@@ -19,6 +19,14 @@ hide:
 
 [전체 목록](datasets/index.md){ .md-button .md-button--primary } [자료 비교하기](compare.md){ .md-button } [세대별 비교](transitions.md){ .md-button }
 
+## 이런 분께 추천합니다
+
+- 재분석자료를 모델 입력자료로 쓰며 장기 운영하는 연구자
+- 하려는 분석에 맞는 자료를 찾는 연구자
+- 쓰던 자료의 갱신 중단·버전 교체 여부를 확인해야 하는 연구자
+- 여러 자료를 비교하거나 교차 검증하려는 연구자
+- 논문에 자료 버전·격자·변수 정의를 정확히 적어야 하는 연구자
+
 ## 최근 공지
 
 <!-- RECENT_NOTICES -->
