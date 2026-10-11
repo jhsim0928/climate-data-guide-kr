@@ -220,16 +220,16 @@
   "mode": "http"
  },
  "https://disc.gsfc.nasa.gov/datacollection/GPCPMON_3.3.html": {
-  "fails": 1,
+  "fails": 0,
   "file": "bf7a5d978dfcd6a5.txt",
-  "last_error": "ConnectionError: HTTPSConnectionPool(host='disc.gsfc.nasa.gov', port=443): Max retries exceeded with url: /datacollection/GPCPMON_3.3.html (Caused by NewConnectionError(\"HTTPSConnection(host='disc.gsfc.nasa.gov', port",
-  "last_ok": "2026-10-12"
+  "last_ok": "2026-10-12",
+  "mode": "browser"
  },
  "https://disc.gsfc.nasa.gov/information/alerts": {
-  "fails": 1,
+  "fails": 0,
   "file": "939e24f35459fce8.txt",
-  "last_error": "ConnectionError: HTTPSConnectionPool(host='disc.gsfc.nasa.gov', port=443): Max retries exceeded with url: /information/alerts (Caused by NewConnectionError(\"HTTPSConnection(host='disc.gsfc.nasa.gov', port=443): Failed",
-  "last_ok": "2026-10-12"
+  "last_ok": "2026-10-12",
+  "mode": "browser"
  },
  "https://downloads.psl.noaa.gov/Datasets/godas/": {
   "fails": 0,
@@ -384,22 +384,22 @@
   "mode": "http"
  },
  "https://goldsmr1.gesdisc.eosdis.nasa.gov/data/MERRA/": {
-  "fails": 1,
+  "fails": 0,
   "file": "0fd825ff89b8807e.txt",
-  "last_error": "ConnectTimeout: HTTPSConnectionPool(host='goldsmr1.gesdisc.eosdis.nasa.gov', port=443): Max retries exceeded with url: /data/MERRA/ (Caused by ConnectTimeoutError(<HTTPSConnection(host='goldsmr1.gesdisc.eosdis.nasa.g",
-  "last_ok": "2026-10-12"
+  "last_ok": "2026-10-12",
+  "mode": "http"
  },
  "https://gpm.nasa.gov/data/news": {
-  "fails": 1,
+  "fails": 0,
   "file": "49883f9cf547a511.txt",
-  "last_error": "ConnectionError: HTTPSConnectionPool(host='gpm.nasa.gov', port=443): Max retries exceeded with url: /data/news (Caused by NewConnectionError(\"HTTPSConnection(host='gpm.nasa.gov', port=443): Failed to establish a new c",
-  "last_ok": "2026-10-12"
+  "last_ok": "2026-10-12",
+  "mode": "http"
  },
  "https://gpm1.gesdisc.eosdis.nasa.gov/data/GPM_L3/": {
-  "fails": 1,
+  "fails": 0,
   "file": "e67339fca1426821.txt",
-  "last_error": "ConnectionError: HTTPSConnectionPool(host='gpm1.gesdisc.eosdis.nasa.gov', port=443): Max retries exceeded with url: /data/GPM_L3/ (Caused by NewConnectionError(\"HTTPSConnection(host='gpm1.gesdisc.eosdis.nasa.gov', por",
-  "last_ok": "2026-10-12"
+  "last_ok": "2026-10-12",
+  "mode": "http"
  },
  "https://input4mips-cvs.readthedocs.io/en/latest/source-id-landing-pages/MRI-JRA55-do-1-6-0/": {
   "fails": 0,
@@ -657,11 +657,11 @@
   "mode": "http"
  },
  "https://www.earthdata.nasa.gov/data/alerts-outages": {
-  "fails": 2,
+  "fails": 3,
   "last_error": "HTTP 403 / HTTP 403 (브라우저)"
  },
  "https://www.earthdata.nasa.gov/data/projects/merra-2/news": {
-  "fails": 2,
+  "fails": 3,
   "last_error": "HTTP 403 / HTTP 403 (브라우저)"
  },
  "https://www.ecmwf.int/en/about/media-centre/news": {
@@ -677,7 +677,7 @@
   "mode": "http"
  },
  "https://www.ecmwf.int/en/forecasts/datasets/reanalysis-datasets/cera-20c": {
-  "fails": 2,
+  "fails": 3,
   "last_error": "HTTP 401 / HTTP 401 (브라우저)"
  },
  "https://www.ecmwf.int/en/publications/newsletters": {

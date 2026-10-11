@@ -1,10 +1,23 @@
 {
  "date_kst": "2026-10-12",
- "run_at": "2026-10-12T05:38:03+09:00",
+ "run_at": "2026-10-12T05:41:34+09:00",
  "baseline": true,
  "checked": 135,
- "ok": 127,
+ "ok": 132,
  "changes": [
+  {
+   "url": "https://earth.esa.int/eogateway/catalog/smos-cryosat-l4-sea-ice-thickness",
+   "datasets": [
+    "cs2smos"
+   ],
+   "added": [
+    "Biomass Auxiliary Restricted",
+    "This collection contains Biomass auxiliary files used internally on the mission and are not intended for public distribution.",
+    "Biomass Cal/Val",
+    "The Biomass Cal/Val collection contains a limited dataset acquired by Biomass during the Commissioning Phase for use by Calibration and V…"
+   ],
+   "removed_count": 2
+  },
   {
    "url": "https://confluence.ecmwf.int/spaces/CKB/pages/583771254/Copernicus+pan-Arctic+Regional+Reanalysis+CARRA2+Known+issues",
    "datasets": [
@@ -52,17 +65,6 @@
    "removed_count": 1
   },
   {
-   "url": "https://earth.esa.int/eogateway/catalog/smos-cryosat-l4-sea-ice-thickness",
-   "datasets": [
-    "cs2smos"
-   ],
-   "added": [
-    "Biomass Auxiliary Restricted",
-    "This collection contains Biomass auxiliary files used internally on the mission and are not intended for public distribution."
-   ],
-   "removed_count": 2
-  },
-  {
    "url": "https://spaces.awi.de/spaces/CS2SMOS/pages/297634429/CryoSat-2+Sentinel-3+SMOS+Merged+Sea+Ice+Thickness",
    "datasets": [
     "cs3smos"
@@ -105,5 +107,33 @@
    "removed_count": 1
   }
  ],
- "errors": []
+ "errors": [
+  {
+   "url": "https://www.ecmwf.int/en/forecasts/datasets/reanalysis-datasets/cera-20c",
+   "datasets": [
+    "cera20c"
+   ],
+   "error": "HTTP 401 / HTTP 401 (브라우저)",
+   "fails": 3,
+   "last_ok": null
+  },
+  {
+   "url": "https://www.earthdata.nasa.gov/data/alerts-outages",
+   "datasets": [
+    "imerg"
+   ],
+   "error": "HTTP 403 / HTTP 403 (브라우저)",
+   "fails": 3,
+   "last_ok": null
+  },
+  {
+   "url": "https://www.earthdata.nasa.gov/data/projects/merra-2/news",
+   "datasets": [
+    "merra2"
+   ],
+   "error": "HTTP 403 / HTTP 403 (브라우저)",
+   "fails": 3,
+   "last_ok": null
+  }
+ ]
 }
