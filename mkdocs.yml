@@ -58,7 +58,7 @@ nav:
   - 세대별 비교: transitions.md
   - 중요 공지: notices.md
   - 참여:
-      - 알림 신청: subscribe.md
+      - 중요 공지 알림 신청: subscribe.md
       - 데이터셋 제안: suggest.md
   - 소개:
       - 소개·인용: about.md
@@ -76,6 +76,8 @@ markdown_extensions:
   - pymdownx.highlight:
       anchor_linenums: true
   - pymdownx.inlinehilite
+  - pymdownx.tabbed:
+      alternate_style: true
 
 extra_css:
   - stylesheets/extra.css
@@ -90,12 +92,12 @@ extra:
   # doi 는 Zenodo의 "모든 버전" DOI(concept DOI) — 새 버전을 올려도 바꿀 필요가 없습니다.
   site_citation:
     doi: "10.5281/zenodo.23300923"
-    en: "Sim, J.-H. (2026). Korean Climate Data Guide (기후데이터 길잡이) [Computer software]. Zenodo. https://doi.org/10.5281/zenodo.23300923"
-    ko: "Sim, J.-H. (2026). 기후데이터 길잡이 (Korean Climate Data Guide) [소프트웨어]. Zenodo. https://doi.org/10.5281/zenodo.23300923"
+    # 사사(Acknowledgements) 문장 — 사이트 안내·엑셀 저장 파일에 들어갑니다
+    ack_en: "Information on the datasets used in this study was compiled with the help of the Korean Climate Data Guide (Sim, 2026; https://doi.org/10.5281/zenodo.23300923)."
     bibtex: |-
       @misc{sim2026kcdg,
         author       = {Sim, Ji-Han},
-        title        = {Korean Climate Data Guide (기후데이터 길잡이)},
+        title        = {Korean Climate Data Guide},
         year         = {2026},
         publisher    = {Zenodo},
         doi          = {10.5281/zenodo.23300923},

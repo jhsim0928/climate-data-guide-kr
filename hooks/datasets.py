@@ -376,16 +376,12 @@ def variables_block(v: dict, tc: dict | None = None) -> list[str]:
 
 
 def site_citation_lines(c: dict, bibtex: bool = True) -> list[str]:
-    """사이트 인용 문구 (영문·국문, 선택적으로 BibTeX). 소개 페이지와 데이터셋 페이지 하단에서 공통 사용."""
-    if not c:
+    """사이트 인용 안내 — 영어 사사(Acknowledgements) 문장 (소개 페이지는 BibTeX도). 소개 페이지와 데이터셋 페이지 하단 공통."""
+    if not c or not c.get("ack_en"):
         return []
-    L = []
-    if c.get("en"):
-        L += ["**English**", "", "```text", c["en"], "```", ""]
-    if c.get("ko"):
-        L += ["**한국어**", "", "```text", c["ko"], "```", ""]
+    L = ["**Acknowledgements**", "", "```text", c["ack_en"], "```", ""]
     if bibtex and c.get("bibtex"):
-        L += ["**BibTeX**", "", "```bibtex", c["bibtex"].rstrip(), "```", ""]
+        L += ["**BibTeX** (참고문헌 관리 프로그램용)", "", "```bibtex", c["bibtex"].rstrip(), "```", ""]
     return ['<div class="cite-block" markdown="1">', ""] + L + ["</div>", ""]
 
 
@@ -398,7 +394,7 @@ def render_dataset(d: dict, site_cite: dict) -> str:
         badge(d["status"]),
         "",
         '<div class="page-actions">'
-        f'<a class="act act-subscribe" href="../../subscribe/?dataset={d["id"]}">변경 알림 받기</a>'
+        f'<a class="act act-subscribe" href="../../subscribe/?dataset={d["id"]}">중요 공지 알림 받기</a>'
         f'<a class="act act-compare" href="../../compare/?ids={d["id"]}">다른 자료와 비교</a>'
         f'<a class="act act-report" href="#report" data-report="{html.escape(d["name"])}">정보 오류 신고</a>'
         "</div>",
@@ -506,6 +502,7 @@ def render_dataset(d: dict, site_cite: dict) -> str:
         L += ["### 사사(Acknowledgements) 작성", "", oneline(cit["acknowledgement"]), ""]
     if site_cite:
         L += ['!!! tip "이 정리가 도움이 되셨다면 기후데이터 길잡이도 인용해 주세요"', ""]
+        L += ["    논문의 사사(Acknowledgements)에 아래 문장을 넣어주세요.", ""]
         L += ["    " + x if x else "" for x in site_citation_lines(site_cite, bibtex=False)]
         L.append("")
 
@@ -669,7 +666,7 @@ def render_notices(datasets: list[dict]) -> str:
     return "\n".join([
         "# 중요 공지", "",
         "데이터 제공 중단, 서비스 이전, 품질 문제처럼 **분석에 영향을 주는 공지**를 최신순으로 모았습니다.",
-        "각 항목의 링크는 원문 공지로 연결됩니다. 새 공지를 메일로 받고 싶다면 [알림 신청](subscribe.md)을 이용하세요.", "",
+        "각 항목의 링크는 원문 공지로 연결됩니다. 새 공지를 메일로 받고 싶다면 [중요 공지 알림 신청](subscribe.md)을 이용하세요.", "",
         '<div class="notice-filter cdg-form" id="notice-filter">'
         '<label class="field">데이터셋<select id="nf-dataset"><option value="">전체 데이터셋</option>' + opts + "</select></label>"
         f'<div class="nf-levels"><span class="nf-label">구분</span>{lv}</div>'
@@ -960,8 +957,9 @@ def subscribe_form(config) -> str:
         '<input type="email" name="email" placeholder="name@example.ac.kr" autocomplete="email" required>'
         '</fieldset>'
         '<div class="hp-field" aria-hidden="true"><label>웹사이트 (비워 두세요)<input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>'
-        '<label class="check consent"><input type="checkbox" name="consent" required> '
-        '<a href="../privacy/">개인정보 수집·이용</a>에 동의합니다 (필수)</label>'
+        '<div class="consent-row"><label class="check consent"><input type="checkbox" name="consent" required> '
+        '<span>개인정보 수집·이용에 동의합니다 (필수)</span></label>'
+        '<a class="consent-link" href="../privacy/" target="_blank" rel="noopener">처리방침 보기 ↗</a></div>'
         '<div class="form-actions"><button type="submit" class="md-button md-button--primary">알림 신청</button></div>'
         '<p class="hint">신청하면 <strong>확인 메일</strong>이 갑니다. 메일의 <em>신청 확인하기</em>를 눌러야 등록이 끝납니다. 받은편지함에 없으면 <strong>스팸함</strong>을 확인해 주세요. '
         '알림 메일마다 아래쪽에 수신 거부 링크가 있어 언제든 해지할 수 있습니다.</p>'

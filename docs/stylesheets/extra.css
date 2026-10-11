@@ -350,3 +350,14 @@ details.hint summary { cursor: pointer; }
 .md-typeset h2.group-head { font-size: 1.15em; }
 .md-typeset .group-intro { margin: -.2rem 0 .6rem .7rem; font-size: .9em; color: var(--md-default-fg-color--light); }
 [data-md-color-scheme="slate"] { --dom-atmosphere: #3a78ad; --dom-ocean: #2a6b80; --dom-seaice: #4a8eaa; }
+
+/* 체크박스 크게 + 동의 문구 전체를 눌러도 체크되게 (처리방침 링크는 따로) */
+.cdg-form input[type="checkbox"] { width: 1.05rem; height: 1.05rem; accent-color: var(--md-accent-fg-color); cursor: pointer; }
+.cdg-form .consent-row {
+  display: flex; flex-wrap: wrap; align-items: center; gap: .4rem 1rem;
+  margin: .2em 0 1em; padding: .55rem .8rem;
+  border: 1px solid var(--md-default-fg-color--lightest); border-radius: .4rem;
+}
+.cdg-form .consent-row .consent { margin: 0; padding: .2em 0; align-items: center; font-weight: 600; }
+.cdg-form .consent-row .consent input { width: 1.3rem; height: 1.3rem; transform: none; }
+.cdg-form .consent-link { font-size: .9em; white-space: nowrap; }

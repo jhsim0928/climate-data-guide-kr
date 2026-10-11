@@ -21,7 +21,7 @@
 
 기후데이터 길잡이는 Zenodo에 등록되어 DOI가 있습니다: <!-- SITE_DOI -->
 
-논문의 Data availability, Acknowledgements 또는 참고문헌에 아래처럼 적어주시면 사이트를 계속 유지하는 데 큰 힘이 됩니다. 영문 논문은 English, 국문 논문은 한국어 형식을 쓰세요.
+논문의 사사(Acknowledgements)에 아래 문장을 넣어주시면 사이트를 계속 유지하는 데 큰 힘이 됩니다.
 
 <!-- SITE_CITATION -->
 

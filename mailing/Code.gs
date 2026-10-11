@@ -1,5 +1,5 @@
 /**
- * 기후데이터 길잡이 — 변경 알림 메일 서버 (Google Apps Script)
+ * 기후데이터 길잡이 — 중요 공지 알림 메일 서버 (Google Apps Script)
  *
  * 하는 일
  *  1) 사이트의 "알림 신청" 양식을 받아 구독자 시트에 저장하고 확인 메일을 보냅니다(이중 확인).
@@ -133,6 +133,23 @@ function handleReport_(p) {
   return text_('ok');
 }
 
+// ── 발송 테스트: 이미 보낸 공지 하나를 '안 보낸 것'으로 되돌리고 바로 발송 ──
+// Apps Script 편집기 위쪽 함수 목록에서 testSend 를 고르고 [실행]을 누르세요.
+// 구독자 시트에서 status 가 active 이고, 이 데이터셋(또는 all)과 공지 구분(또는 all)을 고른 사람에게만 갑니다.
+var TEST_KEY = 'oisst|2026-10-02|NCEI 클라우드 이전으로 자료 접근 지연 (2026-10-30까지 예정)';
+function testSend() {
+  var sh = SpreadsheetApp.getActive().getSheetByName(SHEET_SENT);
+  if (sh.getLastRow() <= 1) markAllAsSent_();  // 발송 기록이 비어 있으면 먼저 채움 (옛 공지 일괄 발송 방지)
+  var rows = sh.getDataRange().getValues();
+  var removed = 0;
+  for (var i = rows.length - 1; i >= 1; i--) {
+    if (rows[i][0] === TEST_KEY) { sh.deleteRow(i + 1); removed++; }
+  }
+  Logger.log('발송 기록에서 지운 행: ' + removed + '개 → 지금 발송합니다');
+  checkNotices();
+  Logger.log('완료. 구독자 메일함(스팸함 포함)을 확인하세요.');
+}
+
 // ── 메일 속 링크(확인·수신 거부) → 여기로 GET ────────────
 function doGet(e) {
   var p = (e && e.parameter) || {};
@@ -196,6 +213,7 @@ function checkNotices() {
       '명)이 많아 발송을 내일로 미뤘습니다. 구독자가 늘었다면 뉴스레터 서비스로 옮길 때가 되었습니다.');
     return;
   }
+  Logger.log('새 공지 ' + fresh.length + '건 → 받을 사람 ' + plan.length + '명');
   plan.forEach(function (x) {
     var crit = x.items.some(function (n) { return n.level === 'critical'; });
     var subject = '[' + SITE_NAME + '] ' + (crit ? '중요 공지 포함 · ' : '') + '새 공지 ' + x.items.length + '건';
@@ -223,8 +241,8 @@ function fetchNotices_() {
 // ── 메일 본문 ───────────────────────────────────────────
 function sendConfirm_(email, token, datasets, levels) {
   var url = ScriptApp.getService().getUrl() + '?action=confirm&token=' + token;
-  sendMail_(email, '[' + SITE_NAME + '] 알림 신청을 확인해 주세요',
-    '<p>' + SITE_NAME + ' 변경 알림 신청을 받았습니다. 아래 버튼을 눌러야 신청이 완료됩니다.</p>' +
+  sendMail_(email, '[' + SITE_NAME + '] 중요 공지 알림 신청을 확인해 주세요',
+    '<p>' + SITE_NAME + ' 중요 공지 알림 신청을 받았습니다. 아래 버튼을 눌러야 신청이 완료됩니다.</p>' +
     '<p><a href="' + url + '" style="display:inline-block;padding:10px 18px;background:#00897b;color:#fff;border-radius:6px;text-decoration:none">신청 확인하기</a></p>' +
     prefsHtml_(datasets, levels) +
     '<p style="background:#fff8e1;padding:10px 14px;border-radius:6px;color:#5d4037">이 메일이 <b>스팸함</b>에 있었다면 <b>스팸 아님</b>으로 표시해 주세요. 그래야 앞으로 오는 알림이 받은편지함으로 들어옵니다. ' + OWNER_EMAIL + ' 주소를 연락처에 추가해 두셔도 좋습니다.</p>' +
@@ -257,7 +275,7 @@ function footer_(token) {
   return '<hr style="border:0;border-top:1px solid #ddd;margin:20px 0">' +
     '<p style="color:#888;font-size:12px">' + SITE_NAME + ' (<a href="' + SITE_URL + '">' + SITE_URL + '</a>)는 개인이 운영하는 비공식 프로젝트이며, ' +
     '소속 기관이나 자료 제공 기관의 공식 입장이 아닙니다.<br>' +
-    '설정 변경: <a href="' + SUBSCRIBE_PAGE + '">알림 신청 페이지</a>에서 같은 이메일로 다시 신청 · ' +
+    '설정 변경: <a href="' + SUBSCRIBE_PAGE + '">중요 공지 알림 신청 페이지</a>에서 같은 이메일로 다시 신청 · ' +
     '<a href="' + unsub + '">수신 거부(정보 즉시 삭제)</a></p>';
 }
 

@@ -5,6 +5,5 @@
   <link rel="apple-touch-icon" href="{{ 'assets/apple-touch-icon.png' | url }}">
   <meta name="cdg-report-endpoint" content="{{ (config.extra.forms or {}).report_endpoint or '' }}">
   <meta name="cdg-contact" content="{{ config.extra.contact_email or '' }}">
-  <meta name="cdg-cite-en" content="{{ cite.en or '' }}">
-  <meta name="cdg-cite-ko" content="{{ cite.ko or '' }}">
+  <meta name="cdg-ack" content="{{ cite.ack_en or '' }}">
 {% endblock %}

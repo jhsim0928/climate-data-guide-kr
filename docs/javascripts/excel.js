@@ -134,8 +134,7 @@
   }
   function citeFooter() {
     var lines = ["이 자료가 도움이 되셨다면 논문·보고서에 기후데이터 길잡이를 인용해 주세요."];
-    if (meta("cdg-cite-en")) lines.push("English: " + meta("cdg-cite-en"));
-    if (meta("cdg-cite-ko")) lines.push("한국어: " + meta("cdg-cite-ko"));
+    if (meta("cdg-ack")) lines.push("Acknowledgements: " + meta("cdg-ack"));
     lines.push("출처 페이지: " + pageUrl());
     lines.push("이 표는 요약입니다. 분석·논문에 쓰기 전에는 각 자료의 공식 출처에서 반드시 다시 확인하세요.");
     return lines;
