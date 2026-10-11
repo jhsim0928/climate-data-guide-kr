@@ -233,6 +233,18 @@ UI = {
     "이름·소속, 답장이 필요하면 이메일도 적어주세요": "Name and affiliation; add an email if you would like a reply",
     ">제안 보내기</button>": ">Send suggestion</button>",
     "제안은 운영자에게만 전달되며 공개되지 않습니다.": "Suggestions go only to the maintainer and are not published.",
+    # 폼 — 의견 보내기
+    "<legend>의견</legend>": "<legend>Your feedback</legend>",
+    '<label class="field">의견 종류<select': '<label class="field">Type<select',
+    ">기능 제안</option>": ">Feature idea</option>",
+    ">사이트 개선</option>": ">Improvement</option>",
+    ">칭찬·응원</option>": ">Kind words</option>",
+    ">기타</option>": ">Other</option>",
+    "내용 <em>필수</em>": "Message <em>required</em>",
+    "예) 자료 비교표에 라이선스도 다시 보였으면 좋겠어요 / ○○ 자료 페이지가 연구에 큰 도움이 됐어요": "e.g. I'd like to see licences in the comparison table again / the page on dataset X really helped my research",
+    "답변 받을 이메일 (선택)": "Your email for a reply (optional)",
+    ">의견 보내기</button>": ">Send feedback</button>",
+    "의견은 운영자에게만 전달되며 공개되지 않습니다.": "Feedback goes only to the maintainer and is not published.",
     # 메뉴
     "개요": "Overview",
     # 짧은 값

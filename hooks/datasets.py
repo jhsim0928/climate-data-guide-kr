@@ -1177,9 +1177,34 @@ def suggest_form(config) -> str:
     ))
 
 
+def feedback_form(config) -> str:
+    """사이트 의견 보내기 폼. 운영자 메일(Apps Script)로 바로 보내며 공개되지 않습니다."""
+    endpoint = _forms_config(config).get("feedback_endpoint") or ""
+    kinds = [("idea", "기능 제안"), ("improve", "사이트 개선"), ("thanks", "칭찬·응원"), ("other", "기타")]
+    opts = "".join(f'<option value="{k}">{v}</option>' for k, v in kinds)
+    return loc(
+        f'<form id="feedback-form" class="cdg-form" data-endpoint="{endpoint}" novalidate>'
+        '<fieldset><legend>의견</legend>'
+        f'<label class="field">의견 종류<select name="kind">{opts}</select></label>'
+        '<label class="field">내용 <em>필수</em>'
+        '<textarea name="message" rows="6" placeholder="예) 자료 비교표에 라이선스도 다시 보였으면 좋겠어요 / ○○ 자료 페이지가 연구에 큰 도움이 됐어요"></textarea></label>'
+        '<label class="field">답변 받을 이메일 (선택)'
+        '<input type="email" name="contact" placeholder="name@example.ac.kr" autocomplete="email"></label>'
+        '</fieldset>'
+        '<div class="hp-field" aria-hidden="true"><label>웹사이트 (비워 두세요)<input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>'
+        '<div class="form-actions"><button type="submit" class="md-button md-button--primary"'
+        + ("" if endpoint else " disabled") + '>의견 보내기</button></div>'
+        '<p class="hint">의견은 운영자에게만 전달되며 공개되지 않습니다.</p>'
+        '<p class="form-message" role="status" aria-live="polite"></p>'
+        '</form>'
+    )
+
+
 def on_page_markdown(markdown, page, config, files):
     if "<!-- SUBSCRIBE_FORM -->" in markdown:
         markdown = markdown.replace("<!-- SUBSCRIBE_FORM -->", subscribe_form(config))
+    if "<!-- FEEDBACK_FORM -->" in markdown:
+        markdown = markdown.replace("<!-- FEEDBACK_FORM -->", feedback_form(config))
     if "<!-- SUGGEST_FORM -->" in markdown:
         markdown = markdown.replace("<!-- SUGGEST_FORM -->", suggest_form(config))
     if "<!-- DOMAIN_SUMMARY -->" in markdown:
