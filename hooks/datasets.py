@@ -774,15 +774,15 @@ def render_notices(datasets: list[dict]) -> str:
         "# 중요 공지", "",
         "데이터 제공 중단, 서비스 이전, 품질 문제처럼 **분석에 영향을 주는 공지**를 최신순으로 모았습니다.",
         "각 항목의 링크는 원문 공지로 연결됩니다. 새 공지를 메일로 받고 싶다면 [중요 공지 알림 신청](subscribe.md)을 이용하세요.", "",
-        '<div class="notice-filter cdg-form" id="notice-filter">'
+        '<section class="notice-filter cdg-form" id="notice-filter" data-search-exclude>'
         '<label class="field">데이터셋<select id="nf-dataset"><option value="">전체 데이터셋</option>' + opts + "</select></label>"
         f'<div class="nf-levels"><span class="nf-label">구분</span>{lv}</div>'
-        f'<p class="hint" id="nf-count">{("All " + str(len(pairs))) if is_en() else ("전체 " + str(len(pairs)) + "건")}</p></div>',
+        f'<p class="hint" id="nf-count">{("All " + str(len(pairs))) if is_en() else ("전체 " + str(len(pairs)) + "건")}</p></section>',
         "",
-        '<div><table id="notice-table">'
+        '<div data-search-exclude><table id="notice-table">'
         "<thead><tr><th>날짜</th><th>데이터셋</th><th>구분</th><th>내용</th></tr></thead>"
         f"<tbody>{rows}</tbody></table></div>",
-        '<p class="hint" id="nf-empty" hidden>조건에 맞는 공지가 없습니다.</p>',
+        '<p class="hint" id="nf-empty" hidden data-search-exclude>조건에 맞는 공지가 없습니다.</p>',
         "",
     ]) + "\n")
 
@@ -860,10 +860,12 @@ def render_transitions(datasets: list[dict]) -> str:
     for d, t in pairs:
         key = transition_key(d, t)
         block = transition_block(d, t, "##", "datasets/")
-        block[0] = re.sub(r"\{#[^}]*\}", "", block[0]).rstrip()
-        L += [f'<div class="gen-detail" id="{key}" markdown="1" hidden>', ""]
+        # 제목을 h2가 아닌 문단으로: 숨긴 영역의 제목이 사이트 검색에 빈 결과로 잡히지 않도록
+        title = re.sub(r"\{#[^}]*\}", "", block[0]).rstrip()[3:]
+        block[0] = f'<p class="gen-title" markdown="span">{title}</p>'
+        L += [f'<section class="gen-detail" id="{key}" markdown="1" hidden data-search-exclude>', ""]
         L += block
-        L += [f"[{nt(d['name'])} 페이지에서 보기 →](datasets/{d['id']}.md)", "", "</div>", ""]
+        L += [f"[{nt(d['name'])} 페이지에서 보기 →](datasets/{d['id']}.md)", "", "</section>", ""]
     return loc("\n".join(L) + "\n")
 
 
@@ -916,12 +918,12 @@ def compare_app(datasets: list[dict]) -> str:
     )
     data = json.dumps(compare_data(datasets), ensure_ascii=False).replace("</", "<\\/")
     return loc(
-        '<div class="cdg-form compare-controls"><div class="cmp-selects">' + selects + "</div>"
+        '<section class="cdg-form compare-controls" data-search-exclude><div class="cmp-selects">' + selects + "</div>"
         '<label class="field">변수 찾기 <span class="hint">— 고른 자료들에서 같은 종류의 변수를 나란히 봅니다 (한국어 이름이나 변수명)</span>'
         '<input type="text" id="cmp-q" placeholder="예) 강수, tp, prate, sea ice"></label>'
-        f'<div class="chips">{chips}</div></div>'
-        '<p class="hint" id="cmp-empty">위에서 비교할 자료를 2개 이상 골라주세요. 고른 내용은 주소에 저장되어 그대로 공유할 수 있습니다.</p>'
-        '<div class="table-scroll"><table id="cmp-table" hidden></table></div>'
+        f'<div class="chips">{chips}</div></section>'
+        '<p class="hint" id="cmp-empty" data-search-exclude>위에서 비교할 자료를 2개 이상 골라주세요. 고른 내용은 주소에 저장되어 그대로 공유할 수 있습니다.</p>'
+        '<div class="table-scroll" data-search-exclude><table id="cmp-table" hidden></table></div>'
     ) + f'<script type="application/json" id="cmp-data">{data}</script>'
 
 
@@ -1117,7 +1119,7 @@ def subscribe_form(config) -> str:
         ]
     )
     html = (
-        f'<form id="subscribe-form" class="cdg-form" data-endpoint="{endpoint}" novalidate>'
+        f'<form id="subscribe-form" class="cdg-form" data-search-exclude data-endpoint="{endpoint}" novalidate>'
         '<fieldset><legend>1. 알림 받을 데이터셋</legend>'
         '<label class="check check-all"><input type="checkbox" data-all="datasets"> '
         '<strong>전체</strong><span class="hint"> — 앞으로 추가되는 데이터셋 포함</span></label>'
@@ -1151,8 +1153,8 @@ def suggest_form(config) -> str:
         "    그동안은 data4researchers@gmail.com 으로 메일을 보내주세요.\n\n"
     )
     return loc(pre + (
-        f'<details class="hint"><summary>이미 있는 데이터셋 {len(_datasets)}개 보기</summary><p>{existing}</p></details>'
-        f'<form id="suggest-form" class="cdg-form" data-endpoint="{endpoint}" novalidate>'
+        f'<details class="hint" data-search-exclude><summary>이미 있는 데이터셋 {len(_datasets)}개 보기</summary><p>{existing}</p></details>'
+        f'<form id="suggest-form" class="cdg-form" data-search-exclude data-endpoint="{endpoint}" novalidate>'
         '<fieldset><legend>데이터셋 정보</legend>'
         '<label class="field">데이터셋 이름 <em>필수</em>'
         '<input type="text" name="name" placeholder="예) ERA5-Land, SMAP 토양수분" required></label>'
@@ -1183,7 +1185,7 @@ def feedback_form(config) -> str:
     kinds = [("idea", "기능 제안"), ("improve", "사이트 개선"), ("thanks", "칭찬·응원"), ("other", "기타")]
     opts = "".join(f'<option value="{k}">{v}</option>' for k, v in kinds)
     return loc(
-        f'<form id="feedback-form" class="cdg-form" data-endpoint="{endpoint}" novalidate>'
+        f'<form id="feedback-form" class="cdg-form" data-search-exclude data-endpoint="{endpoint}" novalidate>'
         '<fieldset><legend>의견</legend>'
         f'<label class="field">의견 종류<select name="kind">{opts}</select></label>'
         '<label class="field">내용 <em>필수</em>'
