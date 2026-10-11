@@ -15,3 +15,17 @@ if (typeof document$ !== "undefined") {
 } else {
   document.addEventListener("DOMContentLoaded", protectFromTranslation);
 }
+
+// 방문자 수 집계 (GoatCounter) — 쿠키를 쓰지 않습니다
+// GoatCounter 가입 후, 정한 Code를 아래 따옴표 안에 넣으세요. 예) "climatedata-kr"
+// 비워두면 집계하지 않습니다.
+var GOATCOUNTER_CODE = "";
+
+(function () {
+  if (!GOATCOUNTER_CODE) return;
+  var s = document.createElement("script");
+  s.async = true;
+  s.src = "https://gc.zgo.at/count.js";
+  s.setAttribute("data-goatcounter", "https://" + GOATCOUNTER_CODE + ".goatcounter.com/count");
+  document.head.appendChild(s);
+})();

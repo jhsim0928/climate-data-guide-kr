@@ -61,6 +61,17 @@ CITATION.cff             ← GitHub "Cite this repository" 버튼
 3. `mkdocs.yml`의 `nav`에 한 줄 추가합니다. 예: `- MERRA-2: datasets/merra2.md`
 4. 필수 항목이 빠지거나 형식이 틀리면 빌드가 실패하면서 무엇이 잘못됐는지 알려줍니다.
 
+## 알림 신청 · 데이터셋 제안 폼
+
+- `docs/subscribe.md`(알림 신청)와 `docs/suggest.md`(데이터셋 제안)의 입력 양식은 `hooks/datasets.py`가 데이터셋 목록으로 자동 생성합니다. 데이터셋을 추가하면 체크박스도 자동으로 늘어납니다.
+- 데이터셋 제안은 지금 바로 동작합니다. 입력한 내용이 채워진 GitHub 이슈가 새 창에서 열립니다.
+- 메일 알림은 **아직 준비 중**입니다. 양식은 미리 볼 수 있지만 신청이 저장되지 않습니다.
+- 메일 발송을 시작할 때는 신청을 받을 주소(예: Google Apps Script 웹앱)를 `mkdocs.yml`의 `extra.forms.subscribe_endpoint`에 넣으면 됩니다. 그 전에 `docs/privacy.md`(개인정보 처리방침 초안)의 빈칸을 채워주세요.
+
+## 방문자 수 집계 (선택)
+
+GoatCounter에 가입한 뒤 `docs/javascripts/notranslate.js`의 `GOATCOUNTER_CODE = ""` 따옴표 안에 정한 Code를 넣으면 집계가 시작됩니다.
+
 ## 정리 원칙
 
 - DOI, 기간, URL은 **반드시 공식 페이지에서 직접 확인**한 뒤 적습니다. (AI가 만든 초안도 마찬가지)
@@ -72,6 +83,7 @@ CITATION.cff             ← GitHub "Cite this repository" 버튼
 - [ ] 공지 페이지 변경 감지 스크립트 + 주간 GitHub Actions → 변경 시 이슈 자동 생성
 - [ ] 이슈를 받아 Claude가 YAML 수정 PR을 여는 워크플로 (사람이 검토 후 머지)
 - [ ] Zenodo 연동으로 릴리스별 DOI 발급
+- [ ] 메일 알림 발송 연결 (구글 폼·시트 + Apps Script)
 - [ ] 데이터셋 확장 (MERRA-2, JRA-3Q, 해빙 농도, SST …) 및 WRF·CESM2 모델 페이지
 
 ## 라이선스

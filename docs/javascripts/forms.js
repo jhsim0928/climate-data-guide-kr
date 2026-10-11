@@ -1,0 +1,149 @@
+// 알림 신청 · 데이터셋 제안 폼
+// 발송 주소(endpoint)는 mkdocs.yml 의 extra.forms 에서 정합니다. 비어 있으면 "준비 중"으로 동작합니다.
+(function () {
+  var LEVEL_LABEL = { critical: "중요", warning: "주의", info: "안내" };
+
+  function show(form, text, kind) {
+    var box = form.querySelector(".form-message");
+    if (!box) return;
+    box.textContent = text;
+    box.className = "form-message " + (kind || "");
+  }
+
+  function values(form, name) {
+    return Array.prototype.map.call(
+      form.querySelectorAll('input[name="' + name + '"]:checked'),
+      function (el) { return el.value; }
+    );
+  }
+
+  // "전체" 체크박스와 개별 체크박스 연동
+  function bindSelectAll(form) {
+    form.querySelectorAll("[data-all]").forEach(function (all) {
+      var name = all.getAttribute("data-all");
+      var items = form.querySelectorAll('input[name="' + name + '"]');
+      function sync() {
+        var n = form.querySelectorAll('input[name="' + name + '"]:checked').length;
+        all.checked = n === items.length && n > 0;
+        all.indeterminate = n > 0 && n < items.length;
+      }
+      all.addEventListener("change", function () {
+        items.forEach(function (el) { el.checked = all.checked; });
+        all.indeterminate = false;
+      });
+      items.forEach(function (el) { el.addEventListener("change", sync); });
+      sync();
+    });
+  }
+
+  function post(endpoint, data) {
+    // Google Apps Script 웹앱 등으로 보낼 때를 위한 형식 (응답은 읽지 않음)
+    return fetch(endpoint, { method: "POST", mode: "no-cors", body: new URLSearchParams(data) });
+  }
+
+  function setupSubscribe(form) {
+    bindSelectAll(form);
+
+    // 데이터셋 페이지의 "알림 받기" 링크로 들어오면 해당 데이터셋을 미리 체크
+    var pre = new URLSearchParams(location.search).get("dataset");
+    if (pre) {
+      var box = form.querySelector('input[name="datasets"][value="' + pre + '"]');
+      if (box) { box.checked = true; box.dispatchEvent(new Event("change")); }
+    }
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      var allDatasets = form.querySelector('[data-all="datasets"]').checked;
+      var datasets = values(form, "datasets");
+      var levels = values(form, "levels");
+      var email = form.querySelector('input[name="email"]');
+      var consent = form.querySelector('input[name="consent"]');
+
+      if (!datasets.length) return show(form, "알림 받을 데이터셋을 하나 이상 골라주세요.", "error");
+      if (!levels.length) return show(form, "받을 공지 구분을 하나 이상 골라주세요.", "error");
+      if (!email.value || !email.checkValidity()) return show(form, "이메일 주소를 확인해 주세요.", "error");
+      if (!consent.checked) return show(form, "개인정보 수집·이용에 동의해 주세요.", "error");
+
+      var endpoint = form.getAttribute("data-endpoint");
+      var summary =
+        (allDatasets ? "전체 데이터셋" : datasets.length + "개 데이터셋") + " · " +
+        levels.map(function (l) { return LEVEL_LABEL[l]; }).join(", ") + " 공지";
+
+      if (!endpoint) {
+        return show(form, summary + "를 선택하셨어요. 메일 알림은 아직 준비 중이라 신청이 저장되지 않았습니다. 오픈하면 다시 신청해 주세요.", "info");
+      }
+      show(form, "신청하는 중…", "info");
+      post(endpoint, {
+        type: "subscribe",
+        email: email.value.trim(),
+        datasets: allDatasets ? "all" : datasets.join(","),
+        levels: levels.length === 3 ? "all" : levels.join(","),
+        consent: "yes",
+        requested_at: new Date().toISOString()
+      }).then(function () {
+        form.reset();
+        show(form, summary + " 알림을 신청했습니다. 감사합니다!", "success");
+      }).catch(function () {
+        show(form, "신청을 보내지 못했습니다. 잠시 후 다시 시도해 주세요.", "error");
+      });
+    });
+  }
+
+  function setupSuggest(form) {
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      var action = (e.submitter && e.submitter.getAttribute("data-action")) || "github";
+      var get = function (n) { var el = form.elements[n]; return el ? el.value.trim() : ""; };
+      var urlField = form.elements.url;
+
+      if (!get("name")) return show(form, "데이터셋 이름을 적어주세요.", "error");
+      if (!get("url") || !urlField.checkValidity() || !/^https?:\/\//.test(get("url")))
+        return show(form, "공식 페이지 주소를 https:// 로 시작하는 형식으로 적어주세요.", "error");
+
+      var body = [
+        "### 데이터셋", get("name"), "",
+        "### 종류", get("category"), "",
+        "### 공식 페이지", get("url"), "",
+        "### 어떤 연구에 쓰나요", get("reason") || "-", "",
+        "### 알고 있는 중단·변경 소식", get("notes") || "-", "",
+        "### 제안자", get("contact") || "-"
+      ].join("\n");
+
+      if (action === "direct") {
+        show(form, "보내는 중…", "info");
+        post(form.getAttribute("data-endpoint"), {
+          type: "suggest", name: get("name"), category: get("category"), url: get("url"),
+          reason: get("reason"), notes: get("notes"), contact: get("contact"),
+          requested_at: new Date().toISOString()
+        }).then(function () {
+          form.reset();
+          show(form, "제안을 보냈습니다. 감사합니다!", "success");
+        }).catch(function () {
+          show(form, "보내지 못했습니다. GitHub 이슈로 제안해 주세요.", "error");
+        });
+        return;
+      }
+
+      var repo = form.getAttribute("data-repo");
+      var link = repo + "/issues/new?" + new URLSearchParams({
+        title: "[데이터셋 제안] " + get("name"),
+        body: body,
+        labels: "dataset-request"
+      }).toString();
+      window.open(link, "_blank", "noopener");
+      show(form, "새 창에서 제안서가 열렸어요. 내용을 확인하고 제출(Create) 버튼을 누르면 접수됩니다.", "success");
+    });
+  }
+
+  function init() {
+    document.querySelectorAll("#subscribe-form:not([data-bound])").forEach(function (f) {
+      f.setAttribute("data-bound", "1"); setupSubscribe(f);
+    });
+    document.querySelectorAll("#suggest-form:not([data-bound])").forEach(function (f) {
+      f.setAttribute("data-bound", "1"); setupSuggest(f);
+    });
+  }
+
+  if (typeof document$ !== "undefined") document$.subscribe(init);
+  else document.addEventListener("DOMContentLoaded", init);
+})();

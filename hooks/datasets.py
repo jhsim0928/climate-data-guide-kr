@@ -133,7 +133,12 @@ def render_dataset(d: dict, site_cite: str) -> str:
     L += [f"# {nt(d['name'])}", ""]
     if d.get("full_name"):
         L += [f"*{d['full_name']}*", ""]
-    L += [badge(d["status"]) + f' <span class="verified">마지막 확인 {d["last_verified"]}</span>', ""]
+    L += [
+        badge(d["status"])
+        + f' <span class="verified">마지막 확인 {d["last_verified"]}</span>'
+        + f' <a class="subscribe-link" href="../../subscribe/?dataset={d["id"]}">이 데이터셋 변경 알림 받기</a>',
+        "",
+    ]
 
     # 상태 경고
     if d["status"] != "active" or d.get("status_note"):
@@ -253,7 +258,7 @@ def render_notices(datasets: list[dict]) -> str:
     L = [
         "# 공지 모음", "",
         "데이터 제공 중단, 서비스 이전, 품질 문제처럼 **분석에 영향을 주는 공지**를 최신순으로 모았습니다.",
-        "각 항목의 링크는 원문 공지로 연결됩니다.", "",
+        "각 항목의 링크는 원문 공지로 연결됩니다. 새 공지를 메일로 받고 싶다면 [알림 신청](subscribe.md)을 이용하세요.", "",
     ]
     L += notice_rows(all_notices(datasets), "datasets/")
     return "\n".join(L) + "\n"
@@ -278,7 +283,99 @@ def on_files(files, config):
     return files
 
 
+def _forms_config(config) -> dict:
+    return (config.get("extra") or {}).get("forms") or {}
+
+
+def subscribe_form(config) -> str:
+    """알림 신청 폼. 데이터셋 체크박스는 YAML 목록에서 자동 생성됩니다."""
+    endpoint = _forms_config(config).get("subscribe_endpoint") or ""
+    pre = ""
+    if not endpoint:
+        pre = (
+            '!!! info "메일 알림은 준비 중입니다"\n\n'
+            "    신청 양식은 미리 둘러보실 수 있지만, 아직 메일 발송을 시작하지 않아 신청이 저장되지 않습니다.\n"
+            "    오픈하면 이 페이지에서 바로 신청할 수 있어요. 그전까지는 [공지 모음](notices.md)을 확인해 주세요.\n\n"
+        )
+    ds = "".join(
+        f'<label class="check"><input type="checkbox" name="datasets" value="{d["id"]}"> '
+        f'{nt(d["name"])} {badge(d["status"])}</label>'
+        for d in _datasets
+    )
+    lv = "".join(
+        f'<label class="check"><input type="checkbox" name="levels" value="{key}"> '
+        f'<span class="level-{key}">{LEVEL[key][0]}</span><span class="hint"> — {desc}</span></label>'
+        for key, desc in [
+            ("critical", "제공 중단, 서비스 종료처럼 분석에 바로 영향을 주는 공지"),
+            ("warning", "품질 문제, 재처리, 종료 예고"),
+            ("info", "주소 이전, 라이선스 변경, 새 자료 공개"),
+        ]
+    )
+    html = (
+        f'<form id="subscribe-form" class="cdg-form" data-endpoint="{endpoint}" novalidate>'
+        '<fieldset><legend>1. 알림 받을 데이터셋</legend>'
+        '<label class="check check-all"><input type="checkbox" data-all="datasets"> '
+        '<strong>전체</strong><span class="hint"> — 앞으로 추가되는 데이터셋 포함</span></label>'
+        f'<div class="check-grid">{ds}</div></fieldset>'
+        '<fieldset><legend>2. 받을 공지 구분</legend>'
+        '<label class="check check-all"><input type="checkbox" data-all="levels"> <strong>전체</strong></label>'
+        f'<div class="check-list">{lv}</div></fieldset>'
+        '<fieldset><legend>3. 받을 이메일</legend>'
+        '<input type="email" name="email" placeholder="name@example.ac.kr" autocomplete="email" required>'
+        '</fieldset>'
+        '<label class="check consent"><input type="checkbox" name="consent" required> '
+        '<a href="../privacy/">개인정보 수집·이용</a>에 동의합니다 (필수)</label>'
+        '<div class="form-actions"><button type="submit" class="md-button md-button--primary">알림 신청</button></div>'
+        '<p class="form-message" role="status" aria-live="polite"></p>'
+        '</form>'
+    )
+    return pre + html
+
+
+def suggest_form(config) -> str:
+    """데이터셋 추가 제안 폼. 지금은 내용을 채운 GitHub 이슈로 연결합니다."""
+    repo = (config.get("repo_url") or "").rstrip("/")
+    endpoint = _forms_config(config).get("suggest_endpoint") or ""
+    cats = "".join(f'<option value="{v}">{v}</option>' for v in CATEGORY.values())
+    existing = ", ".join(nt(d["name"]) for d in _datasets)
+    direct = (
+        '<button type="submit" class="md-button md-button--primary" data-action="direct">바로 보내기</button>'
+        if endpoint else ""
+    )
+    return (
+        f'<p class="hint">이미 있는 데이터셋: {existing}</p>'
+        f'<form id="suggest-form" class="cdg-form" data-repo="{repo}" data-endpoint="{endpoint}" novalidate>'
+        '<fieldset><legend>데이터셋 정보</legend>'
+        '<label class="field">데이터셋 이름 <em>필수</em>'
+        '<input type="text" name="name" placeholder="예) MERRA-2, OSI SAF 해빙 농도" required></label>'
+        f'<label class="field">종류<select name="category">{cats}</select></label>'
+        '<label class="field">공식 페이지 주소 <em>필수</em>'
+        '<input type="url" name="url" placeholder="https://" required></label>'
+        '</fieldset>'
+        '<fieldset><legend>왜 필요한가요</legend>'
+        '<label class="field">어떤 연구에 쓰시나요?'
+        '<textarea name="reason" rows="3" placeholder="예) 북극 해빙 변화와 대기 순환 연구에 ERA5와 비교용으로 사용"></textarea></label>'
+        '<label class="field">알고 계신 중단·변경 소식 (선택)'
+        '<textarea name="notes" rows="2" placeholder="예) 2025년부터 새 버전으로 전환 예정이라고 들었어요"></textarea></label>'
+        '<label class="field">제안하신 분 (선택)'
+        '<input type="text" name="contact" placeholder="이름·소속 — 기여자 목록에 올려드려요"></label>'
+        '</fieldset>'
+        '<div class="form-actions">'
+        f'{direct}'
+        '<button type="submit" class="md-button' + ("" if endpoint else " md-button--primary") + '" data-action="github">'
+        'GitHub 이슈로 제안하기</button></div>'
+        '<p class="hint">GitHub 이슈로 제안하면 새 창에서 내용이 채워진 제안서가 열리고, 제출(<strong>Create</strong>) 버튼을 누르면 됩니다. '
+        'GitHub 계정이 필요합니다.' + ("" if endpoint else " 계정 없이 보내는 기능은 메일 알림과 함께 추가될 예정입니다.") + '</p>'
+        '<p class="form-message" role="status" aria-live="polite"></p>'
+        '</form>'
+    )
+
+
 def on_page_markdown(markdown, page, config, files):
+    if "<!-- SUBSCRIBE_FORM -->" in markdown:
+        markdown = markdown.replace("<!-- SUBSCRIBE_FORM -->", subscribe_form(config))
+    if "<!-- SUGGEST_FORM -->" in markdown:
+        markdown = markdown.replace("<!-- SUGGEST_FORM -->", suggest_form(config))
     if "<!-- STATUS_SUMMARY -->" in markdown:
         L = ["| 데이터셋 | 상태 | 기간 |", "|---|---|---|"]
         L += [f"| [{nt(d['name'])}](datasets/{d['id']}.md) | {badge(d['status'])} | {period_text(d['period'])} |" for d in _datasets]
@@ -288,6 +385,19 @@ def on_page_markdown(markdown, page, config, files):
     if "<!-- BUILD_DATE -->" in markdown:
         markdown = markdown.replace("<!-- BUILD_DATE -->", date.today().isoformat())
     return markdown
+
+
+def on_page_context(context, page, config, nav):
+    """페이지 오른쪽 위 연필(수정) 버튼이 실제로 고쳐야 할 파일을 열도록 맞춥니다."""
+    repo = (config.get("repo_url") or "").rstrip("/")
+    src = page.file.src_uri
+    ids = {d["id"] for d in _datasets}
+    m = re.match(r"^datasets/(.+)\.md$", src)
+    if src in ("datasets/index.md", "notices.md"):
+        page.edit_url = None  # 자동 생성 페이지 — 고칠 파일이 따로 없음
+    elif m and m.group(1) in ids:
+        page.edit_url = f"{repo}/edit/main/data/datasets/{m.group(1)}.yaml"
+    return context
 
 
 def on_serve(server, config, builder):

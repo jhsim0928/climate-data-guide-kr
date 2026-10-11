@@ -44,3 +44,81 @@
 
 /* 표 안 줄바꿈 정리 */
 .md-typeset table:not([class]) td:first-child { white-space: nowrap; }
+
+/* 데이터셋 페이지의 "알림 받기" 링크 */
+.subscribe-link {
+  margin-left: 0.8em;
+  font-size: 0.78em;
+  white-space: nowrap;
+}
+.subscribe-link::before { content: "🔔 "; }
+
+/* 알림 신청 · 데이터셋 제안 폼 */
+.cdg-form { max-width: 40rem; margin: 1.2em 0 2em; }
+.cdg-form fieldset {
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-radius: 0.4rem;
+  padding: 0.6em 1em 0.9em;
+  margin: 0 0 1em;
+}
+.cdg-form legend { font-weight: 700; padding: 0 0.3em; }
+.cdg-form .check {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5em;
+  padding: 0.25em 0;
+  cursor: pointer;
+}
+.cdg-form .check input { flex: none; transform: translateY(0.1em); }
+.cdg-form .check-all {
+  border-bottom: 1px dashed var(--md-default-fg-color--lightest);
+  margin-bottom: 0.3em;
+  padding-bottom: 0.45em;
+}
+.cdg-form .check-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(13rem, 1fr));
+  gap: 0 1em;
+}
+.cdg-form .hint, .md-typeset p.hint {
+  color: var(--md-default-fg-color--light);
+  font-size: 0.85em;
+}
+.cdg-form .field { display: block; margin: 0.4em 0 0.8em; font-weight: 600; }
+.cdg-form .field em {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 0.8em;
+  color: var(--md-accent-fg-color);
+  margin-left: 0.3em;
+}
+.cdg-form input[type="email"],
+.cdg-form input[type="text"],
+.cdg-form input[type="url"],
+.cdg-form select,
+.cdg-form textarea {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  margin-top: 0.35em;
+  padding: 0.55em 0.7em;
+  font: inherit;
+  font-weight: 400;
+  color: var(--md-default-fg-color);
+  background: var(--md-default-bg-color);
+  border: 1px solid var(--md-default-fg-color--lighter);
+  border-radius: 0.3rem;
+}
+.cdg-form input:focus, .cdg-form select:focus, .cdg-form textarea:focus {
+  outline: 2px solid var(--md-accent-fg-color);
+  outline-offset: 1px;
+}
+.cdg-form .consent { margin: 0.2em 0 1em; }
+.cdg-form .form-actions { display: flex; flex-wrap: wrap; gap: 0.6em; }
+.cdg-form .md-button { cursor: pointer; }
+.form-message { min-height: 1.4em; margin-top: 0.8em; font-size: 0.9em; }
+.form-message.error   { color: #c62828; }
+.form-message.success { color: #1e6b34; }
+.form-message.info    { color: var(--md-default-fg-color--light); }
+[data-md-color-scheme="slate"] .form-message.error   { color: #ff8a80; }
+[data-md-color-scheme="slate"] .form-message.success { color: #9ee0b2; }
