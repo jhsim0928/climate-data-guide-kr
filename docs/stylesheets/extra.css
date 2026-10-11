@@ -1,0 +1,46 @@
+/* 상태 배지 */
+.status-badge {
+  display: inline-block;
+  padding: 0.1em 0.65em;
+  border-radius: 999px;
+  font-size: 0.78em;
+  font-weight: 700;
+  line-height: 1.6;
+  white-space: nowrap;
+  border: 1px solid transparent;
+}
+.status-active     { background: #e6f4ea; color: #1e6b34; border-color: #a8d5b5; }
+.status-delayed    { background: #fff4e0; color: #8a5300; border-color: #f2c77a; }
+.status-deprecated { background: #fdecdf; color: #9a3d00; border-color: #f0b48a; }
+.status-ended      { background: #fde8e8; color: #9b1c1c; border-color: #f1a9a9; }
+
+[data-md-color-scheme="slate"] .status-active     { background: #173a24; color: #9ee0b2; border-color: #2d6b42; }
+[data-md-color-scheme="slate"] .status-delayed    { background: #3d2c0b; color: #f5cf86; border-color: #7a5a1a; }
+[data-md-color-scheme="slate"] .status-deprecated { background: #3f2310; color: #f6b88e; border-color: #80461f; }
+[data-md-color-scheme="slate"] .status-ended      { background: #401818; color: #f5a9a9; border-color: #7f2e2e; }
+
+/* 공지 구분 */
+.level-critical { color: #c62828; font-weight: 700; }
+.level-warning  { color: #b26a00; font-weight: 700; }
+.level-info     { color: var(--md-default-fg-color--light); }
+[data-md-color-scheme="slate"] .level-critical { color: #ff8a80; }
+[data-md-color-scheme="slate"] .level-warning  { color: #ffcc80; }
+
+.verified {
+  margin-left: 0.6em;
+  font-size: 0.78em;
+  color: var(--md-default-fg-color--light);
+}
+
+/* 인용문 박스 */
+.citation-text {
+  padding: 0.7em 0.9em;
+  border-left: 3px solid var(--md-accent-fg-color);
+  background: var(--md-code-bg-color);
+  font-size: 0.85em;
+  line-height: 1.6;
+  margin-bottom: 0.6em;
+}
+
+/* 표 안 줄바꿈 정리 */
+.md-typeset table:not([class]) td:first-child { white-space: nowrap; }

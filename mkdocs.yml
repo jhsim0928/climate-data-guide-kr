@@ -1,0 +1,80 @@
+# ─────────────────────────────────────────────────────────────
+# 사이트 설정 — 처음 한 번만 아래 3곳을 본인 정보로 바꾸세요
+#   1) site_url   2) repo_url   3) extra.site_citation
+# ─────────────────────────────────────────────────────────────
+site_name: 기후데이터 길잡이
+site_description: 대기·해양·해빙·극지·원격탐사 연구자를 위한 데이터 출처, 받는 방법, 인용, 중단·변경 공지 모음
+site_url: https://jhsim0928.github.io/climate-data-guide-kr/
+repo_url: https://github.com/jhsim0928/climate-data-guide-kr
+repo_name: climate-data-guide-kr
+edit_uri: edit/main/data/datasets/
+copyright: 콘텐츠 CC BY 4.0 · 코드 MIT
+
+theme:
+  name: material
+  language: ko
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: indigo
+      accent: teal
+      toggle:
+        icon: material/weather-night
+        name: 어두운 화면으로
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: indigo
+      accent: teal
+      toggle:
+        icon: material/weather-sunny
+        name: 밝은 화면으로
+  features:
+    - navigation.tabs
+    - navigation.top
+    - navigation.indexes
+    - search.highlight
+    - search.suggest
+    - content.code.copy
+    - content.tabs.link
+  icon:
+    repo: fontawesome/brands/github
+
+plugins:
+  - search:
+      lang:
+        - ko
+        - en
+
+hooks:
+  - hooks/datasets.py
+
+nav:
+  - 홈: index.md
+  - 데이터셋:
+      - datasets/index.md
+      - ERA5: datasets/era5.md
+      - JRA-55: datasets/jra55.md
+  - 공지 모음: notices.md
+  - 소개·인용: about.md
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - md_in_html
+  - tables
+  - toc:
+      permalink: true
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+
+extra_css:
+  - stylesheets/extra.css
+extra_javascript:
+  - javascripts/notranslate.js
+
+extra:
+  # 데이터셋 페이지 하단 "이 사이트 인용" 안내에 들어가는 문장
+  site_citation: "예) 기후데이터 길잡이, https://jhsim0928.github.io/climate-data-guide-kr/ (접속일 YYYY-MM-DD)"

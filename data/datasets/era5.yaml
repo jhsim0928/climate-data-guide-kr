@@ -1,0 +1,179 @@
+# ─────────────────────────────────────────────────────────────
+# ERA5 — 데이터셋 정보 파일
+# 이 파일 하나가 사이트의 ERA5 페이지, 목록 표, 공지 페이지를 모두 만듭니다.
+# 수정 후에는 공식 페이지에서 확인한 날짜로 last_verified 를 갱신하세요.
+# ─────────────────────────────────────────────────────────────
+id: era5
+name: ERA5
+full_name: ECMWF Reanalysis v5 (5세대 ECMWF 대기 재분석)
+category: reanalysis
+domains: [대기, 육지, 해양파랑]
+provider: ECMWF / Copernicus Climate Change Service (C3S)
+
+status: active
+status_note: >-
+  정상 제공 중입니다. 다만 후속 재분석인 ERA6 생산이 시작되었고,
+  ERA6 자료가 충분히 공개되면 ERA5T(준실시간 갱신)를 ERA6가 대체할 예정입니다.
+  장기 실시간 갱신이 필요한 연구라면 전환 계획 공지를 지켜보세요.
+
+period:
+  start: "1940-01"
+  end: present
+  note: 준실시간 자료(ERA5T)는 약 5일 지연. 최종본은 2~3개월 뒤 확정되며, 드물게 ERA5T와 달라질 수 있음.
+
+resolution:
+  spatial: "원본 약 31 km (TL639) / CDS 제공 격자 0.25° (불확실성 앙상블 0.5°)"
+  vertical: "모델면 137층 / 기압면 37층"
+  temporal: 1시간 (월평균 별도 제공)
+
+update: 매일 (약 5일 지연)
+license: CC BY 4.0 (2025-07-02부터 기존 Copernicus 라이선스를 대체)
+account_required: true
+
+summary: >-
+  ECMWF가 Copernicus 기후변화 서비스(C3S)를 위해 생산한 5세대 전지구 재분석자료입니다.
+  대기, 지면, 해양 파랑 변수를 1시간 간격으로 제공하며, ERA-Interim을 대체했습니다.
+  CDS에서 받는 자료는 원본 해상도를 0.25° 위경도 격자로 재격자한 것입니다.
+
+access:
+  - name: Copernicus Climate Data Store (CDS) — 단일면(single levels)
+    url: https://cds.climate.copernicus.eu/datasets/reanalysis-era5-single-levels
+    method: 웹 다운로드 / CDS API (cdsapi)
+    note: ECMWF 계정 필요. 데이터셋별 이용약관에 동의해야 API 요청이 성공합니다.
+  - name: Copernicus Climate Data Store (CDS) — 기압면(pressure levels)
+    url: https://cds.climate.copernicus.eu/datasets/reanalysis-era5-pressure-levels
+    method: 웹 다운로드 / CDS API (cdsapi)
+  - name: NSF NCAR GDEX (d633000, 0.25° 미러)
+    url: https://gdex.ucar.edu/datasets/d633000/
+    method: 웹 다운로드 / THREDDS
+    note: NCAR 계정 필요. 월 단위로 갱신되어 CDS보다 최근 몇 달이 늦게 들어옵니다. CDS 대기열이 길 때 과거 기간용 대안으로 좋습니다.
+
+example:
+  lang: python
+  note: "~/.cdsapirc 파일에 url(https://cds.climate.copernicus.eu/api)과 본인 API key를 넣은 뒤 실행합니다."
+  code: |
+    # pip install --upgrade cdsapi
+    import cdsapi
+
+    client = cdsapi.Client()
+    client.retrieve(
+        "reanalysis-era5-single-levels",
+        {
+            "product_type": ["reanalysis"],
+            "variable": ["2m_temperature"],
+            "year": ["2024"],
+            "month": ["01"],
+            "day": ["01"],
+            "time": ["00:00", "12:00"],
+            "data_format": "netcdf",
+            "download_format": "unarchived",
+        },
+        "era5_t2m_20240101.nc",
+    )
+
+tips:
+  - 2024년 9월 신규 CDS 전환 이후 예전 API key와 .cdsapirc 주소는 동작하지 않습니다. 오래된 스크립트가 실패하면 이것부터 확인하세요.
+  - ERA5T(최근 약 3개월) 구간은 최종본으로 교체될 수 있으므로, 논문용 분석은 다운로드 날짜를 기록해 두는 것이 안전합니다.
+  - 인용할 때는 실제로 받은 CDS 데이터셋(단일면/기압면/월평균 등)의 DOI를 각각 적어야 합니다.
+
+citations:
+  dataset:
+    - label: 단일면 시간별 자료
+      text: >-
+        Hersbach, H., Bell, B., Berrisford, P., Biavati, G., Horányi, A., Muñoz Sabater, J.,
+        Nicolas, J., Peubey, C., Radu, R., Rozum, I., Schepers, D., Simmons, A., Soci, C.,
+        Dee, D., Thépaut, J-N. (2023): ERA5 hourly data on single levels from 1940 to present.
+        Copernicus Climate Change Service (C3S) Climate Data Store (CDS),
+        DOI: 10.24381/cds.adbb2d47 (Accessed on DD-MMM-YYYY)
+      doi: 10.24381/cds.adbb2d47
+      bibtex: |
+        @misc{era5_single_levels,
+          author    = {Hersbach, H. and Bell, B. and Berrisford, P. and Biavati, G. and Hor{\'a}nyi, A. and Mu{\~n}oz Sabater, J. and Nicolas, J. and Peubey, C. and Radu, R. and Rozum, I. and Schepers, D. and Simmons, A. and Soci, C. and Dee, D. and Th{\'e}paut, J.-N.},
+          title     = {{ERA5} hourly data on single levels from 1940 to present},
+          year      = {2023},
+          publisher = {Copernicus Climate Change Service (C3S) Climate Data Store (CDS)},
+          doi       = {10.24381/cds.adbb2d47},
+          note      = {Accessed on DD-MMM-YYYY}
+        }
+    - label: 기압면 시간별 자료
+      text: >-
+        Hersbach, H., Bell, B., Berrisford, P., Biavati, G., Horányi, A., Muñoz Sabater, J.,
+        Nicolas, J., Peubey, C., Radu, R., Rozum, I., Schepers, D., Simmons, A., Soci, C.,
+        Dee, D., Thépaut, J-N. (2023): ERA5 hourly data on pressure levels from 1940 to present.
+        Copernicus Climate Change Service (C3S) Climate Data Store (CDS),
+        DOI: 10.24381/cds.bd0915c6 (Accessed on DD-MMM-YYYY)
+      doi: 10.24381/cds.bd0915c6
+      bibtex: |
+        @misc{era5_pressure_levels,
+          author    = {Hersbach, H. and Bell, B. and Berrisford, P. and Biavati, G. and Hor{\'a}nyi, A. and Mu{\~n}oz Sabater, J. and Nicolas, J. and Peubey, C. and Radu, R. and Rozum, I. and Schepers, D. and Simmons, A. and Soci, C. and Dee, D. and Th{\'e}paut, J.-N.},
+          title     = {{ERA5} hourly data on pressure levels from 1940 to present},
+          year      = {2023},
+          publisher = {Copernicus Climate Change Service (C3S) Climate Data Store (CDS)},
+          doi       = {10.24381/cds.bd0915c6},
+          note      = {Accessed on DD-MMM-YYYY}
+        }
+  papers:
+    - label: ERA5 기술 논문
+      text: >-
+        Hersbach, H., et al. (2020): The ERA5 global reanalysis.
+        Quarterly Journal of the Royal Meteorological Society, 146(730), 1999–2049.
+      doi: 10.1002/qj.3803
+      bibtex: |
+        @article{hersbach2020era5,
+          author  = {Hersbach, Hans and Bell, Bill and Berrisford, Paul and others},
+          title   = {The {ERA5} global reanalysis},
+          journal = {Quarterly Journal of the Royal Meteorological Society},
+          volume  = {146},
+          number  = {730},
+          pages   = {1999--2049},
+          year    = {2020},
+          doi     = {10.1002/qj.3803}
+        }
+  acknowledgement: >-
+    C3S/ECMWF 자료를 사용했음을 밝히고, 위 데이터셋 DOI와 접근 날짜를 함께 적습니다.
+    정확한 권장 문구는 CDS 데이터셋 페이지의 "Citation and attribution" 항목을 확인하세요.
+
+notices:
+  - date: "2026-08-26"
+    level: warning
+    title: ERA6 생산 시작 — ERA5T 대체 예정
+    body: >-
+      ECMWF가 차세대 재분석 ERA6(수평 해상도 약 14 km, 해양 포함) 생산을 시작했습니다.
+      2007년 이후 구간이 2027년 말경 첫 공개 예정이며, 충분한 자료가 공개되면 ERA6가
+      ERA5T(준실시간 갱신)를 대체합니다. 구체 일정은 추후 전환 계획으로 안내될 예정입니다.
+    source: https://www.ecmwf.int/en/newsletter/188/news/era6-reanalysis-production
+  - date: "2025-07-02"
+    level: info
+    title: 라이선스가 CC BY 4.0으로 변경
+    body: 기존 "Licence to use Copernicus Products"가 CC BY 4.0으로 대체되었습니다. 출처 표시 의무는 유지됩니다.
+    source: https://forum.ecmwf.int/c/announcements/5
+  - date: "2025-01-09"
+    level: warning
+    title: 2025년 1월 1~6일 ERA5T 품질 저하 (해결됨)
+    body: >-
+      생산 과정의 기술 문제로 위성 관측 상당수가 동화되지 않아 열대 습도 등이 영향을 받았습니다.
+      2025-01-14 수정 완료. 그 이전에 2025년 1월 1~6일 ERA5T/ERA5-Land-T 시간·일 자료를 받았다면
+      다시 받아야 합니다. 월평균 자료는 영향 없음.
+    source: https://forum.ecmwf.int/t/era5-data-from-1st-january-2025-was-degraded-and-is-being-corrected/10689
+  - date: "2024-09-26"
+    level: critical
+    title: 구 CDS 종료 — 새 계정·API key 필요
+    body: >-
+      구(legacy) CDS가 폐쇄되고 신규 CDS로 전환되었습니다. 예전 자격 증명으로 보낸 API 요청은 모두 실패합니다.
+      ECMWF 계정을 새로 만들고, pip install --upgrade cdsapi 후 .cdsapirc 의 url과 key를 갱신하세요.
+    source: https://forum.ecmwf.int/t/goodbye-legacy-climate-data-store-hello-new-climate-data-store-cds/6380
+
+links:
+  - name: CDS ERA5 단일면 데이터셋 페이지
+    url: https://cds.climate.copernicus.eu/datasets/reanalysis-era5-single-levels
+  - name: ECMWF 포럼 공지(Announcements)
+    url: https://forum.ecmwf.int/c/announcements/5
+  - name: NCAR Climate Data Guide — ERA5
+    url: https://climatedataguide.ucar.edu/climate-data/era5-atmospheric-reanalysis
+
+# 자동 변경 감지(다음 단계)에서 감시할 페이지
+watch_urls:
+  - https://forum.ecmwf.int/c/announcements/5
+  - https://www.ecmwf.int/en/publications/newsletters
+
+last_verified: "2026-10-11"

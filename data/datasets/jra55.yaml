@@ -1,0 +1,138 @@
+# ─────────────────────────────────────────────────────────────
+# JRA-55 — 데이터셋 정보 파일
+# ─────────────────────────────────────────────────────────────
+id: jra55
+name: JRA-55
+full_name: Japanese 55-year Reanalysis (일본 기상청 55년 재분석)
+category: reanalysis
+domains: [대기, 육지]
+provider: 일본 기상청 (JMA)
+
+status: ended
+status_note: >-
+  준실시간 갱신이 2024년 1월 말로 종료되었습니다. 1958년~2024년 1월 자료는 계속 받을 수 있지만
+  더 이상 기간이 늘어나지 않습니다. 최근 기간이 필요하거나 새로 연구를 시작한다면 후속 자료인 JRA-3Q를 검토하세요.
+
+successor:
+  name: JRA-3Q
+  url: https://gdex.ucar.edu/datasets/d640000/
+  note: >-
+    기간 1947년 9월~현재(월 단위 갱신), 모델 해상도 TL479(약 40 km)·100층.
+    라이선스가 CC BY-NC-SA 4.0(비상업)이라는 점이 JRA-55와 다릅니다.
+    인용: Kosaka et al. (2024), J. Meteor. Soc. Japan, 102, 49–109, doi:10.2151/jmsj.2024-004
+
+period:
+  start: "1958-01"
+  end: "2024-01"
+  note: 준실시간 갱신 종료로 2024년 1월 31일 자료가 마지막입니다.
+
+resolution:
+  spatial: "모델 해상도 TL319(약 55 km) / 1.25° 위경도 격자 / 약 0.5625° 가우시안 격자"
+  vertical: "모델면 60층 / 기압면 37층"
+  temporal: 6시간 분석, 3시간 예보·진단 (월평균 별도 제공)
+
+update: 종료 (2024년 1월 말)
+license: CC BY 4.0 (NCAR GDEX 기준) + JMA 이용 조건
+account_required: true
+
+summary: >-
+  일본 기상청(JMA)이 수행한 두 번째 장기 전지구 재분석입니다. 전지구 라디오존데 관측망이 갖춰진 1958년부터 시작하며,
+  4D-Var 자료동화와 위성 복사휘도 변분 편향보정(VarBC)을 사용했습니다. 동아시아 연구에서 ERA5와 함께
+  비교용으로 많이 쓰였습니다.
+
+access:
+  - name: NSF NCAR GDEX — 3시간·6시간 자료 (d628000)
+    url: https://gdex.ucar.edu/datasets/d628000/
+    method: 웹 다운로드 / 부분 추출·형식 변환 / THREDDS
+    note: NCAR 계정 등록 필요. GRIB1 형식, 전체 약 91 TB이므로 필요한 변수·층만 골라 받으세요.
+  - name: NSF NCAR GDEX — 월평균·분산 (d628001)
+    url: https://gdex.ucar.edu/datasets/d628001/
+    method: 웹 다운로드
+  - name: DIAS (일본 데이터 통합·분석 시스템)
+    url: https://diasjp.net/en/
+    method: 웹 다운로드
+    note: >-
+      장기 점검 후 2026년 7~9월 공지로 일부 서비스만 재개된 상태입니다. JMA 페이지에는 여전히 접근 불가로 안내되어 있으니,
+      DIAS에서 JRA-55 제공 여부를 먼저 확인하고 안 되면 NCAR을 이용하세요.
+
+tips:
+  - JMA 이용 조건에 따라, JRA-55를 사용한 논문·보고서 사본을 JMA(jra@met.kishou.go.jp)에 보내야 합니다.
+  - "GDEX 데이터셋 페이지의 Publications 항목 중 JRA-55 논문 링크의 DOI가 JRA-25 논문(10.2151/jmsj.85.369)으로 표기되어 있습니다. JRA-55 논문의 올바른 DOI는 10.2151/jmsj.2015-001 입니다."
+  - JRA-55와 JRA-3Q는 기후값과 추세가 다를 수 있으므로, 한 분석 안에서 두 자료를 이어 붙이지 마세요.
+
+citations:
+  dataset:
+    - label: NCAR GDEX 3시간·6시간 자료
+      text: >-
+        Japan Meteorological Agency (2013): JRA-55: Japanese 55-year Reanalysis, Daily 3-Hourly and 6-Hourly Data.
+        Research Data Archive at the National Center for Atmospheric Research, Computational and Information Systems Laboratory.
+        https://doi.org/10.5065/D6HH6H41 (Accessed DD MMM YYYY)
+      doi: 10.5065/D6HH6H41
+      bibtex: |
+        @misc{jra55_d628000,
+          author    = {{Japan Meteorological Agency}},
+          title     = {{JRA-55}: Japanese 55-year Reanalysis, Daily 3-Hourly and 6-Hourly Data},
+          year      = {2013},
+          publisher = {Research Data Archive at the National Center for Atmospheric Research, Computational and Information Systems Laboratory},
+          doi       = {10.5065/D6HH6H41},
+          note      = {Accessed DD MMM YYYY}
+        }
+  papers:
+    - label: JRA-55 종합 논문
+      text: >-
+        Kobayashi, S., Ota, Y., Harada, Y., Ebita, A., Moriya, M., Onoda, H., Onogi, K., Kamahori, H.,
+        Kobayashi, C., Endo, H., Miyaoka, K., Takahashi, K. (2015): The JRA-55 Reanalysis:
+        General Specifications and Basic Characteristics. J. Meteor. Soc. Japan, 93(1), 5–48.
+      doi: 10.2151/jmsj.2015-001
+      bibtex: |
+        @article{kobayashi2015jra55,
+          author  = {Kobayashi, Shinya and Ota, Yukinari and Harada, Yayoi and Ebita, Ayataka and Moriya, Masami and Onoda, Hirokatsu and Onogi, Kazutoshi and Kamahori, Hirotaka and Kobayashi, Chiaki and Endo, Hirokazu and Miyaoka, Kengo and Takahashi, Kiyotoshi},
+          title   = {The {JRA-55} Reanalysis: General Specifications and Basic Characteristics},
+          journal = {Journal of the Meteorological Society of Japan. Ser. II},
+          volume  = {93},
+          number  = {1},
+          pages   = {5--48},
+          year    = {2015},
+          doi     = {10.2151/jmsj.2015-001}
+        }
+    - label: 순환·기후 변동성 평가 논문 (선택)
+      text: >-
+        Harada, Y., et al. (2016): The JRA-55 Reanalysis: Representation of atmospheric circulation
+        and climate variability. J. Meteor. Soc. Japan, 94(3), 269–302.
+      doi: 10.2151/jmsj.2016-015
+  acknowledgement: >-
+    JMA 이용 조건은 논문 등에서 자료 출처(JMA가 수행한 JRA-55 프로젝트)를 밝히도록 요구합니다.
+    권장 영문 문구는 GDEX 데이터셋 페이지의 이용 조건(Usage Restrictions)에서 그대로 복사해 쓰세요.
+
+notices:
+  - date: "2025-12-02"
+    level: info
+    title: JMA 재분석 홈페이지 주소 변경
+    body: JRA 프로젝트 홈페이지가 jra.kishou.go.jp에서 www.data.jma.go.jp/jra/html/ 로 이전했습니다. 당분간 자동 연결됩니다.
+    source: https://www.data.jma.go.jp/jra/html/JRA-55/index_en.html
+  - date: "2024-01-31"
+    level: critical
+    title: 준실시간 갱신 종료 — JRA-55 프로젝트 종료
+    body: >-
+      2024년 1월 말로 JRA-55 준실시간 자료 갱신이 끝났습니다. 기존 자료는 협력 기관(NCAR 등)에서 계속 받을 수 있으며,
+      후속 자료로 JRA-3Q 사용이 권고됩니다.
+    source: https://www.data.jma.go.jp/jra/html/
+  - date: "2023-12-05"
+    level: warning
+    title: 갱신 종료 예고 및 JRA-3Q 준실시간 자료 NCAR 제공 시작
+    body: NCAR이 JRA-55 갱신 종료(2024년 1월 말)를 예고하고, JRA-3Q 준실시간 자료로 전환하라고 안내했습니다.
+    source: https://gdex.ucar.edu/news/jra-55-will-be-discountinued-at-the-end-of-jan-2024/
+
+links:
+  - name: JMA JRA-55 공식 페이지
+    url: https://www.data.jma.go.jp/jra/html/JRA-55/index_en.html
+  - name: JRA-55 품질 이슈(Quality issues)
+    url: https://www.data.jma.go.jp/jra/html/JRA-55/index_en.html#quality
+  - name: NCAR Climate Data Guide — JRA-55
+    url: https://climatedataguide.ucar.edu/climate-data/jra-55
+
+watch_urls:
+  - https://www.data.jma.go.jp/jra/html/
+  - https://gdex.ucar.edu/news/
+
+last_verified: "2026-10-11"
