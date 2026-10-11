@@ -103,11 +103,25 @@ summary: >-
   물순환 재현 개선을 주요 목표로 삼았고, 1시간 간격 2차원 진단장을 제공해 당시로서는 시간 해상도가 높았습니다.
   지금은 MERRA-2로 대체되었으며, 예전 논문 재현이나 세대 간 비교가 주된 용도입니다.
 
+time_convention:
+  summary: >-
+    원조 MERRA도 MERRA-2와 같은 규칙을 씁니다. inst 컬렉션은 표시 시각의 순간값, tavg 컬렉션은 구간 평균이며, 평균 자료의 시각은 구간 가운데(00:30, 01:30 …)입니다.
+    가강수량(`TQV`)이 들어 있는 inst1_2d_int_Nx는 매 정시의 순간값이라 같은 1시간 간격이어도 tavg1 자료와 30분 어긋납니다.
+  points:
+    - "tavg1_2d_slv_Nx·tavg1_2d_flx_Nx: 1시간 평균, 시각 00:30·01:30 … (구간 중앙)"
+    - "inst1_2d_int_Nx: 매 정시(00:00, 01:00 …) 순간값인 연직 적분량"
+    - "inst3_3d_asm_Cp: 00·03·06…21 UTC 순간값(1.25° 격자)"
+    - "강수·열속은 kg m-2 s-1, W m-2 단위의 평균 강도이며 누적량이 아닙니다. 월평균 파일은 윤년을 반영한 달력월 평균입니다"
+  source: https://gmao.gsfc.nasa.gov/pubs/docs/Lucchesi528.pdf
+  source_name: "File Specification for MERRA Products (GMAO Office Note No. 1, v2.3), 3절·부록 D·F"
+
 variables:
   note: MERRA 파일 규격서(GMAO Office Note No. 1) 기준 주요 변수입니다. 변수명은 파일 안의 이름이며, 괄호 앞에 해당 컬렉션을 적었습니다.
   full_list: https://gmao.gsfc.nasa.gov/pubs/docs/Lucchesi528.pdf
   groups:
     - name: 지표·단일면 (tavg1_2d_slv_Nx, 1시간 평균)
+      kind: mean
+      period: 1시간
       items:
         - "2m 기온 — `T2M` (K)"
         - "2m 비습 — `QV2M` (kg kg-1)"
@@ -115,14 +129,18 @@ variables:
         - "해면기압 — `SLP` (Pa)"
         - "지표기압 — `PS` (Pa)"
     - name: 지표 플럭스 (tavg1_2d_flx_Nx, 1시간 평균)
+      kind: mean
+      period: 1시간
       items:
         - "총 강수 플럭스 — `PRECTOT` (kg m-2 s-1)"
         - "현열 플럭스(상향 +) — `HFLUX` (W m-2)"
         - "잠열 플럭스(상향 +) — `EFLUX` (W m-2)"
     - name: 연직 적분 (inst1_2d_int_Nx, 1시간 순간값)
+      kind: instant
       items:
         - "가강수량 — `TQV` (kg m-2)"
     - name: 기압면 (inst3_3d_asm_Cp, 3시간 순간값, 1.25° 격자 42층)
+      kind: instant
       items:
         - "기온 — `T` (K)"
         - "동서·남북 바람 — `U`, `V` (m s-1)"

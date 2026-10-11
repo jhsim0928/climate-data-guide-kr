@@ -37,11 +37,26 @@ summary: >-
   초분광 적외·마이크로파 복사휘도, GPS 전파엄폐 관측 등을 동화하며, 장기 재분석 가운데 처음으로 위성 에어로졸 관측을 동화해
   에어로졸 농도·광학두께 자료도 함께 제공합니다. 파일은 수집 단위(collection, 예 M2T1NXSLV)로 나뉘어 있고 각각 DOI가 있습니다.
 
+time_convention:
+  summary: >-
+    MERRA-2는 컬렉션 이름 앞부분이 시간 특성을 알려 줍니다. inst는 표시 시각의 순간값, tavg는 구간 평균, const는 시간에 따라 변하지 않는 고정값입니다.
+    1시간 평균(tavg1) 자료의 시각은 평균 구간의 가운데(00:30, 01:30 …)로 찍혀 있어, 정시에 찍히는 순간값 자료와 30분 어긋납니다.
+  points:
+    - "inst1·inst3·inst6: 순간값. inst3는 00·03·06…21 UTC, inst6은 00·06·12·18 UTC, inst1은 매 정시"
+    - "tavg1: 1시간 평균, 시각은 구간 중앙(00:30 = 00~01 UTC 평균). tavg3: 3시간 평균, 01:30·04:30 … (01:30 = 00~03 UTC 평균)"
+    - "tavgM(월평균)·tavgU(월별 일주기 평균)·statD(일 통계)는 별도 컬렉션입니다(예: M2TMNXSLV). 월평균은 윤년을 반영한 달력월 평균입니다"
+    - "강수·플럭스(`PRECTOT`, `HFLUX` 등)는 누적량이 아니라 평균 강도입니다. 단위가 kg m-2 s-1이므로 1시간 강수량(mm)은 3600을 곱합니다"
+    - "에어로졸 농도·광학두께(M2T1NXAER)도 1시간 평균입니다"
+  source: https://gmao.gsfc.nasa.gov/media/publications/zbly36ziNFDFbmYmvhQeVqPhUo/Bosilovich785.pdf
+  source_name: "MERRA-2: File Specification (GMAO Office Note No. 9), 3·5.1절"
+
 variables:
   note: GES DISC 컬렉션 페이지 기준 주요 변수입니다. 변수명은 netCDF 파일 안의 이름이며, 괄호 앞에 해당 컬렉션을 적었습니다.
   full_list: https://gmao.gsfc.nasa.gov/media/publications/zbly36ziNFDFbmYmvhQeVqPhUo/Bosilovich785.pdf
   groups:
     - name: 지표·단일면 (M2T1NXSLV, 1시간 평균)
+      kind: mean
+      period: 1시간
       items:
         - "2m 기온 — `T2M` (K)"
         - "2m 이슬점온도 — `T2MDEW` (K)"
@@ -55,6 +70,8 @@ variables:
         - "500 hPa 연직속도 — `OMEGA500` (Pa s-1)"
         - "총 오존량 — `TO3` (Dobsons)"
     - name: 지표 플럭스 (M2T1NXFLX, 1시간 평균)
+      kind: mean
+      period: 1시간
       items:
         - "총 강수 플럭스 — `PRECTOT` (kg m-2 s-1)"
         - "보정된 총 강수 — `PRECTOTCORR` (kg m-2 s-1)"
@@ -64,6 +81,7 @@ variables:
         - "경계층 높이 — `PBLH` (m)"
         - "해빙 비율 — `FRSEAICE` (1)"
     - name: 기압면 (M2I3NPASM, 3시간 순간값, 42층)
+      kind: instant
       items:
         - "기온 — `T` (K)"
         - "동서·남북 바람 — `U`, `V` (m s-1)"
@@ -74,6 +92,8 @@ variables:
         - "오존 질량혼합비 — `O3` (kg kg-1)"
         - "에르텔 잠재와도 — `EPV` (K m2 kg-1 s-1)"
     - name: 에어로졸 (M2T1NXAER, 1시간 평균)
+      kind: mean
+      period: 1시간
       items:
         - "황사 지표 질량농도(PM2.5) — `DUSMASS25` (kg m-3)"
         - "블랙카본 지표 질량농도 — `BCSMASS` (kg m-3)"

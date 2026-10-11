@@ -108,6 +108,20 @@ summary: >-
   관측 종류를 기압 하나로 고정해 위성·고층 관측 도입에 따른 인위적 변화를 피했고, 80개 앙상블로 시점마다 불확실성을 함께 제공합니다.
   과거 극한 기상 사례, 장기 순환 변동, 다른 재분석이 다루지 못하는 1940년 이전 기간 연구에 주로 쓰입니다.
 
+time_convention:
+  summary: >-
+    20CR v3의 PSL 파일은 3시간 간격(하루 8회) 80개 멤버 앙상블 평균이며, 시각은 구간의 시작으로 정의됩니다(coordinate_defines 'start').
+    00·06·12·18 UTC는 자료동화 분석값, 03·09·15·21 UTC는 분석에서 출발한 3시간 예보값으로 채워지고(원본 pgrbensmeananl / +3 파일),
+    강수·열속·복사처럼 예보에서만 나오는 변수는 3시간 평균이나 누적입니다.
+  points:
+    - "원본 GRIB 표기: 분석은 'anl', 중간 시각은 '3 hour fcst', 플럭스는 '0-3 hour ave', 강수량·유출은 '0-3 hour acc', 최고·최저 기온은 '0-3 hour max/min'"
+    - "`apcp`는 3시간 누적량(kg/m^2 = mm)이고, `lhtfl`·`dswrf` 등 플럭스는 3시간 평균 강도(W/m^2)입니다"
+    - "PSL 파일 속성에는 평균 구간 정보(avg_period·cell_methods)가 없고 statistic이 모두 'Ensemble Mean'입니다. 평균/누적 여부는 long_name('3-hourly accumulated …')과 원본 GRIB 표기로 판단했습니다"
+    - "누적·평균 구간이 표시 시각에서 시작하는지 끝나는지는 PSL 파일에 따로 적혀 있지 않습니다. 원본 GRIB는 예보 출발 시각부터 3시간 구간(0~3시간, 3~6시간)으로 표기합니다"
+    - "spreads/ 폴더 값은 같은 시각의 앙상블 표준편차이며, Dailies·Monthlies는 3시간 값을 평균한 일·월평균입니다"
+  source: https://reanalyses.org/task-forces/pgrbensmeananlyyyymmddhhplus3
+  source_name: "20CR 개발진 제공 20CRv3 출력 파일 목록(reanalyses.org: pgrbensmeananl, +3, sflxgrbensmeanfg) + PSL netCDF 파일 속성"
+
 variables:
   note: >-
     NOAA PSL netCDF 파일(OPeNDAP 속성) 기준 주요 변수입니다. 변수명은 파일 안의 이름이고, 괄호 앞에 PSL 폴더 이름을 적었습니다.
@@ -115,24 +129,36 @@ variables:
   full_list: https://psl.noaa.gov/thredds/catalog/Datasets/20thC_ReanV3/catalog.html
   groups:
     - name: 기압면 (prsSI·prsMO, 3시간, 1000~1 hPa)
+      kind: instant
       items:
         - "기온 — `air` (degK)"
         - "지위고도 — `hgt` (m)"
         - "동서·남북 바람 — `uwnd`, `vwnd` (m/s)"
         - "비습(1000~100 hPa) — `shum` (kg/kg)"
     - name: 근지표 (2mSI·2mMO, 10mSI·10mMO)
+      kind: instant
       items:
         - "2 m 기온 — `air` (degK, 파일 air.2m)"
         - "10 m 동서 바람 — `uwnd` (m/s, 파일 uwnd.10m)"
     - name: 단일면·연직 적분 (miscSI·miscMO)
+      kind: instant
       items:
         - "평균 해면기압 — `prmsl` (Pa)"
-        - "전운량(대기 전층) — `tcdc` (%, 파일 tcdc.eatm)"
+        - text: "전운량(대기 전층) — `tcdc` (%, 파일 tcdc.eatm)"
+          kind: mean
+          period: 3시간
+          note: "원본 GRIB에서 대기 전층 전운량은 '0-3 hour ave fcst'"
     - name: 누적·적설 (accumsSI·accumsMO, 3시간 누적)
+      kind: accum
+      period: 3시간
       items:
         - "총강수량 — `apcp` (kg/m^2)"
-        - "적설 물당량 — `weasd` (kg/m^2)"
+        - text: "적설 물당량 — `weasd` (kg/m^2)"
+          kind: instant
+          note: "폴더는 accums지만 상태량입니다. 원본 GRIB 표기 '3 hour fcst'(순간값)"
     - name: 지표 플럭스 (sfcFlxSI·sfcFlxMO)
+      kind: mean
+      period: 3시간
       items:
         - "잠열 순플럭스 — `lhtfl` (W/m^2)"
         - "지표 하향 단파복사 — `dswrf` (W/m^2, 파일 dswrf.sfc)"

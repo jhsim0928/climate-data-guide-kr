@@ -1,0 +1,30 @@
+{#- 사이트 공통 틀: 하단에 "데이터 제공 기관" 회전 띠를 추가합니다 (목록은 data/providers.yaml) -#}
+{% extends "base.html" %}
+
+{% block footer %}
+  {% set providers = config.extra.providers or [] %}
+  {% if providers %}
+  <div class="provider-strip" aria-label="데이터 제공 기관">
+    <p class="provider-strip__title">데이터 제공 기관 <span>— 누르면 공식 홈페이지가 새 창으로 열립니다</span></p>
+    <div class="provider-strip__viewport">
+      <ul class="provider-strip__track">
+        {% for rep in [0, 1] %}
+          {% for p in providers %}
+          <li {% if rep %}aria-hidden="true"{% endif %}>
+            <a href="{{ p.url }}" target="_blank" rel="noopener" {% if rep %}tabindex="-1"{% endif %} title="{{ p.name }} 홈페이지">
+              {% if p.logo %}
+                <img class="provider-logo" src="{{ p.logo | url }}" alt="" loading="lazy">
+              {% else %}
+                <span class="provider-mono notranslate" translate="no" style="--c: {{ p.color or '#3f51b5' }}">{{ p.short }}</span>
+              {% endif %}
+              <span class="provider-name">{{ p.name }}</span>
+            </a>
+          </li>
+          {% endfor %}
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+  {% endif %}
+  {{ super() }}
+{% endblock %}

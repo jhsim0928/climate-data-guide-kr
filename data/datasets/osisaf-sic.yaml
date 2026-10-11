@@ -138,6 +138,19 @@ summary: >-
   장기 기후 분석에는 CDR과 그 연장판(ICDR)을, 당일 상황 파악에는 준실시간 산출물(OSI-401-d, OSI-408)을 씁니다.
   ESA CCI 해빙 프로젝트와 같은 알고리즘 계열이며, Copernicus Marine과 C3S CDS에서도 재배포합니다.
 
+time_convention:
+  summary: >-
+    기후자료(CDR/ICDR) 일자료의 각 값은 12:00 UTC를 중심으로 한 24시간(00~24 UTC) 동안의 위성 관측을 격자마다 같은 가중치로 평균한 일평균장입니다.
+    파일 이름의 시각(…1200)은 평균 구간의 중심이며 그 시각의 순간값이 아닙니다. 월·연 파일은 일자료를 다시 평균한 값입니다.
+  points:
+    - "일자료: 12.5 km 반경 안의 관측 지점(footprint)을 하루 단위로 평균한 뒤(L3), 관측이 빈 격자는 앞뒤 날(D-1, D+1) 평균과 공간 보간으로 채웁니다(L4). 보간된 격자는 status_flag로 구분됩니다."
+    - "1987년 7월 이전 SMMR 시기는 센서가 이틀에 한 번만 운용되어 시간 간격이 48시간이고, 빈 날 보간에 D-2·D+2를 씁니다."
+    - "월·연 평균은 필터를 걸지 않은 일별 농도(ice_conc + raw_ice_conc_values)를 평균한 뒤 10% 미만은 0%, 100% 초과는 100%로 자릅니다. 결측일은 보간하지 않으며, 5일 넘게 연속으로 비면 그 달 파일을 만들지 않습니다."
+    - "월·연 파일에는 불확실성 변수가 없습니다. 일자료 불확실성은 그날 일평균장(필터 전 값)에 대한 1 표준편차이고, 보간 격자에는 주어지지 않습니다."
+    - "준실시간 OSI-401-d·OSI-408도 하루 한 장(중심 12:00)이지만 기후자료와 처리·격자가 달라 같은 규칙을 그대로 적용하지 마세요."
+  source: https://osisaf-hl.met.no/sites/osisaf-hl/files/baseline_document/osisaf_atbd_sea-ice-conc-climate-data-record_3.2.pdf
+  source_name: OSI SAF 해빙 농도 CDR ATBD v3.2 (6.1절) / PUM v3.4 / OSI-450-a1 제품 페이지
+
 variables:
   note: >-
     공식 제품 사용자 설명서(PUM v3.4) 기준 기후자료(CDR/ICDR) 일자료 파일의 변수입니다. 월·연평균 파일에는 불확실성 변수가 없고,
@@ -145,17 +158,29 @@ variables:
   full_list: https://osisaf-hl.met.no/sites/osisaf-hl/files/user_manuals/osisaf_pum_sea-ice-conc-climate-data-record_3.4.pdf
   groups:
     - name: 해빙 농도
+      kind: mean
+      period: 일
       items:
-        - "해빙 농도(필터·후처리 적용) — `ice_conc` (%)"
-        - "필터로 바뀐 격자의 원래 값(0% 미만·100% 초과 포함) — `raw_ice_conc_values` (%)"
+        - text: "해빙 농도(필터·후처리 적용) — `ice_conc` (%)"
+          note: 12:00 UTC 중심 24시간 평균(SMMR 시기 48시간 간격). 월·연 파일의 같은 이름 변수는 월·연평균
+        - text: "필터로 바뀐 격자의 원래 값(0% 미만·100% 초과 포함) — `raw_ice_conc_values` (%)"
+          note: ice_conc와 같은 일평균장에서 필터로 바뀐 격자의 원래 값. 월·연 파일에서는 평균 후 잘려 나간 값
     - name: 불확실성(1 표준편차)
+      kind: mean
+      period: 일
       items:
-        - "총 불확실성 — `total_standard_uncertainty` (%)"
-        - "알고리즘 불확실성 — `algorithm_standard_uncertainty` (%)"
-        - "스미어링(해상도 차이) 불확실성 — `smearing_standard_uncertainty` (%)"
+        - text: "총 불확실성 — `total_standard_uncertainty` (%)"
+          note: 그날 일평균 농도(필터 전 값)에 대한 불확실성. 알고리즘·스미어링 분산을 합친 값이며 보간 격자에는 없음. 일자료 파일에만 있음
+        - text: "알고리즘 불확실성 — `algorithm_standard_uncertainty` (%)"
+          note: 일평균 농도에 딸린 값. 하루 동안의 관측 불확실성을 분산으로 합성
+        - text: "스미어링(해상도 차이) 불확실성 — `smearing_standard_uncertainty` (%)"
+          note: 일평균 농도에 딸린 값(센서 footprint와 격자 해상도 차이에서 오는 오차)
     - name: 품질 정보
+      kind: mean
+      period: 일
       items:
-        - "처리 상태 비트 플래그 — `status_flag` (비트값)"
+        - text: "처리 상태 비트 플래그 — `status_flag` (비트값)"
+          note: 그날 일평균장에 적용된 처리(육지·호수, 개빙 필터, 해안 보정, 시·공간 보간, 기후값 밖 등)를 나타내는 날짜별 플래그. 육지·호수 비트는 고정 마스크에서, 최대 해빙 기후값 비트는 월별로 바뀜
 
 access:
   - name: OSI SAF 제품 페이지 — OSI-450-a1 (SSMIS 계열 CDR v3.1)

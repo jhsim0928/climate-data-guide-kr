@@ -106,6 +106,18 @@ summary: >-
   2004년 4월 기준 JMA 현업 3D-Var 체계(T106L40)를 쓰며, 열대저기압 주변 바람 산출값, SSM/I 적설, 중국 적설 디지털 자료 등을
   처음 동화한 재분석입니다. 2005년부터는 같은 시스템의 JCDAS로 실시간 연장되었다가, 2014년 JRA-55로 교체되었습니다.
 
+time_convention:
+  summary: >-
+    분석(anl_*)은 6시간 간격(00·06·12·18 UTC) 순간값이고, 예보 진단(fcst_phy2m)은 직전 6시간 평균입니다.
+    JRA-25 파일 이름의 날짜는 순간값이면 그 시각, 평균값이면 평균 구간의 "끝" 시각입니다(예: fcst_phy2m.1981010100 = 1980년 12월 31일 18 UTC~1월 1일 00 UTC 평균).
+    강수는 누적량이 아니라 6시간 평균 강도(mm/day)입니다.
+  points:
+    - "날짜 규칙이 JRA-55(평균 구간의 시작)와 반대입니다. 두 자료를 같이 쓰면 평균 변수가 6시간 어긋나기 쉬우니 반드시 맞춰 주세요."
+    - "fcst_phy2m에는 6시간 평균 외에 6시간 최고·최저 기온(TMAXsfc·TMINsfc), 6시간 최대 풍속(WSMXsfc), 6시간 중 최대 1시간 강수(PRMXsfc) 같은 극값 요소도 있습니다."
+    - "JMA 요소 표에는 일부 fcst_phy2m 요소(가강수량, 전운량, 해수면온도)의 평균·순간값 여부가 따로 적혀 있지 않아, 이 분류의 일반 규칙(6시간 평균)을 적용했습니다."
+  source: https://www.data.jma.go.jp/jra/html/JRA-55/document/JRA-55_handbook_LL125_v7_en.pdf
+  source_name: "JRA-55 Product Users' Handbook 10.2절·표 10-3 (JRA-25와의 날짜 규칙 비교) / JRA-25 요소 표"
+
 variables:
   note: >-
     JMA JRA-25 "사용 가능한 요소(6시간)" 표 기준 주요 변수입니다. 변수명은 GrADS 제어 파일에 쓰이는 이름(요소+층 약어)이며,
@@ -113,6 +125,8 @@ variables:
   full_list: https://www.data.jma.go.jp/jra/html/JRA-25/vari_catg_6.htm
   groups:
     - name: 기압면 분석 (anl_p / anl_chipsi)
+      kind: instant
+      period: "6시간 간격"
       items:
         - "지위고도 — `HGTprs` (gpm)"
         - "기온 — `TMPprs` (K)"
@@ -122,21 +136,36 @@ variables:
         - "연직 속도(기압 좌표) — `VVELprs` (Pa/s)"
         - "유선함수 · 속도 퍼텐셜 — `STRMprs`, `VPOTprs` (m2/s)"
     - name: 지표 분석 (anl_p)
+      kind: instant
+      period: "6시간 간격"
       items:
         - "평균 해면기압 — `PRMSLmsl` (Pa)"
         - "지표(2 m) 기온 — `TMPsfc` (K)"
         - "지표(2 m) 비습 — `SPFHsfc` (kg/kg)"
         - "지표(10 m) 바람 u·v — `UGRDsfc`, `VGRDsfc` (m/s)"
     - name: 플럭스·진단 — 6시간 예보 평균 (fcst_phy2m)
+      kind: mean
+      period: "6시간"
       items:
         - "대류성 · 대규모 강수 강도 — `CPRATsfc`, `LPRATsfc` (mm/day)"
         - "잠열 · 현열 플럭스 — `LHTFLsfc`, `SHTFLsfc` (W/m2)"
         - "하향 단파 · 장파 복사(지표) — `DSWRFsfc`, `DLWRFsfc` (W/m2)"
         - "상향 장파 복사(대기 상단, OLR) — `ULWRFtoa` (W/m2)"
-        - "가강수량 — `PWATcol` (kg/m2)"
-        - "전운량 — `TCDCcol` (%)"
-        - "해수면온도 — `WTMPsfc` (K)"
+        - text: "가강수량 — `PWATcol` (kg/m2)"
+          kind: mean
+          period: "6시간"
+          note: "요소 표에 평균·순간 구분이 없어 fcst_phy2m 일반 규칙을 적용"
+        - text: "전운량 — `TCDCcol` (%)"
+          kind: mean
+          period: "6시간"
+          note: "요소 표에 평균·순간 구분이 없어 fcst_phy2m 일반 규칙을 적용"
+        - text: "해수면온도 — `WTMPsfc` (K)"
+          kind: mean
+          period: "6시간"
+          note: "요소 표에 평균·순간 구분이 없어 fcst_phy2m 일반 규칙을 적용"
     - name: 지면 분석 (anl_land)
+      kind: instant
+      period: "6시간 간격"
       items:
         - "적설 물당량 — `SNWEsfc` (m)"
         - "토양 습윤도 — `SOILWhbl` (비율)"

@@ -1,0 +1,13 @@
+{#- 하단 저작권 영역: 라이선스 + 면책 문구 -#}
+<div class="md-copyright">
+  {% if config.copyright %}
+    <div class="md-copyright__highlight">{{ config.copyright }}</div>
+  {% endif %}
+  {% if config.extra.disclaimer %}
+    <div class="cdg-disclaimer">{{ config.extra.disclaimer }}</div>
+  {% endif %}
+  <div class="cdg-generator">
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">Material for MkDocs</a>
+  </div>
+</div>

@@ -13,6 +13,7 @@ copyright: 콘텐츠 CC BY 4.0 · 코드 MIT
 theme:
   name: material
   language: ko
+  custom_dir: overrides
   palette:
     - media: "(prefers-color-scheme: light)"
       scheme: default
@@ -52,7 +53,9 @@ hooks:
 
 nav:
   - 홈: index.md
-  - 전체 목록: datasets/index.md
+  - 자료 찾기:
+      - 전체 목록: datasets/index.md
+      - 자료 비교: compare.md
   # 대기·해양·해빙 메뉴는 data/datasets/*.yaml 의 domain·group·order 값으로 자동 생성됩니다
   - __DATA_SECTIONS__: auto
   - 공지·전환:
@@ -83,6 +86,7 @@ extra_css:
 extra_javascript:
   - javascripts/notranslate.js
   - javascripts/forms.js
+  - javascripts/site.js
 
 extra:
   # 데이터셋 페이지 하단 "이 사이트 인용" 안내에 들어가는 문장

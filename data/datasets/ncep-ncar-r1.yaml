@@ -108,6 +108,20 @@ summary: >-
   그 체계를 CDAS라는 이름으로 실시간까지 이어 왔습니다. 해상도는 낮지만 가장 긴 기간을 한 체계로 제공하고 PSL에서 연도별 netCDF로
   쉽게 받을 수 있어 수십 년간 기후 진단과 지수 계산에 널리 쓰였습니다. 2026년 3월 CDAS 종료와 함께 갱신이 끝났습니다.
 
+time_convention:
+  summary: >-
+    PSL의 6시간 자료에서 기압면·지표 분석 변수(`air`, `hgt`, `slp`, `pr_wtr` 등)는 표시 시각(00·06·12·18 UTC)의 순간값입니다.
+    반면 가우시안 격자 플럭스 파일(surface_gauss, other_gauss)의 강수·열속·복사는 그 시각의 분석에서 출발한 예보 0~6시간 평균이며,
+    표시 시각이 평균 구간의 시작입니다(예: 00 UTC 값 = 00~06 UTC 평균).
+  points:
+    - "PSL 파일 속성으로 구분할 수 있습니다: 순간값은 statistic 'Individual Obs', 6시간 평균은 statistic 'Mean'과 time 변수의 avg_period '06:00:00'"
+    - "NCEP 문서는 플럭스를 '분석에서 출발한 예보의 0~6시간 평균/누적'으로 정의합니다. R1 PSL 파일에는 구간 기준(시작/끝) 속성이 없어, 같은 체계인 R2 PSL 파일의 coordinate_defines 'start'를 근거로 시작 기준으로 적었습니다"
+    - "강수 `prate`는 누적량이 아니라 평균 강도(Kg/m^2/s)입니다. 6시간 강수량(mm)은 21600을, 하루 강수량은 86400을 곱합니다"
+    - "2 m 기온·10 m 바람은 분석값이 아니라 6시간 예보값입니다"
+    - "일평균(dailyavgs)은 00·06·12·18 UTC 네 값의 평균(00~24 UTC), 월평균(derived)은 해당 월의 평균입니다"
+  source: https://www.cpc.ncep.noaa.gov/products/wesley/cdrom/surfaceflux.html
+  source_name: "NCEP/NCAR Reanalysis 문서 — Surface Flux 코드 정의(A = 0~6시간 예보 평균/누적, 6 = 6시간 예보) + PSL netCDF 파일 속성"
+
 variables:
   note: >-
     NOAA PSL netCDF 파일(OPeNDAP 속성) 기준 주요 변수입니다. 변수명은 파일 안의 이름이며, 괄호 앞에 PSL 폴더와 파일 이름 규칙을 적었습니다.
@@ -115,6 +129,7 @@ variables:
   full_list: https://psl.noaa.gov/data/gridded/data.ncep.reanalysis.html
   groups:
     - name: 기압면 (pressure/, 예 air.2025.nc, 2.5°·17층)
+      kind: instant
       items:
         - "기온 — `air` (degK)"
         - "지위고도 — `hgt` (m)"
@@ -124,18 +139,27 @@ variables:
         - "상대습도(1000~300 hPa) — `rhum` (%)"
         - "비습(1000~300 hPa) — `shum` (kg/kg)"
     - name: 지표·연직 적분 (surface/, 2.5°)
+      kind: instant
       items:
         - "해면기압 — `slp` (Pascals)"
         - "가강수량(대기 전층) — `pr_wtr` (kg/m^2, 파일 pr_wtr.eatm)"
     - name: 지표 플럭스·근지표 (surface_gauss/, T62 가우시안)
+      kind: mean
+      period: 6시간
       items:
-        - "2 m 기온 — `air` (degK, 파일 air.2m.gauss)"
-        - "10 m 동서 바람 — `uwnd` (m/s, 파일 uwnd.10m.gauss)"
+        - text: "2 m 기온 — `air` (degK, 파일 air.2m.gauss)"
+          kind: instant
+          note: "NCEP 문서상 6시간 예보값(코드 6). 단 PSL 파일 속성은 statistic 'Mean', avg_period 6시간으로 표기되어 문서와 다르므로 확인 필요"
+        - text: "10 m 동서 바람 — `uwnd` (m/s, 파일 uwnd.10m.gauss)"
+          kind: instant
+          note: "6시간 예보값(PSL 속성 statistic 'Individual Obs')"
         - "강수율 — `prate` (Kg/m^2/s)"
         - "잠열 순플럭스 — `lhtfl` (W/m^2)"
         - "현열 순플럭스 — `shtfl` (W/m^2)"
         - "지표 하향 단파복사 — `dswrf` (W/m^2, 파일 dswrf.sfc.gauss)"
     - name: 대기 상단 (other_gauss/)
+      kind: mean
+      period: 6시간
       items:
         - "대기 상단 상향 장파복사(OLR) — `ulwrf` (W/m^2, 파일 ulwrf.ntat.gauss)"
 

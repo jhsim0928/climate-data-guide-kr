@@ -94,6 +94,17 @@ summary: >-
   최적내삽(OI) 자료동화와 T106·31층 모델을 사용했고, 같은 시기 NCEP/NCAR 재분석과 함께 1세대 재분석으로 분류됩니다.
   여기서 얻은 경험(관측 편향 처리, 품질관리 목록 등)이 ERA-40에 반영되었습니다.
 
+time_convention:
+  summary: >-
+    NCAR·CEDA에 보관된 ERA-15 자료는 00·06·12·18 UTC 분석장이며, 여기 적은 변수는 모두 그 시각의 순간값입니다.
+    강수·복사·열속 같은 누적 예보 변수는 이 사이트가 정리한 공개 파라미터 표에 없습니다.
+  points:
+    - "파일 이름의 시각(YYMMDDHH의 HH = 00·06·12·18)이 분석 시각입니다."
+    - "ECMWF 문서에 따르면 분석은 6시간 주기 최적내삽(OI)으로 만들어졌습니다. 즉 각 값은 그 시각의 분석 상태입니다."
+    - "누적 예보 변수(강수·플럭스)나 월평균이 필요하면 ERA-15 기술 보고서의 아카이브 표(월평균·예보 누적 표)를 확인해야 합니다. 이 페이지의 변수 목록에는 포함하지 않았습니다."
+  source: https://artefacts.ceda.ac.uk/badc_datadocs/ecmwf-era/params.html
+  source_name: "CEDA ERA-15 parameter tables (analysis files)"
+
 variables:
   note: >-
     CEDA가 보관 중인 ERA-15 자료의 파라미터 표 기준입니다. 변수명은 ECMWF GRIB 약어(원문은 대문자)이며,
@@ -101,6 +112,7 @@ variables:
   full_list: https://artefacts.ceda.ac.uk/badc_datadocs/ecmwf-era/params.html
   groups:
     - name: 기압면 (17층)
+      kind: instant
       items:
         - "지위(geopotential) — `Z` (m2 s-2)"
         - "기온 — `T` (K)"
@@ -111,6 +123,7 @@ variables:
         - "상대와도(스펙트럼 자료) — `VO` (s-1)"
         - "발산(스펙트럼 자료) — `D` (s-1)"
     - name: 지표·단일면
+      kind: instant
       items:
         - "평균 해면기압 — `MSL` (Pa)"
         - "2m 기온 — `2T` (K)"
@@ -120,11 +133,16 @@ variables:
         - "지표(skin) 온도 — `SKT` (K)"
         - "적설 깊이 — `SD` (m of water equivalent)"
     - name: 지면
+      kind: instant
       items:
         - "토양온도 1층 — `STL1` (K)"
         - "토양 수분 1층 — `SWL1` (m of water)"
-        - "지표 거칠기 — `SR` (m)"
-        - "알베도 — `AL` (-)"
+        - text: "지표 거칠기 — `SR` (m)"
+          kind: instant
+          note: "분석 파일에 시각별로 들어 있는 값. 시간에 따라 변하는지는 공식 문서에서 확인하지 못함"
+        - text: "알베도 — `AL` (-)"
+          kind: instant
+          note: "분석 파일에 시각별로 들어 있는 값. 시간에 따라 변하는지는 공식 문서에서 확인하지 못함"
 
 access:
   - name: NSF NCAR GDEX — ERA-15 지표 재분석 (d115000)

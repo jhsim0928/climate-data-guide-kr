@@ -46,6 +46,18 @@ summary: >-
   해빙은 디지털화된 해빙 차트와 수동마이크로파 위성 자료를 바탕으로 합니다. AMIP형 대기 모델 실험의 하부 경계조건과
   ENSO·장기 변동 연구에 널리 쓰입니다.
 
+time_convention:
+  summary: >-
+    모든 값은 한 달을 대표하는 월 단위 값이며, 순간값이 아닙니다. 해수면온도는 월평균 관측을 바탕으로 한 분석값이고,
+    해빙 농도는 주로 일별 위성·주별 해빙 차트 값의 월 중앙값(median)을 바탕으로 만들어졌습니다.
+  points:
+    - "시간 좌표는 각 달의 가운데(약 16일)에 찍혀 있지만, 그날의 값이 아니라 그 달 전체를 대표하는 값입니다 (NOAA ERDDAP 미러의 time 좌표로 확인)"
+    - "SST 입력은 월평균(일부 과거 현장관측 COADS는 월 중앙값)이며, 위성 SST는 주별 값을 평균해 월 값을 만듭니다 (Rayner et al. 2003)"
+    - "해빙 농도는 위성 시대(1978년 말~)에는 일별 농도의 월 중앙값, 과거 Walsh 자료(월말 값)는 월 중앙값에 맞추도록 변환되었습니다. 산술 평균과 약간 다를 수 있습니다"
+    - "1870년부터 하나의 시계열이지만 해빙은 시기에 따라 기후값으로 채운 구간이 있어, 월 값이라도 실제 그 달의 관측을 반영하지 않을 수 있습니다"
+  source: https://www.metoffice.gov.uk/hadobs/hadisst/HadISST_paper.pdf
+  source_name: Rayner et al. (2003) HadISST 논문 (Met Office 제공 PDF)
+
 variables:
   note: >-
     공식 NetCDF 파일(HadISST_sst.nc, HadISST_ice.nc) 기준입니다. 해수면온도와 해빙 농도가 각각 별도 파일로 제공됩니다.
@@ -53,11 +65,16 @@ variables:
   full_list: https://www.metoffice.gov.uk/hadobs/hadisst/data/download.html
   groups:
     - name: 해수면온도 (HadISST_sst.nc)
+      kind: mean
+      period: 월
       items:
         - "월평균 해수면온도 — `sst` (°C, 파일 표기 `C`)"
     - name: 해빙 (HadISST_ice.nc)
+      kind: mean
+      period: 월
       items:
-        - "월평균 해빙 농도 — `sic` (0~1 비율, 파일 표기 `1`)"
+        - text: "월평균 해빙 농도 — `sic` (0~1 비율, 파일 표기 `1`)"
+          note: 엄밀히는 일별 위성 농도(또는 주별 차트)의 월 중앙값을 바탕으로 한 월 대표값입니다 (Rayner et al. 2003).
 
 access:
   - name: Met Office Hadley Centre 다운로드 페이지

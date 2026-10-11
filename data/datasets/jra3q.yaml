@@ -39,6 +39,21 @@ summary: >-
   JRA-55의 대기 상단·지표 에너지 불균형과 열대저기압 강도의 인위적 약화 경향 같은 문제를 크게 줄였습니다.
   해수면온도는 1985년 5월까지 COBE-SST2, 6월부터 MGDSST를 써서, 그 전환의 영향을 따로 볼 수 있도록 JRA-3Q-COBE도 함께 공개되었습니다.
 
+time_convention:
+  summary: >-
+    분석(anl_*)은 6시간 간격(00·06·12·18 UTC) 순간값이고, 예보 진단은 1시간 간격입니다.
+    fcst_surf125·bnd_ocean125는 1시간 간격 순간값, fcst_phy2m125(강수·플럭스·복사)는 1시간 평균입니다.
+    강수·증발은 누적량이 아니라 1시간 평균 강도(kg m-2 s-1)입니다.
+  points:
+    - "NCAR GDEX 파일의 변수 속성 time_step에 \"6-hour\"(분석), \"1-hour instantaneous\"(순간값 예보), \"1-hour average\"(평균 진단), \"24-hour\"(적설 분석)처럼 시간 특성이 적혀 있습니다. 헷갈리면 이 속성을 확인하세요."
+    - "적설 깊이 분석(anl_snow125)은 하루 한 번(18 UTC) 자료입니다."
+    - "1시간 평균의 시각 표기는 JMA 형식 문서에 명시되어 있지 않습니다. 다만 GDEX 월별 파일이 00~23 UTC로 이름 붙어 있어, JRA-55처럼 표시 시각이 평균 구간의 \"시작\"인 것으로 보입니다(추정). 시간 정밀도가 중요한 분석이라면 직접 확인하세요."
+    - "평균 진단이 어느 예보 시간대(예: 6시간마다 시작한 예보의 0~6시간)에서 나왔는지는 형식 문서에 기후값 계산 설명으로만 언급되어 있습니다."
+    - "minmax_surf(가우시안 격자)의 2 m 최고·최저 기온과 최대 풍속은 1시간 구간의 최댓값·최솟값입니다(GDEX time_step \"1-hour maximum\")."
+    - "JRA-55의 3시간 평균(mm/day)과 비교하려면 1시간 평균 3개를 평균하고 86400을 곱하세요."
+  source: https://www.data.jma.go.jp/jra/html/JRA-3Q/document/JRA-3Q_LL125_format_v1_en.pdf
+  source_name: "JRA-3Q 1.25° 자료 형식 문서 + NCAR GDEX d640000 파일 메타데이터(time_step)"
+
 variables:
   note: >-
     JMA "JRA-3Q 1.25° 격자 자료 형식" 문서와 NCAR GDEX(d640000) NetCDF 파일 기준 주요 변수입니다.
@@ -47,6 +62,8 @@ variables:
   full_list: https://www.data.jma.go.jp/jra/html/JRA-3Q/document/JRA-3Q_LL125_format_v1_en.pdf
   groups:
     - name: 기압면 분석 (anl_p125, 6시간)
+      kind: instant
+      period: "6시간 간격"
       items:
         - "지위고도 — `hgt` (gpm)"
         - "기온 — `tmp` (K)"
@@ -59,6 +76,8 @@ variables:
         - "상대 소용돌이도 — `relv` (s-1)"
         - "유선함수 · 속도 퍼텐셜 — `strm`, `vpot` (m2 s-1)"
     - name: 지표 분석 (anl_surf125, 6시간)
+      kind: instant
+      period: "6시간 간격"
       items:
         - "2 m 기온 — `tmp2m` (K)"
         - "2 m 비습 — `spfh2m` (kg kg-1)"
@@ -69,8 +88,13 @@ variables:
         - "가강수량(연직 적분 수증기) — `tciwv` (kg m-2)"
         - "적설 물당량 — `weasd` (kg m-2)"
     - name: 플럭스·진단 — 1시간 평균 예보 (fcst_phy2m125)
+      kind: mean
+      period: "1시간"
       items:
-        - "총 강수율 — `tprate` (kg m-2 s-1)"
+        - text: "총 강수율 — `tprate` (kg m-2 s-1)"
+          kind: mean
+          period: "1시간"
+          note: "GDEX time_step \"1-hour average\" 확인. 단위가 강도이므로 누적량이 아님"
         - "대류성 · 대규모 강수율 — `cprat`, `lsprate` (kg m-2 s-1)"
         - "강설률(물당량) — `tsrwe` (kg m-2 s-1)"
         - "증발률 — `evarate` (kg m-2 s-1)"
@@ -80,11 +104,15 @@ variables:
         - "상향 단파 · 장파 복사(지표·대기 상단) — `uswrf`, `ulwrf` (W m-2)"
         - "연직 적분 수증기 플럭스 u·v — `tuwv`, `tvwv` (kg m-1 s-1)"
     - name: 구름·오존·적설 — 1시간 순간값 예보 (fcst_surf125)
+      kind: instant
+      period: "1시간 간격"
       items:
         - "전운량 · 하층 · 중층 · 상층 운량 — `tcdc`, `lcdc`, `mcdc`, `hcdc` (%)"
         - "오존 전량 — `tozne` (DU)"
         - "적설 깊이 — `snod` (m)"
     - name: 해양 경계조건 (bnd_ocean125)
+      kind: instant
+      period: "1시간 간격"
       items:
         - "해수면(수면) 온도 — `wtmp` (K)"
         - "해빙 피복률 — `icec` (비율)"

@@ -45,6 +45,19 @@ summary: >-
   상층·위성 관측은 일부러 빼고 지표기압·평균해면기압(ISPD, ICOADS)과 해상풍(ICOADS)만 24시간 창 4D-Var로 동화해,
   관측 체계 변화에 따른 불연속을 줄이려 했습니다. 해수면온도·해빙은 HadISST2.1, 기타 강제력은 CMIP5 설정을 따릅니다.
 
+time_convention:
+  summary: >-
+    분석 변수는 3시간(일부 지표 변수는 6시간) 간격의 순간값입니다. 강수·복사·열속 같은 누적 변수는 매일 06 UTC에 시작하는 예보에서 나오며,
+    3시간씩이 아니라 예보 시작(06 UTC)부터 표시된 단계까지 계속 쌓인 값입니다.
+  points:
+    - "예보 step 3 = 06~09 UTC, step 12 = 06~18 UTC, step 24 = 06 UTC~다음날 06 UTC 누적입니다. 3시간 값은 이웃한 step끼리 빼서 구합니다."
+    - "순간값 예보 변수의 유효 시각은 06 UTC + step입니다(step 27 = 다음날 09 UTC)."
+    - "SST, 토양 온도·수분, 적설, 2m 기온·이슬점 분석은 3시간이 아니라 6시간 간격입니다."
+    - "월평균(monthly means of daily means)에서 누적 변수는 step 24만 평균한 값이며, 달 경계를 넘는 21·24시간 누적은 잘라서 각 달에 나눠 넣었습니다."
+    - "누적 복사·열속(J m-2)을 평균 플럭스(W m-2)로 바꾸려면 누적 시간(초)으로 나눕니다(예: step 24 = 86400)."
+  source: https://www.ecmwf.int/en/research/climate-reanalysis/era-20c
+  source_name: "ECMWF ERA-20C 데이터셋 설명"
+
 variables:
   note: >-
     NCAR GDEX ERA-20C(d626000) THREDDS 메타데이터와 ECMWF 파라미터 데이터베이스로 확인한 주요 변수입니다.
@@ -53,20 +66,30 @@ variables:
   full_list: https://www.ecmwf.int/en/research/climate-reanalysis/era-20c
   groups:
     - name: 지표·단일면
+      kind: instant
       items:
         - "평균 해면기압 — `msl` (Pa)"
         - "지표 기압 — `sp` (Pa)"
-        - "2m 기온 (분석은 6시간) — `2t` (K)"
+        - text: "2m 기온 (분석은 6시간) — `2t` (K)"
+          kind: instant
+          period: "6시간 간격"
+          note: "분석은 6시간 간격, 예보는 3시간 간격"
         - "2m 이슬점온도 — `2d` (K)"
         - "10m 동서풍 — `10u` (m s-1)"
         - "10m 남북풍 — `10v` (m s-1)"
-        - "해수면온도 (강제력) — `sst` (K)"
-        - "해빙 면적비 (강제력) — `ci` (0-1)"
+        - text: "해수면온도 (강제력) — `sst` (K)"
+          kind: instant
+          period: "6시간 간격"
+        - text: "해빙 면적비 (강제력) — `ci` (0-1)"
+          kind: instant
+          period: "6시간 간격"
         - "전운량 — `tcc` (0-1)"
         - "가강수량(수증기 연직적분) — `tcwv` (kg m-2)"
         - "대기경계층 높이 — `blh` (m)"
         - "대류가용잠재에너지(CAPE) — `cape` (J kg-1)"
     - name: 누적 예보 변수
+      kind: accum
+      period: "예보 시작 이후"
       items:
         - "총강수량 — `tp` (m)"
         - "지표 하향 단파복사 — `ssrd` (J m-2)"
@@ -76,6 +99,7 @@ variables:
         - "지표 잠열 플럭스 — `slhf` (J m-2)"
         - "증발량 — `e` (m of water equivalent)"
     - name: 기압면 (37층)
+      kind: instant
       items:
         - "지위(geopotential) — `z` (m2 s-2)"
         - "기온 — `t` (K)"
@@ -88,10 +112,20 @@ variables:
         - "잠재와도 — `pv` (K m2 kg-1 s-1)"
         - "오존 질량혼합비 — `o3` (kg kg-1)"
     - name: 지면
+      kind: instant
       items:
-        - "토양온도 1층 — `stl1` (K)"
-        - "토양 체적수분 1층 — `swvl1` (m3 m-3)"
-        - "적설 깊이 — `sd` (m of water equivalent)"
+        - text: "토양온도 1층 — `stl1` (K)"
+          kind: instant
+          period: "6시간 간격"
+          note: "분석은 6시간 간격"
+        - text: "토양 체적수분 1층 — `swvl1` (m3 m-3)"
+          kind: instant
+          period: "6시간 간격"
+          note: "분석은 6시간 간격"
+        - text: "적설 깊이 — `sd` (m of water equivalent)"
+          kind: instant
+          period: "6시간 간격"
+          note: "분석은 6시간 간격"
 
 access:
   - name: NSF NCAR GDEX — ERA-20C Project (d626000)

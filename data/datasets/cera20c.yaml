@@ -43,6 +43,19 @@ summary: >-
   대기(IFS)와 해양(NEMO)·해빙(LIM2)·파랑 모델을 결합하고 24시간 공통 창에서 동화해, 대기와 해양이 서로 일관된 상태를 만들도록 설계했습니다.
   대기는 ERA-20C처럼 지표기압·해상풍만, 해양은 수온·염분 연직 프로파일을 동화하며, 해수면온도는 HadISST2 월평균으로 완화(relaxation)합니다.
 
+time_convention:
+  summary: >-
+    분석 변수는 3시간 간격의 순간값입니다. 강수·복사·열속 같은 누적 변수는 매일 18 UTC에 시작하는 예보에서 나오며,
+    예보 시작(18 UTC)부터 표시된 단계까지 계속 쌓인 값입니다.
+  points:
+    - "예보 step 3 = 18~21 UTC, step 6 = 18 UTC~다음날 00 UTC 누적입니다. 3시간 값은 이웃한 step끼리 빼서 구합니다."
+    - "순간값 예보 변수의 유효 시각은 18 UTC + step입니다(step 6 = 다음날 00 UTC)."
+    - "월평균(monthly means of daily means)에서 누적 변수는 step 24만 평균한 값이며, 달 경계를 넘는 누적은 잘라서 각 달에 나눠 넣었습니다(GRIB 헤더에 드러나지 않을 수 있음)."
+    - "누적 복사·열속(J m-2)을 평균 플럭스(W m-2)로 바꾸려면 누적 시간(초)으로 나눕니다."
+    - "모든 값은 10개 앙상블 멤버별로 따로 있습니다."
+  source: https://www.ecmwf.int/en/forecasts/datasets/reanalysis-datasets/cera-20c
+  source_name: "ECMWF CERA-20C 데이터셋 설명"
+
 variables:
   note: >-
     ECMWF CERA-20C 데이터셋 페이지와 ECMWF 파라미터 데이터베이스로 확인한 대기·지표 주요 변수입니다(ECMWF GRIB short name).
@@ -51,10 +64,13 @@ variables:
   full_list: https://www.ecmwf.int/en/forecasts/datasets/reanalysis-datasets/cera-20c
   groups:
     - name: 지표·단일면
+      kind: instant
       items:
         - "2m 기온 — `2t` (K)"
         - "해수면온도 — `sst` (K)"
     - name: 누적 예보 변수 (지표)
+      kind: accum
+      period: "예보 시작 이후"
       items:
         - "총강수량 — `tp` (m)"
         - "강설량 — `sf` (m of water equivalent)"

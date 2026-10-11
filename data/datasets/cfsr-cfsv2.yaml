@@ -98,6 +98,20 @@ summary: >-
   6시간 예보 단계에서 대기와 해양을 결합하고 위성 복사휘도를 직접 동화했으며, 당시 NCEP 재분석 가운데 해상도가 가장 높았습니다.
   해양 3차원장까지 함께 제공되어 대기–해양 상호작용, 지역 모델 경계조건 등에 많이 쓰입니다.
 
+time_convention:
+  summary: >-
+    CFSR·CFSv2는 6시간마다(00·06·12·18 UTC) 분석을 만들고 그 분석에서 1~6시간 예보를 이어 냅니다. 기압면 분석(pgbh 등 f00)은 표시 시각의 순간값이고,
+    강수·열속·복사 같은 평균·누적 변수는 예보에서만 나오며 매 6시간 주기 시작 시각부터 해당 예보 시간까지(0~1, 0~2 … 0~6시간) 평균·누적됩니다.
+    2 m 기온, 10 m 바람처럼 분석하지 않는 변수도 있으니 GRIB 레코드의 시간 표기(anl / N hour fcst / 0-N hour ave)를 반드시 확인하세요.
+  points:
+    - "평균·누적 구간은 6시간 주기마다 처음부터 다시 시작합니다. 시간별 시계열의 f01~f05 평균값은 그 시각의 순간값이나 1시간 평균이 아니라 '0~N시간 평균'이므로, 예를 들어 2~3시간 평균은 0~3시간 평균×3에서 0~2시간 평균×2를 빼서 구합니다(NCEI 알려진 문제 문서)"
+    - "시간별 시계열은 분석+1~5시간 예보, 또는 1~6시간 예보를 이어 붙여 만든 자료입니다. f00 레코드는 몇 분짜리 모델 스핀업이며 분석값이 아닙니다"
+    - "`PRATE`·`LHTFL`·`DSWRF` 등은 평균 강도(kg m-2 s-1, W m-2), `APCP`는 누적량(kg m-2 = mm)입니다. 평균 강도에서 강수량을 얻으려면 구간 길이(초)를 곱합니다"
+    - "`TMAX`·`TMIN`은 예보 구간 안의 최고·최저값입니다"
+    - "월평균(d093002·d094002, NCEI Monthly Means)은 한 달 동안의 같은 주기·예보 단계 값을 평균한 것입니다. 파일 이름의 주기(예: .06Z)에 따라 평균 대상이 달라지므로 wgrib2 -fix_CFSv2_fcst 안내를 참고하세요"
+  source: https://www.ncei.noaa.gov/sites/default/files/2023-10/CFSRR-Known-Issues-Technical-Document-August-2011%20%282%29.pdf
+  source_name: "NOAA NCEI CFSRR Known Issues Technical Document (2011-08) + NCAR GDEX d093000·d094001 설명"
+
 variables:
   note: >-
     NCAR GDEX d093000의 GRIB2 파라미터 표와 NCEP GRIB2 코드표 기준 주요 변수입니다. 변수명은 GRIB2 약어(wgrib2·cfgrib에서 보이는 이름)입니다.
@@ -105,6 +119,7 @@ variables:
   full_list: https://gdex.ucar.edu/datasets/d093000/metadata/grib2.xml
   groups:
     - name: 기압면 (PGB)
+      kind: instant
       items:
         - "기온 — `TMP` (K)"
         - "지위고도 — `HGT` (gpm)"
@@ -114,24 +129,41 @@ variables:
         - "상대습도 — `RH` (%)"
         - "온위 — `POT` (K)"
     - name: 지표·단일면
+      kind: instant
       items:
         - "해면 환산 기압 — `PRMSL` (Pa)"
         - "지표 기압 — `PRES` (Pa)"
         - "가강수량 — `PWAT` (kg m-2)"
-        - "이슬점온도 — `DPT` (K)"
-        - "최고·최저 기온 — `TMAX`, `TMIN` (K)"
+        - text: "이슬점온도 — `DPT` (K)"
+          kind: instant
+          note: "2 m 값 등은 분석되지 않은 예보값일 수 있음(NCAR: 2 m 기온·10 m 바람은 비분석)"
+        - text: "최고·최저 기온 — `TMAX`, `TMIN` (K)"
+          kind: max
+          period: 예보 구간(0~N시간)
+          note: "TMAX는 구간 최고, TMIN은 구간 최저(kind는 최고 기준). 6시간 주기마다 초기화"
         - "해빙 비율 — `ICEC` (fraction)"
-        - "경계층 높이 — `HPBL` (m)"
+        - text: "경계층 높이 — `HPBL` (m)"
+          kind: instant
+          note: "예보 단계에서 나오는 진단값. 레코드의 시간 표기로 순간값/평균 여부 확인 권장"
     - name: 플럭스·강수·구름 (FLX)
+      kind: mean
+      period: 예보 시작~해당 시간(최대 6시간)
       items:
         - "강수율 — `PRATE` (kg m-2 s-1)"
-        - "총강수량 — `APCP` (kg m-2)"
+        - text: "총강수량 — `APCP` (kg m-2)"
+          kind: accum
+          period: 예보 시작~해당 시간(최대 6시간)
+          note: "6시간 주기마다 0부터 다시 누적"
         - "잠열·현열 플럭스 — `LHTFL`, `SHTFL` (W m-2)"
         - "하향 단파·장파 복사 — `DSWRF`, `DLWRF` (W m-2)"
         - "상향 단파·장파 복사 — `USWRF`, `ULWRF` (W m-2)"
         - "지표 운동량 플럭스 u·v — `UFLX`, `VFLX` (N m-2)"
-        - "전운량 — `TCDC` (%)"
+        - text: "전운량 — `TCDC` (%)"
+          kind: mean
+          period: 예보 시작~해당 시간(최대 6시간)
+          note: "CFSR 문서에서 레벨별 평균/순간 구분을 직접 확인하지 못했습니다. FLX 파일의 일반 규칙(구간 평균)을 따랐으니 레코드 시간 표기를 확인하세요"
     - name: 지면·눈
+      kind: instant
       items:
         - "토양 체적수분 — `SOILW` (fraction)"
         - "적설 물당량 — `WEASD` (kg m-2)"

@@ -87,6 +87,19 @@ summary: >-
   대기, 지면, 해양 파랑 변수를 1시간 간격으로 제공하며, ERA-Interim을 대체했습니다.
   CDS에서 받는 자료는 원본 해상도를 0.25° 위경도 격자로 재격자한 것입니다.
 
+time_convention:
+  summary: >-
+    분석 변수와 대부분의 상태 변수는 표시 시각의 순간값입니다. 강수·복사·열속 같은 누적 변수와 최대·최소 변수는
+    표시 시각에서 끝나는 구간의 값이며, CDS 시간별 재분석(HRES)은 1시간, 불확실성 앙상블(EDA)은 3시간 구간입니다.
+  points:
+    - "누적·최대·최소 변수의 표시 시각은 구간의 '끝'입니다. 예: 01 UTC의 tp = 00~01 UTC 1시간 강수. 00 UTC 값은 전날 23~24시 구간이므로 일합계를 낼 때 날짜 경계에 주의하세요."
+    - "앙상블(EDA, 0.5°) 자료의 누적·최대·최소는 표시 시각까지의 3시간 구간입니다."
+    - "누적 복사·열속(J m-2)을 평균 플럭스(W m-2)로 바꾸려면 구간 길이(초)로 나눕니다. 1시간 자료는 3600, 월평균(monthly means of daily means)은 86400."
+    - "월평균(monthly means of daily means)의 누적 변수는 '하루 누적'으로 환산되어 있습니다. 강수는 m/day이므로 1000을 곱하면 mm/day입니다."
+    - "mean rate·flux 계열 변수(예: 평균 강수율)는 같은 구간의 평균값이며 단위가 '초당'(kg m-2 s-1, W m-2)입니다."
+  source: https://confluence.ecmwf.int/display/CKB/ERA5%3A+data+documentation
+  source_name: "ERA5: data documentation (Copernicus Knowledge Base)"
+
 variables:
   note: >-
     ECMWF ERA5 공식 문서(파라미터 표)와 ECMWF 파라미터 데이터베이스 기준 주요 변수입니다.
@@ -95,6 +108,7 @@ variables:
   full_list: https://confluence.ecmwf.int/display/CKB/ERA5%3A+data+documentation#ERA5:datadocumentation-Parameterlistings
   groups:
     - name: 지표·단일면 (순간값)
+      kind: instant
       items:
         - "2m 기온 — `2t` (K)"
         - "2m 이슬점온도 — `2d` (K)"
@@ -108,6 +122,8 @@ variables:
         - "대류가용잠재에너지(CAPE) — `cape` (J kg-1)"
         - "가강수량(수증기 연직적분) — `tcwv` (kg m-2)"
     - name: 지표·단일면 (누적·최대최소, 예보 기반)
+      kind: accum
+      period: "1시간"
       items:
         - "총강수량 — `tp` (m)"
         - "지표 하향 단파복사 — `ssrd` (J m-2)"
@@ -116,8 +132,12 @@ variables:
         - "지표 현열 플럭스 — `sshf` (J m-2)"
         - "지표 잠열 플럭스 — `slhf` (J m-2)"
         - "증발량 — `e` (m of water equivalent)"
-        - "10m 순간 최대풍속(돌풍) — `10fg` (m s-1)"
+        - text: "10m 순간 최대풍속(돌풍) — `10fg` (m s-1)"
+          kind: max
+          period: "1시간"
+          note: "직전 후처리 이후 최대값(재분석 1시간, 앙상블 3시간). 예보 전용 변수"
     - name: 기압면 (37층, 1000~1 hPa)
+      kind: instant
       items:
         - "기온 — `t` (K)"
         - "동서풍 — `u` (m s-1)"
@@ -132,18 +152,22 @@ variables:
         - "오존 질량혼합비 — `o3` (kg kg-1)"
         - "구름 액체수·얼음 함량 — `clwc`, `ciwc` (kg kg-1)"
     - name: 해양 파랑
+      kind: instant
       items:
         - "유의파고(풍랑+너울) — `swh` (m)"
         - "평균 파향 — `mwd` (degree true)"
         - "평균 파주기 — `mwp` (s)"
         - "첨두 파주기 — `pp1d` (s)"
     - name: 지면·불변장
+      kind: instant
       items:
         - "토양온도 1층(0~7 cm) — `stl1` (K)"
         - "토양 체적수분 1층(0~7 cm) — `swvl1` (m3 m-3)"
         - "적설 깊이 — `sd` (m of water equivalent)"
-        - "해륙 마스크 — `lsm` (0-1)"
-        - "지표 지위(지형) — `z` (m2 s-2)"
+        - text: "해륙 마스크 — `lsm` (0-1)"
+          kind: static
+        - text: "지표 지위(지형) — `z` (m2 s-2)"
+          kind: static
 
 access:
   - name: Copernicus Climate Data Store (CDS) — 단일면(single levels)

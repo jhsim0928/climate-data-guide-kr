@@ -104,6 +104,19 @@ summary: >-
   12시간 창의 4D-Var 자료동화와 위성 복사휘도 변분 편향보정(VarBC)을 처음 본격적으로 쓴 ECMWF 재분석이며,
   2010년대 기후 연구에서 가장 널리 인용된 재분석 중 하나였습니다. 현재는 ERA5로 대체되었습니다.
 
+time_convention:
+  summary: >-
+    분석 변수는 00·06·12·18 UTC의 순간값입니다. 강수·복사·열속 같은 누적 변수는 00 또는 12 UTC에 시작한 예보에서만 나오며,
+    표시된 예보 단계(step 3·6·9·12시간 등)까지 예보 시작부터 계속 쌓인 값입니다.
+  points:
+    - "누적 변수는 '예보 시작 이후' 누적입니다. 예: 00 UTC 시작 step 12의 tp = 00~12 UTC 12시간 강수. 3시간 강수는 이웃한 step끼리 빼서(step 6 − step 3) 구합니다."
+    - "일 강수량은 00 UTC 시작 step 12와 12 UTC 시작 step 12를 더하는 방법을 ECMWF가 안내합니다."
+    - "누적 복사·열속 단위 W m-2 s(= J m-2)를 평균 플럭스(W m-2)로 바꾸려면 누적 시간(초)으로 나눕니다(예: 12시간 = 43200)."
+    - "최대·최소 변수(예: mx2t)는 직전 저장 단계 이후 구간의 값입니다. 예: 00 UTC 시작 step 9 = 06~09 UTC."
+    - "월평균 중 moda(monthly means of daily means)는 분석·순간 예보 변수만, 누적 변수의 월평균은 mdfa 스트림에 따로 있습니다."
+  source: https://confluence.ecmwf.int/spaces/CKB/pages/155337848/ERA-Interim+documentation
+  source_name: "ERA-Interim documentation (Copernicus Knowledge Base)"
+
 variables:
   note: >-
     ECMWF ERA-Interim 공식 문서의 파라미터 표와 ERA-Interim 아카이브 보고서 기준 주요 변수입니다.
@@ -111,6 +124,7 @@ variables:
   full_list: https://confluence.ecmwf.int/spaces/CKB/pages/155337848/ERA-Interim+documentation
   groups:
     - name: 지표·단일면
+      kind: instant
       items:
         - "2m 기온 — `2t` (K)"
         - "2m 이슬점온도 — `2d` (K)"
@@ -123,8 +137,12 @@ variables:
         - "지표(skin) 온도 — `skt` (K)"
         - "전운량 — `tcc` (0-1)"
         - "가강수량(수증기 연직적분) — `tcwv` (kg m-2)"
-        - "대기경계층 높이(예보) — `blh` (m)"
+        - text: "대기경계층 높이(예보) — `blh` (m)"
+          kind: instant
+          note: "예보에서만 제공(예보 단계 시각의 값)"
     - name: 누적 예보 변수
+      kind: accum
+      period: "예보 시작 이후"
       items:
         - "총강수량 — `tp` (m of water)"
         - "지표 하향 단파복사 — `ssrd` (W m-2 s)"
@@ -133,6 +151,7 @@ variables:
         - "지표 현열 플럭스 — `sshf` (W m-2 s)"
         - "지표 잠열 플럭스 — `slhf` (W m-2 s)"
     - name: 기압면 (37층)
+      kind: instant
       items:
         - "지위(geopotential) — `z` (m2 s-2)"
         - "기온 — `t` (K)"
@@ -147,17 +166,21 @@ variables:
         - "오존 질량혼합비 — `o3` (kg kg-1)"
         - "구름 액체수·얼음 함량 — `clwc`, `ciwc` (kg kg-1)"
     - name: 해양 파랑 (1.0° 격자)
+      kind: instant
       items:
         - "유의파고(풍랑+너울) — `swh` (m)"
         - "평균 파향 — `mwd` (degree)"
         - "평균 파주기 — `mwp` (s)"
     - name: 지면·불변장
+      kind: instant
       items:
         - "토양온도 1층 — `stl1` (K)"
         - "토양 체적수분 1층 — `swvl1` (m3 m-3)"
         - "적설 깊이 — `sd` (m of water equivalent)"
-        - "해륙 마스크 — `lsm` (0-1)"
-        - "지표 지위(지형) — `z` (m2 s-2)"
+        - text: "해륙 마스크 — `lsm` (0-1)"
+          kind: static
+        - text: "지표 지위(지형) — `z` (m2 s-2)"
+          kind: static
 
 access:
   - name: Copernicus Climate Data Store (CDS) — ERA-Interim

@@ -33,12 +33,15 @@ mkdocs serve
 
 ```
 data/datasets/*.yaml     ← 데이터셋 정보 (여기만 고치면 됩니다)
-data/SCHEMA.md           ← YAML 작성 규칙 (변수 목록, 전환 분석 형식 포함)
+data/SCHEMA.md           ← YAML 작성 규칙 (변수 목록·시간 특성, 전환 분석 형식 포함)
+data/providers.yaml      ← 하단 "데이터 제공 기관" 회전 띠 목록 (기관 추가·순서 변경은 여기서)
 scripts/validate.py      ← YAML 검사 도구 (사이트 빌드와 같은 규칙)
 hooks/datasets.py        ← YAML을 읽어 페이지·메뉴·목록·공지 모음·전환 가이드·폼을 자동 생성 + 검증
 docs/index.md            ← 홈 (분야별 요약과 최근 공지는 자동으로 채워짐)
 docs/about.md, privacy.md, subscribe.md, suggest.md
-docs/stylesheets/, docs/javascripts/
+docs/compare.md          ← 자료 비교 (표·변수 찾기는 자동 생성)
+docs/stylesheets/, docs/javascripts/   ← site.js: 자료 비교·공지 필터·정보 오류 신고 링크
+overrides/               ← 하단 제공 기관 띠와 면책 문구 템플릿
 .github/workflows/       ← 배포(deploy.yml), PR 검사(check.yml)
 CITATION.cff             ← GitHub "Cite this repository" 버튼
 ```
@@ -56,6 +59,10 @@ CITATION.cff             ← GitHub "Cite this repository" 버튼
 - 데이터셋 제안은 지금 바로 동작합니다. 입력한 내용이 채워진 GitHub 이슈가 새 창에서 열립니다.
 - 메일 알림은 **아직 준비 중**입니다. 양식은 미리 볼 수 있지만 신청이 저장되지 않습니다.
 - 메일 발송을 시작할 때는 신청을 받을 주소(예: Google Apps Script 웹앱)를 `mkdocs.yml`의 `extra.forms.subscribe_endpoint`에 넣으면 됩니다. 그 전에 `docs/privacy.md`(개인정보 처리방침 초안)의 빈칸을 채워주세요.
+
+## 하단 제공 기관 띠와 로고
+
+`data/providers.yaml`의 기관이 사이트 하단에서 천천히 돌아갑니다(마우스를 올리면 멈춤, 움직임 줄이기 설정을 켠 사용자에게는 정지 상태로 표시). 기본은 약자 배지이며, 기관에서 **로고 사용 허가를 받은 경우에만** `docs/assets/logos/`에 이미지를 넣고 해당 기관의 `logo:`에 경로를 적으세요. 정부·국제기구 로고는 대부분 사용 규정이 있고, 허가 없이 쓰면 공식 제휴처럼 보일 수 있습니다.
 
 ## 방문자 수 집계 (선택)
 

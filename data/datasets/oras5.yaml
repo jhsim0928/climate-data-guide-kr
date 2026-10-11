@@ -93,6 +93,18 @@ summary: >-
   수온·염분 프로파일, 해수면 고도 편차, 해빙 농도 관측을 동화했습니다. ECMWF 계절 예측의 해양 초기장으로 쓰여 온 시스템이며,
   CDS에는 5개 앙상블 멤버 중 1개만 월평균으로 공개되어 있습니다.
 
+time_convention:
+  summary: >-
+    CDS의 ORAS5는 월평균 자료만 제공하므로 모든 해양·해빙 변수가 해당 달의 평균값입니다.
+    열플럭스·담수 플럭스·바람 응력도 누적량이 아니라 그 달의 평균 플럭스(초당 단위)입니다.
+  points:
+    - "CDS 데이터셋 설명은 이 자료를 'monthly mean data'로 소개하며, 일별·5일 평균 자료는 CDS에 없습니다."
+    - "플럭스 단위가 W m-2, kg m-2 s-1, N m-2이므로 한 달 총량이 필요하면 그 달의 초 수를 곱해야 합니다."
+    - "파일 안 시간 값이 그 달의 어느 시점(1일 또는 중간)으로 찍히는지는 CDS 문서에 적혀 있지 않습니다. 시간 값은 '해당 월'의 표시로만 쓰고, 일 단위 정렬이 필요하면 파일 속성을 직접 확인하세요."
+    - "혼합층 깊이·등온선 깊이·열용량이 월평균 수온장에서 계산한 것인지 더 짧은 간격 값을 평균한 것인지는 공식 문서에서 확인되지 않았습니다."
+  source: https://cds.climate.copernicus.eu/datasets/reanalysis-oras5?tab=overview
+  source_name: CDS ORAS5 데이터셋 개요(Overview)
+
 variables:
   note: >-
     CDS 다운로드 양식 기준 주요 변수입니다. 백틱 안의 이름은 CDS API 요청에 쓰는 이름이며,
@@ -100,6 +112,8 @@ variables:
   full_list: https://cds.climate.copernicus.eu/datasets/reanalysis-oras5?tab=overview
   groups:
     - name: 3차원 해양 (75층, vertical_resolution=all_levels)
+      kind: mean
+      period: 월
       items:
         - "잠재수온 — `potential_temperature` (°C)"
         - "염분 — `salinity` (PSU)"
@@ -108,6 +122,8 @@ variables:
         - "위경도 방향으로 회전한 동서 유속 — `rotated_zonal_velocity` (m/s)"
         - "위경도 방향으로 회전한 남북 유속 — `rotated_meridional_velocity` (m/s)"
     - name: 해양 단일면 (vertical_resolution=single_level)
+      kind: mean
+      period: 월
       items:
         - "해수면온도 — `sea_surface_temperature` (°C)"
         - "해수면 염분 — `sea_surface_salinity` (PSU)"
@@ -119,12 +135,16 @@ variables:
         - "상층 700 m 해양 열용량 — `ocean_heat_content_for_the_upper_700m` (J m-2)"
         - "전층 해양 열용량 — `ocean_heat_content_for_the_total_water_column` (J m-2)"
     - name: 해면 플럭스
+      kind: mean
+      period: 월
       items:
         - "순 하향 열플럭스 — `net_downward_heat_flux` (W m-2)"
         - "순 상향 담수 플럭스 — `net_upward_water_flux` (kg m-2 s-1)"
         - "동서 바람 응력 — `zonal_wind_stress` (N m-2)"
         - "남북 바람 응력 — `meridional_wind_stress` (N m-2)"
     - name: 해빙
+      kind: mean
+      period: 월
       items:
         - "해빙 농도 — `sea_ice_concentration` (무차원)"
         - "해빙 두께 — `sea_ice_thickness` (m)"

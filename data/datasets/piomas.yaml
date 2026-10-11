@@ -41,6 +41,19 @@ summary: >-
   염두에 두어야 합니다. 그럼에도 잠수함·ICESat 등 두께 관측과 비교 검증이 많이 되어 있어, 북극 해빙 부피 변화의 대표 지표와
   기후모델 검증 자료로 널리 쓰입니다.
 
+time_convention:
+  summary: >-
+    격자 자료는 월 자료(파일 하나에 1년 12개월)와 일 자료(이름에 day가 붙은 파일)로 나뉘며, PSC는 두께를 월평균(heff)·일평균(hiday)으로
+    명시합니다. 나머지 변수는 같은 형식으로 제공되지만 평균이라는 설명이 따로 없습니다. 부피 시계열은 일별 값과 월평균 값을 따로 제공합니다.
+  points:
+    - "월 파일(heff.H연도 등)은 1월~12월 12개 필드가 순서대로 들어 있고 별도 시간 좌표가 없습니다. 각 필드는 그 달 전체를 대표합니다"
+    - "PSC 변수표에서 '평균(mean)'이 명시된 것은 heff(월평균)와 hiday(일평균)뿐입니다. 다른 변수(area, snow, icevel 등)도 같은 방식의 월·일 자료로 보이지만 공식 문서로 확인하지 못했습니다"
+    - "PSC는 부피 시계열에 대해 윤년도 365일만 적분한다고 안내합니다. 격자 일 파일(hiday, aiday 등)의 날짜 수·윤년 처리는 공식 문서에서 확인하지 못했으니 파일 크기로 날짜 수를 먼저 확인하세요"
+    - "iceprod·advect·oflux는 m/s 단위의 '변화율'이므로 월 동안의 총 성장·융해량을 구하려면 해당 기간의 초 수를 곱해야 합니다"
+    - "부피 편차(anomaly)는 1979~2025년 같은 날짜 평균을 기준으로 계산됩니다(PSC 부피 페이지 기준). 기준 기간은 갱신 때 바뀔 수 있습니다"
+  source: https://psc.apl.uw.edu/research/projects/arctic-sea-ice-volume-anomaly/data/model_grid
+  source_name: PSC PIOMAS model grid 변수표
+
 variables:
   note: >-
     PSC의 모델 격자 자료는 변수마다 연도별 파일(이름.H연도)로 따로 제공되며, 머리말 없는 단정밀도 이진(flat binary) 파일입니다.
@@ -49,29 +62,53 @@ variables:
   full_list: https://psc.apl.uw.edu/research/projects/arctic-sea-ice-volume-anomaly/data/model_grid
   groups:
     - name: 해빙 두께·농도 (월평균)
+      kind: mean
+      period: 월
       items:
         - "해빙 두께(단위 면적당 부피) — `heff` (m)"
-        - "해빙 농도 — `area` (비율)"
-        - "적설 깊이(물 환산) — `snow` (m)"
-        - "12범주 두께 분포 — `gice`"
+        - text: "해빙 농도 — `area` (비율)"
+          note: "PSC 표에 '평균'이라는 말은 없고 월 자료(파일당 12개월)로만 안내됩니다. heff와 같은 월평균으로 보이지만 공식 확인은 못 했습니다."
+        - text: "적설 깊이(물 환산) — `snow` (m)"
+          note: "PSC 표에 '평균'이라는 말은 없고 월 자료(파일당 12개월)로만 안내됩니다. heff와 같은 월평균으로 보이지만 공식 확인은 못 했습니다."
+        - text: "12범주 두께 분포 — `gice`"
+          note: "PSC 표에 '평균'이라는 말은 없고 월 자료(파일당 12개월)로만 안내됩니다. heff와 같은 월평균으로 보이지만 공식 확인은 못 했습니다."
     - name: 해빙 역학·열역학 (월평균)
+      kind: mean
+      period: 월
       items:
-        - "해빙 속도 u·v — `icevel` (m/s)"
-        - "해빙 성장·융해율 — `iceprod` (m/s)"
-        - "해빙 이류 — `advect` (m/s)"
-        - "해양 열속에 의한 융해 — `oflux` (m/s)"
-        - "표면 온도(눈·얼음·해양) — `tice0` (K)"
+        - text: "해빙 속도 u·v — `icevel` (m/s)"
+          note: "PSC 표에 '평균'이라는 말은 없고 월 자료(파일당 12개월)로만 안내됩니다. heff와 같은 월평균으로 보이지만 공식 확인은 못 했습니다."
+        - text: "해빙 성장·융해율 — `iceprod` (m/s)"
+          note: "한 달 동안의 평균 변화율(시간당 얼음 두께 변화, m/s)로 보입니다. 월 누적량이 필요하면 초 단위 기간을 곱하세요. 평균 여부는 공식 확인 못 함."
+        - text: "해빙 이류 — `advect` (m/s)"
+          note: "PSC 표에 '평균'이라는 말은 없고 월 자료(파일당 12개월)로만 안내됩니다. heff와 같은 월평균으로 보이지만 공식 확인은 못 했습니다."
+        - text: "해양 열속에 의한 융해 — `oflux` (m/s)"
+          note: "PSC 표에 '평균'이라는 말은 없고 월 자료(파일당 12개월)로만 안내됩니다. heff와 같은 월평균으로 보이지만 공식 확인은 못 했습니다."
+        - text: "표면 온도(눈·얼음·해양) — `tice0` (K)"
+          note: "PSC 표에 '평균'이라는 말은 없고 월 자료(파일당 12개월)로만 안내됩니다. heff와 같은 월평균으로 보이지만 공식 확인은 못 했습니다."
     - name: 일평균 파일
+      kind: mean
+      period: 일
       items:
         - "일평균 해빙 두께 — `hiday` (m)"
-        - "일평균 적설 깊이(물 환산) — `snowday`"
-        - "일평균 해빙 농도 — `aiday` (area/ 디렉터리)"
-        - "일평균 해빙 속도 — `uiday` (other/ 디렉터리)"
+        - text: "일평균 적설 깊이(물 환산) — `snowday`"
+          note: "PSC 표에는 '일(daily)' 자료로만 적혀 있고 평균인지 순간값인지는 명시되어 있지 않습니다."
+        - text: "일평균 해빙 농도 — `aiday` (area/ 디렉터리)"
+          note: "서버 디렉터리에서 확인한 일별 파일입니다. 일평균인지 순간값인지 공식 문서에서 확인하지 못했습니다(hiday와 같은 규칙으로 추정)."
+        - text: "일평균 해빙 속도 — `uiday` (other/ 디렉터리)"
+          note: "서버 디렉터리에서 확인한 일별 파일입니다. 일평균인지 순간값인지 공식 문서에서 확인하지 못했습니다(hiday와 같은 규칙으로 추정)."
     - name: 범북극 시계열 (텍스트·CSV)
+      kind: mean
       items:
-        - "일별 북극 해빙 부피 — `PIOMAS.vol.daily.*.dat.gz` (10³ km³)"
-        - "월별 북극 해빙 부피 — `PIOMAS.monthly.Current.v2.1.csv` (10³ km³)"
-        - "일별 평균 두께(0.15 m 이상 영역) — `PIOMAS.thick.daily.*.dat.gz` (m)"
+        - text: "일별 북극 해빙 부피 — `PIOMAS.vol.daily.*.dat.gz` (10³ km³)"
+          period: 일
+          note: "PIOMAS 영역 전체를 합한 하루 값(연·연중일·부피). 일평균인지 그날의 순간값인지 PSC 페이지에 적혀 있지 않습니다. 윤년도 365일로 적분합니다."
+        - text: "월별 북극 해빙 부피 — `PIOMAS.monthly.Current.v2.1.csv` (10³ km³)"
+          period: 월
+          note: "PSC가 '월평균 부피'(예: 2026년 2월 평균 17.7×10³ km³)로 발표하는 값입니다. 결측은 -1."
+        - text: "일별 평균 두께(0.15 m 이상 영역) — `PIOMAS.thick.daily.*.dat.gz` (m)"
+          period: 일
+          note: "'평균'은 두께 0.15 m 이상 영역에 대한 공간 평균입니다. 시간적으로 일평균인지는 명시되어 있지 않습니다."
 
 access:
   - name: PSC PIOMAS 부피·두께 시계열 페이지

@@ -106,6 +106,19 @@ summary: >-
   SMMR, SSM/I, SSMIS에 이어 2025년부터는 AMSR2 밝기온도를 입력으로 써서, 같은 25 km 극 평사도 격자 위에서 기록을 이어 갑니다.
   NSIDC Sea Ice Index의 기반 자료와 같은 계열이라 북극·남극 해빙 면적·범위 연구에 널리 쓰입니다.
 
+time_convention:
+  summary: >-
+    일자료는 하루 동안 지나간 위성 궤도의 밝기온도를 격자마다 합산 평균(drop-in-the-bucket)한 일별 밝기온도로 계산한 하루 대표값(일평균 성격)입니다.
+    월자료는 같은 격자의 일별 농도를 평균한 값이며, 특정 시각의 순간값이 아닙니다.
+  points:
+    - "일별 입력 밝기온도는 NSIDC 극 격자 밝기온도 자료(NSIDC-0001 등)에서 24시간 궤도 자료를 격자별로 단순 평균해 만듭니다. CDR 사용자 가이드는 하루 경계(UTC 여부)를 따로 밝히지 않습니다."
+    - "관측이 빈 날·격자는 앞뒤 날짜로 선형 보간(양쪽 방식)하고, 안 되면 3일 이내 가장 가까운 날 값을 복사합니다. 보간 여부는 cdr_seaice_conc_interp_temporal_flag·_spatial_flag와 QA 플래그로 확인하세요."
+    - "월평균은 일별 값의 격자별 평균이며 최소 20일(SMMR 시기 10일) 자료가 있어야 만들어집니다. 월 표준편차는 그 달 일별 값들의 표준편차입니다."
+    - "SMMR 시기(1978-10 ~ 1987-07)도 날짜별 파일은 있지만 자료가 없는 날은 채움값(fill value)이 들어 있습니다. 1987-12-03 ~ 1988-01 중순은 파일 자체가 없습니다."
+    - "일자료의 time은 'days since 1970-01-01 00:00:00' 형식의 날짜이며, 하루 중 특정 시각을 뜻하지 않습니다."
+  source: https://nsidc.org/sites/default/files/documents/user-guide/g02202-v006-userguide.pdf
+  source_name: G02202 V6 사용자 가이드 / NSIDC-0001 V6 데이터셋 페이지
+
 variables:
   note: >-
     V6 사용자 가이드 기준 일자료 변수입니다. 농도는 0~100 바이트로 저장되며 scale_factor 0.01이 적용되어 보통 0~1 비율로 읽힙니다.
@@ -114,20 +127,38 @@ variables:
   full_list: https://nsidc.org/sites/default/files/documents/user-guide/g02202-v006-userguide.pdf
   groups:
     - name: 해빙 농도 (기본 그룹)
+      kind: mean
+      period: 일
       items:
-        - "CDR 해빙 농도 — `cdr_seaice_conc` (무차원, 0–1)"
-        - "CDR 농도 표준편차(불확실성 지표) — `cdr_seaice_conc_stdev` (무차원, 0–1)"
+        - text: "CDR 해빙 농도 — `cdr_seaice_conc` (무차원, 0–1)"
+          note: 일별 평균 밝기온도로 계산한 하루 대표값. 월자료의 `cdr_seaice_conc_monthly`는 일별 값의 월평균
+        - text: "CDR 농도 표준편차(불확실성 지표) — `cdr_seaice_conc_stdev` (무차원, 0–1)"
+          note: 그날 일별 장에서 주변 3×3 격자의 NASA Team·Bootstrap 값 18개로 구한 공간 표준편차(시간 통계 아님). 월자료의 `cdr_seaice_conc_monthly_stdev`는 그 달 일별 값의 표준편차
     - name: 품질·보간 플래그 (기본 그룹)
+      kind: mean
+      period: 일
       items:
-        - "QA 비트 플래그(기상 필터, 해안 보정, 결측, 보간, 융빙 시작 등) — `cdr_seaice_conc_qa_flag` (비트값)"
-        - "공간 보간 플래그 — `cdr_seaice_conc_interp_spatial_flag` (비트값)"
-        - "시간 보간 플래그 — `cdr_seaice_conc_interp_temporal_flag` (비트값)"
+        - text: "QA 비트 플래그(기상 필터, 해안 보정, 결측, 보간, 융빙 시작 등) — `cdr_seaice_conc_qa_flag` (비트값)"
+          note: 그날 일별 농도에 적용된 처리를 날짜별로 표시하는 플래그. 시간 통계값이 아니라 일별 장에 딸린 정보
+        - text: "공간 보간 플래그 — `cdr_seaice_conc_interp_spatial_flag` (비트값)"
+          note: 그날 일별 장에서 공간 보간된 격자 표시
+        - text: "시간 보간 플래그 — `cdr_seaice_conc_interp_temporal_flag` (비트값)"
+          note: 그날 값이 앞뒤 날짜에서 시간 보간되었는지 표시
     - name: 보조 변수 (cdr_supplementary 그룹)
+      kind: mean
       items:
-        - "Bootstrap 알고리즘 원시 농도 — `raw_bt_seaice_conc` (무차원, 0–2.54)"
-        - "NASA Team 알고리즘 원시 농도 — `raw_nt_seaice_conc` (무차원, 0–2.54)"
-        - "융빙 시작일(북반구) — `cdr_melt_onset_day` (연중 일수)"
-        - "지표 유형 마스크(바다 50, 호수 75, 극 관측공백 100, 해안 200, 육지 250) — `surface_type_mask` (코드값)"
+        - text: "Bootstrap 알고리즘 원시 농도 — `raw_bt_seaice_conc` (무차원, 0–2.54)"
+          period: 일
+          note: CDR 농도와 같은 일별 밝기온도로 계산, 기상 필터·해안 보정·마스크 미적용
+        - text: "NASA Team 알고리즘 원시 농도 — `raw_nt_seaice_conc` (무차원, 0–2.54)"
+          period: 일
+          note: CDR 농도와 같은 일별 밝기온도로 계산, 기상 필터·해안 보정·마스크 미적용
+        - text: "융빙 시작일(북반구) — `cdr_melt_onset_day` (연중 일수)"
+          kind: instant
+          note: 그 해 융빙기에 처음 융빙이 감지된 날(연중 일수 60~244). 한 번 감지되면 그 시즌 끝까지 같은 값이 유지되므로 '그날까지의 누적 판정 상태'로 읽어야 함
+        - text: "지표 유형 마스크(바다 50, 호수 75, 극 관측공백 100, 해안 200, 육지 250) — `surface_type_mask` (코드값)"
+          kind: static
+          note: 고정 지표 마스크. 파일에 time 차원은 있으나 가이드에 시간 변화 언급은 없음. 센서별로 달라지는 극 관측공백 크기는 별도 보조 자료(polehole_bitmask)로 관리
 
 access:
   - name: NSIDC 데이터셋 페이지 — G02202 Version 6 (최종 CDR)

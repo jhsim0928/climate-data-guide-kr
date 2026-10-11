@@ -43,18 +43,44 @@ summary: >-
   위성 SST는 현장 관측에 맞춰 편향을 보정하고, 해빙 가장자리에서는 해빙 농도로 만든 대리 SST를 사용합니다.
   1981년 9월부터 끊김 없이 이어지는 매일 자료라 해양 열파, ENSO 감시, 기후값 계산 등에 폭넓게 쓰입니다.
 
+time_convention:
+  summary: >-
+    하루치 관측을 모아 만든 일별 분석장으로, 각 값은 그날의 대표값(일평균)입니다. NCEI 원본 파일의 시간 값은
+    그날 12:00 UTC('하루의 중심 시각')로 표기되며, 특정 시각의 순간값이 아닙니다.
+  points:
+    - "NCEI는 '하루 동안의 위성 관측을 0.25° 격자에 평균해' 쓴다고 설명합니다. 일변화(주간·야간 차이)는 담지 않습니다."
+    - "NCEI 원본·ERDDAP의 time은 'Center time of the day'(예: 1981-09-01T12:00:00Z)입니다. NOAA PSL 연도별 파일은 같은 날짜를 00:00으로 표기하므로 두 출처를 섞을 때 날짜만 맞추세요."
+    - "편차(anom)는 1971~2000년 일별 기후값을 뺀 값입니다. PSL 파일은 1991~2020년 기후값 파일을 따로 제공합니다."
+    - "해빙 근처 대리 SST에는 일별 해빙 농도의 7일 중앙값이 쓰입니다. 파일 속 ice 값의 정확한 시간 처리(당일 값인지 7일 중앙값인지)는 공식 문서에 명시되어 있지 않습니다."
+    - "예비본은 약 1일 뒤, 최종본은 약 2주 뒤 나오며 같은 날짜 값이 바뀔 수 있습니다."
+  source: https://www.ncei.noaa.gov/products/optimum-interpolation-sst
+  source_name: NCEI OISST 제품 페이지 / ERDDAP ncdcOisst21Agg 메타데이터
+
 variables:
   note: 파일 안의 변수명(short name) 기준입니다. NCEI 원본 일별 파일(oisst-avhrr-v02r01.YYYYMMDD.nc) 하나에 네 변수가 모두 들어 있습니다.
   full_list: https://www.ncei.noaa.gov/products/optimum-interpolation-sst
   groups:
     - name: 해수면온도
+      kind: mean
+      period: 일
       items:
         - "일평균 해수면온도 — `sst` (°C)"
-        - "해수면온도 편차 — `anom` (°C)"
-        - "추정 오차 표준편차 — `err` (°C)"
+        - text: "해수면온도 편차 — `anom` (°C)"
+          kind: mean
+          period: 일
+          note: 일평균 SST에서 1971~2000년 일별 기후값을 뺀 편차
+        - text: "추정 오차 표준편차 — `err` (°C)"
+          kind: mean
+          period: 일
+          note: 그날 분석값(sst)에 대한 오차 추정치. 별도의 시간 통계가 아니라 일별 분석에 딸린 값
     - name: 해빙
+      kind: mean
+      period: 일
       items:
-        - "해빙 농도 — `ice` (비율, 0~1)"
+        - text: "해빙 농도 — `ice` (비율, 0~1)"
+          kind: mean
+          period: 일
+          note: PSL 파일(icec, 단위 percent)은 statistic을 'Mean', 평균 구간을 1일로 표기. NCEI 원본의 시간 처리 방식은 공식 문서에 명시되지 않음
 
 access:
   - name: NCEI 직접 다운로드 (일별 NetCDF)

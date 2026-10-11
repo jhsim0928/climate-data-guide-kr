@@ -91,6 +91,18 @@ summary: >-
   해빙 영역에서는 해빙 농도와 계절·해역별 결빙 온도를 이용해 SST를 추정합니다.
   HadISST, ERSST와 함께 장기 SST 비교 연구에 자주 쓰이는 세 자료 중 하나입니다.
 
+time_convention:
+  summary: >-
+    배포되는 자료는 월평균입니다. JMA는 내부적으로 매일 분석을 수행하지만 공개 파일(JMA NEAR-GOOS, NOAA PSL)은
+    그 달의 평균 해수면온도(PSL은 해빙 농도 월평균 포함)이며, 시간 값은 해당 월을 가리킵니다.
+  points:
+    - "NOAA PSL 파일(sst.mon.mean.nc)은 statistic을 'Mean', 평균 구간(avg_period)을 1개월로 표기합니다."
+    - "JMA는 최근 달 값을 매월 7일경 잠정치로 올리고, 다음 달 7일에 확정치로 바꿉니다. 최근 1~2개월 값은 바뀔 수 있습니다."
+    - "JMA 원본 텍스트 파일은 머리줄에 연·월만 있고 시각 정보가 없습니다. PSL 파일의 시간 값도 '해당 월'의 표시로만 쓰세요."
+    - "기후값 파일(1981~2010, 1991~2020 월별 평년값)은 특정 연도가 아니라 같은 달의 다년 평균입니다."
+  source: https://ds.data.jma.go.jp/goos/data/pub/JMA-product/cobe2_sst_glb_M/Readme_cobe2_sst_glb_M
+  source_name: JMA NEAR-GOOS COBE-SST2 Readme / NOAA PSL 파일 메타데이터
+
 variables:
   note: >-
     NOAA PSL NetCDF 파일 기준 변수명입니다. JMA NEAR-GOOS 원본은 0.1°C 단위 정수로 적힌 텍스트 격자 파일(육지 999)이고,
@@ -98,9 +110,13 @@ variables:
   full_list: https://www.data.jma.go.jp/tcc/tcc/products/elnino/cobesst2_doc.html
   groups:
     - name: 해수면온도
+      kind: mean
+      period: 월
       items:
         - "월평균 해수면온도 — `sst` (°C)"
     - name: 해빙 (PSL, 2019년까지)
+      kind: mean
+      period: 월
       items:
         - "월평균 해빙 농도 — `icec` (비율, 0~1)"
 

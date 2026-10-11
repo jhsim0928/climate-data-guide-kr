@@ -83,6 +83,18 @@ summary: >-
   CORE-II를 대체하는 OMIP 2단계(OMIP-2) 표준 강제력으로 쓰였으며, 3시간 간격 바람·기온·습도·복사·강수와
   하천·남극·그린란드 담수 유출을 한 묶음으로 제공합니다. 원자료보다 해상도와 갱신 빈도가 높아 고해상도 해양 모델 실험에 널리 쓰였습니다.
 
+time_convention:
+  summary: >-
+    3시간 대기 변수 중 바람·기온·습도·해면기압(uas, vas, tas, huss, psl)은 순간값이고, 하향 복사와 강수(rsds, rlds, prra, prsn)는 3시간 평균입니다.
+    하천·빙하 유출(friver, licalvf)은 일평균입니다. 강수·유출은 누적량이 아니라 평균 플럭스(kg m-2 s-1)입니다.
+  points:
+    - "순간값 변수의 첫 자료는 매년 1월 1일 00 UTC 값입니다."
+    - "3시간 평균 변수의 첫 자료는 1월 1일 00~03 UTC 구간 평균이며, 시간 좌표는 구간의 가운데(01:30 UTC)에 놓입니다. 그래서 순간값 변수와 시간축이 1.5시간 어긋나 있습니다."
+    - "하천 유출 friver와 빙산 분리 licalvf는 0.25° 격자의 일평균 값입니다."
+    - "보조 자료 중 tos·siconc(COBE-SST)는 일평균, siconca·ts(JRA-55)는 3시간 순간값, sos는 월별 기후값, uos·vos는 연평균 기후값입니다."
+  source: https://climate.mri-jma.go.jp/pub/ocean/JRA55-do/docs/v1_6-manual/User_manual_jra55_do_v1_6.pdf
+  source_name: "JRA55-do v1.6 User Manual (Table 1·2)"
+
 variables:
   note: >-
     JRA55-do v1.6 사용자 매뉴얼 Table 1·2 기준 변수입니다. 변수명은 input4MIPs 파일 속 CMOR 변수명이며 파일은 NetCDF입니다.
@@ -90,27 +102,50 @@ variables:
   full_list: https://climate.mri-jma.go.jp/pub/ocean/JRA55-do/docs/v1_6-manual/User_manual_jra55_do_v1_6.pdf
   groups:
     - name: 대기 강제력 (3시간, TL319)
+      kind: instant
+      period: "3시간 간격"
       items:
         - "10 m 기온 — `tas` (K)"
         - "10 m 비습 — `huss` (kg kg-1)"
         - "10 m 동서 바람 — `uas` (m s-1)"
         - "10 m 남북 바람 — `vas` (m s-1)"
         - "해면기압 — `psl` (Pa)"
-        - "하향 단파 복사 — `rsds` (W m-2)"
-        - "하향 장파 복사 — `rlds` (W m-2)"
-        - "강우 플럭스 — `prra` (kg m-2 s-1)"
-        - "강설 플럭스 — `prsn` (kg m-2 s-1)"
+        - text: "하향 단파 복사 — `rsds` (W m-2)"
+          kind: mean
+          period: "3시간"
+        - text: "하향 장파 복사 — `rlds` (W m-2)"
+          kind: mean
+          period: "3시간"
+        - text: "강우 플럭스 — `prra` (kg m-2 s-1)"
+          kind: mean
+          period: "3시간"
+          note: "평균 강수 플럭스이며 누적량이 아님"
+        - text: "강설 플럭스 — `prsn` (kg m-2 s-1)"
+          kind: mean
+          period: "3시간"
+          note: "평균 강설 플럭스이며 누적량이 아님"
     - name: 담수 유출 (일평균, 0.25°)
+      kind: mean
+      period: "일"
       items:
         - "액체 유출(하천 등) — `friver` (kg m-2 s-1)"
         - "고체 유출(빙산 분리) — `licalvf` (kg m-2 s-1)"
     - name: 보조 자료
+      kind: mean
+      period: "일"
       items:
         - "해수면온도(COBE-SST, 일평균 1°) — `tos` (°C)"
         - "해빙 분포(COBE-SST, 일평균 1°) — `siconc` (%)"
-        - "해빙 분포(JRA-55, 3시간) — `siconca` (%)"
-        - "해면 염분(WOA13 v2, 월 기후값) — `sos` (0.001)"
-        - "격자 면적(대기 격자) — `areacella` (m2)"
+        - text: "해빙 분포(JRA-55, 3시간) — `siconca` (%)"
+          kind: instant
+          period: "3시간 간격"
+          note: "JRA-55 해빙 분포(0% 또는 100%)"
+        - text: "해면 염분(WOA13 v2, 월 기후값) — `sos` (0.001)"
+          kind: mean
+          period: "월"
+          note: "World Ocean Atlas 2013 v2의 월별 기후값(해마다 같은 값 반복)"
+        - text: "격자 면적(대기 격자) — `areacella` (m2)"
+          kind: static
 
 access:
   - name: ESGF input4MIPs — MRI-JRA55-do-1-6-0 (최종판)

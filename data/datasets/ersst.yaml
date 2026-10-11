@@ -116,14 +116,29 @@ summary: >-
   관측이 빈 곳은 통계적 재구성으로 채워 1854년부터 공간적으로 완전한 2° 격자를 제공합니다. 위성 자료는 쓰지 않는 현장 관측 기반이며,
   NOAA의 ENSO 지수(ONI)와 전지구 기온 자료(NOAAGlobalTemp)의 해양 부분으로 오랫동안 쓰였습니다.
 
+time_convention:
+  summary: >-
+    월별 분석 자료로, 모든 값은 해당 달의 평균 해수면온도(또는 그 편차)입니다. 시간 값은 그 달을 가리키는 표시일 뿐 특정 시각의 순간값이 아닙니다.
+  points:
+    - "NOAA PSL 파일(sst.mnmean.nc)은 statistic을 'Mean', 평균 구간(avg_period)을 1개월로 표기합니다."
+    - "NCEI 원본 파일(ersst.v5.YYYYMM.nc)은 한 달에 한 파일이며, 시간 표기 위치(1일 또는 15일)는 배포처마다 다릅니다. 예: ERDDAP 미러는 time을 'Start Time'으로 표기하지만 시작 값은 1854-01-01, 마지막 값은 2026-08-15로 일자가 일정하지 않습니다. 날짜가 아니라 연·월로 맞추세요."
+    - "편차(ssta)는 1971~2000년 월별 기후값 기준입니다. 후속 v6는 1991~2020년 기준입니다."
+  source: https://www.ncei.noaa.gov/products/extended-reconstructed-sst
+  source_name: NCEI ERSST 제품 페이지 / NOAA PSL·ERDDAP 파일 메타데이터
+
 variables:
   note: NCEI 원본 NetCDF 파일 기준 변수명입니다. NOAA PSL 묶음 파일(sst.mnmean.nc)에는 sst만 들어 있습니다.
   full_list: https://www.ncei.noaa.gov/access/metadata/landing-page/bin/iso?id=gov.noaa.ncdc:C00927
   groups:
     - name: 해수면온도
+      kind: mean
+      period: 월
       items:
         - "월평균 해수면온도 — `sst` (°C)"
-        - "해수면온도 편차(1971~2000년 기후값 기준) — `ssta` (°C)"
+        - text: "해수면온도 편차(1971~2000년 기후값 기준) — `ssta` (°C)"
+          kind: mean
+          period: 월
+          note: 월평균 SST에서 1971~2000년 월별 기후값을 뺀 편차
 
 access:
   - name: NCEI 직접 다운로드 (월별 NetCDF)

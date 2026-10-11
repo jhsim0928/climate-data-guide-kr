@@ -40,28 +40,47 @@ summary: >-
   중규모 소용돌이를 직접 분해하는 해상도라 경계류, 연안 순환, 해양 열파 같은 연구에 많이 쓰입니다.
   1993년(위성 고도계 시대 시작)부터 제공됩니다.
 
+time_convention:
+  summary: >-
+    해양·해빙 변수는 모두 순간값이 아니라 평균값입니다. 일자료(P1D-m)는 하루(자정~자정) 평균, 월자료(P1M-m)는 달력상 한 달(1일~말일) 평균이며,
+    수심·마스크·평균 역학 지형 같은 static 데이터셋은 시간에 따라 변하지 않는 고정값입니다.
+  points:
+    - "일평균은 00~24시 평균이고, PUM은 이를 '정오 중심'이라고 설명합니다. 다만 같은 문서의 파일 예시에는 해당 날짜 00:00으로 표기되어 있으므로, 시각 값은 '그 날짜의 평균'을 가리키는 표시로만 해석하세요."
+    - "월평균 파일과 시간 값은 해당 월을 가리킵니다(파일명은 yyyymm). 월평균을 일평균에서 다시 계산할 필요는 없습니다."
+    - "1993~2016년 평균으로 만든 월별 기후값 데이터셋(…-climatology_P1M-m)이 따로 있으며, 이는 특정 연도가 아니라 같은 달의 다년 평균입니다."
+    - "데이터셋 ID 끝의 -m 은 평균(mean)을 뜻합니다. 순간값(snapshot) 자료는 이 제품에 없습니다."
+  source: https://documentation.marine.copernicus.eu/PUM/CMEMS-GLO-PUM-001-030.pdf
+  source_name: CMEMS-GLO-PUM-001-030 (GLORYS12 Product User Manual)
+
 variables:
   note: 공식 Product User Manual(PUM) 기준 주요 변수입니다. 변수명은 NetCDF 파일 안의 이름(short name)입니다.
   full_list: https://documentation.marine.copernicus.eu/PUM/CMEMS-GLO-PUM-001-030.pdf
   groups:
     - name: 3차원 해양 (50층)
+      kind: mean
+      period: 일 / 월
       items:
         - "잠재수온 — `thetao` (°C)"
         - "염분 — `so` (1e-3, 실용염분)"
         - "동서 방향 해류 — `uo` (m/s)"
         - "남북 방향 해류 — `vo` (m/s)"
     - name: 2차원 해양
+      kind: mean
+      period: 일 / 월
       items:
         - "해수면 높이(지오이드 기준) — `zos` (m)"
         - "혼합층 두께(포텐셜 밀도 기준) — `mlotst` (m)"
         - "해저면 잠재수온 — `bottomT` (°C)"
     - name: 해빙
+      kind: mean
+      period: 일 / 월
       items:
         - "해빙 농도 — `siconc` (비율, 0~1)"
         - "해빙 두께 — `sithick` (m)"
         - "해빙 동서 방향 속도 — `usi` (m/s)"
         - "해빙 남북 방향 속도 — `vsi` (m/s)"
     - name: 고정장(static)
+      kind: static
       items:
         - "해저 수심 — `deptho` (m)"
         - "평균 역학 지형 — `mdt` (m)"

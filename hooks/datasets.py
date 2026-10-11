@@ -12,10 +12,13 @@ YAML에 필수 항목이 빠졌거나 값이 잘못되면 빌드가 실패합니
 
 from __future__ import annotations
 
+import os
 import re
 from datetime import date
 from pathlib import Path
-from urllib.parse import urlparse
+import html
+import json
+from urllib.parse import quote, urlencode, urlparse
 
 import yaml
 from mkdocs.exceptions import PluginError
@@ -61,9 +64,57 @@ REQUIRED = [
     "summary", "access", "variables", "citations", "last_verified",
 ]
 DATE_RE = re.compile(r"^\d{4}-\d{2}(-\d{2})?$")
+
+# 변수의 시간 특성 — 3시간 자료라도 순간값인지, 3시간 평균인지, 누적인지 구분하기 위함
+KIND = {
+    "instant": "순간값",
+    "mean": "평균",
+    "accum": "누적",
+    "max": "최대",
+    "min": "최소",
+    "static": "고정값",
+}
+# 모든 변수에 시간 특성을 반드시 적도록 검사 (True면 빠진 항목이 있을 때 빌드 실패)
+REQUIRE_KIND = os.environ.get("CDG_ALLOW_MISSING_KIND") != "1"
+
+
+def norm_item(it, group: dict) -> dict:
+    """변수 항목은 문자열 또는 {text, kind, period, note}. 그룹의 kind/period를 기본값으로 씁니다."""
+    if isinstance(it, str):
+        it = {"text": it}
+    return {
+        "text": str(it.get("text") or ""),
+        "kind": it.get("kind") or group.get("kind"),
+        "period": it.get("period") or group.get("period"),
+        "note": it.get("note"),
+    }
 PERIOD_RE = re.compile(r"^\d{4}(-\d{2}(-\d{2})?)?$")
 
 _datasets: list[dict] = []
+_repo_url = ""
+_site_url = ""
+
+# 모든 페이지 하단과 소개·인용 페이지에 쓰이는 면책 문구
+DISCLAIMER = (
+    "기후데이터 길잡이는 개인이 운영하는 비공식 프로젝트이며, 운영자의 소속 기관이나 자료 제공 기관의 공식 입장이 아닙니다. "
+    "모든 정보는 확인 시점 기준이며 바뀔 수 있으니, 논문·보고서에 쓰기 전에 DOI·인용 형식·기간·변수 정의를 반드시 공식 출처에서 다시 확인해 주세요."
+)
+
+
+def site_page_url(d: dict) -> str:
+    return f"{_site_url}datasets/{d['id']}/"
+
+
+def report_url(title: str, page_url: str = "") -> str:
+    """정보 오류 신고용 GitHub 이슈 주소 (제목·본문이 채워진 상태로 열림)"""
+    body = (
+        f"### 페이지\n{page_url or '(페이지 주소)'}\n\n"
+        "### 어떤 정보가 틀렸나요?\n\n\n"
+        "### 올바른 정보\n\n\n"
+        "### 근거가 되는 공식 출처 (링크)\n\n"
+    )
+    q = urlencode({"title": f"[정보 오류] {title}", "body": body, "labels": "data-error"}, quote_via=quote)
+    return f"{_repo_url}/issues/new?{q}"
 
 
 # ── 유틸 ────────────────────────────────────────────────────
@@ -121,6 +172,19 @@ def validate(d: dict, src: Path) -> None:
     v = d.get("variables") or {}
     if not v.get("groups") or not all(g.get("name") and g.get("items") for g in v["groups"]):
         errors.append("variables.groups에 name과 items가 있는 그룹을 하나 이상 적어주세요")
+    for gi, g in enumerate(v.get("groups") or []):
+        if g.get("kind") and g["kind"] not in KIND:
+            errors.append(f"variables.groups[{gi}].kind는 {list(KIND)} 중 하나")
+        for ii, it in enumerate(g.get("items") or []):
+            it = norm_item(it, g)
+            if not it["text"]:
+                errors.append(f"variables.groups[{gi}].items[{ii}]에 text가 없어요")
+            if it["kind"] and it["kind"] not in KIND:
+                errors.append(f"variables.groups[{gi}].items[{ii}].kind는 {list(KIND)} 중 하나")
+            if REQUIRE_KIND and not it["kind"]:
+                errors.append(f"variables '{g.get('name')}'의 '{it['text'][:30]}'에 시간 특성(kind)이 없어요")
+    if REQUIRE_KIND and not (d.get("time_convention") or {}).get("summary"):
+        errors.append("time_convention.summary(시간 표기 규칙 요약)가 없어요")
     if not DATE_RE.match(str(d.get("last_verified", ""))):
         errors.append("last_verified 형식은 YYYY-MM-DD")
     if d.get("status") == "ended" and not d.get("successor"):
@@ -248,13 +312,42 @@ def transition_block(d: dict, t: dict, heading: str = "###", link_prefix: str = 
     return L
 
 
-def variables_block(v: dict) -> list[str]:
+def kind_badge(it: dict) -> str:
+    if not it.get("kind"):
+        return ""
+    label = KIND[it["kind"]]
+    if it.get("period") and it["kind"] in ("mean", "accum", "max", "min"):
+        label = f"{it['period']} {label}"
+    elif it.get("period") and it["kind"] == "instant":
+        label = f"{label} ({it['period']})"
+    return f' <span class="kind kind-{it["kind"]}">{label}</span>'
+
+
+def variables_block(v: dict, tc: dict | None = None) -> list[str]:
     L = ["## 활용 가능한 변수", ""]
     if v.get("note"):
         L += [oneline(v["note"]), ""]
+    if tc:
+        L += ['!!! info "시간 표기 규칙 — 순간값인가, 평균인가, 누적인가"', ""]
+        L += ["    " + oneline(tc["summary"]), ""]
+        L += [f"    - {oneline(p)}" for p in tc.get("points") or []]
+        if tc.get("source"):
+            L += ["", f"    근거: [{tc.get('source_name') or '공식 문서'}]({tc['source']})"]
+        L.append("")
+    L += [
+        '<p class="kind-legend">'
+        + " ".join(f'<span class="kind kind-{k}">{lab}</span>' for k, lab in KIND.items())
+        + ' <span class="hint">— 순간값: 표시 시각의 값 · 평균/누적/최대/최소: 표시된 구간 동안의 값 · 고정값: 시간에 따라 변하지 않음</span></p>',
+        "",
+    ]
     for g in v["groups"]:
         L += [f"### {g['name']}", "", '<div class="var-list" markdown>', ""]
-        L += [f"- {oneline(it)}" for it in g["items"]]
+        for it in g["items"]:
+            it = norm_item(it, g)
+            line = f"- {oneline(it['text'])}{kind_badge(it)}"
+            if it.get("note"):
+                line += f' <span class="hint">— {oneline(it["note"])}</span>'
+            L.append(line)
         L += ["", "</div>", ""]
     if v.get("full_list"):
         L += [f"전체 변수 목록은 [공식 문서]({v['full_list']})에서 확인하세요.", ""]
@@ -269,7 +362,13 @@ def render_dataset(d: dict, site_cite: str) -> str:
     L += [
         badge(d["status"])
         + f' <span class="verified">마지막 확인 {d["last_verified"]}</span>'
-        + f' <a class="subscribe-link" href="../../subscribe/?dataset={d["id"]}">이 데이터셋 변경 알림 받기</a>',
+        + "",
+        "",
+        '<div class="page-actions">'
+        f'<a class="act act-subscribe" href="../../subscribe/?dataset={d["id"]}">변경 알림 받기</a>'
+        f'<a class="act act-compare" href="../../compare/?ids={d["id"]}">다른 자료와 비교</a>'
+        f'<a class="act act-report" href="{html.escape(report_url(d["name"], site_page_url(d)))}" target="_blank" rel="noopener">정보 오류 신고</a>'
+        "</div>",
         "",
     ]
 
@@ -323,7 +422,7 @@ def render_dataset(d: dict, site_cite: str) -> str:
         for t in trs:
             L += transition_block(d, t)
 
-    L += variables_block(d["variables"])
+    L += variables_block(d["variables"], d.get("time_convention"))
 
     # 받는 방법
     L += ["## 받는 방법", ""]
@@ -359,6 +458,13 @@ def render_dataset(d: dict, site_cite: str) -> str:
     # 인용
     cit = d["citations"]
     L += ["## 논문에 넣을 레퍼런스", ""]
+    L += [
+        '!!! warning "논문에 쓰기 전에 꼭 다시 확인하세요"',
+        "",
+        "    아래 인용 정보는 운영자가 정리한 것으로 오류가 있을 수 있습니다. DOI, 저자, 연도, 접근 날짜 표기 방식은 "
+        "제공 기관의 공식 데이터셋 페이지와 학술지 투고 규정에서 **반드시 더블체크**한 뒤 사용하세요.",
+        "",
+    ]
     L += citation_block(cit.get("dataset", []), "데이터셋 인용")
     L += citation_block(cit.get("papers", []), "논문 인용")
     if cit.get("acknowledgement"):
@@ -378,22 +484,72 @@ def render_dataset(d: dict, site_cite: str) -> str:
     return "\n".join(L)
 
 
-def group_table(entries, link_prefix: str) -> list[str]:
-    L = ["| 자료 | 종류 | 기간 | 상태 | 마지막 확인 |", "|---|---|---|---|---|"]
+STATUS_ORDER = {"active": 0, "delayed": 1, "deprecated": 2, "ended": 3}
+
+
+def _first_value(text: str, rules) -> float | str:
+    """문장에서 가장 먼저 나오는 값 (rules: [(정규식, 변환 함수)])"""
+    hits = []
+    for pat, conv in rules:
+        for m in re.finditer(pat, str(text or "")):
+            hits.append((m.start(), conv(m)))
+    return round(min(hits)[1], 2) if hits else ""
+
+
+def spatial_km(text: str):
+    """수평 해상도 정렬용 값: 처음 표기된 대표 격자를 km로 환산 (1° ≈ 111 km)"""
+    return _first_value(text, [
+        (r"(\d+)/(\d+)\s*°", lambda m: 111 * float(m.group(1)) / float(m.group(2))),
+        (r"(?<![\d/.])(\d+(?:\.\d+)?)\s*°", lambda m: 111 * float(m.group(1))),
+        (r"(\d+(?:\.\d+)?)\s*km", lambda m: float(m.group(1))),
+    ])
+
+
+def temporal_hours(text: str):
+    """시간 해상도 정렬용 값: 처음 표기된 간격을 시간 단위로"""
+    return _first_value(text, [
+        (r"(\d+(?:\.\d+)?)\s*시간", lambda m: float(m.group(1))),
+        (r"(\d+)\s*일", lambda m: 24 * float(m.group(1))),
+        (r"(?<!\d)(매일|하루|일평균|일별|일·|일\b|일 )", lambda m: 24.0),
+        (r"주간|주별|주\b", lambda m: 168.0),
+        (r"월평균|월별|월\b|매월", lambda m: 720.0),
+    ])
+
+
+def group_table(entries, href_prefix: str) -> list[str]:
+    """분야·전체 목록 표 (열 머리를 누르면 정렬). href_prefix는 이 표가 실린 페이지에서 데이터셋 페이지까지의 경로"""
+    rows = ""
     for d, label, cross in entries:
-        mark = " ↔" if cross else ""
-        L.append(
-            f"| [{nt(label)}]({link_prefix}{d['id']}.md){mark} | {CATEGORY[d['category']]} | {period_text(d['period'])} "
-            f"| {badge(d['status'])} | {d['last_verified']} |"
+        r = d.get("resolution") or {}
+        sp, tm = oneline(r.get("spatial") or "-"), oneline(r.get("temporal") or "-")
+        mark = ' <span class="hint" title="다른 분야에도 실린 자료">↔</span>' if cross else ""
+        rows += (
+            "<tr>"
+            f'<td data-sort="{html.escape(label)}"><a href="{href_prefix}{d["id"]}/">{nt(html.escape(label))}</a>{mark}</td>'
+            f"<td>{CATEGORY[d['category']]}</td>"
+            f'<td class="nowrap" data-sort="{d["period"]["start"]}">{period_text(d["period"])}</td>'
+            f'<td class="col-res" data-sort="{spatial_km(sp)}">{html.escape(sp)}</td>'
+            f'<td class="col-res" data-sort="{temporal_hours(tm)}">{html.escape(tm)}</td>'
+            f'<td data-sort="{STATUS_ORDER[d["status"]]}">{badge(d["status"])}</td>'
+            f'<td class="nowrap">{d["last_verified"]}</td>'
+            "</tr>"
         )
-    return L
+    return [
+        '<div class="list-table"><table>'
+        "<thead><tr><th>자료</th><th>종류</th><th>기간</th>"
+        '<th title="처음 표기된 대표 격자 기준으로 정렬 (1° ≈ 111 km)">수평 해상도</th>'
+        '<th title="처음 표기된 간격 기준으로 정렬">시간 해상도</th><th>상태</th><th>마지막 확인</th></tr></thead>'
+        f"<tbody>{rows}</tbody></table></div>"
+    ]
 
 
 def render_index(datasets: list[dict]) -> str:
     L = [
+        "---", "hide:", "  - navigation", "  - toc", "---", "",
         "# 전체 데이터셋 목록", "",
         f"모두 {len(datasets)}개 자료를 공식 출처에서 직접 확인해 정리했습니다. **마지막 확인** 날짜 이후 바뀌었을 수 있습니다.", "",
-        "↔ 표시는 다른 분야에도 함께 실린 자료입니다.", "",
+        "↔ 표시는 다른 분야에도 함께 실린 자료입니다. 표의 열 이름을 누르면 그 열 기준으로 정렬됩니다 "
+        "(해상도는 각 칸에 처음 적힌 대표 값 기준).", "",
     ]
     pl = placements(datasets)
     for dom, (label, groups) in DOMAINS.items():
@@ -407,10 +563,10 @@ def render_index(datasets: list[dict]) -> str:
 def render_domain(dom: str, datasets: list[dict]) -> str:
     label, groups = DOMAINS[dom]
     pl = placements(datasets)
-    L = [f"# {label}", "", DOMAIN_INTRO[dom], ""]
+    L = ["---", "hide:", "  - navigation", "  - toc", "---", "", f"# {label}", "", DOMAIN_INTRO[dom], ""]
     for g in groups:
         if (dom, g) in pl:
-            L += [f"## {g}", ""] + group_table(pl[(dom, g)], "../datasets/") + [""]
+            L += [f"## {g}", ""] + group_table(pl[(dom, g)], "../../datasets/") + [""]
     if any(cross for g in groups for _, _, cross in pl.get((dom, g), [])):
         L += ["↔ 다른 분야 페이지에도 함께 실린 자료입니다.", ""]
     return "\n".join(L) + "\n"
@@ -433,13 +589,43 @@ def notice_rows(pairs, link_prefix: str) -> list[str]:
 
 
 def render_notices(datasets: list[dict]) -> str:
-    L = [
+    """공지 모음 — 데이터셋·공지 구분으로 걸러 볼 수 있는 표"""
+    pairs = all_notices(datasets)
+    opts = ""
+    for dom, (label, _) in DOMAINS.items():
+        items = [d for d in datasets if d["domain"] == dom and d["notices"]]
+        if items:
+            opts += f'<optgroup label="{label}">' + "".join(
+                f'<option value="{d["id"]}">{html.escape(d["name"])} ({len(d["notices"])})</option>' for d in items
+            ) + "</optgroup>"
+    lv = "".join(
+        f'<label class="check"><input type="checkbox" name="nlevel" value="{k}" checked> '
+        f'<span class="level-{k}">{LEVEL[k][0]}</span></label>'
+        for k in LEVEL
+    )
+    rows = "".join(
+        f'<tr data-dataset="{d["id"]}" data-level="{n["level"]}">'
+        f'<td class="nowrap">{n["date"]}</td>'
+        f'<td><a href="../datasets/{d["id"]}/">{nt(html.escape(d["name"]))}</a></td>'
+        f'<td><span class="level-{n["level"]}">{LEVEL[n["level"]][0]}</span></td>'
+        f'<td><a href="{html.escape(n["source"])}" target="_blank" rel="noopener">{html.escape(n["title"])}</a></td></tr>'
+        for d, n in pairs
+    )
+    return "\n".join([
         "# 공지 모음", "",
         "데이터 제공 중단, 서비스 이전, 품질 문제처럼 **분석에 영향을 주는 공지**를 최신순으로 모았습니다.",
         "각 항목의 링크는 원문 공지로 연결됩니다. 새 공지를 메일로 받고 싶다면 [알림 신청](subscribe.md)을 이용하세요.", "",
-    ]
-    L += notice_rows(all_notices(datasets), "datasets/")
-    return "\n".join(L) + "\n"
+        '<div class="notice-filter cdg-form" id="notice-filter">'
+        '<label class="field">데이터셋<select id="nf-dataset"><option value="">전체 데이터셋</option>' + opts + "</select></label>"
+        f'<div class="nf-levels"><span class="nf-label">구분</span>{lv}</div>'
+        f'<p class="hint" id="nf-count">전체 {len(pairs)}건</p></div>',
+        "",
+        '<div><table id="notice-table">'
+        "<thead><tr><th>날짜</th><th>데이터셋</th><th>구분</th><th>내용</th></tr></thead>"
+        f"<tbody>{rows}</tbody></table></div>",
+        '<p class="hint" id="nf-empty" hidden>조건에 맞는 공지가 없습니다.</p>',
+        "",
+    ]) + "\n"
 
 
 def render_transitions(datasets: list[dict]) -> str:
@@ -469,6 +655,62 @@ def render_transitions(datasets: list[dict]) -> str:
             L += block
             L += [f"[{nt(d['name'])} 페이지에서 자세히 보기 →](datasets/{d['id']}.md)", ""]
     return "\n".join(L) + "\n"
+
+
+def compare_data(datasets: list[dict]) -> list[dict]:
+    out = []
+    for d in datasets:
+        r = d.get("resolution") or {}
+        cit = d["citations"]
+        dois = [c["doi"] for c in (cit.get("dataset") or []) + (cit.get("papers") or []) if c.get("doi")]
+        groups = []
+        for g in d["variables"]["groups"]:
+            items = []
+            for it in g["items"]:
+                it = norm_item(it, g)
+                items.append({"t": oneline(it["text"]), "k": it["kind"], "b": kind_badge(it).strip()})
+            groups.append({"n": g["name"], "i": items})
+        s = d.get("successor") or {}
+        out.append({
+            "id": d["id"], "name": d["name"], "domain": domain_label(d["domain"]), "group": d["group"],
+            "category": CATEGORY[d["category"]], "provider": d["provider"], "status": badge(d["status"]),
+            "period": period_text(d["period"]), "spatial": oneline(r.get("spatial") or "-"),
+            "vertical": oneline(r.get("vertical") or "-"), "temporal": oneline(r.get("temporal") or "-"),
+            "update": oneline(d.get("update") or "-"), "license": oneline(d.get("license") or "-"),
+            "account": "예" if d.get("account_required") else "아니오",
+            "time": oneline((d.get("time_convention") or {}).get("summary") or "-"),
+            "nvars": sum(len(g["items"]) for g in d["variables"]["groups"]),
+            "doi": dois[:2], "successor": s.get("name") or "-", "groups": groups,
+        })
+    return out
+
+
+def compare_app(datasets: list[dict]) -> str:
+    opts = ""
+    for dom, (label, groups) in DOMAINS.items():
+        items = [d for d in datasets if d["domain"] == dom]
+        opts += f'<optgroup label="{label}">' + "".join(
+            f'<option value="{d["id"]}">{html.escape(d["name"])}</option>' for d in items
+        ) + "</optgroup>"
+    selects = "".join(
+        f'<label class="field">자료 {i + 1}<select class="cmp-select" data-slot="{i}">'
+        f'<option value="">— 선택 —</option>{opts}</select></label>'
+        for i in range(4)
+    )
+    chips = "".join(
+        f'<button type="button" class="chip" data-q="{q}">{q}</button>'
+        for q in ["강수", "기온", "바람", "기압", "복사", "습도", "해수면온도", "해빙", "염분", "플럭스"]
+    )
+    data = json.dumps(compare_data(datasets), ensure_ascii=False).replace("</", "<\\/")
+    return (
+        '<div class="cdg-form compare-controls"><div class="cmp-selects">' + selects + "</div>"
+        '<label class="field">변수 찾기 <span class="hint">— 고른 자료들에서 같은 종류의 변수를 나란히 봅니다 (한국어 이름이나 변수명)</span>'
+        '<input type="text" id="cmp-q" placeholder="예) 강수, tp, prate, sea ice"></label>'
+        f'<div class="chips">{chips}</div></div>'
+        '<p class="hint" id="cmp-empty">위에서 비교할 자료를 2개 이상 골라주세요. 고른 내용은 주소에 저장되어 그대로 공유할 수 있습니다.</p>'
+        '<div class="table-scroll"><table id="cmp-table" hidden></table></div>'
+        f'<script type="application/json" id="cmp-data">{data}</script>'
+    )
 
 
 def domain_summary(datasets: list[dict]) -> str:
@@ -503,8 +745,14 @@ def build_nav_sections(datasets: list[dict], base_path: str) -> list[dict]:
 
 
 def on_config(config):
-    global _datasets
+    global _datasets, _repo_url, _site_url
     _datasets = load_datasets()
+    _repo_url = (config.get("repo_url") or "").rstrip("/")
+    _site_url = config.get("site_url") or "/"
+    prov = DATA_DIR.parent / "providers.yaml"
+    if prov.exists():
+        config["extra"]["providers"] = yaml.safe_load(prov.read_text(encoding="utf-8")) or []
+    config["extra"]["disclaimer"] = DISCLAIMER
     base = urlparse(config.get("site_url") or "/").path or "/"
     if not base.endswith("/"):
         base += "/"
@@ -643,6 +891,10 @@ def on_page_markdown(markdown, page, config, files):
         markdown = markdown.replace("<!-- DOMAIN_SUMMARY -->", domain_summary(_datasets))
     if "<!-- RECENT_NOTICES -->" in markdown:
         markdown = markdown.replace("<!-- RECENT_NOTICES -->", "\n".join(notice_rows(all_notices(_datasets)[:6], "datasets/")))
+    if "<!-- COMPARE_APP -->" in markdown:
+        markdown = markdown.replace("<!-- COMPARE_APP -->", compare_app(_datasets))
+    if "<!-- DISCLAIMER -->" in markdown:
+        markdown = markdown.replace("<!-- DISCLAIMER -->", DISCLAIMER)
     if "<!-- DATASET_COUNT -->" in markdown:
         markdown = markdown.replace("<!-- DATASET_COUNT -->", str(len(_datasets)))
     if "<!-- BUILD_DATE -->" in markdown:
