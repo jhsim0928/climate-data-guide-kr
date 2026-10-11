@@ -34,8 +34,8 @@
       ["상태", function (d) { return d.status; }],
       ["제공 기관", function (d) { return esc(d.provider); }],
       ["기간", function (d) { return esc(d.period); }],
-      ["수평 해상도", function (d) { return esc(d.spatial); }],
-      ["시간 해상도", function (d) { return esc(d.temporal_s); }],
+      ["제공 해상도", function (d) { return esc(d.spatial) + ' <span class="hint">(km는 적도 기준 근사)</span>'; }],
+      ["시간 간격", function (d) { return esc(d.temporal_s); }],
       ["연직 해상도", function (d) { return esc(d.vertical); }],
       ["시간 간격 (세부)", function (d) { return esc(d.temporal); }],
       ["시간 표기 규칙", function (d) { return codeText(d.time); }],
@@ -103,7 +103,7 @@
     render();
   }
 
-  // ── 공지 모음 필터 ────────────────────────────────────────
+  // ── 중요 공지 필터 ────────────────────────────────────────
   function setupNoticeFilter() {
     var box = document.getElementById("notice-filter");
     var table = document.getElementById("notice-table");
@@ -260,7 +260,33 @@
     document.querySelectorAll(".md-typeset table").forEach(makeSortable);
   }
 
+  // ── 세대별 비교: 표에서 누른 항목만 아래에 표시 ─────────────
+  function setupGenerations() {
+    var opens = document.querySelectorAll(".gen-open");
+    if (!opens.length || opens[0].dataset.bound) return;
+    var details = document.querySelectorAll(".gen-detail");
+    var empty = document.getElementById("gen-empty");
+    function show(key, scroll) {
+      var found = false;
+      details.forEach(function (el) { el.hidden = el.id !== key; if (el.id === key) found = true; });
+      document.querySelectorAll(".gen-table tr[data-key]").forEach(function (tr) {
+        tr.classList.toggle("is-selected", tr.dataset.key === key);
+      });
+      if (empty) empty.hidden = found;
+      if (found) {
+        try { history.replaceState(null, "", "#" + key); } catch (e) {}
+        if (scroll) document.getElementById(key).scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    }
+    opens.forEach(function (b) {
+      b.dataset.bound = "1";
+      b.addEventListener("click", function () { show(b.getAttribute("data-key"), true); });
+    });
+    if (location.hash) show(decodeURIComponent(location.hash.slice(1)), true);
+  }
+
   function init() {
+    setupGenerations();
     setupPickCompare();
     setupSortableTables();
     setupCompare();

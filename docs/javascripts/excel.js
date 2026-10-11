@@ -1,0 +1,149 @@
+// 표를 엑셀(.xlsx) 파일로 저장 — 외부 라이브러리 없이 브라우저에서 바로 만듭니다.
+// 화면에 보이는 그대로(정렬 순서, 필터로 숨긴 행 제외, 비교표는 고른 자료만) 저장합니다.
+(function () {
+  // ── ZIP(무압축) 만들기 ─────────────────────────────────
+  var CRC_TABLE = (function () {
+    var t = new Uint32Array(256);
+    for (var n = 0; n < 256; n++) {
+      var c = n;
+      for (var k = 0; k < 8; k++) c = c & 1 ? 0xedb88320 ^ (c >>> 1) : c >>> 1;
+      t[n] = c >>> 0;
+    }
+    return t;
+  })();
+  function crc32(bytes) {
+    var c = 0xffffffff;
+    for (var i = 0; i < bytes.length; i++) c = CRC_TABLE[(c ^ bytes[i]) & 0xff] ^ (c >>> 8);
+    return (c ^ 0xffffffff) >>> 0;
+  }
+  function u16(v) { return [v & 0xff, (v >>> 8) & 0xff]; }
+  function u32(v) { return [v & 0xff, (v >>> 8) & 0xff, (v >>> 16) & 0xff, (v >>> 24) & 0xff]; }
+  function zip(files) {
+    var enc = new TextEncoder(), parts = [], central = [], offset = 0;
+    files.forEach(function (f) {
+      var name = enc.encode(f.name), data = enc.encode(f.data), crc = crc32(data);
+      var local = [].concat([0x50, 0x4b, 0x03, 0x04], u16(20), u16(0x0800), u16(0), u16(0), u16(0x21),
+        u32(crc), u32(data.length), u32(data.length), u16(name.length), u16(0));
+      parts.push(new Uint8Array(local), name, data);
+      central.push([].concat([0x50, 0x4b, 0x01, 0x02], u16(20), u16(20), u16(0x0800), u16(0), u16(0), u16(0x21),
+        u32(crc), u32(data.length), u32(data.length), u16(name.length), u16(0), u16(0), u16(0), u16(0), u32(0),
+        u32(offset)), name);
+      offset += local.length + name.length + data.length;
+    });
+    var cdSize = 0;
+    central.forEach(function (c, i) {
+      if (i % 2 === 0) { parts.push(new Uint8Array(c)); cdSize += c.length; }
+      else { parts.push(c); cdSize += c.length; }
+    });
+    parts.push(new Uint8Array([].concat([0x50, 0x4b, 0x05, 0x06], u16(0), u16(0), u16(files.length),
+      u16(files.length), u32(cdSize), u32(offset), u16(0))));
+    return new Blob(parts, { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" });
+  }
+
+  // ── XLSX 구성 ──────────────────────────────────────────
+  function xmlEsc(s) {
+    return String(s).replace(/[<>&"]/g, function (c) {
+      return { "<": "&lt;", ">": "&gt;", "&": "&amp;", '"': "&quot;" }[c];
+    }).replace(/[\u0000-\u0008\u000b\u000c\u000e-\u001f]/g, "");
+  }
+  function colName(i) {
+    var s = "";
+    for (i++; i > 0; i = Math.floor((i - 1) / 26)) s = String.fromCharCode(65 + ((i - 1) % 26)) + s;
+    return s;
+  }
+  function buildXlsx(rows, sheetName) {
+    var widths = [];
+    var body = rows.map(function (row, r) {
+      return '<row r="' + (r + 1) + '">' + row.map(function (v, c) {
+        var ref = colName(c) + (r + 1), style = r === 0 ? ' s="1"' : ' s="2"';
+        widths[c] = Math.max(widths[c] || 8, Math.min(60, String(v).length * 1.6 + 2));
+        if (r > 0 && /^-?\d+(\.\d+)?$/.test(v) && v.length < 15) return '<c r="' + ref + '"' + style + "><v>" + v + "</v></c>";
+        return '<c r="' + ref + '"' + style + ' t="inlineStr"><is><t xml:space="preserve">' + xmlEsc(v) + "</t></is></c>";
+      }).join("") + "</row>";
+    }).join("");
+    var cols = "<cols>" + widths.map(function (w, i) {
+      return '<col min="' + (i + 1) + '" max="' + (i + 1) + '" width="' + w.toFixed(1) + '" customWidth="1"/>';
+    }).join("") + "</cols>";
+    var NS = 'xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"';
+    var REL = "http://schemas.openxmlformats.org/officeDocument/2006/relationships";
+    return zip([
+      { name: "[Content_Types].xml", data: '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/xl/workbook.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml"/><Override PartName="/xl/worksheets/sheet1.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/><Override PartName="/xl/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.styles+xml"/></Types>' },
+      { name: "_rels/.rels", data: '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="' + REL + '/officeDocument" Target="xl/workbook.xml"/></Relationships>' },
+      { name: "xl/workbook.xml", data: '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><workbook ' + NS + ' xmlns:r="' + REL + '"><sheets><sheet name="' + xmlEsc(sheetName) + '" sheetId="1" r:id="rId1"/></sheets></workbook>' },
+      { name: "xl/_rels/workbook.xml.rels", data: '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="' + REL + '/worksheet" Target="worksheets/sheet1.xml"/><Relationship Id="rId2" Type="' + REL + '/styles" Target="styles.xml"/></Relationships>' },
+      { name: "xl/styles.xml", data: '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><styleSheet ' + NS + '><fonts count="2"><font><sz val="11"/><name val="Malgun Gothic"/></font><font><b/><sz val="11"/><name val="Malgun Gothic"/></font></fonts><fills count="3"><fill><patternFill patternType="none"/></fill><fill><patternFill patternType="gray125"/></fill><fill><patternFill patternType="solid"><fgColor rgb="FFE8EEFC"/><bgColor indexed="64"/></patternFill></fill></fills><borders count="1"><border><left/><right/><top/><bottom/><diagonal/></border></borders><cellStyleXfs count="1"><xf numFmtId="0" fontId="0" fillId="0" borderId="0"/></cellStyleXfs><cellXfs count="3"><xf numFmtId="0" fontId="0" fillId="0" borderId="0" xfId="0"/><xf numFmtId="0" fontId="1" fillId="2" borderId="0" xfId="0" applyFont="1" applyFill="1" applyAlignment="1"><alignment vertical="top" wrapText="1"/></xf><xf numFmtId="0" fontId="0" fillId="0" borderId="0" xfId="0" applyAlignment="1"><alignment vertical="top" wrapText="1"/></xf></cellXfs><cellStyles count="1"><cellStyle name="Normal" xfId="0" builtinId="0"/></cellStyles></styleSheet>' },
+      { name: "xl/worksheets/sheet1.xml", data: '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><worksheet ' + NS + '><sheetViews><sheetView workbookViewId="0"><pane ySplit="1" topLeftCell="A2" activePane="bottomLeft" state="frozen"/></sheetView></sheetViews>' + cols + "<sheetData>" + body + "</sheetData></worksheet>" }
+    ]);
+  }
+
+  // ── 화면의 표 → 행 목록 ────────────────────────────────
+  function cellText(cell) {
+    var c = cell.cloneNode(true);
+    c.querySelectorAll("input, .hint, script").forEach(function (e) { e.remove(); });
+    c.querySelectorAll("br, li").forEach(function (e) { e.insertAdjacentText("beforebegin", "\n"); });
+    return c.textContent.replace(/[ \t]+/g, " ").replace(/\n\s*/g, "\n").replace(/↕|▲|▼|¶/g, "").trim();
+  }
+  function tableRows(table) {
+    var skip = [];
+    var rows = [];
+    Array.prototype.forEach.call(table.rows, function (tr) {
+      if (tr.hidden || tr.style.display === "none") return;
+      var row = [];
+      Array.prototype.forEach.call(tr.cells, function (cell, i) {
+        if (cell.classList.contains("pick-col")) { skip[i] = true; return; }
+        row.push(cellText(cell));
+      });
+      rows.push(row);
+    });
+    return rows;
+  }
+  function tableTitle(table) {
+    var page = ((document.querySelector(".md-content__inner h1") || {}).textContent || document.title).replace("¶", "").trim();
+    if (table.id === "cmp-table") return page;
+    // 표 바로 위의 소제목(h2·h3)을 찾아 파일 이름에 붙임
+    var found = {}, node = table, stop = document.querySelector(".md-content__inner");
+    while (node && node !== stop && !(found.H2)) {
+      if (node.previousElementSibling) {
+        node = node.previousElementSibling;
+        if (/^H[23]$/.test(node.tagName) && !found[node.tagName]) found[node.tagName] = node.textContent.replace("¶", "").trim();
+      } else {
+        node = node.parentElement;
+      }
+    }
+    var parts = [found.H2, found.H3].filter(Boolean);
+    return parts.length ? page + " - " + parts.join(" ") : page;
+  }
+  function download(table) {
+    var rows = tableRows(table);
+    if (rows.length < 2) { alert("저장할 내용이 없습니다."); return; }
+    var title = tableTitle(table);
+    if (table.id === "cmp-table") title = "자료 비교 - " + rows[0].slice(1).join(" vs ");
+    var safe = title.replace(/[\\/:*?"<>|\[\]]/g, "").slice(0, 80);
+    var blob = buildXlsx(rows, safe.replace(/[^0-9A-Za-z가-힣 _-]/g, "").slice(0, 31) || "Sheet1");
+    var a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = safe + ".xlsx";
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 1000);
+  }
+
+  // ── 모든 표에 "엑셀로 저장" 버튼 ──────────────────────
+  function addButtons() {
+    document.querySelectorAll(".md-typeset table").forEach(function (table) {
+      if (table.dataset.xlsx) return;
+      table.dataset.xlsx = "1";
+      var anchor = table.closest(".md-typeset__scrollwrap") || table.closest(".table-scroll") || table;
+      var bar = document.createElement("div");
+      bar.className = "table-tools";
+      bar.innerHTML = '<button type="button" class="xlsx-btn" title="화면에 보이는 그대로 엑셀 파일로 저장">엑셀로 저장</button>';
+      bar.querySelector("button").addEventListener("click", function () { download(table); });
+      anchor.parentNode.insertBefore(bar, anchor);
+      if (table.id === "cmp-table") bar.classList.add("cmp-tools");
+    });
+  }
+
+  function init() { setTimeout(addButtons, 0); }  // 다른 스크립트가 표를 정리한 뒤 실행
+  if (typeof document$ !== "undefined") document$.subscribe(init);
+  else document.addEventListener("DOMContentLoaded", init);
+})();

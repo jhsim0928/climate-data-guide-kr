@@ -12,7 +12,7 @@ hide:
 !!! warning "이용 전에 꼭 읽어주세요"
     <!-- DISCLAIMER -->
 
-[자료 비교하기](compare.md){ .md-button .md-button--primary } [전체 목록](datasets/index.md){ .md-button } [전환 가이드](transitions.md){ .md-button }
+[자료 비교하기](compare.md){ .md-button .md-button--primary } [전체 목록](datasets/index.md){ .md-button } [세대별 비교](transitions.md){ .md-button }
 
 ## 분야별 자료
 
@@ -32,7 +32,7 @@ hide:
 - **변수를 쓸 때**: 각 변수 옆의 **순간값 · 평균 · 누적** 표시와 *시간 표기 규칙*을 확인합니다. 같은 3시간 자료라도 의미가 다를 수 있습니다.
 - **자료를 받을 때**: 각 데이터셋 페이지의 *받는 방법*과 *예시 코드*를 따라 합니다.
 - **논문을 쓸 때**: *논문에 넣을 레퍼런스*에서 인용문과 BibTeX를 복사합니다.
-- **새 자료로 옮길 때**: [전환 가이드](transitions.md)에서 이전 자료와 무엇이 달라졌는지, 바꿔 쓸 때 주의할 점을 확인합니다.
+- **새 자료로 옮길 때**: [세대별 비교](transitions.md)에서 이전 자료와 무엇이 달라졌는지, 바꿔 쓸 때 주의할 점을 확인합니다.
 - **변경 소식을 놓치기 싫을 때**: [알림 신청](subscribe.md)에서 데이터셋과 공지 구분을 골라 메일로 받습니다. *(준비 중)*
 - **필요한 데이터가 없을 때**: [데이터셋 제안](suggest.md)으로 알려주세요.
 

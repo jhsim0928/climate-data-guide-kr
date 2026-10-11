@@ -185,7 +185,7 @@ details.hint summary { cursor: pointer; }
 .table-scroll { overflow-x: auto; margin: 1em 0; }
 .md-typeset .table-scroll table { display: table; margin: 0; }
 
-/* ── 공지 모음 필터 ─────────────────────────────────────── */
+/* ── 중요 공지 필터 ─────────────────────────────────────── */
 .notice-filter { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 0.4em 1.4em; max-width: none; margin: 1em 0 0.4em; }
 .notice-filter .field { margin: 0; min-width: 16rem; }
 .notice-filter .nf-levels { display: flex; align-items: center; gap: 0.9em; padding-bottom: 0.4em; }
@@ -208,51 +208,6 @@ details.hint summary { cursor: pointer; }
 .md-typeset .cmp-vars { margin: 0; padding-left: 1em; }
 .md-typeset .cmp-vars li { margin: 0 0 0.45em; }
 .cmp-var-row { background: var(--md-code-bg-color); }
-
-/* ── 하단: 데이터 제공 기관 회전 띠 ─────────────────────── */
-.provider-strip {
-  background: var(--md-default-bg-color);
-  border-top: 1px solid var(--md-default-fg-color--lightest);
-  padding: 0.9rem 0 1rem;
-}
-.provider-strip__title {
-  margin: 0 auto 0.6rem; max-width: 61rem; padding: 0 1rem;
-  font-size: 0.7rem; font-weight: 700; color: var(--md-default-fg-color--light);
-}
-.provider-strip__title span { font-weight: 400; }
-.provider-strip__viewport {
-  overflow: hidden;
-  -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
-          mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
-}
-.provider-strip__track {
-  display: flex; gap: 0.7rem; width: max-content; margin: 0; padding: 0; list-style: none;
-  animation: provider-scroll 70s linear infinite;
-}
-.provider-strip:hover .provider-strip__track,
-.provider-strip:focus-within .provider-strip__track { animation-play-state: paused; }
-@keyframes provider-scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-.provider-strip__track li { flex: none; }
-.provider-strip__track a {
-  display: flex; align-items: center; gap: 0.55rem;
-  padding: 0.35rem 0.9rem 0.35rem 0.4rem; border-radius: 999px;
-  border: 1px solid var(--md-default-fg-color--lightest);
-  color: var(--md-default-fg-color); font-size: 0.72rem; text-decoration: none; white-space: nowrap;
-  transition: border-color 0.15s, transform 0.15s;
-}
-.provider-strip__track a:hover, .provider-strip__track a:focus-visible {
-  border-color: var(--md-accent-fg-color); transform: translateY(-1px);
-}
-.provider-mono {
-  display: inline-grid; place-items: center; min-width: 2.2rem; height: 2.2rem; padding: 0 0.35rem;
-  border-radius: 999px; background: var(--c); color: #fff;
-  font-size: 0.56rem; font-weight: 800; letter-spacing: 0.02em;
-}
-.provider-logo { height: 2.2rem; width: auto; max-width: 5rem; object-fit: contain; }
-@media (prefers-reduced-motion: reduce) {
-  .provider-strip__track { animation: none; flex-wrap: wrap; width: auto; justify-content: center; padding: 0 1rem; }
-  .provider-strip__track li[aria-hidden="true"] { display: none; }
-}
 
 /* ── 면책 문구 ──────────────────────────────────────────── */
 .cdg-disclaimer { margin: 0.4em 0; max-width: 46rem; line-height: 1.6; opacity: 0.85; }
@@ -290,3 +245,32 @@ details.hint summary { cursor: pointer; }
   background: var(--md-accent-fg-color); color: #fff; text-decoration: none;
 }
 .pick-bar .pick-go.is-disabled { opacity: 0.4; cursor: not-allowed; }
+
+/* ── 세대별 비교 ────────────────────────────────────────── */
+.lineage { margin: 1em 0 1.4em; padding: 0.8em 1em; border-radius: 0.4rem; background: var(--md-code-bg-color); }
+.md-typeset .lineage-title { margin: 0 0 0.4em; font-size: 0.75em; font-weight: 700; color: var(--md-default-fg-color--light); }
+.md-typeset .lineage-chain { margin: 0.2em 0; font-size: 0.85em; }
+.lineage .arrow, .gen-open .arrow { color: var(--md-accent-fg-color); font-weight: 700; margin: 0 0.15em; }
+.lineage .planned { color: var(--md-default-fg-color--light); font-style: italic; }
+.md-typeset .gen-open {
+  font: inherit; color: var(--md-typeset-a-color); background: none; border: 0; padding: 0;
+  cursor: pointer; text-align: left;
+}
+.md-typeset .gen-open:hover { text-decoration: underline; }
+.md-typeset .gen-table tr.is-selected td { background: var(--md-accent-fg-color--transparent); }
+.gen-detail { margin-top: 1.5em; padding-top: 0.5em; border-top: 2px solid var(--md-accent-fg-color); scroll-margin-top: 4rem; }
+.md-typeset .gen-table td:first-child { white-space: normal; min-width: 16rem; }
+.md-typeset .gen-table td:not(:first-child) { white-space: nowrap; }
+.md-typeset .gen-open { white-space: normal; line-height: 1.5; }
+
+/* ── 표 엑셀 저장 버튼 ─────────────────────────────────── */
+.table-tools { display: flex; justify-content: flex-end; margin: 0.8em 0 -0.4em; }
+.md-typeset .xlsx-btn {
+  display: inline-flex; align-items: center; gap: 0.35em; cursor: pointer;
+  padding: 0.2em 0.75em; border-radius: 999px; font: inherit; font-size: 0.72em;
+  border: 1px solid var(--md-default-fg-color--lightest); background: var(--md-default-bg-color);
+  color: var(--md-default-fg-color--light);
+}
+.md-typeset .xlsx-btn::before { content: "⤓"; font-weight: 700; color: #1d6f42; }
+.md-typeset .xlsx-btn:hover { border-color: #1d6f42; color: #1d6f42; }
+.cmp-tools:has(+ * table[hidden]), .cmp-tools:has(+ table[hidden]) { display: none; }

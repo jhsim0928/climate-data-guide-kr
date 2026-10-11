@@ -58,9 +58,8 @@ nav:
       - 자료 비교: compare.md
   # 대기·해양·해빙 메뉴는 data/datasets/*.yaml 의 domain·group·order 값으로 자동 생성됩니다
   - __DATA_SECTIONS__: auto
-  - 공지·전환:
-      - 공지 모음: notices.md
-      - 전환 가이드: transitions.md
+  - 세대별 비교: transitions.md
+  - 중요 공지: notices.md
   - 참여:
       - 알림 신청: subscribe.md
       - 데이터셋 제안: suggest.md
@@ -87,6 +86,7 @@ extra_javascript:
   - javascripts/notranslate.js
   - javascripts/forms.js
   - javascripts/site.js
+  - javascripts/excel.js
 
 extra:
   # 데이터셋 페이지 하단 "이 사이트 인용" 안내에 들어가는 문장

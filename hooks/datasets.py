@@ -2,7 +2,7 @@
 
 - 각 YAML → datasets/<id>.md (가상 파일, 디스크에 쓰지 않음)
 - 분야별 소개 → domains/<atmosphere|ocean|seaice>.md
-- 전체 목록 → datasets/index.md, 공지 모음 → notices.md
+- 전체 목록 → datasets/index.md, 중요 공지 → notices.md
 - 위쪽 메뉴(대기·해양·해빙)도 YAML의 domain/group/order 값으로 자동 구성
 - 본문의 <!-- DOMAIN_SUMMARY -->, <!-- RECENT_NOTICES -->, <!-- SUBSCRIBE_FORM -->, <!-- SUGGEST_FORM --> 자리를 채움
 
@@ -66,9 +66,25 @@ REQUIRED = [
 DATE_RE = re.compile(r"^\d{4}-\d{2}(-\d{2})?$")
 
 # 자료 간 비교를 쉽게 하기 위한 대표 해상도 표기 (세부 내용은 각 데이터셋 페이지에)
-SPATIAL_SHORT_RE = re.compile(r"^\d+(\.\d+)? km \(\d+(\.\d+)?°\)$")
+SPATIAL_SHORT_RE = re.compile(r"^\d+(\.\d+)? km \(\d+(\.\d+)?°(×\d+(\.\d+)?°)?\)$")
 TEMPORAL_SHORT = ["1시간", "3시간", "6시간", "1일", "7일", "1개월"]
 TEMPORAL_HOURS = {"1시간": 1, "3시간": 3, "6시간": 6, "1일": 24, "7일": 168, "1개월": 720}
+
+# 해상도 표기 주의 — 목록·비교·데이터셋 페이지에 접힌 상자로 표시
+RES_NOTE = [
+    "**제공 해상도**는 모델 원본 해상도가 아니라, 주 제공처에서 기본으로 내려받는 격자 간격입니다. 같은 자료도 제공처·제품에 따라 다른 격자로 제공될 수 있으니, 실제로 받은 파일의 격자를 꼭 확인하세요.",
+    "km 값은 **적도 기준 근사값**(1° ≈ 111 km)입니다. 경도 방향 간격은 위도가 높아질수록 cos(위도)만큼 줄어, 위도 60°에서는 절반(0.25° ≈ 14 km)이 됩니다. 그래서 \"28 km\"는 어디서나 정확히 28 km가 아닙니다.",
+    "가우시안 격자는 위도 간격이 일정하지 않고, 해양 모델 격자(삼극·곡선 격자)는 지역마다 간격이 다릅니다. 위경도 간격이 다른 격자는 `0.5°×0.625°`(위도×경도)처럼 적었습니다.",
+    "해빙 위성자료의 극 평사도법·EASE2 격자는 km가 기준이고, 괄호 속 각도는 단순 환산값입니다. NSIDC 극 평사도법은 위도 70°에서만 표기 간격과 같고, 다른 위도에서는 실제 간격이 조금씩 다릅니다.",
+    "격자 간격이 곧 **실제로 구분되는 현상의 크기(실효 해상도)는 아닙니다.** 보통 격자 간격의 몇 배 크기부터 제대로 표현되며, 원본보다 촘촘하게 보간한 격자는 정보가 늘지 않습니다.",
+    "시간 해상도는 **가장 짧은 제공 간격**입니다. 변수마다 간격과 순간값·평균·누적 여부가 다를 수 있으니 각 자료 페이지의 '활용 가능한 변수'를 확인하세요.",
+]
+
+
+def res_note(collapsed: bool = True) -> list[str]:
+    head = '??? warning "해상도 표기 주의 — 꼭 읽어주세요"' if collapsed else '!!! warning "해상도 표기 주의"'
+    return [head, ""] + [f"    - {x}" for x in RES_NOTE] + [""]
+
 
 # 변수의 시간 특성 — 3시간 자료라도 순간값인지, 3시간 평균인지, 누적인지 구분하기 위함
 KIND = {
@@ -192,7 +208,7 @@ def validate(d: dict, src: Path) -> None:
         errors.append("time_convention.summary(시간 표기 규칙 요약)가 없어요")
     r = d.get("resolution") or {}
     if not SPATIAL_SHORT_RE.match(str(r.get("spatial_short", ""))):
-        errors.append('resolution.spatial_short는 "31 km (0.28°)" 형식으로 적어주세요')
+        errors.append('resolution.spatial_short는 "28 km (0.25°)" 또는 "56 km (0.5°×0.625°)" 형식으로 적어주세요')
     if r.get("temporal_short") not in TEMPORAL_SHORT:
         errors.append(f"resolution.temporal_short는 {TEMPORAL_SHORT} 중 하나")
     if not DATE_RE.match(str(d.get("last_verified", ""))):
@@ -407,7 +423,7 @@ def render_dataset(d: dict, site_cite: str) -> str:
         ("분야", ", ".join(d.get("domains") or [])),
         ("제공 기관", nt(d["provider"])),
         ("기간", period_text(d["period"])),
-        ("대표 해상도", f"{r.get('spatial_short')} · {r.get('temporal_short')} 간격"),
+        ("제공 해상도", f"{r.get('spatial_short')} · {r.get('temporal_short')} 간격 (km는 적도 기준 근사)"),
         ("수평 해상도 (세부)", r.get("spatial")),
         ("연직 해상도", r.get("vertical")),
         ("시간 해상도 (세부)", r.get("temporal")),
@@ -419,6 +435,7 @@ def render_dataset(d: dict, site_cite: str) -> str:
     L += [f"| {k} | {oneline(v)} |" for k, v in rows if v]
     if d["period"].get("note"):
         L += ["", f"*기간 참고:* {oneline(d['period']['note'])}"]
+    L += [""] + res_note()
     L += ["", "## 개요", "", oneline(d["summary"]), ""]
 
     # 이전 자료 → 이 자료로 넘어온 경우: 비교 내용이 있는 곳으로 안내
@@ -558,8 +575,8 @@ def group_table(entries, href_prefix: str, compare_href: str) -> list[str]:
     return [
         f'<div class="list-table" data-compare="{compare_href}"><table>'
         "<thead><tr><th>자료</th><th>종류</th><th>기간</th>"
-        '<th title="대표 수평 해상도 (세부는 각 자료 페이지)">수평 해상도</th>'
-        '<th title="가장 짧은 제공 간격 (세부는 각 자료 페이지)">시간 해상도</th><th>상태</th><th>마지막 확인</th></tr></thead>'
+        '<th title="주 제공처에서 받는 격자 간격 (km는 적도 기준 근사)">제공 해상도</th>'
+        '<th title="가장 짧은 제공 간격 (세부는 각 자료 페이지)">시간 간격</th><th>상태</th><th>마지막 확인</th></tr></thead>'
         f"<tbody>{rows}</tbody></table></div>"
     ]
 
@@ -570,9 +587,9 @@ def render_index(datasets: list[dict]) -> str:
         "# 전체 데이터셋 목록", "",
         f"모두 {len(datasets)}개 자료를 공식 출처에서 직접 확인해 정리했습니다. **마지막 확인** 날짜 이후 바뀌었을 수 있습니다.", "",
         "표의 열 이름을 누르면 정렬되고, 왼쪽 칸을 2개 이상 체크하면 **바로 비교**할 수 있습니다. "
-        "해상도는 쉽게 비교하도록 대표 값만 적었고(시간 해상도는 가장 짧은 제공 간격), 세부 내용은 각 자료 페이지에 있습니다. "
+        "해상도는 쉽게 비교하도록 **주 제공처에서 받는 격자** 기준 대표 값만 적었고(시간 해상도는 가장 짧은 제공 간격), 세부 내용은 각 자료 페이지에 있습니다. "
         "↔ 표시는 다른 분야에도 함께 실린 자료입니다.", "",
-    ]
+    ] + res_note()
     pl = placements(datasets)
     for dom, (label, groups) in DOMAINS.items():
         L += [f"## {label}", ""]
@@ -586,7 +603,7 @@ def render_domain(dom: str, datasets: list[dict]) -> str:
     label, groups = DOMAINS[dom]
     pl = placements(datasets)
     L = ["---", "hide:", "  - navigation", "  - toc", "---", "", f"# {label}", "", DOMAIN_INTRO[dom], "",
-         "표의 왼쪽 칸을 2개 이상 체크하면 바로 비교할 수 있고, 열 이름을 누르면 정렬됩니다.", ""]
+         "표의 왼쪽 칸을 2개 이상 체크하면 바로 비교할 수 있고, 열 이름을 누르면 정렬됩니다.", ""] + res_note()
     for g in groups:
         if (dom, g) in pl:
             L += [f"## {g}", ""] + group_table(pl[(dom, g)], "../../datasets/", "../../compare/") + [""]
@@ -612,7 +629,7 @@ def notice_rows(pairs, link_prefix: str) -> list[str]:
 
 
 def render_notices(datasets: list[dict]) -> str:
-    """공지 모음 — 데이터셋·공지 구분으로 걸러 볼 수 있는 표"""
+    """중요 공지 — 데이터셋·공지 구분으로 걸러 볼 수 있는 표"""
     pairs = all_notices(datasets)
     opts = ""
     for dom, (label, _) in DOMAINS.items():
@@ -635,7 +652,7 @@ def render_notices(datasets: list[dict]) -> str:
         for d, n in pairs
     )
     return "\n".join([
-        "# 공지 모음", "",
+        "# 중요 공지", "",
         "데이터 제공 중단, 서비스 이전, 품질 문제처럼 **분석에 영향을 주는 공지**를 최신순으로 모았습니다.",
         "각 항목의 링크는 원문 공지로 연결됩니다. 새 공지를 메일로 받고 싶다면 [알림 신청](subscribe.md)을 이용하세요.", "",
         '<div class="notice-filter cdg-form" id="notice-filter">'
@@ -651,32 +668,83 @@ def render_notices(datasets: list[dict]) -> str:
     ]) + "\n"
 
 
+def lineage_chains(datasets: list[dict]) -> list[list[tuple]]:
+    """to_id로 이어지는 세대 계보 (예: ERA-15 → ERA-40 → ERA-Interim → ERA5 → ERA6)"""
+    by_id = {d["id"]: d for d in datasets}
+    nxt, has_prev = {}, set()
+    for d in datasets:
+        for t in d.get("transitions") or []:
+            if t.get("to_id") and t["to_id"] != d["id"]:
+                nxt[d["id"]] = t
+                has_prev.add(t["to_id"])
+    chains = []
+    for start in [i for i in nxt if i not in has_prev]:
+        chain, cur = [(by_id[start]["name"], start, False)], start
+        while cur in nxt:
+            cur = nxt[cur]["to_id"]
+            chain.append((by_id[cur]["name"], cur, False))
+        # 마지막 자료에 예정된 후속(사이트 밖)이 있으면 덧붙임
+        for t in by_id[cur].get("transitions") or []:
+            if t["status"] == "planned" and not t.get("to_id"):
+                chain.append((t["to"], None, True))
+        chains.append(chain)
+    return chains
+
+
+def transition_key(d: dict, t: dict) -> str:
+    return "g-" + d["id"] + "-" + transition_anchor(t)
+
+
 def render_transitions(datasets: list[dict]) -> str:
+    """세대별 비교 — 표에서 항목을 누르면 그 변화만 아래에 표시"""
     pairs = [(d, t) for d in datasets for t in d.get("transitions") or []]
     L = [
-        "# 전환 가이드", "",
+        "---", "hide:", "  - navigation", "  - toc", "---", "",
+        "# 세대별 비교", "",
         "재분석자료와 관측 자료는 세대가 바뀌거나 새 버전이 나오면 기간, 해상도, 관측 입력, 변수 이름이 함께 바뀝니다.",
-        "옛 자료로 쓴 분석을 새 자료로 옮기거나, 두 자료를 비교할 때 무엇이 달라지는지 정리했습니다.", "",
-        "| 이전 | 이후 | 분야 | 상태 |", "|---|---|---|---|",
+        "아래 표에서 **항목을 누르면** 무엇이 달라졌는지와 바꿔 쓸 때 주의할 점이 표 아래에 나타납니다.", "",
     ]
+    chains = lineage_chains(datasets)
+    if chains:
+        L += ['<div class="lineage">', '<p class="lineage-title">자료 계보</p>']
+        for ch in chains:
+            parts = []
+            for name, did, planned in ch:
+                if did:
+                    parts.append(f'<a href="../datasets/{did}/">{nt(html.escape(name))}</a>')
+                else:
+                    parts.append(f'<span class="planned">{nt(html.escape(name))} (예정)</span>')
+            L.append('<p class="lineage-chain">' + ' <span class="arrow">→</span> '.join(parts) + "</p>")
+        L += ["</div>", ""]
+    rows = ""
     for d, t in pairs:
         state = "예정" if t["status"] == "planned" else "완료"
-        L.append(
-            f"| [{nt(t['from'])}](datasets/{d['id']}.md#{transition_anchor(t)}) | {nt(t['to'])} "
-            f"| {domain_label(d['domain'])} | {state} |"
+        key = transition_key(d, t)
+        rows += (
+            f'<tr data-key="{key}">'
+            f'<td data-sort="{html.escape(t["from"])}"><button type="button" class="gen-open" data-key="{key}">'
+            f'{nt(html.escape(t["from"]))} <span class="arrow">→</span> {nt(html.escape(t["to"]))}</button></td>'
+            f"<td>{domain_label(d['domain'])}</td>"
+            f'<td data-sort="{0 if t["status"] == "completed" else 1}">'
+            f'<span class="status-badge {"status-active" if state == "완료" else "status-delayed"}">{state}</span></td>'
+            f'<td class="nowrap">{html.escape(str(t.get("date") or "-"))}</td>'
+            "</tr>"
         )
-    L.append("")
-    for dom, (label, _) in DOMAINS.items():
-        sub = [(d, t) for d, t in pairs if d["domain"] == dom]
-        if not sub:
-            continue
-        L += [f"## {label}", ""]
-        for d, t in sub:
-            block = transition_block(d, t, "###", "datasets/")
-            # 가이드 페이지에서는 앵커가 겹치지 않도록 접두어를 붙임
-            block[0] = block[0].replace("{#to-", "{#g-" + d["id"] + "-to-")
-            L += block
-            L += [f"[{nt(d['name'])} 페이지에서 자세히 보기 →](datasets/{d['id']}.md)", ""]
+    L += [
+        '<div class="gen-table"><table>'
+        "<thead><tr><th>세대 변화</th><th>분야</th><th>상태</th><th>전환 시점</th></tr></thead>"
+        f"<tbody>{rows}</tbody></table></div>",
+        "",
+        '<p class="hint" id="gen-empty">표에서 비교할 항목을 누르세요.</p>',
+        "",
+    ]
+    for d, t in pairs:
+        key = transition_key(d, t)
+        block = transition_block(d, t, "##", "datasets/")
+        block[0] = re.sub(r"\{#[^}]*\}", "", block[0]).rstrip()
+        L += [f'<div class="gen-detail" id="{key}" markdown="1" hidden>', ""]
+        L += block
+        L += [f"[{nt(d['name'])} 페이지에서 보기 →](datasets/{d['id']}.md)", "", "</div>", ""]
     return "\n".join(L) + "\n"
 
 
@@ -773,9 +841,6 @@ def on_config(config):
     _datasets = load_datasets()
     _repo_url = (config.get("repo_url") or "").rstrip("/")
     _site_url = config.get("site_url") or "/"
-    prov = DATA_DIR.parent / "providers.yaml"
-    if prov.exists():
-        config["extra"]["providers"] = yaml.safe_load(prov.read_text(encoding="utf-8")) or []
     config["extra"]["disclaimer"] = DISCLAIMER
     base = urlparse(config.get("site_url") or "/").path or "/"
     if not base.endswith("/"):
@@ -823,7 +888,7 @@ def subscribe_form(config) -> str:
         pre = (
             '!!! info "메일 알림은 준비 중입니다"\n\n'
             "    신청 양식은 미리 둘러보실 수 있지만, 아직 메일 발송을 시작하지 않아 신청이 저장되지 않습니다.\n"
-            "    오픈하면 이 페이지에서 바로 신청할 수 있어요. 그전까지는 [공지 모음](notices.md)을 확인해 주세요.\n\n"
+            "    오픈하면 이 페이지에서 바로 신청할 수 있어요. 그전까지는 [중요 공지](notices.md)을 확인해 주세요.\n\n"
         )
     ds = ""
     for dom, (label, _) in DOMAINS.items():
@@ -917,6 +982,8 @@ def on_page_markdown(markdown, page, config, files):
         markdown = markdown.replace("<!-- RECENT_NOTICES -->", "\n".join(notice_rows(all_notices(_datasets)[:6], "datasets/")))
     if "<!-- COMPARE_APP -->" in markdown:
         markdown = markdown.replace("<!-- COMPARE_APP -->", compare_app(_datasets))
+    if "<!-- RES_NOTE -->" in markdown:
+        markdown = markdown.replace("<!-- RES_NOTE -->", "\n".join(res_note()))
     if "<!-- DISCLAIMER -->" in markdown:
         markdown = markdown.replace("<!-- DISCLAIMER -->", DISCLAIMER)
     if "<!-- DATASET_COUNT -->" in markdown:
