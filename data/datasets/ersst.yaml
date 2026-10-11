@@ -8,7 +8,7 @@ name: ERSST v5
 full_name: NOAA Extended Reconstructed Sea Surface Temperature, Version 5 (NOAA 확장 재구성 해수면온도 5판)
 category: analysis
 domain: ocean
-group: 관측 기반 분석장
+group: 해수면온도 분석장
 order: 20
 domains: [해양]
 provider: NOAA National Centers for Environmental Information (NCEI)
@@ -25,11 +25,13 @@ successor:
   note: >-
     기간 1850년 1월~현재, 2° 월별(v5와 같은 형식). 인공신경망(ANN) 내삽, 품질관리 강화, 해빙역 대리 SST 개선이 적용됐고
     편차 기준 기후값이 1991~2020년으로 바뀌었습니다. 인용: Huang et al. (2025), J. Climate, 38(4), 1105–1121,
-    doi:10.1175/JCLI-D-23-0707.1 및 Part II, 1123–1136, doi:10.1175/JCLI-D-24-0185.1
+    doi:10.1175/JCLI-D-23-0707.1 및 Part II, 1123–1136, doi:10.1175/JCLI-D-24-0185.1.
+    데이터셋 DOI는 10.25921/z7cw-es89 입니다(v5의 10.7289/V5T72FNM과 다름).
 
 transitions:
   - from: ERSST v5
     to: ERSST v6
+    to_id: ersst-v6
     status: completed
     date: "2025-12"
     summary: >-
@@ -66,7 +68,7 @@ transitions:
         after: "1991~2020년"
       - aspect: 배포 형식·위치
         before: "NetCDF + ASCII, ersst.v5.YYYYMM.nc (/pub/data/cmb/ersst/v5/netcdf/)"
-        after: "NetCDF만 제공, ersst.v6.YYYYMM.nc (/pub/data/cmb/ersst/v5/v6/, /data/.../v6/access/). 파일 구성 규칙은 v5와 같음"
+        after: "NetCDF, ersst.v6.YYYYMM.nc (/pub/data/cmb/ersst/v5/v6/, /data/.../v6/access/). 파일 구성 규칙은 v5와 같음. NCEI 메타데이터에는 ASCII도 적혀 있으나 공개 폴더에서는 확인되지 않음"
       - aspect: NOAA 현업 활용
         before: "NOAA ENSO 판정, NOAAGlobalTemp 6.0.0까지의 해양 부분"
         after: "2026년부터 NOAA ENSO 판정·RONI, NOAAGlobalTemp 6.1.0(2026년 1월 분석~)"

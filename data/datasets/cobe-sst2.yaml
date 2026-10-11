@@ -7,7 +7,7 @@ name: COBE-SST2
 full_name: Centennial in situ Observation-Based Estimates of SST, version 2 (일본 기상청 장기 현장관측 기반 해수면온도 분석 2판)
 category: analysis
 domain: ocean
-group: 관측 기반 분석장
+group: 해수면온도 분석장
 order: 30
 domains: [해양, 해빙]
 provider: 일본 기상청 (JMA) / 기상연구소 (MRI)
@@ -15,21 +15,23 @@ provider: 일본 기상청 (JMA) / 기상연구소 (MRI)
 status: active
 status_note: >-
   JMA의 현업 장기 SST 분석으로 정상 갱신 중입니다(2021년 5월 COBE-SST를 대체). 후속 연구판인 COBE-SST3(0.25°, 일별)가
-  2025년 논문으로 공개되었지만 1850~2020년 고정 기간 자료이고 아직 현업화되지 않았으므로, 최신 기간까지 필요하면 COBE-SST2를 쓰면 됩니다.
+  2025년 논문으로 공개되었지만 정기 갱신되지 않는 연구용 자료(2026-10 확인 시 MRI 서버 기준 2024년까지)이고 아직 현업화되지 않았으므로, 최신 기간까지 필요하면 COBE-SST2를 쓰면 됩니다.
   다만 NOAA PSL이 배포하는 해빙 농도 파일은 2019년 12월에서 멈춰 있습니다.
 
 transitions:
   - from: COBE-SST2
     to: COBE-SST3
+    to_id: cobe-sst3
     status: planned
     summary: >-
-      COBE-SST 계열의 다음 판으로 2025년 논문과 함께 공개된 0.25° 일별 SST 분석입니다. 다만 현재는 1850~2020년만 있는 연구용 자료이고
-      JMA 현업 자료는 여전히 COBE-SST2입니다. 개발자 안내(NCAR Climate Data Guide)에는 최근까지 연장해 현업화할 계획과
-      준현업판 개발 중이라는 내용이 있으나, JMA가 COBE-SST2를 대체한다고 공식 발표하지는 않았습니다.
+      COBE-SST 계열의 다음 판으로 2025년 논문과 함께 공개된 0.25° 일별 SST 분석입니다. 정기 갱신되지 않는 연구용 자료로,
+      논문은 1850~2020년을 다루고 2025년 9월 MRI 서버에 2024년까지의 일별·월별 파일이 추가되었습니다(섭동 앙상블·COBE-SST3H는 2020년까지).
+      JMA 현업 자료는 여전히 COBE-SST2입니다. JMA 재분석 간담회 자료(2026-02)는 COBE-SST3를 COBE-SST2의 후계로 소개했고
+      개발자 안내(NCAR Climate Data Guide)에는 최근까지 연장·준현업판 개발 계획이 있으나, JMA가 COBE-SST2를 대체한다고 공식 발표하지는 않았습니다.
     changes:
       - aspect: 기간
         before: "1850-01 ~ 현재 (매월 갱신)"
-        after: "1850 ~ 2020 (고정, 최근 연장은 계획 단계)"
+        after: "1850 ~ 2024 (MRI 서버, 2025-09 연장. 정기 갱신 없음)"
       - aspect: 수평·시간 해상도
         before: "1°, 월평균 배포"
         after: "0.25°, 일별 (월평균도 제공)"
@@ -38,7 +40,7 @@ transitions:
         after: "ICOADS Release 3.0 (2015년 이후 JMA 현업 자료), Argo·CTD·XBT 등 표층 근처 수중 관측 추가"
       - aspect: 위성 자료
         before: "사용하지 않음"
-        after: "기본판(COBE-SST3)은 현장 관측만 사용. 위성(AVHRR Pathfinder, AMSR-E, AMSR2, WindSat)을 섞은 COBE-SST3H(1982~2020) 별도"
+        after: "기본판(COBE-SST3)은 현장 관측 값만 사용(빈 곳을 채우는 공간 패턴에는 위성 SST 정보 활용). 위성(AVHRR Pathfinder, AMSR-E, AMSR2, WindSat)을 섞은 COBE-SST3H(1982~2020) 별도"
       - aspect: 관측 편향 보정
         before: "버킷·ERI·종류 미상 관측 보정"
         after: "부이·Argo를 기준으로 6개 관측 유형 편향을 변분 최소화로 추정, 야간 해상 기온(HadNMAT2)·육상 기온과의 일관성 고려. 1940년대 초 급변이 완화됨"
@@ -55,7 +57,7 @@ transitions:
         before: "JMA NEAR-GOOS(텍스트 격자), NOAA PSL(NetCDF), MRI 서버(GRIB2)"
         after: "MRI 연구 자료 서버 NetCDF (climate.mri-jma.go.jp/pub/archives/Ishii-et-al_COBE-SST3/)"
     impacts:
-      - 2021년 이후가 필요하면 COBE-SST3는 아직 쓸 수 없습니다. 최근 기간 분석은 COBE-SST2를 유지하세요.
+      - COBE-SST3는 정기 갱신되지 않아 2025년 이후 기간이 없습니다. 최근 기간까지 이어지는 분석은 COBE-SST2를 유지하세요.
       - 1940년대 전후 SST 변화가 COBE-SST2보다 완만하게 나오므로, 20세기 중반 추세나 장기 변동 분석 결과가 달라질 수 있습니다.
       - 해상도와 시간 간격이 달라 두 자료를 이어 붙이거나 그대로 차이를 내지 말고, 같은 격자·월평균으로 맞춘 뒤 비교하세요.
       - 논문 저자들은 COBE-SST3의 일별 값이 부이·Argo와 맞는 정도가 OISST v2.1보다 낫지는 않다고 밝혔습니다. 최근 일별 분석에는 OISST 등 위성 기반 자료를 함께 검토하세요.
@@ -141,7 +143,7 @@ access:
 tips:
   - PSL 파일의 위도는 북→남(89.5 → -89.5) 순서입니다. 다른 자료와 겹쳐 쓸 때 위도 방향을 꼭 맞추세요.
   - COBE-SST2 해빙 농도는 PSL 기준 2019년에서 끝납니다. 최근 기간 해빙이 필요하면 OISST의 ice나 위성 해빙 농도 자료를 쓰세요.
-  - COBE-SST3(0.25° 일별, 1850~2020년)는 MRI 서버(climate.mri-jma.go.jp/pub/archives/Ishii-et-al_COBE-SST3/)에 연구용으로 공개되어 있습니다. 과거 기간 고해상도 분석에는 검토해 볼 만하지만, 최근 기간이 없다는 점에 유의하세요.
+  - COBE-SST3(0.25° 일별, 2026-10 확인 시 1850~2024년)는 MRI 서버(climate.mri-jma.go.jp/pub/archives/Ishii-et-al_COBE-SST3/)에 연구용으로 공개되어 있습니다. 과거 기간 고해상도 분석에는 검토해 볼 만하지만, 정기 갱신되지 않는다는 점에 유의하세요.
   - 구판 COBE-SST(1891년~)는 2023년 5월로 끝났습니다. 예전 논문을 따라 할 때 어느 판을 썼는지 확인하세요.
 
 citations:

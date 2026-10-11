@@ -1,0 +1,335 @@
+# ─────────────────────────────────────────────────────────────
+# WOA23 — 데이터셋 정보 파일
+# NOAA NCEI World Ocean Atlas 2023 (수온·염분·용존산소·영양염 기후값)
+# 수정 후에는 공식 페이지에서 확인한 날짜로 last_verified 를 갱신하세요.
+# ─────────────────────────────────────────────────────────────
+id: woa23
+name: WOA23
+full_name: World Ocean Atlas 2023 (세계 해양 아틀라스 2023 — 수온·염분·용존산소·영양염 객관분석 기후값)
+category: analysis
+domain: ocean
+group: 수온·염분 분석장
+order: 20
+domains: [해양]
+provider: NOAA National Centers for Environmental Information (NCEI) Ocean Climate Laboratory
+
+status: active
+status_note: >-
+  2024년 2월 14일 전체 공개된 현재 버전입니다. 정해진 기간의 기후값(climatology)이라 매달 갱신되는 자료가 아니며,
+  2024년 5~6월 용존산소 계열만 소폭 갱신되었습니다. 2026년 10월 현재 NCEI 클라우드 이전 작업으로 일시적인 접근 지연이 공지되어 있습니다.
+
+transitions:
+  - from: WOA18
+    to: WOA23
+    status: completed
+    date: "2024-02"
+    summary: >-
+      World Ocean Database에 새로 들어온 관측과 갱신된 품질관리를 반영한 후속판입니다. 수온·염분 기간이 2017년에서 2022년까지 늘었고,
+      1971–2000·1991–2020 기후 평년값이 추가되었으며, 분석 표준편차·분석 표준오차 장이 새로 들어갔습니다. 반면 WOA18 페이지에 있던 밀도·전기전도도·혼합층 깊이는
+      WOA23 자료 페이지 변수 목록에 없습니다.
+    changes:
+      - aspect: 수온·염분 10년 구간
+        before: "1955–1964 ~ 1995–2004 다섯 구간 + 2005–2017 (A5B7)"
+        after: "1955–1964 ~ 2005–2014 여섯 구간 + 2015–2022 (B5C2, 8년 '10년 구간')"
+      - aspect: 기후 평년값
+        before: "1981–2010 (WOA18 Product Documentation 기준)"
+        after: "1971–2000 (decav71A0), 1981–2010 (decav81B0), 1991–2020 (decav91C0)"
+      - aspect: 전 기간 평균 (decav)
+        before: "1955–2017 (여섯 10년 구간 평균, NCEI FAQ)"
+        after: "1955–2022 (일곱 10년 구간 평균)"
+      - aspect: 용존산소·영양염 기간
+        before: "all (가용한 전 기간)"
+        after: "all = 1965–2022, 용존산소 계열은 1971–2000 (decav71A0)도 제공"
+      - aspect: 제공 변수
+        before: "수온, 염분, 밀도, 전기전도도, 혼합층 깊이, 용존산소, 산소 포화도, AOU, 규산염, 인산염, 질산염 (WOA18 자료 페이지)"
+        after: "수온, 염분, 용존산소, 산소 포화도, AOU, 규산염, 인산염, 질산염 (WOA23 자료 페이지 — 밀도·전기전도도·혼합층 깊이 없음)"
+      - aspect: 통계장
+        before: "an, mn, dd, sd, se, oa, gp, ma 등"
+        after: "같은 장에 객관분석 표준편차와 분석 표준오차(두 번째 영향 반경 1° 669 km, 0.25° 267 km 사용)를 새로 추가"
+    impacts:
+      - "WOA18과 WOA23의 같은 이름 기간(예: decav)은 포함 연도가 다릅니다. 모델 초기장·편차 기준을 바꿀 때 기간을 반드시 확인하세요."
+      - "WOA18의 밀도·전기전도도·혼합층 깊이 기후값을 쓰던 작업은 WOA23에서 같은 파일을 찾을 수 없으므로 수온·염분으로 직접 계산하거나 WOA18을 계속 써야 합니다."
+      - "관측 추가와 QC 변경으로 같은 기간이라도 값이 다를 수 있으니 두 판을 섞어 차이를 '변화'로 해석하지 마세요."
+    sources:
+      - name: NCEI World Ocean Atlas 제품 페이지
+        url: https://www.ncei.noaa.gov/products/world-ocean-atlas
+      - name: WOA23 Product Documentation (Reagan et al. 2023)
+        url: https://doi.org/10.25923/a78k-gq49
+      - name: WOA18 Product Documentation
+        url: http://www.ncei.noaa.gov/sites/default/files/2020-04/woa18documentation.pdf
+      - name: WOA18 자료 페이지
+        url: https://www.ncei.noaa.gov/access/world-ocean-atlas-2018/
+
+period:
+  start: "1955-01"
+  end: "2022-12"
+  note: >-
+    입력 관측 기간입니다. 수온·염분은 1955–2022년(10년 구간별·평년값별 기후값), 용존산소·영양염은 1965–2022년 전체 자료로 만든 기후값입니다.
+    시간에 따라 이어지는 시계열이 아니라 '정해진 기간의 평균 상태'를 담은 정적 자료이며, NCEI 메타데이터의 시간 범위는 1955-01-01~2022-12-31입니다.
+
+resolution:
+  spatial_short: "28 km (0.25°)"
+  temporal_short: "1개월"
+  spatial: >-
+    수온·염분: 0.25° (1440×720) 및 1° (360×180) 위경도 격자 / 용존산소·AOU·산소 포화도·영양염: 1° 격자만 /
+    5° (72×36) 격자는 품질관리용 통계장(객관분석 기후값 아님)
+  vertical: >-
+    표준 깊이 102층(0~5500 m). 월별 장은 수온·염분·용존산소가 0~1500 m(57층), 영양염은 0~800 m(43층)까지만 있습니다.
+    계절 장은 수온·염분 0~5500 m(102층), 용존산소 0~1500 m(57층), 영양염 0~800 m(43층)입니다
+  temporal: >-
+    기후값 — 연(00), 월(01~12), 계절(13 겨울 1~3월, 14 봄 4~6월, 15 여름 7~9월, 16 가을 10~12월, 북반구 기준).
+    0.25° 월별 장은 2005–2014, 2015–2022와 세 평년값(decav71A0·81B0·91C0)에만 있습니다
+
+update: 정기 갱신 없음 (몇 년 간격으로 새 판 공개 — WOA18 2018-09-30, WOA23 2024-02-14)
+license: >-
+  미국 정부 공공 자료 — 별도 라이선스 표기 없이 무료 공개(NCEI 메타데이터는 정확성 보증 없음만 명시).
+  데이터셋 DOI와 해당 변수의 Atlas 문서 인용 요청
+account_required: false
+
+summary: >-
+  NOAA NCEI가 World Ocean Database 2023(WOD23)의 품질관리된 관측 프로파일을 객관분석해 만든 전지구 해양 기후값입니다.
+  수온·염분은 1955–2022년의 10년 구간별, 1971–2000·1981–2010·1991–2020 평년값별 기후값을 0.25°·1° 격자로, 용존산소·AOU·산소 포화도와
+  영양염(인산염·질산염·규산염)은 1° 격자로 제공합니다. 해양 모델의 초기장·경계 조건, 편차 계산의 기준 기후값, 모델·위성 자료 검증에 가장 널리 쓰이는 기준 자료입니다.
+
+time_convention:
+  summary: >-
+    모든 값은 정해진 여러 해(10년 구간 또는 30년 평년값)에 걸친 기후 평균입니다. 월별 장은 '그 기간 모든 해의 같은 달' 평균, 계절 장은 3개월 묶음,
+    연 장은 1년 전체를 대표하는 값이며 특정 연도·시각의 값이 아닙니다.
+  points:
+    - "파일 하나에는 시간 단계가 하나뿐이며, time은 'months since 1955-01-01' 형식의 명목 값입니다. 실제 평균 기간은 `climatology_bounds`와 파일 이름의 기간 코드(예: decav91C0 = 1991–2020)로 확인합니다 (Product Documentation)."
+    - "1500 m 아래의 연 장은 네 계절 분석의 평균으로 정의됩니다(Volume 1). 월별 장은 1500 m(영양염은 800 m)까지만 있습니다."
+    - "계절 번호 13~16은 북반구 기준(13 = 1~3월)입니다. 남반구 연구에서는 계절 이름이 반대라는 점에 주의하세요."
+    - "decav(접미사 없음)는 1955–2022년 일곱 10년 구간 기후값의 평균으로, 단순히 1955–2022년 전체 관측을 평균한 것과는 다릅니다."
+  source: https://doi.org/10.25923/a78k-gq49
+  source_name: WOA23 Product Documentation (Reagan et al. 2023) · WOA23 Volume 1
+
+variables:
+  note: >-
+    WOA23 자료 페이지와 Product Documentation 기준입니다. 파일 이름은 woa23_[기간]_[변수 코드][시간 코드]_[격자].nc (예: woa23_decav91C0_t00_01.nc)이고,
+    파일 안 변수는 `[변수 코드]_[통계 코드]` 형식(예: `t_an`)입니다. 변수 코드: 수온 t, 염분 s, 용존산소 o, 질산염 n, 인산염 p, 규산염 i.
+    AOU·산소 포화도의 파일 변수 코드는 공식 문서에서 확인하지 못해 적지 않았습니다.
+  full_list: https://www.ncei.noaa.gov/access/world-ocean-atlas-2023/
+  groups:
+    - name: 객관분석 기후값 (주요 변수, `*_an`)
+      kind: mean
+      period: 기후값(연·계절·월)
+      items:
+        - "수온 — `t_an` (°C)"
+        - "염분(실용염분) — `s_an` (무차원)"
+        - "용존산소 — `o_an` (µmol/kg)"
+        - "산소 포화도 (%) · 겉보기 산소 소모량 AOU (µmol/kg)"
+        - "질산염 — `n_an`, 인산염 — `p_an`, 규산염 — `i_an` (µmol/kg)"
+    - name: 통계장 (수온 예, 다른 변수도 같은 구성)
+      kind: mean
+      period: 기후값(연·계절·월)
+      items:
+        - "관측 통계 평균(품질관리 통과 값의 단순 평균) — `t_mn`"
+        - text: "관측 수 — `t_dd` (개)"
+          note: 해당 기간·격자에서 품질관리를 통과한 관측 개수. 0이면 그 격자 값은 주변 관측으로 채운 것
+        - "표준편차 — `t_sd`, 평균의 표준오차 — `t_se`"
+        - "통계 평균 − 객관분석 값 — `t_oa`, 계절·월 기후값 − 연 기후값 — `t_ma`"
+        - "최소 영향 반경 안에서 통계 평균이 있는 1° 격자 수 — `t_gp`"
+    - name: 마스크 (WOA23/MASKS)
+      kind: static
+      items:
+        - "해역(basin) 마스크, 육지·바다 마스크, 혼합(mixnumber) 마스크 — 1°·0.25°"
+
+access:
+  - name: NCEI WOA23 자료 선택 페이지
+    url: https://www.ncei.noaa.gov/access/world-ocean-atlas-2023/
+    method: 웹 (변수·기간·격자·형식 고르기)
+    note: NetCDF(CF), CSV, ASCII, ArcGIS shapefile 형식을 고를 수 있습니다. 공식 문서는 깊이 정보가 명시되지 않는 구형 ASCII 형식을 권하지 않습니다.
+  - name: NCEI HTTPS 디렉터리
+    url: https://www.ncei.noaa.gov/data/oceans/woa/WOA23/DATA/
+    method: HTTPS (wget / curl)
+    note: DATA/[변수]/netcdf/[기간]/[격자]/ 구조입니다. 예) DATA/temperature/netcdf/decav91C0/1.00/woa23_decav91C0_t00_01.nc
+  - name: NCEI THREDDS (thredds-ocean)
+    url: https://www.ncei.noaa.gov/thredds-ocean/catalog/woa23/DATA/catalog.html
+    method: THREDDS 카탈로그 (HTTPServer 다운로드)
+    note: 2026-10-12 확인 시 파일 페이지에 HTTPServer만 표시되고 OPeNDAP 서비스는 보이지 않았습니다.
+  - name: NCEI 아카이브 (Accession 0270533)
+    url: https://www.ncei.noaa.gov/archive/accession/0270533
+    method: HTTPS / FTP (전체 묶음)
+  - name: WOA23 그림(Figures)
+    url: https://www.ncei.noaa.gov/access/world-ocean-atlas-2023f/
+    method: 웹 지도 보기
+
+example:
+  lang: python
+  note: 1991–2020 평년값의 1° 연평균 수온 파일(약 80 MB)을 받아 표층 값을 봅니다.
+  code: |
+    # pip install xarray netCDF4 requests
+    import requests
+    import xarray as xr
+
+    url = ("https://www.ncei.noaa.gov/data/oceans/woa/WOA23/DATA/temperature/netcdf/"
+           "decav91C0/1.00/woa23_decav91C0_t00_01.nc")
+    with open("woa23_decav91C0_t00_01.nc", "wb") as f:
+        f.write(requests.get(url, timeout=600).content)
+
+    # time 단위가 'months since 1955-01-01'이라 자동 변환이 안 될 수 있어 끕니다
+    ds = xr.open_dataset("woa23_decav91C0_t00_01.nc", decode_times=False)
+    sst_clim = ds["t_an"].isel(time=0).sel(depth=0)
+    print(sst_clim.sel(lat=slice(30, 45), lon=slice(120, 135)).mean().values)
+
+tips:
+  - >-
+    파일 이름의 기간 코드를 꼭 확인하세요. decav(1955–2022 일곱 10년 구간 평균), decav71A0·decav81B0·decav91C0(30년 평년값),
+    5564~B5C2(10년 구간), all(용존산소·영양염의 1965–2022 전체)이 서로 다른 자료입니다. 편차 기준으로는 보통 평년값(예: decav91C0)을 씁니다.
+  - >-
+    `t_an`은 관측이 없는 곳도 주변 관측과 1차 추정장(first guess)으로 채운 값입니다. 관측이 드문 해역·심층·초기 10년 구간에서는 `t_dd`(관측 수)를
+    함께 보고 해석하세요. 이번 판에 추가된 분석 표준편차·표준오차 장도 활용할 수 있습니다.
+  - >-
+    월별 장은 1500 m(영양염 800 m)까지만 있으므로, 그 아래가 필요하면 계절·연 장을 쓰세요. 0.25° 월별 장은 2005년 이후 구간과 세 평년값에만 있습니다.
+  - >-
+    수온 자료에는 Cheng et al. (2014) XBT 보정과 Levitus et al. (2009) 방식의 MBT 보정이 적용되어 있습니다(Volume 1).
+    EN4 등 다른 보정 방식을 쓴 자료와 비교할 때는 이 차이를 염두에 두세요.
+  - >-
+    WOA18에 있던 밀도·전기전도도·혼합층 깊이 기후값은 WOA23 자료 페이지에 없습니다. 이런 값이 필요하면 WOA23 수온·염분으로 직접 계산하거나
+    WOA18을 출처로 명시해 쓰세요.
+
+citations:
+  dataset:
+    - label: WOA23 데이터셋 DOI (NCEI Accession 0270533)
+      text: >-
+        Reagan, J. R., Boyer, T. P., García, H. E., Locarnini, R. A., Baranova, O. K., Bouchard, C., Cross, S. L., Mishonov, A. V., Paver, C. R.,
+        Seidov, D., Wang, Z., Dukhovskoy, D. (2023): World Ocean Atlas 2023. NOAA National Centers for Environmental Information.
+        Dataset. https://doi.org/10.25921/va26-hv25 (Accessed DD MMM YYYY)
+      doi: 10.25921/va26-hv25
+      bibtex: |
+        @misc{woa23_dataset,
+          author    = {Reagan, James R. and Boyer, Tim P. and Garc{\'i}a, Hern{\'a}n E. and Locarnini, Ricardo A. and Baranova, Olga K. and Bouchard, Courtney and Cross, Scott L. and Mishonov, Alexey V. and Paver, Christopher R. and Seidov, Dan and Wang, Zhankun and Dukhovskoy, Dmitry},
+          title     = {World Ocean Atlas 2023},
+          year      = {2023},
+          publisher = {NOAA National Centers for Environmental Information},
+          doi       = {10.25921/va26-hv25},
+          note      = {NCEI Accession 0270533. Accessed DD MMM YYYY}
+        }
+  papers:
+    - label: WOA23 Product Documentation
+      text: >-
+        Reagan, J. R., Garcia, H. E., Boyer, T. P., Baranova, O. K., Bouchard, C., Cross, S. L., Dukhovskoy, D., Grodsky, A., Locarnini, R. A.,
+        Mishonov, A. V., Paver, C. R., Seidov, D., Wang, Z. (2023): World Ocean Atlas 2023: Product Documentation.
+        NOAA National Centers for Environmental Information.
+      doi: 10.25923/a78k-gq49
+      bibtex: |
+        @techreport{reagan2023woa23doc,
+          author      = {Reagan, J. R. and Garcia, H. E. and Boyer, T. P. and Baranova, O. K. and Bouchard, C. and Cross, S. L. and Dukhovskoy, D. and Grodsky, A. and Locarnini, R. A. and Mishonov, A. V. and Paver, C. R. and Seidov, D. and Wang, Z.},
+          title       = {World Ocean Atlas 2023: Product Documentation},
+          institution = {NOAA National Centers for Environmental Information},
+          year        = {2023},
+          doi         = {10.25923/a78k-gq49}
+        }
+    - label: Volume 1 — 수온 (NOAA Atlas NESDIS 89)
+      text: >-
+        Locarnini, R. A., Mishonov, A. V., Baranova, O. K., Reagan, J. R., Boyer, T. P., Seidov, D., Wang, Z., Garcia, H. E., Bouchard, C.,
+        Cross, S. L., Paver, C. R., Dukhovskoy, D. (2024): World Ocean Atlas 2023, Volume 1: Temperature. NOAA Atlas NESDIS 89.
+      doi: 10.25923/54bh-1613
+      bibtex: |
+        @techreport{locarnini2024woa23t,
+          author      = {Locarnini, Ricardo A. and Mishonov, Alexey V. and Baranova, Olga K. and Reagan, James R. and Boyer, Timothy P. and Seidov, Dan and Wang, Zhankun and Garcia, Hernan E. and Bouchard, Courtney and Cross, Scott L. and Paver, Christopher R. and Dukhovskoy, Dmitry},
+          title       = {World Ocean Atlas 2023, Volume 1: Temperature},
+          institution = {NOAA National Centers for Environmental Information},
+          type        = {NOAA Atlas NESDIS},
+          number      = {89},
+          year        = {2024},
+          doi         = {10.25923/54bh-1613}
+        }
+    - label: Volume 2 — 염분 (NOAA Atlas NESDIS 90)
+      text: >-
+        Reagan, J. R., Seidov, D., Wang, Z., Dukhovskoy, D., Boyer, T. P., Locarnini, R. A., Baranova, O. K., Mishonov, A. V., Garcia, H. E.,
+        Bouchard, C., Cross, S. L., Paver, C. R. (2024): World Ocean Atlas 2023, Volume 2: Salinity. NOAA Atlas NESDIS 90.
+      doi: 10.25923/70qt-9574
+      bibtex: |
+        @techreport{reagan2024woa23s,
+          author      = {Reagan, James R. and Seidov, Dan and Wang, Zhankun and Dukhovskoy, Dmitry and Boyer, Timothy P. and Locarnini, Ricardo A. and Baranova, Olga K. and Mishonov, Alexey V. and Garcia, Hernan E. and Bouchard, Courtney and Cross, Scott L. and Paver, Christopher R.},
+          title       = {World Ocean Atlas 2023, Volume 2: Salinity},
+          institution = {NOAA National Centers for Environmental Information},
+          type        = {NOAA Atlas NESDIS},
+          number      = {90},
+          year        = {2024},
+          doi         = {10.25923/70qt-9574}
+        }
+    - label: Volume 3 — 용존산소·AOU·산소 포화도 (NOAA Atlas NESDIS 91)
+      text: >-
+        Garcia, H. E., Wang, Z., Bouchard, C., Cross, S. L., Paver, C. R., Reagan, J. R., Boyer, T. P., Locarnini, R. A., Mishonov, A. V.,
+        Baranova, O. K., Seidov, D., Dukhovskoy, D. (2024): World Ocean Atlas 2023, Volume 3: Dissolved Oxygen, Apparent Oxygen Utilization,
+        and Dissolved Oxygen Saturation. NOAA Atlas NESDIS 91.
+      doi: 10.25923/rb67-ns53
+      bibtex: |
+        @techreport{garcia2024woa23o,
+          author      = {Garcia, Hernan E. and Wang, Zhankun and Bouchard, Courtney and Cross, Scott L. and Paver, Christopher R. and Reagan, James R. and Boyer, Timothy P. and Locarnini, Ricardo A. and Mishonov, Alexey V. and Baranova, Olga K. and Seidov, Dan and Dukhovskoy, Dmitry},
+          title       = {World Ocean Atlas 2023, Volume 3: Dissolved Oxygen, Apparent Oxygen Utilization, and Dissolved Oxygen Saturation},
+          institution = {NOAA National Centers for Environmental Information},
+          type        = {NOAA Atlas NESDIS},
+          number      = {91},
+          year        = {2024},
+          doi         = {10.25923/rb67-ns53}
+        }
+    - label: Volume 4 — 영양염 (NOAA Atlas NESDIS 92)
+      text: >-
+        Garcia, H. E., Bouchard, C., Cross, S. L., Paver, C. R., Reagan, J. R., Boyer, T. P., Locarnini, R. A., Mishonov, A. V., Baranova, O. K.,
+        Seidov, D., Wang, Z., Dukhovskoy, D. (2024): World Ocean Atlas 2023, Volume 4: Dissolved Inorganic Nutrients
+        (phosphate, nitrate and nitrate+nitrite, silicate). NOAA Atlas NESDIS 92.
+      doi: 10.25923/39qw-7j08
+      bibtex: |
+        @techreport{garcia2024woa23n,
+          author      = {Garcia, Hernan E. and Bouchard, Courtney and Cross, Scott L. and Paver, Christopher R. and Reagan, James R. and Boyer, Timothy P. and Locarnini, Ricardo A. and Mishonov, Alexey V. and Baranova, Olga K. and Seidov, Dan and Wang, Zhankun and Dukhovskoy, Dmitry},
+          title       = {World Ocean Atlas 2023, Volume 4: Dissolved Inorganic Nutrients (phosphate, nitrate and nitrate+nitrite, silicate)},
+          institution = {NOAA National Centers for Environmental Information},
+          type        = {NOAA Atlas NESDIS},
+          number      = {92},
+          year        = {2024},
+          doi         = {10.25923/39qw-7j08}
+        }
+  acknowledgement: >-
+    데이터셋 DOI와 함께 실제로 쓴 변수의 Atlas 문서(수온 Volume 1, 염분 Volume 2, 산소 Volume 3, 영양염 Volume 4)를 인용하세요.
+    파일 형식·기간 코드를 설명할 때는 Product Documentation을 함께 인용하면 좋습니다.
+
+notices:
+  - date: "2026-10-02"
+    level: warning
+    title: NCEI 클라우드 이전으로 자료 접근 지연 (2026-10-30까지 예정)
+    body: >-
+      NCEI가 자료와 서비스를 클라우드로 옮기는 중이라 일시적으로 다운로드가 느리거나 실패할 수 있다고 공지했습니다.
+      WOA 제품 페이지에도 같은 안내가 실려 있습니다. 안 될 때는 THREDDS와 HTTPS 디렉터리를 번갈아 시도하세요.
+    source: https://www.ncei.noaa.gov/alerts
+  - date: "2024-05-30"
+    level: info
+    title: 용존산소·AOU·산소 포화도 v1.1로 갱신
+    body: >-
+      프로파일링 플로트 산소 보정 방식을 조금 바꿔 용존산소·AOU·산소 포화도 기후값을 v1.0(2024년 2월)에서 v1.1로 갱신했습니다.
+      Volume 3 문서(Garcia et al. 2024)도 정오표와 함께 갱신되었습니다(NCEI 아카이브 메타데이터에는 2024-06-15 게시로 기록). 이전에 받은 산소 계열 파일은 다시 받으세요.
+    source: https://www.ncei.noaa.gov/products/world-ocean-atlas
+  - date: "2024-02-14"
+    level: info
+    title: WOA23 전체 공개 (WOA18 대체)
+    body: >-
+      수온·염분의 10년 구간·세 평년값·1955–2022 평균, 용존산소 계열, 영양염(1965–2022) 기후값이 모두 공개되었습니다.
+      2022년 10월 먼저 나온 1991–2020 수온·염분 평년값도 이때 갱신되었으므로, 예비판을 받았다면 다시 받으세요.
+    source: https://www.ncei.noaa.gov/products/world-ocean-atlas
+  - date: "2022-10"
+    level: info
+    title: WOA23 예비판 — 1991–2020 수온·염분 평년값 선공개
+    body: 전체 공개에 앞서 1991–2020년 수온·염분 기후 평년값이 예비판으로 먼저 공개되었습니다. 이 예비판은 2024년 2월 전체 공개 때 갱신되었습니다.
+    source: https://www.ncei.noaa.gov/products/world-ocean-atlas
+
+links:
+  - name: NCEI World Ocean Atlas 제품 페이지 (모든 판·문서 DOI)
+    url: https://www.ncei.noaa.gov/products/world-ocean-atlas
+  - name: WOA23 자료 선택 페이지
+    url: https://www.ncei.noaa.gov/access/world-ocean-atlas-2023/
+  - name: WOA23 Product Documentation (PDF)
+    url: https://repository.library.noaa.gov/view/noaa/70581
+  - name: WOA23 Volume 1 — Temperature
+    url: https://doi.org/10.25923/54bh-1613
+  - name: NCEI 아카이브 메타데이터 (Accession 0270533, 버전 이력)
+    url: https://www.ncei.noaa.gov/access/metadata/landing-page/bin/iso?id=gov.noaa.nodc:0270533
+  - name: WOA18 자료 페이지 (이전 판)
+    url: https://www.ncei.noaa.gov/access/world-ocean-atlas-2018/
+
+watch_urls:
+  - https://www.ncei.noaa.gov/products/world-ocean-atlas
+  - https://www.ncei.noaa.gov/alerts
+
+last_verified: "2026-10-12"

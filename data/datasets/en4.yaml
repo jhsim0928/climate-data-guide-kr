@@ -1,0 +1,298 @@
+# ─────────────────────────────────────────────────────────────
+# EN4 — 데이터셋 정보 파일
+# Met Office Hadley Centre EN.4.2.2 (품질관리된 수온·염분 프로파일 + 월별 객관분석장)
+# 수정 후에는 공식 페이지에서 확인한 날짜로 last_verified 를 갱신하세요.
+# ─────────────────────────────────────────────────────────────
+id: en4
+name: EN4
+full_name: "EN4: Quality-Controlled Subsurface Ocean Temperature and Salinity Profiles and Objective Analyses, version EN.4.2.2 (품질관리 수온·염분 프로파일과 월별 객관분석장)"
+category: analysis
+domain: ocean
+group: 수온·염분 분석장
+order: 10
+domains: [해양]
+provider: Met Office Hadley Centre (영국 기상청)
+
+status: active
+status_note: >-
+  현재 버전 EN.4.2.2가 매월 갱신되고 있습니다. 2023년 말과 2024·2025년에 비(非)Argo 입력원인 GTSPP 자료를 일부 받지 못한 달이 있었고,
+  해당 파일은 재처리되었거나 공식 페이지에 공백 범위가 안내되어 있습니다. 이전 버전(EN.4.2.1 등)도 내려받을 수 있지만 갱신은 끝났습니다.
+
+period:
+  start: "1900-01"
+  end: present
+  note: >-
+    2026-10-12 확인 시점에 다운로드 페이지의 가장 최근 예비(preliminary) 파일은 2026년 8월(202608)이고, 연도별 묶음 파일은 2026년까지 있습니다.
+    확정(final) 자료는 관측 약 2개월 뒤, 예비 자료는 그보다 약 1개월 먼저 나옵니다. 초기(특히 1950년 이전)는 관측이 매우 드물어 분석장이 기후값에 가깝습니다.
+
+resolution:
+  spatial_short: "111 km (1°)"
+  temporal_short: "1개월"
+  spatial: >-
+    객관분석장: 1°×1° 정규 위경도 격자, 경도 360 × 위도 173 (남쪽 7°는 바다가 없어 저장하지 않으므로 위도가 약 83°S부터 시작) /
+    프로파일: 관측 위치 그대로(격자 아님)
+  vertical: >-
+    객관분석장: 불규칙 간격 42층 — 첫 층 0~10.0475 m(중심 약 5.02 m), 마지막 층 5200.5986~5500 m(중심 약 5350.27 m).
+    깊이 값은 층의 대략적인 중간점입니다(depth, depth_bnds). 프로파일: 관측 층 그대로, 최대 400층(2000 m 아래부터 약 50 m 간격으로 솎아냄)
+  temporal: 객관분석장은 월별, 프로파일은 월별 파일에 관측 시각 그대로 수록
+
+update: 매월 (확정 자료 약 2개월 지연, 예비 자료는 보통 매달 12~18일에 전달 분 공개)
+license: >-
+  Crown Copyright, Non-Commercial Government Licence v2 — 개인 학습·과학 연구 목적 무료, 상업적 이용은 Met Office 고객센터에 별도 문의.
+  출처 표시(credit line)와 Good et al. (2013) 및 사용한 편향 보정 논문 인용 필요
+account_required: false
+
+summary: >-
+  영국 기상청 해들리센터가 만드는 전지구 해양 아표층(subsurface) 수온·염분 자료로, 품질관리(QC)를 거친 관측 프로파일과 이를 1°·월별 격자로
+  객관분석한 분석장 두 가지를 함께 제공합니다. 입력은 Argo, ASBO, GTSPP, World Ocean Database이며 1900년부터 현재까지 이어집니다.
+  XBT·MBT 관측의 계통 오차를 서로 다른 네 가지 방식(g10, l09, c13, c14)으로 보정한 판이 각각 나와 있어 보정 방식에 따른 구조적 불확실성을 확인할 수 있습니다.
+  해양 열용량·염분 변화 연구, 모델 검증, 해양 재분석과의 비교에 널리 쓰입니다.
+
+time_convention:
+  summary: >-
+    객관분석장은 한 달 동안의 관측을 모아 만든 월 단위 분석값(월평균장)이며, time은 분석한 달의 가운데, time_bnds는 그 달의 시작과 끝입니다.
+    프로파일 파일은 한 달치 관측을 모은 것으로 각 프로파일은 관측 시각(JULD)의 순간 관측값입니다.
+  points:
+    - "분석장의 time 단위는 days since 1800-01-01, 프로파일의 JULD는 days since 1950-01-01입니다 (Product User Guide)."
+    - "분석의 배경장은 '지난달 분석장의 지속 예보'이며 1971~2000년 기후값을 포함합니다. 관측이 오랫동안 없으면 분석값이 1971~2000년 기후값으로 되돌아갑니다(relax back)."
+    - "`*_observation_weights`가 1에 가까우면 그달 그 위치의 값이 관측에 크게 좌우되고, 0에 가까우면 그달 관측이 없어 배경장(기후값 쪽) 값이라는 뜻입니다. 1을 넘을 수도 있습니다."
+    - "예비(p) 파일은 확정(f) 파일이 나오면 바뀔 수 있습니다. 파일 이름의 p/f로 구분합니다."
+  source: https://www.metoffice.gov.uk/hadobs/en4/EN.4.2.2_Product_User_Guide_v1.0.pdf
+  source_name: EN.4.2.2 Product User Guide v1.0 · EN4 분석장 파일 형식 페이지 · EN4 FAQ
+
+variables:
+  note: >-
+    EN.4.2.2 파일 형식 페이지·FAQ·Product User Guide 기준입니다. 분석장의 온도는 잠재수온(기준 압력 0 dbar)이며 Kelvin으로 저장되어 있고,
+    염분은 실용염분(단위 '1', EN.4.2.0부터 psu에서 바뀜, 값은 같음)입니다.
+  full_list: https://www.metoffice.gov.uk/hadobs/en4/en4-2-2-analysis-file-format.html
+  groups:
+    - name: 객관분석장 (EN.4.2.2.f.analysis.<보정>.YYYYMM.nc)
+      kind: mean
+      period: 월
+      items:
+        - "잠재수온 — `temperature` (K)"
+        - "염분(실용염분) — `salinity` (1)"
+        - text: "잠재수온 분석 오차 표준편차 — `temperature_uncertainty` (K)"
+          note: 격자점끼리 독립이 아니고 상관 구조가 주어지지 않아, 영역 평균 오차를 계산할 때 독립으로 가정해 합치면 안 됩니다
+        - "염분 분석 오차 표준편차 — `salinity_uncertainty` (1)"
+        - text: "관측 가중치 — `temperature_observation_weights`, `salinity_observation_weights` (무차원, 대략 0~1)"
+          note: 관측과 배경장의 상대적 영향. 추세 분석 전에 반드시 확인
+    - name: 프로파일 (EN.4.2.2.f.profiles.<보정>.YYYYMM.nc)
+      kind: instant
+      items:
+        - "잠재수온(편향 보정 적용) — `POTM_CORRECTED` (°C)"
+        - "현장 수온 — `TEMP` (°C)"
+        - "실용염분 — `PSAL_CORRECTED` (1)"
+        - "깊이(보정 적용) — `DEPH_CORRECTED` (m)"
+        - "관측 시각 — `JULD` (days since 1950-01-01)"
+        - text: "품질 플래그 — `PROFILE_POTM_QC`, `PROFILE_PSAL_QC`, `QC_FLAGS_PROFILES`, `QC_FLAGS_LEVELS`"
+          note: EN4 자체 자동 QC 결과. 입력 자료의 QC 플래그는 Argo 외에는 대부분 버리고 EN4 기준으로 다시 판정
+
+access:
+  - name: Met Office Hadley Centre EN.4.2.2 다운로드 페이지
+    url: https://www.metoffice.gov.uk/hadobs/en4/download-en4-2-2.html
+    method: 웹 다운로드 (연도별 zip, 최근 월 예비 파일은 .nc.gz) / wget용 목록 파일
+    note: >-
+      보정 방식(g10, l09, c13, c14)마다 프로파일(profiles)과 분석장(analyses)이 따로 있습니다. 여러 해를 받을 때는
+      `EN.4.2.2.analyses.g10.download-list.txt`처럼 보정 방식별 목록 파일을 `wget -i`로 쓰면 편합니다. 계정은 필요 없습니다.
+      보정을 적용하지 않은 자료는 요청하면 받을 수 있다고 안내되어 있습니다.
+  - name: 이전 버전 (EN.4.2.1 등)
+    url: https://www.metoffice.gov.uk/hadobs/en4/download.html
+    method: 웹 다운로드
+    note: 갱신이 끝난 버전입니다. 과거 논문 재현용으로만 쓰세요.
+
+example:
+  lang: python
+  note: >-
+    다운로드 페이지에서 EN.4.2.2.analyses.g10.2020.zip을 받아 압축을 푼 뒤 실행합니다. 압축 안에 월별 파일(EN.4.2.2.f.analysis.g10.2020MM.nc)이 들어 있습니다.
+  code: |
+    # pip install xarray netCDF4 dask
+    import xarray as xr
+
+    ds = xr.open_mfdataset("EN.4.2.2.f.analysis.g10.2020*.nc")
+    temp_c = ds["temperature"] - 273.15          # Kelvin → °C (잠재수온)
+    w = ds["temperature_observation_weights"]
+
+    # 관측 영향이 약한 격자(배경장·기후값 위주)는 걸러서 보기
+    temp_obs = temp_c.where(w > 0.5)
+    print(temp_obs.sel(depth=5, method="nearest").sel(lat=slice(30, 45), lon=slice(120, 135)).mean(["lat", "lon"]).values)
+
+tips:
+  - >-
+    분석장은 관측이 없으면 1971~2000년 기후값으로 돌아가므로, 관측이 드문 시기·해역(1950년 이전, 남반구 고위도, 심층)에서는 변동과 추세가 작게 나옵니다.
+    공식 FAQ도 관측 가중치가 낮은 곳에서는 추세 분석에 쓰지 말라고 권합니다. 열용량 추세를 계산하기 전에 `*_observation_weights`를 꼭 지도로 그려 보세요.
+  - >-
+    g10·l09·c13·c14는 XBT·MBT 편향 보정 방식만 다른 네 판입니다(g10: Gouretski & Reseghetti 2010 XBT + Gouretski & Cheng 2020 MBT,
+    l09: Levitus et al. 2009 XBT·MBT, c13: Cowley et al. 2013 XBT + Levitus 2009 MBT, c14: Cheng et al. 2014 XBT + Gouretski & Cheng 2020 MBT).
+    공식 안내는 네 판을 모두 써서 결과가 얼마나 달라지는지 확인하라고 권합니다. 논문에는 버전(EN.4.2.2)과 쓴 보정 방식을 함께 적으세요.
+  - 분석장 온도는 Kelvin(273.15 오프셋 포함)이고 잠재수온입니다. 프로파일의 POTM_CORRECTED는 °C입니다. 단위를 섞지 않도록 주의하세요.
+  - >-
+    배경장 염분이 없어 염분 35.0을 가정해 잠재수온을 계산한 프로파일은 신뢰할 수 없는 값으로 플래그됩니다. 프로파일을 직접 쓸 때는 QC 플래그를 반드시 적용하세요.
+  - >-
+    World Ocean Database(WOD18) 입력은 2020년 10월에 한 번 받은 뒤 갱신하지 않아 2020년 말 이후로는 들어오지 않습니다(Product User Guide).
+    최근 구간은 Argo와 GTSPP가 주 입력이므로, 연안·선박 관측이 필요한 연구는 WOD를 함께 확인하세요.
+  - 해면 단독 관측(표층만 재는 기기)은 넣지 않습니다. 해수면온도가 필요하면 HadSST4·HadISST 같은 SST 전용 자료를 쓰세요(공식 FAQ 안내).
+
+citations:
+  dataset: []
+  papers:
+    - label: EN4 기술 논문 (필수 인용)
+      text: >-
+        Good, S. A., Martin, M. J., Rayner, N. A. (2013): EN4: Quality controlled ocean temperature and salinity profiles and monthly
+        objective analyses with uncertainty estimates. Journal of Geophysical Research: Oceans, 118(12), 6704–6716.
+      doi: 10.1002/2013JC009067
+      bibtex: |
+        @article{good2013en4,
+          author  = {Good, Simon A. and Martin, Matthew J. and Rayner, Nick A.},
+          title   = {{EN4}: Quality controlled ocean temperature and salinity profiles and monthly objective analyses with uncertainty estimates},
+          journal = {Journal of Geophysical Research: Oceans},
+          volume  = {118},
+          number  = {12},
+          pages   = {6704--6716},
+          year    = {2013},
+          doi     = {10.1002/2013JC009067}
+        }
+    - label: g10 XBT 보정 (Gouretski & Reseghetti 2010)
+      text: >-
+        Gouretski, V., Reseghetti, F. (2010): On depth and temperature biases in bathythermograph data: Development of a new correction scheme
+        based on analysis of a global ocean database. Deep Sea Research Part I: Oceanographic Research Papers, 57(6), 812–833.
+      doi: 10.1016/j.dsr.2010.03.011
+      bibtex: |
+        @article{gouretski2010xbt,
+          author  = {Gouretski, Viktor and Reseghetti, Franco},
+          title   = {On depth and temperature biases in bathythermograph data: Development of a new correction scheme based on analysis of a global ocean database},
+          journal = {Deep Sea Research Part I: Oceanographic Research Papers},
+          volume  = {57},
+          number  = {6},
+          pages   = {812--833},
+          year    = {2010},
+          doi     = {10.1016/j.dsr.2010.03.011}
+        }
+    - label: l09 XBT·MBT 보정 (Levitus et al. 2009)
+      text: >-
+        Levitus, S., Antonov, J. I., Boyer, T. P., Locarnini, R. A., Garcia, H. E., Mishonov, A. V. (2009): Global ocean heat content 1955–2008
+        in light of recently revealed instrumentation problems. Geophysical Research Letters, 36(7), L07608.
+      doi: 10.1029/2008GL037155
+      bibtex: |
+        @article{levitus2009ohc,
+          author  = {Levitus, S. and Antonov, J. I. and Boyer, T. P. and Locarnini, R. A. and Garcia, H. E. and Mishonov, A. V.},
+          title   = {Global ocean heat content 1955--2008 in light of recently revealed instrumentation problems},
+          journal = {Geophysical Research Letters},
+          volume  = {36},
+          number  = {7},
+          pages   = {L07608},
+          year    = {2009},
+          doi     = {10.1029/2008GL037155}
+        }
+    - label: c13 XBT 보정 (Cowley et al. 2013)
+      text: >-
+        Cowley, R., Wijffels, S., Cheng, L., Boyer, T., Kizu, S. (2013): Biases in Expendable Bathythermograph Data: A New View Based on
+        Historical Side-by-Side Comparisons. Journal of Atmospheric and Oceanic Technology, 30(6), 1195–1225.
+      doi: 10.1175/JTECH-D-12-00127.1
+      bibtex: |
+        @article{cowley2013xbt,
+          author  = {Cowley, Rebecca and Wijffels, Susan and Cheng, Lijing and Boyer, Tim and Kizu, Shoichi},
+          title   = {Biases in Expendable Bathythermograph Data: A New View Based on Historical Side-by-Side Comparisons},
+          journal = {Journal of Atmospheric and Oceanic Technology},
+          volume  = {30},
+          number  = {6},
+          pages   = {1195--1225},
+          year    = {2013},
+          doi     = {10.1175/JTECH-D-12-00127.1}
+        }
+    - label: c14 XBT 보정 (Cheng et al. 2014)
+      text: >-
+        Cheng, L., Zhu, J., Cowley, R., Boyer, T., Wijffels, S. (2014): Time, Probe Type, and Temperature Variable Bias Corrections to Historical
+        Expendable Bathythermograph Observations. Journal of Atmospheric and Oceanic Technology, 31(8), 1793–1825.
+      doi: 10.1175/JTECH-D-13-00197.1
+      bibtex: |
+        @article{cheng2014xbt,
+          author  = {Cheng, Lijing and Zhu, Jiang and Cowley, Rebecca and Boyer, Tim and Wijffels, Susan},
+          title   = {Time, Probe Type, and Temperature Variable Bias Corrections to Historical Expendable Bathythermograph Observations},
+          journal = {Journal of Atmospheric and Oceanic Technology},
+          volume  = {31},
+          number  = {8},
+          pages   = {1793--1825},
+          year    = {2014},
+          doi     = {10.1175/JTECH-D-13-00197.1}
+        }
+    - label: g10·c14 MBT 보정 (Gouretski & Cheng 2020)
+      text: >-
+        Gouretski, V., Cheng, L. (2020): Correction for Systematic Errors in the Global Dataset of Temperature Profiles from Mechanical
+        Bathythermographs. Journal of Atmospheric and Oceanic Technology, 37(5), 841–855.
+      doi: 10.1175/JTECH-D-19-0205.1
+      bibtex: |
+        @article{gouretski2020mbt,
+          author  = {Gouretski, Viktor and Cheng, Lijing},
+          title   = {Correction for Systematic Errors in the Global Dataset of Temperature Profiles from Mechanical Bathythermographs},
+          journal = {Journal of Atmospheric and Oceanic Technology},
+          volume  = {37},
+          number  = {5},
+          pages   = {841--855},
+          year    = {2020},
+          doi     = {10.1175/JTECH-D-19-0205.1}
+        }
+  acknowledgement: >-
+    이용 약관은 "EN.4.2.2 data were obtained from https://www.metoffice.gov.uk/hadobs/en4/ and are © Crown Copyright, Met Office,
+    [최초 공개 연도], provided under a Non-Commercial Government Licence"와 같은 credit line을 요구합니다(영국 밖에서는 © British Crown Copyright).
+    Good et al. (2013)과 함께 실제로 쓴 보정 방식(g10·l09·c13·c14)의 논문을 인용하고, Product User Guide가 제시한 입력 자료(Argo, ASBO, GTSPP, WOD18)
+    감사 문구도 넣으세요. 공식 사용자 안내서는 모든 판에 기본 적용되는 Hanawa et al. (1995)·Kizu et al. (2005) XBT 낙하속도 보정도 참고문헌으로 듭니다.
+
+notices:
+  - date: "2025-11"
+    level: warning
+    title: GTSPP 서비스 중단으로 2025년 9월 일부·10월 예비 파일에 비Argo 자료 누락
+    body: >-
+      GTSPP 서비스가 일시 중단되어 2025년 9월 예비·확정 파일에는 GTSPP 자료가 일부만, 2025년 10월 예비 파일에는 전혀 들어가지 않았습니다.
+      서비스는 재개되었고 Met Office가 상황을 지켜보고 있다고 안내했습니다. 공지 게시일은 페이지에 없어, 해당 파일이 공개된 시기(2025년 11월 무렵) 기준으로 적었습니다.
+      이 기간 연안·선박 관측이 중요한 분석은 결과를 다시 확인하세요.
+    source: https://www.metoffice.gov.uk/hadobs/en4/download-en4-2-2.html
+  - date: "2024-11"
+    level: info
+    title: 2024년 9월 예비 파일에 태평양 GTSPP 자료 누락 — 확정 파일은 정상
+    body: >-
+      2024년 9월 예비(p) 파일은 처리 문제로 태평양의 GTSPP 자료 없이 만들어졌습니다. 2024년 11월에 공개된 2024년 9월 확정(f) 파일은 정상 입력(Argo·GTSPP)으로 만들어졌으므로
+      예비 파일을 받았다면 확정 파일로 바꾸세요.
+    source: https://www.metoffice.gov.uk/hadobs/en4/download-en4-2-2.html
+  - date: "2024-01-29"
+    level: warning
+    title: 2023년 10~12월 자료 재처리 — 해당 기간 다시 받기 권장
+    body: >-
+      2023년 10~12월에 GTSPP 자료를 모두 받지 못해 파일이 불완전했고, 이후 새 자료를 넣어 재처리했습니다.
+      2023-12-12~2024-01-29 사이에 이 기간 파일을 받았다면 다시 받으라고 안내되어 있습니다.
+    source: https://www.metoffice.gov.uk/hadobs/en4/download-en4-2-2.html
+  - date: "2021-08-25"
+    level: info
+    title: EN.4.2.2 — WOD18 입력이 2020년 말 이후 갱신되지 않음
+    body: >-
+      EN.4.2.2 사용자 안내서(2021-08-25 작성)에 따르면 World Ocean Database(WOD18)는 2020년 10월에 한 번만 받아 이후 갱신하지 않으므로,
+      WOD 출처 관측은 2020년 말 이후 들어오지 않습니다. 같은 버전에서 Gouretski & Cheng (2020) MBT 보정 도입, c13·c14 판 추가,
+      문제 있는 TAO 부이 8기(2015~2016년)·Argo 플로트 1기 제거가 함께 이루어졌습니다.
+    source: https://www.metoffice.gov.uk/hadobs/en4/EN.4.2.2_Product_User_Guide_v1.0.pdf
+
+links:
+  - name: EN4 공식 페이지 (Met Office Hadley Centre)
+    url: https://www.metoffice.gov.uk/hadobs/en4/
+  - name: EN.4.2.2 다운로드 페이지 (버전 변경 내역 포함)
+    url: https://www.metoffice.gov.uk/hadobs/en4/download-en4-2-2.html
+  - name: EN.4.2.2 Product User Guide (PDF)
+    url: https://www.metoffice.gov.uk/hadobs/en4/EN.4.2.2_Product_User_Guide_v1.0.pdf
+  - name: 분석장 파일 형식
+    url: https://www.metoffice.gov.uk/hadobs/en4/en4-2-2-analysis-file-format.html
+  - name: 프로파일 파일 형식
+    url: https://www.metoffice.gov.uk/hadobs/en4/en4-2-2-profile-file-format.html
+  - name: 분석장 깊이 층 목록 (depths.txt)
+    url: https://www.metoffice.gov.uk/hadobs/en4/depths.txt
+  - name: EN4 FAQ
+    url: https://www.metoffice.gov.uk/hadobs/en4/FAQ.html
+  - name: EN4 이용 약관
+    url: https://www.metoffice.gov.uk/hadobs/en4/terms_and_conditions.html
+  - name: EN.4.2.2 입력 자료 출처
+    url: https://www.metoffice.gov.uk/hadobs/en4/en4-2-2-data-sources.html
+
+watch_urls:
+  - https://www.metoffice.gov.uk/hadobs/en4/
+  - https://www.metoffice.gov.uk/hadobs/en4/download-en4-2-2.html
+  - https://www.metoffice.gov.uk/hadobs/en4/FAQ.html
+
+last_verified: "2026-10-12"

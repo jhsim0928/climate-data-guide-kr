@@ -7,7 +7,7 @@ name: OSTIA
 full_name: Operational Sea Surface Temperature and Sea Ice Analysis (영국 기상청 현업 해수면온도·해빙 분석)
 category: analysis
 domain: ocean
-group: 관측 기반 분석장
+group: 해수면온도 분석장
 order: 50
 domains: [해양, 해빙]
 provider: Met Office / Copernicus Marine Service (CMEMS)
@@ -27,7 +27,7 @@ period:
 resolution:
   spatial_short: "6 km (0.05°)"
   temporal_short: "1일"
-  spatial: 0.05° 위경도 격자 (약 5~6 km, 7200×3600)
+  spatial: 0.05° 위경도 격자 (7200×3600)
   vertical: 해면만 (foundation SST — 일변화 영향을 뺀 표층 온도)
   temporal: 일평균 (정오 기준)
 

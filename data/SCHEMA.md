@@ -2,6 +2,7 @@
 
 `data/datasets/<id>.yaml` 파일 하나가 데이터셋 페이지, 메뉴, 목록, 공지 모음, 알림 신청 체크박스를 모두 만듭니다.
 작성 후 `python scripts/validate.py data/datasets/<id>.yaml`로 검사하세요.
+영어판은 같은 구조의 `data/datasets_en/<id>.yaml`이 필요합니다(공식 영어 출처를 보고 작성, `id`·`domain`·`group`·`domains`·`status`·`level`·`kind`·`temporal_short`·날짜·URL·DOI는 한국어 파일과 같은 값).
 
 ## 필수 항목
 
@@ -17,11 +18,11 @@
 | `also_in` | (선택) 다른 탭에도 실을 때: `[{domain, group, label}]` |
 | `domains` | 다루는 영역 태그 목록 (예: `[대기, 육지]`) |
 | `provider` | 제공 기관 |
-| `status` | `active` 정상 / `delayed` 지연 / `deprecated` 대체 예정 / `ended` 갱신 종료 |
+| `status` | `active` 정상 / `delayed` 지연 / `deprecated` 대체 예정 / `ended` 갱신 종료 / `upcoming` 공개 예정(아직 공개 전 — `variables`·`time_convention`은 비워도 됨) |
 | `status_note` | 현재 상태 설명 (한국어 2~3문장) |
 | `successor` | `ended`이면 필수: `{name, url, note}` (후속이 없으면 `name: 없음`) |
 | `period` | `{start: "YYYY-MM", end: present 또는 "YYYY-MM", note}` |
-| `resolution` | `{spatial_short, temporal_short, spatial, vertical, temporal}` — `spatial_short`은 목록·비교용 대표 값 `"31 km (0.28°)"` 형식, `temporal_short`는 가장 짧은 제공 간격 `1시간`/`3시간`/`6시간`/`1일`/`7일`/`1개월` 중 하나. 나머지는 세부 설명 |
+| `resolution` | `{spatial_short, temporal_short, spatial, vertical, temporal}` — `spatial_short`은 목록·비교용 대표 값 `"31 km (0.28°)"` 형식, `temporal_short`는 가장 짧은 제공 간격 `1시간`/`3시간`/`6시간`/`1일`/`7일`/`1개월` 중 하나. `spatial`·`vertical`·`temporal`은 데이터셋 상세 페이지 '한눈에 보기'에 그대로 나가므로 **공식 문서의 격자 정보를 정확히**(모델 원본 격자 + 제공 격자, 격자 이름·크기) 적고, 직접 계산한 km·° 환산값은 넣지 않습니다. `spatial_short`·`temporal_short`는 목록·비교표에서만 쓰입니다 |
 | `update` | 갱신 주기 |
 | `license` | 라이선스·이용 조건 요약 |
 | `account_required` | `true` / `false` |
@@ -40,9 +41,9 @@
 
 | domain | group |
 |---|---|
-| `atmosphere` | `재분석`, `위성 관측 미동화 재분석` |
-| `ocean` | `재분석`, `관측 기반 분석장`, `모델 강제력` |
-| `seaice` | `재분석`, `관측 기반 분석장`, `위성 관측 자료` |
+| `atmosphere` | `재분석`, `지역 재분석`, `위성 관측 미동화 재분석`, `육상 재분석`, `강수 자료`, `기온 자료`, `복사 자료` |
+| `ocean` | `재분석`(상태 추정 포함), `해수면온도 분석장`, `수온·염분 분석장`, `위성 관측 자료`, `모델 강제력` |
+| `seaice` | `재분석`, `관측 기반 분석장`(SST 자료의 해빙 농도 교차 수록), `위성 관측 자료`, `해빙 이동`, `해빙 지수` |
 
 ## 변수 목록 형식
 

@@ -29,6 +29,7 @@ successor:
 transitions:
   - from: CS2SMOS v206 (CryoSat-2 + SMOS)
     to: CS3SMOS v300 (CryoSat-2 + Sentinel-3A/B + SMOS)
+    to_id: cs3smos
     status: completed
     date: "2025-10"
     summary: >-
@@ -53,7 +54,7 @@ transitions:
         after: "북극 10-15 ~ 이듬해 4-15 + 남극 4-15 ~ 10-15"
       - aspect: 기간
         before: "2010-11 ~ 2025-04 (마지막 시즌 2024/25)"
-        after: "2025/26 겨울(2025-10-15 주간장)부터 운영. 과거 시즌 재처리본 공개 여부는 AWI 공지에서 확인되지 않음"
+        after: "AWI 준실시간 운영은 2025/26 겨울(2025-10-15 주간장)부터. Copernicus Marine에는 v300 북반구가 2023-10-18부터, 남반구가 2025-04-18부터 공개. 2010년 이후 전체 재처리본의 공개 위치는 확인되지 않음"
       - aspect: 불확실성
         before: "v206 불확실성 모델"
         after: "고도계·SMOS 불확실성 재산정 — SMOS는 해빙 농도 100% 미만 효과를 포함하고 최소 20 cm, 고도계 불확실성은 v206보다 크게 잡힘"
@@ -62,13 +63,13 @@ transitions:
         after: "ESA CCI 해빙 산출물과 같은 마스크, 육지/바다 비율 변수 추가"
       - aspect: 파일 내용
         before: "분석·배경장·가중평균 두께, innovation, SMOS·CryoSat-2 각각의 두께와 불확실성 등 (PDD v1.6 표 3)"
-        after: "해빙 부피 계산에 필요한 변수 위주로 단순화, 상태·품질 플래그 추가 — 새 변수 목록은 공식 문서로 아직 확인되지 않음"
+        after: "6개로 단순화 — sea_ice_thickness, sea_ice_thickness_uncertainty, sea_ice_concentration, status_flag, quality_flag, density_of_ocean(격자 안 바다 비율) (Copernicus Marine 제품 설명서 기준)"
       - aspect: 파일 이름
         before: "W_XX-ESA,SMOS_CS2,NH_25KM_EASE2_<시작>_<끝>_<o|r>_v206_01_l4sit.nc"
         after: "W_XX-ESA,SMOS_CS2_S3A_S3B,NH_12P5KM_EASE2_<시작>_<끝>_o_v300_01_l4sit (AWI 퀵룩 파일명 기준)"
       - aspect: 받는 곳·DOI
         before: "ESA SMOS 배포 서버 L4_SIT_Open, DOI 10.57780/sm1-4f787c3 (Version 206) / AWI FTP"
-        after: "AWI FTP cryosat2_smos/v300 폴더 / ESA 배포 서버의 v300 제공과 새 DOI는 2026-10 현재 확인되지 않음"
+        after: "AWI FTP cryosat2_smos/v300 폴더 / Copernicus Marine SEAICE_GLO_PHY_L4_NRT_011_014 (제품 DOI 10.48670/moi-00125). ESA 배포 서버에는 2026-10 현재 v300 없음"
     impacts:
       - v206(2010~2025)과 v300(2025/26~)은 해상도·입력 위성·불확실성 모델이 달라 한 시계열로 이어 붙이면 경계에 계단이 생길 수 있습니다. 장기 분석은 한 버전으로 통일된 기록이 나올 때까지 v206 구간과 v300 구간을 나눠 다루세요.
       - 파일명(SMOS_CS2 → SMOS_CS2_S3A_S3B, 25KM → 12P5KM, v206 → v300)과 변수 구성이 바뀌어 기존 읽기 스크립트가 그대로 동작하지 않습니다. 새 파일의 변수 이름을 직접 확인한 뒤 고치세요.
@@ -94,7 +95,7 @@ period:
 resolution:
   spatial_short: "25 km (0.23°)"
   temporal_short: "7일"
-  spatial: "25 km EASE2 북반구 격자(Lambert 정적 방위 등적도법, 432×432, 5400 km × 5400 km) — 후속 CS3SMOS는 12.5 km"
+  spatial: "25 km EASE2 북반구 격자(Lambert 정적 방위 등적도법, 432×432) — 후속 CS3SMOS는 12.5 km"
   vertical: 해당 없음 (두께 단일 값)
   temporal: 주간 평균(7일 창) 장을 매일 갱신 — 파일 하나가 한 주(월~일 또는 최근 7일)를 대표
 
@@ -180,10 +181,10 @@ access:
     url: https://spaces.awi.de/spaces/CS2SMOS/overview
     method: 웹 안내
     note: 생산 시작·중단·자료 결측 공지가 가장 먼저 올라오는 곳입니다.
-  - name: C3S Climate Data Store — Sea ice thickness monthly gridded data (L4)
+  - name: C3S Climate Data Store — Sea ice thickness gridded data for the Arctic derived from satellite observations
     url: https://cds.climate.copernicus.eu/datasets/satellite-sea-ice-thickness
     method: 웹 다운로드 / CDS API
-    note: CryoSat-2·Sentinel-3 고도계와 SMOS를 합친 월별 L4 두께를 별도 처리로 제공합니다. ECMWF 계정이 필요합니다.
+    note: C3S가 별도로 처리해 제공하는 위성 기반 북극 해빙 두께 격자 자료로, CS2SMOS와 같은 제품은 아닙니다. ECMWF 계정이 필요합니다.
 
 example:
   lang: python

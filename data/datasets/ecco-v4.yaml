@@ -1,0 +1,322 @@
+# ─────────────────────────────────────────────────────────────
+# ECCO Version 4 — 데이터셋 정보 파일
+# 수정 후에는 공식 페이지에서 확인한 날짜로 last_verified 를 갱신하세요.
+# ─────────────────────────────────────────────────────────────
+id: ecco-v4
+name: ECCO V4
+full_name: ECCO Version 4 Central Estimate (Estimating the Circulation and Climate of the Ocean, 전지구 해양·해빙 상태 추정, 현재 공개 주력판 V4r4)
+category: reanalysis
+domain: ocean
+group: 재분석
+order: 30
+domains: [해양, 해빙, 대기]
+provider: ECCO Consortium (NASA JPL·MIT·UT Austin·AER 등) / 배포 NASA PO.DAAC (Earthdata)
+
+status: active
+status_note: >-
+  PO.DAAC에서 정상 배포 중인 주력판은 Release 4(V4r4, 1992~2017년)이며, 매달 연장되는 자료가 아니라 기간이 고정된 릴리스입니다.
+  기간을 2019년 말까지 늘린 V4r5는 2025년부터 AWS 클라우드(요청자 부담 S3)에서 원 격자 월평균만 일부 공개되어 있고,
+  ECCO 팀은 2026년 5월 1992~2025년을 다루는 V4r6를 PO.DAAC로 정식 공개해 V4r5를 대체하겠다고 밝혔습니다. 2026-10-12 기준 V4r6 공개 날짜는 발표되지 않았습니다.
+
+transitions:
+  - from: ECCO V4r4
+    to: ECCO V4r5
+    status: completed
+    date: "2025-05"
+    summary: >-
+      같은 LLC90 격자·MITgcm 체계에서 최적화 기간을 2019년 말까지 늘리고 해빙 열역학 수반(adjoint) 모델과 남극 빙붕·조수 빙하 표현을 더한 릴리스입니다.
+      다만 2026-10 확인 기준으로 PO.DAAC 일반 다운로드(Earthdata 검색)에는 없고, AWS 요청자 부담 버킷에서 원 격자 월평균 일부 변수만 받을 수 있습니다.
+    changes:
+      - aspect: 기간
+        before: "1992-01 ~ 2017-12"
+        after: "1992-01 ~ 2019-12 (요약 문서: 2020-01-01까지)"
+      - aspect: 모델·최적화
+        before: "MITgcm 1° LLC90, 4D-Var(수반 모델) 최소제곱 맞춤"
+        after: "같은 격자에 해빙 열역학 수반 모델을 써서 위성 해빙 농도에 더 잘 맞추고, 남극 빙붕·조수 빙하(열역학) 표현 추가"
+      - aspect: 제공 형태
+        before: "PO.DAAC — llc90·0.5° 격자, 일평균·월평균·일 순간값, 수십 개 데이터셋"
+        after: "s3://ecco-model-granules/ (요청자 부담) — llc90 원 격자 월평균 일부(수온·염분, 해양·해빙 표면 열 플럭스, 해양 수온 플럭스, 대기 지표 상태)만"
+      - aspect: 이용 조건(파일 속성)
+        before: "Public Domain"
+        after: "CC BY 4.0"
+    impacts:
+      - V4r4와 V4r5는 서로 다른 최적화 해이므로 두 릴리스를 한 시계열로 이어 붙이지 마세요. 2018~2019년이 필요하면 V4r5 전 기간을 쓰세요.
+      - V4r5는 AWS 클라우드 안(us-west-2 권장)에서만 ecco_access로 읽을 수 있고, 밖에서 받으면 전송 비용이 듭니다.
+      - ECCO 팀이 V4r6로 V4r5를 대체한다고 밝혔으므로 새로 시작하는 장기 분석은 V4r6 공개 시점을 확인하세요.
+    sources:
+      - name: Synopsis of the ECCO V4r5 Global Ocean and Sea-Ice State Estimate (Zenodo, 2024)
+        url: https://doi.org/10.5281/zenodo.13926715
+      - name: ecco_access 문서 — Accessing ECCOv4 release 5 output in the AWS Cloud
+        url: https://ecco-access.readthedocs.io/en/latest/ECCO_access_v4r5.html
+  - from: ECCO V4r4 / V4r5
+    to: ECCO V4r6
+    status: planned
+    summary: >-
+      ECCO 팀(JPL Ou Wang)이 2026년 4~5월 지원 메일링 리스트에서 1992-01-01~2025-12-31을 다루는 V4r6를 준비 중이며,
+      PO.DAAC로 정식 공개하고 V4r5를 대체할 것이라고 답했습니다. 월평균 자료를 먼저 ECCO Drive에 올리겠다고 했으나 공개 날짜는 정해지지 않았습니다.
+    changes:
+      - aspect: 기간
+        before: "1992~2017 (V4r4) / 1992~2019 (V4r5)"
+        after: "1992-01-01 ~ 2025-12-31"
+      - aspect: 제공처
+        before: "PO.DAAC (V4r4) / AWS 요청자 부담 버킷 (V4r5)"
+        after: "ECCO Drive 월평균 선공개 후 PO.DAAC 정식 공개 예정"
+    impacts:
+      - 모델·자료동화의 구체적 변경점은 아직 공식 문서로 공개되지 않았습니다. 공개 뒤 요약 문서(synopsis)를 확인하고 바꿔 쓰세요.
+    sources:
+      - name: ecco-support 메일링 리스트 — V4r6 안내 (2026-05-14)
+        url: https://mailman.mit.edu/pipermail/ecco-support/2026-May/000851.html
+      - name: ecco-support 메일링 리스트 — ECCO data after end of 2017 (2026-04)
+        url: https://mailman.mit.edu/pipermail/ecco-support/2026-April/000846.html
+
+period:
+  start: "1992-01"
+  end: "2017-12"
+  note: >-
+    V4r4 기준 1992-01-01 ~ 2017-12-31입니다(PO.DAAC 메타데이터 종료 2018-01-01, 2026-10-12 확인 시 마지막 월평균 파일 2017-12).
+    V4r5는 1992-01 ~ 2019-12를 다루지만 공개 범위가 제한적이고, V4r6(1992~2025)는 공개 예정입니다.
+
+resolution:
+  spatial_short: "111 km (1°)"
+  temporal_short: "1일"
+  spatial: >-
+    모델 격자 LLC90(lat-lon-cap 90): 70°S~57°N은 위경도 격자, 그 위는 북극 캡인 곡선 격자로 13개 타일(각 90 × 90)로 저장, 공칭 1°(사용자 안내서 표기 22~110 km, 고위도에서 조밀) /
+    제공 격자: 원 격자(llc90) 또는 0.5° × 0.5° 정규 위경도 격자(위도 −89.75~89.75°, 경도 −179.75~179.75°, 보간본)
+  vertical: "50층 (층 두께 표층 10 m ~ 해저 부근 457 m, 최대 수심 6,145 m)"
+  temporal: >-
+    일평균·월평균(llc90·0.5° 모두) / 일 단위 순간값(snapshot, 00 UTC, llc90 일부 변수) /
+    해저압 기반 SBO 핵심 산출물(전지구 스칼라 시계열)은 1시간
+
+update: 고정 기간 릴리스 — 정기 연장 없음 (새 릴리스로 기간 확장)
+license: >-
+  무료 공개. V4r4 파일 속성은 Public Domain, V4r5는 CC BY 4.0. ECCO는 이용 조건으로 데이터셋·요약 문서·Forget et al. (2015) 인용을 요구합니다
+account_required: true
+
+summary: >-
+  ECCO V4는 MITgcm 해양·해빙 모델의 초기조건, 모델 매개변수, 대기 강제력(ERA-Interim에 보정량을 더한 값)을 조정해
+  모델을 자유롭게 돌린 결과가 1992년 이후 위성 고도계·SST·해빙 농도·GRACE 해저압·Argo 등 현장 관측에 최소제곱으로 맞도록 만든 '상태 추정(state estimate)'입니다.
+  일반 재분석처럼 관측 시각마다 모델 상태를 직접 고치지 않으므로, 결과가 모델 방정식을 그대로 만족해 열·염·부피·운동량이 보존되고 수지(budget)가 닫힙니다.
+  해양 열·담수 수지, 해수면 변화 원인 분석처럼 '왜 변했는가'를 따지는 연구에 특히 쓰입니다.
+
+time_convention:
+  summary: >-
+    PO.DAAC의 일평균·월평균 파일은 그 구간(하루 또는 달력상 한 달)의 평균이며, `time`은 평균 구간의 중심 시각, `time_bnds`는 구간의 시작·끝입니다.
+    snapshot 데이터셋은 해당 날짜 00:00 UTC의 순간값이고, 월평균 플럭스로 계산한 변화량은 연속한 snapshot 사이의 차이와 맞도록 설계되었습니다.
+  points:
+    - "예: 2017년 1월 월평균의 `time`은 2017-01-16T12:00:00, 일평균은 그날 12:00(파일 기준 시각 'hours since 1992-01-01T12:00:00')입니다."
+    - "snapshot 파일 이름은 OCEAN_TEMPERATURE_SALINITY_snap_1992-01-02T000000_… 처럼 날짜와 00 UTC 시각을 담고 있습니다."
+    - "열·염 수지를 닫으려면 원 격자(llc90) 월평균 플럭스와 월 경계의 snapshot을 함께 써야 합니다. 0.5° 보간장은 수지 계산에 쓰지 말라고 안내되어 있습니다."
+    - "플럭스 변수(W m-2, kg m-2 s-1, N m-2)는 누적량이 아니라 평균 플럭스입니다."
+  source: https://www.earthdata.nasa.gov/data/catalog/pocloud-ecco-l4-ocean-vel-05deg-monthly-v4r4-v4r4
+  source_name: "NASA Earthdata 데이터셋 변수 설명(time = 'Center time of the averaging period', time_bnds) + ECCO V4r4 사용자 안내서(snapshot·수지 설명)"
+
+variables:
+  note: >-
+    PO.DAAC V4r4 데이터셋 기준 주요 변수입니다. 변수명은 netCDF 파일 안의 이름입니다. 변수는 주제별 데이터셋(ShortName)으로 나뉘어 있고,
+    같은 변수가 llc90(…_LLC0090GRID_…)과 0.5°(…_05DEG_…), 일평균(DAILY)·월평균(MONTHLY)으로 따로 있습니다.
+  full_list: https://ecco-access.readthedocs.io/en/latest/Querying_ECCO_variables.html
+  groups:
+    - name: 3차원 해양 (50층)
+      kind: mean
+      period: 일 / 월
+      items:
+        - "잠재수온 — `THETA` (°C)"
+        - "염분 — `SALT` (psu)"
+        - "모델 격자 x·y 방향 유속(llc90) — `UVEL`, `VVEL` (m/s)"
+        - "동서·남북 유속(0.5° 격자, 격자 중심 보간) — `EVEL`, `NVEL` (m/s)"
+        - "연직 유속(격자 윗면) — `WVEL` (m/s)"
+    - name: 해수면·혼합층
+      kind: mean
+      period: 일 / 월
+      items:
+        - "역학적 해수면 높이 편차(고도계 비교용) — `SSH` (m)"
+        - "혼합층 깊이(Kara et al. 2000, 표층보다 0.8 °C 낮아지는 깊이) — `MXLDEPTH` (m)"
+    - name: 해면 플럭스
+      kind: mean
+      period: 일 / 월
+      items:
+        - "해빙 없는 해면의 순 해기 열플럭스 — `EXFqnet` (W m-2)"
+        - "해면으로 들어가는 순 열플럭스 — `oceQnet` (W m-2)"
+        - "해면 담수 플럭스(강수·증발·유출) — `EXFempmr` (m/s)"
+        - "해양으로 들어가는 순 담수 플럭스 — `oceFWflx` (kg m-2 s-1)"
+        - "모델 x방향 바람 응력 / 바람·해빙에 의한 해면 응력 — `EXFtaux`, `oceTAUX` (N m-2)"
+    - name: 해빙·적설
+      kind: mean
+      period: 일 / 월
+      items:
+        - "해빙 농도 — `SIarea` (비율, 0~1)"
+        - "격자 평균 해빙 두께 — `SIheff` (m)"
+        - "격자 평균 적설 두께 — `SIhsnow` (m)"
+        - "모델 x방향 해빙 속도 — `SIuice` (m/s)"
+    - name: 순간값(snapshot, llc90)
+      kind: instant
+      period: "하루 1회(00 UTC)"
+      items:
+        - "잠재수온·염분 — `THETA`, `SALT` (ECCO_L4_TEMP_SALINITY_LLC0090GRID_SNAPSHOT_V4R4)"
+        - "해수면 높이 관련 변수 — ECCO_L4_SSH_LLC0090GRID_SNAPSHOT_V4R4"
+        - "해빙·적설 농도와 두께 — ECCO_L4_SEA_ICE_CONC_THICKNESS_LLC0090GRID_SNAPSHOT_V4R4"
+
+access:
+  - name: NASA PO.DAAC — ECCO 데이터셋 모음
+    url: https://podaac.jpl.nasa.gov/ECCO
+    method: Earthdata Search / HTTPS 다운로드 / earthaccess·ecco_access(Python) / AWS us-west-2 직접 접근
+    note: >-
+      무료 NASA Earthdata 계정이 필요합니다. V4r4는 주제·격자·시간 간격별로 수십 개 데이터셋(ShortName 예: ECCO_L4_TEMP_SALINITY_05DEG_MONTHLY_V4R4)으로 나뉘어 있습니다.
+  - name: ECCO 프로젝트 — V4r4 제품 페이지
+    url: https://ecco-group.org/products-ECCO-V4r4.htm
+    method: 안내 페이지 (인용 문구, 오류 공지, 문서)
+    note: 페이지의 "ECCO Drive 일시 중단" 안내는 2026-10 확인 시에도 남아 있으나, ECCO 팀은 2026-08-28 Drive 복구를 공지했습니다.
+  - name: ECCO Drive
+    url: https://ecco.jpl.nasa.gov/drive/
+    method: HTTPS(WebDAV) — Earthdata 계정 로그인
+    note: llc90 원 격자 파일(V4r4 월평균, 강제력 입력 파일 등)과 앞으로 V4r6 월평균이 올라올 곳입니다.
+  - name: ecco_access (ECCOv4-py) — V4r5 클라우드 접근 안내
+    url: https://ecco-access.readthedocs.io/en/latest/ECCO_access_v4r5.html
+    method: Python (AWS 클라우드 안에서만)
+    note: V4r5 월평균은 s3://ecco-model-granules/ 요청자 부담 버킷에 있습니다.
+
+example:
+  lang: python
+  note: "pip install earthaccess xarray netcdf4 후 실행합니다. 처음 login() 때 Earthdata 아이디·비밀번호를 입력(또는 ~/.netrc 저장)합니다. ShortName은 PO.DAAC 데이터셋 이름입니다."
+  code: |
+    import earthaccess
+    import xarray as xr
+
+    earthaccess.login()
+
+    # V4r4 수온·염분 월평균, 0.5° 위경도 격자
+    results = earthaccess.search_data(
+        short_name="ECCO_L4_TEMP_SALINITY_05DEG_MONTHLY_V4R4",
+        temporal=("2010-01-01", "2010-12-31"),
+    )
+    files = earthaccess.download(results, "ecco_v4r4_ts")
+    ds = xr.open_mfdataset(files)
+    print(ds["THETA"])   # (time, Z, latitude, longitude)
+
+tips:
+  - "0.5° 보간장은 그림·비교용입니다. 열·염·부피 수지를 닫으려면 llc90 원 격자 자료와 격자 기하 데이터셋(ECCO_L4_GEOMETRY_LLC0090GRID_V4R4)을 쓰세요."
+  - "llc90은 13개 타일(tile, j, i) 구조라 위경도 배열처럼 바로 자를 수 없습니다. ecco_v4_py 패키지에 타일 그리기·보간·수지 계산 도구가 있습니다."
+  - "`UVEL`·`VVEL`은 모델 격자 축 방향이라 북극 캡 등에서는 동서·남북 성분이 아닙니다. 동서·남북 유속이 필요하면 0.5° 자료의 `EVEL`·`NVEL`을 쓰거나 격자 각도로 회전하세요."
+  - "2021년 6월 오류 공지(V4r4b): 2014년 대기압 강제력이 잘못 들어가(4월·12월 뒤바뀜, 5~11월 하루 밀림) 2013~2015년 일 단위 해수면·해저압에 영향이 있습니다. 이 기간 일자료가 필요하면 V4R4B 데이터셋을 쓰세요."
+  - "V4r4의 대기 강제력은 ERA-Interim에 ECCO 최적화로 얻은 보정량을 더한 것입니다(풍속·기압은 보정 없음). 대기 지표 상태 데이터셋을 ERA-Interim 원자료와 같다고 보지 마세요."
+  - "ECCO V5 Alpha, ECCO2, ECCO-Darwin 등은 다른 제품입니다. 논문에는 릴리스 이름(V4r4 등)을 정확히 적으세요."
+
+citations:
+  dataset:
+    - label: PO.DAAC 데이터셋 DOI (예 — 수온·염분 월평균 0.5°)
+      text: >-
+        ECCO Consortium, Fukumori, I., Wang, O., Fenty, I., Forget, G., Heimbach, P., & Ponte, R. M. (2020).
+        ECCO Ocean Temperature and Salinity - Monthly Mean 0.5 Degree (Version 4 Release 4). Ver. V4r4. PO.DAAC, CA, USA.
+        Dataset accessed [YYYY-MM-DD] at https://doi.org/10.5067/ECG5M-OTS44
+      doi: 10.5067/ECG5M-OTS44
+      bibtex: |
+        @misc{ecco_v4r4_ts_05deg_monthly,
+          author    = {{ECCO Consortium} and Fukumori, Ichiro and Wang, Ou and Fenty, Ian and Forget, Ga{\"e}l and Heimbach, Patrick and Ponte, Rui M.},
+          title     = {{ECCO} Ocean Temperature and Salinity - Monthly Mean 0.5 Degree (Version 4 Release 4)},
+          year      = {2020},
+          publisher = {NASA Physical Oceanography Distributed Active Archive Center (PO.DAAC)},
+          version   = {V4r4},
+          doi       = {10.5067/ECG5M-OTS44}
+        }
+    - label: PO.DAAC 데이터셋 DOI (예 — 수온·염분 월평균 llc90 원 격자)
+      text: >-
+        ECCO Consortium, Fukumori, I., Wang, O., Fenty, I., Forget, G., Heimbach, P., & Ponte, R. M. (2020).
+        ECCO Ocean Temperature and Salinity - Monthly Mean llc90 Grid (Version 4 Release 4). Ver. V4r4. PO.DAAC, CA, USA.
+        Dataset accessed [YYYY-MM-DD] at https://doi.org/10.5067/ECL5M-OTS44
+      doi: 10.5067/ECL5M-OTS44
+    - label: V4r4 요약 문서(synopsis)
+      text: >-
+        ECCO Consortium, Fukumori, I., Wang, O., Fenty, I., Forget, G., Heimbach, P., & Ponte, R. M. (2021).
+        Synopsis of the ECCO Central Production Global Ocean and Sea-Ice State Estimate (Version 4 Release 4). Zenodo.
+      doi: 10.5281/zenodo.4533349
+      bibtex: |
+        @techreport{ecco_v4r4_synopsis,
+          author      = {{ECCO Consortium} and Fukumori, Ichiro and Wang, Ou and Fenty, Ian and Forget, Ga{\"e}l and Heimbach, Patrick and Ponte, Rui M.},
+          title       = {Synopsis of the {ECCO} Central Production Global Ocean and Sea-Ice State Estimate (Version 4 Release 4)},
+          institution = {Zenodo},
+          year        = {2021},
+          doi         = {10.5281/zenodo.4533349}
+        }
+  papers:
+    - label: ECCO Version 4 체계 논문
+      text: >-
+        Forget, G., Campin, J.-M., Heimbach, P., Hill, C. N., Ponte, R. M., Wunsch, C. (2015): ECCO version 4: an integrated framework
+        for non-linear inverse modeling and global ocean state estimation. Geoscientific Model Development, 8(10), 3071–3104.
+      doi: 10.5194/gmd-8-3071-2015
+      bibtex: |
+        @article{forget2015ecco,
+          author  = {Forget, Ga{\"e}l and Campin, Jean-Michel and Heimbach, Patrick and Hill, Christopher N. and Ponte, Rui M. and Wunsch, Carl},
+          title   = {{ECCO} version 4: an integrated framework for non-linear inverse modeling and global ocean state estimation},
+          journal = {Geoscientific Model Development},
+          volume  = {8},
+          number  = {10},
+          pages   = {3071--3104},
+          year    = {2015},
+          doi     = {10.5194/gmd-8-3071-2015}
+        }
+    - label: V4r5 요약 문서 (V4r5를 쓴 경우)
+      text: >-
+        ECCO Consortium, Fenty, I., Fukumori, I., Wang, O. (2024): Synopsis of the ECCO V4r5 Global Ocean and Sea-Ice State Estimate. Zenodo.
+      doi: 10.5281/zenodo.13926715
+  acknowledgement: >-
+    ECCO V4r4 제품 페이지는 이용 조건으로 ① 데이터셋, ② V4r4 요약 문서(10.5281/zenodo.4533349), ③ Forget et al. (2015)을 모두 인용하라고 요구합니다.
+    데이터셋 DOI는 PO.DAAC 데이터셋(ShortName)마다 다르므로 실제로 받은 데이터셋의 DOI를 적으세요.
+
+notices:
+  - date: "2026-08-28"
+    level: info
+    title: ECCO Drive 복구
+    body: >-
+      ECCO Drive가 2026년 7월 초 기술 문제로 멈췄고, 8월 하순 일부 경로(ECCO2) 마운트 문제를 거쳐 8월 28일 다시 접속 가능해졌다고 ECCO 팀이 알렸습니다.
+      ECCO 웹사이트 V4r4 페이지에는 예전 'Drive 일시 중단' 안내가 남아 있을 수 있습니다.
+    source: https://mailman.mit.edu/pipermail/ecco-support/2026-August/000865.html
+  - date: "2026-05-14"
+    level: info
+    title: V4r6(1992~2025) 준비 — V4r5 대체 예정
+    body: >-
+      ECCO 팀이 1992-01-01~2025-12-31을 다루는 V4r6를 준비 중이며 PO.DAAC로 정식 공개하고 V4r5를 대체할 것이라고 밝혔습니다.
+      월평균 자료를 먼저 ECCO Drive에 올릴 계획이나 예상보다 늦어지고 있다고 했고, 2026-10-12 현재 공개 날짜는 공지되지 않았습니다.
+    source: https://mailman.mit.edu/pipermail/ecco-support/2026-May/000851.html
+  - date: "2025-05"
+    level: info
+    title: V4r5 원 격자 월평균 AWS 클라우드 공개
+    body: >-
+      V4r5(1992~2019) 월평균 llc90 일부 데이터셋이 요청자 부담 S3 버킷(s3://ecco-model-granules/)에 공개되었습니다(파일 생성일 2025-05-02).
+      2025년 10월 기준 AWS 클라우드 안에서만 ecco_access로 읽을 수 있고, 일평균·0.5° 보간장은 아직 없습니다.
+    source: https://ecco-access.readthedocs.io/en/latest/ECCO_access_v4r5.html
+  - date: "2024-10-13"
+    level: info
+    title: V4r5 요약 문서 발표
+    body: >-
+      V4r5가 V4r4를 2020년 1월 1일까지 연장하고, 해빙 열역학 수반 모델과 남극 빙붕·조수 빙하 표현을 더했다는 요약 문서가 Zenodo에 공개되었습니다.
+    source: https://doi.org/10.5281/zenodo.13926715
+  - date: "2021-06"
+    level: warning
+    title: V4r4 대기압 강제력 오류와 V4r4b 재배포
+    body: >-
+      2014년 대기압 강제력 오류(4월·12월 뒤바뀜, 5~11월 하루 밀림)로 2013~2015년 일 단위 해수면·해저압이 영향을 받았습니다.
+      수정한 SSH·OBP 일·월자료와 SBO 시계열이 V4R4B 데이터셋으로 재배포되었고, 월 이상 시간 규모 분석은 2014년 4월·12월을 빼면 영향이 작습니다.
+    source: https://ecco-group.org/docs/ECCO_V4r4_errata.pdf
+
+links:
+  - name: ECCO 프로젝트 홈페이지
+    url: https://ecco-group.org/
+  - name: ECCO V4r4 제품 페이지 (인용·오류 공지)
+    url: https://ecco-group.org/products-ECCO-V4r4.htm
+  - name: ECCO V4r4 사용자 안내서 (PDF)
+    url: https://ecco-group.org/docs/v4r4_user_guide.pdf
+  - name: ECCO 데이터셋 갤러리 (PO.DAAC 데이터셋 목록)
+    url: https://ecco-group.org/datasets.htm
+  - name: ECCO v4 Python 튜토리얼
+    url: https://ecco-v4-python-tutorial.readthedocs.io/intro.html
+  - name: ecco_access — ECCO 변수 검색
+    url: https://ecco-access.readthedocs.io/en/latest/Querying_ECCO_variables.html
+  - name: ecco-support 메일링 리스트 보관소
+    url: https://mailman.mit.edu/pipermail/ecco-support/
+
+watch_urls:
+  - https://ecco-group.org/updates.htm
+  - https://mailman.mit.edu/pipermail/ecco-support/
+  - https://ecco-group.org/products.htm
+
+last_verified: "2026-10-12"

@@ -1,0 +1,304 @@
+# ─────────────────────────────────────────────────────────────
+# ERA5-Land — 데이터셋 정보 파일
+# 대기 탭 '육상 재분석'에 싣습니다. ERA5(era5.yaml)와 CDS·라이선스 공지를 공유합니다.
+# 수정 후에는 공식 페이지에서 확인한 날짜로 last_verified 를 갱신하세요.
+# ─────────────────────────────────────────────────────────────
+id: era5-land
+name: ERA5-Land
+full_name: ERA5-Land (ERA5 기상장으로 구동한 약 9 km 전지구 육상 재분석)
+category: reanalysis
+domain: atmosphere
+group: 육상 재분석
+order: 10
+domains: [육지, 대기]
+provider: ECMWF / Copernicus Climate Change Service (C3S)
+
+status: active
+status_note: >-
+  정상 제공 중이며, ERA5T와 맞춰 매일 갱신되는 준실시간본(ERA5-Land-T)이 약 5일 지연으로 붙습니다.
+  다만 월평균 자료의 누적 변수(강수·증발·유출·복사 등)는 2022년 9월~2024년 2월 값이 잘못된 채로 남아 있고,
+  1950~1978년 구간은 폐기된 ERA5 예비 확장판(ERA5.P)으로 구동된 뒤 다시 계산되지 않았습니다. 아래 공지를 꼭 확인하세요.
+
+period:
+  start: "1950-01"
+  end: present
+  note: >-
+    확정본은 현재보다 2~3개월 전까지이고, 그 뒤는 ERA5-Land-T(약 5일 지연)로 채워지며 약 2개월 뒤 확정본으로 덮어씁니다.
+    2026-10-12 확인 시 CDS 시간별 자료는 2026-10-05까지, 월평균은 2026-08까지 있습니다.
+    1950년 1월 1일 00 UTC의 예보(누적) 변수는 비어 있습니다.
+
+resolution:
+  spatial_short: "11 km (0.1°)"
+  temporal_short: "1시간"
+  spatial: "원본 약 9 km(~0.08°), 팔면체 축소 가우시안 격자 TCo1279 / CDS 제공 격자 0.1°×0.1° 정규 위경도 (원본 격자는 MARS에서만)"
+  vertical: "지표 단일면 + 토양 4층(0~7, 7~28, 28~100, 100~289 cm) — 지상 2 m부터 토양 깊이 289 cm까지"
+  temporal: 1시간 (월평균, CDS 일 통계·시계열 제품 별도 제공)
+
+update: 매일 (ERA5-Land-T 약 5일 지연) / 월평균은 매월
+license: CC BY 4.0 (2025-07-02부터 기존 Copernicus 라이선스를 대체)
+account_required: true
+
+summary: >-
+  ECMWF가 C3S를 위해 만든 전지구 육상 재분석으로, ERA5의 지면 모델(H-TESSEL)을 약 9 km 해상도로 다시 돌린 자료입니다.
+  자체 자료동화는 하지 않고 ERA5 대기장(기온·습도·기압은 고도 보정)을 강제력으로 써서 토양수분·토양온도·적설·유출·증발 같은
+  육상 변수를 ERA5보다 촘촘하게 1시간 간격으로 제공합니다. 홍수·가뭄, 수문, 농업 연구에 많이 쓰이며, CDS에서는 0.1° 격자로 받습니다.
+
+time_convention:
+  summary: >-
+    상태 변수(기온·토양수분·적설 등)는 표시 시각의 순간값입니다. 누적 변수(강수·증발·유출·복사·열속)는 ERA5와 달리
+    '그날 00 UTC부터 표시 시각까지' 쌓인 값이고(최대 24시간), 00 UTC 값은 전날 하루(24시간) 누적입니다.
+  points:
+    - "누적 변수는 매일 00 UTC에 시작한 단기 예보(1~24시간 단계)에서 나옵니다. 예: 06 UTC의 tp = 당일 00~06 UTC 강수."
+    - "00 UTC 값은 '전날 00 UTC~당일 00 UTC'의 24시간 누적입니다. 하루 강수량은 다음 날 00 UTC 값 하나만 쓰면 됩니다."
+    - "1시간 강수가 필요하면 연속한 두 시각의 차이를 구합니다(01 UTC는 그 값 자체가 1시간 누적). ERA5처럼 그대로 더하면 크게 과대 계산됩니다."
+    - "월평균(monthly averaged reanalysis)은 매일 마지막 단계(24시간)를 써서 '하루당' 단위입니다. 강수는 m/day이므로 1000을 곱하면 mm/day, 복사·열속은 86400으로 나누면 W m-2입니다."
+    - "시각별 월평균(monthly averaged reanalysis by hour of day)은 '예보 단계 시간당' 단위입니다. 00:00 값이 24시간 누적의 월평균이며, 공식 공지가 월평균 오류 기간의 대체 자료로 안내하는 값입니다."
+    - "CDS 일 통계 제품(post-processed daily statistics)은 요청 시 시간별 자료에서 일평균·최대·최소를 계산하며 시간대(UTC 오프셋)를 바꿀 수 있습니다."
+  source: https://confluence.ecmwf.int/display/CKB/ERA5-Land%3A+data+documentation
+  source_name: "ERA5-Land: data documentation (Copernicus Knowledge Base)"
+
+variables:
+  note: >-
+    ERA5-Land 공식 문서의 파라미터 표(Table 1~3) 기준 주요 변수입니다. 변수명은 GRIB short name이며, CDS에서 NetCDF로 받으면
+    일부가 다른 이름으로 저장됩니다(예: `2t`→`t2m`, `2d`→`d2m`). 대기 변수는 ERA5보다 적고, 기압면 자료는 없습니다.
+    sp·u10·v10·tp·sf·ssrd·strd 등 강제력 변수는 ERA5 값을 ERA5-Land 격자로 보간한 것입니다.
+  full_list: https://confluence.ecmwf.int/display/CKB/ERA5-Land%3A+data+documentation
+  groups:
+    - name: 지표 상태 (순간값)
+      kind: instant
+      items:
+        - "2m 기온 — `2t` (K)"
+        - "2m 이슬점온도 — `2d` (K)"
+        - "지표면(skin) 온도 — `skt` (K)"
+        - "지표 기압 — `sp` (Pa)"
+        - "10m 동서풍·남북풍 — `u10`, `v10` (m s-1)"
+        - "적설 깊이 — `sde` (m)"
+        - "적설 수당량 — `sd` (m of water equivalent)"
+        - "적설 피복률 — `snowc` (%)"
+        - "적설 밀도 — `rsn` (kg m-3)"
+        - "엽면적지수(저식생·고식생) — `lai_lv`, `lai_hv` (m2 m-2)"
+        - "호수 혼합층 온도 — `lmlt` (K)"
+    - name: 토양 (4층, 순간값)
+      kind: instant
+      items:
+        - "토양 체적수분 1~4층 — `swvl1`~`swvl4` (m3 m-3)"
+        - "토양온도 1~4층 — `stl1`~`stl4` (K)"
+    - name: 누적 변수 (당일 00 UTC부터 표시 시각까지)
+      kind: accum
+      period: "00 UTC부터 표시 시각까지 (최대 24시간)"
+      items:
+        - "총강수량 — `tp` (m)"
+        - "강설량 — `sf` (m of water equivalent)"
+        - "총증발량 — `e` (m of water equivalent)"
+        - text: "잠재증발량 — `pev` (m)"
+          note: 2021-11-18부터 개방 수면(팬) 증발로 정의가 바뀌었습니다
+        - "유출량(총·지표·지하) — `ro`, `sro`, `ssro` (m)"
+        - "융설량 — `smlt` (m of water equivalent)"
+        - "지표 하향 단파·장파복사 — `ssrd`, `strd` (J m-2)"
+        - "지표 순 단파·장파복사 — `ssr`, `str` (J m-2)"
+        - "지표 현열·잠열 플럭스 — `sshf`, `slhf` (J m-2)"
+        - text: "증발 성분(나지·수면·증산·수관) — `evabs`, `evaow`, `evavt`, `evatc` (m of water equivalent)"
+          note: 공식 '알려진 문제'에 따르면 evabs·evaow·evavt 세 변수의 값이 서로 뒤바뀌어 있습니다. 쓰기 전에 문서의 대응표를 확인하세요
+    - name: 불변장
+      kind: static
+      items:
+        - "해륙 마스크 — `lsm` (0-1)"
+        - "지표 지위(지형) — `z` (m2 s-2)"
+        - "고식생·저식생 피복률 — `cvh`, `cvl` (0-1)"
+        - "토양 유형 — `slt`"
+        - "빙하 마스크 — `glm` (비율)"
+        - "호수 피복률·깊이 — `cl` (0-1), `dl` (m)"
+
+access:
+  - name: Copernicus Climate Data Store (CDS) — 시간별 자료
+    url: https://cds.climate.copernicus.eu/datasets/reanalysis-era5-land
+    method: 웹 다운로드 / CDS API (cdsapi)
+    note: ECMWF 계정 필요. 데이터셋 이용약관에 동의해야 API 요청이 성공합니다. 기본 형식은 GRIB이며 NetCDF도 선택할 수 있습니다.
+  - name: CDS — 월평균 자료
+    url: https://cds.climate.copernicus.eu/datasets/reanalysis-era5-land-monthly-means
+    method: 웹 다운로드 / CDS API
+    note: monthly averaged reanalysis(하루당 단위)와 monthly averaged reanalysis by hour of day 두 종류가 있습니다.
+  - name: CDS — 일 통계(post-processed daily statistics)
+    url: https://cds.climate.copernicus.eu/datasets/derived-era5-land-daily-statistics
+    method: 웹 다운로드 / CDS API
+    note: 요청할 때 시간별 자료로 일평균·최대·최소를 계산해 줍니다. 원하는 시간대(UTC 오프셋)를 지정할 수 있습니다.
+  - name: CDS — 지점 시계열(time-series, ARCO)
+    url: https://cds.climate.copernicus.eu/datasets/reanalysis-era5-land-timeseries
+    method: 웹 다운로드 / CDS API
+    note: 한 지점의 긴 시계열을 빠르게 받는 용도입니다. 요청 위치와 가장 가까운 격자점 값을 돌려줍니다.
+
+example:
+  lang: python
+  note: "~/.cdsapirc 파일에 url(https://cds.climate.copernicus.eu/api)과 본인 API key를 넣은 뒤 실행합니다. 하루 강수량은 다음 날 00:00 값입니다."
+  code: |
+    # pip install --upgrade cdsapi
+    import cdsapi
+
+    client = cdsapi.Client()
+    client.retrieve(
+        "reanalysis-era5-land",
+        {
+            "variable": ["2m_temperature", "total_precipitation"],
+            "year": "2024",
+            "month": "07",
+            "day": ["01", "02"],
+            "time": ["00:00", "06:00", "12:00", "18:00"],
+            "area": [39, 124, 33, 132],  # 북, 서, 남, 동 (한반도 주변)
+            "data_format": "netcdf",
+            "download_format": "unarchived",
+        },
+        "era5land_korea_20240701.nc",
+    )
+    # 2024-07-01 하루 강수량 = 2024-07-02 00:00 의 tp (단위 m → ×1000 하면 mm)
+
+tips:
+  - 누적 변수 규칙이 ERA5와 다릅니다. ERA5 코드를 그대로 가져와 시간별 tp를 더하면 하루 강수량이 몇 배로 부풀려지니, ERA5-Land는 '다음 날 00 UTC 값' 또는 '연속 시각의 차이'로 계산하세요.
+  - 2022년 9월~2024년 2월 월평균(monthly averaged reanalysis)의 누적 변수는 잘못된 값이 교체되지 않았습니다. 이 기간은 'by hour of day'의 00:00 값을 쓰거나 시간별 자료로 직접 월합계를 내세요.
+  - 1950~1978년은 ERA5 예비 확장판(ERA5.P)으로 구동된 뒤 다시 계산되지 않아 최종 ERA5와 맞지 않는 부분이 있습니다(일부 해 중앙아프리카·남미의 고온·건조 이상치 보고). 1979년 이전을 포함한 추세 분석은 주의하세요.
+  - 강수·복사·바람 등 강제력 변수는 ERA5를 보간한 값이라 해상도만 높을 뿐 새 정보가 없습니다. 이 변수들은 ERA5와 거의 같고, ERA5-Land의 장점은 토양·적설·유출 같은 지면 변수에 있습니다.
+  - 남극 동부 빙상의 적설 값은 비현실적으로 작고, 빙하 지점은 적설 깊이 10 m로 고정되어 있습니다. 극지·빙하 지역 적설 분석에는 쓰지 마세요.
+  - 불확실성(앙상블) 자료는 제공하지 않습니다. 공식 문서는 필요하면 ERA5 EDA의 불확실성을 참고하라고 안내합니다.
+
+citations:
+  dataset:
+    - label: 시간별 자료 (CDS)
+      text: >-
+        Muñoz Sabater, J. (2019): ERA5-Land hourly data from 1950 to present.
+        Copernicus Climate Change Service (C3S) Climate Data Store (CDS).
+        DOI: 10.24381/cds.e2161bac (Accessed on DD-MMM-YYYY)
+      doi: 10.24381/cds.e2161bac
+      bibtex: |
+        @misc{era5land_hourly,
+          author    = {Mu{\~n}oz Sabater, J.},
+          title     = {{ERA5-Land} hourly data from 1950 to present},
+          year      = {2019},
+          publisher = {Copernicus Climate Change Service (C3S) Climate Data Store (CDS)},
+          doi       = {10.24381/cds.e2161bac},
+          note      = {Accessed on DD-MMM-YYYY}
+        }
+    - label: 월평균 자료 (CDS)
+      text: >-
+        Muñoz Sabater, J. (2019): ERA5-Land monthly averaged data from 1950 to present.
+        Copernicus Climate Change Service (C3S) Climate Data Store (CDS).
+        DOI: 10.24381/cds.68d2bb30 (Accessed on DD-MMM-YYYY)
+      doi: 10.24381/cds.68d2bb30
+      bibtex: |
+        @misc{era5land_monthly,
+          author    = {Mu{\~n}oz Sabater, J.},
+          title     = {{ERA5-Land} monthly averaged data from 1950 to present},
+          year      = {2019},
+          publisher = {Copernicus Climate Change Service (C3S) Climate Data Store (CDS)},
+          doi       = {10.24381/cds.68d2bb30},
+          note      = {Accessed on DD-MMM-YYYY}
+        }
+    - label: 일 통계 자료 (CDS)
+      text: >-
+        Copernicus Climate Change Service (2024): ERA5-Land post-processed daily statistics from 1950 to present.
+        ECMWF. DOI: 10.24381/cds.e9c9c792 (Accessed on DD-MMM-YYYY)
+      doi: 10.24381/cds.e9c9c792
+      bibtex: |
+        @misc{era5land_daily_stats,
+          author    = {{Copernicus Climate Change Service}},
+          title     = {{ERA5-Land} post-processed daily statistics from 1950 to present},
+          year      = {2024},
+          publisher = {ECMWF},
+          doi       = {10.24381/cds.e9c9c792},
+          note      = {Accessed on DD-MMM-YYYY}
+        }
+    - label: 시간별 지점 시계열 (CDS)
+      text: >-
+        Copernicus Climate Change Service (2025): ERA5 Land hourly time-series data from 1950 to present.
+        ECMWF. DOI: 10.24381/ee82e357 (Accessed on DD-MMM-YYYY)
+      doi: 10.24381/ee82e357
+      bibtex: |
+        @misc{era5land_timeseries,
+          author    = {{Copernicus Climate Change Service}},
+          title     = {{ERA5} Land hourly time-series data from 1950 to present},
+          year      = {2025},
+          publisher = {ECMWF},
+          doi       = {10.24381/ee82e357},
+          note      = {Accessed on DD-MMM-YYYY}
+        }
+  papers:
+    - label: ERA5-Land 기술 논문
+      text: >-
+        Muñoz-Sabater, J., Dutra, E., Agustí-Panareda, A., Albergel, C., Arduini, G., Balsamo, G., Boussetta, S.,
+        Choulga, M., Harrigan, S., Hersbach, H., Martens, B., Miralles, D. G., Piles, M., Rodríguez-Fernández, N. J.,
+        Zsoter, E., Buontempo, C., Thépaut, J.-N. (2021): ERA5-Land: a state-of-the-art global reanalysis dataset for
+        land applications. Earth System Science Data, 13(9), 4349–4383.
+      doi: 10.5194/essd-13-4349-2021
+      bibtex: |
+        @article{munozsabater2021era5land,
+          author  = {Mu{\~n}oz-Sabater, Joaqu{\'i}n and Dutra, Emanuel and Agust{\'i}-Panareda, Anna and Albergel, Cl{\'e}ment and Arduini, Gabriele and Balsamo, Gianpaolo and Boussetta, Souhail and Choulga, Margarita and Harrigan, Shaun and Hersbach, Hans and Martens, Brecht and Miralles, Diego G. and Piles, Mar{\'i}a and Rodr{\'i}guez-Fern{\'a}ndez, Nemesio J. and Zsoter, Ervin and Buontempo, Carlo and Th{\'e}paut, Jean-No{\"e}l},
+          title   = {{ERA5-Land}: a state-of-the-art global reanalysis dataset for land applications},
+          journal = {Earth System Science Data},
+          volume  = {13},
+          number  = {9},
+          pages   = {4349--4383},
+          year    = {2021},
+          doi     = {10.5194/essd-13-4349-2021}
+        }
+  acknowledgement: >-
+    실제로 받은 CDS 데이터셋(시간별/월평균/일 통계/시계열)의 DOI와 접근 날짜를 각각 적고, Copernicus 프로그램과 C3S 자료를
+    사용했음을 밝힙니다. DataCite에는 시간별·월평균 자료의 저자가 'Copernicus Climate Change Service'로 등록되어 있으니,
+    정확한 권장 문구는 CDS 데이터셋 페이지의 인용 안내를 확인하세요.
+
+notices:
+  - date: "2026-10-05"
+    level: info
+    title: CDS 이용약관 개정 (2026-10-28 시행)
+    body: >-
+      CDS 이용약관 제1조(제품·서비스 설명)가 2026년 10월 28일부터 바뀝니다. 별도 조치 없이 계속 쓰면 동의한 것으로 봅니다.
+      동의하지 않으면 10월 27일까지 ECMWF 지원창구로 알려야 하며, 그 경우 Copernicus 제품 접근이 끊깁니다.
+    source: https://forum.ecmwf.int/t/upcoming-cds-terms-of-use-change/15374
+  - date: "2025-09-25"
+    level: warning
+    title: 1950~1978년 구간은 폐기된 ERA5 예비판(ERA5.P)으로 구동된 상태
+    body: >-
+      ECMWF는 ERA5-Land의 1979년 이전 구간이 ERA5 예비 확장판(ERA5.P)으로 만들어졌고 다시 계산되지 않았다고 확인했습니다.
+      일부 해(1951·1961·1965년 등) 중앙아프리카·남미에서 최종 ERA5에 없는 고온·건조 이상치가 보고되었고,
+      C3S 기후 아틀라스는 1978년 이전 ERA5-Land 추세를 제외했습니다. 재계산 계획은 발표되지 않았습니다.
+    source: https://forum.ecmwf.int/t/era5-land-data-pre-1978-seems-to-be-derived-from-long-deprecated-and-removed-era5-p-data/14180
+  - date: "2025-07-02"
+    level: info
+    title: 라이선스가 CC BY 4.0으로 변경
+    body: 기존 "Licence to use Copernicus Products"가 CC BY 4.0으로 대체되었습니다. 출처 표시 의무는 유지됩니다.
+    source: https://forum.ecmwf.int/t/cc-by-licence-to-replace-licence-to-use-copernicus-products-on-02-july-2025/13464
+  - date: "2025-01-09"
+    level: warning
+    title: 2025년 1월 1~6일 ERA5-Land-T 품질 저하 (해결됨)
+    body: >-
+      ERA5T 생산 문제로 ERA5-Land-T 시간별 자료와 일 통계도 영향을 받았습니다. 2025-01-14에 교체가 끝났으며,
+      그 전에 2025년 1월 1~6일 자료를 받았다면 다시 받아야 합니다. 월평균 자료는 영향 없음.
+    source: https://forum.ecmwf.int/t/era5-data-from-1st-january-2025-was-degraded-and-is-being-corrected/10689
+  - date: "2024-09-26"
+    level: critical
+    title: 구 CDS 종료 — 새 계정·API key 필요
+    body: >-
+      구(legacy) CDS가 폐쇄되고 신규 CDS로 전환되었습니다. 예전 자격 증명으로 보낸 API 요청은 모두 실패합니다.
+      ECMWF 계정을 새로 만들고, pip install --upgrade cdsapi 후 .cdsapirc 의 url과 key를 갱신하세요.
+    source: https://forum.ecmwf.int/t/goodbye-legacy-climate-data-store-hello-new-climate-data-store-cds/6380
+  - date: "2024-04-02"
+    level: critical
+    title: 월평균 누적 변수 2022-09~2024-02 오류 — 교체되지 않음
+    body: >-
+      monthly averaged reanalysis의 모든 누적 변수(강수·증발·유출·복사·열속 등)가 2022년 9월~2024년 2월에 잘못 계산되었습니다.
+      2024년 3월 이후 자료는 고쳐졌지만, 이 기간 값은 CDS와 MARS에서 교체하지 않는다고 공지되었습니다.
+      대신 monthly averaged reanalysis by hour of day의 00:00 값을 쓰라고 안내합니다.
+    source: https://forum.ecmwf.int/t/issue-affecting-era5-land-monthly-averaged-reanalysis-for-the-period-september-2022-to-february-2024/2370
+
+links:
+  - name: CDS ERA5-Land 시간별 자료 페이지
+    url: https://cds.climate.copernicus.eu/datasets/reanalysis-era5-land
+  - name: "ERA5-Land: data documentation (변수표·누적 규칙·알려진 문제)"
+    url: https://confluence.ecmwf.int/display/CKB/ERA5-Land%3A+data+documentation
+  - name: ECMWF 포럼 C3S 공지(Announcements)
+    url: https://forum.ecmwf.int/c/announcements/c3s-announcements/7
+  - name: ECMWF — ERA5-Land 소개
+    url: https://www.ecmwf.int/en/era5-land
+
+watch_urls:
+  - https://forum.ecmwf.int/c/announcements/c3s-announcements/7
+  - https://confluence.ecmwf.int/display/CKB/ERA5-Land%3A+data+documentation
+
+last_verified: "2026-10-12"
