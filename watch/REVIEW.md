@@ -54,6 +54,17 @@ pip install --break-system-packages -q -r requirements.txt
 4. 한 공지가 `datasets`의 여러 자료에 해당할 수 있습니다(예: ECMWF 공지 → ERA5, ERA5-Land, ORAS5). **실제로 영향받는 자료에만** 넣습니다.
 5. 애매하면 넣지 말고 `notes`에 "운영자 확인 필요: …(링크)"로 적습니다. 잘못된 알림이 구독자에게 가는 것보다 하루 늦는 게 낫습니다.
 
+### 3-1. 자동 점검이 막힌 페이지는 직접 확인
+
+일부 기관 사이트(예: NASA Earthdata, ECMWF 일부 페이지)는 GitHub Actions 같은 데이터센터 접속을 막아
+`watch/state/index.json`에 `fails ≥ 1`, `last_error`에 `HTTP 401`/`HTTP 403`이 남습니다. 사람 브라우저로는 열립니다.
+
+- 이런 주소는 **WebFetch로 직접 열어** 최근 7일 안에 올라온 글 중 그 주소를 감시하는 자료(`datasets`)에 관한 것이 있는지 봅니다.
+  (예: Earthdata 공지 목록은 NASA 전체 자료 공지이므로 MERRA-2·IMERG·GPCP·GES DISC 관련 글만 봄)
+- 관련 공지가 있으면 3단계 기준으로 판단해 후보로 올리고, 없으면 넘어갑니다.
+- WebFetch로 확인한 주소는 `digest.json`의 `errors`에 넣지 않습니다. WebFetch로도 열리지 않을 때만 `errors`에 넣습니다.
+- 자바스크립트로만 그려져 WebFetch로도 내용이 비어 오는 페이지(예: disc.gsfc.nasa.gov)는 같은 자료의 다른 감시 주소로 대신합니다.
+
 ### 4. 공지 쓰기 (새 공지가 있을 때만)
 
 `data/SCHEMA.md` 규칙을 따릅니다.

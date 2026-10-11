@@ -42,7 +42,9 @@ KEEP_HISTORY_DAYS = 30
 NOISE = re.compile(
     r"^(©|copyright\b|all rights reserved|last (updated|modified|reviewed)|page (last )?(updated|modified)|"
     r"updated:|modified:|this page was|generated (on|at)|current time|server time|"
-    r"\d+\s+(views?|replies|reads?|users? online)|loading|skip to (main )?content|cookie)",
+    r"\d+\s+(views?|replies|reads?|users? online)|loading|skip to (main )?content|cookie)"
+    # 페이지를 열 때마다 바뀌는 서버 정보 (Confluence 요청 ID, 서버 시각 등)
+    r"|requestcorrelationid|serverduration|^\(confluence-\d+: [0-9a-f]+\)$|local time: ?\d|^utc: ?\d",
     re.I,
 )
 ONLY_DATETIME = re.compile(r"^[\d\s:/.,\-–TZUTC()+]+$")
@@ -56,6 +58,10 @@ def load_targets() -> dict[str, list[str]]:
         for u in d.get("watch_urls") or []:
             targets.setdefault(str(u).strip(), []).append(d["id"])
     return targets
+
+
+def lhash(line: str) -> str:
+    return hashlib.sha1(line[:600].encode()).hexdigest()[:12]
 
 
 def slug(url: str) -> str:
@@ -85,8 +91,9 @@ def extract_lines(content: bytes, ctype: str) -> list[str]:
     return out
 
 
-def fetch(url: str):
+def fetch(url: str, retry: bool = True):
     import requests
+    import time
     try:
         r = requests.get(url, headers={"User-Agent": UA, "Accept-Language": "en"}, timeout=TIMEOUT)
         if r.status_code in (401, 403, 406, 429):
@@ -100,6 +107,9 @@ def fetch(url: str):
             return None, "본문이 비어 있음"
         return lines, None
     except Exception as e:  # noqa: BLE001 — 어떤 오류든 '접속 실패'로 기록
+        if retry:  # 일시적인 연결 오류는 잠시 뒤 한 번 더
+            time.sleep(15)
+            return fetch(url, retry=False)
         return None, type(e).__name__ + ": " + str(e)[:200]
 
 
@@ -118,13 +128,14 @@ def render_all(urls: list[str]) -> dict[str, tuple]:
     except ImportError:
         return {u: (None, "브라우저 없음") for u in urls}
     debug = bool(os.environ.get("WATCH_DEBUG"))
+    log = (STATE / "browser-debug.txt").open("w", encoding="utf-8") if debug else None
     with sync_playwright() as pw:
         browser = pw.chromium.launch()
         ctx = browser.new_context(user_agent=BROWSER_UA, locale="en-US", viewport={"width": 1280, "height": 2000})
         for url in urls:
             page = ctx.new_page()
             if debug:
-                page.on("response", lambda r: ("json" in (r.headers.get("content-type") or "")) and print("   [json]", r.status, r.url))
+                page.on("response", lambda r: ("json" in (r.headers.get("content-type") or "")) and log.write(f"   [json] {r.status} {r.url}\n"))
             try:
                 resp = page.goto(url, wait_until="networkidle", timeout=60000)
                 page.wait_for_timeout(2500)
@@ -143,8 +154,10 @@ def render_all(urls: list[str]) -> dict[str, tuple]:
             finally:
                 page.close()
             if debug:
-                print(" [browser]", url, "→", out[url][1] or f"{len(out[url][0])}줄")
+                log.write(f"[browser] {url} → {out[url][1] or str(len(out[url][0])) + '줄'}\n")
         browser.close()
+    if log:
+        log.close()
     return out
 
 
@@ -207,21 +220,29 @@ def main() -> int:
         mode_changed = meta.get("mode", "http") != modes[url]
         meta.update({"fails": 0, "last_ok": now.date().isoformat(), "file": snap.name, "mode": modes[url]})
         meta.pop("last_error", None)
+        seen_path = STATE / (slug(url) + ".seen")
+        seen = set(seen_path.read_text().split()) if seen_path.exists() else set()
         if snap.exists() and not mode_changed:   # 읽는 방식이 바뀐 날은 새 기준으로 저장만 함
             old = snap.read_text(encoding="utf-8").splitlines()[1:]
-            add = added_lines(old, lines)
+            # 예전에 한 번이라도 보였던 줄(돌아가며 바뀌는 추천 목록 등)은 새 줄로 치지 않음
+            add = [x for x in added_lines(old, lines) if x.startswith("…") or lhash(x) not in seen]
+            if add == ["… (이하 생략)"]:
+                add = []
             if add:
                 changes.append({"url": url, "datasets": datasets, "added": add,
                                 "removed_count": len(set(old) - set(lines))})
                 meta["last_change"] = now.date().isoformat()
         if not args.dry_run:
             snap.write_text("# " + url + "\n" + "\n".join(lines) + "\n", encoding="utf-8")
+            seen |= {lhash(x) for x in lines}
+            seen_path.write_text("\n".join(sorted(seen)[-20000:]) + "\n")
         index[url] = meta
 
     # 더 이상 감시하지 않는 주소의 저장본 정리
     for url in [u for u in index if u not in targets]:
         if not args.only:
             (STATE / (slug(url) + ".txt")).unlink(missing_ok=True)
+            (STATE / (slug(url) + ".seen")).unlink(missing_ok=True)
             index.pop(url)
 
     # 같은 날 다시 돌린 경우(수동 실행 등) 앞선 실행에서 찾은 변경을 잃지 않도록 합침
