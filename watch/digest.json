@@ -1,0 +1,44 @@
+{
+ "date": "2026-10-12",
+ "reviewed_at": "2026-10-12T05:40:00+09:00",
+ "summary": "첫 점검입니다. 공지 페이지 135곳 중 132곳의 현재 내용을 기준으로 저장했습니다. 내일부터 바뀐 부분을 찾아 새 공지 후보를 올립니다.",
+ "watch": {
+  "date": "2026-10-12",
+  "checked": 135,
+  "ok": 132,
+  "changed": 0
+ },
+ "candidates": [],
+ "pr": null,
+ "pending": [],
+ "ignored": [],
+ "errors": [
+  {
+   "datasets": [
+    "imerg"
+   ],
+   "url": "https://www.earthdata.nasa.gov/data/alerts-outages",
+   "error": "HTTP 403",
+   "fails": 1
+  },
+  {
+   "datasets": [
+    "merra2"
+   ],
+   "url": "https://www.earthdata.nasa.gov/data/projects/merra-2/news",
+   "error": "HTTP 403",
+   "fails": 1
+  },
+  {
+   "datasets": [
+    "cera20c"
+   ],
+   "url": "https://www.ecmwf.int/en/forecasts/datasets/reanalysis-datasets/cera-20c",
+   "error": "HTTP 401",
+   "fails": 1
+  }
+ ],
+ "notes": [
+  "NASA GES DISC 공지 페이지(MERRA-2·GPCP·IMERG 관련)는 화면을 자바스크립트로 그려서 글자를 읽을 수 없습니다. 다른 감시 주소로 보완할 예정입니다."
+ ]
+}

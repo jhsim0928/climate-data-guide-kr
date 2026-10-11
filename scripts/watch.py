@@ -30,6 +30,7 @@ HISTORY = WATCH / "history"
 KST = dt.timezone(dt.timedelta(hours=9))
 
 UA = "Mozilla/5.0 (compatible; data4researchers-notice-watch/1.0; +https://data4researchers.kr/)"
+BROWSER_UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0 Safari/537.36"
 TIMEOUT = 40
 MAX_ADDED_LINES = 80        # 한 페이지에서 보고할 새 줄 수 상한
 MAX_ADDED_CHARS = 6000
@@ -87,6 +88,10 @@ def fetch(url: str):
     import requests
     try:
         r = requests.get(url, headers={"User-Agent": UA, "Accept-Language": "en"}, timeout=TIMEOUT)
+        if r.status_code in (401, 403, 406, 429):
+            # 자동 수집기를 막는 사이트는 일반 브라우저 식별값으로 한 번 더 시도
+            r = requests.get(url, headers={"User-Agent": BROWSER_UA, "Accept": "text/html,application/xhtml+xml,*/*;q=0.8",
+                                           "Accept-Language": "en-US,en;q=0.9"}, timeout=TIMEOUT)
         if r.status_code >= 400:
             return None, f"HTTP {r.status_code}"
         lines = extract_lines(r.content, r.headers.get("content-type", ""))
