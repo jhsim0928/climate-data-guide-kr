@@ -1,0 +1,252 @@
+# ─────────────────────────────────────────────────────────────
+# OSTIA — dataset information file
+# Met Office OSTIA daily 0.05° foundation SST + sea ice (distributed by Copernicus Marine)
+# ─────────────────────────────────────────────────────────────
+id: ostia
+name: OSTIA
+full_name: Operational Sea Surface Temperature and Sea Ice Analysis (OSTIA)
+category: analysis
+domain: ocean
+group: 해수면온도 분석장
+order: 50
+domains: [해양, 해빙]
+provider: Met Office / Copernicus Marine Service (CMEMS)
+
+status: active
+status_note: >-
+  Both the near-real-time (NRT) analysis and the reprocessed (REP) product are available as normal. Since 2025, however, the Copernicus Marine NRT product
+  retains only the most recent two years, so use the reprocessed product (SST_GLO_SST_L4_REP_OBSERVATIONS_010_011) for long-term analyses.
+
+period:
+  start: "1981-10"
+  end: present
+  note: >-
+    The reprocessed product (REP) covers 1 October 1981 to 31 March 2026 and is extended in batches, more than about six months behind real time. The NRT product is updated daily,
+    and Copernicus Marine serves only the most recent two years of it. The full NRT record since 2007 is available from NASA PO.DAAC.
+
+resolution:
+  spatial_short: "6 km (0.05°)"
+  temporal_short: "1일"
+  spatial: 1/20° (0.05°) regular latitude-longitude grid (7200 × 3600)
+  vertical: Sea surface only (foundation SST — the temperature free of diurnal warming)
+  temporal: Daily mean (midnight to midnight, centred at noon)
+
+update: NRT daily (by 1200 UTC) / REP extended irregularly (once or twice a year)
+license: >-
+  Copernicus Marine Service licence — free of charge, redistribution and derived products allowed, with mandatory attribution and citation of the product DOI.
+  The PO.DAAC mirror follows the NASA Earthdata terms of use.
+account_required: true
+
+summary: >-
+  The L4 (gap-free) output of OSTIA, the global sea surface temperature and sea ice concentration analysis run daily by the Met Office —
+  a merged, multi-sensor L4 foundation SST product for applications requiring gap-free observational SST.
+  Infrared and microwave satellite SSTs and in situ observations from buoys and ships are combined with NEMOVAR-based data assimilation into daily 0.05° foundation SST,
+  and sea ice concentration is taken from EUMETSAT OSI SAF. It is widely used as a lower boundary condition for numerical weather prediction and for ocean monitoring,
+  and a reprocessed record from 1981 produced with the same system is also provided.
+
+time_convention:
+  summary: >-
+    One analysis is produced per day. The product user manual describes each file as a daily mean over the day (midnight to midnight UTC), centred and time-stamped at noon.
+    The SST is a foundation SST with diurnal (daytime surface) warming removed, so it differs both from the instantaneous temperature at any time of day and from a simple daily mean that includes daytime warming.
+  points:
+    - "File names and the time coordinate carry 12:00 UTC of the date, but the value represents the whole day (00–24 UTC), not an instantaneous value at noon."
+    - "Foundation SST is the temperature from which diurnal warming develops. To limit daytime warming, daytime satellite observations with wind speeds below 6 m/s are excluded; only night-time observations and daytime observations in stronger winds are used (Good et al. 2020)."
+    - "The analysis for a given date uses SST observations received from 18 UTC the previous day to 06 UTC the next day (36 hours) (Good et al. 2020)."
+    - "Sea ice concentration is taken directly from the OSI SAF daily sea ice concentration for that date, without blending neighbouring days (Good et al. 2020)."
+    - "The NRT run starts at 05:50 UTC the next morning to produce the previous day's analysis; REP recomputes the past with the same definitions."
+  source: https://documentation.marine.copernicus.eu/PUM/CMEMS-SST-PUM-010-001.pdf
+  source_name: Copernicus Marine PUM (SST-010-001) and Good et al. (2020)
+
+variables:
+  note: >-
+    Variable names in the files, from the Copernicus Marine Product User Manual (PUM). NRT and REP have the same variables.
+    The original REP files are packed as integers (scale_factor, add_offset), so check that your library unpacks them automatically.
+  full_list: https://documentation.marine.copernicus.eu/PUM/CMEMS-SST-PUM-010-001.pdf
+  groups:
+    - name: Sea surface temperature
+      kind: mean
+      period: Daily
+      items:
+        - text: "Analysed sea surface temperature (foundation SST) — `analysed_sst` (K)"
+          note: A daily mean (00–24 UTC) according to the manual, but as a foundation SST with diurnal warming removed it differs from the true daily mean temperature including daytime warming.
+        - text: "Estimated error standard deviation of analysed_sst — `analysis_error` (K)"
+          note: Estimated error (standard deviation) of the same day's analysed_sst; follows the time definition of analysed_sst.
+    - name: Sea ice and mask
+      items:
+        - text: "Sea ice area fraction — `sea_ice_fraction` (0–1)"
+          kind: mean
+          period: Daily
+          note: Uses the OSI SAF daily sea ice concentration for that date. The internal time definition of the OSI SAF daily value is not given in this manual.
+        - text: "Land sea ice lake bit mask — `mask` (bit flags)"
+          kind: static
+          note: The ocean/land/lake classification is fixed, but the sea ice bit (8) can change from day to day with the ice analysis.
+
+access:
+  - name: Copernicus Marine — NRT analysis (SST_GLO_SST_L4_NRT_OBSERVATIONS_010_001)
+    url: https://data.marine.copernicus.eu/product/SST_GLO_SST_L4_NRT_OBSERVATIONS_010_001/description
+    method: Web subset / Copernicus Marine Toolbox (copernicusmarine) / file browser
+    note: >-
+      Requires a free Copernicus Marine account. Dataset ID: METOFFICE-GLO-SST-L4-NRT-OBS-SST-V2.
+      Only the most recent two years are served; for earlier data use REP or PO.DAAC.
+  - name: Copernicus Marine — reprocessed (SST_GLO_SST_L4_REP_OBSERVATIONS_010_011)
+    url: https://data.marine.copernicus.eu/product/SST_GLO_SST_L4_REP_OBSERVATIONS_010_011/description
+    method: Web subset / Copernicus Marine Toolbox (copernicusmarine) / file browser
+    note: Dataset ID METOFFICE-GLO-SST-L4-REP-OBS-SST. A consistent record from October 1981 intended for climate analysis.
+  - name: NASA PO.DAAC — full OSTIA NRT record (OSTIA-UKMO-L4-GLOB-v2.0)
+    url: https://podaac.jpl.nasa.gov/dataset/OSTIA-UKMO-L4-GLOB-v2.0
+    method: Earthdata Search / OPeNDAP / AWS S3 (us-west-2) / podaac-data-subscriber
+    note: The same NRT analysis in GHRSST format from 2006-12-31. Requires a NASA Earthdata account.
+  - name: NASA PO.DAAC — OSTIA reprocessed (OSTIA-UKMO-L4-GLOB-REP-v2.0)
+    url: https://podaac.jpl.nasa.gov/dataset/OSTIA-UKMO-L4-GLOB-REP-v2.0
+    method: Earthdata Search / OPeNDAP / AWS S3 (us-west-2)
+    note: When checked, the PO.DAAC mirror covered only 1982-01-01 to 2024-01-01, shorter than the Copernicus Marine REP.
+
+example:
+  lang: python
+  note: "Register your Copernicus Marine account once in a terminal with copernicusmarine login before running."
+  code: |
+    # pip install copernicusmarine xarray
+    import copernicusmarine
+
+    copernicusmarine.subset(
+        dataset_id="METOFFICE-GLO-SST-L4-REP-OBS-SST",
+        variables=["analysed_sst", "sea_ice_fraction"],
+        minimum_longitude=120, maximum_longitude=135,
+        minimum_latitude=30, maximum_latitude=45,
+        start_datetime="2020-01-01T00:00:00",
+        end_datetime="2020-01-31T23:59:59",
+        output_filename="ostia_rep_korea_202001.nc",
+    )
+
+tips:
+  - >-
+    The NRT product (010_001) and the reprocessed product (010_011) differ in input data and processing version, so values differ even on the same date.
+    Use the reprocessed product throughout for climatologies and trends, and if you append recent months from NRT, check the differences over an overlap period first.
+  - >-
+    OSTIA SST is a foundation SST (the temperature at a depth free of diurnal variation), so it can be lower than daytime satellite skin SST or buoy measurements.
+    Allow for this difference in definition when comparing with observations.
+  - >-
+    The grid is 0.05°, but the scales actually resolved are larger and depend on observation density. Check analysis_error as well, especially in persistently cloudy regions
+    and in coastal areas with little satellite microwave coverage.
+  - >-
+    For climate research there is also the ESA SST CCI / C3S-based L4 analysis (CEDA, from 1980). It shares much of its input with OSTIA REP but is a separate product,
+    so cite it and its version separately.
+
+citations:
+  dataset:
+    - label: NRT analysis product (010_001)
+      text: >-
+        E.U. Copernicus Marine Service Information (CMEMS). Global Ocean OSTIA Sea Surface Temperature and Sea Ice Analysis
+        (SST_GLO_SST_L4_NRT_OBSERVATIONS_010_001). DOI: 10.48670/moi-00165 (Accessed on DD-MMM-YYYY)
+      doi: 10.48670/moi-00165
+      bibtex: |
+        @misc{cmems_ostia_nrt,
+          author    = {{E.U. Copernicus Marine Service Information (CMEMS)}},
+          title     = {Global Ocean {OSTIA} Sea Surface Temperature and Sea Ice Analysis ({SST\_GLO\_SST\_L4\_NRT\_OBSERVATIONS\_010\_001})},
+          publisher = {Mercator Ocean International},
+          doi       = {10.48670/moi-00165},
+          note      = {Accessed on DD-MMM-YYYY}
+        }
+    - label: Reprocessed product (010_011)
+      text: >-
+        E.U. Copernicus Marine Service Information (CMEMS). Global Ocean OSTIA Sea Surface Temperature and Sea Ice Reprocessed
+        (SST_GLO_SST_L4_REP_OBSERVATIONS_010_011). DOI: 10.48670/moi-00168 (Accessed on DD-MMM-YYYY)
+      doi: 10.48670/moi-00168
+      bibtex: |
+        @misc{cmems_ostia_rep,
+          author    = {{E.U. Copernicus Marine Service Information (CMEMS)}},
+          title     = {Global Ocean {OSTIA} Sea Surface Temperature and Sea Ice Reprocessed ({SST\_GLO\_SST\_L4\_REP\_OBSERVATIONS\_010\_011})},
+          publisher = {Mercator Ocean International},
+          doi       = {10.48670/moi-00168},
+          note      = {Accessed on DD-MMM-YYYY}
+        }
+    - label: PO.DAAC NRT mirror (GHRSST)
+      text: >-
+        UK Met Office. GHRSST Level 4 OSTIA Global Foundation Sea Surface Temperature Analysis (GDS version 2), version 2.0.
+        PO.DAAC, CA, USA. DOI: 10.5067/GHOST-4FK02 (Accessed on DD-MMM-YYYY)
+      doi: 10.5067/GHOST-4FK02
+  papers:
+    - label: Current OSTIA configuration (reference recommended in the PUM)
+      text: >-
+        Good, S., Fiedler, E., Mao, C., Martin, M. J., Maycock, A., Reid, R., Roberts-Jones, J., Searle, T., Waters, J., While, J.,
+        Worsfold, M. (2020): The Current Configuration of the OSTIA System for Operational Production of Foundation Sea Surface
+        Temperature and Ice Concentration Analyses. Remote Sensing, 12(4), 720.
+      doi: 10.3390/rs12040720
+      bibtex: |
+        @article{good2020ostia,
+          author  = {Good, Simon and Fiedler, Emma and Mao, Chongyuan and Martin, Matthew J. and Maycock, Adam and Reid, Rebecca and Roberts-Jones, Jonah and Searle, Toby and Waters, Jennifer and While, James and Worsfold, Mark},
+          title   = {The Current Configuration of the {OSTIA} System for Operational Production of Foundation Sea Surface Temperature and Ice Concentration Analyses},
+          journal = {Remote Sensing},
+          volume  = {12},
+          number  = {4},
+          pages   = {720},
+          year    = {2020},
+          doi     = {10.3390/rs12040720}
+        }
+    - label: Original OSTIA system paper
+      text: >-
+        Donlon, C. J., Martin, M., Stark, J., Roberts-Jones, J., Fiedler, E., Wimmer, W. (2012): The Operational Sea Surface
+        Temperature and Sea Ice Analysis (OSTIA) system. Remote Sensing of Environment, 116, 140–158.
+      doi: 10.1016/j.rse.2010.10.017
+      bibtex: |
+        @article{donlon2012ostia,
+          author  = {Donlon, Craig J. and Martin, Matthew and Stark, John and Roberts-Jones, Jonah and Fiedler, Emma and Wimmer, Werenfrid},
+          title   = {The Operational Sea Surface Temperature and Sea Ice Analysis ({OSTIA}) system},
+          journal = {Remote Sensing of Environment},
+          volume  = {116},
+          pages   = {140--158},
+          year    = {2012},
+          doi     = {10.1016/j.rse.2010.10.017}
+        }
+    - label: Reprocessed (REP) dataset paper
+      text: >-
+        Worsfold, M., Good, S., Atkinson, C., Embury, O. (2024): Presenting a Long-Term, Reprocessed Dataset of Global Sea Surface
+        Temperature Produced Using the OSTIA System. Remote Sensing, 16(18), 3358.
+      doi: 10.3390/rs16183358
+  acknowledgement: >-
+    The Copernicus Marine licence requires publications to state "This study has been conducted using E.U. Copernicus Marine Service Information" and to give the DOI of every product used.
+    The product user manual also recommends the acknowledgement "These data were provided by GHRSST, Met Office and the Copernicus Marine Service".
+
+notices:
+  - date: "2026-04-28"
+    level: info
+    title: "[MDSOP-377] Application of retention periods to ARCO datacubes — start dates may change"
+    body: >-
+      Copernicus Marine has begun applying the retention periods defined in the product manuals to ARCO-based services (web subset, Toolbox subset, MyOcean Viewer),
+      so the start date and length of some time series may change. Original files (File Browser, copernicusmarine get) are not affected.
+    source: https://marine.copernicus.eu/user-corner/user-notification-service
+  - date: "2025-06-24"
+    level: warning
+    title: NRT product (010_001) dataset length reduced to the most recent two years
+    body: >-
+      The change history of the product user manual records "Updated dataset length to be the most recent two years" for the NRT dataset.
+      For NRT data older than two years use NASA PO.DAAC (OSTIA-UKMO-L4-GLOB-v2.0); for long-term analyses use the REP product.
+    source: https://documentation.marine.copernicus.eu/PUM/CMEMS-SST-PUM-010-001.pdf
+  - date: "2025-05-28"
+    level: info
+    title: Ingestion of VIIRS on NOAA-21 observations (NRT)
+    body: The NRT analysis started assimilating VIIRS SST observations from NOAA-21. Small changes in the product's characteristics are possible around this date.
+    source: https://documentation.marine.copernicus.eu/PUM/CMEMS-SST-PUM-010-001.pdf
+
+links:
+  - name: Copernicus Marine NRT product page (010_001)
+    url: https://data.marine.copernicus.eu/product/SST_GLO_SST_L4_NRT_OBSERVATIONS_010_001/description
+  - name: Copernicus Marine REP product page (010_011)
+    url: https://data.marine.copernicus.eu/product/SST_GLO_SST_L4_REP_OBSERVATIONS_010_011/description
+  - name: NRT Product User Manual (PUM 010-001)
+    url: https://documentation.marine.copernicus.eu/PUM/CMEMS-SST-PUM-010-001.pdf
+  - name: REP Product User Manual (PUM 010-011)
+    url: https://documentation.marine.copernicus.eu/PUM/CMEMS-SST-PUM-010-011.pdf
+  - name: Copernicus Marine User Notification Service
+    url: https://marine.copernicus.eu/user-corner/user-notification-service
+  - name: Copernicus Marine service commitments and licence
+    url: https://marine.copernicus.eu/user-corner/service-commitments-and-licence
+  - name: ESA SST CCI L4 analysis v3.0 (CEDA)
+    url: https://catalogue.ceda.ac.uk/uuid/4a9654136a7148e39b7feb56f8bb02d2/
+
+watch_urls:
+  - https://marine.copernicus.eu/user-corner/user-notification-service
+  - https://data.marine.copernicus.eu/product/SST_GLO_SST_L4_NRT_OBSERVATIONS_010_001/notifications
+  - https://data.marine.copernicus.eu/product/SST_GLO_SST_L4_REP_OBSERVATIONS_010_011/notifications
+
+last_verified: "2026-10-11"

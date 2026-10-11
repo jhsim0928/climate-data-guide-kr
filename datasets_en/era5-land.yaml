@@ -1,0 +1,304 @@
+# ─────────────────────────────────────────────────────────────
+# ERA5-Land — dataset information file
+# Listed under the Atmosphere tab, 'Land reanalysis'. Shares the CDS and licence notices with ERA5 (era5.yaml).
+# After editing, update last_verified to the date you checked the official pages.
+# ─────────────────────────────────────────────────────────────
+id: era5-land
+name: ERA5-Land
+full_name: ERA5-Land (global land reanalysis at about 9 km, forced by ERA5 meteorological fields)
+category: reanalysis
+domain: atmosphere
+group: 육상 재분석
+order: 10
+domains: [육지, 대기]
+provider: ECMWF / Copernicus Climate Change Service (C3S)
+
+status: active
+status_note: >-
+  Active. A near-real-time version, ERA5-Land-T, is updated daily in step with ERA5T, about 5 days behind real time.
+  However, the accumulated variables (precipitation, evaporation, runoff, radiation, etc.) in the monthly averaged data remain incorrect for September 2022 to February 2024,
+  and the 1950–1978 segment was forced by the deprecated preliminary ERA5 back-extension (ERA5.P) and has not been rerun. See the notices below.
+
+period:
+  start: "1950-01"
+  end: present
+  note: >-
+    The consolidated dataset covers January 1950 to 2–3 months before the present; ERA5-Land-T (about 5-day latency) fills the remaining period and is replaced by final data about two months later.
+    On 2026-10-12 the CDS hourly data extended to 2026-10-05 and the monthly means to 2026-08.
+    Forecast (accumulated) parameters are missing for 1 January 1950 00 UTC.
+
+resolution:
+  spatial_short: "11 km (0.1°)"
+  temporal_short: "1시간"
+  spatial: "Native: about 9 km (~0.08°) on the octahedral reduced Gaussian grid TCo1279 / CDS: regular latitude-longitude grid of 0.1° × 0.1° (native grid only from MARS)"
+  vertical: "Single surface level + 4 soil layers (0–7, 7–28, 28–100, 100–289 cm) — from 2 m above the surface down to a soil depth of 289 cm"
+  temporal: Hourly (monthly means, plus CDS daily statistics and time-series products)
+
+update: Daily (ERA5-Land-T, about 5 days behind real time) / monthly means monthly
+license: CC BY 4.0 (replaced the Licence to use Copernicus Products on 2025-07-02)
+account_required: true
+
+summary: >-
+  ERA5-Land is a replay of the land component of the ERA5 climate reanalysis, produced by ECMWF for C3S at about 9 km resolution with the H-TESSEL land surface model.
+  It runs without data assimilation of its own, forced by ERA5 atmospheric fields (with lapse-rate correction of temperature, humidity and pressure), and provides hourly land variables —
+  soil moisture, soil temperature, snow, runoff, evaporation — at higher resolution than ERA5. It is widely used for flood and drought, hydrological and agricultural studies, and is downloaded from the CDS on a 0.1° grid.
+
+time_convention:
+  summary: >-
+    State variables (temperature, soil moisture, snow, etc.) are instantaneous values at the validity time. Unlike ERA5, accumulated variables (precipitation, evaporation,
+    runoff, radiation, heat fluxes) are accumulated from 00 UTC of the same day to the validity time (up to 24 hours); the 00 UTC value is the 24-hour accumulation of the previous day.
+  points:
+    - "Accumulations come from the short forecasts started daily at 00 UTC (steps 1–24). Example: tp at 06 UTC = precipitation from 00 to 06 UTC that day."
+    - "The 00 UTC value is the 24-hour accumulation ending at that time (previous day 00 UTC to 00 UTC). A daily total therefore needs only the next day's 00 UTC value."
+    - "For hourly precipitation, difference consecutive time steps (the 01 UTC value is itself a 1-hour accumulation). Summing the values as you would for ERA5 grossly overestimates the total."
+    - "Monthly means of daily means (monthly averaged reanalysis) use the last (24-hour) step and are in units 'per day'. Precipitation is m/day — multiply by 1000 for mm/day; divide radiation and heat fluxes by 86400 for W m-2."
+    - "Synoptic monthly means (monthly averaged reanalysis by hour of day) are in units per forecast step in hours. The 00:00 value is the monthly mean of the 24-hour accumulation, and is the substitute the official notice recommends for the period affected by the monthly-mean error."
+    - "The CDS post-processed daily statistics product computes daily mean, maximum and minimum from the hourly data on request, with a selectable time zone (UTC offset)."
+  source: https://confluence.ecmwf.int/display/CKB/ERA5-Land%3A+data+documentation
+  source_name: "ERA5-Land: data documentation (Copernicus Knowledge Base)"
+
+variables:
+  note: >-
+    Main variables from the parameter tables (Tables 1–3) of the official ERA5-Land documentation. Names are GRIB short names; when downloaded from the CDS as NetCDF,
+    some are stored under different names (e.g. `2t`→`t2m`, `2d`→`d2m`). There are fewer atmospheric variables than in ERA5 and no pressure-level data.
+    Forcing variables such as sp, u10, v10, tp, sf, ssrd and strd are ERA5 values interpolated to the ERA5-Land grid.
+  full_list: https://confluence.ecmwf.int/display/CKB/ERA5-Land%3A+data+documentation
+  groups:
+    - name: Surface state (instantaneous)
+      kind: instant
+      items:
+        - "2 metre temperature — `2t` (K)"
+        - "2 metre dewpoint temperature — `2d` (K)"
+        - "Skin temperature — `skt` (K)"
+        - "Surface pressure — `sp` (Pa)"
+        - "10 metre U and V wind components — `u10`, `v10` (m s-1)"
+        - "Snow depth — `sde` (m)"
+        - "Snow depth water equivalent — `sd` (m of water equivalent)"
+        - "Snow cover — `snowc` (%)"
+        - "Snow density — `rsn` (kg m-3)"
+        - "Leaf area index, low and high vegetation — `lai_lv`, `lai_hv` (m2 m-2)"
+        - "Lake mix-layer temperature — `lmlt` (K)"
+    - name: Soil (4 layers, instantaneous)
+      kind: instant
+      items:
+        - "Volumetric soil water layers 1–4 — `swvl1`–`swvl4` (m3 m-3)"
+        - "Soil temperature levels 1–4 — `stl1`–`stl4` (K)"
+    - name: Accumulations (from 00 UTC of the day to the validity time)
+      kind: accum
+      period: "From 00 UTC to the validity time (up to 24 hours)"
+      items:
+        - "Total precipitation — `tp` (m)"
+        - "Snowfall — `sf` (m of water equivalent)"
+        - "Total evaporation — `e` (m of water equivalent)"
+        - text: "Potential evaporation — `pev` (m)"
+          note: Redefined on 2021-11-18 as open-water (pan) evaporation
+        - "Runoff, surface runoff, sub-surface runoff — `ro`, `sro`, `ssro` (m)"
+        - "Snowmelt — `smlt` (m of water equivalent)"
+        - "Surface solar and thermal radiation downwards — `ssrd`, `strd` (J m-2)"
+        - "Surface net solar and thermal radiation — `ssr`, `str` (J m-2)"
+        - "Surface sensible and latent heat flux — `sshf`, `slhf` (J m-2)"
+        - text: "Evaporation from bare soil, open water surfaces excluding oceans, vegetation transpiration, top of canopy — `evabs`, `evaow`, `evavt`, `evatc` (m of water equivalent)"
+          note: According to the official known issues, the values of evabs, evaow and evavt are mismatched with one another. Check the mapping in the documentation before use
+    - name: Invariant fields
+      kind: static
+      items:
+        - "Land-sea mask — `lsm` (0-1)"
+        - "Geopotential (orography) — `z` (m2 s-2)"
+        - "High and low vegetation cover — `cvh`, `cvl` (0-1)"
+        - "Soil type — `slt`"
+        - "Glacier mask — `glm` (proportion)"
+        - "Lake cover and lake total depth — `cl` (0-1), `dl` (m)"
+
+access:
+  - name: Copernicus Climate Data Store (CDS) — hourly data
+    url: https://cds.climate.copernicus.eu/datasets/reanalysis-era5-land
+    method: Web download / CDS API (cdsapi)
+    note: Requires an ECMWF account, and you must accept the dataset licence before API requests succeed. Default format is GRIB; NetCDF can be selected.
+  - name: CDS — monthly averaged data
+    url: https://cds.climate.copernicus.eu/datasets/reanalysis-era5-land-monthly-means
+    method: Web download / CDS API
+    note: Two products — monthly averaged reanalysis (per-day units) and monthly averaged reanalysis by hour of day.
+  - name: CDS — post-processed daily statistics
+    url: https://cds.climate.copernicus.eu/datasets/derived-era5-land-daily-statistics
+    method: Web download / CDS API
+    note: Daily mean, maximum and minimum are computed from the hourly data on request; you can specify the time zone (UTC offset).
+  - name: CDS — time-series (ARCO)
+    url: https://cds.climate.copernicus.eu/datasets/reanalysis-era5-land-timeseries
+    method: Web download / CDS API
+    note: For quickly retrieving long series at a single point. Returns the grid point nearest the requested location.
+
+example:
+  lang: python
+  note: "Put the url (https://cds.climate.copernicus.eu/api) and your API key in ~/.cdsapirc before running. The daily precipitation total is the 00:00 value of the following day."
+  code: |
+    # pip install --upgrade cdsapi
+    import cdsapi
+
+    client = cdsapi.Client()
+    client.retrieve(
+        "reanalysis-era5-land",
+        {
+            "variable": ["2m_temperature", "total_precipitation"],
+            "year": "2024",
+            "month": "07",
+            "day": ["01", "02"],
+            "time": ["00:00", "06:00", "12:00", "18:00"],
+            "area": [39, 124, 33, 132],  # North, West, South, East (around the Korean Peninsula)
+            "data_format": "netcdf",
+            "download_format": "unarchived",
+        },
+        "era5land_korea_20240701.nc",
+    )
+    # Precipitation total for 2024-07-01 = tp at 2024-07-02 00:00 (units m; ×1000 for mm)
+
+tips:
+  - The accumulation convention differs from ERA5. Reusing ERA5 code that sums hourly tp inflates daily totals several times over; for ERA5-Land, use the next day's 00 UTC value or differences between consecutive steps.
+  - The incorrect accumulated variables in the monthly averaged reanalysis for September 2022 – February 2024 were never replaced. For that period, use the 00:00 value of the 'by hour of day' product or compute monthly totals yourself from the hourly data.
+  - 1950–1978 was forced by the preliminary ERA5 back-extension (ERA5.P) and not rerun, so parts of it disagree with the final ERA5 (warm/dry anomalies reported in central Africa and South America in some years). Be careful with trend analyses that include the pre-1979 period.
+  - Forcing variables such as precipitation, radiation and wind are interpolated from ERA5 — higher resolution, but no new information. They are nearly identical to ERA5; the value of ERA5-Land lies in land-surface variables such as soil moisture, snow and runoff.
+  - Snow values over the East Antarctic ice sheet are unrealistically low, and glacier points carry a fixed 10 m snow depth. Do not use ERA5-Land snow for polar or glacier studies.
+  - No uncertainty (ensemble) information is provided. The documentation suggests using the ERA5 EDA uncertainty as an approximation if needed.
+
+citations:
+  dataset:
+    - label: Hourly data (CDS)
+      text: >-
+        Muñoz Sabater, J. (2019): ERA5-Land hourly data from 1950 to present.
+        Copernicus Climate Change Service (C3S) Climate Data Store (CDS).
+        DOI: 10.24381/cds.e2161bac (Accessed on DD-MMM-YYYY)
+      doi: 10.24381/cds.e2161bac
+      bibtex: |
+        @misc{era5land_hourly,
+          author    = {Mu{\~n}oz Sabater, J.},
+          title     = {{ERA5-Land} hourly data from 1950 to present},
+          year      = {2019},
+          publisher = {Copernicus Climate Change Service (C3S) Climate Data Store (CDS)},
+          doi       = {10.24381/cds.e2161bac},
+          note      = {Accessed on DD-MMM-YYYY}
+        }
+    - label: Monthly averaged data (CDS)
+      text: >-
+        Muñoz Sabater, J. (2019): ERA5-Land monthly averaged data from 1950 to present.
+        Copernicus Climate Change Service (C3S) Climate Data Store (CDS).
+        DOI: 10.24381/cds.68d2bb30 (Accessed on DD-MMM-YYYY)
+      doi: 10.24381/cds.68d2bb30
+      bibtex: |
+        @misc{era5land_monthly,
+          author    = {Mu{\~n}oz Sabater, J.},
+          title     = {{ERA5-Land} monthly averaged data from 1950 to present},
+          year      = {2019},
+          publisher = {Copernicus Climate Change Service (C3S) Climate Data Store (CDS)},
+          doi       = {10.24381/cds.68d2bb30},
+          note      = {Accessed on DD-MMM-YYYY}
+        }
+    - label: Post-processed daily statistics (CDS)
+      text: >-
+        Copernicus Climate Change Service (2024): ERA5-Land post-processed daily statistics from 1950 to present.
+        ECMWF. DOI: 10.24381/cds.e9c9c792 (Accessed on DD-MMM-YYYY)
+      doi: 10.24381/cds.e9c9c792
+      bibtex: |
+        @misc{era5land_daily_stats,
+          author    = {{Copernicus Climate Change Service}},
+          title     = {{ERA5-Land} post-processed daily statistics from 1950 to present},
+          year      = {2024},
+          publisher = {ECMWF},
+          doi       = {10.24381/cds.e9c9c792},
+          note      = {Accessed on DD-MMM-YYYY}
+        }
+    - label: Hourly time-series (CDS)
+      text: >-
+        Copernicus Climate Change Service (2025): ERA5 Land hourly time-series data from 1950 to present.
+        ECMWF. DOI: 10.24381/ee82e357 (Accessed on DD-MMM-YYYY)
+      doi: 10.24381/ee82e357
+      bibtex: |
+        @misc{era5land_timeseries,
+          author    = {{Copernicus Climate Change Service}},
+          title     = {{ERA5} Land hourly time-series data from 1950 to present},
+          year      = {2025},
+          publisher = {ECMWF},
+          doi       = {10.24381/ee82e357},
+          note      = {Accessed on DD-MMM-YYYY}
+        }
+  papers:
+    - label: ERA5-Land reference paper
+      text: >-
+        Muñoz-Sabater, J., Dutra, E., Agustí-Panareda, A., Albergel, C., Arduini, G., Balsamo, G., Boussetta, S.,
+        Choulga, M., Harrigan, S., Hersbach, H., Martens, B., Miralles, D. G., Piles, M., Rodríguez-Fernández, N. J.,
+        Zsoter, E., Buontempo, C., Thépaut, J.-N. (2021): ERA5-Land: a state-of-the-art global reanalysis dataset for
+        land applications. Earth System Science Data, 13(9), 4349–4383.
+      doi: 10.5194/essd-13-4349-2021
+      bibtex: |
+        @article{munozsabater2021era5land,
+          author  = {Mu{\~n}oz-Sabater, Joaqu{\'i}n and Dutra, Emanuel and Agust{\'i}-Panareda, Anna and Albergel, Cl{\'e}ment and Arduini, Gabriele and Balsamo, Gianpaolo and Boussetta, Souhail and Choulga, Margarita and Harrigan, Shaun and Hersbach, Hans and Martens, Brecht and Miralles, Diego G. and Piles, Mar{\'i}a and Rodr{\'i}guez-Fern{\'a}ndez, Nemesio J. and Zsoter, Ervin and Buontempo, Carlo and Th{\'e}paut, Jean-No{\"e}l},
+          title   = {{ERA5-Land}: a state-of-the-art global reanalysis dataset for land applications},
+          journal = {Earth System Science Data},
+          volume  = {13},
+          number  = {9},
+          pages   = {4349--4383},
+          year    = {2021},
+          doi     = {10.5194/essd-13-4349-2021}
+        }
+  acknowledgement: >-
+    Cite the CDS catalogue entry (DOI and access date) for each dataset you actually used (hourly, monthly, daily statistics, time-series), and give clear and visible
+    attribution to the Copernicus programme and the C3S data. DataCite lists 'Copernicus Climate Change Service' as the creator of the hourly and monthly datasets,
+    so check the citation guidance on each CDS dataset page for the exact recommended wording.
+
+notices:
+  - date: "2026-10-05"
+    level: info
+    title: Upcoming CDS Terms of use change (effective 2026-10-28)
+    body: >-
+      Article 1 (products and services) of the CDS Terms of use changes on 28 October 2026. Continued use of the CDS after that date will be considered acceptance of the updated terms.
+      Users who do not accept should contact ECMWF Support by 27 October; their access to Copernicus Products will then end.
+    source: https://forum.ecmwf.int/t/upcoming-cds-terms-of-use-change/15374
+  - date: "2025-09-25"
+    level: warning
+    title: ERA5-Land data pre-1978 derived from the deprecated ERA5.P
+    body: >-
+      ECMWF confirmed that ERA5-Land before 1979 was based on the preliminary ERA5 back-extension (ERA5.P) and was not rerun.
+      Warm/dry anomalies absent from the final ERA5 have been reported in central Africa and South America in some years (e.g. 1951, 1961, 1965),
+      and the C3S Interactive Climate Atlas has removed ERA5-Land trends before 1978. No recalculation has been announced.
+    source: https://forum.ecmwf.int/t/era5-land-data-pre-1978-seems-to-be-derived-from-long-deprecated-and-removed-era5-p-data/14180
+  - date: "2025-07-02"
+    level: info
+    title: CC-BY licence replaces the Licence to use Copernicus Products
+    body: The former "Licence to use Copernicus Products" has been replaced by CC BY 4.0. Attribution is still required.
+    source: https://forum.ecmwf.int/t/cc-by-licence-to-replace-licence-to-use-copernicus-products-on-02-july-2025/13464
+  - date: "2025-01-09"
+    level: warning
+    title: ERA5 data from 1–6 January 2025 degraded (resolved)
+    body: >-
+      A technical problem in ERA5T production also affected the ERA5-Land-T hourly data and daily statistics. All degraded data were replaced by 2025-01-14;
+      if you downloaded data for 1–6 January 2025 before then, download it again. Monthly data were not affected.
+    source: https://forum.ecmwf.int/t/era5-data-from-1st-january-2025-was-degraded-and-is-being-corrected/10689
+  - date: "2024-09-26"
+    level: critical
+    title: Goodbye legacy Climate Data Store, hello new CDS — new account and API key required
+    body: >-
+      The legacy CDS has been decommissioned and replaced by the new CDS. API requests with old credentials all fail.
+      Create a new ECMWF account, run pip install --upgrade cdsapi, and update the url and key in .cdsapirc.
+    source: https://forum.ecmwf.int/t/goodbye-legacy-climate-data-store-hello-new-climate-data-store-cds/6380
+  - date: "2024-04-02"
+    level: critical
+    title: Issue affecting ERA5-Land monthly averaged reanalysis for September 2022 to February 2024 — not replaced
+    body: >-
+      All accumulated variables (precipitation, evaporation, runoff, radiation, heat fluxes, etc.) in the monthly averaged reanalysis are wrong for September 2022 to February 2024.
+      Data from March 2024 onward have been corrected, but the incorrect data will not be replaced on CDS discs nor MARS tapes.
+      ECMWF recommends using the 00:00 value of the monthly averaged reanalysis by hour of day instead.
+    source: https://forum.ecmwf.int/t/issue-affecting-era5-land-monthly-averaged-reanalysis-for-the-period-september-2022-to-february-2024/2370
+
+links:
+  - name: CDS — ERA5-Land hourly data page
+    url: https://cds.climate.copernicus.eu/datasets/reanalysis-era5-land
+  - name: "ERA5-Land: data documentation (parameter tables, accumulation conventions, known issues)"
+    url: https://confluence.ecmwf.int/display/CKB/ERA5-Land%3A+data+documentation
+  - name: ECMWF Forum — C3S Announcements
+    url: https://forum.ecmwf.int/c/announcements/c3s-announcements/7
+  - name: ECMWF — ERA5-Land
+    url: https://www.ecmwf.int/en/era5-land
+
+watch_urls:
+  - https://forum.ecmwf.int/c/announcements/c3s-announcements/7
+  - https://confluence.ecmwf.int/display/CKB/ERA5-Land%3A+data+documentation
+
+last_verified: "2026-10-12"

@@ -1,0 +1,222 @@
+# ─────────────────────────────────────────────────────────────
+# GLORYS12 — dataset information file (English edition)
+# After editing, update last_verified to the date you checked the official pages.
+# ─────────────────────────────────────────────────────────────
+id: glorys12
+name: GLORYS12
+full_name: Copernicus Marine Global Ocean Physics Reanalysis GLORYS12V1 (GLOBAL_MULTIYEAR_PHY_001_030)
+category: reanalysis
+domain: ocean
+group: 재분석
+order: 10
+domains: [해양, 해빙]
+provider: Copernicus Marine Service (CMEMS) / Mercator Ocean International
+
+status: active
+status_note: >-
+  Available and extended every month. In November 2025 the separate multi-year interim (myint) datasets were merged into the
+  corresponding multi-year (my) datasets, so a single my dataset now covers 1993 to the recent past.
+  As of October 2026, no successor version to GLORYS12V1 has been announced.
+
+period:
+  start: "1993-01"
+  end: present
+  note: >-
+    The multi-year reanalysis proper runs to June 2021; months from July 2021 onwards were produced in "interim" mode and are extended monthly.
+    When checked on 2026-10-11, the catalogue's temporal extent ended on 25 Aug 2026, so the most recent one to two months are not yet available.
+
+resolution:
+  spatial_short: "9 km (0.083°)"
+  temporal_short: "1일"
+  spatial: "1/12° standard regular grid (4320 × 2041), global, 80°S–90°N"
+  vertical: "50 standard levels (surface to about 5,500 m)"
+  temporal: Daily means and monthly means (plus a separate 1993–2016 monthly climatology)
+
+update: Extended monthly (about 1–2 months behind real time)
+license: Copernicus Marine Service licence — free of charge (commercial use included); attribution and DOI citation required
+account_required: true
+
+summary: >-
+  GLORYS12V1 is the Copernicus Marine global ocean eddy-resolving reanalysis (1/12° horizontal resolution, 50 vertical levels) produced by Mercator Ocean International.
+  It is based on the NEMO ocean model with sea ice, assimilating along-track satellite altimetry, satellite sea surface temperature, sea ice concentration
+  and in situ temperature and salinity profiles. Because it resolves mesoscale eddies, it is widely used for studies of boundary currents, coastal circulation
+  and marine heatwaves. It covers the altimetry era, starting in 1993.
+
+time_convention:
+  summary: >-
+    All ocean and sea-ice fields are means, not instantaneous values. Daily fields (P1D-m) are means over a day (midnight to midnight), monthly fields (P1M-m)
+    are means over the calendar month, and the static datasets (bathymetry, mask, mean dynamic topography) are time-invariant.
+  points:
+    - "Daily means cover 00–24 h, and the PUM describes them as \"centered at noon\". The file examples in the same document, however, show 00:00 on that date, so treat the time value only as a label for \"the mean of that day\"."
+    - "Monthly mean files and time values refer to the month (file names use yyyymm). There is no need to recompute monthly means from the daily means."
+    - "A separate monthly climatology dataset (…-climatology_P1M-m) gives the 1993–2016 average for each month of the year; it is a multi-year mean of the same calendar month, not a specific year."
+    - "The -m suffix in the dataset ID means \"mean\". This product contains no instantaneous (snapshot) fields."
+  source: https://documentation.marine.copernicus.eu/PUM/CMEMS-GLO-PUM-001-030.pdf
+  source_name: CMEMS-GLO-PUM-001-030 (GLORYS12 Product User Manual)
+
+variables:
+  note: Main variables from the official Product User Manual (PUM). Names are the NetCDF variable names (short names) in the files.
+  full_list: https://documentation.marine.copernicus.eu/PUM/CMEMS-GLO-PUM-001-030.pdf
+  groups:
+    - name: 3D ocean (50 levels)
+      kind: mean
+      period: Day / month
+      items:
+        - "Sea water potential temperature — `thetao` (°C)"
+        - "Sea water salinity — `so` (1e-3, practical salinity)"
+        - "Eastward sea water velocity — `uo` (m/s)"
+        - "Northward sea water velocity — `vo` (m/s)"
+    - name: 2D ocean
+      kind: mean
+      period: Day / month
+      items:
+        - "Sea surface height above geoid — `zos` (m)"
+        - "Ocean mixed layer thickness defined by sigma theta — `mlotst` (m)"
+        - "Sea water potential temperature at sea floor — `bottomT` (°C)"
+    - name: Sea ice
+      kind: mean
+      period: Day / month
+      items:
+        - "Sea ice area fraction — `siconc` (1, fraction 0–1)"
+        - "Sea ice thickness — `sithick` (m)"
+        - "Eastward sea ice velocity — `usi` (m/s)"
+        - "Northward sea ice velocity — `vsi` (m/s)"
+    - name: Static fields
+      kind: static
+      items:
+        - "Sea floor depth below geoid (bathymetry) — `deptho` (m)"
+        - "Mean dynamic topography — `mdt` (m)"
+        - "Land-sea mask (1 = sea, 0 = land) — `mask`"
+
+access:
+  - name: Copernicus Marine Data Store — product page
+    url: https://data.marine.copernicus.eu/product/GLOBAL_MULTIYEAR_PHY_001_030/description
+    method: Web download (Subset, File Browser) / Copernicus Marine Toolbox (copernicusmarine)
+    note: >-
+      Requires a free Copernicus Marine account. Dataset IDs: daily means cmems_mod_glo_phy_my_0.083deg_P1D-m,
+      monthly means cmems_mod_glo_phy_my_0.083deg_P1M-m.
+  - name: Copernicus Marine Toolbox documentation
+    url: https://toolbox-docs.marine.copernicus.eu/en/stable/
+    method: Python / command line (CLI)
+    note: Provides subset (cut by area, depth and time) and get (download the original files). The supported major version is 2.x.
+
+example:
+  lang: python
+  note: "Install with pip install copernicusmarine, run login() once to store your credentials, then run the script. Based on the example in the official help centre."
+  code: |
+    import copernicusmarine
+
+    # Run once (credentials are stored locally)
+    # copernicusmarine.login(username="<username>", password="<password>")
+
+    copernicusmarine.subset(
+        dataset_id="cmems_mod_glo_phy_my_0.083deg_P1D-m",
+        variables=["thetao", "so"],
+        minimum_longitude=120,
+        maximum_longitude=135,
+        minimum_latitude=30,
+        maximum_latitude=45,
+        start_datetime="2020-01-01",
+        end_datetime="2020-01-31",
+        minimum_depth=0,
+        maximum_depth=100,
+        output_filename="glorys12_eastsea_202001.nc",
+        output_directory="copernicus-data",
+    )
+
+tips:
+  - "In November 2025 the interim datasets (cmems_mod_glo_phy_myint_0.083deg_P1D-m, ..._P1M-m) were retired and merged into the my datasets. If old scripts still use the myint IDs, switch them to the my IDs."
+  - Support for Copernicus Marine Toolbox 1.x ended in July 2025. Upgrade to 2.x; version 2.4 and later require Python 3.10 or newer.
+  - Data from July 2021 onwards were produced in interim mode, under different production conditions from the earlier period. When computing long-term trends, check for a discontinuity at this boundary.
+  - Daily 3D fields at 1/12° quickly reach hundreds of MB to several GB. Use subset to download only the region, depths and variables you actually need.
+
+citations:
+  dataset:
+    - label: Product DOI
+      text: >-
+        Global Ocean Physics Reanalysis. E.U. Copernicus Marine Service Information (CMEMS).
+        Marine Data Store (MDS). DOI: 10.48670/moi-00021 (Accessed on DD MMM YYYY)
+      doi: 10.48670/moi-00021
+      bibtex: |
+        @misc{cmems_glorys12,
+          author    = {{E.U. Copernicus Marine Service Information (CMEMS)}},
+          title     = {Global Ocean Physics Reanalysis ({GLOBAL\_MULTIYEAR\_PHY\_001\_030})},
+          year      = {2018},
+          publisher = {Mercator Ocean International, Marine Data Store (MDS)},
+          doi       = {10.48670/moi-00021},
+          note      = {Accessed on DD MMM YYYY}
+        }
+  papers:
+    - label: GLORYS12 description paper
+      text: >-
+        Lellouche, J.-M., Greiner, E., Bourdallé-Badie, R., Garric, G., Melet, A., Drévillon, M., Bricaud, C.,
+        Hamon, M., Le Galloudec, O., Regnier, C., Candela, T., Testut, C.-E., Gasparin, F., Ruggiero, G.,
+        Benkiran, M., Drillet, Y., Le Traon, P.-Y. (2021): The Copernicus Global 1/12° Oceanic and Sea Ice
+        GLORYS12 Reanalysis. Frontiers in Earth Science, 9, 698876.
+      doi: 10.3389/feart.2021.698876
+      bibtex: |
+        @article{lellouche2021glorys12,
+          author  = {Lellouche, Jean-Michel and Greiner, Eric and Bourdall{\'e}-Badie, Romain and Garric, Gilles and Melet, Ang{\'e}lique and Dr{\'e}villon, Marie and Bricaud, Cl{\'e}ment and Hamon, Mathieu and Le Galloudec, Olivier and Regnier, Charly and Candela, Tony and Testut, Charles-Emmanuel and Gasparin, Florent and Ruggiero, Giovanni and Benkiran, Mounir and Drillet, Yann and Le Traon, Pierre-Yves},
+          title   = {The {Copernicus} Global 1/12$^\circ$ Oceanic and Sea Ice {GLORYS12} Reanalysis},
+          journal = {Frontiers in Earth Science},
+          volume  = {9},
+          pages   = {698876},
+          year    = {2021},
+          doi     = {10.3389/feart.2021.698876}
+        }
+  acknowledgement: >-
+    Copernicus Marine recommends the acknowledgement "This study has been conducted using E.U. Copernicus Marine Service Information;"
+    followed by the DOI of each product used (here 10.48670/moi-00021). Dataset IDs have no DOI of their own, so cite the product DOI.
+
+notices:
+  - date: "2026-04-28"
+    level: info
+    title: "[MDSOP-377] Application of retention periods to ARCO datacubes"
+    body: >-
+      Copernicus Marine is applying the retention periods defined in the Product User Manuals to some ARCO datacubes, so some time series may start later
+      in the Subset GUI, the Copernicus Marine Toolbox subset and MyOcean Viewer. Original files (File Browser, copernicusmarine get) are not affected.
+      The notice does not list the affected products.
+    source: https://marine.copernicus.eu/user-corner/user-notification-service
+  - date: "2025-11"
+    level: warning
+    title: Multi-year interim dataset merged into the corresponding multi-year dataset
+    body: >-
+      The datasets cmems_mod_glo_phy_myint_0.083deg_P1D-m and cmems_mod_glo_phy_myint_0.083deg_P1M-m were retired and their data moved into
+      cmems_mod_glo_phy_my_0.083deg_P1D-m / _P1M-m. Code that uses the myint IDs must be updated.
+    source: https://marine.copernicus.eu/user-corner/product-roadmap/transition-information?product=GLOBAL_MULTIYEAR_PHY_001_030
+  - date: "2025-07"
+    level: warning
+    title: Copernicus Marine Toolbox 1.x end of support
+    body: Toolbox 1.x (latest 1.3.6) is no longer supported and should be replaced with 2.x; version 2.4.0 dropped support for Python 3.9.
+    source: https://toolbox-docs.marine.copernicus.eu/en/stable/end-of-life.html
+  - date: "2024-11"
+    level: info
+    title: Interim dataset extended every month (Month-1)
+    body: The interim dataset is now extended every month closer to real time, until Month-1 (the offset was then 4 months).
+    source: https://marine.copernicus.eu/user-corner/product-roadmap/transition-information?product=GLOBAL_MULTIYEAR_PHY_001_030
+  - date: "2023-11"
+    level: info
+    title: Time extension, addition of an interim dataset and renaming of datasets
+    body: >-
+      The multi-year datasets were extended to June 2021, and months from July 2021 onwards switched to monthly "interim" generation in new interim datasets.
+      Several datasets were renamed at the same time (e.g. cmems_mod_glo_phy_my_0.083_P1D-m became cmems_mod_glo_phy_my_0.083deg_P1D-m).
+    source: https://marine.copernicus.eu/user-corner/product-roadmap/transition-information?product=GLOBAL_MULTIYEAR_PHY_001_030
+
+links:
+  - name: Copernicus Marine product page (GLOBAL_MULTIYEAR_PHY_001_030)
+    url: https://data.marine.copernicus.eu/product/GLOBAL_MULTIYEAR_PHY_001_030/description
+  - name: Product User Manual (PUM)
+    url: https://documentation.marine.copernicus.eu/PUM/CMEMS-GLO-PUM-001-030.pdf
+  - name: Quality Information Document (QUID)
+    url: https://documentation.marine.copernicus.eu/QUID/CMEMS-GLO-QUID-001-030.pdf
+  - name: How to cite or reference Copernicus Marine products and services
+    url: https://help.marine.copernicus.eu/en/articles/4444611-how-to-cite-or-reference-copernicus-marine-products-and-services
+  - name: "Copernicus Marine Toolbox — API: subset (help centre)"
+    url: https://help.marine.copernicus.eu/en/articles/8283072-copernicus-marine-toolbox-api-subset
+
+watch_urls:
+  - https://marine.copernicus.eu/user-corner/product-roadmap/transition-information?product=GLOBAL_MULTIYEAR_PHY_001_030
+  - https://marine.copernicus.eu/user-corner/user-notification-service
+  - https://data.marine.copernicus.eu/product/GLOBAL_MULTIYEAR_PHY_001_030/notifications
+
+last_verified: "2026-10-11"

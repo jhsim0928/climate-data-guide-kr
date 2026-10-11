@@ -1,0 +1,345 @@
+# ─────────────────────────────────────────────────────────────
+# OSI SAF Sea Ice Drift — dataset information file
+# NRT Global Low Resolution Sea-Ice Drift OSI-405-d (62.5 km, 48-hour displacement)
+# + climate data record OSI-455 (75 km, 24-hour displacement) + demonstrational ICDR OSI-435
+# ─────────────────────────────────────────────────────────────
+id: osisaf-drift
+name: OSI SAF Sea Ice Drift
+full_name: EUMETSAT OSI SAF Global Low Resolution Sea-Ice Drift (OSI-405-d) / Global Low Resolution Sea-Ice Drift data record (OSI-455) and Interim Climate Data Record (OSI-435)
+category: satellite
+domain: seaice
+group: 해빙 이동
+order: 20
+domains: [해빙]
+provider: EUMETSAT Ocean and Sea Ice Satellite Application Facility (OSI SAF) / Norwegian Meteorological Institute (MET Norway)
+
+status: active
+status_note: >-
+  The near-real-time product OSI-405-d is operational. SSMIS was dropped as an input in July 2025, leaving AMSR2 as the primary source,
+  and AMSR3 became the main input on 1 September 2026; the product ID and file names did not change.
+  The climate data record OSI-455 is a fixed record for 1991–2020. Its continuation, the Interim CDR OSI-435 (2021–2025), has been on the FTP server
+  as a demonstrational product since June 2026. Dissemination of the Medium Resolution Sea Ice Drift product (OSI-407-a) stopped on 19 May 2025.
+
+transitions:
+  - from: OSI-405-c (2017-05-30 to 2025-03-04; SSMIS, AMSR2 and ASCAT Metop-B input)
+    to: OSI-405-d (from 2025-03-04; AMSR2, then AMSR3 from 2026-09, with ASCAT Metop-C input)
+    status: completed
+    date: "2025-03"
+    summary: >-
+      On 4 March 2025 all distribution channels switched from OSI-405-c to OSI-405-d. The method, grid and 48-hour displacement are unchanged;
+      the update moved files to NetCDF4, switched ASCAT from Metop-B to Metop-C and changed the global attributes. Removal of SSMIS input (17 July 2025)
+      and the move to AMSR3 (1 September 2026) followed under the same product ID.
+    changes:
+      - aspect: File format
+        before: "NetCDF3 (EUMETCast files distributed as .nc.gz)"
+        after: "NetCDF4 (no .gz extension on EUMETCast files); global attributes changed"
+      - aspect: ASCAT input
+        before: "Metop-B"
+        after: "Metop-C"
+      - aspect: Passive microwave input
+        before: "DMSP SSMIS F18 (91 GHz) + GCOM-W1 AMSR2 (37 and 18.7 GHz)"
+        after: "No SSMIS from 2025-07-17 (AMSR2 is the primary source); GOSAT-GW AMSR3 is the main input from 2026-09-01"
+      - aspect: Grid, displacement period, product ID
+        before: "62.5 km polar stereographic, 48-hour displacement"
+        after: "Unchanged. The AMSR3 switch kept the product ID (OSI-405-d) and the merged-file names"
+      - aspect: DOI
+        before: "10.15770/EUM_SAF_OSI_NRT_2007"
+        after: "Unchanged (the recommended citation now names OSI-405-d)"
+    impacts:
+      - "If you build a record that spans OSI-405-c and OSI-405-d, note the input changes in July 2025 and September 2026; everything from September 2026 onward is AMSR3-based."
+      - "EUMETCast ingest scripts that expect NetCDF3 or gunzip a .nc.gz file need updating."
+      - "Users of the single-sensor files should check the FTP listing directly: the PUM (v1.9, December 2024) predates the SSMIS removal (2025-07-17) and the AMSR3 switch (2026-09-01), so the current per-sensor file set and names are not documented there."
+    sources:
+      - name: "OSI SAF service message #3193 (2025-03-03): New sea ice emissivity and LR sea ice drift products"
+        url: https://osi-saf.eumetsat.int/community/list-of-service-messages/new-sea-ice-emissivity-and-lr-sea-ice-drift-products
+      - name: OSI-405-d product page
+        url: https://osi-saf.eumetsat.int/products/osi-405-d
+      - name: OSI SAF — Implications of the end of SSMIS data on OSI SAF products
+        url: https://osi-saf.eumetsat.int/community/stories/implications-end-ssmis-data-osi-saf-products
+      - name: "OSI SAF service message #3571 (2026-08-31): Operational release of AMSR3-based sea-ice products on 1st September 2026"
+        url: https://osi-saf.eumetsat.int/community/list-of-service-messages/operational-release-amsr3-based-sea-ice-products-1st-september
+
+period:
+  start: "1991-01"
+  end: present
+  note: >-
+    OSI-455 covers 1991-01-01 to 2020-12-31 (both hemispheres, year-round). The demonstrational ICDR OSI-435 starts on 2021-01-01 and covers 2021–2025
+    (the product page gives no exact last date). The NRT OSI-405 series runs from 2009 and is updated daily as of 2026-10-12
+    (the FTP prod folder holds the last 31 days; the archive folder holds the full record).
+    We could not open the THREDDS or FTP listings, so the date of the latest file was not checked.
+
+resolution:
+  spatial_short: "62.5 km (0.56°)"
+  temporal_short: "1일"
+  spatial: >-
+    NRT OSI-405-d — 62.5 km polar stereographic grids: NH 119 × 177 (true at 70°N, central meridian 45°W), SH 125 × 131 (true at 70°S, central meridian 0°).
+    CDR OSI-455 — EASE2 75 km grid (Lambert Azimuthal Equal Area on WGS84), 144 × 144 in each hemisphere; motion is tracked on 12.5 km imagery
+    with overlapping sub-images. ICDR OSI-435 — 75 km grid
+  vertical: Not applicable (sea-ice surface motion)
+  temporal: >-
+    One file per day. OSI-405-d gives the 48-hour displacement from 12:00 UTC to 12:00 UTC two days later; OSI-455 and OSI-435 give the displacement
+    from (D-1) 12:00 to D 12:00 UTC. The actual start and end times vary from vector to vector, so durations are not exactly 48 h or 24 h
+
+update: >-
+  OSI-405-d is updated daily: the calculation runs at about 04:00 UTC on day D using day D-3 to D-1 data, and products are distributed around 05:00 UTC
+  (timeliness better than 5 h from the last swath per the PUM; 6 h on the product page).
+  OSI-455 is a closed record ("No updates expected" on the C3S CDS). No regular update schedule has been announced for OSI-435
+license: CC BY 4.0 (attribution to "EUMETSAT OSI SAF" required; quote the product DOI)
+account_required: false
+
+summary: >-
+  Gridded sea-ice drift vector fields for both hemispheres, retrieved by EUMETSAT OSI SAF from passive microwave (AMSR2 and AMSR3; formerly SSM/I,
+  SSMIS and AMSR-E) and ASCAT scatterometer imagery with the Continuous Maximum Cross-Correlation (CMCC) method. The NRT product OSI-405-d delivers
+  48-hour displacements on a 62.5 km polar stereographic grid every day. The climate data record OSI-455 gives year-round 24-hour displacements
+  on the 75 km EASE2 grid for 1991–2020, with summer seasons gap-filled by a free-drift model forced with ERA5 10 m winds.
+  Every vector carries an uncertainty (1 standard deviation) and a status flag.
+
+time_convention:
+  summary: >-
+    The fields are displacements (km) over a fixed period, not velocities. OSI-405-d gives the ice displacement from 12:00 UTC on the start day to
+    12:00 UTC two days later (48 h); OSI-455 gives the displacement from 12:00 UTC on the previous day to 12:00 UTC on the file date (24 h).
+    Each value is the velocity integrated over that period. To get a mean speed, divide by the actual elapsed time of each vector.
+  points:
+    - "OSI-405-d file names end in …_<startdate12>-<enddate12>.nc (YYYYMMDDhhmm). These are the nominal 12:00 UTC start and end of the 48-hour period, also stored in `time_bnds`. Example: the 16 Feb 12:00 → 18 Feb 12:00 field is distributed around 05:00 UTC on 19 Feb."
+    - "Per-vector start and end times differ from the nominal ones: OSI-405-d stores them as `dt0` and `dt1` (seconds relative to time_bnds[0] and time_bnds[1]), OSI-455 as `t0` and `t1`. The elapsed time is therefore not exactly 48 h or 24 h."
+    - "The date in an OSI-455 file name (<date12>, YYYYMMDD1200) is the end of the 24-hour period. Reading it as the start date shifts your series by one day."
+    - "`lat1` and `lon1` are the ice position at the end of the displacement; `lat` and `lon` are the grid-point (start) positions."
+    - "OSI-405-d single-sensor files contain no valid vectors in the summer period (NH 1 May–1 Oct, SH 1 Nov–1 Apr; status_flag 4); only the merged multi-oi analysis has (less accurate) summer vectors. OSI-455 uses free-drift wind vectors in summer (NH Jun–Sep, SH Nov–Feb) and uncertainty-weighted blends of satellite and wind vectors in spring and autumn."
+  source: https://osisaf-hl.met.no/sites/osisaf-hl/files/user_manuals/osisaf_pum_sea-ice-drift-lr_v1p9.pdf
+  source_name: OSI-405-d Product User Manual (v1.9) / OSI-455 PUM (v1.0) / OSI-455 product page
+
+variables:
+  note: >-
+    Variables in the merged files (multi-oi for OSI-405-d, merged for OSI-455) as listed in the OSI-405-d PUM v1.9 and the OSI-455 PUM v1.0.
+    Variable names are mostly the same in both products; only the per-vector time offsets differ (`dt0`/`dt1` in OSI-405-d, `t0`/`t1` in OSI-455).
+    The fill value for floating-point variables is -1e10.
+  full_list: https://osisaf-hl.met.no/sites/osisaf-hl/files/user_manuals/osisaf_pum_sea-ice-drift-lr_v1p9.pdf
+  groups:
+    - name: Ice displacement
+      kind: accum
+      period: 48 hours
+      items:
+        - text: "Component of the displacement along the x axis of the grid — `dX` (km; sea_ice_x_displacement)"
+          note: Displacement accumulated over 48 h (OSI-405-d) or 24 h (OSI-455 and OSI-435). Along the grid x axis, not eastward
+        - text: "Component of the displacement along the y axis of the grid — `dY` (km; sea_ice_y_displacement)"
+          note: Same period as dX. Along the grid y axis
+        - text: "Uncertainty (1 standard deviation) of dX and dY components of the drift vector — `uncert_dX_and_dY` (km)"
+          note: Uncertainty of the displacement over the same period. Divide by the same elapsed time when converting to speed
+    - name: Position and time
+      kind: instant
+      items:
+        - text: "Latitude and longitude at end of displacement — `lat1`, `lon1` (degrees)"
+          period: end of displacement period
+          note: Ice position at the end of the displacement period
+        - text: "Delta time for start and end of displacement — `dt0`, `dt1` (s, OSI-405-d) / `t0`, `t1` (OSI-455)"
+          note: Actual start and end time relative to the nominal time_bnds; use them to compute the elapsed time
+        - text: "Latitude and longitude coordinate (start position) — `lat`, `lon` (degrees); projection coordinates — `xc`, `yc` (km)"
+          kind: static
+    - name: Quality information
+      kind: accum
+      period: 48 hours
+      items:
+        - text: "Rejection and quality level flag (0–19 rejection, 20–30 quality index, 30 nominal) — `status_flag` (code)"
+          note: Flag attached to the displacement vector for that period (not a time statistic). E.g. 4 summer period, 22 interpolated (multi-oi only); in OSI-455, 23–25 mark wind-derived or blended vectors
+
+access:
+  - name: OSI SAF product page — OSI-405-d (near real time)
+    url: https://osi-saf.eumetsat.int/products/osi-405-d
+    method: Web / FTP (ftp://osisaf.met.no/prod/ice/drift_lr/ last 31 days, ftp://osisaf.met.no/archive/ice/drift_lr/ full archive) / EUMETCast
+    note: The FTP server has merged and single_sensor folders. EUMETCast carries only the merged (multi-sensor) files.
+  - name: MET Norway THREDDS — OSI SAF sea-ice drift catalogue
+    url: https://thredds.met.no/thredds/catalog/osisaf/osisaf_seaicedrift.html
+    method: THREDDS / OPeNDAP / HTTP
+    note: No account needed. The climate data record (OSI-455) is at https://thredds.met.no/thredds/catalog/osisaf/osisaf_cdrseaicedrift.html
+  - name: OSI SAF product page — OSI-455 (climate data record, 1991–2020)
+    url: https://osi-saf.eumetsat.int/products/osi-455
+    method: FTP (ftp://osisaf.met.no/reprocessed/ice/drift_lr/v1/) / THREDDS / EUMETSAT Data Store
+    note: Merged files are under merged/YYYY/MM/; per-sensor and ERA5-wind files are under single_sensor/<sensor>/YYYY/MM/.
+  - name: OSI SAF product page — OSI-435 (demonstrational ICDR, 2021–2025)
+    url: https://osi-saf.eumetsat.int/products/osi-435-complementing-osi-455
+    method: FTP (ftp://osisaf.met.no/reprocessed_test/ice/drift_lr_icdr/v1) / THREDDS
+    note: A demonstrational climate product, served from the test FTP area (reprocessed_test); no DOI or recommended citation yet.
+  - name: C3S Climate Data Store — Sea ice drift daily gridded data derived from satellite observations
+    url: https://cds.climate.copernicus.eu/datasets/satellite-sea-ice-drift
+    method: Web download / CDS API
+    note: Redistribution of OSI-455 (1991–2020, version 1.0). Requires an ECMWF account; no updates expected.
+  - name: Copernicus Marine — SEAICE_GLO_SEAICE_L4_NRT_OBSERVATIONS_011_001
+    url: https://data.marine.copernicus.eu/product/SEAICE_GLO_SEAICE_L4_NRT_OBSERVATIONS_011_001
+    method: Web download / copernicusmarine toolbox
+    note: NRT redistribution listed on the OSI-405-d product page. Requires a Copernicus Marine account.
+
+example:
+  lang: python
+  note: >-
+    Opens an OSI-405-d Northern Hemisphere merged file downloaded from FTP or THREDDS. File names follow
+    ice_drift_<nh|sh>_polstere-625_multi-oi_<start>-<end>.nc (times as YYYYMMDDhhmm). OSI-455 files follow
+    ice_drift_<nh|sh>_ease2-750_cdr-v1p0-<source>_24h-<end YYYYMMDD1200>.nc (the source part is left out for merged files);
+    check the exact names in the FTP listing.
+  code: |
+    import numpy as np
+    import xarray as xr
+
+    ds = xr.open_dataset("ice_drift_nh_polstere-625_multi-oi_202401011200-202401031200.nc")
+    dX = ds["dX"].squeeze()            # km, 48-hour displacement along grid x
+    dY = ds["dY"].squeeze()
+    flag = ds["status_flag"].squeeze()
+
+    # Actual elapsed time per vector = (time_bnds[1] + dt1) - (time_bnds[0] + dt0)
+    tb = ds["time_bnds"].squeeze().values
+    span_s = (tb[1] - tb[0]) / np.timedelta64(1, "s") + ds["dt1"].squeeze() - ds["dt0"].squeeze()
+
+    speed_cm_s = np.hypot(dX, dY) * 1e5 / span_s       # km -> cm; mean speed over the period
+    good = flag >= 20                                  # 20-30: valid vectors (30 = nominal quality)
+    print(float(speed_cm_s.where(good).mean()), "cm/s")
+
+tips:
+  - >-
+    `dX` and `dY` are displacements in km over 48 h (OSI-405-d) or 24 h (OSI-455), along the grid x and y axes rather than east and north.
+    Before comparing with winds or currents, divide by the elapsed time and recompute the direction from the start (`lat`, `lon`) and end (`lat1`, `lon1`) positions.
+  - >-
+    OSI-405-d is issued daily but each file spans 48 h, so consecutive files overlap by 24 h. Account for this when building daily series or counting independent samples.
+  - >-
+    Summer melt makes satellite tracking unreliable. OSI-405-d has summer vectors (NH 1 May–1 Oct, SH 1 Nov–1 Apr) only in the merged files, and most OSI-455 summer values
+    (NH Jun–Sep, SH Nov–Feb) come from the ERA5-wind free-drift model. Use status_flag to see where each vector comes from.
+  - >-
+    OSI-455 combines different inputs over time (SSM/I and SSMIS near 90 GHz, AMSR-E and AMSR2 at 36.5 GHz), and its merged files fill remaining gaps by spatial
+    interpolation and wind vectors. Its grid (75 km EASE2) and period (24 h) also differ from OSI-405-d (62.5 km polar stereographic, 48 h), so do not splice the two into one series.
+  - >-
+    For a CDR-consistent record after 2020, the demonstrational ICDR OSI-435 (2021–2025) is currently the only option. It has no DOI yet and lives in the reprocessed_test folder,
+    so record the product ID and download date in publications and check later whether it becomes operational.
+
+citations:
+  dataset:
+    - label: NRT — OSI-405-d
+      text: >-
+        EUMETSAT OSI SAF, Global Low Resolution Sea Ice Drift (2025), OSI-405-d, doi:10.15770/EUM_SAF_OSI_NRT_2007
+      doi: 10.15770/EUM_SAF_OSI_NRT_2007
+      bibtex: |
+        @misc{osisaf405d,
+          author    = {{EUMETSAT Ocean and Sea Ice Satellite Application Facility}},
+          title     = {Global Low Resolution Sea Ice Drift, {OSI-405-d}},
+          year      = {2025},
+          publisher = {EUMETSAT OSI SAF},
+          doi       = {10.15770/EUM_SAF_OSI_NRT_2007}
+        }
+    - label: Climate data record — OSI-455 (v1, 1991–2020)
+      text: >-
+        EUMETSAT OSI SAF, Global Low Resolution Sea Ice Drift data record 1991-2020 (v1, 2022), OSI-455, doi:10.15770/EUM_SAF_OSI_0012
+        (Data extracted from [distributor] on [download date])
+      doi: 10.15770/EUM_SAF_OSI_0012
+      bibtex: |
+        @misc{osisaf455,
+          author    = {{EUMETSAT Ocean and Sea Ice Satellite Application Facility}},
+          title     = {Global Low Resolution Sea Ice Drift data record 1991-2020 (v1, 2022), {OSI-455}},
+          year      = {2022},
+          publisher = {EUMETSAT OSI SAF},
+          doi       = {10.15770/EUM_SAF_OSI_0012}
+        }
+    - label: C3S CDS copy of OSI-455 (the CDS page gives only the DOI)
+      text: >-
+        Copernicus Climate Change Service (C3S) Climate Data Store (CDS): Sea ice drift daily gridded data derived from satellite observations
+        (version 1.0, OSI SAF OSI-455). DOI: 10.24381/8e7af13d. Accessed on DD-MMM-YYYY.
+      doi: 10.24381/8e7af13d
+  papers:
+    - label: OSI-455 climate data record paper
+      text: >-
+        Lavergne, T. and Down, E. (2023): A climate data record of year-round global sea-ice drift from the EUMETSAT Ocean and Sea Ice Satellite
+        Application Facility (OSI SAF). Earth System Science Data, 15, 5807–5834.
+      doi: 10.5194/essd-15-5807-2023
+      bibtex: |
+        @article{lavergne2023drift,
+          author  = {Lavergne, Thomas and Down, Emily},
+          title   = {A climate data record of year-round global sea-ice drift from the {EUMETSAT} {Ocean and Sea Ice Satellite Application Facility} ({OSI SAF})},
+          journal = {Earth System Science Data},
+          volume  = {15},
+          number  = {12},
+          pages   = {5807--5834},
+          year    = {2023},
+          doi     = {10.5194/essd-15-5807-2023}
+        }
+    - label: CMCC motion-tracking method paper
+      text: >-
+        Lavergne, T., Eastwood, S., Teffah, Z., Schyberg, H., and Breivik, L.-A. (2010): Sea ice motion from low-resolution satellite sensors:
+        An alternative method and its validation in the Arctic. Journal of Geophysical Research, 115, C10032.
+      doi: 10.1029/2009JC005958
+      bibtex: |
+        @article{lavergne2010cmcc,
+          author  = {Lavergne, T. and Eastwood, S. and Teffah, Z. and Schyberg, H. and Breivik, L.-A.},
+          title   = {Sea ice motion from low-resolution satellite sensors: An alternative method and its validation in the {Arctic}},
+          journal = {Journal of Geophysical Research: Oceans},
+          volume  = {115},
+          number  = {C10},
+          pages   = {C10032},
+          year    = {2010},
+          doi     = {10.1029/2009JC005958}
+        }
+  acknowledgement: >-
+    Under CC BY 4.0 you must include attribution to "EUMETSAT OSI SAF" and give the DOI of each product used (OSI-405-d, OSI-455).
+    The demonstrational ICDR OSI-435 has no DOI or recommended citation as of October 2026; cite the product ID, FTP path and download date instead.
+
+notices:
+  - date: "2026-08-31"
+    level: warning
+    title: "Operational release of AMSR3-based sea-ice products on 1st September 2026 (service message #3571)"
+    body: >-
+      From 1 September 2026 AMSR3 is the main satellite input for OSI SAF sea-ice products, including the L3 sea-ice drift OSI-405-d. Products stay at the
+      same FTP and THREDDS locations as the AMSR2-based ones and NRT files remain on EUMETCast; product ID and file names are unchanged.
+      Record that the input sensor differs before and after September 2026.
+    source: https://osi-saf.eumetsat.int/community/list-of-service-messages/operational-release-amsr3-based-sea-ice-products-1st-september
+  - date: "2026-08-18"
+    level: info
+    title: "Planned AMSR2 outage (JAXA G-Portal maintenance) halts sea-ice products for three days (service messages #3564, #3568)"
+    body: >-
+      A planned outage of AMSR2 data interrupted the AMSR2-based products, OSI-405-d among them, from 18 August 2026; the outage ended at 02:00 UTC on 21 August.
+      Production resumed in stages, with OSI-405-d last because it needs input data two days apart.
+    source: https://osi-saf.eumetsat.int/community/list-of-service-messages/resuming-production-osi-saf-sea-ice-products-based-amsr2
+  - date: "2026-06-01"
+    level: info
+    title: Interim Climate Data Record OSI-435 (2021–2025) released as a demonstrational product
+    body: >-
+      The Global Low Resolution Sea-Ice Drift Interim Climate Data Record (OSI-435), which extends OSI-455, has been on the FTP server (reprocessed_test) and THREDDS
+      since 1 June 2026. It uses SSMIS and AMSR2 with ERA5T winds (ECMWF operational forecasts as backup). No DOI or operational schedule has been announced.
+    source: https://osi-saf.eumetsat.int/products/osi-435-complementing-osi-455
+  - date: "2025-07-17"
+    level: warning
+    title: "DMSP SSMIS no longer used in OSI-405-d (service message #3321)"
+    body: >-
+      With the SSMIS data supply ending, the multi-sensor products OSI-402-d, OSI-403-d and OSI-405-d no longer use SSMIS as input, and AMSR2 is the primary data source.
+    source: https://osi-saf.eumetsat.int/community/stories/implications-end-ssmis-data-osi-saf-products
+  - date: "2025-05-19"
+    level: warning
+    title: "Discontinuation of OSI SAF Medium Resolution Sea Ice Drift on 19 May 2025 (service message #3236)"
+    body: >-
+      User surveys and helpdesk contacts showed no regular use, so dissemination of the Medium Resolution Sea Ice Drift product (OSI-407-a) on EUMETCast and FTP
+      stopped on 19 May 2025 (announced 9 April 2025). OSI SAF recommends the Global Low Resolution Sea Ice Drift product (OSI-405) or the CMEMS high-resolution SAR sea-ice drift product instead.
+    source: https://osi-saf.eumetsat.int/community/list-of-service-messages/discontinuation-osi-saf-medium-resolution-sea-ice-drift-19-may
+  - date: "2025-03-04"
+    level: info
+    title: "New sea ice emissivity and LR sea ice drift products: OSI-405-c → OSI-405-d (service message #3193)"
+    body: >-
+      Distribution switched from OSI-405-c to OSI-405-d on all channels. The drift product moves from NetCDF3 to NetCDF4, switches ASCAT from Metop-B to Metop-C
+      and changes its global attributes; EUMETCast files no longer carry the .gz extension.
+    source: https://osi-saf.eumetsat.int/community/list-of-service-messages/new-sea-ice-emissivity-and-lr-sea-ice-drift-products
+
+links:
+  - name: OSI-405-d Product User Manual (PUM v1.9)
+    url: https://osisaf-hl.met.no/sites/osisaf-hl/files/user_manuals/osisaf_pum_sea-ice-drift-lr_v1p9.pdf
+  - name: OSI-405 Algorithm Theoretical Basis Document (ATBD v1.5)
+    url: https://osisaf-hl.met.no/sites/osisaf-hl/files/baseline_document/osisaf_atbd_sea-ice-drift-lr_v1p5.pdf
+  - name: OSI-405 Scientific Validation Report (SVR v6.0)
+    url: https://osisaf-hl.met.no/sites/osisaf-hl/files/validation_reports/osisaf_valrep_sea-ice-drift-lr_v6p0.pdf
+  - name: OSI-455 Product User Manual (PUM v1.0)
+    url: https://osisaf-hl.met.no/sites/osisaf-hl/files/user_manuals/osisaf_cdop3_ss2_pum_sea-ice-drift-lr-cdr_v1p0.pdf
+  - name: OSI-455 Algorithm Theoretical Basis Document (ATBD v1.0)
+    url: https://osisaf-hl.met.no/sites/osisaf-hl/files/baseline_document/osisaf_cdop3_ss2_atbd_sea-ice-drift-lr-cdr_v1p0.pdf
+  - name: Implications of AMSR2 being replaced by AMSR3 on OSI SAF products
+    url: https://osi-saf.eumetsat.int/community/stories/implications-amsr2-being-replaced-amsr3-osi-saf-products
+  - name: Learn OSI SAF sea ice — training notebooks (EUMETSAT)
+    url: https://gitlab.eumetsat.int/eumetlab/oceans/ocean-training/sensors/learn-osi-saf-sea-ice
+
+watch_urls:
+  - https://osi-saf.eumetsat.int/community/list-of-service-messages
+  - https://osi-saf.eumetsat.int/products/osi-405-d
+  - https://osi-saf.eumetsat.int/products/osi-435-complementing-osi-455
+
+last_verified: "2026-10-12"

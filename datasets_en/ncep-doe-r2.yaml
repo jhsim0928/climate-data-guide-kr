@@ -1,0 +1,187 @@
+# ─────────────────────────────────────────────────────────────
+# NCEP–DOE R2 — dataset information file (English edition)
+# ─────────────────────────────────────────────────────────────
+id: ncep-doe-r2
+name: NCEP–DOE R2
+full_name: NCEP/DOE AMIP-II Reanalysis (Reanalysis-2)
+category: reanalysis
+domain: atmosphere
+group: 재분석
+order: 70
+domains: [대기, 육지]
+provider: NOAA National Centers for Environmental Prediction (NCEP) and U.S. Department of Energy (DOE) (distributed by NOAA PSL and NSF NCAR GDEX)
+
+status: delayed
+status_note: >-
+  There has been no official end-of-production notice, but as of 2026-10-11 both PSL and NCAR stop at 18 UTC on 28 February 2026, with no update for more than seven months.
+  The NCEP cdas2 directories that carried the real-time extension of R2 (CDAS2) are among the paths listed for removal in the CDAS-to-CORe upgrade notice effective 9 March 2026 (SCN 26-12),
+  so R2 has most likely ended in practice, as R1 did. If you need recent months, plan to switch to another reanalysis.
+
+period:
+  start: "1979-01"
+  end: "2026-02"
+  note: >-
+    1 January 1979 to 28 February 2026, 18 UTC (PSL 2026 files and NCAR d091000, checked 2026-10-11). The dataset is still labelled "1979–present",
+    but nothing after February 2026 has been added. The NOAA NCEI archive copy stopped ingesting in September 2005 (monthly means in March 2006).
+
+resolution:
+  spatial_short: "278 km (2.5°)"
+  temporal_short: "6시간"
+  spatial: "Model T62 (about 210 km) / pressure levels on a 2.5° × 2.5° grid (144 × 73) / surface and flux fields on the T62 Gaussian grid (192 × 94)"
+  vertical: "28 sigma levels in the model / 17 pressure levels (1000–10 hPa; humidity and vertical velocity also up to 10 hPa)"
+  temporal: 6-hourly (00, 06, 12, 18 UTC); daily and monthly means provided separately by PSL
+update: No updates since March 2026 (previously updated monthly at PSL and NCAR)
+license: "PSL data are freely available with no restrictions (PSL asks to be acknowledged) / the NCAR GDEX copy is licensed under Creative Commons Attribution 4.0 International (CC BY 4.0)"
+account_required: false
+
+summary: >-
+  The NCEP/DOE AMIP-II Reanalysis (Reanalysis-2) is a follow-on to the NCEP/NCAR Reanalysis (R1), rerun from 1979 to fix known R1 processing errors
+  and update the parameterizations of physical processes. It keeps R1's resolution (T62, 28 levels) and observing system, so it was presented as
+  an updated NCEP/NCAR Reanalysis rather than a next-generation reanalysis. Its soil moisture, surface fluxes and water budget are better than R1's,
+  which made it popular for land-surface and hydrological work and for checking results obtained with R1.
+
+time_convention:
+  summary: >-
+    Pressure-level and surface analysis variables (`air`, `hgt`, `mslp`, `pr_wtr`, etc.) are instantaneous values at the time stamp (00, 06, 12, 18 UTC).
+    Precipitation, heat fluxes and radiation in the gaussian_grid directory are 6-hourly means, and because the PSL files define time as the start of the averaging
+    interval (coordinate_defines 'start'), the 00 UTC value is the forecast mean over 00–06 UTC. In the same directory, 2 m temperature and humidity, 10 m wind and soil moisture are 6-hour forecast values, not means.
+  points:
+    - "PSL file attributes: averaged variables carry statistic 'Mean', cell_methods 'time: mean' and avg_period '06:00:00'; instantaneous ones carry statistic 'Individual Obs'."
+    - "Precipitation `prate` is a mean rate (Kg/m^2/s), not an accumulation. Multiply by 21600 for 6-hour precipitation (mm) and by 86400 for a daily total."
+    - "The 2 m and 10 m variables and `soilw` have long_names beginning '6-Hourly Forecast of …'. The PSL files do not say whether the forecast valid time equals the time stamp, so check the original GRIB files (NCAR d091000) if you need exact timing."
+    - "Daily means (ncep.reanalysis2.dailyavgs) average the four values of each day; monthly means (ncep.reanalysis2.derived) average the month."
+  source: https://psl.noaa.gov/thredds/dodsC/Datasets/ncep.reanalysis2/gaussian_grid/prate.sfc.gauss.2025.nc.das
+  source_name: "NOAA PSL R2 netCDF file attributes (prate.sfc.gauss: statistic Mean, cell_methods time: mean, coordinate_defines start)"
+
+variables:
+  note: >-
+    Main variables from the NOAA PSL netCDF files (OPeNDAP attributes). Names are the variable names inside the files; the PSL directory and file-name pattern are given in brackets.
+    Names resemble R1, but the directory (gaussian_grid) and some file names (mslp) differ.
+  full_list: https://psl.noaa.gov/data/gridded/data.ncep.reanalysis2.html
+  groups:
+    - name: Pressure levels (pressure/, 2.5°, 17 levels)
+      kind: instant
+      items:
+        - "Air temperature — `air` (degK)"
+        - "Geopotential height — `hgt` (m)"
+        - "Zonal and meridional wind — `uwnd`, `vwnd` (m/s)"
+        - "Omega (vertical velocity in pressure coordinates) — `omega` (Pascal/s)"
+        - "Relative humidity — `rhum` (%)"
+    - name: Surface and entire atmosphere (surface/, 2.5°)
+      kind: instant
+      items:
+        - "Mean sea level pressure — `mslp` (Pascals)"
+        - "Surface pressure — `pres` (Pascals, file pres.sfc)"
+        - "Precipitable water for entire atmosphere — `pr_wtr` (kg/m^2, file pr_wtr.eatm)"
+    - name: Near-surface and fluxes (gaussian_grid/, T62 Gaussian, 6-hourly forecasts and means)
+      kind: mean
+      period: 6-hour
+      items:
+        - text: "Air temperature at 2 m — `air` (degK, file air.2m.gauss)"
+          kind: instant
+          note: "6-hour forecast value (long_name '6-Hourly Forecast of Air temperature at 2 m'). The PSL attribute statistic is 'Mean', but there is no cell_methods or avg_period, so it is classed here as an instantaneous forecast value."
+        - text: "Specific humidity at 2 m — `shum` (kg/kg, file shum.2m.gauss)"
+          kind: instant
+          note: "6-hour forecast value (statistic 'Individual Obs')"
+        - text: "Zonal wind at 10 m — `uwnd` (m/s, file uwnd.10m.gauss)"
+          kind: instant
+          note: "6-hour forecast value (statistic 'Individual Obs')"
+        - "Precipitation rate at surface (6-hourly mean) — `prate` (Kg/m^2/s)"
+        - "Latent heat net flux — `lhtfl` (W/m^2)"
+        - "Sensible heat net flux — `shtfl` (W/m^2)"
+        - text: "Volumetric soil moisture between 0–10 cm below ground level — `soilw` (fraction, file soilw.0-10cm.gauss)"
+          kind: instant
+          note: "6-hour forecast value (statistic 'Individual Obs'). The file also carries cell_methods 'time: mean', so its attributes are inconsistent."
+        - "Upward longwave radiation flux at the nominal top of atmosphere (OLR) — `ulwrf` (W/m^2, file ulwrf.ntat.gauss)"
+
+access:
+  - name: NOAA PSL — NCEP-DOE Reanalysis 2 dataset page
+    url: https://psl.noaa.gov/data/gridded/data.ncep.reanalysis2.html
+    method: Variable list, plotting and subsetting
+    note: No account needed. Files are netCDF, one per variable per year.
+  - name: NOAA PSL download server (6-hourly data)
+    url: https://downloads.psl.noaa.gov/Datasets/ncep.reanalysis2/
+    method: Direct HTTPS download
+    note: Directories pressure/, surface/, gaussian_grid/ and spectral/. Daily means are in ncep.reanalysis2.dailyavgs/ and monthly means in ncep.reanalysis2.derived/.
+  - name: NOAA PSL THREDDS / OPeNDAP (pressure levels shown)
+    url: https://psl.noaa.gov/thredds/catalog/Datasets/ncep.reanalysis2/pressure/catalog.html
+    method: Remote access via OPeNDAP
+  - name: NSF NCAR GDEX — NCEP/DOE Reanalysis 2 (d091000)
+    url: https://gdex.ucar.edu/datasets/d091000/
+    method: Web download / subsetting
+    note: WMO GRIB1 in monthly bundles, CC BY 4.0. Dataset DOI 10.5065/KVQZ-YJ93. GDEX labels it a historical dataset "recommended for ancillary use only and not as a primary research dataset".
+  - name: CPC Reanalysis-2 home page (error notices and real-time information)
+    url: https://www.cpc.ncep.noaa.gov/products/wesley/reanalysis2/
+    method: Information page
+    note: The page is long out of date (it still says R2 "is running in near real time") and does not reflect the current status.
+
+example:
+  lang: python
+  note: The PSL OPeNDAP URLs open directly in xarray. Note that sea-level pressure is `mslp`, not `slp` as in R1.
+  code: |
+    import xarray as xr
+
+    base = "https://psl.noaa.gov/thredds/dodsC/Datasets/ncep.reanalysis2"
+    mslp = xr.open_dataset(f"{base}/surface/mslp.2025.nc")["mslp"]       # Pa
+    t2m = xr.open_dataset(f"{base}/gaussian_grid/air.2m.gauss.2025.nc")["air"]  # degK, Gaussian grid
+    print(mslp.mean("time"), t2m.mean("time"))
+
+tips:
+  - The R2 developers advised treating it as an updated R1 to use alongside it, not as a next-generation replacement. Higher resolution, direct radiance assimilation and proper use of SSM/I data were never added.
+  - "A CPC notice explains that \"Version C\" cloud temperatures were set to zero rather than undefined in cloud-free regions, biasing monthly-mean cloud temperatures and cloud top and base pressures low (total cloud cover `tcdc` is unaffected). Check the notice before using any cloud field."
+  - The NCAR Climate Data Guide still classes R2 as a first-generation reanalysis and lists low moisture variability over the oceans and a poor Southern Hemisphere among its limitations.
+  - There are no data after February 2026, so scripts that fetch "the latest month" may simply stop without raising an error. Check the last time step you actually received.
+
+citations:
+  dataset:
+    - label: NCAR GDEX copy (d091000)
+      text: >-
+        NCEP/DOE Reanalysis 2 (R2). NSF NCAR Geoscience Data Exchange (GDEX), dataset d091000.
+        https://doi.org/10.5065/KVQZ-YJ93 (Accessed DD MMM YYYY)
+      doi: 10.5065/KVQZ-YJ93
+  papers:
+    - label: R2 reference paper
+      text: >-
+        Kanamitsu, M., Ebisuzaki, W., Woollen, J., Yang, S.-K., Hnilo, J. J., Fiorino, M., Potter, G. L. (2002):
+        NCEP–DOE AMIP-II Reanalysis (R-2). Bulletin of the American Meteorological Society, 83(11), 1631–1643.
+      doi: 10.1175/BAMS-83-11-1631
+      bibtex: |
+        @article{kanamitsu2002r2,
+          author  = {Kanamitsu, Masao and Ebisuzaki, Wesley and Woollen, Jack and Yang, Shi-Keng and Hnilo, J. J. and Fiorino, M. and Potter, G. L.},
+          title   = {{NCEP--DOE} {AMIP-II} Reanalysis ({R-2})},
+          journal = {Bulletin of the American Meteorological Society},
+          volume  = {83},
+          number  = {11},
+          pages   = {1631--1643},
+          year    = {2002},
+          doi     = {10.1175/BAMS-83-11-1631}
+        }
+  acknowledgement: >-
+    If you obtained the data from PSL, include the acknowledgement PSL requests ("data provided by the NOAA PSL, Boulder, Colorado, USA, from their website at https://psl.noaa.gov")
+    and cite Kanamitsu et al. (2002). If you used the NCAR copy, also give the GDEX DOI (10.5065/KVQZ-YJ93).
+
+notices:
+  - date: "2026-02-09"
+    level: warning
+    title: "NWS SCN 26-12 — Upgrading CDAS to CORe effective March 9, 2026; CDAS data files, including the cdas2 paths, no longer available"
+    body: >-
+      The notice states that "the data files for CDAS will no longer be available as of March 9, 2026", listing the NOMADS and FTP /com/cdas2/ directories.
+      It does not mention R2 by name, but the R2 data at PSL and NCAR stop just before then, on 28 February 2026 (checked 2026-10-11).
+    source: https://www.weather.gov/media/notification/pdf_2026/scn26-12_Updated_CDAS_COReUpdate_aaa.pdf
+
+links:
+  - name: CPC — Overview of NCEP/DOE Reanalysis-2
+    url: https://www.cpc.ncep.noaa.gov/products/tools/reanalysis2/kana/Overview.htm
+  - name: NOAA NCEI — Reanalysis-1 / Reanalysis-2
+    url: https://www.ncei.noaa.gov/products/weather-climate-models/reanalysis-1-2
+  - name: NCAR Climate Data Guide — NCEP Reanalysis (R2)
+    url: https://climatedataguide.ucar.edu/climate-data/ncep-reanalysis-r2
+  - name: PSL Data Notices
+    url: https://psl.noaa.gov/data/notices/
+
+watch_urls:
+  - https://psl.noaa.gov/data/notices/
+  - https://downloads.psl.noaa.gov/Datasets/ncep.reanalysis2/
+  - https://gdex.ucar.edu/datasets/d091000/
+
+last_verified: "2026-10-11"

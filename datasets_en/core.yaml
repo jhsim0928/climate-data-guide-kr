@@ -1,0 +1,302 @@
+# ─────────────────────────────────────────────────────────────
+# CORe — dataset information file (English edition)
+# ─────────────────────────────────────────────────────────────
+id: core
+name: CORe
+full_name: NOAA Conventional Observation Reanalysis (CORe)
+category: reanalysis
+domain: atmosphere
+group: 재분석
+order: 85
+domains: [대기, 육지]
+provider: NOAA NCEP Climate Prediction Center (CPC), developed with EMC and PSL; distributed via NCEP NOMADS, NOAA NODD (Google Cloud) and NSF NCAR GDEX
+
+status: active
+status_note: >-
+  CPC reports that CORe was implemented at NCEP on March 19, 2026, replacing CDAS, the real-time extension of the NCEP/NCAR Reanalysis.
+  The NOAA NODD cloud archive holds ensemble means from 1950 to near real time and is updated daily with a latency of a little over one day (on 2026-10-12 the latest file was 2026-10-10 12 UTC);
+  NOMADS keeps the last 7 days, including the ensemble members. A copy is also served by NCAR GDEX (d090004).
+
+period:
+  start: "1950-01"
+  end: present
+  note: >-
+    Starts at 00 UTC on 1 January 1950 (R1 and CDAS start in 1948). As of April 1, 2026, CPC reports that NODD holds 1950 through 2025,
+    with operational output appended since then. NOMADS keeps only the last 7 days, so get the historical record from NODD or GDEX.
+
+resolution:
+  spatial_short: "78 km (0.7°)"
+  temporal_short: "3시간"
+  spatial: "Model: FV3GFS (UFS) on a C128 cubed-sphere grid (\"about 0.7 degree\", CPC) / Analysis and output grid: 512 × 256 Gaussian grid for both flx and pgb files (GDEX: 0.703° × ~0.702°)"
+  vertical: "64 model layers (hybrid pressure-sigma) / pgb: 22 pressure levels (1000–1 hPa), vertical velocity `VVEL` on 14 levels (1000–100 hPa) / flx: 4 soil layers (0–2 m)"
+  temporal: "3-hourly (analyses valid at 00, 03, …, 21 UTC from a 6-hourly assimilation cycle); daily and monthly means on NODD and GDEX"
+
+update: Daily (operational), about 1 day behind real time (CPC lists "1.x day" for NOMADS and "1.x+ day" for NODD)
+license: NOAA public data, free via NOMADS and NODD (no separate licence statement on CPC or NCEP pages) / the NCAR GDEX copy is under Creative Commons Attribution 4.0 International (CC BY 4.0)
+account_required: false
+
+summary: >-
+  CORe is an atmospheric reanalysis from the NOAA Climate Prediction Center (CPC) covering 1950 to the present, built for climate monitoring. It replaced CDAS, the real-time extension of the NCEP/NCAR Reanalysis, in March 2026.
+  It is not a rerun of R1 but a new reanalysis: a UFS-based FV3GFS model (C128, 64 layers) with an 80-member Ensemble Kalman Filter (EnKF).
+  Unlike most modern reanalyses it assimilates no satellite data except Atmospheric Motion Vectors (AMV); the design emphasises consistent climate trends and anomalies over the best state for a forecast.
+  Output is 3-hourly GRIB2, and the primary product is the mean of the 80 ensemble analyses.
+
+time_convention:
+  summary: >-
+    The file time (YYYYMMDDHH, every 3 hours) is the CORe analysis time. Pressure-level fields in pgb files and state variables in flx files (temperature, wind, snow, etc.) are valid at that time.
+    Per the GDEX file metadata, the 3-hour average, accumulation, maximum and minimum fields in flx files cover the 3 hours starting at the file time (e.g. flx.2026041300 = 00–03 UTC).
+    Precipitation `PRATE` is a 3-hour mean rate (kg m-2 s-1), not an accumulation.
+  points:
+    - "The assimilation cycle is 6-hourly (00, 06, 12 and 18 UTC, with observations from ±3 h around the cycle time). Each cycle's forecast is first nudged toward the observations by an incremental update and then runs unforced; CPC uses the unforced part (fhr03 and fhr06) as the CORe analyses. That is why GRIB headers may label an analysis as a forecast — the \"6hr fcst\" is really the analysis valid at the verification time."
+    - "On NOMADS, files sit in cycle directories (core.YYYYMMDD/HH) as core.tRRz files, where RR (HH+03 or HH+06) is the analysis time. NODD and GDEX file names use the analysis time directly."
+    - "The start/end convention of averaging periods was taken from the time bounds in the NCAR GDEX THREDDS metadata (0–3 h, reftime = file time); CPC documents do not state it. If timing matters, check the wgrib2 inventory (-v) yourself."
+    - "Multiply `PRATE` by 10800 for 3-hour precipitation in mm, or by 86400 for mm/day."
+    - "NODD and GDEX daily means average the eight 3-hourly analyses of the day (GRIB: \"8@3 hour ave(anl)\"); monthly means average all 3-hourly analyses of the month (248 for a 31-day month)."
+    - "Because the analysis is the mean of 80 members, extremes such as peak winds are weaker than in any single member."
+  source: https://www.cpc.ncep.noaa.gov/products/CORe/pns/eval/eval_datasets.html
+  source_name: "CPC CORe dataset description (timing) + get_core.txt (daily/monthly means) + NCAR GDEX d090004 THREDDS metadata (time bounds)"
+
+variables:
+  note: >-
+    Main fields from the NCAR GDEX (d090004) THREDDS metadata and CPC documentation. Names are the GRIB2 abbreviations shown by wgrib2 inventories and .idx files;
+    xarray (cfgrib) renames them to ecCodes short names (e.g. `t`, `gh`). All fields are means of the 80 ensemble members (member files are on NOMADS only).
+    There is no `PRMSL` as in CDAS (R1): mean sea level pressure is `PRES` at mean sea level. Relative vorticity and divergence (RELV, RELD) must be computed from the winds.
+  full_list: https://gdex.ucar.edu/datasets/d090004/
+  groups:
+    - name: Pressure-level analyses (pgb, 512 × 256 Gaussian, 22 levels)
+      kind: instant
+      period: "3-hourly"
+      items:
+        - "Temperature — `TMP` (K)"
+        - "Geopotential height — `HGT` (gpm)"
+        - "U- and V-component of wind — `UGRD`, `VGRD` (m s-1)"
+        - "Relative humidity — `RH` (%)"
+        - "Specific humidity — `SPFH` (kg kg-1)"
+        - "Vertical velocity (pressure), 14 levels 1000–100 hPa — `VVEL` (Pa s-1)"
+        - "Absolute vorticity — `ABSV` (s-1)"
+        - "Stream function and velocity potential — `STRM`, `VPOT` (m2 s-1)"
+        - "Ozone mixing ratio — `O3MR` (kg kg-1)"
+    - name: Sea level pressure (pgb)
+      kind: instant
+      period: "3-hourly"
+      items:
+        - "Pressure at mean sea level — `PRES` (mean sea level, Pa)"
+        - "MSLP (Eta model reduction) — `MSLET` (Pa)"
+    - name: Surface and near-surface state (flx)
+      kind: instant
+      period: "3-hourly"
+      items:
+        - "2 m temperature — `TMP` (2 m above ground, K)"
+        - "2 m specific humidity — `SPFH` (2 m above ground, kg kg-1)"
+        - "10 m U- and V-component of wind — `UGRD`, `VGRD` (10 m above ground, m s-1)"
+        - "Surface pressure — `PRES` (surface, Pa)"
+        - "Surface temperature — `TMP` (surface, K)"
+        - "Precipitable water (entire atmosphere) — `PWAT` (kg m-2)"
+        - "Snow depth — `SNOD` (m)"
+        - "Water equivalent of accumulated snow depth — `WEASD` (kg m-2)"
+        - "Ice cover — `ICEC` (proportion)"
+    - name: Precipitation, fluxes and clouds — 3-hour averages (flx)
+      kind: mean
+      period: 3 hours
+      items:
+        - text: "Precipitation rate — `PRATE` (kg m-2 s-1)"
+          note: "GDEX metadata: \"Precipitation rate (3_Hour Average)\", averaged over the 3 hours from the file time"
+        - "Convective precipitation rate — `CPRAT` (kg m-2 s-1)"
+        - "Latent and sensible heat net flux — `LHTFL`, `SHTFL` (W m-2)"
+        - "Ground heat flux — `GFLUX` (W m-2)"
+        - "Downward short-wave and long-wave radiation flux (surface) — `DSWRF`, `DLWRF` (W m-2)"
+        - "Upward short-wave and long-wave radiation flux (surface and top of atmosphere) — `USWRF`, `ULWRF` (W m-2)"
+        - "Downward short-wave radiation flux at the top of the atmosphere — `DSWRF` (nominal top, W m-2)"
+        - "Momentum flux, U- and V-component — `UFLX`, `VFLX` (N m-2)"
+        - "Total, high, middle, low and boundary-layer cloud cover — `TCDC` (%)"
+    - name: 2 m maxima and minima — 3-hour window (flx)
+      kind: max
+      period: 3 hours
+      items:
+        - text: "2 m maximum temperature — `TMP` (3-hour maximum, K)"
+          note: "Stored as `TMP` with a maximum statistical process, not as `TMAX` as in CDAS"
+        - text: "2 m minimum temperature — `TMP` (3-hour minimum, K)"
+          kind: min
+        - "2 m maximum specific humidity — `SPFH` (3-hour maximum, kg kg-1)"
+        - text: "2 m minimum specific humidity — `SPFH` (3-hour minimum, kg kg-1)"
+          kind: min
+    - name: Runoff and sunshine — 3-hour accumulations (flx)
+      kind: accum
+      period: 3 hours
+      items:
+        - "Storm surface runoff — `SSRUN` (kg m-2)"
+        - "Sunshine duration — `SUNSD` (s)"
+    - name: Fixed surface fields (flx)
+      kind: static
+      items:
+        - "Land cover (0 = sea, 1 = land) — `LAND`"
+        - "Soil type, vegetation type and surface slope type — `SOTYP`, `VGTYP`, `SLTYP` (code)"
+
+access:
+  - name: NOAA NODD — Google Cloud bucket noaa-nws-ncep-core
+    url: https://storage.googleapis.com/noaa-nws-ncep-core/
+    method: Direct HTTPS download / Google Cloud (gsutil) / get_core.py
+    note: >-
+      Full record from 1950 to near real time. Ensemble means only (no members or statistics), as 3-hourly, daily and monthly GRIB2 under grib/3hour|day|month/flx|pgb/,
+      with simplified, unique names such as flx.YYYYMMDDHH.grb, pgb.YYYYMMDD.grb and pgb.YYYYMM.grb. Each file has an .idx inventory, so single fields can be fetched by byte range.
+      The NOAA NODD listing shows Google Cloud only; there is no AWS or Azure copy.
+  - name: NCEP NOMADS — operational CORe output
+    url: https://nomads.ncep.noaa.gov/pub/data/nccf/com/core/
+    method: Direct HTTPS download
+    note: >-
+      Last 7 days only. Cycle directories (core.YYYYMMDD/HH/post/) contain flx (members 001–080 and ensemble mean), flx_stats (ensemble statistics),
+      nceppost (pgb ensemble mean), and spost / spost_stats (reduced pressure-level files per member, mean and statistics). This is the only place to get ensemble members.
+  - name: NSF NCAR GDEX — NOAA CORe (d090004)
+    url: https://gdex.ucar.edu/datasets/d090004/
+    method: Web download / THREDDS (OPeNDAP) / subsetting and format conversion / Globus
+    note: >-
+      3-hourly, daily and monthly flx (2D) and pgb (3D pressure-level) ensemble means in GRIB2, CC BY 4.0, updated daily. On 2026-10-12 the THREDDS catalogue
+      showed no folders for 2003–2025, so use NODD if you need the full record.
+  - name: CPC download script get_core.py
+    url: https://ftp.cpc.ncep.noaa.gov/CORe/get_core/get_core.py
+    method: Python script (downloads from NODD by date range and field regex)
+    note: Usage is documented at https://ftp.cpc.ncep.noaa.gov/CORe/get_core/get_core.txt. Example — get_core.py flx 195001 12 1 PRATE .
+
+example:
+  lang: python
+  note: >-
+    Downloads one 3-hourly pgb file from NODD and reads 500 hPa temperature with xarray (cfgrib). Fields have different numbers of levels (`VVEL` has 14),
+    so opening everything at once fails; filter by shortName.
+  code: |
+    import urllib.request
+    import xarray as xr
+
+    url = ("https://storage.googleapis.com/noaa-nws-ncep-core/"
+           "grib/3hour/pgb/2025/01/pgb.2025011512.grb")
+    urllib.request.urlretrieve(url, "pgb.2025011512.grb")
+
+    ds = xr.open_dataset(
+        "pgb.2025011512.grb", engine="cfgrib",
+        backend_kwargs={"filter_by_keys": {"typeOfLevel": "isobaricInhPa", "shortName": "t"},
+                        "indexpath": ""},
+    )
+    t500 = ds["t"].sel(isobaricInhPa=500)   # K, 512x256 Gaussian grid
+    print(t500)
+
+tips:
+  - "CORe is not an improved R1. The model (T62 28-level MRF → C128 64-layer FV3GFS), assimilation (3D-Var → 80-member EnKF), observations (no satellite temperature retrievals), boundary conditions (newer SST, sea-ice and snow analyses) and grid (2.5° → 512 × 256 Gaussian) all differ. Do not join R1 or CDAS and CORe into one series; compute anomalies against each dataset's own climatology."
+  - "The standard product is the ensemble mean, so peak winds in intense systems such as tropical cyclones are damped by the analysis spread. For cyclone tracking CPC suggests running the tracker on each of the 80 analyses and averaging the results. Member files exist only in the 7-day NOMADS window."
+  - "Files are GRIB2 (wgrib2 recommended). CDAS GRIB1 scripts will not work as-is, and names change, e.g. `PRMSL` → `PRES` (mean sea level) and `TMAX`/`TMIN` → `TMP` (3-hour max/min). Select records by field and level, not by record number: CPC warns that flx files will gain 11 GRIB messages, and be renumbered, once the real-time fix is in."
+  - "To regrid, follow CPC's wgrib2 guide: -new_grid with budget interpolation for precipitation (PRATE, CPRAT), nearest neighbour for soil, vegetation and slope types, and bilinear for everything else. CORe assumes a spherical Earth of radius 6371.229 km."
+  - "Using only satellite AMVs reduces artificial jumps at the start of the satellite era, but CORe is not fully free of satellite data. CPC's evaluation notes that no global snow analysis exists before 1979, so a simple correction was applied to the model snow."
+  - "CPC's evaluation notes that absolute shortwave and longwave fluxes depend heavily on clouds and are hard to get right, so use them mainly as anomalies; it also reports a zonally varying artefact in the computed top-of-atmosphere downward shortwave (DSWRFtoa)."
+  - "CPC has offered non-operational, evaluation-only \"CDAS look-alike\" files mimicking the R1 format (2.5° pressure levels, 192 × 94 flux grid, 6-hourly, GRIB1) on its FTP (CDAS_clone_temporary). We could not confirm whether they are still updated; use the official GRIB2 archive for research."
+
+citations:
+  dataset:
+    - label: NCAR GDEX copy (d090004)
+      text: >-
+        National Oceanic & Atmospheric Administration (2026). NOAA - Conventional Observation Reanalysis (CORe).
+        NSF National Center for Atmospheric Research. https://gdex.ucar.edu/datasets/d090004 (Accessed DD Month YYYY)
+      bibtex: |
+        @misc{core_d090004,
+          author    = {{National Oceanic \& Atmospheric Administration}},
+          title     = {{NOAA} - Conventional Observation Reanalysis ({CORe})},
+          year      = {2026},
+          publisher = {NSF National Center for Atmospheric Research},
+          url       = {https://gdex.ucar.edu/datasets/d090004},
+          note      = {Accessed DD Month YYYY}
+        }
+  papers:
+    - label: Early CORe design (workshop digest; no journal paper found yet)
+      text: >-
+        Ebisuzaki, W., A. Kumar, J. Whitaker, J. Woollen, H.-C. Lee, and L. Zhang (2017): A preliminary examination of a
+        conventional EnKF atmospheric reanalysis. Climate Prediction S&T Digest (41st NOAA Climate Diagnostics and Prediction Workshop), 148–151.
+      doi: 10.7289/V5JS9NH0
+      bibtex: |
+        @inproceedings{ebisuzaki2017core,
+          author    = {Ebisuzaki, W. and Kumar, A. and Whitaker, J. and Woollen, J. and Lee, H.-C. and Zhang, L.},
+          title     = {A preliminary examination of a conventional {EnKF} atmospheric reanalysis},
+          booktitle = {Climate Prediction S\&T Digest, 41st NOAA Climate Diagnostics and Prediction Workshop},
+          pages     = {148--151},
+          year      = {2017},
+          doi       = {10.7289/V5JS9NH0}
+        }
+    - label: Initial CORe assessment (same digest)
+      text: >-
+        Zhang, L., A. Kumar, J. Whitaker, J. Woollen, W. Ebisuzaki, and H.-C. Lee (2017): Initial assessment of the
+        conventional observation reanalysis. Climate Prediction S&T Digest (41st NOAA Climate Diagnostics and Prediction Workshop), 152–154.
+      doi: 10.7289/V5JS9NH0
+  acknowledgement: >-
+    CPC and NCEP give no official citation. State that you used the NOAA NCEP/CPC CORe reanalysis, where you obtained it (NODD, NOMADS or GDEX) and the access date;
+    if you used the GDEX copy, add the dataset citation above (the UCAR data catalog lists the dataset DOI as "Not Assigned").
+    The DOI above belongs to the whole 41st CDPW digest (Climate Prediction S&T Digest, 2017), not to the individual papers.
+
+notices:
+  - date: "2026-04-01"
+    level: info
+    title: NODD now holds 1950–2025
+    body: >-
+      CPC reports that, as of April 1, 2026, the NOAA NODD archive (Google Cloud) has data from 1950 through 2025 (3-hourly, daily means and monthly means).
+      Newer data are added in near real time with about a 1-day latency.
+    source: https://www.cpc.ncep.noaa.gov/products/CORe/index.html
+  - date: "2026-03-19"
+    level: info
+    title: CORe implemented at NCEP, replacing CDAS
+    body: >-
+      The CPC CORe page states that CORe was implemented on March 19, 2026 (a PSL notice gives NCEP's switchover as March 18).
+      The NCEP Director approved running CDAS for one more year for internal conversion, with public CDAS distribution ending 30 days after CORe became operational.
+      PSL is not involved in CORe production and has no plans to distribute it.
+    source: https://www.cpc.ncep.noaa.gov/products/CORe/index.html
+  - date: "2026-03-13"
+    level: info
+    title: NOAA CORe (d090004) published at NCAR GDEX
+    body: Published 2026-03-13 according to the UCAR data catalog, under CC BY 4.0; the dataset DOI is listed as not assigned.
+    source: https://data.ucar.edu/dataset/noaa-conventional-observation-reanalysis-core
+  - date: "2026-03-09"
+    level: warning
+    title: "SCN 26-12 Updated: CDAS upgraded to CORe — cdas and cdas2 directories removed from NOMADS and FTP"
+    body: >-
+      Under Service Change Notice 26-12 (issued February 9, updated February 13, 2026), CDAS data files are no longer available as of March 9, 2026,
+      including the cdas/ and cdas2/ paths on NOMADS and FTP and the tgftp CDAS path. CORe files are on NOMADS under /com/core/.
+    source: https://www.weather.gov/media/notification/pdf_2026/scn26-12_Updated_CDAS_COReUpdate_aaa.pdf
+  - date: "2026-03-09"
+    level: warning
+    title: GRIB1 replaced by GRIB2; new file names and directory structure
+    body: >-
+      CDAS GRIB version 1 files are replaced by CORe GRIB version 2 files under core.YYYYMMDD/HH/post/ (flx, flx_stats, nceppost, spost, spost_stats),
+      named per member (e.g. core.tRRz.flx.memMMM.grib2, MMM = 001–080), ensemble mean (ensmean) and ensemble statistics (ensstats). Existing CDAS download scripts need updating.
+    source: https://www.weather.gov/media/notification/pdf_2026/scn26-12_Updated_CDAS_COReUpdate_aaa.pdf
+  - date: "2025-09-05"
+    level: warning
+    title: Cloud top/bottom fields removed from NODD flx files; record numbers will change
+    body: >-
+      Interpolation of cloud top and bottom TMP and PRES from the model grid to the Gaussian grid had a problem, so these fields were removed from the flx files uploaded to NODD.
+      CPC notes that once NODD is updated in real time the fixed fields will be included, adding 11 GRIB messages to the flx files and changing the field numbering.
+    source: https://ftp.cpc.ncep.noaa.gov/CORe/get_core/get_core.txt
+
+links:
+  - name: CPC — CORe home page
+    url: https://www.cpc.ncep.noaa.gov/products/CORe/index.html
+  - name: CPC — CORe archives (NOMADS vs NODD)
+    url: https://www.cpc.ncep.noaa.gov/products/CORe/archive.html
+  - name: CPC — CORe datasets (CORe vs CDAS, timing conventions)
+    url: https://www.cpc.ncep.noaa.gov/products/CORe/pns/eval/eval_datasets.html
+  - name: CPC — CORe evaluation materials
+    url: https://www.cpc.ncep.noaa.gov/products/CORe/pns/eval/index.html
+  - name: CORe configuration (44th CDPW, Ebisuzaki)
+    url: https://www.cpc.ncep.noaa.gov/products/CORe/pns/eval/44cdpw-WEbisuzaki.pdf
+  - name: CORe overview talk (9th NOAA Ensemble Users Workshop, 2023)
+    url: https://www.cpc.ncep.noaa.gov/products/CORe/pns/eval/large_fv3gfs_ensemble_reanalysis_v1.pptx.pdf
+  - name: PSL — About NOAA CORe Reanalysis
+    url: https://psl.noaa.gov/data/coreinfo.html
+  - name: NWS SCN 26-12 Updated (CDAS → CORe)
+    url: https://www.weather.gov/media/notification/pdf_2026/scn26-12_Updated_CDAS_COReUpdate_aaa.pdf
+  - name: CPC — Regridding CORe files (wgrib2)
+    url: https://www.cpc.ncep.noaa.gov/products/CORe/regridding.html
+  - name: CPC — Making CORe time averages
+    url: https://www.cpc.ncep.noaa.gov/products/CORe/time_ave.html
+
+watch_urls:
+  - https://www.cpc.ncep.noaa.gov/products/CORe/index.html
+  - https://www.cpc.ncep.noaa.gov/products/CORe/archive.html
+  - https://psl.noaa.gov/data/coreinfo.html
+  - https://www.weather.gov/notification/
+  - https://gdex.ucar.edu/news/
+
+last_verified: "2026-10-12"

@@ -1,0 +1,275 @@
+# ─────────────────────────────────────────────────────────────
+# GISTEMP v4 — dataset information file (English edition)
+# Listed under the Atmosphere tab (temperature datasets). Combines GHCN v4 over land with ERSST v5 over the ocean.
+# After editing, set last_verified to the date you checked the official pages.
+# ─────────────────────────────────────────────────────────────
+id: gistemp
+name: GISTEMP v4
+full_name: GISS Surface Temperature Analysis, version 4
+category: analysis
+domain: atmosphere
+group: 기온 자료
+order: 20
+domains: [대기, 해양]
+provider: NASA Goddard Institute for Space Studies (GISS)
+
+status: active
+status_note: >-
+  Operational, updated around the 10th of every month. As of October 2026 the ocean input is still
+  ERSST v5 (file name gistemp1200_GHCNv4_ERSSTv5), but NOAA has announced that ERSST v5 will be
+  discontinued in favour of ERSST v6, so a change of ocean input is likely. We will update this page
+  when GISS announces it.
+
+period:
+  start: "1880-01"
+  end: present
+  note: >-
+    Under the GISS 2026 release schedule, the September 2026 data were due on 2026-10-09. We could not open
+    the tables (tabledata_v4) during this check, so the latest month has not been confirmed. Each monthly
+    update can also revise earlier months as late reports and corrections arrive.
+
+resolution:
+  spatial_short: "222 km (2°)"
+  temporal_short: "1개월"
+  spatial: >-
+    NetCDF and Zarr files on a regular 2°×2° grid; the basic analysis files (SBBX) are on an equal-area subbox grid.
+    Provided as the Land-Ocean Temperature Index with 1200 km smoothing and as surface air temperature
+    (no ocean data) with 250 km smoothing
+  vertical: Surface only (surface air temperature over land and sea ice blended with sea surface temperature over open ocean)
+  temporal: Monthly mean anomalies (the tables also give seasonal and annual means)
+
+update: Monthly, around the 10th, simultaneously with NOAA/NCEI's monthly Global Analysis release
+license: >-
+  U.S. Government (NASA) data with no licence stated on the site; GISS asks users to credit
+  "NASA's Goddard Institute for Space Studies" (or "NASA GISS/GISTEMP") and to cite the webpage and the latest publication
+account_required: false
+
+summary: >-
+  The GISS Surface Temperature Analysis version 4 (GISTEMP v4) is an estimate of global surface temperature
+  change since 1880. It combines NOAA GHCN v4 meteorological station data over land with ERSST v5 over ocean
+  areas, following Hansen et al. (2010) and Lenssen et al. (2024), and reports anomalies relative to the
+  1951–1980 means. Station anomalies are spread over a 1200 km radius, so sparsely observed regions such as the
+  Arctic are filled. A 200-member observational uncertainty ensemble (1880–2020) is also available.
+
+time_convention:
+  summary: >-
+    Every value is a monthly mean temperature anomaly (°C) relative to the 1951–1980 mean for the same month.
+    These are not instantaneous values; the seasonal and annual values in the tables are means of the monthly values.
+  points:
+    - "From the GISS FAQ: 'normal' always means the average over the 30-year period 1951–1980 for that place and time of year. GISS keeps this fixed base period because a fixed base period yields anomalies that are consistent over time."
+    - "LOTI uses surface air temperature anomalies over land and sea ice, and sea surface temperature anomalies only over ice-free water; SSTs in grid boxes with sea ice (or lakes) are not used."
+    - "Late reports and the way records are combined mean that each monthly update can slightly change earlier months and years."
+    - "The AIRS-based tables use a different base period (2007–2016); do not compare them directly with LOTI values."
+  source: https://data.giss.nasa.gov/gistemp/faq/
+  source_name: GISTEMP FAQ / Data Downloads page
+
+variables:
+  note: >-
+    Products as listed on the official Data Downloads page. We could not open the NetCDF files during this check,
+    so the variable names inside them are not given here (run ncdump -h after downloading).
+  full_list: https://data.giss.nasa.gov/gistemp/data_v4.html
+  groups:
+    - name: Gridded data (regular 2°×2° grid, NetCDF and Zarr)
+      kind: mean
+      period: Monthly
+      items:
+        - "Land-Ocean Temperature Index, ERSSTv5, 1200km smoothing — gistemp1200_GHCNv4_ERSSTv5 (°C)"
+        - "Surface air temperature (no ocean data), 250km smoothing — gistemp250_GHCNv4 (°C)"
+        - text: "Land mask on a 2°×2° grid — landmask.2degx2deg.txt"
+          kind: static
+    - name: Summary tables (L-OTI, plain text and CSV)
+      kind: mean
+      period: Monthly
+      items:
+        - "Global, Northern and Southern Hemisphere means — GLB/NH/SH.Ts+dSST (°C; monthly, seasonal and annual)"
+        - text: "Zonal annual means — ZonAnn.Ts+dSST (°C)"
+          kind: mean
+          period: Annual
+    - name: Observational uncertainty ensemble (Lenssen et al. 2024)
+      kind: mean
+      period: Monthly
+      items:
+        - "200-member gridded anomaly ensemble (2°×2°, 1880–2020) — FullEnsembleZips (°C)"
+        - "Key global, hemispheric and zonal monthly mean series, all 200 members — KeySeries.zip (°C)"
+        - "Gridded summary statistics — GriddedSummary.zip"
+
+access:
+  - name: GISTEMP Data Downloads
+    url: https://data.giss.nasa.gov/gistemp/data_v4.html
+    method: HTTPS (browser / wget / curl)
+    note: >-
+      Summary tables (tabledata_v4/GLB.Ts+dSST.csv etc.), gzip-compressed 2°×2° NetCDF and Zarr v3 (tar.gz) files,
+      the basic SBBX files and Fortran code to read them. Gridded files live under https://data.giss.nasa.gov/pub/gistemp/.
+  - name: Observational uncertainty ensemble v2.0
+    url: https://data.giss.nasa.gov/gistemp/uncertainty/
+    method: HTTPS
+    note: >-
+      The full 200-member ensemble (16 ZIP archives of about 700 MiB each), KeySeries.zip, GriddedSummary.zip and R analysis code.
+      Some downloads ask for the shared user ID and password given on the page. The NetCDF files were updated on 2024-10-01 to fix
+      a minor error in labelling the time dimension.
+  - name: Station data
+    url: https://data.giss.nasa.gov/gistemp/station_data_v4_globe/
+    method: Web tool
+    note: Browse and download raw and adjusted records for individual stations.
+  - name: GISTEMP source code
+    url: https://data.giss.nasa.gov/gistemp/sources_v4/
+    method: HTTPS (tar.gz)
+
+example:
+  lang: python
+  note: >-
+    Downloads the 1200 km LOTI grid and computes an area-weighted global mean. Open the file first and adjust
+    variable and coordinate names if needed (the code below picks the first time-lat-lon variable automatically).
+  code: |
+    import gzip, shutil, urllib.request
+    import numpy as np
+    import xarray as xr
+
+    url = "https://data.giss.nasa.gov/pub/gistemp/gistemp1200_GHCNv4_ERSSTv5.nc.gz"
+    urllib.request.urlretrieve(url, "gistemp1200.nc.gz")
+    with gzip.open("gistemp1200.nc.gz") as fi, open("gistemp1200.nc", "wb") as fo:
+        shutil.copyfileobj(fi, fo)
+
+    ds = xr.open_dataset("gistemp1200.nc")
+    print(ds)                                         # check variable/coordinate names and units
+    name = [v for v in ds.data_vars if ds[v].ndim == 3][0]
+    da = ds[name]                                     # monthly anomalies vs 1951-1980
+    tdim, ydim, xdim = da.dims
+    w = np.cos(np.deg2rad(da[ydim]))
+    glob = da.weighted(w).mean([ydim, xdim])
+    print(glob.isel({tdim: slice(-12, None)}).round(2).to_series())
+
+tips:
+  - Anomalies are relative to 1951–1980, so they look warmer than HadCRUT5 (1961–1990). Rebase to a common period before comparing datasets.
+  - The 1200 km product extends station information far into the Arctic and the Antarctic interior. When interpreting polar results, check them against the 250 km land product and the station coverage.
+  - As of October 2026 the ocean input is ERSST v5. NOAA adopted ERSST v6 in 2026 and has announced the end of v5; if GISTEMP switches its ocean input, values for the whole record may change. Keep an eye on the Updates to Analysis page.
+  - Monthly updates revise past values, so record your download date and archive the files you used (the GISS citation includes an access date).
+  - The uncertainty ensemble (v2.0) covers 1880–2020 only and is not updated monthly. For recent years, use the FAQ's rough figure (about ±0.05°C for annual global means after 1960).
+  - GISS removes faulty station reports as they are found and reports them to NOAA (e.g. three Maliye Karmakuly reports dropped in September 2025). For regional or station-level work, check the Updates to Analysis log.
+
+citations:
+  dataset:
+    - label: GISTEMP dataset (as recommended by GISS)
+      text: >-
+        GISTEMP Team, 2026: GISS Surface Temperature Analysis (GISTEMP), version 4. NASA Goddard Institute for Space Studies.
+        Dataset accessed 20YY-MM-DD at https://data.giss.nasa.gov/gistemp/.
+      bibtex: |
+        @misc{gistemp_v4_dataset,
+          author       = {{GISTEMP Team}},
+          title        = {{GISS} Surface Temperature Analysis ({GISTEMP}), version 4},
+          year         = {2026},
+          publisher    = {NASA Goddard Institute for Space Studies},
+          howpublished = {\url{https://data.giss.nasa.gov/gistemp/}},
+          note         = {Dataset accessed YYYY-MM-DD}
+        }
+  papers:
+    - label: GISTEMP v4 observational uncertainty ensemble (the latest publication GISS asks you to cite)
+      text: >-
+        Lenssen, N., Schmidt, G. A., Hendrickson, M., Jacobs, P., Menne, M. J., Ruedy, R. (2024):
+        A NASA GISTEMPv4 Observational Uncertainty Ensemble. Journal of Geophysical Research: Atmospheres, 129(17), e2023JD040179.
+      doi: 10.1029/2023JD040179
+      bibtex: |
+        @article{lenssen2024gistemp,
+          author  = {Lenssen, Nathan and Schmidt, Gavin A. and Hendrickson, Michael and Jacobs, Peter and Menne, Matthew J. and Ruedy, Reto},
+          title   = {A {NASA} {GISTEMPv4} Observational Uncertainty Ensemble},
+          journal = {Journal of Geophysical Research: Atmospheres},
+          volume  = {129},
+          number  = {17},
+          pages   = {e2023JD040179},
+          year    = {2024},
+          doi     = {10.1029/2023JD040179}
+        }
+    - label: Improvements in the GISTEMP uncertainty model (introduced v4)
+      text: >-
+        Lenssen, N. J. L., Schmidt, G. A., Hansen, J. E., Menne, M. J., Persin, A., Ruedy, R., Zyss, D. (2019):
+        Improvements in the GISTEMP Uncertainty Model. Journal of Geophysical Research: Atmospheres, 124(12), 6307–6326.
+      doi: 10.1029/2018JD029522
+      bibtex: |
+        @article{lenssen2019gistemp,
+          author  = {Lenssen, Nathan J. L. and Schmidt, Gavin A. and Hansen, James E. and Menne, Matthew J. and Persin, Avraham and Ruedy, Reto and Zyss, Daniel},
+          title   = {Improvements in the {GISTEMP} Uncertainty Model},
+          journal = {Journal of Geophysical Research: Atmospheres},
+          volume  = {124},
+          number  = {12},
+          pages   = {6307--6326},
+          year    = {2019},
+          doi     = {10.1029/2018JD029522}
+        }
+    - label: GISTEMP analysis method (combining land and ocean)
+      text: >-
+        Hansen, J., Ruedy, R., Sato, M., Lo, K. (2010): Global Surface Temperature Change. Reviews of Geophysics, 48(4), RG4004.
+      doi: 10.1029/2010RG000345
+      bibtex: |
+        @article{hansen2010gistemp,
+          author  = {Hansen, J. and Ruedy, R. and Sato, M. and Lo, K.},
+          title   = {Global Surface Temperature Change},
+          journal = {Reviews of Geophysics},
+          volume  = {48},
+          number  = {4},
+          pages   = {RG4004},
+          year    = {2010},
+          doi     = {10.1029/2010RG000345}
+        }
+  acknowledgement: >-
+    GISS asks you to cite both the webpage (GISTEMP Team, with your access date) and its most recent scholarly publication,
+    Lenssen et al. (2024). The preferred credit is "NASA's Goddard Institute for Space Studies", or "NASA GISS/GISTEMP" where space
+    is limited. There is no dataset DOI; if you use the uncertainty ensemble, also cite Zenodo DOI 10.5281/zenodo.13343335.
+
+notices:
+  - date: "2026-09-14"
+    level: info
+    title: New GISTEMP GMSTA page — current and next year's GMST anomaly estimates (vs 1850–1900)
+    body: >-
+      GISS added a page, run in partnership with the International Research Institute for Climate and Society (Columbia University),
+      showing estimates of the current and next years' annual Global Mean Surface Temperature anomaly relative to the pre-industrial
+      period 1850–1900, updated monthly by the middle of the month. The LOTI data themselves (1951–1980 base) are unchanged.
+    source: https://data.giss.nasa.gov/gistemp/gmsta/
+  - date: "2026-06-10"
+    level: info
+    title: AIRS v7 displays now include recent corrections for 2021–2025
+    body: AIRS v7-based displays now include all recent corrections, mostly for 2021–2025, and months corrected in AIRS v6 are also used in the products. These are separate from the GHCN/ERSST-based LOTI.
+    source: https://data.giss.nasa.gov/gistemp/updates_v4/
+  - date: "2026-04-26"
+    level: warning
+    title: Ocean input ERSST v5 to be discontinued (NOAA, June 2026)
+    body: >-
+      NOAA PSL announced that "the NOAA ERSSTv5 dataset will be discontinued by NOAA/NCEI in June 2026" and replaced by ERSSTv6.
+      As of October 2026 GISTEMP still uses ERSST v5 (per its home and Data Downloads pages), and no plan to change the input has been announced.
+    source: https://psl.noaa.gov/data/notices/
+  - date: "2025-09-11"
+    level: info
+    title: Faulty station reports omitted (Maliye Karmakuly)
+    body: The August 2025 report from Maliye Karmakuly was confirmed to be about 12°C off. It was omitted from the analysis together with faulty June 2024 and June 2025 reports from the same station (about 3–4°C off), and all three were reported to NCEI.
+    source: https://data.giss.nasa.gov/gistemp/updates_v4/
+  - date: "2024-09-04"
+    level: info
+    title: GISTEMP v4 observational uncertainty ensemble published (Lenssen et al. 2024)
+    body: >-
+      An ensemble of 200 equally likely reconstructions (2°×2° grid, 1880–2020) was released with the JGR Atmospheres paper.
+      The NetCDF files were updated on 2024-10-01 to fix a minor error in labelling the time dimension; download them again if you got them earlier.
+    source: https://data.giss.nasa.gov/gistemp/uncertainty/
+
+links:
+  - name: GISTEMP home (NASA GISS)
+    url: https://data.giss.nasa.gov/gistemp/
+  - name: GISTEMP Data Downloads
+    url: https://data.giss.nasa.gov/gistemp/data_v4.html
+  - name: Updates to Analysis (change log)
+    url: https://data.giss.nasa.gov/gistemp/updates_v4/
+  - name: Release Dates Schedule
+    url: https://data.giss.nasa.gov/gistemp/release_dates.html
+  - name: GISTEMP FAQ
+    url: https://data.giss.nasa.gov/gistemp/faq/
+  - name: Observational uncertainty ensemble
+    url: https://data.giss.nasa.gov/gistemp/uncertainty/
+  - name: NOAA GHCN-Monthly (land input)
+    url: https://www.ncei.noaa.gov/products/land-based-station/global-historical-climatology-network-monthly
+  - name: NOAA ERSST (ocean input)
+    url: https://www.ncei.noaa.gov/products/extended-reconstructed-sst
+
+watch_urls:
+  - https://data.giss.nasa.gov/gistemp/updates_v4/
+  - https://data.giss.nasa.gov/gistemp/
+  - https://data.giss.nasa.gov/gistemp/data_v4.html
+
+last_verified: "2026-10-12"

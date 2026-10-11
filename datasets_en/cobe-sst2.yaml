@@ -1,0 +1,202 @@
+# ─────────────────────────────────────────────────────────────
+# COBE-SST2 — dataset information file (English edition)
+# After editing, set last_verified to the date you checked the official pages.
+# ─────────────────────────────────────────────────────────────
+id: cobe-sst2
+name: COBE-SST2
+full_name: Centennial in situ Observation-Based Estimates of SST, version 2
+category: analysis
+domain: ocean
+group: 해수면온도 분석장
+order: 30
+domains: [해양, 해빙]
+provider: Japan Meteorological Agency (JMA) / Meteorological Research Institute (MRI)
+
+status: active
+status_note: >-
+  JMA's operational centennial SST analysis, updated regularly (it replaced COBE-SST in operations in May 2021).
+  Its research successor COBE-SST3 (0.25°, daily) was released with a 2025 paper, but it is not updated on a regular
+  schedule (on the MRI server it ran to 2024 when checked in October 2026) and has not become operational, so use
+  COBE-SST2 if you need data up to the latest months. Note that the sea-ice concentration file distributed by
+  NOAA PSL stops in December 2019.
+
+transitions:
+  - from: COBE-SST2
+    to: COBE-SST3
+    to_id: cobe-sst3
+    status: planned
+    summary: >-
+      The next version in the COBE-SST series, a daily 0.25° SST analysis released with a 2025 paper. It is a research
+      product without regular updates: the paper covers 1850–2020, and daily and monthly files to 2024 were added on the
+      MRI server in September 2025 (the perturbed ensemble and COBE-SST3H still end in 2020). JMA's operational product
+      remains COBE-SST2. A JMA reanalysis meeting presentation (February 2026) described COBE-SST3 as the successor to
+      COBE-SST2, and the developers' note in the NCAR Climate Data Guide says a near-operational version extending to recent
+      years is in development, but JMA has not formally announced that it will replace COBE-SST2.
+    changes:
+      - aspect: Period
+        before: "1850-01 to present (monthly updates)"
+        after: "1850 to 2024 (MRI server, extended September 2025; no regular updates)"
+      - aspect: Horizontal and temporal resolution
+        before: "1°, distributed as monthly means"
+        after: "0.25°, daily (monthly means also provided)"
+      - aspect: In situ input
+        before: "ICOADS Release 2.5"
+        after: "ICOADS Release 3.0 (JMA operational data from 2015), plus near-surface subsurface profiles from Argo, CTD, XBT and others"
+      - aspect: Satellite data
+        before: "Not used"
+        after: "The standard COBE-SST3 uses in situ values only (satellite SST information shapes the spatial patterns used to fill gaps). A separate COBE-SST3H (1982–2020) blends in AVHRR Pathfinder, AMSR-E, AMSR2 and WindSat"
+      - aspect: Observation bias correction
+        before: "Corrections for buckets, engine room intake (ERI) and unknown measurement types"
+        after: "Biases of six measurement types estimated by variational minimisation against buoys and Argo, constrained by consistency with night marine air temperature (HadNMAT2) and land air temperature; the abrupt early-1940s shift is reduced"
+      - aspect: Joint analysis with land air temperature
+        before: "None"
+        after: "Analysed together with the land surface air temperature analysis COBE-LSAT3 for land-ocean consistency"
+      - aspect: Uncertainty
+        before: "Analysis error estimates (Hirahara et al. 2014)"
+        after: "300-member perturbed ensemble"
+      - aspect: SST in sea-ice areas
+        before: "Sea-ice concentration–SST relationship with freezing points from climatological salinity"
+        after: "Same freezing-point definition; proxy SSTs blended in near the ice edge. Sea ice before 1978 from Walsh et al. (2017)"
+      - aspect: Distribution and format
+        before: "JMA NEAR-GOOS (text grids), NOAA PSL (NetCDF), MRI server (GRIB2)"
+        after: "NetCDF on the MRI research data server (climate.mri-jma.go.jp/pub/archives/Ishii-et-al_COBE-SST3/)"
+    impacts:
+      - COBE-SST3 is not updated on a schedule and has no data after 2024. Stay with COBE-SST2 for analyses that must run to the present.
+      - SST changes around the 1940s are smoother than in COBE-SST2, which can change mid-20th-century trends and multidecadal variability.
+      - The two differ in resolution and time step, so do not splice them or difference them directly; regrid to a common grid and monthly means first.
+      - The authors report that COBE-SST3 daily values do not match buoys and Argo better than OISST v2.1. For recent daily analyses, also consider satellite-based products such as OISST.
+    sources:
+      - name: Ishii et al. (2025) COBE-SST3, J. Meteor. Soc. Japan
+        url: https://doi.org/10.2151/jmsj.2025-002
+      - name: NCAR Climate Data Guide — COBEv3 (with developers' notes)
+        url: https://climatedataguide.ucar.edu/climate-data/sst-data-cobev3-centennial-situ-observation-based-estimates-version-3
+      - name: JMA TCC — COBE-SST2 description
+        url: https://www.data.jma.go.jp/tcc/tcc/products/elnino/cobesst2_doc.html
+      - name: MRI COBE-SST3 data server
+        url: https://climate.mri-jma.go.jp/pub/archives/Ishii-et-al_COBE-SST3/
+
+period:
+  start: "1850-01"
+  end: present
+  note: >-
+    When checked on 2026-10-11, the PSL SST file ran to August–September 2026. JMA posts an interim SST for the latest month
+    first and replaces it with the final SST later. The PSL sea-ice concentration (icec) file covers only 1850 to December 2019.
+
+resolution:
+  spatial_short: "111 km (1°)"
+  temporal_short: "1개월"
+  spatial: "1° latitude × 1° longitude grid (89.5°S–89.5°N, 0.5°E–0.5°W)"
+  vertical: Sea surface only
+  temporal: Monthly means (JMA runs the analysis daily internally)
+
+update: Monthly; the interim SST for the latest month is posted on the 7th and replaced by the final SST on the 7th of the following month
+license: JMA website Terms of Use (Public Data License, Version 1.0; compatible with CC BY 4.0) — source attribution required
+account_required: false
+
+summary: >-
+  COBE-SST2 is JMA's global sea surface temperature analysis from 1850, based on in situ observations from ICOADS.
+  It uses a multi-time-scale analysis, in which the SST field is the sum of secular trends, interannual variations and
+  daily changes, together with improved corrections for instrumental biases. In the Arctic and Antarctic, SSTs are estimated
+  from sea-ice concentration using statistical relations that account for freezing points varying with climatological salinity.
+  Alongside HadISST and ERSST, it is one of the three datasets most often compared in long-term SST studies.
+
+time_convention:
+  summary: >-
+    The distributed data are monthly means. JMA analyses SST daily, but the public files (JMA NEAR-GOOS, NOAA PSL) hold
+    the monthly mean SST (plus monthly mean sea-ice concentration at PSL), and the time value identifies the month.
+  points:
+    - "The NOAA PSL file (sst.mon.mean.nc) labels sst with statistic 'Mean', and its time variable gives an averaging period (avg_period) of one month."
+    - "JMA posts the interim value for the latest month around the 7th and replaces it with the final value on the 7th of the following month, so the last one or two months can change."
+    - "The JMA text files carry only the year and month in the header record, with no time of day. Treat the PSL time values simply as labels for the month."
+    - "The climatology files (monthly normals for 1981–2010 and 1991–2020) are multi-year averages for each calendar month, not values for a particular year."
+  source: https://ds.data.jma.go.jp/goos/data/pub/JMA-product/cobe2_sst_glb_M/Readme_cobe2_sst_glb_M
+  source_name: JMA NEAR-GOOS COBE-SST2 Readme / NOAA PSL file metadata
+
+variables:
+  note: >-
+    Variable names as in the NOAA PSL NetCDF files. The JMA NEAR-GOOS originals are text grids of integers in tenths of a
+    degree Celsius (999 over land), and the MRI server originals are yearly GRIB2 files.
+  full_list: https://www.data.jma.go.jp/tcc/tcc/products/elnino/cobesst2_doc.html
+  groups:
+    - name: Sea surface temperature
+      kind: mean
+      period: Monthly
+      items:
+        - "Monthly Means of Global Sea Surface Temperature — `sst` (degC)"
+    - name: Sea ice (PSL, to 2019)
+      kind: mean
+      period: Monthly
+      items:
+        - "Monthly mean sea ice concentration — `icec` (fraction, 0–1)"
+
+access:
+  - name: JMA NEAR-GOOS — COBE-SST2 monthly mean SST
+    url: https://ds.data.jma.go.jp/goos/data/rrtdb/jma-pro/cobe2_sst_glb_M.html
+    method: Web download (monthly text grid files)
+    note: The file format is described in the Readme in the same directory (Readme_cobe2_sst_glb_M). Monthly normals and standard deviations for 1991–2020 are also provided.
+  - name: NOAA PSL — COBE-SST2 (NetCDF)
+    url: https://psl.noaa.gov/data/gridded/data.cobe2.html
+    method: Web download / THREDDS / OPeNDAP
+    note: >-
+      The easiest option: the full SST record is in a single file, sst.mon.mean.nc. The sea-ice concentration file
+      icec.mon.mean.nc ends in December 2019; climatology files (1981–2010, 1991–2020) are also available.
+  - name: MRI research data server (yearly GRIB2)
+    url: https://climate.mri-jma.go.jp/pub/ocean/cobe-sst2/
+    method: Web download
+    note: Yearly GRIB2 files and GrADS ctl files posted by the Meteorological Research Institute. Files are bundled by year, so the current year's file can lag by several months.
+
+tips:
+  - Latitudes in the PSL file run north to south (89.5 to -89.5). Flip or align them before combining with other datasets.
+  - COBE-SST2 sea-ice concentration at PSL ends in 2019. For recent sea ice, use the OISST ice field or a satellite sea-ice concentration product.
+  - COBE-SST3 (0.25° daily, 1850–2024 as of October 2026) is available for research on the MRI server (climate.mri-jma.go.jp/pub/archives/Ishii-et-al_COBE-SST3/). It is worth a look for high-resolution historical analyses, but it is not updated on a regular schedule.
+  - The original COBE-SST (from 1891) ended in May 2023. When reproducing older papers, check which version they used.
+
+citations:
+  papers:
+    - label: COBE-SST2 reference paper
+      text: >-
+        Hirahara, S., Ishii, M., Fukuda, Y. (2014): Centennial-Scale Sea Surface Temperature Analysis and Its Uncertainty.
+        Journal of Climate, 27(1), 57–75.
+      doi: 10.1175/JCLI-D-12-00837.1
+      bibtex: |
+        @article{hirahara2014cobesst2,
+          author  = {Hirahara, Shoji and Ishii, Masayoshi and Fukuda, Yoshikazu},
+          title   = {Centennial-Scale Sea Surface Temperature Analysis and Its Uncertainty},
+          journal = {Journal of Climate},
+          volume  = {27},
+          number  = {1},
+          pages   = {57--75},
+          year    = {2014},
+          doi     = {10.1175/JCLI-D-12-00837.1}
+        }
+    - label: Successor research product COBE-SST3 (for reference)
+      text: >-
+        Ishii, M., Nishimura, A., Yasui, S., Hirahara, S. (2025): Historical High-Resolution Daily SST Analysis (COBE-SST3)
+        with Consistency to Monthly Land Surface Air Temperature. J. Meteor. Soc. Japan, 103(1), 17–44.
+      doi: 10.2151/jmsj.2025-002
+  acknowledgement: >-
+    There is no dataset DOI, so cite Hirahara et al. (2014) and state where you obtained the data (JMA or NOAA PSL).
+    JMA's Terms of Use require a source credit such as "Source: Japan Meteorological Agency website (URL of relevant page)".
+    If you used the PSL files, also add PSL's requested acknowledgement: "data provided by the NOAA PSL, Boulder, Colorado, USA,
+    from their website at https://psl.noaa.gov".
+
+notices: []
+
+links:
+  - name: JMA TCC — COBE-SST2 description
+    url: https://www.data.jma.go.jp/tcc/tcc/products/elnino/cobesst2_doc.html
+  - name: JMA NEAR-GOOS file format description (Readme)
+    url: https://ds.data.jma.go.jp/goos/data/pub/JMA-product/cobe2_sst_glb_M/Readme_cobe2_sst_glb_M
+  - name: NOAA PSL — COBE-SST2 page
+    url: https://psl.noaa.gov/data/gridded/data.cobe2.html
+  - name: NCAR Climate Data Guide — COBE-SST3
+    url: https://climatedataguide.ucar.edu/climate-data/sst-data-cobev3-centennial-situ-observation-based-estimates-version-3
+  - name: JMA website Terms of Use
+    url: https://www.jma.go.jp/jma/en/copyright.html
+
+watch_urls:
+  - https://www.data.jma.go.jp/tcc/tcc/products/elnino/cobesst2_doc.html
+  - https://psl.noaa.gov/data/notices/
+  - https://climate.mri-jma.go.jp/pub/ocean/cobe-sst2/
+
+last_verified: "2026-10-11"

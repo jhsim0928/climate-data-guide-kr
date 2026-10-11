@@ -1,0 +1,209 @@
+# ─────────────────────────────────────────────────────────────
+# OISST — dataset information file (English edition)
+# Listed in the Ocean tab (observation-based analyses) and cross-listed in the Sea Ice tab.
+# After editing, set last_verified to the date you checked the official pages.
+# ─────────────────────────────────────────────────────────────
+id: oisst
+name: OISST v2.1
+full_name: NOAA 0.25-degree Daily Optimum Interpolation Sea Surface Temperature (DOISST/OISST), Version 2.1
+category: analysis
+domain: ocean
+group: 해수면온도 분석장
+order: 10
+also_in:
+  - domain: seaice
+    group: 관측 기반 분석장
+    label: OISST (sea-ice concentration)
+domains: [해양, 해빙]
+provider: NOAA National Centers for Environmental Information (NCEI)
+
+status: active
+status_note: >-
+  Updated daily and operating normally. Production changed in October 2021 (satellite input switched to ACSPO, v2.1a) and April 2023 (monthly time-dependent ship bias
+  correction, v2.1b), but the product is still named v2.1. As of October 2026, NCEI has posted a notice of temporary data access delays due to its cloud migration.
+
+period:
+  start: "1981-09"
+  end: present
+  note: >-
+    A preliminary version is released about one day after the fact and replaced by the final version about two weeks later.
+    Data before 1 January 2016 are the same as in v2.0.
+
+resolution:
+  spatial_short: "28 km (0.25°)"
+  temporal_short: "1일"
+  spatial: "1/4° regular latitude–longitude grid (global)"
+  vertical: Sea surface (single level)
+  temporal: Daily (monthly means provided separately by NOAA PSL)
+
+update: Daily (preliminary after about 1 day, final after about 2 weeks)
+license: US Government public data — no restrictions on use; please cite the dataset DOI and the reference paper
+account_required: false
+
+summary: >-
+  NOAA NCEI's daily 1/4° sea surface temperature (SST) analysis, which combines AVHRR satellite SSTs with in situ observations from ships, buoys and Argo floats
+  into a regular global grid using optimum interpolation (OI), filling gaps to give a spatially complete map. Satellite and ship data are referenced to buoys to remove
+  platform and sensor biases, and proxy SSTs derived from sea-ice concentration are used in the marginal ice zone. As a continuous daily record since September 1981,
+  it is widely used for marine heatwave studies, ENSO monitoring and climatologies.
+
+time_convention:
+  summary: >-
+    A daily analysis built from one day of observations; each value represents that day (a daily mean). In the original NCEI files the time value is 12:00 UTC,
+    the "center time of the day", and does not denote an instantaneous value.
+  points:
+    - "NCEI describes the satellite input as daily observations averaged onto the 0.25° grid. The analysis does not resolve the diurnal cycle (day–night differences)."
+    - "In the NCEI files and ERDDAP, time is the 'Center time of the day' (e.g. 1981-09-01T12:00:00Z). The NOAA PSL yearly files stamp the same day at 00:00, so match by date when combining the two sources."
+    - "Anomalies (anom) are relative to a daily climatology for the 1971–2000 base period. PSL also provides separate 1991–2020 climatology files."
+    - "Proxy SSTs near sea ice use the seven-day median of daily sea-ice concentrations. The official documentation does not say how the in-file ice values are defined in time (same-day value or seven-day median)."
+    - "Preliminary data appear after about one day and final data after about two weeks, so values for the same date can change."
+  source: https://www.ncei.noaa.gov/products/optimum-interpolation-sst
+  source_name: NCEI OISST product page / ERDDAP ncdcOisst21Agg metadata
+
+variables:
+  note: Short names are the in-file variable names. Each original NCEI daily file (oisst-avhrr-v02r01.YYYYMMDD.nc) contains all four variables.
+  full_list: https://www.ncei.noaa.gov/products/optimum-interpolation-sst
+  groups:
+    - name: Sea surface temperature
+      kind: mean
+      period: Daily
+      items:
+        - "Daily sea surface temperature — `sst` (°C)"
+        - text: "Daily sea surface temperature anomalies — `anom` (°C)"
+          kind: mean
+          period: Daily
+          note: Daily mean SST minus the 1971–2000 daily climatology
+        - text: "Estimated error standard deviation of analysed_sst — `err` (°C)"
+          kind: mean
+          period: Daily
+          note: Error estimate for that day's analysis (sst); a companion to the daily analysis rather than a separate time statistic
+    - name: Sea ice
+      kind: mean
+      period: Daily
+      items:
+        - text: "Sea ice concentration — `ice` (fraction, 0–1)"
+          kind: mean
+          period: Daily
+          note: The PSL files (icec, in percent) give the statistic as 'Mean' with a one-day averaging period. The official documentation does not state how the NCEI original is defined in time
+
+access:
+  - name: NCEI direct download (daily NetCDF)
+    url: https://www.ncei.noaa.gov/data/sea-surface-temperature-optimum-interpolation/v2.1/access/avhrr/
+    method: HTTPS (wget / curl)
+    note: One file per day inside monthly folders. Preliminary files are replaced when the final versions arrive, so re-download periodically.
+  - name: NCEI THREDDS
+    url: https://www.ncei.noaa.gov/thredds/catalog/OisstBase/NetCDF/V2.1/AVHRR/catalog.html
+    method: OPeNDAP / NetCDF Subset
+  - name: NOAA PSL (yearly files)
+    url: https://psl.noaa.gov/data/gridded/data.noaa.oisst.v2.highres.html
+    method: Web download / THREDDS / OPeNDAP
+    note: >-
+      Files are bundled by variable and year (sst.day.mean.YYYY.nc, sst.day.anom.YYYY.nc, sst.day.err.YYYY.nc, icec.day.mean.YYYY.nc),
+      which makes long periods easy to download. In the PSL files the sea-ice variable is named icec.
+  - name: AWS Open Data (NOAA CDR)
+    url: https://noaa-cdr-sea-surface-temp-optimum-interpolation-pds.s3.amazonaws.com/index.html
+    method: Cloud storage (S3)
+  - name: Google Cloud (NOAA CDR)
+    url: https://console.cloud.google.com/storage/browser/noaa-cdr-sea-surface-temp-optimum-interpolation
+    method: Cloud storage (GCS)
+
+tips:
+  - A file for a given date first appears as a preliminary version and is replaced by the final version about two weeks later. If your analysis uses the last few weeks, re-download the final files and check your results.
+  - The NCEI anom field is relative to 1971–2000. For anomalies relative to 1991–2020, compute them yourself from the PSL climatology file (sst.day.mean.ltm.1991-2020.nc).
+  - "The ice variable is the satellite sea-ice concentration used as input, a supporting field for the SST analysis. If sea ice itself is your subject, compare it with a dedicated sea-ice concentration product."
+  - Some evaluations find that OISST shows a larger post-1982 warming trend than other SST analyses. For trend studies, cross-check against other datasets.
+
+citations:
+  dataset:
+    - label: NCEI dataset DOI
+      text: >-
+        Huang, Boyin; Liu, Chunying; Banzon, Viva F.; Freeman, Eric; Graham, Garrett; Hankins, William; Smith, Thomas M.; Zhang, Huai-Min. (2020):
+        NOAA 0.25-degree Daily Optimum Interpolation Sea Surface Temperature (OISST), Version 2.1. [indicate subset used].
+        NOAA National Centers for Environmental Information. https://doi.org/10.25921/RE9P-PT57. Accessed [date].
+      doi: 10.25921/RE9P-PT57
+      bibtex: |
+        @misc{oisst_v21_dataset,
+          author    = {Huang, Boyin and Liu, Chunying and Banzon, Viva F. and Freeman, Eric and Graham, Garrett and Hankins, William and Smith, Thomas M. and Zhang, Huai-Min},
+          title     = {{NOAA} 0.25-degree Daily Optimum Interpolation Sea Surface Temperature ({OISST}), Version 2.1},
+          year      = {2020},
+          publisher = {NOAA National Centers for Environmental Information},
+          doi       = {10.25921/RE9P-PT57},
+          note      = {Accessed DD MMM YYYY}
+        }
+  papers:
+    - label: OISST v2.1 paper (citation recommended by NCEI)
+      text: >-
+        Huang, B., Liu, C., Banzon, V., Freeman, E., Graham, G., Hankins, B., Smith, T., Zhang, H.-M. (2021):
+        Improvements of the Daily Optimum Interpolation Sea Surface Temperature (DOISST) Version 2.1.
+        Journal of Climate, 34(8), 2923–2939.
+      doi: 10.1175/JCLI-D-20-0166.1
+      bibtex: |
+        @article{huang2021oisst,
+          author  = {Huang, Boyin and Liu, Chunying and Banzon, Viva and Freeman, Eric and Graham, Garrett and Hankins, Bill and Smith, Tom and Zhang, Huai-Min},
+          title   = {Improvements of the Daily Optimum Interpolation Sea Surface Temperature ({DOISST}) Version 2.1},
+          journal = {Journal of Climate},
+          volume  = {34},
+          number  = {8},
+          pages   = {2923--2939},
+          year    = {2021},
+          doi     = {10.1175/JCLI-D-20-0166.1}
+        }
+    - label: Original daily OISST methodology paper
+      text: >-
+        Reynolds, R. W., Smith, T. M., Liu, C., Chelton, D. B., Casey, K. S., Schlax, M. G. (2007):
+        Daily High-Resolution-Blended Analyses for Sea Surface Temperature. Journal of Climate, 20(22), 5473–5496.
+      doi: 10.1175/2007JCLI1824.1
+      bibtex: |
+        @article{reynolds2007oisst,
+          author  = {Reynolds, Richard W. and Smith, Thomas M. and Liu, Chunying and Chelton, Dudley B. and Casey, Kenneth S. and Schlax, Michael G.},
+          title   = {Daily High-Resolution-Blended Analyses for Sea Surface Temperature},
+          journal = {Journal of Climate},
+          volume  = {20},
+          number  = {22},
+          pages   = {5473--5496},
+          year    = {2007},
+          doi     = {10.1175/2007JCLI1824.1}
+        }
+  acknowledgement: >-
+    NCEI asks users to cite both the dataset DOI and the Huang et al. (2021) paper.
+    If you obtained the data from NOAA PSL, also include the acknowledgement wording requested on the PSL page.
+
+notices:
+  - date: "2026-10-02"
+    level: warning
+    title: "NCEI Data Access Delays (cloud migration, planned through 2026-10-30)"
+    body: >-
+      NCEI is moving its data and applications to the cloud, which may result in temporary data access delays. Order fulfillment services may also be degraded
+      during this period, with empty or incomplete results. If downloads fail, use the PSL, AWS or Google Cloud copies.
+    source: https://www.ncei.noaa.gov/alerts
+  - date: "2023-04-01"
+    level: info
+    title: v2.1b — ship SST bias correction changed to a monthly time-dependent scheme
+    body: The ship SST bias correction changed from a constant to a monthly time-dependent scheme, consistent with ERSST v5, to account for ship biases that vary over time. It applies only to data produced from this date.
+    source: https://www.ncei.noaa.gov/products/optimum-interpolation-sst
+  - date: "2021-10-01"
+    level: info
+    title: v2.1a — satellite input switched to NOAA ACSPO SST
+    body: The satellite SST input switched from Navy SST to NOAA ACSPO SST, partly because of the deorbit of METOP-A. It applies only to data produced from this date.
+    source: https://www.ncei.noaa.gov/products/optimum-interpolation-sst
+  - date: "2020-04-01"
+    level: info
+    title: v2.1 released, replacing v2.0
+    body: v2.1 replaced v2.0, whose production stopped on April 26, 2020 after its input datasets were discontinued. Data from 2016 onward were improved.
+    source: https://www.ncei.noaa.gov/products/optimum-interpolation-sst
+
+links:
+  - name: NCEI Optimum Interpolation SST product page
+    url: https://www.ncei.noaa.gov/products/optimum-interpolation-sst
+  - name: NCEI OISST Climate Data Record (CDR) page
+    url: https://www.ncei.noaa.gov/products/climate-data-records/sea-surface-temperature-optimum-interpolation
+  - name: NCEI dataset metadata and citation page
+    url: https://www.ncei.noaa.gov/access/metadata/landing-page/bin/iso?id=gov.noaa.ncdc:C01606
+  - name: NCAR Climate Data Guide — OISST v2.1
+    url: https://climatedataguide.ucar.edu/climate-data/sst-data-noaa-daily-optimum-interpolation-sea-surface-temperature-version-21-oisstv21
+
+watch_urls:
+  - https://www.ncei.noaa.gov/products/optimum-interpolation-sst
+  - https://www.ncei.noaa.gov/alerts
+  - https://psl.noaa.gov/data/notices/
+
+last_verified: "2026-10-11"

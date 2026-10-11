@@ -1,0 +1,211 @@
+# ─────────────────────────────────────────────────────────────
+# NCEP GODAS — dataset information file (English edition)
+# After editing, update last_verified to the date you checked the official pages.
+# ─────────────────────────────────────────────────────────────
+id: godas
+name: NCEP GODAS
+full_name: NCEP Global Ocean Data Assimilation System (GODAS)
+category: reanalysis
+domain: ocean
+group: 재분석
+order: 50
+domains: [해양]
+provider: NOAA NCEP (developed by EMC; run and monitored by the Climate Prediction Center, CPC) / distributed by NOAA PSL and NSF NCAR GDEX
+
+status: active
+status_note: >-
+  The NOAA PSL monthly netCDF files are still being updated (through August 2026 when checked on 2026-10-12, last updated 2026-09-18), so we consider GODAS to be operating normally.
+  However, its atmospheric forcing, NCEP–DOE R2, stops at 28 February 2026 (cdas2 distribution ended), and neither CPC nor PSL has said what forcing GODAS uses from March 2026 onward.
+  Treat the period from March 2026 with care, as production conditions may differ from earlier years.
+
+period:
+  start: "1980-01"
+  end: present
+  note: >-
+    PSL monthly means start in January 1980. When checked on 2026-10-12, pottmp, salt, ucur, sshg and the other fields ran through August 2026, and `thflx` (total downward heat flux) through June 2026.
+    The NCAR GDEX copy (d277006) ends in October 2024. The CPC home page offers monthly and pentad (5-day) data downloads and pentad maps for the past 3 months.
+
+resolution:
+  spatial_short: "111 km (1°)"
+  temporal_short: "5일"
+  spatial: >-
+    Model: GFDL MOM v3 on a quasi-global domain (75°S–65°N), 1° × 1° grid with meridional resolution refined to 1/3° within 10° of the equator /
+    PSL and GDEX grid: 1° longitude × 1/3° latitude (360 × 418; 0.5°E–359.5°E, 74.5°S–64.5°N). Currents (u, v) are on a different horizontal grid
+  vertical: "40 levels (10 m spacing in the upper 200 m). PSL file depths 5–4,478 m; vertical velocity `dzdt` on staggered levels at 10–4,736 m"
+  temporal: Monthly means (PSL, GDEX, CPC) and pentad (5-day) means (CPC GRIB)
+
+update: Monthly (PSL monthly means with about a 3-week lag)
+license: "PSL distribution: no restrictions (CC0 1.0; PSL asks to be acknowledged) / NCAR GDEX copy: Creative Commons Attribution 4.0 International (CC BY 4.0)"
+account_required: false
+
+summary: >-
+  GODAS is the ocean data assimilation system NCEP has run for climate monitoring and to provide ocean initial conditions for the Climate Forecast System (CFS) —
+  "a real-time ocean analysis and a reanalysis". It uses the GFDL MOM v3 model and assimilates temperature profiles (XBT, TAO moorings, Argo, etc.) and synthetic salinity
+  profiles derived from temperature–salinity relationships with a 3DVAR scheme; altimetry sea level has been assimilated since March 2007 (NCAR Climate Data Guide).
+  Surface momentum, heat and freshwater fluxes come from NCEP–DOE R2, the top-level temperature is relaxed to weekly SST analyses, and surface salinity to annual climatology.
+  Its resolution is coarse, but it has been updated monthly since 1980 and is widely used for CPC's monthly ocean briefings and for heat content and thermocline monitoring of ENSO.
+
+time_convention:
+  summary: >-
+    Every variable in the PSL netCDF files is a monthly mean, and the `time` value is the first day of the averaging period (00 UTC on the 1st), as the time attribute states: "This is the FIRST day of the averaging period."
+    The original GRIB files (CPC/PSL ReadMe) are described the other way round, with the internal time stamp on the last day of the averaging period, so be careful not to shift by one month when mixing the two formats.
+  points:
+    - "PSL file attributes: statistic 'Monthly Mean', avg_period '0000-01-00 00:00:00'."
+    - "The heat flux `thflx`, momentum fluxes `uflx`, `vflx` and salt flux `sltfl` are monthly mean fluxes, not accumulations."
+    - "As CPC explains, the net surface heat flux `thflx` is the total surface heat flux from NCEP Reanalysis 2 plus the relaxation terms."
+    - "We could not find the time-stamp convention of the CPC pentad files in the official documentation. Check the GRIB time information in the files themselves."
+  source: https://psl.noaa.gov/thredds/dodsC/Datasets/godas/pottmp.2026.nc.das
+  source_name: "NOAA PSL GODAS netCDF file attributes (time info, statistic) + PSL GODAS ReadMe"
+
+variables:
+  note: >-
+    Main variables from the NOAA PSL netCDF files (OPeNDAP attributes). Names are the variable names inside the files; files are named `<variable>.<year>.nc`.
+    Units differ from most ocean datasets (temperature in K, salinity in kg/kg, salt flux in g/cm2/s), so check them before use.
+  full_list: https://psl.noaa.gov/data/gridded/data.godas.html
+  groups:
+    - name: 3-D ocean (40 levels)
+      kind: mean
+      period: Monthly
+      items:
+        - "Potential temperature — `pottmp` (K)"
+        - "Salinity — `salt` (kg/kg)"
+        - "Zonal and meridional current — `ucur`, `vcur` (m/s)"
+        - "Geometric vertical velocity — `dzdt` (m/s)"
+    - name: 2-D ocean
+      kind: mean
+      period: Monthly
+      items:
+        - "Sea surface height relative to geoid — `sshg` (m)"
+        - "Mixed layer depth (geometric depth below sea surface) — `dbss_obml` (m)"
+        - "Isothermal layer depth (geometric depth below sea surface) — `dbss_obil` (m)"
+    - name: Surface fluxes
+      kind: mean
+      period: Monthly
+      items:
+        - "Total downward heat flux at surface (downward is positive) — `thflx` (W/m2)"
+        - "Zonal and meridional momentum flux — `uflx`, `vflx` (N/m^2)"
+        - "Salt flux — `sltfl` (g/cm2/s)"
+
+access:
+  - name: NOAA PSL — GODAS dataset page
+    url: https://psl.noaa.gov/data/gridded/data.godas.html
+    method: Variable list, plotting and subsetting
+    note: No account needed. netCDF4 files, one per variable per year.
+  - name: NOAA PSL download server
+    url: https://downloads.psl.noaa.gov/Datasets/godas/
+    method: Direct HTTPS download
+    note: Per-variable, per-year files, a ReadMe, and a Derived/ directory with monthly long-term means (1991–2020 and others).
+  - name: NOAA PSL THREDDS / OPeNDAP
+    url: https://psl.noaa.gov/thredds/catalog/Datasets/godas/catalog.html
+    method: Remote access via OPeNDAP / NetCDF Subset Service
+  - name: NOAA CPC — GODAS home page
+    url: https://www.cpc.ncep.noaa.gov/products/GODAS/
+    method: Maps and animations, monthly and pentad download links, monthly ocean briefing
+    note: The original CPC GRIB files are pointed to the pub/cfs/godas path on cfs.ncep.noaa.gov. Most of the page has not been changed since 2019 (last modified July 30, 2019).
+  - name: NSF NCAR GDEX — NCEP GODAS (d277006)
+    url: https://gdex.ucar.edu/datasets/d277006/
+    method: Web download
+    note: Monthly means in WMO GRIB1, CC BY 4.0, dataset DOI 10.5065/ZAHZ-3174. As of October 2026 it only runs through October 2024.
+
+example:
+  lang: python
+  note: The PSL OPeNDAP URLs open directly in xarray. Temperature is in K, and the time value is the 1st of the month.
+  code: |
+    import xarray as xr
+
+    base = "https://psl.noaa.gov/thredds/dodsC/Datasets/godas"
+    t = xr.open_dataset(f"{base}/pottmp.2025.nc")["pottmp"] - 273.15   # K → °C
+    # Mean temperature of the upper 300 m in the Niño 3.4 region (5°S–5°N, 170°W–120°W)
+    box = t.sel(lat=slice(-5, 5), lon=slice(190, 240), level=slice(0, 300))
+    print(box.mean(["lat", "lon", "level"]).values)
+
+tips:
+  - "GODAS surface fluxes come from NCEP–DOE R2 (about 2.5°, T62). R2 stopped at 28 February 2026 and there is no official word on how GODAS has been forced since March 2026, so compare recent flux and mixed-layer changes against other ocean reanalyses before interpreting them."
+  - "The NCAR Climate Data Guide rates GODAS salinity as poor (synthetic salinity assimilation and relaxation to climatology) and notes large biases in the velocity fields. Use another reanalysis alongside it for salinity or current studies."
+  - "The last available month can differ between variables in the PSL files (in October 2026, `thflx` ended in June and the rest in August). Align the time axes when combining variables."
+  - "The domain is 75°S–65°N, so most of the Arctic Ocean is missing. There are no sea-ice variables."
+  - "The PSL file attributes say 'THESE ARE THE BIAS CORRECTED GODAS FILES', but we found no official document explaining what correction this refers to."
+
+citations:
+  dataset:
+    - label: NCAR GDEX copy (d277006)
+      text: >-
+        National Centers for Environmental Prediction/National Weather Service/NOAA/U.S. Department of Commerce (2006):
+        NCEP Global Ocean Data Assimilation System (GODAS). NSF National Center for Atmospheric Research, Geoscience Data Exchange.
+        https://doi.org/10.5065/ZAHZ-3174 (Accessed DD MMM YYYY)
+      doi: 10.5065/ZAHZ-3174
+      bibtex: |
+        @misc{ncep_godas_gdex,
+          author    = {{National Centers for Environmental Prediction/National Weather Service/NOAA/U.S. Department of Commerce}},
+          title     = {{NCEP} Global Ocean Data Assimilation System ({GODAS})},
+          year      = {2006},
+          publisher = {NSF National Center for Atmospheric Research, Geoscience Data Exchange},
+          doi       = {10.5065/ZAHZ-3174}
+        }
+  papers:
+    - label: GODAS description and evaluation (conference paper, no DOI)
+      text: >-
+        Behringer, D. W., and Y. Xue (2004): Evaluation of the global ocean data assimilation system at NCEP: The Pacific Ocean.
+        Eighth Symposium on Integrated Observing and Assimilation Systems for Atmosphere, Oceans, and Land Surface,
+        AMS 84th Annual Meeting, Seattle, WA. https://ams.confex.com/ams/84Annual/webprogram/Paper70720.html
+      bibtex: |
+        @inproceedings{behringer2004godas,
+          author    = {Behringer, David W. and Xue, Yan},
+          title     = {Evaluation of the global ocean data assimilation system at {NCEP}: The {Pacific} Ocean},
+          booktitle = {Eighth Symposium on Integrated Observing and Assimilation Systems for Atmosphere, Oceans, and Land Surface, 84th AMS Annual Meeting},
+          address   = {Seattle, WA},
+          year      = {2004},
+          url       = {https://ams.confex.com/ams/84Annual/webprogram/Paper70720.html}
+        }
+    - label: GODAS mixed-layer heat budget (related publication listed by NCAR GDEX)
+      text: >-
+        Huang, B., Xue, Y., Zhang, D., Kumar, A., McPhaden, M. J. (2010): The NCEP GODAS Ocean Analysis of the Tropical Pacific
+        Mixed Layer Heat Budget on Seasonal to Interannual Time Scales. Journal of Climate, 23(18), 4901–4925.
+      doi: 10.1175/2010JCLI3373.1
+  acknowledgement: >-
+    If you obtained the data from PSL, the usual practice is to include an acknowledgement such as "GODAS data provided by the NOAA PSL, Boulder, Colorado, USA, from their website at https://psl.noaa.gov"
+    and cite Behringer and Xue (2004), which is also the GODAS reference given in the CPC ocean briefings. If you used the NCAR copy, also give the GDEX DOI.
+
+notices:
+  - date: "2026-09-10"
+    level: info
+    title: "CPC Global Ocean Monitoring briefing for August 2026 still uses GODAS"
+    body: >-
+      CPC's briefing "Global Ocean Monitoring: Recent Evolution, Current Status, and Predictions" (10 September 2026) still uses "NCEP's GODAS temperature, heat content, currents".
+      The same briefing credits winds, surface radiation and heat fluxes to NCEP CORe, but does not say whether the GODAS forcing has switched to CORe.
+    source: https://www.cpc.ncep.noaa.gov/products/GODAS/ocean_briefing_gif/global_ocean_monitoring_current.pdf
+  - date: "2026-02-28"
+    level: warning
+    title: "PSL Data Notice: NCEP/NCAR Reanalysis 1 updates to end"
+    body: >-
+      Announcing that R1 updates will end with the switch from CDAS to CORe, PSL said it is reviewing other products that may stop updating or need an alternative to CDAS.
+      GODAS is not named in the notice, and as of 2026-10-12 the PSL GODAS files are still being updated.
+    source: https://psl.noaa.gov/news/2026/r1datanotice.html
+  - date: "2026-02-09"
+    level: warning
+    title: "NWS SCN 26-12 — Upgrading CDAS to CORe; distribution of the GODAS forcing source (R2/cdas2) ends"
+    body: >-
+      The service change notice lists the NOMADS and FTP /com/cdas2/ directories among the CDAS data files that will no longer be available as of March 9, 2026,
+      and the R2 data at PSL and NCAR stop at 28 February 2026. The notice does not mention GODAS, and how GODAS has been forced since then has not been officially confirmed.
+    source: https://www.weather.gov/media/notification/pdf_2026/scn26-12_Updated_CDAS_COReUpdate_aaa.pdf
+
+links:
+  - name: NOAA PSL GODAS dataset page
+    url: https://psl.noaa.gov/data/gridded/data.godas.html
+  - name: CPC GODAS home page
+    url: https://www.cpc.ncep.noaa.gov/products/GODAS/
+  - name: CPC GODAS background
+    url: https://www.cpc.ncep.noaa.gov/products/GODAS/background.shtml
+  - name: Behringer and Xue (2004) conference paper (PDF)
+    url: https://ams.confex.com/ams/pdfpapers/70720.pdf
+  - name: NCAR Climate Data Guide — GODAS
+    url: https://climatedataguide.ucar.edu/climate-data/godas-ncep-global-ocean-data-assimilation-system
+  - name: PSL Data Notices
+    url: https://psl.noaa.gov/data/notices/
+
+watch_urls:
+  - https://psl.noaa.gov/data/notices/
+  - https://downloads.psl.noaa.gov/Datasets/godas/
+  - https://www.cpc.ncep.noaa.gov/products/GODAS/
+
+last_verified: "2026-10-12"

@@ -1,0 +1,310 @@
+# ─────────────────────────────────────────────────────────────
+# CS2SMOS — dataset information file (English edition)
+# AWI/ESA merged CryoSat-2 + SMOS weekly Arctic sea ice thickness (up to v206) → succeeded by CS3SMOS (v300)
+# ─────────────────────────────────────────────────────────────
+id: cs2smos
+name: CS2SMOS
+full_name: CryoSat-2/SMOS Merged Sea Ice Thickness (ESA SMOS-CryoSat L4 Sea Ice Thickness)
+category: satellite
+domain: seaice
+group: 위성 관측 자료
+order: 40
+domains: [해빙]
+provider: Alfred Wegener Institute (AWI) / European Space Agency (ESA) — based on ESA CryoSat-2 and SMOS data
+
+status: ended
+status_note: >-
+  CS2SMOS (last version v206) completed its final season with the 2024/25 winter (April 2025). From the 2025/26 winter the product continues as
+  CS3SMOS (v300), which adds Sentinel-3A/B altimetry, a 12.5 km grid and Southern Hemisphere coverage. The 2010–2025 v206 record remains available from
+  the ESA dissemination server. Both SMOS and CryoSat-2 are still delivering data in 2026, and CS3SMOS is in routine production.
+
+successor:
+  name: CS3SMOS (CryoSat-2/Sentinel-3/SMOS Merged Sea Ice Thickness, v300)
+  url: https://spaces.awi.de/spaces/CS2SMOS/pages/297634429/CryoSat-2+Sentinel-3+SMOS+Merged+Sea+Ice+Thickness
+  note: >-
+    Operational since 2025-10-23. Resolution 25 km → 12.5 km, Sentinel-3A (from October 2016) and Sentinel-3B (from October 2018) altimetry added,
+    austral winter (15 April–15 October) coverage, and a new file format and uncertainty model (altimetry uncertainties substantially higher than in v206).
+    As of October 2026 no separate dataset DOI has been found; AWI still asks users to cite Ricker et al. (2017), The Cryosphere, 11, 1607–1623,
+    doi:10.5194/tc-11-1607-2017.
+
+transitions:
+  - from: CS2SMOS v206 (CryoSat-2 + SMOS)
+    to: CS3SMOS v300 (CryoSat-2 + Sentinel-3A/B + SMOS)
+    to_id: cs3smos
+    status: completed
+    date: "2025-10"
+    summary: >-
+      The second major revision of AWI's merged sea ice thickness product: Sentinel-3A/B altimetry was added and the processing system rebuilt in Python.
+      Resolution improved from 25 km to 12.5 km, austral winter fields were added, and the uncertainty model and file content changed.
+      It replaced v206 from the 2025/26 winter (operational from 2025-10-23).
+    changes:
+      - aspect: Product name and version
+        before: "CS2SMOS v206 (released 2023-10)"
+        after: "CS3SMOS v300 (released 2025-10; new Python processing system)"
+      - aspect: Altimetry input
+        before: "CryoSat-2 (AWI L2P v2.6)"
+        after: "CryoSat-2 + Sentinel-3A (from 2016) + Sentinel-3B (from 2018), all from the AWI v2.6 algorithm; daily gridding of altimetry now done within the AWI v2.6 production system"
+      - aspect: SMOS input
+        before: "SMOS L3C v3.3"
+        after: "SMOS L3 v3.6"
+      - aspect: Horizontal resolution and grid
+        before: "25 km EASE2, Northern Hemisphere (432 × 432)"
+        after: "12.5 km EASE2, Northern and Southern Hemispheres"
+      - aspect: Region and season
+        before: "Arctic only, freezing season (roughly mid-October to mid-April)"
+        after: "Arctic 15 October–15 April + Antarctic 15 April–15 October"
+      - aspect: Period
+        before: "2010-11 to 2025-04 (last season 2024/25)"
+        after: "AWI near-real-time operations from the 2025/26 winter (first weekly field 2025-10-15). Copernicus Marine hosts v300 Northern Hemisphere data from 2023-10-18 and Southern Hemisphere data from 2025-04-18. Public location of a full reprocessing from 2010 not confirmed"
+      - aspect: Uncertainty
+        before: "v206 uncertainty model"
+        after: "Altimetry and SMOS uncertainties recomputed — SMOS includes the effect of sea ice concentration below 100% with a minimum of 20 cm; altimetry uncertainties substantially higher than in v206"
+      - aspect: Land/ocean mask
+        before: "v206 mask"
+        after: "Same mask as the ESA CCI sea ice products, plus a land/ocean fraction variable"
+      - aspect: File content
+        before: "Analysis, background and weighted-mean thickness, innovation, separate SMOS and CryoSat-2 thicknesses and uncertainties, etc. (PDD v1.6, Table 3)"
+        after: "Reduced to six variables — sea_ice_thickness, sea_ice_thickness_uncertainty, sea_ice_concentration, status_flag, quality_flag, density_of_ocean (ocean fraction per cell) (per the Copernicus Marine product manual)"
+      - aspect: File name
+        before: "W_XX-ESA,SMOS_CS2,NH_25KM_EASE2_<start>_<end>_<o|r>_v206_01_l4sit.nc"
+        after: "W_XX-ESA,SMOS_CS2_S3A_S3B,NH_12P5KM_EASE2_<start>_<end>_o_v300_01_l4sit (from AWI quicklook file names)"
+      - aspect: Distribution and DOI
+        before: "ESA SMOS dissemination server, L4_SIT_Open, DOI 10.57780/sm1-4f787c3 (Version 206) / AWI FTP"
+        after: "AWI FTP, cryosat2_smos/v300 folder / Copernicus Marine SEAICE_GLO_PHY_L4_NRT_011_014 (product DOI 10.48670/moi-00125). Not on the ESA dissemination server as of October 2026"
+    impacts:
+      - v206 (2010–2025) and v300 (2025/26 onward) differ in resolution, input satellites and uncertainty model, so a series joined across the switch may show a step. Until a consistent record in a single version is available, treat the v206 and v300 periods separately in long-term analyses.
+      - File names (SMOS_CS2 → SMOS_CS2_S3A_S3B, 25KM → 12P5KM, v206 → v300) and variables have changed, so existing readers will break. Check the variable names in the new files before updating your code.
+      - Larger v300 uncertainties reflect the new uncertainty model, not lower quality. Do not compare uncertainties across versions directly or filter both versions with the same threshold.
+      - Antarctic winter thickness is new; the CS2SMOS record is Arctic only. For Antarctic work, check when the record starts and how far it has been validated.
+    sources:
+      - name: AWI CS3SMOS/CS2SMOS product page (version history)
+        url: https://spaces.awi.de/spaces/CS2SMOS/pages/297634429/CryoSat-2+Sentinel-3+SMOS+Merged+Sea+Ice+Thickness
+      - name: AWI CS2SMOS-PDS announcements (v300 start on 2025-10-23)
+        url: https://spaces.awi.de/spaces/CS2SMOS/overview
+      - name: ESA SMOS-CryoSat L4 Sea Ice Thickness catalogue (v206)
+        url: https://earth.esa.int/eogateway/catalog/smos-cryosat-l4-sea-ice-thickness
+      - name: ESA CS2SMOS Product Description Document (PDD v1.6, v206)
+        url: https://earth.esa.int/eogateway/documents/20142/37627/CryoSat-2-SMOS-Merged-Product-Description-Document-PDD.pdf
+
+period:
+  start: "2010-11"
+  end: "2025-04"
+  note: >-
+    Starts 2010-11-15 according to the ESA catalogue. Coverage is limited to the Northern Hemisphere October–April (winter) period; summers are empty.
+    The last v206 season is winter 2024/25, and three weeks of L4 data (4–23 February 2025) are missing because the JRA-3Q reanalysis input was unavailable.
+
+resolution:
+  spatial_short: "25 km (0.23°)"
+  temporal_short: "7일"
+  spatial: "25 km EASE2 Grid, Northern Hemisphere (polar aspect spherical Lambert azimuthal equal-area projection, 432 × 432 grid centred on the geographic pole) — successor CS3SMOS is 12.5 km"
+  vertical: Not applicable (single thickness value)
+  temporal: Weekly (7-day window) fields updated daily — each file represents one week (Monday–Sunday or the latest 7 days)
+
+update: Production ended (April 2025). While operational, preliminary weekly fields were produced daily and final versions with a delay of about 3–4 weeks
+license: ESA's Earth Observation Terms and Conditions (ESA distribution) / AWI distribution — citation and acknowledgement as requested by AWI
+account_required: false
+
+summary: >-
+  A weekly Arctic sea ice thickness data record from merged CryoSat-2 and SMOS satellite data. The CryoSat-2 radar altimeter is most accurate over
+  thick ice, while the SMOS L-band radiometer is most sensitive to thin ice (below about 1 m); the two are combined by optimal interpolation. Compared with
+  CryoSat-2 monthly fields alone, the product offers better temporal resolution and gap-free coverage, and it has been widely used for sea ice prediction
+  initialisation, model evaluation and shipping-route studies. It is produced by AWI and distributed by ESA as SMOS-CryoSat L4 Sea Ice Thickness.
+
+time_convention:
+  summary: >-
+    Each file merges SMOS and CryoSat-2 observations from a 7-day window (start and end dates in the file name) into one weekly field; it is a 7-day mean,
+    not an instantaneous value. Since v2.02 the target week is moved forward in daily increments, so files on consecutive days overlap by six days.
+  points:
+    - "The two dates in the file name are the start and end of the 7-day window (e.g. 20190304_20190310). time_coverage_end is given as 00:00 UTC on the day after the end date, so the window runs from 00:00 on the start date to 24:00 on the end date."
+    - "The PDD describes weekly fields based on calendar weeks from Monday to Sunday, whereas the ATBD states that since v2.02 target weeks are updated in daily increments. If you need non-overlapping samples, use only files starting on a Monday."
+    - "The `time` variable is defined only as 'reference time of product'; the documents do not say whether it marks the start or the centre of the window. Use the file name or time_bnds for dates."
+    - "The optimal interpolation background is built from data outside the target week (CryoSat-2 two weeks before and after, SMOS one week before and after). Operational ('o') files can only use data before the target week, so they may differ from reprocessed ('r') files."
+    - "Sea ice concentration is the weekly mean of the OSI SAF daily ice concentration over the target week."
+  source: https://earth.esa.int/eogateway/documents/20142/0/CryoSat-2-SMOS-ATBD.pdf/9ba793ce-2cfa-cc59-1b0e-8e18b7180f30
+  source_name: ESA CryoSat-2/SMOS merged thickness ATBD / Product Description Document (PDD v1.6)
+
+variables:
+  note: >-
+    Variables as listed in the v206 Product Description Document (PDD v1.6, Table 3). Figure captions in the same document use some other names, so check
+    an actual file once. The successor CS3SMOS (v300) has a new file format and different variable names.
+  full_list: https://earth.esa.int/eogateway/documents/20142/37627/CryoSat-2-SMOS-Merged-Product-Description-Document-PDD.pdf
+  groups:
+    - name: Merged thickness (main product)
+      kind: mean
+      period: 7 days
+      items:
+        - text: "CS2SMOS merged sea ice thickness — `analysis_sea_ice_thickness` (m)"
+          note: Weekly SMOS and CryoSat-2 thicknesses of the 7-day window merged with the background field by optimal interpolation.
+        - text: "Uncertainty of the merged sea ice thickness — `analysis_sea_ice_thickness_unc` (m)"
+          note: Uncertainty of the same weekly analysis.
+        - text: "Optimal interpolation background field — `background_sea_ice_thickness` (m)"
+          note: Built from observations outside the target week (CryoSat-2 two weeks before and after, SMOS one week before and after); in operational mode only the preceding weeks are used. It is therefore not a 7-day mean but a field from several weeks around the target week.
+        - text: "Weighted mean of weekly CS2 and SMOS ice thickness retrievals — `weighted_mean_sea_ice_thickness` (m)"
+          note: Weighted mean of the weekly averaged CryoSat-2 and SMOS thicknesses (PDD definition).
+        - text: "Difference between background and analysis ice thickness — `innovation` (m)"
+          note: For the same week.
+    - name: Thickness by input sensor
+      kind: mean
+      period: 7 days
+      items:
+        - text: "Weekly averaged SMOS ice thickness — `smos_sea_ice_thickness` (m)"
+          note: PDD definition 'weekly averaged SMOS ice thickness'.
+        - text: "SMOS ice thickness uncertainty — `smos_sea_ice_thickness_uncertainty` (m)"
+          note: Uncertainty of the weekly averaged SMOS thickness.
+        - text: "Weekly averaged CryoSat-2 ice thickness — `cryosat_sea_ice_thickness` (m)"
+          note: PDD definition 'weekly averaged CryoSat-2 ice thickness'.
+        - text: "CryoSat-2 ice thickness uncertainty — `cryosat_sea_ice_thickness_uncertainty` (m)"
+          note: Uncertainty of the weekly averaged CryoSat-2 thickness.
+    - name: Auxiliary fields
+      kind: mean
+      period: 7 days
+      items:
+        - text: "Sea ice concentration — `sea_ice_concentration` (%)"
+          note: Weekly mean of OSI SAF daily ice concentration over the target week (ATBD).
+        - text: "Sea ice type (2 = first-year ice, 3 = multi-year ice) — `sea_ice_type` (flag)"
+          note: Uses OSI SAF daily sea ice type as input. The documents do not say how it is aggregated to a weekly value (mean, representative day, etc.).
+        - text: "Correlation length scale of sea ice thickness — `correlation_length_scale` (m)"
+          note: An optimal interpolation parameter estimated per grid cell from the background field of the target week. Recomputed every week; not a time mean of observations.
+
+access:
+  - name: ESA SMOS Online Dissemination Service — L4_SIT_Open collection
+    url: https://smos-diss.eo.esa.int/oads/meta/L4_SIT_Open/index/
+    method: HTTPS / FTPS (ftps://smos-diss.eo.esa.int/)
+    note: Log in with a free ESA EO Sign In account to download. The full v206 record from November 2010 is here.
+  - name: ESA Earth Online catalogue — SMOS-CryoSat L4 Sea Ice Thickness
+    url: https://earth.esa.int/eogateway/catalog/smos-cryosat-l4-sea-ice-thickness
+    method: Web documentation (DOI, PDD, Read-me-first note, ATBD)
+  - name: AWI FTP — sea ice product root
+    url: ftp://ftp.awi.de/sea_ice/product/
+    method: Anonymous FTP
+    note: No account needed. According to AWI quicklook paths, CS3SMOS is in the cryosat2_smos/v300 folder; check the FTP listing for the exact subfolders.
+  - name: AWI CS2SMOS-PDS wiki (announcements and documents)
+    url: https://spaces.awi.de/spaces/CS2SMOS/overview
+    method: Web documentation
+    note: The first place where production starts, interruptions and data gaps are announced.
+  - name: C3S Climate Data Store — Sea ice thickness gridded data for the Arctic derived from satellite observations
+    url: https://cds.climate.copernicus.eu/datasets/satellite-sea-ice-thickness
+    method: Web download / CDS API
+    note: A separately processed satellite-based Arctic sea ice thickness dataset provided by C3S; not the same product as CS2SMOS. Requires an ECMWF account.
+
+example:
+  lang: python
+  note: "Assumes a v206 weekly file downloaded from the ESA server, e.g. W_XX-ESA,SMOS_CS2,NH_25KM_EASE2_20190304_20190310_o_v206_01_l4sit.nc"
+  code: |
+    import xarray as xr
+
+    ds = xr.open_dataset("W_XX-ESA,SMOS_CS2,NH_25KM_EASE2_20190304_20190310_o_v206_01_l4sit.nc")
+
+    sit = ds["analysis_sea_ice_thickness"].squeeze()        # m
+    unc = ds["analysis_sea_ice_thickness_unc"].squeeze()    # m
+
+    # Compare SMOS and CryoSat-2 contributions over thin ice (< 1 m)
+    thin = sit < 1.0
+    print("SMOS  :", float(ds["smos_sea_ice_thickness"].squeeze().where(thin).mean()))
+    print("CS2   :", float(ds["cryosat_sea_ice_thickness"].squeeze().where(thin).mean()))
+    print("Merged:", float(sit.where(thin).mean()))
+
+tips:
+  - >-
+    Each file is a 7-day mean. A new file appears every day, but files on consecutive days share six days of data, so do not treat them as an
+    independent daily series and ignore the autocorrelation. Using only non-overlapping weekly files (Monday–Sunday) is the safe choice.
+  - >-
+    Operational ('o') files and reprocessed ('r') files can differ. Where both exist for the same period, use the reprocessed version.
+  - >-
+    SMOS thickness is known to be underestimated where ice concentration is below 100%, and SMOS data are frequently missing over the Barents, Kara and
+    Laptev Seas because of radio-frequency interference (RFI). Merged thickness there relies essentially on altimetry, so interpret it with care.
+  - >-
+    v206 and its successor CS3SMOS (v300) differ in resolution, input satellites and uncertainty model and should not be treated as one record. To extend
+    beyond the 2025/26 winter, move the whole analysis to v300 where possible; if you combine them, state the switch date explicitly.
+
+citations:
+  dataset:
+    - label: ESA SMOS-CryoSat L4 Sea Ice Thickness, Version 206
+      text: >-
+        European Space Agency, 2023, SMOS-CryoSat L4 Sea Ice Thickness, Version 206. https://doi.org/10.57780/sm1-4f787c3
+      doi: 10.57780/sm1-4f787c3
+      bibtex: |
+        @misc{esa_smos_cryosat_l4_sit_v206,
+          author    = {{European Space Agency}},
+          title     = {{SMOS-CryoSat} {L4} Sea Ice Thickness, Version 206},
+          year      = {2023},
+          publisher = {European Space Agency},
+          doi       = {10.57780/sm1-4f787c3}
+        }
+  papers:
+    - label: CS2SMOS method paper (citation requested by AWI and ESA)
+      text: >-
+        Ricker, R., Hendricks, S., Kaleschke, L., Tian-Kunze, X., King, J., and Haas, C. (2017): A weekly Arctic sea-ice thickness
+        data record from merged CryoSat-2 and SMOS satellite data. The Cryosphere, 11, 1607–1623.
+      doi: 10.5194/tc-11-1607-2017
+      bibtex: |
+        @article{ricker2017cs2smos,
+          author  = {Ricker, Robert and Hendricks, Stefan and Kaleschke, Lars and Tian-Kunze, Xiangshan and King, Jennifer and Haas, Christian},
+          title   = {A weekly {Arctic} sea-ice thickness data record from merged {CryoSat-2} and {SMOS} satellite data},
+          journal = {The Cryosphere},
+          volume  = {11},
+          number  = {4},
+          pages   = {1607--1623},
+          year    = {2017},
+          doi     = {10.5194/tc-11-1607-2017}
+        }
+    - label: SMOS thin sea ice thickness algorithm paper (optional)
+      text: >-
+        Tian-Kunze, X., Kaleschke, L., Maaß, N., Mäkynen, M., Serra, N., Drusch, M., and Krumpen, T. (2014): SMOS-derived thin sea ice
+        thickness: algorithm baseline, product specifications and initial verification. The Cryosphere, 8, 997–1018.
+      doi: 10.5194/tc-8-997-2014
+  acknowledgement: >-
+    Along with the paper citation, AWI asks users to acknowledge: "The production of the merged CryoSat-SMOS sea ice thickness data was funded by the ESA
+    project SMOS & CryoSat-2 Sea Ice Data Product Processing and Dissemination Service, and data from DATE to DATE were obtained from AWI." (replace AWI
+    with ESA if you downloaded from ESA). Check the AWI CS2SMOS wiki and the Read-me-first note for the current wording.
+
+notices:
+  - date: "2026-04-21"
+    level: info
+    title: Successor CS3SMOS — near-real-time processing ends for the Arctic 2025/26 winter season
+    body: >-
+      CS3SMOS Arctic near-real-time processing has concluded for the season (final map 9–15 April 2026), and Southern Hemisphere processing is expected
+      to begin soon. As of 2026-10-11 the start of the 2026/27 Arctic season has not yet been announced.
+    source: https://spaces.awi.de/spaces/CS2SMOS/overview
+  - date: "2025-10-23"
+    level: critical
+    title: CS2SMOS (v206) replaced by CS3SMOS (v300)
+    body: >-
+      From the 2025/26 winter the merged thickness product is v300 (CS3SMOS). Key changes are added Sentinel-3A/B altimetry, a 12.5 km grid, Antarctic
+      winter coverage and a new file format. v206 is no longer updated, so check the paths and variable names in operational scripts.
+    source: https://spaces.awi.de/spaces/CS2SMOS/overview
+  - date: "2025-10-23"
+    level: warning
+    title: Degraded quality in the Barents, Kara and Laptev Seas due to SMOS radio-frequency interference (RFI)
+    body: >-
+      Recurring RFI removes SMOS thin-ice measurements in these seas, so thickness there is estimated from radar altimetry alone and may be higher than
+      SMOS-based estimates.
+    source: https://spaces.awi.de/spaces/CS2SMOS/overview
+  - date: "2025-04-17"
+    level: info
+    title: L4 CryoSat-2/SMOS v206 near real time completed for winter season 2024/25 — last CS2SMOS season
+    body: The v206 near-real-time Arctic season has ended; production will continue in October 2025 as v300.
+    source: https://spaces.awi.de/spaces/CS2SMOS/overview
+  - date: "2025-02-24"
+    level: warning
+    title: L4 CryoSat-2/SMOS v206 near-real-time production interrupted (February 2025) — some weekly fields missing
+    body: >-
+      Production of SMOS L3 and the merged L4 stopped because the JRA-3Q reanalysis input was unavailable, and resumed on 2025-03-03.
+      L4 data for three weeks, 4–23 February 2025, remain missing.
+    source: https://spaces.awi.de/spaces/CS2SMOS/overview
+
+links:
+  - name: ESA Read-me-first note (v206; known issues and validation)
+    url: https://earth.esa.int/eogateway/documents/20142/37627/Read-me-first-note-for-the-release-of-theCryoSat-2-SMOS-Merged-Sea-Ice-Thickness.pdf
+  - name: ESA Algorithm Theoretical Basis Document (ATBD)
+    url: https://earth.esa.int/eogateway/documents/20142/0/CryoSat-2-SMOS-ATBD.pdf/9ba793ce-2cfa-cc59-1b0e-8e18b7180f30
+  - name: AWI CS3SMOS/CS2SMOS product page (version history)
+    url: https://spaces.awi.de/spaces/CS2SMOS/pages/297634429/CryoSat-2+Sentinel-3+SMOS+Merged+Sea+Ice+Thickness
+  - name: ESA SMOS mission page
+    url: https://earth.esa.int/eogateway/missions/smos
+
+watch_urls:
+  - https://spaces.awi.de/spaces/CS2SMOS/overview
+  - https://earth.esa.int/eogateway/catalog/smos-cryosat-l4-sea-ice-thickness
+
+last_verified: "2026-10-11"

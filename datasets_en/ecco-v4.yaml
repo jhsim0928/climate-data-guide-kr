@@ -1,0 +1,323 @@
+# ─────────────────────────────────────────────────────────────
+# ECCO Version 4 — dataset information file (English edition)
+# After editing, update last_verified to the date you checked the official pages.
+# ─────────────────────────────────────────────────────────────
+id: ecco-v4
+name: ECCO V4
+full_name: Estimating the Circulation and Climate of the Ocean (ECCO) Version 4 Central Estimate — current main public release V4r4
+category: reanalysis
+domain: ocean
+group: 재분석
+order: 30
+domains: [해양, 해빙, 대기]
+provider: ECCO Consortium (NASA JPL, MIT, UT Austin, AER and others) / distributed by NASA PO.DAAC (Earthdata)
+
+status: active
+status_note: >-
+  The main release distributed by PO.DAAC is Release 4 (V4r4, 1992–2017), a fixed-period release rather than a dataset extended month by month.
+  V4r5, which extends the period to the end of 2019, has been partly available since 2025 as native-grid monthly means in the AWS cloud (requester-pays S3),
+  and in May 2026 the ECCO team said V4r6, covering 1992–2025, will be officially released through PO.DAAC and supersede V4r5. As of 2026-10-12 no release date for V4r6 has been announced.
+
+transitions:
+  - from: ECCO V4r4
+    to: ECCO V4r5
+    status: completed
+    date: "2025-05"
+    summary: >-
+      A release on the same LLC90 grid and MITgcm framework that extends the optimization period to the end of 2019, uses the adjoint of the thermodynamic sea-ice model, and adds Antarctic ice shelves and tidewater glaciers.
+      As of October 2026, however, it is not in PO.DAAC's regular downloads (Earthdata Search); only some native-grid monthly-mean variables can be obtained from an AWS requester-pays bucket.
+    changes:
+      - aspect: Period
+        before: "1992-01 to 2017-12"
+        after: "1992-01 to 2019-12 (synopsis: to 1 January 2020)"
+      - aspect: Model and optimization
+        before: "MITgcm 1° LLC90, least-squares fit with the 4D-Var adjoint method"
+        after: "Same grid; uses the adjoint of the thermodynamic sea-ice model to better fit satellite sea-ice concentration, and adds a thermodynamic representation of Antarctic ice shelves and tidewater glaciers"
+      - aspect: Distribution
+        before: "PO.DAAC — llc90 and 0.5° grids, daily and monthly means and daily snapshots, dozens of datasets"
+        after: "s3://ecco-model-granules/ (requester pays) — only some llc90 native-grid monthly means (temperature and salinity, heat fluxes, atmospheric surface state, etc.)"
+      - aspect: Terms of use (file attributes)
+        before: "Public Domain"
+        after: "CC BY 4.0"
+    impacts:
+      - V4r4 and V4r5 are different optimized solutions, so do not splice them into one time series. If you need 2018–2019, use V4r5 for the whole period.
+      - V4r5 can only be read with ecco_access inside the AWS cloud (us-west-2 recommended); downloading from outside incurs transfer charges.
+      - The ECCO team has said V4r6 will supersede V4r5, so check when V4r6 is released before starting a new long-term analysis.
+    sources:
+      - name: Synopsis of the ECCO V4r5 Global Ocean and Sea-Ice State Estimate (Zenodo, 2024)
+        url: https://doi.org/10.5281/zenodo.13926715
+      - name: ecco_access documentation — Accessing ECCOv4 release 5 output in the AWS Cloud
+        url: https://ecco-access.readthedocs.io/en/latest/ECCO_access_v4r5.html
+  - from: ECCO V4r4 / V4r5
+    to: ECCO V4r6
+    status: planned
+    summary: >-
+      In replies on the ECCO support mailing list in April–May 2026, the ECCO team (Ou Wang, JPL) said V4r6, covering 1 January 1992 to 31 December 2025, is being prepared,
+      will be officially released through PO.DAAC, and will supersede V4r5. Monthly means are to be posted on ECCO Drive first, but no release date has been set.
+    changes:
+      - aspect: Period
+        before: "1992–2017 (V4r4) / 1992–2019 (V4r5)"
+        after: "1992-01-01 to 2025-12-31"
+      - aspect: Distribution
+        before: "PO.DAAC (V4r4) / AWS requester-pays bucket (V4r5)"
+        after: "Monthly means first on ECCO Drive, then official release through PO.DAAC"
+    impacts:
+      - Specific model and data assimilation changes have not yet been documented officially. Read the synopsis once it is released before switching.
+    sources:
+      - name: ecco-support mailing list — V4r6 announcement (2026-05-14)
+        url: https://mailman.mit.edu/pipermail/ecco-support/2026-May/000851.html
+      - name: ecco-support mailing list — ECCO data after end of 2017 (2026-04)
+        url: https://mailman.mit.edu/pipermail/ecco-support/2026-April/000846.html
+
+period:
+  start: "1992-01"
+  end: "2017-12"
+  note: >-
+    V4r4 covers 1992-01-01 to 2017-12-31 (PO.DAAC metadata end 2018-01-01; the last monthly-mean file when checked on 2026-10-12 was 2017-12).
+    V4r5 covers 1992-01 to 2019-12 but is only partly available, and V4r6 (1992–2025) has yet to be released.
+
+resolution:
+  spatial_short: "111 km (1°)"
+  temporal_short: "1일"
+  spatial: >-
+    Model grid LLC90 (Lat-Lon-Cap 90): a simple latitude–longitude grid between 70°S and 57°N and a curvilinear Arctic cap, stored as 13 tiles of 90 × 90; nominally 1° (horizontal resolution varies from 22 km to 110 km per the user guide, finer at high latitudes) /
+    distributed grids: native grid (llc90) or a regular 0.5° × 0.5° latitude–longitude grid (latitude −89.75 to 89.75°, longitude −179.75 to 179.75°, interpolated)
+  vertical: "50 levels (vertical grid spacing increasing from 10 m near the surface to 457 m near the ocean bottom; deepest bottom 6,145 m)"
+  temporal: >-
+    Daily and monthly means (both llc90 and 0.5°) / daily snapshots (instantaneous, 00 UTC, selected llc90 variables) /
+    IERS Special Bureau for the Oceans (SBO) core products based on bottom pressure (global scalar time series) at hourly resolution
+
+update: Fixed-period release — not extended routinely (new releases extend the period)
+license: >-
+  Free and open. V4r4 file attributes state Public Domain; V4r5 is CC BY 4.0. As a condition of use, ECCO requires citation of the dataset, the synopsis and Forget et al. (2015)
+account_required: true
+
+summary: >-
+  ECCO V4 is a "state estimate": the initial conditions, model parameters and atmospheric forcing (ERA-Interim plus estimated adjustments) of the MITgcm ocean–sea-ice model are adjusted
+  so that a free-running solution fits, in a least-squares sense, the observations available since 1992 — satellite altimetry, SST, sea-ice concentration, GRACE bottom pressure, Argo and other in-situ data.
+  Unlike a conventional reanalysis, it does not correct the model state at each observation time, so the result satisfies the model equations exactly: heat, salt, volume and momentum are conserved and budgets close.
+  This makes it especially useful for work on why the ocean changed, such as ocean heat and freshwater budgets and attribution of sea-level change.
+
+time_convention:
+  summary: >-
+    PO.DAAC daily and monthly mean files are averages over that interval (one day or one calendar month); `time` is the "center time of averaging period" and `time_bnds` gives its start and end.
+    Snapshot datasets are instantaneous values at 00:00 UTC on the given date, and are designed so that changes computed from monthly-mean fluxes match the differences between consecutive snapshots.
+  points:
+    - "For example, `time` for the January 2017 monthly mean is 2017-01-16T12:00:00, and daily means are stamped 12:00 on the day (reference 'hours since 1992-01-01T12:00:00')."
+    - "Snapshot file names carry the date and 00 UTC time, e.g. OCEAN_TEMPERATURE_SALINITY_snap_1992-01-02T000000_…"
+    - "To close heat and salt budgets, use native-grid (llc90) monthly-mean fluxes together with the snapshots at the month boundaries. The documentation states that the 0.5° interpolated fields should not be used for budget calculations."
+    - "Flux variables (W m-2, kg m-2 s-1, N m-2) are mean fluxes, not accumulations."
+  source: https://www.earthdata.nasa.gov/data/catalog/pocloud-ecco-l4-ocean-vel-05deg-monthly-v4r4-v4r4
+  source_name: "NASA Earthdata dataset variable descriptions (time = 'center time of averaging period', time_bnds) + ECCO V4r4 user guide (snapshots and budgets)"
+
+variables:
+  note: >-
+    Main variables in the PO.DAAC V4r4 datasets. Names are the variable names inside the netCDF files. Variables are grouped into thematic datasets (ShortName),
+    and the same variable appears separately on llc90 (…_LLC0090GRID_…) and 0.5° (…_05DEG_…) grids and as daily (DAILY) and monthly (MONTHLY) means.
+  full_list: https://ecco-access.readthedocs.io/en/latest/Querying_ECCO_variables.html
+  groups:
+    - name: 3-D ocean (50 levels)
+      kind: mean
+      period: Daily / monthly
+      items:
+        - "Ocean potential temperature — `THETA` (°C)"
+        - "Salinity — `SALT` (psu)"
+        - "Velocity in the model x and y directions (llc90) — `UVEL`, `VVEL` (m/s)"
+        - "Zonal (east-west) and meridional (north-south) components of ocean velocity (0.5° grid, interpolated to cell centres) — `EVEL`, `NVEL` (m/s)"
+        - "Vertical velocity in the +z direction at the top face of the grid cell — `WVEL` (m/s)"
+    - name: Sea surface height and mixed layer
+      kind: mean
+      period: Daily / monthly
+      items:
+        - "Dynamic sea surface height anomaly (suitable for comparison with altimetry) — `SSH` (m)"
+        - "Mixed-layer depth (Kara et al. 2000; depth where temperature is 0.8 °C below the surface) — `MXLDEPTH` (m)"
+    - name: Surface fluxes
+      kind: mean
+      period: Daily / monthly
+      items:
+        - "Open ocean net air-sea heat flux — `EXFqnet` (W m-2)"
+        - "Net heat flux into the ocean surface — `oceQnet` (W m-2)"
+        - "Open ocean net surface freshwater flux from precipitation, evaporation and runoff — `EXFempmr` (m/s)"
+        - "Net freshwater flux into the ocean — `oceFWflx` (kg m-2 s-1)"
+        - "Wind stress in the model +x direction / ocean surface stress due to wind and sea ice — `EXFtaux`, `oceTAUX` (N m-2)"
+    - name: Sea ice and snow
+      kind: mean
+      period: Daily / monthly
+      items:
+        - "Sea-ice concentration — `SIarea` (fraction, 0–1)"
+        - "Area-averaged sea-ice thickness — `SIheff` (m)"
+        - "Area-averaged snow thickness — `SIhsnow` (m)"
+        - "Sea-ice velocity in the model +x direction — `SIuice` (m/s)"
+    - name: Snapshots (instantaneous, llc90)
+      kind: instant
+      period: "once daily (00 UTC)"
+      items:
+        - "Potential temperature and salinity — `THETA`, `SALT` (ECCO_L4_TEMP_SALINITY_LLC0090GRID_SNAPSHOT_V4R4)"
+        - "Sea surface height variables — ECCO_L4_SSH_LLC0090GRID_SNAPSHOT_V4R4"
+        - "Sea-ice and snow concentration and thickness — ECCO_L4_SEA_ICE_CONC_THICKNESS_LLC0090GRID_SNAPSHOT_V4R4"
+
+access:
+  - name: NASA PO.DAAC — ECCO datasets
+    url: https://podaac.jpl.nasa.gov/ECCO
+    method: Earthdata Search / HTTPS download / earthaccess and ecco_access (Python) / direct access in AWS us-west-2
+    note: >-
+      Requires a free NASA Earthdata account. V4r4 is split into dozens of datasets by theme, grid and time interval (e.g. ShortName ECCO_L4_TEMP_SALINITY_05DEG_MONTHLY_V4R4).
+  - name: ECCO project — V4r4 product page
+    url: https://ecco-group.org/products-ECCO-V4r4.htm
+    method: Information page (citations, errata, documentation)
+    note: The page still said "The ECCO Drive is temporarily offline" when checked in October 2026, but the ECCO team announced on 2026-08-28 that ECCO Drive is accessible again.
+  - name: ECCO Drive
+    url: https://ecco.jpl.nasa.gov/drive/
+    method: HTTPS (WebDAV) — log in with an Earthdata account
+    note: Hosts llc90 native-grid files (V4r4 monthly means, forcing input files, etc.) and is where V4r6 monthly means are to appear.
+  - name: ecco_access (ECCOv4-py) — V4r5 cloud access guide
+    url: https://ecco-access.readthedocs.io/en/latest/ECCO_access_v4r5.html
+    method: Python (inside the AWS cloud only)
+    note: V4r5 monthly means are in the requester-pays bucket s3://ecco-model-granules/.
+
+example:
+  lang: python
+  note: "Run after pip install earthaccess xarray netcdf4. On the first login(), enter your Earthdata username and password (or store them in ~/.netrc). The ShortName is the PO.DAAC dataset name."
+  code: |
+    import earthaccess
+    import xarray as xr
+
+    earthaccess.login()
+
+    # V4r4 temperature and salinity, monthly means on the 0.5° lat-lon grid
+    results = earthaccess.search_data(
+        short_name="ECCO_L4_TEMP_SALINITY_05DEG_MONTHLY_V4R4",
+        temporal=("2010-01-01", "2010-12-31"),
+    )
+    files = earthaccess.download(results, "ecco_v4r4_ts")
+    ds = xr.open_mfdataset(files)
+    print(ds["THETA"])   # (time, Z, latitude, longitude)
+
+tips:
+  - "The 0.5° interpolated fields are for plotting and comparison. To close heat, salt or volume budgets, use the llc90 native-grid data with the grid geometry dataset (ECCO_L4_GEOMETRY_LLC0090GRID_V4R4)."
+  - "llc90 is stored as 13 tiles (tile, j, i), so it cannot be subset like a lat-lon array. The ecco_v4_py package provides tools for plotting tiles, interpolation and budget calculations."
+  - "`UVEL` and `VVEL` are along the model grid axes, which are not east–west and north–south in the Arctic cap and elsewhere. For eastward and northward velocity, use `EVEL` and `NVEL` from the 0.5° data or rotate using the grid angles."
+  - "June 2021 errata (V4r4b): the 2014 atmospheric pressure forcing was wrong (April and December swapped, May–November shifted by one day), affecting daily sea level and bottom pressure in 2013–2015. Use the V4R4B datasets if you need daily data for this period."
+  - "V4r4 atmospheric forcing is ERA-Interim plus control adjustments estimated by the ECCO optimization (wind speed and air pressure are not adjusted). Do not treat the atmospheric surface state datasets as identical to the original ERA-Interim."
+  - "ECCO V5 Alpha, ECCO2 and ECCO-Darwin are different products. State the exact release name (e.g. V4r4) in your paper."
+
+citations:
+  dataset:
+    - label: PO.DAAC dataset DOI (example — temperature and salinity, monthly mean 0.5°)
+      text: >-
+        ECCO Consortium, Fukumori, I., Wang, O., Fenty, I., Forget, G., Heimbach, P., & Ponte, R. M. (2020).
+        ECCO Ocean Temperature and Salinity - Monthly Mean 0.5 Degree (Version 4 Release 4). Ver. V4r4. PO.DAAC, CA, USA.
+        Dataset accessed [YYYY-MM-DD] at https://doi.org/10.5067/ECG5M-OTS44
+      doi: 10.5067/ECG5M-OTS44
+      bibtex: |
+        @misc{ecco_v4r4_ts_05deg_monthly,
+          author    = {{ECCO Consortium} and Fukumori, Ichiro and Wang, Ou and Fenty, Ian and Forget, Ga{\"e}l and Heimbach, Patrick and Ponte, Rui M.},
+          title     = {{ECCO} Ocean Temperature and Salinity - Monthly Mean 0.5 Degree (Version 4 Release 4)},
+          year      = {2020},
+          publisher = {NASA Physical Oceanography Distributed Active Archive Center (PO.DAAC)},
+          version   = {V4r4},
+          doi       = {10.5067/ECG5M-OTS44}
+        }
+    - label: PO.DAAC dataset DOI (example — temperature and salinity, monthly mean llc90 native grid)
+      text: >-
+        ECCO Consortium, Fukumori, I., Wang, O., Fenty, I., Forget, G., Heimbach, P., & Ponte, R. M. (2020).
+        ECCO Ocean Temperature and Salinity - Monthly Mean llc90 Grid (Version 4 Release 4). Ver. V4r4. PO.DAAC, CA, USA.
+        Dataset accessed [YYYY-MM-DD] at https://doi.org/10.5067/ECL5M-OTS44
+      doi: 10.5067/ECL5M-OTS44
+    - label: V4r4 synopsis
+      text: >-
+        ECCO Consortium, Fukumori, I., Wang, O., Fenty, I., Forget, G., Heimbach, P., & Ponte, R. M. (2021).
+        Synopsis of the ECCO Central Production Global Ocean and Sea-Ice State Estimate (Version 4 Release 4). Zenodo.
+      doi: 10.5281/zenodo.4533349
+      bibtex: |
+        @techreport{ecco_v4r4_synopsis,
+          author      = {{ECCO Consortium} and Fukumori, Ichiro and Wang, Ou and Fenty, Ian and Forget, Ga{\"e}l and Heimbach, Patrick and Ponte, Rui M.},
+          title       = {Synopsis of the {ECCO} Central Production Global Ocean and Sea-Ice State Estimate (Version 4 Release 4)},
+          institution = {Zenodo},
+          year        = {2021},
+          doi         = {10.5281/zenodo.4533349}
+        }
+  papers:
+    - label: ECCO Version 4 framework paper
+      text: >-
+        Forget, G., Campin, J.-M., Heimbach, P., Hill, C. N., Ponte, R. M., Wunsch, C. (2015): ECCO version 4: an integrated framework
+        for non-linear inverse modeling and global ocean state estimation. Geoscientific Model Development, 8(10), 3071–3104.
+      doi: 10.5194/gmd-8-3071-2015
+      bibtex: |
+        @article{forget2015ecco,
+          author  = {Forget, Ga{\"e}l and Campin, Jean-Michel and Heimbach, Patrick and Hill, Christopher N. and Ponte, Rui M. and Wunsch, Carl},
+          title   = {{ECCO} version 4: an integrated framework for non-linear inverse modeling and global ocean state estimation},
+          journal = {Geoscientific Model Development},
+          volume  = {8},
+          number  = {10},
+          pages   = {3071--3104},
+          year    = {2015},
+          doi     = {10.5194/gmd-8-3071-2015}
+        }
+    - label: V4r5 synopsis (if you used V4r5)
+      text: >-
+        ECCO Consortium, Fenty, I., Fukumori, I., Wang, O. (2024): Synopsis of the ECCO V4r5 Global Ocean and Sea-Ice State Estimate. Zenodo.
+      doi: 10.5281/zenodo.13926715
+  acknowledgement: >-
+    The ECCO V4r4 product page states that "as a condition of using this product, you must use the following citations": (1) the dataset, (2) the V4r4 synopsis (10.5281/zenodo.4533349) and (3) Forget et al. (2015).
+    Dataset DOIs differ for each PO.DAAC dataset (ShortName), so cite the DOI of the dataset you actually downloaded.
+
+notices:
+  - date: "2026-08-28"
+    level: info
+    title: ECCO Drive accessible again
+    body: >-
+      ECCO Drive went offline in early July 2026 because of a technical issue and, after a mount problem affecting some paths (ECCO2) in late August, the ECCO team announced on 28 August that it is accessible again.
+      The V4r4 page on the ECCO website may still show the old "temporarily offline" notice.
+    source: https://mailman.mit.edu/pipermail/ecco-support/2026-August/000865.html
+  - date: "2026-05-14"
+    level: info
+    title: V4r6 (1992–2025) in preparation — will supersede V4r5
+    body: >-
+      The ECCO team said that "ECCO Version 4 Release 6 (V4r6), which will supersede ECCO V4r5", covers 1 January 1992 to 31 December 2025 and will be officially released through PO.DAAC.
+      Monthly means are to be posted on ECCO Drive first, but this is taking longer than planned; as of 2026-10-12 no release date has been announced.
+    source: https://mailman.mit.edu/pipermail/ecco-support/2026-May/000851.html
+  - date: "2025-05"
+    level: info
+    title: V4r5 native-grid monthly means released in the AWS cloud
+    body: >-
+      Some V4r5 (1992–2019) monthly-mean llc90 datasets were made available in the requester-pays S3 bucket s3://ecco-model-granules/ (file creation date 2025-05-02).
+      As of October 2025 they can only be read with ecco_access inside the AWS cloud, and daily, snapshot and 0.5° fields are not yet available.
+    source: https://ecco-access.readthedocs.io/en/latest/ECCO_access_v4r5.html
+  - date: "2024-10-13"
+    level: info
+    title: Synopsis of the ECCO V4r5 Global Ocean and Sea-Ice State Estimate published
+    body: >-
+      The synopsis, published on Zenodo, states that V4r5 "extends the previous solution (V4r4) to Jan 1, 2020", uses the adjoint of the thermodynamic sea-ice model to better fit satellite sea-ice concentration,
+      and adds a representation of Antarctic ice shelves and glaciers via a thermodynamic ice-shelf and tidewater model.
+    source: https://doi.org/10.5281/zenodo.13926715
+  - date: "2021-06"
+    level: warning
+    title: "ECCO Version 4, Release 4b: an errata for atmospheric pressure forcing in V4r4"
+    body: >-
+      Atmospheric pressure forcing fields for April and December 2014 were inadvertently swapped and those for May–November 2014 shifted by one day, affecting daily sea level and bottom pressure in 2013–2015.
+      Corrected daily and monthly SSH and OBP fields and the SBO time series were re-released as the V4R4B datasets; at monthly or longer time scales the difference is negligible for most purposes, apart from April and December 2014.
+    source: https://ecco-group.org/docs/ECCO_V4r4_errata.pdf
+
+links:
+  - name: ECCO project home page
+    url: https://ecco-group.org/
+  - name: ECCO V4r4 product page (citations and errata)
+    url: https://ecco-group.org/products-ECCO-V4r4.htm
+  - name: ECCO V4r4 user guide (PDF)
+    url: https://ecco-group.org/docs/v4r4_user_guide.pdf
+  - name: ECCO dataset gallery (list of PO.DAAC datasets)
+    url: https://ecco-group.org/datasets.htm
+  - name: ECCO v4 Python tutorial
+    url: https://ecco-v4-python-tutorial.readthedocs.io/intro.html
+  - name: ecco_access — querying ECCO variables
+    url: https://ecco-access.readthedocs.io/en/latest/Querying_ECCO_variables.html
+  - name: ecco-support mailing list archive
+    url: https://mailman.mit.edu/pipermail/ecco-support/
+
+watch_urls:
+  - https://ecco-group.org/updates.htm
+  - https://mailman.mit.edu/pipermail/ecco-support/
+  - https://ecco-group.org/products.htm
+
+last_verified: "2026-10-12"

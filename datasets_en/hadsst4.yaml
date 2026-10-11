@@ -1,0 +1,276 @@
+# ─────────────────────────────────────────────────────────────
+# HadSST4 — dataset information file (English edition)
+# Met Office Hadley Centre HadSST.4.2.0.0 (5° monthly SST anomalies, non-interpolated ensemble data set)
+# After editing, set last_verified to the date you checked the official pages.
+# ─────────────────────────────────────────────────────────────
+id: hadsst4
+name: HadSST4
+full_name: Met Office Hadley Centre sea surface temperature data set, version HadSST.4.2.0.0
+category: analysis
+domain: ocean
+group: 해수면온도 분석장
+order: 60
+domains: [해양]
+provider: Met Office Hadley Centre (UK)
+
+status: active
+status_note: >-
+  The current version is HadSST.4.2.0.0 (since September 2025), updated monthly. This version refines the bias adjustments for the Second World War
+  (1941–1945), so values in that period are lower than in earlier versions. The previous version, HadSST.4.1.1.0, remains available on the previous
+  versions page, with a stated end date for its monthly updates.
+
+transitions:
+  - from: HadSST.4.1.1.0
+    to: HadSST.4.2.0.0
+    status: completed
+    date: "2025-09"
+    summary: >-
+      A minor science release. Refinements to the pre-1950 engine room intake (ERI) bias estimates reduce the anomalous warmth during the Second World War;
+      it also adds truncation bias corrections for the Japanese Kobe Collection and fixes a bug in the uncertainty calculation. A new version means the
+      full dataset must be downloaded again.
+    changes:
+      - aspect: Second World War (1941–1945)
+        before: "Pre-1950 ERI bias estimates as in Kennedy et al. (2019) — anomalously warm period"
+        after: "Refined pre-1950 ERI bias estimates that reduce the anomalous warmth (Sandford & Rayner 2026)"
+      - aspect: Japanese Kobe Collection (ICOADS decks 118 and 119)
+        before: "No truncation bias correction"
+        after: "Truncation bias corrections added"
+      - aspect: Global ERI bias uncertainty term
+        before: "Bug (value differed from the intended one)"
+        after: "Corrected to the intended 0.2°C (Kennedy et al. 2019, Section 3.1)"
+      - aspect: Moored buoy input
+        before: "iQuam"
+        after: "CMEMS (Copernicus Marine) from August 2025 onwards — drifting buoys already from CMEMS"
+      - aspect: File packaging
+        before: "Ensemble and error covariances in large zip files"
+        after: "Ensemble in four zips of 50 members; error covariances in four zips (1850–1899, 1900–1949, 1950–1999, 2000–present)"
+      - aspect: Error covariance mask
+        before: "Points with no in-situ data indistinguishable from zero covariance"
+        after: "Mask added to distinguish the two"
+    impacts:
+      - "Global and regional mean SST around 1941–1945 differ from the previous version. Recompute any long-term trend or variability analysis that includes this period with 4.2.0.0."
+      - "The Met Office advises downloading the full dataset again at every update and always using the latest version. Quote the exact version number (HadSST.4.2.0.0) in publications."
+    sources:
+      - name: HadSST.4.2.0.0 Product User Guide (September 2025)
+        url: https://www.metoffice.gov.uk/hadobs/hadsst4/documentation/HadSST.4.2.0.0_product_user_guide.pdf
+      - name: Sandford & Rayner (2026), International Journal of Climatology
+        url: https://doi.org/10.1002/joc.70388
+
+period:
+  start: "1850-01"
+  end: present
+  note: >-
+    Updated monthly. On 2026-10-12 the download page showed "Last updated: 15/09/2026" and the annual time series ran through 2025; the most recent month
+    was not checked directly. Observations are very sparse in the 19th century, during the two world wars and in the Southern Ocean, so many grid boxes are empty.
+
+resolution:
+  spatial_short: "555 km (5°)"
+  temporal_short: "1개월"
+  spatial: "Equi-rectangular 5° latitude × 5° longitude grid (36 latitudes × 72 longitudes, longitude −180 to 180); non-infilled — grid boxes without observations are missing"
+  vertical: Sea surface only (nominal depth 20 cm)
+  temporal: Monthly (anomalies relative to 1961–1990)
+
+update: Monthly
+license: >-
+  © British Crown Copyright, Met Office — Open Government Licence v3. The terms contain no restriction on commercial use; commercial and media enquiries
+  go to the Met Office Customer Centre. Credit line and citation of Kennedy et al. (2019) and Sandford & Rayner (2026) required
+account_required: false
+
+summary: >-
+  A monthly global field of sea surface temperature (SST) anomalies on a 5° latitude by 5° longitude grid from 1850 to the present, built by the Met Office
+  Hadley Centre from ICOADS ship and buoy observations and Copernicus Marine buoy data. The data are adjusted to reduce the effects of changes in
+  instrumentation (buckets, engine room intakes, buoys and so on) and are presented as a set of 200 interchangeable realisations that sample the bias
+  adjustment uncertainty, with measurement, sampling and coverage uncertainties supplied separately. The data are not interpolated: unlike gap-free
+  analyses such as HadISST, ERSST or COBE-SST, empty grid boxes stay empty. HadSST4 is the ocean component of global temperature datasets such as HadCRUT5
+  and is widely used to study long-term SST change.
+
+time_convention:
+  summary: >-
+    All gridded values are monthly means, expressed as anomalies from the 1961–1990 climatology. Time is given in "days since 1850-01-01T00:00:00Z"
+    (standard calendar), and `time_bnds` gives the bounds of each month.
+  points:
+    - "The Product User Guide does not say whether the time value is mid-month, so match months using `time_bnds`."
+    - "The 1961–1990 climatology is spatially complete, interpolated from a wider region where local observations are sparse, so anomalies do not average exactly to zero over 1961–1990 in poorly observed areas."
+    - "If you need actual SSTs, use the official actuals files rather than adding a climatology to the anomalies yourself: the climatology must itself be bias-adjusted, otherwise the resulting SSTs are biased."
+    - "Uncertainties in the annual time series (CSV) assume that simply-correlated errors are fully correlated within a year and uncorrelated between years."
+  source: https://www.metoffice.gov.uk/hadobs/hadsst4/documentation/HadSST.4.2.0.0_product_user_guide.pdf
+  source_name: HadSST.4.2.0.0 Product User Guide
+
+variables:
+  note: >-
+    Based on the HadSST.4.2.0.0 Product User Guide and the download page. For files whose variable names are not given in the guide, only the file name is listed.
+  full_list: https://www.metoffice.gov.uk/hadobs/hadsst4/data/download.html
+  groups:
+    - name: SST anomalies (bias-adjusted)
+      kind: mean
+      period: Monthly
+      items:
+        - text: "Sea water temperature anomaly at a depth of 20cm, ensemble median — `tos` (K, HadSST.4.2.0.0_median.nc)"
+          note: standard_name sea_water_temperature_anomaly, relative to 1961–1990. Missing where there are no observations.
+        - text: "200 ensemble members — `tos` in each member file (K)"
+          note: Interchangeable realisations representing the bias adjustment uncertainty; same structure as the median file.
+        - "Actual SST (anomaly + climatology), median and ensemble — HadSST.4.2.0.0_actuals_median.nc, actuals ensemble zips"
+        - text: "Unadjusted SST anomalies — HadSST.4.2.0.0_unadjusted.nc"
+          note: The guide says these should be used with caution, ideally only to quantify the bias corrections.
+    - name: Uncertainties
+      kind: mean
+      period: Monthly
+      items:
+        - "Measurement and sampling uncertainty (uncorrelated between grid boxes) — HadSST.4.2.0.0_measurement_and_sampling_uncertainty.nc"
+        - text: "Total uncertainty — HadSST.4.2.0.0_total_uncertainty.nc"
+          note: Mixes components with different correlation structures, so it cannot be propagated correctly into area-average uncertainties.
+        - text: "Error covariance — `tos_cov` (K², 2592 × 2592, one file per month)"
+          note: Covariance of simply-correlated measurement errors. Area-average uncertainty is w E wᵀ.
+    - name: Observation counts
+      kind: accum
+      period: Monthly
+      items:
+        - "Number of observations per grid box and month — HadSST.4.2.0.0_number_of_observations.nc"
+        - "Number of superobservations (1° × 1° pentad averages) per grid box and month — HadSST.4.2.0.0_number_of_superobservations.nc"
+
+access:
+  - name: Met Office Hadley Centre HadSST4 download page
+    url: https://www.metoffice.gov.uk/hadobs/hadsst4/data/download.html
+    method: Web download (NetCDF / zip / CSV)
+    note: >-
+      Provides the median file (HadSST.4.2.0.0_median.nc), the ensemble (four zips of 50 members), uncertainty and error covariance files, observation
+      counts, and monthly and annual time series (CSV) for the globe, the Northern and Southern Hemispheres and the tropics. No account needed; MD5 checksums are listed.
+  - name: Previous versions (HadSST.4.1.1.0, HadSST.4.0.1.0)
+    url: https://www.metoffice.gov.uk/hadobs/hadsst4/previous_versions.html
+    method: Web download
+    note: 4.0.1.0 ended in December 2024 and 4.1.1.0 was to be updated monthly only until the end of 2025. Use the latest version for new analyses.
+
+example:
+  lang: python
+  note: Downloads the median (anomaly) file and computes the Niño 3.4 area mean from observed grid boxes only; empty boxes are not filled.
+  code: |
+    # pip install xarray netCDF4 numpy requests
+    import numpy as np
+    import requests
+    import xarray as xr
+
+    url = "https://www.metoffice.gov.uk/hadobs/hadsst4/data/data/HadSST.4.2.0.0_median.nc"
+    with open("HadSST.4.2.0.0_median.nc", "wb") as f:
+        f.write(requests.get(url, timeout=600).content)
+
+    ds = xr.open_dataset("HadSST.4.2.0.0_median.nc")
+    tos = ds["tos"]                                   # anomaly vs 1961–1990 (K); NaN where unobserved
+    box = tos.where((ds.latitude >= -5) & (ds.latitude <= 5) &
+                    (ds.longitude >= -170) & (ds.longitude <= -120), drop=True)
+    w = np.cos(np.deg2rad(box.latitude))
+    nino34 = box.weighted(w).mean(["latitude", "longitude"])   # NaN boxes are skipped automatically
+    n_obs = box.notnull().sum(["latitude", "longitude"])       # also check how many boxes went into the mean
+    print(nino34.sel(time="2025").values, n_obs.sel(time="2025").values)
+
+tips:
+  - >-
+    HadSST4 is not infilled. The set of grid boxes behind an area mean changes from month to month, so always look at the number of contributing boxes,
+    and apply the same coverage mask before comparing with gap-free analyses such as HadISST, ERSST or OISST. Area means carry a coverage uncertainty.
+  - >-
+    To get the bias adjustment uncertainty, compute your area mean for each of the 200 members and use the spread across members; the distribution is not
+    Gaussian, so inspect it first. The guide treats the four components — uncorrelated measurement and sampling, correlated measurement (covariance), bias
+    and coverage — as independent and combines them as a root sum of squares.
+  - >-
+    Anomalies are relative to 1961–1990. To compare with anomalies on a 1991–2020 baseline, subtract the mean over a common period first.
+  - >-
+    HadSST.4.2.0.0 changed 1941–1945 values substantially. Re-check any result based on versions before September 2025 (for example, the wartime warm
+    anomaly) against the new version.
+  - >-
+    HadISST is a separate product that uses HadSST4's unadjusted in-situ observations as input (from January 2021 data), and HadSST4 itself contains no
+    sea ice information. For gap-free SST or sea ice concentration, use HadISST or another analysis.
+
+citations:
+  dataset: []
+  papers:
+    - label: HadSST4 reference paper (required citation)
+      text: >-
+        Kennedy, J. J., Rayner, N. A., Atkinson, C. P., Killick, R. E. (2019): An Ensemble Data Set of Sea Surface Temperature Change From 1850:
+        The Met Office Hadley Centre HadSST.4.0.0.0 Data Set. Journal of Geophysical Research: Atmospheres, 124(14), 7719–7763.
+      doi: 10.1029/2018JD029867
+      bibtex: |
+        @article{kennedy2019hadsst4,
+          author  = {Kennedy, J. J. and Rayner, N. A. and Atkinson, C. P. and Killick, R. E.},
+          title   = {An Ensemble Data Set of Sea Surface Temperature Change From 1850: The {Met Office Hadley Centre} {HadSST.4.0.0.0} Data Set},
+          journal = {Journal of Geophysical Research: Atmospheres},
+          volume  = {124},
+          number  = {14},
+          pages   = {7719--7763},
+          year    = {2019},
+          doi     = {10.1029/2018JD029867}
+        }
+    - label: HadSST.4.2.0.0 update paper (Second World War warm anomaly)
+      text: >-
+        Sandford, C., Rayner, N. (2026): Addressing the World War 2 Warm Anomaly in HadSST.4.2.0.0.
+        International Journal of Climatology, 46(8), e70388.
+      doi: 10.1002/joc.70388
+      bibtex: |
+        @article{sandford2026hadsst42,
+          author  = {Sandford, Caroline and Rayner, Nick},
+          title   = {Addressing the World War 2 Warm Anomaly in {HadSST.4.2.0.0}},
+          journal = {International Journal of Climatology},
+          volume  = {46},
+          number  = {8},
+          pages   = {e70388},
+          year    = {2026},
+          doi     = {10.1002/joc.70388}
+        }
+  acknowledgement: >-
+    The terms and conditions require a credit line such as "HadSST.4.2.0.0 data were obtained from http://www.metoffice.gov.uk/hadobs/hadsst4 on
+    [date downloaded] and are © British Crown Copyright, Met Office [year of first publication], provided under an Open Government Licence,
+    https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/" (the Product User Guide gives the year as the year of download — copy the
+    exact wording from the terms and conditions page). Both Kennedy et al. (2019) and Sandford & Rayner (2026) must be cited.
+
+notices:
+  - date: "2026-04-23"
+    level: info
+    title: Paper describing HadSST.4.2.0.0 published
+    body: >-
+      Sandford & Rayner (2026), "Addressing the World War 2 Warm Anomaly in HadSST.4.2.0.0", describing the new wartime bias adjustments, is published
+      online in the International Journal of Climatology. The terms and conditions require it to be cited together with Kennedy et al. (2019).
+    source: https://www.metoffice.gov.uk/hadobs/hadsst4/
+  - date: "2025-09"
+    level: warning
+    title: HadSST.4.2.0.0 released — 1941–1945 values changed; download the full dataset again
+    body: >-
+      Refined pre-1950 ERI bias estimates reduce the anomalous warmth during the Second World War; the release also adds Kobe Collection truncation bias
+      corrections and fixes the ERI uncertainty term, and repackages the ensemble and error covariance files. Replace all data from earlier versions.
+    source: https://www.metoffice.gov.uk/hadobs/hadsst4/documentation/HadSST.4.2.0.0_product_user_guide.pdf
+  - date: "2025-08"
+    level: info
+    title: Moored buoy data switched from iQuam to CMEMS
+    body: From August 2025 onwards moored buoy observations come from Copernicus Marine (CMEMS) instead of iQuam. Drifting buoys were already taken from CMEMS.
+    source: https://www.metoffice.gov.uk/hadobs/hadsst4/documentation/HadSST.4.2.0.0_product_user_guide.pdf
+  - date: "2025-03"
+    level: info
+    title: HadSST.4.1.1.0 released (mainly workflow improvements)
+    body: >-
+      Mostly an internal workflow release. Visible changes: time series CSV values rounded to 6 decimal places, a fill value reinstated in the NetCDF
+      products, and a new random sampling method for insulated bucket corrections to improve reproducibility.
+    source: https://www.metoffice.gov.uk/hadobs/hadsst4/documentation/HadSST.4.2.0.0_product_user_guide.pdf
+  - date: "2025-01"
+    level: info
+    title: HadSST.4.1.0.0 supersedes HadSST.4.0.1.0 — no changes to the science
+    body: >-
+      HadSST.4.1.0.0 replaced HadSST.4.0.1.0, with the science unchanged from Kennedy et al. (2019). Updates to 4.0.1.0 ended with December 2024 data.
+    source: https://www.metoffice.gov.uk/hadobs/hadsst4/previous_versions.html
+
+links:
+  - name: HadSST4 home page (Met Office Hadley Centre)
+    url: https://www.metoffice.gov.uk/hadobs/hadsst4/
+  - name: HadSST4 download page
+    url: https://www.metoffice.gov.uk/hadobs/hadsst4/data/download.html
+  - name: HadSST.4.2.0.0 Product User Guide (PDF)
+    url: https://www.metoffice.gov.uk/hadobs/hadsst4/documentation/HadSST.4.2.0.0_product_user_guide.pdf
+  - name: HadSST4 previous versions
+    url: https://www.metoffice.gov.uk/hadobs/hadsst4/previous_versions.html
+  - name: HadSST4 terms and conditions
+    url: https://www.metoffice.gov.uk/hadobs/hadsst4/terms_and_conditions.html
+  - name: HadSST.4.2.0.0 diagnostic diagrams (observation counts, biases, uncertainties)
+    url: https://www.metoffice.gov.uk/hadobs/hadsst4/diagrams.html
+
+watch_urls:
+  - https://www.metoffice.gov.uk/hadobs/hadsst4/
+  - https://www.metoffice.gov.uk/hadobs/hadsst4/data/download.html
+  - https://www.metoffice.gov.uk/hadobs/hadsst4/previous_versions.html
+
+last_verified: "2026-10-12"

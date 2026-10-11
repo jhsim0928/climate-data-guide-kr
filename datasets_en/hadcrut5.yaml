@@ -1,0 +1,222 @@
+# ─────────────────────────────────────────────────────────────
+# HadCRUT5 — dataset information file
+# Listed under the atmosphere tab (temperature). A blend of CRUTEM5 (land) and HadSST4 (ocean).
+# After editing, update last_verified to the date you checked the official pages.
+# ─────────────────────────────────────────────────────────────
+id: hadcrut5
+name: HadCRUT5
+full_name: HadCRUT5 — Met Office Hadley Centre / Climatic Research Unit global surface temperature anomalies
+category: analysis
+domain: atmosphere
+group: 기온 자료
+order: 10
+domains: [대기, 해양]
+provider: Met Office Hadley Centre and Climatic Research Unit (CRU), University of East Anglia
+
+status: active
+status_note: >-
+  Actively maintained. The dataset version was updated to HadCRUT.5.2.0.0 on 18 September 2026 (land input CRUTEM.5.2.0.0).
+  Each new version recalculates the whole record back to 1850, so always report the version number you used.
+  The CRU (UEA) web page still lists 5.0.2.0 (data to May 2024); download from the Met Office pages.
+
+period:
+  start: "1850-01"
+  end: present
+  note: >-
+    As checked on 2026-10-12, the HadCRUT.5.2.0.0 annual summary files include a (partial) 2026 value, and the accompanying CRUTEM.5.2.0.0 release notes state
+    "2026 based on data for the first seven months of the year only", so data appear to run through July 2026. The last row of the monthly files was not checked directly.
+
+resolution:
+  spatial_short: "555 km (5°)"
+  temporal_short: "1개월"
+  spatial: "5° latitude × 5° longitude global grid. The non-infilled version leaves cells without observations empty; the analysis version fills them by statistical infilling"
+  vertical: Surface only (a blend of near-surface air temperature over land and sea surface temperature over the ocean)
+  temporal: Monthly mean anomalies (summary series provided as separate monthly and annual files)
+
+update: >-
+  Updated regularly (no interval is stated on the HadCRUT5 pages; CRU gives one to two months, and the HadSST4 input is updated monthly).
+  A new version recalculates the full record
+license: Crown copyright — Open Government Licence v3. Attribution including the version number and download date is required
+account_required: false
+
+summary: >-
+  A gridded dataset of global historical surface temperature anomalies from January 1850, produced jointly by the Met Office Hadley Centre and the
+  Climatic Research Unit at the University of East Anglia. It blends the CRUTEM5 land air temperature and HadSST4 sea surface temperature datasets on a 5° grid,
+  with anomalies relative to 1961–1990. It comes in a non-infilled form, holding only cells with observations, and a statistically infilled analysis;
+  both are presented as an ensemble of 200 realisations that sample the uncertainty. It is one of the main global temperature datasets used in IPCC and WMO assessments.
+
+time_convention:
+  summary: >-
+    Every grid value and time series is a monthly mean temperature anomaly (°C, relative to 1961–1990). Values are not instantaneous;
+    the time stamp simply labels the month. Annual files are averages of the monthly values for that year.
+  points:
+    - "In the CSV summary series, the Time column is year-month in monthly files (e.g. \"1956-06\") and the year in annual files (e.g. \"2025\")."
+    - "Summary series give the ensemble central estimate together with the 95% confidence range (2.5% and 97.5%)."
+    - "The latest year is a partial year (in 5.2.0.0, 2026 covers January–July). Take care when ranking annual means."
+    - "A new version changes past values too. Do not compare values for the same month across versions."
+  source: https://www.metoffice.gov.uk/hadobs/hadcrut5/data/HadCRUT.5.2.0.0/download.html
+  source_name: HadCRUT.5.2.0.0 download page / CRUTEM.5.2.0.0 release notes
+
+variables:
+  note: >-
+    Products as listed on the official download page. CSV column names are as they appear in the files.
+    Variable names inside the gridded NetCDF files were not checked for this page and are not listed (inspect them with ncdump -h after download).
+  full_list: https://www.metoffice.gov.uk/hadobs/hadcrut5/data/HadCRUT.5.2.0.0/download.html
+  groups:
+    - name: Gridded data (analysis and non-infilled)
+      kind: mean
+      period: month
+      items:
+        - "Surface temperature anomaly — 200 ensemble members (°C, relative to 1961–1990), in 20 zip files of 10 members each"
+        - "Surface temperature anomaly, ensemble mean — ensemble_mean.nc (°C)"
+        - text: "Land-ocean weights — weights.nc"
+          kind: static
+          note: The land air temperature contribution used when blending each grid cell
+        - text: "Non-infilled measurement and sampling uncertainties — uncorrelated.nc and decadal error_covariance zip files"
+          kind: mean
+          period: month
+          note: Non-infilled version only. Uncorrelated uncertainties and error covariances that are not represented in the ensemble members
+    - name: Summary series (global (NH+SH)/2, Northern and Southern Hemisphere)
+      kind: mean
+      period: month
+      items:
+        - "Anomaly (central estimate) — `Anomaly (deg C)` (°C)"
+        - "95% confidence limits — `Lower confidence limit (2.5%)`, `Upper confidence limit (97.5%)` (°C)"
+        - text: "Annual mean anomaly — same columns in the annual files (°C)"
+          kind: mean
+          period: year
+        - "Series for each of the 200 members — ensemble_series files (°C)"
+        - "Series for each uncertainty component — component_series files (°C)"
+
+access:
+  - name: Met Office Hadley Centre download page (HadCRUT.5.2.0.0)
+    url: https://www.metoffice.gov.uk/hadobs/hadcrut5/data/HadCRUT.5.2.0.0/download.html
+    method: HTTPS (web / wget / curl)
+    note: >-
+      Separate sections for the analysis and the non-infilled data, each with summary, ensemble and uncertainty component series (CSV and NetCDF, monthly and annual),
+      gridded ensemble members (NetCDF zip files), and ensemble mean and weights files. File names include the version (HadCRUT.5.2.0.0), so URLs change with each new version.
+  - name: Previous versions (5.0.0.0 to 5.1.0.0)
+    url: https://www.metoffice.gov.uk/hadobs/hadcrut5/data/versions/versions.html
+    method: HTTPS
+    note: Use these to reproduce published results. Each version has release notes describing what changed.
+  - name: CEDA Archive (HadCRUT.5.0.0.0)
+    url: https://catalogue.ceda.ac.uk/uuid/b9698c5ecf754b1d981728c37d3a9f02/
+    method: CEDA web download / OPeNDAP
+    note: Archive of the first version (1850–2018). Get current data from the Met Office pages.
+
+example:
+  lang: python
+  note: Reads the analysis global monthly summary series (CSV) and re-expresses it relative to 1850–1900. Update the version number in the URL to the current version.
+  code: |
+    import pandas as pd
+
+    ver = "HadCRUT.5.2.0.0"
+    url = (f"https://www.metoffice.gov.uk/hadobs/hadcrut5/data/{ver}/analysis/diagnostics/"
+           f"{ver}.analysis.summary_series.global.monthly.csv")
+    df = pd.read_csv(url)
+    df["Time"] = pd.PeriodIndex(df["Time"], freq="M")
+    s = df.set_index("Time")["Anomaly (deg C)"]           # °C, relative to 1961-1990
+
+    # Subtract the 1850-1900 mean to get anomalies relative to pre-industrial
+    s_pi = s - s["1850":"1900"].mean()
+    print(s_pi.tail(12).round(2))
+
+tips:
+  - The analysis and non-infilled versions give different global means. The non-infilled version leaves out empty cells such as the sparsely observed Arctic, so do not mix or splice the two.
+  - Anomalies are relative to 1961–1990, while GISTEMP and Berkeley Earth use 1951–1980. Re-baseline to a common period before comparing datasets.
+  - To carry the uncertainty properly, compute your statistic for all 200 members and look at the spread rather than using the ensemble mean alone. For the non-infilled data, also add the measurement and sampling errors held outside the ensemble (uncorrelated and error_covariance files).
+  - The Open Government Licence requires attribution. Include the version number, the download date and "© British Crown Copyright, Met Office" (see the citation guidance below).
+  - The HadCRUT.5.2.0.0 release notes say the ocean input changed "from HadSST.4.1.0.0 to HadSST.4.1.1.0" but link to HadSST.4.2.0.0 documents. If the exact HadSST version matters, ask the Met Office.
+  - As of October 2026 the CRU (UEA) data page still points to 5.0.2.0 (data to May 2024). Download the latest version from the Met Office pages.
+  - Land station data are updated country by country (in 5.2.0.0, for example, Chinese and US stations were replaced), so regional averages can shift noticeably between versions.
+
+citations:
+  dataset:
+    - label: Attribution required by the Met Office (Open Government Licence)
+      text: >-
+        HadCRUT.[version number] data were obtained from http://www.metoffice.gov.uk/hadobs/hadcrut5 on [date downloaded]
+        and are © British Crown Copyright, Met Office [year of first publication], provided under an Open Government License,
+        http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/
+      bibtex: |
+        @misc{hadcrut5_dataset,
+          author       = {{Met Office Hadley Centre} and {Climatic Research Unit, University of East Anglia}},
+          title        = {{HadCRUT}.5.2.0.0: Global surface temperature anomalies},
+          year         = {2026},
+          howpublished = {\url{https://www.metoffice.gov.uk/hadobs/hadcrut5/}},
+          note         = {Open Government Licence v3. Accessed DD MMM YYYY}
+        }
+  papers:
+    - label: HadCRUT5 paper (Met Office recommended citation)
+      text: >-
+        Morice, C. P., Kennedy, J. J., Rayner, N. A., Winn, J. P., Hogan, E., Killick, R. E., Dunn, R. J. H., Osborn, T. J., Jones, P. D., Simpson, I. R. (2021):
+        An Updated Assessment of Near-Surface Temperature Change From 1850: The HadCRUT5 Data Set.
+        Journal of Geophysical Research: Atmospheres, 126(3), e2019JD032361.
+      doi: 10.1029/2019JD032361
+      bibtex: |
+        @article{morice2021hadcrut5,
+          author  = {Morice, C. P. and Kennedy, J. J. and Rayner, N. A. and Winn, J. P. and Hogan, E. and Killick, R. E. and Dunn, R. J. H. and Osborn, T. J. and Jones, P. D. and Simpson, I. R.},
+          title   = {An Updated Assessment of Near-Surface Temperature Change From 1850: The {HadCRUT5} Data Set},
+          journal = {Journal of Geophysical Research: Atmospheres},
+          volume  = {126},
+          number  = {3},
+          pages   = {e2019JD032361},
+          year    = {2021},
+          doi     = {10.1029/2019JD032361}
+        }
+  acknowledgement: >-
+    The Met Office terms ask you to cite Morice et al. (2021) and to include the attribution statement above (with version number, download date and year of first publication).
+    We found no separate dataset DOI. If you use the component datasets on their own, also cite CRUTEM5 (Osborn et al. 2021) and HadSST4 (Kennedy et al. 2019).
+
+notices:
+  - date: "2026-09-18"
+    level: info
+    title: HadCRUT.5.2.0.0 released — land input updated to CRUTEM.5.2.0.0
+    body: >-
+      The dataset version was updated to HadCRUT.5.2.0.0. In CRUTEM.5.2.0.0, 380 Chinese series were updated with values derived from CMA TMAX and TMIN data,
+      data for 1,218 contiguous US stations were replaced with USHCN values, and one Canadian station series was removed. Values change over the whole record, so do not mix results with earlier versions.
+    source: https://www.metoffice.gov.uk/hadobs/hadcrut5/data/versions/HadCRUT.5.2.0.0_release_notes.html
+  - date: "2025-09"
+    level: info
+    title: Ocean input HadSST.4.2.0.0 released (reduced anomalous warmth before 1950)
+    body: >-
+      The new HadSST4 version refines the pre-1950 engine room intake (ERI) bias estimates, "leading to a reduction in anomalous warmth".
+      The HadCRUT.5.2.0.0 release notes link to this document but state that HadSST.4.1.1.0 was used, so it is unclear whether HadCRUT5 includes it.
+    source: https://www.metoffice.gov.uk/hadobs/hadsst4/documentation/HadSST.4.2.0.0_product_user_guide.pdf
+  - date: "2025-09"
+    level: info
+    title: HadCRUT.5.1.0.0 released — with CRUTEM.5.1.0.0 and HadSST.4.1.1.0
+    body: >-
+      The land input moved to CRUTEM.5.1.0.0 (station series updated for a number of countries), the ocean input to HadSST.4.1.1.0, and the sea-ice dataset used for
+      air/sea temperature weighting to HadISST.2.2.2.0. Non-infilled file names now state clearly that they hold non-infilled data. The official page gives no exact release date,
+      so the release-notes update date (2025-09-05) is used.
+    source: https://www.metoffice.gov.uk/hadobs/hadcrut5/data/versions/HadCRUT.5.1.0.0_release_notes.html
+  - date: "2025-02"
+    level: info
+    title: HadSST.4.1.0.0 released — processing system reimplemented, global mean differences of order 0.01°C
+    body: >-
+      The HadSST4 system was rewritten from IDL in Python and several bugs were fixed. The local pattern of post-1945 bias corrections changed,
+      but median differences in global annual means are of order 0.01°C. Version 4.1.0.0 was available only briefly before HadSST.4.1.1.0 followed.
+    source: https://www.metoffice.gov.uk/hadobs/hadsst4/documentation/HadSST.4.1.0.0_release_notes.pdf
+
+links:
+  - name: HadCRUT5 (Met Office Hadley Centre)
+    url: https://www.metoffice.gov.uk/hadobs/hadcrut5/
+  - name: HadCRUT.5.2.0.0 release notes
+    url: https://www.metoffice.gov.uk/hadobs/hadcrut5/data/versions/HadCRUT.5.2.0.0_release_notes.html
+  - name: HadCRUT5 terms and conditions
+    url: https://www.metoffice.gov.uk/hadobs/hadcrut5/terms_and_conditions.html
+  - name: CRUTEM5 (land input)
+    url: https://www.metoffice.gov.uk/hadobs/crutem5/
+  - name: HadSST4 (ocean input)
+    url: https://www.metoffice.gov.uk/hadobs/hadsst4/
+  - name: CRU temperature data page (UEA)
+    url: https://crudata.uea.ac.uk/cru/data/temperature/
+  - name: Met Office climate dashboard — global temperature
+    url: https://climate.metoffice.cloud/temperature.html
+
+watch_urls:
+  - https://www.metoffice.gov.uk/hadobs/hadcrut5/
+  - https://www.metoffice.gov.uk/hadobs/hadcrut5/data/versions/versions.html
+  - https://www.metoffice.gov.uk/hadobs/hadsst4/
+
+last_verified: "2026-10-12"
