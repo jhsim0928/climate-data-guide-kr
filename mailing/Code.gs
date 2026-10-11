@@ -8,9 +8,10 @@
  *     새 공지를 해당 데이터셋·공지 구분을 고른 구독자에게만 묶어서 보냅니다.
  *  4) 사이트의 "데이터셋 제안" 양식을 받아 제안 시트에 저장하고 운영자에게 알립니다.
  *  5) 각 페이지의 "정보 오류 신고"를 받아 오류 신고 시트에 저장하고 운영자에게 알립니다.
- *  6) 영어판(/en/)에서 신청한 사람에게는 확인 메일·알림 메일을 영어로 보냅니다(구독자 시트 lang 열).
+ *  6) 사이트의 "의견 보내기" 양식을 받아 의견 시트에 저장하고 운영자에게 알립니다.
+ *  7) 영어판(/en/)에서 신청한 사람에게는 확인 메일·알림 메일을 영어로 보냅니다(구독자 시트 lang 열).
  *
- * 설치: README의 순서대로 setup()을 한 번 실행한 뒤 웹 앱으로 배포하세요.
+ * 설치: MAINTAINING.md 순서대로 setup()을 한 번 실행한 뒤 웹 앱으로 배포하세요.
  * 개인 Gmail 계정은 하루 발송 인원이 약 100명으로 제한됩니다.
  */
 
@@ -27,6 +28,8 @@ var SHEET_SUBS = '구독자';
 var SHEET_SUGGEST = '데이터셋 제안';
 var SHEET_SENT = '발송 기록';
 var SHEET_REPORT = '오류 신고';
+var SHEET_FEEDBACK = '의견';
+var FEEDBACK_HEADERS = ['received_at', 'kind', 'message', 'contact', 'lang', 'status'];
 var REPORT_HEADERS = ['received_at', 'page_title', 'page_url', 'wrong', 'correct', 'source', 'contact', 'status', 'lang'];
 var SUB_HEADERS = ['email', 'datasets', 'levels', 'status', 'token', 'requested_at', 'confirmed_at', 'updated_at', 'lang'];
 var COL_LANG = 9; // 구독자 시트의 lang 열 (비어 있으면 한국어)
@@ -98,6 +101,7 @@ function setup() {
   ensureSheet_(ss, SHEET_SUGGEST, ['received_at', 'name', 'category', 'url', 'reason', 'notes', 'contact', 'lang']);
   ensureSheet_(ss, SHEET_SENT, ['notice_key', 'first_seen_at', 'recipients']);
   ensureSheet_(ss, SHEET_REPORT, REPORT_HEADERS);
+  ensureSheet_(ss, SHEET_FEEDBACK, FEEDBACK_HEADERS);
   ScriptApp.getProjectTriggers().forEach(function (t) {
     if (t.getHandlerFunction() === 'checkNotices') ScriptApp.deleteTrigger(t);
   });
@@ -130,6 +134,7 @@ function doPost(e) {
     if (p.type === 'subscribe') return handleSubscribe_(p);
     if (p.type === 'suggest') return handleSuggest_(p);
     if (p.type === 'report') return handleReport_(p);
+    if (p.type === 'feedback') return handleFeedback_(p);
     return text_('unknown');
   } finally {
     lock.releaseLock();
@@ -196,6 +201,24 @@ function handleReport_(p) {
         '\n\n올바른 정보\n' + (p.correct || '-') +
         '\n\n근거 출처\n' + (p.source || '-') +
         '\n\n신고자 연락처: ' + (p.contact || '-') };
+    if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(p.contact || '').trim())) mail.replyTo = String(p.contact).trim();
+    MailApp.sendEmail(mail);
+  }
+  return text_('ok');
+}
+
+var FEEDBACK_KIND = { idea: '기능 제안', improve: '사이트 개선', thanks: '칭찬·응원', other: '기타' };
+function handleFeedback_(p) {
+  if (!String(p.message || '').trim()) return text_('invalid');
+  var kind = FEEDBACK_KIND[p.kind] || '기타';
+  var lang = langOf_(p.lang);
+  var sh = ensureSheet_(SpreadsheetApp.getActive(), SHEET_FEEDBACK, FEEDBACK_HEADERS);
+  sh.appendRow([new Date(), kind, cut_(p.message, 5000), cut_(p.contact, 200), lang, '접수']);
+  var owner = OWNER_EMAIL || Session.getEffectiveUser().getEmail();
+  if (owner) {
+    var mail = { to: owner, name: TXT.ko.site,
+      subject: '[' + TXT.ko.site + '] 새 의견 (' + kind + (lang === 'en' ? ', 영어판' : '') + ')',
+      body: '종류: ' + kind + '\n\n' + (p.message || '-') + '\n\n답변 받을 이메일: ' + (p.contact || '-') };
     if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(p.contact || '').trim())) mail.replyTo = String(p.contact).trim();
     MailApp.sendEmail(mail);
   }
