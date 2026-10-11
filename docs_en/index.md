@@ -19,6 +19,14 @@ This site does not host any data. Every entry links to the official source. <!--
 
 [All datasets](datasets/index.md){ .md-button .md-button--primary } [Compare datasets](compare.md){ .md-button } [Generation changes](transitions.md){ .md-button }
 
+## Who this guide is for
+
+- Modelers who use reanalysis as initial and boundary conditions and need to know when an input dataset stops updating or changes
+- Researchers looking for the right dataset for a specific analysis
+- Anyone checking whether a dataset is still maintained or has been superseded by a newer version
+- Researchers comparing several datasets side by side or cross-checking results
+- Authors who need to report dataset versions, grids, and variable definitions accurately in a Methods section
+
 ## Latest notices
 
 <!-- RECENT_NOTICES -->
