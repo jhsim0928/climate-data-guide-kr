@@ -22,7 +22,7 @@
 논문의 Data availability 또는 Acknowledgements에 아래처럼 적어주시면 사이트를 계속 유지하는 데 큰 힘이 됩니다.
 
 ```text
-기후데이터 길잡이 (Korean Climate Data Guide), https://jhsim0928.github.io/climate-data-guide-kr/ (접속일 YYYY-MM-DD)
+기후데이터 길잡이 (Korean Climate Data Guide), https://data4researchers.kr/ (접속일 YYYY-MM-DD)
 ```
 
 Zenodo DOI가 발급되면 이 자리에 DOI 인용 형식을 추가합니다. GitHub 저장소의 **Cite this repository** 버튼으로 APA·BibTeX 형식을 바로 복사할 수도 있습니다.

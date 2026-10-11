@@ -17,6 +17,15 @@
     - `CITATION.cff` (작성자 이름 `성`, `이름` 자리도 본인 이름으로 바꿔주세요)
 5. 커밋하면 **Actions** 탭에서 "사이트 배포"가 돌고, 1~2분 뒤 `https://<아이디>.github.io/climate-data-guide-kr/`에서 사이트가 열립니다.
 
+## 개인 도메인 (data4researchers.kr)
+
+사이트 주소는 `https://data4researchers.kr/`입니다. 설정은 다음과 같습니다.
+
+- 도메인 업체(아이티이지) DNS: `@` A 레코드 4개(185.199.108.153 / 109.153 / 110.153 / 111.153), `www` CNAME → `jhsim0928.github.io`, GitHub 도메인 인증용 TXT 레코드
+- GitHub 저장소 Settings → Pages → Custom domain: `data4researchers.kr`, Enforce HTTPS 켜기
+- GitHub Actions로 배포하므로 `CNAME` 파일은 필요 없습니다.
+- 도메인을 바꾸면 `mkdocs.yml`의 `site_url`, `extra.site_citation`, `docs/about.md`, `CITATION.cff`의 주소도 함께 바꿉니다.
+
 ## 내 컴퓨터에서 미리 보기
 
 ```bash
