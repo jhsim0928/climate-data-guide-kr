@@ -17,13 +17,14 @@ The Korean Climate Data Guide (the "site") collects only the minimum information
 | Language of the page you signed up on | Sending emails in that language |
 | Dataset suggestion; name, affiliation, contact (optional) | Reviewing the suggestion, replying, crediting contributors if you wish |
 | Error report, page address, reply email (optional) | Correcting the site, replying |
+| Feedback about the site, reply email (optional) | Improving the site, replying |
 
 There is no account or login, and nothing else is collected.
 
 ## 2. How long we keep it
 
 - Alert subscriptions: deleted **without delay** when you unsubscribe. Sign-ups that are not confirmed via the email link are deleted within 30 days.
-- Suggestions and error reports: kept for review and replies; deleted without delay on request.
+- Suggestions, error reports and feedback: kept for review and replies; deleted without delay on request.
 - If the service ends, all information is deleted.
 
 ## 3. Sharing with third parties
@@ -34,7 +35,7 @@ We do not share your information with any other person or organisation.
 
 | Provider | Task |
 |---|---|
-| Google LLC (Gmail, Google Sheets, Google Apps Script) | Storing subscriptions, suggestions and error reports; sending confirmation and alert emails |
+| Google LLC (Gmail, Google Sheets, Google Apps Script) | Storing subscriptions, suggestions, error reports and feedback; sending confirmation and alert emails |
 | GoatCounter | Cookie-free visitor statistics (no personally identifiable information stored) |
 
 Google's servers are located outside Korea, so submitted information may be stored abroad (e.g. in the United States). The transfer happens when you submit a form, over an encrypted connection (HTTPS).
