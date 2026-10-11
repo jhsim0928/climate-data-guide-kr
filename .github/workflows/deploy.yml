@@ -1,3 +1,4 @@
+# main 브랜치에 변경이 올라오면 사이트를 빌드해 GitHub Pages에 배포합니다.
 name: 사이트 배포
 
 on:
@@ -24,7 +25,9 @@ jobs:
           python-version: "3.12"
           cache: pip
       - run: pip install -r requirements.txt
+      - run: python scripts/validate.py
       - run: mkdocs build --strict
+      - run: mkdocs build --strict -f mkdocs.en.yml   # 영어판 → site/en/
       - uses: actions/upload-pages-artifact@v4
         with:
           path: site
