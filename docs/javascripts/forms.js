@@ -125,7 +125,33 @@
     });
   }
 
+  function setupFeedback(form) {
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      var get = function (n) { var el = form.elements[n]; return el ? el.value.trim() : ""; };
+      var endpoint = form.getAttribute("data-endpoint");
+      if (!get("message")) return show(form, L("의견 내용을 적어주세요.", "Please write your feedback."), "error");
+      if (get("contact") && !form.elements.contact.checkValidity()) return show(form, L("이메일 주소를 확인해 주세요.", "Please check your email address."), "error");
+      if (!endpoint) return show(form, L("지금은 data4researchers@gmail.com 으로 메일을 보내주세요.", "For now, please email data4researchers@gmail.com."), "info");
+      var btn = form.querySelector('button[type="submit"]');
+      btn.disabled = true;
+      show(form, L("보내는 중…", "Sending…"), "info");
+      post(endpoint, {
+        type: "feedback", kind: get("kind"), message: get("message"), contact: get("contact"),
+        website: get("website"), lang: IS_EN ? "en" : "ko", requested_at: new Date().toISOString()
+      }).then(function () {
+        form.reset();
+        show(form, L("의견을 보냈습니다. 고맙습니다! 사이트를 더 낫게 만드는 데 쓰겠습니다.", "Thank you! Your feedback was sent and will help improve the site."), "success");
+      }).catch(function () {
+        show(form, L("보내지 못했습니다. 잠시 후 다시 시도하거나 data4researchers@gmail.com 으로 메일을 보내주세요.", "Sending failed. Please try again later or email data4researchers@gmail.com."), "error");
+      }).then(function () { btn.disabled = false; });
+    });
+  }
+
   function init() {
+    document.querySelectorAll("#feedback-form:not([data-bound])").forEach(function (f) {
+      f.setAttribute("data-bound", "1"); setupFeedback(f);
+    });
     document.querySelectorAll("#subscribe-form:not([data-bound])").forEach(function (f) {
       f.setAttribute("data-bound", "1"); setupSubscribe(f);
     });
