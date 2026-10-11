@@ -69,7 +69,7 @@
 | | 위성 | DUACS (해수면 고도) |
 | | 모델 강제력 | JRA55-do |
 | 해빙 | 재분석 | PIOMAS, GIOMAS, neXtSIM, TOPAZ4b |
-| | 위성 | OSI SAF (해빙 농도), NOAA/NSIDC CDR, CryoSat-2, CS3SMOS, CS2SMOS, ESA CCI 해빙, ICESat-2 |
+| | 위성 | OSI SAF (해빙 농도), NOAA/NSIDC CDR, CryoSat-2, CS3SMOS, CS2SMOS, ESA CCI, ICESat-2 |
 | | 해빙 이동 | Polar Pathfinder, OSI SAF (해빙 이동) |
 | | 해빙 지수 | Sea Ice Index |
 
