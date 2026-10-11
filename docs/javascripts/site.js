@@ -35,8 +35,9 @@
       ["제공 기관", function (d) { return esc(d.provider); }],
       ["기간", function (d) { return esc(d.period); }],
       ["수평 해상도", function (d) { return esc(d.spatial); }],
+      ["시간 해상도", function (d) { return esc(d.temporal_s); }],
       ["연직 해상도", function (d) { return esc(d.vertical); }],
-      ["시간 해상도", function (d) { return esc(d.temporal); }],
+      ["시간 간격 (세부)", function (d) { return esc(d.temporal); }],
       ["시간 표기 규칙", function (d) { return codeText(d.time); }],
       ["갱신 주기", function (d) { return esc(d.update); }],
       ["라이선스", function (d) { return esc(d.license); }],
@@ -172,6 +173,58 @@
     if (!isNaN(na) && !isNaN(nb)) return na - nb;
     return a.localeCompare(b, "ko", { numeric: true, sensitivity: "base" });
   }
+  // ── 목록 표에서 체크해서 바로 비교 ─────────────────────────
+  function setupPickCompare() {
+    var wraps = document.querySelectorAll(".list-table[data-compare]");
+    if (!wraps.length || document.getElementById("pick-bar")) return;
+    var picked = [];
+    var target = wraps[0].getAttribute("data-compare");
+    var bar = document.createElement("div");
+    bar.id = "pick-bar";
+    bar.className = "pick-bar";
+    bar.hidden = true;
+    bar.innerHTML = '<span class="pick-count"></span>' +
+      '<a class="pick-go" href="#">선택한 자료 비교하기</a>' +
+      '<button type="button" class="pick-clear">선택 해제</button>';
+    document.body.appendChild(bar);
+    function update() {
+      bar.hidden = picked.length === 0;
+      bar.querySelector(".pick-count").textContent =
+        picked.length + "개 선택" + (picked.length < 2 ? " — 1개 더 고르세요" : "") + " (최대 4개)";
+      var go = bar.querySelector(".pick-go");
+      go.href = target + "?ids=" + picked.join(",");
+      go.classList.toggle("is-disabled", picked.length < 2);
+      document.querySelectorAll(".pick-box").forEach(function (b) { b.checked = picked.indexOf(b.value) !== -1; });
+    }
+    bar.querySelector(".pick-go").addEventListener("click", function (e) { if (picked.length < 2) e.preventDefault(); });
+    bar.querySelector(".pick-clear").addEventListener("click", function () { picked = []; update(); });
+    wraps.forEach(function (w) {
+      var table = w.querySelector("table");
+      var th = document.createElement("th");
+      th.className = "pick-col";
+      th.setAttribute("data-nosort", "1");
+      th.innerHTML = '<span title="체크해서 비교">비교</span>';
+      table.tHead.rows[0].insertBefore(th, table.tHead.rows[0].firstChild);
+      Array.prototype.forEach.call(table.tBodies[0].rows, function (tr) {
+        var td = document.createElement("td");
+        td.className = "pick-col";
+        td.innerHTML = '<input type="checkbox" class="pick-box" value="' + esc(tr.dataset.id) + '" aria-label="비교에 담기">';
+        tr.insertBefore(td, tr.firstChild);
+      });
+      w.addEventListener("change", function (e) {
+        if (!e.target.classList.contains("pick-box")) return;
+        var id = e.target.value, i = picked.indexOf(id);
+        if (e.target.checked && i === -1) {
+          if (picked.length >= 4) { e.target.checked = false; alert("한 번에 4개까지 비교할 수 있어요."); return; }
+          picked.push(id);
+        } else if (!e.target.checked && i !== -1) {
+          picked.splice(i, 1);
+        }
+        update();
+      });
+    });
+  }
+
   function makeSortable(table) {
     if (table.dataset.sortable || table.id === "cmp-table") return;
     var head = table.tHead && table.tHead.rows[0];
@@ -179,13 +232,14 @@
     if (!head || !body || body.rows.length < 2) return;
     table.dataset.sortable = "1";
     Array.prototype.forEach.call(head.cells, function (th, col) {
+      if (th.hasAttribute("data-nosort")) return;
       th.classList.add("sort-th");
       th.setAttribute("tabindex", "0");
       th.setAttribute("aria-sort", "none");
       th.title = (th.title ? th.title + " — " : "") + "눌러서 정렬";
       function sort() {
         var asc = th.getAttribute("aria-sort") !== "ascending";
-        Array.prototype.forEach.call(head.cells, function (o) { o.setAttribute("aria-sort", "none"); });
+        Array.prototype.forEach.call(head.cells, function (o) { if (o.classList.contains("sort-th")) o.setAttribute("aria-sort", "none"); });
         th.setAttribute("aria-sort", asc ? "ascending" : "descending");
         var rows = Array.prototype.slice.call(body.rows);
         rows.forEach(function (r, i) { if (!r.dataset.orig) r.dataset.orig = i; });
@@ -207,6 +261,7 @@
   }
 
   function init() {
+    setupPickCompare();
     setupSortableTables();
     setupCompare();
     setupNoticeFilter();

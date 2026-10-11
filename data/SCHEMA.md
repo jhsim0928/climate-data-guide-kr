@@ -21,7 +21,7 @@
 | `status_note` | 현재 상태 설명 (한국어 2~3문장) |
 | `successor` | `ended`이면 필수: `{name, url, note}` (후속이 없으면 `name: 없음`) |
 | `period` | `{start: "YYYY-MM", end: present 또는 "YYYY-MM", note}` |
-| `resolution` | `{spatial, vertical, temporal}` |
+| `resolution` | `{spatial_short, temporal_short, spatial, vertical, temporal}` — `spatial_short`은 목록·비교용 대표 값 `"31 km (0.28°)"` 형식, `temporal_short`는 가장 짧은 제공 간격 `1시간`/`3시간`/`6시간`/`1일`/`7일`/`1개월` 중 하나. 나머지는 세부 설명 |
 | `update` | 갱신 주기 |
 | `license` | 라이선스·이용 조건 요약 |
 | `account_required` | `true` / `false` |

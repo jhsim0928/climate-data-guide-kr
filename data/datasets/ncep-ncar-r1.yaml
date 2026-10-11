@@ -96,6 +96,8 @@ period:
     1979년부터 위성 산출물이 들어가 동화 구성이 바뀝니다. NCAR GDEX 사본은 갱신 주기가 달라 끝 날짜가 PSL보다 이를 수 있습니다.
 
 resolution:
+  spatial_short: "210 km (1.9°)"
+  temporal_short: "6시간"
   spatial: "모델 T62(약 210 km) / 기압면 2.5° × 2.5°(144 × 73) / 지표·플럭스 T62 가우시안 격자(192 × 94, 약 1.9°)"
   vertical: "모델 시그마 28층 / 기압면 17층(1000~10 hPa). 습도(`shum`·`rhum`)는 1000~300 hPa, 연직속도(`omega`)는 1000~100 hPa만"
   temporal: 6시간(00·06·12·18 UTC), PSL 일평균·월평균 별도

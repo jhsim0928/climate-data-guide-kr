@@ -65,6 +65,11 @@ REQUIRED = [
 ]
 DATE_RE = re.compile(r"^\d{4}-\d{2}(-\d{2})?$")
 
+# 자료 간 비교를 쉽게 하기 위한 대표 해상도 표기 (세부 내용은 각 데이터셋 페이지에)
+SPATIAL_SHORT_RE = re.compile(r"^\d+(\.\d+)? km \(\d+(\.\d+)?°\)$")
+TEMPORAL_SHORT = ["1시간", "3시간", "6시간", "1일", "7일", "1개월"]
+TEMPORAL_HOURS = {"1시간": 1, "3시간": 3, "6시간": 6, "1일": 24, "7일": 168, "1개월": 720}
+
 # 변수의 시간 특성 — 3시간 자료라도 순간값인지, 3시간 평균인지, 누적인지 구분하기 위함
 KIND = {
     "instant": "순간값",
@@ -185,6 +190,11 @@ def validate(d: dict, src: Path) -> None:
                 errors.append(f"variables '{g.get('name')}'의 '{it['text'][:30]}'에 시간 특성(kind)이 없어요")
     if REQUIRE_KIND and not (d.get("time_convention") or {}).get("summary"):
         errors.append("time_convention.summary(시간 표기 규칙 요약)가 없어요")
+    r = d.get("resolution") or {}
+    if not SPATIAL_SHORT_RE.match(str(r.get("spatial_short", ""))):
+        errors.append('resolution.spatial_short는 "31 km (0.28°)" 형식으로 적어주세요')
+    if r.get("temporal_short") not in TEMPORAL_SHORT:
+        errors.append(f"resolution.temporal_short는 {TEMPORAL_SHORT} 중 하나")
     if not DATE_RE.match(str(d.get("last_verified", ""))):
         errors.append("last_verified 형식은 YYYY-MM-DD")
     if d.get("status") == "ended" and not d.get("successor"):
@@ -309,6 +319,9 @@ def transition_block(d: dict, t: dict, heading: str = "###", link_prefix: str = 
         L.append("")
     L.append("출처: " + " · ".join(f"[{s.get('name') or s['url']}]({s['url']})" for s in t["sources"]))
     L.append("")
+    if t.get("to_id") and t["to_id"] != d["id"]:
+        up = "../../" if link_prefix == "" else "../"
+        L += [f'<a class="act act-compare" href="{up}compare/?ids={d["id"]},{t["to_id"]}">두 자료를 비교표로 나란히 보기</a>', ""]
     return L
 
 
@@ -394,9 +407,10 @@ def render_dataset(d: dict, site_cite: str) -> str:
         ("분야", ", ".join(d.get("domains") or [])),
         ("제공 기관", nt(d["provider"])),
         ("기간", period_text(d["period"])),
-        ("수평 해상도", r.get("spatial")),
+        ("대표 해상도", f"{r.get('spatial_short')} · {r.get('temporal_short')} 간격"),
+        ("수평 해상도 (세부)", r.get("spatial")),
         ("연직 해상도", r.get("vertical")),
-        ("시간 해상도", r.get("temporal")),
+        ("시간 해상도 (세부)", r.get("temporal")),
         ("갱신 주기", d.get("update")),
         ("라이선스", d.get("license")),
         ("계정 필요", "예" if d.get("account_required") else "아니오"),
@@ -516,29 +530,36 @@ def temporal_hours(text: str):
     ])
 
 
-def group_table(entries, href_prefix: str) -> list[str]:
-    """분야·전체 목록 표 (열 머리를 누르면 정렬). href_prefix는 이 표가 실린 페이지에서 데이터셋 페이지까지의 경로"""
+def short_res(d: dict):
+    r = d.get("resolution") or {}
+    sp, tm = r.get("spatial_short", "-"), r.get("temporal_short", "-")
+    km = float(sp.split(" km")[0]) if " km" in sp else ""
+    return sp, tm, km, TEMPORAL_HOURS.get(tm, "")
+
+
+def group_table(entries, href_prefix: str, compare_href: str) -> list[str]:
+    """분야·전체 목록 표 (열 머리를 누르면 정렬, 체크해서 바로 비교). href_prefix는 데이터셋 페이지까지의 경로"""
     rows = ""
     for d, label, cross in entries:
         r = d.get("resolution") or {}
-        sp, tm = oneline(r.get("spatial") or "-"), oneline(r.get("temporal") or "-")
+        sp, tm, km, hrs = short_res(d)
         mark = ' <span class="hint" title="다른 분야에도 실린 자료">↔</span>' if cross else ""
         rows += (
-            "<tr>"
+            f'<tr data-id="{d["id"]}">'
             f'<td data-sort="{html.escape(label)}"><a href="{href_prefix}{d["id"]}/">{nt(html.escape(label))}</a>{mark}</td>'
             f"<td>{CATEGORY[d['category']]}</td>"
             f'<td class="nowrap" data-sort="{d["period"]["start"]}">{period_text(d["period"])}</td>'
-            f'<td class="col-res" data-sort="{spatial_km(sp)}">{html.escape(sp)}</td>'
-            f'<td class="col-res" data-sort="{temporal_hours(tm)}">{html.escape(tm)}</td>'
+            f'<td class="nowrap" data-sort="{km}" title="{html.escape(oneline(r.get("spatial") or ""))}">{sp}</td>'
+            f'<td class="nowrap" data-sort="{hrs}" title="{html.escape(oneline(r.get("temporal") or ""))}">{tm}</td>'
             f'<td data-sort="{STATUS_ORDER[d["status"]]}">{badge(d["status"])}</td>'
             f'<td class="nowrap">{d["last_verified"]}</td>'
             "</tr>"
         )
     return [
-        '<div class="list-table"><table>'
+        f'<div class="list-table" data-compare="{compare_href}"><table>'
         "<thead><tr><th>자료</th><th>종류</th><th>기간</th>"
-        '<th title="처음 표기된 대표 격자 기준으로 정렬 (1° ≈ 111 km)">수평 해상도</th>'
-        '<th title="처음 표기된 간격 기준으로 정렬">시간 해상도</th><th>상태</th><th>마지막 확인</th></tr></thead>'
+        '<th title="대표 수평 해상도 (세부는 각 자료 페이지)">수평 해상도</th>'
+        '<th title="가장 짧은 제공 간격 (세부는 각 자료 페이지)">시간 해상도</th><th>상태</th><th>마지막 확인</th></tr></thead>'
         f"<tbody>{rows}</tbody></table></div>"
     ]
 
@@ -548,25 +569,27 @@ def render_index(datasets: list[dict]) -> str:
         "---", "hide:", "  - navigation", "  - toc", "---", "",
         "# 전체 데이터셋 목록", "",
         f"모두 {len(datasets)}개 자료를 공식 출처에서 직접 확인해 정리했습니다. **마지막 확인** 날짜 이후 바뀌었을 수 있습니다.", "",
-        "↔ 표시는 다른 분야에도 함께 실린 자료입니다. 표의 열 이름을 누르면 그 열 기준으로 정렬됩니다 "
-        "(해상도는 각 칸에 처음 적힌 대표 값 기준).", "",
+        "표의 열 이름을 누르면 정렬되고, 왼쪽 칸을 2개 이상 체크하면 **바로 비교**할 수 있습니다. "
+        "해상도는 쉽게 비교하도록 대표 값만 적었고(시간 해상도는 가장 짧은 제공 간격), 세부 내용은 각 자료 페이지에 있습니다. "
+        "↔ 표시는 다른 분야에도 함께 실린 자료입니다.", "",
     ]
     pl = placements(datasets)
     for dom, (label, groups) in DOMAINS.items():
         L += [f"## {label}", ""]
         for g in groups:
             if (dom, g) in pl:
-                L += [f"### {g}", ""] + group_table(pl[(dom, g)], "") + [""]
+                L += [f"### {g}", ""] + group_table(pl[(dom, g)], "", "../compare/") + [""]
     return "\n".join(L) + "\n"
 
 
 def render_domain(dom: str, datasets: list[dict]) -> str:
     label, groups = DOMAINS[dom]
     pl = placements(datasets)
-    L = ["---", "hide:", "  - navigation", "  - toc", "---", "", f"# {label}", "", DOMAIN_INTRO[dom], ""]
+    L = ["---", "hide:", "  - navigation", "  - toc", "---", "", f"# {label}", "", DOMAIN_INTRO[dom], "",
+         "표의 왼쪽 칸을 2개 이상 체크하면 바로 비교할 수 있고, 열 이름을 누르면 정렬됩니다.", ""]
     for g in groups:
         if (dom, g) in pl:
-            L += [f"## {g}", ""] + group_table(pl[(dom, g)], "../../datasets/") + [""]
+            L += [f"## {g}", ""] + group_table(pl[(dom, g)], "../../datasets/", "../../compare/") + [""]
     if any(cross for g in groups for _, _, cross in pl.get((dom, g), [])):
         L += ["↔ 다른 분야 페이지에도 함께 실린 자료입니다.", ""]
     return "\n".join(L) + "\n"
@@ -674,7 +697,8 @@ def compare_data(datasets: list[dict]) -> list[dict]:
         out.append({
             "id": d["id"], "name": d["name"], "domain": domain_label(d["domain"]), "group": d["group"],
             "category": CATEGORY[d["category"]], "provider": d["provider"], "status": badge(d["status"]),
-            "period": period_text(d["period"]), "spatial": oneline(r.get("spatial") or "-"),
+            "period": period_text(d["period"]), "spatial": r.get("spatial_short") or "-",
+            "temporal_s": r.get("temporal_short") or "-",
             "vertical": oneline(r.get("vertical") or "-"), "temporal": oneline(r.get("temporal") or "-"),
             "update": oneline(d.get("update") or "-"), "license": oneline(d.get("license") or "-"),
             "account": "예" if d.get("account_required") else "아니오",

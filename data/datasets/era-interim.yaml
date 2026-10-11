@@ -72,7 +72,7 @@ transitions:
       - 두 자료를 한 시계열로 이어 붙이지 마세요. 1979–2019년 겹치는 구간에서도 기후값과 추세가 다르므로, 장기 분석은 ERA5 하나로 다시 계산하는 것이 안전합니다.
       - 누적 변수의 기준이 다릅니다. ERA-Interim은 예보 시작부터의 누적(3·6·9·12시간 등)이라 차분이 필요했지만, ERA5 시간별 자료는 직전 1시간 누적입니다. 옛 스크립트를 그대로 쓰면 강수·복사량이 틀어집니다.
       - ERA5는 2000–2006년 하부 성층권에 뚜렷한 저온 편향이 있어 이 구간을 다시 생산한 ERA5.1이 따로 있습니다. 성층권 기온·습도·오존을 다룬다면 이 기간은 ERA5.1을 쓰세요.
-      - ERA5는 앙상블 퍼짐을 함께 제공하지만 앙상블은 해상도와 출력 간격(3시간)이 본 자료와 다릅니다.
+      - ERA5는 앙상블 스프레드을 함께 제공하지만 앙상블은 해상도와 출력 간격(3시간)이 본 자료와 다릅니다.
     sources:
       - name: ECMWF — What are the changes from ERA-Interim to ERA5 and ERA5-Land?
         url: https://confluence.ecmwf.int/spaces/CKB/pages/74764925/What+are+the+changes+from+ERA-Interim+to+ERA5+and+ERA5-Land
@@ -91,6 +91,8 @@ period:
   note: 1979년 1월 1일 ~ 2019년 8월 31일. 1979~1988년 구간은 2011년에 뒤늦게 추가 생산된 부분입니다.
 
 resolution:
+  spatial_short: "80 km (0.75°)"
+  temporal_short: "3시간"
   spatial: "스펙트럼 T255 / 축소 가우시안 격자 N128(약 80 km, 위경도 환산 약 0.75°) / 파랑 1.0°"
   vertical: "모델면 60층(최상층 0.1 hPa) / 기압면 37층(1000~1 hPa) / 온위면 16층 / 2 PVU 잠재와도면"
   temporal: 분석 6시간(00·06·12·18 UTC), 예보 3시간 (월평균 별도 제공)

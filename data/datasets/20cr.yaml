@@ -31,7 +31,7 @@ transitions:
     date: "2019"
     summary: >-
       3판은 2017년 가을 현업 GFS로 모델을 바꿔 해상도를 T62에서 T254로 높이고, 앙상블을 56개에서 80개로 늘렸으며, ISPD 4.7판으로 지표기압 관측을
-      크게 보강했습니다. 적응형 공분산 팽창·국지화를 도입해 불확실성(앙상블 퍼짐) 추정이 현실에 가까워졌고, 19세기 중반 해면기압 편향과
+      크게 보강했습니다. 적응형 공분산 팽창·국지화를 도입해 불확실성(앙상블 스프레드) 추정이 현실에 가까워졌고, 19세기 중반 해면기압 편향과
       강수 스핀업 문제가 줄었습니다. 기간도 1836년(실험적으로 1806년)까지 앞당겨졌습니다.
     changes:
       - aspect: 기간
@@ -51,7 +51,7 @@ transitions:
         after: "80개"
       - aspect: 자료동화
         before: "앙상블 칼만 필터, 고정 공분산 국지화(4000 km)·고정 팽창, 디지털 필터 초기화"
-        after: "앙상블 제곱근 필터 + 4D 증분 분석 갱신(4D-IAU), 적응형 국지화, 사전 퍼짐 완화(RTPS) 방식의 적응형 팽창, 적응형 품질 관리"
+        after: "앙상블 제곱근 필터 + 4D 증분 분석 갱신(4D-IAU), 적응형 국지화, 사전 스프레드 완화(RTPS) 방식의 적응형 팽창, 적응형 품질 관리"
       - aspect: 관측 입력
         before: "지표·해상 기압만, ISPD 3.2.9판"
         after: "지표·해상 기압만, ISPD 4.7판(ICOADS 3.0, IBTrACS, OldWeather·WeatherDetective 신규 디지털화 자료 포함). 1870년 이전 해상 기압은 기후값 기준 편향 보정"
@@ -62,7 +62,7 @@ transitions:
         before: "분석 6시간, GRIB1(NCAR) / netCDF(PSL)"
         after: "3시간(하루 8회), netCDF4. 변수 약어가 2·2c판과 다름(NERSC 안내)"
       - aspect: 알려진 문제 개선
-        before: "19세기 중반 전지구 해면기압 저압 편향(1851~1865년 Maury 해상 관측 영향), 강수장 스핀업, 신뢰도(퍼짐) 추정 부정확"
+        before: "19세기 중반 전지구 해면기압 저압 편향(1851~1865년 Maury 해상 관측 영향), 강수장 스핀업, 신뢰도(스프레드) 추정 부정확"
         after: "해면기압 편향과 인위적 추세 감소, 강수 스핀업 제거, 신뢰도 추정 개선, 폭풍 강도·허리케인 세기 재현 향상"
       - aspect: 남은 문제
         before: "—"
@@ -71,7 +71,7 @@ transitions:
       - 2c판과 3판은 경계조건·관측·모델이 모두 달라 같은 해에도 값이 다릅니다. 판을 섞지 말고, 2c판으로 낸 결과를 3판으로 재현할 때는 기후값과 추세를 처음부터 다시 계산하세요.
       - 3판은 SST 입력이 1980/1981년 사이에 SODAsi.3에서 HadISST2.2로 바뀌고 파일도 SI(1806~1980)·MO(1981~2015) 폴더로 나뉩니다. 이 경계를 가로지르는 추세 분석에서는 불연속 가능성을 점검하세요.
       - "변수 약어와 폴더 구조가 바뀌어(예: 해면기압 `prmsl`, 3시간 누적 강수 `apcp`) 2c판용 스크립트를 그대로 쓸 수 없습니다."
-      - 3판은 앙상블 퍼짐이 더 믿을 만해졌으므로, 관측이 드문 19세기 결과를 해석할 때 앙상블 평균만 보지 말고 퍼짐(spread) 파일로 불확실성을 함께 제시하세요.
+      - 3판은 앙상블 스프레드이 더 믿을 만해졌으므로, 관측이 드문 19세기 결과를 해석할 때 앙상블 평균만 보지 말고 스프레드(spread) 파일로 불확실성을 함께 제시하세요.
     sources:
       - name: Slivinski et al. (2019), Towards a more reliable historical reanalysis — 20CRv3, QJRMS, 145, 2876–2908
         url: https://doi.org/10.1002/qj.3598
@@ -93,12 +93,14 @@ period:
   end: "2015-12"
   note: >-
     공개 기간은 1836년 1월 ~ 2015년 12월이며, 1806~1835년은 실험적 연장(2021년 공개)입니다. NCAR 메타데이터상 전체 범위는
-    1805-12-31 18 UTC ~ 2016-01-01 00 UTC입니다. 관측이 드문 19세기 초는 불확실성이 매우 크니 앙상블 퍼짐을 함께 보세요.
+    1805-12-31 18 UTC ~ 2016-01-01 00 UTC입니다. 관측이 드문 19세기 초는 불확실성이 매우 크니 앙상블 스프레드을 함께 보세요.
 
 resolution:
+  spatial_short: "75 km (0.7°)"
+  temporal_short: "3시간"
   spatial: "모델 T254(약 0.7°, 512 × 256 가우시안, PSL 표기 약 75 km) / PSL 기압면 출력 1° × 1°(360 × 181)"
   vertical: "모델 64층 / PSL 기압면 28층(1000~1 hPa, 비습은 100 hPa까지)"
-  temporal: 3시간(하루 8회), 일평균·월평균, 80개 멤버의 앙상블 평균과 퍼짐
+  temporal: 3시간(하루 8회), 일평균·월평균, 80개 멤버의 앙상블 평균과 스프레드
 update: 종료 (고정 기간 자료)
 license: PSL 자료는 이용 제한 없이 공개(출처 표기·논문 사본 송부 요청) / NCAR GDEX 사본은 CC BY 4.0
 account_required: false
@@ -125,7 +127,7 @@ time_convention:
 variables:
   note: >-
     NOAA PSL netCDF 파일(OPeNDAP 속성) 기준 주요 변수입니다. 변수명은 파일 안의 이름이고, 괄호 앞에 PSL 폴더 이름을 적었습니다.
-    폴더 이름 끝의 SI는 1806~1980년, MO는 1981~2015년 파일입니다(예: prsSI, prsMO). 퍼짐 파일은 spreads/ 아래 같은 구조로 있습니다.
+    폴더 이름 끝의 SI는 1806~1980년, MO는 1981~2015년 파일입니다(예: prsSI, prsMO). 스프레드 파일은 spreads/ 아래 같은 구조로 있습니다.
   full_list: https://psl.noaa.gov/thredds/catalog/Datasets/20thC_ReanV3/catalog.html
   groups:
     - name: 기압면 (prsSI·prsMO, 3시간, 1000~1 hPa)
@@ -170,14 +172,14 @@ access:
   - name: NOAA PSL 다운로드 서버 (20CR v3)
     url: https://downloads.psl.noaa.gov/Datasets/20thC_ReanV3/
     method: HTTPS 직접 다운로드
-    note: 계정 없이 받을 수 있습니다. 변수·연도별 netCDF이며, 일평균은 Dailies/, 월평균은 Monthlies/, 앙상블 퍼짐은 spreads/에 있습니다.
+    note: 계정 없이 받을 수 있습니다. 변수·연도별 netCDF이며, 일평균은 Dailies/, 월평균은 Monthlies/, 앙상블 스프레드은 spreads/에 있습니다.
   - name: NOAA PSL THREDDS / OPeNDAP (20CR v3)
     url: https://psl.noaa.gov/thredds/catalog/Datasets/20thC_ReanV3/catalog.html
     method: OPeNDAP 원격 읽기
   - name: NSF NCAR GDEX — 20CR Version 3 (d131003)
     url: https://gdex.ucar.edu/datasets/d131003/
     method: 웹 다운로드 / 부분 추출
-    note: 앙상블 평균·퍼짐, netCDF4, 약 105 TB. 데이터셋 DOI 10.5065/H93G-WS83, CC BY 4.0.
+    note: 앙상블 평균·스프레드, netCDF4, 약 105 TB. 데이터셋 DOI 10.5065/H93G-WS83, CC BY 4.0.
   - name: NERSC 20C Reanalysis 포털 (멤버별 자료)
     url: https://portal.nersc.gov/project/20C_Reanalysis/
     method: 웹 다운로드 (일부는 HPSS 보관)
@@ -194,7 +196,7 @@ example:
     print(slp.sel(lat=37.5, lon=127.0, method="nearest").resample(time="1D").mean())
 
 tips:
-  - 같은 시점이라도 관측 밀도에 따라 신뢰도가 크게 다릅니다. 앙상블 평균만 쓰지 말고 spreads/ 폴더의 퍼짐 값을 함께 확인해, 퍼짐이 기후 변동 폭에 가까운 곳은 해석을 피하세요.
+  - 같은 시점이라도 관측 밀도에 따라 신뢰도가 크게 다릅니다. 앙상블 평균만 쓰지 말고 spreads/ 폴더의 스프레드 값을 함께 확인해, 스프레드이 기후 변동 폭에 가까운 곳은 해석을 피하세요.
   - "SST 경계조건이 1980년까지는 SODAsi.3, 1981년부터는 HadISST2.2라서 PSL 폴더도 SI·MO로 나뉩니다. 1980/1981년을 넘나드는 분석은 두 폴더를 이어 읽어야 하며, 이 시점의 불연속 가능성을 점검하세요."
   - 3판은 2·2c판과 변수 약어가 다릅니다. NERSC 포털도 이 점을 따로 안내하고 있으니, 옛 스크립트를 쓸 때는 변수 이름부터 확인하세요.
   - 개발진 평가로는 열대 강수에 계통적 편향이 있고 남반구 고위도 기압장 편향이 시기에 따라 변합니다. 이 두 분야는 다른 장기 재분석(ERA-20C 등)과 비교해 결과를 확인하세요.
