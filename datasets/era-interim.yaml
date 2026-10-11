@@ -1,0 +1,304 @@
+# ─────────────────────────────────────────────────────────────
+# ERA-Interim — 데이터셋 정보 파일
+# ─────────────────────────────────────────────────────────────
+id: era-interim
+name: ERA-Interim
+full_name: ECMWF Interim Reanalysis (ECMWF 중간 세대 대기 재분석)
+category: reanalysis
+domain: atmosphere
+group: 재분석
+order: 20
+domains: [대기, 육지, 해양파랑]
+provider: ECMWF (현재 배포는 Copernicus Climate Change Service, C3S)
+
+status: ended
+status_note: >-
+  2019년 8월 31일로 생산이 끝났고, ERA5로 대체되었습니다. ECMWF Web API(Public Datasets) 경로는 2023년 6월 1일에 닫혔고,
+  지금은 "추후 공지 전까지" Climate Data Store(CDS) API로 스크립트를 통해서만 받을 수 있습니다(웹 양식 다운로드 불가).
+  NCAR GDEX에도 사본이 남아 있으니, 옛 논문 재현이 아니라면 ERA5를 쓰세요.
+
+successor:
+  name: ERA5
+  url: https://cds.climate.copernicus.eu/datasets/reanalysis-era5-single-levels
+  note: >-
+    1940년~현재, 약 31 km·137층·1시간 간격. ECMWF가 ERA-Interim 사용자에게 공식적으로 이전을 권고하는 자료입니다.
+    두 자료는 모델·자료동화 체계가 달라 기후값과 추세가 다를 수 있으므로 한 시계열로 이어 붙이지 마세요.
+
+transitions:
+  - from: ERA-Interim
+    to: ERA5
+    to_id: era5
+    status: completed
+    date: "2019-08"
+    summary: 해상도(79 km→31 km, 60층→137층)와 출력 빈도(6시간→1시간)가 크게 늘고, 앙상블 불확실성 추정과 기후용 강제력이 추가되었으며, 배포처가 CDS로 바뀌었습니다.
+    changes:
+      - aspect: 기간
+        before: 1979-01–2019-08 (종료)
+        after: 1940-01–현재 (약 5일 지연 준실시간 갱신)
+      - aspect: 수평 해상도
+        before: 약 79 km (T255)
+        after: 약 31 km (TL639), 앙상블은 약 62–63 km
+      - aspect: 연직 해상도·모델 상한
+        before: 60층, 최상층 0.1 hPa
+        after: 137층, 최상층 0.01 hPa
+      - aspect: 모델·자료동화
+        before: IFS CY31r2 4D-Var
+        after: IFS CY41r2 4D-Var
+      - aspect: 출력 빈도
+        before: 분석 6시간, 예보 3시간
+        after: 분석·예보 모두 1시간 (앙상블은 3시간)
+      - aspect: 불확실성 정보
+        before: 없음
+        after: 10개 멤버 앙상블 자료동화(EDA)로 불확실성 제공
+      - aspect: 강제력 (SST·해빙·복사)
+        before: 현업 설정 그대로 (SST 일관성 부족)
+        after: 기후용 설정 (CMIP5 온실가스·화산 등, 일관된 SST·해빙)
+      - aspect: 관측·편향보정
+        before: ERA-40 관측 + GTS, 위성 복사휘도만 VarBC, RTTOV-7 맑은 하늘 복사휘도
+        after: 재처리 자료·신규 위성 추가, 오존·항공기·지표기압까지 VarBC, RTTOV-11 전천후(all-sky) 복사휘도
+      - aspect: 단일면 변수 수
+        before: 약 100개
+        after: 240개 이상 (일부 ERA-Interim 변수는 없음)
+      - aspect: 누적 변수 기준
+        before: 예보 시작 시점부터 누적
+        after: 직전 후처리 시점부터 누적 (시간별 자료는 1시간 누적)
+      - aspect: 성능
+        before: GPCP 월강수량과 전지구 평균 상관 67%
+        after: 상관 77%, 라디오존데 대비 대류권 기온·바람·습도 적합도 향상, 재예보 기술 최대 하루 향상
+      - aspect: 배포처
+        before: ECMWF Public Datasets/Web API (2023년 종료) → 현재 CDS API 전용
+        after: Copernicus Climate Data Store (CDS)
+    impacts:
+      - 두 자료를 한 시계열로 이어 붙이지 마세요. 1979–2019년 겹치는 구간에서도 기후값과 추세가 다르므로, 장기 분석은 ERA5 하나로 다시 계산하는 것이 안전합니다.
+      - 누적 변수의 기준이 다릅니다. ERA-Interim은 예보 시작부터의 누적(3·6·9·12시간 등)이라 차분이 필요했지만, ERA5 시간별 자료는 직전 1시간 누적입니다. 옛 스크립트를 그대로 쓰면 강수·복사량이 틀어집니다.
+      - ERA5는 2000–2006년 하부 성층권에 뚜렷한 저온 편향이 있어 이 구간을 다시 생산한 ERA5.1이 따로 있습니다. 성층권 기온·습도·오존을 다룬다면 이 기간은 ERA5.1을 쓰세요.
+      - ERA5는 앙상블 스프레드을 함께 제공하지만 앙상블은 해상도와 출력 간격(3시간)이 본 자료와 다릅니다.
+    sources:
+      - name: ECMWF — What are the changes from ERA-Interim to ERA5 and ERA5-Land?
+        url: https://confluence.ecmwf.int/spaces/CKB/pages/74764925/What+are+the+changes+from+ERA-Interim+to+ERA5+and+ERA5-Land
+      - name: Hersbach et al. (2020), The ERA5 global reanalysis, QJRMS
+        url: https://doi.org/10.1002/qj.3803
+      - name: Dee et al. (2011), The ERA-Interim reanalysis, QJRMS
+        url: https://doi.org/10.1002/qj.828
+      - name: "ECMWF Technical Memo — Global stratospheric temperature bias and other stratospheric aspects of ERA5 and ERA5.1"
+        url: https://www.ecmwf.int/en/elibrary/81149-global-stratospheric-temperature-bias-and-other-stratospheric-aspects-era5-and
+      - name: NCAR GDEX — ERA5.1 Corrections to ERA5 Stratospheric Temperature 2000-2006
+        url: https://gdex.ucar.edu/news/era51-corrections-to-era5-stratospheric-temperature-2000-2006/
+
+period:
+  start: "1979-01"
+  end: "2019-08"
+  note: 1979년 1월 1일 ~ 2019년 8월 31일. 1979~1988년 구간은 2011년에 뒤늦게 추가 생산된 부분입니다.
+
+resolution:
+  spatial_short: "78 km (0.7°)"
+  temporal_short: "3시간"
+  spatial: "스펙트럼 T255 / 축소 가우시안 격자 N128(약 80 km) / 파랑 1.0°"
+  vertical: "모델면 60층(최상층 0.1 hPa) / 기압면 37층(1000~1 hPa) / 온위면 16층 / 2 PVU 잠재와도면"
+  temporal: 분석 6시간(00·06·12·18 UTC), 예보 3시간 (월평균 별도 제공)
+
+update: 종료 (2019년 8월)
+license: ERA-Interim Product licence (CDS) / NCAR GDEX 사본은 CC BY 4.0 + ECMWF 이용 약관
+account_required: true
+
+summary: >-
+  ECMWF가 ERA-40의 뒤를 이어 만든 전지구 대기 재분석으로, 1979년부터 2019년 8월까지 제공됩니다.
+  12시간 창의 4D-Var 자료동화와 위성 복사휘도 변분 편향보정(VarBC)을 처음 본격적으로 쓴 ECMWF 재분석이며,
+  2010년대 기후 연구에서 가장 널리 인용된 재분석 중 하나였습니다. 현재는 ERA5로 대체되었습니다.
+
+time_convention:
+  summary: >-
+    분석 변수는 00·06·12·18 UTC의 순간값입니다. 강수·복사·열속 같은 누적 변수는 00 또는 12 UTC에 시작한 예보에서만 나오며,
+    표시된 예보 단계(step 3·6·9·12시간 등)까지 예보 시작부터 계속 쌓인 값입니다.
+  points:
+    - "누적 변수는 '예보 시작 이후' 누적입니다. 예: 00 UTC 시작 step 12의 tp = 00~12 UTC 12시간 강수. 3시간 강수는 이웃한 step끼리 빼서(step 6 − step 3) 구합니다."
+    - "일 강수량은 00 UTC 시작 step 12와 12 UTC 시작 step 12를 더하는 방법을 ECMWF가 안내합니다."
+    - "누적 복사·열속 단위 W m-2 s(= J m-2)를 평균 플럭스(W m-2)로 바꾸려면 누적 시간(초)으로 나눕니다(예: 12시간 = 43200)."
+    - "최대·최소 변수(예: mx2t)는 직전 저장 단계 이후 구간의 값입니다. 예: 00 UTC 시작 step 9 = 06~09 UTC."
+    - "월평균 중 moda(monthly means of daily means)는 분석·순간 예보 변수만, 누적 변수의 월평균은 mdfa 스트림에 따로 있습니다."
+  source: https://confluence.ecmwf.int/spaces/CKB/pages/155337848/ERA-Interim+documentation
+  source_name: "ERA-Interim documentation (Copernicus Knowledge Base)"
+
+variables:
+  note: >-
+    ECMWF ERA-Interim 공식 문서의 파라미터 표와 ERA-Interim 아카이브 보고서 기준 주요 변수입니다.
+    변수명은 ECMWF GRIB short name입니다. 원본은 GRIB1이며, 누적 변수(강수·복사·열속)는 예보 시작 시점부터의 누적값입니다.
+  full_list: https://confluence.ecmwf.int/spaces/CKB/pages/155337848/ERA-Interim+documentation
+  groups:
+    - name: 지표·단일면
+      kind: instant
+      items:
+        - "2m 기온 — `2t` (K)"
+        - "2m 이슬점온도 — `2d` (K)"
+        - "10m 동서풍 — `10u` (m s-1)"
+        - "10m 남북풍 — `10v` (m s-1)"
+        - "평균 해면기압 — `msl` (Pa)"
+        - "지표 기압 — `sp` (Pa)"
+        - "해수면온도 — `sst` (K)"
+        - "해빙 비율 — `ci` (0-1)"
+        - "지표(skin) 온도 — `skt` (K)"
+        - "전운량 — `tcc` (0-1)"
+        - "가강수량(수증기 연직적분) — `tcwv` (kg m-2)"
+        - text: "대기경계층 높이(예보) — `blh` (m)"
+          kind: instant
+          note: "예보에서만 제공(예보 단계 시각의 값)"
+    - name: 누적 예보 변수
+      kind: accum
+      period: "예보 시작 이후"
+      items:
+        - "총강수량 — `tp` (m of water)"
+        - "지표 하향 단파복사 — `ssrd` (W m-2 s)"
+        - "지표 하향 장파복사 — `strd` (W m-2 s)"
+        - "대기 상단 순 장파복사 — `ttr` (W m-2 s)"
+        - "지표 현열 플럭스 — `sshf` (W m-2 s)"
+        - "지표 잠열 플럭스 — `slhf` (W m-2 s)"
+    - name: 기압면 (37층)
+      kind: instant
+      items:
+        - "지위(geopotential) — `z` (m2 s-2)"
+        - "기온 — `t` (K)"
+        - "동서풍 — `u` (m s-1)"
+        - "남북풍 — `v` (m s-1)"
+        - "연직속도(기압좌표) — `w` (Pa s-1)"
+        - "비습 — `q` (kg kg-1)"
+        - "상대습도 — `r` (%)"
+        - "상대와도 — `vo` (s-1)"
+        - "발산 — `d` (s-1)"
+        - "잠재와도 — `pv` (K m2 kg-1 s-1)"
+        - "오존 질량혼합비 — `o3` (kg kg-1)"
+        - "구름 액체수·얼음 함량 — `clwc`, `ciwc` (kg kg-1)"
+    - name: 해양 파랑 (1.0° 격자)
+      kind: instant
+      items:
+        - "유의파고(풍랑+너울) — `swh` (m)"
+        - "평균 파향 — `mwd` (degree)"
+        - "평균 파주기 — `mwp` (s)"
+    - name: 지면·불변장
+      kind: instant
+      items:
+        - "토양온도 1층 — `stl1` (K)"
+        - "토양 체적수분 1층 — `swvl1` (m3 m-3)"
+        - "적설 깊이 — `sd` (m of water equivalent)"
+        - text: "해륙 마스크 — `lsm` (0-1)"
+          kind: static
+        - text: "지표 지위(지형) — `z` (m2 s-2)"
+          kind: static
+
+access:
+  - name: Copernicus Climate Data Store (CDS) — ERA-Interim
+    url: https://cds.climate.copernicus.eu/datasets/reanalysis-era-interim
+    method: CDS API (cdsapi) 스크립트 전용
+    note: >-
+      ECMWF 계정 필요. 데이터셋 페이지에서 ERA-Interim Product licence에 먼저 동의해야 합니다.
+      웹 양식으로 내려받는 기능은 없고, ECMWF 안내 페이지에 있는 스크립트 방식으로만 받을 수 있습니다. 형식은 GRIB1.
+  - name: ECMWF 안내 — ERA-Interim 내려받는 방법
+    url: https://confluence.ecmwf.int/spaces/CKB/pages/85419044/How+to+download+ERA-Interim+data+from+the+ECMWF+data+archive
+    method: 안내 문서 (CDS API 요청 예시)
+  - name: NSF NCAR GDEX — ERA-Interim Project (d627000)
+    url: https://gdex.ucar.edu/datasets/d627000/
+    method: 웹 다운로드 / 부분 추출 / NCAR HPC(GLADE)
+    note: >-
+      NCAR 계정 필요(부분 추출 등). GRIB1, 전체 약 39 TB. GDEX는 이 자료를 "보조 용도 권장·후속 자료로 대체됨"으로 표시합니다.
+
+tips:
+  - "ECMWF 공식 알려진 문제: 예보 +3시간(03·15 UTC) 단계의 CAPE는 자료 오류로 모두 0입니다. 그 시각의 CAPE는 쓰지 마세요."
+  - "예보 단계(03·06·09·15·18·21시)의 해수면온도는 육지에서 결측이 아니라 0°C로 들어가 있습니다. 해륙 마스크(lsm)로 육지를 반드시 걸러내세요."
+  - NCAR Climate Data Guide는 해양 위 강수·증발(물순환)이 지나치게 강하고, 북극 850 hPa 아래 기온·습도가 라디오존데보다 높게 치우친 점을 주요 한계로 꼽습니다.
+  - 옛 Web API(ecmwfapi, class=ei) 스크립트는 2023년 6월 이후 동작하지 않습니다. 재현 목적이라면 CDS API로 다시 짜거나 NCAR 사본을 쓰세요.
+
+citations:
+  dataset:
+    - label: CDS 데이터셋
+      text: >-
+        Copernicus Climate Change Service (2023): ERA-Interim atmospheric reanalysis.
+        ECMWF. DOI: 10.24381/cds.f2f5241d (Accessed on DD-MMM-YYYY)
+      doi: 10.24381/cds.f2f5241d
+      bibtex: |
+        @misc{era_interim_cds,
+          author    = {{Copernicus Climate Change Service}},
+          title     = {{ERA-Interim} atmospheric reanalysis},
+          year      = {2023},
+          publisher = {ECMWF},
+          doi       = {10.24381/cds.f2f5241d},
+          note      = {Accessed on DD-MMM-YYYY}
+        }
+    - label: NCAR GDEX 사본 (d627000)
+      text: >-
+        European Centre for Medium-Range Weather Forecasts (2009): ERA-Interim Project.
+        NSF National Center for Atmospheric Research. https://doi.org/10.5065/D6CR5RD9 (Accessed DD MMM YYYY)
+      doi: 10.5065/D6CR5RD9
+      bibtex: |
+        @misc{era_interim_d627000,
+          author    = {{European Centre for Medium-Range Weather Forecasts}},
+          title     = {{ERA-Interim} Project},
+          year      = {2009},
+          publisher = {NSF National Center for Atmospheric Research},
+          doi       = {10.5065/D6CR5RD9},
+          note      = {Accessed DD MMM YYYY}
+        }
+  papers:
+    - label: ERA-Interim 기술 논문
+      text: >-
+        Dee, D. P., Uppala, S. M., Simmons, A. J., Berrisford, P., Poli, P., Kobayashi, S., et al. (2011):
+        The ERA-Interim reanalysis: configuration and performance of the data assimilation system.
+        Quarterly Journal of the Royal Meteorological Society, 137(656), 553–597.
+      doi: 10.1002/qj.828
+      bibtex: |
+        @article{dee2011erainterim,
+          author  = {Dee, D. P. and Uppala, S. M. and Simmons, A. J. and Berrisford, P. and Poli, P. and Kobayashi, S. and others},
+          title   = {The {ERA-Interim} reanalysis: configuration and performance of the data assimilation system},
+          journal = {Quarterly Journal of the Royal Meteorological Society},
+          volume  = {137},
+          number  = {656},
+          pages   = {553--597},
+          year    = {2011},
+          doi     = {10.1002/qj.828}
+        }
+    - label: 아카이브(자료 구성) 보고서 (선택)
+      text: >-
+        Berrisford, P., Dee, D. P., Poli, P., Brugge, R., Fielding, M., Fuentes, M., Kållberg, P. W.,
+        Kobayashi, S., Uppala, S., Simmons, A. (2011): The ERA-Interim archive Version 2.0.
+        ERA Report Series No. 1, ECMWF, Reading.
+  acknowledgement: >-
+    CDS에서 받았다면 위 CDS DOI와 접근 날짜를 적고 Copernicus/C3S 출처를 밝힙니다.
+    NCAR 사본을 썼다면 GDEX DOI를 함께 적고, ECMWF 이용 약관에 따라 ECMWF를 자료 출처로 명시하세요.
+
+notices:
+  - date: "2024-09-26"
+    level: warning
+    title: 구 CDS 종료 — ERA-Interim CDS API 스크립트도 새 계정·key 필요
+    body: >-
+      구(legacy) CDS가 폐쇄되고 신규 CDS로 전환되었습니다. ERA-Interim은 CDS API로만 받을 수 있으므로,
+      예전 .cdsapirc(url·key)를 쓰던 스크립트는 새 ECMWF 계정 정보로 갱신해야 합니다.
+    source: https://forum.ecmwf.int/t/goodbye-legacy-climate-data-store-hello-new-climate-data-store-cds/6380
+  - date: "2023-06-01"
+    level: critical
+    title: ECMWF Public Datasets(Web API) 경로 종료
+    body: >-
+      2023년 3월 2일 예고대로 ECMWF Public Datasets 서비스가 종료되어 Web API(ecmwfapi)로 ERA-Interim을 받을 수 없게 되었습니다.
+      이후 ECMWF는 ERA5로 이전할 것을 강하게 권고하며, 필요한 경우에 한해 CDS API 접근을 열어 두었습니다.
+    source: https://confluence.ecmwf.int/spaces/WEBAPI/blog/2023/03/02/320999831/Decommissioning+of+ECMWF+Public+Datasets+service
+  - date: "2019-08-31"
+    level: info
+    title: ERA-Interim 생산 종료
+    body: 2019년 8월 31일 자료를 끝으로 ERA-Interim 생산이 중단되었습니다. 후속 자료는 ERA5입니다.
+    source: https://confluence.ecmwf.int/spaces/CKB/pages/155337848/ERA-Interim+documentation
+
+links:
+  - name: ERA-Interim 공식 문서 (Copernicus Knowledge Base)
+    url: https://confluence.ecmwf.int/spaces/CKB/pages/155337848/ERA-Interim+documentation
+  - name: ERA-Interim 알려진 문제(Known issues)
+    url: https://confluence.ecmwf.int/spaces/CKB/pages/59019757/ERA-Interim+known+issues
+  - name: ERA-Interim에서 ERA5로 바뀐 점
+    url: https://confluence.ecmwf.int/spaces/CKB/pages/74764925/What+are+the+changes+from+ERA-Interim+to+ERA5+and+ERA5-Land
+  - name: ECMWF Public Datasets 서비스 종료 안내
+    url: https://confluence.ecmwf.int/x/-wUiEw
+  - name: NCAR Climate Data Guide — ERA-Interim
+    url: https://climatedataguide.ucar.edu/climate-data/era-interim
+
+watch_urls:
+  - https://confluence.ecmwf.int/spaces/CKB/pages/85419044/How+to+download+ERA-Interim+data+from+the+ECMWF+data+archive
+  - https://confluence.ecmwf.int/x/-wUiEw
+  - https://forum.ecmwf.int/c/announcements/5
+
+last_verified: "2026-10-11"

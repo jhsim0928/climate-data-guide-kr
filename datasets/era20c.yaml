@@ -1,0 +1,214 @@
+# ─────────────────────────────────────────────────────────────
+# ERA-20C — 데이터셋 정보 파일
+# ─────────────────────────────────────────────────────────────
+id: era20c
+name: ERA-20C
+full_name: ECMWF Atmospheric Reanalysis of the 20th Century (ECMWF 20세기 대기 재분석)
+category: reanalysis
+domain: atmosphere
+group: 위성 관측 미동화 재분석
+order: 20
+domains: [대기, 육지, 해양파랑]
+provider: ECMWF (ERA-CLIM 프로젝트)
+
+status: ended
+status_note: >-
+  2010년 12월까지 한 번 생산된 자료로 더 이상 갱신되지 않습니다. ECMWF Public Datasets(웹 다운로드·Web API) 서비스가
+  2023년 6월 1일 종료되면서 ECMWF에서 공개적으로 받는 경로는 사라졌고, ECMWF는 별도 대안을 안내하지 않습니다.
+  현재는 NCAR GDEX(d626000)가 사실상의 공개 보관처입니다.
+
+successor:
+  name: "없음 (1940년 이후는 ERA5 권장)"
+  url: https://cds.climate.copernicus.eu/datasets/reanalysis-era5-single-levels
+  note: >-
+    20세기 전체를 다루는 ECMWF의 직접 후속 대기 재분석은 없습니다. 같은 관측(지표기압·해상풍)만 쓰는 결합 버전으로 CERA-20C(1901~2010, 역시 종료)가 있고,
+    1940년 이후 기간이라면 ERA5가 훨씬 많은 관측을 동화하므로 그쪽을 권장합니다.
+
+period:
+  start: "1900-01"
+  end: "2010-12"
+  note: >-
+    1900년 1월 ~ 2010년 12월. 22개 구간(stream)으로 나눠 병렬 생산했고, 각 구간의 첫 1년은 스핀업으로 버렸습니다.
+    NCAR 사본의 일부 예보 제품은 2011-01-01 06 UTC까지 들어 있습니다.
+
+resolution:
+  spatial_short: "125 km (1.125°)"
+  temporal_short: "3시간"
+  spatial: "스펙트럼 T159(약 125 km) / NCAR 사본은 N80 가우시안 격자(약 1.125°)"
+  vertical: "모델면 91층(지표~0.01 hPa) / 기압면 37층 / 온위면 16층 / 2 PVU 잠재와도면 / 토양 4층"
+  temporal: 대부분 3시간 (일부 지표 분석 변수는 6시간, 월평균 별도)
+
+update: 종료 (2010년 12월까지 생산)
+license: NCAR GDEX 사본은 CC BY 4.0 + ECMWF 이용 약관
+account_required: true
+
+summary: >-
+  ECMWF가 ERA-CLIM 프로젝트로 만든 첫 20세기 대기 재분석으로, 1900~2010년을 하나의 고정된 체계로 다시 분석했습니다.
+  상층·위성 관측은 일부러 빼고 지표기압·평균해면기압(ISPD, ICOADS)과 해상풍(ICOADS)만 24시간 창 4D-Var로 동화해,
+  관측 체계 변화에 따른 불연속을 줄이려 했습니다. 해수면온도·해빙은 HadISST2.1, 기타 강제력은 CMIP5 설정을 따릅니다.
+
+time_convention:
+  summary: >-
+    분석 변수는 3시간(일부 지표 변수는 6시간) 간격의 순간값입니다. 강수·복사·열속 같은 누적 변수는 매일 06 UTC에 시작하는 예보에서 나오며,
+    3시간씩이 아니라 예보 시작(06 UTC)부터 표시된 단계까지 계속 쌓인 값입니다.
+  points:
+    - "예보 step 3 = 06~09 UTC, step 12 = 06~18 UTC, step 24 = 06 UTC~다음날 06 UTC 누적입니다. 3시간 값은 이웃한 step끼리 빼서 구합니다."
+    - "순간값 예보 변수의 유효 시각은 06 UTC + step입니다(step 27 = 다음날 09 UTC)."
+    - "SST, 토양 온도·수분, 적설, 2m 기온·이슬점 분석은 3시간이 아니라 6시간 간격입니다."
+    - "월평균(monthly means of daily means)에서 누적 변수는 step 24만 평균한 값이며, 달 경계를 넘는 21·24시간 누적은 잘라서 각 달에 나눠 넣었습니다."
+    - "누적 복사·열속(J m-2)을 평균 플럭스(W m-2)로 바꾸려면 누적 시간(초)으로 나눕니다(예: step 24 = 86400)."
+  source: https://www.ecmwf.int/en/research/climate-reanalysis/era-20c
+  source_name: "ECMWF ERA-20C 데이터셋 설명"
+
+variables:
+  note: >-
+    NCAR GDEX ERA-20C(d626000) THREDDS 메타데이터와 ECMWF 파라미터 데이터베이스로 확인한 주요 변수입니다.
+    변수명은 ECMWF GRIB short name이며, NCAR THREDDS/NetCDF에서는 `Temperature_isobaric`처럼 긴 이름으로 보입니다.
+    누적 변수(강수·복사·열속)는 06 UTC 예보 시작부터의 누적값입니다.
+  full_list: https://www.ecmwf.int/en/research/climate-reanalysis/era-20c
+  groups:
+    - name: 지표·단일면
+      kind: instant
+      items:
+        - "평균 해면기압 — `msl` (Pa)"
+        - "지표 기압 — `sp` (Pa)"
+        - text: "2m 기온 (분석은 6시간) — `2t` (K)"
+          kind: instant
+          period: "6시간 간격"
+          note: "분석은 6시간 간격, 예보는 3시간 간격"
+        - "2m 이슬점온도 — `2d` (K)"
+        - "10m 동서풍 — `10u` (m s-1)"
+        - "10m 남북풍 — `10v` (m s-1)"
+        - text: "해수면온도 (강제력) — `sst` (K)"
+          kind: instant
+          period: "6시간 간격"
+        - text: "해빙 면적비 (강제력) — `ci` (0-1)"
+          kind: instant
+          period: "6시간 간격"
+        - "전운량 — `tcc` (0-1)"
+        - "가강수량(수증기 연직적분) — `tcwv` (kg m-2)"
+        - "대기경계층 높이 — `blh` (m)"
+        - "대류가용잠재에너지(CAPE) — `cape` (J kg-1)"
+    - name: 누적 예보 변수
+      kind: accum
+      period: "예보 시작 이후"
+      items:
+        - "총강수량 — `tp` (m)"
+        - "지표 하향 단파복사 — `ssrd` (J m-2)"
+        - "지표 하향 장파복사 — `strd` (J m-2)"
+        - "대기 상단 순 장파복사 — `ttr` (J m-2)"
+        - "지표 현열 플럭스 — `sshf` (J m-2)"
+        - "지표 잠열 플럭스 — `slhf` (J m-2)"
+        - "증발량 — `e` (m of water equivalent)"
+    - name: 기압면 (37층)
+      kind: instant
+      items:
+        - "지위(geopotential) — `z` (m2 s-2)"
+        - "기온 — `t` (K)"
+        - "동서풍 — `u` (m s-1)"
+        - "남북풍 — `v` (m s-1)"
+        - "연직속도(기압좌표) — `w` (Pa s-1)"
+        - "비습 — `q` (kg kg-1)"
+        - "상대습도 — `r` (%)"
+        - "상대와도 — `vo` (s-1)"
+        - "잠재와도 — `pv` (K m2 kg-1 s-1)"
+        - "오존 질량혼합비 — `o3` (kg kg-1)"
+    - name: 지면
+      kind: instant
+      items:
+        - text: "토양온도 1층 — `stl1` (K)"
+          kind: instant
+          period: "6시간 간격"
+          note: "분석은 6시간 간격"
+        - text: "토양 체적수분 1층 — `swvl1` (m3 m-3)"
+          kind: instant
+          period: "6시간 간격"
+          note: "분석은 6시간 간격"
+        - text: "적설 깊이 — `sd` (m of water equivalent)"
+          kind: instant
+          period: "6시간 간격"
+          note: "분석은 6시간 간격"
+
+access:
+  - name: NSF NCAR GDEX — ERA-20C Project (d626000)
+    url: https://gdex.ucar.edu/datasets/d626000/
+    method: 웹 다운로드(HTTPS) / Globus / THREDDS·OPeNDAP / 부분 추출·NetCDF 변환
+    note: >-
+      모델면·기압면·온위면·2 PVU·지표 분석과 예보, 불변장을 변수별 시계열 파일로 정리해 제공합니다(GRIB1/GRIB2, 전체 약 80 TB).
+      부분 추출과 형식 변환은 NCAR 로그인이 필요하니, 필요한 변수·기간만 골라 받으세요.
+  - name: NCAR GDEX THREDDS 카탈로그 (d626000)
+    url: https://tds.gdex.ucar.edu/thredds/catalog/catalog_d626000.html
+    method: OPeNDAP / NetCDF Subset Service
+    note: 연도별 집계(aggregation)로 원격 부분 읽기가 가능합니다. xarray 등에서 바로 열 수 있습니다.
+
+tips:
+  - "지표기압과 해상풍만 동화하므로 1979년 이후처럼 관측이 풍부한 시기에는 ERA5·ERA-Interim보다 정확도가 떨어집니다. ERA-20C는 20세기 초~중반 장기 변동 연구용으로 쓰세요."
+  - "Poli et al.(2016)에 따르면 남위 60~90° 평균해면기압이 100년 동안 5 hPa 넘게 떨어지는 비현실적 추세가 있고, 가강수량은 위성 관측 대비 건조 편향을 보입니다. 남극·남반구 장기 추세 해석에 주의하세요."
+  - 2m 기온, 해수면온도, 토양 변수 등 일부 지표 분석 변수는 3시간이 아니라 6시간 간격으로만 있습니다.
+  - 예보는 매일 06 UTC에서 시작(3~27시간)하므로, 누적 변수로 일합계를 만들 때는 시작 시각을 확인하세요. 예보 월평균은 달 경계에서 잘라 이어 붙인 값입니다.
+
+citations:
+  dataset:
+    - label: NCAR GDEX 사본 (d626000)
+      text: >-
+        European Centre for Medium-Range Weather Forecasts (2014): ERA-20C Project (ECMWF Atmospheric Reanalysis of the 20th Century).
+        NSF National Center for Atmospheric Research. https://doi.org/10.5065/D6VQ30QG (Accessed DD MMM YYYY)
+      doi: 10.5065/D6VQ30QG
+      bibtex: |
+        @misc{era20c_d626000,
+          author    = {{European Centre for Medium-Range Weather Forecasts}},
+          title     = {{ERA-20C} Project ({ECMWF} Atmospheric Reanalysis of the 20th Century)},
+          year      = {2014},
+          publisher = {NSF National Center for Atmospheric Research},
+          doi       = {10.5065/D6VQ30QG},
+          note      = {Accessed DD MMM YYYY}
+        }
+  papers:
+    - label: ERA-20C 기술 논문
+      text: >-
+        Poli, P., Hersbach, H., Dee, D. P., Berrisford, P., Simmons, A. J., Vitart, F., Laloyaux, P., Tan, D. G. H.,
+        Peubey, C., Thépaut, J.-N., Trémolet, Y., Hólm, E. V., Bonavita, M., Isaksen, L., Fisher, M. (2016):
+        ERA-20C: An Atmospheric Reanalysis of the Twentieth Century. Journal of Climate, 29(11), 4083–4097.
+      doi: 10.1175/JCLI-D-15-0556.1
+      bibtex: |
+        @article{poli2016era20c,
+          author  = {Poli, Paul and Hersbach, Hans and Dee, Dick P. and Berrisford, Paul and Simmons, Adrian J. and Vitart, Fr{\'e}d{\'e}ric and Laloyaux, Patrick and Tan, David G. H. and Peubey, Carole and Th{\'e}paut, Jean-No{\"e}l and Tr{\'e}molet, Yannick and H{\'o}lm, El{\'i}as V. and Bonavita, Massimo and Isaksen, Lars and Fisher, Michael},
+          title   = {{ERA-20C}: An Atmospheric Reanalysis of the Twentieth Century},
+          journal = {Journal of Climate},
+          volume  = {29},
+          number  = {11},
+          pages   = {4083--4097},
+          year    = {2016},
+          doi     = {10.1175/JCLI-D-15-0556.1}
+        }
+  acknowledgement: >-
+    ECMWF(ERA-CLIM 프로젝트)를 자료 생산 기관으로 밝히고, NCAR GDEX에서 받았다면 GDEX DOI와 접근 날짜를 함께 적습니다.
+    GDEX 자료는 ECMWF 이용 약관 수락을 전제로 제공됩니다.
+
+notices:
+  - date: "2023-06-01"
+    level: critical
+    title: ECMWF Public Datasets 서비스 종료 — ECMWF 웹·Web API 다운로드 중단
+    body: >-
+      2023년 3월 2일 예고대로 ECMWF Public Datasets 서비스(웹 인터페이스와 Web API)가 종료되어,
+      ERA-20C 일·월 자료와 관측 피드백(ERA-20C OFA)을 ECMWF에서 공개적으로 받을 수 없게 되었습니다. ECMWF 안내 표에는 대체 경로가 없으니 NCAR GDEX를 이용하세요.
+    source: https://confluence.ecmwf.int/spaces/WEBAPI/blog/2023/03/02/320999831/Decommissioning+of+ECMWF+Public+Datasets+service
+  - date: "2015-05-13"
+    level: info
+    title: ERA-20C 일 자료·파랑·관측 자료 공개
+    body: ECMWF Public Datasets 서비스로 ERA-20C 일 자료, 파랑 자료, 관측 자료가 처음 공개되었습니다(이 서비스는 2023년 종료).
+    source: https://confluence.ecmwf.int/spaces/WEBAPI/blog/2015/05/13/65223836/New+Public+Dataset+ERA-20C+Daily+ERA-20C+Wave+ERA-20C+Observations
+
+links:
+  - name: ECMWF ERA-20C 소개 페이지
+    url: https://www.ecmwf.int/en/research/climate-reanalysis/era-20c
+  - name: ECMWF Public Datasets 서비스 종료 안내
+    url: https://confluence.ecmwf.int/x/-wUiEw
+  - name: NCAR Climate Data Guide — ERA-20C (NOAA 20CR과 비교 포함)
+    url: https://climatedataguide.ucar.edu/climate-data/era-20c-ecmwfs-atmospheric-reanalysis-20th-century-and-comparisons-noaas-20cr
+
+watch_urls:
+  - https://gdex.ucar.edu/datasets/d626000/
+  - https://confluence.ecmwf.int/x/-wUiEw
+
+last_verified: "2026-10-11"

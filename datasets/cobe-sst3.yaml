@@ -1,0 +1,218 @@
+# ─────────────────────────────────────────────────────────────
+# COBE-SST3 — 데이터셋 정보 파일
+# 수정 후에는 공식 페이지에서 확인한 날짜로 last_verified 를 갱신하세요.
+# 파일 속 변수 이름·단위는 2026-10-12 기준 공식 문서에서 확인하지 못해 적지 않았습니다.
+# 서버의 00README·ctl 파일을 읽을 수 있게 되면 variables 항목에 변수명을 보완하세요.
+# ─────────────────────────────────────────────────────────────
+id: cobe-sst3
+name: COBE-SST3
+full_name: Centennial in situ Observation-Based Estimates, version 3 (일본 기상청 장기 현장관측 기반 해수면온도 분석 3판, 연구판)
+category: analysis
+domain: ocean
+group: 해수면온도 분석장
+order: 35
+domains: [해양, 해빙]
+provider: 일본 기상청 기상연구소 (MRI/JMA)
+
+status: active
+status_note: >-
+  기상연구소(MRI) 연구 자료 서버에서 받을 수 있는 연구용 공개 자료입니다. JMA의 현업 장기 SST 분석은 여전히 COBE-SST2이며,
+  COBE-SST3는 정기 갱신되지 않습니다. 2025년 9월 일별·월별 파일이 2024년까지 추가되었지만(서버 목록 기준) 섭동 앙상블과
+  위성 결합판 COBE-SST3H는 2020년까지이고, 개발자 안내(2025년 9월)는 최근까지 연장·준현업판 개발을 '계획'으로만 밝히고 있습니다.
+
+period:
+  start: "1850-01"
+  end: "2024-12"
+  note: >-
+    2026-10-12 MRI 서버 목록 기준으로 일별(daily/)·월별(monthly/, 1x1/monthly/) 연도 파일이 1850~2024년까지 있습니다(2021~2024년분은 2025-09-22 업로드).
+    논문(Ishii et al. 2025)과 NCAR Climate Data Guide는 아직 1850~2020년으로 설명하며, 2024년 파일 안의 마지막 날짜는 직접 열어 확인하지 못했습니다.
+    섭동 앙상블은 0.25° 일별이 1890~2020년, 1° 월별이 1870~2024년 파일만 있고, COBE-SST3H는 1982~2020년입니다.
+
+resolution:
+  spatial_short: "28 km (0.25°)"
+  temporal_short: "1일"
+  spatial: "0.25° × 0.25° 격자 (전지구 해양·내해·큰 호수, 결측 없음) / 1° × 1° 월별판 별도 (1x1 폴더)"
+  vertical: 해수면 단일층 (해면 아래 수 m 수온에 해당, 표피 수온 아님)
+  temporal: 일별 (월별 파일 별도 제공)
+
+update: 비정기 연구판 — 정기 갱신 일정 공표 없음 (2025년 9월 2021~2024년분 추가)
+license: >-
+  MRI 서버에 별도 이용 조건 표시 없음. 기상연구소 홈페이지는 JMA 홈페이지 이용약관(공공데이터 이용규약 1.0판)을 준용하며 출처 표시 필요.
+  자료 사용 시 Ishii et al. (2025) 인용
+account_required: false
+
+summary: >-
+  일본 기상청 기상연구소(MRI)가 COBE-SST2의 후속으로 개발한 0.25° 일별 해수면온도 분석으로, 1850년부터 ICOADS 3.0 등 현장 관측만으로 재구성했습니다.
+  관측 유형별 편향을 다시 추정하고 육상 기온 분석(COBE-LSAT3)과 월 단위로 함께 분석해 해양·육지 기온의 일관성을 높였으며, 300개 멤버 섭동 앙상블로 불확실성을 제공합니다.
+  2025년 논문과 함께 공개된 연구용 자료이며, JMA의 현업 SST 분석은 여전히 COBE-SST2입니다.
+
+time_convention:
+  summary: >-
+    일별 파일은 하루 단위 분석값이고, 월별 파일은 월 단위 값입니다. 최종 SST는 저주파 성분(같은 달의 31년 이동평균, 1° 격자),
+    경년 변동(월 단위), 일 변화(경년 변동에서의 편차)를 더해 만듭니다. 일별 값이 '일평균'이라고 명시한 공식 설명은 찾지 못했습니다.
+  points:
+    - "논문 설명: 'The final product of COBE-SST3 is a sum of low-frequency components, inter-annual variations, and daily changes.'"
+    - "일 변화 성분은 현장 관측만으로 분석하고, 위성 SST는 공간 보간에 쓰는 EOF(공간 패턴)에만 반영됩니다. 그래서 위성 결합판 COBE-SST3H보다 일별 변동이 작게 나옵니다."
+    - "SST는 해면 아래 수 m 깊이의 대표 수온이며, 위성 표피 수온(skin SST)이 아닙니다 (NCAR CDG 개발자 안내)."
+    - "해빙역 SST는 해빙 농도-SST 관계로 만든 대리값을 해빙 농도 비율로 섞어 정합니다."
+    - "파일 속 시간 좌표가 하루의 몇 시를 가리키는지는 공식 문서에서 확인하지 못했습니다. 파일을 열어 time 값을 먼저 확인하세요."
+  source: https://doi.org/10.2151/jmsj.2025-002
+  source_name: Ishii et al. (2025) / NCAR Climate Data Guide 개발자 안내
+
+variables:
+  note: >-
+    NCAR Climate Data Guide 기준 제공 변수는 해수면온도(SST)와 해빙 농도(SIC)입니다. 파일 안의 변수 이름·단위는 공식 문서에서 확인하지 못했으므로
+    파일을 열어(print(ds)) 직접 확인하세요. 아래 파일 이름은 MRI 서버 목록에서 확인한 것입니다.
+  full_list: https://climatedataguide.ucar.edu/climate-data/sst-data-cobev3-centennial-situ-observation-based-estimates-version-3
+  groups:
+    - name: 해수면온도
+      kind: mean
+      period: 일
+      items:
+        - text: "일별 해수면온도 (0.25°) — 파일 cobe-sst3.YYYY.nc (daily/)"
+          kind: mean
+          period: 일
+          note: 하루 단위 분석값. 일평균이라는 명시적 설명은 공식 문서에 없음
+        - text: "월별 해수면온도 (0.25°) — 파일 cobe-sst3.monthly.YYYY.nc (monthly/)"
+          kind: mean
+          period: 월
+        - text: "월별 해수면온도 (1°) — 파일 cobe-sst3.monthly.YYYY.nc (1x1/monthly/)"
+          kind: mean
+          period: 월
+    - name: 해빙
+      kind: mean
+      period: 일
+      items:
+        - text: "해빙 농도 (SIC)"
+          kind: mean
+          period: 일
+          note: >-
+            NCAR CDG가 제공 변수로 명시. 어느 파일에 어떤 이름으로 들어 있는지와 시간 처리 방식은 확인하지 못함.
+            1978년 10월 이전은 Walsh et al. (2017) 자료 기반이고 남극 해빙은 기후값이라 신뢰도가 낮음
+    - name: 불확실성 (섭동 앙상블)
+      kind: mean
+      period: 일
+      items:
+        - text: "섭동 SST 300개 멤버 (0.25° 일별) — 파일 cobe-sst3.mNNN.YYYY.nc (perturb/m001~m300)"
+          kind: mean
+          period: 일
+          note: 서버에 1890~2020년 파일. 논문에 따르면 SIC 섭동도 SST 섭동과 일관되게 계산됨
+        - text: "섭동 SST 300개 멤버 (1° 월별) — 파일 cobe-sst3.monthly.mNNN.YYYY.nc (1x1/perturb/m001~m300)"
+          kind: mean
+          period: 월
+          note: 서버에 1870~2024년 파일
+    - name: 보조 자료
+      kind: static
+      items:
+        - "해양 마스크 — 파일 ocean-mask_0.25x0.25.nc, ocean-mask_1x1.nc (mask/)"
+        - "육지 마스크 — 파일 land-mask_1x1.nc (mask/)"
+        - text: "전지구 평균 SST 시계열 — 파일 gm_cobe-sst3(월별), annual_gm_cobe-sst3(연별) (gm/)"
+          kind: mean
+          period: 월·연
+          note: 2026-05-28 갱신. COBE-LSAT3·COBE-STEMP3·COBE-SST3H 전지구 평균 파일도 같은 폴더에 있음
+
+access:
+  - name: MRI 연구 자료 서버 — COBE-SST3 아카이브
+    url: https://climate.mri-jma.go.jp/pub/archives/Ishii-et-al_COBE-SST3/
+    method: HTTPS 디렉터리 직접 다운로드 (wget / curl), NetCDF
+    note: >-
+      cobe-sst3/ 아래 daily/(0.25° 일별, 연 1파일), monthly/(0.25° 월별), 1x1/(1° 월별·섭동), perturb/(300개 멤버 일별 섭동)가 있고,
+      같은 상위 폴더에 COBE-SST3H(위성 결합 일별, 1982~2020), COBE-LSAT3(육상 기온), COBE-STEMP3(전지구 기온), mask/, gm/이 있습니다.
+      GrADS용 ctl 파일과 00README가 함께 있습니다. OPeNDAP·THREDDS는 없고, 일별 파일은 연도별 파일 하나가 크므로 필요한 연도만 받으세요.
+
+example:
+  lang: python
+  note: OPeNDAP이 없으므로 파일을 먼저 받은 뒤 엽니다. 변수·좌표 이름은 공식 문서에 없으니 print(ds)로 확인한 뒤 쓰세요.
+  code: |
+    import urllib.request
+    import xarray as xr
+
+    base = "https://climate.mri-jma.go.jp/pub/archives/Ishii-et-al_COBE-SST3/cobe-sst3"
+    fn = "cobe-sst3.monthly.2020.nc"                 # 0.25° 월별 파일 (일별은 daily/cobe-sst3.2020.nc)
+    urllib.request.urlretrieve(f"{base}/monthly/{fn}", fn)
+
+    ds = xr.open_dataset(fn)
+    print(ds)                                         # 변수 이름·단위·위도 방향·time 값 확인
+    sst = ds[list(ds.data_vars)[0]]                   # print(ds) 결과를 보고 SST 변수 이름으로 바꾸세요
+
+tips:
+  - "JMA 현업 자료는 COBE-SST2입니다. 매월 갱신되는 최근 기간이 필요하면 COBE-SST2(1°, 월별)나 OISST 같은 일별 현업 자료를 쓰고, COBE-SST3는 과거 기간 고해상도·불확실성 분석에 쓰세요."
+  - "COBE-SST2와 달라진 점: 해상도 1° → 0.25°, 현장 관측은 ICOADS 3.0(2015년 이후는 JMA 현업 자료), 관측 유형별 편향을 다시 추정하고 야간 해상 기온(HadNMAT2)을 편향 보정에 반영, 육상 기온(COBE-LSAT3)과 월 단위 동시 분석. 그 결과 1940년대 초 급변이 완화되어 20세기 중반 추세가 COBE-SST2와 다르게 나올 수 있습니다."
+  - "분석에 쓴 기후값은 1985~2015년(31년)입니다. 배포 파일에 편차(anomaly) 변수가 있는지 확인하지 못했으므로, 편차는 원하는 기준 기간(예: 1991~2020년)으로 직접 계산하세요."
+  - "불확실성이 중요하면 perturb/의 300개 멤버를 쓰세요. 다만 0.25° 일별 섭동은 서버 기준 1890~2020년, 1° 월별 섭동은 1870~2024년 파일만 있어 본 분석(1850~2024년)과 기간이 다릅니다."
+  - "위성 SST를 직접 섞은 COBE-SST3H(1982~2020년)는 일별 변동을 더 잘 나타냅니다. 논문은 COBE-SST3H의 부이·Argo 대비 통계가 OISST v2.1과 매우 비슷하고, 위성을 쓰지 않은 COBE-SST3는 신호가 다소 약해진다고 평가합니다."
+  - "관측이 드문 시기·해역은 신뢰도가 낮고, 20세기 초 편향 보정은 아직 부족할 수 있다고 개발자가 밝혔습니다. 위성 이전 해빙 농도는 정확도가 낮고 남극 해빙은 기후값입니다."
+  - "2021~2024년 연장분은 2025년 9월 서버에 올라왔지만 논문·NCAR CDG에는 아직 반영되지 않았습니다. 이 구간을 쓸 때는 파일 내용과 서버 00README를 확인하고 받은 날짜를 기록하세요."
+
+citations:
+  papers:
+    - label: COBE-SST3 논문 (기본 인용)
+      text: >-
+        Ishii, M., Nishimura, A., Yasui, S., Hirahara, S. (2025): Historical High-Resolution Daily SST Analysis (COBE-SST3)
+        with Consistency to Monthly Land Surface Air Temperature. Journal of the Meteorological Society of Japan. Ser. II, 103(1), 17–44.
+      doi: 10.2151/jmsj.2025-002
+      bibtex: |
+        @article{ishii2025cobesst3,
+          author  = {Ishii, Masayoshi and Nishimura, Akio and Yasui, Soichiro and Hirahara, Shoji},
+          title   = {Historical High-Resolution Daily {SST} Analysis ({COBE-SST3}) with Consistency to Monthly Land Surface Air Temperature},
+          journal = {Journal of the Meteorological Society of Japan. Ser. II},
+          volume  = {103},
+          number  = {1},
+          pages   = {17--44},
+          year    = {2025},
+          doi     = {10.2151/jmsj.2025-002}
+        }
+  acknowledgement: >-
+    별도의 데이터셋 DOI는 없으므로 Ishii et al. (2025)를 인용하고, 받은 곳(MRI 연구 자료 서버 URL)과 받은 날짜를 밝힙니다.
+    2021년 이후 연장분은 논문에 설명되지 않은 부분이므로 사용 사실과 받은 날짜를 따로 적어 두세요.
+
+notices:
+  - date: "2026-02-13"
+    level: info
+    title: JMA, 차기 장기재분석 해면 경계조건 후보로 COBE-SST3H 시험 결과 발표
+    body: >-
+      JMA 장기재분석 추진 간담회 자료에서 COBE-SST3를 'COBE-SST2의 후계'로 소개하고, 위성 결합판 COBE-SST3H를 MGDSST 대신 넣은
+      2014년 여름 시험 결과(태풍 통과 시 SST 하강 표현 개선 등)를 보고했습니다. 채택이나 현업화 일정은 결정 사항으로 적혀 있지 않습니다.
+    source: https://www.jma.go.jp/jma/kishou/shingikai/kondankai/reanalysis_kondankai/R07/r7-siryo3-2.pdf
+  - date: "2025-09-22"
+    level: info
+    title: 일별·월별 파일 2024년까지 추가 (서버 목록 기준)
+    body: >-
+      MRI 서버의 daily/·monthly/·1x1/monthly/ 폴더에 2021~2024년 파일이 올라왔고, 2011~2020년 파일도 같은 날 다시 올라왔습니다.
+      별도의 공식 공지 문서는 찾지 못했으며, 0.25° 섭동 앙상블과 COBE-SST3H는 여전히 2020년까지입니다.
+    source: https://climate.mri-jma.go.jp/pub/archives/Ishii-et-al_COBE-SST3/cobe-sst3/daily/
+  - date: "2025-09"
+    level: info
+    title: 개발자 안내 — 최근 연도 연장과 준현업판 개발 계획
+    body: >-
+      NCAR Climate Data Guide의 개발자 안내(Masayoshi Ishii, 2025년 9월)는 자료가 2020년까지이며 가능할 때 최신 연도로 연장하고
+      준현업(near-operational)판을 개발 중이라고 밝혔습니다. 구체적인 일정은 없습니다.
+    source: https://climatedataguide.ucar.edu/climate-data/sst-data-cobev3-centennial-situ-observation-based-estimates-version-3
+  - date: "2024-10-25"
+    level: info
+    title: COBE-SST3 논문 온라인 선공개 (JMSJ)
+    body: >-
+      Ishii et al.의 COBE-SST3 논문이 J. Meteor. Soc. Japan에 온라인 선공개되었습니다(정식 게재 2025년 103권 1호).
+      논문은 분석 자료를 MRI 연구 자료 서버에서 NetCDF로 제공한다고 밝혔습니다.
+    source: https://www.jstage.jst.go.jp/article/jmsj/103/1/103_2025-002/_article
+
+links:
+  - name: Ishii et al. (2025) 논문 (J-STAGE, 오픈 액세스)
+    url: https://www.jstage.jst.go.jp/article/jmsj/103/1/103_2025-002/_article
+  - name: JMSJ 논문 하이라이트
+    url: https://metsoc.jp/jmsj/highlights/JMSJ2025-002.html
+  - name: NCAR Climate Data Guide — COBEv3 (개발자 안내 포함)
+    url: https://climatedataguide.ucar.edu/climate-data/sst-data-cobev3-centennial-situ-observation-based-estimates-version-3
+  - name: MRI 연구 자료 서버 COBE-SST3 아카이브
+    url: https://climate.mri-jma.go.jp/pub/archives/Ishii-et-al_COBE-SST3/
+  - name: JMA 장기재분석 추진 간담회 자료 — 해면 경계조건 개선 검토 (2026-02-13)
+    url: https://www.jma.go.jp/jma/kishou/shingikai/kondankai/reanalysis_kondankai/R07/r7-siryo3-2.pdf
+  - name: JMA 홈페이지 이용약관 (기상연구소 준용)
+    url: https://www.jma.go.jp/jma/kishou/info/coment.html
+
+watch_urls:
+  - https://climate.mri-jma.go.jp/pub/archives/Ishii-et-al_COBE-SST3/
+  - https://climate.mri-jma.go.jp/pub/archives/Ishii-et-al_COBE-SST3/cobe-sst3/daily/
+  - https://climatedataguide.ucar.edu/climate-data/sst-data-cobev3-centennial-situ-observation-based-estimates-version-3
+
+last_verified: "2026-10-12"

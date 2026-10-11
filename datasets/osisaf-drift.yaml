@@ -1,0 +1,333 @@
+# ─────────────────────────────────────────────────────────────
+# OSI SAF 해빙 이동 — 데이터셋 정보 파일
+# 준실시간 저해상도 해빙 이동 OSI-405-d(62.5 km, 48시간 변위) + 기후자료 OSI-455(75 km, 24시간 변위) + 시범 연장판 OSI-435
+# ─────────────────────────────────────────────────────────────
+id: osisaf-drift
+name: OSI SAF 해빙 이동
+full_name: EUMETSAT OSI SAF Global Low Resolution Sea-Ice Drift (준실시간 OSI-405-d) / Global Low Resolution Sea-Ice Drift data record (기후자료 OSI-455, 시범 연장판 OSI-435)
+category: satellite
+domain: seaice
+group: 해빙 이동
+order: 20
+domains: [해빙]
+provider: EUMETSAT Ocean and Sea Ice Satellite Application Facility (OSI SAF) / 노르웨이 기상청(MET Norway)
+
+status: active
+status_note: >-
+  준실시간 OSI-405-d는 정상 운영 중이며, 2025년 7월 SSMIS 입력을 뺀 뒤 AMSR2 중심으로 돌다가 2026-09-01부터 AMSR3를 주 입력으로 씁니다(제품 ID·파일 이름은 그대로).
+  기후자료 OSI-455는 1991~2020년으로 고정된 기록이고, 2021년 이후를 잇는 연장판 OSI-435(2021~2025)는 2026년 6월 시험(demonstrational) 단계로 FTP에 올라왔습니다.
+  예전 중해상도 이동 자료 OSI-407-a는 2025-05-19 배포가 끝났습니다.
+
+transitions:
+  - from: OSI-405-c (2017-05-30 ~ 2025-03-04, SSMIS·AMSR2·ASCAT Metop-B 입력)
+    to: OSI-405-d (2025-03-04 ~, AMSR2 → 2026-09부터 AMSR3, ASCAT Metop-C 입력)
+    status: completed
+    date: "2025-03"
+    summary: >-
+      저해상도 해빙 이동 준실시간 제품이 OSI-405-c에서 OSI-405-d로 바뀌었습니다(2025-03-04 일괄 전환). 방법·격자·48시간 변위는 같고 파일 형식과 ASCAT 위성이 바뀌었으며,
+      이후 SSMIS 입력 제외(2025-07-17)와 AMSR3 전환(2026-09-01)이 같은 제품 ID 안에서 이어졌습니다.
+    changes:
+      - aspect: 파일 형식
+        before: "NetCDF3 (EUMETCast 파일은 .nc.gz)"
+        after: "NetCDF4 (EUMETCast 파일 이름에서 .gz 제거), 전역 속성(global attributes) 변경"
+      - aspect: ASCAT 입력 위성
+        before: "Metop-B"
+        after: "Metop-C"
+      - aspect: 수동마이크로파 입력
+        before: "DMSP SSMIS F18 (91 GHz) + GCOM-W1 AMSR2 (37·18.7 GHz)"
+        after: "2025-07-17부터 SSMIS 제외, AMSR2가 주 입력 → 2026-09-01부터 GOSAT-GW AMSR3가 주 입력"
+      - aspect: 격자·변위 구간·제품 ID
+        before: "62.5 km 극 평사도, 48시간 변위"
+        after: "같음. AMSR3 전환 때도 제품 ID(OSI-405-d)와 병합 파일 이름은 바뀌지 않음"
+      - aspect: DOI
+        before: "10.15770/EUM_SAF_OSI_NRT_2007"
+        after: "같음 (권장 인용의 제품 표기만 OSI-405-d로)"
+    impacts:
+      - "OSI-405-c 시절과 2025년 이후 자료를 이어 쓸 때는 입력 센서 구성이 2025-07, 2026-09에 바뀐 점을 기록하세요. 특히 2026-09 이후는 AMSR3 입력입니다."
+      - "NetCDF3 전용 도구나 .gz 압축 해제를 전제로 한 EUMETCast 수신 스크립트는 고쳐야 합니다."
+      - "단일 센서 파일(single_sensor)을 쓰던 경우, SSMIS가 입력에서 빠진 2025-07-17 이후와 AMSR3로 바뀐 2026-09-01 이후의 센서별 파일 구성·이름은 공식 문서(PUM v1.9, 2024-12)에 아직 반영되지 않았으니 FTP 목록을 직접 확인하세요."
+    sources:
+      - name: OSI SAF 서비스 메시지 #3193 (2025-03-03, OSI-405-d 전환)
+        url: https://osi-saf.eumetsat.int/community/list-of-service-messages/new-sea-ice-emissivity-and-lr-sea-ice-drift-products
+      - name: OSI-405-d 제품 페이지
+        url: https://osi-saf.eumetsat.int/products/osi-405-d
+      - name: OSI SAF — Implications of the end of SSMIS data on OSI SAF products
+        url: https://osi-saf.eumetsat.int/community/stories/implications-end-ssmis-data-osi-saf-products
+      - name: OSI SAF 서비스 메시지 #3571 (2026-08-31, AMSR3 기반 운영)
+        url: https://osi-saf.eumetsat.int/community/list-of-service-messages/operational-release-amsr3-based-sea-ice-products-1st-september
+
+period:
+  start: "1991-01"
+  end: present
+  note: >-
+    기후자료 OSI-455는 1991-01-01 ~ 2020-12-31(북·남반구, 연중), 시범 연장판 OSI-435는 2021-01-01부터 2025년까지(정확한 마지막 날짜는 제품 페이지에 없음)입니다.
+    준실시간 OSI-405 계열은 2009년부터 이어지며 2026-10-12 현재 매일 갱신됩니다(FTP prod 폴더는 최근 31일, archive 폴더에 전체).
+    다만 THREDDS·FTP 목록을 직접 열어 확인하지 못해 실제 최신 파일 날짜는 확인되지 않았습니다.
+
+resolution:
+  spatial_short: "62.5 km (0.56°)"
+  temporal_short: "1일"
+  spatial: >-
+    준실시간 OSI-405-d — 62.5 km 극 평사도 격자: 북반구 119×177(70°N에서 실제 축척, 중심 경선 45°W), 남반구 125×131(70°S, 중심 경선 0°) /
+    기후자료 OSI-455 — 75 km EASE2 격자(WGS 84 Lambert 정적 방위 등적도법, 북·남반구 각 144×144). 이동 추적은 12.5 km 영상 위에서 하며 하위 영상끼리 겹침.
+    시범 연장판 OSI-435도 75 km 격자
+  vertical: 해당 없음 (해빙 표면 이동)
+  temporal: >-
+    하루 한 개 파일. OSI-405-d는 정오(12:00 UTC)에서 정오까지 48시간 변위, OSI-455·OSI-435는 전날 12:00 → 그날 12:00 UTC의 24시간 변위.
+    벡터마다 실제 시작·끝 시각이 조금씩 달라 정확히 48·24시간은 아님
+
+update: >-
+  OSI-405-d는 매일 갱신 — D일 04:00 UTC 무렵 D-3·D-1 영상으로 처리해 마지막 입력 관측 후 약 5~6시간 안에 배포(보통 05:00 UTC 전후).
+  OSI-455는 더 이상 갱신되지 않는 고정 기록(C3S CDS 표기 "No updates expected"). OSI-435의 정기 갱신 계획은 공식 페이지에 아직 없음
+license: CC BY 4.0 (출처 "EUMETSAT OSI SAF" 표시 필수, 제품별 DOI 함께 기재)
+account_required: false
+
+summary: >-
+  EUMETSAT OSI SAF가 수동마이크로파(AMSR2·AMSR3, 과거 SSM/I·SSMIS·AMSR-E)와 ASCAT 산란계 영상에서 연속 최대 교차상관(CMCC) 방법으로 추적한
+  북·남반구 해빙 이동(변위) 자료입니다. 준실시간 OSI-405-d는 62.5 km 극 평사도 격자에 48시간 변위를 매일 내고, 기후자료 OSI-455는 75 km EASE2 격자에
+  1991~2020년 24시간 변위를 연중 제공합니다(여름은 ERA5 바람 기반 자유 표류 모델로 채움). 모든 벡터에 불확실성(1 표준편차)과 품질 플래그가 붙습니다.
+
+time_convention:
+  summary: >-
+    값은 속도가 아니라 정해진 구간 동안의 변위(km)입니다. OSI-405-d는 시작일 12:00 UTC에서 이틀 뒤 12:00 UTC까지 48시간, OSI-455는 전날 12:00에서 그날 12:00 UTC까지
+    24시간 동안 얼음이 움직인 거리로, 구간 동안의 속도를 시간에 대해 적분(누적)한 값입니다. 평균 속도가 필요하면 변위를 그 벡터의 실제 경과 시간으로 나눕니다.
+  points:
+    - "OSI-405-d 파일 이름 …_<시작 YYYYMMDDhhmm>-<끝 YYYYMMDDhhmm>.nc 의 두 시각이 48시간 구간의 공칭 시작·끝(12:00 UTC)이며, `time_bnds`에도 들어 있습니다. 예: 2월 16일 12:00 → 18일 12:00 변위는 19일 05:00 UTC 무렵 배포."
+    - "벡터마다 실제 관측 시각이 달라 OSI-405-d는 `dt0`·`dt1`(각각 time_bnds[0]·time_bnds[1]에서의 초 단위 차이), OSI-455는 `t0`·`t1`로 실제 시작·끝을 줍니다. 따라서 경과 시간은 정확히 48·24시간이 아닙니다."
+    - "OSI-455 파일 이름의 날짜(<date12>, YYYYMMDD1200)는 24시간 구간의 끝 시각입니다. 이 날짜를 시작일로 착각하면 하루가 어긋납니다."
+    - "`lat1`·`lon1`은 구간 끝 시각의 얼음 위치(도착점), `lat`·`lon`은 격자점(출발점) 위치입니다."
+    - "여름철(북반구 5/1~10/1, 남반구 11/1~4/1) OSI-405-d 단일 센서 파일에는 유효 벡터가 없고(status_flag 4), 병합(multi-oi) 파일만 정확도가 낮은 여름 벡터를 줍니다. OSI-455는 여름(북반구 6~9월, 남반구 11~2월 — OSI-455 PUM 정의)에 ERA5 10 m 바람 기반 자유 표류 모델 값, 봄·가을에는 위성·바람 벡터를 불확실성 가중으로 섞은 값을 씁니다."
+  source: https://osisaf-hl.met.no/sites/osisaf-hl/files/user_manuals/osisaf_pum_sea-ice-drift-lr_v1p9.pdf
+  source_name: OSI-405-d 제품 사용자 설명서(PUM v1.9) / OSI-455 PUM v1.0 / OSI-455 제품 페이지
+
+variables:
+  note: >-
+    OSI-405-d PUM v1.9와 OSI-455 PUM v1.0 기준 병합(multi-oi, OSI-455는 merged) 파일의 변수입니다. 두 제품 변수 이름은 대부분 같고,
+    벡터별 시각 변수만 OSI-405-d `dt0`·`dt1`, OSI-455 `t0`·`t1`로 다릅니다. 실수형 결측값은 -1e10입니다.
+  full_list: https://osisaf-hl.met.no/sites/osisaf-hl/files/user_manuals/osisaf_pum_sea-ice-drift-lr_v1p9.pdf
+  groups:
+    - name: 해빙 변위
+      kind: accum
+      period: 48시간
+      items:
+        - text: "격자 x 방향 변위 — `dX` (km; sea_ice_x_displacement)"
+          note: OSI-405-d는 48시간, OSI-455·OSI-435는 24시간(period 24시간) 동안의 누적 변위. 동쪽 성분이 아니라 격자 x축 방향
+        - text: "격자 y 방향 변위 — `dY` (km; sea_ice_y_displacement)"
+          note: dX와 같은 구간의 누적 변위. 격자 y축 방향
+        - text: "변위 불확실성(두 성분 공통, 1 표준편차) — `uncert_dX_and_dY` (km)"
+          note: 같은 구간 변위에 대한 불확실성. 속도로 바꿀 때는 같은 경과 시간으로 나눔
+    - name: 위치·시각
+      kind: instant
+      items:
+        - text: "도착점 위도·경도 — `lat1`, `lon1` (degrees)"
+          period: 구간 끝 시각
+          note: 변위 구간 끝 시각의 얼음 위치
+        - text: "벡터별 시작·끝 시각 보정 — `dt0`, `dt1` (s, OSI-405-d) / `t0`, `t1` (OSI-455)"
+          note: 공칭 time_bnds 대비 실제 시작·끝 시각. 경과 시간 계산에 사용
+        - text: "격자점(출발점) 위도·경도 — `lat`, `lon` (degrees), 격자 좌표 — `xc`, `yc` (km)"
+          kind: static
+    - name: 품질 정보
+      kind: accum
+      period: 48시간
+      items:
+        - text: "상태 플래그(0–19 제외 사유, 20–30 품질 등급, 30 정상) — `status_flag` (코드값)"
+          note: 해당 구간 변위 벡터에 딸린 플래그(시간 통계값이 아님). 예 4 여름철, 22 내삽(병합 파일), OSI-455는 23~25 바람·혼합 벡터 표시
+
+access:
+  - name: OSI SAF 제품 페이지 — OSI-405-d (준실시간)
+    url: https://osi-saf.eumetsat.int/products/osi-405-d
+    method: 웹 안내 / FTP (ftp://osisaf.met.no/prod/ice/drift_lr/ 최근 31일, ftp://osisaf.met.no/archive/ice/drift_lr/ 전체) / EUMETCast
+    note: FTP에는 merged(병합)와 single_sensor(센서별) 폴더가 있습니다. EUMETCast로는 병합 파일만 나갑니다.
+  - name: MET Norway THREDDS — OSI SAF 해빙 이동 카탈로그
+    url: https://thredds.met.no/thredds/catalog/osisaf/osisaf_seaicedrift.html
+    method: THREDDS / OPeNDAP / HTTP
+    note: 계정 없이 접근할 수 있습니다. 기후자료(OSI-455)는 https://thredds.met.no/thredds/catalog/osisaf/osisaf_cdrseaicedrift.html 에 있습니다.
+  - name: OSI SAF 제품 페이지 — OSI-455 (기후자료 1991~2020)
+    url: https://osi-saf.eumetsat.int/products/osi-455
+    method: FTP (ftp://osisaf.met.no/reprocessed/ice/drift_lr/v1/) / THREDDS / EUMETSAT Data Store
+    note: merged/YYYY/MM/ 아래 병합 파일, single_sensor/<센서>/YYYY/MM/ 아래 센서별·ERA5 바람 파일이 있습니다.
+  - name: OSI SAF 제품 페이지 — OSI-435 (시범 연장판 2021~2025)
+    url: https://osi-saf.eumetsat.int/products/osi-435-complementing-osi-455
+    method: FTP (ftp://osisaf.met.no/reprocessed_test/ice/drift_lr_icdr/v1) / THREDDS
+    note: 시험(demonstrational) 단계 제품이라 DOI·권장 인용이 아직 없고, 시험용 FTP 폴더(reprocessed_test)에 있습니다.
+  - name: C3S Climate Data Store — Sea ice drift daily gridded data derived from satellite observations
+    url: https://cds.climate.copernicus.eu/datasets/satellite-sea-ice-drift
+    method: 웹 다운로드 / CDS API
+    note: OSI-455(1991~2020) 재배포본입니다. ECMWF 계정이 필요하며 갱신 예정은 없습니다.
+  - name: Copernicus Marine — SEAICE_GLO_SEAICE_L4_NRT_OBSERVATIONS_011_001
+    url: https://data.marine.copernicus.eu/product/SEAICE_GLO_SEAICE_L4_NRT_OBSERVATIONS_011_001
+    method: 웹 다운로드 / copernicusmarine 툴박스
+    note: OSI-405-d 제품 페이지가 안내하는 준실시간 재배포처입니다. Copernicus Marine 계정이 필요합니다.
+
+example:
+  lang: python
+  note: >-
+    FTP나 THREDDS에서 받은 OSI-405-d 북반구 병합 파일을 연다고 가정합니다. 파일명 규칙은 ice_drift_<nh|sh>_polstere-625_multi-oi_<시작>-<끝>.nc
+    (시각은 YYYYMMDDhhmm)입니다. OSI-455는 ice_drift_<nh|sh>_ease2-750_cdr-v1p0-<센서>_24h-<끝 YYYYMMDD1200>.nc 규칙(병합 파일은 센서 부분 생략)이므로 정확한 이름은 FTP 목록에서 확인하세요.
+  code: |
+    import numpy as np
+    import xarray as xr
+
+    ds = xr.open_dataset("ice_drift_nh_polstere-625_multi-oi_202401011200-202401031200.nc")
+    dX = ds["dX"].squeeze()            # km, 48시간 누적 변위 (격자 x 방향)
+    dY = ds["dY"].squeeze()
+    flag = ds["status_flag"].squeeze()
+
+    # 벡터별 실제 경과 시간 = (time_bnds[1] + dt1) - (time_bnds[0] + dt0)
+    tb = ds["time_bnds"].squeeze().values
+    span_s = (tb[1] - tb[0]) / np.timedelta64(1, "s") + ds["dt1"].squeeze() - ds["dt0"].squeeze()
+
+    speed_cm_s = np.hypot(dX, dY) * 1e5 / span_s       # km → cm, 구간 평균 속도
+    good = flag >= 20                                  # 20–30: 유효 벡터(30이 정상 품질)
+    print(float(speed_cm_s.where(good).mean()), "cm/s")
+
+tips:
+  - >-
+    `dX`, `dY`는 속도가 아니라 48시간(OSI-405-d) 또는 24시간(OSI-455) 누적 변위(km)이며, 방향도 동·북이 아니라 격자 x·y축입니다.
+    바람·해류와 비교하려면 경과 시간으로 나눠 속도로 바꾸고, 도착점(`lat1`, `lon1`)과 출발점(`lat`, `lon`)으로 방향을 다시 계산하는 것이 안전합니다.
+  - >-
+    OSI-405-d는 매일 나오지만 각 파일이 48시간 구간이라 이웃한 날짜 파일끼리 24시간이 겹칩니다. 일별 시계열로 쓰거나 독립 표본으로 셀 때 주의하세요.
+  - >-
+    여름철(북반구 5/1~10/1, 남반구 11/1~4/1)에는 녹은 표면 때문에 위성 추적이 어려워 정확도가 떨어집니다. OSI-405-d는 병합 파일에만 여름 벡터가 있고,
+    OSI-455의 여름 값은 대부분 ERA5 바람 기반 자유 표류 모델에서 온 것이므로 status_flag로 출처를 확인하세요.
+  - >-
+    OSI-455(1991~2020)는 위성 입력이 SSM/I·SSMIS(근 90 GHz)와 AMSR-E·AMSR2(36.5 GHz)로 시기마다 다르고, 병합 파일은 남은 공백을 공간 내삽·바람 벡터로 채웁니다.
+    NRT OSI-405-d와 격자(62.5 km 극 평사도 vs 75 km EASE2)·변위 구간(48시간 vs 24시간)이 달라 한 시계열로 그냥 이어 붙이면 안 됩니다.
+  - >-
+    2021년 이후를 기후자료와 같은 방식으로 이으려면 시범 연장판 OSI-435(2021~2025)가 유일한 선택지입니다. 아직 시험 단계(DOI 없음, reprocessed_test 폴더)이므로
+    논문에 쓸 때는 제품 ID와 받은 날짜를 함께 적고 이후 정식 공개 여부를 확인하세요.
+
+citations:
+  dataset:
+    - label: 준실시간 — OSI-405-d
+      text: >-
+        EUMETSAT OSI SAF, Global Low Resolution Sea Ice Drift (2025), OSI-405-d, doi:10.15770/EUM_SAF_OSI_NRT_2007
+      doi: 10.15770/EUM_SAF_OSI_NRT_2007
+      bibtex: |
+        @misc{osisaf405d,
+          author    = {{EUMETSAT Ocean and Sea Ice Satellite Application Facility}},
+          title     = {Global Low Resolution Sea Ice Drift, {OSI-405-d}},
+          year      = {2025},
+          publisher = {EUMETSAT OSI SAF},
+          doi       = {10.15770/EUM_SAF_OSI_NRT_2007}
+        }
+    - label: 기후자료 — OSI-455 (v1, 1991~2020)
+      text: >-
+        EUMETSAT OSI SAF, Global Low Resolution Sea Ice Drift data record 1991-2020 (v1, 2022), OSI-455, doi:10.15770/EUM_SAF_OSI_0012
+        (Data extracted from [distributor] on [download date])
+      doi: 10.15770/EUM_SAF_OSI_0012
+      bibtex: |
+        @misc{osisaf455,
+          author    = {{EUMETSAT Ocean and Sea Ice Satellite Application Facility}},
+          title     = {Global Low Resolution Sea Ice Drift data record 1991-2020 (v1, 2022), {OSI-455}},
+          year      = {2022},
+          publisher = {EUMETSAT OSI SAF},
+          doi       = {10.15770/EUM_SAF_OSI_0012}
+        }
+    - label: C3S CDS 재배포본 (OSI-455를 CDS에서 받았을 때 — CDS 페이지는 DOI만 제시)
+      text: >-
+        Copernicus Climate Change Service (C3S) Climate Data Store (CDS): Sea ice drift daily gridded data derived from satellite observations
+        (version 1.0, OSI SAF OSI-455). DOI: 10.24381/8e7af13d. Accessed on DD-MMM-YYYY.
+      doi: 10.24381/8e7af13d
+  papers:
+    - label: 기후자료(OSI-455) 기술 논문
+      text: >-
+        Lavergne, T. and Down, E. (2023): A climate data record of year-round global sea-ice drift from the EUMETSAT Ocean and Sea Ice Satellite
+        Application Facility (OSI SAF). Earth System Science Data, 15, 5807–5834.
+      doi: 10.5194/essd-15-5807-2023
+      bibtex: |
+        @article{lavergne2023drift,
+          author  = {Lavergne, Thomas and Down, Emily},
+          title   = {A climate data record of year-round global sea-ice drift from the {EUMETSAT} {Ocean and Sea Ice Satellite Application Facility} ({OSI SAF})},
+          journal = {Earth System Science Data},
+          volume  = {15},
+          number  = {12},
+          pages   = {5807--5834},
+          year    = {2023},
+          doi     = {10.5194/essd-15-5807-2023}
+        }
+    - label: CMCC 이동 추적 방법 논문
+      text: >-
+        Lavergne, T., Eastwood, S., Teffah, Z., Schyberg, H., and Breivik, L.-A. (2010): Sea ice motion from low-resolution satellite sensors:
+        An alternative method and its validation in the Arctic. Journal of Geophysical Research, 115, C10032.
+      doi: 10.1029/2009JC005958
+      bibtex: |
+        @article{lavergne2010cmcc,
+          author  = {Lavergne, T. and Eastwood, S. and Teffah, Z. and Schyberg, H. and Breivik, L.-A.},
+          title   = {Sea ice motion from low-resolution satellite sensors: An alternative method and its validation in the {Arctic}},
+          journal = {Journal of Geophysical Research: Oceans},
+          volume  = {115},
+          number  = {C10},
+          pages   = {C10032},
+          year    = {2010},
+          doi     = {10.1029/2009JC005958}
+        }
+  acknowledgement: >-
+    CC BY 4.0 조건에 따라 "EUMETSAT OSI SAF"를 출처로 밝히고, 실제로 쓴 제품(OSI-405-d, OSI-455)의 DOI를 각각 적습니다. 시범 연장판 OSI-435는
+    2026-10 현재 DOI·권장 인용이 없으므로 제품 ID, FTP 경로, 받은 날짜를 적으세요.
+
+notices:
+  - date: "2026-08-31"
+    level: warning
+    title: 2026-09-01부터 OSI-405-d가 AMSR3 기반으로 운영 (서비스 메시지 #3571)
+    body: >-
+      AMSR3가 OSI SAF 해빙 산출물의 주 입력 센서가 되면서 L3 해빙 이동 OSI-405-d도 AMSR3 기반으로 운영됩니다. 제품 ID와 파일 이름은 바뀌지 않고
+      FTP·THREDDS·EUMETCast 위치도 그대로입니다. 2026년 9월 전후로 입력 센서가 다르다는 점을 분석에 기록하세요.
+    source: https://osi-saf.eumetsat.int/community/list-of-service-messages/operational-release-amsr3-based-sea-ice-products-1st-september
+  - date: "2026-08-18"
+    level: info
+    title: JAXA G-portal 점검으로 3일간 해빙 산출물 중단 (서비스 메시지 #3564·#3568)
+    body: >-
+      AMSR2 자료를 배포하는 JAXA G-portal 점검으로 2026-08-18 06:00 ~ 08-21 02:00 UTC에 OSI-405-d를 포함한 AMSR2 기반 산출물이 중단되었습니다.
+      8월 18~20일자 파일은 정시에 나오지 않았고, OSI-405-d는 이틀 간격 입력이 필요해 다른 제품보다 늦게 재개된다고 안내되었습니다.
+    source: https://osi-saf.eumetsat.int/community/list-of-service-messages/resuming-production-osi-saf-sea-ice-products-based-amsr2
+  - date: "2026-06-01"
+    level: info
+    title: 기후자료 연장판 OSI-435(2021~2025) 시범 공개
+    body: >-
+      OSI-455(1991~2020)를 잇는 저해상도 해빙 이동 연장판(ICDR) OSI-435가 시험(demonstrational) 제품으로 FTP(reprocessed_test)와 THREDDS에 올라왔습니다.
+      SSMIS·AMSR2와 ERA5T 바람(백업 ECMWF 운영 예보)을 쓰며, DOI와 정식 운영 일정은 아직 공지되지 않았습니다.
+    source: https://osi-saf.eumetsat.int/products/osi-435-complementing-osi-455
+  - date: "2025-07-17"
+    level: warning
+    title: OSI-405-d 입력에서 DMSP SSMIS 제외 (서비스 메시지 #3321)
+    body: >-
+      DMSP SSMIS 자료 공급이 불안정해지면서 다중 센서 산출물(OSI-402-d·403-d·405-d)이 SSMIS를 더 이상 쓰지 않고 AMSR2를 주 입력으로 씁니다.
+    source: https://osi-saf.eumetsat.int/community/stories/implications-end-ssmis-data-osi-saf-products
+  - date: "2025-05-19"
+    level: warning
+    title: 중해상도 해빙 이동 OSI-407-a 배포 종료 (서비스 메시지 #3236)
+    body: >-
+      정기적으로 쓰는 사용자가 확인되지 않아 중해상도 해빙 이동 OSI-407-a의 EUMETCast·FTP 배포가 2025-05-19 끝났습니다(공지 2025-04-09).
+      OSI SAF는 저해상도 이동(OSI-405) 또는 Copernicus Marine 고해상도 SAR 해빙 이동 자료를 대안으로 권합니다.
+    source: https://osi-saf.eumetsat.int/community/list-of-service-messages/discontinuation-osi-saf-medium-resolution-sea-ice-drift-19-may
+  - date: "2025-03-04"
+    level: info
+    title: OSI-405-c → OSI-405-d 전환 (서비스 메시지 #3193)
+    body: >-
+      저해상도 해빙 이동 준실시간 제품이 OSI-405-d로 일괄 전환되었습니다. NetCDF3 → NetCDF4, ASCAT Metop-B → Metop-C, 전역 속성 변경이 핵심이며
+      EUMETCast 파일 이름에서 .gz가 빠졌습니다.
+    source: https://osi-saf.eumetsat.int/community/list-of-service-messages/new-sea-ice-emissivity-and-lr-sea-ice-drift-products
+
+links:
+  - name: OSI-405-d 제품 사용자 설명서(PUM v1.9)
+    url: https://osisaf-hl.met.no/sites/osisaf-hl/files/user_manuals/osisaf_pum_sea-ice-drift-lr_v1p9.pdf
+  - name: OSI-405 알고리즘 문서(ATBD v1.5)
+    url: https://osisaf-hl.met.no/sites/osisaf-hl/files/baseline_document/osisaf_atbd_sea-ice-drift-lr_v1p5.pdf
+  - name: OSI-405 검증 보고서(SVR v6.0)
+    url: https://osisaf-hl.met.no/sites/osisaf-hl/files/validation_reports/osisaf_valrep_sea-ice-drift-lr_v6p0.pdf
+  - name: OSI-455 제품 사용자 설명서(PUM v1.0)
+    url: https://osisaf-hl.met.no/sites/osisaf-hl/files/user_manuals/osisaf_cdop3_ss2_pum_sea-ice-drift-lr-cdr_v1p0.pdf
+  - name: OSI-455 알고리즘 문서(ATBD v1.0)
+    url: https://osisaf-hl.met.no/sites/osisaf-hl/files/baseline_document/osisaf_cdop3_ss2_atbd_sea-ice-drift-lr-cdr_v1p0.pdf
+  - name: AMSR2 → AMSR3 전환 안내
+    url: https://osi-saf.eumetsat.int/community/stories/implications-amsr2-being-replaced-amsr3-osi-saf-products
+  - name: OSI SAF 해빙 실습 노트북 (EUMETSAT)
+    url: https://gitlab.eumetsat.int/eumetlab/oceans/ocean-training/sensors/learn-osi-saf-sea-ice
+
+watch_urls:
+  - https://osi-saf.eumetsat.int/community/list-of-service-messages
+  - https://osi-saf.eumetsat.int/products/osi-405-d
+  - https://osi-saf.eumetsat.int/products/osi-435-complementing-osi-455
+
+last_verified: "2026-10-12"

@@ -1,0 +1,196 @@
+# ─────────────────────────────────────────────────────────────
+# COBE-SST2 — 데이터셋 정보 파일
+# 수정 후에는 공식 페이지에서 확인한 날짜로 last_verified 를 갱신하세요.
+# ─────────────────────────────────────────────────────────────
+id: cobe-sst2
+name: COBE-SST2
+full_name: Centennial in situ Observation-Based Estimates of SST, version 2 (일본 기상청 장기 현장관측 기반 해수면온도 분석 2판)
+category: analysis
+domain: ocean
+group: 해수면온도 분석장
+order: 30
+domains: [해양, 해빙]
+provider: 일본 기상청 (JMA) / 기상연구소 (MRI)
+
+status: active
+status_note: >-
+  JMA의 현업 장기 SST 분석으로 정상 갱신 중입니다(2021년 5월 COBE-SST를 대체). 후속 연구판인 COBE-SST3(0.25°, 일별)가
+  2025년 논문으로 공개되었지만 정기 갱신되지 않는 연구용 자료(2026-10 확인 시 MRI 서버 기준 2024년까지)이고 아직 현업화되지 않았으므로, 최신 기간까지 필요하면 COBE-SST2를 쓰면 됩니다.
+  다만 NOAA PSL이 배포하는 해빙 농도 파일은 2019년 12월에서 멈춰 있습니다.
+
+transitions:
+  - from: COBE-SST2
+    to: COBE-SST3
+    to_id: cobe-sst3
+    status: planned
+    summary: >-
+      COBE-SST 계열의 다음 판으로 2025년 논문과 함께 공개된 0.25° 일별 SST 분석입니다. 정기 갱신되지 않는 연구용 자료로,
+      논문은 1850~2020년을 다루고 2025년 9월 MRI 서버에 2024년까지의 일별·월별 파일이 추가되었습니다(섭동 앙상블·COBE-SST3H는 2020년까지).
+      JMA 현업 자료는 여전히 COBE-SST2입니다. JMA 재분석 간담회 자료(2026-02)는 COBE-SST3를 COBE-SST2의 후계로 소개했고
+      개발자 안내(NCAR Climate Data Guide)에는 최근까지 연장·준현업판 개발 계획이 있으나, JMA가 COBE-SST2를 대체한다고 공식 발표하지는 않았습니다.
+    changes:
+      - aspect: 기간
+        before: "1850-01 ~ 현재 (매월 갱신)"
+        after: "1850 ~ 2024 (MRI 서버, 2025-09 연장. 정기 갱신 없음)"
+      - aspect: 수평·시간 해상도
+        before: "1°, 월평균 배포"
+        after: "0.25°, 일별 (월평균도 제공)"
+      - aspect: 현장 관측 입력
+        before: "ICOADS Release 2.5"
+        after: "ICOADS Release 3.0 (2015년 이후 JMA 현업 자료), Argo·CTD·XBT 등 표층 근처 수중 관측 추가"
+      - aspect: 위성 자료
+        before: "사용하지 않음"
+        after: "기본판(COBE-SST3)은 현장 관측 값만 사용(빈 곳을 채우는 공간 패턴에는 위성 SST 정보 활용). 위성(AVHRR Pathfinder, AMSR-E, AMSR2, WindSat)을 섞은 COBE-SST3H(1982~2020) 별도"
+      - aspect: 관측 편향 보정
+        before: "버킷·ERI·종류 미상 관측 보정"
+        after: "부이·Argo를 기준으로 6개 관측 유형 편향을 변분 최소화로 추정, 야간 해상 기온(HadNMAT2)·육상 기온과의 일관성 고려. 1940년대 초 급변이 완화됨"
+      - aspect: 육상 기온과의 동시 분석
+        before: "없음"
+        after: "육상 기온 분석(COBE-LSAT3)과 함께 분석해 해양-육지 일관성 확보"
+      - aspect: 불확실성
+        before: "분석 오차 추정 제공 (Hirahara et al. 2014)"
+        after: "300개 멤버 섭동 앙상블 제공"
+      - aspect: 해빙역 SST
+        before: "해빙 농도-SST 관계 + 기후 염분 기반 결빙 온도"
+        after: "같은 결빙 온도 정의 유지, 해빙 가장자리에서 대리 SST를 섞는 방식. 1978년 이전 해빙은 Walsh et al. (2017)"
+      - aspect: 배포처·형식
+        before: "JMA NEAR-GOOS(텍스트 격자), NOAA PSL(NetCDF), MRI 서버(GRIB2)"
+        after: "MRI 연구 자료 서버 NetCDF (climate.mri-jma.go.jp/pub/archives/Ishii-et-al_COBE-SST3/)"
+    impacts:
+      - COBE-SST3는 정기 갱신되지 않아 2025년 이후 기간이 없습니다. 최근 기간까지 이어지는 분석은 COBE-SST2를 유지하세요.
+      - 1940년대 전후 SST 변화가 COBE-SST2보다 완만하게 나오므로, 20세기 중반 추세나 장기 변동 분석 결과가 달라질 수 있습니다.
+      - 해상도와 시간 간격이 달라 두 자료를 이어 붙이거나 그대로 차이를 내지 말고, 같은 격자·월평균으로 맞춘 뒤 비교하세요.
+      - 논문 저자들은 COBE-SST3의 일별 값이 부이·Argo와 맞는 정도가 OISST v2.1보다 낫지는 않다고 밝혔습니다. 최근 일별 분석에는 OISST 등 위성 기반 자료를 함께 검토하세요.
+    sources:
+      - name: Ishii et al. (2025) COBE-SST3, J. Meteor. Soc. Japan
+        url: https://doi.org/10.2151/jmsj.2025-002
+      - name: NCAR Climate Data Guide — COBEv3 (개발자 안내 포함)
+        url: https://climatedataguide.ucar.edu/climate-data/sst-data-cobev3-centennial-situ-observation-based-estimates-version-3
+      - name: JMA TCC COBE-SST2 설명 페이지
+        url: https://www.data.jma.go.jp/tcc/tcc/products/elnino/cobesst2_doc.html
+      - name: MRI COBE-SST3 자료 서버
+        url: https://climate.mri-jma.go.jp/pub/archives/Ishii-et-al_COBE-SST3/
+
+period:
+  start: "1850-01"
+  end: present
+  note: >-
+    SST는 2026-10-11 확인 시 PSL 파일 기준 2026년 8~9월까지 들어 있습니다. JMA는 최근 달 값을 잠정치로 먼저 올리고 이후 확정치로 바꿉니다.
+    PSL의 해빙 농도(icec) 파일은 1850년~2019년 12월까지만 있습니다.
+
+resolution:
+  spatial_short: "111 km (1°)"
+  temporal_short: "1개월"
+  spatial: "1° × 1° 위경도 격자 (89.5°S~89.5°N)"
+  vertical: 해수면 단일층
+  temporal: 월평균 (JMA 내부적으로는 일별 분석)
+
+update: 매월 7일경 (잠정치 → 다음 달 7일에 교체)
+license: JMA 웹사이트 이용약관(공공데이터 이용규약 1.0, CC BY 4.0 호환) — 출처 표시 필수
+account_required: false
+
+summary: >-
+  일본 기상청(JMA)이 ICOADS 등 현장 관측을 바탕으로 만든 1850년부터의 전지구 월별 해수면온도 분석입니다.
+  여러 시간 규모를 나눠 분석하는 방식(multi-time-scale analysis)과 개선된 관측 편향 보정을 사용하며,
+  해빙 영역에서는 해빙 농도와 계절·해역별 결빙 온도를 이용해 SST를 추정합니다.
+  HadISST, ERSST와 함께 장기 SST 비교 연구에 자주 쓰이는 세 자료 중 하나입니다.
+
+time_convention:
+  summary: >-
+    배포되는 자료는 월평균입니다. JMA는 내부적으로 매일 분석을 수행하지만 공개 파일(JMA NEAR-GOOS, NOAA PSL)은
+    그 달의 평균 해수면온도(PSL은 해빙 농도 월평균 포함)이며, 시간 값은 해당 월을 가리킵니다.
+  points:
+    - "NOAA PSL 파일(sst.mon.mean.nc)은 statistic을 'Mean', 평균 구간(avg_period)을 1개월로 표기합니다."
+    - "JMA는 최근 달 값을 매월 7일경 잠정치로 올리고, 다음 달 7일에 확정치로 바꿉니다. 최근 1~2개월 값은 바뀔 수 있습니다."
+    - "JMA 원본 텍스트 파일은 머리줄에 연·월만 있고 시각 정보가 없습니다. PSL 파일의 시간 값도 '해당 월'의 표시로만 쓰세요."
+    - "기후값 파일(1981~2010, 1991~2020 월별 평년값)은 특정 연도가 아니라 같은 달의 다년 평균입니다."
+  source: https://ds.data.jma.go.jp/goos/data/pub/JMA-product/cobe2_sst_glb_M/Readme_cobe2_sst_glb_M
+  source_name: JMA NEAR-GOOS COBE-SST2 Readme / NOAA PSL 파일 메타데이터
+
+variables:
+  note: >-
+    NOAA PSL NetCDF 파일 기준 변수명입니다. JMA NEAR-GOOS 원본은 0.1°C 단위 정수로 적힌 텍스트 격자 파일(육지 999)이고,
+    MRI 서버 원본은 연도별 GRIB2 파일입니다.
+  full_list: https://www.data.jma.go.jp/tcc/tcc/products/elnino/cobesst2_doc.html
+  groups:
+    - name: 해수면온도
+      kind: mean
+      period: 월
+      items:
+        - "월평균 해수면온도 — `sst` (°C)"
+    - name: 해빙 (PSL, 2019년까지)
+      kind: mean
+      period: 월
+      items:
+        - "월평균 해빙 농도 — `icec` (비율, 0~1)"
+
+access:
+  - name: JMA NEAR-GOOS — COBE-SST2 월평균 SST
+    url: https://ds.data.jma.go.jp/goos/data/rrtdb/jma-pro/cobe2_sst_glb_M.html
+    method: 웹 다운로드 (월별 텍스트 격자 파일)
+    note: 파일 형식은 같은 위치의 Readme(Readme_cobe2_sst_glb_M)에 설명되어 있습니다. 1991~2020년 월별 평년값·표준편차도 제공합니다.
+  - name: NOAA PSL — COBE-SST2 (NetCDF)
+    url: https://psl.noaa.gov/data/gridded/data.cobe2.html
+    method: 웹 다운로드 / THREDDS / OPeNDAP
+    note: >-
+      전 기간 SST가 sst.mon.mean.nc 한 파일에 들어 있어 가장 쓰기 편합니다. 해빙 농도 icec.mon.mean.nc는 2019년 12월까지만 있고,
+      기후값 파일(1981~2010, 1991~2020)도 있습니다.
+  - name: MRI 연구 자료 서버 (연도별 GRIB2)
+    url: https://climate.mri-jma.go.jp/pub/ocean/cobe-sst2/
+    method: 웹 다운로드
+    note: 기상연구소가 올리는 연도별 GRIB2 파일과 GrADS용 ctl 파일입니다. 1년 단위로 묶여 있어 올해 파일은 몇 달씩 늦게 갱신됩니다.
+
+tips:
+  - PSL 파일의 위도는 북→남(89.5 → -89.5) 순서입니다. 다른 자료와 겹쳐 쓸 때 위도 방향을 꼭 맞추세요.
+  - COBE-SST2 해빙 농도는 PSL 기준 2019년에서 끝납니다. 최근 기간 해빙이 필요하면 OISST의 ice나 위성 해빙 농도 자료를 쓰세요.
+  - COBE-SST3(0.25° 일별, 2026-10 확인 시 1850~2024년)는 MRI 서버(climate.mri-jma.go.jp/pub/archives/Ishii-et-al_COBE-SST3/)에 연구용으로 공개되어 있습니다. 과거 기간 고해상도 분석에는 검토해 볼 만하지만, 정기 갱신되지 않는다는 점에 유의하세요.
+  - 구판 COBE-SST(1891년~)는 2023년 5월로 끝났습니다. 예전 논문을 따라 할 때 어느 판을 썼는지 확인하세요.
+
+citations:
+  papers:
+    - label: COBE-SST2 논문
+      text: >-
+        Hirahara, S., Ishii, M., Fukuda, Y. (2014): Centennial-Scale Sea Surface Temperature Analysis and Its Uncertainty.
+        Journal of Climate, 27(1), 57–75.
+      doi: 10.1175/JCLI-D-12-00837.1
+      bibtex: |
+        @article{hirahara2014cobesst2,
+          author  = {Hirahara, Shoji and Ishii, Masayoshi and Fukuda, Yoshikazu},
+          title   = {Centennial-Scale Sea Surface Temperature Analysis and Its Uncertainty},
+          journal = {Journal of Climate},
+          volume  = {27},
+          number  = {1},
+          pages   = {57--75},
+          year    = {2014},
+          doi     = {10.1175/JCLI-D-12-00837.1}
+        }
+    - label: 후속 연구판 COBE-SST3 논문 (참고)
+      text: >-
+        Ishii, M., Nishimura, A., Yasui, S., Hirahara, S. (2025): Historical High-Resolution Daily SST Analysis (COBE-SST3)
+        with Consistency to Monthly Land Surface Air Temperature. J. Meteor. Soc. Japan, 103(1), 17–44.
+      doi: 10.2151/jmsj.2025-002
+  acknowledgement: >-
+    별도의 데이터셋 DOI는 없으므로 Hirahara et al. (2014)를 인용하고, 받은 곳(JMA 또는 NOAA PSL)을 밝힙니다.
+    JMA 자료는 이용약관에 따라 출처(예: "Source: Japan Meteorological Agency")를 표시해야 하고,
+    PSL에서 받았다면 PSL 페이지가 요청하는 출처 표시 문구도 함께 넣으세요.
+
+notices: []
+
+links:
+  - name: JMA TCC COBE-SST2 설명 페이지
+    url: https://www.data.jma.go.jp/tcc/tcc/products/elnino/cobesst2_doc.html
+  - name: JMA NEAR-GOOS 자료 파일 형식 설명(Readme)
+    url: https://ds.data.jma.go.jp/goos/data/pub/JMA-product/cobe2_sst_glb_M/Readme_cobe2_sst_glb_M
+  - name: NOAA PSL COBE-SST2 페이지
+    url: https://psl.noaa.gov/data/gridded/data.cobe2.html
+  - name: NCAR Climate Data Guide — COBE-SST3
+    url: https://climatedataguide.ucar.edu/climate-data/sst-data-cobev3-centennial-situ-observation-based-estimates-version-3
+  - name: JMA 웹사이트 이용약관
+    url: https://www.jma.go.jp/jma/en/copyright.html
+
+watch_urls:
+  - https://www.data.jma.go.jp/tcc/tcc/products/elnino/cobesst2_doc.html
+  - https://psl.noaa.gov/data/notices/
+  - https://climate.mri-jma.go.jp/pub/ocean/cobe-sst2/
+
+last_verified: "2026-10-11"

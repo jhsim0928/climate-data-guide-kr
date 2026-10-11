@@ -1,0 +1,397 @@
+# ─────────────────────────────────────────────────────────────
+# GPM IMERG — 데이터셋 정보 파일
+# 대기 탭(강수 자료). V07 Final은 2025-09로 멈춰 있고 V08 전환 대기 중입니다.
+# 수정 후에는 공식 페이지에서 확인한 날짜로 last_verified 를 갱신하세요.
+# ─────────────────────────────────────────────────────────────
+id: imerg
+name: GPM IMERG V07
+full_name: Integrated Multi-satellitE Retrievals for GPM (IMERG) Version 07 (NASA 전지구 다중위성 강수 분석, 30분·0.1°)
+category: satellite
+domain: atmosphere
+group: 강수 자료
+order: 20
+domains: [대기, 육지, 해양]
+provider: NASA GSFC 강수처리시스템(PPS)·GPM 과학팀 (배포 NASA GES DISC, PPS)
+
+status: delayed
+status_note: >-
+  연구용 Final Run(V07)은 2025년 9월 30일 자료를 끝으로 멈춰 있습니다. 입력 산출물(GPROF·CORRA)이 V08로 바뀌면서 V07 코드로는
+  이어 만들 수 없기 때문이며, NASA는 2026년 8월 공지에서 1998년부터 다시 만든 V08 Final을 '2026년 가을'에 내놓을 가능성이 높다고 밝혔습니다.
+  준실시간 Early·Late Run은 V07 알고리즘에 GPROF V08 입력을 쓴 '혼합(hybrid)' 상태(파일 이름 V07C)로 매일 계속 나오고 있습니다(2026-10-12 확인 시 2026년 10월 11일분까지).
+
+period:
+  start: "1998-01"
+  end: present
+  note: >-
+    V07B Final(GPM_3IMERGHH·DF·M)은 1998-01-01~2025-09-30 (2024년 11월 7일 시작점을 2000년 6월에서 1998년 1월로 연장, 2000년 6월 이전은 GridSat-B1 적외 자료 사용).
+    Early·Late(GPM_3IMERGHHE·HHL·DE·DL)도 1998-01-01부터 현재까지이며, 2026-10-12 확인 시 GES DISC 최신 파일은 2026-10-11 자료입니다.
+    2025년 10월 이후 기간의 Final 자료는 V08 Final이 나올 때까지 없습니다.
+
+resolution:
+  spatial_short: "11 km (0.1°)"
+  temporal_short: "30분"
+  spatial: >-
+    0.1° × 0.1° 전지구 위경도 격자(GES DISC 표기 90°S–90°N, 180°W–180°E). V07부터 극지방까지 값이 들어가지만(극 부근 일부 격자 제외),
+    적외(IR) 기반 추정은 CPC 합성 적외 자료 범위인 60°N–60°S에만 있고 그 바깥은 마이크로파 추정(Final 월자료는 우량계 포함)만 씁니다.
+  vertical: 지표 강수 단일층
+  temporal: >-
+    30분(반시간, 기본 산출) / 일(00~24 UTC, 30분 값으로 계산) / 월. PPS는 3시간·7일 묶음 파일도 제공합니다.
+
+update: "Early 약 4시간, Late 약 14시간(최근엔 12시간 안팎) 지연으로 30분 단위 연속 생산 / Final은 관측 월 이후 약 3.5~4개월 지연 월 단위 (V07 Final은 2025-09에서 중단, V08 대기)"
+license: NASA 지구과학 공개 자료 — 무료. GES DISC는 무료 NASA Earthdata 로그인, PPS 서버는 무료 PPS 등록이 필요합니다. 데이터셋 DOI 인용 요청
+account_required: true
+
+summary: >-
+  IMERG는 NASA가 GPM 위성군의 수동 마이크로파(PMW) 강수 추정을 GPM 핵심위성 레이더·복사계 결합 산출물(CORRA)에 맞춰 보정하고,
+  정지궤도 적외 자료와 칼만 필터 '모핑(morphing)'으로 빈틈을 메워 30분·0.1° 전지구 강수를 만드는 다중위성 강수 분석입니다.
+  관측 후 약 4시간(Early)·14시간(Late)에 나오는 준실시간 판과, 월별 우량계 분석으로 보정해 약 4개월 뒤 나오는 연구용 Final 판이 있습니다.
+  V07은 TRMM 시대를 포함한 1998년부터 다시 만든 기록으로, 이전 TMPA(3B42·3B43)와 IMERG V06을 모두 대체했습니다.
+
+time_convention:
+  summary: >-
+    30분 파일의 강수 `precipitation`은 단위가 mm/hr인 '강도'입니다. IMERG 책임연구자(Huffman)는 30분 구간 중 어느 한 시점의 추정(스냅샷)을
+    그 30분 전체의 대표값으로 쓴 것이라고 설명하므로, 30분 강수량(mm)은 값 × 0.5입니다. 파일 시각은 구간의 시작이며 파일 이름에 시작·끝 시각
+    (예: S013000-E015959 = 01:30~01:59:59 UTC)이 들어 있습니다. 일자료는 00~24 UTC 하루의 '평균 강도 × 24'(mm/day), 월자료는 그달 평균 강도(mm/hr)입니다.
+  points:
+    - "30분 값을 그대로 더하면 강수량이 2배가 됩니다. 시간 합계는 (값 × 0.5)를 더하거나, 평균 강도(mm/hr)에 시간 수를 곱하세요."
+    - "일자료(GPM_3IMERGDF·DE·DL)는 V07부터 유효한 30분 값의 평균 강도에 24를 곱한 값입니다(V06 이전의 단순 합계 방식에서 생기던 건조 편향을 줄임). 유효 표본 수는 `precipitation_cnt`에 있습니다."
+    - "일자료의 하루는 00~24 UTC(파일 이름 S000000-E235959)이므로 한국 시간으로는 09시~다음날 09시입니다. 한국 시간 기준 일강수가 필요하면 30분 자료로 직접 합산하세요."
+    - "월자료 `precipitation`도 mm/hr이므로 월강수량(mm)은 값 × 그달의 시간 수(예: 31일 × 24)입니다."
+    - "Final의 30분 값은 그달의 위성-우량계 월합계와 맞도록 조정되고, Early·Late는 Final에서 만든 월별 기후 보정만 받습니다. 같은 시각이라도 세 판의 값이 다릅니다."
+    - "`time`·`time_bnds` 단위는 30분·월 파일이 'seconds since 1980-01-06 00:00:00 UTC', 일 파일이 'days since 1980-01-06 00:00:00Z'입니다(GPS 기준 시각)."
+  source: https://forum.earthdata.nasa.gov/viewtopic.php?p=23098
+  source_name: "Earthdata Forum IMERG 책임연구자 답변(2025) + GES DISC GPM_3IMERGDF·HH·M V07 컬렉션 설명(CMR)"
+
+variables:
+  note: >-
+    GES DISC V07 컬렉션 메타데이터 기준 주요 변수입니다. 30분·월 파일(HDF5)은 `Grid` 그룹(보조 변수는 `Grid/Intermediate`) 안에 있고,
+    일 파일(netCDF4)은 최상위에 있습니다. 배열 순서가 (time, lon, lat)라 지도로 그리려면 축을 바꿔야 합니다. 대부분의 사용자에게는 `precipitation`이 권장 변수입니다.
+  full_list: https://disc.gsfc.nasa.gov/datasets/GPM_3IMERGHH_07/summary
+  groups:
+    - name: 30분 자료 (GPM_3IMERGHH Final / HHE Early / HHL Late)
+      kind: instant
+      period: "30분 구간 대표값"
+      items:
+        - text: "보정된 다중위성 강수 강도 — `precipitation` (mm/hr)"
+          note: "V06의 `precipitationCal`. 30분 안 한 시점의 추정을 30분 대표값으로 쓴 강도이므로 30분 강수량은 × 0.5"
+        - "강수 추정 무작위 오차 — `randomError` (mm/hr)"
+        - "액체 강수 확률(강수 상) — `probabilityLiquidPrecipitation` (%)"
+        - "품질 지수 — `precipitationQualityIndex` (무차원)"
+        - text: "보정 전 다중위성 강수 — `Grid/Intermediate/precipitationUncal` (mm/hr)"
+          note: V07에서 Intermediate 그룹으로 이동
+        - text: "마이크로파 강수 — `Grid/Intermediate/MWprecipitation` (mm/hr)"
+          note: "V06의 `HQprecipitation`. 마이크로파 관측이 있는 격자만 값이 있음"
+        - "적외 강수 — `Grid/Intermediate/IRprecipitation` (mm/hr)"
+        - "마이크로파 관측 시각 — `Grid/Intermediate/MWobservationTime` (분), 센서 코드 — `MWprecipSource`, 적외 영향도 — `IRinfluence`"
+    - name: 일자료 (GPM_3IMERGDF Final / DE Early / DL Late)
+      kind: mean
+      period: 일 (00~24 UTC)
+      items:
+        - text: "일강수 — `precipitation` (mm/day)"
+          note: 유효한 30분 강도의 평균 × 24
+        - "마이크로파 일강수 — `MWprecipitation` (mm/day)"
+        - "무작위 오차 — `randomError` (mm/day)"
+        - "액체 강수 확률 — `probabilityLiquidPrecipitation` (%)"
+        - text: "유효 30분 표본 수 — `precipitation_cnt`, `MWprecipitation_cnt` (개)"
+          kind: accum
+          note: 하루 최대 48개. 단순 합계를 되살리거나 신뢰도를 판단할 때 사용
+    - name: 월자료 (GPM_3IMERGM, Final만)
+      kind: mean
+      period: 월
+      items:
+        - text: "위성-우량계 결합 월강수 강도 — `precipitation` (mm/hr)"
+          note: 월강수량(mm) = 값 × 그달 시간 수
+        - "무작위 오차 — `randomError` (mm/hr)"
+        - "우량계 상대 가중치 — `gaugeRelativeWeighting` (%)"
+        - "액체 강수 확률 — `probabilityLiquidPrecipitation` (%)"
+        - "품질 지수 — `precipitationQualityIndex`"
+    - name: 고정 자료
+      kind: static
+      items:
+        - "IMERG 해륙 마스크 0.1° — GES DISC `GPM_IMERG_LandSeaMask` V2"
+
+access:
+  - name: NASA GES DISC (Earthdata Cloud, HTTPS)
+    url: https://disc.gsfc.nasa.gov/datasets/GPM_3IMERGHH_07/summary
+    method: HTTPS 다운로드 / earthaccess / Earthdata Search / 부분 추출
+    note: >-
+      Final은 GPM_3IMERGHH(30분)·GPM_3IMERGDF(일)·GPM_3IMERGM(월), Early는 GPM_3IMERGHHE·GPM_3IMERGDE, Late는 GPM_3IMERGHHL·GPM_3IMERGDL입니다.
+      파일 주소는 https://data.gesdisc.earthdata.nasa.gov/data/GPM_L3/GPM_3IMERGDF.07/YYYY/MM/ 형식이며 무료 Earthdata 로그인이 필요합니다.
+      예전 서버(gpm1.gesdisc.eosdis.nasa.gov)는 2026년 9월 30일 이후 언제든 닫힐 수 있다고 안내되어 있으니 스크립트 주소를 바꾸세요.
+  - name: Earthdata Cloud OPeNDAP
+    url: https://opendap.earthdata.nasa.gov/
+    method: OPeNDAP (Hyrax) — 변수·영역 부분 추출
+    note: 파일별 OPeNDAP 주소는 CMR·Earthdata Search 결과에 함께 나옵니다. GES DISC의 GrADS Data Server(GDS)는 2026년 3월 이후 중단 대상입니다.
+  - name: AWS us-west-2 직접 접근 (S3)
+    url: https://data.gesdisc.earthdata.nasa.gov/s3credentials
+    method: 클라우드 저장소(S3, us-west-2 안에서만)
+    note: s3://gesdisc-cumulus-prod-protected/GPM_L3/GPM_3IMERGHH.07/ 처럼 저장되어 있으며 임시 자격증명이 필요합니다.
+  - name: NASA PPS (GPM 자료 디렉터리)
+    url: https://gpm.nasa.gov/data/directory
+    method: HTTPS / FTP (PPS 등록 필요)
+    note: 가장 빠르게 올라오는 곳입니다. Early·Late GeoTIFF(GIS) 파일과 3시간·7일 묶음도 여기서 받습니다.
+  - name: NASA Giovanni
+    url: https://giovanni.gsfc.nasa.gov/
+    method: 웹 지도·시계열 분석
+    note: 내려받기 전에 영역 평균 시계열이나 지도로 값의 크기를 점검하기 좋습니다.
+
+example:
+  lang: python
+  note: >-
+    earthaccess로 2023년 7월 한반도 영역의 Final 일자료를 받아 xarray로 여는 예입니다. 처음 실행 때 Earthdata 아이디·비밀번호를 묻습니다.
+    일 파일은 (time, lon, lat) 순서라 지도로 그릴 때 transpose가 필요합니다.
+  code: |
+    import earthaccess
+    import xarray as xr
+
+    earthaccess.login()  # 무료 NASA Earthdata 계정
+    results = earthaccess.search_data(
+        short_name="GPM_3IMERGDF", version="07",
+        temporal=("2023-07-01", "2023-07-31"),
+        bounding_box=(124, 33, 132, 39),   # (서, 남, 동, 북)
+    )
+    files = earthaccess.download(results, "imerg_daily")
+
+    ds = xr.open_mfdataset(files, combine="by_coords")
+    pr = ds["precipitation"].sel(lon=slice(124, 132), lat=slice(33, 39))   # mm/day, 00~24 UTC
+    pr = pr.transpose("time", "lat", "lon")
+    print(pr.mean("time"))
+
+    # 30분 파일(HDF5)은 그룹을 지정해 엽니다: xr.open_dataset(f, group="Grid")
+    # 30분 강수량(mm) = precipitation(mm/hr) * 0.5
+
+tips:
+  - "30분 `precipitation`은 mm/hr 강도입니다. 30분 파일 48개를 그냥 더하면 일강수가 2배로 나옵니다. 30분 강수량은 × 0.5, 월자료(mm/hr)는 × 그달 시간 수로 바꾸세요."
+  - "Early·Late·Final은 알고리즘(전방 모핑만/양방향 모핑)과 보정(기후 보정/월 우량계 보정)이 달라 서로 다른 자료입니다. 장기 연구에는 Final을 쓰고, 최근 몇 달을 Late로 이어 붙였다면 그 사실을 논문에 밝히세요."
+  - "2025년 10월 이후는 Final이 없습니다. V08 Final이 나오면 1998년부터 전체가 바뀌므로 V07과 V08을 섞지 말고 전 기간을 다시 받으세요."
+  - "Early·Late 파일 이름의 V07C(2026-03-04~)는 V07 알고리즘에 GPROF V08 입력을 쓴 혼합 판입니다. 그 이전의 V07B 구간과 입력이 달라 미세한 불연속이 있을 수 있습니다."
+  - "V07은 얼음·눈 덮인 지표 위 마이크로파 추정을 처음 포함했지만, NASA는 극지 강수와 강설량은 신중히 검토하라고 안내합니다. 산악 지형(한반도 동부 산지 포함)에서도 불확실성이 큽니다."
+  - "2000년 6월 이전(1998-01~2000-05)은 GridSat-B1 적외 자료로 만든 구간이라 이후와 품질이 다를 수 있습니다. TRMM 시대(2014년 이전) 주의사항 문서도 함께 보세요."
+  - "일자료의 하루는 00~24 UTC입니다. 기상청 관측(09시 또는 00시 KST 기준)과 비교할 때 날짜 경계를 맞추세요."
+  - "30분·월 파일은 HDF5, 일 파일은 netCDF4입니다. 배열이 (lon, lat) 순서로 저장되어 있어 그대로 그리면 지도가 90° 돌아갑니다."
+
+citations:
+  dataset:
+    - label: IMERG Final 30분 V07 (GES DISC)
+      text: >-
+        Huffman, G.J., E.F. Stocker, D.T. Bolvin, E.J. Nelkin, Jackson Tan (2023), GPM IMERG Final Precipitation L3 Half Hourly
+        0.1 degree x 0.1 degree V07, Greenbelt, MD, Goddard Earth Sciences Data and Information Services Center (GES DISC),
+        Accessed: [Data Access Date], 10.5067/GPM/IMERG/3B-HH/07
+      doi: 10.5067/GPM/IMERG/3B-HH/07
+      bibtex: |
+        @misc{imerg_v07_hh,
+          author    = {Huffman, G. J. and Stocker, E. F. and Bolvin, D. T. and Nelkin, E. J. and Tan, Jackson},
+          title     = {{GPM IMERG} Final Precipitation {L3} Half Hourly 0.1 degree x 0.1 degree {V07}},
+          year      = {2023},
+          publisher = {Goddard Earth Sciences Data and Information Services Center (GES DISC)},
+          address   = {Greenbelt, MD},
+          doi       = {10.5067/GPM/IMERG/3B-HH/07}
+        }
+    - label: IMERG Final 일자료 V07 (GES DISC)
+      text: >-
+        Huffman, G.J., E.F. Stocker, D.T. Bolvin, E.J. Nelkin, Jackson Tan (2023), GPM IMERG Final Precipitation L3 1 day
+        0.1 degree x 0.1 degree V07, Edited by Andrey Savtchenko, Greenbelt, MD, Goddard Earth Sciences Data and Information Services Center (GES DISC),
+        Accessed: [Data Access Date], 10.5067/GPM/IMERGDF/DAY/07
+      doi: 10.5067/GPM/IMERGDF/DAY/07
+      bibtex: |
+        @misc{imerg_v07_day,
+          author    = {Huffman, G. J. and Stocker, E. F. and Bolvin, D. T. and Nelkin, E. J. and Tan, Jackson},
+          editor    = {Savtchenko, Andrey},
+          title     = {{GPM IMERG} Final Precipitation {L3} 1 day 0.1 degree x 0.1 degree {V07}},
+          year      = {2023},
+          publisher = {Goddard Earth Sciences Data and Information Services Center (GES DISC)},
+          address   = {Greenbelt, MD},
+          doi       = {10.5067/GPM/IMERGDF/DAY/07}
+        }
+    - label: IMERG Final 월자료 V07 (GES DISC)
+      text: >-
+        Huffman, G.J., E.F. Stocker, D.T. Bolvin, E.J. Nelkin, Jackson Tan (2023), GPM IMERG Final Precipitation L3 1 month
+        0.1 degree x 0.1 degree V07, Greenbelt, MD, Goddard Earth Sciences Data and Information Services Center (GES DISC),
+        Accessed: [Data Access Date], 10.5067/GPM/IMERG/3B-MONTH/07
+      doi: 10.5067/GPM/IMERG/3B-MONTH/07
+      bibtex: |
+        @misc{imerg_v07_month,
+          author    = {Huffman, G. J. and Stocker, E. F. and Bolvin, D. T. and Nelkin, E. J. and Tan, Jackson},
+          title     = {{GPM IMERG} Final Precipitation {L3} 1 month 0.1 degree x 0.1 degree {V07}},
+          year      = {2023},
+          publisher = {Goddard Earth Sciences Data and Information Services Center (GES DISC)},
+          address   = {Greenbelt, MD},
+          doi       = {10.5067/GPM/IMERG/3B-MONTH/07}
+        }
+  papers:
+    - label: IMERG 개요 (Satellite Precipitation Measurement 단행본 장)
+      text: >-
+        Huffman, G. J., Bolvin, D. T., Braithwaite, D., Hsu, K.-L., Joyce, R. J., Kidd, C., Nelkin, E. J., Sorooshian, S., Stocker, E. F.,
+        Tan, J., Wolff, D. B., Xie, P. (2020): Integrated Multi-satellite Retrievals for the Global Precipitation Measurement (GPM) Mission (IMERG).
+        In: Satellite Precipitation Measurement, Advances in Global Change Research, Springer, Cham, 343–353.
+      doi: 10.1007/978-3-030-24568-9_19
+      bibtex: |
+        @incollection{huffman2020imerg,
+          author    = {Huffman, George J. and Bolvin, David T. and Braithwaite, Dan and Hsu, Kuo-Lin and Joyce, Robert J. and Kidd, Christopher and Nelkin, Eric J. and Sorooshian, Soroosh and Stocker, Erich F. and Tan, Jackson and Wolff, David B. and Xie, Pingping},
+          title     = {Integrated Multi-satellite Retrievals for the Global Precipitation Measurement ({GPM}) Mission ({IMERG})},
+          booktitle = {Satellite Precipitation Measurement},
+          series    = {Advances in Global Change Research},
+          publisher = {Springer International Publishing},
+          address   = {Cham},
+          pages     = {343--353},
+          year      = {2020},
+          doi       = {10.1007/978-3-030-24568-9_19}
+        }
+    - label: IMERG V07 알고리즘 이론 문서(ATBD) — DOI 없음
+      text: >-
+        Huffman, G. J., Bolvin, D. T., Joyce, R., Nelkin, E. J., Tan, J., Braithwaite, D., Hsu, K., Kelley, O. A., Nguyen, P., Sorooshian, S.,
+        Watters, D. C., West, B. J., Xie, P. (2023): Integrated Multi-satellitE Retrievals for GPM (IMERG) Algorithm Theoretical Basis Document (ATBD),
+        Version 07. NASA/GSFC, 12 July 2023. https://gpm.nasa.gov/sites/default/files/2023-07/IMERG_V07_ATBD_final_230712.pdf
+      bibtex: |
+        @techreport{huffman2023imergatbd,
+          author      = {Huffman, George J. and Bolvin, David T. and Joyce, Robert and Nelkin, Eric J. and Tan, Jackson and Braithwaite, Dan and Hsu, Kuolin and Kelley, Owen A. and Nguyen, Phu and Sorooshian, Soroosh and Watters, Daniel C. and West, Brandon J. and Xie, Pingping},
+          title       = {Integrated Multi-satellitE Retrievals for {GPM} ({IMERG}) Algorithm Theoretical Basis Document ({ATBD}), Version 07},
+          institution = {NASA Goddard Space Flight Center},
+          year        = {2023},
+          url         = {https://gpm.nasa.gov/sites/default/files/2023-07/IMERG_V07_ATBD_final_230712.pdf}
+        }
+  acknowledgement: >-
+    쓴 제품(30분·일·월, Early·Late·Final)에 맞는 GES DISC 데이터셋 DOI를 인용하세요. Early·Late 30분 자료의 DOI는
+    10.5067/GPM/IMERG/3B-HH-E/07(Early), 10.5067/GPM/IMERG/3B-HH-L/07(Late)입니다. 알고리즘 설명에는 Huffman et al. (2020)과 V07 ATBD를 함께 인용합니다.
+
+transitions:
+  - from: IMERG V06 (V06B)
+    to: IMERG V07 (V07B)
+    status: completed
+    date: "2023-07"
+    summary: >-
+      입력 마이크로파 알고리즘(GPROF2021)·보정 체계가 전반적으로 바뀌고, 얼음·눈 지표 위 강수와 극지가 처음 채워졌으며, 기록이 1998년 1월까지 늘었습니다.
+      주요 변수 이름도 바뀌어(`precipitationCal` → `precipitation`) V06용 코드는 고쳐야 합니다.
+    changes:
+      - aspect: 전환 시점
+        before: "V06 Final 마지막 달 2021-09 / V06 Early·Late는 2024-06-03 생산 중단"
+        after: "V07 Final 재처리 2023-07-01~08-30(V07A), 결함 GPROF 궤도 162개 수정 후 V07B 2024-01-08 완료 / V07 Early·Late는 2024-06-01 자료부터"
+      - aspect: 기간
+        before: "2000-06~ (Final)"
+        after: "1998-01~ (2024-11-07 V07B 연장, 2000-05 이전은 GridSat-B1 적외 사용)"
+      - aspect: 고위도·얼음 지표
+        before: "얼음·눈 덮인 지표 위 마이크로파 추정을 걸러 내 빈 곳이 많음"
+        after: "포함 — 극 부근 일부 격자를 빼고 거의 전지구. 해당 지역 품질 지수는 낮춰 표시"
+      - aspect: 변수 이름·위치
+        before: "`precipitationCal`, `precipitationUncal`, `HQprecipitation`, `HQprecipSource`, `HQobservationTime`, `IRkalmanFilterWeight` (Grid 그룹)"
+        after: "`precipitation`(Grid), `Grid/Intermediate/` 아래 `precipitationUncal`, `MWprecipitation`, `MWprecipSource`, `MWobservationTime`, `IRinfluence`. 월 파일 변수 이름은 그대로"
+      - aspect: 일자료 계산
+        before: "30분 값의 단순 합계(결측이 있으면 건조 편향)"
+        after: "유효 30분 강도의 평균 × 24 (mm/day), 표본 수 `precipitation_cnt` 제공"
+      - aspect: 우량계 보정
+        before: "Legates-Willmott 포착 손실 보정, CORRA의 GPCP 조정을 육지에도 적용 / Early·Late는 우량계 보정 없음"
+        after: "북위 45° 이북 유라시아에 Fuchs 보정 결합, 육지에서 CORRA의 GPCP 조정 중단 / Early·Late에 Final 기반 월별 기후 보정 추가"
+      - aspect: 강수 상(액체 확률)
+        before: "V06 방식"
+        after: "ERA5(Final)·JMA(Early·Late) 열역학 변수 사용, 평균적으로 액체 확률이 높아짐. 강도 상한은 200 mm/hr로 올림"
+    impacts:
+      - V06과 V07을 한 시계열로 이어 붙이지 말고 전 기간을 V07로 다시 받으세요(V06은 더 이상 제공되지 않습니다).
+      - 경로·변수 이름에 '06'·`precipitationCal`이 들어간 스크립트는 '07'·`precipitation`으로 고쳐야 합니다.
+      - 고위도·겨울철 결과는 V07에서 새로 값이 생긴 지역이므로 품질 지수를 함께 확인하세요.
+    sources:
+      - name: IMERG V07 Release Notes (2024-11-26)
+        url: https://gpm.nasa.gov/sites/default/files/2024-12/IMERG_V07_ReleaseNotes_241126.pdf
+      - name: Status of IMERG Version 06 and 07 Data (GPM, 2024-06-21)
+        url: https://gpm.nasa.gov/mission/news/status-imerg-version-06-and-07-data
+      - name: GES DISC GPM_3IMERGDF V07 컬렉션 설명
+        url: https://disc.gsfc.nasa.gov/datasets/GPM_3IMERGDF_07/summary
+  - from: IMERG V07 (Final V07B, Early·Late V07C)
+    to: IMERG V08
+    status: planned
+    date: "2026"
+    summary: >-
+      입력 산출물(GPROF·CORRA)이 V08로 바뀌어 V07 Final은 2025년 9월에서 멈췄고, 1998년부터 다시 만든 V08 Final은 2026년 가을, V08 Early·Late는
+      그 뒤(빨라야 2026년 겨울) 공개될 예정입니다. 2026-10-12 확인 시 NASA CMR에는 V08 IMERG 컬렉션이 아직 등록되어 있지 않습니다.
+    changes:
+      - aspect: Final Run
+        before: "V07B, 1998-01~2025-09-30에서 중단"
+        after: "V08 Final, 1998-01부터 재처리 후 평소처럼 약 4개월 지연 갱신 (2026년 4월 공지 '2026년 여름' → 8월 공지 '2026년 가을 가능성')"
+      - aspect: Early·Late Run
+        before: "V07B (V07 알고리즘 + V07 입력)"
+        after: "2026-03-04부터 V07C 혼합(V07 알고리즘 + GPROF V08 입력, 2026-03-01부터 CORRA 보정은 계절별 기후값 사용) → V08 전환은 빨라야 2026년 겨울, 전환 전 1998년부터의 V08 Early·Late 소급 기록 공개 예정"
+      - aspect: 입력(부모 산출물)
+        before: "GPROF·CORRA V07"
+        after: "GPROF·CORRA V08 (GPM 전체 산출물 V08 재처리, 2026-03-09 시작)"
+    impacts:
+      - 2025년 10월 이후 연구용(Final) 자료가 필요하면 V08 Final을 기다리거나, Late Run(V07C)을 임시로 쓰되 판이 다르다는 점을 밝히세요.
+      - V08 Final이 나오면 1998년부터 값이 모두 바뀌므로 V07로 만든 기후값·추세와 섞지 마세요.
+    sources:
+      - name: Update to the IMERG V08 Transition Schedule (GPM, 2026-08-06)
+        url: https://gpm.nasa.gov/data/news/update-imerg-v08-transition-schedule-aug-2026
+      - name: IMERG V08 Transition Schedule (GPM, 2026-04-28)
+        url: https://gpm.nasa.gov/data/news/imerg-v08-transition-schedule
+      - name: GPM Version 08 Reprocessing (Earthdata 공지)
+        url: https://www.earthdata.nasa.gov/data/alerts-outages/gpm-version-08-reprocessing
+
+notices:
+  - date: "2026-09-30"
+    level: warning
+    title: GES DISC 기존 데이터 서버(gpm1 등) 접근 종료 예정 — Earthdata Cloud로 전환
+    body: >-
+      gpm1.gesdisc.eosdis.nasa.gov 서버 안내문은 이 서버와 다른 모든 GES DISC 데이터 서버의 접근이 '빨라야 2026년 9월 30일' 이후 끝나며,
+      계속 쓰려면 Earthdata Cloud로 옮겨야 한다고 밝히고 있습니다(익명 FTP는 이미 중단). 2026-10-12 확인 시 서버는 아직 응답합니다.
+      스크립트의 주소를 data.gesdisc.earthdata.nasa.gov(HTTPS)나 earthaccess로 바꾸세요.
+    source: https://gpm1.gesdisc.eosdis.nasa.gov/data/GPM_L3/
+  - date: "2026-08-06"
+    level: warning
+    title: IMERG V08 일정 재조정 — Final은 2026년 가을, Early·Late는 빨라야 2026년 겨울
+    body: >-
+      V08 부모 산출물 하나의 확정이 늦어져 1998년부터의 재처리를 시작하지 못했다며, V08 Final 공개가 '2026년 가을'일 가능성이 높다고 밝혔습니다.
+      Early·Late는 V08 Final과 소급 기록 공개 뒤에 전환하며, 그때까지 혼합(V07C) 상태를 유지합니다.
+    source: https://gpm.nasa.gov/data/news/update-imerg-v08-transition-schedule-aug-2026
+  - date: "2026-04-28"
+    level: critical
+    title: IMERG V07 Final 기록이 2025년 9월에서 끝남
+    body: >-
+      입력인 CORRA·GPROF가 V08로 바뀌어, V07 코드로 계속 만들면 불연속이 생기므로 V07 Final은 2025년 9월 자료로 끝냈습니다.
+      연구용 Final 자료는 V08 Final(1998년부터 재처리)이 나올 때까지 2025년 10월 이후 기간이 비어 있습니다.
+    source: https://gpm.nasa.gov/data/news/imerg-v08-transition-schedule
+  - date: "2026-03-04"
+    level: info
+    title: Early·Late Run이 GPROF V08 입력으로 전환 — 파일 버전 V07B → V07C
+    body: >-
+      GPM 전 산출물의 V08 재처리에 따라 IMERG Early·Late는 V07 알고리즘을 유지하되 V08 GPROF 강수를 입력으로 쓰기 시작했고,
+      이를 표시하려고 파일 이름의 부버전이 V07C로 바뀌었습니다.
+    source: https://www.earthdata.nasa.gov/data/alerts-outages/gpm-version-08-reprocessing
+  - date: "2026-01-15"
+    level: info
+    title: GES DISC GrADS Data Server(GDS) 서비스 중단 — IMERG 포함
+    body: >-
+      GES DISC는 IMERG(Early·Late·Final 30분·일·월, 해륙 마스크)를 포함한 GDS 서비스를 빨라야 2026년 3월 27일 이후 중단한다고 공지했습니다.
+      같은 자료는 Earthdata Cloud에서 HTTPS와 부분 추출 서비스로 받을 수 있습니다.
+    source: https://www.earthdata.nasa.gov/data/alerts-outages/grads-data-server-gds-service-discontinued-earlier-than-march-27-2026
+  - date: "2024-11-07"
+    level: info
+    title: V07B Final 기록 시작을 1998년 1월로 연장 (TRMM 시대 포함)
+    body: >-
+      V07B의 시작점이 2000년 6월에서 1998년 1월로 늘었습니다. 2000년 6월 이전은 GridSat-B1 적외 자료로 만들었습니다.
+      V07은 이전의 모든 IMERG 버전과 TRMM TMPA(3B42·3B43)를 대체합니다.
+    source: https://gpm.nasa.gov/resources/documents/imerg-v07-release-notes
+
+links:
+  - name: GPM IMERG 소개 페이지
+    url: https://gpm.nasa.gov/data/imerg
+  - name: IMERG V07 Release Notes
+    url: https://gpm.nasa.gov/resources/documents/imerg-v07-release-notes
+  - name: IMERG V07 ATBD (2023-07-12)
+    url: https://gpm.nasa.gov/sites/default/files/2023-07/IMERG_V07_ATBD_final_230712.pdf
+  - name: IMERG V08 Transition Schedule (2026-04-28, 2026-08-06 갱신)
+    url: https://gpm.nasa.gov/data/news/imerg-v08-transition-schedule
+  - name: GES DISC GPM_3IMERGHH V07
+    url: https://disc.gsfc.nasa.gov/datasets/GPM_3IMERGHH_07/summary
+  - name: GES DISC GPM_3IMERGDF V07
+    url: https://disc.gsfc.nasa.gov/datasets/GPM_3IMERGDF_07/summary
+  - name: GES DISC GPM_3IMERGM V07
+    url: https://disc.gsfc.nasa.gov/datasets/GPM_3IMERGM_07/summary
+  - name: IMERG TRMM 시대 자료 주의사항 (GES DISC)
+    url: https://docserver.gesdisc.eosdis.nasa.gov/public/project/GPM/IMERGV06_TRMMera-caveats.pdf
+  - name: Earthdata Forum — 30분 값 단위(mm/hr) 해석 답변
+    url: https://forum.earthdata.nasa.gov/viewtopic.php?p=23098
+
+watch_urls:
+  - https://gpm.nasa.gov/data/news
+  - https://www.earthdata.nasa.gov/data/alerts-outages
+  - https://disc.gsfc.nasa.gov/information/alerts
+  - https://gpm1.gesdisc.eosdis.nasa.gov/data/GPM_L3/
+
+last_verified: "2026-10-12"

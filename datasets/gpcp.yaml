@@ -1,0 +1,361 @@
+# ─────────────────────────────────────────────────────────────
+# GPCP — 데이터셋 정보 파일
+# 대기 탭(강수 자료). 주 제품은 V3.3(0.5° 월·일)이고, 옛 V2.3(2.5° 월)·일별 V1.3(1°)을 함께 설명합니다.
+# 수정 후에는 공식 페이지에서 확인한 날짜로 last_verified 를 갱신하세요.
+# ─────────────────────────────────────────────────────────────
+id: gpcp
+name: GPCP V3.3
+full_name: Global Precipitation Climatology Project (GPCP) Version 3.3 Satellite-Gauge 합성 강수 (전지구 위성·우량계 합성 강수 분석)
+category: analysis
+domain: atmosphere
+group: 강수 자료
+order: 10
+domains: [대기, 육지, 해양]
+provider: NASA GSFC·University of Maryland ESSIC GPCP 팀 (배포 NASA GES DISC, NOAA NCEI 기후자료기록 CDR)
+
+status: delayed
+status_note: >-
+  현재 권장판은 V3.3(0.5° 월·일)이며, NASA와 NOAA CDR 프로그램 모두 V2.3(월)·V1.3(일)을 대체된 판으로 표시합니다.
+  다만 V3.3은 몇 달 단위로 몰아서 갱신되고 2026-10-12 확인 시 2025년 12월까지만 있습니다. 공식 설명에는 적외 입력의 새 보정 방식을 기다리느라
+  생산이 멈췄었다는 안내가 남아 있고, 일별 자료의 바탕인 IMERG V07 Final도 2025년 9월에 끝났습니다.
+  최근 몇 달이 필요하면 아직 매달 나오는 V2.3(2.5°)을 임시로 쓸 수 있습니다.
+
+transitions:
+  - from: GPCP V2.3 (월, 2.5°) / 일별 V1.3 (1°)
+    to: GPCP V3.3 (월·일, 0.5°)
+    status: completed
+    date: "2025-08"
+    summary: NOAA CDR이 2025년 8월 V3.3을 새 기후자료기록으로 내면서 V2.3·V1.3을 '대체된 판'으로 바꿨습니다. 격자가 2.5°(일별 1°)에서 0.5°로 촘촘해지고 입력 자료가 전면 교체되었습니다.
+    changes:
+      - aspect: 격자
+        before: 월 2.5° (144×72), 일 1°
+        after: 월·일 모두 0.5° (720×360)
+      - aspect: 기간
+        before: 월 1979-01–현재, 일 1996-10–현재
+        after: 월 1983-01–현재, 일 1998-01–현재
+      - aspect: 적외(IR) 위성 입력
+        before: 정지·극궤도 위성 적외 밝기온도(1986–), 1979–1985는 OPI
+        after: GridSat 기반 PERSIANN-CDR 3시간 자료를 SSM/I·SSMIS로 보정한 뒤 MCTG 기후값 비율 적용
+      - aspect: 고위도
+        before: TOVS(1987-08–2002-12)·AIRS(2003-01–) 강수
+        after: TOVS(1983–2002-08)·AIRS(2002-09–) 강수
+      - aspect: 우량계 분석
+        before: GPCC Full Data Reanalysis V7 + Monitoring
+        after: GPCC V2022 Final + Monitoring
+      - aspect: 일별 산출 방식
+        before: 일별 V1.3 (1°, 1996-10–)
+        after: 55°N–55°S는 IMERG Final 30분 자료를 하루로 모아 0.5°로 평균, 고위도는 TOVS/AIRS를 쓰고 월값에 맞춰 비율 보정
+      - aspect: 새 변수
+        before: 강수·무작위 오차
+        after: 절대 편향 오차, 액체 강수 확률, 우량계 가중치 추가
+      - aspect: 갱신 지연
+        before: 예비(ICDR) 약 10일, 최종 약 2개월 뒤
+        after: 약 3개월 이상 (몇 달씩 묶어 갱신)
+    impacts:
+      - 두 판을 한 시계열로 이어 붙이지 마세요. V3.3은 특히 해양에서 강수가 대체로 더 많게 나옵니다.
+      - V3.3 월자료는 1983년부터라 1979–1982년이 필요하면 V2.3밖에 없습니다. 이 경우 논문에 판 차이를 명시하세요.
+      - 2.5° 격자 기준으로 짠 기후값·지수 계산 코드는 0.5° 격자(격자 중심 위치 포함)에 맞게 고쳐야 합니다.
+      - NOAA는 V2.3을 '이전 연구 재현 같은 드문 경우가 아니면 쓰지 말라'고 안내합니다.
+    sources:
+      - name: NOAA NCEI — GPCP Monthly CDR Version 3.3 (C01725)
+        url: https://www.ncei.noaa.gov/access/metadata/landing-page/bin/iso?id=gov.noaa.ncdc:C01725
+      - name: NOAA NCEI — GPCP Daily CDR Version 3.3 (C01726)
+        url: https://www.ncei.noaa.gov/access/metadata/landing-page/bin/iso?id=gov.noaa.ncdc:C01726
+      - name: GES DISC — GPCP V3.3 Release Notes
+        url: https://docserver.gesdisc.eosdis.nasa.gov/public/project/MEaSUREs/GPCP/Release_Notes.GPCPV3.3.pdf
+      - name: NCEI GPCP Monthly CDR V2.3 알고리즘 설명서 (CDRP-ATBD-0848)
+        url: https://www.ncei.noaa.gov/pub/data/sds/cdr/CDRs/Precipitation_GPCP-Monthly/AlgorithmDescription_01B-34.pdf
+      - name: Huffman et al. (2023), The New Version 3.2 GPCP Monthly and Daily Precipitation Products, J. Climate
+        url: https://doi.org/10.1175/JCLI-D-23-0123.1
+
+period:
+  start: "1983-01"
+  end: present
+  note: >-
+    V3.3 월자료는 1983-01, 일자료는 1998-01부터이며, 2026-10-12 확인 시 GES DISC에 둘 다 2025-12까지 있습니다(2026-05-01 추가).
+    V2.3 월자료(1979-01부터)는 2026-09 예비본까지, 일별 V1.3(1996-10부터)은 2026-07까지 NOAA에 올라와 있습니다.
+    V3.3 일자료의 2025년 10~12월은 IMERG Final 생산 종료로 IMERG V07 Late를 써서 만들었습니다.
+
+resolution:
+  spatial_short: "56 km (0.5°)"
+  temporal_short: "1일"
+  spatial: "V3.3: 0.5°×0.5° 전지구 위경도 격자(720×360, 격자 중심값) / V2.3 월: 2.5° 격자(144×72, 첫 격자 중심 88.75°N·1.25°E) / 일별 V1.3: 1°×1°"
+  vertical: 지표 강수 단일층
+  temporal: 월(V3.3 1983–, V2.3 1979–) / 일(V3.3 1998–, V1.3 1996-10–)
+
+update: V3.3은 몇 달 단위 비정기 갱신(목표는 분기별) / V2.3 월자료는 매월(예비본 약 10일 지연)
+license: 미국 정부 공개 자료 — 이용 제한 없음, 데이터셋 DOI 인용 요청
+account_required: true
+
+summary: >-
+  세계기후연구계획(WCRP) GEWEX가 조정하는 전지구 강수 분석으로, 마이크로파·적외 위성 추정과 GPCC 우량계 분석을 합쳐 육지·해양을 빈틈없이 덮습니다.
+  현재판 V3.3은 0.5° 격자의 월자료(1983–)와 일자료(1998–)이며, 일자료는 IMERG를 바탕으로 만들어 합계가 월자료와 맞도록 보정됩니다.
+  옛 V2.3(2.5° 월, 1979–)은 수많은 논문의 기준 자료였고 지금도 매달 갱신되지만, 공식적으로는 V3.3으로 대체되었습니다.
+
+time_convention:
+  summary: >-
+    월자료는 그달의 평균 강수율(mm/day), 일자료는 하루 강수량(mm/day)입니다. V3.3 파일의 time은 그 달(또는 날)의 시작·끝 시각
+    두 값으로 적혀 있습니다(minutes since 1979-01-01 00:00:00).
+  points:
+    - "월값 단위가 mm/day이므로 월 강수량(mm)은 그 달 일수를 곱해 구합니다."
+    - "V3.3 일자료는 IMERG Final 30분 자료를 하루로 모은 뒤, 격자마다 하루 값들의 합이 V3.3 월값과 거의 같아지도록 비율(0.2~4배 제한)을 곱한 것입니다."
+    - "일자료 하루의 경계 시각(예: 00~24 UTC)은 README·ATBD에 명시되어 있지 않습니다. 파일의 time 시작·끝 값을 확인하세요."
+    - "액체 강수 확률(probability_liquid_phase)은 월자료에서 3시간 확률을 강수량 가중 평균한 값입니다."
+    - "V2.3 NCEI 파일은 이름에 preliminary가 붙은 예비본이 먼저 나오고 나중에 최종본으로 바뀝니다."
+  source: https://measures.gesdisc.eosdis.nasa.gov/data/GPCP/GPCPMON.3.3/doc/README.GPCPV3.3_Monthly.pdf
+  source_name: GES DISC GPCP V3.3 Monthly·Daily README + V3.3 ATBD
+
+variables:
+  note: >-
+    V3.3은 GES DISC README(Table 3)의 파일 속 변수명, V2.3은 NCEI THREDDS 집계 자료의 변수명입니다.
+    V3.3 월 파일의 품질 지수(quality index, 등가 우량계 수)는 README에 공백이 있는 이름으로 적혀 있어 받은 파일에서 확인하세요.
+  full_list: https://measures.gesdisc.eosdis.nasa.gov/data/GPCP/GPCPMON.3.3/doc/README.GPCPV3.3_Monthly.pdf
+  groups:
+    - name: V3.3 월자료 (GPCPMON, 0.5°)
+      kind: mean
+      period: 월
+      items:
+        - "위성·우량계 합성 강수 — `sat_gauge_precip` (mm/day)"
+        - "합성 강수 무작위 오차 — `sat_gauge_error`, `sat_gauge_random_error` (mm/day)"
+        - text: "합성 강수 절대 편향 오차 — `sat_gauge_absolute_bias_error` (mm/day)"
+          note: V3.3에서 새로 추가
+        - "위성 단독 강수 — `satellite_precip` (mm/day)"
+        - "바람 손실 보정 우량계 강수 — `gauge_precip` (mm/day)"
+        - text: "액체 강수 확률 — `probability_liquid_phase` (%)"
+          note: 3시간 확률의 강수량 가중 월평균
+        - "우량계 상대 가중치 — `gauge_relative_weight` (%)"
+    - name: V3.3 일자료 (GPCPDAY, 0.5°)
+      kind: accum
+      period: 일
+      items:
+        - text: "일 강수량 — `precip` (mm/day)"
+          note: 하루 총량이자 일평균 강수율. 합이 월값에 맞도록 보정됨
+        - text: "액체 강수 확률 — `probability_liquid_phase` (%)"
+          kind: mean
+          period: 일
+    - name: V2.3 월자료 (NCEI CDR, 2.5°)
+      kind: mean
+      period: 월
+      items:
+        - "위성·우량계 합성 강수 — `precip` (mm/day)"
+        - "합성 강수 오차 — `precip_error` (mm/day)"
+
+access:
+  - name: NASA GES DISC — GPCPMON V3.3 (월)
+    url: https://disc.gsfc.nasa.gov/datacollection/GPCPMON_3.3.html
+    method: HTTPS / OPeNDAP / Earthdata Search / earthaccess
+    note: NASA Earthdata 로그인(무료)이 필요합니다. 파일 이름은 GPCPMON_L3_yyyymm_V3.3.nc4입니다.
+  - name: NASA GES DISC — GPCPDAY V3.3 (일)
+    url: https://disc.gsfc.nasa.gov/datacollection/GPCPDAY_3.3.html
+    method: HTTPS / OPeNDAP / Earthdata Search / earthaccess
+    note: 파일 이름은 GPCPDAY_L3_yyyymmdd_V3.3.nc4입니다.
+  - name: NOAA NCEI — GPCP Monthly CDR (V3.3 / 이전 V2.3)
+    url: https://www.ncei.noaa.gov/products/climate-data-records/precipitation-gpcp-monthly
+    method: HTTPS / THREDDS / AWS·Google Cloud
+    note: 계정 없이 받을 수 있습니다. 2026-10 확인 시 NCEI 직접 다운로드 폴더와 AWS 버킷(noaa-cdr-precip-gpcp-monthly-pds)에는 V2.3(v02r03) 파일만 있습니다.
+  - name: NOAA NCEI — GPCP Daily CDR (V3.3 / 이전 V1.3)
+    url: https://www.ncei.noaa.gov/products/climate-data-records/precipitation-gpcp-daily
+    method: HTTPS / AWS·Google Cloud
+    note: AWS 버킷(noaa-cdr-precip-gpcp-daily-pds)에는 2026-10 확인 시 V1.3(v01r03, 1°) 파일이 있습니다.
+  - name: Copernicus CDS — GPCP v3.3 재배포본
+    url: https://cds.climate.copernicus.eu/datasets/satellite-precipitation
+    method: 웹 다운로드 / CDS API
+    note: C3S가 재배포하는 사본입니다(2025-12 v3.3 공개). 2026-10 확인 시 카탈로그 기간 표기는 2025-12까지입니다. ECMWF 계정 필요.
+
+example:
+  lang: python
+  note: "NASA Earthdata 계정으로 earthaccess.login()을 한 번 거친 뒤 실행합니다. 계정 없이 최근 달이 필요하면 아래 주석처럼 NOAA AWS의 V2.3을 받습니다."
+  code: |
+    # pip install earthaccess xarray netCDF4
+    import earthaccess
+    import xarray as xr
+
+    earthaccess.login()
+    results = earthaccess.search_data(
+        short_name="GPCPMON", version="3.3", temporal=("2024-01", "2024-12")
+    )
+    files = earthaccess.download(results, "./gpcp")
+    ds = xr.open_mfdataset(files, combine="by_coords")
+    pr = ds["sat_gauge_precip"]          # mm/day, 월평균 강수율
+    print(pr.sel(lat=slice(33, 39), lon=slice(124, 132)).mean(("lat", "lon")).values)
+
+    # 계정 없이 V2.3(2.5°): https://noaa-cdr-precip-gpcp-monthly-pds.s3.amazonaws.com/data/2026/
+    #   gpcp_v02r03_monthly_dYYYYMM_cYYYYMMDD.nc (예비본은 gpcp_v02r03-preliminary_...)
+
+tips:
+  - 2.5° V2.3과 0.5° V3.3은 기후값·추세가 다릅니다. 선행 연구와 비교할 때는 같은 판을 쓰고, 논문에 판 번호(V2.3/V3.3)를 꼭 적으세요.
+  - V3.3 일자료는 개별 날짜·격자 값의 정확도가 낮다고 NOAA가 명시합니다. 극한 강수 사례 분석보다는 대규모·통계적 분석에 쓰세요.
+  - V3.3 일자료는 IMERG에 기대므로 IMERG Final이 V08로 넘어가기 전까지 2026년 이후 연장이 늦어질 수 있습니다. 최신 일강수는 IMERG Early·Late를 함께 검토하세요.
+  - 같은 날짜 V2.3 파일도 예비본(preliminary)이 최종본으로 바뀌므로, 최근 몇 달은 나중에 다시 받아 확인하세요.
+  - "V3.3은 위경도 격자 중심값입니다. 2.5° 격자 시대의 영역 정의(예: 1.25° 오프셋)를 그대로 쓰지 마세요."
+
+citations:
+  dataset:
+    - label: V3.3 월자료 (GES DISC)
+      text: >-
+        Huffman, G. J., Behrangi, A., Bolvin, D. T., Nelkin, E. J. (2025): GPCP Version 3.3 Monthly SG Combined Precipitation Data Set.
+        Goddard Earth Sciences Data and Information Services Center (GES DISC), Greenbelt, MD.
+        https://doi.org/10.5067/MEASURES/GPCP/DATA306 (Accessed DD MMM YYYY)
+      doi: 10.5067/MEASURES/GPCP/DATA306
+      bibtex: |
+        @misc{gpcp_v33_monthly,
+          author    = {Huffman, G. J. and Behrangi, A. and Bolvin, D. T. and Nelkin, E. J.},
+          title     = {{GPCP} Version 3.3 Monthly {SG} Combined Precipitation Data Set},
+          year      = {2025},
+          publisher = {Goddard Earth Sciences Data and Information Services Center (GES DISC)},
+          address   = {Greenbelt, MD, USA},
+          doi       = {10.5067/MEASURES/GPCP/DATA306},
+          note      = {Accessed DD MMM YYYY}
+        }
+    - label: V3.3 일자료 (GES DISC)
+      text: >-
+        Huffman, G. J., Behrangi, A., Bolvin, D. T., Nelkin, E. J. (2025): GPCP Version 3.3 Daily Precipitation Data Set.
+        Goddard Earth Sciences Data and Information Services Center (GES DISC), Greenbelt, MD.
+        https://doi.org/10.5067/MEASURES/GPCP/DATA307 (Accessed DD MMM YYYY)
+      doi: 10.5067/MEASURES/GPCP/DATA307
+      bibtex: |
+        @misc{gpcp_v33_daily,
+          author    = {Huffman, G. J. and Behrangi, A. and Bolvin, D. T. and Nelkin, E. J.},
+          title     = {{GPCP} Version 3.3 Daily Precipitation Data Set},
+          year      = {2025},
+          publisher = {Goddard Earth Sciences Data and Information Services Center (GES DISC)},
+          address   = {Greenbelt, MD, USA},
+          doi       = {10.5067/MEASURES/GPCP/DATA307},
+          note      = {Accessed DD MMM YYYY}
+        }
+    - label: NOAA CDR V3.3 월자료 (NCEI)
+      text: >-
+        Adler, R., Gu, G., Behrangi, A., Huffman, G., Bolvin, D., Nelkin, E., and NOAA CDR Program (2025):
+        NOAA Climate Data Record (CDR) of the Global Precipitation Climatology Project (GPCP) Monthly Version 3.3.
+        NOAA National Centers for Environmental Information. https://doi.org/10.25921/bw8h-xr11 (Accessed DD MMM YYYY)
+      doi: 10.25921/bw8h-xr11
+      bibtex: |
+        @misc{gpcp_v33_monthly_cdr,
+          author    = {Adler, Robert and Gu, Guojun and Behrangi, Ali and Huffman, George and Bolvin, David and Nelkin, Eric and {NOAA CDR Program}},
+          title     = {{NOAA} Climate Data Record ({CDR}) of the Global Precipitation Climatology Project ({GPCP}) Monthly Version 3.3},
+          year      = {2025},
+          publisher = {NOAA National Centers for Environmental Information},
+          doi       = {10.25921/bw8h-xr11},
+          note      = {Accessed DD MMM YYYY}
+        }
+    - label: NOAA CDR V3.3 일자료 (NCEI)
+      text: >-
+        Adler, R., Gu, G., Behrangi, A., Huffman, G., Bolvin, D., Nelkin, E., and NOAA CDR Program (2025):
+        NOAA Climate Data Record (CDR) of the Global Precipitation Climatology Project (GPCP) Daily Version 3.3.
+        NOAA National Centers for Environmental Information. https://doi.org/10.25921/9b5m-ka77 (Accessed DD MMM YYYY)
+      doi: 10.25921/9b5m-ka77
+      bibtex: |
+        @misc{gpcp_v33_daily_cdr,
+          author    = {Adler, Robert and Gu, Guojun and Behrangi, Ali and Huffman, George and Bolvin, David and Nelkin, Eric and {NOAA CDR Program}},
+          title     = {{NOAA} Climate Data Record ({CDR}) of the Global Precipitation Climatology Project ({GPCP}) Daily Version 3.3},
+          year      = {2025},
+          publisher = {NOAA National Centers for Environmental Information},
+          doi       = {10.25921/9b5m-ka77},
+          note      = {Accessed DD MMM YYYY}
+        }
+    - label: V2.3 월자료 (NCEI CDR, 이전 판)
+      text: >-
+        Adler, R., Wang, J.-J., Sapiano, M., Huffman, G., Chiu, L., Xie, P.-P., Ferraro, R., Schneider, U., Becker, A.,
+        Bolvin, D., Nelkin, E., Gu, G., and NOAA CDR Program (2016): Global Precipitation Climatology Project (GPCP)
+        Climate Data Record (CDR), Version 2.3 (Monthly). NOAA National Centers for Environmental Information.
+        https://doi.org/10.7289/V56971M6 (Accessed DD MMM YYYY)
+      doi: 10.7289/V56971M6
+      bibtex: |
+        @misc{gpcp_v23_monthly_cdr,
+          author    = {Adler, R. and Wang, J.-J. and Sapiano, M. and Huffman, G. and Chiu, L. and Xie, P.-P. and Ferraro, R. and Schneider, U. and Becker, A. and Bolvin, D. and Nelkin, E. and Gu, G. and {NOAA CDR Program}},
+          title     = {Global Precipitation Climatology Project ({GPCP}) Climate Data Record ({CDR}), Version 2.3 (Monthly)},
+          year      = {2016},
+          publisher = {NOAA National Centers for Environmental Information},
+          doi       = {10.7289/V56971M6},
+          note      = {Accessed DD MMM YYYY}
+        }
+  papers:
+    - label: GPCP V3.2 논문 (V3 방법론, NOAA V3.3 CDR이 참고문헌으로 제시)
+      text: >-
+        Huffman, G. J., Adler, R. F., Behrangi, A., Bolvin, D. T., Nelkin, E. J., Gu, G., Ehsani, M. R. (2023):
+        The New Version 3.2 Global Precipitation Climatology Project (GPCP) Monthly and Daily Precipitation Products.
+        Journal of Climate, 36(21), 7635–7655.
+      doi: 10.1175/JCLI-D-23-0123.1
+      bibtex: |
+        @article{huffman2023gpcpv32,
+          author  = {Huffman, George J. and Adler, Robert F. and Behrangi, Ali and Bolvin, David T. and Nelkin, Eric J. and Gu, Guojun and Ehsani, Mohammad Reza},
+          title   = {The New Version 3.2 Global Precipitation Climatology Project ({GPCP}) Monthly and Daily Precipitation Products},
+          journal = {Journal of Climate},
+          volume  = {36},
+          number  = {21},
+          pages   = {7635--7655},
+          year    = {2023},
+          doi     = {10.1175/JCLI-D-23-0123.1}
+        }
+    - label: GPCP V2.3 논문
+      text: >-
+        Adler, R. F., Sapiano, M. R. P., Huffman, G. J., Wang, J.-J., Gu, G., Bolvin, D., Chiu, L., Schneider, U., Becker, A.,
+        et al. (2018): The Global Precipitation Climatology Project (GPCP) Monthly Analysis (New Version 2.3) and a Review of
+        2017 Global Precipitation. Atmosphere, 9(4), 138.
+      doi: 10.3390/atmos9040138
+      bibtex: |
+        @article{adler2018gpcpv23,
+          author  = {Adler, Robert F. and Sapiano, Mathew R. P. and Huffman, George J. and Wang, Jian-Jian and Gu, Guojun and Bolvin, David and Chiu, Long and Schneider, Udo and Becker, Andreas and others},
+          title   = {The Global Precipitation Climatology Project ({GPCP}) Monthly Analysis (New Version 2.3) and a Review of 2017 Global Precipitation},
+          journal = {Atmosphere},
+          volume  = {9},
+          number  = {4},
+          pages   = {138},
+          year    = {2018},
+          doi     = {10.3390/atmos9040138}
+        }
+  acknowledgement: >-
+    받은 곳에 맞는 데이터셋 DOI(GES DISC 또는 NOAA CDR)와 접근 날짜를 적고, V3를 쓰면 Huffman et al. (2023), V2.3을 쓰면
+    Adler et al. (2018)을 함께 인용합니다. NOAA CDR 자료는 CDR 이용 동의서(Use Agreement)의 인용 안내도 확인하세요.
+
+notices:
+  - date: "2026-10-02"
+    level: warning
+    title: NCEI 클라우드 이전으로 자료 접근 지연 (2026-10-30까지 예정)
+    body: >-
+      NCEI가 자료와 서비스를 클라우드로 옮기는 중이라 다운로드·주문 서비스가 간헐적으로 느리거나 실패할 수 있습니다.
+      NCEI 경로가 안 되면 AWS·Google Cloud 사본이나 GES DISC를 이용하세요.
+    source: https://www.ncei.noaa.gov/alerts
+  - date: "2026-05-01"
+    level: info
+    title: V3.3을 2025년 12월까지 연장 — 2025년 10~12월 일자료는 IMERG Late 기반
+    body: >-
+      GES DISC에 V3.3 월·일자료 2025년분이 추가되었습니다. IMERG V07 Final 생산이 끝나 2025년 10~12월 일자료는
+      IMERG V07 Late로 만들었고, 2025년 12월 월값 보정에는 다른 GPROF 제품을 썼다고 ATBD에 적혀 있습니다.
+    source: https://docserver.gesdisc.eosdis.nasa.gov/public/project/MEaSUREs/GPCP/GPCP_ATBD_V3.3_Daily.pdf
+  - date: "2025-12-02"
+    level: info
+    title: Copernicus CDS에 GPCP v3.3 공개
+    body: CDS의 GPCP 자료가 v3.3으로 바뀌었습니다(월 1983-01~2024-09, 일 1998-01~2024-09). GES DISC보다 기간이 짧습니다.
+    source: https://forum.ecmwf.int/t/new-gpcp-v3-3-dataset-now-available-on-cds/14469
+  - date: "2025-08-05"
+    level: warning
+    title: NOAA CDR이 V3.3으로 교체 — V2.3·일별 V1.3은 '대체된 판'
+    body: >-
+      NOAA NCEI가 GPCP 월·일 CDR V3.3(0.5°)을 공개하고, V2.3(월)과 V1.3(일)을 대체된 판으로 표시했습니다.
+      이전 연구 재현처럼 드문 경우가 아니면 옛 판을 쓰지 말라고 안내합니다. 다만 V2.3 파일은 2026년 10월에도 계속 올라오고 있습니다.
+    source: https://www.ncei.noaa.gov/access/metadata/landing-page/bin/iso?id=gov.noaa.ncdc:C01725
+  - date: "2025-02-12"
+    level: info
+    title: V3.3 공개, V3.2 대체
+    body: >-
+      GES DISC가 V3.3 월·일자료를 공개하고 V3.2를 대체했습니다. 입력이 GPROF2021, PERSIANN-CDR, GPCC V2022 등으로 바뀌고
+      절대 편향 오차 변수가 추가되었으며, 일자료가 1998년 1월부터로 늘었습니다. 해양 강수는 V3.2보다 대체로 많습니다.
+    source: https://docserver.gesdisc.eosdis.nasa.gov/public/project/MEaSUREs/GPCP/Release_Notes.GPCPV3.3.pdf
+
+links:
+  - name: GES DISC — GPCPMON V3.3 데이터셋 페이지
+    url: https://disc.gsfc.nasa.gov/datacollection/GPCPMON_3.3.html
+  - name: GPCP V3.3 Monthly ATBD
+    url: https://docserver.gesdisc.eosdis.nasa.gov/public/project/MEaSUREs/GPCP/GPCP_ATBD_V3.3_Monthly.pdf
+  - name: NOAA NCEI — GPCP Monthly CDR 제품 페이지
+    url: https://www.ncei.noaa.gov/products/climate-data-records/precipitation-gpcp-monthly
+  - name: NOAA NCEI — GPCP Monthly CDR V3.3 메타데이터·인용 페이지
+    url: https://www.ncei.noaa.gov/access/metadata/landing-page/bin/iso?id=gov.noaa.ncdc:C01725
+
+watch_urls:
+  - https://disc.gsfc.nasa.gov/datacollection/GPCPMON_3.3.html
+  - https://www.ncei.noaa.gov/products/climate-data-records/precipitation-gpcp-monthly
+  - https://www.ncei.noaa.gov/alerts
+
+last_verified: "2026-10-12"

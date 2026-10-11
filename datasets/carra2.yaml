@@ -1,0 +1,312 @@
+# ─────────────────────────────────────────────────────────────
+# CARRA2 — 데이터셋 정보 파일
+# C3S 2세대 범북극(pan-Arctic) 지역 재분석. 2.5 km 단일 영역, 1985-09~2025-12 공개(2026-05-27),
+# 매월 정기 갱신은 2026년 말~2027년 초 시작 예정. 이전 세대 CARRA(CARRA1)는 carra.yaml.
+# 수정 후에는 공식 페이지에서 확인한 날짜로 last_verified 를 갱신하세요.
+# ─────────────────────────────────────────────────────────────
+id: carra2
+name: CARRA2
+full_name: Copernicus pan-Arctic Regional Reanalysis (C3S 범북극 지역 재분석, 2세대 CARRA)
+category: reanalysis
+domain: atmosphere
+group: 지역 재분석
+order: 5
+domains: [대기, 육지, 해빙]
+provider: Copernicus Climate Change Service (C3S) — 노르웨이 기상청(MET Norway) 주도 컨소시엄 생산, ECMWF CDS 배포
+
+status: active
+status_note: >-
+  2025년 12월 첫 자료(24년치)에 이어 2026년 5월 27일 1985년 9월~2025년 12월 전체가 CDS에 공개되었습니다.
+  2026-10-12 확인 시 자료는 2025-12-31까지이고 아직 매월 갱신되지 않습니다. CDS는 2027년부터 매월 갱신을 예고했고,
+  C3S는 2026년 11월~2027년 3월 CARRA1과 함께 매월 갱신한 뒤 CARRA2만 이어 간다고 밝혔습니다.
+
+period:
+  start: "1985-09"
+  end: "2025-12"
+  note: >-
+    CDS 데이터셋 제목은 "1986 to present"이지만 시간별 자료는 1985-09-01부터, 일·월 통계(reanalysis-pan-carra-means)는 1985-10-01부터 있습니다
+    (CDS 카탈로그 기준, 요청 양식의 연도도 1985부터). 2026-10-12 확인 시 두 데이터셋 모두 2025-12-31까지입니다.
+    매월 갱신(2~3개월 지연)이 시작되면 끝 날짜가 현재 쪽으로 늘어납니다.
+
+resolution:
+  spatial_short: "2.5 km (0.023°)"
+  temporal_short: "1시간"
+  spatial: >-
+    2.5 km 극 평사도법(polar stereographic) 단일 범북극 격자, 2869×2869 격자점(사용자 안내서·CDS 기준) — 그린란드 남쪽~알래스카 남쪽, 북극해와 주변 육지, 북유럽 일부.
+    일부 지표 변수(예: 해수면온도·해빙 면적비)는 2880×2880으로 나오며, 늘어난 11행·11열은 NaN이라 버리면 됩니다(C3S 서비스 페이지·총회 발표는 2880×2880으로 표기).
+    제공 격자 = 모델 격자이며, CDS에서 위경도 범위(area)로 잘라 받을 수 있습니다
+  vertical: >-
+    모델면 65층(1층 약 10 hPa ~ 65층 지상 약 12 m) / 기압면 20층(1000~50 hPa) / 고도면 18층(지상 15~3000 m) /
+    토양층(1·2·3·5·8층, 0~100 cm)은 추후 공개 예정. C3S 총회·워크숍 발표 자료에는 기압면 23층·고도면 11층으로 적혀 있지만,
+    사용자 안내서와 CDS 요청 양식 기준(20층·18층)을 따랐습니다
+  temporal: >-
+    분석 3시간(00·03·…·21 UTC) / 예보 1시간 — 00·12 UTC 시작 예보는 +1~18시간 매시, 그 밖의 분석 시각(03·06·09·15·18·21 UTC) 시작 예보는 +1~3시간.
+    모델면은 분석 시각만. 일·월 통계는 별도 데이터셋(reanalysis-pan-carra-means)
+
+update: 현재 갱신 없음(2025-12까지) — 2026년 말~2027년 초부터 매월 갱신 예정(2~3개월 지연)
+license: CC BY 4.0
+account_required: true
+
+summary: >-
+  C3S의 2세대 북극 지역 재분석으로, CARRA1의 유럽 쪽 두 영역(West·East)을 북극 전체를 덮는 2.5 km 단일 극 평사도법 격자로 넓혔습니다.
+  HARMONIE-AROME Cy46h1(정역학) 모델에 3시간 주기 3D-Var 상층 동화와 SEKF 지면 동화를 쓰고, ERA5를 측면 경계로 삼아
+  1985년 9월부터 3시간 분석과 1시간 예보, 일·월 통계를 제공합니다. SURFEX 다층 토양·적설 체계와 숲 캐노피(MEB)로 지표 과정을 개선했고,
+  단일면·기압면·고도면·모델면이 한 CDS 데이터셋에 들어 있으며 원하는 지역만 잘라 받을 수 있습니다.
+
+time_convention:
+  summary: >-
+    분석(analysis) 자료는 00·03·…·21 UTC의 순간값입니다. 예보(forecast) 자료는 시작 시각(time)과 선행 시간(leadtime_hour)으로 지정하며,
+    강수·복사·열속·증발·유출은 예보 시작 시각부터 그 선행 시간까지 누적한 값이고, 최고·최저 기온과 돌풍은 직전 후처리(출력) 이후 75초 모델 시간 간격 전체에서 구한 극값입니다.
+  points:
+    - "예보 자료의 유효 시각 = 시작 시각 + leadtime_hour 입니다. 예: 00 UTC 시작 +6시간 tp = 00~06 UTC 6시간 누적 강수."
+    - "1시간 값은 연속한 두 누적값의 차이로 구합니다. 공식 안내서는 초기 적응(spin-up) 영향을 피하려고 00·12 UTC 예보의 +18시간 − +6시간(12시간 누적)을 권하고, 24시간 누적은 연속한 두 예보의 12시간 누적을 합쳐 만들라고 안내합니다."
+    - "시간 정밀도가 중요하면 8개 분석 시각 예보의 +1~3시간을 이어 쓸 수 있지만, 이때는 초기 적응 영향이 일부 남습니다(안내서)."
+    - "누적 변수(강수 kg m-2, 복사·열속 J m-2)는 분석 시각 자료에는 없고 예보 자료에만 있습니다. 평균 W m-2는 연속한 1시간 누적값의 차이를 3600으로 나눕니다."
+    - "일·월 통계 데이터셋: 일평균(순간 변수)은 00~21 UTC 3시간 표본(분석이 있으면 분석, 없으면 예보)의 평균이고, 일합계는 전날 12 UTC 예보(+18 − +12시간), 당일 00 UTC(+18 − +6시간), 당일 12 UTC(+12 − +6시간)를 이어 붙여 UTC 달력일 기준으로 만듭니다."
+    - "월 통계의 누적 변수는 월 총량이 아니라 '일합계의 월평균'(월 누적 ÷ 그 달 일수)입니다. 월 총량이 필요하면 일수를 곱하세요. 월값은 27일 이상 자료가 있을 때만, 일값은 그날 표본이 모두 있을 때만 만들어집니다."
+    - "C3S 서비스 페이지 비교표는 출력이 CARRA1처럼 '+6시간 이후 3시간 간격'이라고 적었지만, 사용자 안내서와 CDS 요청 양식은 00·12 UTC 예보 +1~18시간 매시를 제공합니다."
+  source: https://confluence.ecmwf.int/display/CKB/Copernicus+pan-Arctic+Regional+Reanalysis+%28CARRA2%29%3A+Data+User+Guide
+  source_name: "Copernicus pan-Arctic Regional Reanalysis (CARRA2): Data User Guide"
+
+variables:
+  note: >-
+    CARRA2 사용자 안내서(Data User Guide)의 파라미터 표 기준 주요 변수입니다. 백틱 안은 GRIB short name이며,
+    CDS 요청에는 `2m_temperature`, `total_precipitation`처럼 긴 이름을 씁니다. CDS 시간별 데이터셋에는 75개 변수 이름이 있습니다.
+  full_list: https://confluence.ecmwf.int/display/CKB/Copernicus+pan-Arctic+Regional+Reanalysis+%28CARRA2%29%3A+Data+User+Guide
+  groups:
+    - name: 지표·단일면 (분석·예보, 순간값)
+      kind: instant
+      items:
+        - "2m 기온 — `2t` (K)"
+        - "2m 상대습도 — `2r` (%)"
+        - "2m 비습 — `2sh` (kg kg-1)"
+        - text: "10m 바람 성분 — `10u`, `10v` (m s-1)"
+          note: 극 평사도법 격자 기준(동서·남북 아님)
+        - text: "10m 풍속·풍향 — `10si` (m s-1), `10wdir` (degrees)"
+          note: 풍향은 진북 기준
+        - "평균 해면기압 — `msl` (Pa)"
+        - "지표 기압 — `sp` (Pa)"
+        - "지표(skin) 온도 — `skt` (K)"
+        - "전운량 — `tcc` (%)"
+        - "적설 물당량 — `sd` (kg m-2)"
+        - "적설 깊이 — `sde` (m)"
+        - text: "해수면온도 — `sst` (K)"
+          note: 입력 자료를 보간한 값으로 하루 한 번 갱신
+        - text: "해빙 면적비 — `ci` (0-1)"
+          note: 입력 자료를 보간한 값으로 하루 한 번 갱신
+        - text: "해빙 두께 — `sithick` (m)"
+          note: 안내서는 대략적 추정치로 다루라고 권함
+        - "해빙 표면 온도 — `sist` (K)"
+        - text: "총 가강수량 — `tciwv` (kg m-2)"
+          note: 분석 자료만
+    - name: 지표·단일면 (예보 전용 누적·극값)
+      kind: accum
+      period: 예보 시작 이후
+      items:
+        - "총강수량 — `tp` (kg m-2)"
+        - "비(액체 강수) 누적 — `tirf` (kg m-2)"
+        - "고체 강수 누적 — `titspf` (kg m-2)"
+        - "증발 — `eva` (kg m-2)"
+        - "지표 유출 — `surfro` (kg m-2)"
+        - "지표 하향 단파·장파복사 — `ssrd`, `strd` (J m-2)"
+        - "지표 순 단파·장파복사 — `ssr`, `str` (J m-2)"
+        - "대기 상단 순 단파·장파복사 — `tsr`, `ttr` (J m-2)"
+        - "지표 현열 플럭스 — `sshf` (J m-2)"
+        - "지표 잠열(증발·승화) 플럭스 — `tislhef`, `tislhsf` (J m-2)"
+        - text: "2m 최고기온 — `mx2t` (K)"
+          kind: max
+          period: 직전 후처리 이후
+        - text: "2m 최저기온 — `mn2t` (K)"
+          kind: min
+          period: 직전 후처리 이후
+        - text: "10m 돌풍 — `i10fg` (m s-1)"
+          kind: max
+          period: 직전 후처리 이후
+          note: 일·월 통계 데이터셋에는 아직 없음
+    - name: 기압면 (20층, 1000~50 hPa, 분석·예보)
+      kind: instant
+      items:
+        - "기온 — `t` (K)"
+        - "상대습도 — `r` (%)"
+        - "풍속·풍향 — `ws` (m s-1), `wdir` (degrees)"
+        - "지위(geopotential) — `z` (m2 s-2)"
+        - "기하 연직속도 — `wz` (m s-1)"
+        - "잠재와도 — `pv` (K m2 kg-1 s-1)"
+        - "구름 액체수·얼음 함량 — `clwc`, `ciwc` (kg kg-1)"
+    - name: 고도면 (지상 15~3000 m 18층)·모델면 (65층, 분석만)
+      kind: instant
+      items:
+        - "고도면 기온·상대습도 — `t` (K), `r` (%)"
+        - "고도면 풍속·풍향 — `ws` (m s-1), `wdir` (degrees)"
+        - "고도면 기압 — `pres` (Pa)"
+        - "모델면 기온·비습 — `t` (K), `q` (kg kg-1)"
+        - "모델면 난류 운동에너지 — `tke` (m2 s-2)"
+    - name: 불변장
+      kind: static
+      items:
+        - "지형 고도 — `orog` (m)"
+        - "해륙 마스크 — `lsm` (0-1)"
+
+access:
+  - name: CDS — pan-Arctic regional reanalysis sub-daily data (reanalysis-pan-carra)
+    url: https://cds.climate.copernicus.eu/datasets/reanalysis-pan-carra
+    method: 웹 다운로드 / CDS API (cdsapi)
+    note: >-
+      ECMWF 계정과 데이터셋 이용약관(CC BY) 동의가 필요합니다. 층 종류(level_type: single_levels/pressure_levels/height_levels/model_levels)와
+      층(level_location), 분석/예보를 골라 요청하며, area로 지역을 잘라 받을 수 있습니다. GRIB2가 원본이고 NetCDF는 실험적 변환입니다.
+  - name: CDS — 일·월 통계 (reanalysis-pan-carra-means)
+    url: https://cds.climate.copernicus.eu/datasets/reanalysis-pan-carra-means
+    method: 웹 다운로드 / CDS API
+    note: >-
+      일·월 평균, 극값, 합계를 미리 계산한 데이터셋입니다. time_aggregation(daily/monthly)과 product_type(analysis_based/forecast_based)을 고릅니다.
+      2026-05-15 CDS 경고 기준 돌풍은 아직 없고, 지표 유출·안개는 많은 기간이 비어 있으며, 최고·최저 기온과 해빙 표면 온도에도 빈 기간이 있어 채우는 중입니다.
+  - name: MET Norway 예제 노트북 (metno/carra2_cds)
+    url: https://github.com/metno/carra2_cds
+    method: Python 예제 (cdsapi·Jupyter)
+    note: CARRA2 생산 기관이 공개한 내려받기·지역 자르기·시계열·해빙 그림 예제입니다.
+
+example:
+  lang: python
+  note: "~/.cdsapirc 에 CDS API 주소와 본인 key를 넣은 뒤 실행합니다. 요청 키와 값은 CDS 요청 양식(API 정의)과 MET Norway 예제에서 확인한 것입니다."
+  code: |
+    # pip install --upgrade cdsapi
+    import cdsapi
+
+    client = cdsapi.Client()
+
+    # 1) 예보: 총강수량 (예보 시작 이후 누적) — +18h − +6h 를 빼면 12시간 강수
+    client.retrieve(
+        "reanalysis-pan-carra",
+        {
+            "level_type": "single_levels",
+            "product_type": "forecast",
+            "variable": ["total_precipitation"],
+            "year": ["2020"], "month": ["01"], "day": ["01"],
+            "time": ["00:00", "12:00"],
+            "leadtime_hour": ["6", "18"],
+            "area": [80, -30, 60, 30],        # 북, 서, 남, 동 — 필요한 지역만
+            "data_format": "grib",
+        },
+        "carra2_tp_fc_20200101.grib",
+    )
+
+    # 2) 월 통계: 2m 기온 월평균 (분석 기반)
+    client.retrieve(
+        "reanalysis-pan-carra-means",
+        {
+            "time_aggregation": "monthly",
+            "level_type": "single_levels",
+            "variable": ["2m_temperature"],
+            "product_type": "analysis_based",
+            "year": ["1986"],
+            "month": [f"{m:02d}" for m in range(1, 13)],
+            "data_format": "netcdf",
+        },
+        "carra2_t2m_monthly_1986.nc",
+    )
+
+tips:
+  - "`10u`·`10v`는 동서·남북이 아니라 극 평사도법 격자 방향 성분입니다(안내서). 지도 위 동서·남북 바람이 필요하면 직접 회전하거나, 진북 기준인 풍향 `10wdir`과 풍속 `10si`를 쓰세요."
+  - "일부 지표 변수(사용자 보고로는 해수면온도·해빙 면적비 등)는 2880×2880으로 나옵니다. 안내서대로 늘어난 11행·11열(NaN)을 버려 2869×2869 격자에 맞추세요."
+  - "숲(고식생) 지역에서는 2m 기온이 너무 따뜻하게 나옵니다(시베리아·캐나다 Sahtu 등, ERA5와 10 K 넘게 차이 나기도 함). 공식 알려진 문제이며 숲 타일별 지상 기온은 나중에 제공할 예정입니다."
+  - "영역 가장자리 약 100 km 안은 측면 경계(ERA5) 영향으로 강수가 너무 적은 경우가 많고, 약 200 km 밖에서는 영향이 거의 없다고 안내되어 있습니다. 가장자리 띠는 분석에서 빼세요."
+  - "그린란드 빙상 일부 관측소 주변(NASA-SE 2012~2019, Petermann ELA 2011~2014 등)은 2m 기온이 크게 어긋나 '믿지 말라'고 공지되어 있습니다. 빙상 연구라면 알려진 문제(Known issues) 페이지의 지점·기간 목록을 먼저 확인하세요."
+  - "빙하 위 융빙이 표현되지 않아 빙하 지표 유출은 비현실적으로 낮고, 빙하 면적은 기간 중간 시점 범위로 고정되어 있습니다. 빙하 질량수지 연구에는 그대로 쓰지 마세요."
+  - "CARRA1과 한 시계열로 이어 붙이지 마세요. 영역·격자·모델(Cy40h1 비정역학 → Cy46h1 정역학)·지면 체계·예보 길이(30 → 18시간)가 모두 달라졌습니다. 2026-09-01 이전에 CDS에서 거칠기 길이를 받았다면 실제로는 지표 유출이 받아졌을 수 있으니 다시 받으세요."
+
+citations:
+  dataset:
+    - label: 시간별 자료 (reanalysis-pan-carra)
+      text: >-
+        Copernicus Climate Change Service (2025): pan-Arctic regional reanalysis sub-daily data from 1986 to present.
+        ECMWF, Copernicus Climate Change Service (C3S) Climate Data Store (CDS), DOI: 10.24381/f5effe24 (Accessed on DD-MMM-YYYY)
+      doi: 10.24381/f5effe24
+      bibtex: |
+        @misc{carra2_subdaily,
+          author    = {{Copernicus Climate Change Service}},
+          title     = {pan-Arctic regional reanalysis sub-daily data from 1986 to present},
+          year      = {2025},
+          publisher = {ECMWF},
+          doi       = {10.24381/f5effe24},
+          note      = {Accessed on DD-MMM-YYYY}
+        }
+    - label: 일·월 통계 자료 (reanalysis-pan-carra-means)
+      text: >-
+        Copernicus Climate Change Service (2025): pan-Arctic regional reanalysis daily and monthly data from 1986 to present.
+        ECMWF, Copernicus Climate Change Service (C3S) Climate Data Store (CDS), DOI: 10.24381/b19380d8 (Accessed on DD-MMM-YYYY)
+      doi: 10.24381/b19380d8
+      bibtex: |
+        @misc{carra2_means,
+          author    = {{Copernicus Climate Change Service}},
+          title     = {pan-Arctic regional reanalysis daily and monthly data from 1986 to present},
+          year      = {2025},
+          publisher = {ECMWF},
+          doi       = {10.24381/b19380d8},
+          note      = {Accessed on DD-MMM-YYYY}
+        }
+  papers: []
+  acknowledgement: >-
+    C3S 자료를 사용했음을 밝히고, 실제로 받은 CDS 데이터셋(시간별 또는 일·월 통계)의 DOI와 접근 날짜를 적습니다.
+    2026-10-12 기준 CARRA2를 설명하는 동료 심사 논문은 확인되지 않았고, 시스템 설명은 Copernicus Knowledge Base의
+    사용자 안내서·전체 시스템 문서(Full system documentation)·시험 평가 보고서(Yang et al., 2025)로 제공됩니다.
+
+notices:
+  - date: "2026-09-07"
+    level: warning
+    title: CDS 요청 양식의 지표 유출 이름 오류 수정 (2026-09-01)
+    body: >-
+      CDS 요청 양식에서 거칠기 길이(roughness)를 고르면 지표 유출(surface runoff) 자료가 내려받아지던 오류가 2026-09-01에 고쳐졌다고
+      알려진 문제(Known issues) 페이지에 적혔습니다. 같은 페이지는 일·월 통계의 지표 순 단파복사(2011년 10월), 최고·최저 기온, 지표 유출,
+      돌풍(전 기간) 누락분을 채우는 중이라고 밝혔습니다.
+    source: https://confluence.ecmwf.int/spaces/CKB/pages/583771254/Copernicus+pan-Arctic+Regional+Reanalysis+CARRA2+Known+issues
+  - date: "2026-06-03"
+    level: info
+    title: 매월 정기 갱신 계획 — CARRA1과 2027년 3월까지 병행
+    body: >-
+      C3S 총회 발표에 따르면 CARRA1과 CARRA2를 적어도 2026년 11월~2027년 3월 함께 매월 갱신하고, CARRA1은 2027년 3월 뒤로 연장하지 않으며
+      CARRA2는 이후에도 매월 준실시간으로 갱신합니다. CDS 페이지는 "2027년부터 매월 갱신 예정", C3S 서비스 페이지는 "늦어도 2027년 1월부터"라고 적었습니다.
+    source: https://climate.copernicus.eu/sites/default/files/custom-uploads/9th%20C3S%20GA/Day1/Day%201.7_Block%20I_SCHYBERG.pdf
+  - date: "2026-05-27"
+    level: info
+    title: 과거 전체 기간(1986~2025) CDS 공개
+    body: >-
+      2025년 12월 일부 공개에 이어 CARRA2 40년 전체 자료가 시간별(reanalysis-pan-carra)과 일·월 통계(reanalysis-pan-carra-means) 두 데이터셋으로
+      CDS에 공개되었습니다. 정기 갱신은 2026년 말부터 시작할 예정이라고 C3S가 밝혔습니다.
+    source: https://climate.copernicus.eu/full-historical-carra2-data-release-offers-new-insights-arctic-extremes
+  - date: "2026-05-15"
+    level: warning
+    title: 일·월 통계 데이터셋 일부 변수 누락
+    body: >-
+      CDS 일·월 통계 데이터셋 경고에 따르면 돌풍은 아직 제공되지 않고, 지표 유출과 안개는 많은 기간이 비어 있으며,
+      최고·최저 기온과 해빙 표면 온도에도 빈 기간이 있습니다. 누락분은 채우는 중입니다.
+    source: https://cds.climate.copernicus.eu/datasets/reanalysis-pan-carra-means
+  - date: "2025-12-10"
+    level: info
+    title: CARRA2 첫 자료 공개 (24년, 3년 단위 8개 구간)
+    body: >-
+      1986~1988, 1991~1993, 1996~1998, 2001~2003, 2006~2008, 2011~2013, 2016~2018, 2021~2023년이 먼저 CDS에 공개되었습니다.
+      모든 층 종류를 한 데이터셋에 담고 지역 잘라 받기를 지원하는 구성이 함께 도입되었습니다.
+    source: https://forum.ecmwf.int/t/new-datasets-family-published-in-cds-copernicus-pan-arctic-regional-reanalysis-carra2/14483
+
+links:
+  - name: CDS CARRA2 시간별 데이터셋 페이지
+    url: https://cds.climate.copernicus.eu/datasets/reanalysis-pan-carra
+  - name: CDS CARRA2 일·월 통계 데이터셋 페이지
+    url: https://cds.climate.copernicus.eu/datasets/reanalysis-pan-carra-means
+  - name: "CARRA2 Data User Guide (Copernicus Knowledge Base)"
+    url: https://confluence.ecmwf.int/display/CKB/Copernicus+pan-Arctic+Regional+Reanalysis+%28CARRA2%29%3A+Data+User+Guide
+  - name: CARRA2 Known issues (Copernicus Knowledge Base)
+    url: https://confluence.ecmwf.int/spaces/CKB/pages/583771254/Copernicus+pan-Arctic+Regional+Reanalysis+CARRA2+Known+issues
+  - name: C3S — Copernicus Arctic Regional Reanalysis service (CARRA1·CARRA2 비교)
+    url: https://climate.copernicus.eu/copernicus-arctic-regional-reanalysis-service
+  - name: CARRA2 사용자 워크숍(2026-06) 발표 — 시스템·관측·알려진 문제 (Schyberg)
+    url: https://climate.copernicus.eu/sites/default/files/custom-uploads/CARRA2-UW/presentations/2-CARRA2workshop-10Jun2026_HaraldSchyberg-v1.pdf
+  - name: 이전 세대 CARRA(CARRA1) 페이지
+    url: https://cds.climate.copernicus.eu/datasets/reanalysis-carra-single-levels
+
+watch_urls:
+  - https://forum.ecmwf.int/tag/carra2
+  - https://confluence.ecmwf.int/spaces/CKB/pages/583771254/Copernicus+pan-Arctic+Regional+Reanalysis+CARRA2+Known+issues
+  - https://climate.copernicus.eu/copernicus-arctic-regional-reanalysis-service
+
+last_verified: "2026-10-12"

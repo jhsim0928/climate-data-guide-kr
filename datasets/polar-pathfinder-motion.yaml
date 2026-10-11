@@ -1,0 +1,271 @@
+# ─────────────────────────────────────────────────────────────
+# Polar Pathfinder 해빙 이동 — 데이터셋 정보 파일
+# NSIDC-0116 Version 4 (파일 버전 v4.1: 1978–2024, v4.2: 2025~) + 빠른 연장판 NSIDC-0748
+# ─────────────────────────────────────────────────────────────
+id: polar-pathfinder-motion
+name: Polar Pathfinder 해빙 이동
+full_name: Polar Pathfinder Daily 25 km EASE-Grid Sea Ice Motion Vectors (NSIDC-0116, Version 4; 위성·부이·바람을 합친 일별 해빙 이동 벡터)
+category: satellite
+domain: seaice
+group: 해빙 이동
+order: 10
+domains: [해빙]
+provider: NASA 국립빙설자료센터 분산자료보관소(NSIDC DAAC) — 제작 M. Tschudi, W. N. Meier, J. S. Stewart
+
+status: active
+status_note: >-
+  정상 제공 중입니다. 2026년 10월 2025년 자료(파일 버전 v4.2)가 추가되어 현재 2025-12-31까지 있으며, 2025년부터 수동마이크로파 입력은 DMSP SSMIS 대신 AMSR2,
+  바람 입력은 NCEP/NCAR 재분석 대신 ERA5로 바뀌었습니다. 그래서 2026년 3월 NCEP/NCAR R1 갱신 종료와 SSMIS 자료 중단은 2025년 이후 갱신을 막지 않습니다.
+  최종판 이후 기간은 북극 주간 빠른 연장판(Quicklook, NSIDC-0748)이 채웁니다.
+
+transitions:
+  - from: NSIDC-0116 V4 파일 버전 v4.1 (1978-11 ~ 2024-12, SSMIS·NCEP/NCAR 입력)
+    to: NSIDC-0116 V4 파일 버전 v4.2 (2025-01 ~, AMSR2·ERA5 입력)
+    status: completed
+    date: "2026-10"
+    summary: >-
+      DMSP SSMIS와 NCEP/NCAR 재분석의 갱신이 끝나면서, 2025년 자료부터 수동마이크로파 입력을 GCOM-W1 AMSR2로, 바람 입력을 ERA5로 바꾼 갱신입니다.
+      데이터셋 버전(Version 4)·DOI·격자·변수는 그대로이고, 2025년 이후 파일만 v4.2 이름으로 나옵니다. 1978~2024년(v4.1)은 다시 처리하지 않았습니다.
+    changes:
+      - aspect: 수동마이크로파 입력 (2025년 이후)
+        before: "DMSP SSMIS (2007-01-01 ~ 2024-12-31)"
+        after: "GCOM-W1 AMSR2 (2025-01-01 ~). NSIDC AMSR2 일별 극 격자 밝기온도를 SSM/I·SSMIS 공간 해상도에 맞게 재표본화해 사용 (36·89 GHz)"
+      - aspect: 바람 입력 (2025년 이후)
+        before: "NCEP/NCAR 재분석 10 m 바람 (1978-10-25 ~ 2024-12-31)"
+        after: "ERA5 10 m 바람 (2025-01-01 ~)"
+      - aspect: 파일 이름의 버전 표기
+        before: "…_v4.1.nc (1978~2024)"
+        after: "…_v4.2.nc (2025~)"
+      - aspect: 격자·변수·DOI
+        before: "25 km EASE-Grid(EPSG:3408/3409), u·v·icemotion_error_estimate, DOI 10.5067/INAWUWO7QH7B"
+        after: "같음"
+    impacts:
+      - 2025-01-01을 경계로 위성 입력과 바람 입력이 동시에 바뀝니다. 1979년 이후 장기 추세·기후값을 만들 때는 이 경계 전후의 체계적 차이 가능성을 따로 점검하세요.
+      - 파일 이름에 `v4.1`을 고정해 둔 스크립트는 2025년 파일을 찾지 못합니다. 버전 부분을 와일드카드로 바꾸세요.
+      - 논문의 자료 설명에 '2025년 이후 AMSR2·ERA5 입력(v4.2)'을 함께 적고, ERA5를 쓴 구간이라면 사용자 안내서가 권하는 Hersbach et al. (2020)도 인용하세요.
+    sources:
+      - name: NSIDC-0116 V4 사용자 안내서 (2026년 10월 갱신, 버전 이력 표)
+        url: https://nsidc.org/sites/default/files/documents/user-guide/nsidc-0116-v004-userguide_0.pdf
+      - name: NSIDC-0116 V4 데이터셋 페이지
+        url: https://nsidc.org/data/nsidc-0116/versions/4
+
+period:
+  start: "1978-11"
+  end: present
+  note: >-
+    2026-10-12 확인 기준 일자료는 1978-11-01 ~ 2025-12-31, 주간 자료는 1978-11-05 ~ 2025-12-31입니다(사용자 안내서 표 11·데이터셋 페이지).
+    안내서 1.4.1절에는 아직 2024-12-31로 적혀 있어 표와 어긋납니다. 2026년 이후는 최종판에 없고, 북극 주간 빠른 연장판 NSIDC-0748이 최종판 마지막 날 다음 주부터 채웁니다.
+    1987년 7월 이전 SMMR 입력은 대략 이틀 간격이며, 남반구는 SSM/I·AVHRR 입력이 빠진 기간에 공백이 있습니다.
+
+resolution:
+  spatial_short: "25 km (0.23°)"
+  temporal_short: "1일"
+  spatial: >-
+    25 km EASE-Grid(원래 EASE-Grid 1.0, 반지름 6,371,228 m 구 위의 Lambert 정적 방위 등적도법, 격자 간격 25,067.5 m) —
+    북반구 "NSIDC EASE-Grid North"(EPSG:3408) 361×361, 남반구 "NSIDC EASE-Grid South"(EPSG:3409) 321×321. EASE-Grid 2.0이 아닙니다
+  vertical: 해당 없음 (해빙 표면 이동)
+  temporal: 일별 벡터 + 주간 평균(매년 1월 1일부터 7일 단위, 7일 중 4일 이상 있을 때만). 월자료는 Version 4부터 제공하지 않음
+
+update: >-
+  공식 갱신 주기는 밝혀져 있지 않습니다. 최종판은 비정기적으로 연장되며(최근: 2026년 10월에 2025년분 추가),
+  그 사이 기간은 빠른 연장판 NSIDC-0748(북극 주간)이 대략 한 달 간격으로 채우고 최종판이 갱신되면 그 뒤로 옮겨 갑니다.
+license: NASA EOSDIS 공개 자료(무료). 데이터셋 인용이 이용 조건이며, 사용한 부분과 접근 날짜를 인용문에 적도록 권고
+account_required: true
+
+summary: >-
+  AVHRR 가시·적외 영상, SMMR·SSM/I·SSMIS·AMSR-E·AMSR2 수동마이크로파 영상에서 연속한 두 날의 공간 상관으로 구한 이동과 IABP 표류 부이, 재분석 10 m 바람으로 추정한
+  해빙 이동을 최적 내삽으로 합친 1978년 이후 북·남반구 일별 해빙 이동 벡터입니다. 격자마다 오차 추정치를 함께 주며, 같은 계열의 NSIDC 해빙 나이(Sea Ice Age) 자료의 입력으로도 쓰입니다.
+  25 km EASE-Grid의 격자 x·y 방향 속도(cm/s)로 제공되므로 동·북 성분으로 바꿔 써야 합니다.
+
+time_convention:
+  summary: >-
+    일자료의 u·v는 하루 동안의 이동을 나타내는 일평균 속도(cm/s)입니다. 위성 입력은 연속한 두 날의 영상에서 구한 하루 변위, 부이 입력은 12:00 GMT 위치로 계산한
+    24시간 평균 속도이며, 이를 날짜별로 합친 값이라 특정 시각의 순간값이 아닙니다. 주간 자료는 그 주 일자료의 평균입니다.
+  points:
+    - "일자료의 `time`은 'days since 1970-01-01' 형식의 날짜입니다. 사용자 안내서는 병합 벡터의 정확한 시작·끝 시각(예: 몇 시부터 몇 시까지)을 따로 정의하지 않습니다."
+    - "주간 파일은 매년 1월 1일부터 7일씩 끊으며, 7일 중 4일 이상 일자료가 있어야 만들어집니다. 각 해의 마지막 날(윤년은 마지막 이틀)은 어느 주에도 들어가지 않습니다. `number_of_observations`는 그 주에 들어간 일자료 수입니다."
+    - "Version 4부터 부이 한 개당 하루 한 개의 이동값(정오·자정 벡터 평균)을 씁니다. 이전 버전의 정오·자정 별도 추정과 다릅니다."
+    - "SMMR 시기(1987년 7월 이전)는 위성 입력이 대략 이틀 간격이라 하루 변위가 아닌 날이 섞일 수 있습니다."
+  source: https://nsidc.org/sites/default/files/documents/user-guide/nsidc-0116-v004-userguide_0.pdf
+  source_name: NSIDC-0116 V4 사용자 안내서 (2026년 10월 갱신)
+
+variables:
+  note: >-
+    사용자 안내서 기준 일·주간 netCDF 변수입니다. u·v는 동·북 방향이 아니라 EASE-Grid의 x·y 방향 성분입니다. 결측값은 -9999입니다.
+    입력 자료별 파일(im_from_<source>_…)도 따로 제공됩니다.
+  full_list: https://nsidc.org/sites/default/files/documents/user-guide/nsidc-0116-v004-userguide_0.pdf
+  groups:
+    - name: 해빙 이동 (일자료)
+      kind: mean
+      period: 일
+      items:
+        - text: "격자 x 방향 해빙 속도 — `u` (cm s-1)"
+          note: 하루 동안의 이동을 나타내는 일평균 속도. 동쪽 성분이 아님(변환식은 tips 참고)
+        - text: "격자 y 방향 해빙 속도 — `v` (cm s-1)"
+          note: 하루 동안의 이동을 나타내는 일평균 속도. 북쪽 성분이 아님
+        - text: "이동 오차 추정 — `icemotion_error_estimate` (cm s-1)"
+          note: 그날 최적 내삽 결과에 딸린 오차 추정치(일자료에만 있음). 가장 가까운 입력이 1250 km보다 멀면 1000을 더하고, 해안 근처(약 25 km 이내) 의심 벡터는 음수로 표시
+    - name: 해빙 이동 (주간 자료)
+      kind: mean
+      period: 7일
+      items:
+        - text: "격자 x·y 방향 주평균 속도 — `u`, `v` (cm s-1)"
+          note: 그 주 일자료의 평균. 주간 파일에는 오차 추정 변수가 없음
+        - text: "주평균에 들어간 일자료 수 — `number_of_observations` (개)"
+          kind: accum
+          note: 그 주 7일 중 값이 있는 일자료 개수(4개 미만이면 주간 값 없음)
+    - name: 좌표
+      kind: static
+      items:
+        - "위도·경도 — `latitude`, `longitude` (degrees_north, degrees_east)"
+        - "투영 좌표 — `x`, `y` (m), 투영 정보 — `crs`"
+
+access:
+  - name: NSIDC 데이터셋 페이지 — NSIDC-0116 Version 4
+    url: https://nsidc.org/data/nsidc-0116/versions/4
+    method: 웹 안내 / 사용자 안내서 / 인용 문구
+    note: 안내서(2026년 10월 갱신)에 입력 자료별 기간, 파일 이름 규칙, 오차 추정 방법이 정리되어 있습니다.
+  - name: NSIDC DAAC HTTPS 저장소 — nsidc0116_icemotion_vectors_v4
+    url: https://daacdata.apps.nsidc.org/pub/DATASETS/nsidc0116_icemotion_vectors_v4/
+    method: HTTPS (브라우저, wget·curl)
+    note: NASA Earthdata Login 계정이 필요합니다(무료). 명령줄에서는 ~/.netrc에 계정을 적어 두고 받습니다.
+  - name: NSIDC 데이터셋 페이지 — Quicklook Arctic Weekly EASE-Grid Sea Ice Motion Vectors (NSIDC-0748)
+    url: https://nsidc.org/data/nsidc-0748/versions/1
+    method: 웹 안내 / HTTPS (Earthdata Login)
+    note: >-
+      최종판 이후 기간을 채우는 북극 주간 빠른 연장판입니다(AMSR2·ERA5·IABP 부이 입력). 최종판이 연장되면 겹치지 않도록 그 뒤 기간으로 옮겨 가므로
+      논문의 최종 분석은 최종판(NSIDC-0116)으로 바꿔 쓰세요. 시작일 표기가 데이터셋 페이지(2025-01-01)와 안내서(2024-04-29)에서 서로 달라 받을 때 실제 파일 목록을 확인하세요.
+
+example:
+  lang: python
+  note: >-
+    Earthdata Login 계정을 ~/.netrc에 적어 두고 HTTPS 저장소에서 받은 북반구 일자료 파일을 연다고 가정합니다. 파일 이름 규칙은
+    icemotion_<daily|weekly>_<nh|sh>_25km_<시작일>_<종료일>_v4.x.nc 이고(1978~2024 v4.1, 2025~ v4.2), 정확한 이름은 디렉터리 목록에서 확인하세요.
+    동·북 성분 변환식은 NSIDC 도움말(How to convert the horizontal and vertical components to east and north) 기준입니다.
+  code: |
+    import glob
+    import numpy as np
+    import xarray as xr
+
+    f = sorted(glob.glob("icemotion_daily_nh_25km_*_v4.*.nc"))[-1]
+    ds = xr.open_dataset(f)
+
+    u = ds["u"].where(ds["u"] != -9999)          # 격자 x 방향, cm/s
+    v = ds["v"].where(ds["v"] != -9999)          # 격자 y 방향, cm/s
+    L = np.deg2rad(ds["longitude"])
+
+    # 북반구 EASE-Grid → 동(E)·북(N) 성분 (남반구는 E = u cosL - v sinL, N = u sinL + v cosL)
+    east = u * np.cos(L) + v * np.sin(L)
+    north = -u * np.sin(L) + v * np.cos(L)
+
+    err = ds["icemotion_error_estimate"]
+    good = (err >= 0) & (err < 1000)             # 해안 의심(음수)·먼 입력(+1000) 격자 제외
+    speed = np.hypot(east, north).where(good)
+    print(float(speed.isel(time=0).mean()), "cm/s")
+
+tips:
+  - >-
+    `u`, `v`는 동·북 성분이 아니라 EASE-Grid의 x·y 방향 성분입니다. 바람·해류 자료와 비교하거나 지도에 화살표를 그릴 때는 경도를 써서 동·북 성분으로 바꾸세요.
+    북반구와 남반구의 변환식 부호가 다릅니다(NSIDC 도움말 참고).
+  - >-
+    `icemotion_error_estimate`에는 값 자체 외에 표시가 섞여 있습니다. 가장 가까운 입력 벡터가 1250 km보다 멀면 1000이 더해지고, 해안에서 약 25 km 안의
+    의심 벡터는 음수로 표시됩니다. 평균·추세를 내기 전에 이 격자를 걸러내세요.
+  - >-
+    수동마이크로파 상관 방법은 넓은 바다가 필요해 캐나다 다도해처럼 육지와 바다가 섞인 곳에서는 이동값이 거의 없습니다. 값이 비어 있다고 얼음이 없는 것이 아니며,
+    변형이 큰 해빙과 해빙 가장자리에서도 추정이 잘 안 됩니다.
+  - >-
+    입력 구성이 시기마다 다릅니다(AVHRR 1981~2000, SSM/I 1987~2006, SSMIS 2007~2024, AMSR-E 2002~2011, AMSR2 2025~, NCEP/NCAR 바람 ~2024, ERA5 바람 2025~).
+    특히 2025-01-01에 위성·바람 입력이 함께 바뀌므로, 장기 추세에서 이 시점 전후 변화가 실제 변화인지 확인하세요.
+  - >-
+    부이(IABP) 입력은 동부 북극에 거의 없고 남반구에는 쓰이지 않습니다. 남반구 이동장은 위성·바람에만 기대며 SSM/I·AVHRR이 빠진 기간에는 공백이 있습니다.
+  - >-
+    EASE-Grid 1.0(EPSG:3408/3409)은 구 기반 투영이라 EASE-Grid 2.0(EPSG:6931/6932, WGS 84) 자료와 그대로 겹치면 위치가 어긋납니다. 다른 해빙 자료와 함께 쓸 때는 재격자하세요.
+
+citations:
+  dataset:
+    - label: NSIDC-0116 Version 4
+      text: >-
+        Tschudi, M., Meier, W. N. & Stewart, J. S. (2019). Polar Pathfinder Daily 25 km EASE-Grid Sea Ice Motion Vectors.
+        (NSIDC-0116, Version 4). [Data Set]. Boulder, Colorado USA. NASA National Snow and Ice Data Center Distributed Active Archive Center.
+        https://doi.org/10.5067/INAWUWO7QH7B. [describe subset used if applicable]. Date Accessed MM-DD-YYYY.
+      doi: 10.5067/INAWUWO7QH7B
+      bibtex: |
+        @misc{nsidc0116_v4,
+          author    = {Tschudi, M. and Meier, W. N. and Stewart, J. S.},
+          title     = {Polar Pathfinder Daily 25 km {EASE-Grid} Sea Ice Motion Vectors ({NSIDC-0116}, Version 4)},
+          year      = {2019},
+          publisher = {NASA National Snow and Ice Data Center Distributed Active Archive Center},
+          address   = {Boulder, Colorado USA},
+          doi       = {10.5067/INAWUWO7QH7B}
+        }
+    - label: 빠른 연장판 — NSIDC-0748 Version 1 (최종판 이후 기간을 썼을 때)
+      text: >-
+        Tschudi, M., Meier, W. N. & Stewart, J. S. (2019). Quicklook Arctic Weekly EASE-Grid Sea Ice Motion Vectors. (NSIDC-0748, Version 1). [Data Set].
+        Boulder, Colorado USA. NASA National Snow and Ice Data Center Distributed Active Archive Center. https://doi.org/10.5067/O0XI8PPYEZJ6. Date Accessed MM-DD-YYYY.
+      doi: 10.5067/O0XI8PPYEZJ6
+  papers:
+    - label: Version 4 방법·개선 논문 (사용자 안내서 권장)
+      text: >-
+        Tschudi, M. A., Meier, W. N., and Stewart, J. S. (2020): An enhancement to sea ice motion and age products at the National Snow and Ice Data Center (NSIDC).
+        The Cryosphere, 14, 1519–1536.
+      doi: 10.5194/tc-14-1519-2020
+      bibtex: |
+        @article{tschudi2020motion,
+          author  = {Tschudi, Mark A. and Meier, Walter N. and Stewart, J. Scott},
+          title   = {An enhancement to sea ice motion and age products at the {National Snow and Ice Data Center} ({NSIDC})},
+          journal = {The Cryosphere},
+          volume  = {14},
+          number  = {5},
+          pages   = {1519--1536},
+          year    = {2020},
+          doi     = {10.5194/tc-14-1519-2020}
+        }
+    - label: ERA5 (2025년 이후 바람 입력, 안내서가 함께 인용)
+      text: >-
+        Hersbach, H., et al. (2020): The ERA5 global reanalysis. Quarterly Journal of the Royal Meteorological Society, 146, 1999–2049.
+      doi: 10.1002/qj.3803
+  acknowledgement: >-
+    NSIDC는 데이터셋 인용을 이용 조건으로 요구합니다. 사용한 기간·반구와 접근 날짜를 함께 적고, 2026년 이후 북극 자료를 빠른 연장판(NSIDC-0748)으로 채웠다면
+    그 DOI도 따로 적으세요.
+
+notices:
+  - date: "2026-10"
+    level: warning
+    title: 2025년 자료 추가(v4.2) — 입력이 AMSR2·ERA5로 바뀜
+    body: >-
+      사용자 안내서가 2026년 10월 갱신되면서 일·주간 자료가 2025-12-31까지 연장되었습니다. 2025년분(파일 버전 v4.2)부터 수동마이크로파 입력이
+      DMSP SSMIS에서 GCOM-W1 AMSR2로, 바람 입력이 NCEP/NCAR 재분석에서 ERA5로 바뀌었습니다. 1978~2024년(v4.1)은 그대로입니다.
+    source: https://nsidc.org/sites/default/files/documents/user-guide/nsidc-0116-v004-userguide_0.pdf
+  - date: "2026-09-08"
+    level: info
+    title: NSIDC AMSR2 산출물 계속 처리 — AMSR3 산출물은 2027년 개발 예정
+    body: >-
+      이 자료와 빠른 연장판의 위성 입력인 AMSR2 일별 극 격자 밝기온도(NSIDC-0802)·해빙 농도(NSIDC-0803)는 JAXA가 AMSR2 자료를 내는 동안 계속 처리됩니다.
+      NSIDC는 AMSR3 기반 산출물 개발을 2027년으로 계획하고 있습니다.
+    source: https://nsidc.org/data/user-resources/data-announcements/user-notice-amsr2-products-continued-forward-processing
+  - date: "2026-03-18"
+    level: info
+    title: NCEP/NCAR 재분석(R1) 갱신 종료 — 이 자료는 2025년부터 ERA5 바람 사용
+    body: >-
+      NOAA PSL이 R1 갱신 종료를 공지했습니다(NCEP의 CDAS → CORe 전환 2026-03-18). NSIDC-0116은 2025-01-01 이후 바람 입력을 ERA5로 바꾸었고(사용자 안내서 표 11)
+      빠른 연장판 NSIDC-0748도 ERA5를 쓰므로 갱신에는 영향이 없습니다. 1978~2024년 구간은 계속 NCEP/NCAR 바람을 입력으로 씁니다.
+    source: https://psl.noaa.gov/news/2026/r1datanotice.html
+
+links:
+  - name: NSIDC-0116 V4 사용자 안내서
+    url: https://nsidc.org/sites/default/files/documents/user-guide/nsidc-0116-v004-userguide_0.pdf
+  - name: NSIDC-0748 빠른 연장판 사용자 안내서
+    url: https://nsidc.org/sites/default/files/documents/user-guide/nsidc-0748-v001-userguide_0.pdf
+  - name: u·v를 동·북 성분으로 바꾸는 법 (NSIDC 도움말)
+    url: https://nsidc.org/data/user-resources/help-center/how-convert-horizontal-and-vertical-components-east-and-north
+  - name: NSIDC DAAC 명령줄 다운로드 안내 (Earthdata Login)
+    url: https://nsidc.org/data/user-resources/help-center/programmatic-access-guide-data-daacdataapps
+  - name: EASE-Grid 변환 도구 (easegrids-easeconv)
+    url: https://github.com/nsidc/easegrids-easeconv
+
+watch_urls:
+  - https://nsidc.org/data/nsidc-0116/versions/4
+  - https://nsidc.org/data/nsidc-0748/versions/1
+  - https://nsidc.org/data/user-resources/data-announcements
+
+last_verified: "2026-10-12"

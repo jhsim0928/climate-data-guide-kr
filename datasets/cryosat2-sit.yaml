@@ -1,0 +1,248 @@
+# ─────────────────────────────────────────────────────────────
+# CryoSat-2 해빙 두께 — 데이터셋 정보 파일
+# 기본: AWI CryoSat-2 Sea Ice Thickness v2.6 / 대안: ESA CCI, CPOM, ESA Cryo-TEMPO, C3S
+# ─────────────────────────────────────────────────────────────
+id: cryosat2-sit
+name: CryoSat-2 해빙 두께
+full_name: AWI CryoSat-2 Sea Ice Thickness (version 2.6) 외 CryoSat-2 레이더 고도계 기반 북극 해빙 두께 산출물
+category: satellite
+domain: seaice
+group: 위성 관측 자료
+order: 30
+domains: [해빙]
+provider: 독일 알프레드 베게너 연구소(AWI) — 원자료 ESA CryoSat-2 / 대안 산출물 ESA CCI, CPOM(영국), ESA
+
+status: active
+status_note: >-
+  AWI v2.6이 최신 버전이며 매년 10월부터 4월까지 준실시간·재처리 자료가 갱신됩니다(2025/26 겨울은 2025-10-07 시작).
+  2026-10-11 현재 2026/27 겨울 준실시간 생산 시작 공지는 아직 AWI 위키에 올라오지 않았습니다.
+  CryoSat-2 위성은 설계 수명(약 5년)을 크게 넘겨 운용 중이며, CPOM 안내에 따르면 임무가 2028년까지 연장되었습니다.
+
+period:
+  start: "2010-10"
+  end: present
+  note: >-
+    v2.6 기록은 2010-10-21부터 시작합니다. 북극 두께는 결빙기인 10월~4월에만 만들어지고 5월~9월은 비어 있습니다
+    (표면 융해 때문에 프리보드를 제대로 잴 수 없음). 즉 '현재'는 가장 최근 겨울철까지를 뜻합니다.
+
+resolution:
+  spatial_short: "25 km (0.23°)"
+  temporal_short: "7일"
+  spatial: "격자 자료(L3C) 25 km EASE2 북반구 격자(Lambert 정적 방위 등적도법, EPSG:6931) / 궤도 자료(L2P) 측정 지점 단위"
+  vertical: 해당 없음 (두께·프리보드 단일 값)
+  temporal: 주별(ISO 주)·월별 격자, 일별 궤도 자료
+
+update: 결빙기(10월~4월) 매일 갱신 — 준실시간 약 2일 지연, 재처리본 약 33일 지연(재처리본이 같은 기간 준실시간본을 대체)
+license: CC BY 4.0 (AWI 제품). 대안 산출물은 각 제공처 조건(ESA CCI 이용약관, ESA 자료 정책 등)을 따름
+account_required: false
+
+summary: >-
+  ESA CryoSat-2의 SIRAL 레이더 고도계로 해빙 프리보드(수면 위로 나온 높이)를 재고, 눈 깊이·눈/얼음/바닷물 밀도를 가정해
+  정수압 평형식으로 해빙 두께를 계산한 북극 겨울철 자료입니다. 여기서는 AWI가 pysiral로 생산하는 v2.6을 기본으로 소개합니다.
+  두께뿐 아니라 레이더·해빙 프리보드, 사용한 눈 깊이·밀도, 흘수(draft), 품질 플래그가 같은 파일에 들어 있어 오차 원인을 추적하기 좋습니다.
+  같은 원자료로 만든 ESA CCI, CPOM, ESA Cryo-TEMPO 산출물도 있으며 처리 방식에 따라 값이 다릅니다.
+
+time_convention:
+  summary: >-
+    AWI 격자 자료(L3C)의 값은 해당 기간(달력 월 또는 ISO 주) 동안 격자 칸 안을 지나간 위성 궤도 측정값을 모두 모아 평균한 기간 평균입니다.
+    특정 날짜의 순간 두께가 아니며, 궤도 자료(L2P)만 측정 시각의 순간값입니다.
+  points:
+    - "월별 파일(…-YYYYMM-fv2p6.nc)은 한 달, 주별 파일(…-YYYYMMDD_YYYYMMDD-fv2p6.nc)은 ISO 주 7일 동안의 궤도 측정값을 격자별로 평균합니다. 유효 측정이 2개 미만인 격자는 비워 둡니다."
+    - "궤도가 기간 안에 고르게 지나가지 않으면 평균이 기간 일부를 대표할 수 있습니다. 파일의 시간 커버리지 통계(`stat_temporal_coverage_day_fraction`, `stat_temporal_coverage_weighted_center` 등)로 관측일 비율과 시간 중심 치우침을 확인하세요."
+    - "궤도 자료(L2P, 일별 파일)는 측정 지점별 값이라 순간값입니다. 두께를 일 단위로 다루려면 L2P를 써야 합니다."
+    - "눈 깊이·눈 밀도는 관측값이 아니라 월 기후값(Warren 기후값 + AMSR2 기반 눈 깊이 병합)이므로, 해마다 같은 달이면 비슷한 값이 들어갑니다."
+    - "준실시간본(약 2일 지연)은 재처리본(약 33일 지연)이 나오면 같은 기간에 대해 교체됩니다. 북극은 10월~4월 파일만 있습니다."
+  source: https://github.com/shendric/pysiral
+  source_name: AWI pysiral v2.6 L3C 출력·처리 설정(output/l3/awi/l3c_awi_v2p6.yaml, proc/l3/awi/l3c_awi_v2p6.yaml) / AWI SIRAL 위키
+
+variables:
+  note: >-
+    AWI v2.6 월·주별 격자(L3C) 파일 변수입니다. AWI 처리 코드(pysiral)의 v2.6 출력 정의에서 확인했으며, 전체 설명은 제품 사용자 가이드에 있습니다.
+    각 물리량에는 `_uncertainty`가 붙은 불확실성 변수가 함께 있습니다(예 `sea_ice_freeboard_uncertainty`).
+  full_list: https://doi.org/10.5281/zenodo.10044554
+  groups:
+    - name: 두께·프리보드
+      kind: mean
+      period: 월 (주별 파일은 7일)
+      items:
+        - text: "해빙 두께(주 산출값) — `sea_ice_thickness` (m)"
+          note: 기간 동안 격자 안 궤도 측정값의 산술 평균(유효 측정 2개 이상)
+        - text: "해빙 두께 불확실성 — `sea_ice_thickness_uncertainty` (m)"
+          note: 기간 평균 두께에 대한 오차 전파값. 무작위 오차는 측정 개수만큼 줄여 계산
+        - "해빙 프리보드(눈 속 전파 지연 보정 후) — `sea_ice_freeboard` (m)"
+        - "레이더 프리보드(눈 보정 전) — `radar_freeboard` (m)"
+        - "해빙 흘수 — `sea_ice_draft` (m)"
+    - name: 두께 계산에 쓴 보조 자료
+      kind: mean
+      period: 월 (주별 파일은 7일)
+      items:
+        - text: "눈 깊이 — `snow_depth` (m)"
+          note: 측정 지점별 입력값의 기간 평균. 입력 자체가 월 기후값(Warren 기후값 + AMSR2 기반 눈 깊이)이라 실제 그해 눈 깊이가 아님
+        - text: "눈 밀도 — `snow_density` (kg m-3)"
+          note: 측정 지점별 입력값의 기간 평균. 관측값이 아닌 처리 과정의 가정치
+        - text: "해빙 밀도 — `sea_ice_density` (kg m-3)"
+          note: 측정 지점별 입력값의 기간 평균. 관측값이 아닌 처리 과정의 가정치
+        - text: "해빙 농도(OSI SAF) — `sea_ice_concentration` (%)"
+          note: 측정 지점에 붙인 OSI SAF 일별 농도의 기간 평균
+        - text: "다년빙 비율 — `sea_ice_type` (0–1)"
+          note: 측정 지점에 붙인 OSI SAF/C3S 해빙 유형의 기간 평균(다년빙으로 분류된 비율)
+    - name: 품질·상태
+      kind: mean
+      period: 월 (주별 파일은 7일)
+      items:
+        - text: "품질 플래그(0 정상 ~ 3 자료 없음) — `quality_flag` (코드값)"
+          note: 기간 전체 측정 통계(측정 수, 리드 비율, 음수 두께 비율, MIZ 등)로 판정한 기간 대표 플래그
+        - text: "산출 상태 플래그(정상, 개빙 해역, 극 관측공백, 육지 등) — `status_flag` (코드값)"
+          note: 기간 평균 두께·농도로 판정한 기간 대표 플래그
+        - text: "해빙 가장자리 구역(MIZ) 편향 플래그 — `miz_flag` (코드값)"
+          note: 기간 동안 측정 지점 플래그의 중앙값
+        - text: "NSIDC 북극 해역 구분 코드 — `region_code` (코드값)"
+          kind: static
+          note: 고정된 해역 구분 마스크(NSIDC 2021). 격자 안 값의 중앙값으로 넣지만 시간에 따라 바뀌지 않음
+
+access:
+  - name: AWI FTP — CryoSat-2 v2.6 (L2P 궤도, L3C 주별·월별 격자)
+    url: ftp://ftp.awi.de/sea_ice/product/cryosat2/v2p6/
+    method: 익명 FTP (FTP 클라이언트 필요)
+    note: >-
+      북반구는 nh/l3c_grid/month, nh/l3c_grid/isoweek, nh/l2p_trajectory 폴더에 있습니다. 각 폴더의 Latest는 준실시간 최신본만 담고 있어
+      전체 기록이 아니므로, 분석에는 재처리본을 쓰세요.
+  - name: AWI SIRAL 위키 — Sea Ice Thickness from Satellite Radar Altimetry
+    url: https://spaces.awi.de/spaces/SIRAL/pages/185827416/Sea+Ice+Thickness+from+Satellite+Radar+Altimetry
+    method: 웹 안내 (제품 설명, 운영 공지, 문서 링크)
+    note: 같은 v2.6 처리로 만든 Sentinel-3A/B 해빙 두께도 이 페이지에서 안내합니다.
+  - name: ESA Sea Ice CCI — CryoSat-2 북반구 월별 두께 L3C v4.0 (CEDA)
+    url: https://catalogue.ceda.ac.uk/uuid/887ebbe3aa4345f3bbcbe2dd1834d955/
+    method: 웹 다운로드 / HTTP 디렉터리
+    note: 2010-10 ~ 2024-04 기후자료용 재처리본으로 AWI와 같은 계열 처리입니다. ESA CCI 해빙 이용약관을 따릅니다.
+  - name: CPOM(영국 극지관측·모델링센터) Sea Ice Thickness 포털
+    url: https://www.cpom.ucl.ac.uk/seaice/download.php?region=Arctic
+    method: 웹 다운로드 (NetCDF, CSV 시계열)
+    note: >-
+      CryoSat-2·Sentinel-3 기반, 5 km 극 평사도(EPSG:3411) 희소 격자입니다. 준실시간(최근 2·14·28일)과 월별 자료, 해역별 부피·질량 시계열을 제공합니다.
+  - name: ESA Cryo-TEMPO 해빙 산출물 (겨울 해빙·여름 해빙·해빙 위 눈 깊이)
+    url: https://earth.esa.int/eogateway/catalog/cryotempo
+    method: CS2EO 플랫폼 / ESA MAAP (EO Sign In 계정 필요)
+    note: ESA가 직접 내는 CryoSat-2 주제별 산출물입니다. 여름(5~9월) 해빙 프리보드 산출물도 별도로 있습니다.
+  - name: C3S Climate Data Store — Sea ice thickness monthly gridded data
+    url: https://cds.climate.copernicus.eu/datasets/satellite-sea-ice-thickness
+    method: 웹 다운로드 / CDS API
+    note: ECMWF 계정 필요. 여러 고도계를 이은 L3 장기 기록과 CryoSat-2·Sentinel-3·SMOS를 합친 L4 자료를 제공합니다.
+
+example:
+  lang: python
+  note: AWI FTP에서 받은 월별 격자 파일을 연다고 가정합니다. 파일명은 awi-siral-l3c-sithick-cryosat2-<timeliness>-nh_25km_ease2-<YYYYMM>-fv2p6.nc 형식입니다.
+  code: |
+    import glob
+    import xarray as xr
+
+    f = glob.glob("awi-siral-l3c-sithick-cryosat2-*-nh_25km_ease2-201903-fv2p6.nc")[0]
+    ds = xr.open_dataset(f)
+
+    sit = ds["sea_ice_thickness"]          # m
+    qf = ds["quality_flag"]                # 0 nominal, 1 intermediate, 2 low, 3 no data
+
+    # 품질 '정상·중간'인 격자만 남겨 평균 두께 계산
+    sit_ok = sit.where(qf <= 1)
+    print(float(sit_ok.mean()))
+
+    # 두께가 눈 깊이 가정에 얼마나 민감한지 함께 확인
+    print(float(ds["snow_depth"].where(qf <= 1).mean()))
+
+tips:
+  - >-
+    두께는 직접 잰 값이 아니라 프리보드에 눈 깊이·밀도 가정을 넣어 환산한 값입니다. AWI v2.6은 Warren 기후값(일년빙은 50% 감소)과 AMSR2 기반 눈 깊이를
+    지역별로 합친 월 기후값을 씁니다. 다른 산출물과 차이가 나면 snow_depth, sea_ice_density 변수부터 비교하세요.
+  - >-
+    북극은 10월~4월만 있습니다. 5~9월 두께가 필요하면 ESA Cryo-TEMPO 여름 해빙 프리보드처럼 별도 방법으로 만든 자료를 써야 하며,
+    겨울 자료와 바로 이어 붙이지 마세요.
+  - >-
+    AWI, CPOM, ESA CCI는 같은 CryoSat-2 원자료를 쓰지만 리트래커, 눈 자료, 격자가 달라 평균 두께와 추세가 다르게 나옵니다.
+    한 분석 안에서는 한 산출물·한 버전만 쓰고, 다운로드한 버전(v2.6 등)을 기록해 두세요.
+  - >-
+    CryoSat-2는 궤도 경사각(92°) 때문에 약 88°N 이북을 관측하지 못합니다. 이 영역은 status_flag에 satellite_pole_hole로 표시되므로
+    북극 전체 부피를 계산할 때 처리 방법을 정해 두세요.
+    얇은 얼음(대략 1 m 미만)은 상대오차가 크므로 SMOS와 합친 CS2SMOS 자료가 더 적합할 수 있습니다.
+
+citations:
+  dataset:
+    - label: AWI CryoSat-2 v2.6 제품 사용자 가이드 (AWI가 파일 references 속성에 지정)
+      text: >-
+        Hendricks, S., & Paul, S. (2023). Product User Guide & Algorithm Specification - AWI CryoSat-2 Sea Ice Thickness (version 2.6).
+        Zenodo (v2.6). https://doi.org/10.5281/zenodo.10044554
+      doi: 10.5281/zenodo.10044554
+      bibtex: |
+        @techreport{hendricks2023awi_cs2_v26,
+          author      = {Hendricks, Stefan and Paul, Stephan},
+          title       = {Product User Guide \& Algorithm Specification - {AWI} {CryoSat-2} Sea Ice Thickness (version 2.6)},
+          institution = {Alfred-Wegener-Institut Helmholtz-Zentrum f{\"u}r Polar- und Meeresforschung},
+          publisher   = {Zenodo},
+          year        = {2023},
+          doi         = {10.5281/zenodo.10044554}
+        }
+    - label: ESA Sea Ice CCI CryoSat-2 월별 두께 v4.0 (CEDA, 대안 자료 사용 시)
+      text: >-
+        Hendricks, S., Paul, S., & Rinne, E. (2025). ESA Sea Ice Climate Change Initiative (Sea_Ice_cci): Northern hemisphere sea ice
+        thickness from CryoSat-2 on a monthly grid (L3C), v4.0. NERC EDS Centre for Environmental Data Analysis.
+        https://catalogue.ceda.ac.uk/uuid/887ebbe3aa4345f3bbcbe2dd1834d955
+  papers:
+    - label: AWI CryoSat-2 두께 산출 방법 논문
+      text: >-
+        Ricker, R., Hendricks, S., Helm, V., Skourup, H., and Davidson, M. (2014): Sensitivity of CryoSat-2 Arctic sea-ice freeboard
+        and thickness on radar-waveform interpretation. The Cryosphere, 8, 1607–1622.
+      doi: 10.5194/tc-8-1607-2014
+      bibtex: |
+        @article{ricker2014cs2,
+          author  = {Ricker, R. and Hendricks, S. and Helm, V. and Skourup, H. and Davidson, M.},
+          title   = {Sensitivity of {CryoSat-2} {Arctic} sea-ice freeboard and thickness on radar-waveform interpretation},
+          journal = {The Cryosphere},
+          volume  = {8},
+          number  = {4},
+          pages   = {1607--1622},
+          year    = {2014},
+          doi     = {10.5194/tc-8-1607-2014}
+        }
+  acknowledgement: >-
+    AWI는 CryoSat-2 Level-1 자료(ESA), 해빙 농도·유형(OSI SAF), 평균 해수면(DTU21, DTU Space), AMSR2 눈 깊이(브레멘대 IUP)를
+    입력으로 썼다고 밝히고 있으므로 감사의 글에 이들 출처를 함께 적는 것이 좋습니다. CC BY 4.0 조건에 따라 AWI 출처 표시가 필요합니다.
+
+notices:
+  - date: "2026-07-04"
+    level: info
+    title: ESA CryoSat Ice Baseline-F 오프라인 처리기 운영 시작
+    body: >-
+      ESA가 CryoSat Ice Level 1·Level 2 오프라인 처리기를 Baseline-F로 올렸습니다. Level 2에 해빙 프리보드·두께 변수가 새로 들어갔고
+      조석 모델(FES2022b)과 지오이드(EGM2008)가 바뀌었습니다. AWI v2.6은 Baseline-E L1B를 쓰므로 당장 값이 바뀌지는 않지만,
+      ESA 공식 L2 두께와 AWI 두께를 비교할 때 기준 버전을 확인하세요. 준실시간 Baseline-F 처리기는 아직 공개 전입니다.
+    source: https://earth.esa.int/eogateway/instruments/siral/processor-releases
+  - date: "2025-10-09"
+    level: info
+    title: AWI v2.6 준실시간 자료 2025/26 겨울 생산 시작 (CryoSat-2·Sentinel-3A/B)
+    body: 2025/26 겨울철 북극 준실시간 산출물 생산이 시작되었습니다. 버전은 v2.6으로 이전 겨울과 같습니다.
+    source: https://spaces.awi.de/spaces/SIRAL/pages/185827416/Sea+Ice+Thickness+from+Satellite+Radar+Altimetry
+  - date: "2023-10-05"
+    level: warning
+    title: AWI CryoSat-2 v2.6 운영 시작 — 이전 버전 자료 보관 처리
+    body: >-
+      v2.6부터 전체 기록에 CryoSat-2 Baseline-E L1B를 쓰고, OSI SAF/C3S v3 해빙 유형 자료로 10월 초 해빙 유형 정보를 개선했습니다.
+      준실시간 지연은 36시간에서 48시간으로 늘었습니다. 이전 버전 자료는 보관 처리되었으며 필요하면 info[at]meereisportal.de로 문의해야 합니다.
+    source: https://spaces.awi.de/display/SIRAL/Version+History
+
+links:
+  - name: AWI v2.6 제품 사용자 가이드 (Zenodo)
+    url: https://doi.org/10.5281/zenodo.10044554
+  - name: AWI CryoSat-2 버전 변경 이력
+    url: https://spaces.awi.de/display/SIRAL/Version+History
+  - name: pysiral (AWI 처리 코드, GitHub)
+    url: https://github.com/shendric/pysiral
+  - name: ESA CryoSat 임무 페이지
+    url: https://earth.esa.int/eogateway/missions/cryosat
+  - name: CPOM CryoSat-2 15주년 안내 (임무 2028년까지 연장)
+    url: https://cpom.org.uk/celebrating-15-years-of-cryosat-2/
+
+watch_urls:
+  - https://spaces.awi.de/pages/viewrecentblogposts.action?key=SIRAL
+  - https://earth.esa.int/eogateway/instruments/siral/processor-releases
+  - https://earth.esa.int/eogateway/missions/cryosat
+
+last_verified: "2026-10-11"

@@ -1,0 +1,280 @@
+# ─────────────────────────────────────────────────────────────
+# ERA-40 — 데이터셋 정보 파일
+# ─────────────────────────────────────────────────────────────
+id: era40
+name: ERA-40
+full_name: ECMWF 40-year Reanalysis (ECMWF 40년 재분석, 2세대)
+category: reanalysis
+domain: atmosphere
+group: 재분석
+order: 100
+domains: [대기, 육지, 해양파랑]
+provider: ECMWF
+
+status: ended
+status_note: >-
+  2000년대 초에 생산이 끝난 자료로 더 이상 갱신되지 않습니다. ECMWF Public Datasets(웹 다운로드·Web API) 서비스는 2023년 6월 1일 종료되었고,
+  ECMWF는 ERA-40에 대한 별도 공개 대안을 안내하지 않습니다. 지금은 NCAR GDEX(일부 제품만 공개)와 영국 CEDA 사본으로 받는 것이 현실적입니다.
+
+successor:
+  name: ERA-Interim → ERA5
+  url: https://cds.climate.copernicus.eu/datasets/reanalysis-era5-single-levels
+  note: >-
+    직접 후속은 ERA-Interim(1979~2019)이지만 이 역시 종료되었고, 현재 권장 자료는 ERA5(1940년~현재, 약 31 km·137층)입니다.
+    1957~1978년 구간이 필요해 ERA-40을 쓰던 경우에도 이제는 ERA5가 그 기간을 포함합니다.
+
+transitions:
+  - from: ERA-40
+    to: ERA-Interim
+    to_id: era-interim
+    status: completed
+    summary: 3D-Var에서 12시간 4D-Var와 위성 복사휘도 변분 편향보정(VarBC)으로 바꾸고 해상도를 T255로 올려, ERA-40의 물순환·성층권 순환·시간 일관성 문제를 개선했습니다.
+    changes:
+      - aspect: 기간
+        before: 1957-09–2002-08
+        after: 1979-01–2019-08 (2019년 8월까지 준실시간 갱신)
+      - aspect: 수평 해상도
+        before: T159 (N80, 약 125 km)
+        after: T255 (N128, 약 79–80 km)
+      - aspect: 연직 해상도·모델 상한
+        before: 모델면 60층, 최상층 0.1 hPa
+        after: 모델면 60층, 최상층 0.1 hPa (동일)
+      - aspect: 기압면·온위면 제공 층수
+        before: 기압면 23층 / 온위면 15층
+        after: 기압면 37층 / 온위면 16층
+      - aspect: 모델 버전
+        before: IFS CY23r4
+        after: IFS CY31r2
+      - aspect: 자료동화
+        before: 3D-Var (FGAT), 6시간 창
+        after: 4D-Var, 12시간 창
+      - aspect: 위성 복사휘도 편향보정
+        before: 정적(static) 편향보정
+        after: 변분 편향보정(VarBC)으로 자동 조정
+      - aspect: 관측 입력
+        before: ERA-40용으로 수집·재처리한 관측
+        after: ERA-40 관측 + GTS 실시간 관측, 강수 영향을 받은 SSM/I 복사휘도(1D-Var), 재처리된 Meteosat 바람 등 추가
+      - aspect: 알려진 문제 개선
+        before: 열대 해양 강수 과다, 너무 강한 Brewer-Dobson 순환, 시간 일관성 부족
+        after: 물순환(전지구 강수-증발 균형)과 성층권 순환(공기 연령)이 더 현실적으로 개선
+      - aspect: 해양 파랑 격자
+        before: 1.5°
+        after: 1.0°
+    impacts:
+      - 두 자료를 한 시계열로 이어 붙이지 마세요. 1979–2002년 겹치는 구간에서도 기후값과 추세가 다를 수 있습니다.
+      - ERA-40의 기압면은 23층이라 ERA-Interim(37층)과 비교할 때는 공통 층만 써야 합니다.
+      - ERA-Interim은 1979년부터 시작하므로 1957–1978년 구간이 필요하면 ERA-40 대신 지금은 ERA5(1940년~)를 쓰세요.
+      - ERA-Interim에도 해양 위 물순환 과다, 북극 하층 고온·고습 편향 같은 한계가 남아 있습니다. 개선 폭을 과신하지 마세요.
+    sources:
+      - name: Dee et al. (2011), The ERA-Interim reanalysis, QJRMS
+        url: https://doi.org/10.1002/qj.828
+      - name: Uppala et al. (2005), The ERA-40 re-analysis, QJRMS
+        url: https://doi.org/10.1256/qj.04.176
+      - name: ECMWF — What is the difference between ERA-Interim and ERA-40
+        url: https://confluence.ecmwf.int/spaces/CKB/pages/56659628/What+is+the+difference+between+ERA-Interim+1979-2019+and+ERA-40+1957-2002
+      - name: ERA-Interim documentation (Copernicus Knowledge Base)
+        url: https://confluence.ecmwf.int/spaces/CKB/pages/155337848/ERA-Interim+documentation
+      - name: Kållberg et al. (2004), The ERA-40 archive
+        url: https://www.ecmwf.int/sites/default/files/elibrary/2004/10595-era-40-archive-revised-october-2007.pdf
+      - name: Uppala (2006), From ERA-15 to ERA-40 and ERA-Interim
+        url: https://www.ecmwf.int/sites/default/files/elibrary/2006/12885-era-15-era-40-and-era-interim.pdf
+
+period:
+  start: "1957-09"
+  end: "2002-08"
+  note: 1957년 9월 ~ 2002년 8월(45년). 1958년 국제지구물리관측년(IGY) 직전부터 시작합니다.
+
+resolution:
+  spatial_short: "125 km (1.125°)"
+  temporal_short: "6시간"
+  spatial: "스펙트럼 T159 / 축소 가우시안 N80(약 125 km) / 2.5° 위경도 격자 제공본"
+  vertical: "모델면 60층(최상층 0.1 hPa) / 기압면 23층 / 온위면 15층"
+  temporal: 6시간(00·06·12·18 UTC) 분석 (월평균 별도)
+
+update: 종료 (2002년 8월분이 마지막)
+license: NCAR GDEX 사본은 CC BY 4.0 + ECMWF 이용 약관
+account_required: true
+
+summary: >-
+  ECMWF가 1957년 9월부터 2002년 8월까지 45년을 다시 분석한 2세대 재분석입니다. 3D-Var(FGAT) 자료동화와 T159·60층 모델을 썼고,
+  위성 복사휘도(TOVS, SSM/I 등)를 직접 동화한 초기 재분석으로 꼽힙니다. 해양 파랑 모델이 결합되어 파랑 변수도 함께 제공됩니다.
+  2000년대 중반까지 기후 연구의 표준 자료 중 하나였으나 지금은 ERA5로 대체되었습니다.
+
+time_convention:
+  summary: >-
+    분석 변수는 00·06·12·18 UTC의 순간값입니다. 강수·복사·열속 같은 누적 변수는 예보에서만 나오며, 예보 시작부터 표시된 예보 길이까지
+    쌓인 값입니다(공개 2.5° 자료는 6시간 예보만 제공).
+  points:
+    - "누적 변수는 '예보 시작 이후' 누적입니다. 예보는 00·12 UTC 시작(최대 36시간)과 06·18 UTC 시작(6시간)이 있으며, 짧은 구간 값은 이웃한 예보 단계끼리 빼서 구합니다."
+    - "옛 ECMWF 공개 데이터 서버의 2.5° 자료에는 6시간 예보만 있었습니다(누적 변수 = 6시간 누적). 다른 보관처의 파일은 예보 시작 시각과 step을 GRIB 헤더에서 확인하세요."
+    - "누적 복사·열속 단위 W m-2 s를 평균 플럭스(W m-2)로 바꾸려면 누적 시간(초)으로 나눕니다. 월 누적 스트림(mdfa)은 하루 단위로 환산되어 있어 86400으로 나누면 W m-2, 강수는 1000을 곱하면 mm/day입니다."
+    - "월평균 moda 스트림의 플럭스는 '6시간당' 단위이고 달 경계와도 정확히 맞지 않으므로 ECMWF는 쓰지 말고 mdfa를 쓰라고 권고합니다."
+    - "2m 최고·최저기온은 직전 후처리 단계 이후 구간의 값이며, 월평균은 만들어지지 않았습니다."
+  source: https://www.ecmwf.int/sites/default/files/elibrary/2004/10595-era-40-archive-revised-october-2007.pdf
+  source_name: "The ERA-40 archive (ERA-40 Project Report Series No. 17)"
+
+variables:
+  note: >-
+    ECMWF ERA-40 아카이브 보고서(ERA-40 Project Report Series No. 17)의 파라미터 표 기준 주요 변수입니다.
+    변수명은 ECMWF GRIB short name(파라미터 코드와 대응)입니다. 원본은 GRIB1이며, 누적 변수는 예보 누적값(W m-2 s 등)입니다.
+  full_list: https://www.ecmwf.int/sites/default/files/elibrary/2004/10595-era-40-archive-revised-october-2007.pdf
+  groups:
+    - name: 기압면 (23층)
+      kind: instant
+      items:
+        - "지위(geopotential) — `z` (m2 s-2)"
+        - "기온 — `t` (K)"
+        - "동서풍 — `u` (m s-1)"
+        - "남북풍 — `v` (m s-1)"
+        - "연직속도(기압좌표) — `w` (Pa s-1)"
+        - "비습 — `q` (kg kg-1)"
+        - "상대습도 — `r` (%)"
+        - "상대와도 — `vo` (s-1)"
+        - "발산 — `d` (s-1)"
+        - "잠재와도 — `pv` (K m2 kg-1 s-1)"
+        - "오존 질량혼합비 — `o3` (kg kg-1)"
+    - name: 지표·단일면
+      kind: instant
+      items:
+        - "평균 해면기압 — `msl` (Pa)"
+        - "2m 기온 — `2t` (K)"
+        - "2m 이슬점온도 — `2d` (K)"
+        - "10m 동서풍 — `10u` (m s-1)"
+        - "10m 남북풍 — `10v` (m s-1)"
+        - "해수면온도 — `sst` (K)"
+        - "해빙 비율 — `ci` (0-1)"
+        - "전운량 — `tcc` (0-1)"
+        - "가강수량(수증기 연직적분) — `tcwv` (kg m-2)"
+    - name: 누적 예보 변수
+      kind: accum
+      period: "예보 시작 이후"
+      items:
+        - "대규모·대류성 강수 — `lsp`, `cp` (m of water)"
+        - "지표 현열·잠열 플럭스 — `sshf`, `slhf` (W m-2 s)"
+        - "지표 하향 단파·장파복사 — `ssrd`, `strd` (W m-2 s)"
+        - "대기 상단 장파복사 — `ttr` (W m-2 s)"
+        - "증발량 — `e` (m of water)"
+    - name: 해양 파랑
+      kind: instant
+      items:
+        - "유의파고 — `swh` (m)"
+        - "평균 파향 — `mwd` (degrees)"
+        - "평균 파주기 — `mwp` (s)"
+    - name: 지면
+      kind: instant
+      items:
+        - "토양온도 1층 — `stl1` (K)"
+        - "토양 체적수분 1층 — `swvl1` (m3 m-3)"
+        - "적설 깊이 — `sd` (m of water equivalent)"
+
+access:
+  - name: NSF NCAR GDEX — ERA-40 지표·플럭스 (d117000)
+    url: https://gdex.ucar.edu/datasets/d117000/
+    method: 웹 다운로드(HTTPS) / Globus / 부분 추출·형식 변환
+    note: 6시간 지표·플럭스 자료(가우시안 격자). 부분 추출·형식 변환은 NCAR 로그인이 필요합니다.
+  - name: NSF NCAR GDEX — ERA-40 2.5° 기압면 월평균 (d120001)
+    url: https://gdex.ucar.edu/datasets/d120001/
+    method: 웹 다운로드(HTTPS) / Globus / 부분 추출
+  - name: NSF NCAR GDEX — ERA-40 2.5° 지표·플럭스 월평균 (d120000)
+    url: https://gdex.ucar.edu/datasets/d120000/
+    method: 웹 다운로드(HTTPS) / Globus / 부분 추출
+  - name: NSF NCAR GDEX — ERA-40 기압면 6시간 분석 (d117001)
+    url: https://gdex.ucar.edu/datasets/d117001/
+    method: 요청 후 제공
+    note: >-
+      2026-10-11 확인 시 "현재 공개되지 않은 파일이 포함됨"으로 표시되어, GDEX 문의(Contact Us)로 요청해야 합니다.
+      2.5° 6시간 기압면(d118001)·지표(d118000) 자료도 같은 상태입니다.
+  - name: CEDA Archive — ERA-40 모델 자료
+    url: https://catalogue.ceda.ac.uk/uuid/775634f7e339b5262067e28a5d7b679d
+    method: 웹 다운로드
+    note: CEDA 계정 필요. 가우시안 격자와 2.5° 격자 자료를 보관하고 있으며, ECMWF 자료 이용 조건이 적용됩니다.
+
+tips:
+  - "NCAR Climate Data Guide는 1991년 이후 열대 수분(강수·가강수량)이 관측보다 많고, 강수가 증발을 크게 웃돌며, Brewer-Dobson 순환이 지나치게 강하고, 북극 기온 추세가 비현실적이라는 점을 주요 한계로 꼽습니다. 물순환·성층권·북극 추세 연구에는 쓰지 마세요."
+  - 1979년 전후로 위성 자료가 들어오면서 관측 체계가 크게 바뀝니다. 1957~2002년 전체 추세를 계산하면 이 불연속이 섞일 수 있습니다.
+  - 기압면이 23층이라 ERA-Interim·ERA5(37층)와 비교할 때는 공통 기압면만 골라 쓰세요.
+
+citations:
+  dataset:
+    - label: NCAR GDEX 지표·플럭스 (d117000)
+      text: >-
+        European Centre for Medium-Range Weather Forecasts (2004): ERA-40 Global Surface and Flux Data.
+        NSF National Center for Atmospheric Research. https://doi.org/10.5065/S4S2-R159 (Accessed DD MMM YYYY)
+      doi: 10.5065/S4S2-R159
+      bibtex: |
+        @misc{era40_d117000,
+          author    = {{European Centre for Medium-Range Weather Forecasts}},
+          title     = {{ERA-40} Global Surface and Flux Data},
+          year      = {2004},
+          publisher = {NSF National Center for Atmospheric Research},
+          doi       = {10.5065/S4S2-R159},
+          note      = {Accessed DD MMM YYYY}
+        }
+    - label: NCAR GDEX 기압면 6시간 분석 (d117001)
+      text: >-
+        European Centre for Medium-Range Weather Forecasts (2004): ERA-40 Global Upper Air Pressure Level Analysis.
+        NSF National Center for Atmospheric Research. https://doi.org/10.5065/WQZB-A142 (Accessed DD MMM YYYY)
+      doi: 10.5065/WQZB-A142
+    - label: NCAR GDEX 2.5° 기압면 월평균 (d120001)
+      text: >-
+        European Centre for Medium-Range Weather Forecasts (2004): ERA-40 Monthly Means of 2.5 Degree Upper Air Pressure Level Analysis.
+        NSF National Center for Atmospheric Research. https://doi.org/10.5065/R275-GB48 (Accessed DD MMM YYYY)
+      doi: 10.5065/R275-GB48
+  papers:
+    - label: ERA-40 기술 논문
+      text: >-
+        Uppala, S. M., Kållberg, P. W., Simmons, A. J., Andrae, U., Da Costa Bechtold, V., Fiorino, M., et al. (2005):
+        The ERA-40 re-analysis. Quarterly Journal of the Royal Meteorological Society, 131(612), 2961–3012.
+      doi: 10.1256/qj.04.176
+      bibtex: |
+        @article{uppala2005era40,
+          author  = {Uppala, S. M. and K{\"a}llberg, P. W. and Simmons, A. J. and Andrae, U. and Da Costa Bechtold, V. and Fiorino, M. and others},
+          title   = {The {ERA-40} re-analysis},
+          journal = {Quarterly Journal of the Royal Meteorological Society},
+          volume  = {131},
+          number  = {612},
+          pages   = {2961--3012},
+          year    = {2005},
+          doi     = {10.1256/qj.04.176}
+        }
+    - label: ERA-40 아카이브 보고서 (선택, DOI 없음)
+      text: >-
+        Kållberg, P., Simmons, A., Uppala, S., Fuentes, M. (2004): The ERA-40 archive. ERA-40 Project Report Series,
+        No. 17, ECMWF, Reading, UK (revised October 2007).
+  acknowledgement: >-
+    ECMWF를 자료 생산 기관으로 밝히고, 실제로 받은 보관처(NCAR GDEX 데이터셋 DOI 또는 CEDA 카탈로그)를 함께 적습니다.
+    GDEX 자료는 ECMWF 이용 약관 수락을 전제로 제공됩니다.
+
+notices:
+  - date: "2023-06-01"
+    level: critical
+    title: ECMWF Public Datasets 서비스 종료 — ECMWF 웹·Web API 다운로드 중단
+    body: >-
+      2023년 3월 2일 예고대로 ECMWF Public Datasets 서비스(웹 인터페이스와 Web API)가 종료되어 ERA-40을 ECMWF에서 공개적으로 받을 수 없게 되었습니다.
+      ECMWF 안내 표에는 ERA-40의 대체 접근 경로가 적혀 있지 않습니다. NCAR GDEX나 CEDA 사본을 이용하세요.
+    source: https://confluence.ecmwf.int/spaces/WEBAPI/blog/2023/03/02/320999831/Decommissioning+of+ECMWF+Public+Datasets+service
+  - date: "2022-06"
+    level: info
+    title: ECMWF 아카이브(MARS) 볼로냐 이전 기간 접근 장애
+    body: ECMWF 데이터센터의 볼로냐 이전으로 2022년 6월~10월 사이 ERA-40 접근이 중단되거나 느려질 수 있다고 안내되었습니다(이미 종료된 일정).
+    source: https://www.ecmwf.int/en/forecasts/dataset/ecmwf-reanalysis-40-years
+
+links:
+  - name: ECMWF ERA-40 데이터셋 소개
+    url: https://www.ecmwf.int/en/forecasts/dataset/ecmwf-reanalysis-40-years
+  - name: ERA-40 아카이브 보고서 (파라미터 표, PDF)
+    url: https://www.ecmwf.int/sites/default/files/elibrary/2004/10595-era-40-archive-revised-october-2007.pdf
+  - name: ERA-40 대기 변수 아틀라스 (ECMWF)
+    url: https://sites.ecmwf.int/era/40-atlas/docs/index.html
+  - name: ERA-Interim과 ERA-40의 차이 (Copernicus Knowledge Base)
+    url: https://confluence.ecmwf.int/spaces/CKB/pages/56659628/What+is+the+difference+between+ERA-Interim+1979-2019+and+ERA-40+1957-2002
+  - name: ECMWF Public Datasets 서비스 종료 안내
+    url: https://confluence.ecmwf.int/x/-wUiEw
+  - name: NCAR Climate Data Guide — ERA-40
+    url: https://climatedataguide.ucar.edu/climate-data/era40
+
+watch_urls:
+  - https://confluence.ecmwf.int/x/-wUiEw
+  - https://gdex.ucar.edu/datasets/d117001/
+
+last_verified: "2026-10-11"
