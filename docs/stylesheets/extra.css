@@ -291,3 +291,62 @@ details.hint summary { cursor: pointer; }
 
 /* 오른쪽 위 GitHub 저장소 버튼 숨김 (모바일 메뉴 포함) — 수정·오류 신고 링크는 그대로 동작 */
 .md-header__source, .md-nav__source { display: none !important; }
+
+/* 정보 오류 신고 창 */
+.report-dialog {
+  width: min(560px, calc(100vw - 32px)); max-height: calc(100vh - 48px); overflow: auto;
+  border: 1px solid var(--md-default-fg-color--lightest); border-radius: 10px; padding: 1.2rem 1.4rem;
+  background: var(--md-default-bg-color); color: var(--md-default-fg-color);
+  font-size: .78rem; box-shadow: 0 10px 40px rgba(0,0,0,.25);
+}
+.report-dialog::backdrop { background: rgba(0,0,0,.45); }
+.report-dialog h2 { margin: 0 0 .4rem; font-size: 1.1rem; font-weight: 700; }
+.report-dialog .field { display: block; margin: .7rem 0; }
+.report-dialog textarea, .report-dialog input[type=url], .report-dialog input[type=email] {
+  display: block; width: 100%; box-sizing: border-box; margin-top: .3rem; padding: .45rem .6rem;
+  border: 1px solid var(--md-default-fg-color--lighter); border-radius: 6px;
+  background: var(--md-default-bg-color); color: var(--md-default-fg-color); font: inherit;
+}
+.report-dialog .form-actions { display: flex; gap: .5rem; margin-top: .8rem; }
+.report-dialog .md-button { margin: 0; }
+
+/* 사이트 인용 문구: 가로 스크롤 없이 줄바꿈 */
+.cite-block pre > code { white-space: pre-wrap; word-break: break-word; }
+
+/* ── 전체 목록: 분야(대기·해양·해빙) > 소분류 구분을 눈에 띄게 ── */
+:root {
+  --dom-atmosphere: #2f7fc1;
+  --dom-ocean: #1f6f8b;
+  --dom-seaice: #5aa7c7;
+}
+.md-typeset .domain-jump { display: flex; flex-wrap: wrap; gap: .5rem; margin: .8rem 0 1.2rem; }
+.md-typeset .domain-chip {
+  display: inline-flex; align-items: baseline; gap: .45rem;
+  padding: .45rem .9rem; border-radius: 999px; text-decoration: none;
+  border: 1.5px solid var(--dom-c); color: var(--dom-c);
+  font-size: .8rem;
+}
+.md-typeset .domain-chip span { font-size: .9em; opacity: .8; }
+.md-typeset .domain-chip:hover { background: var(--dom-c); color: #fff; }
+.md-typeset .domain-atmosphere { --dom-c: var(--dom-atmosphere); }
+.md-typeset .domain-ocean { --dom-c: var(--dom-ocean); }
+.md-typeset .domain-seaice { --dom-c: var(--dom-seaice); }
+
+.md-typeset h2.domain-head {
+  display: flex; align-items: baseline; justify-content: space-between; gap: 1rem;
+  margin: 2.6rem 0 1rem; padding: .7rem 1rem;
+  font-size: 1.55em; font-weight: 700; letter-spacing: -.01em;
+  color: #fff; background: var(--dom-c); border-radius: 8px;
+  scroll-margin-top: 4.5rem;
+}
+.md-typeset h2.domain-head .domain-count { font-size: .55em; font-weight: 500; opacity: .9; }
+.md-typeset h2.domain-head .headerlink { color: rgba(255,255,255,.7); }
+
+.md-typeset .group-head {
+  margin: 1.6rem 0 .6rem; padding-left: .7rem;
+  border-left: 4px solid var(--md-default-fg-color--lighter);
+  font-size: 1.05em; font-weight: 700; color: var(--md-default-fg-color--light);
+}
+.md-typeset h2.group-head { font-size: 1.15em; }
+.md-typeset .group-intro { margin: -.2rem 0 .6rem .7rem; font-size: .9em; color: var(--md-default-fg-color--light); }
+[data-md-color-scheme="slate"] { --dom-atmosphere: #3a78ad; --dom-ocean: #2a6b80; --dom-seaice: #4a8eaa; }

@@ -102,6 +102,11 @@
     });
     return rows;
   }
+  function headText(h) {
+    var c = h.cloneNode(true);
+    c.querySelectorAll(".domain-count, .headerlink").forEach(function (e) { e.remove(); });
+    return c.textContent.replace("¶", "").trim();
+  }
   function tableTitle(table) {
     var page = ((document.querySelector(".md-content__inner h1") || {}).textContent || document.title).replace("¶", "").trim();
     if (table.id === "cmp-table") return page;
@@ -110,7 +115,7 @@
     while (node && node !== stop && !(found.H2)) {
       if (node.previousElementSibling) {
         node = node.previousElementSibling;
-        if (/^H[23]$/.test(node.tagName) && !found[node.tagName]) found[node.tagName] = node.textContent.replace("¶", "").trim();
+        if (/^H[23]$/.test(node.tagName) && !found[node.tagName]) found[node.tagName] = headText(node);
       } else {
         node = node.parentElement;
       }
@@ -118,21 +123,22 @@
     var parts = [found.H2, found.H3].filter(Boolean);
     return parts.length ? page + " - " + parts.join(" ") : page;
   }
-  // 엑셀 맨 아래에 붙는 출처·인용 안내
-  var SITE = "https://data4researchers.kr/";
+  // 엑셀 맨 아래에 붙는 출처·인용 안내 (인용 문구는 mkdocs.yml 의 extra.site_citation)
+  function meta(name) {
+    var m = document.querySelector('meta[name="' + name + '"]');
+    return m ? m.getAttribute("content") : "";
+  }
   function pageUrl() {
     var u = location.href.split("#")[0];
     try { return decodeURIComponent(u); } catch (e) { return u; }
   }
   function citeFooter() {
-    var d = new Date(), pad = function (x) { return (x < 10 ? "0" : "") + x; };
-    var today = d.getFullYear() + "-" + pad(d.getMonth() + 1) + "-" + pad(d.getDate());
-    return [
-      "이 자료가 도움이 되셨다면 논문·보고서에 기후데이터 길잡이를 인용해 주세요.",
-      "인용 예) 기후데이터 길잡이, " + SITE + " (접속일 " + today + ")",
-      "출처 페이지: " + pageUrl() + " · 저장일 " + today,
-      "이 표는 요약입니다. 분석·논문에 쓰기 전에는 각 자료의 공식 출처에서 반드시 다시 확인하세요."
-    ];
+    var lines = ["이 자료가 도움이 되셨다면 논문·보고서에 기후데이터 길잡이를 인용해 주세요."];
+    if (meta("cdg-cite-en")) lines.push("English: " + meta("cdg-cite-en"));
+    if (meta("cdg-cite-ko")) lines.push("한국어: " + meta("cdg-cite-ko"));
+    lines.push("출처 페이지: " + pageUrl());
+    lines.push("이 표는 요약입니다. 분석·논문에 쓰기 전에는 각 자료의 공식 출처에서 반드시 다시 확인하세요.");
+    return lines;
   }
 
   function download(table) {

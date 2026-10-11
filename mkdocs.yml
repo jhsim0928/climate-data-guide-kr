@@ -1,13 +1,11 @@
 # ─────────────────────────────────────────────────────────────
 # 사이트 설정 — 처음 한 번만 아래 3곳을 본인 정보로 바꾸세요
-#   1) site_url   2) repo_url   3) extra.site_citation
+#   1) site_url   2) extra.site_citation (DOI·인용 문구)
+# 방문자가 GitHub 저장소로 가지 않도록 repo_url·edit_uri는 일부러 넣지 않았습니다.
 # ─────────────────────────────────────────────────────────────
 site_name: 기후데이터 길잡이
 site_description: 대기·해양·해빙·극지·원격탐사 연구자를 위한 데이터 출처, 받는 방법, 인용, 중단·변경 공지 모음
 site_url: https://data4researchers.kr/
-repo_url: https://github.com/jhsim0928/climate-data-guide-kr
-repo_name: climate-data-guide-kr
-edit_uri: edit/main/docs/
 copyright: 콘텐츠 CC BY 4.0 · 코드 MIT
 
 theme:
@@ -39,10 +37,7 @@ theme:
     - search.highlight
     - search.suggest
     - content.code.copy
-    - content.action.edit
     - content.tabs.link
-  icon:
-    repo: fontawesome/brands/github
 
 plugins:
   - search:
@@ -91,11 +86,26 @@ extra_javascript:
   - javascripts/excel.js
 
 extra:
-  # 데이터셋 페이지 하단 "이 사이트 인용" 안내에 들어가는 문장
-  site_citation: "예) 기후데이터 길잡이, https://data4researchers.kr/ (접속일 YYYY-MM-DD)"
+  # 사이트 인용 정보 — 소개 페이지, 각 데이터셋 페이지 하단, 엑셀 저장 파일에 똑같이 들어갑니다.
+  # doi 는 Zenodo의 "모든 버전" DOI(concept DOI) — 새 버전을 올려도 바꿀 필요가 없습니다.
+  site_citation:
+    doi: "10.5281/zenodo.23300923"
+    en: "Sim, J.-H. (2026). Korean Climate Data Guide (기후데이터 길잡이) [Computer software]. Zenodo. https://doi.org/10.5281/zenodo.23300923"
+    ko: "Sim, J.-H. (2026). 기후데이터 길잡이 (Korean Climate Data Guide) [소프트웨어]. Zenodo. https://doi.org/10.5281/zenodo.23300923"
+    bibtex: |-
+      @misc{sim2026kcdg,
+        author       = {Sim, Ji-Han},
+        title        = {Korean Climate Data Guide (기후데이터 길잡이)},
+        year         = {2026},
+        publisher    = {Zenodo},
+        doi          = {10.5281/zenodo.23300923},
+        url          = {https://doi.org/10.5281/zenodo.23300923}
+      }
 
   # 알림 신청·데이터셋 제안 폼을 보낼 주소. 비워두면 "준비 중"으로 표시됩니다.
   # 메일 알림을 시작할 때 Google Apps Script 웹앱 주소 등을 넣으면 바로 연결됩니다.
+  contact_email: data4researchers@gmail.com
   forms:
     subscribe_endpoint: "https://script.google.com/macros/s/AKfycbxL9C99BeAUZ6JOyv3lHXtBHwUVE8Z3qkvc4W1MFO5KxPkzjExUUniSjwF6IfmF16D7/exec"
+    report_endpoint: "https://script.google.com/macros/s/AKfycbxL9C99BeAUZ6JOyv3lHXtBHwUVE8Z3qkvc4W1MFO5KxPkzjExUUniSjwF6IfmF16D7/exec"
     suggest_endpoint: "https://script.google.com/macros/s/AKfycbxL9C99BeAUZ6JOyv3lHXtBHwUVE8Z3qkvc4W1MFO5KxPkzjExUUniSjwF6IfmF16D7/exec"

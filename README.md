@@ -2,7 +2,7 @@
 
 대기·해양·해빙·극지·원격탐사 연구자를 위해 **원자료의 출처, 받는 방법, 제공 기간, 논문용 레퍼런스, 제공 중단·변경 공지**를 한곳에 정리하는 한국어 사이트입니다. 자료 자체는 보관하지 않고 공식 출처로 연결합니다.
 
-현재 수록: 30개 자료 — 대기 16(재분석 12, 장기·관측 제한 재분석 4), 해양 8, 해빙 8 (HadISST·OISST는 해양·해빙 교차 수록)
+현재 수록: 30개 자료 — 대기 16(재분석 12, 위성 관측 미동화 재분석 4), 해양 8, 해빙 8 (HadISST·OISST는 해양·해빙 교차 수록)
 
 ---
 
@@ -12,9 +12,9 @@
 2. 이 폴더의 파일을 전부 올립니다. (웹에서 "Add file → Upload files"로 끌어다 놓아도 됩니다.)
 3. 저장소 **Settings → Pages → Build and deployment → Source**를 **GitHub Actions**로 바꿉니다.
 4. GitHub 아이디(`jhsim0928`)는 이미 들어가 있습니다. 아이디나 주소가 바뀌면 아래 파일에서 고치면 됩니다.
-    - `mkdocs.yml` (site_url, repo_url, extra.site_citation)
+    - `mkdocs.yml` (site_url, extra.site_citation)
     - `docs/about.md`
-    - `CITATION.cff` (작성자 이름 `성`, `이름` 자리도 본인 이름으로 바꿔주세요)
+    - `CITATION.cff`
 5. 커밋하면 **Actions** 탭에서 "사이트 배포"가 돌고, 1~2분 뒤 `https://<아이디>.github.io/climate-data-guide-kr/`에서 사이트가 열립니다.
 
 ## 개인 도메인 (data4researchers.kr)
@@ -67,7 +67,8 @@ CITATION.cff             ← GitHub "Cite this repository" 버튼
 
 - `docs/subscribe.md`(알림 신청)와 `docs/suggest.md`(데이터셋 제안)의 입력 양식은 `hooks/datasets.py`가 데이터셋 목록으로 자동 생성합니다. 데이터셋을 추가하면 체크박스도 자동으로 늘어납니다.
 - 양식은 `mkdocs.yml`의 `extra.forms`에 적힌 Google Apps Script 웹앱 주소로 보내집니다. 신청 정보는 **운영자 Google 스프레드시트**에만 저장되고, 공개 저장소에는 남지 않습니다.
-- 데이터셋 제안은 두 가지입니다. **바로 보내기**(운영자 시트에 저장 + 운영자 메일로 알림), **GitHub 이슈로 제안하기**(공개).
+- 데이터셋 제안과 **정보 오류 신고**(모든 페이지 하단·데이터셋 페이지 제목 아래 버튼 → 신고 창)는 운영자 시트(`데이터셋 제안`, `오류 신고`)에 저장되고 `OWNER_EMAIL`(data4researchers@gmail.com)로 알림 메일이 옵니다.
+- 방문자가 이 GitHub 저장소로 오지 않도록 `repo_url`·`edit_uri`(연필 버튼)를 넣지 않았고, 사이트 어디에도 저장소 링크가 없습니다.
 
 ### 메일 알림 동작
 
@@ -79,11 +80,18 @@ CITATION.cff             ← GitHub "Cite this repository" 버튼
 즉, **YAML에 공지를 추가하고 커밋하면 다음 날 아침 메일이 자동으로 나갑니다.** 이미 올린 공지의 날짜나 제목을 고치면 새 공지로 보고 다시 발송되니, 오타 수정은 본문(`body`)에서 하세요.
 
 - Gmail 무료 계정은 하루 약 100명에게 보낼 수 있습니다. 넘으면 남은 사람은 다음 날 보냅니다.
+- Gmail 새 계정에서 보낸 메일은 처음에 스팸함으로 갈 수 있습니다. 신청 페이지와 확인 메일에 '스팸 아님' 표시 안내를 넣어 두었습니다.
 - `mailing/Code.gs`를 고쳤다면 Apps Script 편집기에 붙여넣고 저장합니다. 매일 실행(checkNotices)은 저장만 하면 반영되고, 신청 접수(doPost/doGet)를 고쳤다면 **배포 → 배포 관리 → 수정 → 새 버전**으로 다시 배포해야 합니다(주소는 그대로).
 
 ## 방문자 수 집계
 
 GoatCounter(쿠키 없음)를 씁니다. Code는 `docs/javascripts/notranslate.js`의 `GOATCOUNTER_CODE`에 있고, 통계는 https://data4researchers.goatcounter.com 에서 봅니다.
+
+## 인용 정보 (DOI)
+
+- Zenodo DOI: https://doi.org/10.5281/zenodo.23300923 ("모든 버전" DOI — 새 버전을 올려도 그대로 씁니다)
+- 인용 문구(영문·국문·BibTeX)는 `mkdocs.yml`의 `extra.site_citation` 한 곳에서 고치면 소개 페이지, 각 데이터셋 페이지 하단, 엑셀 저장 파일에 모두 반영됩니다.
+- `CITATION.cff`도 같은 내용으로 맞춰 두세요.
 
 ## 정리 원칙
 
@@ -95,7 +103,6 @@ GoatCounter(쿠키 없음)를 씁니다. Code는 `docs/javascripts/notranslate.j
 
 - [ ] 공지 페이지 변경 감지 스크립트 + 주간 GitHub Actions → 변경 시 이슈 자동 생성
 - [ ] 이슈를 받아 Claude가 YAML 수정 PR을 여는 워크플로 (사람이 검토 후 머지)
-- [ ] Zenodo 연동으로 릴리스별 DOI 발급
 - [ ] 데이터셋 확장 (ERA5-Land 등) 및 WRF·CESM2 모델 페이지
 
 ## 라이선스

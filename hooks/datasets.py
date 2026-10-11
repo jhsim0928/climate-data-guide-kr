@@ -28,7 +28,7 @@ DATA_DIR = Path(__file__).resolve().parent.parent / "data" / "datasets"
 
 # 위쪽 메뉴 탭(분야)과 그 안의 소분류 — 순서대로 표시됩니다
 DOMAINS = {
-    "atmosphere": ("대기", ["재분석", "장기(20세기)·관측 제한 재분석"]),
+    "atmosphere": ("대기", ["재분석", "위성 관측 미동화 재분석"]),
     "ocean": ("해양", ["재분석", "관측 기반 분석장", "모델 강제력"]),
     "seaice": ("해빙", ["재분석", "관측 기반 분석장", "위성 관측 자료"]),
 }
@@ -36,6 +36,11 @@ DOMAIN_INTRO = {
     "atmosphere": "전지구 대기 재분석자료입니다. 현역 자료와 함께, 옛 논문 재현이나 비교 연구에 필요한 이전 세대 자료도 정리했습니다.",
     "ocean": "해양 재분석, 관측 기반 해수면온도(SST) 분석장, 해양·해빙 모델 구동용 대기 강제력 자료입니다.",
     "seaice": "해빙 농도·두께·부피 자료입니다. 모델 기반 재분석, 관측 기반 분석장, 위성 관측 자료로 나눠 정리했습니다.",
+}
+# 소분류 아래에 붙는 한 줄 설명 (없으면 생략)
+GROUP_INTRO = {
+    "위성 관측 미동화 재분석": "위성 관측을 쓰지 않고 지표기압·해상풍 같은 전통 관측만 동화한 재분석입니다. "
+                       "관측 체계 변화의 영향을 줄여 20세기 전체 또는 장기 변동 연구에 씁니다.",
 }
 NAV_PLACEHOLDER = "__DATA_SECTIONS__"
 
@@ -112,7 +117,6 @@ def norm_item(it, group: dict) -> dict:
 PERIOD_RE = re.compile(r"^\d{4}(-\d{2}(-\d{2})?)?$")
 
 _datasets: list[dict] = []
-_repo_url = ""
 _site_url = ""
 
 # 모든 페이지 하단과 소개·인용 페이지에 쓰이는 면책 문구
@@ -124,18 +128,6 @@ DISCLAIMER = (
 
 def site_page_url(d: dict) -> str:
     return f"{_site_url}datasets/{d['id']}/"
-
-
-def report_url(title: str, page_url: str = "") -> str:
-    """정보 오류 신고용 GitHub 이슈 주소 (제목·본문이 채워진 상태로 열림)"""
-    body = (
-        f"### 페이지\n{page_url or '(페이지 주소)'}\n\n"
-        "### 어떤 정보가 틀렸나요?\n\n\n"
-        "### 올바른 정보\n\n\n"
-        "### 근거가 되는 공식 출처 (링크)\n\n"
-    )
-    q = urlencode({"title": f"[정보 오류] {title}", "body": body, "labels": "data-error"}, quote_via=quote)
-    return f"{_repo_url}/issues/new?{q}"
 
 
 # ── 유틸 ────────────────────────────────────────────────────
@@ -383,20 +375,32 @@ def variables_block(v: dict, tc: dict | None = None) -> list[str]:
     return L
 
 
-def render_dataset(d: dict, site_cite: str) -> str:
+def site_citation_lines(c: dict, bibtex: bool = True) -> list[str]:
+    """사이트 인용 문구 (영문·국문, 선택적으로 BibTeX). 소개 페이지와 데이터셋 페이지 하단에서 공통 사용."""
+    if not c:
+        return []
+    L = []
+    if c.get("en"):
+        L += ["**English**", "", "```text", c["en"], "```", ""]
+    if c.get("ko"):
+        L += ["**한국어**", "", "```text", c["ko"], "```", ""]
+    if bibtex and c.get("bibtex"):
+        L += ["**BibTeX**", "", "```bibtex", c["bibtex"].rstrip(), "```", ""]
+    return ['<div class="cite-block" markdown="1">', ""] + L + ["</div>", ""]
+
+
+def render_dataset(d: dict, site_cite: dict) -> str:
     L: list[str] = []
     L += [f"# {nt(d['name'])}", ""]
     if d.get("full_name"):
         L += [f"*{d['full_name']}*", ""]
     L += [
-        badge(d["status"])
-        + f' <span class="verified">마지막 확인 {d["last_verified"]}</span>'
-        + "",
+        badge(d["status"]),
         "",
         '<div class="page-actions">'
         f'<a class="act act-subscribe" href="../../subscribe/?dataset={d["id"]}">변경 알림 받기</a>'
         f'<a class="act act-compare" href="../../compare/?ids={d["id"]}">다른 자료와 비교</a>'
-        f'<a class="act act-report" href="{html.escape(report_url(d["name"], site_page_url(d)))}" target="_blank" rel="noopener">정보 오류 신고</a>'
+        f'<a class="act act-report" href="#report" data-report="{html.escape(d["name"])}">정보 오류 신고</a>'
         "</div>",
         "",
     ]
@@ -500,12 +504,10 @@ def render_dataset(d: dict, site_cite: str) -> str:
     L += citation_block(cit.get("papers", []), "논문 인용")
     if cit.get("acknowledgement"):
         L += ["### 사사(Acknowledgements) 작성", "", oneline(cit["acknowledgement"]), ""]
-    L += [
-        '!!! tip "이 정리가 도움이 되셨다면"',
-        "",
-        f"    논문의 Data availability나 Acknowledgements에 이 사이트를 함께 적어주세요. {site_cite}",
-        "",
-    ]
+    if site_cite:
+        L += ['!!! tip "이 정리가 도움이 되셨다면 기후데이터 길잡이도 인용해 주세요"', ""]
+        L += ["    " + x if x else "" for x in site_citation_lines(site_cite, bibtex=False)]
+        L.append("")
 
     if d.get("links"):
         L += ["## 참고 링크", ""]
@@ -569,14 +571,13 @@ def group_table(entries, href_prefix: str, compare_href: str) -> list[str]:
             f'<td class="nowrap" data-sort="{km}" title="{html.escape(oneline(r.get("spatial") or ""))}">{sp}</td>'
             f'<td class="nowrap" data-sort="{hrs}" title="{html.escape(oneline(r.get("temporal") or ""))}">{tm}</td>'
             f'<td data-sort="{STATUS_ORDER[d["status"]]}">{badge(d["status"])}</td>'
-            f'<td class="nowrap">{d["last_verified"]}</td>'
             "</tr>"
         )
     return [
         f'<div class="list-table" data-compare="{compare_href}"><table>'
         "<thead><tr><th>자료</th><th>종류</th><th>기간</th>"
         '<th title="주 제공처에서 받는 격자 간격 (km는 적도 기준 근사)">제공 해상도</th>'
-        '<th title="가장 짧은 제공 간격 (세부는 각 자료 페이지)">시간 간격</th><th>상태</th><th>마지막 확인</th></tr></thead>'
+        '<th title="가장 짧은 제공 간격 (세부는 각 자료 페이지)">시간 간격</th><th>상태</th></tr></thead>'
         f"<tbody>{rows}</tbody></table></div>"
     ]
 
@@ -585,17 +586,28 @@ def render_index(datasets: list[dict]) -> str:
     L = [
         "---", "hide:", "  - navigation", "  - toc", "---", "",
         "# 전체 데이터셋 목록", "",
-        f"모두 {len(datasets)}개 자료를 공식 출처에서 직접 확인해 정리했습니다. **마지막 확인** 날짜 이후 바뀌었을 수 있습니다.", "",
+        f"모두 {len(datasets)}개 자료를 공식 출처에서 직접 확인해 정리했습니다. 이후 바뀌었을 수 있으니 쓰기 전에 공식 출처를 다시 확인하세요.", "",
         "표의 열 이름을 누르면 정렬되고, 왼쪽 칸을 2개 이상 체크하면 **바로 비교**할 수 있습니다. "
         "해상도는 쉽게 비교하도록 **주 제공처에서 받는 격자** 기준 대표 값만 적었고(시간 해상도는 가장 짧은 제공 간격), 세부 내용은 각 자료 페이지에 있습니다. "
         "↔ 표시는 다른 분야에도 함께 실린 자료입니다.", "",
     ] + res_note()
     pl = placements(datasets)
+    # 분야 바로가기 (대기 · 해양 · 해빙)
+    chips = "".join(
+        f'<a class="domain-chip domain-{dom}" href="#{dom}"><strong>{label}</strong>'
+        f'<span>{sum(len(pl.get((dom, g), [])) for g in groups)}개</span></a>'
+        for dom, (label, groups) in DOMAINS.items()
+    )
+    L[L.index("# 전체 데이터셋 목록") + 2:L.index("# 전체 데이터셋 목록") + 2] = [f'<nav class="domain-jump">{chips}</nav>', ""]
     for dom, (label, groups) in DOMAINS.items():
-        L += [f"## {label}", ""]
+        n = sum(len(pl.get((dom, g), [])) for g in groups)
+        L += [f'<h2 class="domain-head domain-{dom}" id="{dom}">{label}<span class="domain-count">{n}개 자료</span></h2>', ""]
         for g in groups:
             if (dom, g) in pl:
-                L += [f"### {g}", ""] + group_table(pl[(dom, g)], "", "../compare/") + [""]
+                L += [f"### {g} {{ .group-head }}", ""]
+                if g in GROUP_INTRO:
+                    L += [f'<p class="group-intro">{GROUP_INTRO[g]}</p>', ""]
+                L += group_table(pl[(dom, g)], "", "../compare/") + [""]
     return "\n".join(L) + "\n"
 
 
@@ -606,7 +618,10 @@ def render_domain(dom: str, datasets: list[dict]) -> str:
          "표의 왼쪽 칸을 2개 이상 체크하면 바로 비교할 수 있고, 열 이름을 누르면 정렬됩니다.", ""] + res_note()
     for g in groups:
         if (dom, g) in pl:
-            L += [f"## {g}", ""] + group_table(pl[(dom, g)], "../../datasets/", "../../compare/") + [""]
+            L += [f"## {g} {{ .group-head }}", ""]
+            if g in GROUP_INTRO:
+                L += [f'<p class="group-intro">{GROUP_INTRO[g]}</p>', ""]
+            L += group_table(pl[(dom, g)], "../../datasets/", "../../compare/") + [""]
     if any(cross for g in groups for _, _, cross in pl.get((dom, g), [])):
         L += ["↔ 다른 분야 페이지에도 함께 실린 자료입니다.", ""]
     return "\n".join(L) + "\n"
@@ -837,9 +852,8 @@ def build_nav_sections(datasets: list[dict], base_path: str) -> list[dict]:
 
 
 def on_config(config):
-    global _datasets, _repo_url, _site_url
+    global _datasets, _site_url
     _datasets = load_datasets()
-    _repo_url = (config.get("repo_url") or "").rstrip("/")
     _site_url = config.get("site_url") or "/"
     config["extra"]["disclaimer"] = DISCLAIMER
     base = urlparse(config.get("site_url") or "/").path or "/"
@@ -857,7 +871,9 @@ def on_config(config):
 
 
 def on_files(files, config):
-    site_cite = config.get("extra", {}).get("site_citation", "")
+    site_cite = config.get("extra", {}).get("site_citation") or {}
+    if not isinstance(site_cite, dict):
+        site_cite = {}
 
     def add(uri: str, content: str):
         existing = files.get_file_from_path(uri)
@@ -947,7 +963,7 @@ def subscribe_form(config) -> str:
         '<label class="check consent"><input type="checkbox" name="consent" required> '
         '<a href="../privacy/">개인정보 수집·이용</a>에 동의합니다 (필수)</label>'
         '<div class="form-actions"><button type="submit" class="md-button md-button--primary">알림 신청</button></div>'
-        '<p class="hint">신청하면 <strong>확인 메일</strong>이 갑니다. 메일의 <em>신청 확인하기</em>를 눌러야 등록이 끝납니다. '
+        '<p class="hint">신청하면 <strong>확인 메일</strong>이 갑니다. 메일의 <em>신청 확인하기</em>를 눌러야 등록이 끝납니다. 받은편지함에 없으면 <strong>스팸함</strong>을 확인해 주세요. '
         '알림 메일마다 아래쪽에 수신 거부 링크가 있어 언제든 해지할 수 있습니다.</p>'
         '<p class="form-message" role="status" aria-live="polite"></p>'
         '</form>'
@@ -956,18 +972,17 @@ def subscribe_form(config) -> str:
 
 
 def suggest_form(config) -> str:
-    """데이터셋 추가 제안 폼. 지금은 내용을 채운 GitHub 이슈로 연결합니다."""
-    repo = (config.get("repo_url") or "").rstrip("/")
+    """데이터셋 추가 제안 폼. 운영자 메일(Apps Script)로 바로 보냅니다."""
     endpoint = _forms_config(config).get("suggest_endpoint") or ""
     cats = "".join(f'<option value="{v}">{v}</option>' for v in CATEGORY.values())
     existing = ", ".join(nt(d["name"]) for d in _datasets)
-    direct = (
-        '<button type="submit" class="md-button md-button--primary" data-action="direct">바로 보내기</button>'
-        if endpoint else ""
+    pre = "" if endpoint else (
+        '!!! info "제안 접수는 준비 중입니다"\n\n'
+        "    그동안은 data4researchers@gmail.com 으로 메일을 보내주세요.\n\n"
     )
-    return (
+    return pre + (
         f'<details class="hint"><summary>이미 있는 데이터셋 {len(_datasets)}개 보기</summary><p>{existing}</p></details>'
-        f'<form id="suggest-form" class="cdg-form" data-repo="{repo}" data-endpoint="{endpoint}" novalidate>'
+        f'<form id="suggest-form" class="cdg-form" data-endpoint="{endpoint}" novalidate>'
         '<fieldset><legend>데이터셋 정보</legend>'
         '<label class="field">데이터셋 이름 <em>필수</em>'
         '<input type="text" name="name" placeholder="예) ERA5-Land, SMAP 토양수분" required></label>'
@@ -981,15 +996,12 @@ def suggest_form(config) -> str:
         '<label class="field">알고 계신 중단·변경 소식 (선택)'
         '<textarea name="notes" rows="2" placeholder="예) 내년부터 새 버전으로 전환 예정이라고 들었어요"></textarea></label>'
         '<label class="field">제안하신 분 (선택)'
-        '<input type="text" name="contact" placeholder="이름·소속 — 기여자 목록에 올려드려요"></label>'
+        '<input type="text" name="contact" placeholder="이름·소속, 답장이 필요하면 이메일도 적어주세요"></label>'
         '</fieldset>'
         '<div class="hp-field" aria-hidden="true"><label>웹사이트 (비워 두세요)<input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>'
         '<div class="form-actions">'
-        f'{direct}'
-        '<button type="submit" class="md-button' + ("" if endpoint else " md-button--primary") + '" data-action="github">'
-        'GitHub 이슈로 제안하기</button></div>'
-        '<p class="hint">GitHub 이슈로 제안하면 새 창에서 내용이 채워진 제안서가 열리고, 제출(<strong>Create</strong>) 버튼을 누르면 됩니다. '
-        'GitHub 계정이 필요합니다.' + (" <strong>바로 보내기</strong>는 계정 없이 운영자에게 바로 전달됩니다." if endpoint else "") + '</p>'
+        '<button type="submit" class="md-button md-button--primary"' + ("" if endpoint else " disabled") + '>제안 보내기</button></div>'
+        '<p class="hint">제안은 운영자에게만 전달되며 공개되지 않습니다.</p>'
         '<p class="form-message" role="status" aria-live="polite"></p>'
         '</form>'
     )
@@ -1012,21 +1024,21 @@ def on_page_markdown(markdown, page, config, files):
         markdown = markdown.replace("<!-- DISCLAIMER -->", DISCLAIMER)
     if "<!-- DATASET_COUNT -->" in markdown:
         markdown = markdown.replace("<!-- DATASET_COUNT -->", str(len(_datasets)))
+    if "<!-- SITE_CITATION -->" in markdown:
+        c = (config.get("extra") or {}).get("site_citation") or {}
+        markdown = markdown.replace("<!-- SITE_CITATION -->", "\n".join(site_citation_lines(c if isinstance(c, dict) else {})))
+    if "<!-- SITE_DOI -->" in markdown:
+        c = (config.get("extra") or {}).get("site_citation") or {}
+        doi = c.get("doi", "") if isinstance(c, dict) else ""
+        markdown = markdown.replace("<!-- SITE_DOI -->", f"[{doi}](https://doi.org/{doi})" if doi else "")
     if "<!-- BUILD_DATE -->" in markdown:
         markdown = markdown.replace("<!-- BUILD_DATE -->", date.today().isoformat())
     return markdown
 
 
 def on_page_context(context, page, config, nav):
-    """페이지 제목 옆 연필(수정) 버튼이 실제로 고쳐야 할 파일을 열도록 맞춥니다."""
-    repo = (config.get("repo_url") or "").rstrip("/")
-    src = page.file.src_uri
-    ids = {d["id"] for d in _datasets}
-    m = re.match(r"^datasets/(.+)\.md$", src)
-    if src in ("datasets/index.md", "notices.md", "transitions.md") or src.startswith("domains/"):
-        page.edit_url = None  # 자동 생성 페이지 — 고칠 파일이 따로 없음
-    elif m and m.group(1) in ids:
-        page.edit_url = f"{repo}/edit/main/data/datasets/{m.group(1)}.yaml"
+    """연필(수정) 버튼을 모든 페이지에서 숨깁니다 — 방문자에게 저장소를 노출하지 않음."""
+    page.edit_url = None
     return context
 
 

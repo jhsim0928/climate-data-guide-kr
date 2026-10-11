@@ -133,27 +133,106 @@
     apply();
   }
 
-  // ── 모든 페이지 하단: 정보 오류 신고 링크 ─────────────────
+  // ── 정보 오류 신고: 페이지 하단 버튼 + 신고 창 (운영자 메일로 전달) ──
+  function meta(name) {
+    var m = document.querySelector('meta[name="' + name + '"]');
+    return m ? m.getAttribute("content") : "";
+  }
+  function pageTitle() {
+    var h1 = document.querySelector(".md-content__inner h1");
+    return (h1 ? h1.textContent : document.title).replace("¶", "").trim();
+  }
+  function reportDialog() {
+    var dlg = document.getElementById("report-dialog");
+    if (dlg) return dlg;
+    dlg = document.createElement("dialog");
+    dlg.id = "report-dialog";
+    dlg.className = "report-dialog md-typeset";
+    dlg.innerHTML =
+      '<form method="dialog" class="cdg-form" novalidate>' +
+      '<h2>정보 오류 신고</h2>' +
+      '<p class="hint">페이지: <strong class="rp-title"></strong></p>' +
+      '<label class="field">어떤 정보가 틀렸나요? <em>필수</em>' +
+      '<textarea name="wrong" rows="3" placeholder="예) 제공 기간 끝이 2023-12로 되어 있는데 실제로는 갱신이 계속되고 있어요"></textarea></label>' +
+      '<label class="field">올바른 정보 (선택)<textarea name="correct" rows="2"></textarea></label>' +
+      '<label class="field">근거가 되는 공식 출처 링크 (선택)<input type="url" name="source" placeholder="https://"></label>' +
+      '<label class="field">답변 받을 이메일 (선택)<input type="email" name="contact" placeholder="name@example.ac.kr" autocomplete="email"></label>' +
+      '<div class="hp-field" aria-hidden="true"><label>웹사이트 (비워 두세요)<input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>' +
+      '<div class="form-actions">' +
+      '<button type="submit" value="send" class="md-button md-button--primary rp-send">보내기</button>' +
+      '<button type="button" class="md-button rp-close">닫기</button></div>' +
+      '<p class="form-message" role="status" aria-live="polite"></p>' +
+      '<p class="hint rp-mail"></p>' +
+      "</form>";
+    document.body.appendChild(dlg);
+    var form = dlg.querySelector("form");
+    var msg = dlg.querySelector(".form-message");
+    function say(t, k) { msg.textContent = t; msg.className = "form-message " + (k || ""); }
+    dlg.querySelector(".rp-close").addEventListener("click", function () { dlg.close(); });
+    dlg.addEventListener("click", function (e) { if (e.target === dlg) dlg.close(); });  // 바깥 누르면 닫기
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      var get = function (n) { return form.elements[n].value.trim(); };
+      var endpoint = meta("cdg-report-endpoint");
+      if (!get("wrong")) return say("어떤 정보가 틀렸는지 적어주세요.", "error");
+      if (get("contact") && !form.elements.contact.checkValidity()) return say("이메일 주소를 확인해 주세요.", "error");
+      if (!endpoint) return say("지금은 아래 메일 주소로 보내주세요.", "info");
+      var btn = form.querySelector(".rp-send");
+      btn.disabled = true;
+      say("보내는 중…", "info");
+      fetch(endpoint, { method: "POST", mode: "no-cors", body: new URLSearchParams({
+        type: "report", title: dlg.dataset.title, page: dlg.dataset.page,
+        wrong: get("wrong"), correct: get("correct"), source: get("source"),
+        contact: get("contact"), website: get("website"), requested_at: new Date().toISOString()
+      }) }).then(function () {
+        form.reset();
+        say("신고를 보냈습니다. 고맙습니다! 공식 출처를 확인한 뒤 고치겠습니다.", "success");
+      }).catch(function () {
+        say("보내지 못했습니다. 아래 메일 주소로 보내주세요.", "error");
+      }).then(function () { btn.disabled = false; });
+    });
+    return dlg;
+  }
+  function openReport(title) {
+    var dlg = reportDialog();
+    var page = location.href.split("#")[0];
+    try { page = decodeURIComponent(page); } catch (e) {}
+    dlg.dataset.title = title || pageTitle();
+    dlg.dataset.page = page;
+    dlg.querySelector(".rp-title").textContent = dlg.dataset.title;
+    dlg.querySelector(".form-message").textContent = "";
+    var mail = meta("cdg-contact");
+    var box = dlg.querySelector(".rp-mail");
+    box.innerHTML = "";
+    if (mail) {
+      var a = document.createElement("a");
+      a.href = "mailto:" + mail + "?" + "subject=" + encodeURIComponent("[정보 오류] " + dlg.dataset.title) +
+        "&body=" + encodeURIComponent("페이지: " + page + "\n\n어떤 정보가 틀렸나요?\n\n올바른 정보\n\n근거 출처\n");
+      a.textContent = mail;
+      box.append("메일로 직접 보내셔도 됩니다: ", a);
+    }
+    if (dlg.showModal) dlg.showModal(); else dlg.setAttribute("open", "");
+    var first = dlg.querySelector("textarea");
+    if (first) first.focus();
+  }
   function addReportLink() {
     var inner = document.querySelector(".md-content__inner");
-    var src = document.querySelector("a.md-source");
-    if (!inner || !src || inner.querySelector(".report-bar")) return;
-    var repo = src.getAttribute("href").replace(/\/$/, "");
-    var h1 = inner.querySelector("h1");
-    var title = h1 ? h1.textContent.replace("¶", "").trim() : document.title;
-    var body =
-      "### 페이지\n" + location.href.split("?")[0] + "\n\n" +
-      "### 어떤 정보가 틀렸나요?\n\n\n" +
-      "### 올바른 정보\n\n\n" +
-      "### 근거가 되는 공식 출처 (링크)\n\n";
-    var url = repo + "/issues/new?" + new URLSearchParams({ title: "[정보 오류] " + title, body: body, labels: "data-error" });
-    var bar = document.createElement("div");
-    bar.className = "report-bar";
-    bar.innerHTML =
-      '<span>이 페이지에서 틀린 정보나 바뀐 내용을 발견하셨나요?</span> ' +
-      '<a class="act act-report" target="_blank" rel="noopener" href="' + esc(url) + '">정보 오류 신고</a>' +
-      '<span class="hint">GitHub 계정이 필요합니다</span>';
-    inner.appendChild(bar);
+    if (!inner) return;
+    if (!inner.querySelector(".report-bar")) {
+      var bar = document.createElement("div");
+      bar.className = "report-bar";
+      bar.innerHTML =
+        '<span>이 페이지에서 틀린 정보나 바뀐 내용을 발견하셨나요?</span> ' +
+        '<a class="act act-report" href="#report">정보 오류 신고</a>';
+      inner.appendChild(bar);
+    }
+    inner.querySelectorAll(".act-report:not([data-bound])").forEach(function (a) {
+      a.setAttribute("data-bound", "1");
+      a.addEventListener("click", function (e) {
+        e.preventDefault();
+        openReport(a.getAttribute("data-report") || "");
+      });
+    });
   }
 
   // ── 모든 표: 열 이름을 누르면 정렬 ────────────────────────

@@ -84,7 +84,7 @@
         requested_at: new Date().toISOString()
       }).then(function () {
         form.reset();
-        show(form, summary + " 알림 신청을 받았습니다. 확인 메일을 보냈으니 메일함(스팸함 포함)에서 '신청 확인하기'를 눌러야 완료됩니다.", "success");
+        show(form, summary + " 알림 신청을 받았습니다. 확인 메일을 보냈습니다. 메일함에서 '신청 확인하기'를 눌러야 완료됩니다. 받은편지함에 없으면 꼭 스팸함을 확인하고 '스팸 아님'으로 표시해 주세요.", "success");
       }).catch(function () {
         show(form, "신청을 보내지 못했습니다. 잠시 후 다시 시도해 주세요.", "error");
       });
@@ -94,46 +94,28 @@
   function setupSuggest(form) {
     form.addEventListener("submit", function (e) {
       e.preventDefault();
-      var action = (e.submitter && e.submitter.getAttribute("data-action")) || "github";
       var get = function (n) { var el = form.elements[n]; return el ? el.value.trim() : ""; };
       var urlField = form.elements.url;
+      var endpoint = form.getAttribute("data-endpoint");
 
       if (!get("name")) return show(form, "데이터셋 이름을 적어주세요.", "error");
       if (!get("url") || !urlField.checkValidity() || !/^https?:\/\//.test(get("url")))
         return show(form, "공식 페이지 주소를 https:// 로 시작하는 형식으로 적어주세요.", "error");
+      if (!endpoint) return show(form, "제안 접수는 준비 중입니다. data4researchers@gmail.com 으로 메일을 보내주세요.", "info");
 
-      var body = [
-        "### 데이터셋", get("name"), "",
-        "### 종류", get("category"), "",
-        "### 공식 페이지", get("url"), "",
-        "### 어떤 연구에 쓰나요", get("reason") || "-", "",
-        "### 알고 있는 중단·변경 소식", get("notes") || "-", "",
-        "### 제안자", get("contact") || "-"
-      ].join("\n");
-
-      if (action === "direct") {
-        show(form, "보내는 중…", "info");
-        post(form.getAttribute("data-endpoint"), {
-          type: "suggest", name: get("name"), category: get("category"), url: get("url"),
-          reason: get("reason"), notes: get("notes"), contact: get("contact"), website: get("website"),
-          requested_at: new Date().toISOString()
-        }).then(function () {
-          form.reset();
-          show(form, "제안을 보냈습니다. 감사합니다!", "success");
-        }).catch(function () {
-          show(form, "보내지 못했습니다. GitHub 이슈로 제안해 주세요.", "error");
-        });
-        return;
-      }
-
-      var repo = form.getAttribute("data-repo");
-      var link = repo + "/issues/new?" + new URLSearchParams({
-        title: "[데이터셋 제안] " + get("name"),
-        body: body,
-        labels: "dataset-request"
-      }).toString();
-      window.open(link, "_blank", "noopener");
-      show(form, "새 창에서 제안서가 열렸어요. 내용을 확인하고 제출(Create) 버튼을 누르면 접수됩니다.", "success");
+      var btn = form.querySelector('button[type="submit"]');
+      btn.disabled = true;
+      show(form, "보내는 중…", "info");
+      post(endpoint, {
+        type: "suggest", name: get("name"), category: get("category"), url: get("url"),
+        reason: get("reason"), notes: get("notes"), contact: get("contact"), website: get("website"),
+        requested_at: new Date().toISOString()
+      }).then(function () {
+        form.reset();
+        show(form, "제안을 보냈습니다. 감사합니다! 확인 후 사이트에 정리해 올리겠습니다.", "success");
+      }).catch(function () {
+        show(form, "보내지 못했습니다. 잠시 후 다시 시도하거나 data4researchers@gmail.com 으로 메일을 보내주세요.", "error");
+      }).then(function () { btn.disabled = false; });
     });
   }
 

@@ -1,5 +1,10 @@
-{#- 홈 화면에 추가할 때 쓰는 아이콘(iPhone·iPad) -#}
+{#- 홈 화면 아이콘(iPhone·iPad) + 정보 오류 신고 창·엑셀 저장이 쓰는 값 -#}
 {% extends "base.html" %}
 {% block extrahead %}
+  {% set cite = config.extra.site_citation or {} %}
   <link rel="apple-touch-icon" href="{{ 'assets/apple-touch-icon.png' | url }}">
+  <meta name="cdg-report-endpoint" content="{{ (config.extra.forms or {}).report_endpoint or '' }}">
+  <meta name="cdg-contact" content="{{ config.extra.contact_email or '' }}">
+  <meta name="cdg-cite-en" content="{{ cite.en or '' }}">
+  <meta name="cdg-cite-ko" content="{{ cite.ko or '' }}">
 {% endblock %}

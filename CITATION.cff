@@ -1,8 +1,7 @@
-# GitHub 저장소에 "Cite this repository" 버튼을 만들어 줍니다.
-# authors 의 이름과 url 을 본인 정보로 바꾸세요. Zenodo DOI를 받으면 doi 줄의 주석을 풀고 채우세요.
+# 인용 정보 (Zenodo 등록 정보와 같게 유지). doi 는 "모든 버전" DOI(concept DOI)입니다.
 cff-version: 1.2.0
-message: "이 사이트가 연구에 도움이 되었다면 아래 정보로 인용해 주세요."
-type: dataset
+message: "If you use this guide, please cite it as below. / 이 사이트가 연구에 도움이 되었다면 아래 정보로 인용해 주세요."
+type: software
 title: "기후데이터 길잡이 (Korean Climate Data Guide)"
 abstract: >-
   대기·해양·해빙·극지·원격탐사 연구자를 위해 원자료의 출처, 받는 방법, 제공 기간,
@@ -16,7 +15,7 @@ url: "https://data4researchers.kr/"
 repository-code: "https://github.com/jhsim0928/climate-data-guide-kr"
 version: "0.1.0"
 date-released: "2026-10-11"
-# doi: "10.5281/zenodo.XXXXXXX"
+doi: "10.5281/zenodo.23300923"
 keywords:
   - reanalysis
   - climate data

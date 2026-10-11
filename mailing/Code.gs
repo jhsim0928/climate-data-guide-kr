@@ -7,6 +7,7 @@
  *  3) 하루 한 번 사이트의 공지 목록(assets/notices.json)을 확인해, 새 공지를
  *     해당 데이터셋·공지 구분을 고른 구독자에게만 묶어서 보냅니다.
  *  4) 사이트의 "데이터셋 제안" 양식을 받아 제안 시트에 저장하고 운영자에게 알립니다.
+ *  5) 각 페이지의 "정보 오류 신고"를 받아 오류 신고 시트에 저장하고 운영자에게 알립니다.
  *
  * 설치: README의 순서대로 setup()을 한 번 실행한 뒤 웹 앱으로 배포하세요.
  * 개인 Gmail 계정은 하루 발송 인원이 약 100명으로 제한됩니다.
@@ -17,11 +18,14 @@ var SITE_NAME = '기후데이터 길잡이';
 var SITE_URL = 'https://data4researchers.kr/';
 var NOTICES_URL = SITE_URL + 'assets/notices.json';
 var SUBSCRIBE_PAGE = SITE_URL + 'subscribe/';
+var OWNER_EMAIL = 'data4researchers@gmail.com'; // 제안·오류 신고 알림을 받을 주소
 var SEND_HOUR = 9; // 매일 공지 확인 시각 (프로젝트 시간대 기준, Asia/Seoul 권장)
 
 var SHEET_SUBS = '구독자';
 var SHEET_SUGGEST = '데이터셋 제안';
 var SHEET_SENT = '발송 기록';
+var SHEET_REPORT = '오류 신고';
+var REPORT_HEADERS = ['received_at', 'page_title', 'page_url', 'wrong', 'correct', 'source', 'contact', 'status'];
 var SUB_HEADERS = ['email', 'datasets', 'levels', 'status', 'token', 'requested_at', 'confirmed_at', 'updated_at'];
 var LEVEL_LABEL = { critical: '중요', warning: '주의', info: '안내' };
 
@@ -31,6 +35,7 @@ function setup() {
   ensureSheet_(ss, SHEET_SUBS, SUB_HEADERS);
   ensureSheet_(ss, SHEET_SUGGEST, ['received_at', 'name', 'category', 'url', 'reason', 'notes', 'contact']);
   ensureSheet_(ss, SHEET_SENT, ['notice_key', 'first_seen_at', 'recipients']);
+  ensureSheet_(ss, SHEET_REPORT, REPORT_HEADERS);
   ScriptApp.getProjectTriggers().forEach(function (t) {
     if (t.getHandlerFunction() === 'checkNotices') ScriptApp.deleteTrigger(t);
   });
@@ -59,6 +64,7 @@ function doPost(e) {
   try {
     if (p.type === 'subscribe') return handleSubscribe_(p);
     if (p.type === 'suggest') return handleSuggest_(p);
+    if (p.type === 'report') return handleReport_(p);
     return text_('unknown');
   } finally {
     lock.releaseLock();
@@ -95,7 +101,7 @@ function handleSubscribe_(p) {
 function handleSuggest_(p) {
   var sh = SpreadsheetApp.getActive().getSheetByName(SHEET_SUGGEST);
   sh.appendRow([new Date(), cut_(p.name), cut_(p.category), cut_(p.url), cut_(p.reason, 2000), cut_(p.notes, 2000), cut_(p.contact)]);
-  var owner = Session.getEffectiveUser().getEmail();
+  var owner = OWNER_EMAIL || Session.getEffectiveUser().getEmail();
   if (owner) {
     MailApp.sendEmail({
       to: owner, name: SITE_NAME,
@@ -103,6 +109,26 @@ function handleSuggest_(p) {
       body: '데이터셋: ' + p.name + '\n종류: ' + p.category + '\n공식 페이지: ' + p.url +
         '\n용도: ' + (p.reason || '-') + '\n중단·변경 소식: ' + (p.notes || '-') + '\n제안자: ' + (p.contact || '-')
     });
+  }
+  return text_('ok');
+}
+
+function handleReport_(p) {
+  if (!String(p.wrong || '').trim()) return text_('invalid');
+  var sh = ensureSheet_(SpreadsheetApp.getActive(), SHEET_REPORT, REPORT_HEADERS);
+  sh.appendRow([new Date(), cut_(p.title, 200), cut_(p.page, 500), cut_(p.wrong, 3000), cut_(p.correct, 3000),
+    cut_(p.source, 1000), cut_(p.contact, 200), '접수']);
+  var owner = OWNER_EMAIL || Session.getEffectiveUser().getEmail();
+  if (owner) {
+    var mail = { to: owner, name: SITE_NAME,
+      subject: '[' + SITE_NAME + '] 정보 오류 신고: ' + cut_(p.title, 80),
+      body: '페이지: ' + (p.title || '-') + '\n' + (p.page || '-') +
+        '\n\n어떤 정보가 틀렸나요?\n' + (p.wrong || '-') +
+        '\n\n올바른 정보\n' + (p.correct || '-') +
+        '\n\n근거 출처\n' + (p.source || '-') +
+        '\n\n신고자 연락처: ' + (p.contact || '-') };
+    if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(p.contact || '').trim())) mail.replyTo = String(p.contact).trim();
+    MailApp.sendEmail(mail);
   }
   return text_('ok');
 }
@@ -116,7 +142,7 @@ function doGet(e) {
   if (p.action === 'confirm') {
     sh.getRange(row, 4).setValue('active');
     sh.getRange(row, 7).setValue(new Date());
-    return page_('알림 신청이 완료되었습니다', '고르신 데이터셋에 새 공지가 올라오면 메일로 알려드릴게요.');
+    return page_('알림 신청이 완료되었습니다', '고르신 데이터셋에 새 공지가 올라오면 메일로 알려드릴게요. 알림이 스팸함으로 가지 않도록 ' + OWNER_EMAIL + ' 주소를 연락처에 추가하거나, 확인 메일을 \'스팸 아님\'으로 표시해 주세요.');
   }
   if (p.action === 'unsubscribe') {
     sh.deleteRow(row); // 개인정보 처리방침: 수신 거부 시 지체 없이 파기
@@ -201,6 +227,7 @@ function sendConfirm_(email, token, datasets, levels) {
     '<p>' + SITE_NAME + ' 변경 알림 신청을 받았습니다. 아래 버튼을 눌러야 신청이 완료됩니다.</p>' +
     '<p><a href="' + url + '" style="display:inline-block;padding:10px 18px;background:#00897b;color:#fff;border-radius:6px;text-decoration:none">신청 확인하기</a></p>' +
     prefsHtml_(datasets, levels) +
+    '<p style="background:#fff8e1;padding:10px 14px;border-radius:6px;color:#5d4037">이 메일이 <b>스팸함</b>에 있었다면 <b>스팸 아님</b>으로 표시해 주세요. 그래야 앞으로 오는 알림이 받은편지함으로 들어옵니다. ' + OWNER_EMAIL + ' 주소를 연락처에 추가해 두셔도 좋습니다.</p>' +
     '<p style="color:#777">본인이 신청하지 않았다면 이 메일을 무시하세요. 확인하지 않은 신청은 메일이 발송되지 않습니다.</p>' +
     footer_(token));
 }
