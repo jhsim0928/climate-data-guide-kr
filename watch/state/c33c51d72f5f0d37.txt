@@ -1,0 +1,439 @@
+# https://egusphere.copernicus.org/preprints/2025/egusphere-2025-3810/
+EGUsphere - SODA4: a mesoscale ocean/sea ice reanalysis 1980–2024
+The EGU interactive community platform
+EGUsphere
+Preprint
+Preprints
+Preprint egusphere-2025-3810
+Multiple terms: term1 term2
+red apples
+returns results with all terms like:
+Fructose levels in
+green
+apples
+Precise match in quotes: "term1 term2"
+"red apples"
+returns results matching exactly like:
+Anthocyanin biosynthesis in
+red apples
+Exclude a term with -: term1 -term2
+apples -red
+returns results containing
+apples
+but not
+Malic acid in green
+apples
+There are no results for your search term.
+Network problems
+We are sorry, but your search could not be completed due to network problems. Please try again later.
+We are sorry, but your search could not be completed due to server timeouts. Please try again later.
+Empty search term
+You have applied the search with an empty search term. Please revisit and try again.
+Too many requests
+We are sorry, but we have received too many parallel search requests. Please try again later.
+Searching
+Preprints
+Abstract
+Discussion
+Metrics
+Preprints
+https://doi.org/10.5194/egusphere-2025-3810
+the Creative Commons Attribution 4.0 License.
+https://doi.org/10.5194/egusphere-2025-3810
+the Creative Commons Attribution 4.0 License.
+Preprints
+Abstract
+Discussion
+Metrics
+01 Oct 2025
+SODA4: a mesoscale ocean/sea ice reanalysis 1980–2024
+Gennady A. Chepurin
+James A. Carton
+Luyu Sun
+Stephen G. Penny
+Abstract.
+This paper describes the new Simple Ocean Data Assimilation version 4 (SODA4) global eddy-resolving ocean/sea ice reanalysis that spans the 45-year period 1980–2024. The reanalysis is constructed using GFDL MOM5/SIS1 numerics and ECMWF ERA5 forcings with surface and subsurface temperature and salinity observations as constraints within an optimal interpolation data assimilation algorithm. The method of construction and resulting output files are described. Comparison of the SODA4 temperature and salinity fields to observations and to the UK Met Office EN4 temperature and salinity analyses in the upper ocean shows SODA4 has marginal bias and exhibits more regional variability, with less of an imprint of the sparse and inhomogeneous distribution of observations. Comparison of transports across major ocean sections and passages are generally consistent with independent moored observations.
+How to cite.
+Chepurin, G. A., Carton, J. A., Sun, L., and Penny, S. G.: SODA4: a mesoscale ocean/sea ice reanalysis 1980–2024, EGUsphere [preprint], https://doi.org/10.5194/egusphere-2025-3810, 2025.
+Received: 05 Aug 2025
+Discussion started: 01 Oct 2025
+Publisher's note
+: Copernicus Publications remains neutral with regard to jurisdictional claims made in the text, published maps, institutional affiliations, or any other geographical representation in this paper. While Copernicus Publications makes every effort to include appropriate place names, the final responsibility lies with the authors. Views expressed in the text are those of the authors and do not necessarily reflect the views of the publisher.
+Download & links
+Preprint (PDF, 1773 KB)
+Supplement
+(2679 KB)
+Download & links
+Preprint
+(1773 KB)
+Metadata XML
+Supplement
+(2679 KB)
+BibTeX
+EndNote
+Share
+Gennady A. Chepurin
+James A. Carton
+Luyu Sun
+Stephen G. Penny
+Status
+: closed
+Comment types
+– author |
+– referee |
+– community |
+– editor |
+– chief editor
+: Report abuse
+'Comment on egusphere-2025-3810'
+, Anonymous Referee #1, 30 Oct 2025
+The paper presents the new eddy-resolving SODA4 reanalysis, which represents a step forward in the reconstruction of the ocean climate with the inclusion of mesoscale signals.
+As such, it is broadly interesting for the ocean community, the included verification shows very good performances, and I recommend the publication after a few issues are addressed, mostly, but not all, minor. In some cases, the authors could spend some more time describing the specificities without indicating references, so that the SODA4 description appears self-contained in the manuscript.
+Minor points
+L74-75: Change of advection scheme may have an impact on temporal consistency of momentum and energy; can you specifically comment on the changes in the main text?
+L114: More details needed. Is the difference of heat or freshwater spread/pushed into purely input fields (shortwave and precipitation)? Or are the net fluxes bias corrected with climatological analysis increments corrected to fluxes?
+L152: So is assimilation also performed every 10 days? Using observations in the previous 10 days?
+Figure 6: The salinity panel is not really informative; the palette should be changed
+Section 3: I feel this could go in an appendix, in order not to interrupt the scientific discourse
+L203 : It would be useful to quantify the depth below which there are discontinuities due to the change of stream. The upper ocean is likely unaffected, but the deep and abyssal layers are, so users should be aware of such discontinuities.
+L204: As mentioned earlier, to say whether this changes energy/momentum
+L210: The authors need to mention that this is not an independent dataset (as EN4 relies mostly on WOD). Comparison with altimetry should be carried out, as this is a completely independent dataset, and I recommend including it.
+Section 4: I suggest adding a comparison of heat transports where known (RAPID, etc.).
+Table 3: Is there a reason why OSNAP-West is excluded?
+Also, the time period changes across observation-based estimates. Is this considered in the Table when the mean is computed?
+Additionally, simple scores like correlation that quantify the correctness of the temporal evolution of the transports should be included as well (with a statistical significance statement).
+Typos/Language
+L11-12 “The method of construction” (of what?) is unclear, needs to be reworded
+L37 broken sentence, to be rewritten
+L108 the use of 15 to indicate ERA5 (considering ERA15 existed) is quite cryptic and unfortunate. Is it not possible to change it?
+L155 “Since…” broken sentence
+Caption of Figure 8: “monthly means” I guess here
+L223 “300-1000”
+Figure 9’s caption: “temperature anomaly”
+Citation
+: https://doi.org/
+10.5194/egusphere-2025-3810-RC1
+'Reply on RC1'
+, Jim Carton, 08 Dec 2025
+We really appreciate these comments/suggestions and will make most of the changes. The only ones we think may be out of scope for this paper are:
+>Section 4: I suggest adding a comparison of heat transports where known (RAPID, etc.).
+We considered adding discussion of heat and salt transports but came to the conclusion that this can raise scientific issues that deserve their own studies. Also, we're concerned that vertically integrated heat transport estimates will be impacted by the changes in the advective schemes.
+>Table 3: Is there a reason why OSNAP-West is excluded?
+We note that 75% of the OSNAP-West net volume transport enters through narrow Davis Strait. We note in the manuscript in Table 2, that the SODA4 Davis Strait transport is lower than observed and thus will produce the same result from a OSNAP-West comparison.
+>Additionally, simple scores like correlation that quantify the correctness of the temporal evolution of the transports should be included as well (with a statistical significance statement).
+We do present time series of SODA4 passage and overturning transports in Supplemental Materials (Figs. S15-S18). The longest observational record is at the 26N RAPID AMOC section but even there it doesn't appear that the period of overlap is long enough to make a correlation number (computed after what smoothing?) useful given the presence of strong weekly variability. We think its more honest/revealing to show the two time series.
+>L108 the use of 15 to indicate ERA5 (considering ERA15 existed) is quite cryptic and unfortunate. Is it not possible to change it?
+Unfortunately we cannot change this as ERA5 is the 15th meteorological forcing we have used for the SODA project. Incidentally, number 5 was ERA20C.
+Citation
+: https://doi.org/
+10.5194/egusphere-2025-3810-CC1
+'Reply on RC1'
+, Jim Carton, 16 Apr 2026
+The response is in the attached document
+Citation
+: https://doi.org/
+10.5194/egusphere-2025-3810-AC1
+'Reply on RC1'
+, Jim Carton, 16 Apr 2026
+The response is in the attached document
+Citation
+: https://doi.org/
+10.5194/egusphere-2025-3810-AC1
+'Comment on egusphere-2025-3810'
+, Andrea Molod, 03 Dec 2025
+The manuscript presents and describes SODA4, one of only a few eddy permitting ocean reanalyses available to the community. The presentation of the system and the results are quite clear, and the split between what is presented in the main manuscript and in the supplemental material is appropriate. The evaluation metrics shown make the fidelity of SODA 4 quite clear. With the exception of the few minor issues, mostly suggestions for expanded description of the system or of the results, I recommend that the manuscript be published with minor revisions.
+Minor Issues:
+Line 66 - Please explain what orphan points are
+Lines 73-78 - Please articulate a little more how the decision was made to switch and when. The text in Section 3.1 suggests that the instabilities occurred at stream boundaries - if this is the case please state that, if not, please at least speculate about the source of the instabilities.
+Section 2.2 - Please add some discussion about the impact of the coarser resolution of the forcing
+Line 128 - please say what L3 means
+Line 159 - Fig 6 seems to show large increments in the WBC areas as well, not only between +/-5 degrees. Please address this as well in the text.
+Lines 174-179 - Please add some discussion about the streams - for example, why three years of overlap, what was examined to determine that three years were adequate, and what are the regions where the spinup was not complete in three years, and what are the consequences for the fidelity of the simulated ocean in those regions?
+The text in Section 3.1 mentions the streams but does not address the questions I raised.
+Lines 223-225: The correspondence in all the basins as stated is well noted. The exception is the Arctic in the last few years of the comparison, where EN4 shows a stronger warming than SODA4. Please comment on this.
+Line 232: Again in the Arctic at 0-300m, SODA4 seems to show less interannual variability than EN4. The discussion on lines 216-220 seems to suggest that EN4 should be expected to have less geographic variability - is this the expected behavior for temporal variability? If so, why does EN4 have more temporal variability than SODA4 in the Arctic near-surface salinity? Please comment.
+Line 234: Is the implication of the "limited representative salinity observational coverage" that the salinity in EN4 and SODA4 rely on the background field? Does this explain why the variations in SODA4 salinity at depth are larger than EN4 variations? Please comment.
+Minutae:
+Line 74 - Syntax - the word "with" should be replaced by a comma.
+Lines 103-104 - should be "three/six hourly averaged"
+Line 130 - in situ should be italicized'
+Section 2.4 - in-sentence equations and symbols are offset from the text - please correct this
+Line 174 - typo - "was" not "has"
+Citation
+: https://doi.org/
+10.5194/egusphere-2025-3810-RC2
+'Reply on RC2'
+, Jim Carton, 08 Dec 2025
+We are grateful to Andrea for her careful reading and comments. We can make almost all the corrections that she has suggested.
+One issue she notes is the difference between SODA4 and EN4.2.2 temperature and salinity in the Arctic. We will add more discussion of this issue, but we also note that the Arctic is very sparsely sampled, particularly on the marginal shelves and at deeper levels. We think this lack of constraining data, and the fact that the first guess used by EN4.2.2 is a combination of persistence and monthly climatology is responsible for the differences there.
+Citation
+: https://doi.org/
+10.5194/egusphere-2025-3810-CC2
+'Reply on RC2'
+, Jim Carton, 16 Apr 2026
+final response attached
+Citation
+: https://doi.org/
+10.5194/egusphere-2025-3810-AC2
+'Comment on egusphere-2025-3810'
+, Anonymous Referee #3, 08 Dec 2025
+The manuscript describes the configuration of the new ocean reanalysis SODA4, which in comparison to its predecessor SODA3 features higher horizontal and vertical resolution, and which additionally assimilates sea ice data. The reanalysis is evaluated in terms of temperature and salinity changes, as well as transports at a few key locations.
+SODA is a widely used product and updates are useful and descriptions of those are necessary.
+The presented description/evaluation is very similar to those presented for previous products.
+However, I am missing details of a comparison to the previous product SODA3, which would allow the reader to assess the level of advancement. Only the Gulf Stream paths are intercompared for this purpose. For temperature and salinity, the manuscript also offers only an intercomparison to the objectively analysed EN4 product instead of an evaluation with the EN4 or other in situ data. Based on only intercomparisons, the evaluation of advancement and quality of the product is difficult. EN4 objectively analysed data is flawed in many ways, as it is also acknowledged in the manuscript. Therefore, the purpose of the intercomparison becomes ambiguous. It may either show the advantage of using a dynamical model for an analysis or an evaluation of the SODA4 analysis. I suggest to include a comparison to the EN4 in situ data and the previous SODA3 product as it has been done before. The purpose of the intercomparison to the EN$ analysis could be clearer. More details are below.
+Details
+l 49-50 I cannot find anything about discharge in this reference. Please clarify or correct.
+l 50-51 I suggest to include two sentences about what Fig. 1 shows. Maybe a comparison to observations could be included to provide an idea about the achieved realism.
+l 61-62 How about the the Southern Ocean https://doi.org/10.1175/JCLI-D-14-00353.1 describes 1/10 as resolving equator ward of 50N/S
+l 86-89 Why would this be a good idea ? Is there a reason to believe that the evaporated water is brought back by the rivers into the same basin? Why evaporation and not E-P? How does this bring the flux in alignment with the salinity trends The Atlantic is believed to import freshwater, It seems you put a constrain on this which would rather be something the model should deliver you., but I don't understand what has been done.
+l 88-89 I am missing more details how it was carried out, S1 states the same details about the balancing as provided here.
+l 146 Aren't the Rs the scales and the deltas the distances ?
+l 170-171 How is the heat flux modified, via a relaxation term depending on the sea ice thickness difference to the data?
+Section 3 I think details of the output files would be better presented on the web page that provides the data, best with a doi.
+Section 4.1 As EN4 may have larger errors relative to than SODA4, it is not clear what this comparison evaluates. Particularly in sparsely observed locations EN4 often falls back to climatology.
+Is the comparison an illustration of what additional information SODA4 offers or and evaluation? It would be good to give the reader some guideline.
+Figures Why sometimes temperature is K and sometimes in ˚C? Changes are sometimes in W^2/m and sometimes in ˚C/yr
+l 250 It says Drake Strait in Fig. S17
+l 262-265 Given that a large part of the AMOC variability is related to Ekman transport and resulting in RAPID and SODA4 from ERA5 the agreement between RAPID and SODA4 is surprisingly low. Is the Florida Strait transport o the upper midocean transport responsible for this?
+Table 3 How is the overturning defined. Is it at a fixed depth (which?) or the maximum? And is is in density or z-coordinates?
+l 282 293 I think for an evaluation of SODA4 a comparison to the actual in situ temperature is required. With the last sentences you seem to evaluate EN4 with SODA4. It's odd to change the reference based on occasion.
+L 313 SODA4
+Citation
+: https://doi.org/
+10.5194/egusphere-2025-3810-RC3
+'Reply on RC3'
+, Gennady Chepurin, 19 Dec 2025
+The comment was uploaded in the form of a supplement:
+https://egusphere.copernicus.org/preprints/2025/egusphere-2025-3810/egusphere-2025-3810-CC3-supplement.pdf
+Citation
+: https://doi.org/
+10.5194/egusphere-2025-3810-CC3
+'Reply on RC3'
+, Jim Carton, 16 Apr 2026
+final response attached
+Citation
+: https://doi.org/
+10.5194/egusphere-2025-3810-AC3
+Share
+Status
+: closed
+Comment types
+– author |
+– referee |
+– community |
+– editor |
+– chief editor
+: Report abuse
+'Comment on egusphere-2025-3810'
+, Anonymous Referee #1, 30 Oct 2025
+The paper presents the new eddy-resolving SODA4 reanalysis, which represents a step forward in the reconstruction of the ocean climate with the inclusion of mesoscale signals.
+As such, it is broadly interesting for the ocean community, the included verification shows very good performances, and I recommend the publication after a few issues are addressed, mostly, but not all, minor. In some cases, the authors could spend some more time describing the specificities without indicating references, so that the SODA4 description appears self-contained in the manuscript.
+Minor points
+L74-75: Change of advection scheme may have an impact on temporal consistency of momentum and energy; can you specifically comment on the changes in the main text?
+L114: More details needed. Is the difference of heat or freshwater spread/pushed into purely input fields (shortwave and precipitation)? Or are the net fluxes bias corrected with climatological analysis increments corrected to fluxes?
+L152: So is assimilation also performed every 10 days? Using observations in the previous 10 days?
+Figure 6: The salinity panel is not really informative; the palette should be changed
+Section 3: I feel this could go in an appendix, in order not to interrupt the scientific discourse
+L203 : It would be useful to quantify the depth below which there are discontinuities due to the change of stream. The upper ocean is likely unaffected, but the deep and abyssal layers are, so users should be aware of such discontinuities.
+L204: As mentioned earlier, to say whether this changes energy/momentum
+L210: The authors need to mention that this is not an independent dataset (as EN4 relies mostly on WOD). Comparison with altimetry should be carried out, as this is a completely independent dataset, and I recommend including it.
+Section 4: I suggest adding a comparison of heat transports where known (RAPID, etc.).
+Table 3: Is there a reason why OSNAP-West is excluded?
+Also, the time period changes across observation-based estimates. Is this considered in the Table when the mean is computed?
+Additionally, simple scores like correlation that quantify the correctness of the temporal evolution of the transports should be included as well (with a statistical significance statement).
+Typos/Language
+L11-12 “The method of construction” (of what?) is unclear, needs to be reworded
+L37 broken sentence, to be rewritten
+L108 the use of 15 to indicate ERA5 (considering ERA15 existed) is quite cryptic and unfortunate. Is it not possible to change it?
+L155 “Since…” broken sentence
+Caption of Figure 8: “monthly means” I guess here
+L223 “300-1000”
+Figure 9’s caption: “temperature anomaly”
+Citation
+: https://doi.org/
+10.5194/egusphere-2025-3810-RC1
+'Reply on RC1'
+, Jim Carton, 08 Dec 2025
+We really appreciate these comments/suggestions and will make most of the changes. The only ones we think may be out of scope for this paper are:
+>Section 4: I suggest adding a comparison of heat transports where known (RAPID, etc.).
+We considered adding discussion of heat and salt transports but came to the conclusion that this can raise scientific issues that deserve their own studies. Also, we're concerned that vertically integrated heat transport estimates will be impacted by the changes in the advective schemes.
+>Table 3: Is there a reason why OSNAP-West is excluded?
+We note that 75% of the OSNAP-West net volume transport enters through narrow Davis Strait. We note in the manuscript in Table 2, that the SODA4 Davis Strait transport is lower than observed and thus will produce the same result from a OSNAP-West comparison.
+>Additionally, simple scores like correlation that quantify the correctness of the temporal evolution of the transports should be included as well (with a statistical significance statement).
+We do present time series of SODA4 passage and overturning transports in Supplemental Materials (Figs. S15-S18). The longest observational record is at the 26N RAPID AMOC section but even there it doesn't appear that the period of overlap is long enough to make a correlation number (computed after what smoothing?) useful given the presence of strong weekly variability. We think its more honest/revealing to show the two time series.
+>L108 the use of 15 to indicate ERA5 (considering ERA15 existed) is quite cryptic and unfortunate. Is it not possible to change it?
+Unfortunately we cannot change this as ERA5 is the 15th meteorological forcing we have used for the SODA project. Incidentally, number 5 was ERA20C.
+Citation
+: https://doi.org/
+10.5194/egusphere-2025-3810-CC1
+'Reply on RC1'
+, Jim Carton, 16 Apr 2026
+The response is in the attached document
+Citation
+: https://doi.org/
+10.5194/egusphere-2025-3810-AC1
+'Reply on RC1'
+, Jim Carton, 16 Apr 2026
+The response is in the attached document
+Citation
+: https://doi.org/
+10.5194/egusphere-2025-3810-AC1
+'Comment on egusphere-2025-3810'
+, Andrea Molod, 03 Dec 2025
+The manuscript presents and describes SODA4, one of only a few eddy permitting ocean reanalyses available to the community. The presentation of the system and the results are quite clear, and the split between what is presented in the main manuscript and in the supplemental material is appropriate. The evaluation metrics shown make the fidelity of SODA 4 quite clear. With the exception of the few minor issues, mostly suggestions for expanded description of the system or of the results, I recommend that the manuscript be published with minor revisions.
+Minor Issues:
+Line 66 - Please explain what orphan points are
+Lines 73-78 - Please articulate a little more how the decision was made to switch and when. The text in Section 3.1 suggests that the instabilities occurred at stream boundaries - if this is the case please state that, if not, please at least speculate about the source of the instabilities.
+Section 2.2 - Please add some discussion about the impact of the coarser resolution of the forcing
+Line 128 - please say what L3 means
+Line 159 - Fig 6 seems to show large increments in the WBC areas as well, not only between +/-5 degrees. Please address this as well in the text.
+Lines 174-179 - Please add some discussion about the streams - for example, why three years of overlap, what was examined to determine that three years were adequate, and what are the regions where the spinup was not complete in three years, and what are the consequences for the fidelity of the simulated ocean in those regions?
+The text in Section 3.1 mentions the streams but does not address the questions I raised.
+Lines 223-225: The correspondence in all the basins as stated is well noted. The exception is the Arctic in the last few years of the comparison, where EN4 shows a stronger warming than SODA4. Please comment on this.
+Line 232: Again in the Arctic at 0-300m, SODA4 seems to show less interannual variability than EN4. The discussion on lines 216-220 seems to suggest that EN4 should be expected to have less geographic variability - is this the expected behavior for temporal variability? If so, why does EN4 have more temporal variability than SODA4 in the Arctic near-surface salinity? Please comment.
+Line 234: Is the implication of the "limited representative salinity observational coverage" that the salinity in EN4 and SODA4 rely on the background field? Does this explain why the variations in SODA4 salinity at depth are larger than EN4 variations? Please comment.
+Minutae:
+Line 74 - Syntax - the word "with" should be replaced by a comma.
+Lines 103-104 - should be "three/six hourly averaged"
+Line 130 - in situ should be italicized'
+Section 2.4 - in-sentence equations and symbols are offset from the text - please correct this
+Line 174 - typo - "was" not "has"
+Citation
+: https://doi.org/
+10.5194/egusphere-2025-3810-RC2
+'Reply on RC2'
+, Jim Carton, 08 Dec 2025
+We are grateful to Andrea for her careful reading and comments. We can make almost all the corrections that she has suggested.
+One issue she notes is the difference between SODA4 and EN4.2.2 temperature and salinity in the Arctic. We will add more discussion of this issue, but we also note that the Arctic is very sparsely sampled, particularly on the marginal shelves and at deeper levels. We think this lack of constraining data, and the fact that the first guess used by EN4.2.2 is a combination of persistence and monthly climatology is responsible for the differences there.
+Citation
+: https://doi.org/
+10.5194/egusphere-2025-3810-CC2
+'Reply on RC2'
+, Jim Carton, 16 Apr 2026
+final response attached
+Citation
+: https://doi.org/
+10.5194/egusphere-2025-3810-AC2
+'Comment on egusphere-2025-3810'
+, Anonymous Referee #3, 08 Dec 2025
+The manuscript describes the configuration of the new ocean reanalysis SODA4, which in comparison to its predecessor SODA3 features higher horizontal and vertical resolution, and which additionally assimilates sea ice data. The reanalysis is evaluated in terms of temperature and salinity changes, as well as transports at a few key locations.
+SODA is a widely used product and updates are useful and descriptions of those are necessary.
+The presented description/evaluation is very similar to those presented for previous products.
+However, I am missing details of a comparison to the previous product SODA3, which would allow the reader to assess the level of advancement. Only the Gulf Stream paths are intercompared for this purpose. For temperature and salinity, the manuscript also offers only an intercomparison to the objectively analysed EN4 product instead of an evaluation with the EN4 or other in situ data. Based on only intercomparisons, the evaluation of advancement and quality of the product is difficult. EN4 objectively analysed data is flawed in many ways, as it is also acknowledged in the manuscript. Therefore, the purpose of the intercomparison becomes ambiguous. It may either show the advantage of using a dynamical model for an analysis or an evaluation of the SODA4 analysis. I suggest to include a comparison to the EN4 in situ data and the previous SODA3 product as it has been done before. The purpose of the intercomparison to the EN$ analysis could be clearer. More details are below.
+Details
+l 49-50 I cannot find anything about discharge in this reference. Please clarify or correct.
+l 50-51 I suggest to include two sentences about what Fig. 1 shows. Maybe a comparison to observations could be included to provide an idea about the achieved realism.
+l 61-62 How about the the Southern Ocean https://doi.org/10.1175/JCLI-D-14-00353.1 describes 1/10 as resolving equator ward of 50N/S
+l 86-89 Why would this be a good idea ? Is there a reason to believe that the evaporated water is brought back by the rivers into the same basin? Why evaporation and not E-P? How does this bring the flux in alignment with the salinity trends The Atlantic is believed to import freshwater, It seems you put a constrain on this which would rather be something the model should deliver you., but I don't understand what has been done.
+l 88-89 I am missing more details how it was carried out, S1 states the same details about the balancing as provided here.
+l 146 Aren't the Rs the scales and the deltas the distances ?
+l 170-171 How is the heat flux modified, via a relaxation term depending on the sea ice thickness difference to the data?
+Section 3 I think details of the output files would be better presented on the web page that provides the data, best with a doi.
+Section 4.1 As EN4 may have larger errors relative to than SODA4, it is not clear what this comparison evaluates. Particularly in sparsely observed locations EN4 often falls back to climatology.
+Is the comparison an illustration of what additional information SODA4 offers or and evaluation? It would be good to give the reader some guideline.
+Figures Why sometimes temperature is K and sometimes in ˚C? Changes are sometimes in W^2/m and sometimes in ˚C/yr
+l 250 It says Drake Strait in Fig. S17
+l 262-265 Given that a large part of the AMOC variability is related to Ekman transport and resulting in RAPID and SODA4 from ERA5 the agreement between RAPID and SODA4 is surprisingly low. Is the Florida Strait transport o the upper midocean transport responsible for this?
+Table 3 How is the overturning defined. Is it at a fixed depth (which?) or the maximum? And is is in density or z-coordinates?
+l 282 293 I think for an evaluation of SODA4 a comparison to the actual in situ temperature is required. With the last sentences you seem to evaluate EN4 with SODA4. It's odd to change the reference based on occasion.
+L 313 SODA4
+Citation
+: https://doi.org/
+10.5194/egusphere-2025-3810-RC3
+'Reply on RC3'
+, Gennady Chepurin, 19 Dec 2025
+The comment was uploaded in the form of a supplement:
+https://egusphere.copernicus.org/preprints/2025/egusphere-2025-3810/egusphere-2025-3810-CC3-supplement.pdf
+Citation
+: https://doi.org/
+10.5194/egusphere-2025-3810-CC3
+'Reply on RC3'
+, Jim Carton, 16 Apr 2026
+final response attached
+Citation
+: https://doi.org/
+10.5194/egusphere-2025-3810-AC3
+Share
+Gennady A. Chepurin
+James A. Carton
+Luyu Sun
+Stephen G. Penny
+Supplement
+https://doi.org/10.5194/egusphere-2025-3810-supplement
+Gennady A. Chepurin
+James A. Carton
+Luyu Sun
+Stephen G. Penny
+Viewed
+Total article views: 5,026
+(including HTML, PDF, and XML)
+HTML
+Total
+Supplement
+BibTeX
+EndNote
+HTML: 3,052
+PDF: 1,716
+XML: 258
+Total: 5,026
+Supplement: 541
+BibTeX: 174
+EndNote: 243
+Views and downloads
+(calculated since 01 Oct 2025)
+Cumulative views and downloads
+(calculated since 01 Oct 2025)
+Viewed (geographical distribution)
+Total article views: 4,953
+(including HTML, PDF, and XML)
+Thereof 4,953 with geography defined
+and 0 with unknown origin.
+Country
+Views
+Total:
+HTML:
+PDF:
+XML:
+Cited
+Search
+4 citations as recorded by crossref.
+LETKF-based Ocean Research Analysis version 2.0 for a quasi-global domain (LORA-QG): validation and intercomparison with eddy-permitting global ocean reanalysis datasets
+S. Ohishi et al.
+https://doi.org/10.5194/os-22-2915-2026
+Impact of mesoscale eddy parameterization on Arctic Atlantic Water circulation and heat transport in the eddy-permitting grey zone
+P. Pemberton et al.
+https://doi.org/10.5194/os-22-2375-2026
+A global high-resolution temperature and salinity reconstruction by spatiotemporal multiscale correlations and dynamic height constraints
+H. Wu et al.
+https://doi.org/10.5194/essd-18-5855-2026
+Increased ocean heat transport to the central Arctic despite a well working Barents Sea Cooling Machine
+S. Eisner et al.
+https://doi.org/10.5194/os-22-1073-2026
+Search
+Latest update: 11 Oct 2026
+Gennady A. Chepurin
+Department of Atmospheric and Oceanic Science, University of Maryland, College Park, Maryland, 20742, USA
+James A. Carton
+CORRESPONDING AUTHOR
+carton@umd.edu
+https://orcid.org/0000-0003-0598-5198
+Department of Atmospheric and Oceanic Science, University of Maryland, College Park, Maryland, 20742, USA
+Luyu Sun
+https://orcid.org/0000-0001-5517-6773
+Department of Atmospheric and Oceanic Science, University of Maryland, College Park, Maryland, 20742, USA
+Stephen G. Penny
+https://orcid.org/0000-0002-5223-8307
+Sofar Ocean Technologies, 28 Pier Annex, San Francisco, CA 94105, USA
+Download
+Preprint
+(1773 KB)
+Metadata XML
+Supplement
+(2679 KB)
+BibTeX
+EndNote
+Short summary
+Ocean reanalyses reconstruct the physical state of the ocean – its temperature, salinity, and currents – using historical observations to constrain a numerical simulation of the fluid equations of motion. This paper describes the SODA4 reanalysis, which is now able to resolve the oceanic eddy field and its interactions with the large-scale flow throughout most of the ocean. Reanalyses are key to climate research because they merge messy historical observations into a continuous climate record.
+Ocean reanalyses reconstruct the physical state of the ocean – its temperature, salinity, and...
+Read more
+Share

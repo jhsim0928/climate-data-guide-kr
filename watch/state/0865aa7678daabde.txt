@@ -1,0 +1,58 @@
+# https://osi-saf.eumetsat.int/products/osi-435-complementing-osi-455
+Global Low Resolution Sea-Ice Drift Interim Climate Data Record, release 1 | OSI SAF
+Licensed under
+CC BY 4.0
+by EUMETSAT
+Information
+Demo Jupyter notebooks
+Global Low Resolution Sea-Ice Drift Interim Climate Data Record, release 1
+Demonstrational
+Climate product
+An Interim Climate Data Record of the sea-ice drift variable, associated to the Climate Data Record OSI-455. Based on Passive Microwave Radiometer data (SSMIS and AMSR2). Summer seasons are gap-filled using a Free Drift model forced with ERA5 10m wind data.
+L3+L4 daily files.
+Identification
+Acronym :
+GBL LR SIDR ICDR R1
+OSI SAF producer :
+Norwegian Meteorological Institute
+Identifier :
+OSI-435 (complementing OSI-455)
+Characteristics
+Processing level :
+L3+L4
+Satellite input :
+SSMIS and AMSR2
+Other input :
+NWP outputs (Copernicus C3S ERA5T, with ECMWF operational forecast as backup)
+Temporal sampling :
+24 h
+Central time :
+Displacement from (D-1)@12:00 to D@12:00
+Spatial coverage :
+Global
+Spatial sampling :
+75 km
+File Format(s) :
+NetCDF4
+Characteristics & methods :
+Single and multi sensor analysis. Displacement after 24 hours in km.
+Data Access
+OSI SAF FTP server
+ftp://osisaf.met.no/reprocessed_test/
+Directory: ice/drift_lr_icdr/v1
+Thredds
+https://thredds.met.no/thredds/catalog/osisaf/osisaf.html
+https://thredds.met.no/thredds/catalog/osisaf/met.no/ice/drift/435/catalog.html
+Accuracy Requirements
+Target accuracy :
+5 km
+Verification/validation method :
+Collocation with buoys. Target statistics are yearly std. dev. of the 24 hours displacement. See note at the bottom.
+Applications and users
+Usage :
+Climate models, NWP and Ocean/Ice reanalyses, environmental agencies.
+History
+On FTP server since :
+First date :
+Full series temporal coverage :
+New ticket helpdesk

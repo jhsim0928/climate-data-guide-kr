@@ -1,0 +1,825 @@
+# https://confluence.ecmwf.int/display/CKB/ERA5-Land%3A+data+documentation
+ERA5-Land: data documentation - Copernicus Knowledge Base - ECMWF Confluence Wiki
+Log in
+Copernicus Knowledge Base
+Space shortcuts
+ERA5: data documentation
+Software upgrade for geographical area extraction from data on regular lat-lon grids
+Service status
+ECMWF Training resources
+Page tree
+Browse pages
+Jira links
+tachments (30)
+Page History
+Page Information
+Resolved comments
+View in Hierarchy
+View Source
+Export to PDF
+Export to Word
+Hide Inline Comments
+Explore Built-in Scripts
+ERA5-Land: data documentation
+Created by
+Xiaobo Yang
+, last updated by
+Michela Giusti
+Sept 29, 2025
+22 minute read
+Table of Contents
+Introduction
+Here we document the
+ERA5-Land
+dataset
+that, in its consolidated version,
+covers the
+period from
+January 1950 to 2-3 months before the present
+. In addition,
+ERA5-Land-T
+version
+delivers
+non-checked
+close to Near-Real-Time (NRT)
+daily
+updates.
+ERA5-Land
+is synchronized
+with the close to NRT daily updates provided by the ERA5 climate reanalysis (ERA5T).
+ERA5-Land is a replay of the land component o
+f the ER
+A5 climate reanalysis, forced by meteorological fields from ERA5. Note that ERA5-Land
+was forced by the ERA5 Preliminary back extension, rather than by the final ERA5 back extension for data older than
+ERA5-Land uses forcing fields based on the final release of ERA5 (i.e., expver=0001) for data after 1978
+. ERA5-Land comes with a series of improvements making it more accurate for all ty
+of land applications. In particular, ERA5-Land runs at enhanced resolution (9 km vs 31 km in ERA5). The temporal frequency of the output is hourly and the fields are masked for all oceans, making them lighter to handle. Click
+this link here
+for comparison of the ERA5-Land features against other ECMWF reanalys
+ERA5-Land is produced under a single simulation, without coupling to the atmospheric module of the ECMWF's Integrated Forecasting System (IFS) or to the ocean wave model of the IFS.
+It runs without data assimilation
+, making it computationally affordable for relatively quick updates. For example, if significant improvements of the land surface model are implemented
+the whole or part of the dataset can be reprocessed in a relatively short period. Also, updates are possible in case improved auxiliary datasets are used as input for the production.
+Observations indirectly influence the simulation through the atmospheric forcing of ERA5. This forcing drives
+ERA5-Land single simulation and it has been obtained
+assimilating observations through a 4D-VAR data assimilation system and a Simplified Extended Kalman Filter.
+The core of ERA5-Land is the Tiled ECMWF Scheme for Surface Exchanges over Land incorporating land surface hydrology (H-TESSEL). It uses version CY45R1 of the IFS.
+Currently, ERA5-Land dataset contains only one (9 km) high resolution realisation (HRES). Uncertainty information can currently be used from the reduced resolution ten member ensemble (EDA) of ERA5. The data are available at a sub-daily and monthly frequencies.
+For convention
+and consistency
+with the previous ERA-Interim/Land dataset,
+the data parameters are labelled as analyses and short
+(24 hour)
+forecasts
+initialised once daily from analyses at 00 UTC. Accumulation parameters are only available from
+forecasts and the convention used in ERA5-Land differs from that for ERA5.
+Currently, the data
+can only be downloaded on a regular latitude/longitude grid of 0.1
+x0.1
+via the CDS catalogue
+. ECMWF member states with access to the ECMWF Meteorological Archival and Retrieval System (MARS) can also retrieve the data in the native grid.
+NOTE
+Please, note that
+since 1st Jan 2020
+the new ECMWF Meteorological Interpolation and Regridding interpolation package (
+) has been used to interpolate the atmospheric forcing of ERA5 into the ERA5-Land grid. While this change will be unnoticeable for the overwhelming majority of users, locally and under very limited conditions (some areas with high orography, some coastal points) some fields may suffer of a very small discontinuity this day.
+Land Surface Model
+H-TESSEL is the land surface model that is the basis of ERA5-Land. The H-TESSEL version used in the production of ERA5-Land corresponds to that of the
+IFS model documentation CY45R1.
+Data organisation and access
+full ERA5-Land and ERA5-Land-T
+data are archived in the ECMWF data archive (MARS) and the data have been copied to the Climate Data Store (CDS).
+ERA5-Land (or recent ERA5-Land-T)
+data should be downloaded using the CDS catalogue or the CDS API, which can obtain data from the CDS copy or from MARS (Member State users can access the data using MARS directly, in the usual manner). Documentation on how to use the CDS API to download ERA5-Land data can be found
+here
+. The installation and downloading steps are similar to those of ERA5.
+A couple of downloading examples to extract the data using the CDS API are given below:
+#!/usr/bin/env python
+import cdsapi
+c = cdsapi.Client()
+c.retrieve(
+'reanalysis-era5-land',
+'format':'grib',
+'time':[
+'00:00','01:00','02:00',
+'03:00','04:00','05:00',
+'06:00','07:00','08:00',
+'09:00','10:00','11:00',
+'12:00','13:00','14:00',
+'15:00','16:00','17:00',
+'18:00','19:00','20:00',
+'21:00','22:00','23:00'
+'day':'01',
+'month':'01',
+'year':'2013',
+'variable':'snow_depth_water_equivalent',
+'snow_20130101_era5land.grib')
+#!/usr/bin/env python
+import cdsapi
+c = cdsapi.Client()
+c.retrieve(
+'reanalysis-era5-land',
+'variable':'runoff',
+'year':'2013'
+'month':'01',
+'day':'01',
+'time':'12:00',
+'format':'grib'
+'runoff_00-12_20130101_era5land.grib')
+The data in the native grid can be accessed from MARS using the keywords
+class="l5"
+expver=0001
+. Subdivisions of the data are labelled using the keywords '
+stream
+' and '
+type
+The keyword '
+levtype
+' should be set to '
+' for all the
+fields in ERA5-Land.
+Stream:
+oper: HRES sub-daily
+mnth: HRES synoptic monthly means
+moda: HRES monthly means of daily means
+Type (for convention):
+an: analyses
+fc: forecasts
+Levtype:
+sfc: surface or single level
+Convention used in
+MARS:
+the date and time of the data is specified with three MARS keywords, '
+date
+', '
+time
+' and '
+step
+'. For parameters labelled as analyses (see
+list of parameters
+step=0
+hours so that date and time specify the analysis time.
+All forecasts start at 00UTC (
+time=00
+hours), and
+for parameters labelled as forecasts (see
+list of parameters
+date
+specifies the forecast
+start
+day and
+step
+specifies the number of hours since the start of the forecast, with a maximum of
+step=24
+hours. The combination of
+date
+time
+and forecast
+step
+defines the valid
+ity date/
+time. For analyses, the valid
+ity date/
+time is equal to the analysis date/time.
+Convention used in the CDS:
+'analyses' are provided if available for a particular parameter, otherwise forecasts are provided. T
+he date and time of the data is specified using the validity
+date/time
+, so
+step
+does not need to be specified. For parameters labelled as forecasts
+in MARS,
+steps between 1 and 24 hours have been used to provide data for all the vali
+dity t
+imes within 24 hours, see Table 0 below.
+Table 0: the mapping, for forecasts, between MARS
+date, time
+step
+and the CDS
+date
+time
+date time
+MARS
+date time step
+date time
+MARS
+date time step
+date 00
+date-1 0 24
+date 12
+date 0 12
+date 01
+date 0 1
+date 13
+date 0 13
+date 02
+date 0 2
+date 14
+date 0 14
+date 03
+date 0 3
+date 15
+date 0 15
+date 04
+date 0 4
+date 16
+date 0 16
+date 05
+date 0 5
+date 17
+date 0 17
+date 06
+date 0 6
+date 18
+date 0 18
+date 07
+date 0 7
+date 19
+date 0 19
+date 08
+date 0 8
+date 20
+date 0 20
+date 09
+date 0 9
+date 21
+date 0 21
+date 10
+date 0 10
+date 22
+date 0 22
+date 11
+date 0 11
+date 23
+date 0 23
+Spatial grid
+The ERA5-Land HRES dataset has been produced at a resolution of 9 km, (~0.08
+) and in a (octahedral) reduced Gaussian grid (represented as TCo1279).
+Currently, the uncertainty of the fields is to be obtained
+from the ERA5 EDA dataset, which has a resolution of 62km (~0.56
+The article "
+Model grid box and time step"
+might be useful.
+The data is referenced in the horizontal with respect to the WGS84 ellipse (which defines the major/minor axes) and in the vertical it is referenced to the EGM96 geoid over land but over ocean it is referenced to mean sea level, with the approximation that this is assumed to be coincident with the geoid. For more information on the relationship between mean sea level and the geoid, see for example
+Gregory et al. (2019)
+Temporal frequency
+For sub-daily data for the HRES (
+stream=oper
+) the parameters labelled as analyses (
+type=an
+) are available hourly.
+The once daily short forecasts, run from 00 UTC, also provide data hourly, with steps from 01 to 24.
+The uncertainty is currently provided by ERA5 EDA fields, which are available every 3 hours
+for the surface fields.
+Data update frequency
+Initial release data, i.e. data with just a few days behind real time, is called
+ERA5-Land-T
+. Both for the CDS and MARS, daily updates for ERA5-Land-T are available about 5 days behind real time and monthly mean updates are available about 5 days after the end of the month.
+The daily updates for ERA5-Land-T data on the CDS occur at no fixed time during the day.
+For the CDS, ERA5-Land-T data for a month is overwritten by the final ERA5-Land data about two months after the month in question.
+For MARS, the final ERA5-Land data are available about two months after the month in question. In addition, the last few months of data are kept online and can be accessed much quicker than older data on tape.
+In the event that serious flaws are detected in ERA5-Land-T, the latter could be different to the final consolidated ERA5-Land data. Based on experience with the production of ERA5-Land so far, our expectation is that such an event would occur only when a flaw in the atmospheric forcing (from ERA5) is detected, and the expectation is that the latter occur only on rare occasions.
+Accumulations
+Please, note that
+the convention for accumulations used in ERA5-Land differs with that for ERA5
+The accumulations in the short forecasts of ERA5-Land (
+with hourly steps from 01 to 24
+) are treated the same as those in ERA-Interim or ERA-Interim/Land, i.e., they are accumulated from the beginning of the forecast to the end of the forecast step. For example, runoff at
+day=D
+step=12
+will provide runoff accumulated from
+day=D
+time=0
+day=D, time=12
+. The maximum accumulation is over 24 hours, i.e., from
+day=D, time=0
+day=D+1,time=0
+step=24
+HRES: accumulations are from 00 UTC to the hour ending at the forecast step
+For the CDS time, or validity time, of 00 UTC, the accumulations are over the 24 hours ending at 00 UTC i.e. the accumulation is during the previous day
+Synoptic monthly means (stream=mnth): accumulations have units of "variable_units per forecast_step hours"
+Monthly means of daily means (stream=moda): accumulations have units that include "per day", see section
+Monthly means
+In addition to the sub-daily data, all ERA5-Land parameters are also available as monthly means. Monthly means are available in two forms:
+Synoptic monthly means
+, for each particular time and forecast step (stream=
+mnth
+- in the CDS, referred to as "
+monthly averaged by hour of day
+Monthly means of daily means
+, for the month as a whole (stream=
+moda
+in the CDS, referred to as "
+monthly averaged
+". These monthly means are created from the hourly data for the HRES.
+Monthly means for:
+parameters labelled as analyses or instantaneous forecasts
+are created from data with a valid time in the month, between 00 and 23 UTC on each day of the month.
+accumulations are created from data with a forecast period falling within the month. Monthly means of daily means for accumulations are created from the last forecast step (24) of the forecasts for each day of the month.
+The accumulations in monthly means of daily means (stream=moda) have units that include "
+per day
+". So for accumulations in this stream:
+The hydrological parameters are in units of "m of water equivalent per day" and so they should be multiplied by 1000 to convert to
+mmday
+The energy (turbulent and radiative) and momentum fluxes should be divided by 86400 seconds (24 hours) to convert to the commonly used units of
+, respectively.
+The accumulations in synoptic monthly means (stream=mnth) have units that include "
+variable_units per forecast_step hours
+". So for accumulations in this stream:
+The hydrological parameters are in units of "m of water equivalent per forecast_step hours" and so they should be multiplied by 1000 to convert to
+per forecast_step hours
+mm per forecast_step hours
+The energy (turbulent and radiative) and momentum fluxes should be divided by
+60 x 60 x fc_step
+to convert to the units of
+, respectively.
+Data format
+Surface fields in ERA5-Land are encoded
+either in GRIB1 or
+GRIB2 format.
+Tables 1 and 2
+indicate
+the format for all parameters in ERA5-Land. Note that the retrieval of the data in NetCDF format is still
+an option available
+via the CDS.
+The article "
+What are GRIB files and how can I read them
+might be helpful.
+For GRIB format, ERA5-Land-T data can be identified by the key expver=0005 in the GRIB header. Consolidated ERA5-Land data is identified by the key expver=0001.
+For netCDF data requests which return just ERA5-Land or just ERA5-Land-T data, there is no means of differentiating between ERA5-Land and ERA5-Land-T data in the resulting netCDF files.
+For netCDF data requests which return a mixture of ERA5-Land and ERA5-Land-T data, the origin of the variables (1 or 5) will be identifiable in the resulting netCDF files. See this
+link
+for more details applied to ERA5 data.
+Parameter listings
+Tables 1 and 2 below describe the surface parameters available in ERA5-Land (
+levtype=sfc
+). Information on all ECMWF parameters is available from the
+ECMWF parameter database
+For the sake of completeness, most of the
+forcing fields used to run ERA5-Land are included
+in the catalogue. Note, however, that
+these fields have purely been interpolated to the ERA5-Land grid and they are not obtained by running the land surface model (
+i.e., a purely linear interpolation based on a triangular mesh
+. They are included in Table 1 and Table 2 below under the column "Used as forcing field".
+Auxiliary land invariant parameters
+are attached here below, already interpolated to a regular lat/lon grid of 0.1
+x0.1
+. Relevant information about how to use/interpret these fields are in chapter 8 of
+https://www.ecmwf.int/en/elibrary/18714-ifs-documentation-cy45r1-part-iv-physical-processes
+, and plots of these fields are in chapter 11.
+Parameters described as "instantaneous" in Table 2 are
+valid at the specified time
+Note that in the tables below, "
+" and "
+" is just a label used for convention to archive the data in MARS.
+Please note that with the release of the latest version of ecCodes, some shortNames and names have changed. As a result, some of the shortNames in the tables below will need to be updated. Until this is completed, please use the relevant entry in the parameter database as official reference for the shortNames and names.
+Table 1: surface parameters:
+invariants (in time)
+name
+download link
+units
+shortName
+paramId
+GRIB1
+GRIB2
+netCDF4
+Geopotential
+(GRIB version 1)
+Geopotential
+(GRIB version 2)
+Geopotential
+(netCDF4)
+m**2 s**-2
+Lake cover
+(GRIB version 2)
+Lake cover
+(netCDF4)
+Lake total depth
+Lake total depth (GRIB version 2)
+Lake total depth (netCDF4)
+Land-sea-mask
+(GRIB version 2)
+Land-sea mask
+(netCDF4)
+Low vegetation cover
+(GRIB version 2)
+Low vegetation cover
+(netCDF4)
+High vegetation cover
+(GRIB version 2)
+High vegetation cover
+(netCDF4)
+Glacier mask
+(GRIB version 2)
+Glacier mask
+(netCDF4)
+Proportion
+Soil type
+(GRIB version 2)
+Soil type
+(netCDF4)
+Type of low vegetation
+(GRIB version 1)
+Type of low vegetation
+(netCDF4)
+Type of high vegetation
+(GRIB version 1)
+Type of high vegetation
+(netCDF4)
+Table 2: stream=oper/mnth/moda, levtype=sfc: surface parameters:
+instantaneous
+name
+units
+Variable name in CDS
+shortName
+paramId
+GRIB1
+GRIB2
+Used as forcing field
+Lake mix-layer temperature
+lake_mix_layer_temperature
+lmlt
+Lake mix-layer depth
+lake_mix_layer_depth
+lmld
+Lake bottom temperature
+lake_bottom_temperature
+lblt
+Lake total layer temperature
+lake_total_layer_temperature
+ltlt
+Lake shape factor
+dimensionless
+lake_shape_factor
+lshf
+Lake ice temperature
+lake_ice_temperature
+lict
+Lake ice depth
+lake_ice_depth
+licd
+Snow cover
+snow_cover
+snowc
+Snow depth
+snow_depth
+Snow albedo
+snow_albedo
+Snow density
+kg m**-3
+snow_density
+Volumetric soil water layer 1
+m**3 m**-3
+volumetric_soil_water_layer_1
+swvl1
+Volumetric soil water layer 2
+m**3 m**-3
+volumetric_soil_water_layer_2
+swvl2
+Volumetric soil water layer 3
+m**3 m**-3
+volumetric_soil_water_layer_3
+swvl3
+Volumetric soil water layer 4
+m**3 m**-3
+volumetric_soil_water_layer_4
+swvl4
+Leaf area index, low vegetation
+m**2 m**-2
+leaf_area_index_low_vegetation
+lai_lv
+Leaf area index, high vegetation
+m**2 m**-2
+leaf_area_index_high_vegetation
+lai_hv
+Surface pressure
+surface_pressure
+Soil temperature level 1
+soil_temperature_level_1
+stl1
+Snow depth water equivalent
+m of water equivalent
+snow_depth_water_equivalent
+10 metre U wind component
+m s**-1
+10m_u_component_of_wind
+10 metre V wind component
+m s**-1
+10m_v_component_of_wind
+2 metre temperature
+2m_temperature
+2 metre dewpoint temperature
+2m_dewpoint_temperature
+Soil temperature level 2
+soil_temperature_level_2
+stl2
+Soil temperature level 3
+soil_temperature_level_3
+stl3
+Skin reservoir content
+m of water equivalent
+skin_reservoir_content
+Skin temperature
+skin_temperature
+Soil temperature level 4
+soil_temperature_level_4
+stl4
+Temperature of snow layer
+temperature_of_snow_layer
+Forecast albedo
+forecast_albedo
+Layer
+Range
+Layer 1
+0 - 7 cm
+Layer 2
+7 - 28 cm
+Layer 3
+28 - 100 cm
+Layer 4
+100 - 289 cm
+Leaf Area Index (LAI)
+parameters are based on a monthly climatology as explained
+IFS model documentation CY45R1
+. So the users will only see monthly variability, but not inter-annual variability.
+Table 3: stream=oper/mnth/moda, levtype=sfc: surface parameters:
+accumulations
+name
+units
+Variable name in CDS
+shortName
+paramId
+GRIB1
+GRIB2
+Used as forcing field
+Surface runoff
+surface_runoff
+Sub-surface runoff
+sub_surface_runoff
+ssro
+Snow evaporation
+m of water equivalent
+snow_evaporation
+Snowmelt
+m of water equivalent
+snowmelt
+smlt
+Snowfall
+m of water equivalent
+snowfall
+Surface sensible heat flux
+J m**-2
+surface_sensible_heat_flux
+sshf
+Surface latent heat flux
+J m**-2
+surface_latent_heat_flux
+slhf
+Surface solar radiation downwards
+J m**-2
+surface_solar_radiation_downwards
+ssrd
+Surface thermal radiation downwards
+J m**-2
+surface_thermal_radiation_downwards
+strd
+Surface net solar radiation
+J m**-2
+surface_net_solar_radiation
+Surface net thermal radiation
+J m**-2
+surface_net_thermal_radiation
+Total Evaporation
+m of water equivalent
+total_evaporation
+Runoff
+runoff
+Total precipitation
+total_precipitation
+Evaporation from the top of canopy
+m of water equivalent
+evaporation_from_the_top_of_canopy
+evatc
+Evaporation from bare soil
+m of water equivalent
+evaporation_from_bare_soil
+evabs
+Evaporation from open water surfaces excluding oceans
+m of water equivalent
+evaporation_from_open_water_surfaces_excluding_oceans
+evaow
+Evaporation from vegetation transpiration
+m of water equivalent
+evaporation_from_vegetation_transpiration
+evavt
+Potential evaporation
+potential_evaporation
+Accumulations are described in section
+ERA5-Land: data documentation#accumulations
+. The accumulations in monthly means (stream=moda/mnth) are described in section
+monthly means
+Guidelines
+ctual evapotranspiration
+in the ERA5-Land datasets is called "Total Evaporation" (param ID 182)
+and is the sum of the following four evaporation components:
+Evaporation from bare soil
+Evaporation from open water surfaces excluding oceans
+Evaporation from the top of canopy
+Evaporation from vegetation transpiration
+For the ERA5-Land datasets, actual evapotranspiration
+and it's four components
+can be downloaded from the
+C3S Climate Data Store (CDS) under the category heading "Evaporation and Runoff".
+For details about the computation of
+actual evapotranspiration,
+please see Chapter 8 of Part IV : Physical processes, of the IFS documentation:
+ERA5-Land IFS cycle 45r1
+potential evapotranspiration
+in the ERA5-Land CDS dataset is given by the parameter
+potential evaporation (pev)
+Pev data can be downloaded from the CDS under the category heading "Evaporation and Runoff", in the "Download data" tab for the ERA5-Land datasets.
+definitions of
+potential and reference evapotranspiration
+may vary according to the scientific application and can
+have the same definition in some cases
+. Users should therefore ensure that the definition of this parameter is suitable for their application.
+Please note that to give more flexibilty to users, PEV in ERA5 and ERA5Land are not computed in the same way:
+ERA5: the definition of
+PEV in ERA5
+computed for
+agricultural
+land as if it is well watered (
+no soil moisture stress
+) and assuming that the atmosphere is not affected by this artificial surface condition.
+ERA5Land: the definition of
+PEV in ERA5Land
+is computed as an open water evaporation (
+Pan evaporation
+) and assuming that the atmosphere is not affected by this artificial surface condition.
+Please note that based on ERA5-Land atmospheric forcing, other independent (offline) methods such us "Priesley-Taylor
+(1972) , Schmidt
+(1915) or de Bruin
+(2000)" can also be used to estimate Potential evapotranspiration.
+PRIESTLEY, C. H. B., & TAYLOR, R. J. (1972). On the Assessment of Surface Heat Flux and Evaporation Using Large-Scale Parameters,
+Monthly Weather Review
+(2), 81-92. Retrieved Aug 27, 2021, from
+https://journals.ametsoc.org/view/journals/mwre/100/2/1520-0493_1972_100_0081_otaosh_2_3_co_2.xml
+Schmidt,
+Strahlung und Verdunstung an freien Wasserflächen; ein Beitrag zum Wärmehaushalt des Weltmeers und zum Wasserhaushalt der Erde (Radiation and evaporation over open water surfaces; a contribution to the heat budget of the world ocean and to the water budget of the earth)
+Ann. Hydro. Maritimen Meteor.
+de Bruin,
+H. A. R.
+, and
+Stricker
+J. N. M.
+Evaporation of grass under non-restricted soil moisture conditions
+Hydrol. Sci. J.
+, doi:
+Independently whether a model grid point is over a lake or not, the IFS computes lake variables all over the globe, at each grid-box. This is to ease output field aggregation at diverse model resolutions and to have a warm start of the model with shorter spin-up time if lake cover is upgraded, i.e., it is still a decent lake initial condition if lake location are updated or a new lake is added operationally. Lake depths (input parameter for our lake parametrization) are specified for each grid-box either with in-situ values or with a default 25 m value; over ocean we use ocean bathymetry. Worth to mention that the later default values will be changed soon (extra information in
+this HESS reference
+). The computed lake variable values are not taken into account in the total grid-box flux calculations if lake is not present in the grid-box.
+The lake fields provided in ERA5-Land can be used in combination with the lake location. The latter in the model is determined by lake cover field (
+parameter name CL
+, in fraction: 0 - grid-box has no lakes, 1 - grid-box is fully covered with lake/s). Lake depths are presented in
+the field DL
+(in meters).
+The ECMWF model also contains an ice module, a snow module and a bottom sediments module. The present setup of the IFS is running with no bottom sediment and snow modules (snow accumulation over ice is not allowed and snow parameters are used only for albedo purposes). In the implementation in the IFS lake ice can be fractional within a grid-box with inland water (10 cm of ice means 100 % of a grid-box or tile is covered with ice; 0 cm of ice means 100 % of the grid-box is covered by water; in between a linear interpolation is applied) (
+Manrique-Sunen et al., 2013
+). At present, the water balance equation is not included for lakes and the lake depth and surface area are kept constant in time (
+IFS Documentation, 2017, chapter 8 and 11
+). Lake parametrization also requires the lake fraction CL, lake depth DL (preferably bathymetry), and lake initial conditions. DL is the most important external
+parameter that uses the lake parametrization.
+Known issues
+ERA5-Land forecast parameters are missing for the validity time of 1st January 1950 00 UTC.
+As it was done for ERA5, the original plan for ERA5-Land was to provide an estimate of the uncertainty fields based on a dedicated 10-member ensemble run. The latter generated an ensemble of forcing fields that should, in principle, reproduce the space of uncertainty for the land surface fields. The first experiments demonstrated that the spread of the ensemble was clearly under dispersive, i.e. the uncertainty was unrealistically low. A reason for this is the low spread shown by the ensemble of ERA5 forcing fields.
+As a result of these experiments we took the decision of not providing the uncertainty fields of ERA5-Land. The opposite would have assigned, for instance, unrealistically high confidence to ERA5-land fields in a data assimilation experiment.
+Our recommendation is, for the time being, to use the uncertainty estimate of the corresponding ERA5 field, which should provide a second order approximation to the estimate of the real uncertainty.
+Future experiments will also perturbe, among other, key land surface model parameters, therefore providing a more realistic spread of the ERA5-Land ensemble surface fields.
+Three components of the total evapotranspiration have values swapped as follows:
+- variable "
+Evaporation from bare soil
+mars parameter code
+228101 (evabs)
+) has the values corresponding to the "
+Evaporation from vegetation transpiration
+mars parameter
+228103 (evavt
+- variable "
+Evaporation from open water surfaces excluding oceans
+mars parameter code 228102 (evaow
+) has the values corresponding to the "
+Evaporation from bare soil
+mars parameter code 228101 (evabs)
+- variable "
+Evaporation from vegetation transpiration
+mars parameter code 228103 (evavt)
+) has the values corresponding to the "
+Evaporation from open water surfaces excluding oceans
+mars parameter code 228102 (evaow)
+Low values of snow cover and snow depth were found on the eastern side of the Antarctic ice sheet, as shown in Fig. 1. The issue is due to the application of an old glacier mask to the Antarctica, which excludes the patch shown in the figure as glacier. Inaccuracies in the glacier mask are due to errors in satellite measurements datasets. While, due to the lower horizontal resolution, in ERA5 this ice sheet part is a sea point, in ERA5-Land the area is categorised as land without an initial ice mass. Since the initialization doesn't consider a glacier there (estimated at a constant 10 m of snow water equivalent), the low amount of precipitation along with potential excess of sublimation makes them to obtain unrealistic low numbers there.
+Fig 1: ERA-Land Snow depth (m of water equivalent) on 01-01-2015 eastern side of the Antarctic ice sheet.
+From 1950-1978 ERA5-Land was forced by the preliminary ERA5 back extension which has a
+sub-optimal representation for a number of tropical cyclones
+The over-estimation of a number of tropical cyclones for this period affects some products over the oceans in the vicinity of tropical cyclone tracks. Over land much smaller impact is expected, and therefore, the effect on the ERA5-Land product from 1950-1978 is more limited.
+This is supported by the figure below that plots, for each location, the minimum pressure from the ERA5 forcing (top panels) and the maximum daily accumulated total precipitation for ERA5-Land (lower panels) for the (preliminary) back extension (left panels) and for the period from the late 1970s to 2010 inclusive (right panels). Note that these show the most extreme situations, i.e., the absolute extremes in the about 30-year periods that were considered in each plot. Less extreme statistics, like 99, 95 (etc.) percentiles or mean distributions will show a much smaller impact of tropical cyclones.
+From these panels it is seen that for the forcing from ERA5 (top panels), in general, local minimum pressure is similar between 1950-1978 and 1979-2010. There are of course sampling differences between the two, each about 30-year, periods. Large differences that are likely related to anomalously strong tropical cyclones are very localized, such as for some areas over North Australia, East Madagascar, Philippines and Northeast China. Note again that these affect a few cases only in the 29-year dataset.
+The effect on the ERA5-Land precipitation is shown in the lower panels. Even for these extremes it is difficult to pin-point locations that could be affected by anomalous tropical cyclones.
+Caption: locally minimum of 6-hourly pressure for ERA5 forcing data (top panels) and maximum daily total precipitation (lower panels) over the indicated period of time for the back extension (left panels) and for later periods (right panels). Numbers represent the averages for the locally extreme values over the indicated areas.
+Note that on 18-11-2021 we modified the definition of Potential Evaporation (PEV) provided in the CDS catalogue entry for both, the hourly and the monthly fields. The reason is that until this date the definition of PEV was similar to that of the same field provided by ERA5, whereas in reality they are computed differently:
+PEV in ERA5
+computed for
+agricultural
+land as if it is well watered (
+no soil moisture stress
+) and assuming that the atmosphere is not affected by this artificial surface condition.
+PEV in ERA5-Land
+is computed as an open water evaporation (
+Pan evaporation
+) and assuming that the atmosphere is not affected by this artificial surface condition.
+An issue with the
+ERA5-Land monthly averaged data from 1950 to present
+dataset was identified in January 2024
+on both CDS discs and MARS tapes.
+It affects the following part of the dataset:
+Product:
+Monthly averaged reanalysis
+Time period:
+from September 2022 to February 2024
+Area:
+Global
+Variables:
+all accumulated variables (please refer to
+Table 3 in ERA5-Land documentation
+Incorrect data for period September 2022 to February 2024 is no longer available to download using the interactive CDS
+Download data form
+over the web, but remains accessible for the time being via CDS API or direct MARS access.
+Incorrect data from September 2022 to February 2024 will not be replaced on CDS discs nor MARS tapes.
+Instead users can
+recover the same (and correct) data using the product monthly averaged reanalysis by hour of day at 00:00.
+A fix was implemented for ERA5-Land monthly averaged data stored on CDS discs in time for the release of March 2024 monthly averaged data (i.e. from March 2024 onwards).
+Locations with high values of snow depth indicate glaciers areas.
+For these locations (and over ice) a standard snow depth value of 10 m is placed.
+This means that any snow depth values of 10 m and above are to be regarded as glacier locations where snow depth is not well known.
+Resolved issues
+ERA5-Land-T rewritten 1st - 6th January 2025:
+At the turn of 2025, an unfortunate technical issue with the production of ERA5 resulted in a large part of satellite observations not being used. This led to small but systematic differences, impacting mainly humidity in the tropics, and in lesser extent other ERA5 parameters as well from the 1st of January 2025 onwards. The issue was resolved and ERA5T and ERA5-Land-T were rewritten with the correct data from 12 UTC 1
+January to 12 UTC 6th January 2025. The consolidated ERA5 and ERA5-Land will contain these corrected values.
+How to cite the ERA5-Land dataset
+In addition to the terms and conditions of the license(s), users
+must
+cite the CDS catalogue entry;
+provide clear and visible attribution to the Copernicus programme and attribute each data product used;
+Step 1
+: Check the
+licence
+for attribution/reference clause.
+Step 2
+: Cite the CDS catalogue entry (as traceable source of data).
+Step 3
+: Provide clear and visible attribution to the Copernicus programme and attribute each data product used (to accredit the creators of the data).
+Throughout the content of your publication, the dataset used is referred to as Author (YYYY).
+The 3-steps procedure above is illustrated with this example:
+Use Case 1: ERA5-Land hourly data from 1950 to present
+For complete details, please refer to
+How to acknowledge and cite a Climate Data Store (CDS) catalogue entry and the data published as part of it
+Reference articles
+J. Muñoz-Sabater, Dutra, E., Agustí-Panareda, A., Albergel, C., Arduini, G., Balsamo, G., Boussetta, S., Choulga, M., Harrigan, S., Hersbach, H., Martens, B., Miralles, D. G., Piles, M., Rodríguez-Fernández, N. J., Zsoter, E., Buontempo, C., and Thépaut, J.-N.: ERA5-Land: A state-of-the-art global reanalysis dataset for land applications, Earth Syst. Sci. Data,13, 4349–4383, 2021.
+https://doi.org/10.5194/essd-13-4349-2021
+ERA5-Land news
+Further ERA5-Land references and related information are available from the
+ECMWF website
+This document has been produced in the context of the Copernicus Climate Change Service (C3S).
+The activities leading to these results have been contracted by the European Centre for Medium-Range Weather Forecasts, operator of C3S on behalf of the European Union (Delegation Agreement signed on 11/11/2014 and Contribution Agreement signed on 22/07/2021). All information in this document is provided "as is" and no guarantee or warranty is given that the information is fit for any particular purpose.
+The users thereof use the information at their sole risk and liability. For the avoidance of all doubt , the European Commission and the European Centre for Medium - Range Weather Forecasts have no liability in respect of this document, which is merely representing the author's view.
+Related articles
+Page:
+ERA5 - Q & A
+Page:
+ENSO impacts (based on ERA5 reanalysis)
+Page:
+The family of ERA5 datasets
+Page:
+How to download ERA5 from the Climate Data Store (CDS)
+Page:
+ERA5: data documentation
+era5-land
+owned-single-by-daq
+Overview
+Community Forums
+Content Tools
+Feedback:
+C3S User Satisfaction Survey
+CAMS User Satisfaction Survey
+Training:
+ECMWF training resources
+Web:
+C3S Help and Support
+CAMS Help and Support
+Powered by
+Atlassian Confluence
+(confluence-1: 546f19f7)
+Printed by Atlassian Confluence 10.2.19
+Report a bug
+Atlassian News
+Atlassian
+{"serverDuration": 408, "requestCorrelationId": "286498954141f9e5"}

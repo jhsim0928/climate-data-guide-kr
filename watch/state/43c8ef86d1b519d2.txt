@@ -1,0 +1,64 @@
+# https://www.soda.umd.edu/soda3
+SODA3: Simple Ocean Data Assimilation | University of Maryland
+SODA3
+Reanalysis
+Simple Ocean Data Assimilation • University of Maryland
+Overview
+National Science Foundation
+funded Simple Ocean Data Assimilation (SODA) project provides retrospectively integrated, spatially complete reconstructions of the global historical ocean climate. The project goal is to provide a uniform picture of the evolving global ocean/sea ice system at 5-dy time intervals beginning January, 1980. One example application is to provide the global context for process studies.
+The method uses sparse physical oceanic/sea ice observations (including satellite SST and in situ temperature and salinity profiles) as constraints to guide the evolution of high-resolution numerical ocean models driven by specified atmospheric forcings. These constraints are imposed using sequential data assimilation. The version described here, known as SODA3 (more precisely SODA3.15.2), has ‘eddy-permitting’ ¼-deg horizontal resolution. For those users calculating closed heat or salt budgets a parallel simulation with no data assimilation, soda3.15.2.0, is also provided. The latest version of SODA, SODA4, has much finer ‘eddy-resolving’ 0.1-deg horizontal resolution which is required to resolve near-shore environments, shallow processes, or processes where flow instabilities dominate.
+Dataset Metadata
+Data Type
+Gridded reanalysis variables (NetCDF format)
+Horizontal Resolution
+0.25° x 0.25° grid (~28km at the equator)
+Vertical Resolution
+50 vertical ocean layers
+Surface Forcing
+ECMWF ERA5
+Assimilation Method
+Sequential analysis filter with multi-day updates & bias corrections
+Key Variables
+Ocean Temperature, Salinity, Sea Level, Zonal/Meridional Velocities, Sea Ice Concentration
+Download Gateway & File Formats
+💡 File structures and naming conventions are detailed in the
+SODA3 Readme Document
+Select your requested dataset configuration below. You can copy bulk download command strings directly into terminal contexts or fetch files via targeted mirrors.
+Direct Data Server Mirror
+Access directories containing raw NetCDF data catalogs, index schemas, and multi-version libraries directly via HTTP OPeNDAP storage pathways.
+Go to Data Server
+5-Day Files
+Original Grid:
+~1/4°x1/4° displaced pole non-Mercator horizontal grid, 50 z* levels. (Ocean: 1.9Gb / Ice: 77Mb)
+wget -r -l1 --no-parent --progress=bar -nd -A 'soda3.15.2_5dy_ocean_*.nc' http://dsrs.atmos.umd.edu/DATA/soda3.15.2/ORIGINAL/ocean/
+wget -r -l1 --no-parent --progress=bar -nd -A 'soda3.15.2_5dy_ice_*.nc' http://dsrs.atmos.umd.edu/DATA/soda3.15.2/ORIGINAL/ice/
+Regridded Grid:
+Convenient 1/2°x1/2° Mercator grid, 50 z* levels. (Ocean: 286Mb / Ice: 15Mb)
+wget -r -l1 --no-parent --progress=bar -nd -A 'soda3.15.2_5dy_ocean_reg_*.nc' http://dsrs.atmos.umd.edu/DATA/soda3.15.2/REGRIDED/ocean/
+wget -r -l1 --no-parent --progress=bar -nd -A 'soda3.15.2_5dy_ice_reg_*.nc' http://dsrs.atmos.umd.edu/DATA/soda3.15.2/REGRIDED/ice/
+Monthly Files
+Roughly 500 monthly average files on a regular 1/2°x1/2° Mercator grid at 50 z* vertical levels. (Ocean: 286Mb / Ice: 15Mb)
+wget -r -l1 --no-parent --progress=bar -nd -A 'soda3.15.2_mn_ocean_reg_*.nc' http://dsrs.atmos.umd.edu/DATA/soda3.15.2/REGRIDED/ocean/
+wget -r -l1 --no-parent --progress=bar -nd -A 'soda3.15.2_mn_ice_reg_*.nc' http://dsrs.atmos.umd.edu/DATA/soda3.15.2/REGRIDED/ice/
+Direct Granular Links (By Year Archive):
+10-Day Files
+Analysis Increments:
+Regular 1°x1° Mercator grid, upper 33 z* vertical levels. (25Mb each)
+wget -r -l1 --no-parent --progress=bar -nd -A.nc http://dsrs.atmos.umd.edu/DATA/soda3.15.2/SODA
+Volume Transports:
+Original ~1/4°x1/4° displaced pole grid, 50 z* levels. (600Mb each)
+wget -r -l1 --no-parent --progress=bar -nd -A.nc http://dsrs.atmos.umd.edu/DATA/soda3.15.2/ORIGINAL/transport
+Grid Accuracy Note:
+Basin-integrated transport calculations (such as evaluating AMOC) must be conducted on the
+original grid
+to systematically avoid truncation errors found in standard remapped configurations.
+Citations & Support
+Users of SODA3 datasets are requested to acknowledge the SODA3 project and cite the primary methodology paper:
+Carton, J.A., G.A. Chepurin, and L. Chen (2018), SODA3: a new ocean climate reanalysis, Journal of Climate, 31, 6967-6983. https://doi.org/10.1175/JCLI-D-18-0149.1
+Contact Details
+Principal Investigator:
+Dr. James A. Carton
+Institution:
+Dept. of Atmospheric and Oceanic Science (AOSC), University of Maryland
+Support Email:
+carton@umd.edu

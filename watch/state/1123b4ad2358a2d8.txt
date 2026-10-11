@@ -1,0 +1,122 @@
+# https://osi-saf.eumetsat.int/products/osi-405-d
+Global Low Resolution Sea-Ice Drift | OSI SAF
+Licensed under
+CC BY 4.0
+by EUMETSAT
+Information
+Description
+Quicklook
+Quality monitoring
+Production status
+Demo Jupyter notebooks
+Documentation
+ATBD
+Global Low Resolution Sea-Ice Drift
+Operational
+Near real time product
+Gridded sea-ice drift vector fields obtained from satellite image processing. It is a low resolution product (62. resolution). Ice motion vectors with a time span of 48 hours are estimated by an advanced cross-correlation method (the Continuous MCC, CMCC). Several single-sensor products are available, along with a merged (multi-sensor) dataset. This near-real-time product is intended for routine monitoring and data assimilation. For climate application, please use the OSI SAF sea-ice drift Climate Data Record (OSI-455).
+Identification
+Acronym :
+GBL LR SIDR
+EUMETSAT collection ref. :
+EO:EUM:DAT:MULT:GBL-LR-SIDR
+OSI SAF producer :
+Norwegian Meteorological Institute
+Identifier :
+OSI-405-d
+Digital object identifier (DOI)
+10.15770/EUM_SAF_OSI_NRT_2007
+Id for archive (APNM) :
+OSIDRGB
+Licence/Attribution/Citation :
+CC BY 4.0
+See below
+Characteristics
+Processing level :
+Satellite input :
+GCOM-W/AMSR2 and Metop/ASCAT
+Other input :
+ECMWF outputs
+Temporal sampling :
+1 per day
+Central time :
+Timeliness :
+The timeliness is the time elapsing from the sensing time of the last contributing file to the product dissemination to users. It is similar to the latency.
+Spatial coverage :
+Global
+Spatial sampling :
+62.5 km
+Projection :
+Polar stereographic
+File Format(s) :
+NetCDF4
+Characteristics & methods :
+Single and multi sensor analysis.
+Displacement after 48 hours in km.
+Data Access
+OSI SAF FTP server (last 31 days)
+ftp://osisaf.met.no/prod/
+Directory: ice/drift_lr/
+OSI SAF FTP server (archive)
+ftp://osisaf.met.no/archive/
+Directory: ice/drift_lr/
+OSI SAF Thredds
+https://thredds.met.no/thredds/catalog/osisaf/osisaf.html
+https://thredds.met.no/thredds/catalog/osisaf/osisaf_seaicedrift.html
+EUMETSAT Multicast
+EUMETCast
+EUMETSAT Archive
+EUMETSAT Data Centre
+Direct link
+Redistribution by Copernicus Marine Service
+https://marine.copernicus.eu/
+Direct link
+Accuracy Requirements
+Target accuracy :
+5 km yearly std deviation on both x and y components after 48 hours displacement
+Verification/validation method :
+Collocation with buoys
+Applications and users
+Usage :
+NWP and Ocean/Ice models, operational Met and Sea Ice services.
+History
+Authorised to be operational / released :
+Declared operational / released since :
+On EUMETCast since :
+On EDC since :
+On FTP server since :
+First date :
+Full series temporal coverage :
+2009-onwards
+Detailed history :
+The product series is operational since 2009:
+version OSI-405 from 2009 to 2015
+version OSI-405-b from 2015 to 30/05/2017
+version OSI-405-c from 30/05/2017 to 04/03/2025
+version OSI-405-d from 04/03/2025
+without DMSP/SSMIS data from 17/07/2025, see
+service message #3321
+Transitioning from AMSR2 input data to AMSR3 input data in July-August 2026. See
+dedicated story
+Licence/Attribution/Citation
+Licence :
+CC BY 4.0
+Attribution :
+You must include
+attribution
+to EUMETSAT OSI SAF
+Recommended citation :
+EUMETSAT OSI SAF, Global Low Resolution Sea Ice Drift (2025), OSI-405-d, doi:10.15770/EUM_SAF_OSI_NRT_2007
+References :
+BibteX entry
+Comments
+In 2017, a new variable, the product uncertainties, was introduced in the files for OSI-405-c: it provides an uncertainty value (aka expected accuracy) for each grid location, it holds the standard deviation of the uncertainty in the components of the ice drift displacement vectors.
+In 2025, for OSI-405-d, the changes are mainly technical :
+output now in NetCDF4, instead of NetCDF3,
+replace ASCAT Metop-B with Metop-C,
+changes in the product global attributes.
+Please note also that OSI SAF products are licensed under the
+Creative Commons Attribution 4.0 International License (CC BY 4.0)
+by EUMETSAT. See
+OSI SAF usage policy and acknowledgement
+New ticket helpdesk

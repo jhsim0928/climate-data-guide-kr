@@ -1,0 +1,107 @@
+# https://climatedataguide.ucar.edu/climate-data/sst-data-cobev3-centennial-situ-observation-based-estimates-version-3
+SST Data: COBEv3: Centennial in situ Observation-Based Estimates Version 3 | Climate Data Guide
+SST Data: COBEv3: Centennial in situ Observation-Based Estimates Version 3
+Teaser image
+Main content
+The Centennial in situ Observation-Based Estimates of Sea Surface Temperature version 3 (COBE-SST3) is a SST analysis produced by the Japanese Meteorological Agency (JMA). The main COBE-SST3 reconstruction provides spatially complete estimates of SST over the global oceans, seas, and large lakes at daily temporal resolution on a regular 0.25° grid. The product currently covers 1850-2020 with plans to extend to the present day and make operational. The product is gridded from in situ observations from the ICOADS Database 3.0 release and uses remote sensed observations indirectly as part of the spatial model used to estimate patterns of daily SST variability. The main COBE-SST3 product is comparable to other major centennial SST products such as DCENT, ERSST, HadISST, and HadSST. Following the state-of-the-art in uncertainty quantification, COBE-SST3 has a 300 member uncertainty ensemble (referred to as "Perturbations" or `perturb` in their language) available for download that spans known sources of uncertainty. In general, the robustness of findings using this dataset should be confirmed with both the uncertainty ensemble as well as other modern SST products.
+There are currently three additional sister products of COBE-SST3: (1) COBE-SST3H, (2) COBE-LSAT3, and (3) COBE-STEMP3. The first, COBE-SST3H is an SST analysis that directly utilizes satellite observations and thus is restricted to a time period starting in 1982. This product is comparable to NOAA OISST and other remote sensed SST products. The second two products are a historical land surface air temperature (LSAT) reconstruction and a global temperature product from 1850-2020 which combines the SST reconstruction and LSAT reconstruction to reconstruction global temperature.
+Key Strengths
+Long record from 1850-2020 with daily, 0.25° degree, globally complete SST fields reconstructed from in situ observations.
+Uncertainty characterized through a 300-member ensemble accounting for errors in the global, daily reconstruction.
+Utilizes globally-complete SST observations from satellites in the spatial infilling model rather than climate model or reanalysis output.
+Key Limitations
+The data is currently only extended until 2020, but a near-operational version is in development.
+The corrections to known SST biases in the early 20th century are likely insufficient.
+Low accuracy and underestimated variability of sea ice concentration prior to the satellite era. In particular, the Antarctic sea ice concentration is climatology.
+Please cite data sources, following the data providers' instructions
+Suggested Data Citation
+Ishii, M., Nishimura, A., Yasui, S., & Hirahara, S. (2025). Historical High-Resolution Daily SST Analysis (COBE-SST3) with Consistency to Monthly Land Surface Air Temperature. Journal of the Meteorological Society of Japan. Ser. II, 103(1), 17-44.
+https://doi.org/10.2151/jmsj.2025-002
+Dataset DOIs
+None
+Hosted Climate Index Files
+None
+Data Access
+COBE-SST3 Archive at MRI-JMA
+Usage Restrictions
+None
+Expert Developer Guidance
+The following was contributed by
+Dr. Masayoshi Ishii
+from the Meteorological Research Institute (MRI) at the Japanese Metrological Agency (JMA), September, 2025:
+Overview
+COBE-SST3 (Ishii et al., 2025) is a spatially complete, interpolated daily 0.25° x 0.25° sea surface temperature (SST) product for 1850 to 2020, achieving consistency with monthly land surface air temperature (LSAT) and SIC. It combines SSTs from ICOADS Release 3.0 (Freeman et al., 2017), satellite sea ice concentration (SIC; Ishii et al., 2005) observations and the Arctic SIC database (Walsh et al., 2017), and LSAT observations from GHCN version 4 (Menne et al., 2018).
+The SST analysis is defined as the sum of the climatology, low-frequency components, interannual monthly variations, and daily variations. The climatology is based on in-situ and satellite SST observations. The low frequency components are 31-year running mean SSTs estimated from monthly in-situ SST and monthly LSAT observations averaged in each 1° x 1° box. The interannual and daily variations are reconstructed using empirical orthogonal functions (EOFs) computed from monthly and daily SST analyses conducted prior to the reconstructions.
+The daily SST analysis, not reconstruction, is produced by optimum interpolation using in-situ and satellite SST observations on a 0.25° x 0.25° grid. This is referred to as COBE-SST3H. The 1° x 1° monthly SST reconstruction is conducted simultaneously with the LSAT reconstruction using the covariance structures between SST and LSAT (Fig. 1). The monthly LSAT analysis is referred to as COBE-LSAT3. The climatology and the EOFs for the monthly LSAT are computed from JRA-55. The final product, COBE-SST3, is daily 0.25° x 0.25° reconstruction using only in-situ observations for the period from 1850 to 2020, together with the 300 perturbations.
+COBE-SST3 uses all types of SST observations archived in ICOADS Release 3.0. The SST observations separately for each type are adjusted to those of drifting buoy and Argo with a single correction value defined each year. These corrections are obtained by using the Folland-Parker’s bucket correction (Folland and Parker, 1995), night-time marine air temperatures (NMAT) from HadNMAT2 (Kent et al., 2013), and LSATs of CRUTEM5 (Osborn and Jones, 2014). COBE-SST3H uses four sun-synchronous polar-orbiting satel- lites: Pathfinder AVHRR, AMSR-E, AMSR2, and WindSat. These satellite observations are adjusted to bias-corrected in-situ SSTs. The comparable data sets of COBE-SST3 include HadISST and ERSST, and that for COBE-SST3H is high-resolution OISSTv2.
+What are the key strengths of the dataset?
+COBE-SST3 provides globally covered SSTs since 1850 on a daily basis together with analysis errors to indicate uncertainties of COBE-SST3.
+The analysis errors provided for each spatio-temporal grid point take into account the uncertainties in climatology, low-frequency components, interannual monthly variations, and daily variations.
+The 300 daily perturbations (Fig. 2) are computed. Their spread is equivalent to the above-mentioned analysis errors. The perturbations are random yet continuous in space and time. Additionally, the SIC perturbations are computed to be consistent with the SST perturbations.
+The monthly SST variations are consistent with those of LSAT especially in coastal areas, around islands, and in low latitudes (Fig. 1).
+Rather steep changes seen in historical SST and NMAT analyses including COBE-SST2 during the early 1940s become moderate in COBE-SST3 due to the new SST bias corrections, which minimize the differences in intradecadal-scale NMAT-LSAT anomalies.
+The freezing temperature of sea ice is defined as a function of climatological salinity of World Ocean Atlas 2005 edition (Boyer et al., 2006), as introduced previously in COBE-SST2. In other words, a constant value such as -1.85°C is not used.
+The sister products, COBE-SST3H, COBE-LSAT3, and COBE-STEMP3 are available. Additionally, the monthly 1° x 1° surface temperatures produced by combining COBE-SST3 and COBE-LSAT3 is available as COBE-STEMP3.
+What are the key limitations of the dataset?
+The analysis method used in COBE-SST3 is designed to minimize the influence in regard to unevenness of spatio-temporal data distributions. However, the reliability is actually low when the observations are scarce. Users are therefore recommended to refer to the analysis errors and the data availability information included in the data files.
+COBE-SST3 does not use satellite SST observations directly, but it uses the EOFs computed from the satellite data instead. Consequently, COBE-SST3 exhibits less variability than COBE-SST3H (Fig. 3).
+Although the SST biases are thought to vary over time and in space, a single value is used in COBE-SST3 for each measurement type such as bucket, engine room intake, etc. Consequently, COBE-SST3 may be biased in certain basins. The bias corrections prior to World War II remain uncertain, leaving scope for improvement. Furthermore, the corrections applied during this period are partly dependent on HadNMAT2 and CRUTEM5.
+Accuracy and variability of the sea ice concentration prior to the satellite era are low. In particular, the Antarctic sea ice concentration is given a climatology.
+COBE-SST3 does not represent skin temperatures but typical ocean temperatures at depths within several meters from the sea surface.
+The daily mean COBE-SST3H are rather uncertain when compared with NCEP OIS- STv2. A careful treatment of satellite observations may be needed to reduce their uncertainties.
+Typical Research Applications
+COBE-SST3 is applicable to a wide range of weather and climate analysis studies, and to climate simulation studies involving dynamical models for which the SSTs are used as boundary conditions. The perturbations can be used to evaluate uncertainties in user-defined area averages in a nonparametric manner, as well as ensemble experiments with dynamical models. COBE-SST3 is an update of the previous COBE-SST series (Ishii et al., 2005; Hirahara et al., 2014) which is operational at the Japan Meteorological Agency.
+Moreover, the COBE-SST products have been used for historical analyses of ocean subsurface temperature and salinity (Ishii et al., 2006; Ishii et al., 2017), Japanese reanalysis series: JRA-25, JRA-55, and JRA- 3Q (Onogi et al., 2007; Kobayashi et al., 2015; Kosaka et al., 2024), a climate reanalysis: OCADA (Ishii et al., 2024), seasonal prediction (Hirahara et al., 2023), decadal climate prediction (Tatebe et al., 2012), and large ensemble climate simulations (d4PDF: Mizuta et al., 2017, Ishii and Mori, 2020).
+Data Access
+All products formatted with netCDF can be found at:
+https://climate.mri-jma.go.jp/pub/archives/Ishii-et-al_COBE-SST3/
+. These products are currently available up to 2020 and will be extended to the latest years when possible. They are listed below:
+COBE-SST3: monthly and daily 0.25° x 0.25°, and daily 0.25° x 0.25°, 300-member ensemble of perturbations (uncertainty ensemble)
+COBE-SST3H: daily 0.25° x 0.25°
+COBE-LSAT3: monthly 1° x 1°
+COBE-STEMP3: monthly 1° x 1°
+Cite this page
+Acknowledgement of any material taken from or knowledge gained from this page is appreciated:
+Ishii, Masayoshi & National Center for Atmospheric Research Staff (Eds). Last modified
+"The Climate Data Guide: SST Data: COBEv3: Centennial in situ Observation-Based Estimates Version 3.” Retrieved from
+https://climatedataguide.ucar.edu/climate-data/sst-data-cobev3-centennial-situ-observation-based-estimates-version-3
+on 2026-10-10.
+Citation of datasets is separate and should be done according to the data providers' instructions. If known to us, data citation instructions are given in the Data Access section, above.
+Acknowledgement of the Climate Data Guide project is also appreciated:
+Schneider, D. P., C. Deser, J. Fasullo, and K. E. Trenberth, 2013: Climate Data Guide Spurs Discovery and Understanding. Eos Trans. AGU, 94, 121–122,
+https://doi.org/10.1002/2013eo130001
+Key Figures
+Figure 1:
+Monthly mean SSTs and LSATs (contours) and their anomalies (shade;°C) of COBE-SST3 and COBR-LSAT3 in March 2005. Contours are shown every 2°C and 4°C for SST and LSAT, respectively.
+Figure 2:
+ENSO Uncertainty quantification as shown by the daily Nino-3 SSTs (°C) of the perturbed (gray) and 300 unperturbed (red) COBE-SST3 in year 2005.
+Figure 3:
+Daily mean SSTs (contour) and their anomalies (shades;°C) of a) COBE-SST3 and b) COBE-SST3H on March 15th, 2005. Contours are shown every 2°C.
+Other Information
+Earth system components and main variables
+Ocean
+SST - sea surface temperature
+Type of data product
+Gridded from obs
+Dataset collections
+None
+Key Publications
+(Ishii et al. 2025) Documentation paper of COBE-SST3
+SST Data: COBEv3: Centennial in situ Observation-Based Estimates Version 3
+Years of Record
+1900-01 to 2020-01
+Main variables
+Ocean
+SST - sea surface temperature
+Dataset collections
+None
+Type of data product
+Gridded from obs
+Institution and PIs
+M. Ishiii (MRI, JMA)
+About the experts
+Pages with expert guidance by Ishii, Masayoshi
+SST Data: COBEv3: Centennial in situ Observation-Based Estimates Version 3
+Related pages
+SST Data Sets: Overview & Comparison Table
+Global Temperature Data Sets: Overview & Comparison Table

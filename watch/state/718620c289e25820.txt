@@ -1,0 +1,84 @@
+# https://www.soda.umd.edu/soda4
+SODA4: Simple Ocean Data Assimilation | University of Maryland
+SODA
+SODA4
+Reanalysis
+Simple Ocean Data Assimilation • University of Maryland
+Overview
+National Science Foundation
+funded Simple Ocean Data Assimilation (SODA) project provides retrospectively integrated, spatially complete reconstructions of
+the global historical ocean climate. The project goal is to provide a uniform, continuous picture of the evolving global ocean/sea ice system beginning January, 1980.
+The algorithm uses sparse physical oceanic/sea ice observations (including satellite SST, sea ice concentration, and in situ temperature and salinity profiles)
+as physical constraints to guide the evolution of a high-resolution numerical model. These constraints are applied via a modified version of the
+optimal interpolation
+data assimilation algorithm (derived based on minimizing a quadratic cost function).
+The latest iteration,
+SODA4
+(specifically the
+soda4.15
+stream series), represents a step forward from the eddy-permitting architecture of
+SODA3. SODA4 introduces a
+global eddy-resolving 0.1° horizontal resolution
+and enhanced vertical resolution, for more accurate mapping of
+near-shore environments, shallow coastal processes,
+and narrow currents, and mixed layers where flow instabilities are important. For SODA4 we have also upgraded things such as the topographic map, ocean observations, and discharge data sets.
+Dataset Metadata
+Data Type
+Gridded mesoscale ocean/sea ice reanalysis variables (NetCDF-4 format)
+Temporal Range
+45-year continuous timeline:
+1980 – 2024 currently
+Horizontal Resolution
+0.1° x 0.1° global grid (~10km at the equator; eddy-resolving)
+Vertical Resolution
+Enhanced vertical resolution ocean layers
+Numeric Numerics
+GFDL MOM5 Ocean Model / SIS1 Sea Ice Numerics
+Surface Forcing
+ECMWF ERA5
+Assimilation Method
+Optimal Interpolation (OI) sequential analysis algorithm
+Observational Constraints
+Satellite SST, In situ T/S profiles (WOD/Argo), and Sea Ice Concentration properties
+Download Gateway & File Formats
+💡 File structures and naming conventions are detailed in the
+SODA4 Readme Document
+Select your requested dataset configuration below. You can copy bulk download command strings directly into terminal contexts or fetch files via targeted mirrors.
+Direct Data Server Mirror
+Access directories containing raw NetCDF data catalogs, index schemas, and multi-version libraries directly via HTTP OPeNDAP storage pathways.
+Go to Data Server
+5-Day Files
+Original Grid:
+~1/10°x1/10° displaced pole non-Mercator horizontal grid, 75 z* levels. (Ocean: 5.3GGb / Ice: 0.15Gb)
+wget -r -l1 --no-parent --progress=bar -nd -A 'soda4.15.2_5dy_ocean_*.nc' https://dsrs.atmos.umd.edu/DATA/SODA4.15.2_OR/ocean/
+wget -r -l1 --no-parent --progress=bar -nd -A 'soda4.15.2_5dy_ice_*.nc' https://dsrs.atmos.umd.edu/DATA/SODA4.15.2_OR/ice/
+Regridded Grid:
+Convenient 1/10°x1/10° Mercator grid currently at every other z* vertical level. (Ocean: 1.8Gb / Ice: 0.03Gb)
+wget -r -l1 --no-parent --progress=bar -nd -A 'soda4.15.2_5dy_ocean_reg_*.nc' https://dsrs.atmos.umd.edu/DATA/SODA4.15.2_REG/ocean/
+wget -r -l1 --no-parent --progress=bar -nd -A 'soda4.15.2_5dy_ice_reg_*.nc' https://dsrs.atmos.umd.edu/DATA/SODA4.15.2_REG/ice/
+Monthly Files
+Roughly 500 monthly average files on a regular 1/10°x1/10° Mercator grid currently at every other z* vertical level. (Ocean: 1.8Gb / Ice: 0.03Gb)
+wget -r -l1 --no-parent --progress=bar -nd -A 'soda4.15.2_mn_ocean_reg_*.nc' https://dsrs.atmos.umd.edu/DATA/SODA4.15.2_REG/ocean/
+wget -r -l1 --no-parent --progress=bar -nd -A 'soda4.15.2_mn_ice_reg_*.nc' https://dsrs.atmos.umd.edu/DATA/SODA4.15.2_REG/ice/
+Direct Granular Links (By Year Archive):
+10-Day Files
+Analysis Increments:
+Regular 1°x1° Mercator grid, upper 33 z* vertical levels.
+wget -r -l1 --no-parent --progress=bar -nd -A.nc https://dsrs.atmos.umd.edu/DATA/soda4.15.2/SODA
+Volume Transports:
+Original displaced pole grid, 75 z* levels. (2.3Gb each)
+wget -r -l1 --no-parent --progress=bar -nd -A.nc https://dsrs.atmos.umd.edu/DATA/SODA4.15.2_OR/transport
+Grid Accuracy Note:
+Basin-integrated transport calculations (such as evaluating AMOC) must be carried out on the
+original grid
+to avoid truncation errors that will be introduced if using the remapped dataset.
+Citations & Contact
+When using this dataset for publications, research, or process studies, please use the following primary scientific reference:
+Chepurin, G. A., Carton, J. A., Sun, L., and Penny, S. G., 2025: SODA4: a mesoscale ocean/sea ice reanalysis 1980–2024, EGUsphere [preprint], DOI:10.5194/egusphere-2025-3810.
+Contact and Inquiries
+For feedback, questions regarding data availability, or to report problems in the reanalysis, please contact:
+Dr. James A. Carton
+Department of Atmospheric and Oceanic Science
+University of Maryland, College Park, MD 20742
+Email:
+carton@umd.edu

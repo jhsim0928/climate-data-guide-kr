@@ -1,0 +1,158 @@
+# https://nsidc.org/data/g02202/versions/6
+NOAA/NSIDC Climate Data Record of Passive Microwave Sea Ice Concentration, Version 6 | National Snow and Ice Data Center
+NOAA/NSIDC Climate Data Record of Passive Microwave Sea Ice Concentration, Version 6
+Data set id:
+G02202
+DOI: 10.7265/b18j-z797
+Data Citation and Acknowledgment
+As a condition of using these data, you must cite the use of this data set. Such a practice gives credit to data set producers and advances principles of transparency and reproducibility.
+Meier, W. N., Fetterer, F., Windnagel, A. K., Stewart, J. S. & Stafford, T. (2026).
+NOAA/NSIDC Climate Data Record of Passive Microwave Sea Ice Concentration
+. (G02202, Version 6). [Data Set]. Boulder, Colorado USA. National Snow and Ice Data Center.
+https://doi.org/10.7265/b18j-z797
+describe subset used if applicable
+]. Date Accessed 10-11-2026.
+Copied
+Other standard citation formats may be found on the
+DOI Citation Formatter website
+(paste
+10.7265/b18j-z797
+into the top form field).
+Describing subset: When applicable, include the information a reader would need to extract the same subset at the end of your citation. If multiple or complex steps were incolved, it may be more appropriate to include this information in the paper itself.
+See our
+Citation Policies
+for more details about how to structure your data citation.
+Subscribe here to receive email updates of the data set G02202
+COMPREHENSIVE Level of Service
+Data:
+Data integrity and usability verified; data customization services available for select data
+Documentation:
+Key metadata and comprehensive user guide available
+User Support:
+Assistance with data access and usage; guidance on use of data in tools and data customization services
+See All Level of Service Details
+This is the most recent version of these data.
+Version Summary
+* Added AMSR2 as the input brightness temperature source beginning 1 January 2025.
+* Removed the AMSR2 prototype sea ice concentration (prototype_am2 group) that was included in CDR Version 5.
+* Fixed a bug that allowed sea ice concentration values less than 10% to be considered during land spillover corrections.
+* Updated Python code to use current versions of core libraries, including NumPy and Xarray.
+Overview
+This data set provides a Climate Data Record (CDR) of sea ice concentration from passive microwave data. The CDR algorithm output is a rule-based combination of ice concentration estimates from two well-established algorithms: the NASA Team (NT) algorithm (Cavalieri et al. 1984) and NASA Bootstrap (BT) algorithm (Comiso 1986). The CDR is a consistent, daily and monthly time series of sea ice concentrations from 25 October 1978 through the most recent processing for both the north and south polar regions. All data are on a 25 km x 25 km grid.
+Note: A near-real-time version of this data set also exists to fill the gap between the time that this data set is updated through to the present. The data set is called the Near-Real-Time NOAA/NSIDC Climate Data Record of Passive Microwave Sea Ice Concentration (
+https://nsidc.org/data/g10016
+Parameter(s):
+SEA ICE CONCENTRATION
+Platform(s):
+DMSP 5D-2/F11
+DMSP 5D-2/F13
+DMSP 5D-2/F8
+DMSP 5D-3/F17
+GCOM-W1
+Nimbus-7
+Sensor(s):
+AMSR2
+SMMR
+SSM/I
+SSMIS
+Data Format(s):
+NetCDF
+Temporal Coverage:
+25 October 1978 to present
+Temporal Resolution:
+1 day
+1 month
+Spatial Resolution:
+25 km
+Spatial Reference System(s):
+NSIDC Sea Ice Polar Stereographic North
+EPSG:3411
+NSIDC Sea Ice Polar Stereographic South
+EPSG:3412
+Spatial Coverage:
+Northern latitude
+Southern latitude
+Eastern longitude
+Western longitude
+Northern latitude
+Southern latitude
+Eastern longitude
+Western longitude
+Blue outlined yellow areas on the map below indicate the spatial coverage for this data set.
+View Metadata Record
+Data Access
+HTTPS File System Location
+https://noaadata.apps.nsidc.org/NOAA/G02202_V6/
+How to access and download NOAA@NSIDC data
+This help article explains how to access the data via HTTPS, wget and with Python and R scripts.
+Documentation
+User Guide
+NOAA/NSIDC Climate Data Record of Passive Microwave Sea Ice Concentration, Version 6
+ATBDs
+Climate Algorithm Theoretical Basis Document (C-ATBD) Sea Ice Concentration V6
+NSIDC Special Reports
+Special Report 29: NOAA/NSIDC Climate Data Record of Passive Microwave Sea Ice Concentration Version 6 Updates
+Help Articles
+General Questions & FAQs
+Descriptions of and differences between the NASA Team and Bootstrap algorithms
+NSIDC currently archives passive microwave sea ice concentration products based on two algorithms: the NASA Team algorithm and the Bootstrap algorithm. Both algorithms were developed by researchers at the NASA Goddard Space Flight Center in the 1980s.
+Read More
+How to Articles
+How to access NOAA@NSIDC data sets in PolarWatch
+Currently three NOAA@NSIDC data sets are available in NOAA's PolarWatch Data Catalog. Please note that in the catalog the Climate Data Record (CDR) data sets are split up into Antarctic and Arctic data sets:
+Read More
+How to download CDR data from PolarWatch and map it using R
+This external R tutorial guides you through an R script for the NOAA/NSIDC Climate Data Record of Passive Microwave Sea Ice Concentration data in PolarWatch:
+Read More
+Rendering Links ...
+News & Analyses
+News & Stories
+Sea Ice Today
+Ice Sheets Today
+Snow Today
+About our Analyses
+Multimedia
+Data
+Explore Data
+Visualize Data
+Submit Data
+User Resources
+Get Started with Data
+Data Announcements
+Help Center
+Data Tools
+Documents
+Levels of Service
+NASA Earthdata Forum
+Data Programs
+About our Programs
+NASA National Snow and Ice Data Center Distributed Active Archive Center (NSIDC DAAC)
+NOAA at NSIDC
+Exchange for Observations and Local Knowledge of the Arctic (ELOKA)
+Data Policies
+Our Research
+Learn
+What is the Cryosphere?
+Parts of the Cryosphere
+Arctic Weather & Climate
+Frozen Ground & Permafrost
+Glaciers
+Ice Sheets
+Ice Shelves
+Sea Ice
+Snow
+Ask a Scientist
+Cryosphere glossary
+About
+About NSIDC
+What We Do
+Our People
+Published Research
+Our History
+Careers
+50th Anniversary
+For the Media
+Contact Us
+Citation Policies
+Protecting Your Privacy
+Land Acknowledgement

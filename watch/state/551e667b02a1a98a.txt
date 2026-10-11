@@ -1,0 +1,98 @@
+# https://www.data.jma.go.jp/tcc/tcc/products/elnino/cobesst2_doc.html
+Description of Daily Sea Surface Analysis for Climate Monitoring and Predictions (COBE-SST) / TCC
+TCC home
+About TCC
+Site Map
+Contact us
+Home
+World Climate
+Climate System Monitoring
+El Niño Monitoring
+NWP Model Prediction
+Global Warming
+Climate in Japan
+Training Module
+Press release
+Links
+HOME
+El Niño Monitoring
+> Description of Daily Sea Surface Analysis for Climate Monitoring and Predictions (COBE-SST version 2)
+Description of Daily Sea Surface Analysis for Climate Monitoring and Predictions (COBE-SST version 2)
+» Page : COBE-SST version 1
+Notice:
+JMA has been providing COBE-SST version 2 since December 2021. COBE-SST version 2 data are available on the
+NEAR-GOOS site
+Introduction
+JMA produces historical SST datasets via analysis systems known as Centennial In Situ Observation-Based Estimates of the Variability of SST and Marine Meteorological Variables (COBE; Ishii et al. 2005) and COBE2 (Hirahara et al. 2014). Since May 2021, COBE2 has been operated and its SST component (COBE-SST version 2, called COBE-SST2) has been utilized in century-scale monitoring of global warming and in the historical Ocean Data Assimilation System (
+MOVE/MRI.COM-G3
+Outline of COBE-SST2
+Horizontal resolution
+COBE-SST2 has a resolution of 1º latitude and 1º longitude.
+The east-west grid points start at 0.5ºE and end at 0.5ºW, while the north-south grid points start at 89.5ºS and at 89.5ºN.
+Observation and related usage
+The historical database of in situ observations used in the SST analysis is the International Comprehensive Ocean and Atmosphere Data Set (ICOADS) release 2.5 (Woodruff et al. 2011).
+Analysis is based on multi-time-scale analysis (MTA), and deviation of the previous day's analysis from the normal is multiplied by 0.95 for use as a first guess.
+Analysis is performed on a daily basis with data for 31 days centered on the day of interest.
+Observations are aggregated daily for each call sign and averaged in a 1º x 1º grid box at their location and time in order to form super-observation data, which are later used in for optimal interpolation.
+SST analysis
+To minimize the effects of distortion relating to changes in observation distribution on SST analysis, the SST analysis scheme is based on the MTA.
+In this analysis, a daily SST field is constructed as a sum of secular trends, interannual variations and daily changes.
+The secular trend is defined as the leading empirical orthogonal function (EOF) of annual mean SST anomalies of bias-corrected in situ observations averaged in 5º x 5º boxes during the period from 1845 to 2010.
+The leading EOF for 2010 is used from 2011 onward, and interannual variations are reconstructed using EOFs, whose computation is based on SST analysis using optimal interpolation (OI) with bias-corrected satellite and in situ observations for the period from 1961 to 2005.
+SST anomalies on a monthly time scale are estimated daily using in situ observations for the periods within 15 days either side of analysis.
+Interannual variations are defined as 90% of SST monthly anomaly variations incorporating 133 EOF modes.
+Daily changes are reconstructed regularly via the OI method with available observations, and are defined as variations relative to 31-day mean SSTs as departures from those on the previous day.
+Bias correction
+Bias correction for past SST observation reports is based on Folland and Parker (1995) in consideration of estimation for the biases of individual SST measurement types such as insulated/uninsulated buckets and engine room intake.
+The bias of observations with no measurement type information is defined as a mixture of those from specified measurement types.
+Quality control for observation data is based on checking the tracks of ship and drifting buoy, dates and positions in reports, and any erroneous data are corrected automatically when marine meteorological data are compiled at JMA.
+Drifting buoy data and ship call signs with large data biases are automatically blacklisted in daily analysis based on the checking of such biases in the three-month period whose central month contains the day in question.
+In operational analysis, SSTs recorded over the past 30 days are re-analyzed sequentially every day with a delay of 31 days for the earliest analysis and 1 day for the latest in order to allow the utilization of delayed data and make the blacklist with the previous three months of data to be checked.
+SST estimation for ice-covered regions
+Information on sea ice concentration is used to estimate SSTs in the Arctic and Antarctic oceans.
+SST estimation for ice-covered regions involves statistical relations between sea-ice concentration and SSTs for consideration of freezing points in sea water as a function of climatological sea surface salinity.
+Comparison between COBE-SST2 and COBE-SST
+Table 1 : Comparision between COBE-SST2 and COBE-SST
+Name of analysis system
+COBE-SST
+COBE-SST2
+Start of operation
+March 2006
+May 2021
+Horizontal resolution
+1º (longitude) x 1º (latitude)
+Covering period
+from January 1891 to May 2023
+from January 1850 to latest
+Historical database of in situ observations
+ICOADS 2.0
+ICOADS 2.5
+SST analysis method
+optimum interpolation (OI) method
+MTA (Multi-Time-scale analysis) including OI
+Bias corrected observations
+bucket observation
+bucket, ERI, and unknown-type observation
+SST in ice-covered regions
+constant freezing point of seawater (FPS)
+variable FPS depending on seasons and sea areas
+COBE-SST2 efficacy
+COBE-SST2 exhibits lower uncertainty than COBE-SST in analysis data for Nino-3 SST anomalies during World Wars I and II, regardless of data sparsity.
+The reconstruction scheme for interannual SST variations also contributes to improvement of monthly SST analysis for southern ocean areas.
+In addition, large SST variability in Kuroshio-Oyashio extension regions and along the Gulf Stream is represented better in COBE-SST2, which as a whole exhibits improved accuracy in relation to climate analysis/prediction.
+Daily updated operational SST data are utilized or will be utilized for the following, along with historical data:
+Monitoring of equatorial Pacific SSTs, El Niño/La Niña evolution, Pacific Decadal Oscillation and global warming over 100 years,
+Input for the operational ocean data assimilation system (named
+MOVE/MRI.COM-G3
+) and historical oceanic analysis,
+Input for the Japanese Reanalysis for Three Quarters of a Century (JRA-3Q).
+References
+Folland, C. K. and D. E. Parker, 1995: Correction of instrumental biases in historical sea surface temperature data.
+Q. J. R. Meteorol. Soc.
+Hirahara, S., M. Ishii, and Y. Fukuda, 2014: Centennial-scale sea surface temperature analysis and its uncertainty.
+J. Climate
+Ishii, M., A. Shouji, S. Sugimoto, and T. Matsumoto, 2005: Objective Analyses of Sea-Surface Temperature and Marine Meteorological Variables for the 20th Century using ICOADS and the Kobe Collection.
+Int. J. Climatol.
+page top
+Tokyo Climate Center, Climate Prediction Division.
+Legal Notice

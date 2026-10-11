@@ -1,0 +1,194 @@
+# https://catalogue.ceda.ac.uk/uuid/4a9654136a7148e39b7feb56f8bb02d2/
+Dataset Record: ESA Sea Surface Temperature Climate Change Initiative (SST_cci): Level 4 Analysis product, version 3.0
+This website uses cookies.
+By continuing to use this website you are agreeing to our use of cookies.
+About
+News
+Search Catalogue
+Get Data
+Deposit
+Tools
+Sign in
+Register
+Dataset
+View XML
+ESA Sea Surface Temperature Climate Change Initiative (SST_cci): Level 4 Analysis product, version 3.0
+Permitted Use:
+Open Access
+Download
+Related Documents
+Update Frequency:
+Irregular
+Latest Data Update:
+Status:
+Ongoing
+Online Status:
+ONLINE
+Publication State:
+Citable
+Publication Date:
+DOI Publication Date:
+Download Stats:
+last 12 months
+Dataset Size:
+16.25K Files | 243GB
+Citations: 1
+Abstract
+This dataset provides daily-mean sea surface temperatures (SST), presented on global 0.05° latitude-longitude grid, spanning 1980 to present. This is a Level 4 product, with gaps between available daily observations filled by statistical means.
+The SST CCI Analysis product contains estimates of daily mean SST and sea ice concentration. Each SST value has an associated uncertainty estimate.
+The dataset has been produced as part of the version 3 Climate Data Record (CDR) produced by the European Space Agency (ESA) Climate Change Initiative Sea Surface Temperature project (ESA SST_cci). The CDR accurately maps the surface temperature of the global oceans over the period 1980 to 2021 using observations from many satellites, with a high degree of independence from in situ measurements. The data provide independently quantified SSTs to a quality suitable for climate research.
+Data from 2022 onwards are provided as an Interim Climate Data Record (ICDR) and will be updated daily at one month behind present. The Copernicus Climate Change Service (C3S) funded the development of the ICDR extension and production of the ICDR during 2022. From 2023 onwards the production of the ICDR is funded by the UK Earth Observation Climate Information Service (EOCIS) and Marine and Climate Advisory Service (MCAS).
+This CDR Version 3.0 product supersedes the CDR v2.1 product. Compared to the previous version the major changes are:
+* Longer time series: 1980 to 2021 (previous CDR was Sept 1981 to 2016)
+* Improved retrieval to reduce systematic biases using bias-aware optimal methods (for single view sensors)
+* Improved retrieval with respect to desert-dust aerosols
+* Addition of dual-view SLSTR data from 2016 onwards
+* Addition of early AVHRR/1 data in 1980s, and improved AVHRR processing to reduce data gaps in 1980s
+* Use of full-resolution MetOp AVHRR data (previously used ‘global area coverage’ Level 1 data)
+* Inclusion of L2P passive microwave AMSR data
+Data are made freely and openly available under a Creative Commons License by Attribution (CC By 4.0) https://creativecommons.org/licenses/by/4.0/
+When citing this dataset please also cite the associated data paper:
+Embury, O., Merchant, C.J., Good, S.A., Rayner, N.A., Høyer, J.L., Atkinson, C., Block, T., Alerskans, E., Pearson, K.J., Worsfold, M., McCarroll, N., Donlon, C. Satellite-based time-series of sea-surface temperature since 1980 for climate applications. Scientific Data 11, 326 (2024). https://doi.org/10.1038/s41597-024-03147-w
+Citable as:
+Good, S.A.; Embury, O. (2024): ESA Sea Surface Temperature Climate Change Initiative (SST_cci): Level 4 Analysis product, version 3.0. NERC EDS Centre for Environmental Data Analysis,
+09 April 2024
+. doi:10.5285/4a9654136a7148e39b7feb56f8bb02d2.
+https://dx.doi.org/10.5285/4a9654136a7148e39b7feb56f8bb02d2
+Cite this dataset
+Cite this dataset as:
+Good, S.A.; Embury, O. (2024): ESA Sea Surface Temperature Climate Change Initiative (SST_cci): Level 4 Analysis product, version 3.0. NERC EDS Centre for Environmental Data Analysis,
+09 April 2024
+. doi:10.5285/4a9654136a7148e39b7feb56f8bb02d2.
+https://dx.doi.org/10.5285/4a9654136a7148e39b7feb56f8bb02d2
+Abbreviation:
+Not defined
+Keywords:
+ESA, CCI, SST, Analysis, Level 4
+Details
+Previous Info:
+No news update for this record
+Previously used record identifiers:
+No related previous identifiers.
+Access rules:
+Public data: access to these data is available to both registered and non-registered users.
+Use of these data is covered by the following licence(s):
+https://artefacts.ceda.ac.uk/licences/specific_licences/esacci_sst_terms_and_conditions_v2.pdf
+When using these data you must cite them correctly using the citation given on the CEDA Data Catalogue record.
+Data lineage:
+Data were processed by the ESA CCI SST project team and supplied to the Centre for Environmental Data Analysis (CEDA) for archiving.
+Data Quality:
+For information on data quality see the linked Product Validation and Intercomparison report (PVIR) and the Climate Assessment Report (CAR)
+File Format:
+netCDF-4 classic following: Climate and Forecast (CF) metadata conventions, GHRSST Data Specification 2.0, and SST CCI Product Specification.
+Related Documents
+ESA CCI Sea Surface Temperature project website
+Embury, O., Merchant, C.J., Good, S.A., Rayner, N.A., Høyer, J.L., Atkinson, C., Block, T., Alerskans, E., Pearson, K.J., Worsfold, M., McCarroll, N., Donlon, C. Satellite-based time-series of sea-surface temperature since 1980 for climate applications. Scientific Data 11, 326 (2024). https://doi.org/10.1038/s41597-024-03147-w
+Product Validation and Intercomparison Report (PVIR)
+Climate Assessment Report (CAR)
+Product User Guide
+Citations: 1
+The following citations have been automatically harvested from external sources associated with this resource where DOI tracking is possible. As such some citations may be missing from this list whilst others may not be accurate. Please contact the helpdesk to raise any issues to help refine these citation trackings.
+error occurred
+https://doi.org/10.1029/2024jc020898
+Process overview
+This dataset was generated by the
+computation
+detailed below.
+Title
+Derivation of the CCI SST Analysis v3 product
+Abstract
+For information on the derivation of the SST CCI Analysis v3 product, see the SST CCI project documentation
+Input Description
+None
+Output Description
+None
+Software Reference
+None
+units
+: degrees_north
+var_id
+: lat_bnds
+long_name
+: Latitude cell boundaries
+units
+: degrees_east
+var_id
+: lon_bnds
+long_name
+: Longitude cell boundaries
+units
+: seconds
+var_id
+: time_bnds
+long_name
+: Time cell boundaries
+units
+: kelvin
+standard_name
+: sea_water_temperature
+var_id
+: analysed_sst
+long_name
+: analysed sea surface temperature
+units
+: kelvin
+long_name
+: estimated error standard deviation of analysed_sst
+standard_name
+: sea_water_temperature standard_error
+var_id
+: analysed_sst_uncertainty
+units
+standard_name
+: sea_ice_area_fraction
+var_id
+: sea_ice_fraction
+long_name
+: sea ice area fraction
+var_id
+: mask
+long_name
+: sea/land/lake/ice field composite mask
+standard_name
+: status_flag
+Co-ordinate Variables
+units
+: degrees_north
+standard_name
+: latitude
+var_id
+: lat
+long_name
+: Latitude
+units
+: degrees_east
+standard_name
+: longitude
+var_id
+: lon
+long_name
+: Longitude
+standard_name
+: time
+var_id
+: time
+units
+: seconds
+long_name
+: reference time of sst field
+CEDA Archive Web Download Service
+CEDA OPeNDAP service
+Coverage
+Temporal Range
+Start time:
+End time:
+Ongoing
+Geographic Extent
+90.0000°
+-180.0000°
+180.0000°
+-90.0000°
+Related parties
+Authors (2)
+Publishers (1)
+Funders (3)

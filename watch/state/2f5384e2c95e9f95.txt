@@ -1,0 +1,62 @@
+# https://osi-saf.eumetsat.int/community/stories/implications-end-ssmis-data-osi-saf-products
+Implications of the end of SSMIS data on OSI SAF products | OSI SAF
+Implications of the end of SSMIS data on OSI SAF products
+Latest news:
+After having been scheduled successively for 30 June and 31 July 2025, the decommission of the DMSP (SSMIS) has been postponed. However SSMIS data are available on a best-efforts basis only until September 2026. Periods with data outages, as we already experienced in the past, are expected. For the OSI SAF sea-ice products, this implies that
+near-real time
+products currently based only on SSMIS will continue as long as the provision of SSMIS data remains stable enough. The SSMIS-based sea-ice concentration
+climate
+product (
+OSI-430-a
+) has been suspended on 17/10/2025.
+This page will be regularly updated to provide you with the latest information about SSMIS end of life and about the implications on OSI SAF products.
+After having been scheduled successively for 30 June and 31 July 2025, we've been informed that the decommission of the DMSP (SSMIS) has been postponed. The U.S. Department of Defense has decided to continue distributing SSMIS data on a best-efforts basis until September 2026, however periods with data outages, as we already experienced in the past, are expected. For the OSI SAF sea-ice products, this implies that most products, which are currently based only on SSMIS, will continue as long as the provision of SSMIS data remains stable enough. If we experience too many gaps in the data reception, we might discontinue our SSMIS-based products promptly, this has been done for the SSMIS-based Sea-ice concentration climate product (
+OSI-430-a
+) on 17/10/2025.
+This has some implications for users using OSI SAF sea ice products only based on SSMIS data. Below is described our advice for each implicated product. In general, we advise our users to start using our products based on AMSR2 data instead of the products based on SSMIS.
+As a good alternative to SSMIS for sea-ice products is the AMSR2 instrument, which OSI SAF is already using in several products. This instrument has better resolution than SSMIS and therefore provides more detailed information.
+Alternatives to SSMIS and AMSR2
+There is also a follow-on mission for DMSP, the WSF mission, which is already flying, where we hope to get access to data soon.
+Here is the detail per product:
+Sea Ice Concentration [OSI-401-d]
+: This is a pure SSMIS product, and
+we advise users to start using the
+OSI-408-a
+product, which is based on AMSR2 instead
+. More information about this product can be found here:
+https://osi-saf.eumetsat.int/products/osi-408-a
+Sea Ice Edge
+Type
+Drift
+OSI-402-d
+OSI-403-d
+OSI-405-d
+]: These products are multi-sensor products which were based on AMSR2, ASCAT and SSMIS. From July, they do no longer use SSMIS as input and AMSR2 is the primary data source.
+Sea Ice Emissivity [OSI-404-b]
+This SSMIS-based product will continue to be produced as long as SSMIS data are available within sufficient timeliness.
+The OSI SAF sea-ice team is working on migrating the product to use AMSR2 instead of SSMIS.
+L2 Sea Ice Concentration [OSI-410-a]
+: This product has separate output files based on either SSMIS or AMSR2.
+We recommend that users use the files based on AMSR2
+, as those based on SSMIS are frequently delayed.
+Sea Ice Index [OSI-420]
+The sea-ice index requires continuity and climate consistency
+. Since the first warnings of SSMIS’s end-of-life, an alternative solution to keep the current index product running has been developed; see previous service messages
+#3328
+. The new solution involves indexes computed from AMSR2 and a calibration of the index against the SSMIS-based indexes to maintain consistency in the time series. The new calibrated AMSR2-based indexes have been evaluated over a longer overlap period against the standard indexes and show good, robust performance.
+To avoid future gaps in the index time series caused by unstable SSMIS provision, we will continue the series with AMSR2-based indexes.
+The new product is version 2.3, which fully replace the current version 2.2, meaning no parallel distribution will be available. Version 2.3 was released on Tuesday 2nd of September
+(see service message
+#3338
+Index values before 1st of August 2025, remain unchanged from version 2.2, while values from 1st August onward will be based solely on AMSR2.
+Sea Ice Concentration interim climate data record [OSI-430-a]
+This pure SSMIS product has been suspended on 17/10/2025
+because the long gaps in input data are impacting the temporal consistency of this climate product
+. We recommend users switch to the OSI-438 product instead, which is based
+on the alternative sensor AMSR2, and was implemented in early July 2025. It provides daily concentration data (see our Service Message
+#3315
+, 4th July 2025). More information about this product can be found here:
+https://osi-saf.eumetsat.int/products/osi-438
+OSI-438 has the same projection, spatio-temporal resolution and timeliness compared to OSI-430-a
+. It includes nominal ICDR files with 16 days delay and fasttrack ICDR files with 2 days delay. OSI-438 has not yet been through the nominal validation and reviewing process, but due to the situation, it is available to users as a demonstrational product now that we find it mature enough for sharing. The product will become operational when validation and review is passed this autumn. The level of details in the sea ice concentration data will be better in OSI-438, since the resolution of the AMSR2 instrument is better than the SSMIS.
+New ticket helpdesk

@@ -1,0 +1,131 @@
+# https://www.metoffice.gov.uk/hadobs/en4/FAQ.html
+Met Office Hadley Centre observations datasets
+Home
+EN4: Frequently Asked Questions
+FAQs:
+1. Which set of corrections should I use for my application?
+EN4 currently provides four XBT correction schemes; Levitus et al (2009) which also has Levitus et al (2009) MBT corrections; Gouretski and Reseghetti (2010) which also has Gouretski and Cheng (2020) MBT corrections; Cowley et al (2013) which also has Levitus et al (2009) MBT corrections and Cheng et al (2014) which also has Gouretski and Cheng (2020) MBT corrections. It is recommended that you look at all of these in your work to see what impact it makes. Note that these correction schemes only correct XBT and MBT data.
+2. Is X specific data source in EN4?
+EN4 takes data from
+these sources
+. These sources themselves draw from other sources, it is therefore recommended that you check the information on these four input
+sources to determine whether EN4 contains the data you are interested in.
+3. What are the depth levels in the objective analyses?
+The specification for the depth levels is contained in the NetCDF files. The quickest way to see them at a glance is to type ncdump -v depth NAME_OF_FILE.nc in a linux terminal, if you want the bounds of these levels you can
+type ncdump -v depth_bnds NAME_OF_FILE.nc in a linux terminal. If you are a Windows user then the easiest way to view these variables will be dependent on the software you are using, but once you have your chosen piece
+of software and a way of reading NetCDF files into it then depth and depth_bnds will still be the variables of interest.
+Update: You can now see the analysis depth levels and their bounds
+here
+4. Which temperature and salinity variables are included in EN4?
+In the profile files we provide observed temperature (TEMP), potential temperature (POTM_CORRECTED) and practical salinity (PSAL_CORRECTED).
+In the analysis files we provide potential temperature (temperature) and practical salinity (salinity).
+5. What is the reference pressure for POTM_CORRECTED?
+0 dbar.
+6. When are the preliminary files for the previous month uploaded?
+The preliminary files for the previous month's data are usually uploaded between the 12th and 18th of the current month. The profile files and analysis files are uploaded at the same time.
+7. Can I use EN4 for OHC trend analysis?
+EN4 is an observation based data set and therefore coverage varies in both time and space. For the complete fields provided in the analyses we strongly encourage users to look at the observation weights variables. These will inform users how much the analysis value has been influenced by observations (when the observation weight values are closer to one) and how much it has been determined by background fields (when the observation weight values are closer to zero). We would not encourage the use of EN4 analyses for trend analysis in areas where the observation weights are low. In the long term absence of observations, EN.4.2.2 analyses will relax back to the 1971 - 2000 climatology.
+8. How do you deal with possible duplicates?
+The process for duplicate removal is described in section 2.2 of Good et al., 2013 and is built from the work of Gronnell and Wijffels, 2008. Briefly, the steps look to remove duplicates that arise from:
+1. Argo profiles that are also in WOD and GTSPP - we prefer the profile from Argo;
+2. Profiles that have the exact (or almost exact) time and location;
+3. Profiles that have exactly the same depths, temperatures and salinities;
+4. Profiles that are very similar, but not exactly the same (only profiles with 5 or more levels and near to each other (within 1 degree latitude and longitude and 1 day in time) are checked).
+9. Do you include QC flags from your input sources?
+Predominantly EN4 discards the QC flags of its input sources and performs its own automatic quality control for consistency. Table 1 of Good et al., 2013 gives an overview of these checks. The exception to this is that Argo QC flags are retained, and data flagged as bad or probably bad by Argo will also be flagged in EN4. We also take into account the Argo grey lists and comparisons with altimetry data as well as maintaining a manual reject list file of profiles identified to be bad by data set maintainers and users.
+10. How do you deal with Argo data with a salinity drift?
+Certain batches of Argo floats have been found to experience a salinity drift. Many of these are flagged for rejection in the Argo grey list files and are therefore flagged as bad accordingly in EN4. EN4 also uses delayed mode Argo data where possible where these data will have been either corrected or flagged for rejection. Some floats will not have been identified at the time of the creation of EN.4.2.2 and therefore will still exhibit this salinity drift. If you identify any such floats, please
+notify us.
+11. Which instruments contribute to EN4?
+EN4 takes data from all instruments used in Argo, ASBO, GTSPP and the World Ocean Database, apart from those known to only be taking measurements at the ocean surface. This means EN4 will include profiles from Argo and other profiling floats, bathythermographs, bottles, CTDs, drifting buoys, gliders, moored buoys, STDs, instruments attached to animals, undulating oceanographic recorders and XCTDs. For an overview of these and other instruments we recommend the World Ocean Database 2018 Introduction.
+12. Which instruments are bias corrected in EN4?
+The only instruments we apply bias corrections to in EN4 are MBTs and XBTs, although some data processing will have been undertaken before the data reach us e.g. Argo float delayed mode data may have been adjusted.
+13. What are the units of the variables in EN4?
+In the EN4 profile files all temperatures are given in degrees Celsius, salinities are unitless and depths are given in metres. In the analysis files temperatures are recorded in Kelvin, but with a 273.15 offset built into the netCDF files, this offset won't always need to be subtracted by the user, it is dependent on the software you use to read netCDF files in. The analysis salinities are unitless and the depths are given in metres.
+14. How is potential temperature calculated when no salinity value is present?
+Not all temperature measurements will have accompanying salinity measurements. Where this is the case, we use a salinity value from the background fields. If no background salinity value is available, then we use a salinity value of 35.0 but flag the potential temperature value as untrustworthy.
+15. How many levels are in the EN4 data files?
+EN.4.2.2 has a maximum of 400 levels in a profile file. If source data profiles have more levels than this then they are thinned until there are 400 levels or less. This thinning begins at the deepest depths, thinning to observations approximately every 50m below 2000m. Once approximately 400 levels remain, thinning stops.
+16. What data conventions does EN4 follow?
+EN.4.2.2 data are served as netCDF files which are broadly compliant with the CF conventions standard 1.8. However, there are variables which are non-compliant, notably owing to a lack of appropriate long_names or units. This is something we will seek to resolve in future versions of the EN4 data set.
+17. Why do the analysis files start at -83?
+To save space in the analysis files that we serve we remove the most southerly 7 degrees latitude owing to there being no ocean in this zone.
+18. Are there uncertainties in EN4?
+EN4 analysis files do incorporate uncertainty variables for temperatures and salinities. These uncertainties are the analysis error standard deviations of the analysis fields. The uncertainties are not independent of each other, but also do not have a defined correlation structure to allow the combining of uncertainties. This is something we aim to provide in a future version of the EN dataset.
+EN4 profile files do not incorporate uncertainties, however, values of random uncertainties for each instrument type can be obtained from both tables 2 and 3 in the HadIOD user guide, which can be found
+here
+and tables 1 and 2 of the International Quality controlled Ocean Database (IQuOD)
+uncertainties paper
+Some element of structural uncertainty is represented in EN4 through the provision of four ensemble members, using different XBT and MBT bias correction schemes.
+19. What is the precision of the data in EN4?
+EN4 data are provided to a greater number of decimal places than precision would be expected to extend to, owing to the storage mechanism in netCDF files where all numbers are stored as floats. The tables linked in FAQ 18 give an idea of the expected uncertainties in values measured by different instruments, we would therefore not recommend assuming a precision to a greater number of decimal places than these uncertainties are given for.
+20. Is there surface data in EN4?
+EN4 does not take data from surface only sources, but there will be some surface data incorporated in the profiles, which will also feed through into the analyses. If surface data is sought alongside profile data, then we recommend users to look at the
+HadIOD dataset
+. If gridded, surface only, observations are sought then we would recommend the
+HadSST4 dataset
+or the
+HadISST dataset
+21. Are XBT and MBT corrections applied to TEMP and POTM_CORRECTED or just POTM_CORRECTED?
+XBT and MBT corrections are applied to both TEMP and POTM_CORRECTED profiles from XBT and MBT instruments.
+Further questions
+If you have any comments or questions about the data which are not answered here, please
+get in touch
+New versions of the dataset will be released as required to incorporate new features and new historical data.
+If you have suggestions for changes to the dataset we would love to hear about them.
+References
+Viktor Gouretski and Franco Reseghetti, 2010: On depth and
+temperature biases in bathythermograph data: development of a new
+correction scheme based on analysis of a global ocean database.
+Deep-Sea
+Research I
+, 6. doi:
+http://dx.doi.org/10.1016/j.dsr.2010.03.011
+S. Levitus et al., 2009: Global ocean heat content 1955-2008 in
+light of recently revealed instrumentation problems.
+Geophysical
+Research Letters
+, L07608. doi:
+http://dx.doi.org/10.1029/2008GL037155
+Cowley et al, 2013: Biases in Expendable Bathythermograph Data: A New View Based on Historical Side-by-Side Comparisons.
+Journal of Atmospheric and Oceanic Technology
+, 6. doi:
+https://doi.org/10.1175/JTECH-D-12-00127.1
+Cheng et al, 2014: Time, Probe Type, and Temperature Variable Bias Corrections to Historical Expendable Bathythermograph Observations.
+Journal of Atmospheric and Oceanic Technology
+, 8. doi:
+https://doi.org/10.1175/JTECH-D-13-00197.1
+Viktor Gouretski and Lijing Cheng, 2020: Correction for Systematic Errors in the Global Dataset of Temperature Profiles from Mechanical Bathythermographs.
+Journal of Atmospheric Technology and Oceanic Research
+, 5. doi:
+https://doi.org/10.1175/JTECH-D-19-0205.1
+Gronell, A., and S. E. Wijffels, 2008: A semiautomated approach for quality controlling large historical ocean temperature archives.
+Journal of Atmospheric and Oceanic Technology
+, 990-1003, doi:10.1175/JTECHO539.1.
+Obtaining the data
+Data are made available without charge for the purposes of private study and scientific research, under a
+non-commercial goverment licence
+, please read the
+terms and conditions
+for using this data.
+The latest version of the data is
+EN.4.2.2
+. Data from the previous version of EN4 is
+also available
+Product User Guide
+product user guide
+is available as a pdf. This includes more in depth material including how to work with the bias correction and uncertainty information and a description of the data format.
+Citing the data
+Please see the
+terms and conditions page
+for the appropriate way to cite the EN4 data, its bias corrections and its sources.
+Contact us
+If you cannot find the information you require on these pages, please do
+contact us
+. We are also interested in receiving feedback about the data and its usability. See below if your query is of a commercial nature or relates to the media.
+Commercial and media enquiries
+You can access the Met Office Customer Centre, any time of the day or night by phone, fax or e-mail. Trained staff will help you find the information or products that are right for you.
+Contact the Met Office Customer Centre
+Contact us
+Hosted by:
+Met Office Hadley Centre for Climate Change

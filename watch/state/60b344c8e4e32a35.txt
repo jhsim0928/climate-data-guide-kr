@@ -1,0 +1,199 @@
+# https://stac.marine.copernicus.eu/metadata/ARCTIC_MULTIYEAR_PHY_ICE_002_016/product.stac.json
+"id": "ARCTIC_MULTIYEAR_PHY_ICE_002_016",
+"type": "Collection",
+"stac_version": "1.0.0",
+"stac_extensions": [
+"https://stac-extensions.github.io/scientific/v1.0.0/schema.json"
+"title": "Arctic Ocean Sea Ice Reanalysis",
+"description": "The Arctic Sea Ice Reanalysis system uses the neXtSIM stand-alone sea ice model running the Brittle-Bingham-Maxwell sea ice rheology on an adaptive triangular mesh of 10 km average cell length. The model domain covers the whole Arctic domain, from Bering Strait to the North Atlantic. neXtSIM is forced by reanalyzed surface atmosphere forcings (ERA5) from the ECMWF (European Centre for Medium-Range Weather Forecasts) and ocean forcings from TOPAZ4b, the ARC MFC MYP system (002_003). neXtSIM assimilates satellite sea ice concentrations from Passive Microwave satellite sensors, and sea ice thickness from CS2SMOS in winter from October 2010 onwards. The output variables are sea ice concentrations (total, young ice, and multi-year ice), sea ice thickness, sea ice velocity, snow depth on sea ice, sea ice type, sea ice age, sea ice ridge volume fraction and sea ice albedo, provided at daily and monthly frequency. The adaptive Lagrangian mesh is interpolated for convenience on a 3 km resolution regular grid in a Polar Stereographic projection. The projection is identical to other ARC MFC products.\n\n**References:**\n\n* Williams, T., Korosov, A., Rampal, P., and Ólason, E.: Presentation and evaluation of the Arctic sea ice forecasting system neXtSIM-F, The Cryosphere, 15, 3207–3227, https://doi.org/10.5194/tc-15-3207-2021, 2021.\n",
+"license": "proprietary",
+"providers": [
+"name": "NERSC (Norway)",
+"roles": [
+"producer"
+"name": "Copernicus Marine Service",
+"roles": [
+"host",
+"processor"
+"url": "https://marine.copernicus.eu"
+"keywords": [
+"oceanographic-geographical-features",
+"numerical-model",
+"multi-year",
+"marine-safety",
+"weather-climate-and-seasonal-forecasting",
+"coastal-marine-environment",
+"marine-resources",
+"arctic-ocean",
+"level-4",
+"in-situ-ts-profiles",
+"sea-ice-concentration-and/or-thickness"
+"links": [
+"rel": "root",
+"href": "../catalog.stac.json",
+"title": "Copernicus Marine Data Store",
+"type": "application/json"
+"rel": "parent",
+"href": "../catalog.stac.json",
+"title": "Copernicus Marine Data Store",
+"type": "application/json"
+"rel": "item",
+"href": "cmems_mod_arc_phy_my_nextsim_P1D-m_202411/dataset.stac.json",
+"title": "Daily",
+"type": "application/json"
+"rel": "item",
+"href": "cmems_mod_arc_phy_my_nextsim_P1M-m_202411/dataset.stac.json",
+"title": "Monthly",
+"type": "application/json"
+"rel": "item",
+"href": "cmems_mod_arc_phy_my_nextsim_P1M-m_202411--ext--originalGrid/dataset.stac.json",
+"title": "Monthly, original grid",
+"type": "application/json"
+"rel": "item",
+"href": "cmems_mod_arc_phy_my_nextsim_P1D-m_202411--ext--originalGrid/dataset.stac.json",
+"title": "Arctic sea ice reanalysis",
+"type": "application/json"
+"rel": "item",
+"href": "cmems_mod_arc_phy_my_3km-climatology_P1M-m_202511--ext--originalGrid/dataset.stac.json",
+"title": "Climatology, original grid",
+"type": "application/json"
+"rel": "item",
+"href": "cmems_mod_arc_phy_my_3km-climatology_P1M-m_202511/dataset.stac.json",
+"title": "Climatology",
+"type": "application/json"
+"rel": "license",
+"href": "https://marine.copernicus.eu/user-corner/service-commitments-and-licence",
+"title": "Copernicus Marine Service Commitments and Licence",
+"type": "text/html"
+"rel": "cite-as",
+"href": "https://doi.org/10.48670/mds-00336",
+"title": "10.48670/mds-00336",
+"type": "text/html"
+"rel": "alternative",
+"href": "https://data.marine.copernicus.eu/product/ARCTIC_MULTIYEAR_PHY_ICE_002_016",
+"title": "Product page",
+"type": "text/html"
+"rel": "describedby",
+"href": "https://documentation.marine.copernicus.eu/QUID/CMEMS-ARC-QUID-002-016.pdf",
+"title": "Quality Information Document",
+"type": "application/pdf",
+"ref": "CMEMS-ARC-QUID-002-016",
+"createdAt": "2024-11-26",
+"updatedAt": "2024-10-23T07:56:03.509681Z"
+"rel": "describedby",
+"href": "https://documentation.marine.copernicus.eu/SQO/CMEMS-ARC-SQO-002-016.pdf",
+"title": "Synthesis Quality Overview",
+"type": "application/pdf",
+"ref": "CMEMS-ARC-SQO-002-016",
+"createdAt": "2024-11-26",
+"updatedAt": "2024-10-23T07:57:55.839672Z"
+"rel": "describedby",
+"href": "https://documentation.marine.copernicus.eu/PUM/CMEMS-ARC-PUM-002-016.pdf",
+"title": "Product User Manual",
+"type": "application/pdf",
+"ref": "CMEMS-ARC-PUM-002-016",
+"createdAt": "2025-11-25",
+"updatedAt": "2025-09-19T13:43:23.732218Z"
+"extent": {
+"spatial": {
+"bbox": [
+"temporal": {
+"interval": [
+"1993-01-01T00:00:00Z",
+"2026-05-31T00:00:00Z"
+"assets": {
+"thumbnail": {
+"href": "https://mdl-metadata.s3.waw3-1.cloudferro.com/metadata/thumbnails/ARCTIC_MULTIYEAR_PHY_ICE_002_016.jpg",
+"type": "image/jpeg",
+"roles": [
+"thumbnail"
+"title": "Arctic Ocean Sea Ice Reanalysis thumbnail"
+"properties": {
+"altId": "f13d4772-410b-4dba-ba6f-e4d15ea58050",
+"providerMetadata": {
+"source": "cmems",
+"type": "csw",
+"url": "https://csw.marine.copernicus.eu/geonetwork/csw-MYOCEAN-CORE-PRODUCTS/eng/csw?service=CSW&version=2.0.2&request=GetRecordById&id=f13d4772-410b-4dba-ba6f-e4d15ea58050&elementsetname=full&outputSchema=http://www.isotc211.org/2005/gmd"
+"thumbnailMeta": {
+"creationDate": "2024-11-15T08:32:46.439Z",
+"layerId": "ARCTIC_MULTIYEAR_PHY_ICE_002_016/cmems_mod_arc_phy_my_nextsim_P1M-m_202411/siconc",
+"time": 1496275200000,
+"elevation": null,
+"timeWindow": null,
+"elevationWindow": null,
+"basemapId": "light",
+"overlays": {
+"tags": []
+"crs": "epsg:32661",
+"valueMin": 0,
+"valueMax": 0.999,
+"valueClamp": true,
+"logScale": false,
+"style": "solid",
+"colormapId": "ice",
+"colormapInvert": false,
+"colormapStops": null,
+"hiddenSparsePtypes": {}
+"creationDate": "2024-11-26",
+"modifiedDate": "2025-11-25",
+"contacts": [
+"name": "",
+"organisationName": "ARC-NERSC-BERGEN-NO",
+"responsiblePartyRole": "resourceProvider",
+"email": ""
+"projection": "Polar stereographic North",
+"assimilatedData": [
+"In-Situ TS Profiles",
+"Sea Ice Concentration and/or Thickness"
+"formats": [
+"NetCDF-4"
+"updateFrequencies": {
+"unknown": null
+"featureTypes": [
+"Grid"
+"indicatorFamilies": [],
+"geoExtent": {
+"type": "envelope",
+"coordinates": [
+"geoResolution": {
+"row": {
+"magnitude": 3,
+"units": "km"
+"column": {
+"magnitude": 3,
+"units": "km"
+"tempExtentBegin": "1993-01-15",
+"tempExtentEnd": "2022-12-15",
+"tempResolutions": [
+"Monthly"
+"vertExtentMin": 0,
+"vertExtentMax": 0,
+"rank": 2700,
+"useCases": [],
+"areas": [
+"Arctic Ocean"
+"times": [
+"Past"
+"sources": [
+"Numerical models"
+"colors": [
+"White Ocean",
+"Blue Ocean"
+"communities": [
+"Polar environment monitoring",
+"Policy & governance",
+"Science & innovation",
+"Extremes, hazards & safety",
+"Coastal services",
+"Natural resources & energy",
+"Trade & marine navigation"
+"processingLevel": "Level 4",
+"mainVariables": [],
+"allVariables": [],
+"directives": [
+"Maritime Spatial Planning (MSP)",
+"ARCTIC policy"
+"crs": "EPSG:32661",
+"isStaging": false,
+"admp_updated": "2026-09-21T10:13:08.159831Z"
+"sci:doi": "10.48670/mds-00336"

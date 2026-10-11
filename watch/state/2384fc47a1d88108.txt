@@ -1,0 +1,55 @@
+# https://psl.noaa.gov/data/coreinfo.html
+NOAA CORe Reanalysis: NOAA Physical Sciences Laboratory
+Home
+NOAA CORe Reanalysis
+About NOAA CORe Reanalysis
+Overview
+CORe is a climate atmospheric reanalysis from 1950-present. Like all reanalyses, it produces a 3D physically
+constrained representation of the atmosphere for each model output time, using "assimilated" observations. CORe
+replaces the real-time extension of the NCEP/NCAR Reanalysis (1948-present).
+Like the NCEP/NCAR Reanalysis extension, CORe is an atmospheric reanalysis that uses externally produced Sea Surface Temperature
+(SST), sea ice, and snow analyses for boundary conditions. However, COREe uses more modern versions of these analyses. It also
+differs in that it uses little of the satellite data as input so there is no strong discontinuity in climate/weather
+processes in the modern satellite era.
+Data Access
+Technical information about the NOAA CORe files follows.
+Please note: For questions on the CORe
+model, output, and how to get it, please contact
+NOAA/NCEP
+. PSL is not involved in CORe production but is providing these technical details as a service to our users.
+Scientific and technical enhancements
+CORe is a UFS-based system (circa 2020 codes) which uses an Ensemble
+Kalman filter to assimilate conventional observations as well as
+Atmospheric Motion Vectors (AMV). CDAS is a MRF-based system
+(circa 1995 operational codes) that assimilates conventional
+observations, as well as AMV and satellite temperature
+retrievals.
+The data files for CORe will be available on the NOAA
+Operational Model Archive and Distribution Service (NOMADS) at
+the following location:
+https://nomads.ncep.noaa.gov/pub/data/nccf/com/core/
+The data files for CDAS will
+no longer be available as of March
+at the following locations:
+https://nomads.ncep.noaa.gov/pub/data/nccf/com/cdas/
+ftp://ftp.ncep.noaa.gov/pub/data/nccf/com/cdas/
+https://nomads.ncep.noaa.gov/pub/data/nccf/com/cdas2/
+ftp://ftp.ncep.noaa.gov/pub/data/nccf/com/cdas2/
+Sample CORe files are available at the following location:
+https://nomads.ncep.noaa.gov/pub/data/nccf/com/core/para/
+At the provided CORe URL, new CORe files have the following
+paths and regexes:
+/core.YYYYMMDD/HH/post/flx/core.tRRz.flx.memMMM[.grib2,.grib2.idx]
+/core.YYYYMMDD/HH/post/flx/core.tRRz.flx.ensmean[.grib2,.grib2.idx]
+/core.YYYYMMDD/HH/post/flx_stats/core.tRRz.flx.ensstats[.grib2,.grib2.idx]
+/core.YYYYMMDD/HH/post/nceppost/core.tRRz.pgb.ensmean.anl[.grib2,.grib2.idx]
+/core.YYYYMMDD/HH/post/nceppost/core.t[HH+06]z.pgb.ensmean.f003[.grib2,.grib2.idx]
+/core.YYYYMMDD/HH/post/spost/core.tRRz.spgb.memMMM.anl[.grib2,.grib2.idx]
+/core.YYYYMMDD/HH/post/spost/core.tRRz.spgb.ensmean.anl[.grib2,.grib2.idx]
+/core.YYYYMMDD/HH/post/spost_stats/core.tRRz.spgb.ensstats[.grib2,.grib2.idx]
+where YYYYMMDD is the date, HH is the forecast cycle
+(00,06,12,18), RR is the hour of the reference time (forecast
+cycle + [03,06]), and MMM is the ensemble member (001-080
+inclusive).
+The grib version 1 files have been replaced by grib version 2.
+Page Last Reviewed: February 23, 2026

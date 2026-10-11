@@ -1,0 +1,141 @@
+# https://data.giss.nasa.gov/gistemp/data_v4.html
+Data.GISS:
+GISS Surface Temperature Analysis (GISTEMP v4): Data Downloads
+Go to Main Content (Accesskey 2)
+Go to Site Menu (Accesskey 3)
+National Aeronautics and Space Administration
+Goddard Institute for Space Studies
+Goddard Space Flight Center
+Sciences and Exploration Directorate
+Earth Sciences Division
+GISS Surface Temperature Analysis (v4)
+Data Downloads
+Monthly surface temperature anomaly data are available for download in several forms: plain-text tables of Land-Ocean Temperature Index (LOTI) deviations from the 1951-1980 means, plain-text tables of AIRS anomalies from the 2007-2016 means, netCDF data files on a regular 2°×2° regular grid, compressed Zarr (v3) data directories on a regular 2°×2° regular grid, and compressed basic subbox (SBBX) data on an equal-area grid. Example Fortran codes for working with the gridded data are also provided.
+Tables of Global and Hemispheric Monthly Means and Zonal Annual Means
+Combined Land-Surface Air and Sea-Surface Water Temperature Anomalies
+(Land-Ocean Temperature Index, L-OTI)
+The following are plain-text files in tabular format of temperature anomalies, i.e. deviations from the corresponding 1951-1980 means.
+Global-mean monthly, seasonal, and annual means
+, 1880-present, updated through most recent
+month:
+Northern Hemisphere-mean monthly, seasonal, and annual means
+, 1880-present, updated through
+most recent month:
+Southern Hemisphere-mean monthly, seasonal, and annual means
+, 1880-present, updated through
+most recent month:
+Zonal annual means
+, 1880-present, updated through most recent complete year:
+AIRS v6 and AIRS v7 Temperature Anomalies
+The following tables show anomalies based on AIRS data vs. 2007-2016. Corresponding L-OTI anomaly data are also provided.
+Global-mean monthly, seasonal, and annual means
+, 2002-present, updated through most recent
+month:
+Northern Hemisphere-mean monthly, seasonal, and annual means
+, 2002-present, updated through
+most recent month:
+Southern Hemisphere-mean monthly, seasonal, and annual means
+, 2002-present, updated through
+most recent month:
+Zonal annual means
+, 2002-present, updated through most recent complete year:
+Gridded Monthly Temperature Anomaly Data
+Users interested in the entire gridded surface air temperature anomaly data may
+download netCDF files containing selected series on a regular 2°×2°
+grid or the basic SBBX binary files.
+Compressed NetCDF Files (regular 2°×2° grid)
+Land-Ocean Temperature Index, ERSSTv5, 1200km smoothing
+(23 MB)
+Surface air temperature (no ocean data), 250km smoothing
+(9 MB)
+Land Mask on a 2°×2° grid
+Compressed Zarr (v3) Directories (Regular 2°×2° Grid)
+Land-Ocean Temperature Index, ERSSTv5, 1200km smoothing
+(53 MB)
+Surface air temperature (no ocean data), 250km smoothing
+(27 MB)
+Compressed Basic Subbox Grid Series (Equal-Area Grid)
+Surface air temperature, 1200km smoothing - GISTEMP v4
+(27 MB)
+Surface air temperature, 250km smoothing - GISTEMP v4
+(9 MB)
+Sea surface air temperature (ERSSTv5)
+, currently used (30 MB)
+Sea surface air temperature (ERSSTv4)
+, used until July 2017 (30 MB)
+Sea surface air temperature (ERSSTv3b)
+, used until June 2015 (30 MB)
+Sea surface air temperature (HadR2)
+, used until Nov. 2012 (30 MB)
+Related Fortran Code
+Also available are various Fortran programs and instructions to create (time series of) regular gridded
+anomaly maps from the basic files. Be sure to read the README file for discussion of the files' binary
+format.
+README.txt
+mkTsMap.f
+SBBX_to_nc.f
+SBBX_to_1x1.f
+SBBX_to_txt.f
+Contact
+Before contacting us, please check if your question about the GISTEMP analysis is already answered in
+the FAQ
+If the FAQ does not answer your question,
+please address your inquiry to
+Dr. Reto Ruedy
+Site Menu
+GISS Home
+News & Features
+News & Features Overview
+Projects & Groups
+Projects Overview
+Astrobiology & ROCKE-3D
+Climate Impacts
+Climate Modeling
+IRI Forecasts
+ISCCP
+RASI
+Datasets
+Datasets Overview
+GISTEMP Surface Temperature
+Model E Simulations
+Model Forcings
+ROCKE-3D Simulations
+ISCCP Data Products
+GACP Data Products
+Publications
+Publications Overview
+2026 Publications
+2025 Publications
+2024 Publications
+Accepted & In Press
+Author Bibliographies
+Annual Best
+Most Cited
+Dissertations
+Software
+Software Overview
+GCM Model E
+Panoply Data Viewer
+G.Projector
+Mars24 Sunclock
+Education
+Education Overview
+Internships
+Graduate Study
+Postdoc Research
+STEM Curriculum Modules
+Events
+Events Overview
+Lunch Seminars
+Past Special Events
+About GISS
+Management Staff
+Personnel Directory
+Employment
+Website Curator:
+Robert B. Schmunk
+NASA Official:
+Gavin A. Schmidt
+Contact GISS
+NASA Privacy Policy
+Accessibility

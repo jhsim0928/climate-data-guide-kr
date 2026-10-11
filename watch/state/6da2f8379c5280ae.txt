@@ -1,0 +1,46 @@
+# https://www.metoffice.gov.uk/hadobs/hadisst/servicenotes.html
+26/APRIL/2021
+: We have switched to using unadjusted (for continuity with the HadSST2
+data previously used) HadSST4 as the basis for updates to the in situ data in HadISST.
+HadSST4 data are used for January 2021 onwards.
+22/OCTOBER/2020
+: We have changed the data source used to provide satellite SST
+retrievals. This was previously supplied by NOAA (as described in the HadISST paper).
+We now use SST retrievals from METOP which are extracted from the Met Office
+data base. The first month to use METOP data is June 2020 and every month thereafter.
+While we have found no obvious discontinuity in the mean or the appearance of the
+SST fields, a change of data source can introduce unexpected changes. Please be
+aware of this when using the data. Note that HadISST1 has a cool bias in recent years
+becase no adjustment is made to account for changing ship biases and the known offset between
+buoy and ship measurements.
+10 March 2016: A
+detailed analysis of HadISST
+has identified a number of problems, some of which might
+limit the utility of the dataset for certain scientific applications, particularly where
+high resolution SST data or spatial gradients of SST are required. Thanks to Dudley Chelton
+and Craig Risien for bringing this to our attention and their detailed analysis.
+13/MARCH/2015. Users have noticed that there is a minor discontinuity at
+the dateline in HadISST1 SST fields starting in 1982. It appears to only affect
+gridcells just to the east of the dateline. Please note that this can affect
+estimates of the mean and variability of SSTs in HadISST1 when analysed across
+this region.
+08/MARCH/2011. The switch of satellite source data at the start of 2009
+introduced a discontinuity in the fields of sea ice in both the Arctic and Antarctic.
+03/DECEMBER/2010. The SSM/I satellite that was used to provide the data
+for the sea ice analysis in HadISST suffered a significant degradation in
+performance through January and February 2009. The problem affected HadISST
+fields from January 2009 and probably causes an underestimate of ice extent and
+concentration. It also affected sea surface temperatures in sea ice areas because
+the SSTs are estimated from the sea ice concentration (see Rayner et al. 2003).
+As of 3rd December 2010 we have reprocessed the data from January 2009 to the
+present using a different sea ice data source. This is an improvement on the
+previous situation, but users should still note that the switch of data source
+at the start of 2009 might introduce a discontinuity into the record. The
+reprocessed files are available from the
+main data
+page
+. The older version of the data set is archived
+here
+From May 2007 the data set of in situ measurements used in HadISST has changed. The MOHSST data set, which
+was previously used has been discontinued, and HadSST2 is now being used in its place. The two systems ran in parallel
+for several months prior to the changeover and no significant differences were seen.

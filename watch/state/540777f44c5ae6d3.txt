@@ -1,0 +1,180 @@
+# https://www.ncei.noaa.gov/products/extended-reconstructed-sst
+Extended Reconstructed Sea Surface Temperature (ERSST) | National Centers for Environmental Information (NCEI)
+An official website of the United States government
+Here's how you know
+The .gov means it’s official.
+Federal government websites often end in .gov or .mil. Before sharing sensitive information, make sure you’re on a federal government site.
+The site is secure.
+https://
+ensures that you are connecting to the official website and that any information you provide is encrypted and transmitted securely.
+NCEI is currently moving its data and applications to the cloud. This upgrade may result in temporary data access delays. Please see our
+cloud migration overview
+frequently asked questions
+for more information and resources. Check the
+NCEI Alerts page
+for impacted products and datasets. Current Impact: Intermittent degraded order fulfillment services.
+Extended Reconstructed Sea Surface Temperature (ERSST)
+The Extended Reconstructed Sea Surface Temperature (ERSST) dataset is a global monthly analysis of SST data derived from the International Comprehensive Ocean–Atmosphere Dataset (ICOADS). The dataset can be used for long-term global and basin-wide studies and incorporates smoothed local and short-term variations. The
+NOAA Global Surface Temperature (NOAA GlobalTemp)
+product integrates ERSST data with land surface air temperature from the
+Global Historical Climatology Network-Monthly dataset
+to create integrated surface temperature analyses.
+Register for ERSST Updates
+Data Access
+References
+Version 6
+Data Sources
+ICOADS 3.0.2
+GDAC Argo
+HadISST2(1850-2015) and NCEP (2016-present) ice concentration
+Contact Information
+Please direct any questions to Boyin Huang |
+boyin.huang@noaa.gov
+Updates
+Improved SST spatial and temporal variability by:
+Implementing an interpolation method using artificial neural network (ANN),
+Implementing the nearest neighbor check (NNC) in quality control on ship observations, and
+Applying a large-scale filter (LS200) on SST super-observations,
+Improved SST in the ice-covered regions by applying an spatial-time varying ice-SST proxy algorithm.
+SST anomalies are in reference to a climatological period of 1991-2020.
+Gridded Data
+NetCDF
+Specifications
+ERSST Specifications
+Spatial Resolution:
+2° × 2° horizontal grid with statistically enhanced spatial completeness
+Time Frame:
+January 1850—Present (anomalies are computed with respect to a 1991— 2020 climatology)
+Data Sources:
+SST from ICOADS (ships and buoys) and profiling floats from Argo Float GDAC; Ice concentration from HadISST2(1850-2015), and NCEP (2016-present)
+Reliability:
+Data are more reliable after the 1940’s
+Citation
+Huang, B., X. Yin, T. Boyer, C. Liu, M. Menne, Y. D. Rao, T. Smith, R. Vose, H.-M. Zhang, 2025: Extended Reconstructed Sea Surface Temperature Version 6 (ERSSTv6): Part I. An Artificial Neural Network Approach.
+J. Climate
+https://doi.org/10.1175/JCLI-D-23-0707.1
+Huang, B., X. Yin, T. Boyer, C. Liu, M. Menne, Y. D. Rao, T. Smith, R. Vose, H.-M. Zhang, 2025: Extended Reconstructed Sea Surface Temperature Version 6 (ERSSTv6): Part II. Upgrades on Quality Control and Large-scale Filter.
+J. Climate
+https://doi.org/10.1175/JCLI-D-24-0185.1
+we may need a data citation such as for v5 after data DOI is generated
+December 11, 2025
+Key NOAA Dataset Upgraded Using AI
+ERSSTv6 has been upgraded from ERSSTv5 by implementing an interpolation method using an artificial neural network.
+Read More
+Previous Versions
+Version 5
+Data Sources
+ICOADS 3.0
+Updates
+Improved SST spatial and temporal variability by:
+Reducing spatial filtering in training the reconstruction functions Empirical Orthogonal Teleconnections (EOTs)
+Removing high-latitude damping in EOTs
+Adding 10 more EOTs in the Arctic
+Improved absolute SST by using buoy-SST as a reference to correct ship biases
+Updated to unadjusted First Guess from adjusted First Guess
+Gridded Data
+ASCII
+NetCDF
+Specifications
+ERSST Specifications
+Spatial Resolution:
+2° × 2° horizontal grid with statistically enhanced spatial completeness
+Time Frame:
+January 1854—Present (anomalies are computed with respect to a 1971— 2000 climatology)
+Data Sources:
+SST from ICOADS (ships and buoys) and profiling floats from Argo Float GDAC; Ice concentration from HadISST2(1854-2015), and NCEP (2016-present)
+Reliability:
+Data are more reliable after the 1940’s
+Citation
+Boyin Huang, Peter W. Thorne, Viva F. Banzon, Tim Boyer, Gennady Chepurin, Jay H. Lawrimore, Matthew J. Menne, Thomas M. Smith, Russell S. Vose, and Huai-Min Zhang (2017): NOAA Extended Reconstructed Sea Surface Temperature (ERSST), Version 5. [indicate subset used]. NOAA National Centers for Environmental Information.
+doi:10.7289/V5T72FNM
+[access date].
+Version 4 Data Sources
+ICOADS 2.5
+Version 4 Updates
+Revised empirical orthogonal teleconnections (EOTs) and EOT acceptance criterion
+Updated SST quality control procedures
+Revised SST anomaly (SSTA) evaluation methods
+Updated bias adjustments of ship SSTs using the Hadley Centre Nighttime Marine Air Temperature dataset version 2 (HadNMAT2)
+Buoy SST bias adjustment not made in v3b
+Version 4 Gridded Data
+ASCII
+NetCDF
+Version 4 Citation
+Boyin Huang, Viva F. Banzon, Eric Freeman, Jay Lawrimore, Wei Liu, Thomas C. Peterson, Thomas M. Smith, Peter W. Thorne, Scott D. Woodruff, and Huai-Min Zhang, 2015: Extended Reconstructed Sea Surface Temperature (ERSST), Version 4. [indicate subset used]. NOAA National Centers for Environmental Information.
+doi:10.7289/V5KD1VVF
+[access date].
+Version 3 Data Sources
+ICOADS
+Version 3 Updates
+Identical to version 3 (updates described in
+Improvements to NOAA’s Historical Merged Land–Ocean Surface Temperature Analysis (1880–2006)
+), but satellite data have been excluded to correct a cold bias.
+Version 3 Gridded Data
+ASCII
+NetCDF
+Version 3 Citation
+Smith, Thomas M., Richard W. Reynolds, Thomas C. Peterson, and Jay Lawrimore (2010): Extended Reconstructed Sea Surface Temperature (ERSST) Monthly Analysis, Version 3b. [indicate subset used]. NOAA National Climatic Data Center.
+doi:10.7289/V5Z31WJ4
+[access date].
+ERSST v3b corrected a bias created when satellite data was added to version 3 of the dataset. SST captured by satellite Advanced Very High Resolution Radiometer (AVHRR) caused a cold bias that changed monthly rankings in v3.
+While v3 improved low frequency tuning that reduced the SST anomaly damping before 1930 using the optimized parameters, the addition of satellite SSTs introduced a small residual cold bias (in the order of 0.01°C). The AVHRR is an infrared-based instrument that only works effectively in clear-sky conditions, and cloud contaminated data are often difficult to identify. This contamination leads to a cold SST bias in the retrievals.
+There were attempts to correct these biases as mentioned in "Improvements to NOAA's Historical Merged Land-Ocean Surface Temperature Analysis (1880–2006)," but the adjustment did not fully compensate for the cold bias. While this small difference did not strongly influence the long-term trend, it was significant enough to change the rankings of the warmest months in the time series. Therefore, use of satellite SST data was discontinued.
+ERSST v6
+Huang, B., X. Yin, T. Boyer, C. Liu, M. Menne, Y. D. Rao, T. Smith, R. Vose, H.-M. Zhang, 2025: Extended Reconstructed Sea Surface Temperature Version 6 (ERSSTv6): Part I. An Artificial Neural Network Approach.
+J. Climate
+https://doi.org/10.1175/JCLI-D-23-0707.1
+Huang, B., X. Yin, T. Boyer, C. Liu, M. Menne, Y. D. Rao, T. Smith, R. Vose, H.-M. Zhang, 2025: Extended Reconstructed Sea Surface Temperature Version 6 (ERSSTv6): Part II. Upgrades on Quality Control and Large-scale Filter.
+J. Climate
+https://doi.org/10.1175/JCLI-D-24-0185.1
+ERSST v5
+Huang, B., M. J. Menne, T. Boyer, E. Freeman, B. E. Gleason, J. H. Lawrimore, C. Liu, J. J. Rennie, C. Schreck, F. Sun, R. Vose, C. N. Williams, X. Yin, and H.-M. Zhang, 2020: Uncertainty estimates for sea surface temperature and land surface air temperature in NOAAGlobalTemp version 5.
+Journal of Climate
+doi: 10.1175/JCLI-D-19-0395.1
+Huang, B., C. Liu, G. Ren, H.-M. Zhang, and L. Zhang, 2019: The role of buoy and Argo observations in two SST analyses in the global and tropical Pacific oceans.
+Journal of Climate
+doi:10.1175/JCLI-D-18-0368.1
+Huang, B., W. Angel, T. Boyer, L. Cheng, G. Chepurin, E. Freeman, C. Liu, and H.-M. Zhang, 2018: Evaluating SST analyses with independent ocean profile observations.
+J. Climate
+doi:10.1175/jcli-d-17-0824.1
+Huang, B., Peter W. Thorne, et. al, 2017: Extended Reconstructed Sea Surface Temperature version 5 (ERSSTv5), Upgrades, validations, and intercomparisons.
+Journal of Climate,
+doi: 10.1175/JCLI-D-16-0836.1
+Huang, B., C. Liu, G. Ren, H.-M. Zhang, and L. Zhang, 2018: The role of buoy and Argo observations in two SST analyses in the global and tropical Pacific oceans.
+Journal of Climate
+doi:10.1175/JCLI-D-18-0368.1
+ERSST v4
+Huang, B., V.F. Banzon, E. Freeman, J. Lawrimore, W. Liu, T.C. Peterson, T.M. Smith, P.W. Thorne, S.D. Woodruff, and H.-M. Zhang, 2014: Extended Reconstructed Sea Surface Temperature version 4 (ERSST.v4): Part I. Upgrades and intercomparisons.
+Journal of Climate
+doi:10.1175/JCLI-D-14-00006.1
+Liu, W., B. Huang, P.W. Thorne, et. al, 2014: Extended Reconstructed Sea Surface Temperature version 4 (ERSST.v4): Part II. Parametric and structural uncertainty estimations.
+Journal of Climate
+doi:10.1175/JCLI-D-14-00007.1
+Huang, B., P. Thorne, T. Smith, et. al, 2015: Further Exploring and Quantifying Uncertainties for Extended Reconstructed Sea Surface Temperature (ERSST) Version 4 (v4).
+Journal of Climate
+doi:10.1175/JCLI-D-15-0430.1
+ERSST v3
+Smith, T.M., R.W. Reynolds, T.C. Peterson, and J. Lawrimore, 2008: Improvements to NOAA's historical merged land–ocean temperature analysis (1880–2006).
+Journal of Climate
+doi:10.1175/2007JCLI2100.1
+Xue, Y., T.M. Smith, and R.W. Reynolds, 2003: Interdecadal changes of 30-Yr SST normals during 1871–2000.
+Journal of Climate
+doi:10.1175/1520-0442-16.10.1601
+ERSST v2
+Smith, T.M., and R.W. Reynolds, 2004: Improved extended reconstruction of SST (1854–1997).
+Journal of Climate
+doi:10.1175/1520-0442(2004)017<2466:IEROS>2.0.CO;2
+ERSST v1
+Smith, T.M., and R.W. Reynolds, 2003: Extended reconstruction of global sea surface temperatures based on COADS data (1854–1997).
+Journal of Climate
+doi:10.1175/1520-0442-16.10.1495
+Related News
+July 16, 2026
+ENSO Detection and Monitoring Depends on Data
+Read More
+April 13, 2026
+AI Supercharges Key NOAA Dataset, Ensuring Peak Accuracy
+Read More
+December 4, 2025
+Key NOAA Dataset Upgraded Using AI
+Read More

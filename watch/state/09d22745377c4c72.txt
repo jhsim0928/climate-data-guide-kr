@@ -1,0 +1,140 @@
+# https://github.com/nasa/gesdisc-tutorials/blob/main/user-guidance/GES_DISC_Migration_to_Earthdata_Website_and_Earthdata_Cloud.md
+gesdisc-tutorials/user-guidance/GES_DISC_Migration_to_Earthdata_Website_and_Earthdata_Cloud.md at main · nasa/gesdisc-tutorials · GitHub
+Navigation Menu
+Sign in
+Appearance settings
+Sign in
+Sign up
+Appearance settings
+You signed in with another tab or window.
+Reload
+to refresh your session.
+You signed out in another tab or window.
+Reload
+to refresh your session.
+You switched accounts on another tab or window.
+Reload
+to refresh your session.
+Dismiss alert
+Repository navigation
+Expand file tree
+GES_DISC_Migration_to_Earthdata_Website_and_Earthdata_Cloud.md
+Copy path
+More file actions
+Latest commit
+History
+55 lines (37 loc) · 11.3 KB
+GES_DISC_Migration_to_Earthdata_Website_and_Earthdata_Cloud.md
+Copy path
+File metadata and controls
+55 lines (37 loc) · 11.3 KB
+Copy raw file
+Download raw file
+Outline
+Edit and raw actions
+GES DISC Migration to Earthdata Website and Earthdata Cloud
+Originally published: May 11, 2026
+As the Earth Science Data Systems (ESDS) Program moves toward a consolidated Earthdata entity through its web presence and data access through the Earthdata Cloud, GES DISC is undergoing several changes in the coming months that users and data providers should be aware of. This document will be updated as more information becomes available. For any questions or help finding data, please visit the
+Earthdata Forum
+, or reach out to
+gsfc-dl-help-disc@mail.nasa.gov
+before November 2026.
+For all GES DISC data users
+Changes to HTTPS data access
+HTTPS access to data on our on-premises servers (
+https://\<server\>.gesdisc.eosdis.nasa.gov/...
+) will no longer be available by September 30, 2026. GES DISC is using a phased approach to this transition where direct access to our on-premises servers will be disabled between now and the end of September. Scripts used to construct URLs for data or OPeNDAP requests from these systems will cease to function once public access is disabled. However, data will continue to be available for HTTPS download free of charge from the Earthdata Cloud (URLs starting with
+https://data.gesdisc.earthdata.nasa.gov/...
+), though some functionality - notably recursive download of entire directories via wget/curl - will not be available. Instead, lists of granule URLs will need to be compiled via query to NASA’s
+Common Metadata Repository (CMR)
+In addition to the
+CMR API
+Earthdata Search
+provides an interface to finding and downloading granules. The community developed
+Earthaccess Python Package
+is a recommended tool for finding and downloading data from Earthdata from within Python. See our
+tutorial
+for other methods of accessing GES DISC data via Earthdata Cloud using Python. A browsable listing of data files, similar to the old HTTPS interface, is available at
+Earthdata Provider Holdings Directory
+- though it should be noted that recursive wget/curl will NOT work on this interface.
+For users with access to AWS resources in the
+us-west-2
+region, direct S3 access to data is available. See
+this tutorial
+for an example of direct S3 access using the Earthaccess Python library. Direct S3 URLs can be found in CMR, both via
+Earthdata Search
+and API queries.
+Migration to the Earthdata website
+Information in the
+GES DISC website
+will be migrated to the
+Earthdata website
+. While both sites will remain active during the transition phase (from May 2026 to November 2026), all traffic will be redirected to the Earthdata website after November 2026. This
+guide
+will help you navigate the new Earthdata website. To learn more about ESDS’s Web Unification Project, please visit
+https://www.earthdata.nasa.gov/about/web-unification-project
+Updates to Giovanni Service
+Giovanni
+will continue to exist in its current form until further notice, but users are encouraged to try our
+Giovanni in the Cloud area-averaged time series and time-averaged mapping services
+, and point time-series using the
+Hydrology Time Series Viewer
+Discontinuation of on-premises data services
+GES DISC is migrating data access and services to Earthdata Cloud. Several data access services and tools that reside on our on-premises servers will be, or already have been, discontinued.
+OPeNDAP:
+GES DISC data collections with
+OPeNDAP
+access will be
+enabled in the Earthdata Cloud
+. Between August 20 and September 30, all on-premises OPeNDAP services will be turned off. We strongly encourage you to review the
+OPeNDAP in the Cloud
+documentation and update to your workflows as soon as possible to avoid a lapse of accessibility.
+GES DISC Level 3 and 4 Regridder and Subsetter Service (L34RS):
+GES DISC Level 3 and 4 data collections with
+GES DISC Level 3 and 4 Regridder and Subsetter Service
+(L34RS) access will be enabled in the
+Harmony OPeNDAP Subsetting Service (HOSS)
+and the Harmony OPeNDAP URL Service. All collections are fully enabled in HOSS, so L34RS will discontinue by September 15, 2026. HOSS does not support regridding services, but an alternative that users can run offline is
+Climate Data Operators (CDO)
+. The subsetting interface through the GES DISC website will be accessible through November, now through the Data Access button and using HOSS. API users will need to switch to the Harmony API. The API is required for dimension subsetting services. See our tutorial on using the
+Harmony API to subset data using Python
+. The
+Level 3 and 4 Regridder and Subsetter transition document
+outlines the capabilities of the new Enterprise Level 3 and 4 Subsetting Service, which will serve to help replace L34RS.
+GES DISC Level 2 Subsetter:
+GES DISC Level 2 data collections with
+GES DISC Level 2 Subsetter
+access was transitioned to the
+Earthdata Enterprise Subsetter
+as of August 5, 2026. The subsetting interface through the GES DISC website will be accessible through November, now through the Data Access button and using the Earthdata Enterprise Subsetter. API users will need to switch to the
+Harmony API
+. See our tutorials for more information on using the Earthdata Enterprise Subsetter
+interface
+Harmony API with Python
+THREDDS Data Server (TDS):
+THREDDS Data Server (TDS)
+was discontinued as of July 31, 2026. An alternative to TDS is virtualized data stores, and we are working on offering those for some popular data collections over a limited time period using
+VirtualiZarr
+. Another alternative for aggregation is
+netCDF Operator (NCO)
+. For more information on using NCO for aggregation, see our
+tutorial
+AIRS Level 1 and 2 Subsetter:
+The AIRS Level 1 and Level 2 Subsetter was discontinued as of July 31, 2026. Once all of the collections are enabled in OPeNDAP in the Cloud, dimension-based channel subsetting and variable subsetting will be available. See our
+tutorial
+on using OPeNDAP in the Cloud and Python to subset AIRS Level 1 and Level 2 data.
+Previously available services that have been discontinued:
+GrADS Data Server (GDS)
+AIRS Near-Real-Time (NRT) Viewer tool
+Hydrology Data Rods service
+NASA Level 2 Data Quality Visualization Service (DQViz)
+Open Geospatial Consortium (OGC)
+Web Map Service (WMS)
+for AIRS, TRMM, and OMI data
+Multi-sensor Aerosol Products Sampling System (MAPSS) tool
+For GES DISC data providers
+Future data ingest interfaces
+By September 30, 2026, our on-premises data archives will only maintain a “rolling” archive of data, serving as a pass-through to maintain existing data interfaces with the Earthdata Cloud becoming the primary host of all GES DISC data. This means that only a small amount of newly-ingested data will pass-through our on-premises systems. Data will not be accessible publicly via the on-premises server, only via Earthdata Cloud/Cumulus. After October 1, 2026, GES DISC will begin a strong focus on converting all existing data ingest interfaces to deliver directly to our Earthdata Cloud. Existing data providers should expect communication from GES DISC when the time comes to migrate their respective interface. All new data products and new interfaces must be configured to ingest directly to cloud. Please feel free to reach out to GES DISC if you have any questions or concerns.
+Data subscriptions
+Certain users or groups that access newly-ingested data via a subscription will not see an interruption to those subscriptions. However, data will only be available on-premises for a short period of time, after which time data will “roll off” our archive and will only be accessible from the cloud. If you anticipate needing access to historical data through your subscription (e.g. via the MRI tool), please contact GES DISC as soon as possible.
+You can’t perform that action at this time.

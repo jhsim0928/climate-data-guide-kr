@@ -1,0 +1,223 @@
+# https://psc.apl.uw.edu/data/global-sea-ice-giomas-data-sets/
+Polar Science Center » Global Sea Ice (GIOMAS) Data Sets
+Polar Science Center
+DATA
+Global Sea Ice (GIOMAS) Data Sets
+GIOMAS (Globle Ice-Ocean Modeling and Assimilation System) Data:
+GIOMAS Data
+and some supporting programs can be grabbed here. The global sea ice thickness fields are illustrated by
+movies
+Variables:
+Variable
+Variable name
+Dimension
+Unit
+File name
+Sea ice thickness
+heff
+heff.H<yyyy>
+Sea ice concentration
+area
+fraction
+area.H<yyyy>
+Sea ice velocity u and v
+icevel
+icevel.H<yyyy>
+Sea ice growth rate *
+iceprod
+iceprod.H<yyyy>
+Sea ice melt tendency due to ocean heat flux **
+oflux_ocn
+oflux_ocn.H<yyyy>
+Snow depth (water equivalent) ***
+snow
+snow.H<yyyy>
+Ocean surface temperature (at 2.5 m)
+otemp1
+otemp1.H<yyyy>
+Ocean surface salinity (at 2.5 m)
+osali1
+osali1.H<yyyy>
+Ocean surface velocity u and v (at 2.5 m)
+ouv1
+cm/s
+ouv1.H<yyyy>
+* Ice growth rate is the net ice production due to atmospheric heating/cooling and oceanic heat flux.
+** When converted to W/m*m by multiplying a negative value of (-3.02*10**8), this variable becomes ocean heat flux to the mixed layer and can be used to drive global sea ice models.
+*** To convert to actual snow depth, multiply a factor of (water density/snow density).
+Methods and data:
+SSM/I ice concentration data were assimilated in the
+sea ice model that is used in GIOMAS.
+Grid:
+Grid Parameters:
+Grid configuration
+Generalized curvilinear coordinate system
+Grid Size:
+360 x 276
+Spatial Coverage
+Global.
+The grid domain is shown here
+lon and lat for scalar fields
+grid.dat
+lon and lat for vector fields
+grid.dat.pop
+angle between latitude line and grid cell x-coordinate line
+alpha.fortran.dat
+Temporal Coverage:
+Currently monthly data from 1/1979 to the present. Each file contains 12 monthly 2-D fields. For sea ice and ocean velocities, first comes 2-D u component followed by v component.
+Data Format:
+The data are flat binary files (no headers) consisting of single-precision floating-point numbers. The data were written as unformatted direct access files on a Linux PC cluster. Byte order may have to be changed if you are using a machine using a different byte order (e.g. HP workstations ). A FORTRAN program demonstrating how to read sea ice thickness and grid information is provided (
+read_hi_uice.f
+). An IDL program demonstrating how to read (and plot) scalar fields and grid information is also provided (
+read_draw_hi.pro
+). Another IDL routine (
+read_draw_uice.pro
+) is provided to read vector fields and vector grid information. It also plots ice velocity on a spherical coordinate system using the angle between the latitude line and the grid cell x-coordinate line (
+alpha.fortran.dat
+). The structure of the data sets should be apparent from these routines. Please let us know if you have difficulty reading the data.
+Utilities:
+read_hi_uice.f
+: FORTRAN program to read sea ice thickness and grid information, can be used to read other scalar fields
+read_draw_hi.pro
+: IDL program to read and plot sea ice thickness, can be used to read other scalar fields such as ice concentration and ice growth
+read_draw_uice.pro
+: IDL program to read and plot sea ice velocity, can be used to read and plot other vector fields such as ocean velocity
+colorbar.pro
+: IDL routine for drawing color bar
+con_clr.pro
+: IDL routine for setting colors
+LLtoXY.pro
+: IDL routine for plotting vectors
+LLtoXY_s.pro
+: IDL routine for plotting vectors
+XYtoLL.pro
+: IDL routine for plotting vectors
+XYtoLL_s.pro
+: IDL routine for plotting vectors
+heads.pro
+: IDL routine for plotting vectors
+io.dat_360_276.output
+: model grid mask; ocean levels > 0, land = 0
+Other Ways for Data Access:
+You can access the data via sftp/ssh/rsync from pscfiles.apl.washington.edu/pcfiles/zhang/Global_seaice’, with the credentials:
+username: ‘anonymous’
+password: ‘anonymous’
+If you are downloading the data, please e-mail us at
+zhang©apl•washington•edu
+we can update you on changes, bugs etc.
+Other Related (Arctic Sea Ice-Ocean) Data Sets
+Attribution:
+We’d appreciate your reference to the following paper for using the data:
+Zhang, Jinlun and D.A. Rothrock:
+Modeling global sea ice with a thickness and enthalpy distribution model in generalized curvilinear coordinates
+, Mon. Wea. Rev. 131(5), 681-697, 2003.
+ABOUT PSC
+Aaron Donohoe, PSC Chair, Welcome»
+The Polar Science Center is a group of dedicated investigators conducting interdisciplinary research on the oceanography, climatology, meteorology, biology and ecology of the ice-covered regions on Earth and elsewhere in the solar system.
+Learn more »
+SCIENTIST LINKS
+Tyler Sutterley
+Dale Winebrenner
+Ian Joughin
+Karen Junge
+Ben Smith
+POPULAR RESOURCES
+Ice Volume Reanalysis
+North Pole Environmental Observatory
+Ice Thickness CDR
+Arctic Buoy Program
+SIZRS Flights
+Polar Science Center
+HOME
+ABOUT
+Chair’s Welcome
+PSC History
+In the Field
+Contact information
+PSC Private Web
+NEWS
+PEOPLE
+Investigators »
+Jessica Badgeley
+Aaron Donohoe
+Tim Elam
+John Guthrie
+Ian Joughin
+Karen Junge
+Aditya Khuller
+Michalea King
+Ron Kwok
+Kristin Laidre
+Bonnie Light
+Zheng Liu
+Jamie Morison
+Mónica V. Orellana
+Cecilia Peralta Ferriz
+Eric Regehr
+Ignatius Rigor
+Axel Schweiger
+Daniel Shapero
+Ben Smith
+Mike Steele
+Harry Stern
+Tyler Sutterley
+Melinda Webster
+Dale Winebrenner
+Rebecca Woodgate
+Jinlun Zhang
+Post Doctoral Scholars »
+Ethan Campbell
+Laramie Jensen
+Astrid Pacini
+Research Staff »
+Roger Andersen
+Ben Cohen
+Suzanne Dickinson
+Wendy Ermold
+Erin Firth
+Jim Johnson
+Dean Stewart
+Visiting Scholars and Scientists
+Admin Staff »
+Chao, Yu-Chan
+Students »
+Jessica Hale
+Jennifer Stern
+Retirees »
+Knut Aagaard
+Ron Lindsay
+Dick Moritz
+Yanling Yu
+Adjunct and Affiliate Scientists
+In Memoriam »
+In Memoriam of Gary A. Maykut, Friend of PSC and Sea Ice Researcher
+The Polar Science Center lost one of its founders: Alan Thorndike
+PSC lost a dear friend, Andy Heiberg (1938-2021)
+In memory of Norbert Untersteiner (1926-2012)
+RESEARCH
+Atmospheric Science
+Biological Research
+Field Programs
+Ice Sheets & Glaciers
+Modeling
+Oceanography
+Planetary Science
+Remote Sensing
+Sea Ice
+Projects
+PUBLICATIONS
+DATA
+EDUCATION
+Links
+Field Reports
+PSC Outreach Activities
+Student Involvement
+twitter
+facebook
+Donate
+Polar Science Center
+Applied Physics Laboratory
+University of Washington
+. 1013 NE 40th Street . Box 355640 . Seattle, WA 98105-6698
+E-mail:
+PSCAdmin@uw.edu

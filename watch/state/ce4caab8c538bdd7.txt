@@ -1,0 +1,177 @@
+# https://confluence.ecmwf.int/spaces/CKB/pages/583771254/Copernicus+pan-Arctic+Regional+Reanalysis+CARRA2+Known+issues
+Copernicus pan-Arctic Regional Reanalysis (CARRA2): Known issues - Copernicus Knowledge Base - ECMWF Confluence Wiki
+Log in
+Copernicus Knowledge Base
+Space shortcuts
+ERA5: data documentation
+Software upgrade for geographical area extraction from data on regular lat-lon grids
+Service status
+ECMWF Training resources
+Page tree
+Browse pages
+Jira links
+tachments (16)
+Page History
+Page Information
+Resolved comments
+View in Hierarchy
+View Source
+Export to PDF
+Export to Word
+Hide Inline Comments
+Explore Built-in Scripts
+Copernicus pan-Arctic Regional Reanalysis (CARRA2): Known issues
+Created by
+Michela Giusti
+, last updated on
+Oct 02, 2026
+15 minute read
+Table of Contents
+Introduction
+The Copernicus pan-Arctic Regional Reanalysis (CARRA2) is a very high resolution (2.5 km) reanalysis system covering the full Arctic. The Arctic is an essential area of the Globe having a significantly stronger warming than other parts of the Earth. The CARRA2 dataset is a successor of the CARRA1 data with a full pan-Arctic coverage and it will cover more than 40 years of reanalysis from September, 1985 to present (it will be completed until Q2 2026). From 2027 onwards monthly timely update service is also planned adding 1 month new data to the dataset (with 2-3 months delay with respect to real time). The new pan-Arctic regional reanalysis system adds value to the ERA5 global reanalysis with the use of more (local) observations, with the better description of surface characteristic (like sea ice or glaciers for instance) and with its higher horizontal resolution. The new CARRA2 system has similar quality than that of CARRA1, but wider spatial and temporal coverage. All the details of the CARRA2 system is described in its
+Copernicus pan-Arctic Regional Reanalysis (CARRA2): Full system documentation
+Known issues
+Small negative values in hydrometeor specific mass concentrations
+A conversion issue has been found when hydrometeor specific mass concentrations (graupel, specific cloud ice water content, specific cloud liquid water content, specific cloud rain water content and specific cloud snow water content) are converted to GRIB format. These variables are available on model, pressure and height levels (depending on the variable). It causes in some cases small, unphysical negative values in the output fields (the model values are correct). This conversion issue particularly occurs for hydrometeors with very low or zero concentrations and can display negative mass concentrations of the order of 10⁻¹¹ - 10⁻¹² . Users can safely assume these values to be zero.
+Warm 2m temperature over forest regions
+The CARRA2 reanalysis dataset can exhibit unusually warm 2m temperatures when compared to other models or independent datasets. These warm temperatures are associated with the high-vegetation patches in the model and thus appear in regions dominated by forests. Prominent examples are Siberia or the Sahtu region in Canada. This deficiency is related to the fact that although the CARRA2 system describes the surface characteristics (like forests in this case) better than CARRA1, but the diagnostic formula used to determine the 2m temperature is unable to interpret the new canopy processes properly when they are translated to actual 2m temperature values. A note explaining all the details is available below. Meanwhile, it is recommended to use the 2m temperature variable with care over forest areas.
+The interpretation of the CARRA2 2m temperature values over forests:
+Summary:
+The 2m temperature (T2m) in weather prediction models is a diagnostic variable, derived from the variables of the model’s surface and near surface layer. By construction, it reflects the assumptions of the surface scheme and therefore it is subject to representation errors when compared to other models or observations. In the Copernicus pan-Arctic Regional Reanalysis (CARRA2), this problem is more complex because of the sophisticated surface scheme, which explicitly accounts for vegetation canopies. In grid boxes dominated by high vegetation (like forests), the diagnostic T2m represents conditions above the explicit canopy rather than near the ground. This can lead to unusually warm values in forested regions such as Siberia or the Sahtu area in Canada. As a result, intercomparisons with other datasets may give the impression of poor CARRA2 performance, when the differences are primarily due to the definitions of the T2m diagnostics and not the poor performance of the model. This guide documents this issue.
+1 Introduction
+The 2m temperature (T2m) provided by Numerical Weather Prediction (NWP) and reanalysis systems is not a model prognostic variable but a diagnostic field. It is generally obtained by interpolating between the model’s lowest atmospheric level and the surface using stability functions from the surface-layer scheme of the model. By design, such diagnostics are sensitive to model-specific assumptions and tuning, such as artificially enhanced roughness lengths or atmospheric stability introduced to improve flux calculations (Kähnert et al. 2025). This means that even if two models have identical surface and atmospheric air temperatures, they may still yield different T2m values simply because of differences in interpolation methods or surface parameterizations. We call this a representation error. Any intercomparison of T2m between different models or between a model and an observation is therefore subject to such an error.
+Due to the “relative simplicity” of surface schemes in most models, these representation errors are usually minor and overshadowed by more fundamental deficiencies, such as for instance biases in the snow scheme (Day et al. 2020), excessive turbulent mixing (Holtslag et al. 2013), or flaws in radiation parameterizations (Edwards 2009). However, for CARRA2 with a sophisticated surface parameterization scheme, this representation error can become the largest error source over forest dominated areas due to CARRA2’s explicit representation of the canopy (Le Moigne 2009, Boone et al. 2017, Napoly et al. 2017). Please note that in the original Copernicus Arctic Regional Reanalysis (CARRA) this problem was not present due to its much simpler surface scheme.
+In order to demonstrate the problem Figure 1, shows a domain-wide intercomparison between CARRA2 and ERA5. In certain areas CARRA2 exhibits pronouncedly warmer T2m compared to ERA5, with differences between ERA5 and CARRA2 well exceeding 10K in some locations.
+Figure 1:
+T2m differences between CARRA2 and ERA5 for the months of December, January, and February averaged over 7 winters: 1990/91, 1995/96, 2000/2001, 2005/06, 2010/11, 2015/16 and 2020/21. a ) Over the entire domain b),c) over specific sub-areas in Siberia. (These small areas are on the upper right side of the full domain in panel a.)
+An inspection of the model physiography reveals that these warm anomalies coincide with grid boxes dominated by forests (compare Fig. 1b,c to Fig. 2a,b respectively), emphasizing that they arise from differences in how T2m is represented over high vegetation in ERA5 versus CARRA2.
+Figure 2:
+Area fraction of the boreal needleleaf deciduous cover type. a) the region highlighted in Fig. 1b, b) the region highlighted in Fig. 1c.
+2. The “warm” T2m
+As mentioned in the introduction T2m in CARRA2 is a diagnostic variable. That means that T2m is not evolved in time by prognostic model equations, like e.g. surface or atmospheric temperatures at model levels (prognostic variables), but is diagnosed at every time step based on a relation to the prognostic variables. In CARRA2 we use a formulation following Geleyn (1988):
+where z is the requested height (here 2m), Ts denotes surface temperature, Ta atmospheric temperature (available as prognostic variable at lowest model level), and si is an interpolation factor dependent on z, the roughness length for momentum z0, the roughness length for heat z0H, and Ri, the bulk Richardson number:
+Thus, T2m is obtained by a stability-dependent interpolation between the prognostic temperature at the lowermost model level and the surface temperature. It is this surface temperature, or better to say,
+the choice of what is used as surface temperature in Equation 1 that causes the warm temperatures over forest dominated areas
+Figure 3:
+Schematic representation of the nature tile in CARRA2. Graphic adapted from Kähnert et al. (2023).
+SURFEX (Le Moigne, 2009) is the surface model applied in the CARRA2 system. In total four tiles (representing fractions of a grid box area) are employed by SURFEX: sea, inland water, nature and town. Forests, or high vegetation, are calculated as part of the nature tile in SURFEX. The nature tile represents bare-soil processes, as well as low and high (forest) vegetation processes, while also accounting for partial or full snow cover (Figure 3). Individual state variables are calculated for each of these cover types, among them the canopy air temperature (Tc) for high vegetation. The canopy air temperature represents a bulk temperature for the entire high vegetation canopy layer, which is explicitly separated from the soil surface as illustrated in Figure 3 (Boone et al. 2017).
+For every patch or tile within a grid box, an individual T2m​ is computed using its corresponding temperature as Ts in Equation 1, with the high-vegetation patch specifically relying on Tc​. The resulting estimates are subsequently combined into a grid-averaged T2m​ by means of area-weighting. In grid boxes dominated by forest, the mean T2m​ is strongly influenced by the high-vegetation contribution based on Tc​. Often, the Tc​ values do not deviate substantially from the lowest model level atmospheric temperature, Ta​. As an illustration, Figure 4 shows the evolution of the tile-specific Ts and corresponding T2m during a stable weather period. The surface temperatures for the bare-soil and low-vegetation tiles (black lines) exhibit pronounced cooling, resulting in strong surface-layer inversions exceeding 15 K (Fig. 4b,c). According to Equation 1, the associated T2m values (red lines) are similarly cold and closely follow the evolution of their respective surface temperatures. In contrast, the surface temperature of the high-vegetation tile remains considerably warmer, producing a much weaker inversion of about 5 K (Fig. 4d). Consequently, the corresponding T2m is notably warmer and more consistent with the evolution of the atmospheric temperature (blue line), owing to the reduced stability (Ri, see Eq. 2). Depending on the fractional coverage of each tile within a grid box (Fig. 4a), the grid-averaged T2m may therefore be strongly influenced by the high-vegetation component, resulting in comparatively warm overall values.
+Figure 4:
+a) Schematic representation of tile fractions in a grid box, with red shading indicating tendencies for warmer or colder tile-specific surface temperatures. b)-d) Illustrative, tile-specific (bare soil, low vegetation and high vegetation) temperature evolutions during a stable boundary layer period for surface temperatures (black), 2m-temperatures (red), and atmospheric temperatures (blue).
+It becomes clear that the representation of “2m temperature” is shaped by these formulations. If we picture a grid box fully covered by forest, T2m always describes “2m temperature above the canopy”. However, in a model without an explicit representation of the canopy the corresponding canopy air temperature Tc does not substantially differ from the surface temperature. In the operational NWP configuration of the HARMONIE-AROME model (using a surface scheme without explicit canopy representation), for example, the temperature differences between high and low vegetation during cloud free and very stable nights are between 1-3 K. Thus any representation error is small compared to the differences of more than 15 K that can appear in CARRA2. So while the more sophisticated representation of the surface in CARRA2 yields us with better surface-air interactions in form of fluxes, a proper representation of snow and an explicit handling of the energy budget within the surface layer, it simultaneously emphasizes the representation error in T2m.
+Hence, any comparison between CARRA2 and another model such as ERA5 will yield substantial differences in T2m over forest dominated areas. Similar differences will occur when one would compare an independent observation typically taken 2m above ground with CARRA2 in such areas (the practice for observing T2m is to avoid forest and high vegetation areas). Yet, it is clear that many users require a T2m that is more similar to an observation taken 2m above ground. Ideally, users need to work directly with tile-specific near-surface temperatures, as these represent the physically consistent outputs of the land-surface scheme. For example, the aforementioned T2m similar to an observation would be represented by the T2m of the low vegetation patch. Unfortunately, such variables are not routinely available for the initial release of the CARRA2 data stream but will be published at a later stage (around mid-2026).
+3. Conclusion and general considerations
+This user guide highlights that differences in T2m diagnostic formulations play a decisive role in shaping its values over forested regions. In CARRA2, the explicit treatment of high vegetation introduces a more realistic surface–atmosphere coupling, but it also changes the meaning of T2m compared to other datasets or observations that lack a canopy representation. Over forest-dominated areas, T2m effectively reflects conditions above the canopy rather than near the ground, leading to systematically warmer values under stable and cloud-free conditions.
+These differences should not be interpreted as a deficiency in CARRA2, but rather as a reflection of its sophisticated surface parameterisation. When compared against models such as ERA5 or against near-surface observations, the apparent warm bias primarily arises from this representational mismatch.
+Until tile-specific T2m outputs become available in future CARRA2 releases, users are urged to treat areas dominated by high-vegetation with care. Doing so will help ensuring that comparisons across datasets and with in-situ measurements remain physically consistent and scientifically meaningful.
+References
+Boone A, Samuelsson P, Gollvik S, Napoly A, Jarlan L, Brun E, Decharme B (2017) The interactions between soil–biosphere–atmosphere land surface model with a multi-energy balance (ISBA-MEB) option in SURFEXv8—Part 1: model description. Geosci Model Dev 10(2):843–872
+Day JJ, Arduini G, Sandu I, Magnusson L, Beljaars A, Balsamo G, Rodwell M, Richardson D (2020) Measuring the impact of a new snow model using surface energy budget process relationships. J Adv Model Earth Syst 12(12):e2020MS002,144
+Edwards JM (2009) Radiative processes in the stable boundary layer: Part I. Radiative aspects. Boundary-Layer Meteorol 131(2):105
+Geleyn J.-F. (1988) Interpolation of wind, temperature and humidity values from
+model levels to the height of measurement. Tellus, 40A(4):347–351
+Holtslag AAM, Svensson G, Baas P, Basu S, Beare B, Beljaars ACM, Bosveld FC, Cuxart J, Lindvall J, Steeneveld GJ, Tjernström M, Wiel BJHVD (2013) Stable atmospheric boundary layers and diurnal cycles: challenges for weather and climate models. Bull Am Meteorol Soc 94(11):1691–170
+Kähnert, M., Sodemann, H., Remes, T.M. et al. (2023) Spatial Variability of Nocturnal Stability Regimes in an Operational Weather Prediction Model. Boundary-Layer Meteorol
+https://doi.org/10.1007/s10546-022-00762-1
+Le Moigne P (2009) SURFEX scientific documentation. CNRM Tech Rep p 211 pp
+Napoly A, Boone A, Samuelsson P, Gollvik S, Martin E, Seferian R, Carrer D, Decharme B, Jarlan L (2017) The interactions between soil-biosphere-atmosphere (ISBA) land surface model multi-energy balance (MEB) option in SURFEXv8—Part 2: introduction of a litter formulation and model evaluation for local-scale forest sites. Geosci Model Dev 10(4):1621–1644
+General lateral boundary issues
+The NWP regional system handles the lateral model boundaries of its domain with a relaxation scheme which ensures a continuous transition between the ERA5 and the CARRA prognostic fields from the domain boundaries to the interior of the regional domain. Consequently, in general the CARRA2 data have less realism close to the domain boundaries (less than 100 km) where this boundary relaxation scheme is applied. Usually the effect is small when farther away from the boundary and even negligible when more than 200 km away from the boundary. All model quantities may be affected, in particular precipitation values will generally be too small near the boundaries. Therefore, generally users need to be careful looking at information near to the CARRA2 domain edges.
+Local biases in analysed 2-meter temperature on the
+Greenland Ice Shee
+Surface temperature anomalies were discovered in Southern part of Greenland, due to some erroneous observations assimilated into the CARRA system. The most severe anomaly was discovered in the surface observation time series from NASA-SE station (ID: 04488) in the Greenland Climate Network (GC-Net) from 2012 to 2019. This issue locally impacts reanalysis output of CARRA2 for the surrounding area.
+The consequence of this bias is illustrated in Figure 5 by comparing the average winter-time (DJF) temperature for Greenland to the 20 year average temperature for the period 1991-2010. A warm anomaly is clearly seen around NASA-SE in Southeastern Greenland. The largest assimilation errors are for winter (DJF) while the summer season (JJA) is affected to a much lesser degree. The spatial extent of this anomaly is estimated at ~80 km radius. The affected area for CARRA2 is smaller than for CARRA1 (see
+Copernicus Arctic Regional Reanalysis (CARRA): known issues and uncertainty information#Generaldataissues
+, since the surface data assimilation scheme has been improved in the CARRA2 modelling system; however, for CARRA2 we can see a few other anomalies (for instance around the Humboldt (HUM) GC-Net automatic weather station), that suggest other erroneous observations.
+Figure 5:
+Map of the 2015 temperature anomalies for the winter months (DJF), relative to the 1991-2010 period,
+that was not affected by the error at the NASA-SE station.
+For instance a similar problem has also been found for the Peterman
+n ELA station from 2011 to 2014, for winter data from JAR1 from 2008 to 2011, and for GITS in 2007.
+From 2007 to 2010 the station at NGRIP was buried under snow. As a result the temperatures from inside the snow pack were assimilated with significantly lowered daily variability. Lowered variability has also been found at the Crawford Point station from 2005 to 2007.
+The impact of most of these smaller issues is limited.
+The Greenland Ice Sheet, covering ~2.8 million km², is observation-sparse, with only a few ground-based stations. Of these, for CARRA2 (also CARRA1), the GC-Net and PROMICE automatic weather station networks data were assimilated for surface reanalysis. While generally high-quality, these datasets occasionally suffer from interruptions or anomalies.
+Quality assurance typically involves comparing month-long time series with independent datasets like ERA5. However, a major discontinuity in NASA-SE’s data (2012–2019) went undetected: its temperature sensor degraded in cold conditions below -30°C, that is they cannot measure lower temperatures than this. Thus, +10 to +20°C biases can occur for the coldest days. In average, during the December, January and February, the bias is up to +5°C near the station, as illustrated in Figure 5. Data from 2012 to 2019 near NASA-SE should not be trusted. Similarly data near the other stations with issues should not be trusted.
+The anomaly was only identified recently when winter 2025 temperatures showed a suspiciously large negative bias compared to the 1991–2020 mean. Investigation revealed that the cold bias was exaggerated due to distorted climatology, caused by the faulty NASA-SE data. The sparse observation network amplified the impact of this single-station issue. A s
+imilar behaviour has also been found for CARRA1.
+CARRA2 surface data assimilation involving near-surface observations typically involves two steps: 1) Horizontal distribution of observation increments (temperature, humidity, and snow depth) in the 2D grid using an Optimal Interpolation (OI) scheme. 2) Vertical distribution of these increments into soil layers via a flow-dependent Simplified Extended Kalman Filter (SEKF). However, over the glacier area where the problematic observation data originated, the vertical interpolation step is skipped. As a result, the impact of the flawed temperature observations from the glacier station is believed to be confined to screen-level temperature and in lesser extent to humidity.
+Surface information slightly less accurate north of 75 degrees N
+The near-surface regional reanalysis variables are influenced by the surface physiographic databases used. For this purpose, CARRA2 relies on the ECOCLIMAP Second Generation databases, supplemented by a set of corrections and updates from enhanced information sources to further improve the surface description. However, we could not address some known issues in the leaf area index and land surface albedo input data, therefore north of 75°N the data remain slightly coarser and smoother. The impact on the reanalysis variables is minor, but it might still be noticeable in some applications.
+Oversized grid output for some surface variables
+The extension zone of our model grid has been included for some surface variables by mistake. The full grid sizes for these fields are thereby 2880 x 2880 points instead of the correct 2869 x 2869 grid dimension.
+The additional 11 extra rows and columns have no physical meaning (needed only for technical reasons) and therefore these rows and columns should be discarded. In this extension zone only NaN values are found for these variables. Concretely, the dimensions (1:2869, 1:2869) (or (0:2868, 0:2868) for zero-based arrays) should be used. The variables output on the wrongly oversized 2880 x 2880 grid are:
+Sea ice area fraction
+Sea surface temperature
+Surface roughness (climatological)
+Snow depth
+Sea-ice thickness
+Snow depth water equivalent
+Surface runoff
+Surface roughness for heat
+Snow cover
+Percolation
+Sea ice surface temperature
+Snow on ice total depth
+Missing daily/monthly statistics for some parameters
+Fixed on 01-Sep-2026
+: In the CDS download form, before 01-Sep-2026, the surface roughness variable was erroneously listed. If this surface roughness variable was selected, the data downloaded was of surface runoff data instead (as indicated by the metadata in the downloaded file). The issue was linked to the incorrect mapping of the archived parameters and the variable list in the CDS download form. As of 01-Sep-2026,
+surface runoff variable is correctly labelled as surface runoff.
+The daily/monthly statistics of some parameters are missing for some periods. We are working on back-filling these parameters. This affects the following parameters:
+Param
+Name
+Missing period
+Figure of missing periods / more details
+Min and max temperature since previous post processing
+Several periods (same for min and max), see the figure on the right
+Surface runoff
+Several periods, see the figure on the right
+Wind gust
+The entire period
+Sea ice surface temperature
+September - December 1985
+February - December 2001
+January - April 2002
+Several periods, see the figure on the right
+For more explanation of the CARRA2 means and extreme values, please see
+Copernicus pan-Arctic Regional Reanalysis (CARRA2): Data User Guide#Climatemeansandextremevalues
+This document has been produced in the context of the Copernicus Climate Change Service (C3S).
+The activities leading to these results have been contracted by the European Centre for Medium-Range Weather Forecasts, operator of C3S on behalf of the European Union (Delegation agreement signed on 11/11/2014). All information in this document is provided "as is" and no guarantee or warranty is given that the information is fit for any particular purpose.
+The users thereof use the information at their sole risk and liability. For the avoidance of all
+doubt
+, the European Commission
+and the European Centre for Medium
+Range Weather Forecasts have no liability in respect of this document, which is merely
+representing the author's view.
+Related articles
+Page:
+C3S Seasonal Forecast known issues
+Page:
+Copernicus pan-Arctic Regional Reanalysis (CARRA2): Data User Guide
+Page:
+Copernicus pan-Arctic Regional Reanalysis (CARRA2): Known issues
+Page:
+The family of ERA5 datasets
+Page:
+Climate Data Store (CDS) User Guide
+carra
+reanalysis
+owned-single-by-daah
+Overview
+Community Forums
+Content Tools
+Feedback:
+C3S User Satisfaction Survey
+CAMS User Satisfaction Survey
+Training:
+ECMWF training resources
+Web:
+C3S Help and Support
+CAMS Help and Support
+Powered by
+Atlassian Confluence
+(confluence-1: 546f19f7)
+Printed by Atlassian Confluence 10.2.19
+Report a bug
+Atlassian News
+Atlassian
+{"serverDuration": 228, "requestCorrelationId": "55869bc7458e3983"}

@@ -1,0 +1,439 @@
+# https://www.ncei.noaa.gov/products/world-ocean-atlas
+World Ocean Atlas | National Centers for Environmental Information (NCEI)
+An official website of the United States government
+Here's how you know
+The .gov means it’s official.
+Federal government websites often end in .gov or .mil. Before sharing sensitive information, make sure you’re on a federal government site.
+The site is secure.
+https://
+ensures that you are connecting to the official website and that any information you provide is encrypted and transmitted securely.
+NCEI is currently moving its data and applications to the cloud. This upgrade may result in temporary data access delays. Please see our
+cloud migration overview
+frequently asked questions
+for more information and resources. Check the
+NCEI Alerts page
+for impacted products and datasets. Current Impact: Intermittent degraded order fulfillment services.
+World Ocean Atlas
+The World Ocean Atlas (WOA) is a collection of objectively analyzed, quality controlled temperature, salinity, oxygen, phosphate, silicate, and nitrate means based on profile data from the World Ocean Database (WOD). It can be used to create boundary and/or initial conditions for a variety of ocean models, verify numerical simulations of the ocean, and corroborate satellite data.
+Data Access
+Help
+WOA 2023
+Data
+Figures
+The World Ocean Atlas 2023 Dissolved Oxygen, Apparent Oxygen Utilization, and Dissolved Oxygen Saturation version 1.0 (released Feb. 2024) has been updated to version 1.1 as of May 30, 2024. A small change to the profiling float O2 data adjustment was made to allow for internal consistency with other independent types of O2 observations. For a description of the changes please see the Errata in Garcia et al., 2024. doi:
+10.25923/rb67-ns53
+Current WOA Citation
+Reagan, James R.; Boyer, Tim P.; García, Hernán E.; Locarnini, Ricardo A.; Baranova, Olga K.; Bouchard, Courtney; Cross, Scott L.; Mishonov, Alexey V.; Paver, Christopher R.; Seidov, Dan; Wang, Zhankun; Dukhovskoy, Dmitry. (2024). World Ocean Atlas 2023. NOAA National Centers for Environmental Information. Dataset:
+NCEI Accession 0270533.
+Releases
+A new version of the WOA is released in conjunction with each major update to the
+, the largest collection of publicly available, uniformly formatted, quality controlled subsurface ocean profile data in the world.
+The full WOA23 was released on February 14, 2024 and includes temperature, salinity, oxygen (and parameters Apparent Oxygen Utilization and percent oxygen saturation) and inorganic nutrients (phosphate, silicate, and nitrate). WOA23 includes approximately 1.8 million new oceanographic casts added to the WOD since WOA18’s release, as well as renewed and updated quality controls.
+The WOA23 was initially released in October 2022 and it contained the 1991–2020 climate normals of global ocean temperature and salinity at selected standard depths. These fields were, in part, generated to complement the recently released
+U.S. Climate Normals.
+These fields were also updated as part of the full February 2024 release.
+2023 Climate Normals
+A "normal" is defined by the
+World Meteorological Organization (WMO)
+as the 30-year average of data for a particular variable, calculated for a uniform time period. Normals provide long-term means for initializing models, environmental studies, checking in situ observations,
+etc.
+Normals establish a baseline that can help researchers determine whether or not current observations are within the statistical norm in the context of the most recent 30-year climatological background.
+2023 Documentation
+WOA23 Product Documentation
+doi:
+https://doi.org/10.25923/a78k-gq49
+2023 Programs
+analysis.for
+: FORTRAN program to print out a 10x10 degree latitude-longitude area from a user requested file
+analysis.c
+: C program to print out a 10x10 degree latitude-longitude area from a user requested file
+analysis.exe
+: DOS executable version of the "analysis.for" program
+analysis_64.exe
+: 64 bit executable version of the "analysis.for" program
+anlyxyz.for
+: FORTRAN program which writes the entire 360x180 degree latitude-longitude grid into a comma-separated-value output file
+anlyxyz_64.exe
+: 64 bit executable version of the "anlyxyz.for" program
+2023 Masks
+basinmask_01.msk
+: basin mask used for WOA climatology objective analysis for 1° grid
+basinmask_04.ms
+: basin mask used for WOA climatology objective analysis for 0.25° grid
+landsea_01.msk
+: bottom depth assigned to each 1°x1° square
+landsea_04.msk
+: bottom depth assigned to each 0.25°x0.25° square
+mixnumber_01.msk
+: mixing number (values -2 through 2) for 1° grid. If basins are not the same, the sum of the mixing numbers must be >0
+mixnumber_04.msk
+: mixing number (values -2 through 2) for 0.25° grid. If basins are not the same, the sum of the mixing numbers must be > 0
+2023 Publications
+Temperature:
+Locarnini, R.A., A.V. Mishonov, O.K. Baranova, J.R. Reagan, T.P. Boyer, D. Seidov, Z. Wang, H.E. Garcia, C. Bouchard, S.L. Cross, C.R. Paver, and D. Dukhovskoy (2024). World Ocean Atlas 2023, Volume 1: Temperature. A. Mishonov Technical Editor, NOAA Atlas NESDIS 89,
+doi.org/10.25923/54bh-1613
+Salinity:
+Reagan, J.R., D. Seidov, Z. Wang, D. Dukhovskoy, T.P. Boyer, R.A. Locarnini, O.K. Baranova, A.V. Mishonov, H.E. Garcia, C. Bouchard, S.L. Cross, and C.R. Paver. (2024). World Ocean Atlas 2023, Volume 2: Salinity. A. Mishonov, Technical Editor, NOAA Atlas NESDIS 90,
+doi.org/10.25923/70qt-9574
+Oxygen:
+Garcia, H.E., Z. Wang, C. Bouchard, S.L. Cross, C.R. Paver, J.R. Reagan, T.P. Boyer, R.A. Locarnini, A.V. Mishonov, O. Baranova, D. Seidov, and D. Dukhovskoy (2024). World Ocean Atlas 2023, Volume 3: Dissolved Oxygen, Apparent Oxygen Utilization, and Oxygen Saturation. A. Mishonov, Tech. Ed. NOAA Atlas NESDIS 91,
+doi.org/10.25923/rb67-ns53
+Nutrients:
+Garcia, H.E., C. Bouchard, S.L. Cross, C.R. Paver, Z. Wang, J.R. Reagan, T.P. Boyer, R.A. Locarnini, A.V. Mishonov, O. Baranova, D. Seidov, and D. Dukhovskoy (2024b). World Ocean Atlas 2023, Volume 4: Dissolved Inorganic Nutrients (phosphate, nitrate, silicate). A. Mishonov, Tech. Ed. NOAA Atlas NESDIS 92,
+doi.org/10.25923/39qw-7j08
+WOA18 was released September 30, 2018. It includes approximately 3 million new oceanographic casts added to the WOD, as well as renewed and updated quality control. The WOA18 temperature and salinity fields were released preliminarily to crowd source quality assurance from the WOA user community, which has successfully identified suspect features in previous releases.
+2018 Access
+Data
+Figures
+Metadata
+2018 Citations
+Garcia H.E., T.P. Boyer, O.K. Baranova, R.A. Locarnini, A.V. Mishonov, A. Grodsky, C.R. Paver, K.W. Weathers, I.V. Smolyar, J.R. Reagan, D. Seidov, M.M. Zweng (2019).
+World Ocean Atlas (2018): Product Documentation. A. Mishonov, Technical Editor.
+2018 Documentation
+WOA 2018 Product Documentation
+doi:
+10.25923/tzyw-rp36
+2018 Programs
+analysis.for
+FORTRAN program to print out a 10x10 degree latitude-longitude area from a user requested file
+analysis.c
+C program to print out a 10x10 degree latitude-longitude area from a user requested file
+analysis.exe
+DOS executable version of the "analysis.for" program
+analysis_64.exe
+64 bit executable version of the "analysis.for" program
+anlyxyz.for
+FORTRAN program which writes the entire 360x180 degree latitude-longitude grid into a comma-separated-value output file
+anlyxyz_64.exe
+64 bit executable version of the "anlyxyz.for" program
+2018 Masks
+basinmask_01.msk
+basin mask used for WOA climatology objective analysis for 1° grid
+basinmask_04.msk
+basin mask used for WOA climatology objective analysis for 0.25° grid
+landsea_01.msk
+bottom depth assigned to each 1°x1° square
+landsea_04.msk
+bottom depth assigned to each 0.25°x0.25° square
+mixnumber_01.msk
+mixing number (values -2 through 2) for 1° grid. If basins are not the same, the sum of the mixing numbers must be > 0
+mixnumber_04.msk
+mixing number (values -2 through 2) for 0.25° grid. If basins are not the same, the sum of the mixing numbers must be > 0
+2018 Publications
+Temperature
+Locarnini, R. A., A. V. Mishonov, O. K. Baranova, T. P. Boyer, M. M. Zweng, H. E. Garcia, J. R. Reagan, D. Seidov, K. Weathers, C. R. Paver, and I. Smolyar (2018).
+World Ocean Atlas 2018, Volume 1: Temperature
+. A. Mishonov Technical Ed.; NOAA Atlas NESDIS 81, 52pp.,
+doi: 10.25923/e5rn-9711
+Salinity
+Zweng, M. M., J. R. Reagan, D. Seidov, T. P. Boyer, R. A. Locarnini, H. E. Garcia, A. V. Mishonov, O. K. Baranova, K. Weathers, C. R. Paver, and I. Smolyar (2018).
+World Ocean Atlas 2018, Volume 2: Salinity
+. A. Mishonov Technical Ed.; NOAA Atlas NESDIS 82, 50pp.,
+doi: 10.25923/9pgv-1224
+Oxygen
+Garcia, H. E., K. Weathers, C. R. Paver, I. Smolyar, T. P. Boyer, R. A. Locarnini, M. M. Zweng, A. V. Mishonov, O. K. Baranova, D. Seidov, and J. R. Reagan (2018).
+World Ocean Atlas 2018, Volume 3: Dissolved Oxygen, Apparent Oxygen Utilization, and Oxygen Saturation
+. A. Mishonov Technical Ed.; NOAA Atlas NESDIS 83, 38pp.,
+doi: 10.25923/qspr-pn52
+Nutrients
+Garcia, H. E., K. Weathers, C. R. Paver, I. Smolyar, T. P. Boyer, R. A. Locarnini, M. M. Zweng, A. V. Mishonov, O. K. Baranova, D. Seidov, and J. R. Reagan (2018).
+World Ocean Atlas 2018, Volume 4: Dissolved Inorganic Nutrients (phosphate, nitrate and nitrate+nitrite, silicate)
+. A. Mishonov Technical Ed.; NOAA Atlas NESDIS 84, 35pp.,
+doi: 10.25923/ng6j-ey81
+Density
+Locarnini, R.A., T.P. Boyer, A.V. Mishonov, J.R. Reagan, M.M. Zweng, O.K. Baranova, H.E. Garcia, D. Seidov, K.W. Weathers, C.R. Paver, and I.V. Smolyar (2019). World Ocean Atlas (2018), Volume 5: Density. A. Mishonov, Technical Editor. NOAA Atlas NESDIS 85, 41pp.,
+doi: 10.25923/xnf9-9s53
+Conductivity
+Reagan, J.R., M.M. Zweng, D. Seidov, T.P. Boyer, R.A. Locarnini, A.V. Mishonov, O.K. Baranova, H.E. Garcia, K.W. Weathers, C.R. Paver, I.V. Smolyar, and R.H. Tyler (2019). World Ocean Atlas (2018), Volume 6: Conductivity. A. Mishonov Technical Editor, NOAA Atlas NESDIS 86, 38 pp.,
+doi: 10.25923/wjeq-s877
+WOA 2013 V2
+World Ocean Atlas 2013 version 2 (WOA13 V2) contains objectively analyzed 1° climatological fields of in situ temperature, salinity, dissolved oxygen, Apparent Oxygen Utilization (AOU), percent oxygen saturation, phosphate, silicate, and nitrate at standard depth levels for annual, seasonal, and monthly compositing periods for the World Ocean. It also includes associated statistical fields of observed oceanographic profile data interpolated to standard depth levels on 5°, 1°, and 0.25° grids.
+2013 Access
+Data
+Figures
+Metadata
+2013 Citation
+Levitus, Sydney; Boyer, Tim P.; Garcia, Hernan E.; Locarnini, Ricardo A.; Zweng, Melissa M.; Mishonov, Alexey V.; Reagan, James R.; Antonov, John I.; Baranova, Olga K.; Biddle, Mathew; Hamilton, Melanie; Johnson, Daphne R.; Paver, Christopher R.; Seidov, Dan (2015). World Ocean Atlas 2013 (
+NCEI Accession 0114815
+). [indicate subset used]. NOAA National Centers for Environmental Information. Dataset. Accessed [date].
+2013 Documentation
+Changes to WOA 2013 v2 calculations
+WOA13 Product Documentation
+Standard Depth Levels
+More Info
+2013 Programs
+analysis.for
+FORTRAN program to print out a 10x10 degree latitude-longitude area from a user requested file
+analysis.c
+C program to print out a 10x10 degree latitude-longitude area from a user requested file
+analysis.exe
+DOS executable version of the "analysis.for" program
+analysis_64.exe
+64 bit executable version of the "analysis.for" program
+anlyxyz.for
+FORTRAN program which writes the entire 360x180 degree latitude-longitude grid into a comma-separated-value output file
+anlyxyz_64.exe
+64 bit executable version of the "anlyxyz.for" program
+2013 Masks
+basinmask_01.msk
+Basin mask used for WOA climatology objective analysis for 1° grid
+basinmask_04.msk
+Basin mask used for WOA climatology objective analysis for 0.25° grid
+landsea_01.msk
+Bottom depth assigned to each 1°x1° square
+landsea_04.msk
+Bottom depth assigned to each 0.25°x0.25° square
+mixnumber_01.msk
+Mixing number (values -2 through 2) for 1° grid. If basins are not the same, the sum of the mixing numbers must be > 0
+mixnumber_04.msk
+Mixing number (values -2 through 2) for 0.25° grid. If basins are not the same, the sum of the mixing numbers must be > 0
+2013 Publications
+Temperature
+Locarnini, R. A., A. V. Mishonov, J. I. Antonov, T. P. Boyer, H. E. Garcia, O. K. Baranova, M. M. Zweng, C. R. Paver, J. R. Reagan, D. R. Johnson, M. Hamilton, and D. Seidov, 2013.
+World Ocean Atlas 2013, Volume 1: Temperature
+. S. Levitus, Ed., A. Mishonov Technical Ed.; NOAA Atlas NESDIS 73, 40 pp.
+Salinity
+Zweng, M.M, J.R. Reagan, J.I. Antonov, R.A. Locarnini, A.V. Mishonov, T.P. Boyer, H.E. Garcia, O.K. Baranova, D.R. Johnson, D.Seidov, M.M. Biddle, 2013.
+World Ocean Atlas 2013, Volume 2: Salinity
+. S. Levitus, Ed., A. Mishonov Technical Ed.; NOAA Atlas NESDIS 74, 39 pp.
+Oxygen
+Garcia, H. E., R. A. Locarnini, T. P. Boyer, J. I. Antonov, O.K. Baranova, M.M. Zweng, J.R. Reagan, D.R. Johnson, 2014.
+World Ocean Atlas 2013, Volume 3: Dissolved Oxygen, Apparent Oxygen Utilization, and Oxygen Saturation
+. S. Levitus, Ed., A. Mishonov Technical Ed.; NOAA Atlas NESDIS 75, 27 pp.
+Nutrients
+Garcia, H. E., R. A. Locarnini, T. P. Boyer, J. I. Antonov, O.K. Baranova, M.M. Zweng, J.R. Reagan, D.R. Johnson, 2014.
+World Ocean Atlas 2013, Volume 4: Dissolved Inorganic Nutrients (phosphate, nitrate, silicate)
+. S. Levitus, Ed., A. Mishonov Technical Ed.; NOAA Atlas NESDIS 76, 25 pp.
+World Ocean Atlas 2009 (WOA09) is a set of objectively analyzed (1° grid) climatological fields of in situ temperature, salinity, dissolved oxygen, Apparent Oxygen Utilization (AOU), percent oxygen saturation, phosphate, silicate, and nitrate at standard depth levels for annual, seasonal, and monthly compositing periods for the World Ocean. It also includes associated statistical fields of observed oceanographic profile data interpolated to standard depth levels on both 1° and 5° grids.
+2009 Access
+Data
+Metadata
+2009 Citation
+Levitus Sydney, Tim P. Boyer, et al. (2009). World Ocean Atlas 2009 (
+NCEI Accession 0094866
+). [indicate subset used]. NOAA National Centers for Environmental Information. Dataset. Accessed [date].
+2009 Documentation
+WOA 2009 Product Documentation
+2009 Programs
+analysis.for
+: FORTRAN program to print out a 10x10 degree latitude-longitude area from a user requested file
+analysis.c
+: C program to print out a 10x10 degree latitude-longitude area from a user requested file
+analysis.exe
+: DOS executable version of the "analysis.for" program
+analysis_64.exe
+: 64 bit executable version of the "analysis.for" program
+anlyxyz.for
+: FORTRAN program which writes the entire 360x180 degree latitude-longitude grid into a comma-separated-value output file
+anlyxyz_64.exe
+: 64 bit executable version of the "anlyxyz.for" program
+2009 Masks
+basin.msk
+: Basin mask used in the objective analysis
+landsea.msk
+: bottom depth assigned to each one-degree latitude by one-degree longitude square
+mixnumber.msk
+: mixing number (values -2 through 2). If basins are not the same, the sum of the mixing numbers must be > 0
+2009 Publications
+Temperature
+: Locarnini, R. A., A. V. Mishonov, J. I. Antonov, T. P. Boyer, H. E. Garcia, O. K. Baranova, M. M. Zweng, and D. R. Johnson, 2010. World Ocean Atlas 2009, Volume 1: Temperature. S. Levitus, Ed. NOAA Atlas NESDIS 68, U.S. Government Printing Office, Washington, D.C., 184 pp.
+Salinity
+: Antonov, J. I., D. Seidov, T. P. Boyer, R. A. Locarnini, A. V. Mishonov, H. E. Garcia, O. K. Baranova, M. M. Zweng, and D. R. Johnson, 2010. World Ocean Atlas 2009, Volume 2: Salinity. S. Levitus, Ed. NOAA Atlas NESDIS 69, U.S. Government Printing Office, Washington, D.C., 184 pp.
+Oxygen
+: Garcia, H. E., R. A. Locarnini, T. P. Boyer, J. I. Antonov, O. K. Baranova, M. M. Zweng, and D. R. Johnson, 2010. World Ocean Atlas 2009, Volume 3: Dissolved Oxygen, Apparent Oxygen Utilization, and Oxygen Saturation. S. Levitus, Ed. NOAA Atlas NESDIS 70, U.S. Government Printing Office, Washington, D.C., 344 pp.
+Nutrients
+: Garcia, H. E., R. A. Locarnini, T. P. Boyer, J. I. Antonov, M. M. Zweng, O. K. Baranova, and D. R. Johnson, 2010. World Ocean Atlas 2009, Volume 4: Nutrients (phosphate, nitrate, silicate). S. Levitus, Ed. NOAA Atlas NESDIS 71, U.S. Government Printing Office, Washington, D.C., 398 pp.
+World Ocean Atlas 2005 (WOA05) is a set of objectively analyzed (1° grid) climatological fields of in situ temperature, salinity, dissolved oxygen, Apparent Oxygen Utilization (AOU), percent oxygen saturation, phosphate, silicate, and nitrate at standard depth levels for annual, seasonal, and monthly compositing periods for the World Ocean. It also includes associated statistical fields of observed oceanographic profile data interpolated to standard depth levels on both 1° and 5° grids.
+2005 Access
+Data
+Metadata
+One-Degree Fields
+2005 Citation
+Levitus Sydney, Tim P. Boyer, et al.(2005) World ocean atlas 2005 (4 disc set) (
+NCEI Accession 0097967
+). [indicate subset used]. NOAA National Centers for Environmental Information. Dataset. Accessed [date].
+2005 Documentation
+WOA 2005 Product Documentation
+2005 Programs
+analysis.for
+: FORTRAN program to print out a 10x10 degree latitude-longitude area from a user requested file
+analysis.c
+: C program to print out a 10x10 degree latitude-longitude area from a user requested file
+analysis.exe
+: DOS executable version of the "analysis.for" program
+anlyxyz.for
+: FORTRAN program which writes the entire 360x180 degree latitude-longitude grid into a comma-separated-value output file
+anlyxyz.exe
+: DOS executable version of the "anlyxyz.for" program
+2005 Masks
+basin.msk
+: Basin mask used in the objective analysis
+Landsea.msk
+: Bottom depth assigned to each one-degree latitude by one-degree longitude square
+mixnumber.msk
+: Mixing number (values -2 through 2). If basins are not the same, the sum of the mixing numbers must be > 0
+2005 Publications
+Temperature
+: World Ocean Atlas 2005, Volume 1: Temperature. S. Levitus, Ed. NOAA Atlas NESDIS 61, U.S. Government Printing Office, Washington, D.C., 182 pp.
+Salinity
+: World Ocean Atlas 2005, Volume 2: Salinity. S. Levitus, Ed. NOAA Atlas NESDIS 62, U.S. Government Printing Office, Washington, D.C., 182 pp.
+Oxygen
+Garcia, H.E., R.A. Locarnini, T.P. Boyer, and J.I. Antonov, 2006. World Ocean Atlas 2005 Volume 3: Dissolved Oxygen, Apparent Oxygen Utilization, and Oxygen Saturation. S. Levitus, Ed. NOAA Atlas NESDIS 63, U.S. Government Printing Office, Washington, D.C., 342 pp.
+Nutrients
+World Ocean Atlas 2005, Volume 4: Nutrients (phosphate, nitrate, silicate). S. Levitus, Ed. NOAA Atlas NESDIS 64, U.S. Government Printing Office, Washington, D.C., 396 pp.
+The World Ocean Atlas 2001 (WOA01) contains ASCII data of statistics and objectively analyzed fields for one-degree and five-degree squares generated from World Ocean Database 2001 observed and standard level flagged data.
+The ocean variables included in the atlas are: in-situ temperature, salinity, dissolved oxygen, apparent oxygen utilization, percent oxygen saturation, dissolved inorganic nutrients (phosphate, nitrate, and silicate), chlorophyll at standard depth levels, and plankton biomass sampled from 0 - 200 meters.
+2001 Access
+Data
+Metadata
+2001 Citation
+Levitus Sydney, Tim P. Boyer, et al. (2001) World Ocean Atlas 2001 (6 disc set) (
+NCEI Accession 0095600
+). [indicate subset used]. NOAA National Centers for Environmental Information. Dataset. Accessed [date].
+2001 Documentation
+WOA 2001 Data Format Description
+2001 Programs
+analysis.for
+FORTRAN program to print out a 10x10 degree latitude-longitude area from a user requested file
+analysis.c
+C program to print out a 10x10 degree latitude-longitude area from a user requested file
+analysis.exe
+DOS executable version of the "analysis.for" program
+anlyxyz01.for
+FORTRAN program which writes the entire 360x180 degree latitude-longitude grid into a comma-separated-value output file
+anlyxyz01.exe
+DOS executable version of the "anlyxyz.for" program
+2001 Masks
+Basin.msk
+basin mask used in the objective analysis
+Landsea.msk
+bottom depth assigned to each one-degree latitude by one-degree longitude square
+Range_area.txt
+ocean areas for each set of variable min/max ranges
+Range_basin.txt
+range basins list
+Multimask.5deg.ascii
+5-degree standard deviation multiplier
+2001 Publications
+World Ocean Atlas 2001: Objective Analyses, Data Statistics, and Figures CD-ROM Documentation
+Conkright, M.E., R. A. Locarnini, H.E. Garcia, T.D. O’Brien, T.P. Boyer, C. Stephens, J.I. Antonov, 2002: World Ocean Atlas 2001: Objective Analyses, Data Statistics, and Figures, CD-ROM Documentation. National Oceanographic Data Center, Silver Spring, MD, 17 pp.
+Temperature:
+Stephens Cathy, John I. Antonov, Timothy P. Boyer, Margarita E. Conkright, Ricardo Locarnini, Todd O’Brien, Hernan E. Garcia. World ocean atlas 2001.Volume 1, Temperature. S. Levitus, Ed., NOAA Atlas NESDIS 49, U.S.Government Printing Office, Washington, D.C., 176 pp.
+Salinity:
+S. Levitus, Ed., NOAA Atlas NESDIS 50, U.S. Government Printing Office, Washington, D.C., 174 pp.
+Oxygen: Locarnini Ricardo, Todd O’Brien, Hernan E. Garcia, John I. Antonov, Boyer Timothy P., Margarita E. Conkright, Cathy Stephens. World ocean atlas 2001. Volume 3,
+Oxygen:
+S. Levitus, Ed., NOAA Atlas NESDIS 51, U.S. Government Printing Office, Washington, D.C., 294 pp.
+Nutrients: Conkright Margarita E., Hernan E. Garcia, Todd O’Brien, Ricardo Locarnini, Boyer Timothy P., Cathy Stephens, John I. Antonov, World ocean atlas 2001. Volume 4,
+Nutrients:
+S. Levitus, Ed., NOAA Atlas NESDIS 52, U.S. Government Printing Office, Washington, D.C., 406 pp.
+Plankton:
+O’Brien Todd, Margarita E. Conkright, Timothy P. Boyer, Cathy Stephens, John I. Antonov, Ricardo Locarnini, Hernan E. Garcia. World ocean atlas 2001. Volume 5, Plankton. S. Levitus, Ed., NOAA Atlas NESDIS 53, U.S. Government Printing Office, Washington, D.C., 109 pp.
+Chlorophyll:
+Conkright Margarita E., Todd O’Brien, Cathy Stephens, Ricardo Locarnini, Hernan E. Garcia Timothy P. Boyer, John I. Antonov. World ocean atlas 2001. Volume 6, Chlorophyll. S. Levitus, Ed., NOAA Atlas NESDIS 54, U.S. Government Printing Office, Washington, D.C., 52 pp.
+1998 Data Access
+Data
+Metadata
+1998 Citation
+Levitus Sydney, Tim P. Boyer, et al. (1998). NODC Standard Product: World Ocean Atlas 1998 (7 disc set) (
+NCEI Accession 0095184
+). [indicate subset used]. NOAA National Centers for Environmental Information. Dataset. Accessed [date].
+1998 Documentation
+Yearly and Year-Season Upper Ocean Temperature Anomaly Fields, 1948-1998
+Corrections to data fields for "Warming of the World Ocean" -Science (2000)
+The temperature anomaly fields calculated in conjunction with "Warming of the World Oceans" (Science, 2000) have a systematic error for years 1997 and 1998. Sippican started distributing XBT recording software with the Hanawa et al. (1995) depth equation as default in August 1996. We were unaware of this and continued to apply a depth correction to XBT profiles from all T4, T6, and T7 XBT probes, which was necessary due to errors in the original default depth equation used on Sippican XBT software. The result of applying the depth correction to profiles which used the Hanawa depth equation was calculated depths deeper than the actual depths. In regions where temperature decreases with increasing depth, this resulted in the appearance of "warmer" water at these depths. Although the new Sippican software was not (and is still not) universally distributed, sufficient numbers of XBTs in 1997 and 1998 were recorded with this software to artificially inflate the positive temperature anomalies for these years.
+This error does not affect the conclusions of the Science paper, since years 1997 and 1998 were not used to calculate the rate of change of ocean heat content. However, the 1997 and 1998 yearly temperature anomaly fields were made available online. Thus we recommend that people who downloaded these data and used them in their studies should revise their results using the updated temperature anomaly fields.
+We have calculated temperature anomaly fields with the XBT depth correction problem properly resolved and with the addition of significant amounts of new data for the 1990s and other periods. These results were published in Geophysical Research Letters: Levitus, S. J. I. Antonov, T. P. Boyer, 2005: Warming of the World Ocean, 1955-2003 Geophys. Res. Lett.,32, L02604, doi:10.1029GL021592, online reprint (pdf, 1.12 MB).
+Please use these temperature anomaly fields rather than the fields from the earlier work.
+1994 Access
+Data
+Metadata
+1994 Citation
+Levitus Sydney, Tim P. Boyer, et al. (1994)World Ocean Atlas 1994 (11 disc set) (
+NCEI Accession 0098057
+). [indicate subset used]. NOAA National Centers for Environmental Information. Dataset. Accessed [date].
+1994 Documentation
+Quality Control of Oxygen, Temperature, and Salinity Data
+Data Download and Reading Instructions
+Frequently Asked Questions
+How do I read quarter degree netCDF files?
+Quarter degree files can’t be opened with classic netCDF3. Download netCDF4 to read.
+Where can I find WOA quality control procedures?
+WOA input data quality control procedures are detailed in the
+World Ocean Database 2018 Technical Report
+User's Manual
+What vertical interpolation method is used for WOA18?
+We use the 4-point Reiniger-Ross interpolation method with no changes to their algorithm when data coverage allows, though our implementation does deviate slightly. We don't use variable values for depths outside a given envelope of distance from the target standard depth: see table 4 in the
+WOA18 temperature atlas
+(p 28-29).
+If there aren’t enough valid points for Reiniger-Ross, we use three point Lagrangian or, as a last resort, linear interpolation. Finally, we do not use levels that fail quality control tests.
+What are the temperature and salinity units?
+In situ temperatures used for WOA18 are not converted from their original scale, so there is a mix of:
+IPTS-48
+IPTS-68
+ITS-90 (and pre-IPTS-48 temperatures).
+The differences between each scale are small (on the order of 0.01°C) and it should not have a dramatic effect on the climatological means, except possibly at very deep depths. Salinity values are on the Practical salinity scale (PSS-78). Pre-1978 salinity values converted from conductivity may have used a different salinity scale. Pre-conductivity salinities use the Knudsen method.
+PSS-78 description
+What time frames are the climatological means calculated from?
+Temperature and salinity are based on a mean climatological field from 1955-2017 (the average of six decadal climatological means). Oxygen, phosphate, silicate, and nitrate climatological means pull from every year in the database (1900s to present).
+How accurate are the climatological means?
+Climatologies are long-term means calculated from large, varied datasets that include measurements taken with different instruments and capture methods. These varying calibration standards, along with factors like data sparsity and time bias (some areas have more measurements in specific subset of the overall time span) make it difficult to provide a simple accuracy assessment.
+We ensure accuracy in other ways, like storing the most accurate temperature readings possible (3 digits past the decimal point). We also provide standard deviation and standard error of the mean fields to contextualize the spread of values in any geographic area over the long term.
+Do I have to pay to access WOA18 data?
+WOA data are available free of charge.
+How can I get the geographical boxes for WOA18 basins?
+The Pacific, Indian, and Atlantic basin masks are available in the heat content netCDF files accessible from
+Global Ocean Heat and Salt Content
+. South encompasses all latitudes (box centers) -89.5 to -0.5. If netCDF is not convenient, we have a
+full basin mask
+(all depths) in a comma-separated file for the WOA which follows the same boundaries, but must be manipulated somewhat. Use just the surface level. The list of codes corresponding to the basins are found in appendix one (page 11) of the
+WOA Documentation
+The following basins/codes are for the Southern Hemisphere:
+1 - Atlantic Ocean
+10 - Southern Ocean, between 63°W and 20°E longitudes The Pacific:
+2 - Pacific Ocean
+10 - Southern Ocean, between 147°E and 63°W The Indian:
+3 - Indian Ocean
+10 - Southern Ocean, between 20°E and 147°E.
+What is the separation line between northern and southern parts of basins in the WOA18?
+The Equator
+Decadal Averaging
+What is decadal averaging?
+The WOA 2018 decav (decadal average) climatology is the average of six decadal climatologies used to account for the impact of the Argo era (early 2000’s and on), which skews the average of the entire time span because it has significantly more measurements than other decades in the WOA.
+Standard deviation, standard error, and data distribution are calculated from all the data in the WOA, while the climatological mean (and the statistical mean) for January are average values for Jan. 1955-1964, Jan. 1964-75, ... Jan. 2015-18, the standard deviation values are the standard deviation of all Jan. data regardless of year.
+What time frames do the climatological means cover?
+Temperature and salinity are based on a mean climatological field from 1955-2017 (the average of six decadal climatological means). Oxygen, phosphate, silicate, and nitrate climatological means pull from every year in the database (1900s to present).
+How does the decadal average account for temporal changes in data coverage?
+The analysis procedure addresses this problem by using a fairly large radius of influence (880km for the first pass) and using seasonal values as the first guess for each month (annual values for each season), so the analyzed value and decadal means still reflect a six decadal balance in most cases. Note that standard deviation, standard error of the mean, and data distribution fields for the decadal averages are not averages of the six decadal fields. The standard deviation field associated with the decadal averaged objectively analyzed field is actually an all-data (all time period) field. There are standard deviation fields for each of the six decades that demonstrate the different standard deviations between each decade - but the standard deviation field provided with the decadal averaged field can be skewed in some areas, especially the southern Hemisphere, toward the Argo era.
+This is detailed in World Ocean Atlas 2018 publications.
+For any questions about the WOA18 product, please e-mail the
+OCL help desk
+Utilities Necessary to Use the World Ocean Atlas 2018 Data
+Any utility that can handle zip-archives could (i.e., WinZip, WinRAR, StuffIt, MacZip, UnZip, etc.) can be used to decompress WOA data. Some operational systems have embedded support for zip-archives. We provide gzip124.exe and gzip124.tar for decompressing the zip-archived files. Data management and visualization can also be done with
+Ocean Data View
+software.
+Installing gzip
+The file gzip124.exe is a self-extracting DOS executable.
+Copy gzip124.exe to your hard disk; preferably into a directory listed in your path.
+Run gzip124.exe. It will decompress the utility package.
+UNIX
+Copy gzip124.tar to your UNIX system.
+Run the following commands: tar xvf gzip124.tar
+These commands will create a directory named gzip124 which includes the gzip source code and documentation on copyrights, compression methods, and how to compile and install the gzip code.
+Decompressing Data From WOA18
+Copy data files to selected folder.
+Use gzip to decompress selected files or a directory and all subdirectories with one command.
+gzip has a limited help menu accessible with the -h option (i.e., gzip -h).
+To decompress a single file: gzip -nd
+To decompress the contents of a directory and all subdirectories: gzip -dr
+If an older version of gzip is used, the -n option is required in order to preserve the correct file names.
+Related News
+September 15, 2026
+Exploring with the Gulf Data Atlas
+Read More
+July 16, 2026
+ENSO Detection and Monitoring Depends on Data
+Read More
+June 17, 2026
+Tracking the Gulf Dead Zone
+Read More

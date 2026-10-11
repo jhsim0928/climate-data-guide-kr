@@ -1,0 +1,197 @@
+# https://data.giss.nasa.gov/gistemp/updates_v4/
+Data.GISS: GISS Surface Temperature Analysis (GISTEMP) (v4) — Updates to Analysis
+Go to Main Content (Accesskey 2)
+Go to Site Menu (Accesskey 3)
+National Aeronautics and Space Administration
+Goddard Institute for Space Studies
+Goddard Space Flight Center
+Sciences and Exploration Directorate
+Earth Sciences Division
+GISS Surface Temperature Analysis (v4)
+Updates to Analysis
+Note:
+This webpage describes updates to the GISS analysis made after the May 2019 release, the last official release based on GHCN v3/SCAR.
+Starting June 2019 with the release of May 2019 data, the official analysis uses GHCN v4.
+GISTEMP v3 updates made between December 2011 and May 2019 are
+detailed here
+GISTEMP v2 updates made before December 2011
+may be found here
+Graphs and tables are updated around the
+middle of every month
+using the current data files provided by NOAA/NCEI (GHCN v4: meteorological stations, ERSST v5: ocean).
+They are combined as described in our
+Hansen et al. (2010)
+Lenssen et al. (2019)
+, and
+Lenssen et al. (2024)
+papers.
+These updated files incorporate reports for the previous month and late reports and corrections for earlier months.
+June 10, 2026:
+The displays based on AIRS v7 data now incorporate all the recent corrections that happened mostly for the 2021-2025 period.
+The various months that were corrected in the AIRS v6 data are now used in our products as well.
+April 9, 2026:
+The February 2026 warming in the Kamchatka Peninsula was absent in the AIRS and other analyses. Inspecting the stations in that area, the Ust Hairyuzovo reports in other sources were lower by about 6 °C. Hence that report was omitted. No further discrepancies were found, so the warming in that region is still present.
+September 11, 2025:
+The August 2025 report from Maliye Karmakuly seemed inconsistent with history and its neighbors, off by about 12 °C. This was confirmed by looking at other sources.
+Inspecting the whole time series showed that the same faulty report was also submitted for June 2024 and June 2025, where it was less noticeable, being off by about 3-4 °C. All three reports were omitted from our analysis. This was reported to NCEI.
+May 31, 2025:
+Due to webserver system upgrades, the old GISTEMPv2 station data tool is no longer available due to
+its reliance on an old, unsupported database software library. Please use the
+GISTEMPv4 station data tool
+to search for and to plot individual station data.
+May 9, 2025:
+The April 2025 from Troicko Pecherskoe at 62.7N, 56.2E was considerably lower than its March report, whereas the opposite was true for all neighboring stations.
+In most years, April is warmer than March also at that location. That observation was reported to NOAA/NCEI and that report was dropped from our analysis.
+February 11, 2025:
+Some minor bug fixes were applied to some plotting routines on the Custom Plotter page and to the three graphs on the Station Data page.
+Those graphs were also updated to include year 2024.
+September 4, 2024:
+observational uncertainty ensemble analysis
+of the GISTEMP analysis has been published —
+Lenssen, N., G.A. Schmidt, M. Hendrickson, P. Jacobs, M. Menne, and R. Ruedy, 2024:
+A GISTEMPv4 observational uncertainty ensemble
+J. Geophys. Res. Atmos.
+, no. 17, e2023JD040179,
+doi:10.1029/2023JD040179.
+February 8, 2024:
+Three stations in Northern Canada were discovered to have a discontinuity in their records that is not present in any other station in that area. This was reported to NOAA/NCEI and the reports after the discontinuity were removed.
+March 14, 2023:
+The source NOAA ocean temperatures OISST v2 are no longer updated. These data were based on satellite data and they were used in some displays as an added alternative to our standard ocean data, which are based on ship and buoy data. Currently, these data are no longer available.
+September 21, 2022:
+The 250km smoothing option of the
+maps utility
+no longer interpolates the gridded data. This will make it easier to spot potential outliers, the main reason for providing that option.
+August 12, 2022:
+The gridded anomaly data are now also provided in
+Zarr
+format.
+June 14, 2022:
+Due to a calibration maneuver in late 2021, the AIRS team had to adapt their algorithm and reprocess the AIRS v7 data starting with September 2021. Our displays of AIRS v7 data are now based on the reprocessed data.
+changes
+generally seem minor.
+April 5, 2022:
+Links to the Clear Climate Code Project's first implementation of GISTEMP in pure Python were updated to point to
+their Github repo
+. The old CCC website is no longer available. We'd like to thank Ivo Welch for bringing this to our attention.
+March 18, 2022:
+Elusive Absolute Temperature
+webpage has been completely overhauled. That page discusses why the GISTEMP analysis investigates temperature anomalies (deviations from the normal temperature for a given location and time of year) rather than absolute temperatures.
+February 22, 2022:
+A thank you to Dave Brown for bringing to our attention that some monthly graphs on the
+Graphs site
+and the
+Custom Plotter site
+had stopped updating. This has been corrected.
+February 14, 2022:
+A thank you to John van Boxel for bringing to our attention that the final part of the CSV file for
+GISTEMP Seasonal Cycle since 1880
+was inconsistent with that graph. The bug was found and corrected.
+January 13, 2022:
+New time series were added to the
+Custom Plotter site
+In addition to the global monthly means we now also provide the means over the land area as well as the means over the ice-free part of the ocean.
+NOAA/NCEI replaced the bad Saskylah November 2021 report, so it is now included in our analysis.
+December 13, 2021:
+A comparison of the September 2021 report of Verhojansk (67.5667N, 133.4000E) and the November 2021 report of Saskylah (71.9700N, 114.0800E) with other sources and neighboring stations as well as the AIRS data indicated that these reports may be incorrect. Those two reports are not used in the current analysis and NOAA/NCEI was notified.
+December 21, 2020:
+Tables section
+has been extended to provide the AIRS measurements based data. Since these data only start in September 2002, a later base period had to be selected. We chose the 10-year period 2007-2016. The corresponding GHCNv4/ERSSTv5 based estimates were also included for comparison purposes. AIRS data were added to some displays on March 11, 2020; please see also the notes from August 14 and September 18, 2020.
+December 14, 2020:
+A closer look at the reports of the station Gateshead Island (70.6333N, 100.2667W) showed
+a clear discontinuity
+near the end of 2011. There are also a lot of months missing after that point. Hence we deleted all records of that station starting with 12/2011.
+September 18, 2020:
+Global Maps
+Zonal Means
+utilities may now be used to show plots based on AIRS v7 or AIRS v6 data. Please note that the AIRS temperature estimates are based on satellite data only and are completely independent of the data used by the GISS analysis.
+August 2020 AIRS data were impacted by a technical satellite problem that wiped out the data from 8/16 to 9/02. We also learned that the November 2003 data are similarly affected by a 2-week data gap. No attempt has been made so far to modify these estimates to account for those data losses.
+August 14, 2020:
+Dr. Joel Susskind's group released a new version 7 of the AIRS temperature data. Hence, we are switching from the earlier v6 data to v7 starting today, which will have small implications for the trends.
+Comparisons of these versions as well as comparisons to the GISTEMP v4 product will be provided with next month's release. Some comparisons of T-AIRS v6 and GISTEMP v4 are shown
+on Dr. Sato's site
+May 13, 2020:
+The questionable Atbara reports are now also dropped by NOAA/NCEI as well as some other reports; hence our small set of changes could be further reduced.
+April 13, 2020:
+NOAA/NCEI no longer updates the ERSST v3b and v4 datasets. Those data have not been used in our analysis in some years, and we will no longer make them accessible from our interactive plotting webpages.
+An obviously incorrect March 2020 report from Atbara (Sudan) was eliminated. In response to a communication with NCEI, the pre-1949 part of Atbara's temperature record was also dropped.
+March 11, 2020:
+The "Maps" and "Zonal Means" utility were expanded to also display graphs and maps based on temperature estimates obtained from satellite data; that analysis is completely independent from the GISTEMP analysis and was
+carried out by a group lead by Dr. Susskind at GSFC.
+September 16, 2019:
+NCEI no longer maintains GHCN v3; hence the analysis based on GHCN v3/SCAR reports stopped with the July 2019 update.
+July 15, 2019:
+We have updated our FAQ and some captions in the interactive graphics to clarify the provenance and contents of the data sources we are now ingesting into GISTEMP v4. Notably, we have corrected an incorrect statement that the 'qcu' 'unadjusted' file from NCEI was the 'raw' station data file. Raw data can be found at the
+ISTI databank
+June 14, 2019:
+The GISTEMP v4 analysis is now the official version. GISTEMP v3, the previous
+analysis based on the GHCNv3/SCAR reports
+will still be available until further notice (see 9/16/2019 entry - added 9/16/2019).
+Comparisons of GHCN v3/SCAR and GHCN v4
+were prepared by Dr. Makiko Sato.
+We will no longer provide the legacy global estimates based on surface air temperatures alone, since they are overestimating any changes (heating or cooling) and are often confused with temperatures averaged over the land surface only — actual land surface means are provided in the "Annual Mean Temperature Change over Land and Ocean" section of the
+graphs web page
+May 23, 2019:
+A new webpage was created in connection with a paper discussing the uncertainty of the estimates presented on this site. NASA has posted
+a feature story
+about the new GISTEMP
+uncertainty quantification
+. This site contains links to programs and data used in this uncertainty analysis.
+• Return to
+GISTEMP homepage
+Site Menu
+GISS Home
+News & Features
+News & Features Overview
+Projects & Groups
+Projects Overview
+Astrobiology & ROCKE-3D
+Climate Impacts
+Climate Modeling
+IRI Forecasts
+ISCCP
+RASI
+Datasets
+Datasets Overview
+GISTEMP Surface Temperature
+Model E Simulations
+Model Forcings
+ROCKE-3D Simulations
+ISCCP Data Products
+GACP Data Products
+Publications
+Publications Overview
+2026 Publications
+2025 Publications
+2024 Publications
+Accepted & In Press
+Author Bibliographies
+Annual Best
+Most Cited
+Dissertations
+Software
+Software Overview
+GCM Model E
+Panoply Data Viewer
+G.Projector
+Mars24 Sunclock
+Education
+Education Overview
+Internships
+Graduate Study
+Postdoc Research
+STEM Curriculum Modules
+Events
+Events Overview
+Lunch Seminars
+Past Special Events
+About GISS
+Management Staff
+Personnel Directory
+Employment
+Website Curator:
+Robert B. Schmunk
+NASA Official:
+Gavin A. Schmidt
+Contact GISS
+NASA Privacy Policy
+Accessibility

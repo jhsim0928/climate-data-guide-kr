@@ -1,0 +1,88 @@
+# https://www.cpc.ncep.noaa.gov/products/CORe/archive.html
+Climate Prediction Center - CORe Archive
+www.nws.noaa.gov
+Site Map
+News
+Organization
+About Us
+Our Mission
+Who We Are
+Contact Us
+CPC Information
+CPC Web Team
+HOME
+Monitoring_and_Data
+Oceanic and Atmospheric Data
+Reanalysis: Atmospheric Data
+> CORe
+CORe (
+onventional
+bservation
+analysis) Archive
+CORe is an atmospheric reanalysis from the Climate Prediction Center NCEP/NWS/NOAA
+with collaboration with the Environmental Modeling Center NCEP/NWS/NOAA and Physical Sciences
+Laboratory NOAA. CORe analyses can be obtained from the NCEP Nomads site, and the NODD
+(NOAA Open Data Dissemination) service which distributes NOAA data by the cloud.
+CORe: NCEP Nomads NODD (cloud)
+length last 7 days 1950 to near real-time
+file names NCO standard (names not unique) simplified and unique
+https access free free
+ens mean 3 hourly 3 hourly, daily, monthly
+ens members yes no
+ens stats yes no
+restart IC no no IC = initial conditions
+secondary no no
+URL https://nomads.ncep.noaa.gov https://storage.googleapis.com/noaa-nws-ncep-core/
+Subsetting regions, gbl grids gbl grids gbl = global
+OpenDAP no no points, subregions, grids
+grib filter yes no subregions, grids
+grid^ yes yes gbl grids
+software many
+get_core.py
+scope grib files ens means #
+info
+get_core.txt
+status when CORe is operational 1950-present
+delay 1.x day 1.x+ day
+Questions
+tech Q NCO (24 hour) NODD network and server issues
+file Q NCO (24 hour) CPC questions about missing files
+CORe sci Q - CPC office hours CORe science questions
+gen sci Q NCEP - general science questions
+grib Q - - see software documentation
+cloud access no Google Cloud (bucket: noaa-nws-ncep-core)
+* Files with restricted observations are not public, including BUFR and diagnostic files
+^ grids by partial https downloading, using index (*.idx) files
+Nomads: see
+https://nomads.ncep.noaa.gov/info.php?page=fastdownload
+NODD: Google Cloud can only download one byte range at a time
+so need special versions of the partial https downloading software
+For the CORe, see: get_core.py
+# we expect to add more data types depending on demand
+The NCEP Nomads site is run by NCEP Central Operations (NCO) using data from
+the operational run of CORe. You can submit help tickets, subscribe to mailing
+lists and read their documentation at
+NCO help and information
+NCO has 24 hour support.
+More information will be provided after CORe data is sent the Nomads site.
+The CORe files on NODD can be downloaded using
+https://ftp.cpc.ncep.noaa.gov/CORe/get_core/get_core.py
+Documentation is in
+https://ftp.cpc.ncep.noaa.gov/CORe/get_core/get_core.txt
+The Climate Prediction Center (CPC) is responsible for updating the NODD archive, and
+maintaining get_core.py. CPC support is limited to office hours.
+In the event that CORe needs to be rerun, it is expected that the new analyses
+would be sent to the NODD archive and not NCEP's nomads site.
+CORe home page
+regridding CORe files
+Comments: Leigh.Zhang@noaa.gov
+Created Sep 9, 2025
+NOAA/
+National Weather Service
+National Centers for Environmental Prediction
+Climate Prediction Center
+5830 University Research Court
+College Park, Maryland 20740
+Climate Prediction Center Web Team
+Disclaimer
+Privacy Policy

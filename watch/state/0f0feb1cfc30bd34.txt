@@ -1,0 +1,139 @@
+# https://marine.copernicus.eu/user-corner/product-roadmap/transition-information?product=SEALEVEL_GLO_PHY_L4_NRT_008_046
+Product Roadmap | CMEMS
+Implemented by
+Mercator Ocean International
+as part of
+The Copernicus Programme
+English
+Български
+Czech
+Danish
+Deutsch
+Estonian
+Greek
+Español
+Français
+Croatian
+Italiano
+Latvian
+Lithuanian
+Hungarian
+Maltese
+Nederlands
+Polski
+Português
+Română
+Slovak
+Slovenian
+Finnish
+Swedish
+Copernicus Marine Roadmap
+Summary
+Last update: 30 Sep 2026
+Nov 2025
+update , New Dataset, Upstream Data Change
+New Sea Level NRT L4 dataset combining Nadir and SWOT-KaRIn measurement
+SEALEVEL_GLO_PHY_L4_NRT_008_046
+Blue
+Satellite
+New Sea Level NRT L4 dataset combining Nadir and SWOT-KaRIn measurement
+New Dataset, Upstream Data Change
+Release date:
+Nov 2025
+Product change:
+A specific NRT L4 production will be set up by merging nadir measurements with SWOT-KaRIn measurements. This production will take as input the L3 nadir products available on the Copernicus Marine Service and the L3 KaRIn currently available on AVISO+. Due to the risk inherent in the “non-operational status” of the required L3 KaRIn product, and its possible impact on the timeliness KPI of currently available NRT L3/L4 products, these new L4 maps will be distributed in a specific dataset. Historical L3/L4 production based on nadir measurements only remains the official operational product. The production of the new L4 dataset with KaRIn measurements will take place after the official production and will be delivered with a slightly degraded timeliness.
+Technical details:
+New datasets will be created for
+* SEALEVEL_GLO_PHY_L4_NRT_008_046 / cmems_obs-sl_glo_phy-ssh_nrt_demo-allsat-swos-l4-duacs-0.125deg_P1D-i
+"demo" identifies the demonstrative status of the production with relaxed timeliness KPI
+"allsat-swos" identifies the merging of all satellite nadir available with the SWOT swath KaRIn (here "swos") measurements.
+Reference
+SEALEVEL_GLO_PHY_L4_NRT_008_046
+Nov 2025
+update , New Dataset, Upstream Data Change
+New Sea Level NRT L4 dataset combining Nadir and SWOT-KaRIn measurement
+SEALEVEL_GLO_PHY_L4_NRT_008_046
+and 1 more
+Blue
+Satellite
+New Sea Level NRT L4 dataset combining Nadir and SWOT-KaRIn measurement
+New Dataset, Upstream Data Change
+Release date:
+Nov 2025
+Product change:
+A specific NRT L4 production will be set up by merging nadir measurements with SWOT-KaRIn measurements. This production will take as input the L3 nadir products available on the Copernicus Marine Service and the L3 KaRIn currently available on AVISO+. Due to the risk inherent in the “non-operational status” of the required L3 KaRIn product, and its possible impact on the timeliness KPI of currently available NRT L3/L4 products, these new L4 maps will be distributed in a specific dataset. Historical L3/L4 production based on nadir measurements only remains the official operational product. The production of the new L4 dataset with KaRIn measurements will take place after the official production and will be delivered with a slightly degraded timeliness.
+Technical details:
+Two new datasets will be created :
+SEALEVEL_GLO_PHY_L4_NRT_008_046 / cmems_obs-sl_glo_phy-ssh_nrt_demo-allsat-swos-l4-duacs-0.125deg_P1D-i
+SEALEVEL_EUR_PHY_L4_NRT_008_060 / cmems_obs-sl_eur_phy-ssh_nrt_demo-allsat-swos-l4-duacs-0.0625deg_P1D-i
+"demo" identifies the demonstrative status of the production with relaxed timeliness KPI.
+"allsat-swos" identifies the merging of all satellite nadir available with the SWOT swath KaRIn (here "swos") measurements.
+Reference
+SEALEVEL_GLO_PHY_L4_NRT_008_046
+SEALEVEL_EUR_PHY_L4_NRT_008_060
+Jun 2025
+update , New production system, Updated Dataset
+Backward temporal extension of L4 Near Real Time datasets for the 2nd semester 2024
+SEALEVEL_GLO_PHY_L4_NRT_008_046
+and 1 more
+Blue
+Satellite
+Backward temporal extension of L4 Near Real Time datasets for the 2nd semester 2024
+New production system, Updated Dataset
+Release date:
+Jun 2025
+Product change:
+A backward time extension of the Sea Level L4 NRT series from June 2024
+Technical details:
+The impacted NRT products/datasets are:
+* SEALEVEL_GLO_PHY_L4_NRT_008_046/cmems_obs-sl_glo_phy-ssh_nrt_allsat-l4-duacs-0.125deg_P1D
+Complementary information:
+A double-dissemination period is planned from June 25th to July 29th
+For more information please visit
+Copernicus Marine Service releases: double distribution process | Copernicus Marine Help Center
+Reference
+SEALEVEL_GLO_PHY_L4_NRT_008_046
+SEALEVEL_EUR_PHY_L4_NRT_008_060
+Nov 2024
+update , New Dataset
+NRT L4 GLO product quality improvement
+SEALEVEL_GLO_PHY_L4_NRT_008_046
+Blue
+NRT L4 GLO product quality improvement
+New Dataset
+Release date:
+Nov 2024
+Product change:
+The processing of the NRT L4 DUACS products for Global ocean will evolve to reach the DT-2024 standards. These evolutions complete the change of the altimeter standards and geophysical correction previously implemented (July 2024 version). The following changes are expected :
+new MDT used
+Improved absolute dynamic height and associated geostrophic current;
+regional biases
+L4 use of new mapping method and increase the grid resolution
+Improved mesoscale signal on L4 products.
+Change grid resolution : 1/8° x 1/8°|
+These changes will contribute to improve the mesoscale signal reconstructed in L4 products. This improvement is mainly due to the use of the new Multiscale Inversion of Ocean Surface Topography mapping process (MIOST). Compared to the Optimal interpolation method the MIOST mapping process contributes to reduce the SLA errors at mesoscale by 20% in high energetic areas. The use of a new MDT also contributes to improve the quality of the absolute sea surface topography and associated geostrophic currents.
+Technical details:
+cmems_obs-sl_glo_phy-ssh_nrt_allsat-l4-duacs-0.125deg_P1D dataset will be available from 26/11, and cmems_obs-sl_glo_phy-ssh_nrt_allsat-l4-duacs-0.25deg_P1D dataset will no longer be updated from 26/11.
+Your scripts need to be updated to download new data.
+Reference
+SEALEVEL_GLO_PHY_L4_NRT_008_046
+Nov 2023
+renamed
+GLOBAL OCEAN GRIDDED L4 SEA SURFACE HEIGHTS AND DERIVED VARIABLES NRT
+SEALEVEL_GLO_PHY_L4_NRT_008_046
+Blue
+Satellite
+GLOBAL OCEAN GRIDDED L4 SEA SURFACE HEIGHTS AND DERIVED VARIABLES NRT
+Release date:
+Nov 2023
+Product change:
+Product/dataset renaming:
+L4 GLO NRT product and dataset are renamed to adopt the new Copernicus Marine Service nomenclature
+Use of L3 5Hz data for mapping:
+Moreover, the input products to the calculation of the L4 products will evolve: the L3 1Hz product, historicaly used, will be replaced by the 5Hz version when it is available. The expected impact is a slight improvement of the L4 product quality, especially in areas where L3 5Hz availability is better than the 1Hz version.
+New mission SWOT-Nadir
+The measurements from the new mission SWOT-Nadir will be used in L4 GLO processing in addition to other active missions, resulting in improved product quality.
+The impacted dataset is:
+SEALEVEL_GLO_PHY_L4_NRT_008_046/cmems_obs-sl_glo_phy-ssh_nrt_allsat-l4-duacs-0.25deg_P1D
+Reference
+SEALEVEL_GLO_PHY_L4_NRT_008_046

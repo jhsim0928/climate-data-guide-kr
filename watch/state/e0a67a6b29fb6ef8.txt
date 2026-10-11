@@ -1,0 +1,474 @@
+# https://www.ncei.noaa.gov/products/weather-climate-models/climate-forecast-system
+Climate Forecast System (CFS) | National Centers for Environmental Information (NCEI)
+An official website of the United States government
+Here's how you know
+The .gov means it’s official.
+Federal government websites often end in .gov or .mil. Before sharing sensitive information, make sure you’re on a federal government site.
+The site is secure.
+https://
+ensures that you are connecting to the official website and that any information you provide is encrypted and transmitted securely.
+NCEI is currently moving its data and applications to the cloud. This upgrade may result in temporary data access delays. Please see our
+cloud migration overview
+frequently asked questions
+for more information and resources. Check the
+NCEI Alerts page
+for impacted products and datasets. Current Impact: Intermittent degraded order fulfillment services.
+Climate Forecast System (CFS)
+The Climate Forecast System (CFS) models the interactions between Earth's oceans, land, and atmosphere on a global scale. The model is produced by several dozen scientists under guidance from the National Centers for Environmental Prediction (NCEP), and generates hourly data with a ½° horizontal resolution (approximately 56 km).
+About
+Operational
+Historical
+Calibration
+Specifications and Data Access
+CFS uses the latest scientific approaches to incorporate observations from a variety of data sources, including surface observations, upper air balloon observations, aircraft observations, and satellite observations. NCEI provides access to near real-time historical model data, while real-time data are available on NCEP servers through the
+CFS 7-day rotating archive
+Products
+Operational
+CFSv2 Operational Forecasts
+Time Frame:
+April 1, 2011—Present
+File Format:
+GRIB2
+CFSv2 Operational Analysis
+Time Frame:
+April 1, 2011—Present
+File Formats:
+GRIB2, BUFR
+Historical
+CFS Reforecasts
+Time Frames:
+Dec. 12, 1981—March 2011, Jan. 1, 1999— March 31, 2011
+File Formats:
+GRIB2
+CFS Reanalysis (CFSR)
+Time Frame:
+Jan. 1, 1979—March 31, 2011
+File Formats:
+GRIB2, BUFR
+Calibration
+CFSRR Calibration Climatologies
+Time Frames:
+1982—2010, 1999—2010
+File Formats:
+GRIB2
+02 Dec 2011
+NCEI and NCEP have identified that the "High-Priority Reforecast" datasets are roughly 99% serially complete at this time and may contain isolated damaged files.
+01 Aug 2011
+Known CFSRR data issues are explained in the
+August 2011 CFSRR Known Issues Technical Document
+18 Feb 2010
+Notice to users who downloaded CFSR time series data prior to 22:00 UTC February 18, 2010:
+A format conversion issue was verified affecting the metadata in non-instantaneous CFSR time series files (28 of the 73 file types affected are listed below). The issue, triggered during the conversion process between GRIB1 to GRIB2 by NCEP (to facilitate transmission and storage), caused the non-instantaneous fields (00-01, 01-02, 02-03 hr statistical) to appear instantaneous (00-00, 01-01, 02-02 hr statistical) when decoded. At 22:00 UTC February 18, 2010, NCEI will begin bringing corrected versions of these files online. Users who have already downloaded these files are encouraged to re-download these files on/after Friday, February 19, otherwise be aware of these facts when using your existing copy. If you improvise the metadata, the data itself is valid. The issue affects the following time series file types (28):
+dlwsfc
+ocnsal15
+ocnv15
+tmax
+dwsfc
+ocnsal5
+ocnv5
+tmin
+gflux
+ocnslh
+ocnvv55
+ulwsfc
+lhtfl
+ocnsst
+prate
+ulwtoa
+ocndt20c
+ocnt15
+runoff
+uswsfc
+ocnheat
+ocnu15
+shtfl
+uswtoa
+ocnmld
+ocnu5
+snohf
+wndstrs
+About CFSv2 Operational Products
+Operational real-time CFS model data are available on NCEP servers on the
+CFS 7-day rotating archive
+. NCEI provides access to historical,
+near-real time
+data from CFS operational analysis and forecasts.
+CFSv2 Operational Analysis Time Series and Monthly Means
+Product
+Grid/Scale
+Period of Record
+Output Timestep
+Data Access Links
+Time Series
+Various
+01Apr2011 - Present
+Hourly, full month
+HTTPS
+Monthly Means Energetics (EGY)
+Various
+01Apr2011 - Present
+HTTPS
+Monthly Means Fluxes (FLX)
+Various
+01Apr2011 - Present
+HTTPS
+Monthly Means Isentropic (IPV)
+Various
+01Apr2011 - Present
+HTTPS
+Monthly Means Ocean (OCN)
+Various
+01Apr2011 - Present
+HTTPS
+Monthly Means Pressure (PGB)
+Various
+01Apr2011 - Present
+HTTPS
+CFSv2 Operational Analysis 6-Hourly Products
+Product
+Grid/Scale
+Period of Record
+Model Cycle
+Output Timestep
+Data Access Links
+6-Hourly Surface and Radiative Fluxes (FLX)
+Gaussian: T574
+01Apr2011 - Present
+4/day: 00, 06, 12, 18UTC
+HTTPS
+6-Hourly Low-Resolution Data
+Gaussian: T62; Lat/Lon: 1.0°, 2.5°
+01Apr2011 - Present
+4/day: 00, 06, 12, 18UTC
+HTTPS
+6-Hourly 3-D Isentropic Level Data (IPV)
+Lat/Lon: 0.5°
+01Apr2011 - Present
+4/day: 00, 06, 12, 18UTC
+HTTPS
+6-Hourly 3-D Ocean Data (OCN)
+Lat/Lon: 0.5°
+01Apr2011 - Present
+4/day: 00, 06, 12, 18UTC
+HTTPS
+6-Hourly 3-D Pressure Level Data (PGB)
+Lat/Lon: 0.5°
+01Apr2011 - Present
+4/day: 00, 06, 12, 18UTC
+HTTPS
+CFSv2 Operational Analysis Initial Conditions
+Product
+Grid/Scale
+Period of Record
+Model Cycle
+Data Access Links
+High Resolution Initial Conditions (HIC)
+Various
+01Apr2011 - 31Dec2014
+4/day: 00, 06, 12, 18UTC
+HTTPS
+Low Resolution Initial Conditions (LIC)
+Various
+01Apr2011 - Present
+4/day: 00, 06, 12, 18UTC
+HTTPS
+Full Ingest Data (dumps)
+Various
+01Apr2011 - 31Dec2014
+4/day: 00, 06, 12, 18UTC
+HTTPS
+CFSv2 Operational Forecasts Time Series and Monthly Means
+Product
+Grid/Scale
+Period of Record
+Model Cycle
+Output Timestep
+Data Access Links
+9-Month Forecasts: Time Series
+Various
+01Apr2011 - Present
+4/day: 00, 06, 12, 18UTC
+Hourly, out ~9 months
+HTTPS
+9-Month Forecasts: Monthly Means
+Various
+01Apr2011 - Present
+4/day: 00, 06, 12, 18UTC
+Monthly, 00, 06, 12, and 18UTC; out ~9 months
+HTTPS
+CFSv2 Operational Forecasts 6-Hourly Products
+Product
+Grid/Scale
+Period of Record
+Model Cycle
+Output Timestep
+Data Access Links
+9-Month Forecasts: 6-Hourly Surface and Radiative Fluxes (FLX)
+Gaussian: T126
+01Apr2011 - Present
+4/day: 00, 06, 12, 18UTC
+6-Hourly: +00, +06, +12,...out ~6 months
+HTTPS
+9-Month Forecasts: 6-Hourly 3D Isentropic Level Data (IPV)
+Lat/Lon: 0.5°
+01Apr2011 - Present
+4/day: 00, 06, 12, 18UTC
+6-Hourly: +00, +06, +12,...out ~6 months
+HTTPS
+9-Month Forecasts: 6-Hourly 3D Ocean Data (OCN)
+Lat/Lon: 0.5°
+01Apr2011 - Present
+4/day: 00, 06, 12, 18UTC
+6-Hourly: +00, +06, +12,...out ~6 months
+HTTPS
+9-Month Forecasts: 6-Hourly 3D Pressure Level Data (PGB)
+Lat/Lon: 0.5°
+01Apr2011 - Present
+4/day: 00, 06, 12, 18UTC
+6-Hourly: +00, +06, +12,...out ~6 months
+HTTPS
+About Historical Products
+Reanalysis
+The Climate Forecast System Reanalysis (CFSR) was an effort to generate a uniform, continuous, best-estimate record of the state of the ocean–atmosphere interaction for use in climate monitoring and diagnostics. The reanalysis method kept the model’s software constant and ran the model retrospectively from January 1979 through March 2011.
+Citation
+Saha, S., S. Moorthi, H. Pan, X. Wu, J. Wang, and Coauthors, 2010: The NCEP Climate Forecast System Reanalysis.
+Bulletin of the American Meteorological Society
+doi:10.1175/2010BAMS3001.1
+Reforecast
+In addition to the reanalysis efforts, the CFS model was used to generate a reforecast of past weather forecasts. Reforecasts help scientists better understand the model's ability to produce accurate weather forecasts. The CFS reforecasts were initialized with CFSR data, which were the best estimate of initial conditions from the assimilation of observational data into the CFS model. Reforecast predictions start in mid-December of 1981. CFS reforecast data were used to generate calibration climatologies for use with the operational CFS version 2 (CFSv2) forecasts of seasonal weather. Together, the CFSR and the CFS reforecast data are known as the Climate Forecast System Reanalysis and Reforecast (CFSRR). The operational CFSv2 analysis and forecasts continue the dataset from April 2011 to present.
+Citation
+Saha, S., ;S. Moorthi, X. Wu, J. Wang, and Coauthors, 2014: The NCEP Climate Forecast System Version 2.
+Journal of Climate
+doi:10.1175/JCLI-D-12-00823.1
+The NCEP Climate Forecast System Reanalysis (CFSR) was designed and executed as a global, high-resolution, coupled atmosphere-ocean-land surface-sea ice system to accurately estimate the state of these coupled domains throughout the 32-year period of record (January 1979—March 2011). It has been extended as an operational real-time product.
+"The CFSR data was developed by NOAA's National Centers for Environmental Prediction (NCEP). The data for this study are from NOAA's National Operational Model Archive and Distribution System (NOMADS), which is maintained at NOAA's National Centers for Environmental Information (NCEI)."
+CFS Reanalysis (CFSR) Time Series and Monthly Means
+Product
+Grid/Scale
+Period of Record
+Model Cycle
+Output Timestep
+Data Access Links
+Time Series
+Lat/Lon: 0.5°, 1.0°, 2.5°; Gaussian: T382, T62
+01Jan1979 - 31Mar2011
+Monthly
+Hourly, full month
+HTTPS
+Monthly Means
+Lat/Lon: 0.5°, 1.0°, 2.5°; Gaussian: T382, T62
+01Jan1979 - 31Mar2011
+Monthly: 00, 06, 12, 18UTC
+HTTPS
+ERDDAP
+CFS Reanalysis (CFSR) 6-Hourly Products
+Product
+Grid/Scale
+Period of Record
+Model Cycle
+Output Timestep
+Data Access Links
+6-Hourly 3-D Diabatic Heating Data (DIAB)
+Lat/Lon: 1.0°
+01Jan1979 - 31Mar2011
+4/day: 00, 06, 12, 18UTC
+HTTPS
+6-Hourly Surface and Radiative Fluxes (FLX)
+Gaussian: T382
+01Jan1979 - 31Mar2011
+4/day: 00, 06, 12, 18UTC
+HTTPS
+6-Hourly Low-Resolution Data
+Lat/Lon: 1.0°, 2.5°; Gaussian: T62
+01Jan1979 - 31Mar2011
+4/day: 00, 06, 12, 18UTC
+HTTPS
+6-Hourly 3-D Isentropic Level (IPV)
+Lat/Lon: 0.5°
+01Jan1979 - 31Mar2011
+4/day: 00, 06, 12, 18UTC
+HTTPS
+6-Hourly 3-D Ocean Data (OCN)
+Lat/Lon: 0.5°
+01Jan1979 - 31Mar2011
+4/day: 00, 06, 12, 18UTC
+HTTPS
+6-Hourly 3-D Pressure Level Data (PGB)
+Lat/Lon: 0.5°
+01Jan1979 - 31Mar2011
+4/day: 00, 06, 12, 18UTC
+HTTPS
+CFS Reanalysis (CFSR) Initial Conditions
+Product
+Grid/Scale
+Period of Record
+Model Cycle
+Data Access Links
+High Resolution Initial Conditions (HIC)
+Various
+01Jan1979 - 31Mar2011
+4/day: 00, 06, 12, 18UTC
+HTTPS
+Low Resolution Initial Conditions (LIC)
+Various
+01Jan1979 - 31Mar2011
+4/day: 00, 06, 12, 18UTC
+HTTPS
+Full Ingest Data (dumps)
+Various
+01Jan1979 - 31Mar2011
+4/day: 00, 06, 12, 18UTC
+HTTPS
+The complete reforecast of CFS over the 29-year period (1982–2011) provides stable calibration and skill estimates of the new system for operational seasonal and sub-seasonal prediction at NCEP. There are coupled full 9-month forecasts from initial conditions every 5 days apart (for all four cycles on that day) have been made for each calendar year with the T126L64 GFS with half-hourly coupling to the ocean (MOM4 at 1/4° equatorial, 1/2° global). The total number of 9-month forecasts is 73x4 for each year. In addition to the 9-month runs, there is a full season run from every 00Z cycle over a 12-year period (1999–2011). There is also a short 45-day forecast from every 06Z, 12Z, and 18Z cycle over the same 12-year period (1999–2011).
+CFS Reforecast "First-Look" Time Series and Monthly Means
+Product
+Grid/Scale
+Period of Record
+Model Cycle
+Output Timestep
+Data Access Links
+Monthly Means of Daily Averages
+Various
+01Jan1984-31Dec2009
+00Z, 06Z, 12Z, 18Z cycles, 1 out of 5 days
+Monthly, out ~9 months
+HTTPS
+Monthly Mean Time Series of Select Variables
+Various
+01Jan1999-31Dec2009
+Full POR
+Monthly, out full POR
+HTTPS
+6-Hourly Time Series from 45-Day and Seasonal Runs
+Various
+01Jan1999-31Dec2009
+00Z cycle, 4 out of 5 days for 45-day runs; 06Z, 12Z, 18Z cycles; 4 out of 5 days for seasonal runs
+6-Hourly, out ~45 days or ~3 months
+HTTPS
+6-Hourly Time Series from 9-Month Runs
+Various
+12Dec1981-31Mar2011
+00Z, 06Z, 12Z, 18Z cycles, 1 out of 5 days
+6-Hourly, out ~9 months
+HTTPS
+CFS Reforecast "High-Priority" Subset
+Product
+Grid/Scale
+Period of Record
+Model Cycle
+Output Timestep
+Data Access Links
+Monthly Means from 9-Month Runs
+Various
+12Dec1981-31Mar2011
+00Z, 06Z, 12Z, 18Z cycles, 1 out of 5 days
+Monthly, 00, 06, 12, and 18UTC; out ~9 months
+HTTPS
+Monthly Means from Seasonal Runs
+Various
+01Jan1999-31Mar2011
+00Z cycle, 4 out of 5 days
+Monthly, 00, 06, 12, and 18UTC; out ~3 months
+HTTPS
+Time Series from 45-Day and Seasonal Runs
+Various
+01Jan1999-31Mar2011
+06Z, 12Z, 18Z cycles; 4 out of 5 days
+6-Hourly, out ~45 days or ~3 months
+HTTPS
+Time Series from 9-Month Runs
+Various
+12Dec1981-31Mar2011
+00Z, 06Z, 12Z, 18Z cycles, 1 out of 5 days
+6-Hourly, out ~9 months
+HTTPS
+CFS Reforecast 6-Hourly PGBF and FLXF (1982-2011 and 1999-2011)
+Product
+Grid/Scale
+Period of Record
+Model Cycle
+Output Timestep
+Data Access Links
+45-Day Runs of FLXF
+Gaussian: T126
+01Jan1999-31Mar2011
+06Z, 12Z, 18Z cycles; 4 out of 5 days
+6-Hourly: +00, +06, +12,...out 45 days
+HTTPS
+45-Day Runs of PGBF
+Lat/Lon: 1°
+01Jan1999-31Mar2011
+06Z, 12Z, 18Z cycles; 4 out of 5 days
+6-Hourly: +00, +06, +12,...out 45 days
+HTTPS
+90-Day Runs of FLXF
+Gaussian: T126
+01Jan1999-31Mar2011
+00Z cycle, 4 out of 5 days
+6-Hourly: +00, +06, +12,...out ~3 months
+HTTPS
+90-Day Runs of PGBF
+Lat/Lon: 1°
+01Jan1999-31Mar2011
+00Z cycle, 4 out of 5 days
+6-Hourly: +00, +06, +12,...out ~3 months
+HTTPS
+9-Month Runs of FLXF
+Gaussian: T126
+12Dec1981-31Mar2011
+00Z, 06Z, 12Z, 18Z cycles, 1 out of 5 days
+6-Hourly: +00, +06, +12,...out ~6 months
+HTTPS
+9-Month Runs of PGBF
+Lat/Lon: 1°
+12Dec1981-31Mar2011
+00Z, 06Z, 12Z, 18Z cycles, 1 out of 5 days
+6-Hourly: +00, +06, +12,...out ~6 months
+HTTPS
+CFSRR Calibration Climatologies
+CFS Reanalysis Calibration Climatologies have not yet been ingested/archived at NCEI. Links to product data in the tables below are not serially complete.
+CFS Reanalysis Calibration Climatologies
+Product
+Period of Record
+Monthly Means: Mean and Standard Deviation
+1982-2010 and 1999-2010
+Time Series: Mean for All Variables
+Time Series: Standard Deviation for All Variables
+Time Series: Mean for All Variables
+Time Series: Standard Deviation for All Variables
+CFS Reforecast Calibration Climatologies
+Product
+Period of Record
+Data Access Links
+9-Month Runs: FLXF Mean and Standard Deviation
+HTTPS
+9-Month Runs: FLXF Mean and Standard Deviation
+HTTPS
+9-Month Runs: IPVF Mean and Standard Deviation
+HTTPS
+9-Month Runs: IPVF Mean and Standard Deviation
+HTTPS
+9-Month Runs: OCNF Mean and Standard Deviation
+HTTPS
+9-Month Runs: OCNF Mean and Standard Deviation
+HTTPS
+9-Month Runs: OCNH Mean and Standard Deviation
+HTTPS
+9-Month Runs: PGBF Mean and Standard Deviation
+HTTPS
+9-Month Runs: PGBF Mean and Standard Deviation
+HTTPS
+9-Month Runs Time Series: Mean and Standard Deviation by Variable
+1982-2010 and 1999-2010
+45 and 90-Day Runs Time Series: Mean by Variable
+45 and 90-Day Runs Time Series: Standard Deviation by Variable
+Related News
+July 16, 2026
+ENSO Detection and Monitoring Depends on Data
+Read More
+August 22, 2024
+Reporting on the State of the Climate in 2023
+Read More
+August 22, 2024
+Reportando sobre el Estado del Clima del 2023
+Read More
