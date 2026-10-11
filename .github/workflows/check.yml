@@ -1,0 +1,23 @@
+# PR이 열리면 YAML 검증과 빌드를 돌려, 잘못된 정보가 머지되기 전에 걸러냅니다.
+# (나중에 Claude 자동화가 PR을 만들 때도 이 검사를 통과해야 합니다)
+name: 변경 검사
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -r requirements.txt
+      - run: python scripts/validate.py
+      - run: mkdocs build --strict
+      - run: mkdocs build --strict -f mkdocs.en.yml   # 영어판 → site/en/

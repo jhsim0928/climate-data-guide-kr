@@ -105,14 +105,29 @@ CITATION.cff             ← GitHub "Cite this repository" 버튼
 
 1. 신청 → 시트에 `pending`으로 저장되고 확인 메일 발송 → 메일 속 **신청 확인하기**를 누르면 `active`.
 2. 사이트를 빌드할 때 모든 YAML의 `notices`가 `https://data4researchers.kr/assets/notices.json`으로 만들어집니다.
-3. Apps Script가 매일 오전 9시쯤 이 파일을 읽어, 처음 보는 공지만 골라 구독자별(데이터셋·공지 구분)로 한 통씩 묶어 보냅니다. 보낸 공지는 `발송 기록` 시트에 남습니다.
+3. Apps Script가 매시간(오전 8시~오후 9시) 이 파일을 읽어, 처음 보는 공지만 골라 구독자별(데이터셋·공지 구분)로 한 통씩 묶어 보냅니다. 보낸 공지는 `발송 기록` 시트에 남습니다.
 4. 수신 거부 링크를 누르면 시트에서 해당 행이 바로 지워집니다. 30일 넘게 확인하지 않은 신청도 자동 삭제됩니다.
 
-즉, **YAML에 공지를 추가하고 커밋하면 다음 날 아침 메일이 자동으로 나갑니다.** 이미 올린 공지의 날짜나 제목을 고치면 새 공지로 보고 다시 발송되니, 오타 수정은 본문(`body`)에서 하세요.
+즉, **YAML에 공지를 추가하고 main에 반영되면 한 시간 안에 메일이 자동으로 나갑니다**(밤이면 다음 날 아침 8시). 이미 올린 공지의 날짜나 제목을 고치면 새 공지로 보고 다시 발송되니, 오타 수정은 본문(`body`)에서 하세요.
 
 - Gmail 무료 계정은 하루 약 100명에게 보낼 수 있습니다. 넘으면 남은 사람은 다음 날 보냅니다.
 - Gmail 새 계정에서 보낸 메일은 처음에 스팸함으로 갈 수 있습니다. 신청 페이지와 확인 메일에 '스팸 아님' 표시 안내를 넣어 두었습니다.
 - `mailing/Code.gs`를 고쳤다면 Apps Script 편집기에 붙여넣고 저장합니다. 매일 실행(checkNotices)은 저장만 하면 반영되고, 신청 접수(doPost/doGet)를 고쳤다면 **배포 → 배포 관리 → 수정 → 새 버전**으로 다시 배포해야 합니다(주소는 그대로).
+
+## 새 공지 자동 점검 (매일)
+
+| 시각(한국) | 누가 | 하는 일 |
+|---|---|---|
+| 06시 | GitHub Actions `공지 페이지 점검` (`.github/workflows/watch.yml` → `scripts/watch.py`) | 각 YAML의 `watch_urls`(공지 페이지 약 135곳)를 열어 지난번과 달라진 줄을 `watch/changes.json`에 저장 |
+| 08시 | Claude 예약 작업 (지침: `watch/REVIEW.md`) | 바뀐 부분이 진짜 공지인지 판단 → 공지면 한국어·영어 YAML에 써서 **공지 후보 PR** 생성 → `watch/digest.json` 작성 |
+| 09시 | Apps Script `dailyDigest` | `digest.json`을 읽어 운영자에게 요약 메일 (새 공지 후보, 승인 버튼, 공지가 아니라고 본 변경, 열리지 않는 페이지) |
+| 승인 후 | 운영자 → Apps Script `checkNotices` | PR에서 **Merge pull request → Confirm merge** → 사이트 배포 → 한 시간 안에 구독자 알림 메일 |
+
+- 공지가 아니면 PR에서 **Close pull request**. 고칠 점이 있으면 Claude에게 PR 링크와 함께 말하면 됩니다.
+- 요약 메일 받는 사람: `OWNER_EMAIL` + Apps Script **프로젝트 설정 → 스크립트 속성 `DIGEST_TO`**(쉼표로 여러 주소). 개인 주소는 공개 저장소에 적지 않기 위해 이렇게 둡니다.
+- 9시 메일에 "점검 결과 없음"이 오면 06시 Actions나 08시 Claude 작업이 실패한 것입니다. GitHub **Actions** 탭에서 `공지 페이지 점검`을 열어 **Run workflow**로 다시 돌리거나 Claude에게 알려 주세요.
+- 감시 주소를 바꾸려면 YAML의 `watch_urls`만 고치면 됩니다. 저장된 페이지 사본은 `watch/state/`, 지난 30일 감지 기록은 `watch/history/`에 있습니다.
+- Actions와 Claude가 main에 올리는 점검 기록 커밋에는 `[skip ci]`가 붙어 사이트를 다시 배포하지 않습니다.
 
 ## 방문자 수 집계
 
@@ -132,8 +147,7 @@ GoatCounter(쿠키 없음)를 씁니다. Code는 `docs/javascripts/notranslate.j
 
 ## 다음 단계 (예정)
 
-- [ ] 공지 페이지 변경 감지 스크립트 + 주간 GitHub Actions → 변경 시 이슈 자동 생성
-- [ ] 이슈를 받아 Claude가 YAML 수정 PR을 여는 워크플로 (사람이 검토 후 머지)
+- [x] 공지 페이지 변경 감지 + Claude 공지 후보 PR + 운영자 승인 (위 '새 공지 자동 점검')
 - [ ] 데이터셋 확장 (ERA5-Land 등) 및 WRF·CESM2 모델 페이지
 
 ## 라이선스

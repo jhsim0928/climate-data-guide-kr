@@ -10,6 +10,9 @@
  *  5) 각 페이지의 "정보 오류 신고"를 받아 오류 신고 시트에 저장하고 운영자에게 알립니다.
  *  6) 사이트의 "의견 보내기" 양식을 받아 의견 시트에 저장하고 운영자에게 알립니다.
  *  7) 영어판(/en/)에서 신청한 사람에게는 확인 메일·알림 메일을 영어로 보냅니다(구독자 시트 lang 열).
+ *  8) 매일 오전 9시, 자동 공지 점검 결과(watch/digest.json)를 운영자에게 요약 메일로 보냅니다.
+ *     새 공지 후보는 GitHub PR로 올라오며, 운영자가 머지(승인)하면 사이트에 반영되고
+ *     한 시간 안에(오전 8시~오후 9시 사이) 구독자에게 알림 메일이 나갑니다.
  *
  * 설치: MAINTAINING.md 순서대로 setup()을 한 번 실행한 뒤 웹 앱으로 배포하세요.
  * 개인 Gmail 계정은 하루 발송 인원이 약 100명으로 제한됩니다.
@@ -22,7 +25,11 @@ var NOTICES_URL_EN = SITE_URL + 'en/assets/notices.json';
 var OWNER_EMAIL = 'data4researchers@gmail.com'; // 제안·오류 신고 알림을 받을 주소
 var SEND_OLD = false; // testSend 실행 때만 true (오래된 공지도 보냄)
 var OLD_DAYS = 30;  // 공지 날짜가 이보다 오래된 새 공지는 메일로 보내지 않음 (새 데이터셋 추가 시 과거 공지 일괄 발송 방지)
-var SEND_HOUR = 9; // 매일 공지 확인 시각 (프로젝트 시간대 기준, Asia/Seoul 권장)
+var SEND_FROM = 8, SEND_UNTIL = 21; // 구독자 알림은 이 시간대(프로젝트 시간대, Asia/Seoul)에만 발송 — 밤에 승인해도 아침에 나감
+var DIGEST_HOUR = 9; // 운영자 요약 메일 시각
+var DIGEST_URL = 'https://raw.githubusercontent.com/jhsim0928/climate-data-guide-kr/main/watch/digest.json';
+// 요약 메일을 함께 받을 주소는 코드(공개 저장소)에 적지 않고 [프로젝트 설정 → 스크립트 속성]에
+// 속성 DIGEST_TO, 값 'a@example.com,b@example.com' 형태로 넣습니다. OWNER_EMAIL에는 항상 갑니다.
 
 var SHEET_SUBS = '구독자';
 var SHEET_SUGGEST = '데이터셋 제안';
@@ -102,13 +109,22 @@ function setup() {
   ensureSheet_(ss, SHEET_SENT, ['notice_key', 'first_seen_at', 'recipients']);
   ensureSheet_(ss, SHEET_REPORT, REPORT_HEADERS);
   ensureSheet_(ss, SHEET_FEEDBACK, FEEDBACK_HEADERS);
-  ScriptApp.getProjectTriggers().forEach(function (t) {
-    if (t.getHandlerFunction() === 'checkNotices') ScriptApp.deleteTrigger(t);
-  });
-  ScriptApp.newTrigger('checkNotices').timeBased().everyDays(1).atHour(SEND_HOUR).create();
+  setupTriggers();
   // 기존 공지는 '이미 보낸 것'으로 기록 — 설치 직후 옛 공지가 한꺼번에 나가지 않도록
   try { markAllAsSent_(); } catch (err) { Logger.log('공지 목록을 아직 읽을 수 없습니다: ' + err); }
   Logger.log('설치 완료. 이제 [배포 → 새 배포 → 웹 앱]으로 배포하세요.');
+}
+
+// ── 실행 예약: 구독자 알림 확인(매시간) + 운영자 요약 메일(매일 9시) ──
+// 예약을 바꾼 뒤 한 번만 실행하면 됩니다. 이미 보낸 기록은 건드리지 않습니다.
+function setupTriggers() {
+  ScriptApp.getProjectTriggers().forEach(function (t) {
+    var f = t.getHandlerFunction();
+    if (f === 'checkNotices' || f === 'dailyDigest') ScriptApp.deleteTrigger(t);
+  });
+  ScriptApp.newTrigger('checkNotices').timeBased().everyHours(1).create();
+  ScriptApp.newTrigger('dailyDigest').timeBased().everyDays(1).atHour(DIGEST_HOUR).nearMinute(0).create();
+  Logger.log('예약 완료: 공지 확인 매시간, 운영자 요약 매일 ' + DIGEST_HOUR + '시. 요약 받을 주소: ' + digestRecipients_().join(', '));
 }
 
 function ensureSheet_(ss, name, headers) {
@@ -277,6 +293,8 @@ function cleanupPending_() {
 }
 
 function checkNotices() {
+  var hour = Number(Utilities.formatDate(new Date(), Session.getScriptTimeZone(), 'H'));
+  if (!SEND_OLD && (hour < SEND_FROM || hour >= SEND_UNTIL)) return;  // 밤에는 보내지 않음
   cleanupPending_();
   var notices = fetchNotices_(NOTICES_URL);
   // 영어판 공지(같은 key) — 영어 구독자에게는 영어 제목·본문으로 보냄. 못 읽으면 한국어로 대신 보냄
@@ -351,6 +369,96 @@ function fetchNotices_(url) {
   var res = UrlFetchApp.fetch((url || NOTICES_URL) + '?t=' + Date.now(), { muteHttpExceptions: true });
   if (res.getResponseCode() !== 200) throw new Error('공지 목록 응답 ' + res.getResponseCode());
   return JSON.parse(res.getContentText()).notices || [];
+}
+
+// ── 매일 9시: 운영자에게 자동 공지 점검 요약 ─────────────────
+// 06시 GitHub Actions가 공지 페이지 변경을 찾고(watch/changes.json), 08시쯤 Claude 점검이 진짜 공지를 골라
+// 공지 후보 PR과 watch/digest.json을 만듭니다. 이 함수는 그 결과를 메일로 정리해 보냅니다.
+function digestRecipients_() {
+  var extra = PropertiesService.getScriptProperties().getProperty('DIGEST_TO') || '';
+  var list = [OWNER_EMAIL || Session.getEffectiveUser().getEmail()];
+  extra.split(/[,;\s]+/).forEach(function (a) { if (a && list.indexOf(a) === -1) list.push(a); });
+  return list;
+}
+
+function dailyDigest() {
+  var tz = Session.getScriptTimeZone();
+  var today = Utilities.formatDate(new Date(), tz, 'yyyy-MM-dd');
+  var d = null, err = '';
+  try {
+    var res = UrlFetchApp.fetch(DIGEST_URL + '?t=' + Date.now(), { muteHttpExceptions: true });
+    if (res.getResponseCode() === 200) d = JSON.parse(res.getContentText());
+    else err = '점검 결과 파일 응답 ' + res.getResponseCode();
+  } catch (e) { err = String(e); }
+
+  var colors = { critical: '#c62828', warning: '#b26a00', info: '#546e7a' };
+  var lvName = TXT.ko.level;
+  var box = function (bg, html) { return '<div style="background:' + bg + ';padding:12px 16px;border-radius:8px;margin:14px 0">' + html + '</div>'; };
+  var btn = function (url, label) {
+    return '<a href="' + esc_(url) + '" style="display:inline-block;padding:10px 18px;background:#1f6f8b;color:#fff;border-radius:6px;text-decoration:none;font-weight:bold">' + label + '</a>';
+  };
+  var html = '', subject;
+  var fresh = d && d.date === today;
+  var cands = (fresh && d.candidates) || [];
+  var pending = (d && d.pending) || [];
+
+  if (!fresh) {
+    subject = '[운영] ' + today + ' 공지 점검 결과 없음 — 확인 필요';
+    html += box('#fdecea', '<b>오늘 자동 점검 결과가 올라오지 않았습니다.</b><br>' +
+      (d ? '마지막 점검: ' + esc_(d.date) : esc_(err || '결과 파일을 읽지 못했습니다')) +
+      '<br>GitHub Actions의 "공지 페이지 점검"이나 Claude의 예약 작업이 실패했을 수 있습니다. Claude에게 "오늘 공지 점검이 안 됐어"라고 알려 주세요.');
+  } else {
+    subject = '[운영] ' + today + ' 공지 점검 — ' + (cands.length ? '새 공지 후보 ' + cands.length + '건, 승인 필요' : '새 공지 없음');
+    if (d.summary) html += '<p style="font-size:15px">' + esc_(d.summary) + '</p>';
+  }
+
+  if (cands.length) {
+    html += '<h3 style="margin:22px 0 6px">새 공지 후보</h3>' + cands.map(function (n) {
+      var c = colors[n.level] || '#999';
+      return '<div style="border-left:4px solid ' + c + ';padding:8px 14px;margin:12px 0">' +
+        '<div style="font-size:13px;color:' + c + ';font-weight:bold">' + (lvName[n.level] || esc_(n.level)) + ' · ' + esc_(n.dataset || n.dataset_id) + ' · ' + esc_(n.date || '') + '</div>' +
+        '<div style="font-size:16px;font-weight:bold;margin:4px 0">' + esc_(n.title) + '</div>' +
+        (n.why ? '<div style="font-size:14px;color:#333">' + esc_(n.why) + '</div>' : '') +
+        '<div style="font-size:13px;margin-top:6px"><a href="' + esc_(n.source) + '">원문 공지</a></div></div>';
+    }).join('');
+    if (d.pr && d.pr.url) {
+      html += box('#e8f4f8', '<b>승인 방법</b><br>아래 버튼 → GitHub 페이지 맨 아래 <b>Merge pull request</b> → <b>Confirm merge</b>.<br>' +
+        '승인하면 몇 분 뒤 사이트에 올라가고, 한 시간 안에(오전 8시~오후 9시) 해당 자료를 구독한 사람에게 알림 메일이 나갑니다.<br>' +
+        '내용을 고치고 싶으면 Claude에게 PR 링크와 함께 말해 주세요. 공지가 아니면 <b>Close pull request</b>를 누르면 됩니다.' +
+        '<p style="margin:12px 0 0">' + btn(d.pr.url, '검토하고 승인하기') + '</p>');
+    }
+  }
+
+  var older = pending.filter(function (p) { return !(d && d.pr && p.url === d.pr.url); });
+  if (older.length) {
+    html += '<h3 style="margin:22px 0 6px">아직 승인하지 않은 공지 후보</h3><ul>' + older.map(function (p) {
+      return '<li><a href="' + esc_(p.url) + '">' + esc_(p.title) + '</a>' + (p.opened ? ' (' + esc_(p.opened) + ')' : '') + '</li>';
+    }).join('') + '</ul>';
+  }
+
+  if (fresh && d.notes && d.notes.length) {
+    html += '<h3 style="margin:22px 0 6px">참고</h3><ul>' + d.notes.map(function (x) { return '<li>' + esc_(x) + '</li>'; }).join('') + '</ul>';
+  }
+  if (fresh && d.ignored && d.ignored.length) {
+    html += '<h3 style="margin:22px 0 6px;color:#555">바뀌었지만 공지가 아니라고 본 페이지 ' + d.ignored.length + '곳</h3><ul style="color:#555;font-size:13px">' +
+      d.ignored.map(function (x) {
+        return '<li>' + esc_((x.datasets || []).join(', ')) + ' — ' + esc_(x.reason || '') + ' (<a href="' + esc_(x.url) + '">페이지</a>)</li>';
+      }).join('') + '</ul>';
+  }
+  if (fresh && d.errors && d.errors.length) {
+    html += '<h3 style="margin:22px 0 6px;color:#555">며칠째 열리지 않는 페이지 ' + d.errors.length + '곳</h3><ul style="color:#555;font-size:13px">' +
+      d.errors.map(function (x) {
+        return '<li>' + esc_((x.datasets || []).join(', ')) + ' — ' + esc_(x.error || '') + ', ' + (x.fails || '?') + '일째 (<a href="' + esc_(x.url) + '">페이지</a>)</li>';
+      }).join('') + '</ul><p style="color:#777;font-size:13px">주소가 바뀌었을 수 있습니다. Claude에게 확인을 부탁하세요.</p>';
+  }
+  if (fresh && d.watch) {
+    html += '<p style="color:#888;font-size:12px;margin-top:24px">점검한 공지 페이지 ' + (d.watch.checked || 0) + '곳 · 열림 ' + (d.watch.ok || 0) +
+      ' · 바뀐 곳 ' + (d.watch.changed || 0) + ' · 점검 ' + esc_(d.watch.date || '') + '</p>';
+  }
+  html += '<p style="color:#888;font-size:12px">이 메일은 운영자에게만 가는 요약입니다. 구독자 메일은 승인한 공지만 나갑니다.</p>';
+
+  MailApp.sendEmail({ to: digestRecipients_().join(','), subject: '[' + TXT.ko.site + '] ' + subject, htmlBody: html, name: TXT.ko.site + ' 점검',
+    body: html.replace(/<br>|<\/(p|div|li|h3)>/g, '\n').replace(/<[^>]+>/g, '').replace(/&amp;/g, '&') });
 }
 
 // ── 메일 본문 ───────────────────────────────────────────
