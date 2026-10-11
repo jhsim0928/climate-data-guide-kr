@@ -1,10 +1,36 @@
 {
  "date_kst": "2026-10-12",
- "run_at": "2026-10-12T05:41:34+09:00",
+ "run_at": "2026-10-12T08:23:44+09:00",
  "baseline": false,
  "checked": 135,
  "ok": 132,
- "changes": [],
+ "changes": [
+  {
+   "url": "https://earth.esa.int/eogateway/catalog/smos-cryosat-l4-sea-ice-thickness",
+   "datasets": [
+    "cs2smos"
+   ],
+   "added": [
+    "undefined - Earth Online"
+   ],
+   "removed_count": 121
+  },
+  {
+   "url": "https://disc.gsfc.nasa.gov/information/alerts",
+   "datasets": [
+    "imerg"
+   ],
+   "added": [
+    "Data Recall - All L3 GPROF data for GPM v08",
+    "GPM Science Users, please see the following alert from the Precipitation Processing System (PPS) ...",
+    "Alert Date:Oct 1, 2026 4:00:00 AM",
+    "Access to GES DISC Data Servers will be discontinued no earlier than September 30, 2026",
+    "HTTPS access to data on our on-premises servers (https://\\<server\\>.gesdisc.eosdis.nasa.gov/…) will ...",
+    "Alert Date:Sep 14, 2026 4:00:00 PM"
+   ],
+   "removed_count": 0
+  }
+ ],
  "errors": [
   {
    "url": "https://www.ecmwf.int/en/forecasts/datasets/reanalysis-datasets/cera-20c",
@@ -12,7 +38,7 @@
     "cera20c"
    ],
    "error": "HTTP 401 / HTTP 401 (브라우저)",
-   "fails": 3,
+   "fails": 4,
    "last_ok": null
   },
   {
@@ -21,7 +47,7 @@
     "imerg"
    ],
    "error": "HTTP 403 / HTTP 403 (브라우저)",
-   "fails": 3,
+   "fails": 4,
    "last_ok": null
   },
   {
@@ -30,7 +56,7 @@
     "merra2"
    ],
    "error": "HTTP 403 / HTTP 403 (브라우저)",
-   "fails": 3,
+   "fails": 4,
    "last_ok": null
   }
  ]
