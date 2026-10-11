@@ -20,8 +20,8 @@ status_note: >-
   (OSI-438-a) provides the fast-track updates (about 2 days latency).
 
 transitions:
-  - from: OSI SAF SSMIS series (OSI-450-a1 CDR + OSI-430-a ICDR, NRT OSI-401-d)
-    to: OSI SAF AMSR series (OSI-458 CDR + OSI-438 and OSI-438-a ICDR, NRT OSI-408-a and OSI-408-g)
+  - from: OSI SAF SSMIS series
+    to: OSI SAF AMSR series
     status: completed
     date: "2025-10"
     summary: >-
@@ -84,8 +84,8 @@ transitions:
         url: https://osi-saf.eumetsat.int/products/osi-458
       - name: Sea-ice concentration CDR/ICDR Product User Manual (PUM v3.4)
         url: https://osisaf-hl.met.no/sites/osisaf-hl/files/user_manuals/osisaf_pum_sea-ice-conc-climate-data-record_3.4.pdf
-  - from: OSI-450-a (v3.0, 2022)
-    to: OSI-450-a1 (v3.1, 2025)
+  - from: OSI-450-a v3.0
+    to: OSI-450-a1 v3.1
     status: completed
     date: "2025-06"
     summary: >-

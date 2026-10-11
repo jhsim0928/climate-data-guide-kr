@@ -19,8 +19,8 @@ status_note: >-
   2026년 9월 1일부터는 AMSR3 기반 연장판(OSI-438-a)이 빠른 갱신(약 2일 지연)을 담당합니다.
 
 transitions:
-  - from: OSI SAF SSMIS 계열 (OSI-450-a1 CDR + OSI-430-a ICDR, 준실시간 OSI-401-d)
-    to: OSI SAF AMSR 계열 (OSI-458 CDR + OSI-438·OSI-438-a ICDR, 준실시간 OSI-408-a·OSI-408-g)
+  - from: OSI SAF SSMIS 계열
+    to: OSI SAF AMSR 계열
     status: completed
     date: "2025-10"
     summary: >-
@@ -82,8 +82,8 @@ transitions:
         url: https://osi-saf.eumetsat.int/products/osi-458
       - name: 해빙 농도 CDR/ICDR 제품 사용자 설명서 (PUM v3.4)
         url: https://osisaf-hl.met.no/sites/osisaf-hl/files/user_manuals/osisaf_pum_sea-ice-conc-climate-data-record_3.4.pdf
-  - from: OSI-450-a (v3.0, 2022)
-    to: OSI-450-a1 (v3.1, 2025)
+  - from: OSI-450-a v3.0
+    to: OSI-450-a1 v3.1
     status: completed
     date: "2025-06"
     summary: >-
