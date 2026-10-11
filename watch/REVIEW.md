@@ -34,7 +34,8 @@ pip install --break-system-packages -q -r requirements.txt
 
 ### 2. 감지 결과 확인
 
-- `watch/changes.json`의 `date_kst`가 오늘이 아니면 감지 작업이 늦었거나 실패한 것입니다.
+- `watch/changes.json`의 `run_at`이 **오늘 05:30(한국 시간)보다 이르거나 3시간 넘게 지났으면** 06시 감지가 돌지 않은 것입니다
+  (GitHub 예약 실행은 늦거나 빠질 때가 있음. `date_kst`만 보면 새벽에 수동으로 돌린 결과를 오늘 결과로 착각하므로 반드시 `run_at`을 봅니다).
   `gh api -X POST $R/actions/workflows/watch.yml/dispatches -f ref=main` 로 직접 실행하고,
   `gh api "$R/actions/workflows/watch.yml/runs?per_page=1" --jq '.workflow_runs[0]|[.status,.conclusion]'` 가 `completed`가 될 때까지(최대 15분) 기다린 뒤 `git pull origin main`.
   그래도 오늘 결과가 없으면 `digest.json`의 `notes`에 그 사실을 적고 6단계로 갑니다.
@@ -44,7 +45,11 @@ pip install --break-system-packages -q -r requirements.txt
 
 `changes[]`의 각 항목(`url`, `datasets`, `added` = 새로 생긴 줄)에 대해:
 
-1. `added`를 읽고, 필요하면 WebFetch로 그 페이지와 거기서 링크된 **개별 공지 원문**을 엽니다.
+1. `added`를 읽고, 필요하면 **WebFetch 도구**로 그 페이지와 거기서 링크된 **개별 공지 원문**을 엽니다.
+   (셸의 curl·python 요청은 이 환경의 주소 제한에 막히니 쓰지 않습니다. 페이지 전체 글은 `watch/state/<index.json의 file>`에도 있습니다.)
+   - GES DISC 공지(disc.gsfc.nasa.gov)는 화면이 자바스크립트라 WebFetch로 비어 옵니다. 공지 본문은
+     `https://disc.gsfc.nasa.gov/api/alerts?page=1&size=10` 을 WebFetch로 열면 읽힙니다.
+   - WebFetch가 거절되면 `watch/state/` 사본만으로 판단하되, 원문을 못 본 후보는 올리지 말고 `notes`에 "운영자 확인 필요"로 남깁니다.
 2. 다음에 해당하면 **새 공지**입니다 — 해당 자료를 쓰는 연구자가 알아야 하는 변화:
    생산·갱신 중단/종료, 갱신 지연, 서비스·다운로드 경로 이전/중단, 자료 오류·품질 문제·재처리, 새 버전 공개/버전 교체,
    기간 연장·축소, 변수·격자·형식 변경, 계정·라이선스·인용 방식 변경, 계획된 점검으로 인한 접근 중단.
