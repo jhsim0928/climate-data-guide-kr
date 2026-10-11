@@ -3,8 +3,8 @@ hide:
   - navigation
 ---
 
-<div class="home-hero home-hero--en" markdown="1">
-![](assets/logo.png){ .hero-icon }
+<div class="home-hero home-hero--lockup" markdown="1">
+![](assets/logo.svg){ .hero-icon }
 <div class="hero-text"><p class="hero-title">Korean Climate Data Guide</p><p class="hero-sub">data4researchers.kr</p></div>
 </div>
 

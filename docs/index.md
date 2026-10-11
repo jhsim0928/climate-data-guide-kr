@@ -3,9 +3,9 @@ hide:
   - navigation
 ---
 
-<div class="home-hero" markdown="1">
-![기후데이터 길잡이 data4researchers.kr](assets/logo-lockup.png#only-light){ .hero-logo }
-![기후데이터 길잡이](assets/logo-lockup-dark.png#only-dark){ .hero-logo .hero-logo--dark }
+<div class="home-hero home-hero--lockup" markdown="1">
+![](assets/logo.svg){ .hero-icon }
+<div class="hero-text"><p class="hero-title">기후데이터 <span class="hero-accent">길잡이</span></p><p class="hero-sub">data4researchers.kr</p></div>
 </div>
 
 # 기후데이터 길잡이 { .visually-hidden }

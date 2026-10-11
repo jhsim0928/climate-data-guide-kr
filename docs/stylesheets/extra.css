@@ -280,8 +280,6 @@ details.hint summary { cursor: pointer; }
 .md-header__button.md-logo img { height: 1.9rem; width: auto; }
 .home-hero { margin: .2rem 0 1rem; }
 .home-hero p { margin: 0; }
-.home-hero .hero-logo { width: 100%; max-width: 440px; height: auto; display: block; }
-.home-hero .hero-logo--dark { max-width: 330px; border-radius: 14px; }
 .visually-hidden {
   position: absolute !important; width: 1px; height: 1px; padding: 0; margin: -1px;
   overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
@@ -367,10 +365,17 @@ details.hint summary { cursor: pointer; }
 .status-upcoming { background: #ece8fd; color: #4a2fa0; border-color: #c4b6f2; }
 [data-md-color-scheme="slate"] .status-upcoming { background: #2a2147; color: #c9bcff; border-color: #54468f; }
 
-/* 영어판 홈 상단 (로고 + 영문 이름) */
-.home-hero--en { display: flex; align-items: center; gap: 1.1rem; }
-.home-hero--en p { margin: 0; }
-.home-hero--en .hero-icon { width: 92px; height: auto; display: block; }
-.home-hero--en .hero-title { font-size: 1.9rem; font-weight: 800; line-height: 1.15; color: #12293b; letter-spacing: -.01em; }
-.home-hero--en .hero-sub { font-family: var(--md-code-font-family); color: var(--md-default-fg-color--light); font-size: .85rem; margin-top: .25rem; }
-[data-md-color-scheme="slate"] .home-hero--en .hero-title { color: #e6edf3; }
+/* 홈 상단 (로고 + 사이트 이름) — 한국어판·영어판 공통.
+   로고 그림(assets/logo.svg)은 밝은·어두운 화면에서 똑같은 파일 하나만 쓰고, 글자 색만 화면에 맞춘다. */
+.home-hero--lockup { display: flex; align-items: center; gap: 1.1rem; }
+.home-hero--lockup p { margin: 0; }
+.home-hero--lockup .hero-icon { width: 96px; height: auto; display: block; }
+.home-hero--lockup .hero-title { font-size: 1.9rem; font-weight: 800; line-height: 1.15; color: #12293b; letter-spacing: -.01em; }
+.home-hero--lockup .hero-accent { color: #1f6e7e; }
+.home-hero--lockup .hero-sub { font-family: var(--md-code-font-family); color: var(--md-default-fg-color--light); font-size: .85rem; margin-top: .25rem; }
+[data-md-color-scheme="slate"] .home-hero--lockup .hero-title { color: #e6edf3; }
+[data-md-color-scheme="slate"] .home-hero--lockup .hero-accent { color: #7cc0cc; }
+@media (max-width: 30em) {
+  .home-hero--lockup .hero-icon { width: 72px; }
+  .home-hero--lockup .hero-title { font-size: 1.5rem; }
+}

@@ -1,11 +1,10 @@
 <p align="center">
   <a href="https://data4researchers.kr/">
-    <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="docs/assets/logo-lockup-dark.png">
-      <img src="docs/assets/logo-lockup.png" alt="기후데이터 길잡이 · data4researchers.kr" width="460">
-    </picture>
+    <img src="docs/assets/logo.svg" alt="기후데이터 길잡이 로고" width="120">
   </a>
 </p>
+
+<h1 align="center">기후데이터 길잡이</h1>
 
 <p align="center">
   <b>대기·해양·해빙 연구자를 위한 기후자료 안내서</b><br>

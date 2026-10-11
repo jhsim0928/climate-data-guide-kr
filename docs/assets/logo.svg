@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -4 96 96" role="img" aria-label="기후데이터 길잡이">
+  <title>기후데이터 길잡이</title>
+  <defs>
+    <clipPath id="cdg-globe"><circle cx="44" cy="56" r="30"/></clipPath>
+  </defs>
+  <!-- 관측 빔 (불투명 색: 밝은·어두운 배경에서 똑같이 보이도록) -->
+  <polygon points="78,16 44,26 70,41" fill="#EAD0B1"/>
+  <!-- 대기 -->
+  <path d="M8.3 43 A38 38 0 0 1 79.7 43" fill="none" stroke="#5AA7D6" stroke-width="5" stroke-linecap="round"/>
+  <!-- 해양 -->
+  <circle cx="44" cy="56" r="30" fill="#1F5F7A"/>
+  <!-- 육지 -->
+  <g clip-path="url(#cdg-globe)">
+    <path d="M8 50 C16 48 25 50 29 55 C33 60 27 64 31 70 C34 76 29 81 21 84 L8 84 Z" fill="#6E9E78"/>
+    <path d="M58 51 C64 49 71 51 76 55 L76 71 C70 73 66 69 62 71 C58 73 54 67 56 61 C57 57 55 53 58 51 Z" fill="#6E9E78"/>
+  </g>
+  <!-- 해빙 -->
+  <path d="M18.6 40 A30 30 0 0 1 69.4 40 L62 44 L53 39 L44 45 L35 40 L26 44 Z" fill="#DCEEF4"/>
+  <circle cx="44" cy="56" r="30" fill="none" stroke="#A9CFDA" stroke-width="2"/>
+  <!-- 물결 -->
+  <path d="M33 62 q4 -3.5 8 0 t8 0 M39 71 q4 -3.5 8 0 t8 0" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round"/>
+  <!-- 관측 폭 -->
+  <path d="M44 26 L70 41" stroke="#D2780F" stroke-width="3" stroke-linecap="round"/>
+  <!-- 위성 (흰 윤곽: 어두운 배경에서도 태양전지판이 보이도록) -->
+  <g transform="translate(78 16) rotate(45)">
+    <path d="M-16 0 H16" stroke="#FFFFFF" stroke-width="4.5" stroke-linecap="round"/>
+    <path d="M-16 0 H16" stroke="#0F2A3D" stroke-width="2"/>
+    <rect x="-17" y="-3.5" width="10" height="7" rx="1" fill="#0F2A3D" stroke="#FFFFFF" stroke-width="1.5"/>
+    <rect x="7" y="-3.5" width="10" height="7" rx="1" fill="#0F2A3D" stroke="#FFFFFF" stroke-width="1.5"/>
+    <rect x="-5" y="-5" width="10" height="10" rx="2" fill="#D2780F" stroke="#FFFFFF" stroke-width="1.5"/>
+  </g>
+</svg>
