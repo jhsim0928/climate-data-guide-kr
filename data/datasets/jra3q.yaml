@@ -1,0 +1,236 @@
+# ─────────────────────────────────────────────────────────────
+# JRA-3Q — 데이터셋 정보 파일
+# ─────────────────────────────────────────────────────────────
+id: jra3q
+name: JRA-3Q
+full_name: Japanese Reanalysis for Three Quarters of a Century (일본 기상청 3세대 장기 재분석, 75년 재분석)
+category: reanalysis
+domain: atmosphere
+group: 재분석
+order: 40
+domains: [대기, 육지]
+provider: 일본 기상청 (JMA)
+
+status: active
+status_note: >-
+  정상 제공 중이며 JRA-55의 공식 후속 자료입니다. NCAR GDEX에서 정규본은 월 단위로, 준실시간본은 며칠 간격으로 늘어납니다.
+  일본 DIAS는 2026년 장기 점검 이후 일부만 재개되어, 현재는 2026년 6월 24일 이후 자료만 받을 수 있습니다.
+  비상업 라이선스(CC BY-NC-SA 4.0)이므로 상업적 용도라면 일본 기상업무지원센터(JMBSC)를 통해 받아야 합니다.
+
+period:
+  start: "1947-09"
+  end: present
+  note: >-
+    1947년 9월 1일부터. NCAR 정규본(d640000)은 월 단위로 늘어나며(2026년 10월 확인 시 2026년 9월까지),
+    최근 며칠~몇 주는 준실시간본(d640001)에 먼저 들어옵니다. 부속 제품 JRA-3Q-COBE는 1985년 6월~1990년 12월만 있습니다.
+
+resolution:
+  spatial: "모델 해상도 TL479(약 40 km) / 1.25° 위경도 격자 / 모델 격자 기반 약 0.375° 격자(960×480)"
+  vertical: "모델면 100층(최상층 0.01 hPa) / 기압면 45층(1000~0.01 hPa) / 온위면 36층"
+  temporal: 분석 6시간, 지표 진단·플럭스 1시간 (월·일변화 통계 별도 제공)
+
+update: 매월(NCAR 정규본) / 준실시간본은 수일 지연으로 수시 갱신
+license: CC BY-NC-SA 4.0 (비상업·동일조건) — 상업적 이용은 JMBSC를 통해 유료 취득
+account_required: true
+
+summary: >-
+  일본 기상청(JMA)의 세 번째 장기 전지구 재분석으로, 1947년 9월부터 현재까지를 다룹니다.
+  2018년 12월 기준 현업 수치예보 체계(TL479, 4D-Var)를 바탕으로 새로 발굴된 과거 관측과 재처리 위성자료를 넣어,
+  JRA-55의 대기 상단·지표 에너지 불균형과 열대저기압 강도의 인위적 약화 경향 같은 문제를 크게 줄였습니다.
+  해수면온도는 1985년 5월까지 COBE-SST2, 6월부터 MGDSST를 써서, 그 전환의 영향을 따로 볼 수 있도록 JRA-3Q-COBE도 함께 공개되었습니다.
+
+variables:
+  note: >-
+    JMA "JRA-3Q 1.25° 격자 자료 형식" 문서와 NCAR GDEX(d640000) NetCDF 파일 기준 주요 변수입니다.
+    변수명은 GDEX 파일·변수 이름 앞부분의 JMA short name입니다(예: tmp2m-hgt-an-ll125 → `tmp2m`).
+    원본은 GRIB2이며 GDEX는 변수별 NetCDF4로 변환해 제공합니다. 강수·증발 단위가 JRA-55(mm/day)와 다르니 주의하세요.
+  full_list: https://www.data.jma.go.jp/jra/html/JRA-3Q/document/JRA-3Q_LL125_format_v1_en.pdf
+  groups:
+    - name: 기압면 분석 (anl_p125, 6시간)
+      items:
+        - "지위고도 — `hgt` (gpm)"
+        - "기온 — `tmp` (K)"
+        - "동서 바람 — `ugrd` (m s-1)"
+        - "남북 바람 — `vgrd` (m s-1)"
+        - "연직 속도(기압 좌표) — `vvel` (Pa s-1)"
+        - "비습 — `spfh` (kg kg-1)"
+        - "상대습도 — `rh` (%)"
+        - "이슬점 강하 — `depr` (K)"
+        - "상대 소용돌이도 — `relv` (s-1)"
+        - "유선함수 · 속도 퍼텐셜 — `strm`, `vpot` (m2 s-1)"
+    - name: 지표 분석 (anl_surf125, 6시간)
+      items:
+        - "2 m 기온 — `tmp2m` (K)"
+        - "2 m 비습 — `spfh2m` (kg kg-1)"
+        - "2 m 상대습도 — `rh2m` (%)"
+        - "10 m 바람 u·v — `ugrd10m`, `vgrd10m` (m s-1)"
+        - "지면 기압 — `pres` (Pa)"
+        - "평균 해면기압 — `prmsl` (Pa)"
+        - "가강수량(연직 적분 수증기) — `tciwv` (kg m-2)"
+        - "적설 물당량 — `weasd` (kg m-2)"
+    - name: 플럭스·진단 — 1시간 평균 예보 (fcst_phy2m125)
+      items:
+        - "총 강수율 — `tprate` (kg m-2 s-1)"
+        - "대류성 · 대규모 강수율 — `cprat`, `lsprate` (kg m-2 s-1)"
+        - "강설률(물당량) — `tsrwe` (kg m-2 s-1)"
+        - "증발률 — `evarate` (kg m-2 s-1)"
+        - "잠열 · 현열 플럭스 — `lhtfl`, `shtfl` (W m-2)"
+        - "지표 운동량 플럭스 u·v — `uflx`, `vflx` (N m-2)"
+        - "하향 단파 · 장파 복사 — `dswrf`, `dlwrf` (W m-2)"
+        - "상향 단파 · 장파 복사(지표·대기 상단) — `uswrf`, `ulwrf` (W m-2)"
+        - "연직 적분 수증기 플럭스 u·v — `tuwv`, `tvwv` (kg m-1 s-1)"
+    - name: 구름·오존·적설 — 1시간 순간값 예보 (fcst_surf125)
+      items:
+        - "전운량 · 하층 · 중층 · 상층 운량 — `tcdc`, `lcdc`, `mcdc`, `hcdc` (%)"
+        - "오존 전량 — `tozne` (DU)"
+        - "적설 깊이 — `snod` (m)"
+    - name: 해양 경계조건 (bnd_ocean125)
+      items:
+        - "해수면(수면) 온도 — `wtmp` (K)"
+        - "해빙 피복률 — `icec` (비율)"
+
+access:
+  - name: NSF NCAR GDEX — JRA-3Q 정규본 (d640000)
+    url: https://gdex.ucar.edu/datasets/d640000/
+    method: 웹 다운로드 / THREDDS / Kerchunk·Intake-ESM 카탈로그
+    note: >-
+      NCAR 계정 필요, 비상업 용도만 허용. 변수별 NetCDF4 파일이며 전체 약 477 TB이므로 필요한 제품·변수만 고르세요.
+  - name: NSF NCAR GDEX — 준실시간 JRA-3Q (d640001)
+    url: https://gdex.ucar.edu/datasets/d640001/
+    method: 웹 다운로드 / THREDDS
+    note: 2023년 12월 9일 이후 최근 자료. 정규본(d640000)에 아직 들어오지 않은 최근 기간이 필요할 때 씁니다.
+  - name: NSF NCAR GDEX — 월 통계 (d640002) · 일변화 통계 (d640004)
+    url: https://gdex.ucar.edu/datasets/d640002/
+    method: 웹 다운로드
+    note: 일변화 통계는 https://gdex.ucar.edu/datasets/d640004/ 에 있습니다.
+  - name: NSF NCAR GDEX — JRA-3Q-COBE (d640006)
+    url: https://gdex.ucar.edu/datasets/d640006/
+    method: 웹 다운로드
+    note: 1985년 6월~1990년 12월. 해수면온도 입력 전환(COBE-SST2 → MGDSST)의 영향을 평가하는 용도입니다.
+  - name: DIAS — JRA-3Q
+    url: https://search.diasjp.net/en/dataset/JRA3Q
+    method: 웹 다운로드 (GRIB2 원본)
+    note: >-
+      DIAS 계정 필요. 장기 점검 뒤 2026년 8월 19일부터 일부 재개되었지만 2026년 6월 24일 이후 자료만 받을 수 있고,
+      그 이전 기간과 JRA-3Q-COBE의 재공개 일정은 미정입니다.
+  - name: 일본 기상업무지원센터 (JMBSC)
+    url: https://www.jmbsc.or.jp/en/index-e.html
+    method: 유료 제공 신청
+    note: JMA가 지정한 공식 제공 창구입니다. 상업적 목적이라면 협력 기관(NCAR·DIAS)이 아니라 여기서 받아야 합니다.
+
+tips:
+  - "강수·증발 단위가 JRA-55(mm day-1)와 달리 kg m-2 s-1(= mm s-1)입니다. JRA-55와 비교하려면 86400을 곱해 mm/day로 바꾸세요."
+  - 1985년 6월에 해수면온도 입력이 COBE-SST2(1°)에서 MGDSST(0.25°)로 바뀝니다. 이 시점을 걸친 추세·변동 분석이라면 JRA-3Q-COBE로 영향을 확인해 보세요.
+  - JMA는 1985년 6월~2013년 4월 구간에서 해빙 가장자리 약 250 km 이내의 해빙 피복률·지표 플럭스·2 m 기온이 국지적으로 어긋나는 품질 문제를 공지했습니다. 극지 해빙 경계 연구라면 확인이 필요합니다.
+  - "GDEX 파일 속 메타데이터에는 Kosaka et al. (2024)의 쪽수가 102, 1-168로 적혀 있지만, J-STAGE 정식 서지는 102(1), 49–109입니다."
+
+citations:
+  dataset:
+    - label: NCAR GDEX 정규본 (d640000)
+      text: >-
+        Japan Meteorological Agency (2023): Japanese Reanalysis for Three Quarters of a Century (JRA-3Q).
+        Research Data Archive at the National Center for Atmospheric Research, Computational and Information Systems Laboratory.
+        https://doi.org/10.5065/AVTZ-1H78 (Accessed DD MMM YYYY)
+      doi: 10.5065/AVTZ-1H78
+      bibtex: |
+        @misc{jra3q_d640000,
+          author    = {{Japan Meteorological Agency}},
+          title     = {Japanese Reanalysis for Three Quarters of a Century ({JRA-3Q})},
+          year      = {2023},
+          publisher = {Research Data Archive at the National Center for Atmospheric Research, Computational and Information Systems Laboratory},
+          doi       = {10.5065/AVTZ-1H78},
+          note      = {Accessed DD MMM YYYY}
+        }
+    - label: NCAR GDEX 준실시간본 (d640001)
+      text: >-
+        Japan Meteorological Agency (2023): Near Real-Time Japanese Reanalysis for Three Quarters of a Century (JRA-3Q).
+        Research Data Archive at the National Center for Atmospheric Research, Computational and Information Systems Laboratory.
+        https://doi.org/10.5065/E3QQ-0F24 (Accessed DD MMM YYYY)
+      doi: 10.5065/E3QQ-0F24
+    - label: NCAR GDEX JRA-3Q-COBE (d640006)
+      text: >-
+        Japan Meteorological Agency (2024): Japanese Reanalysis for Three Quarters of a Century - COBE (JRA-3Q-COBE).
+        Research Data Archive at the National Center for Atmospheric Research, Computational and Information Systems Laboratory.
+        https://doi.org/10.5065/RM7V-3X70 (Accessed DD MMM YYYY)
+      doi: 10.5065/RM7V-3X70
+  papers:
+    - label: JRA-3Q 종합 논문 (JMA가 인용을 요청하는 논문)
+      text: >-
+        Kosaka, Y., Kobayashi, S., Harada, Y., Kobayashi, C., Naoe, H., Yoshimoto, K., Harada, M., Goto, N., Chiba, J.,
+        Miyaoka, K., Sekiguchi, R., Deushi, M., Kamahori, H., Nakaegawa, T., Tanaka, T. Y., Tokuhiro, T., Sato, Y.,
+        Matsushita, Y., Onogi, K. (2024): The JRA-3Q Reanalysis. J. Meteor. Soc. Japan, 102(1), 49–109.
+      doi: 10.2151/jmsj.2024-004
+      bibtex: |
+        @article{kosaka2024jra3q,
+          author  = {Kosaka, Yu and Kobayashi, Shinya and Harada, Yayoi and Kobayashi, Chiaki and Naoe, Hiroaki and Yoshimoto, Koichi and Harada, Masashi and Goto, Naochika and Chiba, Jotaro and Miyaoka, Kengo and Sekiguchi, Ryohei and Deushi, Makoto and Kamahori, Hirotaka and Nakaegawa, Toshiyuki and Tanaka, Taichu Y. and Tokuhiro, Takayuki and Sato, Yoshiaki and Matsushita, Yasuhiro and Onogi, Kazutoshi},
+          title   = {The {JRA-3Q} Reanalysis},
+          journal = {Journal of the Meteorological Society of Japan. Ser. II},
+          volume  = {102},
+          number  = {1},
+          pages   = {49--109},
+          year    = {2024},
+          doi     = {10.2151/jmsj.2024-004}
+        }
+  acknowledgement: >-
+    JMA는 JRA-3Q를 쓴 논문에서 위 종합 논문(Kosaka et al., 2024)을 인용하고, 일본 기상청의 JRA-3Q 재분석자료를 사용했다는 사실을
+    본문이나 사사에 밝히도록 요청합니다. NCAR나 DIAS에서 받았다면 각 기관 메타데이터 페이지에 안내된 데이터셋 인용
+    (DIAS는 doi:10.20783/DIAS.645)도 함께 적습니다.
+
+notices:
+  - date: "2026-08-19"
+    level: warning
+    title: DIAS 일부 재개 — 2026년 6월 24일 이후 자료만 제공
+    body: >-
+      장기 점검 중이던 DIAS가 JRA-3Q 다운로드를 일부 재개했습니다. 다만 2026년 6월 24일 이후 자료만 받을 수 있고,
+      그 이전 기간의 재공개 일정은 정해지지 않았습니다. 과거 기간은 NCAR GDEX를 이용하세요.
+    source: https://diasjp.net/en/information/operation/20260727-resumption/
+  - date: "2026-04-28"
+    level: warning
+    title: DIAS 장기 점검 — 모든 데이터셋 접근 불가
+    body: >-
+      DIAS가 장기 점검 중이라 웹사이트를 제외한 모든 시스템과 데이터셋을 쓸 수 없고 복구 일정도 정해지지 않았다고 공지했습니다.
+      JMA JRA-3Q 페이지도 DIAS 자료에 접근할 수 없다고 안내하고 있습니다.
+    source: https://diasjp.net/en/information/operation/20260428-unscheduled-maintenance/
+  - date: "2025-12-02"
+    level: info
+    title: JMA 재분석 홈페이지 주소 변경
+    body: JRA 프로젝트 홈페이지가 jra.kishou.go.jp에서 www.data.jma.go.jp/jra/html/ 로 옮겨졌습니다. 옛 주소는 당분간 자동 연결됩니다.
+    source: https://www.data.jma.go.jp/jra/html/JRA-3Q/index_en.html
+  - date: "2023-12-05"
+    level: info
+    title: NCAR에서 준실시간 JRA-3Q 제공 시작
+    body: 준실시간 JRA-3Q 자료를 NCAR에서 받을 수 있게 되었습니다. 같은 시기에 JRA-55 준실시간 갱신 종료(2024년 1월 말)가 예고되었습니다.
+    source: https://www.data.jma.go.jp/jra/html/JRA-3Q/information_en.html
+  - date: "2023-08-10"
+    level: info
+    title: 전 기간 공개 및 JRA-3Q-COBE 공개 (DIAS)
+    body: 1947년 9월~1990년 12월과 2013년 5월 이후 자료가 DIAS에 추가되어 전 기간이 공개되었고, 부속 제품 JRA-3Q-COBE도 함께 공개되었습니다.
+    source: https://www.data.jma.go.jp/jra/html/JRA-3Q/information_en.html
+  - date: "2022-12-09"
+    level: warning
+    title: 해빙 관련 요소의 국지적 품질 문제 공지
+    body: >-
+      1985년 6월~2013년 4월 구간에서 해빙 분석을 모델 격자로 옮기는 과정의 오류로, 해빙 가장자리 약 250 km 이내의
+      해빙 피복률이 과대(약 0.15)하게 들어갔습니다. 주변의 지표 복사·난류 열플럭스와 2 m 기온·습도도 약간 영향을 받습니다.
+      JMA는 영향이 국지적이고 경년변동보다 작다고 설명합니다.
+    source: https://www.data.jma.go.jp/jra/html/JRA-3Q/document/JRA-3Q_qualityissue_20221209_en.pdf
+
+links:
+  - name: JMA JRA-3Q 공식 페이지
+    url: https://www.data.jma.go.jp/jra/html/JRA-3Q/index_en.html
+  - name: JMA JRA-3Q 소식 모음(News archive)
+    url: https://www.data.jma.go.jp/jra/html/JRA-3Q/information_en.html
+  - name: JRA-3Q 1.25° 자료 형식 문서 (PDF)
+    url: https://www.data.jma.go.jp/jra/html/JRA-3Q/document/JRA-3Q_LL125_format_v1_en.pdf
+  - name: JRA-3Q 종합 논문 (J-STAGE)
+    url: https://www.jstage.jst.go.jp/article/jmsj/102/1/102_2024-004/_article
+  - name: DIAS 재공개 데이터셋 목록
+    url: https://diasjp.net/en/dataset-republication-list/
+
+watch_urls:
+  - https://www.data.jma.go.jp/jra/html/JRA-3Q/index_en.html
+  - https://www.data.jma.go.jp/jra/html/JRA-3Q/information_en.html
+  - https://diasjp.net/en/dataset-republication-list/
+  - https://gdex.ucar.edu/news/
+
+last_verified: "2026-10-11"

@@ -32,6 +32,7 @@ theme:
     - navigation.tabs
     - navigation.top
     - navigation.indexes
+    - navigation.sections
     - search.highlight
     - search.suggest
     - content.code.copy
@@ -51,13 +52,15 @@ hooks:
 
 nav:
   - 홈: index.md
-  - 데이터셋:
-      - datasets/index.md
-      - ERA5: datasets/era5.md
-      - JRA-55: datasets/jra55.md
-  - 공지 모음: notices.md
-  - 알림 신청: subscribe.md
-  - 데이터셋 제안: suggest.md
+  - 전체 목록: datasets/index.md
+  # 대기·해양·해빙 메뉴는 data/datasets/*.yaml 의 domain·group·order 값으로 자동 생성됩니다
+  - __DATA_SECTIONS__: auto
+  - 공지·전환:
+      - 공지 모음: notices.md
+      - 전환 가이드: transitions.md
+  - 참여:
+      - 알림 신청: subscribe.md
+      - 데이터셋 제안: suggest.md
   - 소개:
       - 소개·인용: about.md
       - 개인정보 처리방침: privacy.md

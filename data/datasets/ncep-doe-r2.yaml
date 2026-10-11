@@ -1,0 +1,159 @@
+# ─────────────────────────────────────────────────────────────
+# NCEP–DOE R2 — 데이터셋 정보 파일
+# ─────────────────────────────────────────────────────────────
+id: ncep-doe-r2
+name: NCEP–DOE R2
+full_name: NCEP–DOE AMIP-II Reanalysis (Reanalysis 2, 미국 NCEP·에너지부 재분석 2)
+category: reanalysis
+domain: atmosphere
+group: 재분석
+order: 70
+domains: [대기, 육지]
+provider: NOAA NCEP·미국 에너지부(DOE) (배포 NOAA PSL, NSF NCAR GDEX)
+
+status: delayed
+status_note: >-
+  공식 종료 공지는 없지만, 2026-10-11 현재 PSL·NCAR 모두 2026년 2월 28일 18 UTC 자료에서 멈춰 7개월 넘게 갱신되지 않고 있습니다.
+  R2의 실시간 연장판(CDAS2)을 내보내던 NCEP의 cdas2 경로가 2026년 3월 9일 CDAS→CORe 전환 공지(SCN 26-12)에 함께 종료 대상으로 올라 있어,
+  R1처럼 사실상 끝났을 가능성이 큽니다. 최근 기간이 필요하면 다른 재분석을 준비하세요.
+
+period:
+  start: "1979-01"
+  end: "2026-02"
+  note: >-
+    1979년 1월 1일 ~ 2026년 2월 28일 18 UTC(PSL 2026년 파일·NCAR d091000 기준, 2026-10-11 확인). 공식적으로는 "1979–현재"로 표기되어 있으나
+    3월 이후 자료가 추가되지 않았습니다. NOAA NCEI 보관본은 2005년 9월(월평균은 2006년 3월)에서 수집이 끝났습니다.
+
+resolution:
+  spatial: "모델 T62(약 210 km) / 기압면 2.5° × 2.5°(144 × 73) / 지표·플럭스 T62 가우시안 격자(192 × 94)"
+  vertical: "모델 시그마 28층 / 기압면 17층(1000~10 hPa, 습도·연직속도도 10 hPa까지)"
+  temporal: 6시간(00·06·12·18 UTC), PSL 일평균·월평균 별도
+update: 2026년 3월 이후 갱신 없음 (원래 PSL·NCAR 월 단위 갱신)
+license: PSL 자료는 이용 제한 없이 공개(PSL 출처 표기 요청) / NCAR GDEX 사본은 CC BY 4.0
+account_required: false
+
+summary: >-
+  NCEP/NCAR 재분석(R1)의 알려진 처리 오류를 바로잡고 물리 과정을 손봐 1979년부터 다시 돌린 재분석입니다. 해상도와 관측 구성은 R1과 같은
+  1세대 체계라서 "차세대 재분석"이 아니라 R1의 개선·보완판으로 소개되었습니다. 토양수분, 지표 플럭스, 물 수지가 R1보다 나아
+  지면·수문 연구와 R1 결과 확인용으로 많이 쓰였습니다.
+
+variables:
+  note: >-
+    NOAA PSL netCDF 파일(OPeNDAP 속성) 기준 주요 변수입니다. 변수명은 파일 안의 이름이며, 괄호 앞에 PSL 폴더와 파일 이름 규칙을 적었습니다.
+    R1과 이름은 비슷하지만 폴더(gaussian_grid)와 일부 파일명(mslp)이 다릅니다.
+  full_list: https://psl.noaa.gov/data/gridded/data.ncep.reanalysis2.html
+  groups:
+    - name: 기압면 (pressure/, 2.5°·17층)
+      items:
+        - "기온 — `air` (degK)"
+        - "지위고도 — `hgt` (m)"
+        - "동서·남북 바람 — `uwnd`, `vwnd` (m/s)"
+        - "연직속도(기압 좌표) — `omega` (Pascal/s)"
+        - "상대습도 — `rhum` (%)"
+    - name: 지표·연직 적분 (surface/, 2.5°)
+      items:
+        - "평균 해면기압 — `mslp` (Pascals)"
+        - "지표 기압 — `pres` (Pascals, 파일 pres.sfc)"
+        - "가강수량(대기 전층) — `pr_wtr` (kg/m^2, 파일 pr_wtr.eatm)"
+    - name: 근지표·플럭스 (gaussian_grid/, T62 가우시안, 6시간 예보·평균)
+      items:
+        - "2 m 기온 — `air` (degK, 파일 air.2m.gauss)"
+        - "2 m 비습 — `shum` (kg/kg, 파일 shum.2m.gauss)"
+        - "10 m 동서 바람 — `uwnd` (m/s, 파일 uwnd.10m.gauss)"
+        - "강수율(6시간 평균) — `prate` (Kg/m^2/s)"
+        - "잠열 순플럭스 — `lhtfl` (W/m^2)"
+        - "현열 순플럭스 — `shtfl` (W/m^2)"
+        - "토양 체적수분(0~10 cm) — `soilw` (fraction, 파일 soilw.0-10cm.gauss)"
+        - "대기 상단 상향 장파복사(OLR) — `ulwrf` (W/m^2, 파일 ulwrf.ntat.gauss)"
+
+access:
+  - name: NOAA PSL — NCEP-DOE Reanalysis 2 데이터 페이지
+    url: https://psl.noaa.gov/data/gridded/data.ncep.reanalysis2.html
+    method: 변수 목록·그림 그리기·부분 추출
+    note: 계정 없이 이용할 수 있습니다. 파일은 변수·연도별 netCDF입니다.
+  - name: NOAA PSL 다운로드 서버 (6시간 자료)
+    url: https://downloads.psl.noaa.gov/Datasets/ncep.reanalysis2/
+    method: HTTPS 직접 다운로드
+    note: pressure/, surface/, gaussian_grid/, spectral/ 폴더. 일평균은 ncep.reanalysis2.dailyavgs/, 월평균은 ncep.reanalysis2.derived/에 있습니다.
+  - name: NOAA PSL THREDDS / OPeNDAP (기압면 예시)
+    url: https://psl.noaa.gov/thredds/catalog/Datasets/ncep.reanalysis2/pressure/catalog.html
+    method: OPeNDAP 원격 읽기
+  - name: NSF NCAR GDEX — NCEP/DOE Reanalysis 2 (d091000)
+    url: https://gdex.ucar.edu/datasets/d091000/
+    method: 웹 다운로드 / 부분 추출
+    note: GRIB1, 월 단위 묶음, CC BY 4.0. 데이터셋 DOI 10.5065/KVQZ-YJ93. GDEX는 "보조 용도 권장" 자료로 표시합니다.
+  - name: CPC Reanalysis-2 홈페이지 (오류 공지·실시간 안내)
+    url: https://www.cpc.ncep.noaa.gov/products/wesley/reanalysis2/
+    method: 안내 페이지
+    note: 페이지 내용은 오래전 기준("near real time" 운영)이라 현재 상태와 맞지 않습니다.
+
+example:
+  lang: python
+  note: PSL OPeNDAP 주소를 xarray로 바로 열 수 있습니다. 해면기압 변수 이름이 R1(`slp`)과 달리 `mslp`입니다.
+  code: |
+    import xarray as xr
+
+    base = "https://psl.noaa.gov/thredds/dodsC/Datasets/ncep.reanalysis2"
+    mslp = xr.open_dataset(f"{base}/surface/mslp.2025.nc")["mslp"]       # Pa
+    t2m = xr.open_dataset(f"{base}/gaussian_grid/air.2m.gauss.2025.nc")["air"]  # degK, 가우시안 격자
+    print(mslp.mean("time"), t2m.mean("time"))
+
+tips:
+  - R2 개발진은 이 자료를 R1을 대체하는 차세대가 아니라 보완재로 쓰라고 권했습니다. 해상도 향상, 복사휘도 직접 동화, SSM/I 활용 같은 개선은 들어가지 않았습니다.
+  - "CPC 공지에 따르면 \"Version C\" 구름 기온이 구름 없는 곳에서 결측 대신 0으로 들어가 구름 기온·기압이 낮게 치우쳤습니다(운량 `tcdc`는 영향 없음). 구름 관련 변수를 쓸 때는 공지를 확인하세요."
+  - NCAR Climate Data Guide는 R2를 여전히 1세대 재분석으로 보고, 해양 위 수분 변동성이 작고 남반구 표현이 약하다는 점을 한계로 꼽습니다.
+  - 2026년 3월 이후 자료가 없으므로, 최신 월까지 자동으로 받아 오는 스크립트는 오류 없이 멈춰 있을 수 있습니다. 마지막 시각을 확인하세요.
+
+citations:
+  dataset:
+    - label: NCAR GDEX 사본 (d091000)
+      text: >-
+        NCEP/DOE Reanalysis 2 (R2). NSF NCAR Geoscience Data Exchange (GDEX), dataset d091000.
+        https://doi.org/10.5065/KVQZ-YJ93 (Accessed DD MMM YYYY)
+      doi: 10.5065/KVQZ-YJ93
+  papers:
+    - label: R2 종합 논문
+      text: >-
+        Kanamitsu, M., Ebisuzaki, W., Woollen, J., Yang, S.-K., Hnilo, J. J., Fiorino, M., Potter, G. L. (2002):
+        NCEP–DOE AMIP-II Reanalysis (R-2). Bulletin of the American Meteorological Society, 83(11), 1631–1643.
+      doi: 10.1175/BAMS-83-11-1631
+      bibtex: |
+        @article{kanamitsu2002r2,
+          author  = {Kanamitsu, Masao and Ebisuzaki, Wesley and Woollen, Jack and Yang, Shi-Keng and Hnilo, J. J. and Fiorino, M. and Potter, G. L.},
+          title   = {{NCEP--DOE} {AMIP-II} Reanalysis ({R-2})},
+          journal = {Bulletin of the American Meteorological Society},
+          volume  = {83},
+          number  = {11},
+          pages   = {1631--1643},
+          year    = {2002},
+          doi     = {10.1175/BAMS-83-11-1631}
+        }
+  acknowledgement: >-
+    PSL에서 받았다면 PSL이 요청하는 출처 문구("data provided by the NOAA PSL, Boulder, Colorado, USA, from their website at https://psl.noaa.gov")를
+    사사에 넣고 Kanamitsu et al. (2002)을 인용하세요. NCAR 사본을 썼다면 GDEX DOI(10.5065/KVQZ-YJ93)를 함께 적습니다.
+
+notices:
+  - date: "2026-02-09"
+    level: warning
+    title: NWS SCN 26-12 — cdas2 경로 포함 CDAS 자료 제공 종료
+    body: >-
+      CDAS를 CORe로 바꾸는 서비스 변경 공지에서 NOMADS·FTP의 /com/cdas2/ 경로도 "2026년 3월 9일부터 제공 중단" 목록에 들어 있습니다.
+      공지문은 R2를 직접 언급하지 않지만, PSL·NCAR의 R2 자료는 이 무렵 직전인 2026년 2월 28일에서 멈춰 있습니다(2026-10-11 확인).
+    source: https://www.weather.gov/media/notification/pdf_2026/scn26-12_Updated_CDAS_COReUpdate_aaa.pdf
+
+links:
+  - name: CPC — Overview of NCEP/DOE Reanalysis-2
+    url: https://www.cpc.ncep.noaa.gov/products/tools/reanalysis2/kana/Overview.htm
+  - name: NOAA NCEI — Reanalysis-1 / Reanalysis-2
+    url: https://www.ncei.noaa.gov/products/weather-climate-models/reanalysis-1-2
+  - name: NCAR Climate Data Guide — NCEP Reanalysis (R2)
+    url: https://climatedataguide.ucar.edu/climate-data/ncep-reanalysis-r2
+  - name: PSL 자료 공지(Data Notices)
+    url: https://psl.noaa.gov/data/notices/
+
+watch_urls:
+  - https://psl.noaa.gov/data/notices/
+  - https://downloads.psl.noaa.gov/Datasets/ncep.reanalysis2/
+  - https://gdex.ucar.edu/datasets/d091000/
+
+last_verified: "2026-10-11"

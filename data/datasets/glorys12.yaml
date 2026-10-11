@@ -1,0 +1,201 @@
+# ─────────────────────────────────────────────────────────────
+# GLORYS12 — 데이터셋 정보 파일
+# 수정 후에는 공식 페이지에서 확인한 날짜로 last_verified 를 갱신하세요.
+# ─────────────────────────────────────────────────────────────
+id: glorys12
+name: GLORYS12
+full_name: Copernicus Marine Global Ocean Physics Reanalysis GLORYS12V1 (1/12° 전지구 해양·해빙 재분석, GLOBAL_MULTIYEAR_PHY_001_030)
+category: reanalysis
+domain: ocean
+group: 재분석
+order: 10
+domains: [해양, 해빙]
+provider: Copernicus Marine Service (CMEMS) / Mercator Ocean International
+
+status: active
+status_note: >-
+  정상 제공 중이며 매달 기간이 늘어납니다. 2025년 11월에 따로 있던 interim(myint) 데이터셋이
+  본 multi-year(my) 데이터셋으로 합쳐졌으므로, 이제는 my 데이터셋 하나로 1993년부터 최근까지 받을 수 있습니다.
+  2026년 10월 확인 기준으로 GLORYS12V1을 대체할 새 버전은 공지되지 않았습니다.
+
+period:
+  start: "1993-01"
+  end: present
+  note: >-
+    2021년 6월까지는 정식 재분석 생산분이고, 2021년 7월 이후는 interim 방식(매달 연장)으로 생산된 자료입니다.
+    2026-10-11 확인 시 카탈로그상 마지막 날짜는 2026-08-25로, 최근 1~2개월은 아직 들어오지 않습니다.
+
+resolution:
+  spatial: "1/12° (0.083°, 약 8 km) 정규 위경도 격자, 80°S~90°N"
+  vertical: "50층 (표층~약 5,500 m)"
+  temporal: 일평균, 월평균 (1993~2016 월별 기후값 별도 제공)
+
+update: 매월 연장 (약 1~2개월 지연)
+license: Copernicus Marine Service 이용약관 — 무료(상업적 이용 포함), 출처 표시와 DOI 인용 필수
+account_required: true
+
+summary: >-
+  Mercator Ocean International이 Copernicus Marine Service를 위해 만든 1/12° 해상도의 전지구 해양·해빙 재분석입니다.
+  NEMO 해양 모델에 위성 고도계, 위성 해수면온도, 해빙 농도, 현장 수온·염분 관측을 동화했습니다.
+  중규모 소용돌이를 직접 분해하는 해상도라 경계류, 연안 순환, 해양 열파 같은 연구에 많이 쓰입니다.
+  1993년(위성 고도계 시대 시작)부터 제공됩니다.
+
+variables:
+  note: 공식 Product User Manual(PUM) 기준 주요 변수입니다. 변수명은 NetCDF 파일 안의 이름(short name)입니다.
+  full_list: https://documentation.marine.copernicus.eu/PUM/CMEMS-GLO-PUM-001-030.pdf
+  groups:
+    - name: 3차원 해양 (50층)
+      items:
+        - "잠재수온 — `thetao` (°C)"
+        - "염분 — `so` (1e-3, 실용염분)"
+        - "동서 방향 해류 — `uo` (m/s)"
+        - "남북 방향 해류 — `vo` (m/s)"
+    - name: 2차원 해양
+      items:
+        - "해수면 높이(지오이드 기준) — `zos` (m)"
+        - "혼합층 두께(포텐셜 밀도 기준) — `mlotst` (m)"
+        - "해저면 잠재수온 — `bottomT` (°C)"
+    - name: 해빙
+      items:
+        - "해빙 농도 — `siconc` (비율, 0~1)"
+        - "해빙 두께 — `sithick` (m)"
+        - "해빙 동서 방향 속도 — `usi` (m/s)"
+        - "해빙 남북 방향 속도 — `vsi` (m/s)"
+    - name: 고정장(static)
+      items:
+        - "해저 수심 — `deptho` (m)"
+        - "평균 역학 지형 — `mdt` (m)"
+        - "육지·해양 마스크 — `mask`"
+
+access:
+  - name: Copernicus Marine Data Store — 제품 페이지
+    url: https://data.marine.copernicus.eu/product/GLOBAL_MULTIYEAR_PHY_001_030/description
+    method: 웹 다운로드(Subset·File Browser) / Copernicus Marine Toolbox(copernicusmarine)
+    note: >-
+      무료 Copernicus Marine 계정이 필요합니다. 데이터셋 ID는 일평균 cmems_mod_glo_phy_my_0.083deg_P1D-m,
+      월평균 cmems_mod_glo_phy_my_0.083deg_P1M-m 입니다.
+  - name: Copernicus Marine Toolbox 문서
+    url: https://toolbox-docs.marine.copernicus.eu/en/stable/
+    method: Python / 명령줄(CLI)
+    note: 지역·깊이·기간을 잘라 받는 subset, 원본 파일을 통째로 받는 get 기능을 제공합니다. 현재 지원 버전은 2.x입니다.
+
+example:
+  lang: python
+  note: "pip install copernicusmarine 으로 설치한 뒤, 처음 한 번 login()으로 계정 정보를 저장하고 실행합니다. 공식 도움말의 예시를 바탕으로 했습니다."
+  code: |
+    import copernicusmarine
+
+    # 처음 한 번만 실행 (자격 증명이 로컬에 저장됨)
+    # copernicusmarine.login(username="<아이디>", password="<비밀번호>")
+
+    copernicusmarine.subset(
+        dataset_id="cmems_mod_glo_phy_my_0.083deg_P1D-m",
+        variables=["thetao", "so"],
+        minimum_longitude=120,
+        maximum_longitude=135,
+        minimum_latitude=30,
+        maximum_latitude=45,
+        start_datetime="2020-01-01",
+        end_datetime="2020-01-31",
+        minimum_depth=0,
+        maximum_depth=100,
+        output_filename="glorys12_eastsea_202001.nc",
+        output_directory="copernicus-data",
+    )
+
+tips:
+  - "2025년 11월 interim 데이터셋(cmems_mod_glo_phy_myint_0.083deg_P1D-m, ..._P1M-m)이 폐지되고 my 데이터셋에 합쳐졌습니다. 예전 스크립트에 myint ID가 남아 있다면 my ID로 바꾸세요."
+  - Copernicus Marine Toolbox 1.x는 2025년 7월로 지원이 끝났습니다. 2.x로 올리고, 2.4 이상은 Python 3.10 이상이 필요합니다.
+  - 2021년 7월 이후 구간은 interim 방식으로 생산된 자료라 그 이전과 생산 조건이 다릅니다. 장기 추세를 계산할 때는 이 경계에서 불연속이 없는지 한 번 확인하세요.
+  - 1/12° 3차원 일자료는 금방 수백 MB~GB 단위가 됩니다. subset으로 지역·깊이·변수를 꼭 필요한 만큼만 잘라 받는 것이 좋습니다.
+
+citations:
+  dataset:
+    - label: 제품(product) DOI
+      text: >-
+        Global Ocean Physics Reanalysis. E.U. Copernicus Marine Service Information (CMEMS).
+        Marine Data Store (MDS). DOI: 10.48670/moi-00021 (Accessed on DD MMM YYYY)
+      doi: 10.48670/moi-00021
+      bibtex: |
+        @misc{cmems_glorys12,
+          author    = {{E.U. Copernicus Marine Service Information (CMEMS)}},
+          title     = {Global Ocean Physics Reanalysis ({GLOBAL\_MULTIYEAR\_PHY\_001\_030})},
+          year      = {2018},
+          publisher = {Mercator Ocean International, Marine Data Store (MDS)},
+          doi       = {10.48670/moi-00021},
+          note      = {Accessed on DD MMM YYYY}
+        }
+  papers:
+    - label: GLORYS12 기술 논문
+      text: >-
+        Lellouche, J.-M., Greiner, E., Bourdallé-Badie, R., Garric, G., Melet, A., Drévillon, M., Bricaud, C.,
+        Hamon, M., Le Galloudec, O., Regnier, C., Candela, T., Testut, C.-E., Gasparin, F., Ruggiero, G.,
+        Benkiran, M., Drillet, Y., Le Traon, P.-Y. (2021): The Copernicus Global 1/12° Oceanic and Sea Ice
+        GLORYS12 Reanalysis. Frontiers in Earth Science, 9, 698876.
+      doi: 10.3389/feart.2021.698876
+      bibtex: |
+        @article{lellouche2021glorys12,
+          author  = {Lellouche, Jean-Michel and Greiner, Eric and Bourdall{\'e}-Badie, Romain and Garric, Gilles and Melet, Ang{\'e}lique and Dr{\'e}villon, Marie and Bricaud, Cl{\'e}ment and Hamon, Mathieu and Le Galloudec, Olivier and Regnier, Charly and Candela, Tony and Testut, Charles-Emmanuel and Gasparin, Florent and Ruggiero, Giovanni and Benkiran, Mounir and Drillet, Yann and Le Traon, Pierre-Yves},
+          title   = {The {Copernicus} Global 1/12$^\circ$ Oceanic and Sea Ice {GLORYS12} Reanalysis},
+          journal = {Frontiers in Earth Science},
+          volume  = {9},
+          pages   = {698876},
+          year    = {2021},
+          doi     = {10.3389/feart.2021.698876}
+        }
+  acknowledgement: >-
+    Copernicus Marine는 사사에 "This study has been conducted using E.U. Copernicus Marine Service Information;"
+    뒤에 사용한 제품 DOI(10.48670/moi-00021)를 붙이는 문구를 권장합니다. 데이터셋 ID 자체에는 DOI가 없으므로 제품 DOI를 인용합니다.
+
+notices:
+  - date: "2026-04-28"
+    level: info
+    title: ARCO 데이터큐브에 보존 기간(retention) 적용 예정
+    body: >-
+      Copernicus Marine가 제품 설명서에 정해진 보존 기간을 일부 ARCO 데이터큐브에 적용한다고 알렸습니다.
+      영향을 받는 데이터셋은 Subset 화면, Toolbox subset, MyOcean Viewer에서 시계열 시작일이 늦어질 수 있습니다.
+      원본 파일(File Browser, copernicusmarine get)은 영향이 없습니다. 대상 제품 목록은 공지에 나와 있지 않습니다.
+    source: https://marine.copernicus.eu/user-corner/user-notification-service
+  - date: "2025-11"
+    level: warning
+    title: interim(myint) 데이터셋 폐지 — my 데이터셋으로 통합
+    body: >-
+      cmems_mod_glo_phy_myint_0.083deg_P1D-m 과 cmems_mod_glo_phy_myint_0.083deg_P1M-m 이 폐지되고,
+      그 자료가 cmems_mod_glo_phy_my_0.083deg_P1D-m / _P1M-m 으로 옮겨졌습니다. myint ID를 쓰는 코드는 수정해야 합니다.
+    source: https://marine.copernicus.eu/user-corner/product-roadmap/transition-information?product=GLOBAL_MULTIYEAR_PHY_001_030
+  - date: "2025-07"
+    level: warning
+    title: Copernicus Marine Toolbox 1.x 지원 종료
+    body: Toolbox 1.x(마지막 1.3.6)의 지원이 끝났습니다. 2.x로 업그레이드해야 하며, 2.4.0부터 Python 3.9 지원이 빠졌습니다.
+    source: https://toolbox-docs.marine.copernicus.eu/en/stable/end-of-life.html
+  - date: "2024-11"
+    level: info
+    title: interim 자료 매월 연장(M-1)으로 변경
+    body: interim 자료가 매달 실시간 쪽으로 연장되도록 바뀌었습니다(당시 약 4개월 지연에서 단축).
+    source: https://marine.copernicus.eu/user-corner/product-roadmap/transition-information?product=GLOBAL_MULTIYEAR_PHY_001_030
+  - date: "2023-11"
+    level: info
+    title: 2021~2022년 연장, interim 데이터셋 신설, 데이터셋 이름 변경
+    body: >-
+      정식 multi-year 자료가 2021년 6월까지 연장되고, 2021년 7월 이후는 매달 생산하는 interim 데이터셋으로 제공되기 시작했습니다.
+      이때 여러 데이터셋의 이름도 바뀌었습니다.
+    source: https://marine.copernicus.eu/user-corner/product-roadmap/transition-information?product=GLOBAL_MULTIYEAR_PHY_001_030
+
+links:
+  - name: Copernicus Marine 제품 페이지 (GLOBAL_MULTIYEAR_PHY_001_030)
+    url: https://data.marine.copernicus.eu/product/GLOBAL_MULTIYEAR_PHY_001_030/description
+  - name: Product User Manual (PUM)
+    url: https://documentation.marine.copernicus.eu/PUM/CMEMS-GLO-PUM-001-030.pdf
+  - name: Quality Information Document (QUID)
+    url: https://documentation.marine.copernicus.eu/QUID/CMEMS-GLO-QUID-001-030.pdf
+  - name: Copernicus Marine 인용 방법 안내
+    url: https://help.marine.copernicus.eu/en/articles/4444611-how-to-cite-or-reference-copernicus-marine-products-and-services
+  - name: Toolbox subset 사용법 (공식 도움말)
+    url: https://help.marine.copernicus.eu/en/articles/8283072-copernicus-marine-toolbox-api-subset
+
+watch_urls:
+  - https://marine.copernicus.eu/user-corner/product-roadmap/transition-information?product=GLOBAL_MULTIYEAR_PHY_001_030
+  - https://marine.copernicus.eu/user-corner/user-notification-service
+  - https://data.marine.copernicus.eu/product/GLOBAL_MULTIYEAR_PHY_001_030/notifications
+
+last_verified: "2026-10-11"

@@ -1,0 +1,287 @@
+# ─────────────────────────────────────────────────────────────
+# NOAA/NSIDC 해빙 농도 CDR — 데이터셋 정보 파일
+# G02202(최종 CDR) + G10016(준실시간 CDR)
+# ─────────────────────────────────────────────────────────────
+id: nsidc-cdr-sic
+name: NOAA/NSIDC 해빙 농도 CDR
+full_name: NOAA/NSIDC Climate Data Record of Passive Microwave Sea Ice Concentration (G02202, Version 6) / Near-Real-Time (G10016, Version 4)
+category: satellite
+domain: seaice
+group: 위성 관측 자료
+order: 20
+domains: [해빙, 해양]
+provider: NOAA NCEI 기후자료기록(CDR) 프로그램 / 미국 국립빙설자료센터(NSIDC)
+
+status: active
+status_note: >-
+  정상 제공 중입니다. 2026년 1월 15일 Version 6이 나오면서 2025년 1월 1일 이후 입력이 DMSP SSMIS에서 JAXA AMSR2로 바뀌었습니다.
+  이전 버전(CDR V5, 준실시간 V3)은 2026년 6월 접근이 종료되었으니, 예전 경로를 쓰는 스크립트는 V6/V4 경로로 바꿔야 합니다.
+  DMSP 임무 종료(2026년 9월 예정)는 V6 이후 갱신에 직접 영향을 주지 않습니다.
+
+transitions:
+  - from: NOAA/NSIDC CDR Version 5 (G02202 V5) / 준실시간 V3 (G10016 V3)
+    to: NOAA/NSIDC CDR Version 6 (G02202 V6) / 준실시간 V4 (G10016 V4)
+    status: completed
+    date: "2026-01"
+    summary: >-
+      DMSP SSMIS의 노후화와 자료 공급 불안에 대비해 2025-01-01 이후 입력 밝기온도를 JAXA AMSR2로 바꾼 버전입니다.
+      격자·변수 구성은 V5와 거의 같지만, V5에 따로 들어 있던 AMSR2 시험 그룹이 사라지고 해안 오염 보정 오류가 고쳐졌습니다.
+      1978~2024년 값의 차이는 매우 작으나 V5는 2026년 6월 접근이 종료되어 전체 기록을 V6로 다시 받아야 합니다.
+    changes:
+      - aspect: 기간
+        before: "1978-10-25 ~ 2024-12-31 (V5 최종 갱신은 2024년 말 구간까지)"
+        after: "1978-10-25 ~ 현재 (최종 CDR 약 3주 지연, 그 이후는 준실시간 V4)"
+      - aspect: 2025년 이후 입력 센서
+        before: "DMSP-F17 SSMIS (2008-01-01부터)"
+        after: "GCOM-W1 AMSR2 (2025-01-01부터). 18.7·23.8·36.5 GHz 채널 사용, 원래 12.5 km 자료를 25 km 격자로 재격자"
+      - aspect: 센서 간 맞춤
+        before: "SSMIS 기준 tie-point·회귀식으로 이전 센서와 상호 보정"
+        after: "AMSR2에 위치별로 달라지는 해빙/바다 판정 문턱값(Seki et al. 2024 방법 응용)을 적용해 남은 반구 범위 편향 제거. 2023~2024 중복 기간 SSMIS와의 차이는 자료 불확실성 범위 안"
+      - aspect: 알고리즘 오류 수정
+        before: "해안 육지 오염(land spillover) 보정 때 10% 미만 농도 값도 계산에 포함되는 오류"
+        after: "오류 수정 — 해빙 범위가 약간 늘며 주로 SMMR 구간(1978~1987)에서 나타남. Python 라이브러리(NumPy, Xarray) 갱신에 따른 미세한 반올림 차이도 있음"
+      - aspect: 1978~2024년 값 차이 (V6 − V5 해빙 범위)
+        before: "V5 값"
+        after: "평균 차이 북반구 0.00066, 남반구 0.0010 백만 km² / 일 최대 차이 북반구 0.022, 남반구 0.078 백만 km² (NSIDC Special Report 29)"
+      - aspect: AMSR2 시험 자료
+        before: "prototype_am2 그룹(2013년~)에 `am2_seaice_conc`, `am2_seaice_conc_stdev`, `am2_seaice_conc_qa_flag` 등 별도 제공"
+        after: "prototype_am2 그룹 삭제 — AMSR2는 2025년부터 본 CDR 변수(`cdr_seaice_conc` 등)에 직접 들어감"
+      - aspect: 변수 이름·그룹 구조
+        before: "V5에서 정리된 구조: 기본 그룹 `cdr_seaice_conc`·`cdr_seaice_conc_stdev`·QA·보간 플래그, cdr_supplementary 그룹 `raw_bt_seaice_conc`·`raw_nt_seaice_conc`·`surface_type_mask`·`cdr_melt_onset_day` (V4의 `nsidc_bt_seaice_conc`·`nsidc_nt_seaice_conc`는 V5에서 이 구조로 바뀜)"
+        after: "V5와 같은 이름·그룹 구조 유지 (prototype_am2 그룹만 삭제)"
+      - aspect: 북극점 관측 공백
+        before: "SSMIS F17 — 89.02°N 이북, 0.0292 백만 km²"
+        after: "2025년 이후 AMSR2 — 88.5°N 이북, 0.064 백만 km² (보간으로 채움)"
+      - aspect: 파일 이름
+        before: "sic_ps[n|s]25_[날짜]_F17_[버전].nc (2008~2024)"
+        after: "2025년 이후 위성 코드가 am2로 바뀜: sic_ps[n|s]25_[날짜]_am2_[버전].nc"
+      - aspect: 받는 곳·DOI
+        before: "G02202 V5, DOI 10.7265/rjzb-pf78 / 준실시간 V3, DOI 10.7265/j0z0-4h87"
+        after: "https://noaadata.apps.nsidc.org/NOAA/G02202_V6/, DOI 10.7265/b18j-z797 / 준실시간 V4 https://noaadata.apps.nsidc.org/NOAA/G10016_V4/, DOI 10.7265/tm2n-1m33"
+      - aspect: 준실시간 판 입력
+        before: "V3 — SSMIS 기반 + AMSR2 시험 그룹(2025-09-01 AMSR2 시험 자료 중단)"
+        after: "V4 — 2025-01-01부터 AMSR2 입력, V6와 같은 코드 사용"
+      - aspect: 이전 버전 지원
+        before: "V5·준실시간 V3 — 2026-01-15부터 갱신 중단"
+        after: "2026-06-17 V5·V3 접근 종료, V6·V4만 제공"
+    impacts:
+      - 예전에 받은 V5 파일은 더 이상 공식 배포되지 않으므로, 새 분석은 1978년부터 전체 기록을 V6로 다시 받아 쓰세요. V5와 V6를 한 시계열에 섞지 마세요.
+      - 2025-01-01을 경계로 입력 센서가 SSMIS에서 AMSR2로 바뀝니다. NSIDC는 차이가 불확실성 범위 안이라고 밝혔지만, 2025년 전후를 비교하는 이상치·추세 분석에서는 센서 교체 시점을 명시하고 민감도를 점검하세요.
+      - "`prototype_am2` 그룹을 읽던 스크립트와 파일명에 `F17`을 고정해 둔 스크립트는 2025년 이후 자료에서 실패합니다. 기본 CDR 변수와 `am2` 위성 코드로 바꾸세요."
+      - SMMR 구간(1978~1987)은 해안 보정 오류 수정으로 해빙 범위가 V5보다 조금 커졌습니다. 1980년대 기준 기후값이나 장기 추세를 V5 결과와 비교할 때 이 차이를 감안하세요.
+      - 인용 DOI가 바뀌었습니다. 논문에는 V6(10.7265/b18j-z797)와, 최근 기간을 준실시간판으로 채웠다면 V4(10.7265/tm2n-1m33)를 함께 적으세요.
+    sources:
+      - name: NSIDC 공지 — CDR Version 6·준실시간 Version 4 공개 (2026-01-15)
+        url: https://nsidc.org/data/user-resources/data-announcements/new-version-release-noaansidc-sea-ice-concentration-data-records-cdr-version-6-and-near-real-time
+      - name: NSIDC Special Report 29 — CDR Version 6 Updates (Windnagel, Meier, Fetterer, 2026)
+        url: https://nsidc.org/sites/default/files/documents/other/nsidc-special-report-29.pdf
+      - name: G02202 V6 사용자 가이드
+        url: https://nsidc.org/sites/default/files/documents/user-guide/g02202-v006-userguide.pdf
+      - name: G02202 V5 사용자 가이드
+        url: https://nsidc.org/sites/default/files/documents/user-guide/g02202-v005-userguide.pdf
+      - name: G10016 V4 사용자 가이드
+        url: https://nsidc.org/sites/default/files/documents/user-guide/g10016-v004-userguide.pdf
+      - name: NOAA@NSIDC 자료 갱신 내역 (V5·V3 퇴역 2026-06-17)
+        url: https://nsidc.org/data/data-programs/noaa-nsidc/data-updates
+
+period:
+  start: "1978-10"
+  end: present
+  note: >-
+    일자료는 1978-10-25, 월자료는 1978-11부터 시작합니다. 최종 CDR(G02202)은 약 3주 늦게 따라오며, 그 사이와 최근 약 3개월은
+    준실시간 CDR(G10016)이 채웁니다. 1987년 12월 초~1988년 1월 중순은 위성 문제로 자료가 없습니다.
+
+resolution:
+  spatial: "25 km NSIDC 극 평사도법 격자(북반구 EPSG:3411, 448×304 / 남반구 EPSG:3412), 70° 위도에서 실제 축척"
+  vertical: 해당 없음 (지표면 자료)
+  temporal: 일·월
+
+update: 최종 CDR은 자료가 쌓이는 대로 갱신(약 3주 지연), 준실시간 CDR은 매일 갱신(최근 약 3개월분 제공)
+license: 공개 자료(NOAA). 데이터셋 인용이 이용 조건이며, 사용한 부분(기간·반구)을 인용문에 함께 적도록 권고
+account_required: false
+
+summary: >-
+  NOAA CDR 프로그램의 일환으로 NSIDC가 만드는 1978년 이후 북·남반구 해빙 농도 기후자료입니다.
+  NASA Team과 Bootstrap 두 알고리즘 결과를 결합해 CDR 농도를 만들고, 두 알고리즘의 차이를 불확실성 지표(표준편차)로 함께 제공합니다.
+  SMMR, SSM/I, SSMIS에 이어 2025년부터는 AMSR2 밝기온도를 입력으로 써서, 같은 25 km 극 평사도 격자 위에서 기록을 이어 갑니다.
+  NSIDC Sea Ice Index의 기반 자료와 같은 계열이라 북극·남극 해빙 면적·범위 연구에 널리 쓰입니다.
+
+variables:
+  note: >-
+    V6 사용자 가이드 기준 일자료 변수입니다. 농도는 0~100 바이트로 저장되며 scale_factor 0.01이 적용되어 보통 0~1 비율로 읽힙니다.
+    보조 변수는 cdr_supplementary 그룹 안에 있습니다. 월자료는 `cdr_seaice_conc_monthly`, `cdr_seaice_conc_monthly_stdev`, `cdr_seaice_conc_monthly_qa` 이름을 씁니다.
+    V4의 `nsidc_bt_seaice_conc`·`nsidc_nt_seaice_conc`는 V5부터 `raw_bt_seaice_conc`·`raw_nt_seaice_conc`로 바뀌었습니다.
+  full_list: https://nsidc.org/sites/default/files/documents/user-guide/g02202-v006-userguide.pdf
+  groups:
+    - name: 해빙 농도 (기본 그룹)
+      items:
+        - "CDR 해빙 농도 — `cdr_seaice_conc` (무차원, 0–1)"
+        - "CDR 농도 표준편차(불확실성 지표) — `cdr_seaice_conc_stdev` (무차원, 0–1)"
+    - name: 품질·보간 플래그 (기본 그룹)
+      items:
+        - "QA 비트 플래그(기상 필터, 해안 보정, 결측, 보간, 융빙 시작 등) — `cdr_seaice_conc_qa_flag` (비트값)"
+        - "공간 보간 플래그 — `cdr_seaice_conc_interp_spatial_flag` (비트값)"
+        - "시간 보간 플래그 — `cdr_seaice_conc_interp_temporal_flag` (비트값)"
+    - name: 보조 변수 (cdr_supplementary 그룹)
+      items:
+        - "Bootstrap 알고리즘 원시 농도 — `raw_bt_seaice_conc` (무차원, 0–2.54)"
+        - "NASA Team 알고리즘 원시 농도 — `raw_nt_seaice_conc` (무차원, 0–2.54)"
+        - "융빙 시작일(북반구) — `cdr_melt_onset_day` (연중 일수)"
+        - "지표 유형 마스크(바다 50, 호수 75, 극 관측공백 100, 해안 200, 육지 250) — `surface_type_mask` (코드값)"
+
+access:
+  - name: NSIDC 데이터셋 페이지 — G02202 Version 6 (최종 CDR)
+    url: https://nsidc.org/data/g02202/versions/6
+    method: 웹 안내 / HTTPS 디렉터리 다운로드
+    note: 사용자 가이드, C-ATBD, 버전 변경 보고서(Special Report 29), 갱신 알림 메일 신청 양식이 있습니다.
+  - name: NOAA@NSIDC HTTPS 저장소 — G02202_V6
+    url: https://noaadata.apps.nsidc.org/NOAA/G02202_V6/
+    method: HTTPS (브라우저, wget, Python/R 스크립트)
+    note: 로그인 없이 받을 수 있습니다. north/south 폴더 아래 일·월 파일이 나뉘어 있고, 연별 일자료 묶음 파일도 있습니다.
+  - name: NSIDC 데이터셋 페이지 — G10016 Version 4 (준실시간 CDR)
+    url: https://nsidc.org/data/g10016/versions/4
+    method: 웹 안내 / HTTPS (https://noaadata.apps.nsidc.org/NOAA/G10016_V4/)
+    note: 최근 약 3개월만 보관하는 예비 자료입니다. 최종 CDR이 나오면 그 구간은 G02202로 바꿔 쓰세요.
+  - name: NOAA NCEI Sea Ice Concentration CDR 페이지
+    url: https://www.ncei.noaa.gov/products/climate-data-records/sea-ice-concentration
+    method: 웹 안내 (문서·소스코드·성숙도 평가표)
+  - name: NOAA PolarWatch에서 NSIDC 자료 받기 (도움말)
+    url: https://nsidc.org/data/user-resources/help-center/how-access-noaansidc-data-sets-polarwatch
+    method: ERDDAP (부분 추출·형식 변환)
+    note: PolarWatch에 올라간 버전이 V6인지 데이터셋 ID에서 먼저 확인하세요.
+
+example:
+  lang: bash
+  note: 로그인 없이 HTTPS로 받습니다. 파일명 규칙은 sic_ps<n|s>25_<YYYYMMDD>_<위성코드>_<vXXrXX>.nc 형식(위성코드 예 F17, am2)이므로 정확한 이름은 디렉터리 목록에서 확인하세요.
+  code: |
+    # 북반구 V6 일자료 디렉터리를 통째로 내려받기 (필요한 연도 폴더만 지정 권장)
+    wget -r -np -nH --cut-dirs=3 -A "*.nc" -e robots=off \
+      https://noaadata.apps.nsidc.org/NOAA/G02202_V6/north/daily/
+
+    # Python에서 열 때는 보조 변수 그룹을 따로 지정
+    # xr.open_dataset(f)                               -> cdr_seaice_conc 등
+    # xr.open_dataset(f, group="cdr_supplementary")    -> raw_bt_seaice_conc 등
+
+tips:
+  - >-
+    같은 날짜를 최종 CDR(G02202)과 준실시간 CDR(G10016) 양쪽에서 받으면 값이 다를 수 있습니다. 준실시간판은 일부 품질 관리와 시간 보간이
+    빠진 예비 자료이므로, 논문 분석은 최종 CDR로 하고 최근 몇 주만 준실시간판으로 채운 뒤 나중에 교체하세요.
+  - >-
+    2025년 1월 1일부터 입력 센서가 SSMIS(F17)에서 AMSR2로 바뀌었습니다. NSIDC는 AMSR2를 SSMIS에 맞춰 보정해 차이가 자료 불확실성 범위 안이라고
+    밝혔지만, 2025년 전후를 비교하는 추세·이상치 분석에서는 센서 교체 시점을 명시해 두는 것이 안전합니다.
+  - >-
+    북극점 관측 공백(pole hole)은 보간으로 채워져 있고 surface_type_mask에서 100으로 표시됩니다. 센서마다 크기가 달라(SMMR 84.1°N, SSM/I 86.7°N,
+    SSMIS 89.0°N, AMSR2 88.5°N 이북) 늦여름·초가을 추세나 기후값 계산에 영향을 줄 수 있습니다.
+  - >-
+    이 극 평사도 격자는 등적 격자가 아니어서 셀마다 실제 면적이 다릅니다. 해빙 면적을 직접 계산할 때 25 km × 25 km를 그대로 곱하지 말고
+    위도에 따른 셀 면적을 반영하세요.
+
+citations:
+  dataset:
+    - label: 최종 CDR — G02202 Version 6
+      text: >-
+        Meier, W. N., Fetterer, F., Windnagel, A. K., Stewart, J. S. & Stafford, T. (2026). NOAA/NSIDC Climate Data Record of
+        Passive Microwave Sea Ice Concentration. (G02202, Version 6). [Data Set]. Boulder, Colorado USA. National Snow and Ice Data Center.
+        https://doi.org/10.7265/b18j-z797. [describe subset used if applicable]. Date Accessed MM-DD-YYYY.
+      doi: 10.7265/b18j-z797
+      bibtex: |
+        @misc{nsidc_g02202_v6,
+          author    = {Meier, W. N. and Fetterer, F. and Windnagel, A. K. and Stewart, J. S. and Stafford, T.},
+          title     = {{NOAA/NSIDC} Climate Data Record of Passive Microwave Sea Ice Concentration ({G02202}, Version 6)},
+          year      = {2026},
+          publisher = {National Snow and Ice Data Center},
+          address   = {Boulder, Colorado USA},
+          doi       = {10.7265/b18j-z797}
+        }
+    - label: 준실시간 CDR — G10016 Version 4
+      text: >-
+        Meier, W. N., Fetterer, F., Windnagel, A. K., Stewart, J. S. & Stafford, T. (2026). Near-Real-Time NOAA/NSIDC Climate Data Record
+        of Passive Microwave Sea Ice Concentration. (G10016, Version 4). [Data Set]. Boulder, Colorado USA. National Snow and Ice Data Center.
+        https://doi.org/10.7265/tm2n-1m33. Date Accessed MM-DD-YYYY.
+      doi: 10.7265/tm2n-1m33
+  papers:
+    - label: CDR 구축 방법 논문
+      text: >-
+        Peng, G., Meier, W. N., Scott, D. J., and Savoie, M. H. (2013): A long-term and reproducible passive microwave sea ice
+        concentration data record for climate studies and monitoring. Earth System Science Data, 5, 311–318.
+      doi: 10.5194/essd-5-311-2013
+      bibtex: |
+        @article{peng2013cdr,
+          author  = {Peng, G. and Meier, W. N. and Scott, D. J. and Savoie, M. H.},
+          title   = {A long-term and reproducible passive microwave sea ice concentration data record for climate studies and monitoring},
+          journal = {Earth System Science Data},
+          volume  = {5},
+          number  = {2},
+          pages   = {311--318},
+          year    = {2013},
+          doi     = {10.5194/essd-5-311-2013}
+        }
+    - label: CDR 검증 논문 (선택)
+      text: >-
+        Meier, W. N., Peng, G., Scott, D. J., and Savoie, M. H. (2014): Verification of a new NOAA/NSIDC passive microwave
+        sea-ice concentration climate record. Polar Research, 33.
+      doi: 10.3402/polar.v33.21004
+    - label: AMSR2 해빙 농도 운영 구현 논문 (선택, 2025년 이후 입력 관련)
+      text: >-
+        Meier, W. N., Stewart, J. S., Liu, Y., Key, J., and Miller, J. A. (2017): An operational implementation of sea ice
+        concentration estimates from the AMSR2 sensor. IEEE Journal of Selected Topics in Applied Earth Observations and Remote Sensing, 10(9).
+      doi: 10.1109/JSTARS.2017.2693120
+  acknowledgement: >-
+    NSIDC는 데이터셋 인용을 이용 조건으로 요구합니다. 사용한 버전(V6)과 DOI, 사용한 기간·반구, 접근 날짜를 함께 적으세요.
+    알고리즘을 자세히 다룬다면 C-ATBD(Rev. 12)도 인용 대상으로 권고됩니다.
+
+notices:
+  - date: "2026-06-17"
+    level: critical
+    title: CDR V5·준실시간 V3 접근 종료
+    body: >-
+      해빙 농도 CDR Version 5와 준실시간 CDR Version 3이 퇴역해 다운로드가 막혔습니다. 예전 경로(G02202_V5, G10016_V3)를 쓰는
+      스크립트는 V6(G02202_V6)·V4(G10016_V4)로 바꿔야 합니다.
+    source: https://nsidc.org/data/data-programs/noaa-nsidc/data-updates
+  - date: "2026-01-15"
+    level: warning
+    title: CDR Version 6·준실시간 Version 4 공개 — 2025년부터 AMSR2 입력
+    body: >-
+      2025-01-01부터 AMSR2 밝기온도를 입력으로 추가했고, V5에 있던 AMSR2 시험 그룹(prototype_am2)을 없앴으며,
+      해안 오염 보정 때 10% 미만 값이 섞이던 오류를 고쳤습니다. 수정으로 V6 해빙 범위가 V5보다 약간 커졌으며 주로 SMMR 구간에서 나타납니다.
+      V5·V3은 이날부터 갱신이 멈췄습니다.
+    source: https://nsidc.org/data/user-resources/data-announcements/new-version-release-noaansidc-sea-ice-concentration-data-records-cdr-version-6-and-near-real-time
+  - date: "2025-08-06"
+    level: info
+    title: 준실시간 V3, SSMIS 처리 계속 (DMSP 임무 종료 예정 2026년 9월까지)
+    body: >-
+      미 국방부가 DMSP 임무 종료(2026년 9월 예상) 때까지 SSMIS 자료 전달을 이어 가기로 하면서 준실시간 V3 갱신이 재개·유지되었습니다.
+      다만 2025년 봄부터 생긴 SSMIS 자료 공백은 계속될 수 있다고 안내되었고, 이후 V6/V4에서 AMSR2로 전환되었습니다.
+    source: https://nsidc.org/data/user-resources/data-announcements/user-notice-noaansidc-sea-ice-concentration-near-real-time-cdr-version-3-will-continue-ssmis-data
+  - date: "2025-06-25"
+    level: warning
+    title: SSMIS 자료 중단 예고 — 준실시간 CDR·Sea Ice Index 처리 중단 (이후 철회)
+    body: >-
+      미 국방부가 2025-06-30까지 SSMIS 처리·배포를 멈춘다고 통보해, 준실시간 CDR과 Sea Ice Index가 그 이후 처리 중단될 예정이라고 공지되었습니다.
+      직후(6-30) 제공이 7월 말까지 연장되었고, 8월에는 DMSP 임무 종료 때까지 계속 제공하기로 바뀌었습니다.
+    source: https://nsidc.org/data/user-resources/data-announcements/user-notice-ssmis-data-discontinuation-affecting-sea-ice-index-and-sea-ice-cdr-effective-30-june
+  - date: "2025-06-04"
+    level: info
+    title: SSMIS 자료 전달 불안정 — 일별 결측 가능
+    body: >-
+      미 해군의 SSMIS 자료 전달이 불규칙해져 SSMIS를 입력으로 쓰는 여러 NSIDC 산출물에 일별 결측이 생길 수 있다고 안내되었습니다.
+    source: https://nsidc.org/data/user-resources/data-announcements/user-notice-degraded-ssmis-data-delivery-affecting-data-products
+
+links:
+  - name: G02202 V6 사용자 가이드
+    url: https://nsidc.org/sites/default/files/documents/user-guide/g02202-v006-userguide.pdf
+  - name: NSIDC Special Report 29 — V6 변경 사항
+    url: https://nsidc.org/sites/default/files/documents/other/nsidc-special-report-29.pdf
+  - name: C-ATBD (Rev. 12, 해빙 농도 V6)
+    url: https://nsidc.org/sites/default/files/documents/technical-reference/cdrp-atbd-rev12-sea-ice-concentration-final.pdf
+  - name: NASA Team과 Bootstrap 알고리즘 차이 (NSIDC 도움말)
+    url: https://nsidc.org/data/user-resources/help-center/descriptions-and-differences-between-nasa-team-and-bootstrap-algorithms
+  - name: NOAA@NSIDC 자료 갱신 내역
+    url: https://nsidc.org/data/data-programs/noaa-nsidc/data-updates
+
+watch_urls:
+  - https://nsidc.org/data/data-programs/noaa-nsidc/data-updates
+  - https://nsidc.org/data/user-resources/data-announcements
+  - https://nsidc.org/data/g02202/versions/6
+
+last_verified: "2026-10-11"

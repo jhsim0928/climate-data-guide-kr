@@ -1,0 +1,233 @@
+# ─────────────────────────────────────────────────────────────
+# JRA-25 — 데이터셋 정보 파일
+# ─────────────────────────────────────────────────────────────
+id: jra25
+name: JRA-25
+full_name: Japanese 25-year Reanalysis (일본 기상청·전력중앙연구소 25년 재분석, 연장분 JCDAS 포함)
+category: reanalysis
+domain: atmosphere
+group: 재분석
+order: 110
+domains: [대기, 육지]
+provider: 일본 기상청 (JMA) · 전력중앙연구소 (CRIEPI)
+
+status: ended
+status_note: >-
+  JMA의 JRA-25·JCDAS 자료 제공은 2014년 2월에 끝났고, JRA-55로 대체되었습니다.
+  JMA에서는 더 이상 받을 수 없지만 NCAR GDEX(d625000)에 1979년~2014년 1월 자료가 남아 있습니다.
+  옛 논문을 재현하는 경우가 아니라면 JRA-3Q(현역) 또는 JRA-55를 쓰세요.
+
+successor:
+  name: JRA-55
+  url: https://gdex.ucar.edu/datasets/d628000/
+  note: >-
+    1958년~2024년 1월, TL319(약 55 km)·60층, 4D-Var. JRA-55도 2024년 1월 말 갱신이 끝났으므로,
+    최근 기간까지 필요하다면 그 후속인 JRA-3Q(1947년 9월~현재, https://gdex.ucar.edu/datasets/d640000/)를 쓰세요.
+
+transitions:
+  - from: JRA-25
+    to: JRA-55
+    to_id: jra55
+    status: completed
+    date: "2014-02"
+    summary: >-
+      JMA가 자료동화를 3D-Var에서 4D-Var로 바꾸고 해상도를 두 배 가까이 높여 1958년부터 다시 만든 2세대 재분석입니다.
+      JRA-55 공개가 끝난 뒤 2014년 2월 JRA-25·JCDAS 제공이 종료되었습니다. JRA-55 역시 2024년 1월에 끝났으므로,
+      지금 새로 옮겨 간다면 JRA-3Q까지 함께 검토하세요.
+    changes:
+      - aspect: 기간
+        before: "1979-01 ~ 2004-12 (2005년부터 JCDAS로 실시간 연장, 2014-01까지)"
+        after: "1958-01 ~ 2024-01 (준실시간 연장 포함)"
+      - aspect: 기반 현업 체계
+        before: "2004년 3월 기준 JMA 현업 체계"
+        after: "2009년 12월 기준 JMA 현업 체계"
+      - aspect: 수평 해상도
+        before: "T106 (약 110 km)"
+        after: "TL319 (약 55 km)"
+      - aspect: 연직 층수·모델 상단
+        before: "40층, 상단 0.4 hPa"
+        after: "60층, 상단 0.1 hPa"
+      - aspect: 역학 코어 시간 적분
+        before: "오일러(Eulerian) 방식"
+        after: "준라그랑지(semi-Lagrangian) 방식"
+      - aspect: 자료동화
+        before: "3D-Var"
+        after: "4D-Var (내부 루프 T106) — 이 기간 전체에 4D-Var를 쓴 첫 재분석"
+      - aspect: 위성 복사휘도 편향보정
+        before: "적응형 편향보정(Sakamoto et al. 2009 방식)"
+        after: "변분 편향보정(VarBC, Dee et al. 2009 방식)"
+      - aspect: 온실기체
+        before: "CO2 375 ppmv로 고정"
+        after: "CO2·CH4·N2O 연평균 관측값을 일 단위로 내삽해 사용"
+      - aspect: 알려진 문제 개선
+        before: "하부 성층권 한랭 편향, 아마존 유역 건조 편향, 기온 분석의 시간적 일관성 부족"
+        after: "하부 성층권 한랭 편향 감소, 아마존 건조 편향 완화, 기온 분석의 시간 일관성 향상 (대신 상층 대류권 온난 편향·에너지 수지 불균형·열대 강수 과다·TC 강도의 비현실적 추세가 새로 지적됨)"
+      - aspect: 변수 이름·격자
+        before: "GrADS식 이름(예: `TMPprs`, `PRMSLmsl`, `CPRATsfc`), 1.25°·2.5° 위경도 및 T106 가우시안 격자"
+        after: "파일 이름 속 소문자 약어(예: `tmp`, `prmsl`, `cprat`), 1.25° 위경도 및 TL319 가우시안 격자 (형식은 둘 다 GRIB1)"
+      - aspect: 제공처
+        before: "JMA 직접 제공(2014년 2월 종료) / NCAR d625000·d625001"
+        after: "NCAR d628000·d628001(부속 제품 JRA-55C·AMIP 포함), DIAS"
+    impacts:
+      - 두 재분석은 모델·자료동화가 달라 기후값과 추세가 다릅니다. 1979~2004년 비교 외에는 두 자료를 이어 붙여 한 시계열로 쓰지 마세요.
+      - JRA-25는 CO2를 375 ppmv로 고정했으므로 장기 기온·복사 추세를 볼 때 JRA-55와 차이가 날 수 있습니다. 옛 논문의 추세 결과를 재현할 때 이 점을 감안하세요.
+      - JRA-25 시절 스크립트는 `TMPprs` 같은 GrADS식 변수 이름을 가정하는 경우가 많습니다. JRA-55 파일은 이름 체계가 다르므로 읽기 코드부터 고쳐야 합니다.
+      - JRA-55도 2024년 1월에 갱신이 끝났습니다. 최근 기간까지 필요하면 JRA-3Q로 가되, 그때는 라이선스(비상업)와 강수 단위 변화도 함께 확인하세요.
+    sources:
+      - name: Onogi et al. (2007), The JRA-25 Reanalysis, J. Meteor. Soc. Japan, 85(3), 369–432
+        url: https://doi.org/10.2151/jmsj.85.369
+      - name: Kobayashi et al. (2015), The JRA-55 Reanalysis, J. Meteor. Soc. Japan, 93, 5–48
+        url: https://doi.org/10.2151/jmsj.2015-001
+      - name: JMA TCC 연수 강의자료 — Introduction to JRA-55 (JRA-25 대비 사양표)
+        url: https://ds.data.jma.go.jp/tcc/tcc/library/library2015/lectures/4.IntroductionJRA-55.pdf
+      - name: JMA JRA-25 개요 (T106L40, 상단 0.4 hPa, 3D-Var)
+        url: https://www.data.jma.go.jp/jra/html/JRA-25/AboutJRA25_en.html
+      - name: JMA JRA-25 공식 페이지 (2014년 2월 제공 종료)
+        url: https://www.data.jma.go.jp/jra/html/JRA-25/index_en.html
+
+period:
+  start: "1979-01"
+  end: "2014-01"
+  note: >-
+    JRA-25 본 재분석은 1979~2004년이고, 2005년부터는 같은 시스템으로 실시간 운영한 JCDAS가 이어 붙어 있습니다.
+    NCAR 사본(d625000)의 마지막 자료는 2014년 1월 31일 18 UTC입니다.
+
+resolution:
+  spatial: "모델 해상도 T106(약 1.125° 가우시안, 320×160) / 1.25° 및 2.5° 위경도 격자"
+  vertical: "모델면 40층(최상층 0.4 hPa) / 기압면·온위면 분석 별도 제공"
+  temporal: 6시간 (월평균 별도 제공)
+
+update: 종료 (2014년 2월 제공 종료)
+license: CC BY 4.0 (NCAR GDEX 표기) + JMA 이용 조건(연구 목적 한정, 재배포 금지, 논문 사본 JMA 송부)
+account_required: true
+
+summary: >-
+  일본 기상청(JMA)과 전력중앙연구소(CRIEPI)가 함께 만든 일본 최초의 장기 전지구 재분석으로, 1979~2004년을 다룹니다.
+  2004년 4월 기준 JMA 현업 3D-Var 체계(T106L40)를 쓰며, 열대저기압 주변 바람 산출값, SSM/I 적설, 중국 적설 디지털 자료 등을
+  처음 동화한 재분석입니다. 2005년부터는 같은 시스템의 JCDAS로 실시간 연장되었다가, 2014년 JRA-55로 교체되었습니다.
+
+variables:
+  note: >-
+    JMA JRA-25 "사용 가능한 요소(6시간)" 표 기준 주요 변수입니다. 변수명은 GrADS 제어 파일에 쓰이는 이름(요소+층 약어)이며,
+    파일은 GRIB1입니다. 강수는 6시간 평균 강수 강도(mm/day)입니다.
+  full_list: https://www.data.jma.go.jp/jra/html/JRA-25/vari_catg_6.htm
+  groups:
+    - name: 기압면 분석 (anl_p / anl_chipsi)
+      items:
+        - "지위고도 — `HGTprs` (gpm)"
+        - "기온 — `TMPprs` (K)"
+        - "비습 — `SPFHprs` (kg/kg)"
+        - "동서 바람 — `UGRDprs` (m/s)"
+        - "남북 바람 — `VGRDprs` (m/s)"
+        - "연직 속도(기압 좌표) — `VVELprs` (Pa/s)"
+        - "유선함수 · 속도 퍼텐셜 — `STRMprs`, `VPOTprs` (m2/s)"
+    - name: 지표 분석 (anl_p)
+      items:
+        - "평균 해면기압 — `PRMSLmsl` (Pa)"
+        - "지표(2 m) 기온 — `TMPsfc` (K)"
+        - "지표(2 m) 비습 — `SPFHsfc` (kg/kg)"
+        - "지표(10 m) 바람 u·v — `UGRDsfc`, `VGRDsfc` (m/s)"
+    - name: 플럭스·진단 — 6시간 예보 평균 (fcst_phy2m)
+      items:
+        - "대류성 · 대규모 강수 강도 — `CPRATsfc`, `LPRATsfc` (mm/day)"
+        - "잠열 · 현열 플럭스 — `LHTFLsfc`, `SHTFLsfc` (W/m2)"
+        - "하향 단파 · 장파 복사(지표) — `DSWRFsfc`, `DLWRFsfc` (W/m2)"
+        - "상향 장파 복사(대기 상단, OLR) — `ULWRFtoa` (W/m2)"
+        - "가강수량 — `PWATcol` (kg/m2)"
+        - "전운량 — `TCDCcol` (%)"
+        - "해수면온도 — `WTMPsfc` (K)"
+    - name: 지면 분석 (anl_land)
+      items:
+        - "적설 물당량 — `SNWEsfc` (m)"
+        - "토양 습윤도 — `SOILWhbl` (비율)"
+
+access:
+  - name: NSF NCAR GDEX — JRA-25 (d625000)
+    url: https://gdex.ucar.edu/datasets/d625000/
+    method: 웹 다운로드
+    note: >-
+      NCAR 계정 필요. GRIB1, 전체 약 11.9 TB. GDEX는 이 자료를 더 새 자료로 대체된 "보조용(historical)" 데이터셋으로 표시합니다.
+  - name: NSF NCAR GDEX — JRA-25 월평균 (d625001)
+    url: https://gdex.ucar.edu/datasets/d625001/
+    method: 웹 다운로드
+    note: 월평균 자료는 1979년~2007년 12월분까지만 들어 있습니다.
+
+tips:
+  - 2005년 이후 구간은 JRA-25 본 재분석이 아니라 같은 시스템으로 실시간 운영한 JCDAS입니다. 논문에는 사용한 기간이 JCDAS를 포함한다는 점을 밝혀 두세요.
+  - NCAR 사본의 이용 조건은 연구 목적 한정, 수정한 자료를 공식 자료처럼 배포하는 것과 제3자 재배포(파생 자료 포함) 금지, 논문 사본의 JMA 송부를 요구합니다.
+  - 새 연구라면 JRA-55나 JRA-3Q를 쓰세요. JRA-25는 3D-Var·저해상도라 위 두 자료보다 여러 면에서 품질이 떨어집니다.
+
+citations:
+  dataset:
+    - label: NCAR GDEX JRA-25 (d625000)
+      text: >-
+        Central Research Institute Of Electric Power Industry, Japan Meteorological Agency (2007): Japanese 25-year Reanalysis Project.
+        Research Data Archive at the National Center for Atmospheric Research, Computational and Information Systems Laboratory.
+        https://doi.org/10.5065/FV8A-M862 (Accessed DD MMM YYYY)
+      doi: 10.5065/FV8A-M862
+      bibtex: |
+        @misc{jra25_d625000,
+          author    = {{Central Research Institute Of Electric Power Industry} and {Japan Meteorological Agency}},
+          title     = {Japanese 25-year Reanalysis Project},
+          year      = {2007},
+          publisher = {Research Data Archive at the National Center for Atmospheric Research, Computational and Information Systems Laboratory},
+          doi       = {10.5065/FV8A-M862},
+          note      = {Accessed DD MMM YYYY}
+        }
+    - label: NCAR GDEX JRA-25 월평균 (d625001)
+      text: >-
+        Central Research Institute Of Electric Power Industry, Japan Meteorological Agency (2008): Japanese 25-year Reanalysis Project, Monthly Means.
+        Research Data Archive at the National Center for Atmospheric Research, Computational and Information Systems Laboratory.
+        https://doi.org/10.5065/G3AR-1091 (Accessed DD MMM YYYY)
+      doi: 10.5065/G3AR-1091
+  papers:
+    - label: JRA-25 종합 논문
+      text: >-
+        Onogi, K., Tsutsui, J., Koide, H., Sakamoto, M., Kobayashi, S., Hatsushika, H., Matsumoto, T., Yamazaki, N.,
+        Kamahori, H., Takahashi, K., Kadokura, S., Wada, K., Kato, K., Oyama, R., Ose, T., Mannoji, N., Taira, R. (2007):
+        The JRA-25 Reanalysis. J. Meteor. Soc. Japan, 85(3), 369–432.
+      doi: 10.2151/jmsj.85.369
+      bibtex: |
+        @article{onogi2007jra25,
+          author  = {Onogi, Kazutoshi and Tsutsui, Junichi and Koide, Hiroshi and Sakamoto, Masami and Kobayashi, Shinya and Hatsushika, Hiroaki and Matsumoto, Takanori and Yamazaki, Nobuo and Kamahori, Hirotaka and Takahashi, Kiyotoshi and Kadokura, Shinji and Wada, Koji and Kato, Koji and Oyama, Ryo and Ose, Tomoaki and Mannoji, Nobutaka and Taira, Ryusuke},
+          title   = {The {JRA-25} Reanalysis},
+          journal = {Journal of the Meteorological Society of Japan. Ser. II},
+          volume  = {85},
+          number  = {3},
+          pages   = {369--432},
+          year    = {2007},
+          doi     = {10.2151/jmsj.85.369}
+        }
+  acknowledgement: >-
+    JMA는 JRA-25를 쓴 논문·보고서에 자료 출처를 밝히도록 요구합니다. JRA-25 장기 재분석 협력 프로젝트(JMA·CRIEPI)가 제공한
+    자료라는 취지의 권장 영문 문구가 NCAR GDEX 데이터셋 페이지 이용 조건에 있으니 그대로 옮겨 쓰세요.
+
+notices:
+  - date: "2014-02"
+    level: critical
+    title: JRA-25·JCDAS 자료 제공 종료
+    body: >-
+      JMA가 JRA-25와 JCDAS 자료 제공을 2014년 2월로 끝냈습니다. JRA-55가 그 자리를 이어받았으며,
+      NCAR GDEX에 남은 사본은 2014년 1월 말 자료까지 들어 있습니다.
+    source: https://www.data.jma.go.jp/jra/html/JRA-25/index_en.html
+  - date: "2013-12-25"
+    level: warning
+    title: JRA-55 공개 일정 및 JRA-25/JCDAS 제공 종료 계획 개정
+    body: JMA가 JRA-55 자료 공개 일정과 JRA-25/JCDAS 제공 종료 계획을 수정해 공지했습니다(최초 공지 2013-09-30).
+    source: https://www.data.jma.go.jp/jra/html/JRA-25/history/information_en.html
+
+links:
+  - name: JMA JRA-25 공식 페이지 (보관용)
+    url: https://www.data.jma.go.jp/jra/html/JRA-25/index_en.html
+  - name: JRA-25 개요 (Overview of JRA-25)
+    url: https://www.data.jma.go.jp/jra/html/JRA-25/AboutJRA25_en.html
+  - name: JCDAS 개요
+    url: https://www.data.jma.go.jp/jra/html/JRA-25/AboutJCDAS_en.html
+  - name: JRA-25 변경 이력(History)
+    url: https://www.data.jma.go.jp/jra/html/JRA-25/history/information_en.html
+
+watch_urls:
+  - https://www.data.jma.go.jp/jra/html/
+  - https://gdex.ucar.edu/datasets/d625000/
+
+last_verified: "2026-10-11"

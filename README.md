@@ -2,7 +2,7 @@
 
 대기·해양·해빙·극지·원격탐사 연구자를 위해 **원자료의 출처, 받는 방법, 제공 기간, 논문용 레퍼런스, 제공 중단·변경 공지**를 한곳에 정리하는 한국어 사이트입니다. 자료 자체는 보관하지 않고 공식 출처로 연결합니다.
 
-현재 수록: ERA5, JRA-55
+현재 수록: 30개 자료 — 대기 16(재분석 12, 장기·관측 제한 재분석 4), 해양 8, 해빙 8 (HadISST·OISST는 해양·해빙 교차 수록)
 
 ---
 
@@ -33,33 +33,22 @@ mkdocs serve
 
 ```
 data/datasets/*.yaml     ← 데이터셋 정보 (여기만 고치면 됩니다)
-hooks/datasets.py        ← YAML을 읽어 페이지·목록·공지 모음을 자동 생성 + 검증
-docs/index.md            ← 홈 (상태 표와 최근 공지는 자동으로 채워짐)
-docs/about.md            ← 소개·인용·기여 방법
-docs/stylesheets/        ← 상태 배지 등 스타일
-docs/javascripts/        ← 크롬 번역이 코드·인용문·데이터셋 이름을 바꾸지 않게 보호
+data/SCHEMA.md           ← YAML 작성 규칙 (변수 목록, 전환 분석 형식 포함)
+scripts/validate.py      ← YAML 검사 도구 (사이트 빌드와 같은 규칙)
+hooks/datasets.py        ← YAML을 읽어 페이지·메뉴·목록·공지 모음·전환 가이드·폼을 자동 생성 + 검증
+docs/index.md            ← 홈 (분야별 요약과 최근 공지는 자동으로 채워짐)
+docs/about.md, privacy.md, subscribe.md, suggest.md
+docs/stylesheets/, docs/javascripts/
 .github/workflows/       ← 배포(deploy.yml), PR 검사(check.yml)
 CITATION.cff             ← GitHub "Cite this repository" 버튼
 ```
 
 ## 데이터셋 추가하기
 
-1. `data/datasets/era5.yaml`을 복사해 `data/datasets/<id>.yaml`로 저장합니다. 파일명과 `id`가 같아야 합니다.
-2. 내용을 채웁니다. 핵심 항목은 아래와 같습니다.
-
-| 항목 | 설명 |
-|---|---|
-| `status` | `active`(정상) / `delayed`(지연) / `deprecated`(대체 예정) / `ended`(종료) |
-| `successor` | `ended`이면 필수. 후속 자료 이름·링크·차이점 |
-| `period` | `start: "YYYY-MM"`, `end: present` 또는 `"YYYY-MM"` |
-| `access` | 받는 곳 목록 (`name`, `url`, `method`, `note`) |
-| `citations` | `dataset`(데이터 DOI), `papers`(기술 논문), `acknowledgement` |
-| `notices` | 공지 목록. `date`, `level`(critical/warning/info), `title`, `body`, **`source`(원문 링크, 필수)** |
-| `watch_urls` | 다음 단계 자동 감시에 쓸 공지 페이지 |
-| `last_verified` | 공식 페이지에서 마지막으로 확인한 날짜 `YYYY-MM-DD` |
-
-3. `mkdocs.yml`의 `nav`에 한 줄 추가합니다. 예: `- MERRA-2: datasets/merra2.md`
-4. 필수 항목이 빠지거나 형식이 틀리면 빌드가 실패하면서 무엇이 잘못됐는지 알려줍니다.
+1. 비슷한 자료의 YAML(예: `data/datasets/jra3q.yaml`)을 복사해 `data/datasets/<id>.yaml`로 저장합니다. 파일명과 `id`가 같아야 합니다.
+2. `data/SCHEMA.md`의 규칙대로 내용을 채웁니다. 메뉴 위치는 `domain`(대기·해양·해빙), `group`(소분류), `order`(순서)로 정해지므로 `mkdocs.yml`은 고칠 필요가 없습니다.
+3. 후속 자료가 있으면 이전 자료 파일에 `transitions:`를 적습니다. 후속 자료 페이지와 전환 가이드에 자동으로 연결됩니다.
+4. `python scripts/validate.py data/datasets/<id>.yaml`로 검사합니다. 필수 항목이 빠지거나 형식이 틀리면 무엇이 잘못됐는지 알려줍니다.
 
 ## 알림 신청 · 데이터셋 제안 폼
 
@@ -84,7 +73,7 @@ GoatCounter에 가입한 뒤 `docs/javascripts/notranslate.js`의 `GOATCOUNTER_C
 - [ ] 이슈를 받아 Claude가 YAML 수정 PR을 여는 워크플로 (사람이 검토 후 머지)
 - [ ] Zenodo 연동으로 릴리스별 DOI 발급
 - [ ] 메일 알림 발송 연결 (구글 폼·시트 + Apps Script)
-- [ ] 데이터셋 확장 (MERRA-2, JRA-3Q, 해빙 농도, SST …) 및 WRF·CESM2 모델 페이지
+- [ ] 데이터셋 확장 (ERA5-Land 등) 및 WRF·CESM2 모델 페이지
 
 ## 라이선스
 

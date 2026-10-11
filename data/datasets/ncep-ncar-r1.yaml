@@ -1,0 +1,253 @@
+# ─────────────────────────────────────────────────────────────
+# NCEP/NCAR R1 — 데이터셋 정보 파일
+# ─────────────────────────────────────────────────────────────
+id: ncep-ncar-r1
+name: NCEP/NCAR R1
+full_name: NCEP/NCAR Reanalysis 1 (미국 NCEP·NCAR 재분석 1, 실시간 연장판 CDAS 포함)
+category: reanalysis
+domain: atmosphere
+group: 재분석
+order: 60
+domains: [대기, 육지]
+provider: NOAA NCEP·NCAR (배포 NOAA PSL, NSF NCAR GDEX)
+
+status: ended
+status_note: >-
+  NOAA PSL 공지에 따르면 2026년 3월 17일 자료를 끝으로 갱신이 멈췄습니다. 1948년부터 R1을 실시간으로 이어 오던 NCEP의 CDAS가
+  2026년 3월 새 재분석 CORe로 교체되었기 때문입니다(NWS 서비스 변경 공지 SCN 26-12). 지난 자료는 PSL과 NCAR에 그대로 남아 있지만
+  기간은 더 늘어나지 않으므로, 최근 기간까지 필요한 분석은 다른 재분석으로 옮겨야 합니다.
+
+successor:
+  name: "CORe (NOAA Conventional Observation Reanalysis) — R1 재생산판은 아님"
+  url: https://www.cpc.ncep.noaa.gov/products/CORe/index.html
+  note: >-
+    NCEP는 CDAS(R1의 실시간 연장)를 CORe로 대체했습니다. CORe는 1950년~현재를 다루는 UFS 기반(2020년경 코드) 앙상블 칼만 필터 재분석으로,
+    재래식 관측과 대기운동벡터만 동화하고 GRIB2로 제공되며 NOAA NODD 아카이브에서 1일 지연으로 갱신됩니다. 모델·관측 구성이 달라
+    R1과 같은 자료가 아니고, PSL은 당장 CORe를 자체 제공할 계획이 없다고 밝혔습니다. 일반적인 대기 연구라면 ERA5나 JRA-3Q가 현실적인 대안이며,
+    같은 계열의 NCEP–DOE R2도 2026년 2월 이후 갱신되지 않고 있습니다. NCEP 현업 분석을 이어서 쓰려면 CFSv2 분석(2011년~)을 검토하세요.
+
+transitions:
+  - from: NCEP/NCAR R1
+    to: NCEP–DOE R2
+    to_id: ncep-doe-r2
+    status: completed
+    date: "2002"
+    summary: >-
+      R2는 R1과 같은 T62·28층 체계를 유지하면서 R1 처리 과정의 알려진 오류를 고치고 물리 과정을 갱신해 1979년부터 다시 돌린 자료입니다.
+      개발진 스스로 "차세대" 재분석이 아니라고 밝혔고, 북반구 중위도 지위고도·바람은 거의 같지만 지면 변수와 지표 플럭스가 크게 좋아졌습니다.
+      R1의 보완재로 쓰라는 것이 원래 권고입니다.
+    changes:
+      - aspect: 기간
+        before: "1948-01 ~ 2026-03 (CDAS 종료로 갱신 중단)"
+        after: "1979-01 ~ (위성 시대만, 2026-02 이후 갱신 없음)"
+      - aspect: 모델 해상도
+        before: "T62(약 210 km), 시그마 28층"
+        after: "T62, 28층 그대로 (해상도 향상 없음)"
+      - aspect: 남반구 PAOBS 오류
+        before: "1979~1992년 남반구 가상 지상기압(PAOBS) 입력이 잘못 처리됨"
+        after: "수정"
+      - aspect: 적설·눈 관련 오류
+        before: "1974~1994년 적설 분석 오류, 습도 확산 오류로 생긴 \"스펙트럼 눈(spectral snow)\" 현상, 융설항 오류"
+        after: "모두 수정, 적설 마스크를 주간 값에서 일 단위로 내삽, 모델 적설 깊이를 쓰도록 눈 처리 개편"
+      - aspect: 해양 알베도·구름 표
+        before: "전 기간 해양 알베도 오류, 상대습도–운량 표가 경도 0°·180°에서 불연속"
+        after: "수정"
+      - aspect: 토양수분 처리
+        before: "60일 시간 규모로 기후값에 끌어당김(nudging) → 연주기가 지나치게 큼"
+        after: "nudging 제거, 관측 5일(pentad) 강수(위성+우량계)로 모델 강수 오차를 보정해 토양수분에 반영"
+      - aspect: 경계층·복사
+        before: "R1 원래 경계층 확산, 단파복사 3시간마다·축소 격자(128×64)에서 계산"
+        after: "Hong–Pan 비국지 경계층 확산, Chou 단파복사, 복사를 매시간·전체 가우시안 격자(192×94)에서 계산, 구름 상단 장파 냉각 강화"
+      - aspect: 고정 입력장
+        before: "R1 당시 SST·해빙·오존·사막 알베도"
+        after: "AMIP-II SST·해빙, 새 오존 기후값, CO₂ 350 ppmv, Briegleb 사막 알베도, 평활화한 지형"
+      - aspect: 관측 입력
+        before: "재래식 관측 + NESDIS 위성 기온 산출물"
+        after: "대부분 같은 원시 관측(1993년 이후 일부 추가 가능), SSM/I 미사용, NESDIS 산출물 의존 그대로"
+      - aspect: 개선 효과
+        before: "지면 변수·지표 플럭스·물 수지에 알려진 문제"
+        after: "지표 플럭스, 물 수지, 단파복사 플럭스 개선. 다만 열대 웜풀 OLR·열대 상층 수분에는 약점이 남음(NCAR GDEX 설명)"
+      - aspect: PSL 파일 구성
+        before: "기압면 습도 `shum`·`rhum`은 300 hPa까지, 해면기압 파일 `slp`, 지표 플럭스 폴더 surface_gauss"
+        after: "기압면 습도는 `rhum`만(10 hPa까지), 해면기압 파일 `mslp`, 지표 플럭스 폴더 gaussian_grid"
+    impacts:
+      - R2는 1979년부터라서 1948~1978년은 R1에만 있습니다. 1979년을 경계로 R1과 R2를 이어 붙이면 체계 차이가 그대로 불연속으로 들어가므로, 한 분석에는 한 자료만 쓰세요.
+      - 해상도·관측 입력이 R1과 같은 1세대 체계이므로 R2로 바꾼다고 상층 순환장이 크게 달라지지 않습니다. 순환 연구 결과가 두 자료에서 비슷한 것은 독립적인 확인이 아닙니다.
+      - 토양수분·지표 플럭스·물 수지를 다루는 연구라면 R1보다 R2가 낫다는 것이 개발진의 평가입니다. 두 자료의 차이는 그 자체로 분석 불확실성의 지표로 쓸 수 있습니다.
+      - "PSL 파일 이름과 폴더가 달라(`slp` → `mslp`, surface_gauss → gaussian_grid) R1용 스크립트를 그대로 쓰면 파일을 찾지 못합니다."
+      - 두 자료 모두 2026년 봄 이후 갱신되지 않으므로, 최근 기간까지 이어지는 연구는 ERA5·JRA-3Q 등 현역 재분석으로 옮기세요.
+    sources:
+      - name: Kanamitsu et al. (2002), NCEP–DOE AMIP-II Reanalysis (R-2), BAMS, 83, 1631–1643
+        url: https://doi.org/10.1175/BAMS-83-11-1631
+      - name: CPC — Overview of NCEP/DOE Reanalysis-2 (Kanamitsu 외, R1 오류 수정·물리 변경 목록)
+        url: https://www.cpc.ncep.noaa.gov/products/tools/reanalysis2/kana/Overview.htm
+      - name: CPC NCEP/DOE AMIP-II Reanalysis (Reanalysis-2) 홈페이지
+        url: https://www.cpc.ncep.noaa.gov/products/wesley/reanalysis2/
+      - name: NSF NCAR GDEX — NCEP/DOE Reanalysis 2 (d091000)
+        url: https://gdex.ucar.edu/datasets/d091000/
+      - name: Kalnay et al. (1996), The NCEP/NCAR 40-Year Reanalysis Project, BAMS, 77, 437–471
+        url: https://doi.org/10.1175/1520-0477(1996)077<0437:TNYRP>2.0.CO;2
+
+period:
+  start: "1948-01"
+  end: "2026-03"
+  note: >-
+    1948년 1월 1일 ~ 2026년 3월 17일 18 UTC(PSL 파일 기준 마지막 시각). 1948~1957년은 고층 관측이 드물어 품질이 낮고,
+    1979년부터 위성 산출물이 들어가 동화 구성이 바뀝니다. NCAR GDEX 사본은 갱신 주기가 달라 끝 날짜가 PSL보다 이를 수 있습니다.
+
+resolution:
+  spatial: "모델 T62(약 210 km) / 기압면 2.5° × 2.5°(144 × 73) / 지표·플럭스 T62 가우시안 격자(192 × 94, 약 1.9°)"
+  vertical: "모델 시그마 28층 / 기압면 17층(1000~10 hPa). 습도(`shum`·`rhum`)는 1000~300 hPa, 연직속도(`omega`)는 1000~100 hPa만"
+  temporal: 6시간(00·06·12·18 UTC), PSL 일평균·월평균 별도
+update: 종료 (2026년 3월 17일 자료가 마지막)
+license: PSL 자료는 이용 제한 없이 공개(PSL 출처 표기 요청) / NCAR GDEX 사본은 CC BY 4.0
+account_required: false
+
+summary: >-
+  미국 NCEP과 NCAR이 1990년대에 만든 최초의 장기 전지구 대기 재분석으로, 1948년부터 같은 자료동화 체계를 고정해 돌리고
+  그 체계를 CDAS라는 이름으로 실시간까지 이어 왔습니다. 해상도는 낮지만 가장 긴 기간을 한 체계로 제공하고 PSL에서 연도별 netCDF로
+  쉽게 받을 수 있어 수십 년간 기후 진단과 지수 계산에 널리 쓰였습니다. 2026년 3월 CDAS 종료와 함께 갱신이 끝났습니다.
+
+variables:
+  note: >-
+    NOAA PSL netCDF 파일(OPeNDAP 속성) 기준 주요 변수입니다. 변수명은 파일 안의 이름이며, 괄호 앞에 PSL 폴더와 파일 이름 규칙을 적었습니다.
+    지표·플럭스 변수는 대부분 6시간 예보값(또는 평균)이고 분석값이 아닙니다.
+  full_list: https://psl.noaa.gov/data/gridded/data.ncep.reanalysis.html
+  groups:
+    - name: 기압면 (pressure/, 예 air.2025.nc, 2.5°·17층)
+      items:
+        - "기온 — `air` (degK)"
+        - "지위고도 — `hgt` (m)"
+        - "동서 바람 — `uwnd` (m/s)"
+        - "남북 바람 — `vwnd` (m/s)"
+        - "연직속도(기압 좌표, 1000~100 hPa) — `omega` (Pascal/s)"
+        - "상대습도(1000~300 hPa) — `rhum` (%)"
+        - "비습(1000~300 hPa) — `shum` (kg/kg)"
+    - name: 지표·연직 적분 (surface/, 2.5°)
+      items:
+        - "해면기압 — `slp` (Pascals)"
+        - "가강수량(대기 전층) — `pr_wtr` (kg/m^2, 파일 pr_wtr.eatm)"
+    - name: 지표 플럭스·근지표 (surface_gauss/, T62 가우시안)
+      items:
+        - "2 m 기온 — `air` (degK, 파일 air.2m.gauss)"
+        - "10 m 동서 바람 — `uwnd` (m/s, 파일 uwnd.10m.gauss)"
+        - "강수율 — `prate` (Kg/m^2/s)"
+        - "잠열 순플럭스 — `lhtfl` (W/m^2)"
+        - "현열 순플럭스 — `shtfl` (W/m^2)"
+        - "지표 하향 단파복사 — `dswrf` (W/m^2, 파일 dswrf.sfc.gauss)"
+    - name: 대기 상단 (other_gauss/)
+      items:
+        - "대기 상단 상향 장파복사(OLR) — `ulwrf` (W/m^2, 파일 ulwrf.ntat.gauss)"
+
+access:
+  - name: NOAA PSL — NCEP/NCAR Reanalysis 1 데이터 페이지
+    url: https://psl.noaa.gov/data/gridded/data.ncep.reanalysis.html
+    method: 변수 목록·그림 그리기·부분 추출
+    note: 계정 없이 이용할 수 있습니다. 파일은 변수·연도별 netCDF입니다.
+  - name: NOAA PSL 다운로드 서버 (6시간 자료)
+    url: https://downloads.psl.noaa.gov/Datasets/ncep.reanalysis/
+    method: HTTPS 직접 다운로드
+    note: >-
+      pressure/, surface/, surface_gauss/, other_gauss/, spectral/, tropopause/ 폴더로 나뉩니다.
+      일평균은 ncep.reanalysis.dailyavgs/, 월평균은 ncep.reanalysis.derived/ 폴더에 있습니다.
+  - name: NOAA PSL THREDDS / OPeNDAP (기압면 예시)
+    url: https://psl.noaa.gov/thredds/catalog/Datasets/ncep.reanalysis/pressure/catalog.html
+    method: OPeNDAP 원격 읽기
+  - name: NSF NCAR GDEX — NCEP/NCAR Global Reanalysis Products (d090000)
+    url: https://gdex.ucar.edu/datasets/d090000/
+    method: 웹 다운로드 / 부분 추출
+    note: >-
+      원본 GRIB1(일부 BUFR) 형식, CC BY 4.0. 월 단위로 갱신되던 사본이라 끝 날짜가 PSL과 다를 수 있습니다.
+      GDEX는 이 자료를 "보조 용도 권장·더 새로운 자료로 대체되었을 가능성"으로 표시합니다.
+
+example:
+  lang: python
+  note: PSL OPeNDAP 주소를 xarray로 바로 열 수 있습니다. 2026년 파일은 3월 17일 18 UTC에서 끝납니다.
+  code: |
+    import xarray as xr
+
+    url = "https://psl.noaa.gov/thredds/dodsC/Datasets/ncep.reanalysis/pressure/air.2025.nc"
+    ds = xr.open_dataset(url)
+    t500 = ds["air"].sel(level=500)   # 단위 degK, 6시간 간격
+    print(t500.mean("time"))
+
+tips:
+  - Kalnay et al. (1996)은 변수를 관측 영향 정도에 따라 A(고층 기온·바람, 가장 신뢰), B(습도·지표 기온), C(구름·강수·지표 플럭스, 관측 직접 영향 없음) 등으로 나눴습니다. C등급 변수는 모델 특성이 강하므로 조심해서 쓰세요.
+  - 기압면 습도는 300 hPa까지만, omega는 100 hPa까지만 있습니다. 상층 수증기가 필요하면 다른 재분석을 쓰세요.
+  - "PSL의 알려진 문제 목록에는 1979~1992년 남반구 PAOBS 오류, 1997~2001년 TOVS 산출물 문제, 1998년 이후 적설 분석 변경으로 인한 남반구 육지 기온 저하 등이 정리되어 있습니다. 장기 추세를 볼 때는 이 기간을 먼저 확인하세요."
+  - 2026년 3월 이후 R1 기반 지수나 기후값(예: PSL 그림 도구, 각종 순환 지수)도 함께 멈췄을 수 있습니다. 실시간 감시 용도라면 CORe 또는 다른 재분석 기반 산출물로 바꿨는지 확인하세요.
+
+citations:
+  dataset:
+    - label: NCAR GDEX 사본 (d090000)
+      text: >-
+        NCEP/NCAR Global Reanalysis Products, 1948-continuing. NSF NCAR Geoscience Data Exchange (GDEX), dataset d090000.
+        https://gdex.ucar.edu/datasets/d090000/ (데이터셋 DOI는 페이지에 표시되지 않음, 접근 날짜를 함께 적으세요)
+  papers:
+    - label: R1 종합 논문
+      text: >-
+        Kalnay, E., Kanamitsu, M., Kistler, R., Collins, W., Deaven, D., Gandin, L., Iredell, M., Saha, S., White, G.,
+        Woollen, J., Zhu, Y., Leetmaa, A., Reynolds, R., Chelliah, M., Ebisuzaki, W., Higgins, W., Janowiak, J., Mo, K. C.,
+        Ropelewski, C., Wang, J., Jenne, R., Joseph, D. (1996): The NCEP/NCAR 40-Year Reanalysis Project.
+        Bulletin of the American Meteorological Society, 77(3), 437–471.
+      doi: 10.1175/1520-0477(1996)077<0437:TNYRP>2.0.CO;2
+      bibtex: |
+        @article{kalnay1996ncep,
+          author  = {Kalnay, E. and Kanamitsu, M. and Kistler, R. and Collins, W. and Deaven, D. and Gandin, L. and Iredell, M. and Saha, S. and White, G. and Woollen, J. and Zhu, Y. and Leetmaa, A. and Reynolds, R. and Chelliah, M. and Ebisuzaki, W. and Higgins, W. and Janowiak, J. and Mo, K. C. and Ropelewski, C. and Wang, J. and Jenne, Roy and Joseph, Dennis},
+          title   = {The {NCEP/NCAR} 40-Year Reanalysis Project},
+          journal = {Bulletin of the American Meteorological Society},
+          volume  = {77},
+          number  = {3},
+          pages   = {437--471},
+          year    = {1996},
+          doi     = {10.1175/1520-0477(1996)077<0437:TNYRP>2.0.CO;2}
+        }
+    - label: 50년 재분석 월평균·문서 (선택)
+      text: >-
+        Kistler, R., et al. (2001): The NCEP–NCAR 50-Year Reanalysis: Monthly Means CD-ROM and Documentation.
+        Bulletin of the American Meteorological Society, 82, 247–267.
+  acknowledgement: >-
+    PSL에서 받았다면 PSL이 요청하는 출처 문구("data provided by the NOAA PSL, Boulder, Colorado, USA, from their website at https://psl.noaa.gov")를
+    사사에 넣고 Kalnay et al. (1996)을 인용하세요. NCAR 사본을 썼다면 GDEX 데이터셋 이름과 접근 날짜도 함께 적습니다.
+
+notices:
+  - date: "2026-03-17"
+    level: critical
+    title: R1 갱신 종료 — 마지막 자료 2026년 3월 17일
+    body: >-
+      PSL이 "NCEP/NCAR Reanalysis 1 has stopped production"이라고 공지했습니다. NWS가 CDAS를 CORe로 바꾸면서 R1이 더 이상 생산되지 않으며,
+      지난 자료는 PSL에 계속 남습니다. PSL 공지는 NCEP의 전환일을 3월 18일로, CPC CORe 페이지는 CORe 운영 시작을 3월 19일로 적고 있습니다.
+    source: https://psl.noaa.gov/news/2026/r1datanotice.html
+  - date: "2026-02-28"
+    level: warning
+    title: PSL, R1 갱신 중단 예고
+    body: PSL 자료 공지에서 R1이 3월 18일 전후로 더 이상 갱신되지 않는다고 미리 알렸습니다.
+    source: https://psl.noaa.gov/data/notices/
+  - date: "2026-02-09"
+    level: warning
+    title: NWS 서비스 변경 공지 SCN 26-12 — CDAS를 CORe로 교체
+    body: >-
+      NWS가 "2026년 3월 9일 무렵" CDAS를 CORe로 바꾸고 NOMADS·FTP의 cdas, cdas2 폴더 자료 제공을 끝낸다고 공지했습니다(2월 13일 수정본 재발행).
+      CORe 파일은 GRIB2로 /com/core/ 경로에서 제공됩니다.
+    source: https://www.weather.gov/media/notification/pdf_2026/scn26-12_Updated_CDAS_COReUpdate_aaa.pdf
+
+links:
+  - name: NOAA PSL — NCEP/NCAR Reanalysis 안내
+    url: https://psl.noaa.gov/data/reanalysis/reanalysis.shtml
+  - name: PSL R1 알려진 문제 목록
+    url: https://psl.noaa.gov/data/reanalysis/problems.shtml
+  - name: PSL — About NOAA CORe Reanalysis
+    url: https://psl.noaa.gov/news/2026/psd/data/coreinfo.html
+  - name: CPC CORe 공식 페이지
+    url: https://www.cpc.ncep.noaa.gov/products/CORe/index.html
+  - name: NOAA NCEI — Reanalysis-1 / Reanalysis-2
+    url: https://www.ncei.noaa.gov/products/weather-climate-models/reanalysis-1-2
+  - name: NCAR Climate Data Guide — NCEP-NCAR (R1) Overview
+    url: https://climatedataguide.ucar.edu/climate-data/ncep-ncar-r1-overview
+
+watch_urls:
+  - https://psl.noaa.gov/data/notices/
+  - https://www.cpc.ncep.noaa.gov/products/CORe/index.html
+  - https://www.weather.gov/notification/
+
+last_verified: "2026-10-11"

@@ -1,0 +1,201 @@
+# ─────────────────────────────────────────────────────────────
+# JRA55-do — 데이터셋 정보 파일
+# ─────────────────────────────────────────────────────────────
+id: jra55-do
+name: JRA55-do
+full_name: JRA-55 based surface dataset for driving ocean–sea-ice models (JRA-55 기반 해양·해빙 모델 구동용 지표 강제력 자료)
+category: forcing
+domain: ocean
+group: 모델 강제력
+order: 10
+domains: [해양, 해빙, 대기]
+provider: 일본 기상청 기상연구소 (JMA/MRI)
+
+status: ended
+status_note: >-
+  바탕 자료인 JRA-55가 끝나면서 2024년 1월 31일로 갱신이 중단되었고, v1.6.0(1958년 1월~2024년 1월)이 최종판입니다.
+  MRI는 JRA-3Q 기반 후속판을 공개하지 않았습니다(2026-10 확인). CMIP7 OMIP용 차세대 강제력으로는 NCAR·GFDL·LANL이
+  ERA5 기반 CFORCE를 개발 중이라고 WCRP에서 발표했으므로, 장기적으로는 그쪽 공개 여부를 지켜보세요.
+
+successor:
+  name: 없음
+  note: >-
+    공식 후속판은 아직 없습니다. ERA5 기반 CFORCE가 차세대 OMIP 강제력으로 개발되고 있습니다(2024년 10월 WCRP 발표).
+
+transitions:
+  - from: JRA55-do
+    to: CFORCE (ERA5 기반, 개발 중)
+    status: planned
+    summary: >-
+      공식 후속판이 아니라 계획 단계의 정보입니다. NCAR·GFDL·LANL이 ERA5를 바탕으로 해양·해빙 모델 구동용 차세대 강제력(CFORCE)을
+      만들고 있으며, 2024년 10월 WCRP 발표 자료는 2026년 초 공개를 목표로 하고 공개되면 OMIP·LMIP가 이 자료로 옮겨 갈 수 있다고 밝혔습니다.
+      같은 발표는 CMIP7 OMIP에는 2023년까지 있는 JRA55-do를 쓴다고 했으므로, 2026년 10월 확인 시점에 공개된 자료나 정식 문서는 없습니다.
+    changes:
+      - aspect: 바탕 재분석
+        before: "JRA-55 (2024년 1월 종료)"
+        after: "ERA5 (ECMWF가 계속 생산하는 재분석)"
+      - aspect: 기간
+        before: "1958-01 ~ 2024-01"
+        after: "1940년 ~ 현재 (계획)"
+      - aspect: 해상도·시간 간격
+        before: "TL319(약 0.5625°), 3시간"
+        after: "0.25°, 1시간 (계획 목표 — 소용돌이 분해·연안 해양 모델용)"
+      - aspect: 생산 기관
+        before: "일본 기상청 기상연구소 (MRI)"
+        after: "NSF NCAR · NOAA GFDL · DOE LANL (CLIVAR OMDP와 협력, DOE·NOAA 지원)"
+      - aspect: 연장 방식
+        before: "갱신 종료, v1.6.0이 최종판"
+        after: "매년 연장을 전제로 설계(보정용 관측자료도 최신 유지 필요), 공개 Python 도구로 생산해 ERA6 등 이후 재분석에도 적용 예정"
+      - aspect: 대상 실험
+        before: "OMIP-2 (CMIP6), CMIP7 OMIP에도 1958~2023년 구간 사용 예정"
+        after: "OMIP-Future · LMIP-Future (향후 OMIP/LMIP 전환 후보)"
+      - aspect: 공개 상태
+        before: "input4MIPs(MRI-JRA55-do-1-6-0)로 공개 완료"
+        after: "미공개 — 2024년 10월 발표 기준 2026년 초 공개 예상이었으나 2026-10 확인 시 공식 공개 자료 없음"
+    impacts:
+      - 지금 OMIP 방식 실험을 시작한다면 여전히 JRA55-do v1.6.0(1958~2023년 주기)이 표준입니다. CFORCE를 기다리느라 실험을 미룰 이유는 아직 공식적으로 없습니다.
+      - CFORCE가 공개되면 바탕 재분석·해상도·보정 방법이 모두 달라지므로, JRA55-do로 돌린 실험과 결과를 직접 이어 비교할 수 없습니다. 같은 모델로 두 강제력 실험을 각각 돌려 차이를 확인해야 합니다.
+      - 변수 구성, 벌크 공식, 담수 유출 자료는 아직 발표되지 않았습니다. 공개 전에는 JRA55-do 전처리 코드를 CFORCE용으로 고칠 계획을 확정하지 마세요.
+    sources:
+      - name: WCRP 발표 자료 — Next Generation Datasets for Forcing Ocean/Sea-ice (CFORCE, NSF NCAR, 2024-10)
+        url: https://wcrp-cmip.org/wp-content/uploads/2024/10/S5_DLawrence.pdf
+      - name: MRI JRA55-do 공식 페이지 (2024-01-31 갱신 중단, v1.6.0 최종판)
+        url: https://climate.mri-jma.go.jp/pub/ocean/JRA55-do/
+
+period:
+  start: "1958-01"
+  end: "2024-01"
+  note: >-
+    v1.6.0 기준 1958년 1월 1일 ~ 2024년 2월 1일 00 UTC. v1.6.0의 내용은 v1.5.0(~2020년 7월)과 그 연장판 v1.5.0.1(2020~2024년)을
+    이어 붙인 것과 같습니다. OMIP 실험은 1958~2023년 66년 구간을 한 주기로 씁니다.
+
+resolution:
+  spatial: "대기 변수 TL319 가우시안 격자(약 0.5625°, 약 55 km) / 하천·빙하 유출 0.25° / 보조 SST·해빙 1°"
+  vertical: 지표(대기 10 m 고도) 단일층
+  temporal: 대기 변수 3시간(복사·강수는 3시간 평균, 나머지는 순간값) / 유출 일평균
+
+update: 종료 (2024년 1월 31일 갱신 중단)
+license: CC BY 4.0 (input4MIPs v1.6.0 파일 메타데이터 기준)
+account_required: false
+
+summary: >-
+  JRA-55 재분석의 지표 대기 변수를 위성·현장 관측 기반 자료에 맞춰 보정해 만든, 해양·해빙 모델 구동용 강제력 자료입니다.
+  CORE-II를 대체하는 OMIP 2단계(OMIP-2) 표준 강제력으로 쓰였으며, 3시간 간격 바람·기온·습도·복사·강수와
+  하천·남극·그린란드 담수 유출을 한 묶음으로 제공합니다. 원자료보다 해상도와 갱신 빈도가 높아 고해상도 해양 모델 실험에 널리 쓰였습니다.
+
+variables:
+  note: >-
+    JRA55-do v1.6 사용자 매뉴얼 Table 1·2 기준 변수입니다. 변수명은 input4MIPs 파일 속 CMOR 변수명이며 파일은 NetCDF입니다.
+    대기 변수는 해수면 위 10 m 높이 값입니다(2 m 아님).
+  full_list: https://climate.mri-jma.go.jp/pub/ocean/JRA55-do/docs/v1_6-manual/User_manual_jra55_do_v1_6.pdf
+  groups:
+    - name: 대기 강제력 (3시간, TL319)
+      items:
+        - "10 m 기온 — `tas` (K)"
+        - "10 m 비습 — `huss` (kg kg-1)"
+        - "10 m 동서 바람 — `uas` (m s-1)"
+        - "10 m 남북 바람 — `vas` (m s-1)"
+        - "해면기압 — `psl` (Pa)"
+        - "하향 단파 복사 — `rsds` (W m-2)"
+        - "하향 장파 복사 — `rlds` (W m-2)"
+        - "강우 플럭스 — `prra` (kg m-2 s-1)"
+        - "강설 플럭스 — `prsn` (kg m-2 s-1)"
+    - name: 담수 유출 (일평균, 0.25°)
+      items:
+        - "액체 유출(하천 등) — `friver` (kg m-2 s-1)"
+        - "고체 유출(빙산 분리) — `licalvf` (kg m-2 s-1)"
+    - name: 보조 자료
+      items:
+        - "해수면온도(COBE-SST, 일평균 1°) — `tos` (°C)"
+        - "해빙 분포(COBE-SST, 일평균 1°) — `siconc` (%)"
+        - "해빙 분포(JRA-55, 3시간) — `siconca` (%)"
+        - "해면 염분(WOA13 v2, 월 기후값) — `sos` (0.001)"
+        - "격자 면적(대기 격자) — `areacella` (m2)"
+
+access:
+  - name: ESGF input4MIPs — MRI-JRA55-do-1-6-0 (최종판)
+    url: https://metagrid.esgf-west.org/search?project=input4MIPs&versionType=all&&activeFacets=%7B%22source_id%22%3A%5B%22MRI-JRA55-do-1-6-0%22%5D%7D
+    method: ESGF 검색 → 변수별 wget 스크립트 / HTTPS
+    note: >-
+      검색 조건은 mip_era=CMIP6Plus, target_mip=OMIP, institution_id=MRI, source_id=MRI-JRA55-do-1-6-0 입니다.
+      v1.5.0(1958~2020년 7월)이 필요하면 CMIP6 시대의 MRI-JRA55-do-1-5-0을 찾으세요.
+  - name: ESGF ORNL 노드 THREDDS 카탈로그 (v1.6.0)
+    url: https://esgf-node.ornl.gov/thredds/catalog/user_pub_work/input4MIPs/CMIP6Plus/OMIP/MRI/MRI-JRA55-do-1-6-0/catalog.html
+    method: THREDDS / HTTPS 직접 다운로드
+    note: atmos·land·landIce·ocean·seaIce 영역별 폴더로 나뉘어 있습니다.
+  - name: MRI 서버 — v1.5.0.1 (2020년~2024년 1월)
+    url: https://climate.mri-jma.go.jp/pub/ocean/JRA55-do/jra55do_latest.html
+    method: HTTPS 직접 다운로드 (연도별 파일)
+    note: 2020년 이후 연장분입니다. 1958~2019년은 input4MIPs에서 받으라고 안내되어 있습니다.
+
+tips:
+  - "대기 변수(tas, huss, uas, vas)는 10 m 높이 값입니다. 2 m 기온을 가정한 벌크 공식에 그대로 넣지 말고, Tsujino et al. (2018)이 권장하는 Large and Yeager 계열 벌크 공식(bulk_ncar.F90)을 쓰세요."
+  - 복사·강수는 3시간 평균이고 첫 값이 매년 1월 1일 00~03 UTC 구간의 중앙에 놓입니다. 바람·기온·습도·기압은 00 UTC부터의 순간값이라 시간축이 1.5시간 어긋나 있습니다.
+  - 총 강수는 prra + prsn, 총 담수 유출은 friver + licalvf 입니다. 해면기압을 제외한 모든 대기 변수는 기준 관측자료에 맞춰 보정된 값이라 JRA-55 원자료와 다릅니다.
+  - v1.5 이전 판에는 일부 열대저기압이 잘못 회전하는 오류(1959년 북동태평양, 1967~1987년 북대서양)가 있었고 v1.5부터 고쳐졌습니다. 옛 판으로 돌린 실험과 비교할 때 참고하세요.
+
+citations:
+  papers:
+    - label: JRA55-do 기술 논문 (MRI가 인용을 요청하는 논문)
+      text: >-
+        Tsujino, H., Urakawa, S., Nakano, H., Small, R. J., Kim, W. M., Yeager, S. G., Danabasoglu, G., Suzuki, T.,
+        Bamber, J. L., Bentsen, M., Böning, C. W., Bozec, A., Chassignet, E. P., Curchitser, E., Boeira Dias, F.,
+        Durack, P. J., Griffies, S. M., Harada, Y., Ilicak, M., Josey, S. A., Kobayashi, C., Kobayashi, S., Komuro, Y.,
+        Large, W. G., Le Sommer, J., Marsland, S. J., Masina, S., Scheinert, M., Tomita, H., Valdivieso, M., Yamazaki, D. (2018):
+        JRA-55 based surface dataset for driving ocean–sea-ice models (JRA55-do). Ocean Modelling, 130, 79–139.
+      doi: 10.1016/j.ocemod.2018.07.002
+      bibtex: |
+        @article{tsujino2018jra55do,
+          author  = {Tsujino, Hiroyuki and Urakawa, Shogo and Nakano, Hideyuki and Small, R. Justin and Kim, Who M. and Yeager, Stephen G. and Danabasoglu, Gokhan and Suzuki, Tatsuo and Bamber, Jonathan L. and Bentsen, Mats and B{\"o}ning, Claus W. and Bozec, Alexandra and Chassignet, Eric P. and Curchitser, Enrique and Boeira Dias, Fabio and Durack, Paul J. and Griffies, Stephen M. and Harada, Yayoi and Ilicak, Mehmet and Josey, Simon A. and Kobayashi, Chiaki and Kobayashi, Shinya and Komuro, Yoshiki and Large, William G. and Le Sommer, Julien and Marsland, Simon J. and Masina, Simona and Scheinert, Markus and Tomita, Hiroyuki and Valdivieso, Maria and Yamazaki, Dai},
+          title   = {{JRA-55} based surface dataset for driving ocean--sea-ice models ({JRA55-do})},
+          journal = {Ocean Modelling},
+          volume  = {130},
+          pages   = {79--139},
+          year    = {2018},
+          doi     = {10.1016/j.ocemod.2018.07.002}
+        }
+    - label: OMIP-2 평가 논문 (JRA55-do 강제 실험, 선택)
+      text: >-
+        Tsujino, H., et al. (2020): Evaluation of global ocean–sea-ice model simulations based on the experimental protocols
+        of the Ocean Model Intercomparison Project phase 2 (OMIP-2). Geoscientific Model Development, 13(8), 3643–3708.
+      doi: 10.5194/gmd-13-3643-2020
+  acknowledgement: >-
+    MRI는 JRA55-do를 쓴 연구에서 Tsujino et al. (2018)을 인용하도록 요청하며, 사용한 버전(예: v1.6.0, source_id MRI-JRA55-do-1-6-0)을
+    본문에 함께 적는 것이 좋습니다. 자료에 대한 문의는 JRA-55 프로젝트가 아니라 논문 저자에게 하도록 안내되어 있습니다.
+
+notices:
+  - date: "2024-05-31"
+    level: info
+    title: 최종판 v1.6.0 input4MIPs 공개 (버전 태그 v20240531)
+    body: >-
+      1958년 1월~2024년 1월을 한 판으로 묶은 v1.6.0이 input4MIPs(CMIP6Plus, source_id MRI-JRA55-do-1-6-0)로 공개되었습니다.
+      내용은 v1.5.0과 v1.5.0.1을 합친 것과 같습니다. 날짜는 파일 버전 태그 기준입니다.
+    source: https://climate.mri-jma.go.jp/pub/ocean/JRA55-do/
+  - date: "2024-01-31"
+    level: critical
+    title: JRA55-do 갱신 중단
+    body: 바탕 자료인 JRA-55의 서비스 종료에 따라 JRA55-do 갱신도 2024년 1월 31일로 중단되었습니다.
+    source: https://climate.mri-jma.go.jp/pub/ocean/JRA55-do/
+  - date: "2020-09-16"
+    level: info
+    title: v1.5.0 공개 — 열대저기압 오류 수정
+    body: >-
+      잘못 회전하던 일부 열대저기압을 20CRv3 장으로 교체하고, 2016년 이후 지표 변수를 지연 모드 COBE-SST 기반으로 바꾼 v1.5.0이
+      공개되었습니다(버전 태그 v20200916). 앞서 나온 베타판 v20200803은 오류로 대체되었습니다.
+    source: https://climate.mri-jma.go.jp/pub/ocean/JRA55-do/
+
+links:
+  - name: MRI JRA55-do 공식 페이지
+    url: https://climate.mri-jma.go.jp/pub/ocean/JRA55-do/
+  - name: input4MIPs 소스 안내 — MRI-JRA55-do-1-6-0
+    url: https://input4mips-cvs.readthedocs.io/en/latest/source-id-landing-pages/MRI-JRA55-do-1-6-0/
+  - name: JRA55-do 생성 코드 (GitHub)
+    url: https://github.com/HiroyukiTsujino/JRA55-do
+  - name: WCRP 발표 — 차세대 해양·해빙 강제력 CFORCE (PDF)
+    url: https://wcrp-cmip.org/wp-content/uploads/2024/10/S5_DLawrence.pdf
+
+watch_urls:
+  - https://climate.mri-jma.go.jp/pub/ocean/JRA55-do/
+  - https://input4mips-cvs.readthedocs.io/en/latest/source-id-landing-pages/MRI-JRA55-do-1-6-0/
+
+last_verified: "2026-10-11"

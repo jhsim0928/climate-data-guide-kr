@@ -7,6 +7,9 @@ id: era5
 name: ERA5
 full_name: ECMWF Reanalysis v5 (5세대 ECMWF 대기 재분석)
 category: reanalysis
+domain: atmosphere
+group: 재분석
+order: 10
 domains: [대기, 육지, 해양파랑]
 provider: ECMWF / Copernicus Climate Change Service (C3S)
 
@@ -15,6 +18,55 @@ status_note: >-
   정상 제공 중입니다. 다만 후속 재분석인 ERA6 생산이 시작되었고,
   ERA6 자료가 충분히 공개되면 ERA5T(준실시간 갱신)를 ERA6가 대체할 예정입니다.
   장기 실시간 갱신이 필요한 연구라면 전환 계획 공지를 지켜보세요.
+
+transitions:
+  - from: ERA5
+    to: ERA6
+    status: planned
+    summary: 2026년 생산이 시작된 차세대 재분석입니다. 약 14 km 해상도에 해양 모델이 결합되며, 2007년 이후 구간이 2027년 말경 처음 공개되고 충분히 쌓이면 ERA5T를 대체할 예정입니다.
+    changes:
+      - aspect: 기간
+        before: 1940–현재
+        after: 최소 1950년 이후 (10년 단위 구간을 병렬 생산, 2007년 이후 구간부터 공개)
+      - aspect: 수평 해상도
+        before: 대기·지면 약 31 km (TL639), 파랑 약 40 km
+        after: 대기·지면·파랑 모두 약 14 km (TCo799)
+      - aspect: 연직 해상도
+        before: 대기 137층 (최상층 1 Pa)
+        after: 대기 137층 (최상층 1 Pa) + 해양 75층
+      - aspect: 모델 버전
+        before: IFS CY41r2
+        after: IFS CY49r2 (그 사이 10개 사이클의 개선 반영)
+      - aspect: 해양 결합
+        before: 해양 모델 없음 (SST·해빙을 경계조건으로 사용)
+        after: NEMO-4 해양 + SI3 해빙 모델 결합, 초기 해양·해빙 상태는 ORAS6
+      - aspect: 성층권 자료동화
+        before: 4D-Var
+        after: 성층권에 약한 구속(weak-constraint) 4D-Var 적용, ERA5의 상부 성층권 문제 완화 목표
+      - aspect: 적설
+        before: 단일층 적설
+        after: 5층 적설 + 해빙 위 적설
+      - aspect: 관측 입력
+        before: ERA5 당시 확보한 관측
+        after: 복원·재처리 관측 추가 (VTPR·HIRS·MHS, 극궤도 AMV, GNSS-RO, 고층·부이 자료, 1979년 이전 위성 자료 등)
+      - aspect: 파일 형식
+        before: GRIB1·GRIB2 혼용
+        after: 전부 GRIB2 (WMO 단위 기준)
+      - aspect: 준실시간 갱신
+        before: ERA5T (약 5일 지연)
+        after: 충분한 자료가 공개된 뒤 ERA5T를 대체 (ERA6T 지연 시간은 미정)
+    impacts:
+      - ERA6가 공개되어도 처음에는 2007년 이후 구간만 있습니다. 장기 분석은 한동안 ERA5로 하고, 두 자료를 한 시계열로 이어 붙이지 마세요.
+      - 실시간 갱신이 ERA5T에서 ERA6로 넘어가면 ERA5를 최근까지 이어 받는 작업 흐름이 끊길 수 있습니다. ECMWF가 예고한 전환 계획 공지를 확인하세요.
+      - 파일이 전부 GRIB2로 바뀌므로 GRIB1 전용 도구나 변수 이름·단위에 의존하는 스크립트는 점검이 필요합니다.
+      - Copernicus(2026년 3월)는 ERA5 생산을 필요한 기간 동안 중단 없이 계속한다고 밝혔습니다. 당장 진행 중인 연구를 서둘러 옮길 필요는 없습니다.
+    sources:
+      - name: ECMWF Newsletter 188 (2026) — ERA6 reanalysis production
+        url: https://www.ecmwf.int/en/newsletter/188/news/era6-reanalysis-production
+      - name: Copernicus — Copernicus Climate's ERA6 reanalysis production starts (2026-03-06)
+        url: https://climate.copernicus.eu/copernicus-climates-era6-reanalysis-production-starts
+      - name: Hersbach et al. (2020), The ERA5 global reanalysis, QJRMS
+        url: https://doi.org/10.1002/qj.3803
 
 period:
   start: "1940-01"
@@ -34,6 +86,64 @@ summary: >-
   ECMWF가 Copernicus 기후변화 서비스(C3S)를 위해 생산한 5세대 전지구 재분석자료입니다.
   대기, 지면, 해양 파랑 변수를 1시간 간격으로 제공하며, ERA-Interim을 대체했습니다.
   CDS에서 받는 자료는 원본 해상도를 0.25° 위경도 격자로 재격자한 것입니다.
+
+variables:
+  note: >-
+    ECMWF ERA5 공식 문서(파라미터 표)와 ECMWF 파라미터 데이터베이스 기준 주요 변수입니다.
+    변수명은 GRIB short name이며, CDS에서 NetCDF로 받으면 대부분 같은 이름을 쓰지만 일부(`2t`→`t2m`, `10u`→`u10` 등)는 다르게 저장됩니다.
+    누적·플럭스 변수(강수, 복사, 열속)는 시간 누적값이므로 단위에 유의하세요.
+  full_list: https://confluence.ecmwf.int/display/CKB/ERA5%3A+data+documentation#ERA5:datadocumentation-Parameterlistings
+  groups:
+    - name: 지표·단일면 (순간값)
+      items:
+        - "2m 기온 — `2t` (K)"
+        - "2m 이슬점온도 — `2d` (K)"
+        - "10m 동서풍 — `10u` (m s-1)"
+        - "10m 남북풍 — `10v` (m s-1)"
+        - "평균 해면기압 — `msl` (Pa)"
+        - "해수면온도 — `sst` (K)"
+        - "해빙 면적비 — `ci` (0-1)"
+        - "전운량 — `tcc` (0-1)"
+        - "대기경계층 높이 — `blh` (m)"
+        - "대류가용잠재에너지(CAPE) — `cape` (J kg-1)"
+        - "가강수량(수증기 연직적분) — `tcwv` (kg m-2)"
+    - name: 지표·단일면 (누적·최대최소, 예보 기반)
+      items:
+        - "총강수량 — `tp` (m)"
+        - "지표 하향 단파복사 — `ssrd` (J m-2)"
+        - "지표 하향 장파복사 — `strd` (J m-2)"
+        - "대기 상단 순 장파복사(OLR 관련) — `ttr` (J m-2)"
+        - "지표 현열 플럭스 — `sshf` (J m-2)"
+        - "지표 잠열 플럭스 — `slhf` (J m-2)"
+        - "증발량 — `e` (m of water equivalent)"
+        - "10m 순간 최대풍속(돌풍) — `10fg` (m s-1)"
+    - name: 기압면 (37층, 1000~1 hPa)
+      items:
+        - "기온 — `t` (K)"
+        - "동서풍 — `u` (m s-1)"
+        - "남북풍 — `v` (m s-1)"
+        - "연직속도(기압좌표) — `w` (Pa s-1)"
+        - "지위(geopotential) — `z` (m2 s-2)"
+        - "비습 — `q` (kg kg-1)"
+        - "상대습도 — `r` (%)"
+        - "상대와도 — `vo` (s-1)"
+        - "발산 — `d` (s-1)"
+        - "잠재와도 — `pv` (K m2 kg-1 s-1)"
+        - "오존 질량혼합비 — `o3` (kg kg-1)"
+        - "구름 액체수·얼음 함량 — `clwc`, `ciwc` (kg kg-1)"
+    - name: 해양 파랑
+      items:
+        - "유의파고(풍랑+너울) — `swh` (m)"
+        - "평균 파향 — `mwd` (degree true)"
+        - "평균 파주기 — `mwp` (s)"
+        - "첨두 파주기 — `pp1d` (s)"
+    - name: 지면·불변장
+      items:
+        - "토양온도 1층(0~7 cm) — `stl1` (K)"
+        - "토양 체적수분 1층(0~7 cm) — `swvl1` (m3 m-3)"
+        - "적설 깊이 — `sd` (m of water equivalent)"
+        - "해륙 마스크 — `lsm` (0-1)"
+        - "지표 지위(지형) — `z` (m2 s-2)"
 
 access:
   - name: Copernicus Climate Data Store (CDS) — 단일면(single levels)

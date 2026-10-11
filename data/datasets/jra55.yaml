@@ -5,6 +5,9 @@ id: jra55
 name: JRA-55
 full_name: Japanese 55-year Reanalysis (일본 기상청 55년 재분석)
 category: reanalysis
+domain: atmosphere
+group: 재분석
+order: 30
 domains: [대기, 육지]
 provider: 일본 기상청 (JMA)
 
@@ -20,6 +23,81 @@ successor:
     기간 1947년 9월~현재(월 단위 갱신), 모델 해상도 TL479(약 40 km)·100층.
     라이선스가 CC BY-NC-SA 4.0(비상업)이라는 점이 JRA-55와 다릅니다.
     인용: Kosaka et al. (2024), J. Meteor. Soc. Japan, 102, 49–109, doi:10.2151/jmsj.2024-004
+
+transitions:
+  - from: JRA-55
+    to: JRA-3Q
+    to_id: jra3q
+    status: completed
+    date: "2024-01"
+    summary: >-
+      JMA가 기반 현업 체계를 2009년판에서 2018년판으로 올리고 해상도·층수·모델 상단을 높여 1947년 9월부터 다시 만든 3세대 재분석입니다.
+      JRA-55의 에너지 수지 불균형, 열대저기압 탐지율의 인위적 감소, 상층 대류권 온난 편향이 크게 줄었습니다. 대신 경계조건·관측·변수 이름과 단위,
+      라이선스가 모두 바뀌었으므로 단순 교체가 아니라 별개의 자료로 다뤄야 합니다.
+    changes:
+      - aspect: 기간
+        before: "1958-01 ~ 2024-01 (준실시간 갱신 종료)"
+        after: "1947-09 ~ 현재 (NCAR 월 단위 갱신, 준실시간본 별도)"
+      - aspect: 기반 현업 체계
+        before: "2009년 12월 기준 JMA 전지구 자료동화 체계"
+        after: "2018년 12월 기준 JMA 전지구 수치예보 체계(TL479판)"
+      - aspect: 수평 해상도
+        before: "TL319 (약 55 km)"
+        after: "TL479 (약 40 km)"
+      - aspect: 연직 층수·모델 상단
+        before: "60층, 상단 0.1 hPa"
+        after: "100층, 상단 0.01 hPa"
+      - aspect: 자료동화
+        before: "4D-Var(내부 루프 T106), 위성 복사휘도 VarBC, RTTOV 9.3"
+        after: "증분형 4D-Var(내부 루프 TL319L100), 모든 위성 복사휘도에 VarBC, RTTOV 10.2. 배경오차 공분산은 정적(NMC 방법)이며 관측이 드문 1998년 7월 이전은 배경오차 분산을 키움(1958년 이전 약 155%)"
+      - aspect: 해수면온도·해빙 경계조건
+        before: "COBE-SST(1°) 전 기간 / 해빙은 1층 2 m 슬랩 모형, 농도 55% 기준으로 해빙 여부 판정"
+        after: "COBE-SST2(1°, ~1985-05) → MGDSST(0.25°, 1985-06~) / 해빙은 4층 1.5 m 슬랩, 해빙·개수면 타일 처리. 전환 영향 평가용 JRA-3Q-COBE(1985-06~1990-12) 별도"
+      - aspect: 관측 입력
+        before: "1958년 이후 관측, 당시 재처리 위성자료"
+        after: "1958년 이전 발굴 관측(HadISD, ICOADS R3.0, ISPD v4, IGRA v2, CHUAN 등) 추가, GMS-5·MTSAT 재처리 대기운동벡터, GNSS-RO 굴절각 동화, 지상 GNSS 천정 지연(1994~2014), 초분광 적외 탐측기. 라디오존데 편향보정 RAOBCORE → RISE"
+      - aspect: 열대저기압 처리
+        before: "TC 주변 바람 산출값(TCR) 동화 — 1980년대 후반부터 TC 탐지율·최대풍 약화 추세가 인위적으로 나타남"
+        after: "JMA 현업식 TC 보거스(해면기압, 850·300 hPa 바람) — 전 기간 탐지율 대체로 90% 이상"
+      - aspect: 전지구 에너지 수지
+        before: "대기 상단·지표 모두 큰 상향 순에너지 불균형, 해양 지표 순플럭스 -15.9 W m-2"
+        after: "대기 상단 순플럭스 -5.5 W m-2(JRA-55의 약 절반), 해양 지표 순플럭스 -6.5 W m-2"
+      - aspect: 기온·습도 편향
+        before: "250 hPa 부근 상층 대류권 온난 편향, 850 hPa 부근 한랭 편향, 중층 건조 편향, 열대 강수 과다"
+        after: "상층 온난 편향 크게 감소, 하층 한랭 편향·중층 건조 편향 완화"
+      - aspect: 모델 물리·외부 강제
+        before: "장파 복사 9밴드·3시간마다 계산, WMO 에어로졸 분포, 오존 MRI-CCM1, 지면 SiB 토양 온도 1층·수분 3층"
+        after: "장파 복사 11밴드·매시간 계산, MASINGAR 기반 5종 에어로졸 기후값, 오존 MRI-CCM2.1, 지면 SiB 토양 7층·적설 최대 4층"
+      - aspect: 출력 층·형식
+        before: "기압면 37층(1000~1 hPa), 지표 진단 3시간 간격, GRIB1"
+        after: "기압면 45층(1000~0.01 hPa), 지표 진단·플럭스 1시간 간격, GRIB2 (NCAR GDEX는 변수별 NetCDF4로 변환)"
+      - aspect: 변수 이름·단위
+        before: "강수·증발 mm day-1 (예: `tprat`), 2 m 기온 파일 이름 `anl_surf125.011_tmp`"
+        after: "강수·증발 kg m-2 s-1 (예: `tprate`), 2 m 기온 변수 `tmp2m-hgt-an-ll125`"
+      - aspect: 라이선스·제공처
+        before: "CC BY 4.0(NCAR 표기) + JMA 이용 조건 / NCAR d628000·d628001, DIAS"
+        after: "CC BY-NC-SA 4.0(비상업·동일조건) / NCAR d640000~d640006, DIAS(일부 재개), 상업적 이용은 JMBSC"
+    impacts:
+      - 두 자료는 기후값과 추세가 다르므로 2024년 1월에서 JRA-55와 JRA-3Q를 이어 붙여 한 시계열로 만들지 마세요. 기간이 필요하면 처음부터 JRA-3Q 하나로 다시 계산하는 편이 안전합니다.
+      - "강수·증발 단위가 mm/day에서 kg m-2 s-1로 바뀌었습니다. 기존 스크립트를 그대로 쓰면 값이 86400배 작게 나오니, 변수 이름과 단위 변환을 함께 고치세요."
+      - JRA-3Q는 비상업 라이선스(CC BY-NC-SA 4.0)라서 기업 과제·상용 서비스에 쓰거나 파생 자료를 다른 조건으로 배포할 수 없습니다. 이런 용도라면 JMBSC 경로를 확인하세요.
+      - 1985년 6월의 해수면온도 입력 전환(COBE-SST2 → MGDSST)과 1985년 6월~2013년 4월 해빙 가장자리 품질 문제는 JRA-55에 없던 불연속 요인입니다. 해양 경계층·극지 연구라면 JRA-3Q-COBE와 품질 공지를 함께 확인하세요.
+      - JRA-3Q에서도 화산 폭발 뒤 성층권 승온이 실제보다 작게 나타나고, TC 최대 10 m 풍속은 베스트트랙의 50~60% 수준입니다. JRA-55 대비 개선이 이 부분까지 해결한 것은 아닙니다.
+    sources:
+      - name: Kosaka et al. (2024), The JRA-3Q Reanalysis, J. Meteor. Soc. Japan, 102, 49–109
+        url: https://doi.org/10.2151/jmsj.2024-004
+      - name: Kobayashi et al. (2015), The JRA-55 Reanalysis, J. Meteor. Soc. Japan, 93, 5–48
+        url: https://doi.org/10.2151/jmsj.2015-001
+      - name: Harada et al. (2026), JRA-3Q 열대 해양 강수 평가, Q. J. R. Meteorol. Soc., 152, e70026
+        url: https://doi.org/10.1002/qj.70026
+      - name: JMA JRA-3Q 공식 페이지 (제품·SST 구성, 제공처, 품질 공지)
+        url: https://www.data.jma.go.jp/jra/html/JRA-3Q/index_en.html
+      - name: JMA TCC 연수 강의자료 — Reanalysis and JRA-3Q (2024-01, JRA-25/55/3Q 비교표)
+        url: https://ds.data.jma.go.jp/gmd/tcc/tcc/library/library2023/lectures/4.2.Reanalysis_and_JRA-3Q_20240129.pdf
+      - name: JRA-3Q 1.25° 자료 형식 문서 (GRIB2, 기압면 45층)
+        url: https://www.data.jma.go.jp/jra/html/JRA-3Q/document/JRA-3Q_LL125_format_v1_en.pdf
+      - name: JRA-55 Product Users' Handbook (1.25° 격자, 기압면 37층·변수 단위)
+        url: https://www.data.jma.go.jp/jra/html/JRA-55/document/JRA-55_handbook_LL125_v7_en.pdf
 
 period:
   start: "1958-01"
@@ -39,6 +117,61 @@ summary: >-
   일본 기상청(JMA)이 수행한 두 번째 장기 전지구 재분석입니다. 전지구 라디오존데 관측망이 갖춰진 1958년부터 시작하며,
   4D-Var 자료동화와 위성 복사휘도 변분 편향보정(VarBC)을 사용했습니다. 동아시아 연구에서 ERA5와 함께
   비교용으로 많이 쓰였습니다.
+
+variables:
+  note: >-
+    JRA-55 Product Users' Handbook(1.25° 격자판)과 NCAR GDEX 파일 이름 기준 주요 변수입니다.
+    변수명은 파일 이름에서 GRIB1 코드 번호 뒤에 붙는 약어입니다(예: anl_p125.011_tmp → `tmp`).
+    괄호 안은 제품 분류(파일 접두어)이며, 강수·증발은 mm/day 단위의 평균 강도입니다.
+  full_list: https://www.data.jma.go.jp/jra/html/JRA-55/document/JRA-55_handbook_LL125_v7_en.pdf
+  groups:
+    - name: 기압면 분석 (anl_p125, 6시간, 37층)
+      items:
+        - "지위고도 — `hgt` (gpm)"
+        - "기온 — `tmp` (K)"
+        - "이슬점 강하 — `depr` (K)"
+        - "동서 바람 — `ugrd` (m s⁻¹)"
+        - "남북 바람 — `vgrd` (m s⁻¹)"
+        - "연직 속도(기압 좌표) — `vvel` (Pa s⁻¹)"
+        - "비습 — `spfh` (kg kg⁻¹)"
+        - "상대습도 — `rh` (%)"
+        - "상대 소용돌이도 — `relv` (s⁻¹)"
+        - "유선함수 — `strm` (m² s⁻¹)"
+        - "속도 퍼텐셜 — `vpot` (m² s⁻¹)"
+    - name: 지표 분석 (anl_surf125, 6시간)
+      items:
+        - "지면 기압 — `pres` (Pa)"
+        - "평균 해면기압 — `prmsl` (Pa)"
+        - "2 m 기온 — `tmp` (K)"
+        - "2 m 비습 — `spfh` (kg kg⁻¹)"
+        - "10 m 바람 u·v — `ugrd`, `vgrd` (m s⁻¹)"
+    - name: 연직 적분 분석 (anl_column, 6시간)
+      items:
+        - "가강수량(수증기만) — `pwat` (kg m⁻²)"
+        - "연직 적분 동서 수증기 플럭스 — `uwv` (kg m⁻¹ s⁻¹)"
+        - "연직 적분 남북 수증기 플럭스 — `vwv` (kg m⁻¹ s⁻¹)"
+    - name: 플럭스·진단 — 예보 3시간 평균 (fcst_phy2m125)
+      items:
+        - "총 강수 — `tprat` (mm day⁻¹)"
+        - "대류성 강수 — `cprat` (mm day⁻¹)"
+        - "대규모 강수 — `lprat` (mm day⁻¹)"
+        - "강설(물당량) — `srweq` (mm day⁻¹)"
+        - "증발 — `evp` (mm day⁻¹)"
+        - "잠열 플럭스 — `lhtfl` (W m⁻²)"
+        - "현열 플럭스 — `shtfl` (W m⁻²)"
+        - "지표 운동량 플럭스 u·v — `uflx`, `vflx` (N m⁻²)"
+        - "하향 단파·장파 복사(지표) — `dswrf`, `dlwrf` (W m⁻²)"
+        - "상향 단파·장파 복사(지표·대기 상단) — `uswrf`, `ulwrf` (W m⁻²)"
+    - name: 구름·오존 (fcst_surf125 3시간 순간값 / fcst_p125 6시간)
+      items:
+        - "전운량·하층·중층·상층 운량 — `tcdc`, `lcdc`, `mcdc`, `hcdc` (%)"
+        - "오존 혼합비(기압면) — `ozone` (mg kg⁻¹)"
+        - "구름 물(액체+얼음, 기압면) — `cwat` (kg kg⁻¹)"
+    - name: 지면 (anl_land / fcst_phyland125)
+      items:
+        - "적설 물당량 — `snwe` (kg m⁻²)"
+        - "토양 습윤도 — `soilw` (비율)"
+        - "유출량 — `rof` (mm day⁻¹)"
 
 access:
   - name: NSF NCAR GDEX — 3시간·6시간 자료 (d628000)

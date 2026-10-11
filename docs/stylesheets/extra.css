@@ -122,3 +122,21 @@
 .form-message.info    { color: var(--md-default-fg-color--light); }
 [data-md-color-scheme="slate"] .form-message.error   { color: #ff8a80; }
 [data-md-color-scheme="slate"] .form-message.success { color: #9ee0b2; }
+
+/* 변수 목록: 넓은 화면에서 2단 */
+.var-list ul { columns: 2; column-gap: 2rem; margin-top: 0.3em; }
+.var-list li { break-inside: avoid; margin-bottom: 0.25em; }
+@media (max-width: 44em) { .var-list ul { columns: 1; } }
+
+/* 알림 신청 폼: 분야 제목 */
+.cdg-form .check-group-title {
+  margin: 0.8em 0 0.2em;
+  font-size: 0.8em;
+  font-weight: 700;
+  color: var(--md-default-fg-color--light);
+  letter-spacing: 0.04em;
+}
+
+/* 접힌 목록(이미 있는 데이터셋) */
+details.hint { margin: 0.6em 0 1em; }
+details.hint summary { cursor: pointer; }

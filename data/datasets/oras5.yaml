@@ -1,0 +1,258 @@
+# ─────────────────────────────────────────────────────────────
+# ORAS5 — 데이터셋 정보 파일
+# 수정 후에는 공식 페이지에서 확인한 날짜로 last_verified 를 갱신하세요.
+# ─────────────────────────────────────────────────────────────
+id: oras5
+name: ORAS5
+full_name: ECMWF Ocean Reanalysis System 5 (ECMWF 5세대 해양·해빙 재분석)
+category: reanalysis
+domain: ocean
+group: 재분석
+order: 20
+domains: [해양, 해빙]
+provider: ECMWF / Copernicus Climate Change Service (C3S)
+
+status: active
+status_note: >-
+  CDS에서 매달 갱신되며 정상 제공 중입니다. 후속 시스템 ORAS6가 개발되어 ERA6의 해양·해빙 초기장으로 쓰이고 있고,
+  2026년 6월 ECMWF가 공개를 준비 중이라고 발표했습니다. 다만 2026년 10월 확인 기준으로 ORAS6의 CDS 공개 일정이나
+  ORAS5 갱신 종료 계획은 공지되지 않았습니다.
+
+transitions:
+  - from: ORAS5
+    to: ORAS6
+    status: planned
+    summary: >-
+      ECMWF의 6세대 해양·해빙 재분석으로, 해상도(¼°, 75층)는 같지만 모델(NEMO4·SI3), 대기 강제력(시간별 ERA5),
+      자료동화(앙상블 기반 3D-Var, SST 직접 동화)가 모두 바뀌었습니다. ERA6의 해양·해빙 경계조건으로 쓰이며,
+      2026년 6월 기준 1993년 이후 구간부터 회원국·협력 기관에 먼저 제공될 예정이고 CDS 공개 일정은 발표되지 않았습니다.
+    changes:
+      - aspect: 기간
+        before: "1958-01 ~ 현재 (CDS)"
+        after: "1950년 ~ 현재 (여러 구간을 병렬 생산, 1993년 이후 구간 먼저 완료)"
+      - aspect: 해양·해빙 모델
+        before: "NEMO v3.4 + LIM2 해빙 모델"
+        after: "NEMO v4 + SI3 (두께 범주가 여럿인 해빙 모델, 해빙 염분 예단)"
+      - aspect: 수평·연직 해상도
+        before: "¼°, 75층"
+        after: "¼°, 75층 (변화 없음)"
+      - aspect: 대기 강제력
+        before: "ERA-40/ERA-Interim(일 단위, 24시간 간격), 2015년 이후 ECMWF 현업 분석"
+        after: "ERA5 시간별 강제력, IFS 현업에 가까운 새 벌크 플럭스 공식"
+      - aspect: 해수면온도 처리
+        before: "SST 넛징(nudging)"
+        after: "재처리 OSTIA L4 SST를 직접 동화 (SST 편향 크게 감소, 일변화 표현 개선)"
+      - aspect: 해빙 농도 관측
+        before: "OSTIA L4 격자 해빙 농도"
+        after: "EUMETSAT OSI SAF 해빙 농도 기후자료기록(L3, OSI-450-a), 해양·해빙 동시 최소화"
+      - aspect: 위성 고도계 동화
+        before: "50°S~50°N 밖 고위도와 연안 근처 SLA는 제외"
+        after: "재처리 DUACS SLA, 고위도·연안 자료도 동화"
+      - aspect: 자료동화 방식
+        before: "NEMOVAR 3D-Var FGAT"
+        after: "앙상블 기반 3D-Var (앙상블에서 얻은 흐름 의존 배경오차를 섞은 하이브리드 공분산)"
+      - aspect: 앙상블
+        before: "5개 멤버 (CDS에는 1개만 공개)"
+        after: "해양·해빙 분석 11개 멤버"
+      - aspect: 출력 형식·시간 간격
+        before: "CDS 월평균 NetCDF"
+        after: "GRIB2. 1993년 이후 구간은 2차원 시간별·3차원 일별 자료로 우선 제공 예정 (CDS 제공 형태는 미정)"
+    impacts:
+      - ORAS6가 공개되어도 ORAS5와 한 시계열로 이어 붙이지 마세요. 강제력·모델·동화 방식이 모두 달라 기후값과 추세가 다를 수 있습니다.
+      - ERA6와 함께 분석할 계획이라면 ERA6 해양 경계조건과 일관된 ORAS6를 쓰는 편이 자연스럽습니다.
+      - ECMWF 뉴스레터에 따르면 북극 일부 해역에서 해빙 두께가 얇게 나오는 편향이 있으니 해빙 두께 연구는 검증 자료와 비교하세요.
+      - 공개 일정·배포처·변수 이름이 아직 정해지지 않았으므로, 기존 ORAS5 다운로드 스크립트가 그대로 동작한다고 가정하지 마세요.
+    sources:
+      - name: ECMWF Newsletter 180 — ORAS6 시스템 소개 (2024)
+        url: https://www.ecmwf.int/en/newsletter/180/earth-system-science/ecmwfs-next-ensemble-reanalysis-system-ocean-and-sea-ice
+      - name: ECMWF 뉴스 — New ORAS6 ocean reanalysis (2026-06-08)
+        url: https://www.ecmwf.int/en/about/media-centre/news/2026/new-oras6-ocean-reanalysis
+      - name: Browne et al. (2026) Sea ice data assimilation in ORAS6, The Cryosphere
+        url: https://tc.copernicus.org/articles/20/3299/2026/
+      - name: Zuo et al. (2019) ORAS5 시스템 논문
+        url: https://doi.org/10.5194/os-15-779-2019
+
+period:
+  start: "1958-01"
+  end: present
+  note: >-
+    1958~2014년은 재분석 대기 강제력(ERA-40, ERA-Interim)을 쓴 consolidated 자료,
+    2015년 이후는 ECMWF 현업 분석을 강제력으로 쓴 operational 자료입니다. 2026-10-11 확인 시 2026년 8월까지 제공됩니다.
+
+resolution:
+  spatial: "약 0.25° 삼극(tripolar) 모델 격자 (열대 약 25 km, 북극 약 9 km)"
+  vertical: "75층 (표층~약 5,500 m, 표층 부근 약 1 m 간격)"
+  temporal: 월평균
+
+update: 매월 15일경 (약 15일 지연, operational 자료)
+license: CC BY 4.0
+account_required: true
+
+summary: >-
+  ECMWF의 OCEAN5 시스템으로 만든 전지구 해양·해빙 재분석입니다. NEMO 해양 모델과 NEMOVAR(3D-Var FGAT) 자료동화를 사용해
+  수온·염분 프로파일, 해수면 고도 편차, 해빙 농도 관측을 동화했습니다. ECMWF 계절 예측의 해양 초기장으로 쓰여 온 시스템이며,
+  CDS에는 5개 앙상블 멤버 중 1개만 월평균으로 공개되어 있습니다.
+
+variables:
+  note: >-
+    CDS 다운로드 양식 기준 주요 변수입니다. 백틱 안의 이름은 CDS API 요청에 쓰는 이름이며,
+    내려받은 NetCDF 파일 안의 변수명은 이와 다를 수 있으니 파일을 열어 확인하세요.
+  full_list: https://cds.climate.copernicus.eu/datasets/reanalysis-oras5?tab=overview
+  groups:
+    - name: 3차원 해양 (75층, vertical_resolution=all_levels)
+      items:
+        - "잠재수온 — `potential_temperature` (°C)"
+        - "염분 — `salinity` (PSU)"
+        - "모델 격자 x방향 유속 — `zonal_velocity` (m/s)"
+        - "모델 격자 y방향 유속 — `meridional_velocity` (m/s)"
+        - "위경도 방향으로 회전한 동서 유속 — `rotated_zonal_velocity` (m/s)"
+        - "위경도 방향으로 회전한 남북 유속 — `rotated_meridional_velocity` (m/s)"
+    - name: 해양 단일면 (vertical_resolution=single_level)
+      items:
+        - "해수면온도 — `sea_surface_temperature` (°C)"
+        - "해수면 염분 — `sea_surface_salinity` (PSU)"
+        - "해수면 높이 — `sea_surface_height` (m)"
+        - "혼합층 깊이(밀도차 0.01) — `mixed_layer_depth_0_01` (m)"
+        - "혼합층 깊이(밀도차 0.03) — `mixed_layer_depth_0_03` (m)"
+        - "20°C 등온선 깊이 — `depth_of_20_c_isotherm` (m)"
+        - "상층 300 m 해양 열용량 — `ocean_heat_content_for_the_upper_300m` (J m-2)"
+        - "상층 700 m 해양 열용량 — `ocean_heat_content_for_the_upper_700m` (J m-2)"
+        - "전층 해양 열용량 — `ocean_heat_content_for_the_total_water_column` (J m-2)"
+    - name: 해면 플럭스
+      items:
+        - "순 하향 열플럭스 — `net_downward_heat_flux` (W m-2)"
+        - "순 상향 담수 플럭스 — `net_upward_water_flux` (kg m-2 s-1)"
+        - "동서 바람 응력 — `zonal_wind_stress` (N m-2)"
+        - "남북 바람 응력 — `meridional_wind_stress` (N m-2)"
+    - name: 해빙
+      items:
+        - "해빙 농도 — `sea_ice_concentration` (무차원)"
+        - "해빙 두께 — `sea_ice_thickness` (m)"
+        - "해빙 x방향 속도 — `sea_ice_zonal_velocity` (m/s)"
+        - "해빙 y방향 속도 — `sea_ice_meridional_velocity` (m/s)"
+
+access:
+  - name: Copernicus Climate Data Store (CDS) — reanalysis-oras5
+    url: https://cds.climate.copernicus.eu/datasets/reanalysis-oras5
+    method: 웹 다운로드 / CDS API (cdsapi)
+    note: ECMWF 계정과 데이터셋 이용약관(CC BY) 동의가 필요합니다.
+  - name: CDS — ORAS5 월별 시계열(ARCO) 데이터셋
+    url: https://cds.climate.copernicus.eu/datasets/reanalysis-oras5-timeseries
+    method: 웹 다운로드 / CDS API / Zarr(베타)
+    note: >-
+      2026년 4월 공개된 실험적 데이터셋으로, 한 지점의 긴 시계열을 빠르게 뽑도록 재구성한 일부 변수만 담고 있습니다.
+      CSV 출력도 됩니다. 공간장 전체가 필요하면 원래 데이터셋을 쓰세요.
+  - name: Universität Hamburg ICDC (EASY-Init ORAS5 미러)
+    url: https://cen.uni-hamburg.de/icdc/data/ocean/easy-init-ocean/ecmwf-oras5.html
+    method: 웹 다운로드
+    note: 1979~2018년 등 일부 기간만 있는 별도 미러입니다. 1°로 보간한 파일에는 연안·해저 근처 마스크 오류가 있다고 안내되어 있으니 원 해상도 자료를 권장합니다.
+
+example:
+  lang: python
+  note: "~/.cdsapirc 에 CDS API 주소와 본인 key를 넣은 뒤 실행합니다. 요청 키와 값은 CDS 다운로드 양식에서 확인한 것입니다."
+  code: |
+    # pip install --upgrade cdsapi
+    import cdsapi
+
+    request = {
+        "product_type": ["consolidated"],   # 2015년 이후는 "operational"
+        "vertical_resolution": "single_level",
+        "variable": ["sea_surface_temperature", "sea_surface_height"],
+        "year": ["2010"],
+        "month": ["01", "02", "03"],
+    }
+
+    client = cdsapi.Client()
+    client.retrieve("reanalysis-oras5", request).download()  # 서버가 정한 파일명으로 저장
+
+tips:
+  - 1958~2014년(consolidated)과 2015년 이후(operational)는 대기 강제력과 관측 자료가 다릅니다. 긴 기간을 이어 쓸 때는 product_type을 두 개 모두 요청해야 하고, 2015년 전후 불연속 가능성을 염두에 두세요.
+  - 자료가 삼극(tripolar) 모델 격자라 위경도 격자로 바로 겹쳐 그릴 수 없습니다. 유속은 모델 축 방향 값과 회전된(rotated) 값이 따로 있으니, 동서·남북 성분이 필요하면 rotated 변수를 쓰세요.
+  - CDS ORAS5의 2015년 이후 자료는 Copernicus Marine에서 배포하는 ORAS5와 강제력·관측이 달라 값이 다를 수 있습니다. 어느 쪽에서 받았는지 논문에 밝혀 두세요.
+
+citations:
+  dataset:
+    - label: CDS 월평균 자료
+      text: >-
+        Copernicus Climate Change Service, Climate Data Store (2021): ORAS5 global ocean reanalysis monthly data
+        from 1958 to present. Copernicus Climate Change Service (C3S) Climate Data Store (CDS),
+        DOI: 10.24381/cds.67e8eeb7 (Accessed on DD-MMM-YYYY)
+      doi: 10.24381/cds.67e8eeb7
+      bibtex: |
+        @misc{oras5_cds,
+          author    = {{Copernicus Climate Change Service, Climate Data Store}},
+          title     = {{ORAS5} global ocean reanalysis monthly data from 1958 to present},
+          year      = {2021},
+          publisher = {Copernicus Climate Change Service (C3S) Climate Data Store (CDS)},
+          doi       = {10.24381/cds.67e8eeb7},
+          note      = {Accessed on DD-MMM-YYYY}
+        }
+  papers:
+    - label: ORAS5 시스템 논문
+      text: >-
+        Zuo, H., Balmaseda, M. A., Tietsche, S., Mogensen, K., Mayer, M. (2019): The ECMWF operational ensemble
+        reanalysis–analysis system for ocean and sea ice: a description of the system and assessment.
+        Ocean Science, 15(3), 779–808.
+      doi: 10.5194/os-15-779-2019
+      bibtex: |
+        @article{zuo2019oras5,
+          author  = {Zuo, Hao and Balmaseda, Magdalena Alonso and Tietsche, Steffen and Mogensen, Kristian and Mayer, Michael},
+          title   = {The {ECMWF} operational ensemble reanalysis--analysis system for ocean and sea ice: a description of the system and assessment},
+          journal = {Ocean Science},
+          volume  = {15},
+          number  = {3},
+          pages   = {779--808},
+          year    = {2019},
+          doi     = {10.5194/os-15-779-2019}
+        }
+  acknowledgement: >-
+    C3S/ECMWF 자료를 사용했음을 밝히고 CDS 데이터셋 DOI와 접근 날짜를 함께 적습니다.
+    권장 문구는 CDS 데이터셋 페이지의 "Citation and attribution" 항목에서 확인하세요.
+
+notices:
+  - date: "2026-06-08"
+    level: info
+    title: 후속 해양 재분석 ORAS6 공개 준비 발표
+    body: >-
+      ECMWF가 6세대 해양·해빙 재분석 ORAS6(NEMO4/SI3 모델, 앙상블 기반 자료동화, SST 직접 동화)의 공개를 준비 중이라고 밝혔습니다.
+      1993년 이후 구간은 생산을 마치고 회원국·협력 기관에 먼저 제공될 예정이며, 1950년부터의 구간은 생산 중입니다.
+      ORAS6는 ERA6의 해양·해빙 초기장으로 쓰입니다. 일반 공개 일정과 ORAS5 종료 여부는 아직 발표되지 않았습니다.
+    source: https://www.ecmwf.int/en/about/media-centre/news/2026/new-oras6-ocean-reanalysis
+  - date: "2026-04-27"
+    level: info
+    title: ORAS5 월별 시계열(ARCO) 데이터셋 CDS 공개
+    body: >-
+      한 지점의 긴 시계열을 효율적으로 받을 수 있도록 ORAS5 일부 변수를 Zarr(ARCO) 형식으로 재구성한
+      reanalysis-oras5-timeseries 데이터셋이 추가되었습니다. 실험적 서비스로 안내되어 있습니다.
+    source: https://forum.ecmwf.int/t/new-dataset-published-in-cds-oras5-global-ocean-reanalysis-monthly-time-series-data-from-1958-to-present/14863
+  - date: "2025-07-02"
+    level: info
+    title: CDS 라이선스가 CC BY 4.0으로 변경
+    body: CDS·ADS·EWDS의 "Licence to use Copernicus Products"가 CC BY로 바뀌었습니다. 새 약관에 동의해야 다운로드가 됩니다.
+    source: https://forum.ecmwf.int/t/cc-by-licence-to-replace-licence-to-use-copernicus-products-on-02-july-2025/13464
+  - date: "2024-09-26"
+    level: critical
+    title: 구 CDS 종료 — 새 계정·API key 필요
+    body: >-
+      구(legacy) CDS가 폐쇄되고 신규 CDS로 전환되었습니다. ORAS5를 받는 기존 스크립트도
+      pip install --upgrade cdsapi 후 .cdsapirc 의 url과 key를 새로 설정해야 동작합니다.
+    source: https://forum.ecmwf.int/t/goodbye-legacy-climate-data-store-hello-new-climate-data-store-cds/6380
+
+links:
+  - name: CDS ORAS5 데이터셋 페이지
+    url: https://cds.climate.copernicus.eu/datasets/reanalysis-oras5
+  - name: ECMWF ORAS5 소개 페이지
+    url: https://www.ecmwf.int/en/forecasts/datasets/ocean-reanalysis-system-5-oras5
+  - name: OCEAN5 시스템 기술 문서 (ECMWF Tech Memo)
+    url: https://www.ecmwf.int/en/elibrary/18519-ocean5-ecmwf-ocean-reanalysis-system-and-its-real-time-analysis-component
+  - name: ECMWF 포럼 — ORAS5 태그
+    url: https://forum.ecmwf.int/tag/oras5
+  - name: ECMWF Newsletter 180 — ORAS6 소개
+    url: https://www.ecmwf.int/en/newsletter/180/earth-system-science/ecmwfs-next-ensemble-reanalysis-system-ocean-and-sea-ice
+
+watch_urls:
+  - https://forum.ecmwf.int/tag/oras5
+  - https://forum.ecmwf.int/c/announcements/5
+  - https://www.ecmwf.int/en/about/media-centre/news
+
+last_verified: "2026-10-11"

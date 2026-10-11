@@ -1,0 +1,273 @@
+# ─────────────────────────────────────────────────────────────
+# CS2SMOS — 데이터셋 정보 파일
+# AWI/ESA CryoSat-2 + SMOS 병합 주간 북극 해빙 두께 (v206까지) → 후속 CS3SMOS (v300)
+# ─────────────────────────────────────────────────────────────
+id: cs2smos
+name: CS2SMOS
+full_name: CryoSat-2/SMOS Merged Sea Ice Thickness (ESA SMOS-CryoSat L4 Sea Ice Thickness, CryoSat-2·SMOS 병합 주간 해빙 두께)
+category: satellite
+domain: seaice
+group: 위성 관측 자료
+order: 40
+domains: [해빙]
+provider: 독일 알프레드 베게너 연구소(AWI) / 유럽우주국(ESA) — 원자료 ESA CryoSat-2·SMOS
+
+status: ended
+status_note: >-
+  CS2SMOS(마지막 버전 v206)는 2024/25 겨울(2025년 4월)을 끝으로 생산이 멈췄고, 2025/26 겨울부터 Sentinel-3A/B 고도계를 더한
+  후속 제품 CS3SMOS(v300, 12.5 km, 남반구 포함)로 넘어갔습니다. 기존 2010~2025년 v206 자료는 ESA 배포 서버에서 계속 받을 수 있습니다.
+  SMOS·CryoSat-2 두 위성 모두 2026년에도 자료를 내고 있어 CS3SMOS는 정상 생산 중입니다.
+
+successor:
+  name: CS3SMOS (CryoSat-2/Sentinel-3/SMOS Merged Sea Ice Thickness, v300)
+  url: https://spaces.awi.de/spaces/CS2SMOS/pages/297634429/CryoSat-2+Sentinel-3+SMOS+Merged+Sea+Ice+Thickness
+  note: >-
+    2025-10-23부터 운영. 해상도 25 km → 12.5 km, Sentinel-3A(2016-10~)·3B(2018-10~) 고도계 추가, 남반구 겨울(4/15~10/15) 산출,
+    파일 형식·불확실성 모델 변경(고도계 불확실성이 v206보다 크게 잡힘). 2026-10 현재 별도 데이터셋 DOI는 확인되지 않습니다.
+    인용은 Ricker et al. (2017), The Cryosphere, 11, 1607–1623, doi:10.5194/tc-11-1607-2017 을 AWI가 계속 안내합니다.
+
+transitions:
+  - from: CS2SMOS v206 (CryoSat-2 + SMOS)
+    to: CS3SMOS v300 (CryoSat-2 + Sentinel-3A/B + SMOS)
+    status: completed
+    date: "2025-10"
+    summary: >-
+      AWI가 병합 해빙 두께 제품에 Sentinel-3A/B 고도계를 더하고 처리 체계를 Python 기반으로 새로 만든 두 번째 대규모 개편입니다.
+      해상도가 25 km에서 12.5 km로 높아지고 남반구 겨울 산출이 추가되었으며, 불확실성 모델과 파일 구성이 바뀌었습니다.
+      2025/26 겨울(2025-10-23 운영 시작)부터 v206을 대체했습니다.
+    changes:
+      - aspect: 제품 이름·버전
+        before: "CS2SMOS v206 (2023-10 갱신)"
+        after: "CS3SMOS v300 (2025-10 갱신, 새 Python 처리 체계)"
+      - aspect: 고도계 입력
+        before: "CryoSat-2 (AWI L2P v2.6)"
+        after: "CryoSat-2 + Sentinel-3A(2016년~) + Sentinel-3B(2018년~), 모두 AWI v2.6 산출. 고도계 일별 격자화는 AWI v2.6 체계에서 수행"
+      - aspect: SMOS 입력
+        before: "SMOS L3C v3.3"
+        after: "SMOS L3 v3.6"
+      - aspect: 수평 해상도·격자
+        before: "25 km EASE2 북반구 (432×432)"
+        after: "12.5 km EASE2, 북·남반구"
+      - aspect: 대상 지역·계절
+        before: "북극만, 결빙기(대략 10월 중순~4월 중순)"
+        after: "북극 10-15 ~ 이듬해 4-15 + 남극 4-15 ~ 10-15"
+      - aspect: 기간
+        before: "2010-11 ~ 2025-04 (마지막 시즌 2024/25)"
+        after: "2025/26 겨울(2025-10-15 주간장)부터 운영. 과거 시즌 재처리본 공개 여부는 AWI 공지에서 확인되지 않음"
+      - aspect: 불확실성
+        before: "v206 불확실성 모델"
+        after: "고도계·SMOS 불확실성 재산정 — SMOS는 해빙 농도 100% 미만 효과를 포함하고 최소 20 cm, 고도계 불확실성은 v206보다 크게 잡힘"
+      - aspect: 육지·바다 마스크
+        before: "v206 자체 마스크"
+        after: "ESA CCI 해빙 산출물과 같은 마스크, 육지/바다 비율 변수 추가"
+      - aspect: 파일 내용
+        before: "분석·배경장·가중평균 두께, innovation, SMOS·CryoSat-2 각각의 두께와 불확실성 등 (PDD v1.6 표 3)"
+        after: "해빙 부피 계산에 필요한 변수 위주로 단순화, 상태·품질 플래그 추가 — 새 변수 목록은 공식 문서로 아직 확인되지 않음"
+      - aspect: 파일 이름
+        before: "W_XX-ESA,SMOS_CS2,NH_25KM_EASE2_<시작>_<끝>_<o|r>_v206_01_l4sit.nc"
+        after: "W_XX-ESA,SMOS_CS2_S3A_S3B,NH_12P5KM_EASE2_<시작>_<끝>_o_v300_01_l4sit (AWI 퀵룩 파일명 기준)"
+      - aspect: 받는 곳·DOI
+        before: "ESA SMOS 배포 서버 L4_SIT_Open, DOI 10.57780/sm1-4f787c3 (Version 206) / AWI FTP"
+        after: "AWI FTP cryosat2_smos/v300 폴더 / ESA 배포 서버의 v300 제공과 새 DOI는 2026-10 현재 확인되지 않음"
+    impacts:
+      - v206(2010~2025)과 v300(2025/26~)은 해상도·입력 위성·불확실성 모델이 달라 한 시계열로 이어 붙이면 경계에 계단이 생길 수 있습니다. 장기 분석은 한 버전으로 통일된 기록이 나올 때까지 v206 구간과 v300 구간을 나눠 다루세요.
+      - 파일명(SMOS_CS2 → SMOS_CS2_S3A_S3B, 25KM → 12P5KM, v206 → v300)과 변수 구성이 바뀌어 기존 읽기 스크립트가 그대로 동작하지 않습니다. 새 파일의 변수 이름을 직접 확인한 뒤 고치세요.
+      - 불확실성 값이 v206보다 크게 나오는 것은 모델 변경 때문이며 품질 저하를 뜻하지 않습니다. 두 버전의 불확실성을 직접 비교하거나 같은 기준으로 자료를 거르지 마세요.
+      - 남극 겨울 두께가 새로 생겼지만 CS2SMOS 시절 자료는 북극뿐입니다. 남극 분석에 쓸 때는 기록 시작 시점과 검증 수준을 먼저 확인하세요.
+    sources:
+      - name: AWI CS3SMOS/CS2SMOS 제품 페이지 (버전 이력)
+        url: https://spaces.awi.de/spaces/CS2SMOS/pages/297634429/CryoSat-2+Sentinel-3+SMOS+Merged+Sea+Ice+Thickness
+      - name: AWI CS2SMOS-PDS 운영 공지 (2025-10-23 v300 시작)
+        url: https://spaces.awi.de/spaces/CS2SMOS/overview
+      - name: ESA SMOS-CryoSat L4 Sea Ice Thickness 카탈로그 (v206)
+        url: https://earth.esa.int/eogateway/catalog/smos-cryosat-l4-sea-ice-thickness
+      - name: ESA CS2SMOS 제품 설명서 (PDD v1.6, v206)
+        url: https://earth.esa.int/eogateway/documents/20142/37627/CryoSat-2-SMOS-Merged-Product-Description-Document-PDD.pdf
+
+period:
+  start: "2010-11"
+  end: "2025-04"
+  note: >-
+    ESA 카탈로그 기준 2010-11-15 시작. 북반구 결빙기(대략 10월 중순~4월 중순)만 있고 여름은 비어 있습니다.
+    v206 마지막 시즌은 2024/25 겨울이며, 2025년 2월 일부 주간 자료가 입력 재분석(JRA-3Q) 중단으로 빠져 있습니다.
+
+resolution:
+  spatial: "25 km EASE2 북반구 격자(Lambert 정적 방위 등적도법, 432×432, 5400 km × 5400 km) — 후속 CS3SMOS는 12.5 km"
+  vertical: 해당 없음 (두께 단일 값)
+  temporal: 주간 평균(7일 창) 장을 매일 갱신 — 파일 하나가 한 주(월~일 또는 최근 7일)를 대표
+
+update: 갱신 종료 (2025년 4월). 운영 당시 예비 주간장은 매일, 최종본은 약 3~4주 지연
+license: ESA 지구관측 자료 이용약관(ESA 배포본) / AWI 배포본은 AWI가 안내하는 인용·감사 문구 조건
+account_required: false
+
+summary: >-
+  CryoSat-2 고도계는 두꺼운 얼음에서, SMOS L-band 복사계는 약 1 m 이하 얇은 얼음에서 상대적으로 정확하다는 점을 이용해,
+  두 위성의 해빙 두께를 최적 내삽(optimal interpolation)으로 합친 북극 주간 해빙 두께 자료입니다.
+  CryoSat-2 단독 월평균보다 시간 해상도가 높고 공간 빈틈이 없어 해빙 예측 초기화, 모델 검증, 항로 분석에 많이 쓰였습니다.
+  AWI가 생산하고 ESA가 SMOS-CryoSat L4 Sea Ice Thickness라는 이름으로 배포합니다.
+
+variables:
+  note: >-
+    v206 제품 설명서(PDD v1.6, 표 3) 기준 변수입니다. 같은 문서의 그림 설명에는 다른 이름이 섞여 있으니 실제 파일에서 한 번 확인하세요.
+    후속 CS3SMOS(v300)는 파일 형식이 바뀌어 변수명이 다를 수 있습니다.
+  full_list: https://earth.esa.int/eogateway/documents/20142/37627/CryoSat-2-SMOS-Merged-Product-Description-Document-PDD.pdf
+  groups:
+    - name: 병합 두께 (주 산출값)
+      items:
+        - "병합(분석) 해빙 두께 — `analysis_sea_ice_thickness` (m)"
+        - "병합 두께 불확실성 — `analysis_sea_ice_thickness_unc` (m)"
+        - "배경장 두께 — `background_sea_ice_thickness` (m)"
+        - "가중 평균 두께 — `weighted_mean_sea_ice_thickness` (m)"
+        - "분석 증분(innovation) — `innovation` (m)"
+    - name: 입력 위성별 두께
+      items:
+        - "SMOS 해빙 두께 — `smos_sea_ice_thickness` (m)"
+        - "SMOS 두께 불확실성 — `smos_sea_ice_thickness_uncertainty` (m)"
+        - "CryoSat-2 해빙 두께 — `cryosat_sea_ice_thickness` (m)"
+        - "CryoSat-2 두께 불확실성 — `cryosat_sea_ice_thickness_uncertainty` (m)"
+    - name: 보조 정보
+      items:
+        - "해빙 농도 — `sea_ice_concentration` (%)"
+        - "해빙 유형(2 일년빙, 3 다년빙) — `sea_ice_type` (코드값)"
+        - "상관 길이 규모 — `correlation_length_scale` (m)"
+
+access:
+  - name: ESA SMOS 온라인 배포 서버 — L4_SIT_Open 컬렉션
+    url: https://smos-diss.eo.esa.int/oads/meta/L4_SIT_Open/index/
+    method: HTTPS / FTPS (ftps://smos-diss.eo.esa.int/)
+    note: 무료 ESA EO Sign In 계정으로 로그인해야 내려받을 수 있습니다. 2010-11 이후 v206 기록 전체가 여기 있습니다.
+  - name: ESA Earth Online 카탈로그 — SMOS-CryoSat L4 Sea Ice Thickness
+    url: https://earth.esa.int/eogateway/catalog/smos-cryosat-l4-sea-ice-thickness
+    method: 웹 안내 (DOI, PDD, 읽어보기 문서, ATBD)
+  - name: AWI FTP — 해빙 산출물 루트
+    url: ftp://ftp.awi.de/sea_ice/product/
+    method: 익명 FTP
+    note: 계정 없이 접근할 수 있습니다. AWI 퀵룩 경로 기준으로 CS3SMOS는 cryosat2_smos/v300 폴더에 있으며, 정확한 하위 경로는 FTP 목록에서 확인하세요.
+  - name: AWI CS2SMOS-PDS 위키 (운영 공지·문서)
+    url: https://spaces.awi.de/spaces/CS2SMOS/overview
+    method: 웹 안내
+    note: 생산 시작·중단·자료 결측 공지가 가장 먼저 올라오는 곳입니다.
+  - name: C3S Climate Data Store — Sea ice thickness monthly gridded data (L4)
+    url: https://cds.climate.copernicus.eu/datasets/satellite-sea-ice-thickness
+    method: 웹 다운로드 / CDS API
+    note: CryoSat-2·Sentinel-3 고도계와 SMOS를 합친 월별 L4 두께를 별도 처리로 제공합니다. ECMWF 계정이 필요합니다.
+
+example:
+  lang: python
+  note: "ESA 서버에서 받은 v206 주간 파일을 연다고 가정합니다. 파일명 예시: W_XX-ESA,SMOS_CS2,NH_25KM_EASE2_20190304_20190310_o_v206_01_l4sit.nc"
+  code: |
+    import xarray as xr
+
+    ds = xr.open_dataset("W_XX-ESA,SMOS_CS2,NH_25KM_EASE2_20190304_20190310_o_v206_01_l4sit.nc")
+
+    sit = ds["analysis_sea_ice_thickness"].squeeze()        # m
+    unc = ds["analysis_sea_ice_thickness_unc"].squeeze()    # m
+
+    # 얇은 얼음(1 m 미만)에서 SMOS와 CryoSat-2 기여 비교
+    thin = sit < 1.0
+    print("SMOS  :", float(ds["smos_sea_ice_thickness"].squeeze().where(thin).mean()))
+    print("CS2   :", float(ds["cryosat_sea_ice_thickness"].squeeze().where(thin).mean()))
+    print("병합  :", float(sit.where(thin).mean()))
+
+tips:
+  - >-
+    파일 하나는 7일 평균장입니다. 매일 새 파일이 나오더라도 이웃한 날짜 파일끼리는 6일이 겹치므로, 일별 시계열처럼 다루어 자기상관을 무시하면 안 됩니다.
+    서로 겹치지 않는 주간 파일(월~일)만 골라 쓰는 것이 안전합니다.
+  - >-
+    운영 중에 나온 'o'(operational) 파일과 재처리 'r'(reprocessing) 파일은 값이 다를 수 있습니다. 같은 기간에 두 종류가 있으면 재처리본을 쓰세요.
+  - >-
+    SMOS 두께는 해빙 농도가 100%보다 낮으면 과소 추정되는 알려진 문제가 있고, 바렌츠·카라·랍테프해는 전파 간섭(RFI)으로 SMOS 관측이 자주 빠집니다.
+    이런 곳의 병합 두께는 사실상 고도계 값에 기댄 것이므로 해석에 주의하세요.
+  - >-
+    v206과 후속 CS3SMOS(v300)는 해상도·입력 위성·불확실성 모델이 달라 같은 기록으로 보기 어렵습니다. 2025/26 겨울 이후를 이어 쓰려면
+    가능한 한 v300으로 전체 기간을 맞추고, 섞어 쓸 경우 경계 시점을 명시하세요.
+
+citations:
+  dataset:
+    - label: ESA SMOS-CryoSat L4 Sea Ice Thickness, Version 206
+      text: >-
+        European Space Agency, 2023, SMOS-CryoSat L4 Sea Ice Thickness, Version 206. https://doi.org/10.57780/sm1-4f787c3
+      doi: 10.57780/sm1-4f787c3
+      bibtex: |
+        @misc{esa_smos_cryosat_l4_sit_v206,
+          author    = {{European Space Agency}},
+          title     = {{SMOS-CryoSat} {L4} Sea Ice Thickness, Version 206},
+          year      = {2023},
+          publisher = {European Space Agency},
+          doi       = {10.57780/sm1-4f787c3}
+        }
+  papers:
+    - label: CS2SMOS 방법 논문 (AWI·ESA 권장 인용)
+      text: >-
+        Ricker, R., Hendricks, S., Kaleschke, L., Tian-Kunze, X., King, J., and Haas, C. (2017): A weekly Arctic sea-ice thickness
+        data record from merged CryoSat-2 and SMOS satellite data. The Cryosphere, 11, 1607–1623.
+      doi: 10.5194/tc-11-1607-2017
+      bibtex: |
+        @article{ricker2017cs2smos,
+          author  = {Ricker, Robert and Hendricks, Stefan and Kaleschke, Lars and Tian-Kunze, Xiangshan and King, Jennifer and Haas, Christian},
+          title   = {A weekly {Arctic} sea-ice thickness data record from merged {CryoSat-2} and {SMOS} satellite data},
+          journal = {The Cryosphere},
+          volume  = {11},
+          number  = {4},
+          pages   = {1607--1623},
+          year    = {2017},
+          doi     = {10.5194/tc-11-1607-2017}
+        }
+    - label: SMOS 얇은 해빙 두께 알고리즘 논문 (선택)
+      text: >-
+        Tian-Kunze, X., Kaleschke, L., Maaß, N., Mäkynen, M., Serra, N., Drusch, M., and Krumpen, T. (2014): SMOS-derived thin sea ice
+        thickness: algorithm baseline, product specifications and initial verification. The Cryosphere, 8, 997–1018.
+      doi: 10.5194/tc-8-997-2014
+  acknowledgement: >-
+    AWI와 ESA는 논문 인용과 함께 감사의 글에 "ESA 과제 지원으로 병합 두께가 생산되었고, 사용한 기간의 자료를 AWI(또는 ESA)에서 받았다"는
+    취지의 문장을 넣도록 요청합니다. 정확한 영문 문구는 AWI CS2SMOS 위키와 읽어보기(Read-me-first) 문서에서 그대로 복사해 쓰세요.
+
+notices:
+  - date: "2026-04-21"
+    level: info
+    title: 후속 CS3SMOS, 2025/26 북극 시즌 생산 종료
+    body: >-
+      CS3SMOS 북극 준실시간 처리가 시즌을 마쳤습니다(마지막 장 2026-04-09 ~ 04-15). 남반구 처리는 곧 시작한다고 안내되었고,
+      2026/27 북극 시즌 시작 공지는 2026-10-11 현재 아직 없습니다.
+    source: https://spaces.awi.de/spaces/CS2SMOS/overview
+  - date: "2025-10-23"
+    level: critical
+    title: CS2SMOS(v206) → CS3SMOS(v300) 전환
+    body: >-
+      2025/26 겨울부터 병합 두께 제품이 v300(CS3SMOS)으로 바뀌었습니다. Sentinel-3A/B 고도계 추가, 12.5 km 해상도, 남반구 겨울 산출,
+      새 파일 형식이 핵심 변경입니다. v206은 더 이상 갱신되지 않으므로 운영 스크립트의 경로와 변수명을 점검하세요.
+    source: https://spaces.awi.de/spaces/CS2SMOS/overview
+  - date: "2025-10-23"
+    level: warning
+    title: 바렌츠·카라·랍테프해 SMOS 전파 간섭(RFI)으로 품질 저하
+    body: >-
+      SMOS 입력이 이 해역에서 잦은 전파 간섭으로 빠지면서, 해당 지역 두께는 고도계만으로 추정되어 SMOS가 있을 때보다 두껍게 나올 수 있다고 경고되었습니다.
+    source: https://spaces.awi.de/spaces/CS2SMOS/overview
+  - date: "2025-04-17"
+    level: info
+    title: v206 2024/25 시즌 완료 — CS2SMOS 마지막 시즌
+    body: v206 준실시간 생산이 2024/25 북극 시즌을 마쳤고, 2025년 10월부터 v300이 뒤를 잇는다고 예고되었습니다.
+    source: https://spaces.awi.de/spaces/CS2SMOS/overview
+  - date: "2025-02-24"
+    level: warning
+    title: 2025년 2월 v206 준실시간 생산 중단 — 일부 주간 자료 결측
+    body: >-
+      입력으로 쓰는 JRA-3Q 재분석 자료를 받지 못해 SMOS L3와 병합 L4 생산이 멈췄다가 2025-03-03 재개되었습니다.
+      L4는 2025년 2월 4~23일에 해당하는 주간 자료가 빠져 있습니다.
+    source: https://spaces.awi.de/spaces/CS2SMOS/overview
+
+links:
+  - name: ESA 읽어보기 문서 (v206, 알려진 문제·검증 결과)
+    url: https://earth.esa.int/eogateway/documents/20142/37627/Read-me-first-note-for-the-release-of-theCryoSat-2-SMOS-Merged-Sea-Ice-Thickness.pdf
+  - name: ESA 알고리즘 기술 문서(ATBD)
+    url: https://earth.esa.int/eogateway/documents/20142/0/CryoSat-2-SMOS-ATBD.pdf/9ba793ce-2cfa-cc59-1b0e-8e18b7180f30
+  - name: AWI CS3SMOS/CS2SMOS 제품 페이지 (버전 이력)
+    url: https://spaces.awi.de/spaces/CS2SMOS/pages/297634429/CryoSat-2+Sentinel-3+SMOS+Merged+Sea+Ice+Thickness
+  - name: ESA SMOS 임무 페이지
+    url: https://earth.esa.int/eogateway/missions/smos
+
+watch_urls:
+  - https://spaces.awi.de/spaces/CS2SMOS/overview
+  - https://earth.esa.int/eogateway/catalog/smos-cryosat-l4-sea-ice-thickness
+
+last_verified: "2026-10-11"

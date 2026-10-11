@@ -1,0 +1,336 @@
+# ─────────────────────────────────────────────────────────────
+# OSI SAF 해빙 농도 — 데이터셋 정보 파일
+# EUMETSAT OSI SAF 해빙 농도 기후자료(CDR/ICDR)와 준실시간(NRT) 산출물
+# ─────────────────────────────────────────────────────────────
+id: osisaf-sic
+name: OSI SAF 해빙 농도
+full_name: EUMETSAT OSI SAF Global Sea Ice Concentration Climate Data Record (OSI-450-a1 외, 수동마이크로파 해빙 농도 기후자료)
+category: satellite
+domain: seaice
+group: 위성 관측 자료
+order: 10
+domains: [해빙, 해양]
+provider: EUMETSAT Ocean and Sea Ice Satellite Application Facility (OSI SAF) / 노르웨이 기상청(MET Norway)
+
+status: active
+status_note: >-
+  정상 제공 중이지만 입력 센서가 바뀌는 과도기입니다. DMSP SSMIS 자료가 불안정해지면서 SSMIS 기반 연장판(OSI-430-a)은
+  2025년 10월 17일부터 생산이 중단되었고, AMSR2 기반 연장판(OSI-438, 2026-05-04 정식 운영)이 그 자리를 이어받았습니다.
+  2026년 9월 1일부터는 AMSR3 기반 연장판(OSI-438-a)이 빠른 갱신(약 2일 지연)을 담당합니다.
+
+transitions:
+  - from: OSI SAF SSMIS 계열 (OSI-450-a1 CDR + OSI-430-a ICDR, 준실시간 OSI-401-d)
+    to: OSI SAF AMSR 계열 (OSI-458 CDR + OSI-438·OSI-438-a ICDR, 준실시간 OSI-408-a·OSI-408-g)
+    status: completed
+    date: "2025-10"
+    summary: >-
+      DMSP SSMIS 자료가 끊기기 시작하면서 OSI SAF가 해빙 농도 기후자료의 연장(ICDR)을 SSMIS 계열에서 AMSR 계열로 옮겼습니다.
+      SSMIS 연장판 OSI-430-a는 2025-10-17 생산이 중단되었고, AMSR2 기반 OSI-438이 2026-05-04 정식 운영, 2026-09-01부터는 AMSR3 기반 OSI-438-a가
+      빠른 갱신을 맡습니다. 격자와 지연 시간은 같지만 AMSR 계열 기록은 2002년부터만 있어 1978년부터의 단일 장기 기록과는 별개로 다뤄야 합니다.
+    changes:
+      - aspect: 입력 센서
+        before: "SMMR·SSM/I·SSMIS (2021년 이후 연장은 DMSP SSMIS)"
+        after: "AMSR-E(2002-06~2011-10)·AMSR2(2012-07~), 2026-09-01부터 GOSAT-GW AMSR3"
+      - aspect: 기후자료(CDR) 기준 기록
+        before: "OSI-450-a1 — 1978-10-25 ~ 2020-12-31"
+        after: "OSI-458 — 2002-06-01 ~ 2020-12-31 (2011-10-04 ~ 2012-07-23 공백)"
+      - aspect: 연장판(ICDR)
+        before: "OSI-430-a — 2021-01-01 ~ 2025-10-16 (2025-10-17 생산 중단)"
+        after: "OSI-438(AMSR2) 2021-01-01~, 2026-05-04 정식 운영 / OSI-438-a(AMSR3) 2026-09-01~"
+      - aspect: 격자·시간 간격·지연
+        before: "25 km EASE2, 일평균, 정규 16일·빠른 갱신 2일 지연"
+        after: "같음 — 25 km EASE2, 일평균, 정규 16일·빠른 갱신 2일 지연"
+      - aspect: 빠른 갱신(fast-track) 파일
+        before: "OSI-430-a fast-track (FTP 전용)"
+        after: "2026-09-01부터 OSI-438-a(AMSR3)만 fast-track 제공, OSI-438(AMSR2)은 정규 파일만 새 FTP 위치에서 계속"
+      - aspect: 실제 센서 해상도·해안 오염
+        before: "SSMIS 실효 해상도 약 30~60 km, 해안 육지 오염이 상대적으로 큼"
+        after: "AMSR 실효 해상도 약 15~25 km, 해빙 가장자리 표현이 낫고 해안 육지 오염이 적음"
+      - aspect: 북극점 관측 공백
+        before: "SSMIS — 89°N 이북"
+        after: "AMSR-E 89.5°N 이북, AMSR3는 관측 폭이 좁아 AMSR2보다 조금 넓음"
+      - aspect: 파일 이름의 제품 ID
+        before: "cdr-v3p1 (OSI-450-a1) / icdr-v3p0, icdrft-v3p0 (OSI-430-a)"
+        after: "cdr-v3p0-amsr (OSI-458) / icdr-v3p0-amsr, icdrft-v3p0-amsr (OSI-438)"
+      - aspect: FTP 경로 (ftp://osisaf.met.no/reprocessed/ 아래)
+        before: "ice/conc/v3p1 (OSI-450-a1), conc-cont-reproc/v3p0 (OSI-430-a)"
+        after: "ice/conc_amsr/v3p0 (OSI-458), ice/conc-cont-reproc-amsr/v3p0_amsr2_continued (OSI-438), ice/conc-cont-reproc-amsr/v3p0 (OSI-438-a)"
+      - aspect: DOI
+        before: "10.15770/EUM_SAF_OSI_0023 (OSI-450-a1), 10.15770/EUM_SAF_OSI_0014 (OSI-430-a)"
+        after: "10.15770/EUM_SAF_OSI_0015 (OSI-458), 10.15770/EUM_SAF_OSI_0024 (OSI-438), 10.15770/EUM_SAF_OSI_0027 (OSI-438-a)"
+      - aspect: 준실시간(10 km 극 평사도) 산출물
+        before: "OSI-401-d (SSMIS) — 입력 불안정으로 사용 자제 권고"
+        after: "OSI-408-a (AMSR2, 2016년~), 2026-09-01부터 OSI-408-g (AMSR3, 파일명 amsr2 → amsr3)"
+    impacts:
+      - 1978년부터 이어지는 단일 SSMIS 계열 기록은 2025-10-16에서 멈췄습니다. 2021년 이후를 AMSR 계열 연장판(OSI-438)으로 채우려면 CDR도 같은 계열(OSI-458)을 써야 일관성이 유지되며, 이 경우 시작은 2002년입니다.
+      - OSI-450-a1 + OSI-438처럼 서로 다른 계열을 한 시계열로 이어 붙이면 센서 해상도·해안 오염 차이 때문에 경계 시점에 계단이 생길 수 있습니다. 불가피하면 2002~2020 중복 기간으로 두 계열 차이를 먼저 확인하세요.
+      - 자동 다운로드 스크립트는 FTP 경로와 파일명의 제품 ID(icdr-v3p0 → icdr-v3p0-amsr 등)를 바꿔야 합니다. 2일 지연 파일이 필요하면 2026-09-01 이후는 OSI-438-a를 받아야 합니다.
+      - 2026-09-01 AMSR3 전환 이후 OSI-438-a 구간은 OSI-438(AMSR2)과 센서가 다릅니다. 최근 몇 주 분석에는 OSI-438-a, 정규 기후 분석에는 OSI-438 정규 파일을 쓰고 둘을 섞은 경우 그 사실을 기록하세요.
+      - 논문에는 실제로 쓴 제품별 DOI(OSI-458, OSI-438, OSI-438-a)를 각각 적어야 합니다.
+    sources:
+      - name: OSI SAF — Implications of the end of SSMIS data on OSI SAF products
+        url: https://osi-saf.eumetsat.int/community/stories/implications-end-ssmis-data-osi-saf-products
+      - name: OSI SAF — Implications of AMSR2 being replaced by AMSR3 on OSI SAF products
+        url: https://osi-saf.eumetsat.int/community/stories/implications-amsr2-being-replaced-amsr3-osi-saf-products
+      - name: OSI SAF 서비스 메시지 #3571 (2026-08-31)
+        url: https://osi-saf.eumetsat.int/community/list-of-service-messages/operational-release-amsr3-based-sea-ice-products-1st-september
+      - name: OSI-430-a 제품 페이지
+        url: https://osi-saf.eumetsat.int/products/osi-430-a
+      - name: OSI-438 제품 페이지
+        url: https://osi-saf.eumetsat.int/products/osi-438
+      - name: OSI-458 제품 페이지
+        url: https://osi-saf.eumetsat.int/products/osi-458
+      - name: 해빙 농도 CDR/ICDR 제품 사용자 설명서 (PUM v3.4)
+        url: https://osisaf-hl.met.no/sites/osisaf-hl/files/user_manuals/osisaf_pum_sea-ice-conc-climate-data-record_3.4.pdf
+  - from: OSI-450-a (v3.0, 2022)
+    to: OSI-450-a1 (v3.1, 2025)
+    status: completed
+    date: "2025-06"
+    summary: >-
+      SSMIS 계열 기후자료 OSI-450-a에서 해안 육지 오염 보정 오류가 발견되어, 이를 고친 수정판 OSI-450-a1이 새 DOI로 공개되었습니다.
+      기간·격자·변수는 그대로입니다.
+    changes:
+      - aspect: 해안 육지 오염 보정
+        before: "보정 오류로 343일 자료가 영향을 받음"
+        after: "오류 수정 (영향 날짜 목록은 PUM 부록 B)"
+      - aspect: 버전·DOI
+        before: "v3.0, DOI 10.15770/EUM_SAF_OSI_0013"
+        after: "v3.1, DOI 10.15770/EUM_SAF_OSI_0023 (2025-06-04 운영 선언)"
+      - aspect: FTP 경로 (ftp://osisaf.met.no/reprocessed/ 아래)
+        before: "ice/conc/v3p0"
+        after: "ice/conc/v3p1"
+      - aspect: 기간·격자·변수
+        before: "1978-10-25 ~ 2020-12-31, 25 km EASE2"
+        after: "같음"
+    impacts:
+      - OSI-450-a를 받아 둔 경우 OSI-450-a1로 다시 받으세요. 특히 해안 가까운 해역의 농도·면적을 다룬다면 영향 날짜(PUM 부록 B)를 확인하세요.
+      - 논문 인용 DOI를 10.15770/EUM_SAF_OSI_0023으로 바꿔야 합니다.
+    sources:
+      - name: OSI-450-a1 제품 페이지
+        url: https://osi-saf.eumetsat.int/products/osi-450-a1
+      - name: OSI-450-a 제품 페이지 (대체 안내)
+        url: https://osi-saf.eumetsat.int/products/osi-450-a
+      - name: 해빙 농도 CDR/ICDR 제품 사용자 설명서 (PUM v3.4)
+        url: https://osisaf-hl.met.no/sites/osisaf-hl/files/user_manuals/osisaf_pum_sea-ice-conc-climate-data-record_3.4.pdf
+
+period:
+  start: "1978-10"
+  end: present
+  note: >-
+    SSMIS 계열 CDR(OSI-450-a1)은 1978-10-25 ~ 2020-12-31, 그 연장판 OSI-430-a는 2021-01-01 ~ 2025-10-16에서 멈췄습니다.
+    AMSR 계열은 CDR(OSI-458) 2002-06 ~ 2020-12(2011-10 ~ 2012-07 공백)와 연장판 OSI-438(2021-01~, AMSR2),
+    OSI-438-a(2026-09~, AMSR3)로 이어집니다. 1987년 7월 이전 SMMR 구간은 이틀 간격입니다.
+
+resolution:
+  spatial: "기후자료 25 km EASE2 격자(Lambert 정적 방위 등적도법, 북·남반구 각 432×432) / 준실시간 OSI-401-d·OSI-408 10 km 극 평사도법"
+  vertical: 해당 없음 (지표면 자료)
+  temporal: 일평균(정오 12:00 기준), 월평균·연평균 파일과 월별 해빙 면적·범위 지표 별도 제공
+
+update: >-
+  연장판(ICDR) 매일 갱신 — 정규 파일 약 16일 지연, 빠른 갱신(fast-track) 파일 약 2일 지연(FTP 전용, 16일 뒤 정규 파일로 교체).
+  준실시간 OSI-401-d·OSI-408은 약 5시간 지연.
+license: CC BY 4.0 (출처 "EUMETSAT OSI SAF" 표시 필수, DOI 함께 기재)
+account_required: false
+
+summary: >-
+  EUMETSAT OSI SAF가 SMMR, SSM/I, SSMIS, AMSR-E/AMSR2/AMSR3 수동마이크로파 관측으로 만든 전지구(북·남반구) 해빙 농도 자료입니다.
+  ERA5로 대기 영향을 보정하고 동적 tie-point를 쓰며, 격자마다 불확실성 추정치를 함께 제공한다는 점이 특징입니다.
+  장기 기후 분석에는 CDR과 그 연장판(ICDR)을, 당일 상황 파악에는 준실시간 산출물(OSI-401-d, OSI-408)을 씁니다.
+  ESA CCI 해빙 프로젝트와 같은 알고리즘 계열이며, Copernicus Marine과 C3S CDS에서도 재배포합니다.
+
+variables:
+  note: >-
+    공식 제품 사용자 설명서(PUM v3.4) 기준 기후자료(CDR/ICDR) 일자료 파일의 변수입니다. 월·연평균 파일에는 불확실성 변수가 없고,
+    월·연평균 10% 미만 값은 ice_conc에서 빠져 raw_ice_conc_values로 옮겨집니다. 준실시간(OSI-401-d, OSI-408) 파일은 변수 구성이 다릅니다.
+  full_list: https://osisaf-hl.met.no/sites/osisaf-hl/files/user_manuals/osisaf_pum_sea-ice-conc-climate-data-record_3.4.pdf
+  groups:
+    - name: 해빙 농도
+      items:
+        - "해빙 농도(필터·후처리 적용) — `ice_conc` (%)"
+        - "필터로 바뀐 격자의 원래 값(0% 미만·100% 초과 포함) — `raw_ice_conc_values` (%)"
+    - name: 불확실성(1 표준편차)
+      items:
+        - "총 불확실성 — `total_standard_uncertainty` (%)"
+        - "알고리즘 불확실성 — `algorithm_standard_uncertainty` (%)"
+        - "스미어링(해상도 차이) 불확실성 — `smearing_standard_uncertainty` (%)"
+    - name: 품질 정보
+      items:
+        - "처리 상태 비트 플래그 — `status_flag` (비트값)"
+
+access:
+  - name: OSI SAF 제품 페이지 — OSI-450-a1 (SSMIS 계열 CDR v3.1)
+    url: https://osi-saf.eumetsat.int/products/osi-450-a1
+    method: 웹 안내 / FTP (ftp://osisaf.met.no/reprocessed/ 의 ice/conc/v3p1)
+    note: 제품별 페이지에 FTP 경로, DOI, 인용 문구, 문서 링크가 정리되어 있습니다.
+  - name: MET Norway THREDDS — 해빙 농도 기후자료 카탈로그
+    url: https://thredds.met.no/thredds/catalog/osisaf/osisaf_cdrseaiceconc.html
+    method: THREDDS / OPeNDAP / HTTP 다운로드
+    note: 계정 없이 접근할 수 있고, OPeNDAP으로 필요한 영역·기간만 잘라 읽을 수 있습니다.
+  - name: OSI SAF 제품 페이지 — OSI-438 (AMSR2 기반 연장판)
+    url: https://osi-saf.eumetsat.int/products/osi-438
+    method: FTP (ftp://osisaf.met.no/reprocessed/ 의 ice/conc-cont-reproc-amsr/) / THREDDS / EUMETSAT Data Store
+    note: 2021년 이후 구간의 권장 연장판입니다. 2026-09-01부터는 정규(16일 지연) 파일만 새 FTP 경로로 계속 나옵니다.
+  - name: OSI SAF 제품 페이지 — OSI-438-a (AMSR3 기반 연장판)
+    url: https://osi-saf.eumetsat.int/products/osi-438-a
+    method: FTP / THREDDS / EUMETSAT Data Store
+    note: 2026-09-01 운영 시작. 약 2일 지연의 빠른 갱신 파일이 필요하면 이 제품을 씁니다.
+  - name: Copernicus Marine — SEAICE_GLO_SEAICE_L4_REP_OBSERVATIONS_011_009
+    url: https://data.marine.copernicus.eu/product/SEAICE_GLO_SEAICE_L4_REP_OBSERVATIONS_011_009
+    method: 웹 다운로드 / copernicusmarine 툴박스
+    note: OSI SAF 기후자료의 재배포본입니다. Copernicus Marine 계정이 필요합니다.
+  - name: C3S Climate Data Store — Sea ice concentration daily gridded data
+    url: https://cds.climate.copernicus.eu/datasets/satellite-sea-ice-concentration
+    method: 웹 다운로드 / CDS API
+    note: ECMWF 계정 필요. SSMIS 계열 자료는 2025년까지로 더 이상 갱신되지 않고, AMSR 계열만 운영 갱신됩니다.
+  - name: OSI SAF 제품 페이지 — OSI-408-a (AMSR2 준실시간, 10 km)
+    url: https://osi-saf.eumetsat.int/products/osi-408-a
+    method: FTP (ftp://osisaf.met.no/prod/ 최근 31일, /archive/ 전체) / THREDDS / EUMETCast
+    note: 준실시간 운영 자료로 기후자료와 알고리즘·격자가 다릅니다. 2026-09-01부터 AMSR3 기반 OSI-408-g가 주력입니다.
+
+example:
+  lang: python
+  note: 제품 페이지의 FTP나 THREDDS에서 받은 일자료 파일을 연다고 가정합니다. 파일명 규칙은 ice_conc_<nh|sh>_ease2-250_<제품ID>_<YYYYMMDD>1200.nc 입니다.
+  code: |
+    import xarray as xr
+
+    # 예: OSI-450-a1 북반구 일자료 (제품ID cdr-v3p1)
+    ds = xr.open_dataset("ice_conc_nh_ease2-250_cdr-v3p1_201909011200.nc")
+    sic = ds["ice_conc"].squeeze()                       # 단위: % (0–100), 하루치 2차원 격자
+    unc = ds["total_standard_uncertainty"].squeeze()     # 단위: % (1 표준편차)
+
+    # EASE2 격자는 등적(equal-area) 25 km × 25 km → 셀 면적 625 km²
+    area_km2 = float((sic.where(sic >= 15) / 100 * 625).sum())
+    print(f"해빙 면적(농도 15% 이상 격자): {area_km2:,.0f} km²")
+
+tips:
+  - >-
+    같은 기후자료라도 SSMIS 계열(OSI-450-a1 + OSI-430-a)과 AMSR 계열(OSI-458 + OSI-438 + OSI-438-a)은 별개 기록입니다.
+    2021년 이후를 이어 붙일 때는 CDR과 같은 계열의 연장판을 쓰세요. OSI-430-a는 2025-10-16에서 끝났으므로 장기 갱신이 필요하면 AMSR 계열로 옮기는 것이 좋습니다.
+  - >-
+    예전 OSI-450-a(DOI 10.15770/EUM_SAF_OSI_0013)는 343일에 해안 육지 오염(land spill-over) 보정 오류가 있었고
+    2025년 수정판 OSI-450-a1(DOI 10.15770/EUM_SAF_OSI_0023)로 대체되었습니다. 해당 날짜 목록은 PUM 부록 B에 있습니다.
+  - >-
+    여름철 융빙 연못(melt pond)은 마이크로파에 바다처럼 보여 해빙 농도가 낮게 나옵니다. 이 오차는 불확실성 변수에도 반영되어 있지 않으니
+    6~8월 북극 농도 해석에 주의하세요. 또 약 10% 이하의 얇은 가장자리 해빙은 기상 필터에 의해 0%로 지워질 수 있습니다.
+  - >-
+    북극점 주변의 관측 공백(pole hole)은 센서마다 크기가 다릅니다(SMMR 84°N, SSM/I 87°N, SSMIS 89°N 이북). 기후자료에서는 보간으로 채워져 있으므로
+    status_flag로 보간 격자를 확인하고, 면적·범위 시계열을 직접 계산할 때 이 영역 처리를 명시하세요.
+
+citations:
+  dataset:
+    - label: SSMIS 계열 CDR — OSI-450-a1 (v3.1)
+      text: >-
+        EUMETSAT Ocean and Sea Ice Satellite Application Facility, Global sea ice concentration climate data record 1978-2020
+        (v3.1, 2025), OSI-450-a1, doi:10.15770/EUM_SAF_OSI_0023 (Data extracted from [distributor] on [download date])
+      doi: 10.15770/EUM_SAF_OSI_0023
+      bibtex: |
+        @misc{osisaf450a1,
+          author    = {{EUMETSAT Ocean and Sea Ice Satellite Application Facility}},
+          title     = {Global sea ice concentration climate data record 1978-2020 (v3.1, 2025), {OSI-450-a1}},
+          year      = {2025},
+          publisher = {EUMETSAT OSI SAF},
+          doi       = {10.15770/EUM_SAF_OSI_0023}
+        }
+    - label: SSMIS 계열 연장판 — OSI-430-a (v3.0, 2021-01 ~ 2025-10)
+      text: >-
+        EUMETSAT Ocean and Sea Ice Satellite Application Facility, Global sea ice concentration interim climate data record (SSMIS)
+        (v3.0, 2022), OSI-430-a, doi:10.15770/EUM_SAF_OSI_0014
+      doi: 10.15770/EUM_SAF_OSI_0014
+    - label: AMSR 계열 CDR — OSI-458 (v3.0)
+      text: >-
+        EUMETSAT Ocean and Sea Ice Satellite Application Facility, Global sea ice concentration climate data record (AMSR) 2002-2020
+        (v3.0, 2022), OSI-458, doi:10.15770/EUM_SAF_OSI_0015
+      doi: 10.15770/EUM_SAF_OSI_0015
+    - label: AMSR2 연장판 — OSI-438 (v3.0)
+      text: >-
+        EUMETSAT Ocean and Sea Ice Satellite Application Facility, Global sea ice concentration interim climate data record (AMSR2)
+        (v3.0, 2022), OSI-438, doi:10.15770/EUM_SAF_OSI_0024
+      doi: 10.15770/EUM_SAF_OSI_0024
+    - label: AMSR3 연장판 — OSI-438-a (v3.0)
+      text: >-
+        EUMETSAT Ocean and Sea Ice Satellite Application Facility, Global sea ice concentration interim climate data record (AMSR3)
+        (v3.0, 2026), OSI-438-a, doi:10.15770/EUM_SAF_OSI_0027
+      doi: 10.15770/EUM_SAF_OSI_0027
+  papers:
+    - label: 알고리즘·기후자료 v2 기술 논문 (v3도 이 방법론을 계승)
+      text: >-
+        Lavergne, T., Sørensen, A. M., Kern, S., Tonboe, R., Notz, D., Aaboe, S., Bell, L., Dybkjær, G., Eastwood, S., Gabarro, C.,
+        Heygster, G., Killie, M. A., Brandt Kreiner, M., Lavelle, J., Saldo, R., Sandven, S., and Pedersen, L. T. (2019):
+        Version 2 of the EUMETSAT OSI SAF and ESA CCI sea-ice concentration climate data records. The Cryosphere, 13, 49–78.
+      doi: 10.5194/tc-13-49-2019
+      bibtex: |
+        @article{lavergne2019osisaf,
+          author  = {Lavergne, Thomas and S{\o}rensen, Atle Macdonald and Kern, Stefan and Tonboe, Rasmus and Notz, Dirk and Aaboe, Signe and Bell, Louisa and Dybkj{\ae}r, Gorm and Eastwood, Steinar and Gabarro, Carolina and Heygster, Georg and Killie, Mari Anne and Brandt Kreiner, Matilde and Lavelle, John and Saldo, Roberto and Sandven, Stein and Pedersen, Leif Toudal},
+          title   = {Version 2 of the {EUMETSAT} {OSI SAF} and {ESA} {CCI} sea-ice concentration climate data records},
+          journal = {The Cryosphere},
+          volume  = {13},
+          number  = {1},
+          pages   = {49--78},
+          year    = {2019},
+          doi     = {10.5194/tc-13-49-2019}
+        }
+    - label: 첫 EUMETSAT 해빙 농도 기후자료 논문 (선택)
+      text: >-
+        Tonboe, R. T., et al. (2016): The EUMETSAT sea ice concentration climate data record. The Cryosphere, 10, 2275–2290.
+      doi: 10.5194/tc-10-2275-2016
+  acknowledgement: >-
+    CC BY 4.0 조건에 따라 "EUMETSAT OSI SAF"를 출처로 밝히고, 실제로 사용한 제품(OSI-450-a1, OSI-438 등)의 DOI를 각각 적습니다.
+    Copernicus Marine·CDS에서 받았다면 인용 문구의 배포처(distributor)와 다운로드 날짜 자리에 그 정보를 넣으세요.
+
+notices:
+  - date: "2026-08-31"
+    level: warning
+    title: 2026-09-01부터 AMSR3 기반 해빙 산출물 운영 시작 (서비스 메시지 #3571)
+    body: >-
+      AMSR3가 주 입력 센서가 되면서 AMSR3 기반 연장판 OSI-438-a(약 2일 지연)가 운영을 시작했습니다.
+      AMSR2 기반 OSI-438은 정규(약 16일 지연) 파일만 새 FTP 위치에서 계속 나오고 빠른 갱신(fast-track) 파일은 중단되므로,
+      fast-track 사용자는 OSI-438-a로 바꿔야 합니다. 준실시간 L3 농도는 OSI-408-g(AMSR3)로 파일명이 바뀝니다.
+    source: https://osi-saf.eumetsat.int/community/list-of-service-messages/operational-release-amsr3-based-sea-ice-products-1st-september
+  - date: "2026-05-04"
+    level: info
+    title: AMSR2 기반 연장판 OSI-438 정식 운영 선언
+    body: >-
+      2025년 7월부터 시범 제공되던 OSI-438(AMSR2 기반 2021년 이후 연장판)이 검증을 마치고 2026-05-04 정식 운영 제품이 되었습니다.
+      AMSR 계열 CDR인 OSI-458과 일관되게 이어지는 연장판입니다.
+    source: https://osi-saf.eumetsat.int/products/osi-438
+  - date: "2025-10-17"
+    level: critical
+    title: SSMIS 기반 연장판 OSI-430-a 생산 중단
+    body: >-
+      DMSP SSMIS 입력이 자주 끊겨 시간적 일관성을 유지할 수 없게 되면서 OSI-430-a 생산이 중단되었습니다(마지막 자료 2025-10-16).
+      OSI SAF는 AMSR2 기반 OSI-438로 전환할 것을 권고합니다. SSMIS만 쓰는 준실시간 OSI-401-d도 입력이 불안정하므로 OSI-408 사용이 권장됩니다.
+    source: https://osi-saf.eumetsat.int/community/stories/implications-end-ssmis-data-osi-saf-products
+  - date: "2025-06-13"
+    level: warning
+    title: DMSP SSMIS 자료 종료가 OSI SAF 산출물에 미치는 영향 안내
+    body: >-
+      미 국방부의 SSMIS 자료 제공 중단 계획(처음 2025-06-30, 이후 연기되어 2026년 9월까지 best-effort 제공)에 따라
+      OSI SAF가 제품별 대응을 안내했습니다. 다중 센서 산출물은 2025년 7월부터 SSMIS를 쓰지 않으며, SSMIS 단독 산출물은 AMSR2 기반 제품으로 대체를 권고합니다.
+      이 안내 페이지는 상황에 따라 계속 갱신됩니다.
+    source: https://osi-saf.eumetsat.int/community/stories/implications-end-ssmis-data-osi-saf-products
+  - date: "2025-06-04"
+    level: warning
+    title: 수정판 CDR OSI-450-a1 공개 — OSI-450-a 대체
+    body: >-
+      해안 육지 오염 보정 오류로 343일 자료가 영향을 받았던 OSI-450-a를 고친 OSI-450-a1(v3.1, 새 DOI 10.15770/EUM_SAF_OSI_0023)이
+      운영 제품으로 공개되었습니다. 기존 OSI-450-a를 받아 쓰고 있다면 새 버전으로 교체하세요.
+    source: https://osi-saf.eumetsat.int/products/osi-450-a1
+
+links:
+  - name: OSI SAF 해빙 농도 CDR/ICDR v3 설명 페이지
+    url: https://osisaf-hl.met.no/osi-450a-430a-desc
+  - name: 제품 사용자 설명서(PUM v3.4)
+    url: https://osisaf-hl.met.no/sites/osisaf-hl/files/user_manuals/osisaf_pum_sea-ice-conc-climate-data-record_3.4.pdf
+  - name: 알고리즘 기술 문서(ATBD v3.2)
+    url: https://osisaf-hl.met.no/sites/osisaf-hl/files/baseline_document/osisaf_atbd_sea-ice-conc-climate-data-record_3.2.pdf
+  - name: AMSR2 → AMSR3 전환 안내 (2026-04-24)
+    url: https://osi-saf.eumetsat.int/community/stories/implications-amsr2-being-replaced-amsr3-osi-saf-products
+  - name: OSI SAF 서비스 메시지 목록
+    url: https://osi-saf.eumetsat.int/community/list-of-service-messages
+
+watch_urls:
+  - https://osi-saf.eumetsat.int/community/list-of-service-messages
+  - https://osi-saf.eumetsat.int/community/stories
+  - https://osi-saf.eumetsat.int/community/stories/implications-end-ssmis-data-osi-saf-products
+
+last_verified: "2026-10-11"

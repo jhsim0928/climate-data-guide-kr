@@ -1,0 +1,150 @@
+# ─────────────────────────────────────────────────────────────
+# CERA-20C — 데이터셋 정보 파일
+# ─────────────────────────────────────────────────────────────
+id: cera20c
+name: CERA-20C
+full_name: ECMWF Coupled Reanalysis of the 20th Century (ECMWF 20세기 대기-해양 결합 재분석)
+category: reanalysis
+domain: atmosphere
+group: 장기(20세기)·관측 제한 재분석
+order: 30
+domains: [대기, 해양, 해빙, 육지, 해양파랑]
+provider: ECMWF (ERA-CLIM2 프로젝트)
+
+status: ended
+status_note: >-
+  2010년 12월까지 한 번 생산된 자료로 더 이상 갱신되지 않습니다. 주 배포 경로였던 ECMWF Public Datasets(웹·Web API)가
+  2023년 6월 1일 종료되었고 ECMWF는 대체 경로를 안내하지 않아, 현재는 공개 다운로드 창구가 없습니다.
+  꼭 필요하다면 ECMWF 지원 포털에 문의해야 하며, NCAR GDEX 같은 공개 미러도 확인되지 않습니다.
+
+successor:
+  name: "없음 (1940년 이후 대기는 ERA5 권장)"
+  url: https://cds.climate.copernicus.eu/datasets/reanalysis-era5-single-levels
+  note: >-
+    20세기 전체를 다루는 ECMWF의 후속 결합 재분석은 아직 공개되지 않았습니다. 대기만 필요하면 같은 관측 전략의 ERA-20C(NCAR GDEX에서 받을 수 있음)를,
+    1940년 이후라면 ERA5를 권장합니다.
+
+period:
+  start: "1901-01"
+  end: "2010-12"
+  note: 1901년 1월 1일 ~ 2010년 12월 31일. 1900년은 스핀업용으로만 쓰여 제공되지 않습니다.
+
+resolution:
+  spatial: "대기 T159(약 125 km) / 해양 NEMO ORCA1(약 1°, 적도 부근 남북 방향 세분화)"
+  vertical: "대기 모델면 91층(~0.01 hPa)·기압면 37층·온위면 16층·2 PVU / 해양 42층(최상층 10 m) / 토양 4층"
+  temporal: 3시간 (월평균 별도), 10개 앙상블 멤버
+
+update: 종료 (2010년 12월까지 생산)
+license: ECMWF 이용 조건 (공개 서비스 종료 후 현행 조건은 ECMWF에 문의)
+account_required: true
+
+summary: >-
+  ECMWF가 ERA-CLIM2 프로젝트로 만든 20세기 대기-해양 결합 재분석으로, 10개 멤버 앙상블로 1901~2010년을 제공합니다.
+  대기(IFS)와 해양(NEMO)·해빙(LIM2)·파랑 모델을 결합하고 24시간 공통 창에서 동화해, 대기와 해양이 서로 일관된 상태를 만들도록 설계했습니다.
+  대기는 ERA-20C처럼 지표기압·해상풍만, 해양은 수온·염분 연직 프로파일을 동화하며, 해수면온도는 HadISST2 월평균으로 완화(relaxation)합니다.
+
+variables:
+  note: >-
+    ECMWF CERA-20C 데이터셋 페이지와 ECMWF 파라미터 데이터베이스로 확인한 대기·지표 주요 변수입니다(ECMWF GRIB short name).
+    해양·해빙 변수는 별도 NetCDF로 제공된 것으로 알려져 있으나 공식 변수명 목록을 확인하지 못해 적지 않았습니다.
+    모든 변수는 10개 앙상블 멤버로 제공됩니다.
+  full_list: https://www.ecmwf.int/en/forecasts/datasets/reanalysis-datasets/cera-20c
+  groups:
+    - name: 지표·단일면
+      items:
+        - "2m 기온 — `2t` (K)"
+        - "해수면온도 — `sst` (K)"
+    - name: 누적 예보 변수 (지표)
+      items:
+        - "총강수량 — `tp` (m)"
+        - "강설량 — `sf` (m of water equivalent)"
+        - "증발량 — `e` (m of water equivalent)"
+        - "유출량 — `ro` (m)"
+        - "지표 하향 단파복사 — `ssrd` (J m-2)"
+        - "지표 하향 장파복사 — `strd` (J m-2)"
+        - "대기 상단 순 장파복사 — `ttr` (J m-2)"
+        - "지표 현열 플럭스 — `sshf` (J m-2)"
+        - "지표 잠열 플럭스 — `slhf` (J m-2)"
+        - "동서·남북 난류 지표 응력 — `ewss`, `nsss` (N m-2 s)"
+        - "연직적분 수분 발산 — `vimd` (kg m-2)"
+
+access:
+  - name: ECMWF CERA-20C 데이터셋 페이지
+    url: https://www.ecmwf.int/en/forecasts/datasets/reanalysis-datasets/cera-20c
+    method: 안내 문서 (다운로드 기능 없음)
+    note: 자료 접근 문의는 ECMWF/C3S 사용자 지원 창구로 안내합니다. 기존 웹 다운로드·Web API(ecmwfapi, dataset=cera20c)는 2023년 6월 1일 종료되었습니다.
+  - name: ECMWF 지원 포털 (자료 접근 문의)
+    url: https://confluence.ecmwf.int/site/support
+    method: 문의 요청
+    note: >-
+      공개 다운로드가 닫힌 뒤 ECMWF가 제시하는 유일한 경로입니다. MARS 아카이브(class=ep)에는 자료가 남아 있지만,
+      회원국 외 사용자의 MARS 접근은 별도 서비스 계약이 필요할 수 있습니다.
+
+tips:
+  - "앙상블 퍼짐(spread)이 실제 오차보다 작습니다. ECMWF 뉴스레터(2017)에 따르면 2005년 기준 평균제곱근오차가 퍼짐의 약 두 배였으므로, 퍼짐을 불확실성 그대로 해석하지 마세요."
+  - "해빙 결합 문제로 북극 여름 융해가 부족해 해빙이 해마다 쌓입니다(두께 5 m 초과 사례). 북극 해빙 두께·부피 분석에는 쓰지 마세요."
+  - 생산이 여러 구간(stream)으로 나뉘어 있어 구간 경계에서 해양 열용량에 불연속이 나타날 수 있습니다. 장기 해양 열용량 추세는 구간 경계를 확인하세요.
+  - 상층·위성 관측을 동화하지 않으므로 20세기 후반 대기 상태의 최선 추정치는 아닙니다(NCAR Climate Data Guide). 1979년 이후 대기 연구에는 ERA5를 쓰세요.
+
+citations:
+  papers:
+    - label: CERA-20C 기술 논문
+      text: >-
+        Laloyaux, P., de Boisseson, E., Balmaseda, M., Bidlot, J.-R., Broennimann, S., Buizza, R., Dahlgren, P., Dee, D.,
+        Haimberger, L., Hersbach, H., Kosaka, Y., Martin, M., Poli, P., Rayner, N., Rustemeier, E., Schepers, D. (2018):
+        CERA-20C: A Coupled Reanalysis of the Twentieth Century. Journal of Advances in Modeling Earth Systems, 10(5), 1172–1195.
+      doi: 10.1029/2018MS001273
+      bibtex: |
+        @article{laloyaux2018cera20c,
+          author  = {Laloyaux, Patrick and de Boisseson, Eric and Balmaseda, Magdalena and Bidlot, Jean-Raymond and Broennimann, Stefan and Buizza, Roberto and Dahlgren, Per and Dee, Dick and Haimberger, Leopold and Hersbach, Hans and Kosaka, Yuki and Martin, Matthew and Poli, Paul and Rayner, Nick and Rustemeier, Elke and Schepers, Dinand},
+          title   = {{CERA-20C}: A Coupled Reanalysis of the Twentieth Century},
+          journal = {Journal of Advances in Modeling Earth Systems},
+          volume  = {10},
+          number  = {5},
+          pages   = {1172--1195},
+          year    = {2018},
+          doi     = {10.1029/2018MS001273}
+        }
+    - label: 결합 자료동화 체계 논문 (선택)
+      text: >-
+        Laloyaux, P., Balmaseda, M., Dee, D., Mogensen, K., Janssen, P. (2016): A coupled data assimilation system
+        for climate reanalysis. Quarterly Journal of the Royal Meteorological Society, 142(694), 65–78.
+      doi: 10.1002/qj.2629
+    - label: ECMWF 뉴스레터 해설 (선택)
+      text: >-
+        Laloyaux, P., de Boisseson, E., Dahlgren, P. (2017): CERA-20C: An Earth system approach to climate reanalysis.
+        ECMWF Newsletter, No. 150, 25–30.
+      doi: 10.21957/ffs36birj2
+  acknowledgement: >-
+    공식 데이터셋 DOI는 없습니다. ECMWF(ERA-CLIM2 프로젝트)를 자료 생산 기관으로 밝히고 Laloyaux et al.(2018)을 인용하세요.
+    자료를 받은 경로(예: ECMWF 지원을 통한 제공)와 날짜를 Data availability에 함께 적는 것이 좋습니다.
+
+notices:
+  - date: "2023-06-01"
+    level: critical
+    title: ECMWF Public Datasets 서비스 종료 — CERA-20C 공개 다운로드 중단
+    body: >-
+      2023년 3월 2일 예고대로 ECMWF Public Datasets 서비스(웹 인터페이스와 Web API)가 종료되어 CERA-20C를 공개적으로 받을 수 없게 되었습니다.
+      ECMWF 안내 표에는 CERA-20C의 대체 경로가 적혀 있지 않습니다.
+    source: https://confluence.ecmwf.int/spaces/WEBAPI/blog/2023/03/02/320999831/Decommissioning+of+ECMWF+Public+Datasets+service
+  - date: "2017-01-30"
+    level: info
+    title: CERA-20C 일 자료 공개
+    body: ECMWF Public Datasets 서비스로 CERA-20C 3시간(일) 자료가 공개되었습니다(월평균은 2017년 1월 12일 공개). 이 서비스는 2023년 종료되었습니다.
+    source: https://confluence.ecmwf.int/spaces/WEBAPI/blog/2017/01/30/72129401/New+Public+Dataset+CERA-20C+daily
+
+links:
+  - name: ECMWF CERA-20C 데이터셋 페이지
+    url: https://www.ecmwf.int/en/forecasts/datasets/reanalysis-datasets/cera-20c
+  - name: "ECMWF 뉴스레터 150호 — CERA-20C: An Earth system approach to climate reanalysis"
+    url: https://www.ecmwf.int/en/newsletter/150/meteorology/cera-20c-earth-system-approach-climate-reanalysis
+  - name: ECMWF Public Datasets 서비스 종료 안내
+    url: https://confluence.ecmwf.int/x/-wUiEw
+  - name: NCAR Climate Data Guide — CERA-20C
+    url: https://climatedataguide.ucar.edu/climate-data/cera-20c-ecmwfs-coupled-ocean-atmosphere-reanalysis-20th-century
+
+watch_urls:
+  - https://confluence.ecmwf.int/x/-wUiEw
+  - https://www.ecmwf.int/en/forecasts/datasets/reanalysis-datasets/cera-20c
+
+last_verified: "2026-10-11"
