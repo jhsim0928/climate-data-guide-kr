@@ -15,6 +15,7 @@ import argparse
 import datetime as dt
 import hashlib
 import json
+import os
 import re
 import sys
 from concurrent.futures import ThreadPoolExecutor
@@ -102,6 +103,51 @@ def fetch(url: str):
         return None, type(e).__name__ + ": " + str(e)[:200]
 
 
+def needs_browser(lines, err) -> bool:
+    """자바스크립트로 화면을 그리는 페이지(본문이 거의 비어 옴)나 수집기를 막는 페이지"""
+    if err:
+        return err.startswith("HTTP 4") or err == "본문이 비어 있음"
+    return len(lines) <= 3 and not lines[0].startswith("[PDF")
+
+
+def render_all(urls: list[str]) -> dict[str, tuple]:
+    """실제 브라우저(Chromium)로 열어 화면에 보이는 글자를 읽음. GitHub Actions에서만 설치되어 있음"""
+    out: dict[str, tuple] = {}
+    try:
+        from playwright.sync_api import sync_playwright
+    except ImportError:
+        return {u: (None, "브라우저 없음") for u in urls}
+    debug = bool(os.environ.get("WATCH_DEBUG"))
+    with sync_playwright() as pw:
+        browser = pw.chromium.launch()
+        ctx = browser.new_context(user_agent=BROWSER_UA, locale="en-US", viewport={"width": 1280, "height": 2000})
+        for url in urls:
+            page = ctx.new_page()
+            if debug:
+                page.on("response", lambda r: ("json" in (r.headers.get("content-type") or "")) and print("   [json]", r.status, r.url))
+            try:
+                resp = page.goto(url, wait_until="networkidle", timeout=60000)
+                page.wait_for_timeout(2500)
+                status = resp.status if resp else 0
+                page.evaluate("""() => document.querySelectorAll('script,style,noscript,svg,nav,footer,header,form,iframe,button').forEach(e => e.remove())""")
+                text = page.inner_text("body")
+                lines = extract_lines(text.encode(), "text/plain")
+                if status >= 400:
+                    out[url] = (None, f"HTTP {status} (브라우저)")
+                elif len(lines) <= 3:
+                    out[url] = (None, "브라우저로도 본문이 비어 있음")
+                else:
+                    out[url] = (lines, None)
+            except Exception as e:  # noqa: BLE001
+                out[url] = (None, "브라우저: " + type(e).__name__ + ": " + str(e)[:150])
+            finally:
+                page.close()
+            if debug:
+                print(" [browser]", url, "→", out[url][1] or f"{len(out[url][0])}줄")
+        browser.close()
+    return out
+
+
 def added_lines(old: list[str], new: list[str]) -> list[str]:
     """예전에 없던 줄만 (순서 유지). 줄 이동·재배열은 변경으로 보지 않음"""
     seen = set(old)
@@ -134,6 +180,14 @@ def main() -> int:
 
     with ThreadPoolExecutor(max_workers=8) as ex:
         results = dict(zip(targets, ex.map(fetch, targets)))
+    modes = {u: "http" for u in targets}
+    hard = [u for u, (lines, err) in results.items() if needs_browser(lines, err)]
+    if hard:
+        for u, res in render_all(hard).items():
+            if res[0]:
+                results[u], modes[u] = res, "browser"
+            elif results[u][0] is None or needs_browser(*results[u]):
+                results[u] = (None, res[1] if results[u][1] is None else results[u][1] + " / " + res[1])
 
     now = dt.datetime.now(KST)
     changes, errors, ok = [], [], 0
@@ -150,9 +204,10 @@ def main() -> int:
             index[url] = meta
             continue
         ok += 1
-        meta.update({"fails": 0, "last_ok": now.date().isoformat(), "file": snap.name})
+        mode_changed = meta.get("mode", "http") != modes[url]
+        meta.update({"fails": 0, "last_ok": now.date().isoformat(), "file": snap.name, "mode": modes[url]})
         meta.pop("last_error", None)
-        if snap.exists():
+        if snap.exists() and not mode_changed:   # 읽는 방식이 바뀐 날은 새 기준으로 저장만 함
             old = snap.read_text(encoding="utf-8").splitlines()[1:]
             add = added_lines(old, lines)
             if add:
