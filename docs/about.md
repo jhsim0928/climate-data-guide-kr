@@ -34,6 +34,11 @@ Zenodo DOI가 발급되면 이 자리에 DOI 인용 형식을 추가합니다. G
 - **공지 제보**: GitHub 이슈의 "데이터 변경·공지 제보" 양식을 이용해 주세요.
 - 기여해 주신 분은 저장소의 기여자 목록과 `CITATION.cff`에 이름을 올립니다.
 
+## 문의
+
+- 운영: 기후데이터 길잡이 운영자
+- 메일: [data4researchers@gmail.com](mailto:data4researchers@gmail.com)
+
 ## 면책 안내
 
 !!! warning "이 사이트는 공식 자료가 아닙니다"

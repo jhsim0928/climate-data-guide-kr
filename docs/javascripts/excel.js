@@ -51,8 +51,13 @@
     for (i++; i > 0; i = Math.floor((i - 1) / 26)) s = String.fromCharCode(65 + ((i - 1) % 26)) + s;
     return s;
   }
-  function buildXlsx(rows, sheetName) {
+  function buildXlsx(rows, sheetName, footer) {
     var widths = [];
+    var n = rows.length;
+    var foot = (footer || []).map(function (text, i) {
+      var r = n + 2 + i;  // 표와 한 줄 띄움
+      return '<row r="' + r + '"><c r="A' + r + '" s="' + (i === 0 ? 3 : 4) + '" t="inlineStr"><is><t xml:space="preserve">' + xmlEsc(text) + "</t></is></c></row>";
+    }).join("");
     var body = rows.map(function (row, r) {
       return '<row r="' + (r + 1) + '">' + row.map(function (v, c) {
         var ref = colName(c) + (r + 1), style = r === 0 ? ' s="1"' : ' s="2"';
@@ -60,7 +65,7 @@
         if (r > 0 && /^-?\d+(\.\d+)?$/.test(v) && v.length < 15) return '<c r="' + ref + '"' + style + "><v>" + v + "</v></c>";
         return '<c r="' + ref + '"' + style + ' t="inlineStr"><is><t xml:space="preserve">' + xmlEsc(v) + "</t></is></c>";
       }).join("") + "</row>";
-    }).join("");
+    }).join("") + foot;
     var cols = "<cols>" + widths.map(function (w, i) {
       return '<col min="' + (i + 1) + '" max="' + (i + 1) + '" width="' + w.toFixed(1) + '" customWidth="1"/>';
     }).join("") + "</cols>";
@@ -71,7 +76,7 @@
       { name: "_rels/.rels", data: '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="' + REL + '/officeDocument" Target="xl/workbook.xml"/></Relationships>' },
       { name: "xl/workbook.xml", data: '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><workbook ' + NS + ' xmlns:r="' + REL + '"><sheets><sheet name="' + xmlEsc(sheetName) + '" sheetId="1" r:id="rId1"/></sheets></workbook>' },
       { name: "xl/_rels/workbook.xml.rels", data: '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="' + REL + '/worksheet" Target="worksheets/sheet1.xml"/><Relationship Id="rId2" Type="' + REL + '/styles" Target="styles.xml"/></Relationships>' },
-      { name: "xl/styles.xml", data: '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><styleSheet ' + NS + '><fonts count="2"><font><sz val="11"/><name val="Malgun Gothic"/></font><font><b/><sz val="11"/><name val="Malgun Gothic"/></font></fonts><fills count="3"><fill><patternFill patternType="none"/></fill><fill><patternFill patternType="gray125"/></fill><fill><patternFill patternType="solid"><fgColor rgb="FFE8EEFC"/><bgColor indexed="64"/></patternFill></fill></fills><borders count="1"><border><left/><right/><top/><bottom/><diagonal/></border></borders><cellStyleXfs count="1"><xf numFmtId="0" fontId="0" fillId="0" borderId="0"/></cellStyleXfs><cellXfs count="3"><xf numFmtId="0" fontId="0" fillId="0" borderId="0" xfId="0"/><xf numFmtId="0" fontId="1" fillId="2" borderId="0" xfId="0" applyFont="1" applyFill="1" applyAlignment="1"><alignment vertical="top" wrapText="1"/></xf><xf numFmtId="0" fontId="0" fillId="0" borderId="0" xfId="0" applyAlignment="1"><alignment vertical="top" wrapText="1"/></xf></cellXfs><cellStyles count="1"><cellStyle name="Normal" xfId="0" builtinId="0"/></cellStyles></styleSheet>' },
+      { name: "xl/styles.xml", data: '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><styleSheet ' + NS + '><fonts count="4"><font><sz val="11"/><name val="Malgun Gothic"/></font><font><b/><sz val="11"/><name val="Malgun Gothic"/></font><font><b/><sz val="10"/><color rgb="FF00695C"/><name val="Malgun Gothic"/></font><font><sz val="10"/><color rgb="FF555555"/><name val="Malgun Gothic"/></font></fonts><fills count="3"><fill><patternFill patternType="none"/></fill><fill><patternFill patternType="gray125"/></fill><fill><patternFill patternType="solid"><fgColor rgb="FFE8EEFC"/><bgColor indexed="64"/></patternFill></fill></fills><borders count="1"><border><left/><right/><top/><bottom/><diagonal/></border></borders><cellStyleXfs count="1"><xf numFmtId="0" fontId="0" fillId="0" borderId="0"/></cellStyleXfs><cellXfs count="5"><xf numFmtId="0" fontId="0" fillId="0" borderId="0" xfId="0"/><xf numFmtId="0" fontId="1" fillId="2" borderId="0" xfId="0" applyFont="1" applyFill="1" applyAlignment="1"><alignment vertical="top" wrapText="1"/></xf><xf numFmtId="0" fontId="0" fillId="0" borderId="0" xfId="0" applyAlignment="1"><alignment vertical="top" wrapText="1"/></xf><xf numFmtId="0" fontId="2" fillId="0" borderId="0" xfId="0" applyFont="1"/><xf numFmtId="0" fontId="3" fillId="0" borderId="0" xfId="0" applyFont="1"/></cellXfs><cellStyles count="1"><cellStyle name="Normal" xfId="0" builtinId="0"/></cellStyles></styleSheet>' },
       { name: "xl/worksheets/sheet1.xml", data: '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><worksheet ' + NS + '><sheetViews><sheetView workbookViewId="0"><pane ySplit="1" topLeftCell="A2" activePane="bottomLeft" state="frozen"/></sheetView></sheetViews>' + cols + "<sheetData>" + body + "</sheetData></worksheet>" }
     ]);
   }
@@ -113,13 +118,30 @@
     var parts = [found.H2, found.H3].filter(Boolean);
     return parts.length ? page + " - " + parts.join(" ") : page;
   }
+  // 엑셀 맨 아래에 붙는 출처·인용 안내
+  var SITE = "https://data4researchers.kr/";
+  function pageUrl() {
+    var u = location.href.split("#")[0];
+    try { return decodeURIComponent(u); } catch (e) { return u; }
+  }
+  function citeFooter() {
+    var d = new Date(), pad = function (x) { return (x < 10 ? "0" : "") + x; };
+    var today = d.getFullYear() + "-" + pad(d.getMonth() + 1) + "-" + pad(d.getDate());
+    return [
+      "이 자료가 도움이 되셨다면 논문·보고서에 기후데이터 길잡이를 인용해 주세요.",
+      "인용 예) 기후데이터 길잡이, " + SITE + " (접속일 " + today + ")",
+      "출처 페이지: " + pageUrl() + " · 저장일 " + today,
+      "이 표는 요약입니다. 분석·논문에 쓰기 전에는 각 자료의 공식 출처에서 반드시 다시 확인하세요."
+    ];
+  }
+
   function download(table) {
     var rows = tableRows(table);
     if (rows.length < 2) { alert("저장할 내용이 없습니다."); return; }
     var title = tableTitle(table);
     if (table.id === "cmp-table") title = "자료 비교 - " + rows[0].slice(1).join(" vs ");
     var safe = title.replace(/[\\/:*?"<>|\[\]]/g, "").slice(0, 80);
-    var blob = buildXlsx(rows, safe.replace(/[^0-9A-Za-z가-힣 _-]/g, "").slice(0, 31) || "Sheet1");
+    var blob = buildXlsx(rows, safe.replace(/[^0-9A-Za-z가-힣 _-]/g, "").slice(0, 31) || "Sheet1", citeFooter());
     var a = document.createElement("a");
     a.href = URL.createObjectURL(blob);
     a.download = safe + ".xlsx";

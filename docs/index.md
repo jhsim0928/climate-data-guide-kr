@@ -3,7 +3,12 @@ hide:
   - navigation
 ---
 
-# 기후데이터 길잡이
+<div class="home-hero" markdown="1">
+![기후데이터 길잡이 data4researchers.kr](assets/logo-lockup.png#only-light){ .hero-logo }
+![기후데이터 길잡이](assets/logo-lockup-dark.png#only-dark){ .hero-logo .hero-logo--dark }
+</div>
+
+# 기후데이터 길잡이 { .visually-hidden }
 
 대기·해양·해빙·극지·원격탐사 연구자를 위해, 분석에 필요한 **원자료의 출처, 받는 방법, 제공 기간, 활용 가능한 변수, 논문용 레퍼런스, 그리고 제공 중단·변경 공지**를 한곳에 정리합니다.
 
@@ -12,13 +17,7 @@ hide:
 !!! warning "이용 전에 꼭 읽어주세요"
     <!-- DISCLAIMER -->
 
-[자료 비교하기](compare.md){ .md-button .md-button--primary } [전체 목록](datasets/index.md){ .md-button } [세대별 비교](transitions.md){ .md-button }
-
-## 분야별 자료
-
-<!-- DOMAIN_SUMMARY -->
-
-[전체 목록 한눈에 보기 →](datasets/index.md)
+[전체 목록](datasets/index.md){ .md-button .md-button--primary } [자료 비교하기](compare.md){ .md-button } [세대별 비교](transitions.md){ .md-button }
 
 ## 최근 공지
 
@@ -33,7 +32,7 @@ hide:
 - **자료를 받을 때**: 각 데이터셋 페이지의 *받는 방법*과 *예시 코드*를 따라 합니다.
 - **논문을 쓸 때**: *논문에 넣을 레퍼런스*에서 인용문과 BibTeX를 복사합니다.
 - **새 자료로 옮길 때**: [세대별 비교](transitions.md)에서 이전 자료와 무엇이 달라졌는지, 바꿔 쓸 때 주의할 점을 확인합니다.
-- **변경 소식을 놓치기 싫을 때**: [알림 신청](subscribe.md)에서 데이터셋과 공지 구분을 골라 메일로 받습니다. *(준비 중)*
+- **변경 소식을 놓치기 싫을 때**: [알림 신청](subscribe.md)에서 데이터셋과 공지 구분을 골라 메일로 받습니다.
 - **필요한 데이터가 없을 때**: [데이터셋 제안](suggest.md)으로 알려주세요.
 
 !!! info "정보가 바뀌었거나 틀린 곳을 발견하셨나요?"

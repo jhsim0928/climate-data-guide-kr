@@ -45,7 +45,9 @@ data/datasets/*.yaml     ← 데이터셋 정보 (여기만 고치면 됩니다)
 data/SCHEMA.md           ← YAML 작성 규칙 (변수 목록·시간 특성, 전환 분석 형식 포함)
 scripts/validate.py      ← YAML 검사 도구 (사이트 빌드와 같은 규칙)
 hooks/datasets.py        ← YAML을 읽어 페이지·메뉴·목록·중요 공지·세대별 비교·폼을 자동 생성 + 검증
-docs/index.md            ← 홈 (분야별 요약과 최근 공지는 자동으로 채워짐)
+docs/index.md            ← 홈 (최근 공지는 자동으로 채워짐)
+docs/assets/             ← 로고·파비콘, 빌드 때 notices.json(메일 알림용 공지 목록) 자동 생성
+mailing/Code.gs          ← 메일 알림·제안 접수용 Google Apps Script (사이트에는 올라가지 않음)
 docs/about.md, privacy.md, subscribe.md, suggest.md
 docs/compare.md          ← 자료 비교 (표·변수 찾기는 자동 생성)
 docs/stylesheets/, docs/javascripts/   ← site.js: 자료 비교·공지 필터·정보 오류 신고 링크
@@ -64,13 +66,24 @@ CITATION.cff             ← GitHub "Cite this repository" 버튼
 ## 알림 신청 · 데이터셋 제안 폼
 
 - `docs/subscribe.md`(알림 신청)와 `docs/suggest.md`(데이터셋 제안)의 입력 양식은 `hooks/datasets.py`가 데이터셋 목록으로 자동 생성합니다. 데이터셋을 추가하면 체크박스도 자동으로 늘어납니다.
-- 데이터셋 제안은 지금 바로 동작합니다. 입력한 내용이 채워진 GitHub 이슈가 새 창에서 열립니다.
-- 메일 알림은 **아직 준비 중**입니다. 양식은 미리 볼 수 있지만 신청이 저장되지 않습니다.
-- 메일 발송을 시작할 때는 신청을 받을 주소(예: Google Apps Script 웹앱)를 `mkdocs.yml`의 `extra.forms.subscribe_endpoint`에 넣으면 됩니다. 그 전에 `docs/privacy.md`(개인정보 처리방침 초안)의 빈칸을 채워주세요.
+- 양식은 `mkdocs.yml`의 `extra.forms`에 적힌 Google Apps Script 웹앱 주소로 보내집니다. 신청 정보는 **운영자 Google 스프레드시트**에만 저장되고, 공개 저장소에는 남지 않습니다.
+- 데이터셋 제안은 두 가지입니다. **바로 보내기**(운영자 시트에 저장 + 운영자 메일로 알림), **GitHub 이슈로 제안하기**(공개).
 
-## 방문자 수 집계 (선택)
+### 메일 알림 동작
 
-GoatCounter에 가입한 뒤 `docs/javascripts/notranslate.js`의 `GOATCOUNTER_CODE = ""` 따옴표 안에 정한 Code를 넣으면 집계가 시작됩니다.
+1. 신청 → 시트에 `pending`으로 저장되고 확인 메일 발송 → 메일 속 **신청 확인하기**를 누르면 `active`.
+2. 사이트를 빌드할 때 모든 YAML의 `notices`가 `https://data4researchers.kr/assets/notices.json`으로 만들어집니다.
+3. Apps Script가 매일 오전 9시쯤 이 파일을 읽어, 처음 보는 공지만 골라 구독자별(데이터셋·공지 구분)로 한 통씩 묶어 보냅니다. 보낸 공지는 `발송 기록` 시트에 남습니다.
+4. 수신 거부 링크를 누르면 시트에서 해당 행이 바로 지워집니다. 30일 넘게 확인하지 않은 신청도 자동 삭제됩니다.
+
+즉, **YAML에 공지를 추가하고 커밋하면 다음 날 아침 메일이 자동으로 나갑니다.** 이미 올린 공지의 날짜나 제목을 고치면 새 공지로 보고 다시 발송되니, 오타 수정은 본문(`body`)에서 하세요.
+
+- Gmail 무료 계정은 하루 약 100명에게 보낼 수 있습니다. 넘으면 남은 사람은 다음 날 보냅니다.
+- `mailing/Code.gs`를 고쳤다면 Apps Script 편집기에 붙여넣고 저장합니다. 매일 실행(checkNotices)은 저장만 하면 반영되고, 신청 접수(doPost/doGet)를 고쳤다면 **배포 → 배포 관리 → 수정 → 새 버전**으로 다시 배포해야 합니다(주소는 그대로).
+
+## 방문자 수 집계
+
+GoatCounter(쿠키 없음)를 씁니다. Code는 `docs/javascripts/notranslate.js`의 `GOATCOUNTER_CODE`에 있고, 통계는 https://data4researchers.goatcounter.com 에서 봅니다.
 
 ## 정리 원칙
 
@@ -83,7 +96,6 @@ GoatCounter에 가입한 뒤 `docs/javascripts/notranslate.js`의 `GOATCOUNTER_C
 - [ ] 공지 페이지 변경 감지 스크립트 + 주간 GitHub Actions → 변경 시 이슈 자동 생성
 - [ ] 이슈를 받아 Claude가 YAML 수정 PR을 여는 워크플로 (사람이 검토 후 머지)
 - [ ] Zenodo 연동으로 릴리스별 DOI 발급
-- [ ] 메일 알림 발송 연결 (구글 폼·시트 + Apps Script)
 - [ ] 데이터셋 확장 (ERA5-Land 등) 및 WRF·CESM2 모델 페이지
 
 ## 라이선스

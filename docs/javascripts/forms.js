@@ -65,6 +65,7 @@
       if (!consent.checked) return show(form, "개인정보 수집·이용에 동의해 주세요.", "error");
 
       var endpoint = form.getAttribute("data-endpoint");
+      var hp = form.querySelector('input[name="website"]');
       var summary =
         (allDatasets ? "전체 데이터셋" : datasets.length + "개 데이터셋") + " · " +
         levels.map(function (l) { return LEVEL_LABEL[l]; }).join(", ") + " 공지";
@@ -79,10 +80,11 @@
         datasets: allDatasets ? "all" : datasets.join(","),
         levels: levels.length === 3 ? "all" : levels.join(","),
         consent: "yes",
+        website: hp ? hp.value : "",
         requested_at: new Date().toISOString()
       }).then(function () {
         form.reset();
-        show(form, summary + " 알림을 신청했습니다. 감사합니다!", "success");
+        show(form, summary + " 알림 신청을 받았습니다. 확인 메일을 보냈으니 메일함(스팸함 포함)에서 '신청 확인하기'를 눌러야 완료됩니다.", "success");
       }).catch(function () {
         show(form, "신청을 보내지 못했습니다. 잠시 후 다시 시도해 주세요.", "error");
       });
@@ -113,7 +115,7 @@
         show(form, "보내는 중…", "info");
         post(form.getAttribute("data-endpoint"), {
           type: "suggest", name: get("name"), category: get("category"), url: get("url"),
-          reason: get("reason"), notes: get("notes"), contact: get("contact"),
+          reason: get("reason"), notes: get("notes"), contact: get("contact"), website: get("website"),
           requested_at: new Date().toISOString()
         }).then(function () {
           form.reset();

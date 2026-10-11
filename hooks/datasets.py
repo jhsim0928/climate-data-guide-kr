@@ -872,7 +872,27 @@ def on_files(files, config):
     add("datasets/index.md", render_index(_datasets))
     add("notices.md", render_notices(_datasets))
     add("transitions.md", render_transitions(_datasets))
+    add("assets/notices.json", notices_json(_datasets))
     return files
+
+
+def notices_json(datasets: list[dict]) -> str:
+    """메일 알림용 공지 목록 (mailing/Code.gs 가 하루 한 번 읽어 새 공지만 발송).
+    key 가 처음 보이는 공지만 '새 공지'로 취급하므로, 이미 올린 공지의 날짜·제목을 고치면 다시 발송됩니다."""
+    out = []
+    for d, n in all_notices(datasets):
+        out.append({
+            "key": f"{d['id']}|{n['date']}|{n['title']}",
+            "date": str(n["date"]),
+            "level": n["level"],
+            "dataset_id": d["id"],
+            "dataset_name": d["name"],
+            "title": n["title"],
+            "body": re.sub(r"\s+", " ", str(n.get("body") or "")).strip(),
+            "source": n.get("source", ""),
+            "url": site_page_url(d),
+        })
+    return json.dumps({"generated": date.today().isoformat(), "notices": out}, ensure_ascii=False, indent=1)
 
 
 # ── 폼 ──────────────────────────────────────────────────────
@@ -923,9 +943,12 @@ def subscribe_form(config) -> str:
         '<fieldset><legend>3. 받을 이메일</legend>'
         '<input type="email" name="email" placeholder="name@example.ac.kr" autocomplete="email" required>'
         '</fieldset>'
+        '<div class="hp-field" aria-hidden="true"><label>웹사이트 (비워 두세요)<input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>'
         '<label class="check consent"><input type="checkbox" name="consent" required> '
         '<a href="../privacy/">개인정보 수집·이용</a>에 동의합니다 (필수)</label>'
         '<div class="form-actions"><button type="submit" class="md-button md-button--primary">알림 신청</button></div>'
+        '<p class="hint">신청하면 <strong>확인 메일</strong>이 갑니다. 메일의 <em>신청 확인하기</em>를 눌러야 등록이 끝납니다. '
+        '알림 메일마다 아래쪽에 수신 거부 링크가 있어 언제든 해지할 수 있습니다.</p>'
         '<p class="form-message" role="status" aria-live="polite"></p>'
         '</form>'
     )
@@ -960,12 +983,13 @@ def suggest_form(config) -> str:
         '<label class="field">제안하신 분 (선택)'
         '<input type="text" name="contact" placeholder="이름·소속 — 기여자 목록에 올려드려요"></label>'
         '</fieldset>'
+        '<div class="hp-field" aria-hidden="true"><label>웹사이트 (비워 두세요)<input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>'
         '<div class="form-actions">'
         f'{direct}'
         '<button type="submit" class="md-button' + ("" if endpoint else " md-button--primary") + '" data-action="github">'
         'GitHub 이슈로 제안하기</button></div>'
         '<p class="hint">GitHub 이슈로 제안하면 새 창에서 내용이 채워진 제안서가 열리고, 제출(<strong>Create</strong>) 버튼을 누르면 됩니다. '
-        'GitHub 계정이 필요합니다.' + ("" if endpoint else " 계정 없이 보내는 기능은 메일 알림과 함께 추가될 예정입니다.") + '</p>'
+        'GitHub 계정이 필요합니다.' + (" <strong>바로 보내기</strong>는 계정 없이 운영자에게 바로 전달됩니다." if endpoint else "") + '</p>'
         '<p class="form-message" role="status" aria-live="polite"></p>'
         '</form>'
     )

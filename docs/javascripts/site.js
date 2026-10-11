@@ -38,11 +38,8 @@
       ["시간 간격", function (d) { return esc(d.temporal_s); }],
       ["연직 해상도", function (d) { return esc(d.vertical); }],
       ["시간 간격 (세부)", function (d) { return esc(d.temporal); }],
-      ["시간 표기 규칙", function (d) { return codeText(d.time); }],
       ["갱신 주기", function (d) { return esc(d.update); }],
-      ["라이선스", function (d) { return esc(d.license); }],
       ["계정 필요", function (d) { return esc(d.account); }],
-      ["정리된 변수", function (d) { return d.nvars + "개"; }],
       ["대표 DOI", function (d) {
         return d.doi.map(function (x) { return '<a href="https://doi.org/' + esc(x) + '" target="_blank" rel="noopener">' + esc(x) + "</a>"; }).join("<br>") || "-";
       }],

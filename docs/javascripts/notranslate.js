@@ -19,7 +19,7 @@ if (typeof document$ !== "undefined") {
 // 방문자 수 집계 (GoatCounter) — 쿠키를 쓰지 않습니다
 // GoatCounter 가입 후, 정한 Code를 아래 따옴표 안에 넣으세요. 예) "climatedata-kr"
 // 비워두면 집계하지 않습니다.
-var GOATCOUNTER_CODE = "";
+var GOATCOUNTER_CODE = "data4researchers";
 
 (function () {
   if (!GOATCOUNTER_CODE) return;
