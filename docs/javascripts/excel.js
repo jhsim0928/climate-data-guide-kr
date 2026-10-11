@@ -1,6 +1,9 @@
 // 표를 엑셀(.xlsx) 파일로 저장 — 외부 라이브러리 없이 브라우저에서 바로 만듭니다.
 // 화면에 보이는 그대로(정렬 순서, 필터로 숨긴 행 제외, 비교표는 고른 자료만) 저장합니다.
 (function () {
+  // 영어판(/en/)이면 영어 문구를 씁니다
+  var IS_EN = (document.documentElement.lang || "").toLowerCase().indexOf("en") === 0;
+  function L(ko, en) { return IS_EN ? en : ko; }
   // ── ZIP(무압축) 만들기 ─────────────────────────────────
   var CRC_TABLE = (function () {
     var t = new Uint32Array(256);
@@ -133,18 +136,18 @@
     try { return decodeURIComponent(u); } catch (e) { return u; }
   }
   function citeFooter() {
-    var lines = ["이 자료가 도움이 되셨다면 논문·보고서에 기후데이터 길잡이를 인용해 주세요."];
+    var lines = [L("이 자료가 도움이 되셨다면 논문·보고서에 기후데이터 길잡이를 인용해 주세요.", "If this table helped, please acknowledge the Korean Climate Data Guide in your paper or report.")];
     if (meta("cdg-ack")) lines.push("Acknowledgements: " + meta("cdg-ack"));
-    lines.push("출처 페이지: " + pageUrl());
-    lines.push("이 표는 요약입니다. 분석·논문에 쓰기 전에는 각 자료의 공식 출처에서 반드시 다시 확인하세요.");
+    lines.push(L("출처 페이지: ", "Source page: ") + pageUrl());
+    lines.push(L("이 표는 요약입니다. 분석·논문에 쓰기 전에는 각 자료의 공식 출처에서 반드시 다시 확인하세요.", "This table is a summary. Always re-check each dataset's official source before using it in an analysis or paper."));
     return lines;
   }
 
   function download(table) {
     var rows = tableRows(table);
-    if (rows.length < 2) { alert("저장할 내용이 없습니다."); return; }
+    if (rows.length < 2) { alert(L("저장할 내용이 없습니다.", "Nothing to save.")); return; }
     var title = tableTitle(table);
-    if (table.id === "cmp-table") title = "자료 비교 - " + rows[0].slice(1).join(" vs ");
+    if (table.id === "cmp-table") title = L("자료 비교 - ", "Dataset comparison - ") + rows[0].slice(1).join(" vs ");
     var safe = title.replace(/[\\/:*?"<>|\[\]]/g, "").slice(0, 80);
     var blob = buildXlsx(rows, safe.replace(/[^0-9A-Za-z가-힣 _-]/g, "").slice(0, 31) || "Sheet1", citeFooter());
     var a = document.createElement("a");
@@ -163,7 +166,7 @@
       var anchor = table.closest(".md-typeset__scrollwrap") || table.closest(".table-scroll") || table;
       var bar = document.createElement("div");
       bar.className = "table-tools";
-      bar.innerHTML = '<button type="button" class="xlsx-btn" title="화면에 보이는 그대로 엑셀 파일로 저장">엑셀로 저장</button>';
+      bar.innerHTML = '<button type="button" class="xlsx-btn" title="' + L("화면에 보이는 그대로 엑셀 파일로 저장", "Save the table as shown to an Excel file") + '">' + L("엑셀로 저장", "Save as Excel") + '</button>';
       bar.querySelector("button").addEventListener("click", function () { download(table); });
       anchor.parentNode.insertBefore(bar, anchor);
       if (table.id === "cmp-table") bar.classList.add("cmp-tools");

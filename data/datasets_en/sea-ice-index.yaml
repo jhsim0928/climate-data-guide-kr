@@ -1,0 +1,278 @@
+# ─────────────────────────────────────────────────────────────
+# NSIDC Sea Ice Index — dataset information file (English edition)
+# G02135 Version 4 (released 2025-07-31, AMSR2 input from 2025)
+# ─────────────────────────────────────────────────────────────
+id: sea-ice-index
+name: Sea Ice Index
+full_name: NOAA/NSIDC Sea Ice Index (G02135, Version 4)
+category: satellite
+domain: seaice
+group: 해빙 지수
+order: 10
+domains: [해빙]
+provider: NOAA@NSIDC / National Snow and Ice Data Center (NSIDC)
+
+status: active
+status_note: >-
+  Updated normally (daily, one day behind). With the loss of access to DMSP SSMIS data, Version 4 was released on 2025-07-31; values from 2025-01-01 onwards are now based on JAXA AMSR2,
+  and Version 3 was retired. Since May 2025 the data set has been at a "Basic" Level of Service because of funding limitations: it continues to update automatically,
+  but problems may be addressed more slowly.
+
+transitions:
+  - from: Sea Ice Index Version 3 (G02135 V3)
+    to: Sea Ice Index Version 4 (G02135 V4)
+    status: completed
+    date: "2025-07"
+    summary: >-
+      In response to the loss of access to DMSP SSMIS data, the input sea ice concentration from 2025-01-01 onwards switched from SSMIS-based products (NSIDC-0081, NSIDC-0051) to AMSR2-based NSIDC-0803.
+      Data before 2025 were not reprocessed but copied from V3 (only the file names changed to v4.0), and the distinction between near-real-time and final data was removed. V3 was retired when V4 was released.
+    changes:
+      - aspect: Input from 2025 onwards
+        before: "SSMIS-based near-real-time concentration (NSIDC-0081), replaced a year or more later by final concentration (NSIDC-0051, NASA GSFC)"
+        after: "AMSR2 Daily Polar Gridded Sea Ice Concentrations (NSIDC-0803, NASA Team algorithm) — from 2025-01-01"
+      - aspect: Values for 1978–2024
+        before: "V3 values (2023–2024 updated to final data on 2025-07-03)"
+        after: "Copied unchanged from V3, with v4.0 added to the file names (images before 2025 still labelled 'final')"
+      - aspect: Near-real-time vs final data
+        before: "Recent period based on near-real-time (NRTSI) values, replaced once final data are available"
+        after: "No distinction — produced directly from a single AMSR2 input"
+      - aspect: Handling of missing data
+        before: "Missing grid cells left as gaps in the images"
+        after: "Gaps in the NSIDC-0803 concentration fields are filled with the previous day's value and then with the mean of the days before and after (temporal interpolation), so a day's extent can change slightly the next day"
+      - aspect: Arctic pole hole
+        before: "SSMIS — 0.029 million km², circle of 94 km radius (2008–2024)"
+        after: "AMSR2 — 0.064 million km², rounded square (2025–). Treated as ice in the extent calculation"
+      - aspect: AMSR2 vs SSMIS extent (comparison for 2025-01-01 to 06-30)
+        before: "SSMIS as reference"
+        after: "AMSR2 generally smaller — Northern Hemisphere mean 0.05, maximum below 0.2 / Southern Hemisphere mean 0.04, maximum below 0.15 million km² (Special Report 28), because AMSR2 places the ice edge slightly further inward"
+      - aspect: DOI and file names
+        before: "10.7265/N5K072F8, …_v3.0.csv"
+        after: "10.7265/a98x-0f50, …_v4.0.csv (e.g. N_seaice_extent_daily_v4.0.csv)"
+    impacts:
+      - Values from 2025 onwards are slightly smaller than a continued SSMIS record would give, which tilts the extent trend since 1979 very slightly more negative. Allow for this difference (tens of thousands to over a hundred thousand km²) when ranking "record lows" from 2025 on.
+      - NSIDC describes the intercalibration with SSMIS as preliminary and plans further improvements, so values from 2025 onwards may change again in future versions.
+      - V3 files are no longer distributed. Do not mix previously downloaded V3 CSVs with V4 CSVs; download the full record again as V4 (values through 2024 are identical).
+      - Daily values can change slightly the next day because of gap filling, so re-download the most recent few days before using them.
+    sources:
+      - name: "NSIDC — User Notice: Sea Ice Index Transitioning to Version 4 with AMSR2 Data (2025-07-23)"
+        url: https://nsidc.org/data/user-resources/data-announcements/user-notice-sea-ice-index-transitioning-version-4-amsr2-data
+      - name: "NSIDC — New version release: NOAA/NSIDC Sea Ice Index, Version 4 (2025-07-31)"
+        url: https://nsidc.org/data/user-resources/data-announcements/new-version-release-noaansidc-sea-ice-index-version-4
+      - name: NSIDC Special Report 28 — Sea Ice Index Version 4 Analysis (July 2025)
+        url: https://nsidc.org/sites/default/files/documents/technical-reference/nsidc-special-report-28.pdf
+      - name: G02135 V4 User Guide
+        url: https://nsidc.org/sites/default/files/documents/user-guide/g02135-v004-userguide.pdf
+
+period:
+  start: "1978-10"
+  end: present
+  note: >-
+    Daily data from 1978-10-26 and monthly data from 1978-11; as of 2026-10-12 updated daily, one day behind (per the data set page and Arctic Sea Ice News; the archive listing itself was not opened).
+    Input is NSIDC-0051 (SMMR, SSM/I, SSMIS) for 1978-10 to 2024-12 and NSIDC-0803 (AMSR2) from 2025-01.
+
+resolution:
+  spatial_short: "25 km (0.23°)"
+  temporal_short: "1일"
+  spatial: >-
+    25 km NSIDC sea ice polar stereographic grids — "NSIDC Sea Ice Polar Stereographic North" (EPSG:3411, north of 30.98°N) and "… South" (EPSG:3412, south of 39.23°S), Hughes ellipsoid.
+    Nominal cell area 625 km², but actual cell areas vary with latitude: 382–664 km² (Northern Hemisphere) and 443–664 km² (Southern Hemisphere). Extent and area indices are hemispheric totals
+  vertical: Not applicable (sea ice extent and area indices)
+  temporal: Daily and monthly (daily extent CSV, monthly extent and area CSVs, daily and monthly images and GeoTIFFs). Climatology and anomaly reference period 1981–2010
+
+update: >-
+  Daily CSV and images updated every day (using the previous day's AMSR2 data, about one day behind). Because of gap filling, a day's value can change slightly the next day.
+  Monthly files are updated after the month ends (User Guide wording: "Each monthly file is updated once a year as that month concludes")
+license: Openly available (NOAA@NSIDC). Citing the data set is a condition of use; NSIDC asks you to describe the subset used and the date accessed
+account_required: false
+
+summary: >-
+  The Sea Ice Index provides a quick look at Arctic- and Antarctic-wide changes in sea ice: daily and monthly sea ice extent and area indices computed by NSIDC from passive microwave
+  sea ice concentration, together with concentration and extent images. It uses NASA Team concentrations (NSIDC-0051) from 1978 and continues with AMSR2-based NSIDC-0803 concentrations from 2025,
+  and provides anomaly and trend images relative to the 1981–2010 reference period along with CSV, GeoTIFF and shapefile products. Most figures such as "record-low Arctic sea ice" in the media and reports come from this data set.
+
+time_convention:
+  summary: >-
+    Daily extent and area are single-day values computed from that day's daily sea ice concentration field (a daily composite of the satellite observations in each grid cell), and no smoothing is applied to the CSV values.
+    Monthly extent is the mean of the daily extents in the month, and monthly concentration images show the monthly mean concentration field. None of these are instantaneous values.
+  points:
+    - "Extent = total area of cells with concentration of 15 percent or greater (the Arctic pole hole is counted as ice). Area = sum of cell area × concentration over cells at or above 15 percent (excluding the pole hole)."
+    - "The 5-day trailing mean used in daily extent graphs such as Charctic applies only to the graphs, not to the CSV values or images."
+    - "Monthly mean concentration is computed for a cell only if there are at least 20 days of data for that cell; when data are insufficient, -9999 is substituted for that month's CSV value."
+    - "Version 4 (2025 onwards) fills gaps in the AMSR2 concentration fields with the previous day's value and then the mean of the adjacent days before computing the indices, so a day's value can change slightly the next day."
+    - "The Missing column in the daily CSV is the total area (million km²) of cells with missing data when that day's extent was computed."
+  source: https://nsidc.org/sites/default/files/documents/user-guide/g02135-v004-userguide.pdf
+  source_name: G02135 V4 User Guide / NSIDC Special Report 28
+
+variables:
+  note: >-
+    CSV column names and image/GeoTIFF types as given in the User Guide. Extent and area are in million km², and missing values are -9999. Images (PNG) and GeoTIFFs are named
+    h_YYYYMMDD_concentration_vX.x.tif (daily) and h_YYYYMM_concentration_vX.x.tif (monthly), with the same pattern for extent (h = N or S).
+  full_list: https://nsidc.org/sites/default/files/documents/user-guide/g02135-v004-userguide.pdf
+  groups:
+    - name: Daily index (h_seaice_extent_daily_v4.0.csv)
+      kind: mean
+      period: Day
+      items:
+        - text: "Sea ice extent — `Extent` (million km²)"
+          note: Hemispheric total computed from that day's concentration field; not smoothed
+        - text: "Missing data area — `Missing` (million km²)"
+          note: Total area of cells without data when that day's extent was computed
+        - text: "Input data source — `Source Data` (path string)"
+          kind: static
+          note: The path contains NSIDC-0051 (GSFC product) or NSIDC-0803 (AMSR2 product), identifying the input for that day's value
+    - name: Monthly index (h_mm_extent_v4.0.csv, one file per month)
+      kind: mean
+      period: Month
+      items:
+        - text: "Monthly sea ice extent — `extent` (million km²)"
+          note: Mean of the daily extents in the month
+        - text: "Monthly sea ice area — `area` (million km²)"
+          note: Sea ice area for the month (excluding the Arctic pole hole); -9999 when data are insufficient
+    - name: Gridded images and GeoTIFFs
+      kind: mean
+      period: Day
+      items:
+        - text: "Sea ice concentration — `concentration` GeoTIFF/PNG (%)"
+          note: Daily files show that day's concentration field; monthly files (period month) show the monthly mean concentration
+        - text: "Sea ice extent — `extent` GeoTIFF/PNG (15 percent or greater)"
+          note: Extent images derived from the daily or monthly concentration field with the 15 percent threshold
+    - name: Climatology and median ice edge (1981–2010)
+      kind: static
+      items:
+        - text: "Daily extent climatology — `Avg Ext`, `Std Deviation`, `10th`, `25th`, `50th`, `75th`, `90th` (million km²)"
+          note: h_seaice_extent_climatology_1981-2010_v4.0.csv. Fixed 1981–2010 statistics for each day of year (DOY)
+        - text: "Monthly median ice edge — shapefile (shp_median) (line)"
+          note: Median ice edge for the same month over 1981–2010; the reference line in the anomaly images
+
+access:
+  - name: NSIDC data set page — G02135 Version 4
+    url: https://nsidc.org/data/g02135/versions/4
+    method: Web documentation / User Guide / citation
+    note: Links to the User Guide, Special Report 28 (V4 analysis) and the overview of the sea ice analysis spreadsheets.
+  - name: NOAA@NSIDC HTTPS archive — G02135
+    url: https://noaadata.apps.nsidc.org/NOAA/G02135/
+    method: HTTPS (browser, wget, Python/R)
+    note: >-
+      No login needed. Under north/ and south/ there are daily/ (data, geotiff, images) and monthly/ (data, geotiff, etc.) folders and monthly shapefile folders (shp_extent, shp_median);
+      seaice_analysis/ holds the analysis spreadsheets. Check the directory listing for the exact layout.
+  - name: Sea Ice Index Daily and Monthly Image Viewer
+    url: https://nsidc.org/data/seaice_index
+    method: Web image viewer / compare and animation tools
+    note: Shows daily and monthly extent, concentration, anomaly and trend images. The data and image archive is at https://nsidc.org/data/seaice_index/data-and-image-archive.
+
+example:
+  lang: python
+  note: Reads the Northern Hemisphere daily extent CSV straight from HTTPS without logging in. Column names may have surrounding spaces and there may be a units row, so the code cleans them up.
+  code: |
+    import pandas as pd
+
+    url = "https://noaadata.apps.nsidc.org/NOAA/G02135/north/daily/data/N_seaice_extent_daily_v4.0.csv"
+    df = pd.read_csv(url, skipinitialspace=True)
+    df.columns = df.columns.str.strip()
+    df = df[pd.to_numeric(df["Year"], errors="coerce").notna()]      # drop the units row
+    df["date"] = pd.to_datetime(df[["Year", "Month", "Day"]].astype(int))
+    df["Extent"] = df["Extent"].astype(float)                         # million km²
+
+    # From 2025 the input is AMSR2 (NSIDC-0803 in the Source Data column)
+    print(df.groupby(df["date"].dt.year)["Extent"].min().tail())
+
+tips:
+  - >-
+    NSIDC recommends the monthly products, not daily values, for long-term trend analysis: daily concentrations are more affected by weather and uncertainty, and the daily ice edge is not accurate enough for operational purposes such as navigation.
+  - >-
+    From 2025-01-01 the input changed from SSMIS to AMSR2, which generally gives smaller extents (in the first half of 2025, mean differences of 0.04–0.05 and maxima below 0.15–0.2 million km²). State the sensor change
+    when discussing "record low" rankings from 2025 or trends since 1979. For the same reason, values from 2025 onwards do not exactly match other AMSR2-based records such as the NOAA/NSIDC CDR (G02202 V6).
+  - >-
+    Extent and area are different. Extent sums the full area of cells at or above 15 percent; area sums the concentration-weighted ice area. The Arctic pole hole is included in extent and excluded from area.
+    Because the pole hole differs by sensor (SMMR 1.19, SSM/I 0.31, SSMIS 0.029, AMSR2 0.064 million km²), Arctic area time series can show steps at sensor changes.
+  - >-
+    Values depend on the 15 percent threshold and the NASA Team algorithm, so do not compare absolute extents directly with those from other agencies (OSI SAF, JAXA, etc.). The anomaly and trend reference period is 1981–2010.
+  - >-
+    NSIDC-0051 (SSMIS-based final concentration) and NSIDC-0081 (near-real-time) stopped updating or were retired in 2026, but Sea Ice Index V4 has used NSIDC-0803 (AMSR2) since 2025 and is unaffected.
+    The data set has, however, been at the Basic Level of Service since May 2025, so error fixes and replies to questions may be slow.
+
+citations:
+  dataset:
+    - label: Sea Ice Index Version 4 (G02135)
+      text: >-
+        Fetterer, F., Knowles, K., Meier, W. N., Savoie, M., Windnagel, A. K. & Stafford, T. (2025). Sea Ice Index. (G02135, Version 4). [Data Set].
+        Boulder, Colorado USA. National Snow and Ice Data Center. https://doi.org/10.7265/a98x-0f50. [describe subset used if applicable]. Date Accessed MM-DD-YYYY.
+      doi: 10.7265/a98x-0f50
+      bibtex: |
+        @misc{nsidc_g02135_v4,
+          author    = {Fetterer, F. and Knowles, K. and Meier, W. N. and Savoie, M. and Windnagel, A. K. and Stafford, T.},
+          title     = {Sea Ice Index ({G02135}, Version 4)},
+          year      = {2025},
+          publisher = {National Snow and Ice Data Center},
+          address   = {Boulder, Colorado USA},
+          doi       = {10.7265/a98x-0f50}
+        }
+  papers:
+    - label: Version 4 analysis report (impact of the AMSR2 transition)
+      text: >-
+        Windnagel, A., Stafford, T., Fetterer, F., and Meier, W. (2025): Sea Ice Index Version 4 Analysis. NSIDC Special Report 28.
+        Boulder, Colorado USA: National Snow and Ice Data Center. https://nsidc.org/sites/default/files/documents/technical-reference/nsidc-special-report-28.pdf
+  acknowledgement: >-
+    NSIDC requires citation of the data set as a condition of use. Give the version (V4) and DOI, the hemisphere and period used and the access date, and if you use values from 2025 onwards, state that they are based on AMSR2 input (NSIDC-0803).
+
+notices:
+  - date: "2026-09-08"
+    level: info
+    title: "User notice: AMSR2 products continued forward processing — Sea Ice Index input (NSIDC-0803) maintained"
+    body: >-
+      NSIDC announced that its AMSR2 products, including AMSR2 Daily Polar Gridded Sea Ice Concentrations (NSIDC-0803), will continue forward processing while the data remain available from JAXA.
+      NSIDC is planning AMSR3 data products in 2027, so the Sea Ice Index input is expected to stay AMSR2 until then (the notice does not mention the Sea Ice Index itself).
+    source: https://nsidc.org/data/user-resources/data-announcements/user-notice-amsr2-products-continued-forward-processing
+  - date: "2025-07-31"
+    level: warning
+    title: "New version release: NOAA/NSIDC Sea Ice Index, Version 4 — AMSR2 input from 2025, V3 retired"
+    body: >-
+      From 2025-01-01, extent, area and images are computed from AMSR2-based NSIDC-0803 concentrations. The near-real-time/final distinction is removed, gaps are filled by temporal interpolation,
+      and the Arctic pole hole is slightly different in size. Values through 2024 are the same as V3. The new DOI is 10.7265/a98x-0f50.
+    source: https://nsidc.org/data/user-resources/data-announcements/new-version-release-noaansidc-sea-ice-index-version-4
+  - date: "2025-07-23"
+    level: warning
+    title: "User Notice: Sea Ice Index Transitioning to Version 4 with AMSR2 Data — AMSR2 extent slightly smaller than SSMIS"
+    body: >-
+      AMSR2 usually places the ice edge slightly further inward than SSMIS, giving smaller extents (differences less than about 0.1 million km² in the Northern Hemisphere and about 0.15 million km² in the Southern Hemisphere)
+      and a slightly more negative extent trend. The intercalibration is preliminary with further improvements planned, and V3 will be retired once V4 is released.
+    source: https://nsidc.org/data/user-resources/data-announcements/user-notice-sea-ice-index-transitioning-version-4-amsr2-data
+  - date: "2025-07-03"
+    level: info
+    title: "Data set update: Sea Ice Index, Version 3 — 2023–2024 updated to final data"
+    body: >-
+      The 2023-01-01 to 2024-12-31 portion of V3 was reprocessed from near-real-time input to the final NASA Goddard concentration data. V4 uses these V3 values unchanged through 2024.
+    source: https://nsidc.org/data/user-resources/data-announcements/data-set-update-sea-ice-index-version-3-0
+  - date: "2025-06-25"
+    level: critical
+    title: "User notice: SSMIS Data Discontinuation Affecting Sea Ice Index and Sea Ice CDR Effective 30 June 2025 (later resolved by the AMSR2 transition)"
+    body: >-
+      The Department of Defense notified NSIDC that it would stop processing and delivering SSMIS data by 30 June 2025, so the SSMIS-based Sea Ice Index was expected to stop processing after that date;
+      MASIE was suggested as an alternative for Northern Hemisphere extent. SSMIS processing was later extended to the end of July (notice of 2025-06-30), and processing continued with the release of V4 (AMSR2) on 31 July.
+    source: https://nsidc.org/data/user-resources/data-announcements/user-notice-ssmis-data-discontinuation-affecting-sea-ice-index-and-sea-ice-cdr-effective-30-june
+  - date: "2025-05-06"
+    level: warning
+    title: "User notice: Level of Service Update for Data Products — reduced to Basic"
+    body: >-
+      With NOAA NCEI decommissioning its snow and ice data products (effective 2025-05-05), the Sea Ice Index moved to a Basic level of service. The data continue to update automatically,
+      but they may not be actively maintained, updated or fully supported.
+    source: https://nsidc.org/data/user-resources/data-announcements/user-notice-level-service-update-data-products
+
+links:
+  - name: G02135 V4 User Guide
+    url: https://nsidc.org/sites/default/files/documents/user-guide/g02135-v004-userguide.pdf
+  - name: NSIDC Special Report 28 — Sea Ice Index Version 4 Analysis
+    url: https://nsidc.org/sites/default/files/documents/technical-reference/nsidc-special-report-28.pdf
+  - name: Sea Ice Analysis Spreadsheets overview
+    url: https://nsidc.org/sites/default/files/documents/technical-reference/sea-ice-analysis-spreadsheets-overview.pdf
+  - name: "Interpretation resources: sea ice trends and anomalies"
+    url: https://nsidc.org/sites/default/files/interpretation-resources-sea-ice-trends-and-anomalies.pdf
+  - name: Arctic Sea Ice News & Analysis (NSIDC)
+    url: https://nsidc.org/arcticseaicenews/
+
+watch_urls:
+  - https://nsidc.org/data/g02135/versions/4
+  - https://nsidc.org/data/data-programs/noaa-nsidc/data-updates
+  - https://nsidc.org/data/user-resources/data-announcements
+
+last_verified: "2026-10-12"

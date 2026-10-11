@@ -1,0 +1,281 @@
+# ─────────────────────────────────────────────────────────────
+# ERA-40 — dataset information file
+# ─────────────────────────────────────────────────────────────
+id: era40
+name: ERA-40
+full_name: ECMWF 40-year Reanalysis (ERA-40)
+category: reanalysis
+domain: atmosphere
+group: 재분석
+order: 100
+domains: [대기, 육지, 해양파랑]
+provider: European Centre for Medium-Range Weather Forecasts (ECMWF)
+
+status: ended
+status_note: >-
+  Production finished in the early 2000s and the record is no longer updated. ECMWF decommissioned its Public Datasets service (web interface and Web API)
+  on 1 June 2023 and does not offer another public route for ERA-40. In practice the data now come from NCAR GDEX (some products openly available)
+  or the copy at CEDA in the UK.
+
+successor:
+  name: ERA-Interim → ERA5
+  url: https://cds.climate.copernicus.eu/datasets/reanalysis-era5-single-levels
+  note: >-
+    The direct successor was ERA-Interim (1979–2019), itself now discontinued; the recommended reanalysis today is ERA5 (1940 to present, about 31 km, 137 levels).
+    ERA5 also covers 1957–1978, the period that used to require ERA-40.
+
+transitions:
+  - from: ERA-40
+    to: ERA-Interim
+    to_id: era-interim
+    status: completed
+    summary: ERA-Interim replaced 3D-Var with 12-hour 4D-Var and variational bias correction of satellite radiances (VarBC) and raised the resolution to T255, addressing ERA-40's problems with the hydrological cycle, the stratospheric circulation and temporal consistency.
+    changes:
+      - aspect: Period
+        before: 1957-09 to 2002-08
+        after: 1979-01 to 2019-08 (updated in near real time until August 2019)
+      - aspect: Horizontal resolution
+        before: T159 (N80, about 125 km)
+        after: T255 (N128, about 79–80 km)
+      - aspect: Vertical resolution and model top
+        before: 60 model levels, top level 0.1 hPa
+        after: 60 model levels, top level 0.1 hPa (unchanged)
+      - aspect: Pressure and isentropic output levels
+        before: 23 pressure levels / 15 isentropic levels
+        after: 37 pressure levels / 16 isentropic levels
+      - aspect: Model version
+        before: IFS CY23r4
+        after: IFS CY31r2
+      - aspect: Data assimilation
+        before: 3D-Var (FGAT), 6-hour window
+        after: 4D-Var, 12-hour window
+      - aspect: Satellite radiance bias correction
+        before: Static bias correction
+        after: Variational bias correction (VarBC), adjusted automatically
+      - aspect: Observations
+        before: Observations collected and reprocessed for ERA-40
+        after: ERA-40 observations plus GTS real-time data, rain-affected SSM/I radiances (1D-Var), reprocessed Meteosat winds and more
+      - aspect: Known problems addressed
+        before: Excessive tropical oceanic precipitation, too strong Brewer-Dobson circulation, poor temporal consistency
+        after: More realistic hydrological cycle (global precipitation-evaporation balance) and stratospheric circulation (age of air)
+      - aspect: Ocean-wave grid
+        before: 1.5°
+        after: 1.0°
+    impacts:
+      - Do not splice the two into one time series. Climatologies and trends can differ even over the 1979–2002 overlap.
+      - ERA-40 has 23 pressure levels against ERA-Interim's 37; compare on the common levels only.
+      - ERA-Interim starts in 1979. For 1957–1978, use ERA5 (from 1940) rather than ERA-40.
+      - ERA-Interim still has its own limitations, such as too strong a hydrological cycle over the oceans and warm, moist low-level biases in the Arctic. Do not overstate the improvement.
+    sources:
+      - name: Dee et al. (2011), The ERA-Interim reanalysis, QJRMS
+        url: https://doi.org/10.1002/qj.828
+      - name: Uppala et al. (2005), The ERA-40 re-analysis, QJRMS
+        url: https://doi.org/10.1256/qj.04.176
+      - name: ECMWF — What is the difference between ERA-Interim (1979-2019) and ERA-40 (1957-2002)
+        url: https://confluence.ecmwf.int/spaces/CKB/pages/56659628/What+is+the+difference+between+ERA-Interim+1979-2019+and+ERA-40+1957-2002
+      - name: ERA-Interim documentation (Copernicus Knowledge Base)
+        url: https://confluence.ecmwf.int/spaces/CKB/pages/155337848/ERA-Interim+documentation
+      - name: Kållberg et al. (2004), The ERA-40 archive
+        url: https://www.ecmwf.int/sites/default/files/elibrary/2004/10595-era-40-archive-revised-october-2007.pdf
+      - name: Uppala (2006), From ERA-15 to ERA-40 and ERA-Interim
+        url: https://www.ecmwf.int/sites/default/files/elibrary/2006/12885-era-15-era-40-and-era-interim.pdf
+
+period:
+  start: "1957-09"
+  end: "2002-08"
+  note: September 1957 to August 2002 (45 years), starting just before the International Geophysical Year (1958).
+
+resolution:
+  spatial_short: "125 km (1.125°)"
+  temporal_short: "6시간"
+  spatial: "Spectral T159 / reduced Gaussian grid N80 (approximately uniform 125 km spacing) / 2.5° × 2.5° latitude-longitude grid on the public data server"
+  vertical: "60 model levels (top level 0.1 hPa) / 23 pressure levels / 15 isentropic levels"
+  temporal: 6-hourly analyses (00, 06, 12, 18 UTC); monthly means separately
+
+update: Ended (August 2002 is the last month)
+license: NCAR GDEX copies are CC BY 4.0, with acceptance of the ECMWF terms of use
+account_required: true
+
+summary: >-
+  ECMWF's second-generation reanalysis of the global atmosphere and surface conditions for the 45 years from September 1957 to August 2002.
+  It used 3D-Var (FGAT) data assimilation with a T159, 60-level model and was among the first reanalyses to assimilate satellite radiances (TOVS, SSM/I, etc.) directly.
+  A coupled ocean-wave model provides wave parameters as well. ERA-40 was a standard dataset for climate research until the mid-2000s and has since been superseded by ERA5.
+
+time_convention:
+  summary: >-
+    Analysed fields are instantaneous values at 00, 06, 12 and 18 UTC. Accumulated quantities such as precipitation, radiation and surface fluxes come only from forecasts
+    and are accumulated from the forecast start to the given step (the public 2.5° data offered 6-hour forecasts only).
+  points:
+    - "Accumulations run from the start of the forecast. Forecasts start at 00 and 12 UTC (to 36 h) and at 06 and 18 UTC (to 6 h); for shorter intervals, difference consecutive forecast steps."
+    - "The 2.5° data on ECMWF's former public data server contained 6-hour forecasts only, so accumulations there are 6-hour totals. For files from other archives, check the forecast start time and step in the GRIB header."
+    - "To turn accumulated radiation and heat fluxes (W m-2 s) into mean fluxes (W m-2), divide by the accumulation period in seconds. The monthly accumulation stream (mdfa) is expressed per day: divide by 86,400 to get W m-2, and multiply precipitation by 1000 to get mm/day."
+    - "Fluxes in the monthly mean stream moda are in 'per six hours' units and not aligned with calendar months; ECMWF strongly recommends using mdfa instead."
+    - "Maximum and minimum 2 m temperature refer to the period since the previous post-processing; no monthly means were produced for them."
+  source: https://www.ecmwf.int/sites/default/files/elibrary/2004/10595-era-40-archive-revised-october-2007.pdf
+  source_name: "The ERA-40 archive (ERA-40 Project Report Series No. 17)"
+
+variables:
+  note: >-
+    Main parameters from the parameter tables of the ERA-40 archive report (ERA-40 Project Report Series No. 17).
+    Names are ECMWF GRIB short names (matching the parameter codes). The original data are GRIB1; accumulated parameters are forecast accumulations (W m-2 s, etc.).
+  full_list: https://www.ecmwf.int/sites/default/files/elibrary/2004/10595-era-40-archive-revised-october-2007.pdf
+  groups:
+    - name: Pressure levels (23)
+      kind: instant
+      items:
+        - "Geopotential — `z` (m2 s-2)"
+        - "Temperature — `t` (K)"
+        - "Eastward wind component — `u` (m s-1)"
+        - "Northward wind component — `v` (m s-1)"
+        - "Vertical velocity — `w` (Pa s-1)"
+        - "Specific humidity — `q` (kg kg-1)"
+        - "Relative humidity — `r` (%)"
+        - "Vorticity (relative) — `vo` (s-1)"
+        - "Divergence — `d` (s-1)"
+        - "Potential vorticity — `pv` (K m2 kg-1 s-1)"
+        - "Ozone mass mixing ratio — `o3` (kg kg-1)"
+    - name: Surface and single level
+      kind: instant
+      items:
+        - "Mean sea level pressure — `msl` (Pa)"
+        - "2 metre temperature — `2t` (K)"
+        - "2 metre dewpoint temperature — `2d` (K)"
+        - "10 metre eastward wind component — `10u` (m s-1)"
+        - "10 metre northward wind component — `10v` (m s-1)"
+        - "Sea surface temperature — `sst` (K)"
+        - "Sea ice fraction — `ci` (0-1)"
+        - "Total cloud cover — `tcc` (0-1)"
+        - "Total column water vapour — `tcwv` (kg m-2)"
+    - name: Accumulated forecast parameters
+      kind: accum
+      period: "since forecast start"
+      items:
+        - "Large-scale and convective precipitation — `lsp`, `cp` (m of water)"
+        - "Surface sensible and latent heat flux — `sshf`, `slhf` (W m-2 s)"
+        - "Surface solar and thermal radiation downwards — `ssrd`, `strd` (W m-2 s)"
+        - "Top thermal radiation — `ttr` (W m-2 s)"
+        - "Evaporation — `e` (m of water)"
+    - name: Ocean waves
+      kind: instant
+      items:
+        - "Significant wave height — `swh` (m)"
+        - "Mean wave direction — `mwd` (degrees)"
+        - "Mean wave period — `mwp` (s)"
+    - name: Land surface
+      kind: instant
+      items:
+        - "Soil temperature level 1 — `stl1` (K)"
+        - "Volumetric soil water layer 1 — `swvl1` (m3 m-3)"
+        - "Snow depth — `sd` (m of water equivalent)"
+
+access:
+  - name: NSF NCAR GDEX — ERA-40 Global Surface and Flux Data (d117000)
+    url: https://gdex.ucar.edu/datasets/d117000/
+    method: Web download (HTTPS) / Globus / subsetting and format conversion
+    note: 6-hourly surface and flux data on the Gaussian grid. Subsetting and format conversion require an NCAR login.
+  - name: NSF NCAR GDEX — ERA-40 Monthly Means of 2.5 Degree Upper Air Pressure Level Analysis (d120001)
+    url: https://gdex.ucar.edu/datasets/d120001/
+    method: Web download (HTTPS) / Globus / subsetting
+  - name: NSF NCAR GDEX — ERA-40 2.5° surface and flux monthly means (d120000)
+    url: https://gdex.ucar.edu/datasets/d120000/
+    method: Web download (HTTPS) / Globus / subsetting
+  - name: NSF NCAR GDEX — ERA-40 Global Upper Air Pressure Level Analysis (d117001)
+    url: https://gdex.ucar.edu/datasets/d117001/
+    method: On request
+    note: >-
+      When checked on 2026-10-11 the dataset was marked as containing files that are not currently available, so request them through GDEX Contact Us.
+      The 2.5° 6-hourly pressure-level (d118001) and surface (d118000) datasets are in the same state.
+  - name: CEDA Archive — ERA-40 model data
+    url: https://catalogue.ceda.ac.uk/uuid/775634f7e339b5262067e28a5d7b679d
+    method: Web download
+    note: Requires a CEDA account. Holds data on the reduced Gaussian grid and the regular 2.5° grid; ECMWF data conditions apply.
+
+tips:
+  - "The NCAR Climate Data Guide lists the main weaknesses: tropical moisture (precipitation, total column water) too high after 1991, precipitation well above evaporation, an overly strong Brewer-Dobson circulation and unrealistic Arctic temperature trends. Avoid ERA-40 for hydrological-cycle, stratospheric or Arctic-trend studies."
+  - The observing system changes sharply around 1979 as satellite data come in. A trend over the full 1957–2002 period can carry that discontinuity.
+  - With only 23 pressure levels, compare with ERA-Interim or ERA5 (37 levels) on the levels they share.
+
+citations:
+  dataset:
+    - label: NCAR GDEX surface and flux (d117000)
+      text: >-
+        European Centre for Medium-Range Weather Forecasts (2004): ERA-40 Global Surface and Flux Data.
+        NSF National Center for Atmospheric Research. https://doi.org/10.5065/S4S2-R159 (Accessed DD MMM YYYY)
+      doi: 10.5065/S4S2-R159
+      bibtex: |
+        @misc{era40_d117000,
+          author    = {{European Centre for Medium-Range Weather Forecasts}},
+          title     = {{ERA-40} Global Surface and Flux Data},
+          year      = {2004},
+          publisher = {NSF National Center for Atmospheric Research},
+          doi       = {10.5065/S4S2-R159},
+          note      = {Accessed DD MMM YYYY}
+        }
+    - label: NCAR GDEX 6-hourly pressure-level analysis (d117001)
+      text: >-
+        European Centre for Medium-Range Weather Forecasts (2004): ERA-40 Global Upper Air Pressure Level Analysis.
+        NSF National Center for Atmospheric Research. https://doi.org/10.5065/WQZB-A142 (Accessed DD MMM YYYY)
+      doi: 10.5065/WQZB-A142
+    - label: NCAR GDEX 2.5° pressure-level monthly means (d120001)
+      text: >-
+        European Centre for Medium-Range Weather Forecasts (2004): ERA-40 Monthly Means of 2.5 Degree Upper Air Pressure Level Analysis.
+        NSF National Center for Atmospheric Research. https://doi.org/10.5065/R275-GB48 (Accessed DD MMM YYYY)
+      doi: 10.5065/R275-GB48
+  papers:
+    - label: ERA-40 reference paper
+      text: >-
+        Uppala, S. M., Kållberg, P. W., Simmons, A. J., Andrae, U., Da Costa Bechtold, V., Fiorino, M., et al. (2005):
+        The ERA-40 re-analysis. Quarterly Journal of the Royal Meteorological Society, 131(612), 2961–3012.
+      doi: 10.1256/qj.04.176
+      bibtex: |
+        @article{uppala2005era40,
+          author  = {Uppala, S. M. and K{\"a}llberg, P. W. and Simmons, A. J. and Andrae, U. and Da Costa Bechtold, V. and Fiorino, M. and others},
+          title   = {The {ERA-40} re-analysis},
+          journal = {Quarterly Journal of the Royal Meteorological Society},
+          volume  = {131},
+          number  = {612},
+          pages   = {2961--3012},
+          year    = {2005},
+          doi     = {10.1256/qj.04.176}
+        }
+    - label: ERA-40 archive report (optional, no DOI)
+      text: >-
+        Kållberg, P., Simmons, A., Uppala, S., Fuentes, M. (2004): The ERA-40 archive. ERA-40 Project Report Series,
+        No. 17, ECMWF, Reading, UK (revised October 2007).
+  acknowledgement: >-
+    Credit ECMWF as the producer and name the archive you actually used (the NCAR GDEX dataset DOI or the CEDA catalogue record).
+    GDEX provides the data on condition that users accept the ECMWF terms of use.
+
+notices:
+  - date: "2023-06-01"
+    level: critical
+    title: Decommissioning of ECMWF Public Datasets service — ECMWF web and Web API downloads end
+    body: >-
+      As announced on 2 March 2023, ECMWF decommissioned the Public Datasets service (web interface and Web API access), so ERA-40 can no longer be downloaded publicly from ECMWF.
+      ECMWF names no alternative access route for ERA-40; use the NCAR GDEX or CEDA copies.
+    source: https://confluence.ecmwf.int/spaces/WEBAPI/blog/2023/03/02/320999831/Decommissioning+of+ECMWF+Public+Datasets+service
+  - date: "2022-06"
+    level: info
+    title: Access disruptions during the move of the ECMWF archive (MARS) to Bologna
+    body: Because MARS moved to the new data centre in Bologna, ECMWF warned of no or degraded access to ERA-40 at times between June and October 2022 (now past).
+    source: https://www.ecmwf.int/en/forecasts/dataset/ecmwf-reanalysis-40-years
+
+links:
+  - name: ECMWF — ECMWF Reanalysis 40 years (ERA-40)
+    url: https://www.ecmwf.int/en/forecasts/dataset/ecmwf-reanalysis-40-years
+  - name: The ERA-40 archive (parameter tables, PDF)
+    url: https://www.ecmwf.int/sites/default/files/elibrary/2004/10595-era-40-archive-revised-october-2007.pdf
+  - name: ERA-40 Atlas (ECMWF)
+    url: https://sites.ecmwf.int/era/40-atlas/docs/index.html
+  - name: What is the difference between ERA-Interim and ERA-40 (Copernicus Knowledge Base)
+    url: https://confluence.ecmwf.int/spaces/CKB/pages/56659628/What+is+the+difference+between+ERA-Interim+1979-2019+and+ERA-40+1957-2002
+  - name: Decommissioning of ECMWF Public Datasets service
+    url: https://confluence.ecmwf.int/x/-wUiEw
+  - name: NCAR Climate Data Guide — ERA-40
+    url: https://climatedataguide.ucar.edu/climate-data/era40
+
+watch_urls:
+  - https://confluence.ecmwf.int/x/-wUiEw
+  - https://gdex.ucar.edu/datasets/d117001/
+
+last_verified: "2026-10-11"

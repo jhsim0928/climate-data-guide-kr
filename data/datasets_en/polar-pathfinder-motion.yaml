@@ -1,0 +1,272 @@
+# ─────────────────────────────────────────────────────────────
+# Polar Pathfinder Sea Ice Motion — dataset information file (English edition)
+# NSIDC-0116 Version 4 (file versions v4.1: 1978–2024, v4.2: 2025 onward) + quicklook extension NSIDC-0748
+# ─────────────────────────────────────────────────────────────
+id: polar-pathfinder-motion
+name: Polar Pathfinder Sea Ice Motion
+full_name: Polar Pathfinder Daily 25 km EASE-Grid Sea Ice Motion Vectors, Version 4 (NSIDC-0116)
+category: satellite
+domain: seaice
+group: 해빙 이동
+order: 10
+domains: [해빙]
+provider: NASA National Snow and Ice Data Center Distributed Active Archive Center (NSIDC DAAC) — produced by M. Tschudi, W. N. Meier and J. S. Stewart
+
+status: active
+status_note: >-
+  Available and current. In October 2026 the 2025 data (file version v4.2) were added, so the record now runs to 2025-12-31. From 2025 the passive microwave input is AMSR2 instead of DMSP SSMIS,
+  and the wind input is ERA5 instead of the NCEP/NCAR Reanalysis, so the end of NCEP/NCAR R1 updates in March 2026 and the end of SSMIS data do not block updates from 2025 onward.
+  The period after the final product is covered by the Quicklook Arctic Weekly extension (NSIDC-0748).
+
+transitions:
+  - from: NSIDC-0116 V4 file version v4.1 (1978-11 to 2024-12, SSMIS and NCEP/NCAR inputs)
+    to: NSIDC-0116 V4 file version v4.2 (2025-01 onward, AMSR2 and ERA5 inputs)
+    status: completed
+    date: "2026-10"
+    summary: >-
+      With DMSP SSMIS and the NCEP/NCAR Reanalysis no longer being updated, the passive microwave input was switched to GCOM-W1 AMSR2 and the wind input to ERA5 starting with the 2025 data.
+      The dataset version (Version 4), DOI, grid and variables are unchanged; only files from 2025 onward carry the v4.2 name. 1978–2024 (v4.1) was not reprocessed.
+    changes:
+      - aspect: Passive microwave input (2025 onward)
+        before: "DMSP SSMIS (2007-01-01 to 2024-12-31)"
+        after: "GCOM-W1 AMSR2 (from 2025-01-01). NSIDC AMSR2 daily polar gridded brightness temperatures, resampled to match the SSM/I and SSMIS spatial resolution (36 and 89 GHz)"
+      - aspect: Wind input (2025 onward)
+        before: "NCEP/NCAR Reanalysis 10 m winds (1978-10-25 to 2024-12-31)"
+        after: "ERA5 10 m winds (from 2025-01-01)"
+      - aspect: Version label in file names
+        before: "…_v4.1.nc (1978–2024)"
+        after: "…_v4.2.nc (2025 onward)"
+      - aspect: Grid, variables and DOI
+        before: "25 km EASE-Grid (EPSG:3408/3409), u, v, icemotion_error_estimate, DOI 10.5067/INAWUWO7QH7B"
+        after: "Unchanged"
+    impacts:
+      - Both the satellite and the wind inputs change on 2025-01-01. If you build long-term trends or climatologies from 1979, check separately for systematic differences across this boundary.
+      - Scripts with `v4.1` hard-coded in the file name will not find the 2025 files. Replace the version part with a wildcard.
+      - In your data description, state that 2025 onward uses AMSR2 and ERA5 inputs (v4.2), and if you use that period, also cite Hersbach et al. (2020), the ERA5 reference given in the user guide.
+    sources:
+      - name: NSIDC-0116 V4 User Guide (updated October 2026, version history table)
+        url: https://nsidc.org/sites/default/files/documents/user-guide/nsidc-0116-v004-userguide_0.pdf
+      - name: NSIDC-0116 V4 dataset page
+        url: https://nsidc.org/data/nsidc-0116/versions/4
+
+period:
+  start: "1978-11"
+  end: present
+  note: >-
+    As of 2026-10-12, daily data cover 1978-11-01 to 2025-12-31 and weekly data 1978-11-05 to 2025-12-31 (User Guide Table 11 and the dataset page).
+    Section 1.4.1 of the guide still gives 31 December 2024 as the end, which conflicts with the table. From 2026 there are no final data; the Arctic weekly quicklook product NSIDC-0748 continues from the week after the last final date.
+    SMMR input before July 1987 is roughly every other day, and in the Southern Hemisphere there are gaps when SSM/I and AVHRR inputs are missing.
+
+resolution:
+  spatial_short: "25 km (0.23°)"
+  temporal_short: "1일"
+  spatial: >-
+    Northern and Southern 25 km original EASE-Grid projections (EASE-Grid 1.0: Lambert azimuthal equal-area on a sphere of radius 6,371,228 m, cell size 25,067.5 m) —
+    "NSIDC EASE-Grid North" (EPSG:3408) 361 × 361 cells and "NSIDC EASE-Grid South" (EPSG:3409) 321 × 321 cells. Not EASE-Grid 2.0
+  vertical: Not applicable (sea ice surface motion)
+  temporal: Daily vectors + weekly means (7-day weeks starting 1 January each year, computed only when at least 4 of the 7 days are available). Monthly estimates are no longer provided as of Version 4
+
+update: >-
+  No official update schedule is stated. The final product is extended irregularly (most recently, 2025 was added in October 2026);
+  in between, the quicklook product NSIDC-0748 (Arctic, weekly) is extended approximately monthly and moves forward whenever the final product is extended.
+license: NASA EOSDIS open data (free of charge). Citing the dataset is a condition of use, and NSIDC asks you to describe the subset used and the date accessed in the citation
+account_required: true
+
+summary: >-
+  Daily Northern and Southern Hemisphere sea ice motion vectors from 1978, merged by optimal interpolation from motion derived by spatial correlation of consecutive-day imagery
+  (AVHRR visible and infrared; SMMR, SSM/I, SSMIS, AMSR-E and AMSR2 passive microwave), IABP drifting buoys, and motion estimated from reanalysis 10 m winds.
+  An error estimate is given for every grid cell, and the vectors are the input to NSIDC's companion Sea Ice Age product.
+  Velocities (cm/s) are along the x and y axes of the 25 km EASE-Grid, so they must be rotated to eastward and northward components before use.
+
+time_convention:
+  summary: >-
+    Daily `u` and `v` are daily mean velocities (cm/s) representing motion over the day. Satellite inputs are one-day displacements from consecutive-day images, and buoy inputs are 24-hour mean velocities
+    from 12:00 GMT positions; the merged value combines these for each date and is not an instantaneous value at a given time. Weekly data are averages of that week's daily data.
+  points:
+    - "Daily `time` is a date in 'days since 1970-01-01'. The user guide does not define the exact start and end times (e.g. hour of day) of the merged vectors."
+    - "Weekly means start on 1 January each year (the first week is 1–7 January) and require at least four of the seven days. The last day of each year (the last two days in a leap year) is not included in any week. `number_of_observations` is the number of daily files contributing to the week."
+    - "Beginning with Version 4, the noon-time and midnight buoy vectors are averaged, so each buoy provides one motion estimate per day instead of separate noon and midnight estimates as in earlier versions."
+    - "During the SMMR period (before July 1987), satellite input is available about every other day, so some values are not one-day displacements."
+  source: https://nsidc.org/sites/default/files/documents/user-guide/nsidc-0116-v004-userguide_0.pdf
+  source_name: NSIDC-0116 V4 User Guide (updated October 2026)
+
+variables:
+  note: >-
+    Daily and weekly netCDF variables as described in the user guide. `u` and `v` are components along the EASE-Grid x and y axes, not eastward and northward. The fill value is -9999.
+    Separate files for each input source (im_from_<source>_…) are also provided.
+  full_list: https://nsidc.org/sites/default/files/documents/user-guide/nsidc-0116-v004-userguide_0.pdf
+  groups:
+    - name: Sea ice motion (daily)
+      kind: mean
+      period: Daily
+      items:
+        - text: "Along-x component of the sea ice motion — `u` (cm s-1)"
+          note: Daily mean velocity representing motion over the day. Not the eastward velocity (see tips for the conversion)
+        - text: "Along-y component of the sea ice motion — `v` (cm s-1)"
+          note: Daily mean velocity representing motion over the day. Not the northward velocity
+        - text: "Estimated error of the ice motion vector — `icemotion_error_estimate` (cm s-1)"
+          note: Error estimate attached to that day's optimal interpolation (daily files only). 1000 is added if the closest input vector is more than 1250 km away, and suspect vectors near coastlines (within about 25 km) are made negative
+    - name: Sea ice motion (weekly)
+      kind: mean
+      period: 7-day
+      items:
+        - text: "Weekly mean along-x and along-y components — `u`, `v` (cm s-1)"
+          note: Average of the week's daily data. Weekly files have no error estimate variable
+        - text: "Number of daily files contributing to the weekly mean — `number_of_observations` (count)"
+          kind: accum
+          note: Number of days with data among the week's seven days (no weekly value if fewer than four)
+    - name: Coordinates
+      kind: static
+      items:
+        - "Latitude and longitude — `latitude`, `longitude` (degrees_north, degrees_east)"
+        - "Projected coordinates — `x`, `y` (m); projection information — `crs`"
+
+access:
+  - name: NSIDC dataset page — NSIDC-0116 Version 4
+    url: https://nsidc.org/data/nsidc-0116/versions/4
+    method: Overview / user guide / citation
+    note: The user guide (updated October 2026) documents the period of each input source, the file naming convention and the error estimation method.
+  - name: NSIDC DAAC HTTPS archive — nsidc0116_icemotion_vectors_v4
+    url: https://daacdata.apps.nsidc.org/pub/DATASETS/nsidc0116_icemotion_vectors_v4/
+    method: HTTPS (browser, wget or curl)
+    note: Requires a free NASA Earthdata Login account. For command-line downloads, store your credentials in ~/.netrc.
+  - name: NSIDC dataset page — Quicklook Arctic Weekly EASE-Grid Sea Ice Motion Vectors (NSIDC-0748)
+    url: https://nsidc.org/data/nsidc-0748/versions/1
+    method: Overview / HTTPS (Earthdata Login)
+    note: >-
+      The Arctic weekly quicklook product covering the period after the final product (AMSR2, ERA5 and IABP buoy inputs). When the final product is extended, the quicklook coverage moves on so the two do not overlap,
+      so switch to the final product (NSIDC-0116) for the final analysis in a paper. The dataset page (1 January 2025) and the user guide (29 April 2024) give different start dates, so check the actual file listing when downloading.
+
+example:
+  lang: python
+  note: >-
+    Assumes your Earthdata Login credentials are in ~/.netrc and that you have downloaded a Northern Hemisphere daily file from the HTTPS archive. File names follow
+    icemotion_<daily|weekly>_<nh|sh>_25km_<start-date>_<end-date>_v4.x.nc (v4.1 for 1978–2024, v4.2 from 2025); check the exact names in the directory listing.
+    The east/north conversion follows the NSIDC help article "How to convert the horizontal and vertical components to east and north".
+  code: |
+    import glob
+    import numpy as np
+    import xarray as xr
+
+    f = sorted(glob.glob("icemotion_daily_nh_25km_*_v4.*.nc"))[-1]
+    ds = xr.open_dataset(f)
+
+    u = ds["u"].where(ds["u"] != -9999)          # along grid x, cm/s
+    v = ds["v"].where(ds["v"] != -9999)          # along grid y, cm/s
+    L = np.deg2rad(ds["longitude"])
+
+    # Northern EASE-Grid → eastward (E) and northward (N) components (Southern: E = u cosL - v sinL, N = u sinL + v cosL)
+    east = u * np.cos(L) + v * np.sin(L)
+    north = -u * np.sin(L) + v * np.cos(L)
+
+    err = ds["icemotion_error_estimate"]
+    good = (err >= 0) & (err < 1000)             # drop coastal-suspect (negative) and distant-input (+1000) cells
+    speed = np.hypot(east, north).where(good)
+    print(float(speed.isel(time=0).mean()), "cm/s")
+
+tips:
+  - >-
+    `u` and `v` are components along the EASE-Grid x and y axes, not eastward and northward. Rotate them to east/north using longitude before comparing with wind or current data or plotting arrows on a map.
+    The signs in the conversion differ between hemispheres (see the NSIDC help article).
+  - >-
+    `icemotion_error_estimate` mixes flags with the values themselves: 1000 is added when the closest input vector is more than 1250 km away, and suspect vectors within about 25 km of the coast
+    are made negative. Filter these cells out before computing means or trends.
+  - >-
+    The passive microwave correlation method needs open expanses of ice, so there are few motion estimates where land and sea are interleaved, such as the Canadian Archipelago. Missing values do not mean there is no ice,
+    and estimates are also poor in highly deforming ice and near the ice edge.
+  - >-
+    The mix of inputs changes over time (AVHRR 1981–2000, SSM/I 1987–2006, SSMIS 2007–2024, AMSR-E 2002–2011, AMSR2 2025 onward, NCEP/NCAR winds to 2024, ERA5 winds from 2025).
+    In particular, the satellite and wind inputs both change on 2025-01-01, so check whether any shift across that date in a long-term trend is real.
+  - >-
+    IABP buoy input is sparse in the eastern Arctic and is not used in the Southern Hemisphere. Southern Hemisphere motion relies on satellite and wind input only, and has gaps when SSM/I and AVHRR are missing.
+  - >-
+    EASE-Grid 1.0 (EPSG:3408/3409) is defined on a sphere, so overlaying it directly on EASE-Grid 2.0 data (EPSG:6931/6932, WGS 84) misplaces features. Regrid when combining with other sea ice datasets.
+
+citations:
+  dataset:
+    - label: NSIDC-0116 Version 4
+      text: >-
+        Tschudi, M., Meier, W. N. & Stewart, J. S. (2019). Polar Pathfinder Daily 25 km EASE-Grid Sea Ice Motion Vectors.
+        (NSIDC-0116, Version 4). [Data Set]. Boulder, Colorado USA. NASA National Snow and Ice Data Center Distributed Active Archive Center.
+        https://doi.org/10.5067/INAWUWO7QH7B. [describe subset used if applicable]. Date Accessed MM-DD-YYYY.
+      doi: 10.5067/INAWUWO7QH7B
+      bibtex: |
+        @misc{nsidc0116_v4,
+          author    = {Tschudi, M. and Meier, W. N. and Stewart, J. S.},
+          title     = {Polar Pathfinder Daily 25 km {EASE-Grid} Sea Ice Motion Vectors ({NSIDC-0116}, Version 4)},
+          year      = {2019},
+          publisher = {NASA National Snow and Ice Data Center Distributed Active Archive Center},
+          address   = {Boulder, Colorado USA},
+          doi       = {10.5067/INAWUWO7QH7B}
+        }
+    - label: Quicklook extension — NSIDC-0748 Version 1 (if you used the period after the final product)
+      text: >-
+        Tschudi, M., Meier, W. N. & Stewart, J. S. (2019). Quicklook Arctic Weekly EASE-Grid Sea Ice Motion Vectors. (NSIDC-0748, Version 1). [Data Set].
+        Boulder, Colorado USA. NASA National Snow and Ice Data Center Distributed Active Archive Center. https://doi.org/10.5067/O0XI8PPYEZJ6. Date Accessed MM-DD-YYYY.
+      doi: 10.5067/O0XI8PPYEZJ6
+  papers:
+    - label: Version 4 methods and enhancements (recommended in the user guide)
+      text: >-
+        Tschudi, M. A., Meier, W. N., and Stewart, J. S. (2020): An enhancement to sea ice motion and age products at the National Snow and Ice Data Center (NSIDC).
+        The Cryosphere, 14, 1519–1536.
+      doi: 10.5194/tc-14-1519-2020
+      bibtex: |
+        @article{tschudi2020motion,
+          author  = {Tschudi, Mark A. and Meier, Walter N. and Stewart, J. Scott},
+          title   = {An enhancement to sea ice motion and age products at the {National Snow and Ice Data Center} ({NSIDC})},
+          journal = {The Cryosphere},
+          volume  = {14},
+          number  = {5},
+          pages   = {1519--1536},
+          year    = {2020},
+          doi     = {10.5194/tc-14-1519-2020}
+        }
+    - label: ERA5 (wind input from 2025, cited in the user guide)
+      text: >-
+        Hersbach, H., et al. (2020): The ERA5 global reanalysis. Quarterly Journal of the Royal Meteorological Society, 146, 1999–2049.
+      doi: 10.1002/qj.3803
+  acknowledgement: >-
+    NSIDC requires citation of the dataset as a condition of use. Give the period, hemisphere and access date you used, and if you filled Arctic data from 2026 onward with the quicklook product (NSIDC-0748),
+    cite its DOI separately.
+
+notices:
+  - date: "2026-10"
+    level: warning
+    title: "Version 4.2: 2025 data added — AMSR2 TBs replace SSMIS TBs and ERA5 replaces NCEP/NCAR winds"
+    body: >-
+      With the October 2026 update of the user guide, daily and weekly data were extended to 2025-12-31. From the 2025 data (file version v4.2), "AMSR2 TBs replaced SSMIS TBs as the passive microwave source",
+      and ERA5 replaced the NCEP/NCAR Reanalysis as the wind source. 1978–2024 (v4.1) is unchanged.
+    source: https://nsidc.org/sites/default/files/documents/user-guide/nsidc-0116-v004-userguide_0.pdf
+  - date: "2026-09-08"
+    level: info
+    title: "User notice: AMSR2 products continued forward processing — AMSR3 products planned for 2027"
+    body: >-
+      NSIDC's AMSR2 products, including the daily polar gridded brightness temperatures (NSIDC-0802) and sea ice concentrations (NSIDC-0803) that feed this dataset and its quicklook extension, "will continue forward processing, as the data remain available from" JAXA.
+      "NSIDC is planning for the development of AMSR3 data products in 2027."
+    source: https://nsidc.org/data/user-resources/data-announcements/user-notice-amsr2-products-continued-forward-processing
+  - date: "2026-03-18"
+    level: info
+    title: "NCEP/NCAR Reanalysis 1 updates end — this dataset uses ERA5 winds from 2025"
+    body: >-
+      NOAA PSL announced the end of R1 updates (NCEP switched from CDAS to CORe on 2026-03-18). NSIDC-0116 switched its wind input to ERA5 from 2025-01-01 (User Guide Table 11),
+      and the quicklook product NSIDC-0748 also uses ERA5, so updates are not affected. The 1978–2024 record continues to use NCEP/NCAR winds as input.
+    source: https://psl.noaa.gov/news/2026/r1datanotice.html
+
+links:
+  - name: NSIDC-0116 V4 User Guide
+    url: https://nsidc.org/sites/default/files/documents/user-guide/nsidc-0116-v004-userguide_0.pdf
+  - name: NSIDC-0748 quicklook User Guide
+    url: https://nsidc.org/sites/default/files/documents/user-guide/nsidc-0748-v001-userguide_0.pdf
+  - name: How to convert the horizontal and vertical components to east and north (NSIDC Help Center)
+    url: https://nsidc.org/data/user-resources/help-center/how-convert-horizontal-and-vertical-components-east-and-north
+  - name: NSIDC DAAC programmatic data access guide (Earthdata Login)
+    url: https://nsidc.org/data/user-resources/help-center/programmatic-access-guide-data-daacdataapps
+  - name: EASE-Grid conversion tools (easegrids-easeconv)
+    url: https://github.com/nsidc/easegrids-easeconv
+
+watch_urls:
+  - https://nsidc.org/data/nsidc-0116/versions/4
+  - https://nsidc.org/data/nsidc-0748/versions/1
+  - https://nsidc.org/data/user-resources/data-announcements
+
+last_verified: "2026-10-12"

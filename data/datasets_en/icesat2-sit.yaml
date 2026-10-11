@@ -1,0 +1,461 @@
+# ─────────────────────────────────────────────────────────────
+# ICESat-2 Sea Ice Thickness & Freeboard — dataset information file
+# Gridded: IS2SITMOGR4 v4 (monthly sea ice thickness, Arctic) · ATL20 v5 (daily/monthly freeboard) / Along-track: ATL07 v7 (sea ice height) · ATL10 v7 (freeboard) — distributed by the NSIDC DAAC
+# ─────────────────────────────────────────────────────────────
+id: icesat2-sit
+name: ICESat-2 Sea Ice Thickness & Freeboard
+full_name: >-
+  ICESat-2 L4 Monthly Gridded Sea Ice Thickness (IS2SITMOGR4, Version 4) · ATLAS/ICESat-2 L3B Daily and Monthly Gridded Sea Ice Freeboard (ATL20, Version 5),
+  with the along-track products ATLAS/ICESat-2 L3A Sea Ice Height (ATL07) and L3A Sea Ice Freeboard (ATL10), Version 7
+category: satellite
+domain: seaice
+group: 위성 관측 자료
+order: 60
+domains: [해빙]
+provider: >-
+  NASA ICESat-2 Project Science Office and Science Team (ATL07 · ATL10 · ATL20; Kwok et al.) / IS2SITMOGR4: Petty et al. (CMR data center UMD/ESSIC) —
+  distributed by the NASA National Snow and Ice Data Center Distributed Active Archive Center (NSIDC DAAC, Earthdata Cloud)
+
+status: active
+status_note: >-
+  The along-track products ATL07 and ATL10 are at Version 7 (Release 007, released 2025-10-07); Version 6 was retired on 2026-04-07. The gridded freeboard ATL20 is at
+  Version 5 (released 2025-11-04), and the monthly gridded thickness IS2SITMOGR4 is at Version 4 (released 2025-11-25, derived from ATL10 v7), which was extended with the
+  2025/26 winter (September 2025 – April 2026) on 2026-08-27. As of 2026-10-12, standard ATL10 data run to 2026-07-20, ATL20 to February 2026 and IS2SITMOGR4 to April 2026;
+  the most recent days are available only as Quick Look data.
+
+period:
+  start: "2018-10"
+  end: present
+  note: >-
+    ICESat-2 science data begin on 14 October 2018. As of 2026-10-12 (NASA CMR), the latest granules are ATL07/ATL10 v7 for 2026-07-20, ATL20 v5 for February 2026 (monthly),
+    IS2SITMOGR4 v4 for April 2026 (monthly) and Quick Look ATL10QL for 2026-10-08. IS2SITMOGR4 covers Arctic winters only: November 2018 – April 2019 for the first winter,
+    then September through April each year. There are no science data during the spacecraft safe-mode periods of 4–16 April 2022 and 10 May – 21 June 2024
+    (with additional partial gaps in June–July 2019).
+
+resolution:
+  spatial_short: "25 km (0.23°)"
+  temporal_short: "1일"
+  spatial: >-
+    Gridded (ATL20, IS2SITMOGR4): 25 km NSIDC Sea Ice Polar Stereographic grids — North, EPSG:3411 (448 rows × 304 columns in ATL20); South, EPSG:3412 (332 × 316, ATL20 only).
+    ATL20 covers grid cells with sea ice concentration ≥ 50% and more than 25 km from the coast (89°N–37°N and 53°S–79°S); IS2SITMOGR4 spans the Arctic Ocean and its peripheral seas
+    south of 88°N. Along-track (ATL07, ATL10): segment-based — ATL07 heights are computed over variable-length segments of ~150 signal photons (fixed 10 m segments are also
+    provided for the strong beams), and ATL10 gives freeboard for these segments relative to a lead-derived reference sea surface within 10 km swath segments. Geolocation in WGS 84
+  vertical: Not applicable (single-level freeboard, thickness and snow depth)
+  temporal: >-
+    ATL20: daily composites (that day's tracks) and monthly composites (calendar month); IS2SITMOGR4: monthly means (September–April); ATL07/ATL10: along-track data at
+    measurement time (91-day exact repeat orbit)
+
+update: >-
+  Standard ATL07/ATL10 are released with a lag of several months (latest at time of checking: 2026-07-20). Quick Look products (ATL07QL, ATL10QL) have a 3–5 day latency and are
+  removed once the standard data are available. ATL20 is updated "several times a year"; IS2SITMOGR4 adds each full winter at once in late spring or early summer of the following
+  year (later if ATL10 processing is delayed; the 2025/26 winter arrived on 2026-08-27)
+license: >-
+  NASA Earth Science Data and Information Policy — data from NASA-led missions carry no restrictions on use (Creative Commons Zero, CC0) unless otherwise noted; please cite the data sets in publications
+account_required: true
+
+summary: >-
+  The Advanced Topographic Laser Altimeter System (ATLAS), a photon-counting lidar on NASA's ICESat-2, measures the heights of sea ice and of leads (open water between floes).
+  From these, the products derive total freeboard (the height of the snow surface above local sea level) and, with assumptions about snow depth and density, sea ice thickness.
+  Most research use relies on the monthly 25 km gridded thickness IS2SITMOGR4 (Arctic winter, with NESOSIM snow loading) and the daily and monthly 25 km gridded freeboard ATL20
+  (both hemispheres, all seasons), both built from the along-track sea ice height (ATL07) and freeboard (ATL10). Because the laser ranges to the snow surface rather than the
+  ice surface sensed by radar altimeters such as CryoSat-2, the assumed snow loading largely determines the retrieved thickness.
+
+time_convention:
+  summary: >-
+    Gridded products are period means. ATL20 daily and monthly composites are segment-length-weighted averages of all freeboard segments that fall in a grid cell during the day or
+    calendar month; IS2SITMOGR4 bins the along-track thickness estimates of a month onto the 25 km grid. Along-track data (ATL07, ATL10) are instantaneous values at the time of measurement.
+  points:
+    - "Track coverage is sparse, so a monthly grid cell may represent only one or two days of data — ATL20 imposes no minimum number of observation days (ATL20 Known Issues). Check `mean_day_of_month` in IS2SITMOGR4 and `n_segs` and `delta_time_beg`/`delta_time_end` in ATL20."
+    - "The date and time in an ATL20 file name (e.g. ATL20-01_20260201003450_…) is the time of the first ATL10 granule used for that month, not the end or middle of the month. IS2SITMOGR4 file names (IS2SITMOGR4_01_202604_007_004.nc) give year and month, the ATL10 input version and the product version, in that order."
+    - "Along-track `delta_time` is in GPS seconds since 2018-01-01 (the ATLAS Standard Data Product epoch). Add `/ancillary_data/atlas_sdp_gps_epoch` to get seconds since the GPS epoch; GPS time and UTC differ by the accumulated leap seconds."
+    - "IS2SITMOGR4 snow depth and density are daily NESOSIM fields sub-sampled at the ICESat-2 locations and dates before monthly binning; `sea_ice_conc` is the monthly mean NOAA/NSIDC CDR v4 concentration and is not sub-sampled by ICESat-2."
+  source: https://nsidc.org/sites/default/files/documents/user-guide/is2sitmogr4-v004-userguide.pdf
+  source_name: NSIDC user guides for IS2SITMOGR4 v4, ATL20 v5 and ATL07/ATL10 v7; ATL20/ATL21 Known Issues
+
+variables:
+  note: >-
+    Names as given in the NSIDC user guides and data dictionaries (IS2SITMOGR4 v4, ATL20 v5, ATL07/ATL10 v7). IS2SITMOGR4 uses netCDF-4 variables;
+    the ATL products use HDF5 paths, where `gtx` stands for one of the six beam groups gt1l–gt3r.
+  full_list: https://nsidc.org/sites/default/files/documents/technical-reference/icesat2_atl20_data_dict_v005.pdf
+  groups:
+    - name: Monthly gridded sea ice thickness (IS2SITMOGR4, Arctic, September–April)
+      kind: mean
+      period: Monthly
+      items:
+        - text: "Sea ice thickness — `ice_thickness` (m)"
+          note: Primary variable, using redistributed NESOSIM v1.1 snow loading and a bulk ice density of 916 kg m-3
+        - text: "Total sea ice thickness uncertainty — `ice_thickness_unc` (m)"
+          note: Combined systematic uncertainties only (random errors assumed to average out at 25 km; representation and sampling errors not included). Component variables for freeboard, snow depth, snow density and ice density are also provided
+        - text: "Interpolated and smoothed sea ice thickness — `ice_thickness_int` (m)"
+          note: Delaunay linear interpolation plus a Gaussian filter; masked more than 50 km from data and where concentration is below 50%. The guide calls these fields preliminary and urges caution
+        - text: "Sea ice thickness with alternative assumptions — `ice_thickness_mw99`, `ice_thickness_sm_e5`, `ice_thickness_sm_m2`, `ice_thickness_j22` (m)"
+          note: Modified Warren (1999) snow climatology, SnowModel-LG forced by ERA5 or MERRA-2, and the experimental Jutila et al. (2022) ice density. Use with more caution than the primary variable
+    - name: Monthly gridded freeboard, snow and ancillary fields (IS2SITMOGR4)
+      kind: mean
+      period: Monthly
+      items:
+        - text: "Total freeboard — `freeboard` (m)"
+          note: Monthly mean of ATL10 v7 freeboard (snow surface). Interpolated version `freeboard_int`
+        - "Snow depth — `snow_depth` (m)"
+        - "Snow density — `snow_density` (kg m-3)"
+        - text: "Bulk sea ice density — `ice_density` (kg m-3)"
+          kind: static
+          note: Fixed at 916 kg m-3
+        - text: "Sea ice concentration — `sea_ice_conc` (0–1)"
+          note: Monthly mean of the NOAA/NSIDC CDR v4; masked below 0.15
+        - text: "Number of valid thickness segments per grid cell — `num_segments` (count)"
+        - text: "Mean day of month represented by the grid cell — `mean_day_of_month` (day)"
+        - text: "Grid cell area — `grid_cell_area` (m2)"
+          kind: static
+    - name: Daily and monthly gridded freeboard (ATL20, both hemispheres)
+      kind: mean
+      period: Daily/monthly
+      items:
+        - text: "Monthly mean freeboard — `/monthly/mean_fb` (m)"
+          period: Monthly
+          note: Segment-length-weighted mean. The same group holds `n_segs` (number of segments), `length_sum` (sum of segment lengths, m) and `sigma` (standard deviation, m)
+        - text: "Daily mean freeboard — `/daily/dayxx/mean_fb` (m)"
+          period: Daily
+          note: One subgroup per day of the month (dayxx); check the actual subgroup names in the file
+        - text: "Grid coordinates and land mask — `/grid_x`, `/grid_y` (m), `/grid_lat`, `/grid_lon` (degrees), `/land_mask_map` (1 = land, 0 = ocean/sea ice)"
+          kind: static
+    - name: Along-track data (ATL07 sea ice height · ATL10 freeboard)
+      kind: instant
+      items:
+        - text: "Sea ice and sea surface height — `gtx/sea_ice_segments/heights/height_segment_height` (m)"
+          note: ATL07. Relative to the tide-free mean sea surface (MSS), after ocean tide and inverted barometer corrections
+        - text: "Segment surface type and sea surface flag — `height_segment_type`, `height_segment_ssh_flag` (flag values)"
+          note: ATL07. ssh_flag 1 = candidate sea surface (lead) used by ATL10, 0 = sea ice
+        - text: "Beam freeboard — `gtx/freeboard_segment/beam_fb_height` (m)"
+          note: ATL10. Height above the reference surface built from leads on the same beam (`gtx/reference_surface_section/beam_refsurf_height`). Uncertainty `beam_fb_unc`; quality `beam_fb_quality_flag` (1 best to 5 poor)
+        - text: "Lead height — `gtx/leads/lead_height` (m)"
+          note: ATL10. Weighted mean of contiguous sea surface segments, relative to the tide-free MSS
+
+access:
+  - name: NSIDC — IS2SITMOGR4 v4 (monthly gridded sea ice thickness)
+    url: https://nsidc.org/data/is2sitmogr4/versions/4
+    method: Earthdata Search / earthaccess (Python) / HTTPS / NASA Earthdata Cloud (AWS us-west-2)
+    note: >-
+      Requires a free NASA Earthdata Login. One netCDF-4 file per month (IS2SITMOGR4_01_YYYYMM_007_004.nc, 01 = Northern Hemisphere) with a browse PNG.
+      The CMR version is "4". No Southern Hemisphere (02) files exist yet.
+  - name: NSIDC — ATL20 v5 (daily and monthly gridded freeboard)
+    url: https://nsidc.org/data/atl20/versions/5
+    method: Earthdata Search / earthaccess / HTTPS / NASA Earthdata Cloud
+    note: >-
+      HDF5; one file per hemisphere (01 north, 02 south) and month, holding the monthly composite and the daily composites. If a file is reprocessed under the same name, use the one
+      with the highest trailing revision number. A rolling 30-day gridded Quick Look (ATL20QL v5, built from ATL10QL) was released on 2026-06-16.
+  - name: NSIDC — ATL10 v7 (along-track freeboard) · ATL07 v7 (along-track sea ice height)
+    url: https://nsidc.org/data/atl10/versions/7
+    method: Earthdata Search / earthaccess / NSIDC Data Access Tool (subsetting) / Harmony
+    note: >-
+      Up to 32 HDF5 granules per day (per-hemisphere orbit segments). ATL07 is at https://nsidc.org/data/atl07/versions/7.
+      The 3–5 day Quick Look products (ATL07QL, ATL10QL v7) are deleted once the standard files are out, so use the standard products for the research record.
+  - name: NASA Earthdata Search
+    url: https://search.earthdata.nasa.gov/search/granules?p=C3878683537-NSIDC_CPRD
+    method: Web search and download
+    note: The link opens the IS2SITMOGR4 v4 collection (C3878683537-NSIDC_CPRD). ATL20 v5 is C3825009052-NSIDC_CPRD.
+
+example:
+  lang: python
+  note: >-
+    Install with pip install earthaccess xarray h5py netCDF4. On the first login() you can enter your Earthdata credentials and save them to ~/.netrc.
+    Monthly thickness (IS2SITMOGR4) opens with xarray; ATL20 uses HDF5 groups, so read it with h5py.
+  code: |
+    import earthaccess
+    import h5py
+    import numpy as np
+    import xarray as xr
+
+    earthaccess.login()  # NASA Earthdata Login
+
+    # 1) Monthly gridded sea ice thickness (IS2SITMOGR4 v4) — March 2026
+    res = earthaccess.search_data(short_name="IS2SITMOGR4", version="4",
+                                  temporal=("2026-03-01", "2026-03-31"))
+    files = earthaccess.download(res, "./is2sitmogr4")
+    nc = [f for f in files if str(f).endswith(".nc")][0]
+    ds = xr.open_dataset(nc)
+    sit = ds["ice_thickness"].squeeze()            # m, NESOSIM snow loading
+    print(float(sit.mean()), float(ds["mean_day_of_month"].mean()))
+
+    # 2) Monthly gridded freeboard (ATL20 v5) — February 2026, Northern Hemisphere (01)
+    res = earthaccess.search_data(short_name="ATL20", version="005",
+                                  temporal=("2026-02-01", "2026-02-28"))
+    files = earthaccess.download(res, "./atl20")
+    h5 = [f for f in files if "ATL20-01_" in str(f) and str(f).endswith(".h5")][0]
+    with h5py.File(h5, "r") as h:
+        v = h["monthly/mean_fb"]
+        fb = v[:].astype(float)
+        fill = v.attrs.get("_FillValue")
+        if fill is not None:
+            fb[fb == fill] = np.nan
+        nseg = h["monthly/n_segs"][:]
+        print(list(h["daily"].keys())[:3])        # daily composite groups
+    print(np.nanmean(fb))
+
+tips:
+  - >-
+    ICESat-2 measures total freeboard, i.e. to the snow surface. Snow depth and density are the largest error sources in the thickness conversion, so before comparing with
+    CryoSat-2 thickness (radar, ice-surface freeboard) make sure both use the same snow product. The IS2SITMOGR4 developers recommend the NESOSIM-based `ice_thickness` and advise
+    caution with the alternative thickness variables.
+  - >-
+    The SnowModel-LG variables in IS2SITMOGR4 (`*_sm_e5`, `*_sm_m2`) are only available through July 2021 (user guide footnote). They are empty for recent winters, so do not mix
+    them with the primary variable.
+  - >-
+    OSI SAF does not provide ice type in September, so all ice is treated as multiyear ice that month. In April 2022 the safe mode removed the first part of the month
+    (4–11 April per Known Issues), biasing that monthly mean toward the second half. Sampling dates differ between grid cells, so always check `mean_day_of_month` in regional comparisons.
+  - >-
+    Near the ice edge, some 10 km segments still use a reference surface lowered by tens of centimetres by wave troughs, which inflates freeboard (ATL07/ATL10 and ATL20 Known Issues).
+    The multi-beam (swath) freeboard in ATL10 is disabled because of beam alignment issues; only the per-beam values (`beam_fb_height`) are valid.
+  - >-
+    Do not mix versions. Version 7 changed how ATL10 builds the reference surface (from a static 10 km value to interpolation between neighbouring reference surfaces), so freeboards differ
+    from v6, and v6, ATL20 v4 and IS2SITMOGR4 v3 files can no longer be downloaded. Since 2026-01-15 the ATL07/ATL10 sea ice concentration input has been the AMSR2-based NRT CDR
+    (G10016 v4), which introduces a very small (≤ 0.4%) discontinuity at the ice edge.
+  - >-
+    ATL20 is produced for summer months too, but clouds sharply reduce coverage and surface melt makes ATL10 retrievals difficult (IS2SITMOGR4 Known Issues). IS2SITMOGR4 covers
+    September–April only; summer thickness is still at the "initial assessment" research stage (Petty, Cabaj & Landy, 2025). North of 88°N lies the pole hole not covered by the orbit.
+
+transitions:
+  - from: ICESat-2 sea ice Release 006 (ATL07/ATL10 v6, ATL20 v4, IS2SITMOGR4 v3)
+    to: Release 007 (ATL07·ATL10 v7, ATL20 v5, IS2SITMOGR4 v4)
+    status: completed
+    date: "2025-10"
+    summary: >-
+      The along-track products moved to v7 with a new freeboard reference surface calculation, the gridded freeboard and thickness products followed with new versions,
+      and all previous versions were retired during 2026.
+    changes:
+      - aspect: Release date
+        before: ATL07/ATL10 v6 2023-08-03, ATL20 v4 2023-08-24, IS2SITMOGR4 v3 2023-12
+        after: ATL07/ATL10 v7 2025-10-07, ATL20 v5 2025-11-04, IS2SITMOGR4 v4 2025-11-25
+      - aspect: ATL10 reference sea surface
+        before: Freeboard computed from a static 10 km reference surface value
+        after: >-
+          Reference surface heights interpolated to the freeboard location when neighbouring reference surfaces are available; option to use lognormal-distribution heights;
+          `oc_depth` fixed (previously always 0.0)
+      - aspect: ATL07 processing
+        before: Variable-length ~150-photon segments only
+        after: >-
+          Fixed 10 m segments for strong beams (`sea_ice_segments_10m`), independent DDA-Bifurcation heights, lognormal expected-waveform tables, dynamic atmospheric correction (DAC) added
+      - aspect: ATL20
+        before: v4
+        after: v5 — grid mapping attribute and coordinate reference system (crs) variable updated for netCDF compliance
+      - aspect: IS2SITMOGR4
+        before: v3 — ATL10 v6; SnowModel-LG with ERA5 forcing only
+        after: v4 — ATL10 v7; MERRA-2-forced SnowModel-LG added; `grid_cell_area` and `time` variables added
+      - aspect: Retirement of previous versions
+        before: Available
+        after: IS2SITMOGR4 v3 retired 2026-01, ATL07/ATL10 v6 on 2026-04-07, ATL20 v4 on 2026-05-11
+    impacts:
+      - Do not splice freeboard or thickness series built from v6 or earlier onto v7 data; recompute the full record with v7.
+      - Scripts that assume v6 file names (…_006_xx.h5) or IS2SITMOGR4 v3 names need the version numbers updated.
+    sources:
+      - name: NSIDC announcement — ATL07, ATL10 and ATL12 v7 release (2025-10-07)
+        url: https://nsidc.org/data/user-resources/data-announcements/new-version-release-atlasicesat-2-v7-along-track-products-atl07-atl10-and-atl12
+      - name: ATL10 v7 user guide (version history)
+        url: https://nsidc.org/sites/default/files/documents/user-guide/atl10-v007-userguide.pdf
+      - name: ATL07 v7 user guide (version history)
+        url: https://nsidc.org/sites/default/files/documents/user-guide/atl07-v007-userguide_0.pdf
+      - name: ATL20 v5 user guide (version history)
+        url: https://nsidc.org/sites/default/files/documents/user-guide/atl20-v005-userguide.pdf
+      - name: IS2SITMOGR4 v4 user guide (version history)
+        url: https://nsidc.org/sites/default/files/documents/user-guide/is2sitmogr4-v004-userguide.pdf
+
+citations:
+  dataset:
+    - label: Monthly gridded sea ice thickness (IS2SITMOGR4, Version 4)
+      text: >-
+        Petty, A. A., Kurtz, N., Kwok, R., Markus, T., Neumann, T. A., Keeney, N., and Cabaj, A. (2025). ICESat-2 L4 Monthly Gridded Sea Ice Thickness.
+        (IS2SITMOGR4, Version 4). [Data Set]. Boulder, Colorado USA. NASA National Snow and Ice Data Center Distributed Active Archive Center.
+        https://doi.org/10.5067/TXDHDJ1JT0CG. Date Accessed MM-DD-YYYY.
+      doi: 10.5067/TXDHDJ1JT0CG
+      bibtex: |
+        @misc{petty2025is2sitmogr4v4,
+          author    = {Petty, A. A. and Kurtz, N. and Kwok, R. and Markus, T. and Neumann, T. A. and Keeney, N. and Cabaj, A.},
+          title     = {{ICESat-2} {L4} Monthly Gridded Sea Ice Thickness ({IS2SITMOGR4}, Version 4)},
+          publisher = {NASA National Snow and Ice Data Center Distributed Active Archive Center},
+          address   = {Boulder, Colorado USA},
+          year      = {2025},
+          doi       = {10.5067/TXDHDJ1JT0CG}
+        }
+    - label: Daily and monthly gridded freeboard (ATL20, Version 5)
+      text: >-
+        Kwok, R., Kurtz, N., Wimert, J., Petty, A. A., Cunningham, G., Markus, T., Hancock, D., Ivanoff, A., Bagnardi, M., Herzfeld, U. C., Trantow, T.
+        and the ICESat-2 Science Team. (2025). ATLAS/ICESat-2 L3B Daily and Monthly Gridded Sea Ice Freeboard. (ATL20, Version 5). [Data Set].
+        Boulder, Colorado USA. NASA National Snow and Ice Data Center Distributed Active Archive Center. https://doi.org/10.5067/ATLAS/ATL20.005.
+        Date Accessed MM-DD-YYYY.
+      doi: 10.5067/ATLAS/ATL20.005
+      bibtex: |
+        @misc{kwok2025atl20v5,
+          author    = {Kwok, R. and Kurtz, N. and Wimert, J. and Petty, A. A. and Cunningham, G. and Markus, T. and Hancock, D. and Ivanoff, A. and Bagnardi, M. and Herzfeld, U. C. and Trantow, T. and {the ICESat-2 Science Team}},
+          title     = {{ATLAS/ICESat-2} {L3B} Daily and Monthly Gridded Sea Ice Freeboard ({ATL20}, Version 5)},
+          publisher = {NASA National Snow and Ice Data Center Distributed Active Archive Center},
+          address   = {Boulder, Colorado USA},
+          year      = {2025},
+          doi       = {10.5067/ATLAS/ATL20.005}
+        }
+    - label: Along-track freeboard (ATL10, Version 7)
+      text: >-
+        Kwok, R., Petty, A. A., Cunningham, G., Markus, T., Hancock, D., Ivanoff, A., Wimert, J., Bagnardi, M., Kurtz, N. and the ICESat-2 Science Team. (2025).
+        ATLAS/ICESat-2 L3A Sea Ice Freeboard. (ATL10, Version 7). [Data Set]. Boulder, Colorado USA. NASA National Snow and Ice Data Center
+        Distributed Active Archive Center. https://doi.org/10.5067/ATLAS/ATL10.007. Date Accessed MM-DD-YYYY.
+      doi: 10.5067/ATLAS/ATL10.007
+      bibtex: |
+        @misc{kwok2025atl10v7,
+          author    = {Kwok, R. and Petty, A. A. and Cunningham, G. and Markus, T. and Hancock, D. and Ivanoff, A. and Wimert, J. and Bagnardi, M. and Kurtz, N. and {the ICESat-2 Science Team}},
+          title     = {{ATLAS/ICESat-2} {L3A} Sea Ice Freeboard ({ATL10}, Version 7)},
+          publisher = {NASA National Snow and Ice Data Center Distributed Active Archive Center},
+          address   = {Boulder, Colorado USA},
+          year      = {2025},
+          doi       = {10.5067/ATLAS/ATL10.007}
+        }
+    - label: Along-track sea ice height (ATL07, Version 7)
+      text: >-
+        Kwok, R., Petty, A. A., Cunningham, G., Markus, T., Hancock, D., Ivanoff, A., Wimert, J., Bagnardi, M., Kurtz, N. and the ICESat-2 Science Team. (2025).
+        ATLAS/ICESat-2 L3A Sea Ice Height. (ATL07, Version 7). [Data Set]. Boulder, Colorado USA. NASA National Snow and Ice Data Center
+        Distributed Active Archive Center. https://doi.org/10.5067/ATLAS/ATL07.007. Date Accessed MM-DD-YYYY.
+      doi: 10.5067/ATLAS/ATL07.007
+      bibtex: |
+        @misc{kwok2025atl07v7,
+          author    = {Kwok, R. and Petty, A. A. and Cunningham, G. and Markus, T. and Hancock, D. and Ivanoff, A. and Wimert, J. and Bagnardi, M. and Kurtz, N. and {the ICESat-2 Science Team}},
+          title     = {{ATLAS/ICESat-2} {L3A} Sea Ice Height ({ATL07}, Version 7)},
+          publisher = {NASA National Snow and Ice Data Center Distributed Active Archive Center},
+          address   = {Boulder, Colorado USA},
+          year      = {2025},
+          doi       = {10.5067/ATLAS/ATL07.007}
+        }
+  papers:
+    - label: ICESat-2 freeboard-to-thickness method (recommended in the IS2SITMOGR4 user guide)
+      text: >-
+        Petty, A. A., Kurtz, N. T., Kwok, R., Markus, T., and Neumann, T. A. (2020): Winter Arctic sea ice thickness from ICESat-2 freeboards.
+        Journal of Geophysical Research: Oceans, 125, e2019JC015764.
+      doi: 10.1029/2019JC015764
+      bibtex: |
+        @article{petty2020is2sit,
+          author  = {Petty, Alek A. and Kurtz, Nathan T. and Kwok, Ron and Markus, Thorsten and Neumann, Thomas A.},
+          title   = {Winter {Arctic} Sea Ice Thickness From {ICESat-2} Freeboards},
+          journal = {Journal of Geophysical Research: Oceans},
+          volume  = {125},
+          number  = {5},
+          pages   = {e2019JC015764},
+          year    = {2020},
+          doi     = {10.1029/2019JC015764}
+        }
+    - label: Freeboard and snow loading upgrades and first three winters (recommended in the IS2SITMOGR4 user guide)
+      text: >-
+        Petty, A. A., Keeney, N., Cabaj, A., Kushner, P., and Bagnardi, M. (2023): Winter Arctic sea ice thickness from ICESat-2: upgrades to freeboard
+        and snow loading estimates and an assessment of the first three winters of data collection. The Cryosphere, 17, 127–156.
+      doi: 10.5194/tc-17-127-2023
+      bibtex: |
+        @article{petty2023is2sit,
+          author  = {Petty, Alek A. and Keeney, Nicole and Cabaj, Alex and Kushner, Paul and Bagnardi, Marco},
+          title   = {Winter {Arctic} sea ice thickness from {ICESat-2}: upgrades to freeboard and snow loading estimates and an assessment of the first three winters of data collection},
+          journal = {The Cryosphere},
+          volume  = {17},
+          number  = {1},
+          pages   = {127--156},
+          year    = {2023},
+          doi     = {10.5194/tc-17-127-2023}
+        }
+    - label: ATL07/ATL10 surface height and freeboard — early results
+      text: >-
+        Kwok, R., Markus, T., Kurtz, N. T., Petty, A. A., Neumann, T. A., Farrell, S. L., Cunningham, G. F., Hancock, D. W., Ivanoff, A., and Wimert, J. T. (2019):
+        Surface height and sea ice freeboard of the Arctic Ocean from ICESat-2: characteristics and early results. Journal of Geophysical Research: Oceans, 124, 6942–6959.
+      doi: 10.1029/2019JC015486
+      bibtex: |
+        @article{kwok2019icesat2fb,
+          author  = {Kwok, R. and Markus, T. and Kurtz, N. T. and Petty, A. A. and Neumann, T. A. and Farrell, S. L. and Cunningham, G. F. and Hancock, D. W. and Ivanoff, A. and Wimert, J. T.},
+          title   = {Surface Height and Sea Ice Freeboard of the {Arctic} {Ocean} From {ICESat-2}: Characteristics and Early Results},
+          journal = {Journal of Geophysical Research: Oceans},
+          volume  = {124},
+          number  = {10},
+          pages   = {6942--6959},
+          year    = {2019},
+          doi     = {10.1029/2019JC015486}
+        }
+    - label: All-season (including summer) ICESat-2 thickness — initial assessment (cited in the IS2SITMOGR4 user guide)
+      text: >-
+        Petty, A., Cabaj, A., and Landy, J. C. (2026, published online 2025-12-26): Initial assessment of all-season Arctic sea ice thickness from ICESat-2.
+        Journal of Glaciology, 72, e4.
+      doi: 10.1017/jog.2025.10119
+      bibtex: |
+        @article{petty2026allseason,
+          author  = {Petty, Alek and Cabaj, Alex and Landy, Jack C.},
+          title   = {Initial assessment of all-season {Arctic} sea ice thickness from {ICESat-2}},
+          journal = {Journal of Glaciology},
+          volume  = {72},
+          pages   = {e4},
+          year    = {2026},
+          doi     = {10.1017/jog.2025.10119}
+        }
+  acknowledgement: >-
+    NASA asks that the data sets used be cited in the text and listed in the references, and NSIDC asks for a data citation that includes the DOI, version, date accessed and any subset used.
+    If you use IS2SITMOGR4, also cite Petty et al. (2020, 2023), and, when using the alternative snow (NESOSIM, SnowModel-LG) or ice density variables, the input data references given in the user guide.
+
+notices:
+  - date: "2026-08-27"
+    level: info
+    title: "Data set update: ICESat-2 L4 Monthly Gridded Sea Ice Thickness, Version 4 (September 2025 – April 2026 added)"
+    body: >-
+      NSIDC extended IS2SITMOGR4 Version 4 with monthly files for September 2025 through April 2026. The version is unchanged (v4, based on ATL10 v7).
+      The 2026/27 winter is likely to follow, as in past years, as a single update in late spring or summer 2027.
+    source: https://nsidc.org/data/user-resources/data-announcements/data-set-update-icesat-2-l4-monthly-gridded-sea-ice-thickness-version-4
+  - date: "2026-04-07"
+    level: warning
+    title: "Data set retirements: Version 6 of ATL07 and ATL10 (ATL20 v4 retired 2026-05-11)"
+    body: >-
+      NSIDC retired Version 6 of ATL07, ATL10 and ATL12 on 7 April 2026, followed by ATL20 v4 and ATL21 v3 on 11 May 2026. Documentation remains on each data set page, but the
+      data can no longer be accessed. Analyses built on v6 must be recomputed with v7 (v5 for ATL20) to be reproduced.
+    source: https://nsidc.org/data/user-resources/data-announcements/data-set-retirements-version-6-atlasicesat-2-sea-ice-and-ocean-surface-along-track-products
+  - date: "2026-01-15"
+    level: info
+    title: ATL07/ATL10 sea ice concentration input switched to the AMSR2-based NRT CDR (G10016 v4)
+    body: >-
+      Because the SSM/I-series concentration input was discontinued, ATL07 and ATL10 have used the AMSR2-based NOAA/NSIDC Near-Real-Time CDR (G10016 Version 4) since 15 January 2026.
+      A one-month overlap showed differences at the ATL07 (0.15) and ATL10 (0.5) concentration thresholds of ≤ 0.4% at the ice edge, but the record has a small discontinuity.
+    source: https://nsidc.org/sites/default/files/documents/technical-reference/icesat2_atl07_10_known_issues_v007_0.pdf
+  - date: "2025-11-25"
+    level: info
+    title: "New version release: ICESat-2 L4 Monthly Gridded Sea Ice Thickness, Version 4"
+    body: >-
+      Monthly gridded thickness now combines ATL10 Version 7 freeboard with NESOSIM snow loading. MERRA-2-forced SnowModel-LG snow loading and the `grid_cell_area` and `time`
+      variables were added. Version 3 was retired in January 2026; ATL20 v5 had been released earlier, on 2025-11-04.
+    source: https://nsidc.org/data/user-resources/data-announcements/new-version-release-icesat-2-l4-monthly-gridded-sea-ice-thickness-version-4
+  - date: "2025-10-07"
+    level: warning
+    title: "New version release: ATLAS/ICESat-2 v7 along-track products ATL07, ATL10 and ATL12 — freeboard reference surface changed"
+    body: >-
+      Along-track sea ice height and freeboard moved to v7. ATL10 now interpolates the reference sea surface between neighbouring reference surfaces before computing freeboard, and ATL07
+      adds fixed 10 m segments, DDA-Bifurcation heights and a dynamic atmospheric correction. Values differ from v6, so do not mix versions.
+    source: https://nsidc.org/data/user-resources/data-announcements/new-version-release-atlasicesat-2-v7-along-track-products-atl07-atl10-and-atl12
+  - date: "2025-10-06"
+    level: info
+    title: "User Notice: ATL07 and ATL10 \"Quick Look\" data outage (30 September – 14 November 2025)"
+    body: >-
+      A lapse in federal government funding disrupted the SSMIS (DMSP) input, so the Quick Look products (ATL07QL, ATL10QL) were unavailable from 30 September 2025; production resumed
+      on 14 November 2025 (notice of 20 November 2025). The standard ATL07 and ATL10 products were not affected.
+    source: https://nsidc.org/data/user-resources/data-announcements/user-notice-atl07-and-atl10-quick-look-data-outage
+
+links:
+  - name: IS2SITMOGR4 v4 user guide — variables, snow loading, interpolation, file naming
+    url: https://nsidc.org/sites/default/files/documents/user-guide/is2sitmogr4-v004-userguide.pdf
+  - name: IS2SITMOGR4 and IS2SITDAT4 Known Issues (updated 2025-11-17)
+    url: https://nsidc.org/sites/default/files/documents/technical-reference/is2sitmogr4_is2sitdat4_known_issues_v003.pdf
+  - name: ATL20 v5 user guide — grids and HDF5 structure
+    url: https://nsidc.org/sites/default/files/documents/user-guide/atl20-v005-userguide.pdf
+  - name: ATL07/ATL10/ATL20/ATL21 Algorithm Theoretical Basis Document (ATBD), Release 007
+    url: https://nsidc.org/sites/default/files/documents/technical-reference/icesat2_atl07_10_20_21_atbd_v007.pdf
+  - name: ATL07/ATL10 v7 Known Issues
+    url: https://nsidc.org/sites/default/files/documents/technical-reference/icesat2_atl07_10_known_issues_v007_0.pdf
+  - name: ATL20/ATL21 Known Issues
+    url: https://nsidc.org/sites/default/files/documents/technical-reference/icesat2_atl20_atl21_known_issues_v005.pdf
+  - name: ICESat-2 data gaps list (xlsx)
+    url: https://nsidc.org/sites/default/files/documents/technical-reference/icesat-2_data_gaps.xlsx
+  - name: NSIDC ICESat-2 news and announcements
+    url: https://nsidc.org/data/icesat-2/news
+
+watch_urls:
+  - https://nsidc.org/data/icesat-2/news
+  - https://nsidc.org/data/is2sitmogr4/versions/4
+  - https://nsidc.org/data/atl20/versions/5
+  - https://nsidc.org/data/atl10/versions/7
+
+last_verified: "2026-10-12"

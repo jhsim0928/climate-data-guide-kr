@@ -1,0 +1,210 @@
+# ─────────────────────────────────────────────────────────────
+# JRA-55C — dataset information file
+# ─────────────────────────────────────────────────────────────
+id: jra55c
+name: JRA-55C
+full_name: The Japanese 55-year Reanalysis Using Conventional Data Only (JRA-55C)
+category: reanalysis
+domain: atmosphere
+group: 위성 관측 미동화 재분석
+order: 40
+domains: [대기]
+provider: Meteorological Research Institute, Japan Meteorological Agency (JMA/MRI)
+
+status: ended
+status_note: >-
+  A completed, fixed-period dataset (November 1972 – December 2012) that will not be extended. It is not a 20th-century reanalysis but a "fixed observing system" experiment:
+  the JRA-55 system run without satellite observations, assimilating only conventional surface and upper-air observations.
+  It is used to study long-term homogeneity free of artificial changes caused by the introduction of satellite data; no JRA-3Q-based successor of the same kind has been identified.
+
+successor:
+  name: None
+  note: >-
+    No conventional-data-only successor has been released. If your aim is a general estimate of the atmospheric state, use JRA-3Q, which assimilates the full observing system
+    (https://gdex.ucar.edu/datasets/d640000/).
+
+period:
+  start: "1972-11"
+  end: "2012-12"
+  note: >-
+    JRA-55C itself runs from November 1972 to December 2012. The data for January 1958 to October 1972 are exactly the same as JRA-55 (no satellite data existed then),
+    so JMA recommends using JRA-55 for that period to form a 1958–2012 series.
+
+resolution:
+  spatial_short: "139 km (1.25°)"
+  temporal_short: "3시간"
+  spatial: "Model resolution TL319 (about 55 km, same as JRA-55) / 1.25° × 1.25° (288 × 145) and 2.5° × 2.5° (144 × 73) latitude-longitude grids / about 0.5625° Gaussian grid (640 × 320)"
+  vertical: "60 model levels / 37 pressure levels"
+  temporal: 6-hourly analyses, 3-hourly forecasts and diagnostics (monthly means and variances provided separately)
+
+update: Ended (fixed-period dataset)
+license: CC BY 4.0 (as stated by NCAR GDEX) + JMA terms of use (no commercial use, no redistribution without JMA's consent, copies of publications to JMA)
+account_required: true
+
+summary: >-
+  A global atmospheric reanalysis by the JMA Meteorological Research Institute that uses the same 4D-Var data assimilation system as JRA-55 but assimilates only conventional surface and upper-air observations,
+  with no satellite data. Despite "55-year" in its name it does not reach back to the early 20th century; its purpose is to produce a more homogeneous dataset over a long period,
+  separating spurious trends caused by changes in the observing system (above all, the arrival of satellites) and checking the homogeneity of multidecadal variability.
+  As a best estimate for the data-rich period after 1979 it is inferior to JRA-55, so it is used alongside JRA-55 for the same period.
+
+time_convention:
+  summary: >-
+    Same conventions as JRA-55. Analyses (anl_*) are 6-hourly instantaneous values; forecast-averaged diagnostics (fcst_phy2m) are 0–3 h and 3–6 h averages from forecasts started every 6 hours,
+    and the date in the original file names is the start of the averaging interval. Precipitation and evaporation are mean rates over the interval (mm/day), not accumulations.
+  points:
+    - "Analysis products (anl_p, anl_surf) are instantaneous values at 00, 06, 12 and 18 UTC."
+    - "fcst_phy2m holds 3-hour averages: the first interval (e.g. 00–03 UTC) is the 0–3 h forecast average and the second (e.g. 03–06 UTC) the 3–6 h forecast average."
+    - "For averaged variables, the date in the original file name is the start of the interval (e.g. 2012010100 = 00–03 UTC average). This is the opposite of JRA-25 — take care."
+    - "fcst_p (cloud, ozone) is 6-hourly forecast output with no averaging interval indicated; treat it as instantaneous."
+    - "The NCAR GDEX THREDDS aggregations include the averaging interval in time_bounds."
+  source: https://www.data.jma.go.jp/jra/html/JRA-55/document/JRA-55_handbook_LL125_v7_en.pdf
+  source_name: "JRA-55 Product Users' Handbook (JRA-55C has the same product structure)"
+
+variables:
+  note: >-
+    Main variables from the JRA-55 Product Users' Handbook and the NCAR GDEX (d628002) file names. The variables and their names are the same as JRA-55,
+    with ".C." added to the GDEX file names (e.g. anl_p25.C.011_tmp → `tmp`). Precipitation and evaporation are mean rates in mm/day.
+  full_list: https://www.data.jma.go.jp/jra/html/JRA-55/document/JRA-55_handbook_LL125_v7_en.pdf
+  groups:
+    - name: Pressure-level analysis (anl_p, 6-hourly)
+      kind: instant
+      period: "6-hourly"
+      items:
+        - "Geopotential height — `hgt` (gpm)"
+        - "Temperature — `tmp` (K)"
+        - "u-component of wind — `ugrd` (m s-1)"
+        - "v-component of wind — `vgrd` (m s-1)"
+        - "Vertical velocity (pressure coordinate) — `vvel` (Pa s-1)"
+        - "Specific humidity — `spfh` (kg kg-1)"
+        - "Relative humidity — `rh` (%)"
+        - "Stream function, velocity potential — `strm`, `vpot` (m2 s-1)"
+    - name: Surface analysis (anl_surf, 6-hourly)
+      kind: instant
+      period: "6-hourly"
+      items:
+        - "Surface pressure — `pres` (Pa)"
+        - "Pressure reduced to MSL — `prmsl` (Pa)"
+        - "2 m temperature — `tmp` (K)"
+        - "2 m specific humidity — `spfh` (kg kg-1)"
+        - "10 m u- and v-component of wind — `ugrd`, `vgrd` (m s-1)"
+    - name: Fluxes and diagnostics — 3-hour forecast averages (fcst_phy2m)
+      kind: mean
+      period: "3-hourly"
+      items:
+        - "Total precipitation — `tprat` (mm day-1)"
+        - "Convective and large-scale precipitation — `cprat`, `lprat` (mm day-1)"
+        - "Evaporation — `evp` (mm day-1)"
+        - "Latent and sensible heat flux — `lhtfl`, `shtfl` (W m-2)"
+        - "Downward shortwave and longwave radiation flux (surface) — `dswrf`, `dlwrf` (W m-2)"
+        - "Upward shortwave and longwave radiation flux (surface and top of atmosphere) — `uswrf`, `ulwrf` (W m-2)"
+    - name: Cloud and ozone (fcst_p, 6-hourly)
+      kind: instant
+      period: "6-hourly"
+      items:
+        - text: "Total cloud cover — `tcdc` (%)"
+          kind: instant
+          period: "6-hourly"
+          note: "Cloud cover on pressure levels in fcst_p. The handbook does not state that it is instantaneous, and the GDEX metadata give no averaging interval"
+        - text: "Ozone mixing ratio — `ozone` (mg kg-1)"
+          kind: instant
+          period: "6-hourly"
+          note: "The handbook does not state that it is instantaneous, and the GDEX metadata give no averaging interval"
+
+access:
+  - name: NSF NCAR GDEX — 3-hourly and 6-hourly data (d628002)
+    url: https://gdex.ucar.edu/datasets/d628002/
+    method: Web download / THREDDS
+    note: Requires NCAR registration (and acceptance of the JRA-55 terms). GRIB1, reorganised into single-parameter time series files.
+  - name: NSF NCAR GDEX — monthly means and variances (d628003)
+    url: https://gdex.ucar.edu/datasets/d628003/
+    method: Web download
+  - name: DIAS — JRA55_C
+    url: https://search.diasjp.net/en/dataset/JRA55_C
+    method: Web download
+    note: >-
+      Requires a DIAS account. JRA-55C is not yet on the republication list published after DIAS's extended 2026 maintenance (checked October 2026), so it cannot currently be downloaded there. Use NCAR.
+
+tips:
+  - If you need data before October 1972, follow JMA's recommendation and append JRA-55 for that period; the two datasets are identical there.
+  - Compare trends side by side with JRA-55, which uses the same system. The difference between the two is a clue to the impact of introducing satellite observations.
+  - Uncertainty is large over the oceans, at high southern latitudes and in the upper stratosphere, where observations are sparse. A dry bias in the upper and middle troposphere, an artificial weakening tendency of tropical cyclone intensity, and a discontinuity over Africa around 1998 have also been reported.
+  - If you downloaded the January–August 2005 files from DIAS before 23 March 2016, you have the erroneous version and must download them again.
+
+citations:
+  dataset:
+    - label: NCAR GDEX 3-hourly and 6-hourly data (d628002)
+      text: >-
+        Japan Meteorological Agency (2015): JRA-55C: The Japanese 55-year Reanalysis Using Conventional Data Only.
+        Research Data Archive at the National Center for Atmospheric Research, Computational and Information Systems Laboratory.
+        https://doi.org/10.5065/D67H1GNZ (Accessed DD MMM YYYY)
+      doi: 10.5065/D67H1GNZ
+      bibtex: |
+        @misc{jra55c_d628002,
+          author    = {{Japan Meteorological Agency}},
+          title     = {{JRA-55C}: The Japanese 55-year Reanalysis Using Conventional Data Only},
+          year      = {2015},
+          publisher = {Research Data Archive at the National Center for Atmospheric Research, Computational and Information Systems Laboratory},
+          doi       = {10.5065/D67H1GNZ},
+          note      = {Accessed DD MMM YYYY}
+        }
+    - label: NCAR GDEX monthly means and variances (d628003)
+      text: >-
+        Japan Meteorological Agency (2015): JRA-55C: Monthly Means and Variances.
+        Research Data Archive at the National Center for Atmospheric Research, Computational and Information Systems Laboratory.
+        https://doi.org/10.5065/D6C827B7 (Accessed DD MMM YYYY)
+      doi: 10.5065/D6C827B7
+  papers:
+    - label: JRA-55C preliminary results paper
+      text: >-
+        Kobayashi, C., Endo, H., Ota, Y., Kobayashi, S., Onoda, H., Harada, Y., Onogi, K., Kamahori, H. (2014):
+        Preliminary Results of the JRA-55C, an Atmospheric Reanalysis Assimilating Conventional Observations Only.
+        SOLA, 10, 78–82.
+      doi: 10.2151/sola.2014-016
+      bibtex: |
+        @article{kobayashi2014jra55c,
+          author  = {Kobayashi, Chiaki and Endo, Hirokazu and Ota, Yukinari and Kobayashi, Shinya and Onoda, Hirokatsu and Harada, Yayoi and Onogi, Kazutoshi and Kamahori, Hirotaka},
+          title   = {Preliminary Results of the {JRA-55C}, an Atmospheric Reanalysis Assimilating Conventional Observations Only},
+          journal = {SOLA},
+          volume  = {10},
+          pages   = {78--82},
+          year    = {2014},
+          doi     = {10.2151/sola.2014-016}
+        }
+    - label: JRA-55 reference paper (describes the data assimilation system)
+      text: >-
+        Kobayashi, S., Ota, Y., Harada, Y., Ebita, A., Moriya, M., Onoda, H., Onogi, K., Kamahori, H.,
+        Kobayashi, C., Endo, H., Miyaoka, K., Takahashi, K. (2015): The JRA-55 Reanalysis:
+        General Specifications and Basic Characteristics. J. Meteor. Soc. Japan, 93(1), 5–48.
+      doi: 10.2151/jmsj.2015-001
+  acknowledgement: >-
+    Under the JMA terms of use, the source of the data must be duly acknowledged in papers and presentations, and a copy of the resulting publication sent to JMA (jra@met.kishou.go.jp).
+    JMA's example wording is "The dataset used for this study is from the Japanese 55-year Reanalysis Using Conventional Data Only (JRA-55C) project carried out by the Japan Meteorological Agency (JMA)";
+    see the terms of use on the NCAR GDEX dataset page for the full text.
+
+notices:
+  - date: "2016-03-23"
+    level: warning
+    title: January–August 2005 files replaced (DIAS)
+    body: >-
+      Part of the JRA-55C data from January to August 2005 on DIAS included an error, and the erroneous data were replaced with corrected data on 23 March 2016.
+      Files for that period downloaded before then must be downloaded again.
+    source: https://metadata.diasjp.net/dmm/doc/JRA55_C-DIAS-en.html
+  - date: "2015-07-28"
+    level: info
+    title: "JRA-55C in the RDA: The Japanese 55-year Reanalysis Using Conventional Data Only"
+    body: NCAR downloaded the full JRA-55C archive, reorganised it into single-parameter time series, and began releasing it incrementally to registered JRA-55 users of the RDA.
+    source: https://gdex.ucar.edu/news/jra-55c-in-the-rda-the-japanese-55-year-reanalysis-using-conventional-data-only/
+
+links:
+  - name: JMA JRA-55 official page (includes the JRA-55C sub-product)
+    url: https://www.data.jma.go.jp/jra/html/JRA-55/index_en.html
+  - name: DIAS JRA-55C metadata
+    url: https://metadata.diasjp.net/dmm/doc/JRA55_C-DIAS-en.html
+  - name: NCAR Climate Data Guide — JRA-55C
+    url: https://climatedataguide.ucar.edu/climate-data/jra-55c-reanalysis-using-conventional-observations
+
+watch_urls:
+  - https://www.data.jma.go.jp/jra/html/JRA-55/index_en.html
+  - https://diasjp.net/en/dataset-republication-list/
+
+last_verified: "2026-10-11"

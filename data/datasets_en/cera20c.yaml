@@ -1,0 +1,170 @@
+# ─────────────────────────────────────────────────────────────
+# CERA-20C — dataset information file (English edition)
+# ─────────────────────────────────────────────────────────────
+id: cera20c
+name: CERA-20C
+full_name: ECMWF Coupled Reanalysis of the 20th Century
+category: reanalysis
+domain: atmosphere
+group: 위성 관측 미동화 재분석
+order: 30
+domains: [대기, 해양, 해빙, 육지, 해양파랑]
+provider: ECMWF (ERA-CLIM2 project)
+
+status: ended
+status_note: >-
+  A one-off production covering 1901–2010; it is not updated. Its main distribution route, the ECMWF Public Datasets
+  service (web interface and Web API), was decommissioned on 1 June 2023, and ECMWF lists no alternative access for CERA-20C,
+  so there is currently no public download. Users who need the data must contact ECMWF support; no public mirror (e.g. NCAR GDEX) has been found.
+
+successor:
+  name: "None (ERA5 recommended for the atmosphere from 1940)"
+  url: https://cds.climate.copernicus.eu/datasets/reanalysis-era5-single-levels
+  note: >-
+    ECMWF has not yet released a follow-on coupled reanalysis covering the whole 20th century. For the atmosphere alone, use ERA-20C
+    (same observing strategy; available from NCAR GDEX); from 1940 onwards, use ERA5.
+
+period:
+  start: "1901-01"
+  end: "2010-12"
+  note: 1 January 1901 to 31 December 2010. The year 1900 was used only for spin-up and is not provided.
+
+resolution:
+  spatial_short: "125 km (1.125°)"
+  temporal_short: "3시간"
+  spatial: "Atmosphere and land: T159 (125 km) / Ocean: NEMO ORCA1 (110 km, with meridional refinement at the equator)"
+  vertical: "Atmosphere: 91 model levels (surface to 0.01 hPa), 37 pressure levels, 16 potential temperature levels and the 2 PVU level / Ocean: 42 levels (top level 10 m) / Land: 4 soil layers"
+  temporal: 3-hourly (daily products) plus monthly means; 10 ensemble members
+
+update: Ended (production complete to December 2010)
+license: ECMWF terms of use (the public service has closed; contact ECMWF for current conditions)
+account_required: true
+
+summary: >-
+  CERA-20C is ECMWF's 10-member ensemble of coupled climate reanalyses of the 20th century (1901–2010), produced in the ERA-CLIM2 project.
+  It reconstructs past weather and climate of the atmosphere, ocean, land, ocean waves and sea ice by coupling the IFS atmosphere, land and wave
+  components with the NEMO ocean and LIM2 sea-ice models, using a variational method with a common 24-hour assimilation window so that atmosphere
+  and ocean remain mutually consistent. As in ERA-20C, only surface pressure and marine wind observations are assimilated in the atmosphere;
+  in the ocean, temperature and salinity profiles are assimilated, and the air–sea interface is relaxed towards HadISST2 monthly sea-surface temperature.
+
+time_convention:
+  summary: >-
+    Analysis fields are instantaneous values every 3 hours. Accumulated parameters such as precipitation, radiation and heat fluxes come from
+    forecasts issued daily from 18 UTC and are accumulated from the start of the forecast (18 UTC) to the step shown.
+  points:
+    - "Step 3 covers 18–21 UTC and step 6 covers 18 UTC to 00 UTC the next day. Obtain 3-hourly amounts by differencing adjacent steps."
+    - "For instantaneous forecast fields, the validity time is 18 UTC + step (step 6 = 00 UTC the next day)."
+    - "In the monthly means of daily means, accumulated parameters are averages of step 24 only, and accumulations that cross month boundaries are cut and spliced to fall within the calendar month (this may not be visible in the GRIB headers)."
+    - "To convert accumulated radiation or heat fluxes (J m-2) to mean fluxes (W m-2), divide by the accumulation period in seconds."
+    - "Every field is provided separately for each of the 10 ensemble members."
+  source: https://www.ecmwf.int/en/forecasts/datasets/reanalysis-datasets/cera-20c
+  source_name: "ECMWF CERA-20C dataset description"
+
+variables:
+  note: >-
+    Main atmospheric and surface parameters, checked against the ECMWF CERA-20C dataset page and the ECMWF Parameter Database (ECMWF GRIB short names).
+    Ocean and sea-ice fields are reported to have been distributed as separate NetCDF files, but no official list of their variable names could be found, so they are not listed.
+    All parameters are available for each of the 10 ensemble members.
+  full_list: https://www.ecmwf.int/en/forecasts/datasets/reanalysis-datasets/cera-20c
+  groups:
+    - name: Surface and single level
+      kind: instant
+      items:
+        - "2 metre temperature — `2t` (K)"
+        - "Sea surface temperature — `sst` (K)"
+    - name: Accumulated forecast fields (surface)
+      kind: accum
+      period: "Since forecast start"
+      items:
+        - "Total precipitation — `tp` (m)"
+        - "Snowfall — `sf` (m of water equivalent)"
+        - "Evaporation — `e` (m of water equivalent)"
+        - "Runoff — `ro` (m)"
+        - "Surface solar radiation downwards — `ssrd` (J m-2)"
+        - "Surface thermal radiation downwards — `strd` (J m-2)"
+        - "Top net thermal radiation — `ttr` (J m-2)"
+        - "Surface sensible heat flux — `sshf` (J m-2)"
+        - "Surface latent heat flux — `slhf` (J m-2)"
+        - "Eastward and northward turbulent surface stress — `ewss`, `nsss` (N m-2 s)"
+        - "Vertically integrated moisture divergence — `vimd` (kg m-2)"
+
+access:
+  - name: ECMWF CERA-20C dataset page
+    url: https://www.ecmwf.int/en/forecasts/datasets/reanalysis-datasets/cera-20c
+    method: Documentation only (no download)
+    note: For data access questions, the page points to the ECMWF/C3S user support channels. The former web download and Web API (ecmwfapi, dataset=cera20c) were closed on 1 June 2023.
+  - name: ECMWF Support Portal (data access requests)
+    url: https://confluence.ecmwf.int/site/support
+    method: Support request
+    note: >-
+      The only route ECMWF offers since public downloads closed. The data remain in the MARS archive (class=ep), but MARS access for users
+      outside ECMWF Member and Co-operating States may require a separate service agreement.
+
+tips:
+  - "The ensemble is under-dispersive. According to the ECMWF Newsletter (2017), the RMSE in 2005 was about twice the analysis ensemble spread, so do not read the spread directly as the uncertainty."
+  - "Because of sea-ice coupling problems, Arctic summer melt is too weak and sea ice accumulates year after year (thicknesses above 5 m over most of the Arctic basin). Do not use it for Arctic sea-ice thickness or volume."
+  - Production was split into several streams, and ocean heat content can jump at stream boundaries because of model drift. Check the stream boundaries before interpreting long-term ocean heat content trends.
+  - Upper-air and satellite observations are not assimilated, so it is not the best estimate of the late-20th-century atmosphere (NCAR Climate Data Guide). Use ERA5 for atmospheric studies after 1979.
+
+citations:
+  papers:
+    - label: CERA-20C description paper
+      text: >-
+        Laloyaux, P., de Boisseson, E., Balmaseda, M., Bidlot, J.-R., Broennimann, S., Buizza, R., Dahlgren, P., Dee, D.,
+        Haimberger, L., Hersbach, H., Kosaka, Y., Martin, M., Poli, P., Rayner, N., Rustemeier, E., Schepers, D. (2018):
+        CERA-20C: A Coupled Reanalysis of the Twentieth Century. Journal of Advances in Modeling Earth Systems, 10(5), 1172–1195.
+      doi: 10.1029/2018MS001273
+      bibtex: |
+        @article{laloyaux2018cera20c,
+          author  = {Laloyaux, Patrick and de Boisseson, Eric and Balmaseda, Magdalena and Bidlot, Jean-Raymond and Broennimann, Stefan and Buizza, Roberto and Dahlgren, Per and Dee, Dick and Haimberger, Leopold and Hersbach, Hans and Kosaka, Yuki and Martin, Matthew and Poli, Paul and Rayner, Nick and Rustemeier, Elke and Schepers, Dinand},
+          title   = {{CERA-20C}: A Coupled Reanalysis of the Twentieth Century},
+          journal = {Journal of Advances in Modeling Earth Systems},
+          volume  = {10},
+          number  = {5},
+          pages   = {1172--1195},
+          year    = {2018},
+          doi     = {10.1029/2018MS001273}
+        }
+    - label: Coupled data assimilation system paper (optional)
+      text: >-
+        Laloyaux, P., Balmaseda, M., Dee, D., Mogensen, K., Janssen, P. (2016): A coupled data assimilation system
+        for climate reanalysis. Quarterly Journal of the Royal Meteorological Society, 142(694), 65–78.
+      doi: 10.1002/qj.2629
+    - label: ECMWF Newsletter article (optional)
+      text: >-
+        Laloyaux, P., de Boisseson, E., Dahlgren, P. (2017): CERA-20C: An Earth system approach to climate reanalysis.
+        ECMWF Newsletter, No. 150, 25–30.
+      doi: 10.21957/ffs36birj2
+  acknowledgement: >-
+    There is no official dataset DOI. Credit ECMWF (ERA-CLIM2 project) as the data producer and cite Laloyaux et al. (2018).
+    It is good practice to state in the Data availability section how and when you obtained the data (e.g. supplied via ECMWF support).
+
+notices:
+  - date: "2023-06-01"
+    level: critical
+    title: Decommissioning of ECMWF Public Datasets service — CERA-20C public download ended
+    body: >-
+      As announced on 2 March 2023, the ECMWF Public Datasets service (web interface and Web API) stopped on 1 June 2023, and CERA-20C can no longer be downloaded publicly.
+      ECMWF's table of alternatives lists no replacement access for CERA-20C.
+    source: https://confluence.ecmwf.int/spaces/WEBAPI/blog/2023/03/02/320999831/Decommissioning+of+ECMWF+Public+Datasets+service
+  - date: "2017-01-30"
+    level: info
+    title: "New Public Dataset: CERA-20C daily"
+    body: The 3-hourly (daily) CERA-20C data were released through the ECMWF Public Datasets service (the monthly means had been released on 12 January 2017). The service closed in 2023.
+    source: https://confluence.ecmwf.int/spaces/WEBAPI/blog/2017/01/30/72129401/New+Public+Dataset+CERA-20C+daily
+
+links:
+  - name: ECMWF CERA-20C dataset page
+    url: https://www.ecmwf.int/en/forecasts/datasets/reanalysis-datasets/cera-20c
+  - name: "ECMWF Newsletter No. 150 — CERA-20C: An Earth system approach to climate reanalysis"
+    url: https://www.ecmwf.int/en/newsletter/150/meteorology/cera-20c-earth-system-approach-climate-reanalysis
+  - name: Decommissioning of ECMWF Public Datasets Service
+    url: https://confluence.ecmwf.int/x/-wUiEw
+  - name: NCAR Climate Data Guide — CERA-20C
+    url: https://climatedataguide.ucar.edu/climate-data/cera-20c-ecmwfs-coupled-ocean-atmosphere-reanalysis-20th-century
+
+watch_urls:
+  - https://confluence.ecmwf.int/x/-wUiEw
+  - https://www.ecmwf.int/en/forecasts/datasets/reanalysis-datasets/cera-20c
+
+last_verified: "2026-10-11"

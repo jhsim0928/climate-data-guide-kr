@@ -2,7 +2,7 @@
 
 대기·해양·해빙·극지·원격탐사 연구자를 위해 **원자료의 출처, 받는 방법, 제공 기간, 논문용 레퍼런스, 제공 중단·변경 공지**를 한곳에 정리하는 한국어 사이트입니다. 자료 자체는 보관하지 않고 공식 출처로 연결합니다.
 
-현재 수록: 30개 자료 — 대기 16(재분석 12, 위성 관측 미동화 재분석 4), 해양 8, 해빙 8 (HadISST·OISST는 해양·해빙 교차 수록)
+현재 수록: 63개 자료 — 대기 29, 해양 21, 해빙 16 (교차 수록 포함). 한국어판(https://data4researchers.kr/)과 영어판(https://data4researchers.kr/en/)이 있습니다.
 
 ---
 
@@ -26,12 +26,37 @@
 - GitHub Actions로 배포하므로 `CNAME` 파일은 필요 없습니다.
 - 도메인을 바꾸면 `mkdocs.yml`의 `site_url`, `extra.site_citation`, `docs/about.md`, `CITATION.cff`의 주소도 함께 바꿉니다.
 
+## 영어판 (English edition)
+
+- 주소: `https://data4researchers.kr/en/` — 오른쪽 위 언어 선택 메뉴(한국어 / English)로 오가며, 보고 있던 페이지의 다른 언어판으로 바로 이동합니다.
+- 설정: `mkdocs.en.yml` (나머지 설정은 `mkdocs.yml`을 물려받음). 빌드 결과는 `site/en/`.
+- 자료 내용: `data/datasets_en/<id>.yaml` — 한국어 파일을 번역한 것이 아니라, 같은 공식 영어 출처를 다시 보고 쓴 영어판입니다. 구조(키, 공지·변수 개수와 순서)와 `id`·`group`·`status`·날짜·DOI 등은 한국어 파일과 같아야 합니다.
+- 화면 문구(메뉴, 표 머리, 안내 상자 등): `hooks/i18n_en.py`. 사이트 고정 페이지(홈·소개·비교·알림 신청·제안·개인정보 처리방침): `docs_en/`.
+- 그림·스크립트·스타일은 한국어판 `docs/`의 것을 그대로 함께 씁니다(따로 복사하지 않음).
+- **자료를 고치거나 추가할 때는 한국어·영어 YAML을 함께 고치세요.** `python scripts/validate.py`가 영어 파일 누락, 공지 개수·날짜 불일치를 잡아냅니다. 영어판에 한국어가 남았는지는 `mkdocs build -f mkdocs.en.yml && python scripts/check_en.py`로 확인합니다.
+- 메일 알림: 영어판에서 신청한 사람은 확인 메일·알림 메일을 영어로 받습니다(공지 key는 두 언어가 같아 발송 기록이 하나로 관리됨).
+
+## 검색 노출 (SEO)
+
+자동으로 들어가는 것
+- 페이지마다 검색 결과용 제목·설명 (데이터셋 페이지: "ERA5 — 받는 방법·변수·인용·공지 정리"), 고정 페이지는 각 `.md` 맨 위 `title`·`description`
+- 한국어·영어판이 서로 같은 페이지임을 알리는 `hreflang` 링크, 대표 주소(canonical)
+- 링크 공유 미리보기(카카오톡·슬랙 등): `docs/assets/og-ko.png`, `og-en.png`
+- 구조화 데이터(JSON-LD): 홈은 WebSite, 데이터셋 페이지는 해당 자료(Dataset: 이름·DOI·제공 기관·기간·공식 페이지)를 다루는 TechArticle
+- `sitemap.xml`(한국어)·`en/sitemap.xml`(영어), `robots.txt`, 공지 RSS `feed.xml`·`en/feed.xml`
+
+직접 한 번 해야 하는 것 (검색엔진에 사이트 등록)
+1. **Google Search Console** (search.google.com/search-console) → 속성 추가 → URL 접두어 `https://data4researchers.kr/` → 'HTML 태그' 확인 방법의 `content="…"` 값을 `mkdocs.yml`의 `extra.seo.google_site_verification`에 넣고 배포 → [확인] → Sitemaps 메뉴에 `sitemap.xml`과 `en/sitemap.xml` 제출
+2. **네이버 서치어드바이저** (searchadvisor.naver.com) → 웹마스터 도구 → 사이트 등록 `https://data4researchers.kr` → 'HTML 태그' 값을 `extra.seo.naver_site_verification`에 넣고 배포 → [소유확인] → 요청 → 사이트맵 제출(`https://data4researchers.kr/sitemap.xml`), RSS 제출(`https://data4researchers.kr/feed.xml`)
+3. (선택) **Bing 웹마스터 도구**: Google Search Console에서 가져오기로 바로 등록. 직접 확인하려면 `extra.seo.bing_site_verification`
+
 ## 내 컴퓨터에서 미리 보기
 
 ```bash
 python -m venv .venv && source .venv/bin/activate   # Windows: .venv\Scripts\activate
 pip install -r requirements.txt
-mkdocs serve
+mkdocs serve                      # 한국어판
+mkdocs serve -f mkdocs.en.yml -a 127.0.0.1:8001   # 영어판 (따로 띄움)
 ```
 
 브라우저에서 http://127.0.0.1:8000 을 열면 됩니다. YAML을 고치고 저장하면 바로 반영됩니다.

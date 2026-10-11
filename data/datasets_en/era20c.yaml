@@ -1,0 +1,214 @@
+# ─────────────────────────────────────────────────────────────
+# ERA-20C — dataset information file (English edition)
+# ─────────────────────────────────────────────────────────────
+id: era20c
+name: ERA-20C
+full_name: ECMWF Atmospheric Reanalysis of the 20th Century
+category: reanalysis
+domain: atmosphere
+group: 위성 관측 미동화 재분석
+order: 20
+domains: [대기, 육지, 해양파랑]
+provider: European Centre for Medium-Range Weather Forecasts (ECMWF), ERA-CLIM project
+
+status: ended
+status_note: >-
+  ERA-20C was produced once, through December 2010, and is not updated. When ECMWF decommissioned its Public Datasets service (web interface and Web API) on 1 June 2023,
+  the public download route from ECMWF disappeared, and ECMWF lists no alternative.
+  NCAR GDEX (d626000) is now the de facto public archive.
+
+successor:
+  name: "None (ERA5 recommended from 1940 onward)"
+  url: https://cds.climate.copernicus.eu/datasets/reanalysis-era5-single-levels
+  note: >-
+    ECMWF has no direct successor atmospheric reanalysis covering the whole 20th century. CERA-20C (1901–2010, also ended) is a coupled reanalysis assimilating the same observations (surface pressure and marine winds);
+    for 1940 onward, ERA5 assimilates far more observations and is the better choice.
+
+period:
+  start: "1900-01"
+  end: "2010-12"
+  note: >-
+    January 1900 to December 2010. Production ran as 22 parallel streams, and the first year of each stream was used only for spin-up and discarded.
+    Some forecast products in the NCAR copy extend to 2011-01-01 06 UTC.
+
+resolution:
+  spatial_short: "125 km (1.125°)"
+  temporal_short: "3시간"
+  spatial: "Spectral T159 (approximately 125 km) / the NCAR copy is on the N80 Gaussian grid (1.125° × ~1.121°, 320 × 160)"
+  vertical: "91 model levels (surface to 0.01 hPa) / 37 pressure levels / 16 potential temperature levels / 2 PVU potential vorticity level / 4 soil layers"
+  temporal: Mostly 3-hourly (some surface analysis fields 6-hourly; monthly means separate)
+
+update: Ended (produced through December 2010)
+license: NCAR GDEX copy is under Creative Commons Attribution 4.0 International, and access implies acceptance of the ECMWF Terms of Use
+account_required: true
+
+summary: >-
+  ERA-20C is ECMWF's first atmospheric reanalysis of the 20th century, from 1900 to 2010, produced in the ERA-CLIM project with a single, fixed system.
+  Upper-air and satellite observations are deliberately excluded: it assimilates only surface and mean sea level pressure (ISPD, ICOADS) and surface marine winds (ICOADS) with a 24-hour 4D-Var,
+  to limit discontinuities from changes in the observing system. Sea surface temperature and sea ice come from HadISST2.1, and other forcings follow CMIP5, as in ERA-20CM.
+
+time_convention:
+  summary: >-
+    Analysis fields are instantaneous every 3 hours (6 hours for some surface fields). Accumulated fields such as precipitation, radiation and heat fluxes come from forecasts started daily at 06 UTC
+    and accumulate from 06 UTC to the given step, not over 3-hour intervals.
+  points:
+    - "Forecast step 3 = 06–09 UTC, step 12 = 06–18 UTC, step 24 = 06 UTC to 06 UTC the next day. Get 3-hourly values by differencing adjacent steps."
+    - "Instantaneous forecast fields are valid at 06 UTC + step (step 27 = 09 UTC the next day)."
+    - "The analyses of SST, soil temperature and moisture, snow, and 2 m temperature and dewpoint are 6-hourly, not 3-hourly."
+    - "In the monthly means of daily means, accumulated fields use step 24 only; the 21- and 24-hour accumulations that cross a month boundary have been cut and spliced so the accumulations fall within the calendar month."
+    - "Divide accumulated radiation and heat fluxes (J m-2) by the accumulation period in seconds to get mean fluxes in W m-2 (e.g. 86400 for step 24)."
+  source: https://www.ecmwf.int/en/research/climate-reanalysis/era-20c
+  source_name: "ECMWF ERA-20C dataset description"
+
+variables:
+  note: >-
+    Main parameters confirmed from the NCAR GDEX ERA-20C (d626000) THREDDS metadata and the ECMWF parameter database.
+    Names are ECMWF GRIB short names; in NCAR THREDDS/NetCDF they appear as long names such as `Temperature_isobaric`.
+    Accumulated fields (precipitation, radiation, heat fluxes) are accumulated from the 06 UTC forecast start.
+  full_list: https://www.ecmwf.int/en/research/climate-reanalysis/era-20c
+  groups:
+    - name: Surface and single levels
+      kind: instant
+      items:
+        - "Mean sea level pressure — `msl` (Pa)"
+        - "Surface pressure — `sp` (Pa)"
+        - text: "2 metre temperature (analysis 6-hourly) — `2t` (K)"
+          kind: instant
+          period: "6-hourly"
+          note: "Analysis every 6 hours, forecast every 3 hours"
+        - "2 metre dewpoint temperature — `2d` (K)"
+        - "10 metre U wind component — `10u` (m s-1)"
+        - "10 metre V wind component — `10v` (m s-1)"
+        - text: "Sea surface temperature (forcing) — `sst` (K)"
+          kind: instant
+          period: "6-hourly"
+        - text: "Sea-ice cover (forcing) — `ci` (0-1)"
+          kind: instant
+          period: "6-hourly"
+        - "Total cloud cover — `tcc` (0-1)"
+        - "Total column water vapour — `tcwv` (kg m-2)"
+        - "Boundary layer height — `blh` (m)"
+        - "Convective available potential energy — `cape` (J kg-1)"
+    - name: Accumulated forecast fields
+      kind: accum
+      period: "Since forecast start"
+      items:
+        - "Total precipitation — `tp` (m)"
+        - "Surface solar radiation downwards — `ssrd` (J m-2)"
+        - "Surface thermal radiation downwards — `strd` (J m-2)"
+        - "Top net thermal radiation — `ttr` (J m-2)"
+        - "Surface sensible heat flux — `sshf` (J m-2)"
+        - "Surface latent heat flux — `slhf` (J m-2)"
+        - "Evaporation — `e` (m of water equivalent)"
+    - name: Pressure levels (37 levels)
+      kind: instant
+      items:
+        - "Geopotential — `z` (m2 s-2)"
+        - "Temperature — `t` (K)"
+        - "U component of wind — `u` (m s-1)"
+        - "V component of wind — `v` (m s-1)"
+        - "Vertical velocity — `w` (Pa s-1)"
+        - "Specific humidity — `q` (kg kg-1)"
+        - "Relative humidity — `r` (%)"
+        - "Vorticity (relative) — `vo` (s-1)"
+        - "Potential vorticity — `pv` (K m2 kg-1 s-1)"
+        - "Ozone mass mixing ratio — `o3` (kg kg-1)"
+    - name: Land surface
+      kind: instant
+      items:
+        - text: "Soil temperature level 1 — `stl1` (K)"
+          kind: instant
+          period: "6-hourly"
+          note: "Analysis every 6 hours"
+        - text: "Volumetric soil water layer 1 — `swvl1` (m3 m-3)"
+          kind: instant
+          period: "6-hourly"
+          note: "Analysis every 6 hours"
+        - text: "Snow depth — `sd` (m of water equivalent)"
+          kind: instant
+          period: "6-hourly"
+          note: "Analysis every 6 hours"
+
+access:
+  - name: NSF NCAR GDEX — ERA-20C Project (d626000)
+    url: https://gdex.ucar.edu/datasets/d626000/
+    method: Web download (HTTPS) / Globus / THREDDS and OPeNDAP / subsetting and NetCDF conversion
+    note: >-
+      Model-level, pressure-level, potential-temperature-level, 2 PVU and surface analyses and forecasts, plus invariant fields, organised as per-variable time-series files (GRIB1/GRIB2, about 80 TB in total).
+      Subsetting and format conversion require an NCAR login, so select only the variables and periods you need.
+  - name: NCAR GDEX THREDDS catalogue (d626000)
+    url: https://tds.gdex.ucar.edu/thredds/catalog/catalog_d626000.html
+    method: OPeNDAP / NetCDF Subset Service
+    note: Yearly aggregations allow remote subsetting and can be opened directly in xarray and similar tools.
+
+tips:
+  - "With only surface pressure and marine winds assimilated, ERA-20C is less accurate than ERA5 or ERA-Interim in well-observed periods such as after 1979. Use it for long-term variability in the early and mid-20th century."
+  - "Poli et al. (2016) report a spurious mean sea level pressure trend over 60–90°S, a drop of more than 5 hPa over the century, and a dry bias in total column water vapour compared with satellite observations. Treat long-term trends over Antarctica and the Southern Hemisphere with caution."
+  - Some surface analysis fields, including 2 m temperature, sea surface temperature and the soil fields, exist only every 6 hours, not every 3 hours.
+  - Forecasts start daily at 06 UTC (steps 3–27), so check the start time when building daily totals from accumulated fields. Monthly means of forecast fields are cut and spliced at month boundaries.
+
+citations:
+  dataset:
+    - label: NCAR GDEX copy (d626000)
+      text: >-
+        European Centre for Medium-Range Weather Forecasts (2014): ERA-20C Project (ECMWF Atmospheric Reanalysis of the 20th Century).
+        NSF National Center for Atmospheric Research. https://doi.org/10.5065/D6VQ30QG (Accessed DD MMM YYYY)
+      doi: 10.5065/D6VQ30QG
+      bibtex: |
+        @misc{era20c_d626000,
+          author    = {{European Centre for Medium-Range Weather Forecasts}},
+          title     = {{ERA-20C} Project ({ECMWF} Atmospheric Reanalysis of the 20th Century)},
+          year      = {2014},
+          publisher = {NSF National Center for Atmospheric Research},
+          doi       = {10.5065/D6VQ30QG},
+          note      = {Accessed DD MMM YYYY}
+        }
+  papers:
+    - label: ERA-20C reference paper
+      text: >-
+        Poli, P., Hersbach, H., Dee, D. P., Berrisford, P., Simmons, A. J., Vitart, F., Laloyaux, P., Tan, D. G. H.,
+        Peubey, C., Thépaut, J.-N., Trémolet, Y., Hólm, E. V., Bonavita, M., Isaksen, L., Fisher, M. (2016):
+        ERA-20C: An Atmospheric Reanalysis of the Twentieth Century. Journal of Climate, 29(11), 4083–4097.
+      doi: 10.1175/JCLI-D-15-0556.1
+      bibtex: |
+        @article{poli2016era20c,
+          author  = {Poli, Paul and Hersbach, Hans and Dee, Dick P. and Berrisford, Paul and Simmons, Adrian J. and Vitart, Fr{\'e}d{\'e}ric and Laloyaux, Patrick and Tan, David G. H. and Peubey, Carole and Th{\'e}paut, Jean-No{\"e}l and Tr{\'e}molet, Yannick and H{\'o}lm, El{\'i}as V. and Bonavita, Massimo and Isaksen, Lars and Fisher, Michael},
+          title   = {{ERA-20C}: An Atmospheric Reanalysis of the Twentieth Century},
+          journal = {Journal of Climate},
+          volume  = {29},
+          number  = {11},
+          pages   = {4083--4097},
+          year    = {2016},
+          doi     = {10.1175/JCLI-D-15-0556.1}
+        }
+  acknowledgement: >-
+    Credit ECMWF (ERA-CLIM project) as the producer; if you obtained the data from NCAR GDEX, also give the GDEX DOI and your access date.
+    GDEX provides the data on condition that users accept the ECMWF Terms of Use.
+
+notices:
+  - date: "2023-06-01"
+    level: critical
+    title: Decommissioning of ECMWF Public Datasets service — no more ERA-20C downloads from ECMWF
+    body: >-
+      As announced on 2 March 2023, the ECMWF Public Datasets service, including access via the Web API client, stopped on 1 June 2023,
+      so ERA-20C daily and monthly data and the ERA-20C observation feedback are no longer publicly available from ECMWF. ECMWF's table lists no alternative for ERA-20C; use NCAR GDEX.
+    source: https://confluence.ecmwf.int/spaces/WEBAPI/blog/2023/03/02/320999831/Decommissioning+of+ECMWF+Public+Datasets+service
+  - date: "2015-05-13"
+    level: info
+    title: "New Public Dataset: ERA-20C Daily, ERA-20C Wave, ERA-20C Observations"
+    body: ERA-20C daily data, wave data and observations were first released through the ECMWF Public Datasets service (decommissioned in 2023).
+    source: https://confluence.ecmwf.int/spaces/WEBAPI/blog/2015/05/13/65223836/New+Public+Dataset+ERA-20C+Daily+ERA-20C+Wave+ERA-20C+Observations
+
+links:
+  - name: ECMWF — ERA-20C
+    url: https://www.ecmwf.int/en/research/climate-reanalysis/era-20c
+  - name: ECMWF — Decommissioning of ECMWF Public Datasets Service
+    url: https://confluence.ecmwf.int/x/-wUiEw
+  - name: NCAR Climate Data Guide — ERA-20C (with comparisons to NOAA's 20CR)
+    url: https://climatedataguide.ucar.edu/climate-data/era-20c-ecmwfs-atmospheric-reanalysis-20th-century-and-comparisons-noaas-20cr
+
+watch_urls:
+  - https://gdex.ucar.edu/datasets/d626000/
+  - https://confluence.ecmwf.int/x/-wUiEw
+
+last_verified: "2026-10-11"

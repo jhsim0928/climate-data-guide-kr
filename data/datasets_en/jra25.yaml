@@ -1,0 +1,268 @@
+# ─────────────────────────────────────────────────────────────
+# JRA-25 — dataset information file (English edition)
+# ─────────────────────────────────────────────────────────────
+id: jra25
+name: JRA-25
+full_name: Japanese 25-year Reanalysis (JRA-25), including its JCDAS extension
+category: reanalysis
+domain: atmosphere
+group: 재분석
+order: 110
+domains: [대기, 육지]
+provider: Japan Meteorological Agency (JMA) and Central Research Institute of Electric Power Industry (CRIEPI)
+
+status: ended
+status_note: >-
+  JMA terminated the provision of JRA-25 and JCDAS data in February 2014; JRA-55 took their place.
+  The data are no longer available from JMA, but NCAR GDEX (d625000) still holds the record from 1979 to January 2014.
+  Unless you are reproducing older studies, use JRA-3Q (current) or JRA-55 instead.
+
+successor:
+  name: JRA-55
+  url: https://gdex.ucar.edu/datasets/d628000/
+  note: >-
+    1958 to January 2024, TL319 (about 55 km), 60 levels, 4D-Var. JRA-55 itself stopped updating at the end of January 2024,
+    so if you need recent years, use its successor JRA-3Q (September 1947 to present, https://gdex.ucar.edu/datasets/d640000/).
+
+transitions:
+  - from: JRA-25
+    to: JRA-55
+    to_id: jra55
+    status: completed
+    date: "2014-02"
+    summary: >-
+      JRA-55 is JMA's second-generation reanalysis, rerun from 1958 with 4D-Var instead of 3D-Var and nearly twice the horizontal resolution.
+      Once JRA-55 was released, JRA-25 and JCDAS provision ended in February 2014. JRA-55 itself ended in January 2024,
+      so anyone migrating now should consider JRA-3Q as well.
+    changes:
+      - aspect: Period
+        before: "1979-01 to 2004-12 (extended in real time by JCDAS from 2005, until 2014-01)"
+        after: "1958-01 to 2024-01 (including the near-real-time extension)"
+      - aspect: Equivalent operational NWP system
+        before: "JMA operational system as of March 2004"
+        after: "JMA operational system as of December 2009"
+      - aspect: Horizontal resolution
+        before: "T106 (~110 km)"
+        after: "TL319 (~55 km)"
+      - aspect: Vertical levels and model top
+        before: "40 levels, top at 0.4 hPa"
+        after: "60 levels, top at 0.1 hPa"
+      - aspect: Time integration of the dynamical core
+        before: "Eulerian"
+        after: "Semi-Lagrangian"
+      - aspect: Assimilation scheme
+        before: "3D-Var"
+        after: "4D-Var (with T106 inner model) — the first reanalysis to use 4D-Var over this whole period"
+      - aspect: Satellite radiance bias correction
+        before: "Adaptive method (Sakamoto et al. 2009)"
+        after: "Variational bias correction (VarBC; Dee et al. 2009)"
+      - aspect: Greenhouse gases
+        before: "CO2 constant at 375 ppmv"
+        after: "Annual mean CO2, CH4 and N2O observations interpolated to daily values"
+      - aspect: Known problems addressed
+        before: "Cold bias in the lower stratosphere, dry bias over the Amazon basin, poor temporal consistency of temperature analyses"
+        after: "Reduced lower-stratospheric cold bias, smaller Amazon dry bias, more temporally consistent temperature analyses (new issues reported: warm bias in the upper troposphere, energy budget imbalance, excessive tropical precipitation, unrealistic trend in tropical cyclone intensity)"
+      - aspect: Variable names and grids
+        before: "GrADS-style names (e.g. `TMPprs`, `PRMSLmsl`, `CPRATsfc`); 1.25° and 2.5° latitude–longitude and T106 Gaussian grids"
+        after: "Lower-case abbreviations in the file names (e.g. `tmp`, `prmsl`, `cprat`); 1.25° latitude–longitude and TL319 Gaussian grids (both in GRIB1)"
+      - aspect: Distribution
+        before: "Directly from JMA (ended February 2014) / NCAR d625000 and d625001"
+        after: "NCAR d628000 and d628001 (with the companion products JRA-55C and JRA-55AMIP), DIAS"
+    impacts:
+      - The two reanalyses use different models and assimilation, so their climatologies and trends differ. Apart from comparisons over 1979–2004, do not splice them into one time series.
+      - JRA-25 holds CO2 fixed at 375 ppmv, which can make its long-term temperature and radiation trends differ from JRA-55. Keep this in mind when reproducing trend results from older papers.
+      - Scripts from the JRA-25 era often assume GrADS-style variable names such as `TMPprs`. JRA-55 files use a different naming scheme, so the reading code has to be updated first.
+      - JRA-55 also stopped updating in January 2024. If you need recent years, move to JRA-3Q, and check its licence (non-commercial) and the change in precipitation units at the same time.
+    sources:
+      - name: Onogi et al. (2007), The JRA-25 Reanalysis, J. Meteor. Soc. Japan, 85(3), 369–432
+        url: https://doi.org/10.2151/jmsj.85.369
+      - name: Kobayashi et al. (2015), The JRA-55 Reanalysis, J. Meteor. Soc. Japan, 93, 5–48
+        url: https://doi.org/10.2151/jmsj.2015-001
+      - name: JMA TCC training lecture — Introduction to JRA-55 (JRA-25 vs JRA-55 specification table)
+        url: https://ds.data.jma.go.jp/tcc/tcc/library/library2015/lectures/4.IntroductionJRA-55.pdf
+      - name: JMA — Overview of JRA-25 (T106L40, model top 0.4 hPa, 3D-Var)
+        url: https://www.data.jma.go.jp/jra/html/JRA-25/AboutJRA25_en.html
+      - name: JMA JRA-25 website (data provision terminated in February 2014)
+        url: https://www.data.jma.go.jp/jra/html/JRA-25/index_en.html
+
+period:
+  start: "1979-01"
+  end: "2014-01"
+  note: >-
+    The JRA-25 reanalysis proper covers 1979–2004; from 2005 it is continued by JCDAS, the real-time operation of the same system.
+    The last data in the NCAR copy (d625000) are for 18 UTC on 31 January 2014.
+
+resolution:
+  spatial_short: "139 km (1.25°)"
+  temporal_short: "6시간"
+  spatial: "Model resolution T106 (about 1.125° Gaussian grid, 320 × 160) / 1.25° and 2.5° latitude–longitude grids"
+  vertical: "40 model levels (top at 0.4 hPa) / analyses on pressure and isentropic levels provided separately"
+  temporal: 6-hourly (plus monthly means)
+
+update: Ended (data provision terminated in February 2014)
+license: CC BY 4.0 (as listed on NCAR GDEX) plus JMA terms of use (research use only, no redistribution, send copies of publications to JMA)
+account_required: true
+
+summary: >-
+  JRA-25 is a joint research project between JMA and CRIEPI and the first long-term global atmospheric reanalysis undertaken in Asia, covering 1979–2004.
+  It uses the JMA operational 3D-Var assimilation and forecast system (T106L40, model top 0.4 hPa) and was the first reanalysis to assimilate wind profile
+  retrievals surrounding tropical cyclones (TCR), SSM/I snow coverage and digitized Chinese snow depth data. From 2005 it was extended in real time by JCDAS
+  (the JMA Climate Data Assimilation System) using the same system, and in 2014 it was replaced by JRA-55.
+
+time_convention:
+  summary: >-
+    Analyses (anl_*) are instantaneous fields every 6 hours (00, 06, 12, 18 UTC), and forecast diagnostics (fcst_phy2m) are averages over the preceding 6 hours.
+    In JRA-25 file names, the date indicates the valid time for instantaneous fields and the end of the averaging period for average diagnostic fields
+    (e.g. fcst_phy2m.1981010100 = average from 18 UTC 31 December 1980 to 00 UTC 1 January 1981).
+    Precipitation is a 6-hourly mean rate (mm/day), not an accumulated amount.
+  points:
+    - "This is the opposite of JRA-55, whose file dates indicate the beginning of the averaging period. When using both, align the averaged fields or they will be offset by 6 hours."
+    - "Besides 6-hourly means, fcst_phy2m includes extremes such as maximum and minimum 2 m temperature during 6 hours (TMAXsfc, TMINsfc), maximum surface wind during 6 hours (WSMXsfc) and maximum hourly precipitation during 6 hours (PRMXsfc)."
+    - "The JMA element table does not state whether some fcst_phy2m elements (precipitable water, total cloud cover, sea surface temperature) are averages or instantaneous; the general rule for this category (6-hourly mean) has been applied."
+  source: https://www.data.jma.go.jp/jra/html/JRA-55/document/JRA-55_handbook_LL125_v7_en.pdf
+  source_name: "JRA-55 Product Users' Handbook, Section 10.2 and Table 10-3 (date conventions compared with JRA-25) / JRA-25 element tables"
+
+variables:
+  note: >-
+    Main variables from the JMA JRA-25 table of available elements (6-hourly). Names are those used in the GrADS control files (element + level abbreviation);
+    files are GRIB1. Precipitation is a 6-hourly mean precipitation rate (mm/day).
+  full_list: https://www.data.jma.go.jp/jra/html/JRA-25/vari_catg_6.htm
+  groups:
+    - name: Pressure-level analyses (anl_p / anl_chipsi)
+      kind: instant
+      period: "Every 6 hours"
+      items:
+        - "Geopotential height — `HGTprs` (gpm)"
+        - "Air temperature — `TMPprs` (K)"
+        - "Specific humidity — `SPFHprs` (kg/kg)"
+        - "Zonal wind — `UGRDprs` (m/s)"
+        - "Meridional wind — `VGRDprs` (m/s)"
+        - "Pressure vertical velocity — `VVELprs` (Pa/s)"
+        - "Stream function, velocity potential — `STRMprs`, `VPOTprs` (m2/s)"
+    - name: Surface analyses (anl_p)
+      kind: instant
+      period: "Every 6 hours"
+      items:
+        - "Pressure reduced to mean sea level — `PRMSLmsl` (Pa)"
+        - "Surface (2m) air temperature — `TMPsfc` (K)"
+        - "Surface (2m) specific humidity — `SPFHsfc` (kg/kg)"
+        - "Surface (10m) zonal and meridional wind — `UGRDsfc`, `VGRDsfc` (m/s)"
+    - name: Fluxes and diagnostics — 6-hour forecast averages (fcst_phy2m)
+      kind: mean
+      period: "6 hours"
+      items:
+        - "6-hourly convective and large scale precipitation rate — `CPRATsfc`, `LPRATsfc` (mm/day)"
+        - "Latent and sensible heat flux — `LHTFLsfc`, `SHTFLsfc` (W/m2)"
+        - "Downward solar and long wave radiation flux at surface — `DSWRFsfc`, `DLWRFsfc` (W/m2)"
+        - "Upward long wave radiation flux at top (OLR) — `ULWRFtoa` (W/m2)"
+        - text: "Precipitable water — `PWATcol` (kg/m2)"
+          kind: mean
+          period: "6 hours"
+          note: "Mean vs instantaneous not stated in the element table; general fcst_phy2m rule applied"
+        - text: "Total cloud cover — `TCDCcol` (%)"
+          kind: mean
+          period: "6 hours"
+          note: "Mean vs instantaneous not stated in the element table; general fcst_phy2m rule applied"
+        - text: "Sea surface temperature — `WTMPsfc` (K)"
+          kind: mean
+          period: "6 hours"
+          note: "Mean vs instantaneous not stated in the element table; general fcst_phy2m rule applied"
+    - name: Land surface analyses (anl_land)
+      kind: instant
+      period: "Every 6 hours"
+      items:
+        - "Water equivalent snow depth — `SNWEsfc` (m)"
+        - "Soil wetness — `SOILWhbl` (fraction)"
+
+access:
+  - name: NSF NCAR GDEX — JRA-25 (d625000)
+    url: https://gdex.ucar.edu/datasets/d625000/
+    method: Web download
+    note: >-
+      Requires an NCAR account. WMO GRIB1, about 11.9 TB in total. GDEX labels it a historical dataset "recommended for ancillary use only
+      and not as a primary research dataset".
+  - name: NSF NCAR GDEX — JRA-25 Monthly Means (d625001)
+    url: https://gdex.ucar.edu/datasets/d625001/
+    method: Web download
+    note: The monthly means cover only 1979 to December 2007.
+
+tips:
+  - Data from 2005 onwards are not the JRA-25 reanalysis proper but JCDAS, the real-time operation of the same system. State in your paper when the period you used includes JCDAS.
+  - The terms of use for the NCAR copy limit use to research, prohibit presenting edited data as official products and redistributing the data (including derived products) to third parties, and require you to send JMA a copy of resulting publications.
+  - For new work, use JRA-55 or JRA-3Q. With 3D-Var and low resolution, JRA-25 is inferior to both in many respects.
+
+citations:
+  dataset:
+    - label: NCAR GDEX JRA-25 (d625000)
+      text: >-
+        Central Research Institute Of Electric Power Industry, Japan Meteorological Agency (2007): Japanese 25-year Reanalysis Project.
+        Research Data Archive at the National Center for Atmospheric Research, Computational and Information Systems Laboratory.
+        https://doi.org/10.5065/FV8A-M862 (Accessed DD MMM YYYY)
+      doi: 10.5065/FV8A-M862
+      bibtex: |
+        @misc{jra25_d625000,
+          author    = {{Central Research Institute Of Electric Power Industry} and {Japan Meteorological Agency}},
+          title     = {Japanese 25-year Reanalysis Project},
+          year      = {2007},
+          publisher = {Research Data Archive at the National Center for Atmospheric Research, Computational and Information Systems Laboratory},
+          doi       = {10.5065/FV8A-M862},
+          note      = {Accessed DD MMM YYYY}
+        }
+    - label: NCAR GDEX JRA-25 Monthly Means (d625001)
+      text: >-
+        Central Research Institute Of Electric Power Industry, Japan Meteorological Agency (2008): Japanese 25-year Reanalysis Project, Monthly Means.
+        Research Data Archive at the National Center for Atmospheric Research, Computational and Information Systems Laboratory.
+        https://doi.org/10.5065/G3AR-1091 (Accessed DD MMM YYYY)
+      doi: 10.5065/G3AR-1091
+  papers:
+    - label: JRA-25 overview paper
+      text: >-
+        Onogi, K., Tsutsui, J., Koide, H., Sakamoto, M., Kobayashi, S., Hatsushika, H., Matsumoto, T., Yamazaki, N.,
+        Kamahori, H., Takahashi, K., Kadokura, S., Wada, K., Kato, K., Oyama, R., Ose, T., Mannoji, N., Taira, R. (2007):
+        The JRA-25 Reanalysis. J. Meteor. Soc. Japan, 85(3), 369–432.
+      doi: 10.2151/jmsj.85.369
+      bibtex: |
+        @article{onogi2007jra25,
+          author  = {Onogi, Kazutoshi and Tsutsui, Junichi and Koide, Hiroshi and Sakamoto, Masami and Kobayashi, Shinya and Hatsushika, Hiroaki and Matsumoto, Takanori and Yamazaki, Nobuo and Kamahori, Hirotaka and Takahashi, Kiyotoshi and Kadokura, Shinji and Wada, Koji and Kato, Koji and Oyama, Ryo and Ose, Tomoaki and Mannoji, Nobutaka and Taira, Ryusuke},
+          title   = {The {JRA-25} Reanalysis},
+          journal = {Journal of the Meteorological Society of Japan. Ser. II},
+          volume  = {85},
+          number  = {3},
+          pages   = {369--432},
+          year    = {2007},
+          doi     = {10.2151/jmsj.85.369}
+        }
+  acknowledgement: >-
+    JMA requires papers and reports that use JRA-25 to acknowledge the data source. The terms of use on the NCAR GDEX dataset page give the
+    recommended wording: "The datasets used for this study are provided from the cooperative research project of the JRA-25 long-term reanalysis
+    by Japan Meteorological Agency (JMA) and Central Research Institute of Electric Power Industry (CRIEPI)." Copy it from that page.
+
+notices:
+  - date: "2014-02"
+    level: critical
+    title: Provision of JRA-25 and JCDAS data terminated
+    body: >-
+      JMA terminated the provision of JRA-25 and JCDAS data in February 2014, with JRA-55 taking over.
+      The copy held at NCAR GDEX runs to the end of January 2014.
+    source: https://www.data.jma.go.jp/jra/html/JRA-25/index_en.html
+  - date: "2013-12-25"
+    level: warning
+    title: Release schedule for the JRA-55 data and a plan for ceasing provisions of the JRA-25/JCDAS data (changed)
+    body: JMA revised its release schedule for JRA-55 and its plan for ceasing provision of JRA-25/JCDAS data (first announced on 2013-09-30).
+    source: https://www.data.jma.go.jp/jra/html/JRA-25/history/information_en.html
+
+links:
+  - name: JMA JRA-25 website (archived)
+    url: https://www.data.jma.go.jp/jra/html/JRA-25/index_en.html
+  - name: Overview of JRA-25
+    url: https://www.data.jma.go.jp/jra/html/JRA-25/AboutJRA25_en.html
+  - name: Overview of JCDAS
+    url: https://www.data.jma.go.jp/jra/html/JRA-25/AboutJCDAS_en.html
+  - name: JRA-25 history of information
+    url: https://www.data.jma.go.jp/jra/html/JRA-25/history/information_en.html
+
+watch_urls:
+  - https://www.data.jma.go.jp/jra/html/
+  - https://gdex.ucar.edu/datasets/d625000/
+
+last_verified: "2026-10-11"

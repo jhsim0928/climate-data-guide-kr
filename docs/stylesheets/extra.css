@@ -361,3 +361,15 @@ details.hint summary { cursor: pointer; }
 .cdg-form .consent-row .consent { margin: 0; padding: .2em 0; align-items: center; font-weight: 600; }
 .cdg-form .consent-row .consent input { width: 1.3rem; height: 1.3rem; transform: none; }
 .cdg-form .consent-link { font-size: .9em; white-space: nowrap; }
+
+/* 공개 예정 상태 배지 */
+.status-upcoming { background: #ece8fd; color: #4a2fa0; border-color: #c4b6f2; }
+[data-md-color-scheme="slate"] .status-upcoming { background: #2a2147; color: #c9bcff; border-color: #54468f; }
+
+/* 영어판 홈 상단 (로고 + 영문 이름) */
+.home-hero--en { display: flex; align-items: center; gap: 1.1rem; }
+.home-hero--en p { margin: 0; }
+.home-hero--en .hero-icon { width: 92px; height: auto; display: block; }
+.home-hero--en .hero-title { font-size: 1.9rem; font-weight: 800; line-height: 1.15; color: #12293b; letter-spacing: -.01em; }
+.home-hero--en .hero-sub { font-family: var(--md-code-font-family); color: var(--md-default-fg-color--light); font-size: .85rem; margin-top: .25rem; }
+[data-md-color-scheme="slate"] .home-hero--en .hero-title { color: #e6edf3; }

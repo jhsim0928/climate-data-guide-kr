@@ -1,0 +1,54 @@
+# ─────────────────────────────────────────────────────────────
+# English edition — builds into site/en/ (https://data4researchers.kr/en/)
+# Everything not listed here is inherited from mkdocs.yml.
+# Build order: mkdocs build  →  mkdocs build -f mkdocs.en.yml
+# Dataset pages come from data/datasets_en/*.yaml (written from the official English sources).
+# ─────────────────────────────────────────────────────────────
+INHERIT: mkdocs.yml
+site_name: Korean Climate Data Guide
+site_description: A researcher's guide to climate, ocean and sea-ice datasets — ERA5, JRA-3Q, MERRA-2, OISST, GLORYS and more — with access, variables (instantaneous, mean, accumulated), resolution, citations (DOIs) and discontinuation notices in one place
+site_url: https://data4researchers.kr/en/
+docs_dir: docs_en
+site_dir: site/en
+copyright: Content CC BY 4.0 · Code MIT
+
+extra:
+  seo:
+    og_image: assets/og-en.png
+
+theme:
+  language: en
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: indigo
+      accent: teal
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: indigo
+      accent: teal
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
+
+plugins:
+  - search:
+      lang: en
+
+nav:
+  - Home: index.md
+  - Find data:
+      - All datasets: datasets/index.md
+      - Compare datasets: compare.md
+  - __DATA_SECTIONS__: auto
+  - Generation changes: transitions.md
+  - Notices: notices.md
+  - Get involved:
+      - Notice alerts: subscribe.md
+      - Suggest a dataset: suggest.md
+  - About:
+      - About & citation: about.md
+      - Privacy policy: privacy.md

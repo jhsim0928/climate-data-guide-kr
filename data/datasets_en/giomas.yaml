@@ -1,0 +1,206 @@
+# ─────────────────────────────────────────────────────────────
+# GIOMAS — dataset information file (English edition)
+# UW Polar Science Center global (including Antarctic) ice-ocean model-assimilation estimates
+# ─────────────────────────────────────────────────────────────
+id: giomas
+name: GIOMAS
+full_name: Global Ice-Ocean Modeling and Assimilation System
+category: reanalysis
+domain: seaice
+group: 재분석
+order: 20
+domains: [해빙, 해양]
+provider: University of Washington Applied Physics Laboratory, Polar Science Center (APL/PSC)
+
+status: delayed
+status_note: >-
+  The newest files on the server stop at January 2026 (one month of monthly fields and about half a month of daily
+  fields). Like PIOMAS, GIOMAS is forced by the NCEP/NCAR Reanalysis 1 (R1), which ended in March 2026, and updates
+  appear to have stopped for that reason. There is no notice on the GIOMAS page itself, so check the PIOMAS notices and
+  the server directory for any restart.
+
+period:
+  start: "1979-01"
+  end: "2026-01"
+  note: >-
+    The official page describes the data as running from January 1979 to the present, but when checked on 2026-10-11 the
+    server held 2026 files only through January. Some 2025 files (heff, area and others) were re-uploaded in March–April 2026,
+    so they may differ from 2025 data downloaded earlier.
+
+resolution:
+  spatial_short: "60 km (0.8°)"
+  temporal_short: "1일"
+  spatial: "Global generalized curvilinear grid, 360 x 276 (mean spacing about 0.8°)"
+  vertical: "8 ice thickness categories (per Liao et al. 2022) / ocean surface fields from the 2.5 m layer"
+  temporal: Monthly, plus daily fields for some variables
+
+update: Effectively stopped (January 2026 is the latest; no official notice)
+license: >-
+  No licence statement. Anyone can download without an account; PSC asks users to cite Zhang and Rothrock (2003)
+  and to email the authors after downloading so they can be notified of updates and bugs.
+account_required: false
+
+summary: >-
+  GIOMAS provides global sea ice thickness, concentration and upper-ocean fields from the Polar Science Center's
+  coupled ice-ocean model, the same system as PIOMAS (the Thickness and Enthalpy Distribution (TED) sea ice model with
+  the Parallel Ocean Program) run on a global grid. SSM/I sea ice concentration is assimilated by nudging and the model is
+  forced by NCEP/NCAR reanalysis; no thickness observations are assimilated, so thickness is a model estimate, not an
+  observation. It is widely used for Antarctic sea ice thickness and volume, where long-term observations are scarce.
+
+time_convention:
+  summary: >-
+    The gridded data come as monthly files (12 months per yearly file) and daily files with "day" in their names. Monthly
+    fields represent the month, but the GIOMAS page does not say they are monthly means; we classify them by analogy with
+    the description of the same model in PIOMAS (heff monthly mean, hiday daily mean).
+  points:
+    - "Each monthly file (heff.H<year>, etc.) holds 12 monthly 2-D fields, January to December, with no time coordinate (for vector variables, u is followed by v)."
+    - "The official GIOMAS page only calls these 'monthly data' and does not state whether they are means or snapshots. The same team's PIOMAS variable table gives heff as a monthly mean and hiday as a daily mean."
+    - "The daily files (hiday, aiday, uiday, snowday) are not described on the GIOMAS page and exist only on the server. Check the number of days and leap-year handling from the file size first."
+    - "iceprod and oflux_ocn are rates in m/s; multiply by the number of seconds to get totals over a period."
+  source: https://psc.apl.uw.edu/data/global-sea-ice-giomas-data-sets/
+  source_name: PSC GIOMAS data page (+ PIOMAS model grid variable table)
+
+variables:
+  note: >-
+    Each variable comes as yearly headerless single-precision flat binary files (name.H<year>), with 12 months per file.
+    Names and units of the monthly variables follow the table on the PSC GIOMAS page; the daily files are names found in
+    the server directory. heff, area and otemp1 are also available as NetCDF (.nc.gz).
+  full_list: https://psc.apl.uw.edu/data/global-sea-ice-giomas-data-sets/
+  groups:
+    - name: Sea ice (monthly)
+      kind: mean
+      period: Monthly
+      items:
+        - text: "Sea ice thickness (volume per unit area) — `heff` (m)"
+          note: "The PSC GIOMAS page only describes 'monthly data (12 months per file)' and does not say they are means. Classified as monthly means because heff from the same model (PIOMAS) is documented as a monthly mean."
+        - text: "Sea ice concentration — `area` (fraction)"
+          note: "The PSC GIOMAS page only describes 'monthly data (12 months per file)' and does not say they are means. Classified as monthly means because heff from the same model (PIOMAS) is documented as a monthly mean."
+        - text: "Sea ice velocity u, v — `icevel` (m/s)"
+          note: "The PSC GIOMAS page only describes 'monthly data (12 months per file)' and does not say they are means. Classified as monthly means because heff from the same model (PIOMAS) is documented as a monthly mean."
+        - text: "Sea ice growth rate (net ice production) — `iceprod` (m/s)"
+          note: "A rate in m/s; multiply by the period length in seconds to get total monthly growth. The PSC GIOMAS page only describes 'monthly data (12 months per file)' and does not say they are means. Classified as monthly means because heff from the same model (PIOMAS) is documented as a monthly mean."
+        - text: "Snow depth (water equivalent) — `snow` (m)"
+          note: "The PSC GIOMAS page only describes 'monthly data (12 months per file)' and does not say they are means. Classified as monthly means because heff from the same model (PIOMAS) is documented as a monthly mean."
+    - name: Ocean surface (monthly, 2.5 m)
+      kind: mean
+      period: Monthly
+      items:
+        - text: "Ocean heat flux melt tendency — `oflux_ocn` (m/s)"
+          note: "A rate in m/s. The PSC GIOMAS page only describes 'monthly data (12 months per file)' and does not say they are means. Classified as monthly means because heff from the same model (PIOMAS) is documented as a monthly mean."
+        - text: "Ocean surface temperature — `otemp1` (°C)"
+          note: "The PSC GIOMAS page only describes 'monthly data (12 months per file)' and does not say they are means. Classified as monthly means because heff from the same model (PIOMAS) is documented as a monthly mean."
+        - text: "Ocean surface salinity — `osali1` (psu)"
+          note: "The PSC GIOMAS page only describes 'monthly data (12 months per file)' and does not say they are means. Classified as monthly means because heff from the same model (PIOMAS) is documented as a monthly mean."
+        - text: "Ocean surface velocity u, v — `ouv1` (cm/s)"
+          note: "The PSC GIOMAS page only describes 'monthly data (12 months per file)' and does not say they are means. Classified as monthly means because heff from the same model (PIOMAS) is documented as a monthly mean."
+    - name: Daily files (from the server directory)
+      kind: mean
+      period: Daily
+      items:
+        - text: "Daily sea ice thickness — `hiday`"
+          note: "Daily file found in the server directory. It is not described on the GIOMAS page, so we could not confirm whether it is a daily mean or a snapshot (classified to match PIOMAS hiday, which is documented as a daily mean)."
+        - text: "Daily sea ice concentration — `aiday`"
+          note: "Daily file found in the server directory. It is not described on the GIOMAS page, so we could not confirm whether it is a daily mean or a snapshot (classified to match PIOMAS hiday, which is documented as a daily mean)."
+        - text: "Daily sea ice velocity — `uiday`"
+          note: "Daily file found in the server directory. It is not described on the GIOMAS page, so we could not confirm whether it is a daily mean or a snapshot (classified to match PIOMAS hiday, which is documented as a daily mean)."
+        - text: "Daily snow depth — `snowday`"
+          note: "Daily file found in the server directory. It is not described on the GIOMAS page, so we could not confirm whether it is a daily mean or a snapshot (classified to match PIOMAS hiday, which is documented as a daily mean)."
+
+access:
+  - name: PSC GIOMAS data page
+    url: https://psc.apl.uw.edu/data/global-sea-ice-giomas-data-sets/
+    method: Web download / sftp, ssh or rsync (username and password "anonymous")
+    note: Variable table, grid and mask files (grid.dat, grid.dat.pop, io.dat_360_276.output) and links to Fortran and IDL readers.
+  - name: pscfiles server — Global_seaice directory
+    url: https://pscfiles.apl.washington.edu/zhang/Global_seaice/
+    method: HTTPS directory
+    note: All variables and years are in one directory. Daily files exceed 100 MB per year, so download only the variables you need.
+
+example:
+  lang: python
+  note: Download heff.H2020 (uncompressed) and grid.dat from the same directory first.
+  code: |
+    import numpy as np
+
+    nx, ny = 360, 276
+    # headerless single-precision flat binary, 12 months in sequence (use ">f4" if big-endian)
+    heff = np.fromfile("heff.H2020", dtype="<f4").reshape(12, ny, nx)
+    if np.nanmax(np.abs(heff)) > 100:  # values look wrong: re-read with the other byte order
+        heff = np.fromfile("heff.H2020", dtype=">f4").reshape(12, ny, nx)
+    print("September maximum thickness (m):", heff[8].max())
+
+tips:
+  - >-
+    An evaluation of Antarctic sea ice thickness (Liao et al. 2022) found that GIOMAS reproduces the variability of Antarctic
+    sea ice volume well (correlation 0.83) and the trend reversal around 2013, but its volume is on average about 38% lower than
+    Envisat and CryoSat-2, and it is especially thin where deformed ice is common, such as the northwestern Weddell Sea.
+    It is safer to use it for variability and trends than for absolute values.
+  - >-
+    Assimilating ice concentration also adjusts thickness, which tends to thin the mean ice. Thickness observations are not
+    assimilated, so do not describe GIOMAS thickness as "observed thickness".
+  - >-
+    The citation on the GIOMAS page gives the pages of Zhang and Rothrock (2003) as 681–697, but the paper is in
+    Monthly Weather Review 131(5), 845–861. Use the bibliographic details matching the DOI below.
+  - >-
+    Multiplying oflux_ocn by -3.02×10⁸ gives the ocean heat flux to the mixed layer in W/m², and multiplying snow by
+    (water density / snow density) gives the actual snow depth.
+
+citations:
+  dataset: []
+  papers:
+    - label: Model paper (citation requested by PSC)
+      text: >-
+        Zhang, J., Rothrock, D. A. (2003): Modeling global sea ice with a thickness and enthalpy distribution model in generalized
+        curvilinear coordinates. Monthly Weather Review, 131(5), 845–861.
+      doi: 10.1175/1520-0493(2003)131<0845:MGSIWA>2.0.CO;2
+      bibtex: |
+        @article{zhang2003ted,
+          author  = {Zhang, Jinlun and Rothrock, D. A.},
+          title   = {Modeling Global Sea Ice with a Thickness and Enthalpy Distribution Model in Generalized Curvilinear Coordinates},
+          journal = {Monthly Weather Review},
+          volume  = {131},
+          number  = {5},
+          pages   = {845--861},
+          year    = {2003},
+          doi     = {10.1175/1520-0493(2003)131<0845:MGSIWA>2.0.CO;2}
+        }
+    - label: Application of the global model to Antarctic sea ice (optional)
+      text: >-
+        Zhang, J. (2007): Increasing Antarctic sea ice under warming atmospheric and oceanic conditions.
+        Journal of Climate, 20(11), 2515–2529.
+      doi: 10.1175/JCLI4136.1
+    - label: Evaluation of Antarctic sea ice thickness (optional)
+      text: >-
+        Liao, S., Luo, H., Wang, J., Shi, Q., Zhang, J., Yang, Q. (2022): An evaluation of Antarctic sea-ice thickness from the
+        Global Ice-Ocean Modeling and Assimilation System based on in situ and satellite observations. The Cryosphere, 16(5), 1807–1819.
+      doi: 10.5194/tc-16-1807-2022
+  acknowledgement: >-
+    PSC asks GIOMAS users to cite Zhang and Rothrock (2003). There is no dataset DOI, so give the data location (the PSC GIOMAS page)
+    and your download date in the Data availability statement.
+
+notices:
+  - date: "2026-03-24"
+    level: warning
+    title: Atmospheric forcing (NCEP/NCAR R1) terminated — GIOMAS updates have also stopped
+    body: >-
+      There is no GIOMAS-specific notice, but the PIOMAS page of the same group reports that NOAA NWS/NCEP terminated the NCEP/NCAR
+      R1 reanalysis as of March 18th, 2026, so a replacement forcing has to be found. GIOMAS is also forced by R1, and at the time
+      of checking the server held 2026 files only through January.
+    source: https://psc.apl.uw.edu/research/projects/arctic-sea-ice-volume-anomaly/
+
+links:
+  - name: PSC GIOMAS data page
+    url: https://psc.apl.uw.edu/data/global-sea-ice-giomas-data-sets/
+  - name: PSC PIOMAS page (for the group's notices)
+    url: https://psc.apl.uw.edu/research/projects/arctic-sea-ice-volume-anomaly/
+  - name: Liao et al. (2022) — evaluation of GIOMAS Antarctic sea ice thickness
+    url: https://tc.copernicus.org/articles/16/1807/2022/
+  - name: NOAA PSL — Data Alert, NCEP/NCAR Reanalysis 1 updates to end
+    url: https://www.psl.noaa.gov/news/2026/r1datanotice.html
+
+watch_urls:
+  - https://psc.apl.uw.edu/data/global-sea-ice-giomas-data-sets/
+  - https://pscfiles.apl.washington.edu/zhang/Global_seaice/
+  - https://psc.apl.uw.edu/research/projects/arctic-sea-ice-volume-anomaly/
+
+last_verified: "2026-10-11"

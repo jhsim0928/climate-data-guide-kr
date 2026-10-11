@@ -1,0 +1,241 @@
+# ─────────────────────────────────────────────────────────────
+# ERSST v6 — dataset information file (English edition)
+# Successor to ERSST v5. The v5→v6 comparison table is in the transitions of ersst.yaml.
+# After editing, update last_verified to the date you checked the official pages.
+# ─────────────────────────────────────────────────────────────
+id: ersst-v6
+name: ERSST v6
+full_name: NOAA Extended Reconstructed Sea Surface Temperature (ERSST), Version 6
+category: analysis
+domain: ocean
+group: 해수면온도 분석장
+order: 15
+domains: [해양]
+provider: NOAA National Centers for Environmental Information (NCEI)
+
+status: active
+status_note: >-
+  The current version of ERSST, released by NCEI in December 2025 and updated monthly. Since 2026, NOAA's ENSO determination and the RONI index,
+  as well as the NOAA global temperature dataset (NOAAGlobalTemp 6.1.0), use v6, and the previous version, v5, has been announced for discontinuation.
+  Gridded uncertainty estimates have not yet been formally released.
+
+period:
+  start: "1850-01"
+  end: present
+  note: >-
+    When checked on 2026-10-12, the NCEI monthly files ran through ersst.v6.202609.nc (September 2026), and the NOAA PSL single file also included September 2026.
+    NCEI notes that the data are more reliable after the 1940s.
+
+resolution:
+  spatial_short: "222 km (2°)"
+  temporal_short: "1개월"
+  spatial: "2° × 2° latitude–longitude grid with statistically enhanced spatial completeness. NOAA PSL files: 180 longitudes × 89 latitudes, grid centres 88°S–88°N, 0°–358°E"
+  vertical: Sea surface (single level)
+  temporal: Monthly means
+
+update: Monthly
+license: U.S. Government public data — no use restrictions (CC0 1.0 per the data.gov catalog); NCEI asks users to cite the dataset DOI and the journal articles
+account_required: false
+
+summary: >-
+  ERSST is a global monthly analysis of SST derived from the International Comprehensive Ocean–Atmosphere Dataset (ICOADS Release 3.0.2) ship and buoy observations
+  plus Argo profiling floats, starting in 1850. Version 6 fills gaps with artificial neural network (ANN) interpolation to give a spatially complete 2° grid; no satellite data are used.
+  It also upgrades ship-observation quality control (nearest-neighbour check), the large-scale filter and the proxy SST in ice-covered regions, and anomalies are computed against a 1991–2020 climatology.
+  Since 2026 it has been NOAA's official SST dataset for ENSO monitoring and for the ocean component of NOAAGlobalTemp.
+
+time_convention:
+  summary: >-
+    A monthly analysis: every value is the mean SST (or its anomaly) for the month. The time value only labels the month; it is not an instantaneous value at a specific time.
+  points:
+    - "The NOAA PSL file (sst.mnmean.nc) gives statistic 'Mean' and a one-month averaging period (avg_period); time is 00 UTC on the 1st of each month (e.g. 1850-01-01 to 2026-09-01), with time_bnds included."
+    - "The NCEI originals are one file per month, named ersst.v6.YYYYMM.nc. We did not open them to check how time is encoded inside, so when combining files from different distributors, match on year and month rather than on the date."
+    - "Anomalies are relative to the 1991–2020 monthly climatology (v5 used 1971–2000)."
+  source: https://www.ncei.noaa.gov/products/extended-reconstructed-sst
+  source_name: NCEI ERSST product page / NOAA PSL THREDDS file metadata
+
+variables:
+  note: >-
+    The NOAA PSL file (sst.mnmean.nc) contains a single variable, `sst`. NCEI metadata say the original files contain both SST and SST anomalies (SSTAs),
+    but we did not confirm the anomaly variable name in the original v6 files (it is `ssta` in the v5 files).
+  full_list: https://www.ncei.noaa.gov/access/metadata/landing-page/bin/iso?id=gov.noaa.ncdc:C01737
+  groups:
+    - name: Sea surface temperature
+      kind: mean
+      period: Monthly
+      items:
+        - "Monthly mean sea surface temperature — `sst` (°C)"
+        - text: "Sea surface temperature anomaly (relative to the 1991–2020 climatology, NCEI original files)"
+          kind: mean
+          period: Monthly
+          note: Monthly mean SST minus the 1991–2020 monthly climatology
+    - name: Climatology (separate PSL files)
+      kind: mean
+      period: Monthly
+      items:
+        - text: "Monthly long-term mean — `sst` (°C), sst.mon.ltm.1991-2020.nc and sst.mon.ltm.1981-2010.nc"
+          note: A multi-year average for each calendar month, not a specific year
+
+access:
+  - name: NCEI direct download (monthly NetCDF)
+    url: https://www.ncei.noaa.gov/data/sea-surface-temperature-extended-reconstructed/v6/access/
+    method: HTTPS (wget / curl)
+    note: The official location given on the NCEI product page. One file per month, named ersst.v6.YYYYMM.nc (about 164 KB each).
+  - name: NCEI pub directory (monthly files + full record in one file)
+    url: https://www.ncei.noaa.gov/pub/data/cmb/ersst/v5/v6/
+    method: HTTPS (wget / curl)
+    note: >-
+      Holds the same monthly files (ersst.v6.185001.nc onward), plus ersst.v6.1850-last.nc in netcdf.one/ (1850 to the latest month in one file, about 272 MB)
+      and v6-based climate index files in index/ (ersst.v6.el_nino.dat, pdo, amo, iod, atl3). Note that it sits under the v5 directory.
+  - name: NOAA PSL (full record in one file)
+    url: https://psl.noaa.gov/data/gridded/data.noaa.ersst.v6.html
+    method: Web download / THREDDS / OPeNDAP
+    note: >-
+      The full SST record is in a single file, sst.mnmean.nc, which is convenient to use directly. Monthly long-term mean files (1981–2010, 1991–2020) are also provided.
+      The THREDDS catalog is at https://psl.noaa.gov/thredds/catalog/Datasets/noaa.ersst.v6/catalog.html.
+
+example:
+  lang: python
+  note: Open the full-record file through the NOAA PSL OPeNDAP URL and compute the Niño 3.4 area-mean anomaly relative to 1991–2020.
+  code: |
+    import xarray as xr
+
+    url = "https://psl.noaa.gov/thredds/dodsC/Datasets/noaa.ersst.v6/sst.mnmean.nc"
+    sst = xr.open_dataset(url)["sst"]          # °C, monthly mean; lat runs 88 → -88 (north to south)
+
+    # 1991–2020 monthly climatology and anomalies
+    clim = sst.sel(time=slice("1991-01-01", "2020-12-01")).groupby("time.month").mean("time")
+    ssta = sst.groupby("time.month") - clim
+
+    # Niño 3.4 (5°S–5°N, 170°W–120°W = 190–240°E) area mean
+    nino34 = ssta.sel(lat=slice(5, -5), lon=slice(190, 240)).mean(["lat", "lon"])
+    print(nino34.sel(time=slice("2025-01-01", None)).round(2).to_series())
+
+tips:
+  - v5 and v6 use different anomaly base periods (v5 1971–2000, v6 1991–2020). Do not compare or splice anomalies from the two versions as they are.
+  - v6 changes the interpolation method (EOT to ANN) and drops v5's 3-month running mean. Values and spatial patterns differ from v5 even for the same month, and month-to-month variability can be larger, so do not mix the versions in one time series.
+  - Latitude in the PSL file runs north to south (88 → -88). Selecting with sel(lat=slice(south, north)) returns an empty result; put the northern bound first, e.g. slice(5, -5).
+  - The PSL file's global attributes (summary, source, etc.) still carry v5-era text such as a '1971–2000 climatology' and 'NCEP GTS'. Follow the NCEI documentation for the base period and input data.
+  - A Niño 3.4 anomaly you compute yourself will not match NOAA's official ENSO indices (RONI, etc.), which use different definitions and smoothing. If you need to agree with the official ENSO status, use the index values NOAA distributes.
+  - Gridded uncertainty (ensemble) estimates have not yet been formally released. The developer guidance on the NCAR Climate Data Guide (August 2025) said they were expected in 2026; in October 2026 RONI uncertainty files appeared in the unc/ folder of the NCEI pub directory, but we have not found documentation for them.
+  - Before 1945, when observations are sparse — especially before 1900, during the two World Wars and south of 40°S — uncertainties are large and spurious variability is possible (NCAR Climate Data Guide). Check trends in these periods against other datasets such as HadSST or COBE-SST.
+  - Being 2° monthly means, the data cannot represent extremes or daily variability. When comparing with models, regrid the model to the 2° grid; the developers recommend comparing absolute SST rather than anomalies, because climatologies differ between products.
+  - The dataset DOI for v6 is 10.25921/z7cw-es89. Some catalogues (data.gov, and the 'landing page' link in the NCEI metadata) still show the v5 DOI (10.7289/V5T72FNM); do not use it to cite v6.
+
+citations:
+  dataset:
+    - label: NCEI dataset DOI (v6)
+      text: >-
+        Huang, B., Yin, X., Boyer, T., Liu, C., Menne, M. J., Rao, Y. D., Smith, T. M., Vose, R. S., Zhang, H.-M. (2025):
+        NOAA Extended Reconstructed Sea Surface Temperature (ERSST), Version 6. [indicate subset used].
+        NOAA National Centers for Environmental Information. https://doi.org/10.25921/z7cw-es89 [access date]
+      doi: 10.25921/z7cw-es89
+      bibtex: |
+        @misc{ersst_v6_dataset,
+          author    = {Huang, Boyin and Yin, Xungang and Boyer, Tim and Liu, Chunying and Menne, Matthew J. and Rao, Yuhan Douglas and Smith, Thomas M. and Vose, Russell S. and Zhang, Huai-Min},
+          title     = {{NOAA} Extended Reconstructed Sea Surface Temperature ({ERSST}), Version 6},
+          year      = {2025},
+          publisher = {NOAA National Centers for Environmental Information},
+          doi       = {10.25921/z7cw-es89},
+          note      = {Accessed DD MMM YYYY}
+        }
+  papers:
+    - label: ERSST v6 paper, Part I (artificial neural network interpolation)
+      text: >-
+        Huang, B., Yin, X., Boyer, T., Liu, C., Menne, M., Rao, Y. D., Smith, T., Vose, R., Zhang, H.-M. (2025):
+        Extended Reconstructed Sea Surface Temperature, Version 6 (ERSSTv6). Part I: An Artificial Neural Network Approach.
+        Journal of Climate, 38(4), 1105–1121.
+      doi: 10.1175/JCLI-D-23-0707.1
+      bibtex: |
+        @article{huang2025ersstv6a,
+          author  = {Huang, Boyin and Yin, Xungang and Boyer, Tim and Liu, Chunying and Menne, Matthew and Rao, Yuhan Douglas and Smith, Thomas and Vose, Russell and Zhang, Huai-Min},
+          title   = {Extended Reconstructed Sea Surface Temperature, Version 6 ({ERSSTv6}). Part {I}: An Artificial Neural Network Approach},
+          journal = {Journal of Climate},
+          volume  = {38},
+          number  = {4},
+          pages   = {1105--1121},
+          year    = {2025},
+          doi     = {10.1175/JCLI-D-23-0707.1}
+        }
+    - label: ERSST v6 paper, Part II (quality control and large-scale filter)
+      text: >-
+        Huang, B., Yin, X., Boyer, T., Liu, C., Menne, M., Rao, Y. D., Smith, T., Vose, R., Zhang, H.-M. (2025):
+        Extended Reconstructed Sea Surface Temperature, Version 6 (ERSSTv6). Part II: Upgrades on Quality Control
+        and Large-Scale Filter. Journal of Climate, 38(4), 1123–1136.
+      doi: 10.1175/JCLI-D-24-0185.1
+      bibtex: |
+        @article{huang2025ersstv6b,
+          author  = {Huang, Boyin and Yin, Xungang and Boyer, Tim and Liu, Chunying and Menne, Matthew and Rao, Yuhan Douglas and Smith, Thomas and Vose, Russell and Zhang, Huai-Min},
+          title   = {Extended Reconstructed Sea Surface Temperature, Version 6 ({ERSSTv6}). Part {II}: Upgrades on Quality Control and Large-Scale Filter},
+          journal = {Journal of Climate},
+          volume  = {38},
+          number  = {4},
+          pages   = {1123--1136},
+          year    = {2025},
+          doi     = {10.1175/JCLI-D-24-0185.1}
+        }
+  acknowledgement: >-
+    The NCEI metadata ask users to cite the dataset DOI and to reference the Huang et al. (2025) Part I and Part II articles.
+    The NCEI product page still carries the editorial note "(we may need a data citation such as for v5 after data DOI is generated)", but DOI 10.25921/z7cw-es89 has already been issued and resolves to the NCEI metadata page.
+    The author name "Chunying Kiu" in the NCEI cite-as text is a typo; the DOI registration and the papers give Liu.
+    If you obtained the data from NOAA PSL, also include the acknowledgement requested on the PSL page.
+
+notices:
+  - date: "2026-10-02"
+    level: warning
+    title: "NCEI Data Access Delays — cloud migration (through 2026-10-30)"
+    body: >-
+      "NCEI is currently moving its data and applications to the cloud", so downloads may be intermittently slow or fail. NESDIS expects the migration to run through spring 2027.
+      If the NCEI servers are unavailable, use the PSL copy.
+    source: https://www.ncei.noaa.gov/alerts
+  - date: "2026-08-03"
+    level: info
+    title: ERSST v6 becomes NOAA's official SST dataset for determining the ENSO phase
+    body: "NOAA ERSSTv6 is the new official SST dataset used by NOAA to determine the current ENSO phase, and the Relative Oceanic Niño Index (RONI), NOAA's official ENSO monitoring and prediction product, has also been updated to use ERSSTv6."
+    source: https://psl.noaa.gov/data/notices/
+  - date: "2026-04-26"
+    level: info
+    title: ERSST v5 to be discontinued (June 2026)
+    body: >-
+      NOAA PSL announced that "the NOAA ERSSTv5 dataset will be discontinued by NOAA/NCEI in June 2026" and replaced by ERSSTv6.
+      When checked in October 2026, v5 files were still being updated, but if you work with v5, prepare to move to v6.
+    source: https://psl.noaa.gov/data/notices/
+  - date: "2026-04-13"
+    level: info
+    title: NOAAGlobalTemp 6.1.0 switches its ocean component to ERSST v6
+    body: Starting with the January 2026 Global Temperature and Precipitation Analysis, NOAA's global temperature dataset (NOAAGlobalTemp) version 6.1.0 uses the most recent release of ERSST version 6.
+    source: https://www.ncei.noaa.gov/news/ai-supercharges-key-noaa-dataset-ensuring-peak-accuracy
+  - date: "2026-03-06"
+    level: info
+    title: ERSST v6 added to NOAA PSL
+    body: PSL added NOAA ERSST V6 (monthly, from 1850) to its data collection and began updating it monthly.
+    source: https://psl.noaa.gov/data/notices/
+  - date: "2025-12-04"
+    level: info
+    title: "Key NOAA Dataset Upgraded Using AI — ERSST v6 released"
+    body: >-
+      NCEI released ERSST v6, which uses artificial neural network interpolation. Compared with ERSSTv5 over 1850–2021, the spatial correlation coefficient increases by about 5%
+      and the RMSD decreases by 0.03°C, with the largest improvements in the tropical Pacific, the Southern Hemisphere oceans between 60°S and 30°S, and ice-covered regions.
+    source: https://www.ncei.noaa.gov/news/key-noaa-dataset-upgraded-using-ai
+
+links:
+  - name: NCEI ERSST product page (v6 and v5)
+    url: https://www.ncei.noaa.gov/products/extended-reconstructed-sst
+  - name: NCEI ERSST v6 metadata and citation page
+    url: https://www.ncei.noaa.gov/access/metadata/landing-page/bin/iso?id=gov.noaa.ncdc:C01737
+  - name: NOAA PSL ERSST v6
+    url: https://psl.noaa.gov/data/gridded/data.noaa.ersst.v6.html
+  - name: NOAA PSL THREDDS — noaa.ersst.v6
+    url: https://psl.noaa.gov/thredds/catalog/Datasets/noaa.ersst.v6/catalog.html
+  - name: NCAR Climate Data Guide — ERSST v6
+    url: https://climatedataguide.ucar.edu/climate-data/sst-data-noaa-extended-reconstruction-ssts-version-6-ersstv6
+  - name: NCEI News — Key NOAA Dataset Upgraded Using AI (2025-12-04)
+    url: https://www.ncei.noaa.gov/news/key-noaa-dataset-upgraded-using-ai
+  - name: NCEI — Cloud Migration Offers Bright Future for NOAA's Data
+    url: https://www.ncei.noaa.gov/news/cloud-migration
+
+watch_urls:
+  - https://www.ncei.noaa.gov/products/extended-reconstructed-sst
+  - https://psl.noaa.gov/data/notices/
+  - https://www.ncei.noaa.gov/alerts
+
+last_verified: "2026-10-12"

@@ -1,0 +1,341 @@
+# ─────────────────────────────────────────────────────────────
+# ESA SST CCI / C3S — dataset information file
+# Satellite-based sea surface temperature climate data record (CDR v3.0, 1980–2021) + Interim CDR (ICDR, 2022 onward)
+# After editing, update last_verified to the date you checked the official pages.
+# ─────────────────────────────────────────────────────────────
+id: esa-cci-sst
+name: ESA SST CCI CDR v3
+full_name: >-
+  ESA Sea Surface Temperature Climate Change Initiative (SST_cci) Climate Data Record version 3.0 + Interim Climate Data Record
+  (distributed by CEDA; on the C3S Climate Data Store as "Global sea surface temperature derived from satellite observations")
+category: satellite
+domain: ocean
+group: 해수면온도 분석장
+order: 70
+domains: [해양]
+provider: >-
+  ESA Climate Change Initiative SST project (CDR v3.0) / UK EOCIS and UKMCAS (ICDR from 2023) and Copernicus Climate Change Service (ICDR 2022, CDS distribution) /
+  archived at CEDA. The L4 analysis is produced with the Met Office OSTIA system
+
+status: active
+status_note: >-
+  Active: the 1980–2021 climate data record (CDR v3.0) is extended daily by an Interim CDR (ICDR) from 2022 onward.
+  Version 3.0 replaced v2.1 at CEDA in April 2024, on the C3S CDS on 28 November 2025 and on Copernicus Marine in March 2026.
+  The Copernicus Marine copy still ends in 2021; adding the ICDR is planned for November 2026, subject to the C3S publication schedule.
+
+period:
+  start: "1980-01"
+  end: present
+  note: >-
+    The L4 analysis CDR covers 1980-01-01 to 2021-12-31; data from 2022 onward are ICDR. The C3S CDS catalogue lists a temporal extent of 1979-07-13
+    (start of the L3C daily data) to 2026-09-23 (checked 2026-10-12); end dates per level and sensor were not checked.
+    The ESA data page gives the ICDR as about 2 weeks behind present, the CEDA record as about one month behind.
+    January 1980 to September 1981 rest on a single AVHRR (NOAA-06), so coverage is sparse.
+
+resolution:
+  spatial_short: "6 km (0.05°)"
+  temporal_short: "1일"
+  spatial: >-
+    Regular 0.05° latitude-longitude grid, 7200 × 3600 (cell centres 179.975°W–179.975°E, 89.975°S–89.975°N), shared by L3U, L3C and L4.
+    L2P is at native sensor resolution (swath geometry). The L4 feature resolution is coarser than the grid spacing
+  vertical: >-
+    Sea surface only — skin SST (about 10 µm depth) and SST adjusted to 20 cm depth (depth SST, comparable with drifting-buoy measurements).
+    L4 provides the 20 cm depth SST only
+  temporal: Daily (L4 daily-mean analysis; L3C collated into daily day-time and night-time files). Monthly means are also offered on the C3S CDS
+update: ICDR daily (about 2 weeks to 1 month behind present). The CDR itself is not updated
+license: >-
+  CC BY 4.0 — attribution with the citation given in the CEDA record is required (see also the ESA CCI SST terms and conditions).
+  The C3S CDS copy is under the SST CCI datasets licence and CC BY 4.0; the Copernicus Marine copy is under the Copernicus Marine Service licence
+account_required: false
+
+summary: >-
+  A satellite-only sea surface temperature climate data record from the ESA Climate Change Initiative (CCI), built by reprocessing the AVHRR, ATSR and SLSTR
+  infrared sensor series and the AMSR microwave sensors with consistent algorithms. No ship or buoy data are used, so in situ observations provide an
+  independent validation, and every value comes with an uncertainty estimate. Products include skin SST and SST adjusted to 20 cm depth and the daily mean;
+  the most widely used is the daily, gap-free 0.05° Level 4 analysis from 1980. Version 3.0 (Embury et al. 2024) is the 1980–2021 CDR, extended daily from 2022 by an ICDR made the same way.
+
+time_convention:
+  summary: >-
+    L4 is a daily-mean estimate of SST at 20 cm depth, time-stamped 12:00 UTC on the file date. The L3C depth SST adjusts each observation to the nearest of
+    10:30 or 22:30 local mean solar time (when the diurnal anomaly is closest to zero), approximating the daily mean; skin SST is the temperature at the time of observation.
+  points:
+    - "Daily L3C and L4 file names carry the time 120000 (12:00 UTC). For L3C it is the centre of the collation window; for L4 it is the nominal analysis time, not an observation time."
+    - "L3C has separate day-time and night-time files. Skin SST keeps the daytime diurnal warming, so use depth SST if you need a daily-mean value."
+    - "L4 is an OSTIA analysis of the CCI satellite SSTs with gaps filled statistically. Cells with no satellite data that day are interpolated, so check analysed_sst_uncertainty alongside the SST."
+    - "The CDR (to 2021) and ICDR (from 2022) use the same v3 system, but the ICDR is a delayed-mode extension. Check that long-term trends do not jump at the join."
+  source: https://eu-west-1.climate.esa.int/documents/2568/SST_CCI_D4.2_PUG_v1.1.pdf
+  source_name: SST CCI Product User Guide (SST_CCI_D4.2_PUG v1.1, CDR v3) / Embury et al. (2024)
+
+variables:
+  note: >-
+    Variable names as given in the SST CCI Product User Guide (PUG) and the Copernicus Marine metadata. Values are stored as packed integers,
+    so make sure add_offset and scale_factor are applied when reading. Units are K.
+  full_list: https://eu-west-1.climate.esa.int/documents/2568/SST_CCI_D4.2_PUG_v1.1.pdf
+  groups:
+    - name: L4 analysis (daily, gap-free)
+      kind: mean
+      period: day
+      items:
+        - text: "Analysed sea surface temperature (20 cm depth) — `analysed_sst` (K)"
+          note: Daily mean SST at 0.2 m depth
+        - text: "Estimated uncertainty in analysed_sst — `analysed_sst_uncertainty` (K)"
+          note: Uncertainty of the same day's analysed_sst. L4 has a single uncertainty, so correlation scales cannot be separated
+        - text: "Sea ice area fraction — `sea_ice_fraction` (0–1)"
+          note: Taken from OSI SAF sea-ice concentration (OSI-450, OSI-430). Its internal time definition was not checked
+        - text: "Land, sea, lake and sea-ice mask — `mask`"
+          kind: static
+          note: Ice-free ocean pixels have mask = 1. The sea-ice bit can change from day to day
+    - name: L3C single-sensor daily collation (with gaps)
+      items:
+        - text: "Sea surface skin temperature — `sea_surface_temperature` (K)"
+          kind: instant
+          note: Skin (about 10 µm) temperature at the time of observation. Separate day-time and night-time files
+        - text: "Sea surface temperature at 20 cm depth — `sea_surface_temperature_depth` (K)"
+          kind: mean
+          period: day
+          note: Adjusted to the nearest of 10:30 or 22:30 local time, equivalent to the daily average
+        - text: "Total uncertainty — `sea_surface_temperature_total_uncertainty`, `sea_surface_temperature_depth_total_uncertainty` (K)"
+          kind: instant
+          note: Uncertainty of each SST value; the quadrature sum of the components (uncertainty_random, uncertainty_correlated, uncertainty_systematic, etc.)
+        - text: "Quality level — `quality_level` (0–5)"
+          kind: instant
+          note: Use 4 and 5 for quantitative work; 2 and 3 for qualitative use only
+    - name: Climatology (separate product)
+      kind: mean
+      period: day (1991–2020 mean)
+      items:
+        - text: "Daily SST climatology 1991–2020 (0.05°) — Climatology product v3.0"
+          note: Separate CEDA dataset (DOI 10.5285/62800d3d2227449085b430b503d36b01). A 30-year mean for each calendar day, not a specific year
+
+access:
+  - name: CEDA Archive — L4 Analysis v3.0 (including ICDR)
+    url: https://catalogue.ceda.ac.uk/uuid/4a9654136a7148e39b7feb56f8bb02d2/
+    method: HTTPS direct download / OPeNDAP
+    note: >-
+      Open to registered and unregistered users. Data path:
+      https://data.ceda.ac.uk/neodc/eocis/data/global_and_regional/sea_surface_temperature/CDR_v3/Analysis/L4/v3.0.1/
+      L3C, L3U and L2P are under the same CDR_v3 folder, organised by sensor (AVHRR, SLSTR, etc.).
+  - name: CEDA — ESA SST CCI CDR v3.0 collection
+    url: https://catalogue.ceda.ac.uk/uuid/debfbf49823f4eb99ab0a578f8b25136
+    method: Catalogue (sub-records per level and sensor)
+  - name: C3S Climate Data Store (satellite-sea-surface-temperature)
+    url: https://cds.climate.copernicus.eu/datasets/satellite-sea-surface-temperature
+    method: Web download / CDS API (cdsapi)
+    note: >-
+      Requires an ECMWF account and acceptance of the licence. Choose version 3_0, processinglevel level_4 or level_3c,
+      sensor_on_satellite combined_product (L4) or a sensor name, and temporal_resolution daily or monthly.
+  - name: Copernicus Marine — SST_GLO_SST_L4_REP_OBSERVATIONS_010_024
+    url: https://data.marine.copernicus.eu/product/SST_GLO_SST_L4_REP_OBSERVATIONS_010_024/description
+    method: Copernicus Marine Toolbox / web Subset
+    note: >-
+      The dataset ESACCI-GLO-SST-L4-REP-OBS-SST (product_version 3.0.1) serves the L4 CDR v3 for 1980-01-01 to 2021-12-31 only.
+      Do not confuse it with C3S-GLO-SST-L4-REP-OBS-SST in the same product, a separate SST and sea-ice surface temperature analysis produced by DMI.
+  - name: ESA CCI Open Data Portal
+    url: https://climate.esa.int/en/odp
+    method: Web / OPeNDAP and other services
+  - name: surftemp.net (regridding, time series, regional extraction)
+    url: https://surftemp.net/
+    method: Web service
+    note: Regridding and regional subsetting tool recommended in the PUG.
+
+example:
+  lang: python
+  note: "Put the url (https://cds.climate.copernicus.eu/api) and your API key in ~/.cdsapirc, and accept the dataset licence on the CDS website before running."
+  code: |
+    # pip install --upgrade cdsapi
+    import cdsapi
+
+    client = cdsapi.Client()
+    client.retrieve(
+        "satellite-sea-surface-temperature",
+        {
+            "variable": "all",
+            "processinglevel": "level_4",
+            "sensor_on_satellite": "combined_product",
+            "version": "3_0",
+            "temporal_resolution": "daily",
+            "year": ["2023"],
+            "month": ["08"],
+            "day": ["01", "02", "03"],
+        },
+        "sst_cci_l4_202308.zip",   # NetCDF files arrive bundled in a zip
+    )
+
+tips:
+  - >-
+    This record's SST is adjusted to 20 cm depth and the daily mean, which is not quite the same as foundation SST (OSTIA) or daily-mean bulk SST (OISST).
+    Check depth and time-of-day definitions before comparing SST analyses.
+  - Because no ship or buoy data go in, comparisons with in situ observations are independent. When it disagrees with analyses that assimilate in situ data (OISST, OSTIA, etc.), consider this design difference first.
+  - "The PUG flags January 1980–September 1981 (a single AVHRR on NOAA-06, sparse data) and October 1982–September 1983 (noisy AVHRR with calibration errors) as periods to treat with caution. Avoid them as climatology or trend start points."
+  - "When working with L3C directly, use quality_level 4 and 5 only. Uncertainty is split into components with different correlation properties (random, correlated, systematic, etc.); propagate them separately, as the PUG describes, when averaging in space or time."
+  - The Copernicus Marine copy stops in 2021; use CEDA or the CDS for recent data. Do not mix older v2.1 files (CEDA neodc/esacci/sst path, CDS version 2_1) with v3.0 in one series.
+
+citations:
+  dataset:
+    - label: CEDA L4 Analysis v3.0
+      text: >-
+        Good, S.A.; Embury, O. (2024): ESA Sea Surface Temperature Climate Change Initiative (SST_cci): Level 4 Analysis product, version 3.0.
+        NERC EDS Centre for Environmental Data Analysis, 09 April 2024. doi:10.5285/4a9654136a7148e39b7feb56f8bb02d2
+      doi: 10.5285/4a9654136a7148e39b7feb56f8bb02d2
+      bibtex: |
+        @misc{sstcci_l4_v3,
+          author    = {Good, S. A. and Embury, O.},
+          title     = {{ESA} Sea Surface Temperature Climate Change Initiative ({SST\_cci}): Level 4 Analysis product, version 3.0},
+          year      = {2024},
+          publisher = {NERC EDS Centre for Environmental Data Analysis},
+          doi       = {10.5285/4a9654136a7148e39b7feb56f8bb02d2}
+        }
+    - label: CEDA AVHRR L3C v3.0 (example if you used L3C)
+      text: >-
+        Embury, O. (2024): ESA Sea Surface Temperature Climate Change Initiative (SST_cci): Advanced Very High Resolution Radiometer (AVHRR)
+        Level 3 Collated (L3C) product, version 3.0. NERC EDS Centre for Environmental Data Analysis, 16 May 2024. doi:10.5285/be418645dfa542df86165a7caad24284
+      doi: 10.5285/be418645dfa542df86165a7caad24284
+      bibtex: |
+        @misc{sstcci_avhrr_l3c_v3,
+          author    = {Embury, O.},
+          title     = {{ESA} Sea Surface Temperature Climate Change Initiative ({SST\_cci}): Advanced Very High Resolution Radiometer ({AVHRR}) Level 3 Collated ({L3C}) product, version 3.0},
+          year      = {2024},
+          publisher = {NERC EDS Centre for Environmental Data Analysis},
+          doi       = {10.5285/be418645dfa542df86165a7caad24284}
+        }
+    - label: C3S CDS dataset
+      text: >-
+        Copernicus Climate Change Service (C3S) (2019): Global sea surface temperature derived from satellite observations.
+        Copernicus Climate Change Service (C3S) Climate Data Store (CDS). DOI: 10.24381/cds.cf608234 (Accessed on DD-MMM-YYYY)
+      doi: 10.24381/cds.cf608234
+      bibtex: |
+        @misc{c3s_satellite_sst,
+          author    = {{Copernicus Climate Change Service (C3S)}},
+          title     = {Global sea surface temperature derived from satellite observations},
+          year      = {2019},
+          publisher = {ECMWF, Copernicus Climate Change Service (C3S) Climate Data Store (CDS)},
+          doi       = {10.24381/cds.cf608234},
+          note      = {Accessed on DD-MMM-YYYY}
+        }
+    - label: Copernicus Marine product (010_024)
+      text: >-
+        E.U. Copernicus Marine Service Information (CMEMS). ESA SST CCI and C3S reprocessed sea surface temperature analyses
+        (SST_GLO_SST_L4_REP_OBSERVATIONS_010_024). DOI: 10.48670/moi-00169 (Accessed on DD-MMM-YYYY)
+      doi: 10.48670/moi-00169
+  papers:
+    - label: CDR v3.0 data paper (recommended by CEDA and the PUG)
+      text: >-
+        Embury, O., Merchant, C. J., Good, S. A., Rayner, N. A., Høyer, J. L., Atkinson, C., Block, T., Alerskans, E., Pearson, K. J.,
+        Worsfold, M., McCarroll, N., Donlon, C. (2024): Satellite-based time-series of sea-surface temperature since 1980 for climate applications.
+        Scientific Data, 11, 326.
+      doi: 10.1038/s41597-024-03147-w
+      bibtex: |
+        @article{embury2024sstcci,
+          author  = {Embury, Owen and Merchant, Christopher J. and Good, Simon A. and Rayner, Nick A. and H{\o}yer, Jacob L. and Atkinson, Chris and Block, Thomas and Alerskans, Emy and Pearson, Kevin J. and Worsfold, Mark and McCarroll, Niall and Donlon, Craig},
+          title   = {Satellite-based time-series of sea-surface temperature since 1980 for climate applications},
+          journal = {Scientific Data},
+          volume  = {11},
+          pages   = {326},
+          year    = {2024},
+          doi     = {10.1038/s41597-024-03147-w}
+        }
+    - label: Previous version (v2.1) data paper
+      text: >-
+        Merchant, C. J., Embury, O., Bulgin, C. E., et al. (2019): Satellite-based time-series of sea-surface temperature since 1981 for climate applications.
+        Scientific Data, 6, 223.
+      doi: 10.1038/s41597-019-0236-x
+  acknowledgement: >-
+    CEDA asks users to cite the data with the citation given in each dataset record (CC BY 4.0). The PUG asks you to name the full product, level and version
+    used and to cite Embury et al. (2024). If you downloaded from the CDS, also give the CDS dataset DOI.
+
+transitions:
+  - from: SST CCI CDR v2.1
+    to: SST CCI CDR v3.0 (+ ICDR)
+    status: completed
+    date: "2024-04"
+    summary: >-
+      CDR v3.0 brings a longer time series (1980–2021), retrieval improvements that reduce systematic biases, better handling of desert-dust aerosols,
+      dual-view SLSTR from 2016, early AVHRR/1 data and full-resolution MetOp AVHRR. It replaced v2.1 at CEDA (2024-04), on the C3S CDS (2025-11-28) and on Copernicus Marine (2026-03).
+    changes:
+      - aspect: Period
+        before: "1981–2016 (v2.1 CDR)"
+        after: "1980–2021 (v3.0 CDR) + daily ICDR extension from 2022"
+      - aspect: Retrieval algorithm
+        before: v2.1 algorithm
+        after: Bias-aware retrieval that reduces systematic biases; improved desert-dust aerosol handling
+      - aspect: Input sensors
+        before: "AVHRR, ATSR, SLSTR, etc. (v2.1 set)"
+        after: "Dual-view SLSTR (2016 onward), early AVHRR/1 (1980s), full-resolution MetOp AVHRR, AMSR L2P added"
+      - aspect: Climatology product
+        before: Previous climatology product (v2.2)
+        after: "Climatology product v3.0 — daily climatology for 1991–2020 (DOI 10.5285/62800d3d2227449085b430b503d36b01)"
+      - aspect: CEDA path and DOI
+        before: "neodc/esacci/sst/… (v2.1)"
+        after: "neodc/eocis/data/global_and_regional/sea_surface_temperature/CDR_v3/…; L4 DOI 10.5285/4a9654136a7148e39b7feb56f8bb02d2"
+      - aspect: C3S CDS
+        before: "version 2_1 / 2_0 / 1_1"
+        after: "version 3_0 (published 2025-11-28)"
+      - aspect: Data paper
+        before: "Merchant et al. (2019), Sci. Data 6, 223"
+        after: "Embury et al. (2024), Sci. Data 11, 326"
+    impacts:
+      - Do not mix v2.1 and v3.0 in one series; download the whole period again as v3.0. Values in the 1980s and after 2016 in particular may have changed.
+      - For a 1991–2020 baseline, use the v3.0 climatology product.
+      - The citation DOIs and the data paper have changed.
+    sources:
+      - name: CEDA — SST CCI L4 Analysis v3.0
+        url: https://catalogue.ceda.ac.uk/uuid/4a9654136a7148e39b7feb56f8bb02d2/
+      - name: Embury et al. (2024), Scientific Data
+        url: https://doi.org/10.1038/s41597-024-03147-w
+      - name: ECMWF Forum — New version 3.0 of Global Sea Surface Temperature daily data now available on CDS (2025-11-28)
+        url: https://forum.ecmwf.int/t/new-version-3-0-of-global-sea-surface-temperature-daily-data-now-available-on-cds/14329
+      - name: Copernicus Marine transition information — SST_GLO_SST_L4_REP_OBSERVATIONS_010_024
+        url: https://marine.copernicus.eu/user-corner/product-roadmap/transition-information?product=SST_GLO_SST_L4_REP_OBSERVATIONS_010_024
+
+notices:
+  - date: "2026-11"
+    level: info
+    title: "(Planned) Update product to extend dataset ESACCI-GLO-SST-L4-REP-OBS-SST"
+    body: >-
+      Copernicus Marine plans to broker version 3 of the C3S/UKMCAS Interim Climate Data Record, extending the CCI SST CDR beyond 2021 with a latency of
+      about two to four weeks. Because C3S manages the publication schedule, the November 2026 release may be adjusted.
+    source: https://marine.copernicus.eu/user-corner/product-roadmap/transition-information?product=SST_GLO_SST_L4_REP_OBSERVATIONS_010_024
+  - date: "2026-03"
+    level: info
+    title: Switch from ESA CCI SST v2.1 to v3.0 in the Copernicus Marine catalogue
+    body: The dataset ESACCI-GLO-SST-L4-REP-OBS-SST was re-included with version 3 of the ESA CCI L4 CDR, replacing v2.1. It currently covers 1980–2021 only.
+    source: https://marine.copernicus.eu/user-corner/product-roadmap/transition-information?product=SST_GLO_SST_L4_REP_OBSERVATIONS_010_024
+  - date: "2026-02-04"
+    level: info
+    title: CEDA AVHRR L3C v3.0 restored
+    body: CEDA reports that the AVHRR L3C v3.0 dataset, temporarily unavailable for download since December 2025 after the November 2025 data incident, has been restored and can be downloaded again.
+    source: https://catalogue.ceda.ac.uk/uuid/be418645dfa542df86165a7caad24284/
+  - date: "2025-11-28"
+    level: warning
+    title: New version 3.0 of Global Sea Surface Temperature daily data now available on CDS
+    body: >-
+      Version 3.0 of "Global sea surface temperature derived from satellite observations" was published on the CDS. The 2022 ICDR was funded by C3S,
+      and the 2023–2024 ICDR by the UK EOCIS and UKMCAS services. Update request scripts that still ask for version 2_1.
+    source: https://forum.ecmwf.int/t/new-version-3-0-of-global-sea-surface-temperature-daily-data-now-available-on-cds/14329
+  - date: "2024-04-09"
+    level: info
+    title: CDR v3.0 L4 Analysis published at CEDA
+    body: The SST CCI CDR v3.0 L4 Analysis (1980–2021), with its ICDR extension, was published at CEDA and supersedes CDR v2.1. The associated data paper is Embury et al. (2024).
+    source: https://catalogue.ceda.ac.uk/uuid/4a9654136a7148e39b7feb56f8bb02d2/
+
+links:
+  - name: ESA CCI SST project data page
+    url: https://climate.esa.int/en/projects/sea-surface-temperature/data
+  - name: CEDA — L4 Analysis v3.0
+    url: https://catalogue.ceda.ac.uk/uuid/4a9654136a7148e39b7feb56f8bb02d2/
+  - name: CEDA — Climatology product v3.0 (1991–2020)
+    url: https://catalogue.ceda.ac.uk/uuid/62800d3d2227449085b430b503d36b01
+  - name: SST CCI Product User Guide (PUG, CDR v3)
+    url: https://eu-west-1.climate.esa.int/documents/2568/SST_CCI_D4.2_PUG_v1.1.pdf
+  - name: C3S CDS dataset page
+    url: https://cds.climate.copernicus.eu/datasets/satellite-sea-surface-temperature
+  - name: Embury et al. (2024), Scientific Data
+    url: https://doi.org/10.1038/s41597-024-03147-w
+
+watch_urls:
+  - https://catalogue.ceda.ac.uk/uuid/4a9654136a7148e39b7feb56f8bb02d2/
+  - https://climate.esa.int/en/projects/sea-surface-temperature/data
+  - https://cds.climate.copernicus.eu/datasets/satellite-sea-surface-temperature?tab=documentation
+  - https://marine.copernicus.eu/user-corner/product-roadmap/transition-information?product=SST_GLO_SST_L4_REP_OBSERVATIONS_010_024
+
+last_verified: "2026-10-12"

@@ -1,3 +1,8 @@
+---
+title: "기후데이터 길잡이 소개·인용"
+description: "기후데이터 길잡이를 만든 이유와 정리 원칙, 논문 사사(Acknowledgements)에 넣을 인용 문장과 Zenodo DOI, 문의처, 면책 안내."
+---
+
 # 소개·인용
 
 ## 왜 만들었나요
@@ -49,3 +54,5 @@
 
 - 사이트 콘텐츠는 [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/deed.ko), 코드는 MIT 라이선스입니다.
 - 각 데이터의 이용 조건은 제공 기관의 약관을 따릅니다.
+
+This site is also available in [English](https://data4researchers.kr/en/).

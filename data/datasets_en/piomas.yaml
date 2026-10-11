@@ -1,0 +1,223 @@
+# ─────────────────────────────────────────────────────────────
+# PIOMAS — dataset information file (English edition)
+# UW Polar Science Center model/assimilation estimates of Arctic sea ice thickness and volume
+# ─────────────────────────────────────────────────────────────
+id: piomas
+name: PIOMAS
+full_name: Pan-Arctic Ice Ocean Modeling and Assimilation System
+category: reanalysis
+domain: seaice
+group: 재분석
+order: 10
+domains: [해빙, 해양]
+provider: University of Washington Applied Physics Laboratory, Polar Science Center (APL/PSC)
+
+status: delayed
+status_note: >-
+  NOAA NWS/NCEP terminated the NCEP/NCAR R1 reanalysis, PIOMAS's atmospheric forcing, on March 18, 2026, and PIOMAS updates stopped with the February 2026 data.
+  PSC has to find an alternative forcing and generate a replacement, but funding and timing are uncertain and PSC expects a longer gap than usual.
+  Data for 1979 to February 2026 remain available.
+
+period:
+  start: "1979-01"
+  end: "2026-02"
+  note: >-
+    In normal operation the data were updated roughly monthly. There have been no updates since the 2026-03-24 notice,
+    and the monthly volume CSV holds missing values (-1) from March 2026 onward.
+
+resolution:
+  spatial_short: "22 km (0.2°)"
+  temporal_short: "1일"
+  spatial: "Generalized curvilinear grid, 360 × 120 cells (about 22 km on average), covering the Arctic north of about 45–49°N"
+  vertical: "12 ice thickness categories / 30 ocean (POP) levels"
+  temporal: Monthly means plus daily means for some variables (volume and mean-thickness time series are daily)
+
+update: Suspended (monthly in normal operation; February 2026 is the latest month)
+license: >-
+  No separate licence statement. Anyone can download the data without an account; users are asked to cite the two papers below.
+account_required: false
+
+summary: >-
+  PIOMAS is a coupled sea ice–ocean model run by the University of Washington Polar Science Center, and its output provides estimates of Arctic sea ice thickness and volume since 1979.
+  It assimilates satellite sea ice concentration and, in ice-free areas, sea surface temperature, but no thickness observations, so the results are model and assimilation estimates rather than direct measurements.
+  Because it has been validated extensively against submarine, ICESat and other thickness observations, it is widely used as the reference record of Arctic sea ice volume change and for evaluating climate models.
+
+time_convention:
+  summary: >-
+    Gridded data come as monthly files (12 months per file) and daily files (names containing "day"). PSC labels thickness explicitly as a monthly mean (heff) and a daily mean (hiday);
+    other variables use the same layout but are not described as means. The volume time series are provided both as daily values and as monthly averages.
+  points:
+    - "Monthly files (heff.H<yyyy> etc.) contain 12 fields, January to December, with no time coordinate. Each field represents the whole month"
+    - "In the PSC variable table only heff (monthly mean) and hiday (daily mean) are described as means. Other variables (area, snow, icevel, etc.) appear to follow the same monthly/daily convention, but we could not confirm this in official documentation"
+    - "For the volume time series, PSC notes that the model integrates forward 365 days, so leap years contain only their first 365 days. Day counts and leap-year handling for the gridded daily files (hiday, aiday, etc.) are not documented; check the number of days from the file size first"
+    - "iceprod, advect and oflux are rates in m/s; multiply by the number of seconds in the period to get total growth or melt over a month"
+    - "Volume anomalies are relative to the 1979–2025 average for the same day of the year (PSC volume page). The base period may change with updates"
+  source: https://psc.apl.uw.edu/research/projects/arctic-sea-ice-volume-anomaly/data/model_grid
+  source_name: PSC "PIOMAS Variables on Model Grid" table
+
+variables:
+  note: >-
+    PSC provides the model-grid data as one file per variable per year (name.H<yyyy>), in headerless single-precision flat binary.
+    The names below are the file-name prefixes. Descriptions and units follow the table on the PSC "model grid" page; aiday and uiday are file names found in the server directories
+    (they are not described in the official table, so their meaning is inferred from the naming convention).
+  full_list: https://psc.apl.uw.edu/research/projects/arctic-sea-ice-volume-anomaly/data/model_grid
+  groups:
+    - name: Ice thickness and concentration (monthly mean)
+      kind: mean
+      period: month
+      items:
+        - "Sea ice thickness (volume per unit area), monthly mean — `heff` (m)"
+        - text: "Sea ice concentration — `area` (fraction)"
+          note: "The PSC table does not call this a mean; it is listed only as monthly data (12 months per file). It is probably a monthly mean like heff, but this is not officially confirmed."
+        - text: "Snow depth (water equivalent) — `snow` (m)"
+          note: "The PSC table does not call this a mean; it is listed only as monthly data (12 months per file). It is probably a monthly mean like heff, but this is not officially confirmed."
+        - text: "12-category ice thickness distribution — `gice`"
+          note: "The PSC table does not call this a mean; it is listed only as monthly data (12 months per file). It is probably a monthly mean like heff, but this is not officially confirmed."
+    - name: Ice dynamics and thermodynamics (monthly mean)
+      kind: mean
+      period: month
+      items:
+        - text: "Sea ice velocity (u, v) — `icevel` (m/s)"
+          note: "The PSC table does not call this a mean; it is listed only as monthly data (12 months per file). It is probably a monthly mean like heff, but this is not officially confirmed."
+        - text: "Sea ice growth or melt rate — `iceprod` (m/s)"
+          note: "Appears to be the mean rate of change in ice thickness over the month (m/s); multiply by the period in seconds for a monthly total. Valid only in ice-covered areas. Whether it is a mean is not officially confirmed."
+        - text: "Sea ice advection (-delta(uh)) — `advect` (m/s)"
+          note: "The PSC table does not call this a mean; it is listed only as monthly data (12 months per file). It is probably a monthly mean like heff, but this is not officially confirmed."
+        - text: "Ocean heat flux used to melt ice — `oflux` (m/s)"
+          note: "The PSC table does not call this a mean; it is listed only as monthly data (12 months per file). It is probably a monthly mean like heff, but this is not officially confirmed."
+        - text: "Surface temperature (snow/ice/ocean) — `tice0` (K)"
+          note: "The PSC table does not call this a mean; it is listed only as monthly data (12 months per file). It is probably a monthly mean like heff, but this is not officially confirmed."
+    - name: Daily files
+      kind: mean
+      period: day
+      items:
+        - "Sea ice thickness, daily mean — `hiday` (m)"
+        - text: "Snow depth, daily (water equivalent) — `snowday`"
+          note: "Listed in the PSC table only as daily data; whether values are means or snapshots is not stated."
+        - text: "Daily sea ice concentration — `aiday` (area/ directory)"
+          note: "Daily file found in the server directory. Whether it is a daily mean or a snapshot is not documented (assumed to follow hiday)."
+        - text: "Daily sea ice velocity — `uiday` (other/ directory)"
+          note: "Daily file found in the server directory. Whether it is a daily mean or a snapshot is not documented (assumed to follow hiday)."
+    - name: Pan-Arctic time series (text and CSV)
+      kind: mean
+      items:
+        - text: "Daily Arctic sea ice volume — `PIOMAS.vol.daily.*.dat.gz` (10³ km³)"
+          period: day
+          note: "One value per day for the whole PIOMAS domain (year, day of year, volume). PSC does not say whether it is a daily mean or a snapshot. Leap years contain only 365 days."
+        - text: "Monthly Arctic sea ice volume — `PIOMAS.monthly.Current.v2.1.csv` (10³ km³)"
+          period: month
+          note: "The value PSC reports as average monthly volume (e.g. 17.7 × 10³ km³ for February 2026). Missing values are -1."
+        - text: "Daily mean ice thickness (areas thicker than 0.15 m) — `PIOMAS.thick.daily.*.dat.gz` (m)"
+          period: day
+          note: "\"Mean\" is a spatial average over the PIOMAS domain where ice is thicker than 0.15 m; whether it is also a daily time average is not stated."
+
+access:
+  - name: PSC PIOMAS volume and thickness time series page
+    url: https://psc.apl.uw.edu/research/projects/arctic-sea-ice-volume-anomaly/data/
+    method: Web download (text and CSV)
+    note: Pan-Arctic daily and monthly volume and daily mean thickness time series (version 2.1).
+  - name: PSC model-grid data page
+    url: https://psc.apl.uw.edu/research/projects/arctic-sea-ice-volume-anomaly/data/model_grid
+    method: Web download / SFTP or rsync (username and password anonymous)
+    note: Variable table, grid files (grid.dat etc.), Fortran and IDL reading programs, and links to community Python tools.
+  - name: pscfiles server — sea ice thickness (heff)
+    url: https://pscfiles.apl.uw.edu/zhang/PIOMAS/data/v2.1/heff/
+    method: HTTPS directory
+    note: Binary files (heff.H<yyyy>.gz) plus NetCDF versions for 1979–2025 (heff.H<yyyy>.nc.gz).
+  - name: pscfiles server — sea ice concentration (area, aiday)
+    url: https://pscfiles.apl.washington.edu/zhang/PIOMAS/data/v2.1/area/
+    method: HTTPS directory
+  - name: pscfiles server — other variables (other)
+    url: https://pscfiles.apl.washington.edu/zhang/PIOMAS/data/v2.1/other/
+    method: HTTPS directory
+    note: Some ocean variables (ssh, tice0, uo1_10, etc.) stop with the 2020 files.
+
+example:
+  lang: python
+  note: Download and unzip heff.H2025.gz, and also get grid.dat from utilities/ on the same server.
+  code: |
+    import numpy as np
+
+    nx, ny = 360, 120
+    # Headerless single-precision binary; 12 monthly fields back to back (use ">f4" if big-endian)
+    heff = np.fromfile("heff.H2025", dtype="<f4").reshape(12, ny, nx)
+    if np.nanmax(np.abs(heff)) > 100:  # implausible values: re-read with swapped byte order
+        heff = np.fromfile("heff.H2025", dtype=">f4").reshape(12, ny, nx)
+    print("September mean thickness, max (m):", heff[8].max())
+
+tips:
+  - >-
+    PIOMAS is a model estimate that assimilates no thickness observations. In the satellite era it has been reported to overestimate thin ice and underestimate thick ice,
+    so do not call it "observed thickness", and compare with ICESat or CryoSat-2 thickness where possible.
+  - >-
+    PSC gives an uncertainty of about ±1.0 × 10³ km³ per decade for the volume trend and about ±0.75 × 10³ km³ for monthly anomalies. Long-term trends also depend on the atmospheric reanalysis used as forcing,
+    so if production resumes with a new forcing after 2026, check the version and forcing before joining new and old data.
+  - >-
+    The model's southern boundary excludes parts of the Sea of Okhotsk, the Gulf of St. Lawrence and the Labrador Sea. Match domains when comparing with Northern Hemisphere ice volume from other sources,
+    especially in winter.
+  - >-
+    Binary files may need byte-swapping depending on your system. heff and area are also available as NetCDF (.nc.gz), which is easier.
+
+citations:
+  dataset: []
+  papers:
+    - label: Volume time series and uncertainty (cited as requested by PSC)
+      text: >-
+        Schweiger, A., Lindsay, R., Zhang, J., Steele, M., Stern, H., Kwok, R. (2011): Uncertainty in modeled Arctic sea ice volume.
+        Journal of Geophysical Research, 116, C00D06.
+      doi: 10.1029/2011JC007084
+      bibtex: |
+        @article{schweiger2011piomas,
+          author  = {Schweiger, Axel and Lindsay, Ron and Zhang, Jinlun and Steele, Mike and Stern, Harry and Kwok, Ron},
+          title   = {Uncertainty in modeled {Arctic} sea ice volume},
+          journal = {Journal of Geophysical Research},
+          volume  = {116},
+          pages   = {C00D06},
+          year    = {2011},
+          doi     = {10.1029/2011JC007084}
+        }
+    - label: Model description (cited as requested by PSC)
+      text: >-
+        Zhang, J., Rothrock, D. A. (2003): Modeling global sea ice with a thickness and enthalpy distribution model in generalized
+        curvilinear coordinates. Monthly Weather Review, 131(5), 845–861.
+      doi: 10.1175/1520-0493(2003)131<0845:MGSIWA>2.0.CO;2
+      bibtex: |
+        @article{zhang2003ted,
+          author  = {Zhang, Jinlun and Rothrock, D. A.},
+          title   = {Modeling Global Sea Ice with a Thickness and Enthalpy Distribution Model in Generalized Curvilinear Coordinates},
+          journal = {Monthly Weather Review},
+          volume  = {131},
+          number  = {5},
+          pages   = {845--861},
+          year    = {2003},
+          doi     = {10.1175/1520-0493(2003)131<0845:MGSIWA>2.0.CO;2}
+        }
+  acknowledgement: >-
+    PSC asks users to cite Schweiger et al. (2011) for the volume time series and uncertainties and Zhang and Rothrock (2003) for model details.
+    Recording the version (currently v2.1) and download date will help distinguish your data from any later reprocessing or forcing change.
+
+notices:
+  - date: "2026-03-24"
+    level: critical
+    title: NCEP/NCAR R1 reanalysis terminated — PIOMAS updates stopped
+    body: >-
+      NOAA NWS/NCEP terminated the NCEP/NCAR R1 reanalysis, PIOMAS's atmospheric forcing, as of March 18, 2026 (announced by NOAA on February 13).
+      PSC will have to find alternatives and generate a replacement, does not yet know whether that is possible with available funds, and warns that the gap will be longer than usual.
+      No restart had been announced as of 2026-10-11.
+    source: https://psc.apl.uw.edu/research/projects/arctic-sea-ice-volume-anomaly/
+
+links:
+  - name: PSC — PIOMAS Arctic Sea Ice Volume Reanalysis
+    url: https://psc.apl.uw.edu/research/projects/arctic-sea-ice-volume-anomaly/
+  - name: PSC — PIOMAS Variables on Model Grid
+    url: https://psc.apl.uw.edu/research/projects/arctic-sea-ice-volume-anomaly/data/model_grid
+  - name: NOAA PSL — NCEP/NCAR R1 end-of-updates notice
+    url: https://www.psl.noaa.gov/news/2026/r1datanotice.html
+  - name: NCAR Climate Data Guide — PIOMAS
+    url: https://climatedataguide.ucar.edu/climate-data/pan-arctic-ice-ocean-modeling-and-assimilation-system-piomas
+
+watch_urls:
+  - https://psc.apl.uw.edu/research/projects/arctic-sea-ice-volume-anomaly/
+  - https://pscfiles.apl.uw.edu/zhang/PIOMAS/data/v2.1/heff/
+
+last_verified: "2026-10-11"

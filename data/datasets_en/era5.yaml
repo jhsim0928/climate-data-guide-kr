@@ -1,0 +1,322 @@
+# ─────────────────────────────────────────────────────────────
+# ERA5 — dataset information file (English edition)
+# This one file builds the site's ERA5 page, its row in the list tables and its notices.
+# After editing, set last_verified to the date you checked the official pages.
+# ─────────────────────────────────────────────────────────────
+id: era5
+name: ERA5
+full_name: ECMWF Reanalysis v5
+category: reanalysis
+domain: atmosphere
+group: 재분석
+order: 10
+domains: [대기, 육지, 해양파랑]
+provider: ECMWF / Copernicus Climate Change Service (C3S)
+
+status: active
+status_note: >-
+  Operational. Production of the successor reanalysis, ERA6, is under way, and ERA6 will replace
+  ERA5T (timely updates) after sufficient data have been published. If your work depends on
+  near-real-time ERA5 updates over the long term, follow the transition plan as it is announced.
+
+transitions:
+  - from: ERA5
+    to: ERA6
+    to_id: era6
+    status: planned
+    summary: Next-generation reanalysis in production since 2026, at 14 km horizontal resolution with an ocean component; the first production streams, covering 2007 onwards, are expected towards the end of 2027, and ERA6 will replace ERA5T once sufficient data have been published.
+    changes:
+      - aspect: Period
+        before: 1940–present
+        after: 1950 onwards at least (decadal streams produced in parallel; 2007 onwards published first)
+      - aspect: Horizontal resolution
+        before: Atmosphere and land ~31 km (TL639); ocean waves ~40 km
+        after: Atmosphere, land and ocean waves all ~14 km (TCo799)
+      - aspect: Vertical resolution
+        before: Atmosphere 137 levels (top at 1 Pa)
+        after: Atmosphere 137 levels (top at 1 Pa) + ocean 75 levels
+      - aspect: Model version
+        before: IFS CY41r2
+        after: IFS CY49r2 (ten intervening cycles of model improvements)
+      - aspect: Ocean coupling
+        before: No ocean model (SST and sea ice prescribed as boundary conditions)
+        after: Coupled NEMO-4 ocean and SI3 sea-ice model, initialised from ORAS6
+      - aspect: Stratospheric data assimilation
+        before: 4D-Var
+        after: 4D-Var with weak constraint in the stratosphere, aimed at ERA5's upper-stratosphere problems
+      - aspect: Snow
+        before: Single-layer snow
+        after: 5 layers, plus snow on ice
+      - aspect: Observations
+        before: Observations available when ERA5 was produced
+        after: Additional recovered and reprocessed observations (VTPR, HIRS, MHS, polar AMVs, GNSS-RO, upper-air and buoy data, pre-1979 satellite data and more)
+      - aspect: File format
+        before: Mixed GRIB1 and GRIB2
+        after: All GRIB2 (WMO units)
+      - aspect: Timely updates
+        before: ERA5T (about 5 days behind real time)
+        after: Replaces ERA5T after sufficient data have been published (ERA6T latency not yet announced)
+    impacts:
+      - The first ERA6 release covers only 2007 onwards. Keep using ERA5 for long-term analyses for now, and do not join the two reanalyses into a single time series.
+      - When timely updates move from ERA5T to ERA6, workflows that extend ERA5 up to the present will stop working. Watch for ECMWF's transition-plan communications.
+      - ERA6 is delivered entirely in GRIB2, so check any GRIB1-only tools and any scripts that rely on current parameter names or units.
+      - Copernicus (March 2026) intends to keep the ERA5 operational workflow running uninterrupted for as long as necessary, so there is no need to move ongoing work in a hurry.
+    sources:
+      - name: ECMWF Newsletter 188 (2026) — ERA6 reanalysis is in production
+        url: https://www.ecmwf.int/en/newsletter/188/news/era6-reanalysis-production
+      - name: Copernicus — Copernicus Climate's ERA6 reanalysis production starts (2026-03-06)
+        url: https://climate.copernicus.eu/copernicus-climates-era6-reanalysis-production-starts
+      - name: Hersbach et al. (2020), The ERA5 global reanalysis, QJRMS
+        url: https://doi.org/10.1002/qj.3803
+
+period:
+  start: "1940-01"
+  end: present
+  note: >-
+    Initial-release data (ERA5T) are available about 5 days behind real time; the final ERA5 data replace
+    them two to three months later and may, in rare cases, differ from ERA5T.
+
+resolution:
+  spatial_short: "28 km (0.25°)"
+  temporal_short: "1시간"
+  spatial: "Native HRES 31 km (TL639, 0.28125°) / CDS regular latitude-longitude grid 0.25° x 0.25° (atmosphere), 0.5° x 0.5° (ocean waves); ensemble 0.5° x 0.5° (atmosphere)"
+  vertical: "137 hybrid sigma/pressure (model) levels, top at 0.01 hPa / 37 pressure levels"
+  temporal: Hourly (pre-computed monthly means also available)
+
+update: Daily, about 5 days behind real time
+license: CC-BY licence (CC BY 4.0; replaced the Licence to use Copernicus Products on 2 July 2025)
+account_required: true
+
+summary: >-
+  ERA5 is the fifth-generation ECMWF reanalysis for the global climate and weather, produced for the
+  Copernicus Climate Change Service (C3S) and replacing ERA-Interim. It provides hourly estimates of a
+  large number of atmospheric, ocean-wave and land-surface quantities from 1940 onwards. The data on the
+  CDS are a regridded subset of the full dataset at native resolution, on a regular 0.25° latitude-longitude grid.
+
+time_convention:
+  summary: >-
+    Analysed and most state parameters are instantaneous values at the validity time. Accumulations and
+    minimum/maximum parameters refer to the processing period ending at the validity time: one hour for
+    the hourly reanalysis (HRES) on the CDS, and three hours for the ensemble (EDA).
+  points:
+    - "Accumulations and min/max values are stamped at the end of the period. Example: tp at 01 UTC is the precipitation from 00 to 01 UTC, and the 00 UTC value belongs to 23–24 UTC of the previous day, so shift by one step when summing to daily totals."
+    - "In the ensemble (EDA, 0.5°) data, accumulations and min/max values cover the 3 hours ending at the validity time."
+    - "To turn accumulated radiation and heat fluxes (J m-2) into mean fluxes (W m-2), divide by the period length in seconds: 3600 for hourly data, 86400 for monthly means of daily means."
+    - "In monthly means of daily means, accumulations are scaled to an effective processing period of one day. Precipitation is therefore in m per day; multiply by 1000 for mm per day."
+    - "Mean rate and mean flux parameters (e.g. mean total precipitation rate) are averages over the same period, in per-second units (kg m-2 s-1, W m-2)."
+  source: https://confluence.ecmwf.int/display/CKB/ERA5%3A+data+documentation
+  source_name: "ERA5: data documentation (Copernicus Knowledge Base)"
+
+variables:
+  note: >-
+    Key parameters from the ERA5 data documentation (parameter listings) and the ECMWF parameter database.
+    Names are GRIB short names. NetCDF files from the CDS mostly keep them, but a few are renamed
+    (`2t`→`t2m`, `10u`→`u10`, etc.). Accumulated and flux parameters (precipitation, radiation, heat fluxes)
+    are time integrals, so check the units.
+  full_list: https://confluence.ecmwf.int/display/CKB/ERA5%3A+data+documentation#ERA5:datadocumentation-Parameterlistings
+  groups:
+    - name: Surface and single levels (instantaneous)
+      kind: instant
+      items:
+        - "2 metre temperature — `2t` (K)"
+        - "2 metre dewpoint temperature — `2d` (K)"
+        - "10 metre U wind component — `10u` (m s-1)"
+        - "10 metre V wind component — `10v` (m s-1)"
+        - "Mean sea level pressure — `msl` (Pa)"
+        - "Sea surface temperature — `sst` (K)"
+        - "Sea ice area fraction — `ci` (0-1)"
+        - "Total cloud cover — `tcc` (0-1)"
+        - "Boundary layer height — `blh` (m)"
+        - "Convective available potential energy — `cape` (J kg-1)"
+        - "Total column vertically-integrated water vapour — `tcwv` (kg m-2)"
+    - name: Surface and single levels (accumulations and min/max, from forecasts)
+      kind: accum
+      period: "1-hour"
+      items:
+        - "Total precipitation — `tp` (m)"
+        - "Surface short-wave (solar) radiation downwards — `ssrd` (J m-2)"
+        - "Surface long-wave (thermal) radiation downwards — `strd` (J m-2)"
+        - "Top net long-wave (thermal) radiation (OLR with the sign reversed) — `ttr` (J m-2)"
+        - "Surface sensible heat flux — `sshf` (J m-2)"
+        - "Surface latent heat flux — `slhf` (J m-2)"
+        - "Evaporation — `e` (m of water equivalent)"
+        - text: "10 metre wind gust since previous post-processing — `10fg` (m s-1)"
+          kind: max
+          period: "1-hour"
+          note: "Maximum since the previous post-processing (1 hour for the reanalysis, 3 hours for the ensemble). Forecast-only parameter"
+    - name: Pressure levels (37 levels, 1000–1 hPa)
+      kind: instant
+      items:
+        - "Temperature — `t` (K)"
+        - "U component of wind — `u` (m s-1)"
+        - "V component of wind — `v` (m s-1)"
+        - "Vertical velocity — `w` (Pa s-1)"
+        - "Geopotential — `z` (m2 s-2)"
+        - "Specific humidity — `q` (kg kg-1)"
+        - "Relative humidity — `r` (%)"
+        - "Vorticity (relative) — `vo` (s-1)"
+        - "Divergence — `d` (s-1)"
+        - "Potential vorticity — `pv` (K m2 kg-1 s-1)"
+        - "Ozone mass mixing ratio — `o3` (kg kg-1)"
+        - "Specific cloud liquid / ice water content — `clwc`, `ciwc` (kg kg-1)"
+    - name: Ocean waves
+      kind: instant
+      items:
+        - "Significant height of combined wind waves and swell — `swh` (m)"
+        - "Mean wave direction — `mwd` (degree true)"
+        - "Mean wave period — `mwp` (s)"
+        - "Peak wave period — `pp1d` (s)"
+    - name: Land and invariant fields
+      kind: instant
+      items:
+        - "Soil temperature level 1 (0–7 cm) — `stl1` (K)"
+        - "Volumetric soil water layer 1 (0–7 cm) — `swvl1` (m3 m-3)"
+        - "Snow depth — `sd` (m of water equivalent)"
+        - text: "Land-sea mask — `lsm` (0-1)"
+          kind: static
+        - text: "Geopotential at the surface (orography) — `z` (m2 s-2)"
+          kind: static
+
+access:
+  - name: Copernicus Climate Data Store (CDS) — single levels
+    url: https://cds.climate.copernicus.eu/datasets/reanalysis-era5-single-levels
+    method: Web download / CDS API (cdsapi)
+    note: Requires an ECMWF account. API requests fail until you have accepted the dataset's licence on its download page.
+  - name: Copernicus Climate Data Store (CDS) — pressure levels
+    url: https://cds.climate.copernicus.eu/datasets/reanalysis-era5-pressure-levels
+    method: Web download / CDS API (cdsapi)
+  - name: NSF NCAR GDEX (d633000, 0.25° mirror)
+    url: https://gdex.ucar.edu/datasets/d633000/
+    method: Web download / THREDDS
+    note: Requires an NCAR account. Updated monthly, so it lags the CDS by a few months; a good option for historical periods when the CDS queue is long.
+
+example:
+  lang: python
+  note: "Put the url (https://cds.climate.copernicus.eu/api) and your personal API key in ~/.cdsapirc before running."
+  code: |
+    # pip install --upgrade cdsapi
+    import cdsapi
+
+    client = cdsapi.Client()
+    client.retrieve(
+        "reanalysis-era5-single-levels",
+        {
+            "product_type": ["reanalysis"],
+            "variable": ["2m_temperature"],
+            "year": ["2024"],
+            "month": ["01"],
+            "day": ["01"],
+            "time": ["00:00", "12:00"],
+            "data_format": "netcdf",
+            "download_format": "unarchived",
+        },
+        "era5_t2m_20240101.nc",
+    )
+
+tips:
+  - Old API keys and .cdsapirc URLs stopped working when the new CDS replaced the legacy one in September 2024. If an old script fails, check this first.
+  - The ERA5T period (roughly the last three months) can be overwritten by final ERA5 data, so record your download date for anything you publish.
+  - Cite the DOI of each CDS dataset you actually used (single levels, pressure levels, monthly means, etc.), not just one.
+
+citations:
+  dataset:
+    - label: Hourly data on single levels
+      text: >-
+        Hersbach, H., Bell, B., Berrisford, P., Biavati, G., Horányi, A., Muñoz Sabater, J.,
+        Nicolas, J., Peubey, C., Radu, R., Rozum, I., Schepers, D., Simmons, A., Soci, C.,
+        Dee, D., Thépaut, J-N. (2023): ERA5 hourly data on single levels from 1940 to present.
+        Copernicus Climate Change Service (C3S) Climate Data Store (CDS),
+        DOI: 10.24381/cds.adbb2d47 (Accessed on DD-MMM-YYYY)
+      doi: 10.24381/cds.adbb2d47
+      bibtex: |
+        @misc{era5_single_levels,
+          author    = {Hersbach, H. and Bell, B. and Berrisford, P. and Biavati, G. and Hor{\'a}nyi, A. and Mu{\~n}oz Sabater, J. and Nicolas, J. and Peubey, C. and Radu, R. and Rozum, I. and Schepers, D. and Simmons, A. and Soci, C. and Dee, D. and Th{\'e}paut, J.-N.},
+          title     = {{ERA5} hourly data on single levels from 1940 to present},
+          year      = {2023},
+          publisher = {Copernicus Climate Change Service (C3S) Climate Data Store (CDS)},
+          doi       = {10.24381/cds.adbb2d47},
+          note      = {Accessed on DD-MMM-YYYY}
+        }
+    - label: Hourly data on pressure levels
+      text: >-
+        Hersbach, H., Bell, B., Berrisford, P., Biavati, G., Horányi, A., Muñoz Sabater, J.,
+        Nicolas, J., Peubey, C., Radu, R., Rozum, I., Schepers, D., Simmons, A., Soci, C.,
+        Dee, D., Thépaut, J-N. (2023): ERA5 hourly data on pressure levels from 1940 to present.
+        Copernicus Climate Change Service (C3S) Climate Data Store (CDS),
+        DOI: 10.24381/cds.bd0915c6 (Accessed on DD-MMM-YYYY)
+      doi: 10.24381/cds.bd0915c6
+      bibtex: |
+        @misc{era5_pressure_levels,
+          author    = {Hersbach, H. and Bell, B. and Berrisford, P. and Biavati, G. and Hor{\'a}nyi, A. and Mu{\~n}oz Sabater, J. and Nicolas, J. and Peubey, C. and Radu, R. and Rozum, I. and Schepers, D. and Simmons, A. and Soci, C. and Dee, D. and Th{\'e}paut, J.-N.},
+          title     = {{ERA5} hourly data on pressure levels from 1940 to present},
+          year      = {2023},
+          publisher = {Copernicus Climate Change Service (C3S) Climate Data Store (CDS)},
+          doi       = {10.24381/cds.bd0915c6},
+          note      = {Accessed on DD-MMM-YYYY}
+        }
+  papers:
+    - label: ERA5 reference paper
+      text: >-
+        Hersbach, H., et al. (2020): The ERA5 global reanalysis.
+        Quarterly Journal of the Royal Meteorological Society, 146(730), 1999–2049.
+      doi: 10.1002/qj.3803
+      bibtex: |
+        @article{hersbach2020era5,
+          author  = {Hersbach, Hans and Bell, Bill and Berrisford, Paul and others},
+          title   = {The {ERA5} global reanalysis},
+          journal = {Quarterly Journal of the Royal Meteorological Society},
+          volume  = {146},
+          number  = {730},
+          pages   = {1999--2049},
+          year    = {2020},
+          doi     = {10.1002/qj.3803}
+        }
+  acknowledgement: >-
+    Acknowledge the use of C3S/ECMWF data and give the dataset DOI(s) above with your access date.
+    For the exact recommended wording, see "Citation and attribution" on the CDS dataset page.
+
+notices:
+  - date: "2026-08-26"
+    level: warning
+    title: ERA6 reanalysis is in production — will replace ERA5T
+    body: >-
+      ECMWF has started producing ERA6, with a 14 km horizontal resolution and a new ocean component.
+      The first production streams, covering 2007 onwards, are expected to be published towards the end of 2027,
+      and ERA6 will replace ERA5T (timely updates) after sufficient data have been published. Further timing
+      details will follow as part of the transition plan.
+    source: https://www.ecmwf.int/en/newsletter/188/news/era6-reanalysis-production
+  - date: "2025-07-02"
+    level: info
+    title: CC-BY licence replaces the Licence to use Copernicus Products
+    body: The "Licence to use Copernicus Products" has been replaced by the CC-BY licence (CC BY 4.0). Attribution is still required.
+    source: https://forum.ecmwf.int/c/announcements/5
+  - date: "2025-01-09"
+    level: warning
+    title: ERA5 data from 1 January 2025 degraded and corrected (resolved)
+    body: >-
+      A technical problem in production meant that many satellite observations were not used, causing small but
+      systematic errors mainly in tropical humidity. Resolved on 2025-01-14 by overwriting ERA5T. If you downloaded
+      hourly or daily ERA5T/ERA5-Land-T data for 1–6 January 2025 before then, download them again. Monthly data were not affected.
+    source: https://forum.ecmwf.int/t/era5-data-from-1st-january-2025-was-degraded-and-is-being-corrected/10689
+  - date: "2024-09-26"
+    level: critical
+    title: Goodbye legacy Climate Data Store, hello new CDS — new account and API key required
+    body: >-
+      The legacy CDS has been decommissioned and requests sent to it fail. Register an ECMWF account,
+      run pip install --upgrade cdsapi, and update the url and key in your .cdsapirc file.
+    source: https://forum.ecmwf.int/t/goodbye-legacy-climate-data-store-hello-new-climate-data-store-cds/6380
+
+links:
+  - name: CDS — ERA5 hourly data on single levels
+    url: https://cds.climate.copernicus.eu/datasets/reanalysis-era5-single-levels
+  - name: ECMWF Forum — Announcements
+    url: https://forum.ecmwf.int/c/announcements/5
+  - name: NCAR Climate Data Guide — ERA5
+    url: https://climatedataguide.ucar.edu/climate-data/era5-atmospheric-reanalysis
+
+# Pages watched by the automatic change detector (next step)
+watch_urls:
+  - https://forum.ecmwf.int/c/announcements/5
+  - https://www.ecmwf.int/en/publications/newsletters
+
+last_verified: "2026-10-11"

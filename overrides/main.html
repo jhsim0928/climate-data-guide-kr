@@ -1,8 +1,48 @@
-{#- 홈 화면 아이콘(iPhone·iPad) + 정보 오류 신고 창·엑셀 저장이 쓰는 값 -#}
+{#- 검색엔진 최적화(SEO) 머리말 + 홈 화면 아이콘 + 정보 오류 신고 창·엑셀 저장이 쓰는 값 -#}
 {% extends "base.html" %}
+
+{% block site_meta %}
+  {% set seo = config.extra.seo or {} %}
+  {% set is_en = (config.theme.language or 'ko')[:2] == 'en' %}
+  {% set rel = (page.url if page and page.url else '') %}
+  {% set desc = (page.meta.description if page and page.meta and page.meta.description else config.site_description) %}
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="{{ desc }}">
+  {% if page and page.url == '404.html' %}<meta name="robots" content="noindex">{% endif %}
+  {% if page and page.canonical_url %}<link rel="canonical" href="{{ page.canonical_url }}">{% endif %}
+  {#- 같은 내용의 다른 언어판 (페이지마다 정확한 주소) -#}
+  <link rel="alternate" hreflang="ko" href="{{ seo.base_ko }}{{ rel }}">
+  <link rel="alternate" hreflang="en" href="{{ seo.base_en }}{{ rel }}">
+  <link rel="alternate" hreflang="x-default" href="{{ seo.base_ko }}{{ rel }}">
+  <link rel="alternate" type="application/rss+xml" title="{{ config.site_name }} — {{ 'Notices' if is_en else '중요 공지' }}" href="{{ 'feed.xml' | url }}">
+  <link rel="icon" href="{{ config.theme.favicon | url }}">
+  <link rel="apple-touch-icon" href="{{ 'assets/apple-touch-icon.png' | url }}">
+  {% if seo.google_site_verification %}<meta name="google-site-verification" content="{{ seo.google_site_verification }}">{% endif %}
+  {% if seo.naver_site_verification %}<meta name="naver-site-verification" content="{{ seo.naver_site_verification }}">{% endif %}
+  {% if seo.bing_site_verification %}<meta name="msvalidate.01" content="{{ seo.bing_site_verification }}">{% endif %}
+  {#- 링크 공유 미리보기 (카카오톡·슬랙·X·페이스북 등) -#}
+  {% set ptitle = (page.meta.title if page and page.meta and page.meta.title else (page.title | striptags if page and page.title and not page.is_homepage else config.site_name)) %}
+  <meta property="og:type" content="{{ 'website' if (page and page.is_homepage) else 'article' }}">
+  <meta property="og:site_name" content="{{ config.site_name }}">
+  <meta property="og:title" content="{{ ptitle }}">
+  <meta property="og:description" content="{{ desc }}">
+  {% if page and page.canonical_url %}<meta property="og:url" content="{{ page.canonical_url }}">{% endif %}
+  <meta property="og:image" content="{{ config.site_url }}{{ seo.og_image }}">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:locale" content="{{ 'en_US' if is_en else 'ko_KR' }}">
+  <meta property="og:locale:alternate" content="{{ 'ko_KR' if is_en else 'en_US' }}">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="{{ ptitle }}">
+  <meta name="twitter:description" content="{{ desc }}">
+  <meta name="twitter:image" content="{{ config.site_url }}{{ seo.og_image }}">
+  {#- 구조화 데이터 (검색 결과에 사이트 이름·자료 정보를 정확히 보여주기 위함) -#}
+  {% if page and page.meta and page.meta.jsonld %}<script type="application/ld+json">{{ page.meta.jsonld }}</script>{% endif %}
+{% endblock %}
+
 {% block extrahead %}
   {% set cite = config.extra.site_citation or {} %}
-  <link rel="apple-touch-icon" href="{{ 'assets/apple-touch-icon.png' | url }}">
   <meta name="cdg-report-endpoint" content="{{ (config.extra.forms or {}).report_endpoint or '' }}">
   <meta name="cdg-contact" content="{{ config.extra.contact_email or '' }}">
   <meta name="cdg-ack" content="{{ cite.ack_en or '' }}">

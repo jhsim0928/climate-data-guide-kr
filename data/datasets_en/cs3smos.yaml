@@ -1,0 +1,278 @@
+# ─────────────────────────────────────────────────────────────
+# CS3SMOS — dataset information file (English edition)
+# AWI merged CryoSat-2 + Sentinel-3A/B + SMOS weekly sea ice thickness (v300; successor to CS2SMOS v206, operational from 2025-10-23)
+# ─────────────────────────────────────────────────────────────
+id: cs3smos
+name: CS3SMOS
+full_name: CryoSat-2/Sentinel-3/SMOS Merged Sea Ice Thickness (CS3SMOS, v300)
+category: satellite
+domain: seaice
+group: 위성 관측 자료
+order: 35
+domains: [해빙]
+provider: Alfred Wegener Institute (AWI) — ESA CS2SMOS-PDS project / redistributed by Copernicus Marine (FMI) — based on ESA CryoSat-2 and SMOS and Copernicus Sentinel-3A/B data
+
+status: active
+status_note: >-
+  Version v300, which replaced CS2SMOS v206. AWI started Arctic near-real-time production on 2025-10-23 and ended the 2025/26 Arctic season with the
+  9–15 April 2026 map. Summer gaps are expected for this winter-only product; Southern Hemisphere fields are produced from 15 April to 15 October (the
+  Copernicus Marine Antarctic dataset is updated to 2026-10-06). As of 2026-10-12 the AWI wiki has not yet announced the start of the 2026/27 Arctic season.
+
+period:
+  start: "2023-10"
+  end: present
+  note: >-
+    Based on the public distributions. Copernicus Marine (SEAICE_GLO_PHY_L4_NRT_011_014) holds v300 Northern Hemisphere data from 2023-10-18 and
+    Southern Hemisphere data from 2025-04-18; AWI near-real-time operations began with the 2025/26 winter (first weekly field 2025-10-15 to 21).
+    Northern Hemisphere data cover 15 October–15 April and Southern Hemisphere data 15 April–15 October only. AWI presented a 15-year record from 2010
+    at ESA LPS25, but the official pages do not say where that full reprocessing is published.
+
+resolution:
+  spatial_short: "12.5 km (0.11°)"
+  temporal_short: "7일"
+  spatial: >-
+    12.5 km EASE-Grid 2.0 (Lambert azimuthal equal-area, WGS 84) — Northern Hemisphere "WGS 84 / NSIDC EASE-Grid 2.0 North" (EPSG:6931),
+    Southern Hemisphere "… South" (EPSG:6932), 864 × 864 cells (xc, yc). The default Copernicus Marine service is on 0.1° lat-lon coordinates, with the
+    original grid provided separately as the originalGrid part
+  vertical: Not applicable (single thickness value)
+  temporal: Weekly mean over a 7-day observation window (UTC calendar days), produced daily — time stamp at 12:00 UTC on the 4th day (centre of the window)
+
+update: >-
+  Daily during the freezing season (Northern Hemisphere 15 October–15 April, Southern Hemisphere 15 April–15 October). Near-real-time ('o') files
+  are produced about 2 days after the end of the 7-day window; Copernicus Marine updates daily before 12:00 UTC with a 5-day delay
+license: >-
+  AWI distribution — no separate licence statement; AWI asks for citation of Ricker et al. (2017) and an acknowledgement /
+  Copernicus Marine distribution — Copernicus Marine Service licence (Service Commitments and Licence)
+account_required: false
+
+summary: >-
+  Weekly sea ice thickness from merging radar altimeter thickness from CryoSat-2 and Sentinel-3A/B, which is most reliable over thick ice, with SMOS
+  L-band radiometer thickness, which resolves thin ice, by optimal interpolation. It is version v300, the successor to CS2SMOS (v206). The grid is
+  refined to 12.5 km, Antarctic winter thickness is produced for the first time, and the files are simplified to the parameters needed for sea ice volume.
+  AWI produces it under an ESA project and publishes it on the AWI FTP server; Copernicus Marine redistributes it as the near-real-time L4 product
+  SEAICE_GLO_PHY_L4_NRT_011_014.
+
+time_convention:
+  summary: >-
+    Each file is a 7-day mean of the observations in a 7-day window (start to end date in the file name, UTC calendar days), time-stamped at 12:00 UTC on
+    the 4th day, the centre of the window. The window is moved forward one day at a time and a new file is produced daily, so files on consecutive days
+    overlap by six days.
+  points:
+    - "Example: AWI's last 2025/26 Arctic field, 20260409_20260415, has a reference time of 2026-04-12 12:00 UTC. Product reference days run from 18 October to 12 April in the Northern Hemisphere and from 18 April to 12 October in the Southern Hemisphere."
+    - "`time` is the centre of the window and `time_bnds` holds the 7-day window bounds (seconds since 1970-01-01). Using the start date in the file name as the date shifts your data by 3.5 days."
+    - "In near-real-time mode the optimal interpolation background is built from the 14 days before the observation window; the reprocessed version also uses the 14 days after it. Operational ('o') files use past data only, so they can differ from a later reprocessing."
+    - "Altimetry (CryoSat-2, Sentinel-3A/B) is first aggregated onto daily grids within the AWI v2.6 production system and then merged. Sea ice concentration is averaged over the same 7-day window."
+  source: https://documentation.marine.copernicus.eu/PUM/CMEMS-SEAICE-PUM-011-014.pdf
+  source_name: Copernicus Marine PUM / QUID (SEAICE_GLO_PHY_L4_NRT_011_014, v300) · AWI CS3SMOS change log
+
+variables:
+  note: >-
+    Variables as given in the v300 file header in the Copernicus Marine Product User Manual (PUM) and in the Copernicus Marine metadata. AWI states that the
+    v300 file content was simplified to the parameters needed for sea ice volume; the v206 background, innovation and per-sensor thickness variables are
+    not included.
+  full_list: https://documentation.marine.copernicus.eu/PUM/CMEMS-SEAICE-PUM-011-014.pdf
+  groups:
+    - name: Merged thickness
+      kind: mean
+      period: 7 days
+      items:
+        - text: "Sea Ice Thickness — `sea_ice_thickness` (m)"
+          note: Altimeter and SMOS thickness of the 7-day window merged with the background field by optimal interpolation. Mean thickness over the ice-covered fraction of the cell (open water excluded).
+        - text: "Sea Ice Thickness Uncertainty — `sea_ice_thickness_uncertainty` (m)"
+          note: Algorithm uncertainty of the same 7-day analysis. Based on the v300 uncertainty model, so do not compare it directly with v206 values.
+    - name: Auxiliary fields and flags
+      kind: mean
+      period: 7 days
+      items:
+        - text: "Sea Ice Concentration — `sea_ice_concentration` (%)"
+          note: OSI SAF sea ice concentration averaged over the same 7-day period.
+        - text: "Sea Ice Thickness Status Flag (0 nominal_retrieval, 1 open_ocean, 2 land_lake_landice, 3 retrieval_failed) — `status_flag` (1)"
+          note: Flag for the 7-day analysis.
+        - text: "Sea Ice Thickness Quality Flag (0 altimetry_radiometry, 1 altimetry, 2 radiometry, 3 interpolated, 4 no_sea_ice) — `quality_flag` (1)"
+          note: Shows which observations entered the 7-day window; useful for checking RFI-affected seas.
+        - text: "Density of Ocean (ocean area fraction per cell, 0–1) — `density_of_ocean` (1)"
+          kind: static
+          note: Despite its name, this is a land/ocean fraction mask, not a density. Time-invariant (the same mask as the ESA CCI sea ice products).
+
+access:
+  - name: AWI FTP — sea ice product root
+    url: ftp://ftp.awi.de/sea_ice/product/
+    method: Anonymous FTP (web browser, FTP client or command line)
+    note: >-
+      No account needed. According to the quicklook links on the AWI wiki, the latest Northern Hemisphere files are under cryosat2_smos/v300/nh/LATEST/;
+      check the FTP listing for the Southern Hemisphere and past-season folders.
+  - name: Copernicus Marine — SEAICE_GLO_PHY_L4_NRT_011_014
+    url: https://data.marine.copernicus.eu/product/SEAICE_GLO_PHY_L4_NRT_011_014/description
+    method: Copernicus Marine Toolbox (Python, CLI) / web download
+    note: >-
+      Free Copernicus Marine account required. Dataset IDs: Arctic esa_obs-si_arc_phy-sit_nrt_l4-multi_P1D-m (from 2023-10-18), Antarctic
+      esa_obs-si_ant_phy-sit_nrt_l4-multi_P1D-m (from 2025-04-18). FMI renames the files slightly, to W_XX_ESA_SMOS_CS2_<NH|SH>_12P5KM_EASE2_<start>_<end>_o_v300_01_l4sit.nc.
+  - name: AWI CS3SMOS product page (documents and change log)
+    url: https://spaces.awi.de/spaces/CS2SMOS/pages/297634429/CryoSat-2+Sentinel-3+SMOS+Merged+Sea+Ice+Thickness
+    method: Web documentation
+    note: Summarises the v300 changes. The attached PDD and Read-me documents (v1.5) still describe the previous CS2SMOS.
+  - name: AWI CS2SMOS-PDS wiki (announcements)
+    url: https://spaces.awi.de/spaces/CS2SMOS/overview
+    method: Web documentation
+    note: The first place where season start and end, data gaps and quality warnings are announced. Contact cs2smos-support@awi.de.
+
+example:
+  lang: python
+  note: >-
+    Assumes a Northern Hemisphere v300 file from the AWI FTP server or Copernicus Marine. AWI originals (quicklook naming W_XX-ESA,SMOS_CS2_S3A_S3B,NH_12P5KM_EASE2_…)
+    and Copernicus Marine files (W_XX_ESA_SMOS_CS2_NH_12P5KM_EASE2_…) are named slightly differently, so match on the end of the name.
+  code: |
+    import glob
+    import xarray as xr
+
+    f = sorted(glob.glob("*NH_12P5KM_EASE2_*_v300_01_l4sit.nc"))[-1]
+    ds = xr.open_dataset(f)
+
+    sit = ds["sea_ice_thickness"].squeeze()        # m, mean thickness over the ice-covered fraction
+    sic = ds["sea_ice_concentration"].squeeze()    # %
+    qf = ds["quality_flag"].squeeze()              # 0 altimetry+radiometry, 1 altimetry, 2 radiometry, 3 interpolated, 4 no sea ice
+    ocean = ds["density_of_ocean"]                 # ocean fraction per cell (0–1)
+
+    print(ds["time"].values, ds["time_bnds"].values)   # window centre and 7-day bounds
+
+    # Sea ice volume (km3) = cell area × ocean fraction × concentration × thickness (formula from the PUM)
+    cell_area = 12.5e3 * 12.5e3                    # m2
+    vol = (cell_area * ocean * sic / 100 * sit).sum() / 1e9
+    print(f"{float(vol):.0f} km3")
+
+    # Fraction of ice cells estimated from altimetry only, without SMOS (check RFI-affected seas)
+    ice = qf <= 3
+    print(float((qf == 1).sum() / ice.sum()))
+
+tips:
+  - >-
+    Differences from v206: the grid changed from 25 km EASE2 Northern Hemisphere (432 × 432) to 12.5 km EASE2 for both hemispheres (864 × 864,
+    EPSG:6931/6932), Sentinel-3A/B altimetry was added, and the SMOS input moved from v3.3 to v3.6. The land/ocean mask now matches the ESA CCI sea ice
+    products.
+  - >-
+    The uncertainty model has changed. Altimetry uncertainty now follows AWI v2.6, which separates systematic and random components, and is substantially
+    higher than in v206; SMOS uncertainty adds the effect of concentrations below 100% and has a 20 cm minimum. Larger uncertainties do not mean lower
+    quality, so do not filter v300 with thresholds tuned for v206.
+  - >-
+    The file format is simpler: v206 variables such as `analysis_sea_ice_thickness`, `background_sea_ice_thickness`, `innovation`, `smos_sea_ice_thickness`
+    and `cryosat_sea_ice_thickness` are gone, replaced by `sea_ice_thickness`, status and quality flags and the ocean fraction. File names also changed
+    (SMOS_CS2 → SMOS_CS2_S3A_S3B, 25KM → 12P5KM, v206 → v300), so existing scripts need updating.
+  - >-
+    Files on consecutive days are 7-day means that overlap by six days. For independent samples take every seventh file, and align dates using `time`
+    (window centre) or `time_bnds`.
+  - >-
+    The L4_SIT_Open collection on the ESA SMOS dissemination server stops in April 2025 (v206); get v300 from the AWI FTP server or Copernicus Marine.
+    The C3S Climate Data Store's 'Sea ice thickness gridded data for the Arctic' L4 (CryoSat-2, Sentinel-3, SMOS; Arctic October–April) is a separate
+    distribution, and the Copernicus Marine QUID states that the reprocessed version of this product is to be published in the Climate Data Store.
+
+citations:
+  dataset:
+    - label: Copernicus Marine distribution (SEAICE_GLO_PHY_L4_NRT_011_014)
+      text: >-
+        Sea Ice Thickness derived from merging of L-Band radiometry and radar altimeter derived sea ice thickness.
+        E.U. Copernicus Marine Service Information (CMEMS). Marine Data Store (MDS). DOI: 10.48670/moi-00125 (Accessed on DD MMM YYYY)
+      doi: 10.48670/moi-00125
+      bibtex: |
+        @misc{cmems_seaice_glo_phy_l4_nrt_011_014,
+          author       = {{E.U. Copernicus Marine Service Information (CMEMS)}},
+          title        = {Sea Ice Thickness derived from merging of {L-Band} radiometry and radar altimeter derived sea ice thickness ({SEAICE\_GLO\_PHY\_L4\_NRT\_011\_014})},
+          publisher    = {Marine Data Store (MDS)},
+          doi          = {10.48670/moi-00125},
+          note         = {Accessed on DD MMM YYYY}
+        }
+  papers:
+    - label: CS2SMOS/CS3SMOS merging method paper (citation requested by AWI)
+      text: >-
+        Ricker, R., Hendricks, S., Kaleschke, L., Tian-Kunze, X., King, J., and Haas, C. (2017): A weekly Arctic sea-ice thickness
+        data record from merged CryoSat-2 and SMOS satellite data. The Cryosphere, 11, 1607–1623.
+      doi: 10.5194/tc-11-1607-2017
+      bibtex: |
+        @article{ricker2017cs2smos,
+          author  = {Ricker, Robert and Hendricks, Stefan and Kaleschke, Lars and Tian-Kunze, Xiangshan and King, Jennifer and Haas, Christian},
+          title   = {A weekly {Arctic} sea-ice thickness data record from merged {CryoSat-2} and {SMOS} satellite data},
+          journal = {The Cryosphere},
+          volume  = {11},
+          number  = {4},
+          pages   = {1607--1623},
+          year    = {2017},
+          doi     = {10.5194/tc-11-1607-2017}
+        }
+    - label: SMOS Antarctic thin sea ice thickness paper (for Southern Hemisphere data; cited in the Copernicus Marine PUM)
+      text: >-
+        Kaleschke, L., Tian-Kunze, X., Hendricks, S., and Ricker, R. (2024): SMOS-derived Antarctic thin sea ice thickness:
+        data description and validation in the Weddell Sea. Earth System Science Data, 16, 3149–3170.
+      doi: 10.5194/essd-16-3149-2024
+      bibtex: |
+        @article{kaleschke2024smos_antarctic,
+          author  = {Kaleschke, Lars and Tian-Kunze, Xiangshan and Hendricks, Stefan and Ricker, Robert},
+          title   = {{SMOS}-derived {Antarctic} thin sea ice thickness: data description and validation in the {Weddell Sea}},
+          journal = {Earth System Science Data},
+          volume  = {16},
+          number  = {7},
+          pages   = {3149--3170},
+          year    = {2024},
+          doi     = {10.5194/essd-16-3149-2024}
+        }
+  acknowledgement: >-
+    Along with Ricker et al. (2017), AWI asks for the acknowledgement: "The production of the merged CryoSat-SMOS sea ice thickness data was funded by the
+    ESA project SMOS & CryoSat-2 Sea Ice Data Product Processing and Dissemination Service, and data from DATE to DATE were obtained from AWI." Check the
+    AWI CS2SMOS-PDS wiki for the current wording. As of October 2026 the official pages give no dataset DOI or method paper specific to v300.
+    If you downloaded from Copernicus Marine, add "This study has been conducted using E.U. Copernicus Marine Service Information" together with the DOI.
+
+notices:
+  - date: "2026-10-11"
+    level: info
+    title: Antarctic 2026 winter data updating on Copernicus Marine — 2026/27 Arctic season not yet announced
+    body: >-
+      The AWI wiki has no separate announcement of Southern Hemisphere L4 processing, but the Copernicus Marine Antarctic dataset is updated to the
+      2026-10-06 reference day (metadata updated 2026-10-11). Southern Hemisphere production runs to 15 October; as of 2026-10-12 the AWI wiki has not
+      announced the start of the 2026/27 Arctic season.
+    source: https://stac.marine.copernicus.eu/metadata/SEAICE_GLO_PHY_L4_NRT_011_014/esa_obs-si_ant_phy-sit_nrt_l4-multi_P1D-m_202411/dataset.stac.json
+  - date: "2026-04-21"
+    level: info
+    title: L4 CryoSat-2/Sentinel-3/SMOS (CS3SMOS) near real-time sea ice thickness processing ends for the Arctic 2025/26 winter season
+    body: >-
+      Arctic CS3SMOS near-real-time processing has concluded for the 2025/26 winter. The final map covers 9–15 April 2026, and Southern Hemisphere
+      operational processing is expected to begin soon. This is the normal end of a seasonal product, not an interruption.
+    source: https://spaces.awi.de/spaces/CS2SMOS/blog/2026/04/21/624500204/L4+CryoSat-2+Sentinel-3+SMOS+CS3SMOS+near+real-time+sea+ice+thickness+processing+ends+for+the+Arctic+2025+26+winter+season
+  - date: "2025-10-23"
+    level: warning
+    title: Degraded quality in the Barents, Kara and Laptev Seas due to SMOS radio-frequency interference (RFI)
+    body: >-
+      Frequent and persistent RFI in these seas removes SMOS thin-ice measurements. Thickness there depends on radar altimetry alone and may be higher than
+      SMOS-based estimates. Check cells with `quality_flag` = 1 (altimetry only).
+    source: https://spaces.awi.de/spaces/CS2SMOS/blog/2025/10/23/596052016/L4+CryoSat-2+Sentinel-3+SMOS+CS3SMOS+near+real-time+sea+ice+thickness+processing+has+started+for+the+Arctic+2025+26+winter+season
+  - date: "2025-10-23"
+    level: info
+    title: L4 CryoSat-2/Sentinel-3/SMOS near real-time sea ice thickness processing has started for the Arctic 2025/26 winter season (v300 replaces v206)
+    body: >-
+      From the 2025/26 Arctic winter the merged thickness product changes from v206 (CS2SMOS) to v300 (CS3SMOS). Key changes are added Sentinel-3
+      altimetry, a 12.5 km grid instead of 25 km, Antarctic winter thickness from April to October, and a new file format and content. The first weekly
+      field covers 15–21 October 2025.
+    source: https://spaces.awi.de/spaces/CS2SMOS/blog/2025/10/23/596052016/L4+CryoSat-2+Sentinel-3+SMOS+CS3SMOS+near+real-time+sea+ice+thickness+processing+has+started+for+the+Arctic+2025+26+winter+season
+  - date: "2025-10-16"
+    level: info
+    title: Sea ice concentration input switched from SSMIS (OSI-401) to AMSR2 (OSI-408)
+    body: >-
+      SSMIS data access became unreliable in summer 2025, so the auxiliary sea ice concentration input was switched on short notice to the AMSR2-based
+      OSI-408. The impact analysis found a negligible change in sea ice thickness, about 4 mm on average over one winter (Copernicus Marine QUID issue 2.2).
+    source: https://documentation.marine.copernicus.eu/QUID/CMEMS-SEAICE-QUID-011-014.pdf
+
+links:
+  - name: Copernicus Marine Product User Manual (PUM) — file header, variables, time convention
+    url: https://documentation.marine.copernicus.eu/PUM/CMEMS-SEAICE-PUM-011-014.pdf
+  - name: Copernicus Marine Quality Information Document (QUID) — validation and input changes
+    url: https://documentation.marine.copernicus.eu/QUID/CMEMS-SEAICE-QUID-011-014.pdf
+  - name: ESA LPS25 poster — 15 Years of Global Winter Sea Ice Thickness & Volume from CS3SMOS
+    url: https://lps25.esa.int/lps25-presentations/poster/15%20Years%20of%20Global%20Winter%20Sea%20ice%20Thickness%20&%20Volume%20from%20CryoSat-2,%20Sentinel-3AB%20and%20SMOS%20(CS3SMOS).pdf
+  - name: AWI Sea Ice Thickness from Satellite Radar Altimetry (CryoSat-2, Sentinel-3; altimetry input v2.6)
+    url: https://spaces.awi.de/spaces/SIRAL/pages/185827416/Sea+Ice+Thickness+from+Satellite+Radar+Altimetry
+  - name: ESA SMOS-CryoSat L4 Sea Ice Thickness catalogue (previous v206)
+    url: https://earth.esa.int/eogateway/catalog/smos-cryosat-l4-sea-ice-thickness
+
+watch_urls:
+  - https://spaces.awi.de/spaces/CS2SMOS/overview
+  - https://spaces.awi.de/spaces/CS2SMOS/pages/297634429/CryoSat-2+Sentinel-3+SMOS+Merged+Sea+Ice+Thickness
+  - https://data.marine.copernicus.eu/product/SEAICE_GLO_PHY_L4_NRT_011_014/description
+
+last_verified: "2026-10-12"

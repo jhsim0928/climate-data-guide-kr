@@ -4,7 +4,7 @@
 # 방문자가 GitHub 저장소로 가지 않도록 repo_url·edit_uri는 일부러 넣지 않았습니다.
 # ─────────────────────────────────────────────────────────────
 site_name: 기후데이터 길잡이
-site_description: 대기·해양·해빙·극지·원격탐사 연구자를 위한 데이터 출처, 받는 방법, 인용, 중단·변경 공지 모음
+site_description: ERA5·JRA-3Q·MERRA-2·OISST·GLORYS 등 기후·해양·해빙 자료의 받는 방법, 변수(순간값·평균·누적), 해상도, 논문 인용(DOI), 제공 중단·변경 공지를 한곳에 정리한 연구자용 가이드
 site_url: https://data4researchers.kr/
 copyright: 콘텐츠 CC BY 4.0 · 코드 MIT
 
@@ -103,6 +103,24 @@ extra:
         doi          = {10.5281/zenodo.23300923},
         url          = {https://doi.org/10.5281/zenodo.23300923}
       }
+
+  # 검색엔진 최적화(SEO) — 검색 등록 후 받은 확인 코드를 따옴표 안에 넣으면 됩니다 (README 'SEO' 참고)
+  seo:
+    base_ko: https://data4researchers.kr/
+    base_en: https://data4researchers.kr/en/
+    og_image: assets/og-ko.png
+    google_site_verification: ""
+    naver_site_verification: ""
+    bing_site_verification: ""
+
+  # 언어 선택 (오른쪽 위 메뉴). 영어판은 mkdocs.en.yml 로 site/en/ 에 따로 빌드합니다.
+  alternate:
+    - name: 한국어
+      link: /
+      lang: ko
+    - name: English
+      link: /en/
+      lang: en
 
   # 알림 신청·데이터셋 제안 폼을 보낼 주소. 비워두면 "준비 중"으로 표시됩니다.
   # 메일 알림을 시작할 때 Google Apps Script 웹앱 주소 등을 넣으면 바로 연결됩니다.

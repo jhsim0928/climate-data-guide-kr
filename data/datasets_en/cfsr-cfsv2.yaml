@@ -1,0 +1,301 @@
+# ─────────────────────────────────────────────────────────────
+# CFSR / CFSv2 — dataset information file (English edition)
+# ─────────────────────────────────────────────────────────────
+id: cfsr-cfsv2
+name: CFSR / CFSv2
+full_name: NCEP Climate Forecast System Reanalysis (CFSR) + CFS Version 2 Operational Analysis
+category: reanalysis
+domain: atmosphere
+group: 재분석
+order: 80
+domains: [대기, 해양, 해빙, 육지]
+provider: NOAA NCEP Environmental Modeling Center (EMC) (distributed by NOAA NCEI and NSF NCAR GDEX)
+
+status: active
+status_note: >-
+  The CFSR reanalysis (1979 to March 2011) is a fixed record; it is continued by the analyses of CFSv2, operational
+  since 30 March 2011. As of 2026-10-11, the CFSv2 6-hourly data at NCAR GDEX are updated daily and run to 11 October.
+  NOAA is developing a new coupled Seasonal Forecast System (SFS) to replace CFSv2, but as of 2026-10-11 no
+  implementation date and no end date for the CFSv2 analyses had been announced.
+
+transitions:
+  - from: CFSR (reanalysis)
+    to: CFSv2 operational analysis
+    status: completed
+    date: "2011-04"
+    summary: >-
+      The CFSR reanalysis was produced only through March 2011; later periods come from the real-time analyses of CFSv2,
+      which became operational on 30 March 2011. NCAR describes the CFSv2 products as an extension of CFSR from the same
+      model, but production changed, including an increase in atmospheric analysis resolution from T382 to T574. The two
+      can be used together from 1979 to the present, but they do not form a homogeneous reanalysis across 2011.
+    changes:
+      - aspect: Period
+        before: "1979-01-01 to 2011-03-31 (NCEI; NCAR d093000 ends in 2010-12)"
+        after: "2011-04-01 to present (NCEI; NCAR d094000 starts in 2011-01)"
+      - aspect: Production
+        before: "Reanalysis computed for the past period in one campaign"
+        after: "Operational real-time analysis that initialises the CFSv2 forecasts (updated daily at NCAR)"
+      - aspect: Atmospheric analysis horizontal resolution
+        before: "T382 (~38 km)"
+        after: "T574 (~27 km)"
+      - aspect: Vertical levels
+        before: "64 levels"
+        after: "64 hybrid sigma-pressure levels (unchanged)"
+      - aspect: Highest-resolution output grid
+        before: "Gaussian ~0.312° (1152 x 576)"
+        after: "Gaussian ~0.204° (1760 x 880)"
+      - aspect: Surface and radiative flux (FLX) grid
+        before: "Gaussian T382"
+        after: "Gaussian T574"
+      - aspect: Model
+        before: "Coupled CFS model (atmosphere, ocean, land, sea ice)"
+        after: "Same model as CFSR (per NCAR GDEX); ocean MOM4 with GODAS"
+      - aspect: Reforecasts
+        before: "CFSRR reanalysis and reforecasts available"
+        after: "NCEP states that the CFSRR will not be extended beyond March 2011; later forecasts exist only as operational output"
+      - aspect: Archived initial conditions and observation input
+        before: "High- and low-resolution initial conditions and full observation dumps for the whole period"
+        after: "High-resolution initial conditions and observation dumps archived at NCEI only for 2011-04 to 2014-12; low-resolution initial conditions to the present"
+      - aspect: Datasets and DOIs
+        before: "NCAR d093000 (6-hourly, doi:10.5065/D69K487J), d093002 (monthly, doi:10.5065/D6DN438J) / NCEI CFS Reanalysis"
+        after: "NCAR d094000 (6-hourly, doi:10.5065/D61C1TXF), d094002 (monthly, doi:10.5065/D69021ZF) / NCEI CFS Operational Analysis"
+    impacts:
+      - Resolution and production change around January–April 2011, so check for a step change there before joining 1979–present into one series. Take particular care with resolution-sensitive quantities such as precipitation, surface fluxes and extremes indices.
+      - "NCAR and NCEI split the record differently. NCAR ends CFSR in December 2010 and starts its CFSv2 dataset (d094000) in January 2011, whereas NCEI runs CFSR to March 2011 and the operational analysis from April. Mixing the two archives can duplicate or drop January–March 2011."
+      - The operational analysis is not recomputed for long-term homogeneity the way a reanalysis is. For trends after 2011, check your results against long reanalyses such as ERA5 or JRA-3Q.
+      - The high-resolution output grid changes (1152 x 576 → 1760 x 880), so files with the same name have different grid definitions. Regrid both periods to a common grid (e.g. 0.5°) before combining them.
+    sources:
+      - name: Saha et al. (2010), The NCEP Climate Forecast System Reanalysis, BAMS, 91, 1015–1057
+        url: https://doi.org/10.1175/2010BAMS3001.1
+      - name: Saha et al. (2014), The NCEP Climate Forecast System Version 2, J. Climate, 27, 2185–2208
+        url: https://doi.org/10.1175/JCLI-D-12-00823.1
+      - name: NWS Technical Implementation Notice 10-55, Amended (CFS changes effective 2011-03-30)
+        url: https://www.weather.gov/media/notification/tins/tin10-55cfs_aad.pdf
+      - name: NOAA NCEI — Climate Forecast System (CFSR and CFSv2 product table)
+        url: https://www.ncei.noaa.gov/products/weather-climate-models/climate-forecast-system
+      - name: NSF NCAR GDEX — CFSR 6-hourly (d093000)
+        url: https://gdex.ucar.edu/datasets/d093000/
+      - name: NSF NCAR GDEX — CFSv2 6-hourly (d094000)
+        url: https://gdex.ucar.edu/datasets/d094000/
+      - name: NCEP CFS version 2 page (CFSRR will not be extended beyond March 2011)
+        url: https://cfs.ncep.noaa.gov/cfsv2/
+
+period:
+  start: "1979-01"
+  end: present
+  note: >-
+    CFSR from January 1979 to March 2011 plus the CFSv2 operational analysis from April 2011 to the present (NCEI split).
+    NCAR GDEX splits the record differently: CFSR through December 2010 (d093000) and CFSv2 from January 2011 (d094000).
+
+resolution:
+  spatial_short: "56 km (0.5°)"
+  temporal_short: "1시간"
+  spatial: "Atmospheric analysis CFSR T382 (~38 km) → CFSv2 T574 (27 km) / output on 0.5°, 1.0° and 2.5° latitude-longitude and Gaussian grids / ocean 0.25° at the equator to 0.5° beyond the tropics"
+  vertical: "Atmosphere 64 levels / ocean 40 levels / soil 4 levels / sea ice 3 layers"
+  temporal: 6-hourly analyses (00, 06, 12, 18 UTC) with 1–6 (9) hour forecasts, hourly time series, monthly means
+update: CFSv2 analyses updated daily (NCAR GDEX d094000)
+license: NCAR GDEX copies under CC BY 4.0 (Creative Commons Attribution 4.0 International) / NOAA NCEI data are U.S. Government public data
+account_required: false
+
+summary: >-
+  Combines NCEP's third-generation reanalysis, CFSR, made with a coupled atmosphere-ocean-land-sea ice model, and the
+  analyses of CFSv2, which has run operationally with the same model since 2011. CFSR couples atmosphere and ocean during
+  the 6-hour guess forecast and assimilates satellite radiances directly, and it had the highest resolution of any NCEP
+  reanalysis of its time. Because full 3-D ocean fields are included, it is widely used for air-sea interaction studies
+  and for boundary conditions for regional models.
+
+time_convention:
+  summary: >-
+    CFSR and CFSv2 make an analysis every 6 hours (00, 06, 12, 18 UTC) and run 1–6 hour forecasts from it. Pressure-level
+    analyses (pgbh etc., f00) are instantaneous at the valid time. Averaged and accumulated fields such as precipitation, heat
+    fluxes and radiation come only from the forecasts, averaged or accumulated from the start of each 6-hour cycle to the
+    forecast hour (0–1, 0–2 … 0–6 h). Some fields, such as 2 m temperature and 10 m winds, are not analysed, so always check
+    the time description of each GRIB record (anl / N hour fcst / 0-N hour ave).
+  points:
+    - "Averaging and accumulation restart at the beginning of every 6-hour cycle. The f01–f05 averages in the hourly time series are 0–N hour averages, not instantaneous or one-hour values; for example, the 2–3 h average is 3 × (0–3 h average) − 2 × (0–2 h average) (NCEI CFSRR Known Issues)."
+    - "The hourly time series are built by concatenating the analysis with 1–5 hour forecasts, or 1–6 hour forecasts. The f00 record is a spin-up of the model physics lasting several minutes — it is not the analysis."
+    - "`PRATE`, `LHTFL`, `DSWRF` and similar fields are mean rates (kg m-2 s-1, W m-2); `APCP` is an accumulation (kg m-2 = mm). Multiply a mean rate by the interval length in seconds to get an amount."
+    - "`TMAX` and `TMIN` are the maximum and minimum within the forecast interval."
+    - "Monthly means (d093002, d094002, NCEI Monthly Means) average the same cycle and forecast step over the month. What is averaged depends on the cycle in the file name (e.g. .06Z); see the wgrib2 -fix_CFSv2_fcst notes."
+  source: https://www.ncei.noaa.gov/sites/default/files/2023-10/CFSRR-Known-Issues-Technical-Document-August-2011%20%282%29.pdf
+  source_name: "NOAA NCEI CFSRR Known Issues technical document (August 2011) + NCAR GDEX d093000 and d094001 descriptions"
+
+variables:
+  note: >-
+    Key fields from the NCAR GDEX d093000 GRIB2 parameter table and the NCEP GRIB2 code tables. Names are GRIB2 abbreviations
+    (as shown by wgrib2 and cfgrib). Pressure-level fields are mostly in the PGB files (pgbh, pgbl) and surface and radiative
+    fluxes in the FLX files (flxf); not all parameters are available at all resolutions.
+  full_list: https://gdex.ucar.edu/datasets/d093000/metadata/grib2.xml
+  groups:
+    - name: Pressure levels (PGB)
+      kind: instant
+      items:
+        - "Temperature — `TMP` (K)"
+        - "Geopotential height — `HGT` (gpm)"
+        - "U- and V-component of wind — `UGRD`, `VGRD` (m s-1)"
+        - "Vertical velocity (pressure) — `VVEL` (Pa s-1)"
+        - "Specific humidity — `SPFH` (kg kg-1)"
+        - "Relative humidity — `RH` (%)"
+        - "Potential temperature — `POT` (K)"
+    - name: Surface and single level
+      kind: instant
+      items:
+        - "Pressure reduced to MSL — `PRMSL` (Pa)"
+        - "Surface pressure — `PRES` (Pa)"
+        - "Precipitable water — `PWAT` (kg m-2)"
+        - text: "Dew point temperature — `DPT` (K)"
+          kind: instant
+          note: "Values such as 2 m may be unanalysed forecasts (NCAR: 2 m temperature and 10 m winds are not analysed)"
+        - text: "Maximum / minimum temperature — `TMAX`, `TMIN` (K)"
+          kind: max
+          period: Forecast interval (0–N h)
+          note: "TMAX is the interval maximum and TMIN the interval minimum (kind is set for the maximum). Reset every 6-hour cycle"
+        - "Ice cover — `ICEC` (fraction)"
+        - text: "Planetary boundary layer height — `HPBL` (m)"
+          kind: instant
+          note: "Diagnosed during the forecast step. Check the record's time description to see whether it is instantaneous or averaged"
+    - name: Fluxes, precipitation and cloud (FLX)
+      kind: mean
+      period: Forecast start to valid time (up to 6 h)
+      items:
+        - "Precipitation rate — `PRATE` (kg m-2 s-1)"
+        - text: "Total precipitation — `APCP` (kg m-2)"
+          kind: accum
+          period: Forecast start to valid time (up to 6 h)
+          note: "Accumulation restarts from zero every 6-hour cycle"
+        - "Latent and sensible heat net flux — `LHTFL`, `SHTFL` (W m-2)"
+        - "Downward short-wave and long-wave radiation flux — `DSWRF`, `DLWRF` (W m-2)"
+        - "Upward short-wave and long-wave radiation flux — `USWRF`, `ULWRF` (W m-2)"
+        - "Momentum flux, u and v components — `UFLX`, `VFLX` (N m-2)"
+        - text: "Total cloud cover — `TCDC` (%)"
+          kind: mean
+          period: Forecast start to valid time (up to 6 h)
+          note: "We could not confirm from the CFSR documentation which levels are averaged and which are instantaneous. This follows the general rule for FLX files (interval mean), so check the record's time description"
+    - name: Land and snow
+      kind: instant
+      items:
+        - "Volumetric soil moisture content — `SOILW` (fraction)"
+        - "Water equivalent of accumulated snow depth — `WEASD` (kg m-2)"
+        - "Snow depth — `SNOD` (m)"
+
+access:
+  - name: NSF NCAR GDEX — CFSR 6-hourly products (d093000)
+    url: https://gdex.ucar.edu/datasets/d093000/
+    method: Web download / subsetting and format conversion
+    note: 1979-01 to 2010-12, GRIB2, about 56 TB. Monthly means are in d093002 and other product groups in d093001. Subsetting and similar services require an NCAR account.
+  - name: NSF NCAR GDEX — CFSv2 6-hourly products (d094000)
+    url: https://gdex.ucar.edu/datasets/d094000/
+    method: Web download / subsetting and format conversion
+    note: 2011-01 to present, updated daily, GRIB2. Monthly means are in d094002 and hourly time series in d094001.
+  - name: NOAA NCEI — Climate Forecast System (CFSR and CFSv2 analyses and forecasts)
+    url: https://www.ncei.noaa.gov/products/weather-climate-models/climate-forecast-system
+    method: HTTPS / THREDDS / ERDDAP (monthly means)
+    note: >-
+      CFS Reanalysis covers 1979-01-01 to 2011-03-31 and the CFSv2 Operational Analysis 2011-04-01 to present. Pick the product
+      group (PGB, FLX, OCN, etc.) and grid from the product table. NCEI notes that it is moving its data and applications to the
+      cloud, so access may be intermittently degraded.
+  - name: NOAA NCEI THREDDS — CFSR 6-hourly pressure levels (PGB), example
+    url: https://www.ncei.noaa.gov/thredds/catalog/model-cfs_reanl_6h_pgb/catalog.html
+    method: THREDDS / OPeNDAP
+  - name: NCEP NOMADS — CFS real-time rolling 7-day archive
+    url: https://nomads.ncep.noaa.gov/pub/data/nccf/com/cfs/prod/
+    method: HTTPS (last 7 days only)
+
+tips:
+  - "NCAR notes that some parameters, such as 2 m temperature and 10 m winds, are not analysed but come from the forecast. Choose between the analysis and forecast steps (+00, +01 to +06) deliberately."
+  - "NCEI notice (18 February 2010): some CFSR time-series files downloaded before 22 UTC on 18 February 2010 (28 of the 73 file types) have wrong GRIB metadata that makes averages read as instantaneous values. Download those files again."
+  - "The f00 records in the CFSR time series are model spin-up, not the analysis (NCEI Known Issues). The same document says not to use `tmpsfc` from the ipv files and to take it from the flx files instead."
+  - Resolution and dataset change at the 2011 boundary, so pick either the NCAR or the NCEI split and align your periods to it before any long-term analysis.
+
+citations:
+  dataset:
+    - label: NCAR GDEX CFSR 6-hourly products (d093000)
+      text: >-
+        NCEP Climate Forecast System Reanalysis (CFSR) 6-hourly Products, January 1979 to December 2010.
+        NSF NCAR Geoscience Data Exchange (GDEX). https://doi.org/10.5065/D69K487J (Accessed DD MMM YYYY)
+        — copy the exact format, including authors and year, from the Citation tab on the GDEX dataset page.
+      doi: 10.5065/D69K487J
+    - label: NCAR GDEX CFSv2 6-hourly products (d094000)
+      text: >-
+        NCEP Climate Forecast System Version 2 (CFSv2) 6-hourly Products.
+        NSF NCAR Geoscience Data Exchange (GDEX). https://doi.org/10.5065/D61C1TXF (Accessed DD MMM YYYY)
+      doi: 10.5065/D61C1TXF
+  papers:
+    - label: CFSR reference paper
+      text: >-
+        Saha, S., Moorthi, S., Pan, H.-L., Wu, X., Wang, J., Nadiga, S., Tripp, P., Kistler, R., Woollen, J., Behringer, D., et al. (2010):
+        The NCEP Climate Forecast System Reanalysis. Bulletin of the American Meteorological Society, 91(8), 1015–1057.
+      doi: 10.1175/2010BAMS3001.1
+      bibtex: |
+        @article{saha2010cfsr,
+          author  = {Saha, Suranjana and Moorthi, Shrinivas and Pan, Hua-Lu and Wu, Xingren and Wang, Jiande and Nadiga, Sudhir and Tripp, Patrick and Kistler, Robert and Woollen, John and Behringer, David and others},
+          title   = {The {NCEP} Climate Forecast System Reanalysis},
+          journal = {Bulletin of the American Meteorological Society},
+          volume  = {91},
+          number  = {8},
+          pages   = {1015--1057},
+          year    = {2010},
+          doi     = {10.1175/2010BAMS3001.1}
+        }
+    - label: CFSv2 paper (when using analyses from 2011 onwards)
+      text: >-
+        Saha, S., Moorthi, S., Wu, X., Wang, J., et al. (2014): The NCEP Climate Forecast System Version 2.
+        Journal of Climate, 27(6), 2185–2208.
+      doi: 10.1175/JCLI-D-12-00823.1
+      bibtex: |
+        @article{saha2014cfsv2,
+          author  = {Saha, Suranjana and Moorthi, Shrinivas and Wu, Xingren and Wang, Jiande and others},
+          title   = {The {NCEP} Climate Forecast System Version 2},
+          journal = {Journal of Climate},
+          volume  = {27},
+          number  = {6},
+          pages   = {2185--2208},
+          year    = {2014},
+          doi     = {10.1175/JCLI-D-12-00823.1}
+        }
+  acknowledgement: >-
+    Cite Saha et al. (2010) if you used only 1979–2010 (or to March 2011), and add Saha et al. (2014) if you also used the
+    analyses from 2011 onwards. Give the DOI of each NCAR dataset you used, or, for NCEI downloads, the NCEI product page and your access date.
+
+notices:
+  - date: "2011-08"
+    level: info
+    title: CFSRR Known Issues technical document released
+    body: >-
+      NCEI provides the August 2011 document listing known issues in the CFSR and reforecast files: the f00 time-series records
+      are not the analysis, a precision problem in some monthly means, tmpsfc in the ipv files should not be used, and mislabelled
+      isotherm levels in the ocean files, among others.
+    source: https://www.ncei.noaa.gov/sites/default/files/2023-10/CFSRR-Known-Issues-Technical-Document-August-2011%20%282%29.pdf
+  - date: "2011-04-18"
+    level: info
+    title: "Amended: Climate Forecast System (CFS) changes effective March 30, 2011 (TIN 10-55)"
+    body: >-
+      NWS confirmed that CFSv2 became operational beginning with the 1200 UTC cycle on 30 March 2011 and that the original CFS
+      will continue to run through June 2012. The analysis moves to T574 (27 km) with 64 hybrid sigma-pressure levels, the
+      atmospheric forecast model to T126 (100 km), and the ocean to the global MOM4.
+    source: https://www.weather.gov/media/notification/tins/tin10-55cfs_aad.pdf
+  - date: "2010-02-18"
+    level: warning
+    title: GRIB2 metadata issue in CFSR time-series files corrected
+    body: >-
+      A format conversion issue affected the metadata in non-instantaneous CFSR time-series files (28 of the 73 file types), so
+      averaging and accumulation intervals were recorded as instantaneous. Corrected files were in place by 22 UTC on 18 February 2010;
+      download again any files obtained earlier (the data values themselves are valid).
+    source: https://www.ncei.noaa.gov/products/weather-climate-models/climate-forecast-system
+
+links:
+  - name: NCEP EMC — Climate Forecast System
+    url: https://emc.ncep.noaa.gov/emc/pages/numerical_forecast_systems/cfs.php
+  - name: NCEP CFS version 2
+    url: https://cfs.ncep.noaa.gov/cfsv2/
+  - name: NCAR Climate Data Guide — CFSR
+    url: https://climatedataguide.ucar.edu/climate-data/climate-forecast-system-reanalysis-cfsr
+  - name: NOAA Seasonal Forecast System (SFS) development (planned CFSv2 successor)
+    url: https://vlab.noaa.gov/web/osti-modeling/seasonal-forecast-system
+
+watch_urls:
+  - https://www.weather.gov/notification/
+  - https://gdex.ucar.edu/datasets/d094000/
+  - https://www.ncei.noaa.gov/products/weather-climate-models/climate-forecast-system
+
+last_verified: "2026-10-11"

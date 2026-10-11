@@ -1,5 +1,8 @@
 // 자료 비교 · 공지 필터 · 페이지별 "정보 오류 신고" 링크
 (function () {
+  // 영어판(/en/)이면 영어 문구를 씁니다
+  var IS_EN = (document.documentElement.lang || "").toLowerCase().indexOf("en") === 0;
+  function L(ko, en) { return IS_EN ? en : ko; }
   function esc(s) {
     return String(s).replace(/[&<>"']/g, function (c) {
       return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
@@ -30,20 +33,21 @@
     if (params.get("v")) q.value = params.get("v");
 
     var ROWS = [
-      ["분류", function (d) { return esc(d.domain + " › " + d.group); }],
-      ["상태", function (d) { return d.status; }],
-      ["제공 기관", function (d) { return esc(d.provider); }],
-      ["기간", function (d) { return esc(d.period); }],
-      ["제공 해상도", function (d) { return esc(d.spatial) + ' <span class="hint">(km는 적도 기준 근사)</span>'; }],
-      ["시간 간격", function (d) { return esc(d.temporal_s); }],
-      ["연직 해상도", function (d) { return esc(d.vertical); }],
-      ["시간 간격 (세부)", function (d) { return esc(d.temporal); }],
-      ["갱신 주기", function (d) { return esc(d.update); }],
-      ["계정 필요", function (d) { return esc(d.account); }],
-      ["대표 DOI", function (d) {
+      [L("분류", "Section"), function (d) { return esc(d.domain + " › " + d.group); }],
+      [L("상태", "Status"), function (d) { return d.status; }],
+      [L("제공 기관", "Provider"), function (d) { return esc(d.provider); }],
+      [L("기간", "Period"), function (d) { return esc(d.period); }],
+      [L("제공 해상도 (단순 비교)", "Provided resolution (simplified)"), function (d) { return esc(d.spatial) + ' <span class="hint">' + L("(km는 적도 기준 근사)", "(km approximate at the equator)") + '</span>'; }],
+      [L("시간 간격 (단순 비교)", "Interval (simplified)"), function (d) { return esc(d.temporal_s); }],
+      [L("수평 해상도 (공식)", "Horizontal resolution (official)"), function (d) { return esc(d.spatial_d); }],
+      [L("연직 해상도", "Vertical resolution"), function (d) { return esc(d.vertical); }],
+      [L("시간 해상도 (공식)", "Temporal resolution (official)"), function (d) { return esc(d.temporal); }],
+      [L("갱신 주기", "Update frequency"), function (d) { return esc(d.update); }],
+      [L("계정 필요", "Account required"), function (d) { return esc(d.account); }],
+      [L("대표 DOI", "Key DOIs"), function (d) {
         return d.doi.map(function (x) { return '<a href="https://doi.org/' + esc(x) + '" target="_blank" rel="noopener">' + esc(x) + "</a>"; }).join("<br>") || "-";
       }],
-      ["후속 자료", function (d) { return esc(d.successor); }]
+      [L("후속 자료", "Successor"), function (d) { return esc(d.successor); }]
     ];
 
     function matches(d, term) {
@@ -73,19 +77,19 @@
       }
       empty.hidden = true;
       var ds = ids.map(function (id) { return byId[id]; });
-      var h = "<thead><tr><th>항목</th>" + ds.map(function (d) {
+      var h = "<thead><tr><th>" + L("항목", "Item") + "</th>" + ds.map(function (d) {
         return '<th><a href="../datasets/' + d.id + '/"><span class="notranslate" translate="no">' + esc(d.name) + "</span></a></th>";
       }).join("") + "</tr></thead><tbody>";
       ROWS.forEach(function (r) {
         h += "<tr><th scope=\"row\">" + r[0] + "</th>" + ds.map(function (d) { return "<td>" + r[1](d) + "</td>"; }).join("") + "</tr>";
       });
       if (term) {
-        h += '<tr class="cmp-var-row"><th scope="row">변수 찾기<br><span class="hint">“' + esc(term) + "”</span></th>" + ds.map(function (d) {
+        h += '<tr class="cmp-var-row"><th scope="row">' + L("변수 찾기", "Find a variable") + '<br><span class="hint">“' + esc(term) + "”</span></th>" + ds.map(function (d) {
           var m = matches(d, term);
-          if (!m.length) return '<td><span class="hint">정리된 변수 중 없음</span></td>';
+          if (!m.length) return '<td><span class="hint">' + L("정리된 변수 중 없음", "No matching variable listed") + '</span></td>';
           return "<td><ul class=\"cmp-vars\">" + m.slice(0, 8).map(function (x) {
             return "<li>" + codeText(x.it.t) + " " + (x.it.b || "") + '<br><span class="hint">' + esc(x.g) + "</span></li>";
-          }).join("") + (m.length > 8 ? '<li class="hint">외 ' + (m.length - 8) + "개</li>" : "") + "</ul></td>";
+          }).join("") + (m.length > 8 ? '<li class="hint">' + L("외 " + (m.length - 8) + "개", "+ " + (m.length - 8) + " more") + "</li>" : "") + "</ul></td>";
         }).join("") + "</tr>";
       }
       table.innerHTML = h + "</tbody>";
@@ -120,7 +124,7 @@
         tr.hidden = !ok;
         if (ok) n++;
       });
-      count.textContent = n + "건 표시 중";
+      count.textContent = L(n + "건 표시 중", n + " shown");
       emptyMsg.hidden = n !== 0;
       try {
         var p = new URLSearchParams(location.search);
@@ -150,17 +154,17 @@
     dlg.className = "report-dialog md-typeset";
     dlg.innerHTML =
       '<form method="dialog" class="cdg-form" novalidate>' +
-      '<h2>정보 오류 신고</h2>' +
-      '<p class="hint">페이지: <strong class="rp-title"></strong></p>' +
-      '<label class="field">어떤 정보가 틀렸나요? <em>필수</em>' +
-      '<textarea name="wrong" rows="3" placeholder="예) 제공 기간 끝이 2023-12로 되어 있는데 실제로는 갱신이 계속되고 있어요"></textarea></label>' +
-      '<label class="field">올바른 정보 (선택)<textarea name="correct" rows="2"></textarea></label>' +
-      '<label class="field">근거가 되는 공식 출처 링크 (선택)<input type="url" name="source" placeholder="https://"></label>' +
-      '<label class="field">답변 받을 이메일 (선택)<input type="email" name="contact" placeholder="name@example.ac.kr" autocomplete="email"></label>' +
-      '<div class="hp-field" aria-hidden="true"><label>웹사이트 (비워 두세요)<input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>' +
+      '<h2>' + L("정보 오류 신고", "Report an error") + '</h2>' +
+      '<p class="hint">' + L("페이지", "Page") + ': <strong class="rp-title"></strong></p>' +
+      '<label class="field">' + L("어떤 정보가 틀렸나요? <em>필수</em>", "What is wrong? <em>required</em>") +
+      '<textarea name="wrong" rows="3" placeholder="' + L("예) 제공 기간 끝이 2023-12로 되어 있는데 실제로는 갱신이 계속되고 있어요", "e.g. The period ends 2023-12 here, but the dataset is still being updated") + '"></textarea></label>' +
+      '<label class="field">' + L("올바른 정보 (선택)", "Correct information (optional)") + '<textarea name="correct" rows="2"></textarea></label>' +
+      '<label class="field">' + L("근거가 되는 공식 출처 링크 (선택)", "Link to the official source (optional)") + '<input type="url" name="source" placeholder="https://"></label>' +
+      '<label class="field">' + L("답변 받을 이메일 (선택)", "Your email for a reply (optional)") + '<input type="email" name="contact" placeholder="name@example.ac.kr" autocomplete="email"></label>' +
+      '<div class="hp-field" aria-hidden="true"><label>' + L("웹사이트 (비워 두세요)", "Website (leave empty)") + '<input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>' +
       '<div class="form-actions">' +
-      '<button type="submit" value="send" class="md-button md-button--primary rp-send">보내기</button>' +
-      '<button type="button" class="md-button rp-close">닫기</button></div>' +
+      '<button type="submit" value="send" class="md-button md-button--primary rp-send">' + L("보내기", "Send") + '</button>' +
+      '<button type="button" class="md-button rp-close">' + L("닫기", "Close") + '</button></div>' +
       '<p class="form-message" role="status" aria-live="polite"></p>' +
       '<p class="hint rp-mail"></p>' +
       "</form>";
@@ -174,21 +178,21 @@
       e.preventDefault();
       var get = function (n) { return form.elements[n].value.trim(); };
       var endpoint = meta("cdg-report-endpoint");
-      if (!get("wrong")) return say("어떤 정보가 틀렸는지 적어주세요.", "error");
-      if (get("contact") && !form.elements.contact.checkValidity()) return say("이메일 주소를 확인해 주세요.", "error");
-      if (!endpoint) return say("지금은 아래 메일 주소로 보내주세요.", "info");
+      if (!get("wrong")) return say(L("어떤 정보가 틀렸는지 적어주세요.", "Please describe what is wrong."), "error");
+      if (get("contact") && !form.elements.contact.checkValidity()) return say(L("이메일 주소를 확인해 주세요.", "Please check the email address."), "error");
+      if (!endpoint) return say(L("지금은 아래 메일 주소로 보내주세요.", "For now, please email the address below."), "info");
       var btn = form.querySelector(".rp-send");
       btn.disabled = true;
-      say("보내는 중…", "info");
+      say(L("보내는 중…", "Sending…"), "info");
       fetch(endpoint, { method: "POST", mode: "no-cors", body: new URLSearchParams({
         type: "report", title: dlg.dataset.title, page: dlg.dataset.page,
         wrong: get("wrong"), correct: get("correct"), source: get("source"),
-        contact: get("contact"), website: get("website"), requested_at: new Date().toISOString()
+        contact: get("contact"), website: get("website"), lang: IS_EN ? "en" : "ko", requested_at: new Date().toISOString()
       }) }).then(function () {
         form.reset();
-        say("신고를 보냈습니다. 고맙습니다! 공식 출처를 확인한 뒤 고치겠습니다.", "success");
+        say(L("신고를 보냈습니다. 고맙습니다! 공식 출처를 확인한 뒤 고치겠습니다.", "Thank you! Your report was sent. We will check the official source and fix it."), "success");
       }).catch(function () {
-        say("보내지 못했습니다. 아래 메일 주소로 보내주세요.", "error");
+        say(L("보내지 못했습니다. 아래 메일 주소로 보내주세요.", "Sending failed. Please email the address below."), "error");
       }).then(function () { btn.disabled = false; });
     });
     return dlg;
@@ -206,10 +210,10 @@
     box.innerHTML = "";
     if (mail) {
       var a = document.createElement("a");
-      a.href = "mailto:" + mail + "?" + "subject=" + encodeURIComponent("[정보 오류] " + dlg.dataset.title) +
-        "&body=" + encodeURIComponent("페이지: " + page + "\n\n어떤 정보가 틀렸나요?\n\n올바른 정보\n\n근거 출처\n");
+      a.href = "mailto:" + mail + "?" + "subject=" + encodeURIComponent(L("[정보 오류] ", "[Error report] ") + dlg.dataset.title) +
+        "&body=" + encodeURIComponent(L("페이지: " + page + "\n\n어떤 정보가 틀렸나요?\n\n올바른 정보\n\n근거 출처\n", "Page: " + page + "\n\nWhat is wrong?\n\nCorrect information\n\nOfficial source\n"));
       a.textContent = mail;
-      box.append("메일로 직접 보내셔도 됩니다: ", a);
+      box.append(L("메일로 직접 보내셔도 됩니다: ", "You can also email: "), a);
     }
     if (dlg.showModal) dlg.showModal(); else dlg.setAttribute("open", "");
     var first = dlg.querySelector("textarea");
@@ -222,8 +226,8 @@
       var bar = document.createElement("div");
       bar.className = "report-bar";
       bar.innerHTML =
-        '<span>이 페이지에서 틀린 정보나 바뀐 내용을 발견하셨나요?</span> ' +
-        '<a class="act act-report" href="#report">정보 오류 신고</a>';
+        '<span>' + L("이 페이지에서 틀린 정보나 바뀐 내용을 발견하셨나요?", "Found something wrong or outdated on this page?") + '</span> ' +
+        '<a class="act act-report" href="#report">' + L("정보 오류 신고", "Report an error") + '</a>';
       inner.appendChild(bar);
     }
     inner.querySelectorAll(".act-report:not([data-bound])").forEach(function (a) {
@@ -260,13 +264,13 @@
     bar.className = "pick-bar";
     bar.hidden = true;
     bar.innerHTML = '<span class="pick-count"></span>' +
-      '<a class="pick-go" href="#">선택한 자료 비교하기</a>' +
-      '<button type="button" class="pick-clear">선택 해제</button>';
+      '<a class="pick-go" href="#">' + L("선택한 자료 비교하기", "Compare selected") + '</a>' +
+      '<button type="button" class="pick-clear">' + L("선택 해제", "Clear") + '</button>';
     document.body.appendChild(bar);
     function update() {
       bar.hidden = picked.length === 0;
       bar.querySelector(".pick-count").textContent =
-        picked.length + "개 선택" + (picked.length < 2 ? " — 1개 더 고르세요" : "") + " (최대 4개)";
+        L(picked.length + "개 선택" + (picked.length < 2 ? " — 1개 더 고르세요" : "") + " (최대 4개)", picked.length + " selected" + (picked.length < 2 ? " — pick one more" : "") + " (max 4)");
       var go = bar.querySelector(".pick-go");
       go.href = target + "?ids=" + picked.join(",");
       go.classList.toggle("is-disabled", picked.length < 2);
@@ -279,19 +283,19 @@
       var th = document.createElement("th");
       th.className = "pick-col";
       th.setAttribute("data-nosort", "1");
-      th.innerHTML = '<span title="체크해서 비교">비교</span>';
+      th.innerHTML = '<span title="' + L("체크해서 비교", "Tick to compare") + '">' + L("비교", "Compare") + '</span>';
       table.tHead.rows[0].insertBefore(th, table.tHead.rows[0].firstChild);
       Array.prototype.forEach.call(table.tBodies[0].rows, function (tr) {
         var td = document.createElement("td");
         td.className = "pick-col";
-        td.innerHTML = '<input type="checkbox" class="pick-box" value="' + esc(tr.dataset.id) + '" aria-label="비교에 담기">';
+        td.innerHTML = '<input type="checkbox" class="pick-box" value="' + esc(tr.dataset.id) + '" aria-label="' + L("비교에 담기", "Add to comparison") + '">';
         tr.insertBefore(td, tr.firstChild);
       });
       w.addEventListener("change", function (e) {
         if (!e.target.classList.contains("pick-box")) return;
         var id = e.target.value, i = picked.indexOf(id);
         if (e.target.checked && i === -1) {
-          if (picked.length >= 4) { e.target.checked = false; alert("한 번에 4개까지 비교할 수 있어요."); return; }
+          if (picked.length >= 4) { e.target.checked = false; alert(L("한 번에 4개까지 비교할 수 있어요.", "You can compare up to four datasets at a time.")); return; }
           picked.push(id);
         } else if (!e.target.checked && i !== -1) {
           picked.splice(i, 1);
@@ -312,7 +316,7 @@
       th.classList.add("sort-th");
       th.setAttribute("tabindex", "0");
       th.setAttribute("aria-sort", "none");
-      th.title = (th.title ? th.title + " — " : "") + "눌러서 정렬";
+      th.title = (th.title ? th.title + " — " : "") + L("눌러서 정렬", "Click to sort");
       function sort() {
         var asc = th.getAttribute("aria-sort") !== "ascending";
         Array.prototype.forEach.call(head.cells, function (o) { if (o.classList.contains("sort-th")) o.setAttribute("aria-sort", "none"); });
@@ -361,7 +365,19 @@
     if (location.hash) show(decodeURIComponent(location.hash.slice(1)), true);
   }
 
+  // ── 언어 선택: 지금 보고 있는 페이지의 다른 언어판으로 바로 이동 (두 판의 주소 구조가 같음) ──
+  function setupLangSwitch() {
+    var path = location.pathname;
+    var rel = path.indexOf("/en/") === 0 ? path.slice(3) : path;  // 한국어판 기준 경로
+    document.querySelectorAll(".md-select__link[hreflang]").forEach(function (a) {
+      var lang = a.getAttribute("hreflang");
+      if (lang === "en") a.setAttribute("href", "/en" + rel + location.search);
+      else if (lang === "ko") a.setAttribute("href", rel + location.search);
+    });
+  }
+
   function init() {
+    setupLangSwitch();
     setupGenerations();
     setupPickCompare();
     setupSortableTables();
