@@ -12,7 +12,7 @@ hide:
 
 A one-stop guide for atmospheric, ocean, sea-ice, polar and remote-sensing researchers: **where each dataset comes from, how to download it, the period it covers, which variables it offers, what to cite, and the latest discontinuation and change notices**.
 
-This site does not host any data. Every entry links to the official source. <!-- DATASET_COUNT --> datasets are documented so far.
+This site does not host any data. Every entry links to the official source. <!-- DATASET_COUNT --> datasets are documented so far (<!-- DOMAIN_COUNTS -->; some appear under two domains).
 
 !!! warning "Please read before use"
     <!-- DISCLAIMER -->

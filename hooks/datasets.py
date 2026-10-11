@@ -1202,6 +1202,18 @@ def feedback_form(config) -> str:
     )
 
 
+def domain_counts(datasets: list[dict]) -> str:
+    """홈 소개 문구용 분야별 개수 (메뉴 기준: 교차 수록 포함) — 예) 대기 29 · 해양 21 · 해빙 16"""
+    n = {k: 0 for k in DOMAINS}
+    for (dom, _g), entries in placements(datasets).items():
+        n[dom] = n.get(dom, 0) + len(entries)
+    parts = []
+    for k, v in n.items():
+        label = domain_label(k)
+        parts.append(f"{label.lower() if is_en() else label} {v}")
+    return " · ".join(parts)
+
+
 def on_page_markdown(markdown, page, config, files):
     if "<!-- SUBSCRIBE_FORM -->" in markdown:
         markdown = markdown.replace("<!-- SUBSCRIBE_FORM -->", subscribe_form(config))
@@ -1221,6 +1233,8 @@ def on_page_markdown(markdown, page, config, files):
         markdown = markdown.replace("<!-- DISCLAIMER -->", disclaimer())
     if "<!-- DATASET_COUNT -->" in markdown:
         markdown = markdown.replace("<!-- DATASET_COUNT -->", str(len(_datasets)))
+    if "<!-- DOMAIN_COUNTS -->" in markdown:
+        markdown = markdown.replace("<!-- DOMAIN_COUNTS -->", domain_counts(_datasets))
     if "<!-- SITE_CITATION -->" in markdown:
         c = (config.get("extra") or {}).get("site_citation") or {}
         markdown = markdown.replace("<!-- SITE_CITATION -->", "\n".join(site_citation_lines(c if isinstance(c, dict) else {})))
