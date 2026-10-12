@@ -88,7 +88,7 @@ Information on the datasets used in this study was compiled with the help of the
 ```bibtex
 @misc{sim2026kcdn,
   author    = {Sim, Ji-Han},
-  title     = {Korean Climate Data Navigator},
+  title     = {Korean Climate Data Navigator ({KCDN})},
   year      = {2026},
   publisher = {Zenodo},
   doi       = {10.5281/zenodo.23300923},
