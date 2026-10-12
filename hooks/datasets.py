@@ -373,6 +373,73 @@ def order_in_group(items: list, ds=lambda x: x) -> list:
     return sorted(items, key=key)
 
 
+# ── 표준 변수 (data/variables.yaml) ─────────────────────────────
+_STD: dict | None = None
+
+
+def std_vars() -> dict:
+    """표준 변수 목록과 정규식을 읽어 둠"""
+    global _STD
+    if _STD is None:
+        raw = yaml.safe_load((DATA_DIR.parent / "variables.yaml").read_text(encoding="utf-8"))
+        concepts = []
+        for g in raw["groups"]:
+            for c in g["items"]:
+                c = dict(c, group=g["name"])
+                c["_inc"] = [re.compile(x, re.I) for x in c.get("include") or []]
+                c["_exc"] = [re.compile(x, re.I) for x in c.get("exclude") or []]
+                concepts.append(c)
+        _STD = {"skip": re.compile(raw.get("skip") or "$^"), "concepts": concepts,
+                "by_id": {c["id"]: c for c in concepts}}
+    return _STD
+
+
+def std_tags(d: dict, text: str, explicit=None) -> list[str]:
+    """한국어 변수 설명 하나 → 표준 변수 id 목록. explicit(YAML의 std)가 있으면 그대로 씀"""
+    sv = std_vars()
+    if explicit is not None:
+        ids = explicit if isinstance(explicit, list) else [explicit]
+        bad = [i for i in ids if i not in sv["by_id"]]
+        if bad:
+            raise PluginError(f"{d['id']}: 변수 std에 없는 표준 변수 id {bad}")
+        return list(ids)
+    if sv["skip"].search(text):
+        return []
+    doms = {d["domain"]} | {x["domain"] for x in d.get("also_in") or []}
+    out = []
+    for c in sv["concepts"]:
+        if c.get("domains") and not doms & set(c["domains"]):
+            continue
+        if c.get("dataset_groups") and d.get("group") not in c["dataset_groups"]:
+            continue
+        if any(r.search(text) for r in c["_inc"]) and not any(r.search(text) for r in c["_exc"]):
+            out.append(c["id"])
+    return out
+
+
+def std_tag_dataset(d: dict) -> list[list[list[str]]]:
+    """자료 하나의 변수 그룹·항목별 표준 변수 id (영어판은 같은 자리의 한국어 항목으로 판정)"""
+    ko = d
+    if is_en():
+        ko = next((k for k in _ko_datasets if k["id"] == d["id"]), d)
+    out = []
+    groups = (d.get("variables") or {}).get("groups") or []
+    kgroups = (ko.get("variables") or {}).get("groups") or []
+    for gi, g in enumerate(groups):
+        row = []
+        for ii, it in enumerate(g.get("items") or []):
+            try:
+                kit = kgroups[gi]["items"][ii]
+            except (IndexError, KeyError):
+                row.append([])
+                continue
+            text = kit if isinstance(kit, str) else kit.get("text", "")
+            explicit = kit.get("std") if isinstance(kit, dict) and "std" in kit else None
+            row.append(std_tags(ko, text, explicit))
+        out.append(row)
+    return out
+
+
 def sort_datasets(ds_list: list[dict]) -> list[dict]:
     out = []
     for dom, (_label, groups) in DOMAINS.items():
@@ -916,11 +983,12 @@ def compare_data(datasets: list[dict]) -> list[dict]:
         cit = d["citations"]
         dois = [c["doi"] for c in (cit.get("dataset") or []) + (cit.get("papers") or []) if c.get("doi")]
         groups = []
-        for g in d["variables"]["groups"]:
+        tags = std_tag_dataset(d)
+        for gi, g in enumerate(d["variables"]["groups"]):
             items = []
-            for it in g["items"]:
+            for ii, it in enumerate(g["items"]):
                 it = norm_item(it, g)
-                items.append({"t": oneline(it["text"]), "k": it["kind"], "b": kind_badge(it).strip()})
+                items.append({"t": oneline(it["text"]), "k": it["kind"], "b": kind_badge(it).strip(), "s": tags[gi][ii]})
             groups.append({"n": g["name"], "i": items})
         s = d.get("successor") or {}
         out.append({
@@ -939,6 +1007,33 @@ def compare_data(datasets: list[dict]) -> list[dict]:
     return out
 
 
+def std_payload(datasets: list[dict]) -> list[dict]:
+    """변수 찾기용 표준 변수 목록 — 이름·별칭(+각 자료의 실제 변수명)·관련 변수"""
+    sv = std_vars()
+    names: dict[str, set] = {c["id"]: set() for c in sv["concepts"]}
+    for d in datasets:
+        tags = std_tag_dataset(d)
+        for gi, g in enumerate(d["variables"]["groups"]):
+            for ii, it in enumerate(g["items"]):
+                text = it if isinstance(it, str) else it.get("text", "")
+                for code in re.findall(r"`([^`]+)`", text):
+                    for c in tags[gi][ii]:
+                        names[c].add(code)
+                        names[c].add(code.split("/")[-1])
+    out = []
+    hangul = re.compile("[가-힣]")
+    for c in sv["concepts"]:
+        al = set(c.get("aliases") or []) | names[c["id"]]
+        if is_en():  # 영어판에는 한국어 별칭을 싣지 않음
+            al = {x for x in al if not hangul.search(x)}
+        out.append({
+            "id": c["id"], "n": c["en"] if is_en() else c["ko"], "ko": "" if is_en() else c["ko"], "en": c["en"],
+            "cf": c.get("cf") or "", "g": c["group"]["en" if is_en() else "ko"],
+            "a": sorted(al, key=str.lower), "r": c.get("related") or [],
+        })
+    return out
+
+
 def compare_app(datasets: list[dict]) -> str:
     opts = ""
     for dom, (label, groups) in DOMAINS.items():
@@ -953,18 +1048,23 @@ def compare_app(datasets: list[dict]) -> str:
     )
     chips = "".join(
         f'<button type="button" class="chip" data-q="{q}">{q}</button>'
-        for q in (["precipitation", "temperature", "wind", "pressure", "radiation", "humidity", "sea surface temperature", "sea ice", "salinity", "flux"]
-                  if is_en() else ["강수", "기온", "바람", "기압", "복사", "습도", "해수면온도", "해빙", "염분", "플럭스"])
+        for q in (["precipitation", "2 m temperature", "SST", "sea ice concentration", "sea ice thickness", "wind", "sea level pressure", "humidity", "radiation", "salinity"]
+                  if is_en() else ["강수", "2m 기온", "해수면온도", "해빙 농도", "해빙 두께", "바람", "해면기압", "습도", "복사", "염분"])
     )
+    std = std_payload(datasets)
+    opts_dl = "".join(f'<option value="{html.escape(c["n"])}"></option>' for c in std)
     data = json.dumps(compare_data(datasets), ensure_ascii=False).replace("</", "<\\/")
+    stdj = json.dumps(std, ensure_ascii=False).replace("</", "<\\/")
     return loc(
         '<section class="cdg-form compare-controls" data-search-exclude><div class="cmp-selects">' + selects + "</div>"
-        '<label class="field">변수 찾기 <span class="hint">— 고른 자료들에서 같은 종류의 변수를 나란히 봅니다 (한국어 이름이나 변수명)</span>'
-        '<input type="text" id="cmp-q" placeholder="예) 강수, tp, prate, sea ice"></label>'
+        '<label class="field">변수 찾기 <span class="hint">— 변수 이름(한국어·영어)이나 변수명을 넣으면 그 변수가 있는 자료를 모두 보여 줍니다</span>'
+        '<input type="text" id="cmp-q" list="std-list" autocomplete="off" placeholder="예) 강수, 2m 기온, tp, SST, 해빙 두께"></label>'
+        f'<datalist id="std-list">{opts_dl}</datalist>'
         f'<div class="chips">{chips}</div></section>'
-        '<p class="hint" id="cmp-empty" data-search-exclude>위에서 비교할 자료를 2개 이상 골라주세요. 고른 내용은 주소에 저장되어 그대로 공유할 수 있습니다.</p>'
+        '<p class="hint" id="cmp-empty" data-search-exclude>위에서 비교할 자료를 2개 이상 고르거나, 변수 찾기에 변수를 넣어 주세요. 고른 내용은 주소에 저장되어 그대로 공유할 수 있습니다.</p>'
         '<div class="table-scroll" data-search-exclude><table id="cmp-table" hidden></table></div>'
-    ) + f'<script type="application/json" id="cmp-data">{data}</script>'
+        '<section id="var-results" data-search-exclude hidden></section>'
+    ) + f'<script type="application/json" id="cmp-data">{data}</script>' + f'<script type="application/json" id="std-data">{stdj}</script>'
 
 
 def domain_summary(datasets: list[dict]) -> str:

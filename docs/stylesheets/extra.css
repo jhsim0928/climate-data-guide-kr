@@ -404,3 +404,17 @@ details.hint summary { cursor: pointer; }
 .md-banner { font-size: 0.72rem; }
 .md-banner a { color: inherit; text-decoration: underline; text-underline-offset: 0.15em; }
 .md-banner a:hover { opacity: 0.8; }
+
+/* 자료 비교 — 변수 찾기 결과 */
+#var-results { margin-top: 1.6em; }
+.md-typeset .var-results-title { margin: 0 0 0.5em; font-size: 1.15em; font-weight: 700; }
+.var-concepts { display: flex; flex-direction: column; gap: 0.3em; margin: 0 0 0.6em; }
+.var-concept strong { font-size: 1.02em; }
+.var-related { display: flex; flex-wrap: wrap; gap: 0.35em; align-items: center; margin-top: 0.3em; }
+.md-typeset .var-table td { vertical-align: top; }
+.md-typeset .var-table td:first-child { min-width: 8.5rem; }
+.md-typeset .var-table td:nth-child(2) { min-width: 18rem; }
+.md-typeset .var-table td:nth-child(4) { min-width: 7.5rem; }
+.md-typeset .var-table th { white-space: nowrap; }
+.md-typeset .var-table .var-add { font-size: 0.72rem; padding: 0.25em 0.8em; margin: 0; white-space: nowrap; }
+.md-typeset .var-table .var-add.is-on { background: var(--md-accent-fg-color); border-color: var(--md-accent-fg-color); color: var(--md-accent-bg-color, #fff); }

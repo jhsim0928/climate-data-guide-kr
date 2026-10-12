@@ -25,6 +25,11 @@
     var selects = Array.prototype.slice.call(document.querySelectorAll(".cmp-select"));
     var q = document.getElementById("cmp-q");
     var empty = document.getElementById("cmp-empty");
+    var results = document.getElementById("var-results");
+    var stdEl = document.getElementById("std-data");
+    var STD = stdEl ? JSON.parse(stdEl.textContent) : [];
+    var stdById = {};
+    STD.forEach(function (c) { stdById[c.id] = c; });
 
     var params = new URLSearchParams(location.search);
     (params.get("ids") || "").split(",").filter(Boolean).slice(0, 4).forEach(function (id, i) {
@@ -50,29 +55,112 @@
       [L("후속 자료", "Successor"), function (d) { return esc(d.successor); }]
     ];
 
-    function matches(d, term) {
-      var t = term.toLowerCase();
+    // ── 변수 찾기: 입력 → 표준 변수(data/variables.yaml) → 그 변수가 있는 자료 ──
+    function norm(s) { return String(s || "").toLowerCase().replace(/[\s·_\-]/g, ""); }
+    function findConcepts(term) {
+      var n = norm(term);
+      if (!n) return [];
+      // 1) 이름·별칭·실제 변수명과 정확히 같으면 그것만 (예: "강수" → 총강수, 가강수량은 아님)
+      var exact = STD.filter(function (c) {
+        return norm(c.n) === n || norm(c.ko) === n || norm(c.en) === n ||
+          c.a.some(function (a) { return norm(a) === n; });
+      });
+      if (exact.length) return exact;
+      if (n.length < 2) return [];
+      // 2) 이름이나 별칭에 들어 있으면 (입력 중일 때)
+      return STD.filter(function (c) {
+        return norm(c.ko).indexOf(n) !== -1 || norm(c.en).indexOf(n) !== -1 ||
+          c.a.some(function (a) { var x = norm(a); return x.length >= 3 && x.indexOf(n) !== -1; });
+      });
+    }
+    function matches(d, term, concepts) {
       var out = [];
+      var ids = (concepts || []).map(function (c) { return c.id; });
+      var t = term.toLowerCase();
       d.groups.forEach(function (g) {
         g.i.forEach(function (it) {
-          if (it.t.toLowerCase().indexOf(t) !== -1) out.push({ g: g.n, it: it });
+          var hit = ids.length ? (it.s || []).some(function (x) { return ids.indexOf(x) !== -1; })
+                               : it.t.toLowerCase().indexOf(t) !== -1;
+          if (hit) out.push({ g: g.n, it: it });
         });
       });
       return out;
     }
+    function selectedIds() {
+      var ids = selects.map(function (s) { return s.value; }).filter(Boolean);
+      return ids.filter(function (id, i) { return ids.indexOf(id) === i; });
+    }
+    function toggleSelect(id) {
+      var cur = selects.filter(function (s) { return s.value === id; });
+      if (cur.length) { cur.forEach(function (s) { s.value = ""; }); }
+      else {
+        var free = selects.filter(function (s) { return !s.value; })[0];
+        if (!free) { alert(L("자료는 4개까지 비교할 수 있어요. 위에서 하나를 빼 주세요.", "You can compare up to four datasets. Remove one above first.")); return; }
+        free.value = id;
+      }
+      render();
+    }
+    function renderResults(term, concepts) {
+      if (!results) return;
+      if (!term) { results.hidden = true; results.innerHTML = ""; return; }
+      var picked = selectedIds();
+      var rows = all.map(function (d) { return { d: d, m: matches(d, term, concepts) }; })
+        .filter(function (x) { return x.m.length; });
+      var h = '<h2 class="var-results-title">' + L("변수 찾기 결과", "Datasets with this variable") + "</h2>";
+      if (concepts.length) {
+        h += '<div class="var-concepts">' + concepts.map(function (c) {
+          return '<div class="var-concept"><strong>' + esc(c.n) + "</strong>" +
+            (c.cf ? ' <span class="hint">CF: <code>' + esc(c.cf) + "</code></span>" : "") + "</div>";
+        }).join("");
+        var rel = [];
+        concepts.forEach(function (c) { c.r.forEach(function (r) { if (stdById[r] && rel.indexOf(r) === -1 && !concepts.some(function (x) { return x.id === r; })) rel.push(r); }); });
+        if (rel.length) h += '<div class="var-related"><span class="hint">' + L("관련 변수", "Related") + ':</span> ' +
+          rel.map(function (r) { return '<button type="button" class="chip" data-q="' + esc(stdById[r].n) + '">' + esc(stdById[r].n) + "</button>"; }).join(" ") + "</div>";
+        h += "</div>";
+      } else {
+        h += '<p class="hint">' + L("표준 변수 목록에 없는 말이라 변수 설명에서 글자 그대로 찾았습니다.", "Not in the standard variable list, so this is a plain text match on the variable descriptions.") + "</p>";
+      }
+      if (!rows.length) {
+        results.innerHTML = h + '<p class="hint">' + L("이 변수가 정리된 자료가 없습니다.", "No dataset lists this variable.") + "</p>";
+        results.hidden = false; return;
+      }
+      h += '<p class="hint">' + L("자료 " + rows.length + "개 · 시간 특성(순간값·평균·누적)과 단위가 자료마다 다르니 꼭 확인하세요. <b>비교에 넣기</b>를 누르면 위 비교표에 들어갑니다.",
+        rows.length + " datasets · the time convention (instantaneous, mean, accumulated) and units differ between datasets. Use <b>Add to compare</b> to put a dataset in the table above.") + "</p>";
+      h += '<div class="table-scroll var-table"><table><thead><tr><th>' + L("자료", "Dataset") + "</th><th>" + L("변수 (이 자료의 이름·단위)", "Variable (name and units in this dataset)") +
+        "</th><th>" + L("시간 간격", "Interval") + "</th><th>" + L("기간", "Period") + "</th><th>" + L("상태", "Status") + "</th><th></th></tr></thead><tbody>";
+      rows.forEach(function (x) {
+        var d = x.d, on = picked.indexOf(d.id) !== -1;
+        h += "<tr><td><a href=\"../datasets/" + d.id + '/"><span class="notranslate" translate="no">' + esc(d.name) + '</span></a><br><span class="hint">' + esc(d.group) + "</span></td>" +
+          '<td><ul class="cmp-vars">' + x.m.slice(0, 6).map(function (v) {
+            return "<li>" + codeText(v.it.t) + " " + (v.it.b || "") + "</li>";
+          }).join("") + (x.m.length > 6 ? '<li class="hint">' + L("외 " + (x.m.length - 6) + "개", "+ " + (x.m.length - 6) + " more") + "</li>" : "") + "</ul></td>" +
+          '<td class="nowrap">' + esc(d.temporal_s) + "</td><td>" + esc(d.period) + "</td><td>" + d.status + "</td>" +
+          '<td><button type="button" class="md-button var-add' + (on ? " is-on" : "") + '" data-id="' + d.id + '">' +
+          (on ? L("비교에서 빼기", "Remove") : L("비교에 넣기", "Add to compare")) + "</button></td></tr>";
+      });
+      results.innerHTML = h + "</tbody></table></div>";
+      results.hidden = false;
+      results.querySelectorAll(".var-add").forEach(function (b) {
+        b.addEventListener("click", function () { toggleSelect(b.getAttribute("data-id")); });
+      });
+      results.querySelectorAll(".var-related .chip").forEach(function (b) {
+        b.addEventListener("click", function () { q.value = b.getAttribute("data-q"); render(); });
+      });
+    }
 
     function render() {
-      var ids = selects.map(function (s) { return s.value; }).filter(Boolean);
-      ids = ids.filter(function (id, i) { return ids.indexOf(id) === i; });
+      var ids = selectedIds();
       var term = q.value.trim();
+      var concepts = findConcepts(term);
       var p = new URLSearchParams();
       if (ids.length) p.set("ids", ids.join(","));
       if (term) p.set("v", term);
       try { history.replaceState(null, "", location.pathname + (p.toString() ? "?" + p : "")); } catch (e) {}
 
+      renderResults(term, concepts);
       if (ids.length < 2) {
         table.hidden = true;
-        empty.hidden = false;
+        empty.hidden = !!term;
         return;
       }
       empty.hidden = true;
@@ -85,7 +173,7 @@
       });
       if (term) {
         h += '<tr class="cmp-var-row"><th scope="row">' + L("변수 찾기", "Find a variable") + '<br><span class="hint">“' + esc(term) + "”</span></th>" + ds.map(function (d) {
-          var m = matches(d, term);
+          var m = matches(d, term, concepts);
           if (!m.length) return '<td><span class="hint">' + L("정리된 변수 중 없음", "No matching variable listed") + '</span></td>';
           return "<td><ul class=\"cmp-vars\">" + m.slice(0, 8).map(function (x) {
             return "<li>" + codeText(x.it.t) + " " + (x.it.b || "") + '<br><span class="hint">' + esc(x.g) + "</span></li>";
