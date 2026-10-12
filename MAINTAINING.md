@@ -125,6 +125,7 @@ CITATION.cff             ← GitHub "Cite this repository" 버튼
 | 09시 | Apps Script `dailyDigest` | `digest.json`을 읽어 운영자에게 요약 메일 (새 공지 후보, 승인 버튼, 공지가 아니라고 본 변경, 열리지 않는 페이지) |
 | 승인 후 | 운영자 → Apps Script `checkNotices` | PR에서 **Merge pull request → Confirm merge** → 사이트 배포 → 한 시간 안에 구독자 알림 메일 |
 
+- **공지 추가·수정은 사람이든 Claude든 항상 PR로** 합니다. main에 직접 올린 공지는 승인 없이 한 시간 안에 구독자에게 발송됩니다.
 - 공지가 아니면 PR에서 **Close pull request**. 고칠 점이 있으면 Claude에게 PR 링크와 함께 말하면 됩니다.
 - 요약 메일 받는 사람: `OWNER_EMAIL` + Apps Script **프로젝트 설정 → 스크립트 속성 `DIGEST_TO`**(쉼표로 여러 주소). 개인 주소는 공개 저장소에 적지 않기 위해 이렇게 둡니다.
 - 9시 메일에 "점검 결과 없음"이 오면 06시 Actions나 08시 Claude 작업이 실패한 것입니다. GitHub **Actions** 탭에서 `공지 페이지 점검`을 열어 **Run workflow**로 다시 돌리거나 Claude에게 알려 주세요.
