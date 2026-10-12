@@ -17,7 +17,7 @@ This site does not host any data. Every entry links to the official source. <!--
 !!! warning "Please read before use"
     <!-- DISCLAIMER -->
 
-[All datasets](datasets/index.md){ .md-button .md-button--primary } [Compare datasets](compare.md){ .md-button } [Generation changes](transitions.md){ .md-button }
+[All datasets](datasets/index.md){ .md-button .md-button--primary } [Find by variable](find-variable.md){ .md-button } [Compare datasets](compare.md){ .md-button } [Generation changes](transitions.md){ .md-button }
 
 ## Who the Navigator is for
 

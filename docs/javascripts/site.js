@@ -26,6 +26,8 @@
     var q = document.getElementById("cmp-q");
     var empty = document.getElementById("cmp-empty");
     var results = document.getElementById("var-results");
+    var basket = document.getElementById("var-basket");
+    var VAR_MODE = !!document.querySelector(".var-mode");
     var stdEl = document.getElementById("std-data");
     var STD = stdEl ? JSON.parse(stdEl.textContent) : [];
     var stdById = {};
@@ -95,7 +97,7 @@
       if (cur.length) { cur.forEach(function (s) { s.value = ""; }); }
       else {
         var free = selects.filter(function (s) { return !s.value; })[0];
-        if (!free) { alert(L("자료는 4개까지 비교할 수 있어요. 위에서 하나를 빼 주세요.", "You can compare up to four datasets. Remove one above first.")); return; }
+        if (!free) { alert(L("자료는 4개까지 비교할 수 있어요. 하나를 빼 주세요.", "You can compare up to four datasets. Remove one first.")); return; }
         free.value = id;
       }
       render();
@@ -124,19 +126,22 @@
         results.innerHTML = h + '<p class="hint">' + L("이 변수가 정리된 자료가 없습니다.", "No dataset lists this variable.") + "</p>";
         results.hidden = false; return;
       }
-      h += '<p class="hint">' + L("자료 " + rows.length + "개 · 시간 특성(순간값·평균·누적)과 단위가 자료마다 다르니 꼭 확인하세요. <b>비교에 넣기</b>를 누르면 위 비교표에 들어갑니다.",
-        rows.length + " datasets · the time convention (instantaneous, mean, accumulated) and units differ between datasets. Use <b>Add to compare</b> to put a dataset in the table above.") + "</p>";
+      h += '<p class="hint">' + (VAR_MODE
+        ? L("자료 " + rows.length + "개 · 시간 특성(순간값·평균·누적)과 단위가 자료마다 다르니 꼭 확인하세요. <b>비교에 넣기</b>로 2개 이상 담으면 아래에 <b>비교하기</b> 버튼이 나타납니다.",
+            rows.length + " datasets · the time convention (instantaneous, mean, accumulated) and units differ between datasets. Add two or more with <b>Add to compare</b> and a <b>Compare</b> button appears below.")
+        : L("자료 " + rows.length + "개 · 시간 특성(순간값·평균·누적)과 단위가 자료마다 다르니 꼭 확인하세요. <b>비교에 넣기</b>를 누르면 위 비교표에 들어갑니다.",
+            rows.length + " datasets · the time convention (instantaneous, mean, accumulated) and units differ between datasets. Use <b>Add to compare</b> to put a dataset in the table above.")) + "</p>";
       h += '<div class="table-scroll var-table"><table><thead><tr><th>' + L("자료", "Dataset") + "</th><th>" + L("변수 (이 자료의 이름·단위)", "Variable (name and units in this dataset)") +
-        "</th><th>" + L("시간 간격", "Interval") + "</th><th>" + L("기간", "Period") + "</th><th>" + L("상태", "Status") + "</th><th></th></tr></thead><tbody>";
+        "</th><th>" + L("시간 간격", "Interval") + "</th><th>" + L("기간", "Period") + "</th><th>" + L("상태", "Status") + "</th></tr></thead><tbody>";
       rows.forEach(function (x) {
         var d = x.d, on = picked.indexOf(d.id) !== -1;
-        h += "<tr><td><a href=\"../datasets/" + d.id + '/"><span class="notranslate" translate="no">' + esc(d.name) + '</span></a><br><span class="hint">' + esc(d.group) + "</span></td>" +
+        h += "<tr><td><a href=\"../datasets/" + d.id + '/"><span class="notranslate" translate="no">' + esc(d.name) + '</span></a><br><span class="hint">' + esc(d.group) + "</span>" +
+          '<br><button type="button" class="md-button var-add' + (on ? " is-on" : "") + '" data-id="' + d.id + '">' +
+          (on ? L("✓ 담음 (빼기)", "✓ Added (remove)") : L("+ 비교에 넣기", "+ Add to compare")) + "</button></td>" +
           '<td><ul class="cmp-vars">' + x.m.slice(0, 6).map(function (v) {
             return "<li>" + codeText(v.it.t) + " " + (v.it.b || "") + "</li>";
           }).join("") + (x.m.length > 6 ? '<li class="hint">' + L("외 " + (x.m.length - 6) + "개", "+ " + (x.m.length - 6) + " more") + "</li>" : "") + "</ul></td>" +
-          '<td class="nowrap">' + esc(d.temporal_s) + "</td><td>" + esc(d.period) + "</td><td>" + d.status + "</td>" +
-          '<td><button type="button" class="md-button var-add' + (on ? " is-on" : "") + '" data-id="' + d.id + '">' +
-          (on ? L("비교에서 빼기", "Remove") : L("비교에 넣기", "Add to compare")) + "</button></td></tr>";
+          '<td class="nowrap">' + esc(d.temporal_s) + "</td><td>" + esc(d.period) + "</td><td>" + d.status + "</td></tr>";
       });
       results.innerHTML = h + "</tbody></table></div>";
       results.hidden = false;
@@ -158,6 +163,22 @@
       try { history.replaceState(null, "", location.pathname + (p.toString() ? "?" + p : "")); } catch (e) {}
 
       renderResults(term, concepts);
+      if (VAR_MODE) {
+        // 변수로 찾기: 담은 자료를 자료 비교 페이지로 넘김
+        table.hidden = true;
+        empty.hidden = !!term;
+        if (basket) {
+          if (!ids.length) { basket.hidden = true; basket.innerHTML = ""; }
+          else {
+            var href = "../compare/?ids=" + ids.join(",") + (term ? "&v=" + encodeURIComponent(term) : "");
+            basket.innerHTML = '<span>' + L("비교에 담은 자료", "Selected") + ': <b>' + ids.map(function (id) { return esc(byId[id].name); }).join(", ") + "</b></span> " +
+              (ids.length >= 2 ? '<a class="md-button md-button--primary" href="' + href + '">' + L("선택한 " + ids.length + "개 비교하기 →", "Compare " + ids.length + " datasets →") + "</a>"
+                               : '<span class="hint">' + L("하나 더 고르면 비교할 수 있어요", "Pick one more to compare") + "</span>");
+            basket.hidden = false;
+          }
+        }
+        return;
+      }
       if (ids.length < 2) {
         table.hidden = true;
         empty.hidden = !!term;

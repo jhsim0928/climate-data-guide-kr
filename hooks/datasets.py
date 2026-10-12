@@ -1077,7 +1077,8 @@ def std_table(datasets: list[dict]) -> str:
     return "\n".join(L)
 
 
-def compare_app(datasets: list[dict]) -> str:
+def compare_app(datasets: list[dict], mode: str = "compare") -> str:
+    """mode="compare": 자료 비교 페이지 / mode="var": 변수로 찾기 페이지 (검색창이 주인공, 자료 선택 칸은 숨김)"""
     opts = ""
     for dom, (label, groups) in DOMAINS.items():
         items = [d for d in datasets if d["domain"] == dom]
@@ -1098,6 +1099,19 @@ def compare_app(datasets: list[dict]) -> str:
     opts_dl = "".join(f'<option value="{html.escape(c["n"])}"></option>' for c in std)
     data = json.dumps(compare_data(datasets), ensure_ascii=False).replace("</", "<\\/")
     stdj = json.dumps(std, ensure_ascii=False).replace("</", "<\\/")
+    if mode == "var":
+        return loc(
+            '<section class="cdg-form compare-controls var-mode" data-search-exclude>'
+            f'<div class="cmp-selects" hidden>{selects}</div>'
+            '<label class="field var-search">찾을 변수'
+            '<input type="search" id="cmp-q" list="std-list" autocomplete="off" placeholder="예) 강수, 2m 기온, tp, SST, 해빙 두께"></label>'
+            f'<datalist id="std-list">{opts_dl}</datalist>'
+            f'<div class="chips">{chips}</div></section>'
+            '<p class="hint" id="cmp-empty" data-search-exclude>위 칸에 변수 이름(한국어·영어)이나 자료의 변수명(<code>tp</code>, <code>PRECTOT</code> …)을 넣거나 아래 예시를 눌러 보세요.</p>'
+            '<div hidden><table id="cmp-table" hidden></table></div>'
+            '<section id="var-results" data-search-exclude hidden></section>'
+            '<div id="var-basket" class="var-basket" data-search-exclude hidden></div>'
+        ) + f'<script type="application/json" id="cmp-data">{data}</script>' + f'<script type="application/json" id="std-data">{stdj}</script>'
     return loc(
         '<section class="cdg-form compare-controls" data-search-exclude><div class="cmp-selects">' + selects + "</div>"
         '<label class="field">변수 찾기 <span class="hint">— 변수 이름(한국어·영어)이나 변수명을 넣으면 그 변수가 있는 자료를 모두 보여 줍니다</span>'
@@ -1435,6 +1449,8 @@ def on_page_markdown(markdown, page, config, files):
         markdown = markdown.replace("<!-- RECENT_NOTICES -->", "\n".join(notice_rows(all_notices(_datasets)[:6], "datasets/")))
     if "<!-- STD_TABLE -->" in markdown:
         markdown = markdown.replace("<!-- STD_TABLE -->", std_table(_datasets))
+    if "<!-- VARIABLE_APP -->" in markdown:
+        markdown = markdown.replace("<!-- VARIABLE_APP -->", compare_app(_datasets, mode="var"))
     if "<!-- COMPARE_APP -->" in markdown:
         markdown = markdown.replace("<!-- COMPARE_APP -->", compare_app(_datasets))
     if "<!-- RES_NOTE -->" in markdown:

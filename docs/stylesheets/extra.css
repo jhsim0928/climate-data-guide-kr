@@ -416,10 +416,16 @@ details.hint summary { cursor: pointer; }
 .md-typeset .var-table td:nth-child(2) { min-width: 18rem; }
 .md-typeset .var-table td:nth-child(4) { min-width: 7.5rem; }
 .md-typeset .var-table th { white-space: nowrap; }
-.md-typeset .var-table .var-add { font-size: 0.72rem; padding: 0.25em 0.8em; margin: 0; white-space: nowrap; }
+.md-typeset .var-table .var-add { font-size: 0.68rem; padding: 0.2em 0.7em; margin: 0.45em 0 0; white-space: nowrap; }
 .md-typeset .var-table .var-add.is-on { background: var(--md-accent-fg-color); border-color: var(--md-accent-fg-color); color: var(--md-accent-bg-color, #fff); }
 
 /* 소개 — BibTeX 접기 상자 */
 .md-typeset details.cite-bibtex { border-color: var(--md-default-fg-color--lightest); box-shadow: none; font-size: 0.85rem; }
 .md-typeset details.cite-bibtex > summary { background: transparent; font-weight: 600; }
 .md-typeset details.cite-bibtex > summary::before { background-color: var(--md-default-fg-color--light); -webkit-mask-image: var(--md-admonition-icon--quote); mask-image: var(--md-admonition-icon--quote); }
+
+/* 변수로 찾기 페이지 */
+.var-mode .var-search { font-size: 1.05em; }
+.var-mode .var-search input { font-size: 1.05rem; padding: 0.7em 0.9em; margin-top: 0.35em; }
+.var-basket { position: sticky; bottom: 0.6rem; z-index: 3; box-shadow: 0 2px 10px rgba(0,0,0,.12); background: var(--md-default-bg-color) !important; display: flex; flex-wrap: wrap; align-items: center; gap: 0.6em 1em; margin: 0.8em 0; padding: 0.7em 1em; border: 1px solid var(--md-accent-fg-color); border-radius: 0.4rem; background: var(--md-accent-fg-color--transparent); }
+.md-typeset .var-basket .md-button { margin: 0; font-size: 0.75rem; padding: 0.4em 1em; }

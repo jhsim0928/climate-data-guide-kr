@@ -17,7 +17,7 @@ hide:
 !!! warning "이용 전에 꼭 읽어주세요"
     <!-- DISCLAIMER -->
 
-[전체 목록](datasets/index.md){ .md-button .md-button--primary } [자료 비교하기](compare.md){ .md-button } [세대별 비교](transitions.md){ .md-button }
+[전체 목록](datasets/index.md){ .md-button .md-button--primary } [변수로 찾기](find-variable.md){ .md-button } [자료 비교하기](compare.md){ .md-button } [세대별 비교](transitions.md){ .md-button }
 
 ## 이런 분께 추천합니다
 
