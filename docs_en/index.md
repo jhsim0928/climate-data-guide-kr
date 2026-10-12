@@ -37,13 +37,14 @@ End of production, delays and version changes announced by the agencies that pro
 
 ## How to use this site
 
-- **Choosing a dataset**: browse the **Atmosphere · Ocean · Sea ice** menus, then put several candidates side by side in [Compare datasets](compare.md).
-- **Using a variable**: check the **instantaneous · mean · accumulated** badge next to each variable and the *time-stamp convention* box. Two "3-hourly" products can mean very different things.
-- **Downloading**: follow *How to get the data* and the *example code* on each dataset page.
-- **Writing a paper**: copy the citation text and BibTeX from *References for your paper*.
-- **Moving to a newer product**: [Generation changes](transitions.md) explains what changed from the previous generation and what to watch out for.
-- **Not missing a change**: [Notice alerts](subscribe.md) emails you new notices for the datasets and severity levels you choose.
-- **Missing a dataset?** Tell us via [Suggest a dataset](suggest.md).
+- **Choosing a dataset** — browse the Atmosphere · Ocean · Sea ice menus, then put several candidates side by side in [Compare datasets](compare.md).
+- **Looking for a variable** — type "precipitation" or "2 m temperature" into [Find by variable](find-variable.md) to list every dataset that has it.
+- **Using a variable** — check the instantaneous · mean · accumulated badge next to each variable and the "time-stamp convention" box. Two "3-hourly" products can mean very different things.
+- **Downloading** — follow "How to get the data" and the example code on each dataset page.
+- **Writing a paper** — copy the citation text and BibTeX from "References for your paper" on each dataset page.
+- **Moving to a newer product** — [Generation changes](transitions.md) explains what changed from the previous generation and what to watch out for.
+- **Not missing a change** — [Notice alerts](subscribe.md) emails you new notices for the datasets and severity levels you choose.
+- **Missing a dataset?** — tell us via [Suggest a dataset](suggest.md).
 
 !!! info "Found something outdated or wrong?"
     Click **Report an error** at the bottom of any page (or under the title of a dataset page).

@@ -526,7 +526,7 @@ def transition_block(d: dict, t: dict, heading: str = "###", link_prefix: str = 
     planned = ' <span class="status-badge status-delayed">예정</span>' if t["status"] == "planned" else ""
     L = [f"{heading} {nt(t['from'])} → {to}{planned} {{#{transition_anchor(t)}}}", ""]
     if t.get("date"):
-        L += [f"*전환 시점:* {t['date']}", ""]
+        L += [f"**전환 시점**: {t['date']}", ""]
     L += [oneline(t["summary"]), ""]
     L += [f"| 항목 | {nt(t['from'])} | {nt(t['to'])} |", "|---|---|---|"]
     L += [f"| {oneline(c['aspect'])} | {oneline(c['before'])} | {oneline(c['after'])} |" for c in t["changes"]]
@@ -650,7 +650,7 @@ def render_dataset(d: dict, site_cite: dict) -> str:
     L += ["## 한눈에 보기", "", "| 항목 | 내용 |", "|---|---|"]
     L += [f"| {k} | {oneline(v)} |" for k, v in rows if v]
     if d["period"].get("note"):
-        L += ["", f"*기간 참고:* {oneline(d['period']['note'])}"]
+        L += ["", f"**기간 참고**: {oneline(d['period']['note'])}"]
     L += [""] + detail_res_note()
     L += ["", "## 개요", "", oneline(d["summary"]), ""]
 
