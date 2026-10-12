@@ -1034,6 +1034,47 @@ def std_payload(datasets: list[dict]) -> list[dict]:
     return out
 
 
+def std_table(datasets: list[dict]) -> str:
+    """표준 변수 목록 페이지 — 분야별 표: 표준 변수 · CF 표준 이름 · 자료 수 · 자료별 실제 변수명"""
+    sv = std_vars()
+    per: dict[str, list] = {c["id"]: [] for c in sv["concepts"]}
+    for d in datasets:
+        tags = std_tag_dataset(d)
+        found: dict[str, list] = {}
+        for gi, g in enumerate(d["variables"]["groups"]):
+            for ii, it in enumerate(g["items"]):
+                text = it if isinstance(it, str) else it.get("text", "")
+                codes = [c.split("/")[-1] for c in re.findall(r"`([^`]+)`", text)]
+                for cid in tags[gi][ii]:
+                    lst = found.setdefault(cid, [])
+                    lst += [c for c in codes if c not in lst]
+        for cid, codes in found.items():
+            per[cid].append((d, codes))
+    en = is_en()
+    L = []
+    groups = []
+    for c in sv["concepts"]:
+        if not groups or groups[-1][0] != c["group"]["ko"]:
+            groups.append((c["group"]["ko"], c["group"]["en"], []))
+        groups[-1][2].append(c)
+    for gko, gen, cs in groups:
+        L += [f"## {gen if en else gko}", "",
+              "| " + ("Standard variable | CF standard name | Datasets | Name in each dataset" if en else "표준 변수 | CF 표준 이름 | 자료 수 | 자료별 변수명") + " |",
+              "|---|---|---|---|"]
+        for c in cs:
+            name = c["en"] if en else c["ko"]
+            link = f"[{name}](../compare/?v={quote(name)})"
+            cf = " / ".join(f"`{x.strip()}`" for x in str(c.get("cf") or "-").split(" / "))
+            items = per[c["id"]]
+            names = " · ".join(
+                f"{nt(html.escape(d['name']))} " + (", ".join(f"`{x}`" for x in codes[:4]) if codes else ("(file)" if en else "(파일)"))
+                for d, codes in items
+            ).replace("|", "\\|")
+            L.append(f"| {link} | {cf} | {len(items)} | {names or '-'} |")
+        L.append("")
+    return "\n".join(L)
+
+
 def compare_app(datasets: list[dict]) -> str:
     opts = ""
     for dom, (label, groups) in DOMAINS.items():
@@ -1390,6 +1431,8 @@ def on_page_markdown(markdown, page, config, files):
         markdown = markdown.replace("<!-- DOMAIN_SUMMARY -->", domain_summary(_datasets))
     if "<!-- RECENT_NOTICES -->" in markdown:
         markdown = markdown.replace("<!-- RECENT_NOTICES -->", "\n".join(notice_rows(all_notices(_datasets)[:6], "datasets/")))
+    if "<!-- STD_TABLE -->" in markdown:
+        markdown = markdown.replace("<!-- STD_TABLE -->", std_table(_datasets))
     if "<!-- COMPARE_APP -->" in markdown:
         markdown = markdown.replace("<!-- COMPARE_APP -->", compare_app(_datasets))
     if "<!-- RES_NOTE -->" in markdown:

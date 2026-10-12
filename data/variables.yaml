@@ -3,7 +3,7 @@
 # 각 항목:
 #   id       : 영문 식별자 (주소·코드용)
 #   ko / en  : 화면에 보일 이름
-#   cf       : 해당하는 CF 표준 이름(있을 때) — https://cfconventions.org/standard-names.html
+#   cf       : 해당하는 CF 표준 이름(있을 때) — https://cfconventions.org/Data/cf-standard-names/current/build/cf-standard-name-table.html
 #   aliases  : 검색어로 받아줄 말 (한국어·영어·약어). 각 자료의 변수명(`tp`, `PRECTOT` 등)은 자동으로 더해짐
 #   include  : 한국어 변수 설명이 이 정규식 중 하나에 맞으면 이 변수로 봄
 #   exclude  : 맞아도 이 정규식에 걸리면 제외
@@ -340,7 +340,7 @@ groups:
       - id: ohc
         ko: 해양 열용량·등온선 깊이
         en: Ocean heat content, isotherm depth
-        cf: integral_wrt_depth_of_sea_water_temperature
+        cf: integral_wrt_depth_of_sea_water_potential_temperature_expressed_as_heat_content
         aliases: [열용량, 해양 열용량, 열함량, ocean heat content, OHC, 20도 등온선, D20, isotherm depth]
         include: ['열용량', '등온(선|층) 깊이']
         related: [ocean_temp]
@@ -419,14 +419,14 @@ groups:
       - id: ice_type
         ko: 해빙 유형·나이 (다년빙 등)
         en: Sea ice type / age (multiyear ice)
-        cf: sea_ice_age / multi_year_ice_area_fraction
+        cf: age_of_sea_ice
         aliases: [다년빙, 일년빙, 해빙 나이, 해빙 유형, multiyear ice, first-year ice, ice age, ice type]
         include: ['다년빙', '신생빙', '해빙 나이', '해빙 유형', '능선 얼음']
         related: [sic]
       - id: ice_growth_melt
         ko: 해빙 성장·융해
         en: Sea ice growth / melt
-        cf: tendency_of_sea_ice_amount_due_to_thermodynamics
+        cf: tendency_of_sea_ice_thickness_due_to_thermodynamics
         aliases: [해빙 성장, 해빙 융해, 결빙, 융빙, ice growth, ice melt, melt onset, ice production]
         include: ['해빙 성장', '융해', '해빙 이류', '융빙']
         related: [sit]
