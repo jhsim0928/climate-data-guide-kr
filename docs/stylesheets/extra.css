@@ -385,3 +385,22 @@ details.hint summary { cursor: pointer; }
 .cdg-form .profile-row .field { margin-bottom: 0.4em; }
 .cdg-form .profile-row select { width: 100%; }
 .cdg-form .field-label { font-weight: 600; margin: 0.5em 0 0.2em; }
+
+/* ── 베타 표시 (mkdocs.yml extra.beta) ─────────────────── */
+.cdg-beta .md-header__topic:first-child::after {
+  content: "Beta";
+  flex: none;
+  align-self: center;
+  margin-left: 0.5em;
+  padding: 0 0.5em;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  font-size: 0.62rem;
+  font-weight: 700;
+  line-height: 1.5;
+  letter-spacing: 0.04em;
+  opacity: 0.85;
+}
+.md-banner { font-size: 0.72rem; }
+.md-banner a { color: inherit; text-decoration: underline; text-underline-offset: 0.15em; }
+.md-banner a:hover { opacity: 0.8; }
