@@ -204,6 +204,12 @@ UI = {
     "2. 받을 공지 구분": "2. Notice levels",
     "3. 받을 이메일": "3. Your email",
     "4. 이용자 정보 ": "4. About you ",
+    "자료를 만들거나 배포하는 **기관**(ECMWF·NASA·NOAA 등)이 발표한 공지 가운데, 제공 중단·서비스 이전·품질 문제처럼 **분석에 영향을 주는 것**을 최신순으로 모았습니다.":
+        "Announcements from the **agencies that produce or distribute the data** (ECMWF, NASA, NOAA and others) that **can affect your analysis** — end of production, service migrations, quality issues — newest first.",
+    "이 사이트의 소식이 아니라 각 기관 공지를 짧게 정리한 것이며, 제목을 누르면 **기관의 원문 공지**로 연결됩니다. 새 공지를 메일로 받고 싶다면 [중요 공지 알림 신청](subscribe.md)을 이용하세요.":
+        "These are short summaries of each provider's announcement, not news about this site; click a title to open the **provider's original notice**. To get new notices by email, sign up for [notice alerts](subscribe.md).",
+    "<th>공지일</th><th>자료</th><th>발표 기관</th><th>구분</th><th>기관 공지 (원문)</th>": "<th>Date</th><th>Dataset</th><th>Provider</th><th>Level</th><th>Provider notice (original)</th>",
+    "| 공지일 | 자료 | 발표 기관 | 구분 | 기관 공지 (원문) |": "| Date | Dataset | Provider | Level | Provider notice (original) |",
     "<strong>변수로 찾기</strong><span>강수·기온·SST처럼 변수 이름으로 자료 찾기</span>": "<strong>Find by variable</strong><span>Search datasets by a variable such as precipitation, temperature or SST</span>",
     "<strong>자료 비교</strong><span>최대 4개 자료를 한 표로 나란히</span>": "<strong>Compare datasets</strong><span>Up to four datasets side by side in one table</span>",
     "<strong>표준 변수 목록</strong><span>자료마다 다른 변수 이름 한눈에</span>": "<strong>Standard variables</strong><span>What each dataset calls the same quantity</span>",

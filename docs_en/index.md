@@ -27,11 +27,13 @@ This site does not host any data. Every entry links to the official source. <!--
 - Researchers comparing several datasets side by side or cross-checking results
 - Authors who need to report dataset versions, grids, and variable definitions accurately in a Methods section
 
-## Latest notices
+## Latest notices from data providers
+
+End of production, delays and version changes announced by the agencies that produce or distribute each dataset (ECMWF, NASA, NOAA and others). Click a title to open the provider's original notice.
 
 <!-- RECENT_NOTICES -->
 
-[All notices →](notices.md)
+[All provider notices →](notices.md)
 
 ## How to use this site
 

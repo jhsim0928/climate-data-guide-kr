@@ -853,13 +853,44 @@ def all_notices(datasets: list[dict]) -> list[tuple[dict, dict]]:
     return sorted(pairs, key=lambda p: str(p[1]["date"]), reverse=True)
 
 
+ORG_LABEL = {"UW": "Univ. of Washington", "UMD": "Univ. of Maryland", "UEA": "UEA CRU", "CMEMS": "Copernicus Marine"}
+
+
+def org_label(d: dict) -> str:
+    """자료의 생산 기관 표시용 (provider에서 판단한 기관)"""
+    o = org_of(d)
+    return ORG_LABEL.get(o, o)
+
+
+# 공지 원문 주소 → 공지를 낸 기관 (앞에서부터 처음 맞는 것). 논문·저장소 등은 자료의 생산 기관으로 표시
+NOTICE_HOSTS = [
+    ("ecmwf.int", "ECMWF"), ("marine.copernicus.eu", "Copernicus Marine"), ("copernicus.eu", "Copernicus C3S"),
+    ("ncei.noaa.gov", "NOAA NCEI"), ("psl.noaa.gov", "NOAA PSL"), ("cpc.ncep.noaa.gov", "NOAA CPC"), ("weather.gov", "NOAA NWS"),
+    ("nsidc.org", "NSIDC"), ("gesdisc", "NASA GES DISC"), ("earthdata.nasa.gov", "NASA Earthdata"), ("gpm.nasa.gov", "NASA GPM"),
+    ("giss.nasa.gov", "NASA GISS"), ("gmao", "NASA GMAO"), ("larc.nasa.gov", "NASA LaRC"), ("nasa.gov", "NASA"),
+    ("metoffice.gov.uk", "Met Office"), ("mri-jma.go.jp", "JMA MRI"), ("jma.go.jp", "JMA"), ("ceda.ac.uk", "CEDA"),
+    ("uea.ac.uk", "UEA CRU"), ("eumetsat.int", "EUMETSAT OSI SAF"), ("awi.de", "AWI"), ("esa.int", "ESA"),
+    ("ucar.edu", "NSF NCAR"), ("diasjp.net", "DIAS"), ("hirosaki-u.ac.jp", "APHRODITE"), ("chikyu.ac.jp", "APHRODITE"),
+    ("berkeleyearth.org", "Berkeley Earth"), ("umd.edu", "Univ. of Maryland"), ("uw.edu", "Univ. of Washington"),
+    ("ecco-group.org", "ECCO"), ("ecco-access", "ECCO"),
+]
+
+
+def notice_org(d: dict, n: dict) -> str:
+    host = urlparse(str(n.get("source") or "")).netloc.lower()
+    for key, org in NOTICE_HOSTS:
+        if key in host:
+            return org
+    return org_label(d)
+
+
 def notice_rows(pairs, link_prefix: str) -> list[str]:
-    L = ["| 날짜 | 데이터셋 | 구분 | 내용 |", "|---|---|---|---|"]
+    L = ["| 공지일 | 자료 | 발표 기관 | 구분 | 기관 공지 (원문) |", "|---|---|---|---|---|"]
     for d, n in pairs:
         label = level_label(n["level"])
         L.append(
-            f"| {n['date']} | [{nt(d['name'])}]({link_prefix}{d['id']}.md) "
-            f"| <span class=\"level-{n['level']}\">{label}</span> | [{n['title']}]({n['source']}) |"
+            f"| {n['date']} | [{nt(d['name'])}]({link_prefix}{d['id']}.md) | {html.escape(notice_org(d, n))} "
+            f"| <span class=\"level-{n['level']}\">{label}</span> | [{n['title']} ↗]({n['source']}) |"
         )
     return [loc(x) for x in L]
 
@@ -883,21 +914,22 @@ def render_notices(datasets: list[dict]) -> str:
         f'<tr data-dataset="{d["id"]}" data-level="{n["level"]}">'
         f'<td class="nowrap">{n["date"]}</td>'
         f'<td><a href="../datasets/{d["id"]}/">{nt(html.escape(d["name"]))}</a></td>'
+        f'<td>{html.escape(notice_org(d, n))}</td>'
         f'<td><span class="level-{n["level"]}">{level_label(n["level"])}</span></td>'
-        f'<td><a href="{html.escape(n["source"])}" target="_blank" rel="noopener">{html.escape(n["title"])}</a></td></tr>'
+        f'<td><a href="{html.escape(n["source"])}" target="_blank" rel="noopener">{html.escape(n["title"])} ↗</a></td></tr>'
         for d, n in pairs
     )
     return loc("\n".join([
         "# 중요 공지", "",
-        "데이터 제공 중단, 서비스 이전, 품질 문제처럼 **분석에 영향을 주는 공지**를 최신순으로 모았습니다.",
-        "각 항목의 링크는 원문 공지로 연결됩니다. 새 공지를 메일로 받고 싶다면 [중요 공지 알림 신청](subscribe.md)을 이용하세요.", "",
+        "자료를 만들거나 배포하는 **기관**(ECMWF·NASA·NOAA 등)이 발표한 공지 가운데, 제공 중단·서비스 이전·품질 문제처럼 **분석에 영향을 주는 것**을 최신순으로 모았습니다.",
+        "이 사이트의 소식이 아니라 각 기관 공지를 짧게 정리한 것이며, 제목을 누르면 **기관의 원문 공지**로 연결됩니다. 새 공지를 메일로 받고 싶다면 [중요 공지 알림 신청](subscribe.md)을 이용하세요.", "",
         '<section class="notice-filter cdg-form" id="notice-filter" data-search-exclude>'
         '<label class="field">데이터셋<select id="nf-dataset"><option value="">전체 데이터셋</option>' + opts + "</select></label>"
         f'<div class="nf-levels"><span class="nf-label">구분</span>{lv}</div>'
         f'<p class="hint" id="nf-count">{("All " + str(len(pairs))) if is_en() else ("전체 " + str(len(pairs)) + "건")}</p></section>',
         "",
         '<div data-search-exclude><table id="notice-table">'
-        "<thead><tr><th>날짜</th><th>데이터셋</th><th>구분</th><th>내용</th></tr></thead>"
+        "<thead><tr><th>공지일</th><th>자료</th><th>발표 기관</th><th>구분</th><th>기관 공지 (원문)</th></tr></thead>"
         f"<tbody>{rows}</tbody></table></div>",
         '<p class="hint" id="nf-empty" hidden data-search-exclude>조건에 맞는 공지가 없습니다.</p>',
         "",
