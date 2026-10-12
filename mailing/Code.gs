@@ -296,7 +296,8 @@ function checkNotices() {
   var hour = Number(Utilities.formatDate(new Date(), Session.getScriptTimeZone(), 'H'));
   if (!SEND_OLD && (hour < SEND_FROM || hour >= SEND_UNTIL)) return;  // 밤에는 보내지 않음
   cleanupPending_();
-  var notices = fetchNotices_(NOTICES_URL);
+  var file = fetchNoticeFile_(NOTICES_URL);
+  var notices = file.notices || [];
   // 영어판 공지(같은 key) — 영어 구독자에게는 영어 제목·본문으로 보냄. 못 읽으면 한국어로 대신 보냄
   var enByKey = {};
   try { fetchNotices_(NOTICES_URL_EN).forEach(function (n) { enByKey[n.key] = n; }); }
@@ -311,6 +312,24 @@ function checkNotices() {
   var sent = {};
   sentSh.getDataRange().getValues().slice(1).forEach(function (r) { sent[r[0]] = true; });
   var fresh = notices.filter(function (n) { return !sent[n.key]; });
+
+  // 사이트에 새로 추가된 자료의 기존 공지는 '새 소식'이 아니므로 보내지 않고 기록만 함
+  // (발송 기록 시트의 'dataset|<id>' 행 = 이미 알고 있는 자료. 처음 실행 때는 지금 자료 전부를 기록만 함)
+  if (file.datasets && file.datasets.length) {
+    var known = {}, hasMarkers = false;
+    Object.keys(sent).forEach(function (k) { if (k.indexOf('dataset|') === 0) { known[k.slice(8)] = true; hasMarkers = true; } });
+    var added = file.datasets.filter(function (id) { return !known[id]; });
+    if (added.length) {
+      var at = new Date();
+      added.forEach(function (id) { sentSh.appendRow(['dataset|' + id, at, 0]); });
+      if (hasMarkers) {
+        var backfill = fresh.filter(function (n) { return added.indexOf(n.dataset_id) !== -1; });
+        backfill.forEach(function (n) { sentSh.appendRow([n.key, at, 0]); });
+        if (backfill.length) Logger.log('새로 추가된 자료(' + added.join(', ') + ')의 기존 공지 ' + backfill.length + '건은 발송하지 않고 기록만 했습니다');
+        fresh = fresh.filter(function (n) { return backfill.indexOf(n) === -1; });
+      }
+    }
+  }
   if (!fresh.length) return;
 
   // 오래된 공지(공지 날짜가 OLD_DAYS일보다 이전)는 메일로 보내지 않고 '보낸 것'으로만 기록
@@ -362,13 +381,16 @@ function checkNotices() {
 function markAllAsSent_() {
   var sentSh = SpreadsheetApp.getActive().getSheetByName(SHEET_SENT);
   var now = new Date();
-  fetchNotices_(NOTICES_URL).forEach(function (n) { sentSh.appendRow([n.key, now, 0]); });
+  var file = fetchNoticeFile_(NOTICES_URL);
+  (file.notices || []).forEach(function (n) { sentSh.appendRow([n.key, now, 0]); });
+  (file.datasets || []).forEach(function (id) { sentSh.appendRow(['dataset|' + id, now, 0]); });
 }
 
-function fetchNotices_(url) {
+function fetchNotices_(url) { return fetchNoticeFile_(url).notices || []; }
+function fetchNoticeFile_(url) {
   var res = UrlFetchApp.fetch((url || NOTICES_URL) + '?t=' + Date.now(), { muteHttpExceptions: true });
   if (res.getResponseCode() !== 200) throw new Error('공지 목록 응답 ' + res.getResponseCode());
-  return JSON.parse(res.getContentText()).notices || [];
+  return JSON.parse(res.getContentText());
 }
 
 // ── 매일 9시: 운영자에게 자동 공지 점검 요약 ─────────────────

@@ -1041,7 +1041,9 @@ def notices_json(datasets: list[dict]) -> str:
             "source": n.get("source", ""),
             "url": site_page_url(d),
         })
-    return json.dumps({"generated": date.today().isoformat(), "notices": out}, ensure_ascii=False, indent=1)
+    # datasets: 사이트에 있는 모든 자료 id — 새로 추가된 자료의 기존 공지는 메일로 보내지 않고 기록만 하기 위해 씀
+    return json.dumps({"generated": date.today().isoformat(), "datasets": sorted(d["id"] for d in datasets),
+                       "notices": out}, ensure_ascii=False, indent=1)
 
 
 def notices_rss(datasets: list[dict], config) -> str:
