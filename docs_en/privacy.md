@@ -24,7 +24,7 @@ There is no account or login, and nothing else is collected.
 
 ## 2. How long we keep it
 
-- Alert subscriptions: deleted **without delay** when you unsubscribe. Sign-ups that are not confirmed via the email link are deleted within 30 days.
+- Alert subscriptions: deleted **without delay** when you unsubscribe. For usage statistics we keep only the time and language of each unsubscription — never your email address or anything else that identifies you. Sign-ups that are not confirmed via the email link are deleted within 30 days.
 - Suggestions, error reports and feedback: kept for review and replies; deleted without delay on request.
 - If the service ends, all information is deleted.
 

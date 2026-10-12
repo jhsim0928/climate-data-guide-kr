@@ -36,6 +36,7 @@ var SHEET_SUGGEST = '데이터셋 제안';
 var SHEET_SENT = '발송 기록';
 var SHEET_REPORT = '오류 신고';
 var SHEET_FEEDBACK = '의견';
+var SHEET_UNSUB = '수신 거부 기록'; // 수신 거부 시각·언어만 (이메일 등 개인정보는 남기지 않음) — 운영자 요약의 통계용
 var FEEDBACK_HEADERS = ['received_at', 'kind', 'message', 'contact', 'lang', 'status'];
 var REPORT_HEADERS = ['received_at', 'page_title', 'page_url', 'wrong', 'correct', 'source', 'contact', 'status', 'lang'];
 var SUB_HEADERS = ['email', 'datasets', 'levels', 'status', 'token', 'requested_at', 'confirmed_at', 'updated_at', 'lang',
@@ -111,6 +112,7 @@ function setup() {
   ensureSheet_(ss, SHEET_SENT, ['notice_key', 'first_seen_at', 'recipients']);
   ensureSheet_(ss, SHEET_REPORT, REPORT_HEADERS);
   ensureSheet_(ss, SHEET_FEEDBACK, FEEDBACK_HEADERS);
+  ensureSheet_(ss, SHEET_UNSUB, ['unsubscribed_at', 'lang']);
   setupTriggers();
   // 기존 공지는 '이미 보낸 것'으로 기록 — 설치 직후 옛 공지가 한꺼번에 나가지 않도록
   try { markAllAsSent_(); } catch (err) { Logger.log('공지 목록을 아직 읽을 수 없습니다: ' + err); }
@@ -279,6 +281,7 @@ function doGet(e) {
   }
   if (p.action === 'unsubscribe') {
     sh.deleteRow(row); // 개인정보 처리방침: 수신 거부 시 지체 없이 파기
+    try { ensureSheet_(SpreadsheetApp.getActive(), SHEET_UNSUB, ['unsubscribed_at', 'lang']).appendRow([new Date(), lang]); } catch (err) {}
     return page_(t.unsubTitle, t.unsubMsg, lang);
   }
   return page_(t.unknown, '', lang);
@@ -481,10 +484,63 @@ function dailyDigest() {
     html += '<p style="color:#888;font-size:12px;margin-top:24px">점검한 공지 페이지 ' + (d.watch.checked || 0) + '곳 · 열림 ' + (d.watch.ok || 0) +
       ' · 바뀐 곳 ' + (d.watch.changed || 0) + ' · 점검 ' + esc_(d.watch.date || '') + '</p>';
   }
-  html += '<p style="color:#888;font-size:12px">이 메일은 운영자에게만 가는 요약입니다. 구독자 메일은 승인한 공지만 나갑니다.</p>';
+  var subs = null;
+  try { subs = subscriberStats_(); html += subs.html; } catch (e) { html += '<p style="color:#888">구독자 현황을 읽지 못했습니다: ' + esc_(String(e)) + '</p>'; }
+  html += '<p style="color:#888;font-size:12px">이 메일은 운영자에게만 가는 요약입니다. 구독자 메일은 승인한 공지만 나갑니다. 구독자 현황은 숫자만 싣고 이메일 주소는 싣지 않습니다(주소는 구글 시트에서 확인).</p>';
+  if (subs && subs.newCount) subject += ' · 새 구독 ' + subs.newCount + '명';
 
   MailApp.sendEmail({ to: digestRecipients_().join(','), subject: '[' + TXT.ko.site + '] ' + subject, htmlBody: html, name: TXT.ko.site + ' 점검',
     body: html.replace(/<br>|<\/(p|div|li|h3)>/g, '\n').replace(/<[^>]+>/g, '').replace(/&amp;/g, '&') });
+}
+
+// ── 운영자 요약용 구독자 현황 (숫자만) ──────────────────────
+var PROFILE_LABEL = {
+  org: { university: '대학', research: '연구기관', government: '정부·공공기관', company: '기업', other: '기타' },
+  role: { undergrad: '학부생', masters: '석사과정', phd: '박사과정', postdoc: '박사후연구원', professor: '교수', researcher: '연구원', engineer: '실무자·엔지니어', other: '기타' },
+  field: { atmosphere: '대기', ocean: '해양', cryosphere: '해빙·극지', remote_sensing: '원격탐사', climate_model: '기후 모델링', hydrology: '수문·육상', other: '기타' }
+};
+function subscriberStats_() {
+  var ss = SpreadsheetApp.getActive();
+  var rows = ss.getSheetByName(SHEET_SUBS).getDataRange().getValues().slice(1);
+  var since = Date.now() - 24 * 3600 * 1000;
+  var t = function (v) { var x = new Date(v).getTime(); return isNaN(x) ? 0 : x; };
+  var active = rows.filter(function (r) { return r[3] === 'active'; });
+  var pending = rows.filter(function (r) { return r[3] === 'pending'; });
+  var newReq = rows.filter(function (r) { return t(r[5]) >= since; });
+  var newConf = rows.filter(function (r) { return t(r[6]) >= since; });
+  var changed = rows.filter(function (r) { return t(r[7]) >= since && t(r[5]) < since; });
+  var unsub = 0;
+  var us = ss.getSheetByName(SHEET_UNSUB);
+  if (us) unsub = us.getDataRange().getValues().slice(1).filter(function (r) { return t(r[0]) >= since; }).length;
+  var en = active.filter(function (r) { return langOf_(r[COL_LANG - 1]) === 'en'; }).length;
+
+  function tally(list, col, labels) {
+    var c = {};
+    list.forEach(function (r) {
+      String(r[col] || '').split(',').filter(Boolean).forEach(function (k) { c[k] = (c[k] || 0) + 1; });
+    });
+    var keys = Object.keys(c).sort(function (a, b) { return c[b] - c[a]; });
+    return keys.length ? keys.map(function (k) { return (labels[k] || k) + ' ' + c[k]; }).join(', ') : '응답 없음';
+  }
+  var dsCount = {};
+  active.forEach(function (r) { String(r[1]).split(',').filter(Boolean).forEach(function (k) { dsCount[k] = (dsCount[k] || 0) + 1; }); });
+  var topDs = Object.keys(dsCount).sort(function (a, b) { return dsCount[b] - dsCount[a]; }).slice(0, 5)
+    .map(function (k) { return (k === 'all' ? '전체 자료' : k) + ' ' + dsCount[k]; }).join(', ');
+
+  var cell = 'padding:4px 10px;border-bottom:1px solid #eee';
+  var html = '<h3 style="margin:22px 0 6px">구독자 현황</h3>' +
+    '<table style="border-collapse:collapse;font-size:14px">' +
+    '<tr><td style="' + cell + '">구독 중</td><td style="' + cell + ';font-weight:bold">' + active.length + '명</td><td style="' + cell + ';color:#777">한국어 ' + (active.length - en) + ' · 영어 ' + en + '</td></tr>' +
+    '<tr><td style="' + cell + '">확인 대기</td><td style="' + cell + '">' + pending.length + '명</td><td style="' + cell + ';color:#777">확인 메일 링크를 아직 안 누름 (30일 뒤 자동 삭제)</td></tr>' +
+    '<tr><td style="' + cell + '">지난 24시간</td><td style="' + cell + ';font-weight:bold" colspan="2">새 신청 ' + newReq.length + ' · 확인 완료 ' + newConf.length + ' · 설정 변경 ' + changed.length + ' · 수신 거부 ' + unsub + '</td></tr>' +
+    '</table>';
+  if (active.length) {
+    html += '<p style="font-size:13px;color:#555;margin:8px 0 0">소속: ' + esc_(tally(active, 9, PROFILE_LABEL.org)) +
+      '<br>신분: ' + esc_(tally(active, 10, PROFILE_LABEL.role)) +
+      '<br>연구 분야: ' + esc_(tally(active, 11, PROFILE_LABEL.field)) +
+      '<br>많이 고른 자료: ' + esc_(topDs || '-') + '</p>';
+  }
+  return { html: html, newCount: newConf.length };
 }
 
 // ── 메일 본문 ───────────────────────────────────────────
