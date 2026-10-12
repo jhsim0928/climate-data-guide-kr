@@ -38,6 +38,7 @@ theme:
     - search.suggest
     - content.code.copy
     - content.tabs.link
+    - announce.dismiss
 
 plugins:
   - search:
@@ -89,6 +90,9 @@ extra_javascript:
   - javascripts/excel.js
 
 extra:
+  # 베타 운영 표시 (위쪽 안내 띠 + 사이트 이름 옆 "Beta"). 정식 공개 때 false로 바꾸면 한국어·영어판 모두에서 사라집니다.
+  beta: true
+
   # 사이트 인용 정보 — 소개 페이지, 각 데이터셋 페이지 하단, 엑셀 저장 파일에 똑같이 들어갑니다.
   # doi 는 Zenodo의 "모든 버전" DOI(concept DOI) — 새 버전을 올려도 바꿀 필요가 없습니다.
   site_citation:

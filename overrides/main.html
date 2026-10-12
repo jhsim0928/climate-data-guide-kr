@@ -42,8 +42,22 @@
 {% endblock %}
 
 {% block extrahead %}
+  {#- 베타 표시: 머리말 사이트 이름 옆 "Beta" 글자 (extra.beta 가 true일 때만) -#}
+  {% if config.extra.beta %}<script>document.documentElement.classList.add("cdg-beta")</script>{% endif %}
   {% set cite = config.extra.site_citation or {} %}
   <meta name="cdg-report-endpoint" content="{{ (config.extra.forms or {}).report_endpoint or '' }}">
   <meta name="cdg-contact" content="{{ config.extra.contact_email or '' }}">
   <meta name="cdg-ack" content="{{ cite.ack_en or '' }}">
 {% endblock %}
+
+{#- 베타 안내 띠 — 정식 공개 때는 mkdocs.yml 의 extra.beta 를 false로 바꾸면 띠와 "Beta" 글자가 함께 사라집니다.
+    오른쪽 X로 닫으면 그 방문자에게는 다시 보이지 않습니다(문구를 바꾸면 다시 보임). -#}
+{% block announce -%}
+  {%- if config.extra.beta -%}
+    {%- if (config.theme.language or 'ko')[:2] == 'en' -%}
+      <strong>Beta</strong> — we are still refining the content and features. Found an error or have an idea? <a href="{{ 'feedback/' | url }}">Send feedback</a>.
+    {%- else -%}
+      <strong>베타 운영 중</strong> — 내용과 기능을 다듬고 있습니다. 틀린 정보나 불편한 점은 <a href="{{ 'feedback/' | url }}">의견 보내기</a>로 알려 주세요.
+    {%- endif -%}
+  {%- endif -%}
+{%- endblock %}
