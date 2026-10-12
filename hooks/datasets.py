@@ -1243,7 +1243,7 @@ def on_page_markdown(markdown, page, config, files):
     if "<!-- SITE_DOI -->" in markdown:
         c = (config.get("extra") or {}).get("site_citation") or {}
         doi = c.get("doi", "") if isinstance(c, dict) else ""
-        markdown = markdown.replace("<!-- SITE_DOI -->", f"[{doi}](https://doi.org/{doi})" if doi else "")
+        markdown = markdown.replace("<!-- SITE_DOI -->", f"`{doi}`" if doi else "")  # 링크 없이 글자로만
     if "<!-- BUILD_DATE -->" in markdown:
         markdown = markdown.replace("<!-- BUILD_DATE -->", date.today().isoformat())
     return markdown
