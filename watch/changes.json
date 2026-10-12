@@ -1,34 +1,293 @@
 {
- "date_kst": "2026-10-12",
- "run_at": "2026-10-12T09:24:30+09:00",
+ "date_kst": "2026-10-13",
+ "run_at": "2026-10-13T08:13:55+09:00",
  "baseline": false,
  "checked": 135,
- "ok": 132,
+ "ok": 129,
  "changes": [
+  {
+   "url": "https://essd.copernicus.org/preprints/essd-2026-412/",
+   "datasets": [
+    "berkeley-earth"
+   ],
+   "added": [
+    "Publisher’s note: the content of this comment was removed on 12 October 2026 since the comment was posted by mistake.",
+    "Total article views: 1,347",
+    "HTML: 845",
+    "PDF: 417",
+    "XML: 85",
+    "Total: 1,347",
+    "Supplement: 118",
+    "BibTeX: 98",
+    "EndNote: 71",
+    "Thereof 1,347 with geography defined",
+    "Latest update: 12 Oct 2026"
+   ],
+   "removed_count": 19
+  },
+  {
+   "url": "https://gdex.ucar.edu/datasets/d094000/",
+   "datasets": [
+    "cfsr-cfsv2"
+   ],
+   "added": [
+    "2011-01-01 00:00 +0000 to 2026-10-12 03:00 +0000",
+    "59.77 TB"
+   ],
+   "removed_count": 2
+  },
+  {
+   "url": "https://climatedataguide.ucar.edu/climate-data/sst-data-cobev3-centennial-situ-observation-based-estimates-version-3",
+   "datasets": [
+    "cobe-sst3"
+   ],
+   "added": [
+    "on 2026-10-11."
+   ],
+   "removed_count": 1
+  },
   {
    "url": "https://earth.esa.int/eogateway/catalog/smos-cryosat-l4-sea-ice-thickness",
    "datasets": [
     "cs2smos"
    ],
    "added": [
-    "undefined - Earth Online"
+    "Biomass Auxiliary Restricted",
+    "This collection contains Biomass auxiliary files used internally on the mission and are not intended for public distribution."
    ],
-   "removed_count": 121
+   "removed_count": 2
   },
   {
-   "url": "https://disc.gsfc.nasa.gov/information/alerts",
+   "url": "https://data.marine.copernicus.eu/product/SEAICE_GLO_PHY_L4_NRT_011_014/description",
    "datasets": [
-    "imerg"
+    "cs3smos"
    ],
    "added": [
-    "Data Recall - All L3 GPROF data for GPM v08",
-    "GPM Science Users, please see the following alert from the Precipitation Processing System (PPS) ...",
-    "Alert Date:Oct 1, 2026 4:00:00 AM",
-    "Access to GES DISC Data Servers will be discontinued no earlier than September 30, 2026",
-    "HTTPS access to data on our on-premises servers (https://\\<server\\>.gesdisc.eosdis.nasa.gov/…) will ...",
-    "Alert Date:Sep 14, 2026 4:00:00 PM"
+    "18 Oct 2023 to 7 Oct 2026"
    ],
-   "removed_count": 0
+   "removed_count": 1
+  },
+  {
+   "url": "https://marine.copernicus.eu/user-corner/user-notification-service",
+   "datasets": [
+    "duacs",
+    "glorys12",
+    "nextsim",
+    "ostia",
+    "topaz4b"
+   ],
+   "added": [
+    "[MDSOP-417] GLOBAL_ANALYSISFORECAST_PHY_001_024 - Daily current dataset not fully complete for SUBSET service",
+    "2026-10-12 10:00 UTC - In progress",
+    "In product",
+    "GLOBAL_ANALYSISFORECAST_PHY_001_024",
+    ", the daily current dataset (",
+    "cmems_mod_glo_phy-cur_anfc_0.083deg_PT6H-i",
+    ") is still being updated for the SUBSET service. Because of that, data for 2026-10-20 and 2026-10-21 are not available with SUBSET yet. In the meantime, we recommend downloading these two days of data with the",
+    "File Browser",
+    "of with the GET function (",
+    ") of the Copernicus Marine Toolbox.",
+    "[WEB-396] Maintenance on 2026-10-13",
+    "[WND-251] WIND_GLO_PHY_L3_NRT - Oceansat-3 wind datasets unavailable for 2026-04-13/14",
+    "2026-04-15 09:00 UTC - Anomaly",
+    "Due to an upstream issue, the Oceansat-3 wind data in",
+    "were unavailable since 2026-04-13/14.",
+    "The following datasets were affected by this incident:",
+    "cmems_obs-wind_glo_phy_nrt_l3-oceansat3-oscat-asc-0.25deg_P1D-i",
+    "cmems_obs-wind_glo_phy_nrt_l3-oceansat3-oscat-des-0.25deg_P1D-i",
+    "cmems_obs-wind_glo_phy_nrt_l3-oceansat3-oscat-asc-0.5deg_P1D-i",
+    "cmems_obs-wind_glo_phy_nrt_l3-oceansat3-oscat-des-0.5deg_P1D-i",
+    "The data provision was restored on 2026-04-15, but the missing data won't be reprocessed.",
+    "[ICE-753] SEAICE_GLO_SEAICE_L4_NRT_OBSERVATIONS - missing data from 2026-03-05 to 2026-03-10",
+    "2026-04-13 16:00 UTC - Anomaly",
+    "Due to an upstream data issue, the datasets",
+    "osisaf_obs-si_glo_phy-sic-north_nrt_ssmis_l4_P1D-m",
+    "osisaf_obs-si_glo_phy-sic-south_nrt_ssmis_l4_P1D-m",
+    "from product",
+    "SEAICE_GLO_SEAICE_L4_NRT_OBSERVATIONS_011_001",
+    "do not have data from 2026-03-05 to 2026-03-10.",
+    "These NRT SSMIS ice concentration datasets from the OSI SAF are only provided on a best effort basis, since the access to SSMIS data from NOAA no longer is provided in a full operational manner. Missing data will not be recovered.",
+    "OSI SAF advice all users to use the AMSR based sea ice concentration datasets instead, which are also available in Copernicus Marine. They are provided on the same format, grid and projection. The main difference is that the AMSR based product have more details in the sea ice concentration field.",
+    "[ICE-810] SEAICE_ARC_(PHY|SEAICE)_NRT - Change of upstream SIC from AMSR2 to AMSR3",
+    "Information",
+    "2025-10-08 10:00 UTC - Information",
+    "The input sea ice concentration (SIC) used to identify surface type between SST and IST was switched from the AMSR2-based product (OSI-408-a,",
+    "Global Sea-Ice Concentration (AMSR2) | OSI SAF",
+    ") to the new AMSR3-based product (OSI-408-g,",
+    "Sea-Ice Concentration (AMSR3) | OSI SAF",
+    "). This changed happened from 2026-10-01 due to missing input AMSR2-based SIC and is permanent, i.e. from 2026-10-01 the new OSI SAF AMSR3-based SIC will be used.",
+    "SEAICE_ARC_SEAICE_L4_NRT_OBSERVATIONS_011_008",
+    "SEAICE_ARC_PHY_SST-IST_L3S_NRT_011_022",
+    "Copernicus Marine Toolbox - Version 2.5.0 is available!",
+    "Improvement",
+    "Version 2.5.0",
+    "of the",
+    "is now available!",
+    "This new version introduces new features and improvements, particularly for the",
+    "subset",
+    "describe",
+    "commands.",
+    "Subset",
+    "A new",
+    "--polygons-file",
+    "option is available to",
+    "subset and clip gridded datasets using polygons",
+    "provided in GeoJSON (",
+    ".geojson",
+    "), Shapefile (",
+    ".shp",
+    "), GeoPackage (",
+    ".gpkg",
+    ") or KML (",
+    ".kml",
+    ") files.",
+    "The estimation of output file sizes for",
+    "Zarr subsets",
+    "has also been improved.",
+    "Describe",
+    "Product metadata can now include direct links to the",
+    "Product User Manual (PUM)",
+    "Quality Information Document (QUID)",
+    "Synthesis Quality Overview (SQO)",
+    ", when available.",
+    "Several fixes improve the handling and filtering of",
+    "dataset IDs",
+    ", including IDs containing a dataset version.",
+    "This release also includes additional fixes and technical improvements across the Toolbox.",
+    "For the complete list of changes, please refer to the",
+    "Copernicus Marine Toolbox release notes",
+    "To install or upgrade the Toolbox, please consult the",
+    "… (이하 생략)"
+   ],
+   "removed_count": 28
+  },
+  {
+   "url": "https://www.ecmwf.int/en/about/media-centre/news",
+   "datasets": [
+    "era6",
+    "oras5",
+    "oras6"
+   ],
+   "added": [
+    "ECMWF at Brussels Climate Week",
+    "12 October 2026",
+    "At Brussels Climate Week 2026, ECMWF will engage with policymakers, industry leaders and partners to explore how European collaboration, scientific innovation and trusted data can help anticipate and prepare for climate risks."
+   ],
+   "removed_count": 3
+  },
+  {
+   "url": "https://nsidc.org/data/is2sitmogr4/versions/4",
+   "datasets": [
+    "icesat2-sit"
+   ],
+   "added": [
+    "]. Date Accessed 10-12-2026."
+   ],
+   "removed_count": 2
+  },
+  {
+   "url": "https://nsidc.org/data/atl20/versions/5",
+   "datasets": [
+    "icesat2-sit"
+   ],
+   "added": [
+    "]. Date Accessed 10-12-2026."
+   ],
+   "removed_count": 2
+  },
+  {
+   "url": "https://nsidc.org/data/atl10/versions/7",
+   "datasets": [
+    "icesat2-sit"
+   ],
+   "added": [
+    "]. Date Accessed 10-12-2026."
+   ],
+   "removed_count": 2
+  },
+  {
+   "url": "https://gmao.gsfc.nasa.gov/operations/status.php",
+   "datasets": [
+    "merra2"
+   ],
+   "added": [
+    "20261012 12z",
+    "20261011 09z",
+    "20261003 18z"
+   ],
+   "removed_count": 3
+  },
+  {
+   "url": "https://nsidc.org/data/g02202/versions/6",
+   "datasets": [
+    "nsidc-cdr-sic"
+   ],
+   "added": [
+    "]. Date Accessed 10-12-2026."
+   ],
+   "removed_count": 1
+  },
+  {
+   "url": "https://osi-saf.eumetsat.int/community/list-of-service-messages",
+   "datasets": [
+    "osisaf-drift",
+    "osisaf-sic"
+   ],
+   "added": [
+    "12 October 2026",
+    "Infrared Atmospheric Sounding Interferometer Sea Surface Temperature (IASI SST) restored"
+   ],
+   "removed_count": 2
+  },
+  {
+   "url": "https://nsidc.org/data/nsidc-0116/versions/4",
+   "datasets": [
+    "polar-pathfinder-motion"
+   ],
+   "added": [
+    "]. Date Accessed 10-12-2026."
+   ],
+   "removed_count": 1
+  },
+  {
+   "url": "https://nsidc.org/data/nsidc-0748/versions/1",
+   "datasets": [
+    "polar-pathfinder-motion"
+   ],
+   "added": [
+    "]. Date Accessed 10-12-2026.",
+    "1 January 2026 to present"
+   ],
+   "removed_count": 2
+  },
+  {
+   "url": "https://nsidc.org/data/g02135/versions/4",
+   "datasets": [
+    "sea-ice-index"
+   ],
+   "added": [
+    "]. Date Accessed 10-12-2026."
+   ],
+   "removed_count": 1
+  },
+  {
+   "url": "https://egusphere.copernicus.org/preprints/2025/egusphere-2025-3810/",
+   "datasets": [
+    "soda4"
+   ],
+   "added": [
+    "Total article views: 5,039",
+    "HTML: 3,061",
+    "PDF: 1,718",
+    "XML: 260",
+    "Total: 5,039",
+    "Supplement: 542",
+    "EndNote: 246",
+    "Total article views: 4,966",
+    "Thereof 4,966 with geography defined",
+    "Latest update: 12 Oct 2026"
+   ],
+   "removed_count": 10
   }
  ],
  "errors": [
@@ -38,7 +297,7 @@
     "cera20c"
    ],
    "error": "HTTP 401 / HTTP 401 (브라우저)",
-   "fails": 5,
+   "fails": 6,
    "last_ok": null
   },
   {
@@ -47,7 +306,7 @@
     "imerg"
    ],
    "error": "HTTP 403 / HTTP 403 (브라우저)",
-   "fails": 5,
+   "fails": 6,
    "last_ok": null
   },
   {
@@ -56,7 +315,7 @@
     "merra2"
    ],
    "error": "HTTP 403 / HTTP 403 (브라우저)",
-   "fails": 5,
+   "fails": 6,
    "last_ok": null
   }
  ]
