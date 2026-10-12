@@ -80,7 +80,8 @@ variables:
       kind: mean
       period: 월
       items:
-        - "전지구 육지+해양 TAVG 편차·95% 불확실성 — Global_TAVG_monthly.txt (°C)"
+        - text: "전지구 육지+해양 TAVG 편차·95% 불확실성 — Global_TAVG_monthly.txt (°C)"
+          std: [t_anom]   # 이름에 '불확실성'이 있어 자동 판정에서 빠지므로 직접 지정
         - "육상 TAVG·TMAX·TMIN 편차 — Land_TAVG/TMAX/TMIN_monthly.txt (°C)"
         - "50개 멤버 앙상블 시계열 — *_ensemble.txt (°C)"
         - text: "연평균 편차 — *_annual.txt (°C)"

@@ -1,0 +1,447 @@
+# 표준 변수 목록 — 자료마다 이름이 다른 같은 물리량을 하나로 묶어 "변수로 자료 찾기"에 씁니다.
+#
+# 각 항목:
+#   id       : 영문 식별자 (주소·코드용)
+#   ko / en  : 화면에 보일 이름
+#   cf       : 해당하는 CF 표준 이름(있을 때) — https://cfconventions.org/standard-names.html
+#   aliases  : 검색어로 받아줄 말 (한국어·영어·약어). 각 자료의 변수명(`tp`, `PRECTOT` 등)은 자동으로 더해짐
+#   include  : 한국어 변수 설명이 이 정규식 중 하나에 맞으면 이 변수로 봄
+#   exclude  : 맞아도 이 정규식에 걸리면 제외
+#   domains  : (선택) 이 분야 자료에서만 (atmosphere / ocean / seaice)
+#   dataset_groups : (선택) 이 분류(group) 자료에서만
+#   related  : (선택) 함께 보여줄 관련 변수 id
+#
+# 자동 판정이 틀린 변수는 YAML 변수 항목을 {text: ..., std: [id]} 또는 std: [] 로 직접 지정합니다.
+# 모든 변수에 공통으로 빼는 것: 불확실성·오차·플래그·마스크·관측 수 같은 보조 정보 (아래 skip)
+
+skip: "불확실성|오차|표준편차|플래그|마스크|관측 수|표본 수|가중치|품질|증분|코드|투영 좌표|위도·경도|격자 면적|격자 칸|RSTN|관측 시각|출처|구분\\(|신뢰구간|일자료 수|구간 수"
+
+groups:
+  - name: {ko: 대기 — 지표·지상, en: Atmosphere — near surface}
+    items:
+      - id: t2m
+        ko: 2 m 기온
+        en: 2 m air temperature
+        cf: air_temperature (2 m)
+        aliases: [기온, 지상 기온, 지표 기온, temperature, air temperature, near-surface air temperature, surface air temperature, 2m temperature, t2m, tas, SAT]
+        include: ['(2|10)\s?m\s*(\(.*?\)\s*)?기온', '^(평균|일평균|월평균) 기온', '^지표 기온 ', '지표\(2 m\) 기온', '절대 기온']
+        exclude: ['최고|최저|편차|이슬점|증발']
+        related: [t2m_extremes, t_anom, t_air, tskin]
+      - id: t2m_extremes
+        ko: 최고·최저 기온
+        en: Maximum / minimum temperature
+        cf: air_temperature (maximum / minimum)
+        aliases: [최고기온, 최저기온, tmax, tmin, mx2t, mn2t, maximum temperature, minimum temperature, 일교차, diurnal temperature range]
+        include: ['최고\s?·?\s?(최저)?\s?기온', '최저\s?기온', '일교차']
+        exclude: ['편차']
+        related: [t2m]
+      - id: t_anom
+        ko: 지표 기온 편차 (관측 기반)
+        en: Surface temperature anomaly (observation-based)
+        cf: surface_temperature_anomaly
+        aliases: [기온 편차, 온도 편차, temperature anomaly, global temperature, 지구 평균 기온, TAVG, LOTI]
+        include: ['편차', 'TAVG', '멤버']
+        exclude: ['해수면']
+        dataset_groups: [기온 자료]
+        related: [t2m, sst]
+      - id: tskin
+        ko: 지표면(skin) 온도
+        en: Skin / surface temperature
+        cf: surface_temperature
+        aliases: [지표면 온도, 표면 온도, skin temperature, skt, ts, land surface temperature]
+        include: ['지표(면)?\s?\((skin|피부)\) 온도', '지표면 온도', '^지표 온도']
+        related: [t2m, sst]
+      - id: dewpoint
+        ko: 이슬점온도
+        en: Dew point temperature
+        cf: dew_point_temperature
+        aliases: [이슬점, dew point, d2m, 2d, td]
+        include: ['이슬점']
+        related: [rh, q]
+      - id: rh
+        ko: 상대습도
+        en: Relative humidity
+        cf: relative_humidity
+        aliases: [습도, humidity, relative humidity, rh, hur]
+        include: ['상대습도']
+        related: [q, dewpoint]
+      - id: q
+        ko: 비습
+        en: Specific humidity
+        cf: specific_humidity
+        aliases: [습도, humidity, specific humidity, shum, spfh, hus, qv, 수증기압, vapour pressure]
+        include: ['비습', '증기압']
+        related: [rh, pwat]
+      - id: mslp
+        ko: 해면기압
+        en: Mean sea level pressure
+        cf: air_pressure_at_mean_sea_level
+        aliases: [기압, 해면 기압, sea level pressure, mslp, msl, slp, prmsl, psl]
+        include: ['해면\s?기압', '해면 환산 기압']
+        related: [sp]
+      - id: sp
+        ko: 지표 기압
+        en: Surface pressure
+        cf: surface_air_pressure
+        aliases: [기압, surface pressure, sp, ps, pres]
+        include: ['지표\s?기압', '지면 기압']
+        related: [mslp]
+      - id: wind10
+        ko: 10 m 바람
+        en: 10 m wind
+        cf: eastward_wind / northward_wind (10 m)
+        aliases: [바람, 풍속, 지상풍, 10m wind, surface wind, u10, v10, 10u, 10v, wind speed, 돌풍, gust]
+        include: ['10\s?m.*(바람|풍)', '지표 바람', '10m 돌풍', '10m 순간 최대풍속']
+        related: [wind, tau]
+      - id: cloud
+        ko: 운량
+        en: Cloud cover
+        cf: cloud_area_fraction
+        aliases: [구름, cloud, cloud cover, cloud fraction, tcc, tcdc, clt]
+        include: ['운량', '구름 면적비']
+      - id: blh
+        ko: 대기경계층 높이
+        en: Boundary layer height
+        cf: atmosphere_boundary_layer_thickness
+        aliases: [경계층, PBL, boundary layer, blh, hpbl]
+        include: ['경계층 높이']
+
+  - name: {ko: 대기 — 강수·물순환, en: Atmosphere — precipitation and water cycle}
+    items:
+      - id: precip
+        ko: 강수량 (총강수)
+        en: Precipitation (total)
+        cf: precipitation_flux / precipitation_amount
+        aliases: [강수, 강우, 비, 강수량, 강수율, precipitation, rain, rainfall, precip, pr, tp, prate]
+        include: ['강수량', '강수율', '강수 플럭스', '강수 강도', '총\s?강수', '일\s?강수', '월\s?강수', '강우 플럭스', '합성 강수', '위성 단독 강수', '우량계 강수', '다중위성 강수', '마이크로파.*강수', '적외 강수', '^강수']
+        exclude: ['가강수', '대류성', '대규모', '확률', '일수', '강설', '고체', '강우']
+        related: [precip_components, snowfall, pwat]
+      - id: precip_components
+        ko: 대류성·대규모 강수, 강수 형태
+        en: Convective / large-scale precipitation, precipitation type
+        cf: convective_precipitation_flux / stratiform_precipitation_flux
+        aliases: [대류성 강수, 대규모 강수, convective precipitation, large-scale precipitation, cp, lsp, 액체 강수, 비 누적]
+        include: ['대류성', '대규모 강수', '비\(액체 강수\)', '액체 강수 확률', '강우 플럭스']
+        related: [precip]
+      - id: snowfall
+        ko: 강설
+        en: Snowfall
+        cf: snowfall_flux
+        aliases: [눈, snowfall, snow, sf, prsn]
+        include: ['강설', '고체 강수']
+        related: [precip, snow]
+      - id: pwat
+        ko: 가강수량 (연직 적분 수증기)
+        en: Precipitable water (total column water vapour)
+        cf: atmosphere_mass_content_of_water_vapor
+        aliases: [가강수량, 가강수, 수증기량, precipitable water, total column water vapour, tcwv, pwat, prw, TQV]
+        include: ['가강수']
+        related: [q, precip]
+      - id: evap
+        ko: 증발(산)량
+        en: Evaporation
+        cf: water_evaporation_flux
+        aliases: [증발, 증발산, evaporation, evapotranspiration, e, evspsbl, 잠재증발, potential evaporation]
+        include: ['증발']
+        exclude: ['잠열', '담수']
+        related: [lhf]
+      - id: runoff
+        ko: 유출량
+        en: Runoff
+        cf: runoff_flux
+        aliases: [유출, runoff, ro]
+        include: ['유출']
+        exclude: ['담수']
+      - id: snow
+        ko: 적설 (깊이·물당량)
+        en: Snow depth / snow water equivalent
+        cf: surface_snow_thickness / surface_snow_amount
+        aliases: [적설, 눈, snow, snow depth, SWE, snow water equivalent, sd, sde, weasd]
+        include: ['적설', '융설']
+        domains: [atmosphere]
+        related: [snowfall, snow_on_ice]
+      - id: soil_moisture
+        ko: 토양수분
+        en: Soil moisture
+        cf: mass_content_of_water_in_soil_layer
+        aliases: [토양수분, 토양 수분, soil moisture, soil water, swvl, mrso]
+        include: ['토양.*수분', '토양 습윤도']
+        related: [soil_temp]
+      - id: soil_temp
+        ko: 토양온도
+        en: Soil temperature
+        cf: soil_temperature
+        aliases: [토양온도, soil temperature, stl, tsl]
+        include: ['토양\s?온도']
+        related: [soil_moisture]
+
+  - name: {ko: 대기 — 연직 구조·역학, en: Atmosphere — upper air and dynamics}
+    items:
+      - id: t_air
+        ko: 기온 (기압면·모델면)
+        en: Air temperature (pressure / model levels)
+        cf: air_temperature
+        aliases: [기온, 상층 기온, air temperature, temperature, t, ta]
+        include: ['^기온', '면 기온', 'hPa 기온', '^온위']
+        related: [t2m]
+      - id: wind
+        ko: 바람 (기압면·모델면)
+        en: Wind (pressure / model levels)
+        cf: eastward_wind / northward_wind
+        aliases: [바람, 동서풍, 남북풍, 상층 바람, wind, u, v, ua, va, zonal wind, meridional wind]
+        include: ['동서\s?·?\s?(남북)?\s?바람', '남북\s?바람', '동서풍', '남북풍', '^바람', '^풍속', '고도면 풍속', '바람 u', '동서 · 남북 바람']
+        exclude: ['10\s?m', '지표', '응력', '손실']
+        related: [wind10, w]
+      - id: w
+        ko: 연직속도
+        en: Vertical velocity
+        cf: lagrangian_tendency_of_air_pressure (omega) / upward_air_velocity
+        aliases: [연직속도, 오메가, omega, vertical velocity, w, wap]
+        include: ['연직\s?속도']
+        domains: [atmosphere]
+        related: [wind]
+      - id: z
+        ko: 지위고도
+        en: Geopotential height
+        cf: geopotential_height
+        aliases: [지위고도, 지위, geopotential, geopotential height, z, hgt, zg, gh]
+        include: ['지위']
+        exclude: ['지표 지위']
+      - id: vorticity
+        ko: 와도·발산·유선함수
+        en: Vorticity, divergence, stream function
+        cf: atmosphere_relative_vorticity / divergence_of_wind
+        aliases: [와도, 소용돌이도, 발산, 유선함수, 속도 퍼텐셜, 잠재와도, vorticity, divergence, stream function, velocity potential, PV]
+        include: ['와도', '소용돌이도', '^발산', '유선함수', '속도 퍼텐셜']
+        exclude: ['순압 유선함수']
+        domains: [atmosphere]
+      - id: cape
+        ko: 대류가용잠재에너지 (CAPE)
+        en: Convective available potential energy (CAPE)
+        cf: atmosphere_convective_available_potential_energy
+        aliases: [CAPE, 대류가용잠재에너지, 대류 불안정, convective available potential energy]
+        include: ['대류가용잠재에너지', 'CAPE']
+      - id: cloud_water
+        ko: 구름 물·얼음 함량
+        en: Cloud liquid water / ice content
+        cf: mass_fraction_of_cloud_liquid_water_in_air
+        aliases: [구름 물, 운수량, 구름 얼음, cloud water, cloud ice, clwc, ciwc, cwat, clw, cli]
+        include: ['구름 (액체수|물)', '구름 물']
+        related: [cloud]
+      - id: moisture_flux
+        ko: 수증기 수송·수분 발산
+        en: Moisture transport / moisture flux divergence
+        cf: eastward_atmosphere_water_vapor_transport_across_unit_distance
+        aliases: [수증기 수송, 수증기 플럭스, 수분 발산, moisture flux, moisture transport, IVT, vimd]
+        include: ['수증기 플럭스', '수분 발산']
+        related: [pwat]
+      - id: ozone
+        ko: 오존
+        en: Ozone
+        cf: mass_fraction_of_ozone_in_air / atmosphere_mass_content_of_ozone
+        aliases: [오존, ozone, o3, TO3]
+        include: ['오존']
+      - id: aerosol
+        ko: 에어로졸
+        en: Aerosols
+        cf: atmosphere_optical_thickness_due_to_aerosol
+        aliases: [에어로졸, 황사, 미세먼지, aerosol, dust, AOD, black carbon, sulfate]
+        include: ['황사', '블랙카본', '황산염', '에어로졸']
+
+  - name: {ko: 대기 — 복사·열 플럭스, en: Atmosphere — radiation and heat fluxes}
+    items:
+      - id: sw_sfc
+        ko: 지표 단파복사
+        en: Surface shortwave radiation
+        cf: surface_downwelling_shortwave_flux_in_air (and up / net)
+        aliases: [단파복사, 일사, 태양복사, shortwave, solar radiation, ssrd, ssr, dswrf, rsds, SW]
+        include: ['단파']
+        exclude: ['^대기 상단', '^TOA', '^입사']
+        related: [lw_sfc, toa_rad]
+      - id: lw_sfc
+        ko: 지표 장파복사
+        en: Surface longwave radiation
+        cf: surface_downwelling_longwave_flux_in_air (and up / net)
+        aliases: [장파복사, longwave, thermal radiation, strd, str, dlwrf, rlds, LW]
+        include: ['장파']
+        exclude: ['^대기 상단', '^TOA']
+        related: [sw_sfc, toa_rad]
+      - id: toa_rad
+        ko: 대기 상단 복사 (OLR 등)
+        en: Top-of-atmosphere radiation (OLR etc.)
+        cf: toa_outgoing_longwave_flux / toa_net_downward_radiative_flux
+        aliases: [대기 상단, OLR, 외향 장파, TOA, top of atmosphere, outgoing longwave, net radiation, 복사 수지, ttr, tsr]
+        include: ['대기 상단', 'TOA', '입사 태양복사', '방출 장파']
+        related: [sw_sfc, lw_sfc]
+      - id: lhf
+        ko: 잠열 플럭스
+        en: Latent heat flux
+        cf: surface_upward_latent_heat_flux
+        aliases: [잠열, latent heat, slhf, lhtfl, hfls, LH]
+        include: ['잠열']
+        related: [shf, evap]
+      - id: shf
+        ko: 현열 플럭스
+        en: Sensible heat flux
+        cf: surface_upward_sensible_heat_flux
+        aliases: [현열, sensible heat, sshf, shtfl, hfss, SH]
+        include: ['현열']
+        related: [lhf]
+
+  - name: {ko: 해양, en: Ocean}
+    items:
+      - id: sst
+        ko: 해수면온도
+        en: Sea surface temperature
+        cf: sea_surface_temperature
+        aliases: [해수면온도, 표층 수온, 수온, SST, sea surface temperature, tos, analysed_sst]
+        include: ['해수면\s?(\(수면\)\s?)?온도', '(?<![A-Z])SST', '표층 수온', '`tos`']
+        exclude: ['해빙', 'LOTI']
+        related: [ocean_temp, t_anom]
+      - id: ocean_temp
+        ko: 수온 (수층)
+        en: Ocean temperature (with depth)
+        cf: sea_water_potential_temperature / sea_water_temperature
+        aliases: [수온, 잠재수온, 해수 온도, ocean temperature, potential temperature, thetao, temp, THETA]
+        include: ['수온']
+        exclude: ['해수면', '표층 수온', '혼합층']
+        domains: [ocean, seaice]
+        related: [sst, salinity, ohc]
+      - id: salinity
+        ko: 염분
+        en: Salinity
+        cf: sea_water_salinity
+        aliases: [염분, 염도, salinity, so, salt, SSS]
+        include: ['염분']
+        exclude: ['플럭스', '혼합층']
+        related: [ocean_temp]
+      - id: ssh
+        ko: 해수면 높이
+        en: Sea surface height
+        cf: sea_surface_height_above_geoid / sea_surface_height_above_sea_level
+        aliases: [해수면 높이, 해면고도, 해수면 편차, SSH, SLA, ADT, sea level, sea surface height, zos, dynamic topography]
+        include: ['해수면 높이', '역학\s?지형', '역학적 해수면']
+        related: [currents]
+      - id: currents
+        ko: 해류 (수평 유속)
+        en: Ocean currents (horizontal velocity)
+        cf: eastward_sea_water_velocity / northward_sea_water_velocity
+        aliases: [해류, 유속, 지형류, currents, velocity, uo, vo, geostrophic current]
+        include: ['유속', '해류', '지형류', '에디 운동 에너지']
+        exclude: ['^연직', '해빙']
+        related: [ssh]
+      - id: mld
+        ko: 혼합층 깊이
+        en: Mixed layer depth
+        cf: ocean_mixed_layer_thickness
+        aliases: [혼합층, MLD, mixed layer, mlotst]
+        include: ['혼합층 (깊이|두께)']
+        exclude: ['호수']
+      - id: ohc
+        ko: 해양 열용량·등온선 깊이
+        en: Ocean heat content, isotherm depth
+        cf: integral_wrt_depth_of_sea_water_temperature
+        aliases: [열용량, 해양 열용량, 열함량, ocean heat content, OHC, 20도 등온선, D20, isotherm depth]
+        include: ['열용량', '등온(선|층) 깊이']
+        related: [ocean_temp]
+      - id: wind_stress
+        ko: 바람 응력·운동량 플럭스
+        en: Wind stress, momentum flux
+        cf: surface_downward_eastward_stress
+        aliases: [바람 응력, 응력, wind stress, momentum flux, tauu, tauv]
+        include: ['응력', '운동량 플럭스']
+        related: [wind10]
+      - id: ocean_heat_flux
+        ko: 해면 열플럭스
+        en: Net surface heat flux into the ocean
+        cf: surface_downward_heat_flux_in_sea_water
+        aliases: [해면 열플럭스, 순 열플럭스, net heat flux, hfds, Qnet]
+        include: ['해면.*열\s?플럭스', '해기 열플럭스', '순 하향 열', '순 해면 열', '총 하향 해면 열', '해양.*열플럭스', '들어가는 순 열']
+        related: [lhf, shf]
+      - id: freshwater_flux
+        ko: 담수·염 플럭스
+        en: Freshwater / salt flux
+        cf: water_flux_into_sea_water
+        aliases: [담수 플럭스, 염 플럭스, freshwater flux, E-P, wfo]
+        include: ['담수 플럭스', '염 플럭스']
+      - id: waves
+        ko: 파랑 (파고·파향·파주기)
+        en: Ocean waves
+        cf: sea_surface_wave_significant_height
+        aliases: [파고, 유의파고, 파랑, 파도, wave height, significant wave height, swh, waves]
+        include: ['파고', '파향', '파주기']
+      - id: biogeochem
+        ko: 용존산소·영양염
+        en: Oxygen and nutrients
+        cf: mole_concentration_of_dissolved_molecular_oxygen_in_sea_water
+        aliases: [산소, 용존산소, 영양염, 질산염, 인산염, 규산염, oxygen, nutrients, nitrate, phosphate, silicate]
+        include: ['산소', '질산염', '인산염', '규산염']
+
+  - name: {ko: 해빙, en: Sea ice}
+    items:
+      - id: sic
+        ko: 해빙 농도
+        en: Sea ice concentration
+        cf: sea_ice_area_fraction
+        aliases: [해빙 농도, 해빙, 얼음 농도, sea ice concentration, sea ice fraction, SIC, siconc, ci, icec]
+        include: ['해빙\s?(농도|비율|면적비|면적 비율|피복률|분포)', '원시 농도', '필터 전 농도', '해빙·적설 농도']
+        exclude: ['다년빙', '신생빙']
+        related: [sie, sit]
+      - id: sie
+        ko: 해빙 면적·범위 (지수)
+        en: Sea ice extent / area (index)
+        cf: sea_ice_extent / sea_ice_area
+        aliases: [해빙 면적, 해빙 범위, 해빙 경계, sea ice extent, sea ice area, extent, ice edge]
+        include: ['해빙 (범위|면적)(?!\s?비)', '해빙 경계', '범위 기후값']
+        related: [sic]
+      - id: sit
+        ko: 해빙 두께
+        en: Sea ice thickness
+        cf: sea_ice_thickness
+        aliases: [해빙 두께, 얼음 두께, sea ice thickness, SIT, sithick, hi]
+        include: ['해빙 두께', '두께 분포', '(병합|평균|배경장|가중 평균|SMOS|CryoSat-2) (해빙 )?두께', '해빙·적설 농도와 두께', '^일별 평균 두께']
+        exclude: ['적설', '눈']
+        related: [sic, ice_volume, freeboard]
+      - id: ice_volume
+        ko: 해빙 부피·질량
+        en: Sea ice volume / mass
+        cf: sea_ice_volume
+        aliases: [해빙 부피, 해빙 질량, sea ice volume, ice volume]
+        include: ['해빙 부피', '해빙 질량']
+        related: [sit]
+      - id: ice_drift
+        ko: 해빙 이동 (속도·변위)
+        en: Sea ice drift / velocity
+        cf: sea_ice_x_velocity / sea_ice_y_velocity
+        aliases: [해빙 이동, 해빙 속도, 해빙 표류, sea ice drift, ice motion, ice velocity, siu, siv]
+        include: ['해빙.*속도', '방향 (해빙 )?속도', '변위$', '방향 변위', '주평균 속도']
+        domains: [seaice, ocean]
+      - id: ice_type
+        ko: 해빙 유형·나이 (다년빙 등)
+        en: Sea ice type / age (multiyear ice)
+        cf: sea_ice_age / multi_year_ice_area_fraction
+        aliases: [다년빙, 일년빙, 해빙 나이, 해빙 유형, multiyear ice, first-year ice, ice age, ice type]
+        include: ['다년빙', '신생빙', '해빙 나이', '해빙 유형', '능선 얼음']
+        related: [sic]
+      - id: ice_growth_melt
+        ko: 해빙 성장·융해
+        en: Sea ice growth / melt
+        cf: tendency_of_sea_ice_amount_due_to_thermodynamics
+        aliases: [해빙 성장, 해빙 융해, 결빙, 융빙, ice growth, ice melt, melt onset, ice production]
+        include: ['해빙 성장', '융해', '해빙 이류', '융빙']
+        related: [sit]
+      - id: freeboard
+        ko: 해빙 프리보드·흘수
+        en: Sea ice freeboard / draft
+        cf: sea_ice_freeboard
+        aliases: [프리보드, 흘수, freeboard, draft]
+        include: ['프리보드', '흘수']
+        related: [sit]
+      - id: snow_on_ice
+        ko: 해빙 위 적설
+        en: Snow on sea ice
+        cf: surface_snow_thickness (on sea ice)
+        aliases: [해빙 위 눈, 눈 깊이, 적설, snow on sea ice, snow depth, snow thickness]
+        include: ['적설', '눈 (깊이|두께|밀도)', '해빙 위 눈']
+        domains: [seaice, ocean]
+        related: [sit]

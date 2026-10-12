@@ -6,7 +6,7 @@ description: "Compare up to four datasets such as ERA5, JRA-3Q and MERRA-2 by pe
 # Compare datasets
 
 Pick up to four datasets to see their period, resolution, update status, key DOIs and successors in one table.
-Type a variable such as "precipitation" into **Find a variable** to compare its name, units and whether it is **instantaneous, mean or accumulated** in each selected dataset.
+Type a variable such as "precipitation", "2 m temperature" or `tp` into **Find a variable** to list **every dataset that has it** — no selection needed — with its name, units and whether it is **instantaneous, mean or accumulated**. Different short names for the same quantity (`tp`, `PRECTOT`, `prate` …) are grouped using the [CF standard names](https://cfconventions.org/standard-names.html).
 
 <!-- COMPARE_APP -->
 

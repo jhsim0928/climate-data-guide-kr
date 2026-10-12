@@ -194,10 +194,10 @@ UI = {
     # 비교
     "— 선택 —": "— Select —",
     "변수 찾기": "Find a variable",
-    "— 고른 자료들에서 같은 종류의 변수를 나란히 봅니다 (한국어 이름이나 변수명)": "— shows matching variables side by side (English name or short name)",
-    "예) 강수, tp, prate, sea ice": "e.g. precipitation, tp, prate, sea ice",
-    "위에서 비교할 자료를 2개 이상 골라주세요. 고른 내용은 주소에 저장되어 그대로 공유할 수 있습니다.":
-        "Choose two or more datasets above. Your selection is kept in the page address, so you can share the link.",
+    "— 변수 이름(한국어·영어)이나 변수명을 넣으면 그 변수가 있는 자료를 모두 보여 줍니다": "— type a variable name or short name to list every dataset that has it",
+    "예) 강수, 2m 기온, tp, SST, 해빙 두께": "e.g. precipitation, 2 m temperature, tp, SST, sea ice thickness",
+    "위에서 비교할 자료를 2개 이상 고르거나, 변수 찾기에 변수를 넣어 주세요. 고른 내용은 주소에 저장되어 그대로 공유할 수 있습니다.":
+        "Choose two or more datasets above, or type a variable to find the datasets that have it. Your selection is kept in the page address, so you can share the link.",
     # 폼 — 알림 신청
     "메일 알림은 준비 중입니다": "Email alerts are not available yet",
     "1. 알림 받을 데이터셋": "1. Datasets",
