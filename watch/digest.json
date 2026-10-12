@@ -1,12 +1,12 @@
 {
- "date": "2026-10-12",
- "reviewed_at": "2026-10-12T08:33:00+09:00",
- "summary": "시험 점검: 바뀐 페이지 2곳(GES DISC 공지 목록, ESA 카탈로그)에서 GES DISC 공지 2건을 찾아 원문을 확인했지만, 둘 다 사이트에 새로 올릴 공지는 아니어서 오늘 승인할 후보는 없습니다.",
+ "date": "2026-10-13",
+ "reviewed_at": "2026-10-13T08:20:03+09:00",
+ "summary": "공지 페이지 135곳 중 17곳이 바뀌었지만 모두 날짜·조회수 표시, 행사 소식, 다른 제품 안내여서 오늘 승인할 공지 후보는 없습니다.",
  "watch": {
-  "date": "2026-10-12",
+  "date": "2026-10-13",
   "checked": 135,
-  "ok": 132,
-  "changed": 2
+  "ok": 129,
+  "changed": 17
  },
  "candidates": [],
  "pr": null,
@@ -14,30 +14,160 @@
  "ignored": [
   {
    "datasets": [
-    "imerg",
-    "merra2"
+    "berkeley-earth"
    ],
-   "url": "https://disc.gsfc.nasa.gov/information/alerts",
-   "reason": "GES DISC 데이터 서버 접근 종료(9/30 이후) — 사이트 IMERG(2026-09-30)·MERRA-2(2026-05-11) 공지에 이미 같은 내용이 있음"
+   "url": "https://essd.copernicus.org/preprints/essd-2026-412/",
+   "reason": "논문 조회수·댓글 삭제 표시만 바뀜"
   },
   {
    "datasets": [
-    "imerg"
+    "cfsr-cfsv2"
    ],
-   "url": "https://disc.gsfc.nasa.gov/information/alerts",
-   "reason": "GPM V08 GPROF L2·L3 플래그 오류로 L3 GPROF V08A→V08B 재처리 — 영향 목록이 GPROF 자료뿐이고 IMERG는 없음 (사이트에 GPROF 페이지 없음)"
+   "url": "https://gdex.ucar.edu/datasets/d094000/",
+   "reason": "정기 갱신으로 자료 기간(2026-10-12까지)·용량 표시만 바뀜"
+  },
+  {
+   "datasets": [
+    "cobe-sst3"
+   ],
+   "url": "https://climatedataguide.ucar.edu/climate-data/sst-data-cobev3-centennial-situ-observation-based-estimates-version-3",
+   "reason": "페이지 수정 날짜 표시만 바뀜"
   },
   {
    "datasets": [
     "cs2smos"
    ],
    "url": "https://earth.esa.int/eogateway/catalog/smos-cryosat-l4-sea-ice-thickness",
-   "reason": "페이지 제목 표시만 바뀜 (undefined - Earth Online)"
+   "reason": "다른 자료(Biomass 보조 파일) 소개 문구가 페이지에 섞여 보임 — CS2SMOS와 무관"
+  },
+  {
+   "datasets": [
+    "cs3smos"
+   ],
+   "url": "https://data.marine.copernicus.eu/product/SEAICE_GLO_PHY_L4_NRT_011_014/description",
+   "reason": "정기 갱신으로 자료 기간 끝 날짜만 바뀜"
+  },
+  {
+   "datasets": [
+    "duacs",
+    "glorys12",
+    "nextsim",
+    "ostia",
+    "topaz4b"
+   ],
+   "url": "https://marine.copernicus.eu/user-corner/user-notification-service",
+   "reason": "MDSOP-417은 예보 제품(GLOBAL_ANALYSISFORECAST_PHY_001_024) SUBSET 문제로 감시 자료와 무관. WEB-396(10/13 07:30 UTC 약 2시간 방화벽 점검)은 속도 저하 안내일 뿐 접근 중단이 아님. ICE-810·ICE-753·WND-251·Toolbox 2.5.0은 감시 자료와 다른 제품이거나 예전 글이 다시 보인 것"
+  },
+  {
+   "datasets": [
+    "era6",
+    "oras5",
+    "oras6"
+   ],
+   "url": "https://www.ecmwf.int/en/about/media-centre/news",
+   "reason": "행사 소식(Brussels Climate Week)"
+  },
+  {
+   "datasets": [
+    "icesat2-sit"
+   ],
+   "url": "https://nsidc.org/data/is2sitmogr4/versions/4",
+   "reason": "인용문의 접속 날짜만 바뀜"
+  },
+  {
+   "datasets": [
+    "icesat2-sit"
+   ],
+   "url": "https://nsidc.org/data/atl20/versions/5",
+   "reason": "인용문의 접속 날짜만 바뀜"
+  },
+  {
+   "datasets": [
+    "icesat2-sit"
+   ],
+   "url": "https://nsidc.org/data/atl10/versions/7",
+   "reason": "인용문의 접속 날짜만 바뀜"
+  },
+  {
+   "datasets": [
+    "merra2"
+   ],
+   "url": "https://gmao.gsfc.nasa.gov/operations/status.php",
+   "reason": "생산 현황 날짜 갱신 — MERRA-2는 Nominal"
+  },
+  {
+   "datasets": [
+    "nsidc-cdr-sic"
+   ],
+   "url": "https://nsidc.org/data/g02202/versions/6",
+   "reason": "인용문의 접속 날짜만 바뀜"
+  },
+  {
+   "datasets": [
+    "osisaf-drift",
+    "osisaf-sic"
+   ],
+   "url": "https://osi-saf.eumetsat.int/community/list-of-service-messages",
+   "reason": "IASI SST 복구 소식 — 해빙 자료와 무관"
+  },
+  {
+   "datasets": [
+    "polar-pathfinder-motion"
+   ],
+   "url": "https://nsidc.org/data/nsidc-0116/versions/4",
+   "reason": "인용문의 접속 날짜만 바뀜"
+  },
+  {
+   "datasets": [
+    "polar-pathfinder-motion"
+   ],
+   "url": "https://nsidc.org/data/nsidc-0748/versions/1",
+   "reason": "인용문 접속 날짜와 자료 기간 표시('1 January 2026 to present')만 바뀜"
+  },
+  {
+   "datasets": [
+    "sea-ice-index"
+   ],
+   "url": "https://nsidc.org/data/g02135/versions/4",
+   "reason": "인용문의 접속 날짜만 바뀜"
+  },
+  {
+   "datasets": [
+    "soda4"
+   ],
+   "url": "https://egusphere.copernicus.org/preprints/2025/egusphere-2025-3810/",
+   "reason": "논문 조회수 표시만 바뀜"
   }
  ],
- "errors": [],
+ "errors": [
+  {
+   "datasets": [
+    "cera20c"
+   ],
+   "url": "https://www.ecmwf.int/en/forecasts/datasets/reanalysis-datasets/cera-20c",
+   "error": "HTTP 401 / HTTP 401 (브라우저)",
+   "fails": 6
+  },
+  {
+   "datasets": [
+    "imerg"
+   ],
+   "url": "https://www.earthdata.nasa.gov/data/alerts-outages",
+   "error": "HTTP 403 / HTTP 403 (브라우저)",
+   "fails": 6
+  },
+  {
+   "datasets": [
+    "merra2"
+   ],
+   "url": "https://www.earthdata.nasa.gov/data/projects/merra-2/news",
+   "error": "HTTP 403 / HTTP 403 (브라우저)",
+   "fails": 6
+  }
+ ],
  "notes": [
-  "자동 점검이 막힌 3곳(NASA Earthdata 공지 목록·MERRA-2 소식, ECMWF CERA-20C)은 Claude가 직접 열어 봤고 최근 관련 공지는 없었습니다.",
-  "오늘 06시 자동 감지가 GitHub 쪽에서 실행되지 않아 08:23에 수동으로 돌렸습니다. 내일부터는 08시 점검이 감지 결과가 오래됐으면 직접 다시 돌리도록 고쳤습니다."
+  "오늘 06시 자동 감지가 GitHub 쪽에서 실행되지 않아(마지막 예약 실행: 10/12 09:23) 08:12에 수동으로 돌렸습니다.",
+  "운영자 확인 필요: 자동 점검이 막힌 3곳(NASA Earthdata 공지 목록·MERRA-2 소식, ECMWF CERA-20C)은 오늘 무인 실행이라 웹 열람 권한 승인을 받지 못해 직접 확인하지 못했습니다. IMERG·MERRA-2·CERA-20C 관련 새 공지가 없는지 확인해 주세요.",
+  "세 주소 모두 6회 연속 실패(성공 기록 없음)라 새 공식 주소를 찾아봐야 하지만 오늘은 웹 열람이 안 돼 교체 제안을 못 했습니다."
  ]
 }
