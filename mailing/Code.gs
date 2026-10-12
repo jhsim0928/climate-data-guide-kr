@@ -73,7 +73,7 @@ var TXT = {
     unknown: '알 수 없는 요청입니다', back: '로 돌아가기'
   },
   en: {
-    site: 'Korean Climate Data Guide', home: SITE_URL + 'en/', subscribePage: SITE_URL + 'en/subscribe/',
+    site: 'Korean Climate Data Navigator', home: SITE_URL + 'en/', subscribePage: SITE_URL + 'en/subscribe/',
     level: { critical: 'Critical', warning: 'Warning', info: 'Info' },
     confirmSubject: 'Please confirm your notice alert subscription',
     confirmIntro: ' received your request for notice alerts. Please click the button below to confirm it.',
@@ -88,7 +88,7 @@ var TXT = {
     original: 'Original notice', page: ' page',
     digestNote: 'Notices are checked against official sources by the maintainer, but please re-read the original announcement before acting on it in an analysis or paper.',
     footer: function (unsub, subPage) {
-      return 'The Korean Climate Data Guide (<a href="' + SITE_URL + 'en/">' + SITE_URL + 'en/</a>) is an unofficial project run by an individual ' +
+      return 'The Korean Climate Data Navigator (<a href="' + SITE_URL + 'en/">' + SITE_URL + 'en/</a>) is an unofficial project run by an individual ' +
         'and does not represent any employer or data provider.<br>' +
         'Change settings: sign up again with the same email on the <a href="' + subPage + '">notice alerts page</a> · ' +
         '<a href="' + unsub + '">Unsubscribe (deletes your data immediately)</a>';
@@ -96,7 +96,7 @@ var TXT = {
     expiredTitle: 'This link has expired or was already used.', expiredMsg: 'To receive alerts again, please sign up on the website.',
     doneTitle: 'Your subscription is confirmed',
     doneMsg: 'We will email you when new notices are posted for the datasets you chose. To keep alerts out of spam, add {OWNER} to your contacts or mark the confirmation email as \'Not spam\'.',
-    unsubTitle: 'You have been unsubscribed', unsubMsg: 'Your email address and settings have been deleted. Thank you for using the guide.',
+    unsubTitle: 'You have been unsubscribed', unsubMsg: 'Your email address and settings have been deleted. Thank you for using the Navigator.',
     unknown: 'Unknown request', back: 'Back to '
   }
 };

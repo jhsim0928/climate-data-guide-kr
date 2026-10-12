@@ -1402,7 +1402,7 @@ def on_page_context(context, page, config, nav):
         page.meta["title"] = ten if is_en() else tko
         page.meta["description"] = den if is_en() else dko
     if page.is_homepage:
-        other = "기후데이터 길잡이" if is_en() else "Korean Climate Data Guide"
+        other = "기후데이터 길잡이" if is_en() else "Korean Climate Data Navigator"
         c = (config.get("extra") or {}).get("site_citation") or {}
         page.meta["jsonld"] = _ld({
             "@context": "https://schema.org",

@@ -1,6 +1,6 @@
 ---
 title: "About & citation"
-description: "Why the Korean Climate Data Guide exists, its principles, the acknowledgement sentence and Zenodo DOI to cite, contact and disclaimer."
+description: "Why the Korean Climate Data Navigator exists, its principles, the acknowledgement sentence and Zenodo DOI to cite, contact and disclaimer."
 ---
 
 # About & citation
@@ -24,9 +24,9 @@ This site brings three things together:
 
 ## Citing this site
 
-The Korean Climate Data Guide is archived on Zenodo with a DOI: <!-- SITE_DOI -->
+The Korean Climate Data Navigator is archived on Zenodo with a DOI: <!-- SITE_DOI -->
 
-If the guide helped your work, please add the sentence below to the Acknowledgements of your paper — it really helps keep the site going.
+If the Navigator helped your work, please add the sentence below to the Acknowledgements of your paper — it really helps keep the site going.
 
 <!-- SITE_CITATION -->
 
@@ -38,7 +38,7 @@ If the guide helped your work, please add the sentence below to the Acknowledgem
 
 ## Contact
 
-- Maintainer: Korean Climate Data Guide maintainer
+- Maintainer: Korean Climate Data Navigator maintainer
 - Email: [data4researchers@gmail.com](mailto:data4researchers@gmail.com)
 
 ## Disclaimer

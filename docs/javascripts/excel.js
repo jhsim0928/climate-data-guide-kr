@@ -136,7 +136,7 @@
     try { return decodeURIComponent(u); } catch (e) { return u; }
   }
   function citeFooter() {
-    var lines = [L("이 자료가 도움이 되셨다면 논문·보고서에 기후데이터 길잡이를 인용해 주세요.", "If this table helped, please acknowledge the Korean Climate Data Guide in your paper or report.")];
+    var lines = [L("이 자료가 도움이 되셨다면 논문·보고서에 기후데이터 길잡이를 인용해 주세요.", "If this table helped, please acknowledge the Korean Climate Data Navigator in your paper or report.")];
     if (meta("cdg-ack")) lines.push("Acknowledgements: " + meta("cdg-ack"));
     lines.push(L("출처 페이지: ", "Source page: ") + pageUrl());
     lines.push(L("이 표는 요약입니다. 분석·논문에 쓰기 전에는 각 자료의 공식 출처에서 반드시 다시 확인하세요.", "This table is a summary. Always re-check each dataset's official source before using it in an analysis or paper."));

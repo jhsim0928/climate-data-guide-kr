@@ -5,10 +5,10 @@ hide:
 
 <div class="home-hero home-hero--lockup" markdown="1">
 ![](assets/logo.svg){ .hero-icon }
-<div class="hero-text"><p class="hero-title">Korean Climate Data Guide</p><p class="hero-sub">data4researchers.kr</p></div>
+<div class="hero-text"><p class="hero-title">Korean Climate Data Navigator</p><p class="hero-sub">data4researchers.kr</p></div>
 </div>
 
-# Korean Climate Data Guide { .visually-hidden }
+# Korean Climate Data Navigator { .visually-hidden }
 
 A one-stop guide for atmospheric, ocean, sea-ice, polar and remote-sensing researchers: **where each dataset comes from, how to download it, the period it covers, which variables it offers, what to cite, and the latest discontinuation and change notices**.
 
@@ -19,7 +19,7 @@ This site does not host any data. Every entry links to the official source. <!--
 
 [All datasets](datasets/index.md){ .md-button .md-button--primary } [Compare datasets](compare.md){ .md-button } [Generation changes](transitions.md){ .md-button }
 
-## Who this guide is for
+## Who the Navigator is for
 
 - Modelers who use reanalysis as initial and boundary conditions and need to know when an input dataset stops updating or changes
 - Researchers looking for the right dataset for a specific analysis

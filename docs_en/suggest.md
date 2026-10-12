@@ -1,6 +1,6 @@
 ---
 title: "Suggest a dataset"
-description: "Tell us about a dataset you use that is missing from the Korean Climate Data Guide; we will check its sources, access, citation and notices."
+description: "Tell us about a dataset you use that is missing from the Korean Climate Data Navigator; we will check its sources, access, citation and notices."
 ---
 
 # Suggest a dataset

@@ -79,7 +79,7 @@
 연구에 도움이 되었다면 논문의 사사(Acknowledgements)에 아래 문장을 넣어주세요.
 
 ```text
-Information on the datasets used in this study was compiled with the help of the Korean Climate Data Guide (Sim, 2026; https://doi.org/10.5281/zenodo.23300923).
+Information on the datasets used in this study was compiled with the help of the Korean Climate Data Navigator (Sim, 2026; https://doi.org/10.5281/zenodo.23300923).
 ```
 
 <details>
@@ -88,7 +88,7 @@ Information on the datasets used in this study was compiled with the help of the
 ```bibtex
 @misc{sim2026kcdg,
   author    = {Sim, Ji-Han},
-  title     = {Korean Climate Data Guide},
+  title     = {Korean Climate Data Navigator},
   year      = {2026},
   publisher = {Zenodo},
   doi       = {10.5281/zenodo.23300923},
@@ -106,7 +106,7 @@ Information on the datasets used in this study was compiled with the help of the
 
 ---
 
-## Korean Climate Data Guide (English)
+## Korean Climate Data Navigator (English)
 
 **👉 [data4researchers.kr/en](https://data4researchers.kr/en/)**
 
@@ -121,7 +121,7 @@ A guide to climate, ocean and sea-ice datasets for researchers. For each of **63
 
 Also: side-by-side comparison of up to four datasets, email alerts for the notices you choose, Excel export of every table, and an error-report button on every page. The English pages are written from the official English sources rather than translated from Korean.
 
-**Cite:** please acknowledge the guide as *Sim, 2026; https://doi.org/10.5281/zenodo.23300923* (see the sentence and BibTeX above).
+**Cite:** please acknowledge the Navigator as *Sim, 2026; https://doi.org/10.5281/zenodo.23300923* (see the sentence and BibTeX above).
 
 **Contact:** [data4researchers@gmail.com](mailto:data4researchers@gmail.com) · the *Report an error* button on any page.
 

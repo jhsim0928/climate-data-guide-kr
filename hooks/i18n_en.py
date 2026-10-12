@@ -76,7 +76,7 @@ DETAIL_RES_NOTE = [
 DETAIL_RES_NOTE_TITLE = "How to read the resolution"
 
 DISCLAIMER = (
-    "The Korean Climate Data Guide is an unofficial project run by an individual and does not represent the views of the "
+    "The Korean Climate Data Navigator is an unofficial project run by an individual and does not represent the views of the "
     "maintainer's employer or of any data provider. All information reflects the date it was checked and may change — always "
     "re-check DOIs, citation formats, periods and variable definitions against the official sources before using them in a paper or report."
 )
@@ -135,7 +135,7 @@ UI = {
     "### 논문 인용": "### Reference papers",
     "### 사사(Acknowledgements) 작성": "### Acknowledgements",
     "BibTeX 보기": "Show BibTeX",
-    "이 정리가 도움이 되셨다면 기후데이터 길잡이도 인용해 주세요": "If this page helped, please acknowledge the Korean Climate Data Guide",
+    "이 정리가 도움이 되셨다면 기후데이터 길잡이도 인용해 주세요": "If this page helped, please acknowledge the Korean Climate Data Navigator",
     "논문의 사사(Acknowledgements)에 아래 문장을 넣어주세요.": "Please add the sentence below to the Acknowledgements of your paper.",
     "(참고문헌 관리 프로그램용)": "(for reference managers)",
     "## 참고 링크": "## Links",
@@ -206,7 +206,7 @@ UI = {
     "4. 이용자 정보 ": "4. About you ",
     '<span class="hint">(선택)</span></legend>': '<span class="hint">(optional)</span></legend>',
     "어떤 분들이 쓰시는지 알면 다룰 자료를 고르고 사이트를 다듬는 데 큰 도움이 됩니다. 답하지 않아도 신청할 수 있어요. 통계로만 쓰고 공개하지 않습니다.":
-        "Knowing who uses the guide helps us decide which datasets to cover and how to improve the site. These questions are optional and are used only for aggregate statistics; nothing is published.",
+        "Knowing who uses the Navigator helps us decide which datasets to cover and how to improve the site. These questions are optional and are used only for aggregate statistics; nothing is published.",
     '<label class="field">소속<select': '<label class="field">Affiliation<select',
     '<label class="field">신분<select': '<label class="field">Position<select',
     '<p class="field-label">연구 분야 ': '<p class="field-label">Research area ',

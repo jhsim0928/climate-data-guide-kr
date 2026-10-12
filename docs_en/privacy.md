@@ -1,11 +1,11 @@
 ---
 title: "Privacy policy"
-description: "Privacy policy of the Korean Climate Data Guide — what is collected, retention, service providers, unsubscribing and deletion."
+description: "Privacy policy of the Korean Climate Data Navigator — what is collected, retention, service providers, unsubscribing and deletion."
 ---
 
 # Privacy policy
 
-The Korean Climate Data Guide (the "site") collects only the minimum information needed to send notice alerts and to receive dataset suggestions and error reports.
+The Korean Climate Data Navigator (the "site") collects only the minimum information needed to send notice alerts and to receive dataset suggestions and error reports.
 
 ## 1. What we collect and why
 
@@ -15,7 +15,7 @@ The Korean Climate Data Guide (the "site") collects only the minimum information
 | Selected datasets and severity levels | Sending only the notices you asked for |
 | Time of sign-up and confirmation | Record of consent |
 | Language of the page you signed up on | Sending emails in that language |
-| Type of affiliation, position and research area (optional) | Aggregate statistics on who uses the guide, to choose datasets and improve the site; never published individually or used for anything else |
+| Type of affiliation, position and research area (optional) | Aggregate statistics on who uses the Navigator, to choose datasets and improve the site; never published individually or used for anything else |
 | Dataset suggestion; name, affiliation, contact (optional) | Reviewing the suggestion, replying, crediting contributors if you wish |
 | Error report, page address, reply email (optional) | Correcting the site, replying |
 | Feedback about the site, reply email (optional) | Improving the site, replying |
@@ -51,7 +51,7 @@ Visits are counted with a cookie-free tool (GoatCounter). Only aggregate statist
 
 ## 7. Contact
 
-- Maintainer: Korean Climate Data Guide maintainer
+- Maintainer: Korean Climate Data Navigator maintainer
 - Email: [data4researchers@gmail.com](mailto:data4researchers@gmail.com)
 
 Effective date: 12 October 2026. The Korean version of this policy is the governing text.
