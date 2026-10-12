@@ -204,6 +204,9 @@ UI = {
     "2. 받을 공지 구분": "2. Notice levels",
     "3. 받을 이메일": "3. Your email",
     "4. 이용자 정보 ": "4. About you ",
+    "<strong>변수로 찾기</strong><span>강수·기온·SST처럼 변수 이름으로 자료 찾기</span>": "<strong>Find by variable</strong><span>Search datasets by a variable such as precipitation, temperature or SST</span>",
+    "<strong>자료 비교</strong><span>최대 4개 자료를 한 표로 나란히</span>": "<strong>Compare datasets</strong><span>Up to four datasets side by side in one table</span>",
+    "<strong>표준 변수 목록</strong><span>자료마다 다른 변수 이름 한눈에</span>": "<strong>Standard variables</strong><span>What each dataset calls the same quantity</span>",
     '<label class="field var-search">찾을 변수': '<label class="field var-search">Variable',
     "위 칸에 변수 이름(한국어·영어)이나 자료의 변수명(<code>tp</code>, <code>PRECTOT</code> …)을 넣거나 아래 예시를 눌러 보세요.":
         "Type a variable name or a dataset's short name (<code>tp</code>, <code>PRECTOT</code> …) above, or click an example.",

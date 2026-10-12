@@ -429,3 +429,10 @@ details.hint summary { cursor: pointer; }
 .var-mode .var-search input { font-size: 1.05rem; padding: 0.7em 0.9em; margin-top: 0.35em; }
 .var-basket { position: sticky; bottom: 0.6rem; z-index: 3; box-shadow: 0 2px 10px rgba(0,0,0,.12); background: var(--md-default-bg-color) !important; display: flex; flex-wrap: wrap; align-items: center; gap: 0.6em 1em; margin: 0.8em 0; padding: 0.7em 1em; border: 1px solid var(--md-accent-fg-color); border-radius: 0.4rem; background: var(--md-accent-fg-color--transparent); }
 .md-typeset .var-basket .md-button { margin: 0; font-size: 0.75rem; padding: 0.4em 1em; }
+
+/* 전체 목록 — 자료 찾기 도구 바로가기 */
+.find-tools { display: grid; grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr)); gap: 0.6rem; margin: 0.4em 0 1.2em; }
+.md-typeset .find-tools a { display: flex; flex-direction: column; gap: 0.15em; padding: 0.75em 1em; border: 1px solid var(--md-default-fg-color--lightest); border-radius: 0.5rem; color: var(--md-default-fg-color); transition: border-color .15s, box-shadow .15s; }
+.md-typeset .find-tools a:hover { border-color: var(--md-accent-fg-color); box-shadow: 0 2px 8px rgba(0,0,0,.08); }
+.md-typeset .find-tools strong { color: var(--md-typeset-a-color); font-size: 0.95em; }
+.md-typeset .find-tools span { font-size: 0.78em; color: var(--md-default-fg-color--light); }

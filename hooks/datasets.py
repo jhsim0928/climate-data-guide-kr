@@ -811,7 +811,15 @@ def render_index(datasets: list[dict]) -> str:
         f'<span>{sum(len(pl.get((dom, g), [])) for g in groups)}개</span></a>'
         for dom, (label, groups) in DOMAINS.items()
     )
-    L[L.index("# 전체 데이터셋 목록") + 2:L.index("# 전체 데이터셋 목록") + 2] = [f'<nav class="domain-jump">{chips}</nav>', ""]
+    # 자료 찾기 도구 바로가기 — 이 페이지는 왼쪽 메뉴를 숨기므로 같은 묶음의 다른 페이지를 여기서 보여 줌
+    tools = (
+        '<nav class="find-tools">'
+        '<a href="../find-variable/"><strong>변수로 찾기</strong><span>강수·기온·SST처럼 변수 이름으로 자료 찾기</span></a>'
+        '<a href="../compare/"><strong>자료 비교</strong><span>최대 4개 자료를 한 표로 나란히</span></a>'
+        '<a href="../variables/"><strong>표준 변수 목록</strong><span>자료마다 다른 변수 이름 한눈에</span></a>'
+        "</nav>"
+    )
+    L[L.index("# 전체 데이터셋 목록") + 2:L.index("# 전체 데이터셋 목록") + 2] = [tools, "", f'<nav class="domain-jump">{chips}</nav>', ""]
     for dom, (label, groups) in DOMAINS.items():
         n = sum(len(pl.get((dom, g), [])) for g in groups)
         L += [f'<h2 class="domain-head domain-{dom}" id="{dom}">{domain_label(dom)}<span class="domain-count">{n}개 자료</span></h2>', ""]
