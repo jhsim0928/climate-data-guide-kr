@@ -79,7 +79,7 @@
 연구에 도움이 되었다면 논문의 사사(Acknowledgements)에 아래 문장을 넣어주세요.
 
 ```text
-Information on the datasets used in this study was compiled with the help of the Korean Climate Data Navigator (Sim, 2026; https://doi.org/10.5281/zenodo.23300923).
+Information on the datasets used in this study was compiled with the help of the Korean Climate Data Navigator (KCDN) (Sim, 2026; https://doi.org/10.5281/zenodo.23300923).
 ```
 
 <details>
@@ -106,7 +106,7 @@ Information on the datasets used in this study was compiled with the help of the
 
 ---
 
-## Korean Climate Data Navigator (English)
+## Korean Climate Data Navigator (KCDN, English)
 
 **👉 [data4researchers.kr/en](https://data4researchers.kr/en/)**
 

@@ -24,7 +24,7 @@ This site brings three things together:
 
 ## Citing this site
 
-The Korean Climate Data Navigator is archived on Zenodo with a DOI: <!-- SITE_DOI -->
+The Korean Climate Data Navigator (KCDN) is archived on Zenodo with a DOI: <!-- SITE_DOI -->
 
 If the Navigator helped your work, please add the sentence below to the Acknowledgements of your paper — it really helps keep the site going.
 

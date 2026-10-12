@@ -24,7 +24,7 @@ description: "기후데이터 길잡이를 만든 이유와 정리 원칙, 논�
 
 ## 이 사이트 인용하기
 
-기후데이터 길잡이는 Zenodo에 등록되어 DOI가 있습니다: <!-- SITE_DOI -->
+기후데이터 길잡이(영문 Korean Climate Data Navigator, 줄여서 **KCDN**)는 Zenodo에 등록되어 DOI가 있습니다: <!-- SITE_DOI -->
 
 논문의 사사(Acknowledgements)에 아래 문장을 넣어주시면 사이트를 계속 유지하는 데 큰 힘이 됩니다.
 
