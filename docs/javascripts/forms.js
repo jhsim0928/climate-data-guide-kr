@@ -86,6 +86,10 @@
         levels: levels.length === 3 ? "all" : levels.join(","),
         consent: "yes",
         lang: IS_EN ? "en" : "ko",
+        // 이용자 정보(선택) — 통계용
+        org_type: (form.querySelector('select[name="org_type"]') || {}).value || "",
+        role: (form.querySelector('select[name="role"]') || {}).value || "",
+        fields: values(form, "fields").join(","),
         website: hp ? hp.value : "",
         requested_at: new Date().toISOString()
       }).then(function () {

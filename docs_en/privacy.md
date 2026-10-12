@@ -15,6 +15,7 @@ The Korean Climate Data Guide (the "site") collects only the minimum information
 | Selected datasets and severity levels | Sending only the notices you asked for |
 | Time of sign-up and confirmation | Record of consent |
 | Language of the page you signed up on | Sending emails in that language |
+| Type of affiliation, position and research area (optional) | Aggregate statistics on who uses the guide, to choose datasets and improve the site; never published individually or used for anything else |
 | Dataset suggestion; name, affiliation, contact (optional) | Reviewing the suggestion, replying, crediting contributors if you wish |
 | Error report, page address, reply email (optional) | Correcting the site, replying |
 | Feedback about the site, reply email (optional) | Improving the site, replying |

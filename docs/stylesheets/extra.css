@@ -379,3 +379,9 @@ details.hint summary { cursor: pointer; }
   .home-hero--lockup .hero-icon { width: 72px; }
   .home-hero--lockup .hero-title { font-size: 1.5rem; }
 }
+
+/* 알림 신청 — 이용자 정보(선택) */
+.cdg-form .profile-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); gap: 0 1em; }
+.cdg-form .profile-row .field { margin-bottom: 0.4em; }
+.cdg-form .profile-row select { width: 100%; }
+.cdg-form .field-label { font-weight: 600; margin: 0.5em 0 0.2em; }

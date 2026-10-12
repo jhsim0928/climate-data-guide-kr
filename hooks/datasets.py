@@ -1129,6 +1129,28 @@ def _forms_config(config) -> dict:
     return (config.get("extra") or {}).get("forms") or {}
 
 
+# 알림 신청 "이용자 정보(선택)" — 값은 언어와 상관없이 같은 코드로 저장해 통계를 내기 쉽게 함
+PROFILE_ORG = [("university", "대학"), ("research", "연구기관 (정부출연·공공)"), ("government", "정부·공공기관"),
+               ("company", "기업"), ("other", "기타")]
+PROFILE_ROLE = [("undergrad", "학부생"), ("masters", "석사과정"), ("phd", "박사과정"), ("postdoc", "박사후연구원"),
+                ("professor", "교수"), ("researcher", "연구원"), ("engineer", "실무자·엔지니어"), ("other", "기타")]
+PROFILE_FIELD = [("atmosphere", "대기"), ("ocean", "해양"), ("cryosphere", "해빙·극지"), ("remote_sensing", "원격탐사"),
+                 ("climate_model", "기후 모델링"), ("hydrology", "수문·육상"), ("other", "기타")]
+
+
+def profile_fieldset() -> str:
+    opt = lambda pairs: '<option value="">선택 안 함</option>' + "".join(f'<option value="{k}">{v}</option>' for k, v in pairs)
+    fields = "".join(f'<label class="check"><input type="checkbox" name="fields" value="{k}"> {v}</label>' for k, v in PROFILE_FIELD)
+    return (
+        '<fieldset class="profile"><legend>4. 이용자 정보 <span class="hint">(선택)</span></legend>'
+        '<p class="hint">어떤 분들이 쓰시는지 알면 다룰 자료를 고르고 사이트를 다듬는 데 큰 도움이 됩니다. 답하지 않아도 신청할 수 있어요. 통계로만 쓰고 공개하지 않습니다.</p>'
+        f'<div class="profile-row"><label class="field">소속<select name="org_type">{opt(PROFILE_ORG)}</select></label>'
+        f'<label class="field">신분<select name="role">{opt(PROFILE_ROLE)}</select></label></div>'
+        f'<p class="field-label">연구 분야 <span class="hint">(여러 개 선택 가능)</span></p><div class="check-grid">{fields}</div>'
+        '</fieldset>'
+    )
+
+
 def subscribe_form(config) -> str:
     """알림 신청 폼. 데이터셋 체크박스는 YAML 목록에서 분야별로 자동 생성됩니다."""
     endpoint = _forms_config(config).get("subscribe_endpoint") or ""
@@ -1172,6 +1194,7 @@ def subscribe_form(config) -> str:
         '<fieldset><legend>3. 받을 이메일</legend>'
         '<input type="email" name="email" placeholder="name@example.ac.kr" autocomplete="email" required>'
         '</fieldset>'
+        f'{profile_fieldset()}'
         '<div class="hp-field" aria-hidden="true"><label>웹사이트 (비워 두세요)<input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>'
         '<div class="consent-row"><label class="check consent"><input type="checkbox" name="consent" required> '
         '<span>개인정보 수집·이용에 동의합니다 (필수)</span></label>'

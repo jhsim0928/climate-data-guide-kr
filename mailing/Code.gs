@@ -38,8 +38,10 @@ var SHEET_REPORT = '오류 신고';
 var SHEET_FEEDBACK = '의견';
 var FEEDBACK_HEADERS = ['received_at', 'kind', 'message', 'contact', 'lang', 'status'];
 var REPORT_HEADERS = ['received_at', 'page_title', 'page_url', 'wrong', 'correct', 'source', 'contact', 'status', 'lang'];
-var SUB_HEADERS = ['email', 'datasets', 'levels', 'status', 'token', 'requested_at', 'confirmed_at', 'updated_at', 'lang'];
+var SUB_HEADERS = ['email', 'datasets', 'levels', 'status', 'token', 'requested_at', 'confirmed_at', 'updated_at', 'lang',
+                   'org_type', 'role', 'fields'];
 var COL_LANG = 9; // 구독자 시트의 lang 열 (비어 있으면 한국어)
+var COL_PROFILE = 10; // 이용자 정보(선택, 통계용): org_type · role · fields — 사이트의 코드값 그대로 저장
 
 // ── 메일·안내 문구 (한국어 / 영어) ─────────────────────────
 var TXT = {
@@ -163,6 +165,7 @@ function handleSubscribe_(p) {
   var datasets = clean_(p.datasets) || 'all';
   var levels = clean_(p.levels) || 'all';
   var lang = langOf_(p.lang);
+  var profile = [clean_(p.org_type).slice(0, 40), clean_(p.role).slice(0, 40), clean_(String(p.fields || '').replace(/_/g, '-')).replace(/-/g, '_').slice(0, 200)];
   var sh = ensureSheet_(SpreadsheetApp.getActive(), SHEET_SUBS, SUB_HEADERS);
   var row = findRow_(sh, email);
   var now = new Date();
@@ -171,6 +174,7 @@ function handleSubscribe_(p) {
     sh.getRange(row, 2, 1, 2).setValues([[datasets, levels]]);
     sh.getRange(row, 8).setValue(now);
     sh.getRange(row, COL_LANG).setValue(lang);
+    if (profile.join('')) sh.getRange(row, COL_PROFILE, 1, 3).setValues([profile]);  // 다시 신청하며 답했을 때만 갱신
     var token = sh.getRange(row, 5).getValue();
     if (status === 'active') {
       var t = T_(lang);
@@ -182,7 +186,7 @@ function handleSubscribe_(p) {
     return text_('pending');
   }
   var newToken = Utilities.getUuid().replace(/-/g, '');
-  sh.appendRow([email, datasets, levels, 'pending', newToken, now, '', now, lang]);
+  sh.appendRow([email, datasets, levels, 'pending', newToken, now, '', now, lang].concat(profile));
   sendConfirm_(email, newToken, datasets, levels, lang);
   return text_('pending');
 }
