@@ -335,10 +335,50 @@ def validate(d: dict, src: Path) -> None:
         raise PluginError(f"{src.name} 검증 실패:\n  - " + "\n  - ".join(errors))
 
 
-def sort_key(d: dict):
-    dom = list(DOMAINS).index(d["domain"])
-    grp = DOMAINS[d["domain"]][1].index(d["group"])
-    return (dom, grp, d.get("order", 999), d["name"].lower())
+# 표·메뉴 기본 순서 (같은 분류 안에서):
+#   1) 현역 자료(정상·지연·대체 예정·공개 예정)를 먼저, 제공 기관별로 묶음
+#      — 기관 순서는 그 기관 자료 중 가장 작은 order, 기관 안에서는 order 순
+#   2) 갱신 종료 자료는 아래에, 종료 시점이 최근인 것부터
+ORG_RULES = [  # (provider에 들어 있는 말, 기관) — provider 글에서 가장 앞에 나오는 기관을 씀(생산 기관이 보통 맨 앞)
+    ("NERSC", "NERSC"), ("AWI", "AWI"), ("Alfred Wegener", "AWI"), ("EUMETSAT", "EUMETSAT"),
+    ("ECMWF", "ECMWF"), ("Copernicus Climate Change", "ECMWF"), ("JMA", "JMA"), ("Japan Meteorological", "JMA"),
+    ("NASA", "NASA"), ("NOAA", "NOAA"), ("Met Office", "Met Office"), ("Copernicus Marine", "CMEMS"),
+    ("Mercator", "CMEMS"), ("ESA", "ESA"), ("Maryland", "UMD"), ("Washington", "UW"),
+    ("East Anglia", "UEA"), ("Berkeley Earth", "Berkeley Earth"), ("APHRODITE", "APHRODITE"),
+]
+
+
+def org_of(d: dict) -> str:
+    prov = str(d.get("provider") or "")
+    hits = [(prov.find(key), org) for key, org in ORG_RULES if key in prov]
+    if hits:
+        return min(hits)[1]
+    return prov.split()[0] if prov else d["id"]
+
+
+def order_in_group(items: list, ds=lambda x: x) -> list:
+    """같은 분류(표 하나)에 들어갈 항목들을 위 규칙으로 정렬. ds: 항목 → 자료 dict"""
+    live = [ds(x) for x in items if ds(x)["status"] != "ended"]
+    rank: dict[str, int] = {}
+    for d in live:
+        o = org_of(d)
+        rank[o] = min(rank.get(o, 10**6), d.get("order", 999))
+
+    def key(x):
+        d = ds(x)
+        if d["status"] != "ended":
+            return (0, rank[org_of(d)], org_of(d), d.get("order", 999), d["name"].lower())
+        end = str((d.get("period") or {}).get("end") or "")
+        return (1, "".join(chr(0x10FFFF - ord(c)) for c in end), d.get("order", 999), d["name"].lower())
+    return sorted(items, key=key)
+
+
+def sort_datasets(ds_list: list[dict]) -> list[dict]:
+    out = []
+    for dom, (_label, groups) in DOMAINS.items():
+        for g in groups:
+            out += order_in_group([d for d in ds_list if d["domain"] == dom and d["group"] == g])
+    return out
 
 
 def load_datasets(paths=None, data_dir=None) -> list[dict]:
@@ -367,7 +407,7 @@ def load_datasets(paths=None, data_dir=None) -> list[dict]:
         ]
         if bad:
             raise PluginError("\n".join(bad))
-    return sorted(out, key=sort_key)
+    return sort_datasets(out)
 
 
 def transition_anchor(t: dict) -> str:
@@ -389,7 +429,7 @@ def placements(datasets: list[dict]):
         out.setdefault((d["domain"], d["group"]), []).append((d, d["name"], False))
         for x in d.get("also_in") or []:
             out.setdefault((x["domain"], x["group"]), []).append((d, x.get("label") or d["name"], True))
-    return out
+    return {k: order_in_group(v, ds=lambda e: e[0]) for k, v in out.items()}
 
 
 # ── 페이지 생성 ──────────────────────────────────────────────
