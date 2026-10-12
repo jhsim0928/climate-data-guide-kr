@@ -418,3 +418,8 @@ details.hint summary { cursor: pointer; }
 .md-typeset .var-table th { white-space: nowrap; }
 .md-typeset .var-table .var-add { font-size: 0.72rem; padding: 0.25em 0.8em; margin: 0; white-space: nowrap; }
 .md-typeset .var-table .var-add.is-on { background: var(--md-accent-fg-color); border-color: var(--md-accent-fg-color); color: var(--md-accent-bg-color, #fff); }
+
+/* 소개 — BibTeX 접기 상자 */
+.md-typeset details.cite-bibtex { border-color: var(--md-default-fg-color--lightest); box-shadow: none; font-size: 0.85rem; }
+.md-typeset details.cite-bibtex > summary { background: transparent; font-weight: 600; }
+.md-typeset details.cite-bibtex > summary::before { background-color: var(--md-default-fg-color--light); -webkit-mask-image: var(--md-admonition-icon--quote); mask-image: var(--md-admonition-icon--quote); }

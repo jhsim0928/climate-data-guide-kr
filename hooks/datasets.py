@@ -594,7 +594,9 @@ def site_citation_lines(c: dict, bibtex: bool = True) -> list[str]:
         return []
     L = ["**Acknowledgements**", "", "```text", c["ack_en"], "```", ""]
     if bibtex and c.get("bibtex"):
-        L += [loc("**BibTeX** (참고문헌 관리 프로그램용)"), "", "```bibtex", c["bibtex"].rstrip(), "```", ""]
+        # 누르면 펼쳐지는 접기 상자 (pymdownx.details)
+        L += [loc('??? cite-bibtex "BibTeX (참고문헌 관리 프로그램용) — 눌러서 보기"'), "",
+              "    ```bibtex"] + ["    " + x for x in c["bibtex"].rstrip().splitlines()] + ["    ```", ""]
     return ['<div class="cite-block" markdown="1">', ""] + L + ["</div>", ""]
 
 

@@ -86,7 +86,7 @@ Information on the datasets used in this study was compiled with the help of the
 <summary>BibTeX</summary>
 
 ```bibtex
-@misc{sim2026kcdg,
+@misc{sim2026kcdn,
   author    = {Sim, Ji-Han},
   title     = {Korean Climate Data Navigator},
   year      = {2026},

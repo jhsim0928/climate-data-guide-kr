@@ -204,6 +204,7 @@ UI = {
     "2. 받을 공지 구분": "2. Notice levels",
     "3. 받을 이메일": "3. Your email",
     "4. 이용자 정보 ": "4. About you ",
+    '??? cite-bibtex "BibTeX (참고문헌 관리 프로그램용) — 눌러서 보기"': '??? cite-bibtex "BibTeX (for reference managers) — click to show"',
     '<span class="hint">(선택)</span></legend>': '<span class="hint">(optional)</span></legend>',
     "어떤 분들이 쓰시는지 알면 다룰 자료를 고르고 사이트를 다듬는 데 큰 도움이 됩니다. 답하지 않아도 신청할 수 있어요. 통계로만 쓰고 공개하지 않습니다.":
         "Knowing who uses the Navigator helps us decide which datasets to cover and how to improve the site. These questions are optional and are used only for aggregate statistics; nothing is published.",
