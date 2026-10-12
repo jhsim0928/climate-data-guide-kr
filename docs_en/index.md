@@ -25,7 +25,7 @@ This site does not host any data. Every entry links to the official source. <!--
 - Researchers looking for the right dataset for a specific analysis
 - Anyone checking whether a dataset is still maintained or has been superseded by a newer version
 - Researchers comparing several datasets side by side or cross-checking results
-- Authors who need to report dataset versions, grids, and variable definitions accurately in a Methods section
+- Researchers from outside atmospheric, ocean or sea-ice science who need climate data and want to learn what is available and how to use it
 
 ## Latest notices from data providers
 
