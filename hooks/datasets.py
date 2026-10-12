@@ -1464,7 +1464,8 @@ def on_page_markdown(markdown, page, config, files):
     if "<!-- RES_NOTE -->" in markdown:
         markdown = markdown.replace("<!-- RES_NOTE -->", "\n".join(res_note()))
     if "<!-- DISCLAIMER -->" in markdown:
-        markdown = markdown.replace("<!-- DISCLAIMER -->", disclaimer())
+        # data-nosnippet: 검색 결과 설명에 면책 문구가 뽑히지 않도록 (화면에는 그대로 보임)
+        markdown = markdown.replace("<!-- DISCLAIMER -->", f"<span data-nosnippet>{disclaimer()}</span>")
     if "<!-- DATASET_COUNT -->" in markdown:
         markdown = markdown.replace("<!-- DATASET_COUNT -->", str(len(_datasets)))
     if "<!-- DOMAIN_COUNTS -->" in markdown:
