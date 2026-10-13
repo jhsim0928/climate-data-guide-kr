@@ -88,12 +88,12 @@ variables:
         - "Remote-sensing reflectance — `Rrs_412`, `Rrs_443`, `Rrs_490`, `Rrs_510`, `Rrs_560`, `Rrs_665` (sr-1)"
         - text: "Diffuse attenuation coefficient at 490 nm — `kd_490` (m-1)"
           note: Computed from the IOPs following Lee et al. (2005)
-        - text: "Phytoplankton absorption coefficient — `aph_412` to `aph_665` (m-1)"
+        - text: "Phytoplankton absorption coefficient — `aph_412`~`aph_665` (m-1)"
           note: Based on QAA_v6
-        - "Detrital and dissolved material absorption coefficient — `adg_412` to `adg_665` (m-1)"
-        - text: "Total absorption coefficient — `atot_412` to `atot_665` (m-1)"
+        - "Detrital and dissolved material absorption coefficient — `adg_412`~`adg_665` (m-1)"
+        - text: "Total absorption coefficient — `atot_412`~`atot_665` (m-1)"
           note: Convenience variable (no uncertainty)
-        - text: "Particulate backscattering coefficient — `bbp_412` to `bbp_665` (m-1)"
+        - text: "Particulate backscattering coefficient — `bbp_412`~`bbp_665` (m-1)"
           note: No uncertainty because of insufficient in situ data
     - name: Per-pixel uncertainty (based on in situ match-ups)
       kind: mean
@@ -112,7 +112,7 @@ variables:
       kind: mean
       period: Compositing period
       items:
-        - text: "Optical water class membership — `water_class1` to `water_class14`"
+        - text: "Optical water class membership — `water_class1`~`water_class14`"
           note: Membership in 14 optical water classes, used to blend chlorophyll algorithms and assign uncertainties
           std: []
         - text: "Observation counts — `total_nobs` and per-sensor `SeaWiFS_nobs`, `MERIS_nobs`, `MODISA_nobs`, `VIIRS_nobs`, `OLCI-A_nobs`, `OLCI-B_nobs` (count)"

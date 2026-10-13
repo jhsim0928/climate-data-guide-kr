@@ -378,6 +378,78 @@ groups:
         aliases: [산소, 용존산소, 영양염, 질산염, 인산염, 규산염, oxygen, nutrients, nitrate, phosphate, silicate]
         include: ['산소', '질산염', '인산염', '규산염']
 
+      - id: chl
+        ko: 엽록소 a 농도
+        en: Chlorophyll-a concentration
+        cf: mass_concentration_of_chlorophyll_a_in_sea_water
+        aliases: [엽록소, 클로로필, 엽록소a, 엽록소 a, chlorophyll, chlorophyll-a, chlorophyll a, chl, chla, chl-a, ocean colour, ocean color, 해색]
+        include: ['엽록소 (a )?농도', '^엽록소 a', '보간 엽록소']
+        exclude: ['불확', '형광', '기능군', '크기군', '경사', '전선']
+        domains: [ocean, satellite]
+        related: [rrs, kd, pft, primary_production]
+      - id: rrs
+        ko: 원격 반사도 (Rrs)
+        en: Remote sensing reflectance (Rrs)
+        cf: surface_ratio_of_upwelling_radiance_emerging_from_sea_water_to_downwelling_radiative_flux_in_air
+        aliases: [원격반사도, 원격 반사도, Rrs, RRS, remote sensing reflectance, water-leaving reflectance, nLw, normalized water-leaving radiance]
+        include: ['원격\s?반사도']
+        exclude: ['불확']
+        domains: [ocean, satellite]
+        related: [chl, iop]
+      - id: kd
+        ko: 확산 감쇠 계수 (Kd)·투명도
+        en: Diffuse attenuation coefficient (Kd) / water clarity
+        cf: volume_attenuation_coefficient_of_downwelling_radiative_flux_in_sea_water
+        aliases: [Kd, Kd490, Kd_490, KD490, 감쇠 계수, 확산 감쇠, diffuse attenuation, light attenuation, 투명도, 세키 깊이, Secchi depth, ZSD, water clarity, turbidity]
+        include: ['감쇠 계수', '투명도', '세키 깊이', 'Secchi']
+        exclude: ['불확']
+        domains: [ocean, satellite]
+        related: [rrs, par_ocean]
+      - id: iop
+        ko: 흡수·후방산란 계수 (고유 광특성)
+        en: Absorption and backscattering coefficients (IOPs)
+        cf: volume_absorption_coefficient_of_radiative_flux_in_sea_water
+        aliases: [IOP, IOPs, 고유 광특성, 고유 광학 특성, 흡수 계수, 후방산란, absorption coefficient, backscattering coefficient, aph, adg, bbp, CDOM, CDM, 유색 용존 유기물, coloured dissolved organic matter]
+        include: ['흡수\s?계수', '후방산란', '고유 광(학 )?특성', '용존(·쇄설)? 유기물', 'CDOM', '흡수, 입자']
+        exclude: ['불확', '기울기']
+        dataset_groups: [해색]
+        related: [rrs, chl]
+      - id: particles
+        ko: 입자성 탄소·부유물질
+        en: Particulate carbon and suspended matter
+        cf: mass_concentration_of_particulate_organic_matter_expressed_as_carbon_in_sea_water
+        aliases: [POC, PIC, 입자성 유기탄소, 입자성 무기탄소, 방해석, calcite, 식물플랑크톤 탄소, phytoplankton carbon, SPM, TSS, TSM, 부유물, 부유물질, suspended particulate matter, total suspended solids]
+        include: ['입자성 (유기|무기)탄소', '부유 ?(입자|물)', '식물플랑크톤 탄소']
+        exclude: ['불확']
+        dataset_groups: [해색]
+        related: [chl, iop]
+      - id: par_ocean
+        ko: 해면 광합성 유효 복사 (PAR)
+        en: Photosynthetically available radiation at the sea surface (PAR)
+        cf: surface_downwelling_photosynthetic_radiative_flux_in_air
+        aliases: [PAR, iPAR, 광합성 유효 복사, photosynthetically available radiation, daily PAR]
+        include: ['광합성 유효 복사', '\bPAR\b']
+        exclude: ['불확']
+        dataset_groups: [해색]
+        related: [kd, primary_production]
+      - id: primary_production
+        ko: 해양 일차생산
+        en: Ocean primary production
+        cf: net_primary_productivity_of_biomass_expressed_as_carbon
+        aliases: [일차생산, 순일차생산, 해양 일차생산, primary production, primary productivity, NPP, PP, CAFE]
+        include: ['일차생산']
+        exclude: ['불확']
+        dataset_groups: [해색]
+        related: [chl, par_ocean]
+      - id: pft
+        ko: 식물플랑크톤 군집·크기 등급
+        en: Phytoplankton functional types and size classes
+        aliases: [PFT, PSC, 식물플랑크톤 기능군, 식물플랑크톤 크기군, 규조류, 와편모류, diatoms, dinoflagellates, Prochlorococcus, Synechococcus, picoplankton, phytoplankton community, phytoplankton size class]
+        include: ['기능군', '크기군', '세포 수']
+        exclude: ['불확']
+        dataset_groups: [해색]
+        related: [chl]
+
   - name: {ko: 해빙, en: Sea ice}
     items:
       - id: sic
@@ -446,6 +518,17 @@ groups:
         include: ['적설', '눈 (깊이|두께|밀도)', '해빙 위 눈']
         domains: [seaice, ocean]
         related: [sit]
+
+  - name: {ko: 빙하·빙상, en: Glaciers and ice sheets}
+    items:
+      - id: ice_velocity
+        ko: 빙하·빙상 표면 유속
+        en: Glacier and ice-sheet surface velocity
+        cf: land_ice_surface_x_velocity / land_ice_surface_y_velocity
+        aliases: [빙하 유속, 빙하 속도, 빙상 유속, 빙상 속도, 빙하 흐름, ice velocity, ice flow, glacier velocity, ice-sheet velocity, surface velocity, vx, vy]
+        include: ['표면 속도']
+        exclude: ['오차', '불확']
+        dataset_groups: [빙하·빙상]
 
   - name: {ko: 지면, en: Land surface}
     items:

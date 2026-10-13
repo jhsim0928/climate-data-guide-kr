@@ -80,10 +80,12 @@ variables:
     - name: Atmospheric correction and optical properties (L2, per acquisition)
       kind: instant
       items:
-        - text: "Remote-sensing reflectance and Rayleigh-corrected reflectance — `AC` (RRS and RhoC, per band)"
+        - text: "Remote-sensing reflectance and Rayleigh-corrected reflectance — `AC`"
           std: []
-        - text: "Inherent optical properties — `IOP` (absorption a, backscattering bb)"
+          note: "RRS and RhoC, per band"
+        - text: "Inherent optical properties — `IOP`"
           std: []
+          note: "Absorption a, backscattering bb"
         - text: "Diffuse attenuation coefficient — `Kd`"
           std: []
         - text: "Secchi disk depth — `Zsd`"
@@ -113,7 +115,8 @@ variables:
     - name: Atmospheric products (L2, per acquisition)
       kind: instant
       items:
-        - "Aerosol optical depth — `AOD` (with aerosol type AT and dust DUST)"
+        - text: "Aerosol optical depth — `AOD`"
+          note: "With aerosol type AT and dust DUST"
 
 access:
   - name: NOSC — GOCI-II LA Downloads

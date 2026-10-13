@@ -99,7 +99,7 @@ variables:
           note: Marks microwave, land, ice, lake and river. According to the product page, 5.3 adds bit 6 for daytime SST above 39.8°C
     - name: Ancillary fields
       items:
-        - text: "Sea ice fraction — `sea_ice_fraction` (file units: percent, scale_factor 0.01)"
+        - text: "Sea ice fraction — `sea_ice_fraction` (percent, scale_factor 0.01)"
           kind: mean
           period: day
           note: OSI SAF sea ice (NOAA OISST as fallback) regridded to 4 km. Its internal time definition was not confirmed
@@ -107,7 +107,7 @@ variables:
           kind: instant
           note: NCEP/DOE reanalysis winds. How they are matched to the overpass time was not confirmed
           std: []
-        - text: "Aerosol dynamic indicator — `aerosol_dynamic_indicator` (file units: percent)"
+        - text: "Aerosol dynamic indicator — `aerosol_dynamic_indicator` (percent)"
           kind: instant
           note: 0.63 µm aerosol optical thickness over cloud-free, non-glint water. NCEI calls it sub-optimal because it combines two sources
           std: []

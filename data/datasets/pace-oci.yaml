@@ -152,7 +152,7 @@ variables:
         - text: "일 해양 순일차생산(CAFE 모델) — `npp_cafe` (mg m-2 day-1)"
           kind: accum
           period: 일
-          std: []
+          std: [primary_production]
     - name: L2 스와스 (OC_AOP·OC_IOP·OC_BGC·PAR 5분 그래뉼)
       kind: instant
       period: 통과 시각

@@ -124,23 +124,25 @@ variables:
       kind: mean
       period: Monthly
       items:
-        - "Lower troposphere TLT (K) — RSS, UAH (LT), STAR"
-        - "Middle troposphere TMT (K) — RSS, UAH (MT), STAR"
-        - "Upper troposphere TUT (K) — STAR"
-        - "Total troposphere TTT (K) — RSS (TMT and TLS combination after Fu & Johanson 2005)"
+        - "Lower troposphere TLT — RSS, UAH (LT), STAR (K)"
+        - "Middle troposphere TMT — RSS, UAH (MT), STAR (K)"
+        - "Upper troposphere TUT — STAR (K)"
+        - "Total troposphere TTT — RSS, TMT and TLS combination after Fu & Johanson 2005 (K)"
     - name: Tropopause and stratospheric layer temperatures
       kind: mean
       period: Monthly
       items:
-        - "Troposphere-stratosphere TTS (K) — RSS (from 1987)"
-        - "Tropopause layer TP (K) — UAH"
-        - "Lower stratosphere TLS (K) — RSS, UAH (LS), STAR"
+        - "Troposphere-stratosphere TTS — RSS, from 1987 (K)"
+        - "Tropopause layer TP — UAH (K)"
+        - "Lower stratosphere TLS — RSS, UAH (LS), STAR (K)"
     - name: Anomalies and auxiliary files
       kind: mean
       period: Monthly
       items:
-        - "Monthly anomaly maps (K) — RSS `RSS_Tb_Anom_Maps_ch_*_V4_0.nc`, STAR `*_Anomaly.dat`"
-        - "Regional mean anomaly time series (K) — RSS monthly_time_series, STAR Global_Mean_Anomaly_Time_Series, UAH `uahncdc_*_6.1.txt`"
+        - text: "Monthly anomaly maps — `RSS_Tb_Anom_Maps_ch_*_V4_0.nc`, `*_Anomaly.dat` (K)"
+          note: "RSS file first, then STAR"
+        - text: "Regional mean anomaly time series — `uahncdc_*_6.1.txt` (K)"
+          note: "UAH file. RSS provides monthly_time_series and STAR Global_Mean_Anomaly_Time_Series"
 
 access:
   - name: RSS — Upper Air Temperature (description and downloads)

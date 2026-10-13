@@ -123,30 +123,32 @@ variables:
       kind: mean
       period: 월
       items:
-        - text: "하부 대류권 기온 TLT (K) — RSS·UAH(LT)·STAR"
+        - text: "하부 대류권 기온 TLT — RSS·UAH(LT)·STAR (K)"
           std: [t_air]
-        - text: "중층 대류권 기온 TMT (K) — RSS·UAH(MT)·STAR"
+        - text: "중층 대류권 기온 TMT — RSS·UAH(MT)·STAR (K)"
           std: [t_air]
-        - text: "상부 대류권 기온 TUT (K) — STAR"
+        - text: "상부 대류권 기온 TUT — STAR (K)"
           std: [t_air]
-        - text: "대류권 기온 TTT (K) — RSS (TMT·TLS 조합, Fu & Johanson 2005 방식)"
+        - text: "대류권 기온 TTT — RSS, TMT·TLS 조합(Fu & Johanson 2005 방식) (K)"
           std: [t_air]
     - name: 대류권계면·성층권 층 평균 기온
       kind: mean
       period: 월
       items:
-        - text: "대류권계면~하부 성층권 기온 TTS (K) — RSS (1987년부터)"
+        - text: "대류권계면~하부 성층권 기온 TTS — RSS, 1987년부터 (K)"
           std: [t_air]
-        - text: "대류권계면 층 기온 TP (K) — UAH"
+        - text: "대류권계면 층 기온 TP — UAH (K)"
           std: [t_air]
-        - text: "하부 성층권 기온 TLS (K) — RSS·UAH(LS)·STAR"
+        - text: "하부 성층권 기온 TLS — RSS·UAH(LS)·STAR (K)"
           std: [t_air]
     - name: 편차·보조 자료
       kind: mean
       period: 월
       items:
-        - "월 편차 지도 (K) — RSS `RSS_Tb_Anom_Maps_ch_*_V4_0.nc`, STAR `*_Anomaly.dat`"
-        - "지역 평균 편차 시계열 (K) — RSS monthly_time_series, STAR Global_Mean_Anomaly_Time_Series, UAH `uahncdc_*_6.1.txt`"
+        - text: "월 편차 지도 — `RSS_Tb_Anom_Maps_ch_*_V4_0.nc`, `*_Anomaly.dat` (K)"
+          note: "앞은 RSS, 뒤는 STAR 파일"
+        - text: "지역 평균 편차 시계열 — `uahncdc_*_6.1.txt` (K)"
+          note: "UAH 파일. RSS는 monthly_time_series, STAR는 Global_Mean_Anomaly_Time_Series에 있음"
 
 access:
   - name: RSS — Upper Air Temperature (자료 설명·다운로드)

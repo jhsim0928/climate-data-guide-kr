@@ -102,10 +102,10 @@ variables:
       kind: mean
       period: Daily, 8-day and monthly composites
       items:
-        - text: "Total absorption — `a_400` to `a_701` (m-1)"
+        - text: "Total absorption — `a_400`~`a_701` (m-1)"
           note: "17 wavelengths (400, 413, 425, 442, 460, 475, 490, 510, 532, 555, 583, 618, 640, 655, 665, 678, 701 nm), GIOP model"
-        - "Total backscattering — `bb_400` to `bb_701` (m-1)"
-        - "Phytoplankton absorption — `aph_400` to `aph_701` (m-1)"
+        - "Total backscattering — `bb_400`~`bb_701` (m-1)"
+        - "Phytoplankton absorption — `aph_400`~`aph_701` (m-1)"
         - "Absorption by gelbstoff and detrital material at 442 nm — `adg_442` (m-1)"
         - "Particulate backscattering at 442 nm — `bbp_442` (m-1)"
         - "adg spectral slope — `adg_s` (m-1 nm-1)"
@@ -162,9 +162,10 @@ variables:
           note: "3-D number_of_lines×pixels_per_line×wavelength in Level-2"
         - "Chlorophyll a concentration — `chlor_a` (mg m-3), uncertainty `chlor_a_unc`"
         - "Phytoplankton carbon — `carbon_phyto`, uncertainty `carbon_phyto_unc`"
-        - "Inherent optical properties — `a`, `bb`, `aph`, `adg`, `bbp` and `Kd`"
-        - text: "Latitude and longitude — `latitude`, `longitude` (navigation_data group)"
+        - "Inherent optical properties — `a`, `bb`, `aph`, `adg`, `bbp`, `Kd`"
+        - text: "Latitude and longitude — `latitude`, `longitude`"
           kind: static
+          note: "In the navigation_data group"
 
 access:
   - name: NASA Earthdata Search (OB.DAAC portal)

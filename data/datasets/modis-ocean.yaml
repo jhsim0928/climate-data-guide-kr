@@ -92,11 +92,11 @@ variables:
         - text: "옹스트롬 지수(대기 보정 부산물) — `angstrom` (무차원)"
           std: []
         - text: "490 nm 하향 복사 확산 감쇠 계수 — `Kd_490` (m-1)"
-          std: []
+          std: [kd]
         - text: "입자성 유기탄소 — `poc` (mg m-3, 탄소 기준)"
-          std: []
+          std: [particles]
         - text: "입자성 무기탄소(방해석) — `pic` (mol m-3)"
-          std: []
+          std: [particles]
     - name: 광합성 유효 복사·형광 (PAR·FLH 파일)
       kind: mean
       period: 일·8일·월·연 합성
@@ -105,10 +105,10 @@ variables:
           kind: accum
           period: 일
           note: 하루 적분값. 8일·월 파일은 그 평균
-          std: []
+          std: [par_ocean]
         - text: "통과 시각 순간 광합성 유효 복사 — `ipar` (micromol m-2 s-1)"
           kind: instant
-          std: []
+          std: [par_ocean]
         - text: "정규화 형광선 높이 — `nflh` (W m-2 um-1 sr-1)"
           std: []
     - name: 고유 광학 특성 (IOP 파일, GIOP 모델)
@@ -117,11 +117,11 @@ variables:
       items:
         - text: "총흡수계수 — `a_412`~`a_678` (m-1)"
           note: Rrs와 같은 10개 파장
-          std: []
+          std: [iop]
         - text: "식물플랑크톤 흡수계수 443 nm — `aph_443` (m-1)"
-          std: []
+          std: [iop]
         - text: "용존·쇄설물 흡수계수 443 nm — `adg_443` (m-1)"
-          std: []
+          std: [iop]
         - text: "용존·쇄설물 흡수 분광 기울기·불확실성 — `adg_s`·`adg_unc_443`"
           std: []
     - name: 해수면온도 L3 (SST·NSST·SST4 파일, R2019.0)

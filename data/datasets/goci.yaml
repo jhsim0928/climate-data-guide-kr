@@ -82,15 +82,15 @@ variables:
       kind: instant
       items:
         - text: "원격반사도 — `Rrs` (sr-1, 밴드별)"
-          std: []
+          std: [rrs]
         - text: "엽록소 a 농도 — `chlor_a` (mg m-3)"
-          std: []
+          std: [chl]
         - text: "엽록소 a 농도(밴드비 OCx) — `chl_ocx` (mg m-3)"
-          std: []
+          std: [chl]
         - text: "490 nm 확산 감쇠 계수 — `Kd_490` (m-1)"
-          std: []
+          std: [kd]
         - text: "입자성 유기탄소 — `poc` (mg m-3)"
-          std: []
+          std: [particles]
         - "865 nm 에어로졸 광학 두께 — `aot_865` (무차원)"
         - text: "에어로졸 옹스트롬 지수 — `angstrom` (무차원)"
           std: [aerosol]

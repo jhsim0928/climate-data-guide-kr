@@ -89,33 +89,34 @@ variables:
           note: OCI 알고리즘(저농도 CI와 OCx를 섞음). MODIS와 같은 방식
         - text: "원격 반사도(Suomi NPP) — `Rrs_410`·`Rrs_443`·`Rrs_486`·`Rrs_551`·`Rrs_671` (sr-1)"
         - text: "원격 반사도(NOAA-20·NOAA-21) — `Rrs_411`·`Rrs_445`·`Rrs_489`·`Rrs_556`·`Rrs_667` (sr-1)"
-        - text: "에어로졸 광학두께(대기 보정 부산물) — `aot_862`(Suomi NPP)·`aot_868`(NOAA-20·21) (무차원)"
+        - text: "에어로졸 광학두께(대기 보정 부산물) — `aot_862`·`aot_868` (무차원)"
           std: []
+          note: "aot_862는 Suomi NPP, aot_868은 NOAA-20·21"
         - text: "옹스트롬 지수(대기 보정 부산물) — `angstrom` (무차원)"
           std: []
         - text: "490 nm 하향 복사 확산 감쇠 계수 — `Kd_490` (m-1)"
-          std: []
+          std: [kd]
         - text: "입자성 유기탄소 — `poc` (mg m-3, 탄소 기준)"
-          std: []
+          std: [particles]
         - text: "입자성 무기탄소(방해석) — `pic` (mol m-3)"
-          std: []
+          std: [particles]
     - name: 광합성 유효 복사 (PAR 파일)
       kind: accum
       period: 일
       items:
         - text: "일 광합성 유효 복사 — `par` (mol m-2 day-1)"
           note: 하루 적분값. 8일·월 파일은 그 평균
-          std: []
+          std: [par_ocean]
     - name: 고유 광학 특성 (IOP 파일, GIOP 모델 — NOAA-20·21 기준 파장)
       kind: mean
       period: 일·8일·월·연 합성
       items:
         - text: "총흡수계수 — `a_411`·`a_445`·`a_489`·`a_556`·`a_667` (m-1)"
-          std: []
+          std: [iop]
         - text: "총후방산란계수 — `bb_411`·`bb_445`·`bb_489`·`bb_556`·`bb_667` (m-1)"
-          std: []
+          std: [iop]
         - text: "식물플랑크톤·용존쇄설물 흡수, 입자 후방산란 445 nm — `aph_445`·`adg_445`·`bbp_445` (m-1)"
-          std: []
+          std: [iop]
         - text: "분광 기울기와 불확실성 — `adg_s`·`bbp_s`·`aph_unc_445`·`adg_unc_445`·`bbp_unc_445`"
           std: []
     - name: 해수면온도 L3 (SST·NSST·SST3 파일 — Suomi NPP 2016.2, NOAA-20 2024.0)
