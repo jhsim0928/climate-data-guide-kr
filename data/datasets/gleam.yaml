@@ -1,0 +1,322 @@
+# ─────────────────────────────────────────────────────────────
+# GLEAM — 데이터셋 정보 파일
+# 지면 탭 '증발산'에 싣습니다. GLEAM v3 → GLEAM4, GLEAM4.2 → 4.3 버전 변경은 이 파일의 transitions(to_id 없음)에 적었습니다.
+# 수정 후에는 공식 페이지에서 확인한 날짜로 last_verified 를 갱신하세요.
+# ─────────────────────────────────────────────────────────────
+id: gleam
+name: "GLEAM4"
+full_name: Global Land Evaporation Amsterdam Model (GLEAM) 4.3 (위성 기반 전지구 육지 증발산·토양수분 자료, 0.1°·일)
+category: analysis
+domain: land
+group: 증발산
+order: 10
+domains: [육지, 수문, 원격탐사]
+provider: Ghent University (Diego G. Miralles 연구팀)
+
+status: active
+status_note: >-
+  현재 서버에는 GLEAM4.3a(1980–2024, 위성+재분석 강제력)와 GLEAM4.3b(2003년~, 위성 강제력)가 있습니다. 2026-09-21 소식에서 4.3b가 2025년 말까지
+  공개되었다고 알렸지만, 같은 페이지의 자료 설명은 아직 2024년 말까지로 적혀 있습니다. 새 버전이 나오면 이전 버전은 서버에서 지워지므로
+  4.2 이전 자료는 요청해야만 받을 수 있습니다.
+
+period:
+  start: "1980-01"
+  end: "2025-12"
+  note: >-
+    4.3a는 1980-01-01~2024-12-31(44년), 4.3b는 2003-01-01부터이며 공식 소식(2026-09-21)은 2025년 말까지, 자료 설명은 2024-12-31까지로 서로 다르게 적혀 있습니다.
+    보통 해마다 4월 무렵 전년도까지 늘리지만, 2026-10-13 확인 시 4.3a는 아직 2024년까지입니다.
+
+resolution:
+  spatial_short: "11 km (0.1°)"
+  temporal_short: "1일"
+  spatial: >-
+    0.1° 정규 위경도 격자, 위도 1800 × 경도 3600 (첫 격자 중심 89.95°N, 179.95°W). 육지만 계산하며 바다는 비어 있습니다.
+    0.1°가 아닌 입력 자료는 쌍선형 보간으로 맞췄습니다.
+  vertical: 지표 플럭스 단일값 + 토양수분 2종(표층 SMs, 근권 SMrz). 4.3부터 토양 1·2층 두께를 5 cm·95 cm로 고정
+  temporal: 일 (월·연 합계 파일도 제공)
+
+update: 매년 (보통 4월 무렵 전년도까지 연장, 새 릴리스 때 사용자에게 메일 안내)
+license: CC BY 4.0 (Zenodo 기술 노트 기준). 학술 이용은 무료이며, 상업적 이용은 GLEAM 측 내부 승인을 받아야 한다고 안내합니다
+account_required: true
+
+summary: >-
+  GLEAM은 위성 관측(복사·강수·기온·토양수분·식생 등)을 입력으로 육지 증발을 성분별(증산·차단 손실·나지 증발·승화·개방 수면 증발)로 나누어
+  계산하는 모델이자 그 결과 자료입니다. 4세대인 GLEAM4는 해상도를 0.1°로 높이고, 에디 공분산·수액류 관측으로 학습한 기계학습 증발 스트레스,
+  Penman 식 잠재증발, 식생의 지하수 이용을 넣었습니다. 강제력이 다른 두 묶음 'a'(1980년~, 위성+재분석)와 'b'(2003년~, 위성 위주)가 있습니다.
+
+time_convention:
+  summary: >-
+    일 파일의 증발 성분은 하루 동안의 합계(mm/day)이고, 월·연 파일은 같은 값을 월·연 단위로 합한 것(mm/month, mm/year)입니다.
+    공식 문서는 하루의 경계(UTC 기준 여부)와 토양수분 같은 상태 변수가 일평균인지 특정 시각 값인지를 밝히지 않습니다.
+  points:
+    - "증발량(E 등)은 mm 단위 물 깊이입니다. 잠열 플럭스(W m-2)로 바꾸려면 기화 잠열을 곱해 환산해야 합니다."
+    - "음수 값은 순 응결(대개 지표 순복사가 음수일 때)을 뜻하고, 결측은 -999입니다."
+    - "증발 스트레스 S는 E/Ep 비율(0 = 최대 스트레스, 1 = 스트레스 없음)입니다."
+    - "월 파일(_MO)은 mm/month, 연 파일(_YR)은 mm/year이므로 일 파일(mm/day)과 단위가 다릅니다."
+  source: https://www.nature.com/articles/s41597-025-04610-y
+  source_name: Miralles et al. (2025) GLEAM4 논문 Data Records + gleam.eu FAQ
+
+variables:
+  note: >-
+    GLEAM4 논문(Data Records)과 gleam.eu 기준 12개 변수입니다. 변수마다 연도별 파일 하나이며 파일 이름은 <변수>_<연도>_GLEAM_<버전>.nc 형식입니다(월·연 파일은 _MO·_YR).
+    4.2a부터 잠재증발의 공기역학·복사 성분도 따로 제공되지만, 그 변수 이름은 확인하지 못해 적지 않았습니다.
+  full_list: https://www.gleam.eu/
+  groups:
+    - name: 증발 성분 (일 합계)
+      kind: accum
+      period: 일
+      items:
+        - "실제 증발(총 증발산) — `E` (mm/day)"
+        - text: "증산 — `Et` (mm/day)"
+          std: [evap]
+        - text: "차단 손실 — `Ei` (mm/day)"
+          std: [evap]
+        - "나지 토양 증발 — `Eb` (mm/day)"
+        - text: "눈 승화 — `Es` (mm/day)"
+          std: [evap]
+        - text: "지표 응결 — `Ec` (mm/day)"
+          std: [evap]
+        - "개방 수면 증발 — `Ew` (mm/day)"
+        - "잠재 증발 — `Ep` (mm/day)"
+    - name: 스트레스·열 플럭스 (일 단위)
+      kind: mean
+      period: 일
+      items:
+        - text: "증발 스트레스 — `S` (무차원, 0~1)"
+          note: E/Ep 비율
+          std: [drought]
+        - "현열 플럭스 — `H` (W m-2)"
+    - name: 토양수분 (일 단위 모델 상태값)
+      kind: instant
+      items:
+        - text: "표층 토양수분 — `SMs` (m3 m-3)"
+          note: 하루 1개 값. 일평균인지 특정 시각 값인지는 공식 문서에 명시되어 있지 않음
+        - text: "근권 토양수분 — `SMrz` (m3 m-3)"
+          note: 하루 1개 값. 일평균인지 특정 시각 값인지는 공식 문서에 명시되어 있지 않음
+
+access:
+  - name: GLEAM 공식 사이트 (등록 후 SFTP)
+    url: https://www.gleam.eu/
+    method: 웹 등록 → 메일로 받은 계정으로 SFTP 접속 (포트 2225)
+    note: >-
+      Downloads 메뉴에 이름·성·이메일을 입력하면 접속 정보가 메일로 옵니다(한 시간 안에 안 오면 스팸함 확인 후 info@gleam.eu로 문의).
+      일반 FTP가 아니라 SFTP로 접속해야 하며, 방화벽이 포트 2225를 막지 않는지 확인하세요. 자세한 설명(README)은 서버에 있습니다.
+  - name: 이전 버전 (요청)
+    url: https://www.gleam.eu/
+    method: 이메일 요청
+    note: 새 버전이 나오면 이전 버전은 서버에서 지워집니다. 논문 재현 등으로 옛 버전이 필요하면 'reasonable request'로 요청할 수 있습니다.
+
+example:
+  lang: python
+  note: >-
+    SFTP 호스트·아이디·비밀번호는 등록 후 메일로 받은 값을 넣습니다. 디렉터리 구조는 논문에 실린 v4.2a 예
+    (v4.2a/daily/2023/E_2023_GLEAM_v4.2a.nc)를 따른 것이므로, 실제 경로는 서버의 README로 확인하세요.
+  code: |
+    # pip install paramiko xarray netCDF4
+    import paramiko
+    import xarray as xr
+
+    HOST, PORT = "<메일로 받은 호스트>", 2225
+    USER, PASSWORD = "<아이디>", "<비밀번호>"
+
+    transport = paramiko.Transport((HOST, PORT))
+    transport.connect(username=USER, password=PASSWORD)
+    sftp = paramiko.SFTPClient.from_transport(transport)
+    print(sftp.listdir("."))                      # 먼저 버전 폴더 이름을 확인
+    remote = "v4.3a/daily/2024/E_2024_GLEAM_v4.3a.nc"   # 예시 경로
+    sftp.get(remote, "E_2024_GLEAM_v4.3a.nc")
+    sftp.close(); transport.close()
+
+    ds = xr.open_dataset("E_2024_GLEAM_v4.3a.nc")
+    e = ds["E"].sel(lat=slice(39, 33), lon=slice(124, 132))   # 위도가 북→남 순서
+    print(e.sum("time").mean().values)            # 2024년 연증발량(mm)의 영역 평균
+
+tips:
+  - "'a'와 'b'는 방법은 같지만 강제력이 다릅니다(GLEAM4 논문 기준 a: MSWX 기상·MSWEP 강수, b: IMERG 강수·AIRS 기온·CERES 복사). 긴 기후 기록에는 a, 관측에 더 가까운 짧은 기록이 필요하면 b를 쓰고, 둘을 섞지 마세요."
+  - 새 버전이 나오면 이전 버전이 서버에서 지워지고 과거 값도 바뀝니다. 받은 버전(예 v4.3a)을 꼭 기록하고 논문에 적으세요.
+  - 증발은 우주에서 직접 측정되지 않습니다. GLEAM 값은 모델 추정이며, 에디 공분산 관측과 비교할 때는 관측 범위(약 1 km)와 격자(약 10 km)의 차이, 에너지 수지 불균형, 강수 중 관측 오류를 고려해 비·차단 손실 시간대를 빼고 비교하라고 안내합니다.
+  - 증발 성분 비율이 버전마다 크게 다릅니다. GLEAM4에서 전지구 증산 비율은 약 62%로 v3(약 74%)보다 낮아졌습니다.
+  - 불확실성(오차) 정보는 함께 제공되지 않습니다.
+  - "GLEAM4는 ESA CCI 표층 토양수분을 동화합니다. ESA CCI SM과 GLEAM 토양수분을 비교하면 두 자료가 독립적이지 않습니다."
+  - "강제력과 정적 매개변수는 GLEAM 서버에 없고, 각 원 자료 포털에서 받아야 합니다(README와 Miralles et al. 2025 참고)."
+
+citations:
+  dataset:
+    - label: GLEAM4 기술 노트·자료 기록 (Zenodo, 논문이 지정한 데이터 인용)
+      text: >-
+        Miralles, D. G., Bonte, O., Koppa, A., Baez-Villanueva, O. M., Tronquo, E., Zhong, F., Beck, H. E., Hulsman, P.,
+        Dorigo, W., Verhoest, N. E. C., Haghdoost, S. (2025): GLEAM4 (v4.2). Zenodo.
+      doi: 10.5281/zenodo.14056079
+      bibtex: |
+        @misc{gleam4_zenodo,
+          author    = {Miralles, Diego G. and Bonte, Olivier and Koppa, Akash and Baez-Villanueva, Oscar M. and Tronquo, Emma and Zhong, Feng and Beck, Hylke E. and Hulsman, Petra and Dorigo, Wouter and Verhoest, Niko E. C. and Haghdoost, Shekofeeh},
+          title     = {{GLEAM4}},
+          version   = {v4.2},
+          year      = {2025},
+          publisher = {Zenodo},
+          doi       = {10.5281/zenodo.14056079}
+        }
+  papers:
+    - label: GLEAM4 자료 논문
+      text: >-
+        Miralles, D. G., Bonte, O., Koppa, A., Baez-Villanueva, O. M., Tronquo, E., Zhong, F., Beck, H. E., Hulsman, P.,
+        Dorigo, W., Verhoest, N. E. C., Haghdoost, S. (2025): GLEAM4: global land evaporation and soil moisture dataset
+        at 0.1° resolution from 1980 to near present. Scientific Data, 12, 416.
+      doi: 10.1038/s41597-025-04610-y
+      bibtex: |
+        @article{miralles2025gleam4,
+          author  = {Miralles, Diego G. and Bonte, Olivier and Koppa, Akash and Baez-Villanueva, Oscar M. and Tronquo, Emma and Zhong, Feng and Beck, Hylke E. and Hulsman, Petra and Dorigo, Wouter and Verhoest, Niko E. C. and Haghdoost, Shekoofeh},
+          title   = {{GLEAM4}: global land evaporation and soil moisture dataset at 0.1{\textdegree} resolution from 1980 to near present},
+          journal = {Scientific Data},
+          volume  = {12},
+          pages   = {416},
+          year    = {2025},
+          doi     = {10.1038/s41597-025-04610-y}
+        }
+    - label: GLEAM 원 논문
+      text: >-
+        Miralles, D. G., Holmes, T. R. H., De Jeu, R. A. M., Gash, J. H., Meesters, A. G. C. A., Dolman, A. J. (2011):
+        Global land-surface evaporation estimated from satellite-based observations. Hydrology and Earth System Sciences, 15, 453–469.
+      doi: 10.5194/hess-15-453-2011
+      bibtex: |
+        @article{miralles2011gleam,
+          author  = {Miralles, D. G. and Holmes, T. R. H. and De Jeu, R. A. M. and Gash, J. H. and Meesters, A. G. C. A. and Dolman, A. J.},
+          title   = {Global land-surface evaporation estimated from satellite-based observations},
+          journal = {Hydrology and Earth System Sciences},
+          volume  = {15},
+          number  = {2},
+          pages   = {453--469},
+          year    = {2011},
+          doi     = {10.5194/hess-15-453-2011}
+        }
+    - label: 증발 스트레스 모듈 (하이브리드 딥러닝)
+      text: >-
+        Koppa, A., Rains, D., Hulsman, P., Poyatos, R., Miralles, D. G. (2022): A deep learning-based hybrid model of global
+        terrestrial evaporation. Nature Communications, 13, 1912.
+      doi: 10.1038/s41467-022-29543-7
+      bibtex: |
+        @article{koppa2022hybrid,
+          author  = {Koppa, Akash and Rains, Dominik and Hulsman, Petra and Poyatos, Rafael and Miralles, Diego G.},
+          title   = {A deep learning-based hybrid model of global terrestrial evaporation},
+          journal = {Nature Communications},
+          volume  = {13},
+          pages   = {1912},
+          year    = {2022},
+          doi     = {10.1038/s41467-022-29543-7}
+        }
+    - label: 토양·지하수 모듈
+      text: >-
+        Hulsman, P., Keune, J., Koppa, A., Schellekens, J., Miralles, D. G. (2023): Incorporating Plant Access to Groundwater
+        in Existing Global, Satellite-Based Evaporation Estimates. Water Resources Research, 59(8), e2022WR033731.
+      doi: 10.1029/2022WR033731
+      bibtex: |
+        @article{hulsman2023groundwater,
+          author  = {Hulsman, P. and Keune, J. and Koppa, A. and Schellekens, J. and Miralles, D. G.},
+          title   = {Incorporating Plant Access to Groundwater in Existing Global, Satellite-Based Evaporation Estimates},
+          journal = {Water Resources Research},
+          volume  = {59},
+          number  = {8},
+          pages   = {e2022WR033731},
+          year    = {2023},
+          doi     = {10.1029/2022WR033731}
+        }
+  acknowledgement: >-
+    gleam.eu는 GLEAM4 자료를 논문에 쓰면 Miralles et al. (2011), Miralles et al. (2025)와 함께 차단 손실 모듈 Zhong et al. (2022, HESS),
+    토양 모듈 Hulsman et al. (2023), 스트레스 모듈 Koppa et al. (2022)을 인용하라고 안내합니다. 쓴 버전(예 GLEAM4.3a)과 받은 날짜도 적으세요.
+    Zenodo 기술 노트(10.5281/zenodo.14056079)는 v4.2 기준 문서입니다.
+
+transitions:
+  - from: GLEAM v3 (v3.8a 등)
+    to: GLEAM4 (v4.1~4.2)
+    status: completed
+    date: "2024-07"
+    summary: >-
+      0.25°에서 0.1°로 해상도를 높이고, 잠재증발·차단 손실·증발 스트레스 계산을 새로 바꾸고, 식생의 지하수 이용을 넣은 4세대 판입니다.
+      성분별 증발 비율이 크게 달라졌으므로(전지구 증산 비율 74% → 62%) v3 결과와 직접 비교하거나 이어 쓰면 안 됩니다.
+    changes:
+      - aspect: 수평 해상도
+        before: "0.25°"
+        after: "0.1° (1800 × 3600)"
+      - aspect: 잠재 증발
+        before: "Priestley–Taylor (복사 위주)"
+        after: "Penman 식 — 바람·식생 높이·VPD(공기역학 항) 반영"
+      - aspect: 차단 손실
+        before: "키 큰 식생만"
+        after: "van Dijk–Bruijnzeel 기반 모델, 위성 식생 자료로 제약, 키 큰·낮은 식생 따로 계산"
+      - aspect: 증발 스트레스
+        before: "토양수분·식생 광학 깊이(VOD) 공식"
+        after: "에디 공분산·수액류 관측으로 학습한 심층 신경망(4.3에서 XGBoost로 교체)"
+      - aspect: 지하수
+        before: "없음"
+        after: "선형 저수지 모델로 식생의 지하수 이용 반영"
+      - aspect: 기간·묶음
+        before: "v3a 1980–, v3b 2003–, v3c 2011– (v3 논문 기준)"
+        after: "a 1980–, b 2003– (c 묶음 없음)"
+      - aspect: 전지구 증산 비율
+        before: "약 74%"
+        after: "약 62%"
+    impacts:
+      - v3로 만든 기후값·추세를 GLEAM4와 섞지 마세요. 특히 증산·나지 증발 등 성분별 분석은 결과가 크게 달라집니다.
+      - 해상도가 바뀌었으므로 격자 단위 비교 전에 같은 격자로 맞추세요.
+    sources:
+      - name: Miralles et al. (2025), GLEAM4, Scientific Data
+        url: https://doi.org/10.1038/s41597-025-04610-y
+      - name: Martens et al. (2017), GLEAM v3, Geoscientific Model Development
+        url: https://doi.org/10.5194/gmd-10-1903-2017
+      - name: GLEAM 공식 사이트
+        url: https://www.gleam.eu/
+  - from: GLEAM4.2 (4.2a·4.2b)
+    to: GLEAM4.3 (4.3a·4.3b)
+    status: completed
+    summary: >-
+      같은 GLEAM4 틀 안에서 증발 스트레스 학습 방식과 토양층 구성을 바꾸고 관개를 명시적으로 넣은 판입니다. 4.3이 나오면서 4.2는 서버에서 내려갔습니다.
+    changes:
+      - aspect: 증발 스트레스 모델
+        before: "심층 신경망"
+        after: "XGBoost, 학습 때 식물 이용 가능 수분(PAW)–스트레스 관계가 단조롭도록 제약"
+      - aspect: 토양층
+        before: "다층 물수지(층 두께는 논문에 명시되지 않음)"
+        after: "1층 5 cm, 2층 95 cm로 설정"
+      - aspect: 관개
+        before: "없음"
+        after: "관개 과정 명시적 반영 (관련 논문 심사 중)"
+      - aspect: 제공 기간
+        before: "4.2a 1980–2023(논문) → 2024까지 연장, 4.2b 2003–"
+        after: "4.3a 1980–2024, 4.3b 2003–2025(2026-09-21 소식 기준)"
+    impacts:
+      - 4.2와 4.3을 한 시계열로 섞지 말고 전 기간을 4.3으로 다시 받으세요.
+      - 관개 지역(예 북중국평원·인도 북부)에서는 4.3의 증발이 4.2보다 크게 달라질 수 있으니 지역 분석은 버전을 명시하세요.
+    sources:
+      - name: GLEAM 공식 사이트 (Datasets·News)
+        url: https://www.gleam.eu/
+
+notices:
+  - date: "2026-09-21"
+    level: info
+    title: GLEAM4.3b 공개 (2025년 말까지)
+    body: >-
+      GLEAM4.3b가 서버에 올라왔으며 2025년 말까지를 0.1°로 제공한다고 알렸습니다. 다만 같은 페이지의 자료 설명은 4.3b 기간을
+      2003-01-01~2024-12-31로 적고 있어, 받은 파일의 마지막 날짜를 확인하세요.
+    source: https://www.gleam.eu/
+  - date: "2024-07"
+    level: info
+    title: GLEAM4 공개 — 0.1° 해상도, 새 증발 스트레스·잠재증발 계산
+    body: >-
+      4세대 GLEAM이 공개되었습니다. 해상도가 0.1°로 높아지고 기록이 1980년부터 최근까지로 늘었으며, 하이브리드 학습 증발 스트레스,
+      Penman 잠재증발, 지하수 이용 등이 새로 들어갔습니다. FAQ에 따르면 새 버전이 나오면 이전 버전은 서버에서 지워집니다.
+    source: https://www.gleam.eu/
+
+links:
+  - name: GLEAM 공식 사이트
+    url: https://www.gleam.eu/
+  - name: Miralles et al. (2025) GLEAM4 논문
+    url: https://www.nature.com/articles/s41597-025-04610-y
+  - name: GLEAM4 기술 노트 (Zenodo)
+    url: https://doi.org/10.5281/zenodo.14056079
+  - name: Martens et al. (2017) GLEAM v3 논문
+    url: https://doi.org/10.5194/gmd-10-1903-2017
+
+watch_urls:
+  - https://www.gleam.eu/
+
+last_verified: "2026-10-13"

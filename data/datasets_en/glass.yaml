@@ -1,0 +1,253 @@
+# ─────────────────────────────────────────────────────────────
+# GLASS (Global LAnd Surface Satellite) product suite — dataset information file (English edition)
+# Land tab, 'Vegetation'. LAI, FAPAR, FVC, albedo, net radiation, ET and more are grouped by product on one page. The main distribution point is now the HKU archive.
+# After editing, update last_verified to the date you checked the official pages.
+# ─────────────────────────────────────────────────────────────
+id: glass
+name: "GLASS"
+full_name: Global LAnd Surface Satellite (GLASS) product suite (AVHRR long-term records from 1981 / MODIS records from 2000; global land surface products from Shunlin Liang's group at Beijing Normal University and the University of Hong Kong)
+category: satellite
+domain: land
+group: 식생
+order: 30
+domains: [육지, 원격탐사]
+provider: Beijing Normal University (BNU) GLASS team and the Liang group, Department of Geography, University of Hong Kong (HKU) / distributed by the HKU GLASS archive and China's National Earth System Science Data Center (geodata.cn)
+
+status: active
+status_note: >-
+  The MODIS-based products are being extended one year at a time (on 2026-10-13 the HKU archive held LAI and FAPAR 0.05° through 2025, produced in March 2026).
+  The AVHRR-based long-term records, however, stop between 2018 and 2022 depending on the product, so a single-version record from the 1980s to the present exists essentially only for albedo (the combined AVHRR+MODIS product).
+  The MODIS products will lose their input once Terra and Aqua end science operations (NASA projects February 2027 for Terra and September 2027 for Aqua); no announcement of a follow-on plan by the GLASS team was found.
+
+period:
+  start: "1981-01"
+  end: present
+  note: >-
+    According to the HKU download table, AVHRR products run from 1981 (or 1982) to 2018–2022 (LAI, FAPAR and net radiation to 2018, ET to 2022), and MODIS products from 2000 to 2024–2025 (LAI and FAPAR to 2025; albedo, net radiation and ET to 2024).
+    The combined albedo product (MODIS & AVHRR, 0.05° and 0.5°) covers 1981–2024. No fixed update schedule is published; new years usually appear in a batch the following year.
+
+resolution:
+  spatial_short: "6 km (0.05°)"
+  temporal_short: "1일"
+  spatial: >-
+    AVHRR products: 0.05° latitude–longitude grid (some aggregated to 0.1° and 0.5°) / MODIS products: 0.05° latitude–longitude grid (CMG) or the MODIS Sinusoidal tile grid at 250 m, 500 m and 1 km
+    (LAI and FAPAR 250 m and 500 m tiles plus 0.05°, 0.1° and 0.25° aggregates; albedo 250 m, 500 m and 0.5°; ET 1 km, 0.05° and 0.5°)
+  vertical: Land surface (single level)
+  temporal: >-
+    LAI, FAPAR, FVC, albedo, ET, GPP and NPP every 8 days (file date = first day of the 8-day period, day of year 001, 009, ..., 361) / radiation products (net radiation, downward shortwave, PAR, etc.) daily
+
+update: Irregular, typically once a year (new years added and reprocessed in a batch the following year)
+license: Freely available (the official overview paper states the products are freely available to the public). The HKU archive can be downloaded over HTTPS without logging in
+account_required: false
+
+summary: >-
+  GLASS is a suite of global land surface satellite products developed mainly at Beijing Normal University and now distributed and updated by Shunlin Liang's group at the University of Hong Kong.
+  Using the AVHRR long-term data record (LTDR), MODIS reflectances and other satellite and ground data, it provides more than 20 spatially continuous variables — leaf area index (LAI), FAPAR,
+  fractional vegetation cover (FVC), broadband albedo, net and downward shortwave radiation, evapotranspiration (ET), gross primary production (GPP) and more — from 1981 (AVHRR) and 2000 (MODIS).
+  Because many variables come from related algorithms on consistent grids, GLASS is widely used in energy, water and carbon cycle studies.
+
+time_convention:
+  summary: >-
+    The 8-day products (LAI, FAPAR, FVC, albedo, ET, etc.) represent the 8-day period starting on the year and day of year in the file name (the last period of the year is shorter); radiation products (net radiation, downward shortwave) are daily means.
+    LAI and FAPAR are gap-free, temporally smooth estimates, not maximum value composites. FAPAR is described as black-sky FAPAR around 10:30 local solar time, approximating the daily mean.
+  points:
+    - "In GLASS01B01.V61.A2024001.2026063.hdf, A2024001 is the start date of the data (1 January 2024; the metadata give 1–8 January) and the final 2026063 is the production date (day 63 of 2026)."
+    - "LAI (V6) feeds two years of MODIS 8-day reflectance time series into a bidirectional LSTM to estimate values every 8 days. Periods with no clear observations are filled by the time-series model, so use the quality bits to see whether there was an actual observation."
+    - "The 0.05° daily net radiation is introduced as daily mean all-wave net radiation, but earlier documentation and the validation paper also call it 'daytime net radiation'. Check the definition for the version you use."
+    - "ET is an 8-day product that merges five evapotranspiration algorithms by Bayesian model averaging (BMA). The official product page does not state the physical unit or whether values are 8-day means or totals, so check the file attributes."
+  source: https://glass.hku.hk/algorithms.html
+  source_name: "GLASS Product Algorithms (HKU) + BNU product introduction pages + HKU archive file metadata (hdf.xml)"
+
+variables:
+  note: >-
+    Each product comes in separate files (HDF-EOS4). Because the official pages mostly do not publish scientific dataset (SDS) names, no layer names are given here.
+    Scale factors and valid ranges follow the BNU product pages and may differ between versions (V4, V5, V6), so always check the HDF attributes (scale_factor, _FillValue, valid_range).
+    The BNU albedo page lists layer names such as `ABD_BSA_shortwave`, `ABD_WSA_shortwave` and `ABD_BSA_VIS` for the earlier albedo products (GLASS02B05, B06, A06).
+  full_list: https://glass.hku.hk/download.html
+  groups:
+    - name: Leaf area index LAI (MODIS V6 250 m, 500 m, 0.05° from 2000 / AVHRR V4 0.05° 1981–2018, 8-day)
+      kind: instant
+      period: Representative of the 8-day period
+      items:
+        - text: "Leaf area index (m2 m-2)"
+          note: "V6 500 m and 250 m: stored value × 0.1 (valid 0–100, fill and ocean 255). An 8-bit quality layer carries high-quality, water, snow and cloud bits"
+    - name: Fraction of absorbed PAR, FAPAR (MODIS V6 250 m to 0.5° from 2000 / AVHRR V4 0.05° 1982–2018, 8-day)
+      kind: instant
+      period: Representative of the 8-day period
+      items:
+        - text: "Fraction of absorbed photosynthetically active radiation (dimensionless, 0–1)"
+          note: "Black-sky FAPAR around 10:30 local solar time, approximating the daily mean. MODIS version estimated from GLASS LAI and reflectance; AVHRR version computed from LAI as 1 − canopy transmittance. Stored value × 0.004 (valid 0–250, fill 255)"
+    - name: Fractional vegetation cover FVC (MODIS 500 m to 0.5° 2000–2024 / AVHRR 0.05° and 0.5° 1981–2020, 8-day)
+      kind: instant
+      period: Representative of the 8-day period
+      items:
+        - text: "Fractional green vegetation cover (dimensionless, 0–1)"
+          note: "Stored value × 0.004 (valid 0–250)"
+    - name: Broadband albedo (combined MODIS–AVHRR 0.05° and 0.5° 1981–2024, MODIS 250 m and 500 m, 8-day)
+      kind: instant
+      period: Representative of the 8-day period
+      items:
+        - text: "Black-sky albedo — shortwave, visible, near-infrared (dimensionless)"
+          std: []
+          note: "Stored value × 0.0001 (valid 0–10000, fill −1)"
+        - text: "White-sky albedo — shortwave, visible, near-infrared (dimensionless)"
+          std: []
+        - text: "Blue-sky albedo (actual atmospheric conditions) (dimensionless)"
+          note: Only in the post-2000 0.05° product according to the BNU page
+    - name: Radiation (daily)
+      kind: mean
+      period: Daily
+      items:
+        - text: "Surface all-wave net radiation (W m-2)"
+          note: "MODIS 0.05° 2000–2024, AVHRR 0.05° 1981–2018. Stored value × 0.01. Some versions define it as daytime net radiation"
+        - text: "Surface downward shortwave radiation (W m-2)"
+          note: "MODIS and AVHRR 0.05°. Daily mean. Stored value × 0.01"
+    - name: Evapotranspiration and carbon (8-day)
+      kind: mean
+      period: 8-day
+      items:
+        - text: "Evapotranspiration (latent heat flux) ET"
+          std: [evap]
+          note: "MODIS 1 km and 0.05° 2000–2024, AVHRR 0.05° and 0.5° 1981–2022. BMA merge of five algorithms. Stored value × 0.01. Check the file attributes for units and whether values are means or totals"
+        - text: "Gross primary production GPP (g C m-2)"
+          note: "EC-LUE model. MODIS 500 m 2000–2025, AVHRR 0.05° 1981–2018. Stored value × 0.01. Check the file attributes for per-day versus 8-day totals"
+
+access:
+  - name: HKU GLASS download (archive)
+    url: https://glass.hku.hk/download.html
+    method: HTTPS directory download (no login; bulk download with wget etc.)
+    note: >-
+      The layout is https://glass.hku.hk/archive/<product>/<sensor>/<resolution>/<year>/ (e.g. archive/LAI/MODIS/0.05D/2024/). Each file has an HDF, a metadata file (.hdf.xml) and a preview JPG;
+      the 500 m and 250 m tiled products have an additional day-of-year folder under each year. The site asks users to read the 'HDF File Naming Convention' document before downloading.
+  - name: BNU GLASS product pages (Chinese)
+    url: https://glass-product.bnu.edu.cn/
+    method: Algorithm and data format descriptions per product / links to geodata.cn and HKU
+    note: The per-product pages (e.g. introduction/LAI.html) give scale factors, valid ranges and quality bit definitions.
+  - name: National Earth System Science Data Center (geodata.cn)
+    url: http://www.geodata.cn/thematicView/GLASS.html
+    method: Web search and download (mostly in Chinese)
+    note: Named as a distribution site in the GLASS overview paper (Liang et al., 2021). Some earlier versions may only be found here.
+
+example:
+  lang: python
+  note: >-
+    Downloads the MODIS LAI 0.05° file for the first 8 days of January 2024 from the HKU archive and opens it as HDF4. Layer names are not documented officially, so list them first.
+    Reading HDF4 needs GDAL built with the HDF4 driver, or pyhdf.
+  code: |
+    import requests
+    from osgeo import gdal   # conda install -c conda-forge gdal (build with HDF4 support)
+
+    fname = "GLASS01B01.V61.A2024001.2026063.hdf"   # LAI, MODIS, 0.05°, 1-8 January 2024
+    url = f"https://glass.hku.hk/archive/LAI/MODIS/0.05D/2024/{fname}"
+    with open(fname, "wb") as f:
+        f.write(requests.get(url, timeout=120).content)
+
+    ds = gdal.Open(fname)
+    for name, desc in ds.GetSubDatasets() or [(fname, "single layer")]:
+        print(name, "|", desc)                      # check the layer names
+
+    sub = gdal.Open((ds.GetSubDatasets() or [(fname, "")])[0][0])
+    md = sub.GetMetadata()
+    print({k: v for k, v in md.items() if k.lower() in ("scale_factor", "_fillvalue", "valid_range", "units")})
+    arr = sub.ReadAsArray().astype("float32")
+    # apply the scale factor and fill value from the attributes before use
+
+tips:
+  - "The same product name can hide different versions (V40, V50, V60, V61) and sensors (AVHRR, MODIS) with different algorithms and scale factors. Record the V number in the file name and do not mix versions in one time series. The version in the HKU download table (e.g. LAI V60) can differ from the actual file names (V61)."
+  - "AVHRR and MODIS products are different datasets. To run a record from 1981, first check their differences over the post-2000 overlap. Where an official combined product exists (albedo MIX), it is the safer choice."
+  - "LAI and FAPAR fill cloud gaps with a time-series model. A value being present does not mean there was an observation, so use the quality layer (cloud, snow, fill bits)."
+  - "File numbers in the HKU archive can differ from the documentation (FAPAR files start with GLASS09, ET with GLASS11, net radiation with GLASS07). Go by the actual folder contents rather than the numbers in the 'HDF File Naming Convention' table."
+  - "The MODIS products are affected by Terra and Aqua orbital drift and their end of operations. Interpret trends from the 2020s together with these input changes."
+  - "A single global 0.05° file ranges from a few MB to over 100 MB. For the tiled products (500 m, 250 m), select regions by MODIS Sinusoidal tile number (hXXvYY); the Korean Peninsula is around h28v05."
+
+citations:
+  dataset: []
+  papers:
+    - label: GLASS product suite overview (BAMS)
+      text: >-
+        Liang, S., Cheng, J., Jia, K., Jiang, B., Liu, Q., Xiao, Z., Yao, Y., Yuan, W., Zhang, X., Zhao, X., Zhou, J. (2021):
+        The Global Land Surface Satellite (GLASS) Product Suite. Bulletin of the American Meteorological Society, 102(2), E323–E337.
+      doi: 10.1175/BAMS-D-18-0341.1
+      bibtex: |
+        @article{liang2021glass,
+          author  = {Liang, Shunlin and Cheng, Jie and Jia, Kun and Jiang, Bo and Liu, Qiang and Xiao, Zhiqiang and Yao, Yunjun and Yuan, Wenping and Zhang, Xiaotong and Zhao, Xiang and Zhou, Ji},
+          title   = {The Global Land Surface Satellite ({GLASS}) Product Suite},
+          journal = {Bulletin of the American Meteorological Society},
+          volume  = {102},
+          number  = {2},
+          pages   = {E323--E337},
+          year    = {2021},
+          doi     = {10.1175/BAMS-D-18-0341.1}
+        }
+    - label: GLASS long-term dataset (IJDE)
+      text: >-
+        Liang, S., Zhao, X., Liu, S., Yuan, W., Cheng, X., Xiao, Z., Zhang, X., Liu, Q., Cheng, J., Tang, H., Qu, Y., Bo, Y., Qu, Y., Ren, H., Yu, K., Townshend, J. (2013):
+        A long-term Global LAnd Surface Satellite (GLASS) data-set for environmental studies. International Journal of Digital Earth, 6(sup1), 5–33.
+      doi: 10.1080/17538947.2013.805262
+      bibtex: |
+        @article{liang2013glass,
+          author  = {Liang, Shunlin and Zhao, Xiang and Liu, Suhong and Yuan, Wenping and Cheng, Xiao and Xiao, Zhiqiang and Zhang, Xiaotong and Liu, Qiang and Cheng, Jie and Tang, Hairong and Qu, Yonghua and Bo, Yanchen and Qu, Ying and Ren, Huazhong and Yu, Kai and Townshend, John},
+          title   = {A long-term Global {LAnd} Surface Satellite ({GLASS}) data-set for environmental studies},
+          journal = {International Journal of Digital Earth},
+          volume  = {6},
+          number  = {sup1},
+          pages   = {5--33},
+          year    = {2013},
+          doi     = {10.1080/17538947.2013.805262}
+        }
+    - label: GLASS LAI V6 (250 m, Bi-LSTM)
+      text: >-
+        Ma, H., Liang, S. (2022): Development of the GLASS 250-m leaf area index product (version 6) from MODIS data using the bidirectional LSTM deep learning model.
+        Remote Sensing of Environment, 273, 112985.
+      doi: 10.1016/j.rse.2022.112985
+      bibtex: |
+        @article{ma2022glasslai,
+          author  = {Ma, Han and Liang, Shunlin},
+          title   = {Development of the {GLASS} 250-m leaf area index product (version 6) from {MODIS} data using the bidirectional {LSTM} deep learning model},
+          journal = {Remote Sensing of Environment},
+          volume  = {273},
+          pages   = {112985},
+          year    = {2022},
+          doi     = {10.1016/j.rse.2022.112985}
+        }
+    - label: GLASS FAPAR V6 (250 m, 8-day)
+      text: >-
+        Ma, H., Liang, S., Xiong, C., Wang, Q., Jia, A., Li, B. (2022): Global land surface 250 m 8 d fraction of absorbed photosynthetically active radiation (FAPAR) product from 2000 to 2021.
+        Earth System Science Data, 14(12), 5333–5347.
+      doi: 10.5194/essd-14-5333-2022
+      bibtex: |
+        @article{ma2022glassfapar,
+          author  = {Ma, Han and Liang, Shunlin and Xiong, Changhao and Wang, Qian and Jia, Aolin and Li, Bing},
+          title   = {Global land surface 250 m 8 d fraction of absorbed photosynthetically active radiation ({FAPAR}) product from 2000 to 2021},
+          journal = {Earth System Science Data},
+          volume  = {14},
+          number  = {12},
+          pages   = {5333--5347},
+          year    = {2022},
+          doi     = {10.5194/essd-14-5333-2022}
+        }
+  acknowledgement: >-
+    Most GLASS products have no dataset DOI, so cite the suite overview (Liang et al., 2021) and the algorithm paper for each variable you use (see the HKU 'Algorithms' page),
+    and state the product name, version (V number), resolution, download source (e.g. the HKU archive) and access date in the text.
+
+notices: []
+
+links:
+  - name: HKU GLASS download page (products, versions, periods)
+    url: https://glass.hku.hk/download.html
+  - name: HKU GLASS overview
+    url: https://glass.hku.hk/overview.html
+  - name: HKU GLASS algorithms and references
+    url: https://glass.hku.hk/algorithms.html
+  - name: GLASS HDF file naming convention (PDF)
+    url: https://glass.hku.hk/pdf/download/HDF%20File%20Naming%20Convention.pdf
+  - name: BNU GLASS LAI page (scale factor, quality bits)
+    url: https://glass-product.bnu.edu.cn/introduction/LAI.html
+  - name: BNU GLASS albedo page (layer names, scale factor)
+    url: https://glass-product.bnu.edu.cn/introduction/abd.html
+
+watch_urls:
+  - https://glass.hku.hk/download.html
+  - https://glass-product.bnu.edu.cn/news.html
+
+last_verified: "2026-10-13"

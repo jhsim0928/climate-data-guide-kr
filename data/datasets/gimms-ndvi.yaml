@@ -1,0 +1,327 @@
+# ─────────────────────────────────────────────────────────────
+# GIMMS NDVI (NDVI3g → GIMMS-3G+ V1.2, PKU GIMMS NDVI) — 데이터셋 정보 파일
+# 지면 탭 '식생'. NDVI3g v1(~2015)의 공식 후속 GIMMS-3G+와 베이징대 재보정판 PKU GIMMS NDVI가 모두 2022년 12월에서 멈춰 '갱신 종료'로 분류했습니다.
+# 수정 후에는 공식 페이지에서 확인한 날짜로 last_verified 를 갱신하세요.
+# ─────────────────────────────────────────────────────────────
+id: gimms-ndvi
+name: "GIMMS NDVI"
+full_name: Global Inventory Modeling and Mapping Studies (GIMMS) AVHRR NDVI — NDVI3g v1(1981~2015)과 후속 GIMMS-3G+ V1.2(1982~2022), 베이징대 재보정판 PKU GIMMS NDVI(1982~2022) (1/12°·반월 최대값 합성)
+category: satellite
+domain: land
+group: 식생
+order: 40
+domains: [육지, 원격탐사]
+provider: NASA GSFC GIMMS 그룹(Pinzon·Tucker) / NASA ORNL DAAC 배포 (PKU GIMMS NDVI는 베이징대학 Piao·Zhu 연구진, Zenodo 배포)
+
+status: ended
+status_note: >-
+  NDVI3g v1은 2015년 12월에서 끝났고, 같은 GIMMS 팀의 후속판 GIMMS-3G+ V1.2(ORNL DAAC, 2023-08-24 공개)와 베이징대 재보정판 PKU GIMMS NDVI V1.2(Zenodo, 2023)도 모두 2022년 12월 자료가 마지막입니다.
+  2026-10-13 확인 시 NASA CMR의 GIMMS-3G+ 컬렉션 기간은 2022-12-31에서 끝나고 새 연도·새 판이 등록되어 있지 않으며, 두 자료 모두 연장 계획 공지가 없어 '갱신 종료'로 분류했습니다.
+  1980년대부터의 장기 NDVI 기록으로는 여전히 표준적으로 쓰이지만, 2023년 이후는 다른 자료로 이어야 합니다.
+successor:
+  name: 없음 (공식 후속 미발표)
+  url: https://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=2187
+  note: >-
+    GIMMS 팀이 2022년 이후를 잇는 새 판을 발표하지 않았습니다. 2023년 이후 NDVI가 필요하면 VIIRS 식생지수(viirs-vi) 같은 현역 위성 NDVI를 쓰되,
+    센서·합성 방식·해상도가 달라 GIMMS 기록에 그대로 이어 붙이지 말고 겹치는 기간으로 보정·검토하세요.
+
+period:
+  start: "1982-01"
+  end: "2022-12"
+  note: >-
+    GIMMS-3G+ V1.2는 NASA CMR 기준 1982-01-01~2022-12-31입니다(ORNL 자료 제목은 '1981-2022'로 되어 있으나 파일은 1982년부터).
+    PKU GIMMS NDVI는 AVHRR 단독판 1982-01~2015-12, MODIS 결합판 1982-01~2022-12입니다.
+    갱신이 끝난 NDVI3g v1은 1981-07~2015-12(NCAR Climate Data Guide 기준), 그 이전 판 NDVI3g(v0)은 2013-12까지입니다.
+
+resolution:
+  spatial_short: "9 km (0.083°)"
+  temporal_short: "15일"
+  spatial: "1/12°(0.0833°) 전지구 위경도 격자(WGS84, 화소 중심 좌표, 4320 × 2160) — GIMMS-3G+·NDVI3g·PKU GIMMS NDVI 공통"
+  vertical: 지표 단일층
+  temporal: "반월(한 달 2개) 최대값 합성 — GIMMS-3G+ 기준 1~15일, 16일~말일. GIMMS-3G+ 파일은 6개월(합성 12개)씩 묶음(파일 이름 _0106, _0712)"
+
+update: 갱신 종료 (GIMMS-3G+·PKU 모두 2022-12 자료가 마지막, 연장 계획 미발표)
+license: "GIMMS-3G+: NASA EOSDIS 자료 이용·인용 지침에 따라 제한 없이 공개(내려받기는 무료 NASA Earthdata 로그인) / PKU GIMMS NDVI: CC BY 4.0"
+account_required: true
+
+summary: >-
+  GIMMS NDVI는 1981년부터 NOAA·MetOp 위성의 AVHRR 관측을 이어 붙여 센서 간 보정, 궤도 표류·화산 에어로졸 영향 보정을 거친 전지구 1/12° 반월 NDVI 기록으로,
+  40년 넘는 식생 녹색도 추세·생물계절 연구의 기준 자료로 쓰여 왔습니다. 제3세대 NDVI3g는 v1(2015년까지)에서 멈췄고,
+  NASA GIMMS 팀은 2023년 2022년까지 연장·수정한 GIMMS-3G+ V1.2를 ORNL DAAC에 공개했습니다. 별도로 베이징대 연구진이 NDVI3g를 Landsat으로 재보정하고
+  2003년 이후를 MODIS로 이은 PKU GIMMS NDVI(1982~2022)를 냈습니다. 세 자료 모두 2022년 이후로는 연장되지 않았습니다.
+
+time_convention:
+  summary: >-
+    각 값은 반월(1~15일 또는 16일~말일) 동안의 일별 NDVI 중 최대값을 고른 최대값 합성(MVC)입니다. 구름·대기 영향을 줄이려는 방식이라 그 기간의 평균보다 높게 나옵니다.
+    GIMMS-3G+의 `time`은 합성 기간의 가운데 날(1982-01-01 기준 일수)이고, `time_bnds`에 시작·끝 날이 있습니다.
+  points:
+    - "GIMMS-3G+ 파일 하나에 6개월치 합성 12개가 들어 있습니다(예 ndvi3g_geo_v1_2_2021_0712.nc4 = 2021년 7~12월). CMR 기준 2014년까지 파일 이름은 v1_1, 2015년부터 v1_2입니다."
+    - "여러 NOAA 위성과 MetOp 위성의 AVHRR를 이어 쓰므로 위성마다 관측 시각·태양 천정각이 다르고 궤도 표류로 바뀌기도 합니다. 공식 안내서는 센서·궤도 표류·태양 천정각 편향을 줄였지만 완전히 없애지는 못했다고 밝힙니다."
+    - "결측·구름 화소는 스플라인 보간이나 평년 계절 곡선으로 채워져 있고, 그 여부는 `percentile` 변수 안의 플래그(값 ÷ 2000의 몫)로 알 수 있습니다."
+    - "PKU GIMMS NDVI도 반월 최대값 합성 체계이며, 2003년 이후 결합판은 MODIS 16일 합성(MOD13C1)을 시간 가중으로 반월에 배분한 뒤 1/12°로 옮긴 값입니다."
+  source: https://daac.ornl.gov/VEGETATION/guides/Global_Veg_Greenness_GIMMS_3G.html
+  source_name: "ORNL DAAC — Global Vegetation Greenness (NDVI) from AVHRR GIMMS-3G+, 1981-2022 (안내서) + Li et al. (2023) ESSD"
+
+variables:
+  note: >-
+    GIMMS-3G+는 ORNL DAAC 안내서의 netCDF4 변수표 기준입니다. 정수 변수의 채움값은 −32768입니다. PKU GIMMS NDVI는 변수 이름이 없는 GeoTIFF(uint16)라
+    밴드 이름 대신 내용만 적었습니다(Zenodo 설명 기준). NDVI3g v1의 변수 구성은 공식 문서로 확인하지 못해 적지 않았습니다.
+  full_list: https://daac.ornl.gov/VEGETATION/guides/Global_Veg_Greenness_GIMMS_3G.html
+  groups:
+    - name: GIMMS-3G+ V1.2 (NASA, 1982~2022)
+      kind: max
+      period: 반월 (1~15일, 16일~말일)
+      items:
+        - text: "정규식생지수 NDVI — `ndvi` (무차원, 저장값 ÷ 10000)"
+          note: "유효 범위 −0.03~1.0. −5000은 NDVI를 계산할 수 없었던 화소"
+        - text: "백분위·품질 플래그 — `percentile` (부호화 정수)"
+          kind: instant
+          note: "값 = 백분위×10 + 플래그×2000. 플래그 0 양호, 1 스플라인 보간, 2 평년 계절 곡선(눈·구름 가능), 3 결측. 백분위 기준 기간 1982~2021"
+        - text: "기여한 위성 수 — `satellites` (개)"
+          kind: instant
+          note: 해당 합성 기간에 쓰인 플랫폼 수
+    - name: PKU GIMMS NDVI V1.2 (베이징대, AVHRR 단독 1982~2015 / MODIS 결합 1982~2022)
+      kind: max
+      period: 반월
+      items:
+        - text: "Landsat 기준으로 재보정한 NDVI (무차원, 저장값 × 0.001)"
+          note: "GeoTIFF uint16, 유효 0–1000, 채움 65535. 결합판의 2003년 이후는 MODIS MOD13C1 기반"
+        - text: "품질 관리(QC) 층"
+          kind: instant
+          note: Zenodo 설명은 QC 층을 함께 쓰라고 권하지만 값의 의미는 동봉 Readme에만 있어 여기서는 확인하지 못했습니다
+
+access:
+  - name: NASA ORNL DAAC — GIMMS-3G+ (DOI 10.3334/ORNLDAAC/2187)
+    url: https://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=2187
+    method: HTTPS 내려받기 / earthaccess / Earthdata Search (무료 Earthdata 로그인)
+    note: >-
+      CMR short name은 Global_Veg_Greenness_GIMMS_3G_2187, 버전 1입니다. 파일은 https://data.ornldaac.earthdata.nasa.gov/protected/global_vegetation/Global_Veg_Greenness_GIMMS_3G/data/ 아래
+      ndvi3g_geo_v1_2_YYYY_0106.nc4 형식으로 있습니다(1982~2014년은 v1_1).
+  - name: Earthdata Cloud OPeNDAP
+    url: https://opendap.earthdata.nasa.gov/collections/C2759076389-ORNL_CLOUD/granules/Global_Veg_Greenness_GIMMS_3G.ndvi3g_geo_v1_2_2021_0712.nc4
+    method: OPeNDAP — 변수·영역 부분 추출
+    note: 그래뉼마다 주소가 있으며, 위 주소의 파일 이름 부분을 바꿔 씁니다. Earthdata 로그인이 필요합니다.
+  - name: Zenodo — PKU GIMMS NDVI V1.2
+    url: https://doi.org/10.5281/zenodo.8253971
+    method: HTTPS 내려받기 (로그인 불필요, 연대별 zip)
+    note: MODIS 결합판(PKU_GIMMS_NDVI_AVHRR_MODIS_consolidated_*.zip, 1982~2022)과 AVHRR 단독판(PKU_GIMMS_NDVI_AVHRR_solely_*.zip, 1982~2015)이 있습니다. 전체 약 5 GB.
+  - name: Google Earth Engine — NDVI3g 구판(v0)
+    url: https://developers.google.com/earth-engine/datasets/catalog/NASA_GIMMS_3GV0
+    method: Earth Engine 카탈로그 (NASA/GIMMS/3GV0)
+    note: 1981-07~2013-12의 옛 NDVI3g(v0)입니다. v1이나 GIMMS-3G+가 아니므로 새 분석에는 쓰지 마세요.
+
+example:
+  lang: python
+  note: >-
+    earthaccess로 GIMMS-3G+ 2021년 하반기 파일을 받아 한반도 NDVI와 품질 플래그를 푸는 예입니다. 처음 실행 때 Earthdata 아이디·비밀번호를 묻습니다.
+    저장값 규칙(÷10000, −32768 채움, −5000 계산 불가)을 직접 적용하려고 자동 척도 변환을 끄고 엽니다.
+  code: |
+    import earthaccess
+    import xarray as xr
+
+    earthaccess.login()  # 무료 NASA Earthdata 계정
+    results = earthaccess.search_data(
+        short_name="Global_Veg_Greenness_GIMMS_3G_2187", version="1",
+        temporal=("2021-07-01", "2021-12-31"),
+    )
+    files = earthaccess.download(results, "gimms3g_plus")
+
+    ds = xr.open_dataset(files[0], mask_and_scale=False)
+    sub = ds.sel(lon=slice(124, 132))
+    sub = sub.sel(lat=slice(33, 39)) if sub.lat[0] < sub.lat[-1] else sub.sel(lat=slice(39, 33))
+
+    raw = sub["ndvi"]
+    ndvi = (raw.where((raw != -32768) & (raw != -5000)) / 10000.0)
+    pct = sub["percentile"]
+    flag = pct // 2000                      # 0 양호, 1 스플라인, 2 계절 곡선, 3 결측
+    ndvi_good = ndvi.where(flag == 0)
+    print(ndvi_good.mean(dim=("lat", "lon")).values)   # 반월 합성 12개의 영역 평균
+
+tips:
+  - "반월 최대값 합성(MVC)이라 같은 기간의 평균 NDVI보다 높게 나옵니다. 월값을 만들 때 두 합성의 최대값을 썼는지 평균을 썼는지 논문에 밝히세요."
+  - "NDVI3g v1(2015년까지), GIMMS-3G+(2022년까지), PKU GIMMS NDVI는 같은 AVHRR 원자료에서 나왔지만 보정이 달라 값이 다릅니다. 판을 섞지 말고 논문에 정확한 판 이름과 DOI를 적으세요."
+  - "공식 안내서는 피나투보 화산(1991년) 같은 대기 영향과 센서 보정·궤도 표류·태양 천정각 편향이 완전히 제거되지 않았다고 밝힙니다. 장기 추세는 위성 교체 시점과 함께 점검하세요."
+  - "PKU 연구진은 열대 상록활엽수림에서 NDVI3g의 궤도 표류·센서 열화 흔적이 컸다고 보고했습니다. 열대림 추세 분석에는 PKU판과 GIMMS-3G+를 비교해 보세요."
+  - "PKU 결합판은 2003년부터 MODIS 값이라 그 이전과 원자료가 다릅니다. 1982~2015년 AVHRR만의 일관성이 중요하면 AVHRR 단독판(solely)을 쓰세요. Zenodo 설명은 추세 분석 때 NDVI 0.1 미만의 희박 식생을 빼라고 권합니다."
+  - "2023년 이후는 GIMMS 계열 자료가 없습니다. VIIRS·MODIS NDVI로 잇는다면 겹치는 기간(예 2012~2022)으로 차이를 먼저 확인하세요."
+
+citations:
+  dataset:
+    - label: GIMMS-3G+ (ORNL DAAC)
+      text: >-
+        Pinzon, J.E., E.W. Pak, C.J. Tucker, U.S. Bhatt, G.V. Frost, and M.J. Macander. 2023. Global Vegetation Greenness (NDVI) from AVHRR GIMMS-3G+, 1981-2022.
+        ORNL DAAC, Oak Ridge, Tennessee, USA. https://doi.org/10.3334/ORNLDAAC/2187
+      doi: 10.3334/ORNLDAAC/2187
+      bibtex: |
+        @misc{pinzon2023gimms3gplus,
+          author    = {Pinzon, J. E. and Pak, E. W. and Tucker, C. J. and Bhatt, U. S. and Frost, G. V. and Macander, M. J.},
+          title     = {Global Vegetation Greenness ({NDVI}) from {AVHRR} {GIMMS-3G+}, 1981-2022},
+          year      = {2023},
+          publisher = {ORNL Distributed Active Archive Center},
+          address   = {Oak Ridge, Tennessee, USA},
+          doi       = {10.3334/ORNLDAAC/2187}
+        }
+    - label: PKU GIMMS NDVI V1.2 (Zenodo)
+      text: >-
+        Li, M., Cao, S., Zhu, Z., Wang, Z., Myneni, R. B., Piao, S. (2023): Spatiotemporally consistent global dataset of the GIMMS Normalized Difference Vegetation Index
+        (PKU GIMMS NDVI) from 1982 to 2022 (V1.2). Zenodo. https://doi.org/10.5281/zenodo.8253971
+      doi: 10.5281/zenodo.8253971
+      bibtex: |
+        @misc{li2023pkugimms_data,
+          author    = {Li, Muyi and Cao, Sen and Zhu, Zaichun and Wang, Zhe and Myneni, Ranga B. and Piao, Shilong},
+          title     = {Spatiotemporally consistent global dataset of the {GIMMS} Normalized Difference Vegetation Index ({PKU GIMMS NDVI}) from 1982 to 2022 ({V1.2})},
+          year      = {2023},
+          publisher = {Zenodo},
+          version   = {V1.2},
+          doi       = {10.5281/zenodo.8253971}
+        }
+  papers:
+    - label: NDVI3g 자료 논문
+      text: >-
+        Pinzon, J. E., Tucker, C. J. (2014): A Non-Stationary 1981–2012 AVHRR NDVI3g Time Series. Remote Sensing, 6(8), 6929–6960.
+      doi: 10.3390/rs6086929
+      bibtex: |
+        @article{pinzon2014ndvi3g,
+          author  = {Pinzon, Jorge E. and Tucker, Compton J.},
+          title   = {A Non-Stationary 1981--2012 {AVHRR} {NDVI3g} Time Series},
+          journal = {Remote Sensing},
+          volume  = {6},
+          number  = {8},
+          pages   = {6929--6960},
+          year    = {2014},
+          doi     = {10.3390/rs6086929}
+        }
+    - label: GIMMS 8 km NDVI (이전 세대)
+      text: >-
+        Tucker, C. J., Pinzon, J. E., Brown, M. E., Slayback, D. A., Pak, E. W., Mahoney, R., Vermote, E. F., El Saleous, N. (2005):
+        An extended AVHRR 8-km NDVI dataset compatible with MODIS and SPOT vegetation NDVI data. International Journal of Remote Sensing, 26(20), 4485–4498.
+      doi: 10.1080/01431160500168686
+      bibtex: |
+        @article{tucker2005gimms,
+          author  = {Tucker, Compton J. and Pinzon, Jorge E. and Brown, Molly E. and Slayback, Daniel A. and Pak, Edwin W. and Mahoney, Robert and Vermote, Eric F. and El Saleous, Nazmi},
+          title   = {An extended {AVHRR} 8-km {NDVI} dataset compatible with {MODIS} and {SPOT} vegetation {NDVI} data},
+          journal = {International Journal of Remote Sensing},
+          volume  = {26},
+          number  = {20},
+          pages   = {4485--4498},
+          year    = {2005},
+          doi     = {10.1080/01431160500168686}
+        }
+    - label: PKU GIMMS NDVI 자료 논문
+      text: >-
+        Li, M., Cao, S., Zhu, Z., Wang, Z., Myneni, R. B., Piao, S. (2023): Spatiotemporally consistent global dataset of the GIMMS Normalized Difference Vegetation Index
+        (PKU GIMMS NDVI) from 1982 to 2022. Earth System Science Data, 15(9), 4181–4203.
+      doi: 10.5194/essd-15-4181-2023
+      bibtex: |
+        @article{li2023pkugimms,
+          author  = {Li, Muyi and Cao, Sen and Zhu, Zaichun and Wang, Zhe and Myneni, Ranga B. and Piao, Shilong},
+          title   = {Spatiotemporally consistent global dataset of the {GIMMS} Normalized Difference Vegetation Index ({PKU GIMMS NDVI}) from 1982 to 2022},
+          journal = {Earth System Science Data},
+          volume  = {15},
+          number  = {9},
+          pages   = {4181--4203},
+          year    = {2023},
+          doi     = {10.5194/essd-15-4181-2023}
+        }
+  acknowledgement: >-
+    GIMMS-3G+를 쓰면 ORNL DAAC 데이터셋 DOI(10.3334/ORNLDAAC/2187)를 EOSDIS 자료 인용 지침에 따라 인용하고, 방법 설명에는 Pinzon & Tucker (2014)를 함께 듭니다.
+    PKU GIMMS NDVI를 쓰면 Zenodo DOI와 Li et al. (2023) ESSD 논문을 인용하세요. 어느 판(NDVI3g v1, GIMMS-3G+ V1.2, PKU V1.2)을 썼는지 본문에 밝히는 것이 중요합니다.
+
+transitions:
+  - from: GIMMS NDVI3g v1
+    to: GIMMS-3G+ V1.2
+    status: completed
+    date: "2023-08"
+    summary: >-
+      같은 NASA GIMMS 팀이 NDVI3g 기록을 2022년까지 늘리고 보정을 고쳐 ORNL DAAC에 공개한 후속판입니다. 격자(1/12°)와 반월 최대값 합성 체계는 같지만,
+      배포처가 바뀌어 ORNL DAAC DOI가 생겼고 MetOp AVHRR가 들어갔으며 일부 보정이 수정되었습니다. 이 판도 2022년 12월에서 멈췄습니다.
+    changes:
+      - aspect: 기간
+        before: "1981-07~2015-12"
+        after: "1982-01~2022-12 (CMR 기준)"
+      - aspect: 입력 위성
+        before: "NOAA 위성 AVHRR (NOAA-7·9·11·14·16·17·18 등)"
+        after: "NOAA 위성 + EUMETSAT MetOp 위성 AVHRR"
+      - aspect: 보정 수정 (ORNL 안내서가 든 세 가지)
+        before: "이전 판(안내서 표기 'Version 0')은 북반구 겨울 눈 덮인 지역의 음(−) NDVI를 0으로 가려 생물계절 지표에 인공 흔적 / 2006년 이후 보정 문제로 NDVI 하락 흔적 / 해안선 화소 결측"
+        after: "음의 NDVI 복원 / SeaWiFS 전 기간 육상 산출물 재처리로 2006년 이후 하락 완화 / 해안 화소 시계열 보정"
+      - aspect: 배포·식별자
+        before: "NASA NEX 프로젝트 서버 배포, 데이터셋 DOI 없음"
+        after: "NASA ORNL DAAC(Earthdata Cloud) — DOI 10.3334/ORNLDAAC/2187, CMR short name Global_Veg_Greenness_GIMMS_3G_2187"
+      - aspect: 파일 구성
+        before: "반기별 netCDF4 (CF 규약을 따르지 않음 — NCAR Climate Data Guide)"
+        after: "반기별 netCDF4 ndvi3g_geo_v1_2_YYYY_0106/0712.nc4 (1982~2014년은 v1_1 파일 이름), 변수 ndvi·percentile·satellites·time_bnds"
+    impacts:
+      - NDVI3g v1과 GIMMS-3G+를 한 시계열로 섞지 말고 1982년부터 GIMMS-3G+로 다시 받으세요. 겨울철 고위도 NDVI와 2006년 이후 값이 특히 다릅니다.
+      - 파일 안에서 2014년까지(v1_1)와 2015년부터(v1_2)의 판 표기가 다르지만 ORNL은 하나의 데이터셋(V1.2)으로 배포합니다. 판 표기를 근거로 기간을 잘라 쓰지 않도록 주의하세요.
+      - 2023년 이후는 GIMMS-3G+로도 이을 수 없습니다.
+    sources:
+      - name: ORNL DAAC 안내서 — Global Vegetation Greenness (NDVI) from AVHRR GIMMS-3G+, 1981-2022
+        url: https://daac.ornl.gov/VEGETATION/guides/Global_Veg_Greenness_GIMMS_3G.html
+      - name: Pinzon & Tucker (2014), NDVI3g
+        url: https://doi.org/10.3390/rs6086929
+      - name: NCAR Climate Data Guide — NDVI3g
+        url: https://climatedataguide.ucar.edu/climate-data/ndvi-normalized-difference-vegetation-index-3rd-generation-nasagfsc-gimms
+  - from: GIMMS NDVI3g v1
+    to: PKU GIMMS NDVI V1.2 (베이징대)
+    status: completed
+    date: "2023-08"
+    summary: >-
+      NASA 공식판이 아닌 베이징대 연구진의 재보정판입니다. NDVI3g v1을 Landsat NDVI 약 360만 표본에 맞춘 생물군계별 신경망(BPNN)으로 다시 보정해 궤도 표류·센서 열화 흔적을 줄였고,
+      2003년 이후는 MODIS NDVI로 이어 2022년까지 늘렸습니다. 2015년 이후 NDVI3g 갱신이 멈추자 나온 대안이며, 역시 2022년에서 멈췄습니다.
+    changes:
+      - aspect: 기간·구성
+        before: "1981-07~2015-12, AVHRR만"
+        after: "AVHRR 단독판 1982-01~2015-12 / MODIS 결합판 1982-01~2022-12 (1982~2002 AVHRR 기반, 2003~2022 MODIS MOD13C1 V6.1 기반, 2003~2015 겹침으로 화소별 랜덤포레스트 연결)"
+      - aspect: 보정 기준
+        before: "AVHRR 센서 간 보정 (Pinzon & Tucker 2014 방식)"
+        after: "Landsat 5·7·8 NDVI(Landsat 7 수준으로 상호보정)에 맞춘 생물군계별 신경망 재보정"
+      - aspect: Landsat 대비 정확도 (1984~2015)
+        before: "R² 0.94, RMSE 0.09, MAPE 20%"
+        after: "R² 0.97, RMSE 0.05, MAPE 9% — 열대 상록활엽수림 R² 0.16 → 0.47"
+      - aspect: 파일 형식·라이선스
+        before: "netCDF4, NASA 공개 자료"
+        after: "GeoTIFF(uint16, ×0.001, 채움 65535), CC BY 4.0, Zenodo DOI 10.5281/zenodo.8253971"
+    impacts:
+      - PKU판은 NASA GIMMS-3G+와 별개의 2차 가공 자료입니다. 두 자료의 추세가 다를 수 있으니 결론이 한 자료에만 기대지 않도록 비교해 보세요.
+      - 결합판은 2003년부터 MODIS 값이므로 Terra MODIS의 특성(궤도 표류 포함)이 그대로 들어갑니다. AVHRR만의 일관성이 필요하면 단독판(~2015)을 쓰세요.
+      - 2023년 이후 연장 공지는 없습니다(2026-10-13 확인 시 Zenodo 최신판 V1.2).
+    sources:
+      - name: Li et al. (2023), ESSD — PKU GIMMS NDVI
+        url: https://doi.org/10.5194/essd-15-4181-2023
+      - name: Zenodo — PKU GIMMS NDVI V1.2
+        url: https://doi.org/10.5281/zenodo.8253971
+
+notices:
+  - date: "2023-08-24"
+    level: info
+    title: NASA ORNL DAAC, GIMMS-3G+ V1.2(1982~2022) 공개 — NDVI3g v1 후속
+    body: >-
+      GIMMS 팀의 AVHRR NDVI가 2022년까지 연장·수정된 GIMMS-3G+ V1.2로 ORNL DAAC에 공개되었습니다(DOI 10.3334/ORNLDAAC/2187).
+      2026-10-13 확인 시 이 데이터셋은 2022-12-31 이후로 갱신되지 않았고 새 판도 등록되어 있지 않습니다.
+    source: https://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=2187
+  - date: "2023-08-17"
+    level: info
+    title: PKU GIMMS NDVI V1.2(1982~2022) Zenodo 공개
+    body: >-
+      베이징대 연구진이 NDVI3g를 Landsat으로 재보정하고 2003년 이후를 MODIS로 이은 PKU GIMMS NDVI를 V1.2로 갱신해 공개했습니다(AVHRR 단독판 1982~2015, MODIS 결합판 1982~2022).
+      2026-10-13 확인 시 이후 판은 나오지 않았습니다.
+    source: https://doi.org/10.5281/zenodo.8253971
+
+links:
+  - name: ORNL DAAC — GIMMS-3G+ 데이터셋 페이지
+    url: https://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=2187
+  - name: ORNL DAAC — GIMMS-3G+ 사용자 안내서 (변수표·플래그)
+    url: https://daac.ornl.gov/VEGETATION/guides/Global_Veg_Greenness_GIMMS_3G.html
+  - name: NASA Earthdata — GIMMS-3G+ 카탈로그
+    url: https://www.earthdata.nasa.gov/data/catalog/ornl-cloud-global-veg-greenness-gimms-3g-2187-1
+  - name: Li et al. (2023) ESSD — PKU GIMMS NDVI
+    url: https://essd.copernicus.org/articles/15/4181/2023/
+  - name: NCAR Climate Data Guide — NDVI3g
+    url: https://climatedataguide.ucar.edu/climate-data/ndvi-normalized-difference-vegetation-index-3rd-generation-nasagfsc-gimms
+
+watch_urls:
+  - https://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=2187
+  - https://zenodo.org/records/8253971
+
+last_verified: "2026-10-13"

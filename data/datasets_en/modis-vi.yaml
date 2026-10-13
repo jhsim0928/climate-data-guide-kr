@@ -1,0 +1,378 @@
+# ─────────────────────────────────────────────────────────────
+# MODIS Vegetation Indices MOD13/MYD13 (NDVI, EVI) — dataset information file
+# Land tab, 'Vegetation'. Deprecated because Terra and Aqua are nearing end of mission; the successor is VIIRS Vegetation Indices (viirs-vi.yaml).
+# After editing, update last_verified to the date you checked the official pages.
+# ─────────────────────────────────────────────────────────────
+id: modis-vi
+name: "MODIS NDVI/EVI (MOD13)"
+full_name: MODIS Vegetation Indices (MOD13Q1/A1/A2/A3/C1/C2, MYD13) Version 6.1 (NDVI and EVI, 250 m to 0.05°, 16-day and monthly)
+category: satellite
+domain: land
+group: 식생
+order: 12
+domains: [육지, 원격탐사]
+provider: NASA MODIS Land Team (Vegetation Index and Phenology Lab, University of Arizona, K. Didan) / LP DAAC
+
+status: deprecated
+status_note: >-
+  Collection 6.1 (061) is still being produced (on 2026-10-13 the latest MOD13Q1 composite began on 2026-09-14 and MOD13A3 reached August 2026), but the satellites behind it are at the end of their lives.
+  NASA has said MODIS data collection will stop when Terra and Aqua end operations in late 2026 or early 2027, followed by a final reprocessing, and advises users to move to comparable VIIRS products;
+  NASA's Earth Observer projects the end of science operations in February 2027 for Terra and September 2027 for Aqua. Orbit drift is shifting overpass times and breaking the strict 16-day repeat,
+  so plan new work around the VIIRS vegetation indices (VNP13, VJ113, VJ213) as well.
+
+period:
+  start: "2000-02"
+  end: present
+  note: >-
+    Terra (MOD13) starts on 2000-02-18 and Aqua (MYD13) on 2002-07-04. A CMR check of the Korean tile (h28v05) on 2026-10-13 found the latest
+    MOD13Q1 composite was 2026-09-14 to 29, the latest MYD13Q1 composite 2026-09-06 to 21, and the latest MOD13A3 month August 2026. MODIS data collection is expected to end when Terra and Aqua end operations.
+
+resolution:
+  spatial_short: "0.25 km (0.0025°)"
+  temporal_short: "16일"
+  spatial: >-
+    MODIS sinusoidal tile grid (about 10°×10° at the equator): 250 m (Q1), 500 m (A1), 1 km (A2, A3) /
+    global 0.05° latitude–longitude Climate Modeling Grid (CMG, 3600×7200; C1, C2)
+  vertical: Single surface layer
+  temporal: >-
+    16-day composites (Q1, A1, A2, C1) / calendar month (A3, C2). Terra and Aqua 16-day composites are offset by 8 days (Terra starting on days 1, 17, 33…, Aqua on days 9, 25, 41…),
+    so using both satellites gives a quasi-8-day time series.
+
+update: 16-day composites added roughly 2–3 weeks after the period ends; monthly data after the month (to stop when Terra and Aqua end operations)
+license: NASA Earth science open data — free and unrestricted under the EOSDIS Data Use and Citation Guidance; file downloads need a free NASA Earthdata Login; please cite the dataset DOI
+account_required: true
+
+summary: >-
+  The Normalized Difference Vegetation Index (NDVI) and Enhanced Vegetation Index (EVI) computed from MODIS surface reflectance and composited over 16 days and calendar months. NDVI continues the NOAA AVHRR NDVI record,
+  while EVI uses the blue band to reduce atmospheric effects and saturates less over dense vegetation. Six resolution/period combinations run from 250 m to a 0.05° global grid,
+  and the files also carry reflectances (red, NIR, blue, MIR), view geometry, composite day and quality information. It is one of the most widely used satellite vegetation datasets for phenology, drought, crop and land-change studies.
+
+time_convention:
+  summary: >-
+    The 16-day products use the Constrained-View angle Maximum Value Composite (CV-MVC): of the clear observations in 16 days, the two with the highest NDVI are compared and the one closer to nadir
+    (smaller view angle) is chosen, and that day's NDVI, EVI, reflectances and angles are written out (a plain maximum value composite is the fallback when clear observations are scarce).
+    The monthly products (A3, C2) are a weighted average of the 16-day composites overlapping the month, weighted by the length of overlap. The file date is the first day (day of year) of the compositing period.
+  points:
+    - "A 16-day value is the observation from one selected day, not a period mean. The actual observation day is stored as a day of year in the `250m 16 days composite day of the year` layer; use it for phenology work where dates matter."
+    - "Since Collection 5, Terra and Aqua 16-day composites are processed 8 days out of phase. In 2024, for example, MOD13Q1 composites start on days 1, 17, 33 and MYD13Q1 on days 9, 25, 41. Alternating the two gives an 8-day spacing, but each value is still a 16-day composite."
+    - "Compositing restarts on 1 January each year, so the last composite of a year (e.g. starting 19 December and ending 3 January) overlaps the first composite of the next year."
+    - "Terra originally crossed at 10:30 descending and Aqua at 13:30 ascending, but since orbit maintenance ended Terra has drifted to earlier mornings and Aqua to later afternoons, so solar elevation and shadowing at overpass change from year to year."
+    - "From C6 the input to the 16-day compositing is not daily data but surface reflectance already composited over 8 days (L2G, choosing the minimum-blue observation to reduce aerosol)."
+  source: https://lpdaac.usgs.gov/documents/621/MOD13_User_Guide_V61.pdf
+  source_name: "MODIS Vegetation Index User's Guide (MOD13 Series) V3.10, 2019 + LP DAAC collection descriptions + CMR granule listings"
+
+variables:
+  note: >-
+    From LP DAAC collection information (MOD13Q1 and MOD13A3 V061) and the MOD13 User's Guide. Layer (SDS) names are prefixed with the resolution and period (`250m 16 days …` for the 250 m 16-day product, `1 km monthly …` for the 1 km monthly).
+    The 500 m and 1 km 16-day and CMG products use different prefixes, so check names in your files. Index and reflectance values are int16 and are multiplied by 0.0001.
+  full_list: https://www.earthdata.nasa.gov/data/catalog/lpcloud-mod13q1-061
+  groups:
+    - name: 16-day composites (MOD13Q1 250 m; A1, A2 and C1 have the same structure)
+      kind: instant
+      period: Selected day within the 16-day composite
+      items:
+        - text: "Normalized Difference Vegetation Index (NDVI) — `250m 16 days NDVI` (dimensionless, stored value × 0.0001, valid −2000 to 10000)"
+          kind: max
+          period: 16-day
+          note: "CV-MVC — the smaller view angle of the two highest-NDVI observations, so the period maximum or close to it"
+        - text: "Enhanced Vegetation Index (EVI) — `250m 16 days EVI` (dimensionless, stored value × 0.0001)"
+          note: Value on the selected observation day of the composite
+        - text: "Red, NIR, blue and MIR reflectance — `250m 16 days red reflectance`, `250m 16 days NIR reflectance`, `250m 16 days blue reflectance`, `250m 16 days MIR reflectance` (dimensionless, × 0.0001)"
+          note: "Bands 1, 2, 3 and 7, on the selected observation day"
+        - text: "View zenith, sun zenith and relative azimuth angles — `250m 16 days view zenith angle`, `250m 16 days sun zenith angle`, `250m 16 days relative azimuth angle` (degrees, × 0.01)"
+          note: Value on the selected observation day of the composite
+        - text: "Actual observation day — `250m 16 days composite day of the year` (day of year 1–366)"
+          note: The day on which the selected observation was made
+        - text: "Summary pixel reliability — `250m 16 days pixel reliability` (−1 fill, 0 good, 1 marginal, 2 snow/ice, 3 cloudy)"
+          std: []
+        - "Vegetation index quality bits — `250m 16 days VI Quality` (bit field)"
+    - name: Monthly (MOD13A3 1 km; C2 at 0.05°)
+      kind: mean
+      period: Monthly
+      items:
+        - text: "Monthly NDVI — `1 km monthly NDVI` (dimensionless, × 0.0001)"
+          note: Weighted average of the 16-day composites (A2) overlapping the month, weighted by overlap
+        - "Monthly EVI — `1 km monthly EVI` (dimensionless, × 0.0001)"
+        - "Monthly red, NIR, blue and MIR reflectance — `1 km monthly red reflectance` etc. (dimensionless, × 0.0001)"
+        - text: "Summary pixel reliability — `1 km monthly pixel reliability` (−1 to 3)"
+          std: []
+        - "Vegetation index quality bits — `1 km monthly VI Quality` (bit field)"
+
+access:
+  - name: NASA Earthdata Search (LP DAAC, Earthdata Cloud)
+    url: https://search.earthdata.nasa.gov/search/granules?p=C1748066515-LPCLOUD
+    method: Web search and HTTPS download / earthaccess
+    note: >-
+      The link opens MOD13Q1 V061. Short names are MOD13Q1, MOD13A1, MOD13A2, MOD13A3, MOD13C1, MOD13C2 (Terra) and MYD13… (Aqua), version 061; files are HDF-EOS2 (.hdf).
+      LP DAAC Data Pool distribution of MODIS data ended on 30 June 2025, so scripts that used Data Pool URLs should switch to Earthdata Cloud (for example via earthaccess).
+  - name: AppEEARS (area and point extraction)
+    url: https://appeears.earthdatacloud.nasa.gov/
+    method: Web and API — area (GeoTIFF, NetCDF4) or point (CSV) extraction with optional reprojection
+    note: Delivers just your region without handling tiles or the sinusoidal projection, along with quality-bit lookup tables.
+  - name: LAADS DAAC (MOD13 product page)
+    url: https://ladsweb.modaps.eosdis.nasa.gov/missions-and-measurements/products/MOD13Q1
+    method: HTTPS download
+    note: Distribution point on the MODIS processing system (MODAPS) side; the file specifications (filespec) are also here.
+
+example:
+  lang: python
+  note: >-
+    Downloads Terra (MOD13Q1) and Aqua (MYD13Q1) 16-day NDVI for 2024 with earthaccess to build an 8-day-spaced series for the central Korean tile (h28v05).
+    The files are HDF4, so pyhdf is used, and only pixel reliability 0 and 1 are kept. The actual observation day of each value is in the composite day of the year layer.
+  code: |
+    # pip install earthaccess pyhdf numpy
+    import earthaccess
+    import numpy as np
+    from pyhdf.SD import SD, SDC
+
+    earthaccess.login()  # free NASA Earthdata account
+    files = []
+    for sn in ("MOD13Q1", "MYD13Q1"):          # Terra and Aqua composites are offset by 8 days
+        res = earthaccess.search_data(
+            short_name=sn, version="061",
+            temporal=("2024-04-01", "2024-10-31"),
+            bounding_box=(127.0, 36.0, 127.5, 36.5),   # (west, south, east, north)
+        )
+        files += earthaccess.download(res, "./mod13q1")
+
+    for f in sorted(map(str, files), key=lambda p: p.split(".A")[1][:7]):
+        if ".h28v05." not in f:
+            continue
+        sd = SD(f, SDC.READ)
+        ndvi = sd.select("250m 16 days NDVI")[:].astype("float32")
+        rel = sd.select("250m 16 days pixel reliability")[:]
+        ndvi = np.where((ndvi >= -2000) & (rel <= 1), ndvi * 0.0001, np.nan)
+        print(f.split("/")[-1][:24], "mean NDVI:", round(float(np.nanmean(ndvi)), 3))
+
+tips:
+  - "NDVI and EVI are stored as int16. Multiply by 0.0001 and remove the fill value −3000 and anything outside the valid range (−2000 to 10000) first. The reflectance fill is −1000 and angles are × 0.01."
+  - "`pixel reliability` (0 good, 1 marginal, 2 snow/ice, 3 cloudy) is the simplest quality screen. For finer screening use bits 0–1 (quality), 2–5 (usefulness), 6–7 (aerosol), 8 (adjacent cloud), 10 (mixed clouds), 14 (snow/ice) and 15 (shadow) of `VI Quality`."
+  - "A 16-day value can come from any day in the period. For day-level spring and autumn phenology (green-up and senescence dates), use `composite day of the year` rather than the file date."
+  - "Mixing Terra and Aqua into an 8-day series alternates the overpass time (morning/afternoon) and sensor calibration. Do trend analysis with one satellite's product, and say so if you mix them."
+  - "Because of orbit drift, neither satellite keeps a strict 16-day repeat any more (LP DAAC), and pixel-size and scan-gap effects grew from late 2024 (LDOPE). Cross-check small trends after the mid-2020s against the VIIRS vegetation indices."
+  - The monthly products (A3, C2) are weighted averages of 16-day composites, so their values behave differently from the 16-day data. If you need monthly maximum NDVI, derive it from the 16-day data yourself.
+  - "The CMG (0.05°) products average clear 1 km pixels spatially and fill fully cloudy cells from past data. Values with pixel reliability 4 (estimated from the historical time series) are not observations and are safest left out."
+  - Korea spans several sinusoidal tiles, including h28v05 and h29v05, so AppEEARS or GDAL is the easier route for point extraction and reprojection.
+
+citations:
+  dataset:
+    - label: MOD13Q1 V061 (Terra, 250 m, 16-day)
+      text: >-
+        Didan, K. (2021). MODIS/Terra Vegetation Indices 16-Day L3 Global 250m SIN Grid V061 [Data set]. NASA Land Processes Distributed Active Archive Center.
+        https://doi.org/10.5067/MODIS/MOD13Q1.061 (Accessed YYYY-MM-DD)
+      doi: 10.5067/MODIS/MOD13Q1.061
+      bibtex: |
+        @misc{mod13q1_v061,
+          author    = {Didan, Kamel},
+          title     = {{MODIS/Terra} Vegetation Indices 16-Day {L3} Global 250m {SIN} Grid {V061}},
+          year      = {2021},
+          publisher = {NASA Land Processes Distributed Active Archive Center},
+          doi       = {10.5067/MODIS/MOD13Q1.061}
+        }
+    - label: MYD13Q1 V061 (Aqua, 250 m, 16-day)
+      text: >-
+        Didan, K. (2021). MODIS/Aqua Vegetation Indices 16-Day L3 Global 250m SIN Grid V061 [Data set]. NASA Land Processes Distributed Active Archive Center.
+        https://doi.org/10.5067/MODIS/MYD13Q1.061 (Accessed YYYY-MM-DD)
+      doi: 10.5067/MODIS/MYD13Q1.061
+      bibtex: |
+        @misc{myd13q1_v061,
+          author    = {Didan, Kamel},
+          title     = {{MODIS/Aqua} Vegetation Indices 16-Day {L3} Global 250m {SIN} Grid {V061}},
+          year      = {2021},
+          publisher = {NASA Land Processes Distributed Active Archive Center},
+          doi       = {10.5067/MODIS/MYD13Q1.061}
+        }
+    - label: MOD13A3 V061 (Terra, 1 km, monthly)
+      text: >-
+        Didan, K. (2021). MODIS/Terra Vegetation Indices Monthly L3 Global 1km SIN Grid V061 [Data set]. NASA Land Processes Distributed Active Archive Center.
+        https://doi.org/10.5067/MODIS/MOD13A3.061 (Accessed YYYY-MM-DD)
+      doi: 10.5067/MODIS/MOD13A3.061
+      bibtex: |
+        @misc{mod13a3_v061,
+          author    = {Didan, Kamel},
+          title     = {{MODIS/Terra} Vegetation Indices Monthly {L3} Global 1km {SIN} Grid {V061}},
+          year      = {2021},
+          publisher = {NASA Land Processes Distributed Active Archive Center},
+          doi       = {10.5067/MODIS/MOD13A3.061}
+        }
+  papers:
+    - label: Overview of MODIS vegetation index performance (NDVI and EVI definitions, compositing)
+      text: >-
+        Huete, A., Didan, K., Miura, T., Rodriguez, E. P., Gao, X., Ferreira, L. G. (2002): Overview of the radiometric and biophysical performance of the
+        MODIS vegetation indices. Remote Sensing of Environment, 83(1-2), 195–213.
+      doi: 10.1016/S0034-4257(02)00096-2
+      bibtex: |
+        @article{huete2002modisvi,
+          author  = {Huete, A. and Didan, K. and Miura, T. and Rodriguez, E. P. and Gao, X. and Ferreira, L. G.},
+          title   = {Overview of the radiometric and biophysical performance of the {MODIS} vegetation indices},
+          journal = {Remote Sensing of Environment},
+          volume  = {83},
+          number  = {1-2},
+          pages   = {195--213},
+          year    = {2002},
+          doi     = {10.1016/S0034-4257(02)00096-2}
+        }
+    - label: MOD13 User's Guide (C6.1) — no DOI
+      text: >-
+        Didan, K., Barreto Munoz, A. (2019): MODIS Vegetation Index User's Guide (MOD13 Series), Version 3.10 (Collection 6.1).
+        Vegetation Index and Phenology Lab, The University of Arizona. https://lpdaac.usgs.gov/documents/621/MOD13_User_Guide_V61.pdf
+      bibtex: |
+        @techreport{didan2019mod13ug,
+          author      = {Didan, Kamel and Barreto Munoz, Armando},
+          title       = {{MODIS} Vegetation Index User's Guide ({MOD13} Series), Version 3.10 (Collection 6.1)},
+          institution = {Vegetation Index and Phenology Lab, The University of Arizona},
+          year        = {2019},
+          url         = {https://lpdaac.usgs.gov/documents/621/MOD13_User_Guide_V61.pdf}
+        }
+  acknowledgement: >-
+    Following the EOSDIS Data Use and Citation Guidance, LP DAAC asks you to cite the DOI of each product you used (by satellite, resolution and period).
+    DOIs follow the pattern 10.5067/MODIS/<short name>.061 (e.g. 10.5067/MODIS/MOD13A1.061 for 500 m 16-day, 10.5067/MODIS/MOD13C1.061 for 0.05° 16-day).
+    Cite Huete et al. (2002) for the index definitions and compositing.
+
+transitions:
+  - from: MODIS Vegetation Indices C6.1 (MOD13, MYD13)
+    to: VIIRS Vegetation Indices V2 (VNP13, VJ113, VJ213)
+    to_id: viirs-vi
+    status: planned
+    date: "2027"
+    summary: >-
+      The successor carries the MODIS vegetation index system over to VIIRS. CV-MVC compositing, NDVI and EVI continue, but there is no 250 m product, a different blue band weakens EVI continuity,
+      and the two-band EVI2 has been added. Fill values, scale notation, pixel-reliability classes and file format differ, so code must be updated. MODIS collection ends with Terra and Aqua (late 2026 to 2027).
+    changes:
+      - aspect: Satellites and overpass time
+        before: "Terra (originally 10:30 descending) and Aqua (originally 13:30 ascending), both drifting"
+        after: "Suomi NPP (2012–, distribution to end November 2026), NOAA-20 (2018–) and NOAA-21 (2023–), 13:30 ascending. No product continues Terra's morning observations"
+      - aspect: Product resolutions
+        before: "250 m (Q1), 500 m (A1), 1 km (A2, A3), 0.05° (C1, C2)"
+        after: "500 m (A1), 1 km (A2, A3), 0.05° (C1, C2) — no 250 m product"
+      - aspect: 16-day composite spacing
+        before: "Every 16 days per satellite (Terra and Aqua offset by 8 days, quasi-8-day together)"
+        after: "16-day composites produced every 8 days for each satellite (periods overlap by 8 days)"
+      - aspect: Indices
+        before: "NDVI, EVI"
+        after: "NDVI, EVI, EVI2 (two-band red/NIR, computed without the blue band)"
+      - aspect: Compositing
+        before: "CV-MVC — smallest view angle of the two highest-NDVI observations"
+        after: "CV-MVC — smallest view angle among the top two-thirds of observations by NDVI, plus view-angle bins ([0–30°], [>30°]) to avoid large view angles"
+      - aspect: Blue band
+        before: "MODIS band 3, 459–479 nm"
+        after: "VIIRS M3, 478–498 nm — EVI is sensitive to the blue band, weakening continuity with MODIS EVI (hence EVI2)"
+      - aspect: Reflectance layers
+        before: "Red, NIR, blue, MIR (bands 1, 2, 3, 7)"
+        after: "Red, NIR, blue, green, SWIR1, SWIR2, SWIR3"
+      - aspect: Stored values and quality layer (500 m 16-day)
+        before: "Scale 0.0001, index fill −3000 and valid −2000 to 10000, pixel reliability 0–3 (fill −1)"
+        after: "Scale given as 10000 (divide by 10000), index fill −15000 and valid −10000 to 10000, pixel reliability 0–11 (fill −4)"
+      - aspect: Layer names and file format
+        before: "`250m 16 days NDVI` etc., HDF-EOS2 (HDF4)"
+        after: "`500 m 16 days NDVI` etc. (space between number and m), HDF-EOS5 (HDF5)"
+    impacts:
+      - Analyses that need 250 m (small fields, urban green space) cannot be continued at that resolution with VIIRS. Compare at a common 500 m.
+      - Long EVI series may show a seam because of the blue-band difference, so consider NDVI or EVI2 first when joining the two sensors.
+      - Fill values, scale notation and pixel-reliability classes differ, so do not reuse MODIS quality-filter code as is.
+      - Suomi NPP products (VNP13) stop being distributed in November 2026, so the reference going forward is NOAA-21 (VJ213, primary) and NOAA-20 (VJ113, secondary).
+    sources:
+      - name: Transition from MODIS to VIIRS (NASA Earthdata notice, 2025-05-02)
+        url: https://www.earthdata.nasa.gov/data/alerts-outages/transition-from-modis-viirs
+      - name: VNP13 User Guide and ATBD V2.1.2 (Didan et al., 2018)
+        url: https://lpdaac.usgs.gov/documents/1372/VNP13_User_Guide_ATBD_V2.1.2.pdf
+      - name: Earthdata catalog — VNP13A1 V002 (layer table)
+        url: https://www.earthdata.nasa.gov/data/catalog/lpcloud-vnp13a1-002
+      - name: Román et al. (2024) — continuity between MODIS C6.1 and VIIRS C2 land products (RSE)
+        url: https://doi.org/10.1016/j.rse.2023.113963
+  - from: MODIS Vegetation Indices C6
+    to: MODIS Vegetation Indices C6.1
+    status: completed
+    date: "2023-07"
+    summary: >-
+      A full-record reprocessing that kept the science algorithm and changed only the Terra and Aqua L1B calibration approach and the polarization correction. Format and layer names are the same as C6,
+      and distribution of C6 (006) land products ended on 31 July 2023.
+    changes:
+      - aspect: Algorithm
+        before: "C6 (8-day precomposited L2G reflectance input, CV-MVC)"
+        after: "Unchanged"
+      - aspect: Input calibration
+        before: "C6 L1B calibration"
+        after: "Revised Terra and Aqua L1B calibration approach and polarization correction"
+      - aspect: Availability
+        before: "006 — distribution ended 2023-07-31"
+        after: "061 — the only version available"
+    impacts:
+      - Re-check results made with 006 using 061. The 006 files can no longer be downloaded.
+    sources:
+      - name: MOD13 User's Guide V3.10 (2019)
+        url: https://lpdaac.usgs.gov/documents/621/MOD13_User_Guide_V61.pdf
+      - name: Final notice — MODIS Version 6.0 land products decommissioned (2023-07-25)
+        url: https://www.earthdata.nasa.gov/data/alerts-outages/final-notice-modis-version-6-0-land-data-products-decommissioned-july-31-2023
+
+notices:
+  - date: "2026-03-26"
+    level: info
+    title: Terra MODIS placed in standby — part of 2026 days 085–086 flagged questionable/bad
+    body: >-
+      A Terra anomaly at about 20:00 UTC on 26 March 2026 put MODIS into standby; it returned to science mode on 27 March.
+      The calibration team flagged data from 2026-085 20:00 UTC to 2026-086 19:23 UTC as questionable or bad. Check the quality layers of the MOD13 16-day composite starting on day 81 of 2026 and the March monthly data.
+    source: https://www.earthdata.nasa.gov/data/alerts-outages/terra-modis-placed-standby-mode
+  - date: "2026-03-20"
+    level: warning
+    title: End of science operations projected for February 2027 (Terra) and September 2027 (Aqua)
+    body: >-
+      An editor's note on NASA Earth Observer's Terra feature (published 2025-12-29, updated 2026-03-20) gives the projected end of science activities as February 2027 for Terra and September 2027 for Aqua.
+      Operations continue until then; because its ageing battery limits power, Terra switched off MOPITT on 9 April 2025 to save energy for the remaining four instruments, and the ASTER shortwave infrared subsystem no longer works.
+    source: https://science.nasa.gov/science-research/earth-science/terra-the-end-of-an-era
+  - date: "2026-01-08"
+    level: warning
+    title: MODIS quality team note — Terra and Aqua orbit drift affects pixel size, scan gaps and diurnal sampling
+    body: >-
+      LDOPE reported that drift since the last orbit adjustments (Terra 2022, Aqua 2021) has changed pixel size and spacing, scan gaps, bowtie overlap and diurnal sampling,
+      with impacts growing sharply from late 2024. Effects on individual products, starting with fire, are under investigation.
+    source: https://landweb.modaps.eosdis.nasa.gov/displayissue?id=1254
+  - date: "2025-06-03"
+    level: warning
+    title: LP DAAC Data Pool distribution of MODIS ends (2025-06-30) — move to Earthdata Cloud
+    body: >-
+      LP DAAC announced that Data Pool access to all MODIS data, including C6.1, would be retired on 30 June 2025, with NASA Earthdata Cloud as the primary archive.
+      Earthdata Search and AppEEARS users see no change, but scripts that call Data Pool URLs directly need updating.
+    source: https://www.earthdata.nasa.gov/data/alerts-outages/lp-daac-discontinue-data-pool-distribution-modis-datasets
+  - date: "2025-05-02"
+    level: warning
+    title: Transition from MODIS to VIIRS — Terra and Aqua expected to shut down late 2026 to early 2027
+    body: >-
+      NASA expects Terra and Aqua to stop operating in late 2026 or early 2027; MODIS data collection will end then and a final reprocessing will follow.
+      Because orbit drift may affect crossing times and data quality, users are encouraged to move to comparable VIIRS products.
+    source: https://www.earthdata.nasa.gov/data/alerts-outages/transition-from-modis-viirs
+  - date: "2023-07-25"
+    level: info
+    title: MODIS Version 6.0 land products decommissioned (2023-07-31) — only V6.1 available
+    body: >-
+      LP DAAC stopped distributing Terra, Aqua and combined MODIS V6.0 land products (except MOD44W and MCD43GF) on 31 July 2023.
+      User Guides and ATBDs remain on the DOI landing pages, and users were advised to move to V6.1.
+    source: https://www.earthdata.nasa.gov/data/alerts-outages/final-notice-modis-version-6-0-land-data-products-decommissioned-july-31-2023
+  - date: "2021-11-10"
+    level: info
+    title: Aqua orbit drift plan — the 16-day repeat cycle is no longer strictly kept
+    body: >-
+      LP DAAC explained that Aqua began drifting toward later afternoons in July 2021 and would reach an overpass time of about 15:50 around August 2026.
+      Products are expected to stay mostly science quality, but the lower altitude reduces grid size, the strict 16-day repeat is lost, and lower sun angles can mean more shadows.
+    source: https://lpdaac.usgs.gov/news/aqua-modis-acquisition-plan-through-august-2026/
+
+links:
+  - name: MOD13 User's Guide V3.10 (C6.1, PDF)
+    url: https://lpdaac.usgs.gov/documents/621/MOD13_User_Guide_V61.pdf
+  - name: Earthdata catalog — MOD13Q1 V061
+    url: https://www.earthdata.nasa.gov/data/catalog/lpcloud-mod13q1-061
+  - name: Earthdata catalog — MOD13A3 V061
+    url: https://www.earthdata.nasa.gov/data/catalog/lpcloud-mod13a3-061
+  - name: MODIS/VIIRS land quality known issues (LDOPE)
+    url: https://landweb.modaps.eosdis.nasa.gov/knownissue
+  - name: MODIS Land Team news (orbit drift, C7 plans)
+    url: https://modis-land.gsfc.nasa.gov/news.html
+  - name: LAADS DAAC — MODIS to VIIRS Transition
+    url: https://ladsweb.modaps.eosdis.nasa.gov/learn/modis-to-viirs-transition
+
+watch_urls:
+  - https://www.earthdata.nasa.gov/data/alerts-outages/transition-from-modis-viirs
+  - https://landweb.modaps.eosdis.nasa.gov/knownissue
+  - https://modis-land.gsfc.nasa.gov/news.html
+
+last_verified: "2026-10-13"

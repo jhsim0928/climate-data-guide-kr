@@ -1,0 +1,297 @@
+# ─────────────────────────────────────────────────────────────
+# VIIRS Burned Area VNP64A1 C2 — dataset information file
+# Listed under the Land tab, 'Fire'. Successor to MODIS MCD64A1 (modis-burned-area.yaml); the MCD64A1 → VNP64A1 comparison lives in the MODIS file.
+# Suomi NPP data delivery ends on 1 November 2026 — recheck production status afterwards (Collection 3, NOAA-20 combination).
+# After editing, update last_verified to the date you checked the official pages.
+# ─────────────────────────────────────────────────────────────
+id: viirs-burned-area
+name: "VIIRS Burned Area (VNP64A1)"
+full_name: VIIRS/NPP Burned Area Monthly L4 Global 500m SIN Grid V002 (VNP64A1, Suomi NPP VIIRS monthly burned area at 500 m)
+category: satellite
+domain: land
+group: 산불
+order: 11
+domains: [육지, 원격탐사]
+provider: NASA VIIRS Land Science Team (University of Maryland, Louis Giglio) / produced by NASA GSFC LandSIPS / distributed by LP DAAC (USGS EROS)
+
+status: deprecated
+status_note: >-
+  The NASA standard burned area product that continues MODIS MCD64A1, currently produced every month (on 2026-10-13 data were available through August 2026).
+  However, NOAA has announced that Suomi NPP science data delivery ends at 13:00 UTC on 1 November 2026, and this product uses Suomi NPP alone, so routine production is about to stop.
+  The science team has said a Collection 3 combining Suomi NPP and NOAA-20 is planned, but as of 2026-10-13 no NOAA-20 burned area product has been released.
+
+period:
+  start: "2012-03"
+  end: present
+  note: >-
+    Starts in March 2012 (Suomi NPP launched in October 2011). A CMR query on 2026-10-13 returned August 2026 as the latest month (produced 2026-10-06).
+    With Suomi NPP delivery ending on 1 November 2026, October–November 2026 is likely to be the last month; how the final month will be handled has not been announced.
+
+resolution:
+  spatial_short: "0.5 km (0.005°)"
+  temporal_short: "1개월"
+  spatial: >-
+    MODIS/VIIRS Sinusoidal (SIN) tile grid (horizontal h00–h35, vertical v00–v17, each tile about 10°×10°), 500 m (2400 × 2400 pixels per tile) — the same grid as MCD64A1.
+    The input is 750 m VIIRS imagery resampled to the 500 m grid.
+  vertical: Single surface level
+  temporal: Monthly (one file per calendar month). Each pixel stores the day within that month on which burning was detected (day of year, daily precision).
+
+update: "Monthly (on 2026-10-13 the August 2026 files had been produced on 2026-10-06 — about five weeks after the end of the month). Routine production is expected to stop after Suomi NPP data delivery ends (2026-11-01)"
+license: NASA Earth science open data — freely shared without restriction. Citing the dataset DOI is encouraged
+account_required: true
+
+summary: >-
+  VNP64A1 is a monthly, global 500 m burned area product made by adapting the MODIS MCD64A1 Collection 6.1 algorithm to Suomi NPP VIIRS.
+  Using 750 m VIIRS imagery and active fire detections, it applies dynamic thresholds to a burn-sensitive vegetation index and temporal texture and records the burn date of every burned 500 m cell.
+  It shares the MCD64A1 grid and layer set, so existing code needs little change, and it is intended to carry the burned area record forward beyond MODIS.
+
+time_convention:
+  summary: >-
+    Each file covers one calendar month, and `Burn Date` is the day of year (1–366) on which burning was detected within that month. It results from analysing a month of reflectance
+    time series and comes with a separate date uncertainty (`Burn Date Uncertainty`). Suomi NPP observes only once a day on its 13:30 local mean time ascending pass,
+    so it has fewer daily looks than MCD64A1, which combined morning (Terra) and afternoon (Aqua) overpasses.
+  points:
+    - "AYYYYDDD in the file name is the first day (day of year) of the calendar month. Example: A2026213 = August 2026 (1 August = day 213)."
+    - "In `Burn Date`, 0 is unburned land, -1 is unmapped because of insufficient data and -2 is water. Count only pixels with values 1–366."
+    - "`First Day` and `Last Day` bracket the period of reliable change detection. If the window is shorter than the month, that pixel could not be mapped for the full month (QA bit 2)."
+    - "Without a morning pass, burn dates can be picked up slightly later than with MODIS. In the official comparison, same-day agreement with active fire dates was 38% for VNP64A1 and 46% for MCD64A1, while agreement within ±2 days was similar (71% and 72%)."
+  source: https://doi.org/10.1016/j.rse.2025.115006
+  source_name: "VNP64 User Guide v1.1 + Giglio et al. (2025) VIIRS burned area validation and intercomparison paper"
+
+variables:
+  note: >-
+    The five science data sets (SDS) in the VNP64 User Guide and LP DAAC layer information; names and meanings match MCD64A1. To save cost the files are produced in HDF4 (HDF-EOS2),
+    with netCDF4 planned from Collection 3. There is no scale factor.
+  full_list: https://lpdaac.usgs.gov/documents/2124/VNP64_User_Guide_v1.1.pdf
+  groups:
+    - name: Monthly burned area layers (500 m)
+      kind: instant
+      items:
+        - text: "Burn date (day of year) — `Burn Date` (day, int16)"
+          note: "Day within the month on which burning was detected. 0 = unburned, -1 = unmapped, -2 = water"
+          std: []
+        - text: "Burn date uncertainty — `Burn Date Uncertainty` (days)"
+          note: Always 0 for unburned, unmapped and water cells
+        - text: "First day of reliable change detection — `First Day` (day of year)"
+          std: []
+        - text: "Last day of reliable change detection — `Last Day` (day of year)"
+          std: []
+        - text: "Quality assurance — `QA` (8-bit field)"
+          note: "Same definition as MCD64A1: bit 0 land/water, 1 valid data, 2 shortened mapping period, 3 contextual relabeling, 5–7 special-condition code for unburned cells"
+
+access:
+  - name: NASA Earthdata Search (LP DAAC, Earthdata Cloud)
+    url: https://search.earthdata.nasa.gov/search/granules?p=C2847928673-LPCLOUD
+    method: Web search and HTTPS download / earthaccess / direct S3 access in AWS us-west-2
+    note: >-
+      short_name VNP64A1, version 002. Files are per-tile HDF (.hdf) and need a free Earthdata Login.
+      The S3 prefix is s3://lp-prod-protected/VNP64A1.002/, with temporary credentials from https://data.lpdaac.earthdatacloud.nasa.gov/s3credentials.
+  - name: AppEEARS
+    url: https://appeears.earthdatacloud.nasa.gov/
+    method: Area and point subsetting with reprojection (GeoTIFF, NetCDF4)
+  - name: LP DAAC product page (DOI landing page)
+    url: https://doi.org/10.5067/VIIRS/VNP64A1.002
+    method: Documentation (User Guide, ATBD) and layer information
+  - name: NASA FIRMS (Burned Area mode)
+    url: https://firms.modaps.eosdis.nasa.gov/
+    method: Web map viewer
+    note: Since September 2025, monthly and annual VNP64A1 burned area can be overlaid on the MODIS products.
+
+example:
+  lang: python
+  note: >-
+    Same approach as the MCD64A1 example — only the short_name and version change, and the layer names are identical. Requires rasterio built against GDAL with HDF4 support.
+  code: |
+    # pip install earthaccess rasterio numpy
+    import earthaccess
+    import numpy as np
+    import rasterio
+
+    earthaccess.login()  # free NASA Earthdata account
+    results = earthaccess.search_data(
+        short_name="VNP64A1", version="002",
+        temporal=("2025-03-01", "2025-03-31"),
+        bounding_box=(127, 35, 130, 39),   # (west, south, east, north)
+    )
+    files = earthaccess.download(results, "vnp64a1")
+
+    for f in files:
+        with rasterio.open(f) as src:
+            sds = [s for s in src.subdatasets if s.endswith("Burn Date")][0]
+        with rasterio.open(sds) as b:
+            burn = b.read(1)
+        burned = (burn >= 1) & (burn <= 366)       # 0 unburned, -1 unmapped, -2 water
+        print(f, burned.sum(), "pixels")
+
+tips:
+  - "The grid and layer names match MCD64A1, so code carries over, but the values do not. Over 2012–2023 VNP64A1 mapped 2–6% more global burned area every year, and the mean difference in Southeast Asia was 33%."
+  - "Before joining the two products for trend work, check regional differences over the overlap period (March 2012 onward). The developers advise against simple concatenation for fine-scale trend analysis."
+  - "A Suomi NPP VIIRS outage from 27 July to 10 August 2022 degraded the July and especially August 2022 products (User Guide known issues). The outages of 26–27 September and 2–6 November 2024 may also affect those months."
+  - "Treat cropland burned area as low confidence. With no morning overpass, short-lived crop-residue fires are especially easy to miss."
+  - "Suomi NPP data delivery ends on 1 November 2026. If you need burned area after November 2026, watch LP DAAC notices for the release of a NOAA-20-based successor (planned Collection 3). The current plan is to keep the existing VNP archive available, though that may change."
+  - "Version 1 (VNP64A1.001) had many false detections along inland water edges and at high latitudes because of cloud-mask artifacts, was released only on a limited basis, and was decommissioned on 31 July 2025. Recompute any results based on 001 with 002."
+  - "The data are on a sinusoidal projection. Use nearest-neighbour resampling when moving to a lat-lon grid; interpolation mixes dates."
+
+citations:
+  dataset:
+    - label: VNP64A1 V002 (LP DAAC)
+      text: >-
+        Giglio, L. (2024). VIIRS/NPP Burned Area Monthly L4 Global 500m SIN Grid V002. Distributed by NASA EOSDIS Land Processes
+        Distributed Active Archive Center, https://doi.org/10.5067/VIIRS/VNP64A1.002. Accessed YYYY-MM-DD.
+      doi: 10.5067/VIIRS/VNP64A1.002
+      bibtex: |
+        @misc{vnp64a1_v002,
+          author    = {Giglio, Louis},
+          title     = {{VIIRS/NPP} Burned Area Monthly {L4} Global 500m {SIN} Grid {V002}},
+          year      = {2024},
+          publisher = {NASA EOSDIS Land Processes Distributed Active Archive Center},
+          doi       = {10.5067/VIIRS/VNP64A1.002}
+        }
+  papers:
+    - label: VIIRS burned area product, global validation and MODIS intercomparison
+      text: >-
+        Giglio, L., Boschetti, L., Roy, D. P., Hall, J. V., Zubkova, M., Humber, M., Huang, H., Oles, V. (2025): The NASA VIIRS burned area product,
+        global validation, and intercomparison with the NASA MODIS burned area product. Remote Sensing of Environment, 331, 115006.
+      doi: 10.1016/j.rse.2025.115006
+      bibtex: |
+        @article{giglio2025vnp64,
+          author  = {Giglio, Louis and Boschetti, Luigi and Roy, David P. and Hall, Joanne V. and Zubkova, Maria and Humber, Michael and Huang, Haiyan and Oles, Vladyslav},
+          title   = {The {NASA} {VIIRS} burned area product, global validation, and intercomparison with the {NASA} {MODIS} burned area product},
+          journal = {Remote Sensing of Environment},
+          volume  = {331},
+          pages   = {115006},
+          year    = {2025},
+          doi     = {10.1016/j.rse.2025.115006}
+        }
+    - label: Underlying algorithm (MODIS Collection 6)
+      text: >-
+        Giglio, L., Boschetti, L., Roy, D. P., Humber, M. L., Justice, C. O. (2018): The Collection 6 MODIS burned area mapping algorithm and product.
+        Remote Sensing of Environment, 217, 72–85.
+      doi: 10.1016/j.rse.2018.08.005
+      bibtex: |
+        @article{giglio2018mcd64,
+          author  = {Giglio, Louis and Boschetti, Luigi and Roy, David P. and Humber, Michael L. and Justice, Christopher O.},
+          title   = {The Collection 6 {MODIS} burned area mapping algorithm and product},
+          journal = {Remote Sensing of Environment},
+          volume  = {217},
+          pages   = {72--85},
+          year    = {2018},
+          doi     = {10.1016/j.rse.2018.08.005}
+        }
+  acknowledgement: >-
+    LP DAAC shares the data without restriction and encourages citation of the dataset DOI (EOSDIS Data Use and Citation Guidance). Cite Giglio et al. (2025) for the product description and validation.
+
+transitions:
+  - from: VNP64A1 V001
+    to: VNP64A1 V002 (Collection 2)
+    status: completed
+    date: "2024-10"
+    summary: >-
+      Collection 2 (V002), with a corrected cloud mask and calibration, was released on 22 October 2024. V001 had many false detections caused by cloud-mask artifacts,
+      was released only on a limited basis, and was decommissioned on 31 July 2025.
+    changes:
+      - aspect: Release status
+        before: "Limited, provisional release; decommissioned 2025-07-31"
+        after: "Released 2024-10-22 as a standard product (2012-03 onward)"
+      - aspect: Cloud mask
+        before: "Blocky ~5 km cloud-mask artifacts caused many false burns along inland water edges and at high latitudes"
+        after: "Improved cloud mask; eight-class land/water mask from VNP03"
+      - aspect: Inputs
+        before: "Collection 1 VIIRS inputs"
+        after: "Updated calibration coefficients, improved geolocation, corrected aerosol quantity flag"
+    impacts:
+      - Recompute results built on V001 with V002; V001 can no longer be downloaded.
+    sources:
+      - name: VIIRS Version 2 Burned Area Data Product Released (Earthdata, 2024-10-22)
+        url: https://www.earthdata.nasa.gov/data/alerts-outages/viirs-version-2-burned-area-data-product-released
+      - name: VNP64A1 V001 catalog entry (decommissioning note)
+        url: https://www.earthdata.nasa.gov/data/catalog/lpcloud-vnp64a1-001
+      - name: Giglio et al. (2025)
+        url: https://doi.org/10.1016/j.rse.2025.115006
+  - from: VNP64A1 C2 (Suomi NPP only)
+    to: VIIRS burned area Collection 3 (Suomi NPP + NOAA-20)
+    status: planned
+    summary: >-
+      The developers say a Collection 3 combining Suomi NPP and NOAA-20 VIIRS is planned, with the file format moving to netCDF4. Because Suomi NPP delivery ends in November 2026,
+      continuity of the burned area record depends on this product, but as of 2026-10-13 no release schedule has been published.
+    changes:
+      - aspect: Satellites
+        before: "Suomi NPP VIIRS only"
+        after: "Planned combination of Suomi NPP and NOAA-20 VIIRS (tests showed composite gaps shrinking by 10–20%)"
+      - aspect: File format
+        before: "HDF4 (HDF-EOS2)"
+        after: "netCDF4 planned"
+      - aspect: Release
+        before: "C2 released 2024-10"
+        after: "Not scheduled (no NOAA-20 burned area collection in CMR on 2026-10-13)"
+    impacts:
+      - Burned area after November 2026 must wait for a Collection 3 or NOAA-20 release; once available, check its differences from C2 over the overlap period.
+    sources:
+      - name: Giglio et al. (2025) — Collection 3 plans
+        url: https://doi.org/10.1016/j.rse.2025.115006
+      - name: VNP64 User Guide v1.1
+        url: https://lpdaac.usgs.gov/documents/2124/VNP64_User_Guide_v1.1.pdf
+
+notices:
+  - date: "2026-08-07"
+    level: critical
+    title: Suomi NPP science data delivery ends on 1 November 2026 — routine VNP64A1 production to stop
+    body: >-
+      Following NOAA NESDIS's 3 August 2026 announcement, delivery of all Suomi NPP science data, including VIIRS, ends at 13:00 UTC on 1 November 2026, and NASA advises moving
+      to NOAA-20 and NOAA-21 products (the date may change). The VNP64A1 collection description also gives 2 November 2026 (2026/306) as the end of delivery.
+      LAADS has said the existing Suomi NPP VIIRS archive is currently planned to remain available afterwards, but that this may change.
+    source: https://www.earthdata.nasa.gov/data/alerts-outages/suomi-npp-data-product-delivery-cease-november-1-2026
+  - date: "2025-09-24"
+    level: info
+    title: VNP64A1 burned area added to NASA FIRMS
+    body: >-
+      Monthly and annual VNP64A1 burned area can now be viewed alongside the MODIS products in FIRMS Advanced and Burned Area modes.
+      The announcement notes that both products appear with roughly a five-month lag and that a combined Suomi NPP and NOAA-20 burned area product is planned.
+    source: https://www.earthdata.nasa.gov/news/blog/viirs-global-burned-area-product-added-firms
+  - date: "2025-07-08"
+    level: info
+    title: VIIRS Version 1 products, including burned area (VNP64A1.001), decommissioned on 2025-07-31
+    body: >-
+      LP DAAC announced it would stop distributing VIIRS Version 1 thermal anomalies, land cover dynamics, vegetation indices, burned area and BRDF/albedo products on 31 July 2025.
+      Use Version 2 (VNP64A1.002) for burned area.
+    source: https://www.earthdata.nasa.gov/data/alerts-outages/viirs-version-1-data-products-decommissioned
+  - date: "2024-11-02"
+    level: info
+    title: Suomi NPP GPS anomaly — VIIRS land data gap, 2–6 November 2024
+    body: >-
+      A GPS anomaly left data from 21:12 UTC on 2 November to 17:36 UTC on 6 November 2024 unrecoverable because of geolocation and timestamp errors, and Suomi NPP VIIRS land production was suspended.
+      Normal production resumed after recovery, but the gap is permanent and may affect November 2024 burned area.
+    source: https://www.earthdata.nasa.gov/data/alerts-outages/suomi-npp-viirs-data-product-anomaly-november-2024
+  - date: "2024-10-22"
+    level: info
+    title: VIIRS Version 2 burned area (VNP64A1.002) released
+    body: >-
+      LP DAAC released Version 2 of the Suomi NPP VIIRS burned area product from March 2012 onward, with improved calibration, geolocation and cloud mask.
+    source: https://www.earthdata.nasa.gov/data/alerts-outages/viirs-version-2-burned-area-data-product-released
+  - date: "2024-09-24"
+    level: info
+    title: Suomi NPP VIIRS anomaly — data from 26–27 September 2024 unrecoverable
+    body: >-
+      Data from 00:00 UTC on 26 September to 17:30 UTC on 27 September 2024 could not be recovered, and Suomi NPP VIIRS land production was temporarily suspended.
+    source: https://www.earthdata.nasa.gov/data/alerts-outages/suomi-npp-viirs-data-product-anomaly-september-2024
+
+links:
+  - name: LP DAAC VNP64A1 V002 (Earthdata catalog)
+    url: https://www.earthdata.nasa.gov/data/catalog/lpcloud-vnp64a1-002
+  - name: VNP64 User Guide v1.1
+    url: https://lpdaac.usgs.gov/documents/2124/VNP64_User_Guide_v1.1.pdf
+  - name: VNP64A1 ATBD
+    url: https://lpdaac.usgs.gov/documents/572/VNP64A1_ATBD_V1.pdf
+  - name: VNP64A1 file specification (LAADS)
+    url: https://ladsweb.modaps.eosdis.nasa.gov/filespec/VIIRS/1/VNP64A1
+  - name: NOAA NESDIS — cessation of Suomi NPP data
+    url: https://www.nesdis.noaa.gov/news/cessation-of-suomi-national-polar-orbiting-partnership-s-npp-data-users-onafter-november-01-2026
+  - name: Earthdata Forum — Suomi NPP cessation Q&A (archive retention plans)
+    url: https://forum.earthdata.nasa.gov/viewtopic.php?p=26558
+
+watch_urls:
+  - https://www.earthdata.nasa.gov/data/catalog/lpcloud-vnp64a1-002
+  - https://www.earthdata.nasa.gov/data/alerts-outages/suomi-npp-data-product-delivery-cease-november-1-2026
+  - https://www.earthdata.nasa.gov/data/alerts-outages
+
+last_verified: "2026-10-13"

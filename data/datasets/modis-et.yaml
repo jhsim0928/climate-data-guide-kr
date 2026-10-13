@@ -1,0 +1,356 @@
+# ─────────────────────────────────────────────────────────────
+# MODIS 증발산 MOD16/MYD16 C6.1 — 데이터셋 정보 파일
+# 지면 탭(증발산). Terra·Aqua 종료를 앞둔 대체 예정 자료입니다. 후속인 VIIRS 증발산(VNP16·VJ116) V2는 2026-08-17 철회되어
+# 이 사이트에 페이지가 없습니다(V2.1 재공개 시 viirs-et 페이지를 만들고 transitions에 to_id를 붙이세요).
+# 수정 후에는 공식 페이지에서 확인한 날짜로 last_verified 를 갱신하세요.
+# ─────────────────────────────────────────────────────────────
+id: modis-et
+name: "MODIS ET (MOD16)"
+full_name: MODIS/Terra·Aqua Net Evapotranspiration MOD16A2(GF)·MYD16A2(GF)·MOD16A3GF·MYD16A3GF Version 6.1 (MODIS 위성 기반 전지구 500 m 실제·잠재 증발산)
+category: satellite
+domain: land
+group: 증발산
+order: 20
+domains: [육지, 수문, 원격탐사]
+provider: NASA MODIS 육상팀(MOD16 연구진 Running·Mu·Zhao·Moreno) / NASA LP DAAC
+
+status: deprecated
+status_note: >-
+  C6.1 자료는 지금도 매 8일 생산되고 있지만(2026-10-13 확인 시 2026년 9월 22~29일 합성분까지), Terra·Aqua 위성이 연료·전력 한계로 궤도를 벗어나며
+  2026년 말~2027년 초부터 운용 종료에 들어갈 예정이라 NASA는 VIIRS 유사 산출물로 옮기라고 안내합니다. 그러나 후속인 VIIRS 증발산(VNP16·VJ116) V2는
+  자료 문제로 2026년 8월 17일 철회되었고 V2.1 재처리 일정은 공지되지 않아, 당장은 MODIS를 대신할 NASA 위성 증발산 자료가 없습니다.
+
+period:
+  start: "2000-02"
+  end: present
+  note: >-
+    연말 결측 보완판(GF)이 장기 기록입니다. MOD16A2GF는 2000년(CMR 표기 2000-01-01, Terra 자료는 2000년 2월 하순부터), MYD16A2GF는 2002년(Aqua 자료는 2002-07-04부터)부터
+    2025년 12월까지 있습니다(2025년분은 2026-02-05 생산). 보완 전 forward 판(MOD16A2·MYD16A2)은 V6.1에서 2021-01-01부터만 남아 있으며 2026-10-13 확인 시 2026-09-22~29 구간까지 있습니다.
+    연자료는 GF판(MOD16A3GF·MYD16A3GF)만 CMR에 등록되어 있고 2025년분까지 있습니다.
+
+resolution:
+  spatial_short: "0.5 km (0.005°)"
+  temporal_short: "8일"
+  spatial: "MODIS Sinusoidal(SIN) 타일 격자 500 m (타일 번호 hXXvYY, 전지구 식생 육지). 기상 입력(GMAO 재분석, 0.5°×0.6° 또는 1°×1.25°)은 500 m 격자로 보간해 씀"
+  vertical: 지표 단일층 (지표 전체 증발산 = 토양 증발 + 젖은 수관 증발 + 식생 증산)
+  temporal: >-
+    8일 합성(매년 1월 1일부터 8일씩, 연말 마지막 구간은 평년 5일·윤년 6일) / 연(A3GF). 알고리즘은 일 단위로 계산한 뒤 합산·평균합니다.
+
+update: "forward 8일 자료(MOD16A2·MYD16A2)는 구간이 끝나고 1~2주 뒤 공개(2026-09-22~29 구간은 10월 7~8일 생산) / GF 8일·연자료는 1년치 LAI·FPAR가 모인 뒤 다음 해 초(2025년분은 2026-02-05)에 한 번 생산"
+license: NASA EOSDIS 자료 이용·인용 지침에 따라 제한 없이 공개된 무료 자료입니다. 내려받기에는 무료 NASA Earthdata 로그인이 필요하며, 데이터셋 DOI 인용을 요청합니다.
+account_required: true
+
+summary: >-
+  MOD16은 MODIS의 엽면적지수·광합성유효복사 흡수율(LAI·FPAR), 알베도, 토지피복과 GMAO 일별 기상 재분석을 Penman-Monteith 식 기반 알고리즘(Mu et al., 2011)에 넣어
+  전지구 식생 육지의 실제 증발산(ET)·잠열(LE)과 잠재 증발산(PET)·잠재 잠열(PLE)을 500 m, 8일 간격으로 계산한 4단계(L4) 산출물입니다.
+  Terra판(MOD16)과 Aqua판(MYD16)이 있으며, 연말에 1년치 LAI·FPAR의 품질 나쁜 값을 시간 보간으로 메워 다시 만든 결측 보완판(GF)이 연구용 표준입니다.
+  물수지·가뭄·농업 용수 연구에 널리 쓰이지만, 도시·사막·수면·영구 빙설에는 값이 없습니다.
+
+time_convention:
+  summary: >-
+    ET·PET는 8일(연자료는 1년) 동안의 '합계'(kg m-2 = mm)이고, LE·PLE는 같은 기간의 '하루 평균'(J m-2 day-1)입니다.
+    파일 날짜(AYYYYDDD)는 합성 구간의 첫날이며 구간은 매년 1월 1일(DOY 001)부터 8일씩 끊고, 연말 마지막 구간만 5일(평년)·6일(윤년)입니다.
+  points:
+    - "ET_500m을 단순 평균하면 안 됩니다. 연말 마지막 구간(파일 날짜 DOY 361, 12월 27일~31일)은 5~6일 합계라 다른 구간보다 작게 보입니다. 월·연 합계를 만들 때는 일수 가중을 하거나 구간 일수로 나눠 일평균으로 바꾼 뒤 계산하세요."
+    - "LE·PLE(J m-2 day-1)를 W m-2로 바꾸려면 86400으로 나눕니다. ET 8일 합계(mm)와 LE 일평균은 서로 다른 시간 통계입니다."
+    - "8일 구간은 달력 월과 맞지 않습니다(예: A2023001 = 1월 1~8일, A2023025 = 1월 25일~2월 1일). 월 합계가 필요하면 구간을 날짜 비율로 나눠 배분하세요."
+    - "알고리즘은 일별 기상 입력으로 하루 값을 계산한 뒤 8일(1년) 동안 더하거나 평균합니다. 위성 통과 시각의 순간값이 아닙니다."
+    - "Terra판(MOD16, 설계상 오전 10:30 하강 통과)과 Aqua판(MYD16, 오후 1:30 상승 통과)은 각 위성의 MODIS 입력 산출물로 만들어 값이 조금 다릅니다. Terra는 2020년, Aqua는 2021년부터 궤도 유지를 멈춰 통과 시각이 바뀌었고(Terra는 더 이르게, Aqua는 더 늦게), 이 영향은 반사도 기반 입력(LAI·FPAR·알베도)을 거쳐 간접적으로 들어갑니다. 증발산에 대한 공식 정량 평가는 아직 공개되지 않았습니다."
+    - "GF판은 연말에 1년치를 다시 계산하므로, 같은 날짜라도 forward 판(MOD16A2)과 GF판(MOD16A2GF)의 값이 다릅니다."
+  source: https://lpdaac.usgs.gov/documents/931/MOD16_User_Guide_V61.pdf
+  source_name: "MOD16 C6.1 User's Guide (LP DAAC) + MOD16A2GF·MOD16A2 V061 컬렉션 설명(CMR)"
+
+variables:
+  note: >-
+    LP DAAC 데이터 카탈로그와 C6.1 사용자 가이드 기준 변수(SDS)입니다. HDF-EOS2(HDF4) 파일의 실제 값 = 저장값 × scale_factor이며,
+    8일 자료는 저장값 32761~32767이 채움값(토지피복별 비식생 표시)이므로 반드시 먼저 걸러야 합니다. MYD16(Aqua) 파일도 변수 이름이 같습니다.
+  full_list: https://www.earthdata.nasa.gov/data/catalog/lpcloud-mod16a2gf-061
+  groups:
+    - name: 8일 자료 (MOD16A2GF·MYD16A2GF 연말 보완판 / MOD16A2·MYD16A2 forward판)
+      kind: accum
+      period: 8일 (연말 구간 5~6일)
+      items:
+        - text: "실제 증발산 8일 합계 — `ET_500m` (kg m-2 8day-1 = mm, scale 0.1)"
+          note: 8일(연말 5~6일) 동안의 일별 증발산 합계. 32761~32767은 채움값
+        - text: "잠재 증발산 8일 합계 — `PET_500m` (kg m-2 8day-1, scale 0.1)"
+          note: 8일 합계. 32761~32767은 채움값
+        - text: "잠열 플럭스 8일 평균 — `LE_500m` (J m-2 day-1, scale 10000)"
+          kind: mean
+          note: 8일 동안의 하루 평균 에너지. W m-2 = 값 ÷ 86400
+        - text: "잠재 잠열 플럭스 8일 평균 — `PLE_500m` (J m-2 day-1, scale 10000)"
+          kind: mean
+          note: 8일 동안의 하루 평균 에너지
+        - text: "품질 비트 — `ET_QC_500m` (비트값: 0 MODLAND_QC, 1 센서 Terra/Aqua, 2 고장 검출기, 3~4 구름 상태, 5~7 LAI·FPAR 산출 방식)"
+          kind: instant
+          note: 입력 LAI·FPAR의 품질 정보. 사용자 가이드는 보완판에서 이 값이 주로 보간된 LAI·FPAR 사용 여부를 뜻한다고 설명
+    - name: 연자료 (MOD16A3GF·MYD16A3GF, 연말 보완판만)
+      kind: accum
+      period: 1년
+      items:
+        - text: "실제 증발산 연 합계 — `ET_500m` (kg m-2 yr-1, scale 0.1)"
+          note: 일별 값의 1년 합계. 65529~65535는 채움값
+        - text: "잠재 증발산 연 합계 — `PET_500m` (kg m-2 yr-1, scale 0.1)"
+        - text: "잠열 플럭스 연평균 — `LE_500m` (J m-2 day-1, scale 10000)"
+          kind: mean
+          note: 1년 동안의 하루 평균 에너지
+        - text: "잠재 잠열 플럭스 연평균 — `PLE_500m` (J m-2 day-1, scale 10000)"
+          kind: mean
+        - text: "보간 입력 사용 비율 — `ET_QC_500m` (%, 생육기 중 보간된 LAI·FPAR를 쓴 날의 비율)"
+          kind: mean
+          note: 8일 자료와 달리 비트값이 아니라 백분율. 249~255는 채움값
+
+access:
+  - name: NASA Earthdata Search (LP DAAC, Earthdata Cloud)
+    url: https://search.earthdata.nasa.gov/search/granules?p=C2565791021-LPCLOUD
+    method: HTTPS 다운로드 / earthaccess / Earthdata Search
+    note: >-
+      short name은 MOD16A2GF·MYD16A2GF(8일 보완판), MOD16A3GF·MYD16A3GF(연 보완판), MOD16A2·MYD16A2(8일 forward판)이고 version은 061입니다.
+      파일은 data.lpdaac.earthdatacloud.nasa.gov 아래 HTTPS로 받으며 무료 Earthdata 로그인이 필요합니다. 예전 LP DAAC Data Pool 배포는 2025-06-30에 끝났습니다.
+  - name: AppEEARS (영역·지점 부분 추출)
+    url: https://appeears.earthdatacloud.nasa.gov/
+    method: 웹 / API — 지점 시계열·영역을 GeoTIFF·NetCDF4로 추출
+    note: 필요한 영역·기간·변수만 골라 받을 수 있고 위경도 투영으로 바꿔 받을 수 있어 한반도 같은 작은 영역 분석에 편합니다.
+  - name: AWS us-west-2 직접 접근 (S3)
+    url: https://data.lpdaac.earthdatacloud.nasa.gov/s3credentials
+    method: 클라우드 저장소(S3, us-west-2 안에서만)
+    note: s3://lp-prod-protected/MOD16A2GF.061/ 처럼 저장되어 있으며 임시 자격증명이 필요합니다.
+
+example:
+  lang: python
+  note: >-
+    earthaccess로 2023년 한반도 주변 타일의 Terra 8일 보완판을 받아 pyhdf로 읽는 예입니다(HDF4 형식이라 xarray 기본 엔진으로는 열리지 않을 수 있습니다).
+    채움값(32761 이상)을 먼저 걸러야 합니다.
+  code: |
+    # pip install earthaccess pyhdf numpy
+    import earthaccess
+    import numpy as np
+    from pyhdf.SD import SD, SDC
+
+    earthaccess.login()  # 무료 NASA Earthdata 계정
+    results = earthaccess.search_data(
+        short_name="MOD16A2GF", version="061",
+        temporal=("2023-07-01", "2023-07-31"),
+        bounding_box=(124, 33, 132, 39),   # (서, 남, 동, 북)
+    )
+    files = earthaccess.download(results, "mod16")
+
+    hdf = SD(files[0], SDC.READ)
+    raw = hdf.select("ET_500m").get().astype("float64")
+    raw[raw > 32700] = np.nan          # 32761~32767: 물·사막·도시·빙설 등 채움값
+    et = raw * 0.1                      # mm / 8일(연말 구간은 5~6일)
+    qc = hdf.select("ET_QC_500m").get()
+    print(files[0], np.nanmean(et))
+
+tips:
+  - "연구에는 연말 결측 보완판(MOD16A2GF·MYD16A2GF·MxD16A3GF)을 쓰세요. forward판(MOD16A2)은 구름 낀 LAI·FPAR 대신 최근 5년 기후값을 넣어 만든 준실시간 자료이고 V6.1에서는 2021년부터만 남아 있습니다."
+  - "ET_500m 저장값 32761~32767(연자료 65529~65535)은 결측이 아니라 비식생 토지피복 표시입니다(32766 물, 32765 사막·희박 식생, 32764 영구 빙설, 32763 습지, 32762 도시, 32761 미분류). scale_factor를 곱하기 전에 걸러야 터무니없는 값이 섞이지 않습니다."
+  - "단위가 다릅니다. ET·PET는 8일 합계(mm), LE·PLE는 하루 평균(J m-2 day-1, scale 10000)입니다. 연말 마지막 구간은 5~6일 합계입니다."
+  - "MODIS 토지피복(IGBP 17종, 3년 평활)에 따라 정한 생물군계별 고정 매개변수를 쓰므로, 토지피복 분류 오류가 그대로 증발산 오차가 되고 같은 생물군계 안의 지역 차이는 반영되지 않습니다. 한 해 내내 유효한 알베도가 없는 화소는 0.4를 넣어 계산합니다."
+  - "기상 입력은 GMAO 재분석(0.5°×0.6° 또는 1°×1.25°)을 500 m로 보간한 것이라, 산악·해안처럼 기상이 급변하는 곳에서는 500 m 해상도만큼의 정보가 없습니다."
+  - "2000년(Terra)·2002년(Aqua) 첫해 GF 자료는 연초 관측이 없어 시간 보간이 불완전하므로 덜 믿을 만합니다."
+  - "MODIS Sinusoidal 투영 타일(한반도는 대부분 h27v05·h28v05)입니다. 위경도 격자로 바꾸려면 GDAL·rioxarray로 재투영하거나 AppEEARS를 쓰세요."
+  - "Terra·Aqua는 2026년 말 이후 운용 종료가 예정되어 있고, 후속 VIIRS 증발산은 2026-08-17 철회되었습니다. 장기 시계열을 이어 가야 한다면 MODIS 종료 시점과 VIIRS V2.1 재공개 공지를 함께 확인하세요."
+
+citations:
+  dataset:
+    - label: MOD16A2GF V6.1 (Terra 8일 보완판)
+      text: >-
+        Running, S., Mu, Q., Zhao, M., Moreno, A. (2021). MODIS/Terra Net Evapotranspiration Gap-Filled 8-Day L4 Global 500m SIN Grid V061 [Data set].
+        NASA Land Processes Distributed Active Archive Center. https://doi.org/10.5067/MODIS/MOD16A2GF.061
+      doi: 10.5067/MODIS/MOD16A2GF.061
+      bibtex: |
+        @misc{mod16a2gf_v061,
+          author    = {Running, Steve and Mu, Qiaozhen and Zhao, Maosheng and Moreno, Alvaro},
+          title     = {{MODIS/Terra} Net Evapotranspiration Gap-Filled 8-Day {L4} Global 500m {SIN} Grid {V061}},
+          year      = {2021},
+          publisher = {NASA Land Processes Distributed Active Archive Center},
+          doi       = {10.5067/MODIS/MOD16A2GF.061}
+        }
+    - label: MOD16A3GF V6.1 (Terra 연 보완판)
+      text: >-
+        Running, S., Mu, Q., Zhao, M., Moreno, A. (2021). MODIS/Terra Net Evapotranspiration Gap-Filled Yearly L4 Global 500m SIN Grid V061 [Data set].
+        NASA Land Processes Distributed Active Archive Center. https://doi.org/10.5067/MODIS/MOD16A3GF.061
+      doi: 10.5067/MODIS/MOD16A3GF.061
+      bibtex: |
+        @misc{mod16a3gf_v061,
+          author    = {Running, Steve and Mu, Qiaozhen and Zhao, Maosheng and Moreno, Alvaro},
+          title     = {{MODIS/Terra} Net Evapotranspiration Gap-Filled Yearly {L4} Global 500m {SIN} Grid {V061}},
+          year      = {2021},
+          publisher = {NASA Land Processes Distributed Active Archive Center},
+          doi       = {10.5067/MODIS/MOD16A3GF.061}
+        }
+    - label: MOD16A2 V6.1 (Terra 8일 forward판)
+      text: >-
+        Running, S., Mu, Q., Zhao, M. (2021). MODIS/Terra Net Evapotranspiration 8-Day L4 Global 500m SIN Grid V061 [Data set].
+        NASA Land Processes Distributed Active Archive Center. https://doi.org/10.5067/MODIS/MOD16A2.061
+      doi: 10.5067/MODIS/MOD16A2.061
+      bibtex: |
+        @misc{mod16a2_v061,
+          author    = {Running, Steve and Mu, Qiaozhen and Zhao, Maosheng},
+          title     = {{MODIS/Terra} Net Evapotranspiration 8-Day {L4} Global 500m {SIN} Grid {V061}},
+          year      = {2021},
+          publisher = {NASA Land Processes Distributed Active Archive Center},
+          doi       = {10.5067/MODIS/MOD16A2.061}
+        }
+  papers:
+    - label: MOD16 알고리즘 (Mu et al., 2011)
+      text: >-
+        Mu, Q., Zhao, M., Running, S. W. (2011). Improvements to a MODIS global terrestrial evapotranspiration algorithm.
+        Remote Sensing of Environment, 115(8), 1781–1800.
+      doi: 10.1016/j.rse.2011.02.019
+      bibtex: |
+        @article{mu2011mod16,
+          author  = {Mu, Qiaozhen and Zhao, Maosheng and Running, Steven W.},
+          title   = {Improvements to a {MODIS} global terrestrial evapotranspiration algorithm},
+          journal = {Remote Sensing of Environment},
+          volume  = {115},
+          number  = {8},
+          pages   = {1781--1800},
+          year    = {2011},
+          doi     = {10.1016/j.rse.2011.02.019}
+        }
+  acknowledgement: >-
+    쓴 제품(Terra·Aqua, 8일·연, 보완판·forward판)에 맞는 LP DAAC 데이터셋 DOI를 인용하세요. Aqua판 DOI는 10.5067/MODIS/MYD16A2GF.061,
+    10.5067/MODIS/MYD16A3GF.061, 10.5067/MODIS/MYD16A2.061입니다. 알고리즘은 Mu et al. (2011)을 함께 인용합니다.
+
+transitions:
+  - from: MOD16 C6
+    to: MOD16 C6.1
+    status: completed
+    date: "2021-03"
+    summary: >-
+      과학 알고리즘은 그대로이고, 입력 MODIS L1B 보정 개선과 함께 결측 처리 방식이 바뀌었습니다. C6은 오염된 LAI·FPAR 화소를 채움값으로 남겨 빈 곳이 많았지만,
+      C6.1은 기후값 LAI·FPAR와 결측 보완 알베도를 예비 입력으로 써서 빈 곳을 채웁니다. C6 자료는 2023-07-31 배포가 끝났습니다.
+    changes:
+      - aspect: 과학 알고리즘
+        before: Penman-Monteith 기반 MOD16 (Mu et al., 2011)
+        after: 변경 없음
+      - aspect: 입력 L1B 보정
+        before: C6 보정
+        after: "반사 밴드 주사각 응답(RVS) 방식 변경, Terra 적외 밴드 광학 혼선 보정, 2012~2017 Terra 순방향 LUT 수정, 편광 보정"
+      - aspect: LAI·FPAR 결측 처리 (forward판)
+        before: 오염된 LAI·FPAR 화소는 채움값으로 남김
+        after: 최근 5년 8일별 최적 LAI·FPAR 평균(MCD15A2HCL 기후값)을 예비 입력으로 사용
+      - aspect: 알베도
+        before: 결측 보완 없음
+        after: 결측 보완 알베도(Sun et al., 2017)를 GF·예비 처리에 사용
+      - aspect: 제공 기간 (8일 forward판)
+        before: "2000~ (MOD16A2 V006)"
+        after: "V061 MOD16A2·MYD16A2는 2021-01-01부터. 그 이전은 GF판 사용"
+      - aspect: 파일 형식
+        before: HDF-EOS2
+        after: 동일 (변수 이름·형식 그대로)
+    impacts:
+      - C6과 C6.1을 섞지 말고 전 기간을 C6.1 GF판으로 다시 받으세요(C6은 2023-07-31 이후 배포되지 않습니다).
+      - C6.1 forward판은 예비 입력 덕분에 빈 곳이 줄었지만, 기후값 LAI·FPAR가 들어간 화소는 그해의 실제 식생 상태를 반영하지 않습니다.
+    sources:
+      - name: MOD16 C6.1 User's Guide
+        url: https://lpdaac.usgs.gov/documents/931/MOD16_User_Guide_V61.pdf
+      - name: "Final Notice: MODIS Version 6.0 Land Data Products Decommissioned July 31, 2023"
+        url: https://www.earthdata.nasa.gov/data/alerts-outages/final-notice-modis-version-6-0-land-data-products-decommissioned-july-31-2023
+  - from: MODIS 증발산 MOD16/MYD16 C6.1
+    to: VIIRS 증발산 VNP16·VJ116 V2.1 (공개 전)
+    status: planned
+    summary: >-
+      NASA는 MODIS 종료에 대비해 같은 MOD16 알고리즘을 VIIRS(Suomi NPP·NOAA-20·NOAA-21)에 적용한 VNP16·VJ116·VJ216 V2를 2025~2026년에 공개했지만,
+      자료 문제가 발견되어 2026-08-17 모두 철회하고 '과학 품질이 아니므로 연구에 쓰지 말라'고 공지했습니다. 문제를 고친 뒤 V2.1로 재처리할 예정이며 일정은 정해지지 않았습니다.
+    changes:
+      - aspect: 제공 상태
+        before: "MOD16·MYD16 C6.1 생산 중 (Terra·Aqua 종료 시 중단 예정)"
+        after: "VIIRS V2는 2026-08-17 철회·삭제, V2.1 재처리 예정(날짜 미정). 2026-10-13 확인 시 CMR에 공개된 VIIRS 증발산 컬렉션 없음"
+      - aspect: 알고리즘
+        before: Penman-Monteith 기반 MOD16
+        after: 같은 계열 알고리즘(MODIS 증발산 시리즈를 잇도록 설계), 입력만 VIIRS LAI·FPAR·알베도로 교체
+      - aspect: 위성·통과 시각
+        before: "Terra(오전 10:30 하강, 표류 중)·Aqua(오후 1:30 상승, 표류 중)"
+        after: "Suomi NPP·NOAA-20·NOAA-21 (오후 1:30 상승). Suomi NPP 자료 전달은 2026년 11월 초 종료 예정"
+      - aspect: 해상도·제품 구성
+        before: "500 m SIN, 8일(MOD16A2·A2GF), 연(A3GF)"
+        after: "500 m SIN, 8일(VNP16A2·A2GF), 연(A3GF만) — V2 기준"
+      - aspect: 파일 형식
+        before: HDF-EOS2 (HDF4)
+        after: HDF-EOS5 (HDF5)
+    impacts:
+      - 철회된 VIIRS 증발산 V2 파일을 이미 받았다면 연구에 쓰지 마세요. NASA는 V2를 과학 품질이 아니라고 밝혔습니다.
+      - V2.1이 나와도 MODIS와 겹치는 기간에 두 자료의 차이를 확인한 뒤 이어 붙여야 합니다. 특히 Terra(오전) 관측을 이을 VIIRS 위성은 없습니다.
+    sources:
+      - name: VIIRS Actual and Potential Evapotranspiration Data Products Unavailable (LP DAAC, 2026-08-17)
+        url: https://www.earthdata.nasa.gov/data/alerts-outages/viirs-actual-potential-evapotranspiration-data-products-unavailable
+      - name: VIIRS Version 2 Actual and Potential Evapotranspiration Data Products Released (LP DAAC, 2025-07-10)
+        url: https://www.earthdata.nasa.gov/data/alerts-outages/viirs-version-2-actual-potential-evapotranspiration-data-products-released
+      - name: VIIRS Land — NASA Evapotranspiration and Potential Evapotranspiration
+        url: https://viirsland.gsfc.nasa.gov/Products/NASA/ET_ESDR.html
+
+notices:
+  - date: "2026-08-17"
+    level: warning
+    title: 후속 자료 VIIRS 증발산 V2 전면 철회 — V2.1 재처리 예정, 일정 미정
+    body: >-
+      LP DAAC는 자료 문제가 새로 발견되었다며 Suomi NPP·NOAA-20·NOAA-21의 VIIRS 증발산(VNP16·VJ116·VJ216) V2 제품을 모두 아카이브에서 내리고
+      AppEEARS에서도 비활성화했습니다. 이 자료는 과학 품질이 아니므로 어떤 연구에도 쓰지 말라고 안내했으며, 문제를 고친 뒤 V2.1로 재처리할 예정입니다.
+      그때까지 MODIS 증발산을 이을 NASA VIIRS 산출물은 없습니다.
+    source: https://www.earthdata.nasa.gov/data/alerts-outages/viirs-actual-potential-evapotranspiration-data-products-unavailable
+  - date: "2026-03-20"
+    level: warning
+    title: NASA, Terra 과학 운용 종료를 2027년 2월·Aqua를 2027년 9월로 전망
+    body: >-
+      NASA Science 기사 'Terra: The End of An Era'(2025-12-29 게재, 2026-03-20 갱신)의 편집자 주는 연료·전력 한계로 Terra는 2027년 2월, Aqua는 2027년 9월,
+      Aura는 2028년 8월에 과학 운용이 끝날 것으로 전망하며, 그때까지는 운용을 계속한다고 밝혔습니다. 이전 계획(Terra 2025년 12월, Aqua 2026년 8월 종료)보다 늦춰진 일정입니다.
+    source: https://science.nasa.gov/science-research/earth-science/terra-the-end-of-an-era
+  - date: "2026-03-18"
+    level: info
+    title: MODIS L1B·지오로케이션 Version 7.0 공개 — 지면 산출물은 아직 C6.1
+    body: >-
+      LAADS DAAC가 MODIS 보정 복사량·지오로케이션 V7.0을 공개하고 V6.1 L1 자료는 2026-09-30 이후 내린다고 공지했습니다. 2026-10-13 확인 시
+      MOD16 등 지면 산출물은 CMR에 V061만 있으며, C7 지면 산출물의 공개 일정은 공식 공지로 확인되지 않았습니다.
+    source: https://www.earthdata.nasa.gov/data/alerts-outages/version-7.0-modis-calibrated-radiances-geolocation-data-products-now-available
+  - date: "2026-01-08"
+    level: warning
+    title: Terra·Aqua 궤도 표류가 MODIS 자료에 미치는 영향 조사 중 (LDOPE)
+    body: >-
+      MODIS 지면 품질평가팀(LDOPE)은 Terra·Aqua가 궤도 유지 기동을 멈춘 뒤 표류하면서 화소 크기·간격, 주사 간격(scan gap),
+      보타이 중첩, 일주기 표본 시각이 달라졌고, 2024년 말부터 영향이 크게 나타났다며 MODIS 산출물 전반에 대한 영향을 조사 중이라고 밝혔습니다.
+    source: https://landweb.modaps.eosdis.nasa.gov/displayissue?id=1254
+  - date: "2025-06-03"
+    level: info
+    title: LP DAAC Data Pool의 MODIS 배포 종료(2025-06-30) — Earthdata Cloud로 전환
+    body: >-
+      LP DAAC는 C6.1을 포함한 모든 MODIS 자료의 Data Pool 배포를 2025년 6월 30일에 끝냈습니다. Data Pool 주소를 쓰던 스크립트는 Earthdata Cloud(HTTPS·earthaccess)로 바꿔야 하며,
+      Earthdata Search와 AppEEARS는 그대로 쓸 수 있습니다.
+    source: https://www.earthdata.nasa.gov/data/alerts-outages/lp-daac-discontinue-data-pool-distribution-modis-datasets
+  - date: "2025-05-02"
+    level: warning
+    title: MODIS에서 VIIRS로 전환 안내 — Terra·Aqua 2026년 말~2027년 초 종료 시작
+    body: >-
+      NASA는 Terra·Aqua가 2026년 말~2027년 초부터 운용 종료에 들어가며, 두 위성이 설계 궤도를 벗어나 통과 시각이 바뀌고 있어 자료에 영향을 줄 수 있다고 공지했습니다.
+      MODIS 자료 수집이 멈추면 마지막 재처리를 하며, 사용자는 VIIRS 유사 산출물을 검토하라고 권고했습니다.
+    source: https://www.earthdata.nasa.gov/data/alerts-outages/transition-from-modis-viirs
+  - date: "2023-07-25"
+    level: info
+    title: MODIS V6.0 지면 산출물 배포 종료(2023-07-31) — V6.1로 전환
+    body: >-
+      LP DAAC는 2023년 7월 31일 MOD16을 포함한 MODIS V6.0 지면 산출물의 배포를 끝냈습니다. 사용자 가이드·ATBD는 DOI 페이지에 남아 있고, 자료는 V6.1을 쓰면 됩니다.
+    source: https://www.earthdata.nasa.gov/data/alerts-outages/final-notice-modis-version-6-0-land-data-products-decommissioned-july-31-2023
+
+links:
+  - name: MOD16A2GF V061 데이터 카탈로그 (LP DAAC)
+    url: https://www.earthdata.nasa.gov/data/catalog/lpcloud-mod16a2gf-061
+  - name: MOD16 C6.1 User's Guide
+    url: https://lpdaac.usgs.gov/documents/931/MOD16_User_Guide_V61.pdf
+  - name: MOD16 ATBD
+    url: https://lpdaac.usgs.gov/documents/93/MOD16_ATBD.pdf
+  - name: MOD16 검증 상태 (MODIS Land)
+    url: https://modis-land.gsfc.nasa.gov/ValStatus.php?ProductID=MOD16
+  - name: MODIS/VIIRS 지면 품질평가(LDOPE) 알려진 문제
+    url: https://landweb.modaps.eosdis.nasa.gov/knownissue?sensor=MODIS
+  - name: MODIS Land News (Terra·Aqua 궤도 표류 안내)
+    url: https://modis-land.gsfc.nasa.gov/news.html
+  - name: VIIRS 증발산 제품 소개 (VIIRS Land)
+    url: https://viirsland.gsfc.nasa.gov/Products/NASA/ET_ESDR.html
+
+watch_urls:
+  - https://www.earthdata.nasa.gov/data/catalog/lpcloud-mod16a2gf-061
+  - https://landweb.modaps.eosdis.nasa.gov/knownissue?sensor=MODIS
+  - https://modis-land.gsfc.nasa.gov/news.html
+
+last_verified: "2026-10-13"

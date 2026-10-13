@@ -1,0 +1,404 @@
+# ─────────────────────────────────────────────────────────────
+# NASA SMAP 토양수분 — 데이터셋 정보 파일
+# 지면 탭 '토양수분'에 싣습니다. L3(SPL3SMP·SPL3SMP_E)와 L4(SPL4SMGP·SPL4CMDL)를 한 페이지에 정리했습니다.
+# 같은 페이지 안 버전 변경(L3 V8→V9·V5→V6, L4 V7→V8)은 transitions(to_id 없음)에 적었습니다.
+# 수정 후에는 공식 페이지에서 확인한 날짜로 last_verified 를 갱신하세요.
+# ─────────────────────────────────────────────────────────────
+id: smap
+name: "SMAP (L3·L4)"
+full_name: Soil Moisture Active Passive (SMAP) — L3 복사계 토양수분(SPL3SMP V9·SPL3SMP_E V6)과 L4 동화 토양수분·탄소(SPL4SMGP V8·SPL4CMDL V8)
+category: satellite
+domain: land
+group: 토양수분
+order: 20
+domains: [육지, 원격탐사, 수문]
+provider: NASA JPL·GSFC SMAP 과학팀 (배포 NSIDC DAAC)
+
+status: active
+status_note: >-
+  SMAP는 2015년 7월 레이더 고장 이후 L밴드 복사계만으로 계속 관측 중이며, L3·L4 제품이 매일 정상 갱신되고 있습니다(2026-10-13 확인 시 SPL3SMP_E는 10월 9일, SPL4SMGP는 10월 5일, SPL4CMDL은 9월 29일분까지).
+  2026년 5월 14일~7월 28일 표준 제품에 위치(geolocation) 오류가 있어 재처리 중이며, 근실시간(NRT) 제품은 교체되지 않습니다.
+  현재 버전은 L1~L3 CRID R19(SPL3SMP V9, SPL3SMP_E V6)와 L4 Version 8입니다.
+
+period:
+  start: "2015-03"
+  end: present
+  note: >-
+    네 제품 모두 2015-03-31부터 현재까지입니다. 위성 안전모드로 2019-06-19~07-23, 2022-08-06~09-20에 관측이 끊겨 L3는 비어 있고,
+    L4는 이 기간에도 만들어지지만 SMAP 관측 없이 모델만으로 계산된 값입니다. 2026-05-14~07-28의 위치 오류 구간은 재처리본으로 교체되는 중이며,
+    2026-10-13 확인 시 SPL3SMP 2026-06-01 파일은 재처리 번호(_004)가 붙어 2026-09-23에 갱신되어 있습니다.
+
+resolution:
+  spatial_short: "9 km (0.083°)"
+  temporal_short: "3시간"
+  spatial: >-
+    SPL3SMP: 36 km EASE-Grid 2.0 전지구(EPSG:6933, 964 × 406). SPL3SMP_E: 9 km EASE-Grid 2.0 전지구(3856 × 1624)와 북극 극 격자(EPSG:6931, 2000 × 2000) —
+    복사계 원 관측 해상도는 약 36 km이며 Backus-Gilbert 보간으로 9 km 격자에 다시 표본화한 것입니다. SPL4SMGP·SPL4CMDL: 9 km EASE-Grid 2.0 전지구(EPSG:6933).
+  vertical: "L3 표층(약 0~5 cm) / L4 표층 0~5 cm 평균, 근권 0~100 cm 평균, 모델 전체 토양 단면(sm_profile)"
+  temporal: L3 일(오전 6시 하강·오후 6시 상승 통과 따로) / SPL4SMGP 3시간 평균 / SPL4CMDL 일
+
+update: "매일 (2026-10-13 CMR 확인 시 최신 자료는 SPL3SMP_E 10월 9일, SPL4SMGP 10월 5일, SPL4CMDL 9월 29일분 — 공식 지연 시간은 NSIDC 지연 FAQ 참고)"
+license: NASA 지구과학 공개 자료 — 무료. 무료 NASA Earthdata 로그인 필요, 데이터셋 DOI 인용 요청
+account_required: true
+
+summary: >-
+  NASA SMAP 위성은 L밴드(1.4 GHz) 마이크로파 복사계로 지표 약 5 cm의 토양수분을 전지구에서 관측합니다. 함께 실린 레이더는 2015년 7월 고장 나서
+  그 뒤 제품은 모두 복사계 기반입니다. L3(SPL3SMP 36 km, SPL3SMP_E 9 km)는 하루치 궤도 관측을 오전·오후로 나눠 모은 위성 산출물이고,
+  L4는 SMAP 밝기온도를 NASA GEOS 지면 모델에 동화해 빈틈 없는 3시간 표층·근권 토양수분(SPL4SMGP)과 일 탄소 순생태계교환(SPL4CMDL)을 만든 값입니다.
+
+time_convention:
+  summary: >-
+    L3는 위성이 지나간 순간의 관측값을 하루치 모은 것으로, 하강 궤도(현지 태양시 약 오전 6시)는 AM 그룹, 상승 궤도(약 오후 6시)는 PM 그룹(변수 이름 끝 `_pm`)에 따로 들어 있습니다.
+    SPL4SMGP는 3시간 평균이며 파일 이름 시각이 구간의 '가운데'입니다(예 T013000 = 00~03 UTC 평균). SPL4CMDL은 일평균 탄소 플럭스(g C m-2 d-1)입니다.
+  points:
+    - "L3 실제 관측 시각은 `tb_time_utc`(UTC 문자열)에 있습니다. 궤도가 겹치는 고위도(약 65° 이상)에서는 오전 6시·오후 6시에 가장 가까운 관측을 골라 넣습니다."
+    - "L3 파일 날짜는 그 안의 첫 관측 날짜이며, 한 격자가 하루 안에 AM·PM 두 번 관측될 수 있습니다. 두 값은 서로 다른 시각의 순간값이므로 평균하기 전에 시각 차이를 고려하세요."
+    - "SPL4SMGP 파일은 하루 8개(T013000, T043000 … T223000)이고, 각 값은 그 3시간 구간의 평균입니다. 일평균은 8개를 평균하면 됩니다."
+    - "SPL4SMGP의 유출·증발 플럭스는 kg m-2 s-1(= mm s-1) 평균 속도라서, 3시간 합계(mm)는 값 × 10800입니다."
+    - "SPL4CMDL의 GPP·NEE·Rh는 하루 평균 플럭스(g C m-2 d-1)이고, 토양 유기탄소(SOC)는 g C m-2 저장량입니다."
+  source: https://nsidc.org/data/spl4smgp/versions/8
+  source_name: NSIDC SPL3SMP V9·SPL3SMP_E V6·SPL4SMGP V8·SPL4CMDL V8 사용자 안내서, L4_SM 제품 명세서(PSD v17)
+
+variables:
+  note: >-
+    NSIDC 사용자 안내서와 L4_SM 제품 명세서 기준 주요 변수입니다. 파일은 HDF5이며 변수는 그룹 안에 있습니다
+    (L3: `Soil_Moisture_Retrieval_Data_AM`/`_PM`, SPL3SMP_E 극 격자는 `..._Polar_AM`/`_Polar_PM`; SPL4SMGP: `Geophysical_Data`; SPL4CMDL: `NEE`·`GPP`·`RH`·`SOC`·`QA`).
+    부동소수점 결측값은 -9999.0이고, L3의 정수형(uint16) 플래그 결측값은 65534입니다.
+  full_list: https://nsidc.org/sites/default/files/documents/technical-reference/smap_l4_sm_psd_v17_for_l4sm_version_8.pdf
+  groups:
+    - name: L3 복사계 토양수분 (SPL3SMP 36 km / SPL3SMP_E 9 km, 일)
+      kind: instant
+      items:
+        - text: "표층 토양수분(오전 하강 궤도) — `soil_moisture` (m3/m3)"
+          note: 위성 통과 순간 값. V8부터 기본 알고리즘은 DCA
+        - text: "표층 토양수분(오후 상승 궤도) — `soil_moisture_pm` (m3/m3)"
+          note: PM 그룹 변수는 이름 끝에 _pm
+        - "검색 품질 플래그 — `retrieval_qual_flag` (16비트, 0 또는 8이면 고품질)"
+        - "관측 시각 — `tb_time_utc` (UTC 문자열)"
+        - "유효 토양 온도 — `surface_temperature` (K)"
+        - "식생 광학 두께 — `vegetation_opacity` (무차원)"
+    - name: L4 토양수분·지면 (SPL4SMGP, 3시간 평균)
+      kind: mean
+      period: 3시간
+      items:
+        - "표층 토양수분 0~5 cm — `sm_surface` (m3 m-3)"
+        - "근권 토양수분 0~100 cm — `sm_rootzone` (m3 m-3)"
+        - "전체 단면 토양수분 — `sm_profile` (m3 m-3)"
+        - "표층·근권 습윤도 — `sm_surface_wetness`, `sm_rootzone_wetness` (무차원)"
+        - "지표 온도 — `surface_temp` (K)"
+        - "토양 온도 1층 — `soil_temp_layer1` (K)"
+        - text: "적설 질량(수당량) — `snow_mass` (kg m-2)"
+          std: [snow]
+        - text: "적설 깊이 — `snow_depth` (m)"
+          std: [snow]
+        - "증발산 — `land_evapotranspiration_flux` (kg m-2 s-1)"
+        - "지표 유출·기저 유출 — `overland_runoff_flux`, `baseflow_flux` (kg m-2 s-1)"
+    - name: L4 탄소 (SPL4CMDL, 일평균)
+      kind: mean
+      period: 일
+      items:
+        - "순생태계 CO2 교환(NEE) — `NEE/nee_mean` (g C m-2 d-1)"
+        - "총일차생산(GPP) — `GPP/gpp_mean` (g C m-2 d-1)"
+        - "종속영양 호흡(Rh) — `RH/rh_mean` (g C m-2 d-1)"
+        - text: "토양 유기탄소 — `SOC/soc_mean` (g C m-2)"
+          note: 플럭스가 아니라 저장량
+        - "NEE 오차 추정 — `QA/nee_rmse_mean` (g C m-2 d-1)"
+
+access:
+  - name: NSIDC DAAC — SPL3SMP V9
+    url: https://nsidc.org/data/spl3smp/versions/9
+    method: Earthdata Search / earthaccess / HTTPS(CMR 가상 디렉터리) / NSIDC Data Access Tool / Harmony
+    note: 무료 NASA Earthdata 로그인이 필요합니다. 2025-10-28부터 옛 온프레미스 경로는 닫히고 Earthdata Cloud가 주 보관소입니다.
+  - name: NSIDC DAAC — SPL3SMP_E V6
+    url: https://nsidc.org/data/spl3smp_e/versions/6
+    method: Earthdata Search / earthaccess / HTTPS / Harmony
+    note: 9 km 전지구·북극 극 격자가 한 파일에 들어 있습니다.
+  - name: NSIDC DAAC — SPL4SMGP V8
+    url: https://nsidc.org/data/spl4smgp/versions/8
+    method: Earthdata Search / earthaccess / HTTPS / Harmony / AppEEARS
+    note: 하루 파일 8개(3시간 평균). 분석 증분(SPL4SMAU)과 모델 상수(SPL4SMLM)는 별도 컬렉션입니다. AppEEARS로 지점·영역만 뽑을 수 있습니다.
+  - name: NSIDC DAAC — SPL4CMDL V8
+    url: https://nsidc.org/data/spl4cmdl/versions/8
+    method: Earthdata Search / earthaccess / HTTPS / Harmony / AppEEARS / Worldview
+    note: 일 파일 하나에 NEE·GPP·Rh·SOC와 식생형별(PFT) 값이 들어 있습니다.
+  - name: NASA Earthdata Cloud (AWS S3, us-west-2)
+    url: https://nsidc.org/data/user-resources/help-center/nasa-earthdata-cloud-data-access-guide
+    method: 클라우드 직접 접근 (S3, us-west-2 안에서만)
+    note: 임시 S3 자격증명이 필요합니다. 같은 리전의 클라우드 컴퓨팅에서 대량 처리할 때 씁니다.
+
+example:
+  lang: python
+  note: >-
+    earthaccess로 2024년 7월 한 주의 SPL3SMP_E V6 파일을 받아 오전(AM) 토양수분을 고품질 값만 남겨 읽는 예입니다. 처음 실행 때 Earthdata 아이디·비밀번호를 묻습니다.
+    EASE-Grid 2.0 격자라 위경도 1차원 좌표가 없으므로, 지도로 그리려면 같은 그룹의 위경도 배열이나 EASE-Grid 2.0 좌표 파일을 함께 쓰세요.
+  code: |
+    import earthaccess
+    import h5py
+    import numpy as np
+
+    earthaccess.login()  # 무료 NASA Earthdata 계정
+    results = earthaccess.search_data(
+        short_name="SPL3SMP_E", version="006",
+        temporal=("2024-07-01", "2024-07-07"),
+        bounding_box=(124, 33, 132, 39),   # (서, 남, 동, 북)
+    )
+    files = earthaccess.download(results, "smap_l3e")
+
+    with h5py.File(files[0], "r") as f:
+        g = f["Soil_Moisture_Retrieval_Data_AM"]
+        sm = g["soil_moisture"][:]               # (1624, 3856), m3/m3
+        qf = g["retrieval_qual_flag"][:]
+    sm = np.where((sm == -9999.0) | ~np.isin(qf, [0, 8]), np.nan, sm)
+    print(np.nanmean(sm))
+
+    # L4 3시간 자료: short_name="SPL4SMGP", version="008", 그룹 "Geophysical_Data"의 "sm_rootzone"
+
+tips:
+  - "L3는 사용자 안내서가 고품질로 정의한 `retrieval_qual_flag` 0 또는 8인 값만 남기고 쓰세요. 플래그를 거르지 않으면 품질이 낮은 검색값이 섞입니다."
+  - SPL3SMP_E의 9 km는 36 km 관측을 보간한 격자입니다. 실제로 구분되는 공간 규모는 여전히 수십 km이므로 9 km 개별 격자를 독립 관측처럼 다루지 마세요.
+  - 2019-06-19~07-23, 2022-08-06~09-20 안전모드 기간은 L3가 비어 있고 L4는 관측 없이 모델로만 채워졌습니다. 2019년 복구 직후 일정 기간은 품질 주의 공지가 있었습니다.
+  - "2026-05-14~07-28 자료를 그 전에 받았다면 위치 오류가 있는 판입니다. 재처리본이 올라오면 다시 받으세요(파일 이름 끝 번호가 커진 것이 새 판)."
+  - "L4는 SMAP 밝기온도를 동화한 모델 값이라 관측이 없는 깊이(근권)와 날에도 값이 있습니다. 근권 토양수분은 관측이 아니라 GEOS 지면 모델 추정입니다."
+  - "SPL4SMGP 파일 시각은 3시간 평균 구간의 가운데입니다(T013000 = 00~03 UTC). 한국 시간 일평균을 만들려면 UTC 15시 경계로 8개 파일을 묶으세요."
+  - "버전이 바뀌면 과거 기간 전체가 다시 처리되고 옛 버전은 내려갑니다(L3 V8은 2024-12-16, L4 V7은 2025-06-30 폐기). 논문에는 short_name과 버전, 파일 이름의 CRID(R19…) 또는 과학 버전(Vv80…)을 적으세요."
+
+citations:
+  dataset:
+    - label: SPL3SMP V9 (L3 36 km 일)
+      text: >-
+        O'Neill, P. E., Chan, S., Njoku, E. G., Jackson, T., Bindlish, R., Chaubell, J. (2023). SMAP L3 Radiometer Global Daily 36 km
+        EASE-Grid Soil Moisture, Version 9. Boulder, Colorado USA. NASA National Snow and Ice Data Center Distributed Active Archive Center.
+        https://doi.org/10.5067/4XXOGX0OOW1S. [Date Accessed]
+      doi: 10.5067/4XXOGX0OOW1S
+      bibtex: |
+        @misc{spl3smp_v9,
+          author    = {O'Neill, P. E. and Chan, S. and Njoku, E. G. and Jackson, T. and Bindlish, R. and Chaubell, J.},
+          title     = {{SMAP} {L3} Radiometer Global Daily 36 km {EASE-Grid} Soil Moisture, Version 9},
+          year      = {2023},
+          publisher = {NASA National Snow and Ice Data Center Distributed Active Archive Center},
+          address   = {Boulder, Colorado USA},
+          doi       = {10.5067/4XXOGX0OOW1S}
+        }
+    - label: SPL3SMP_E V6 (L3 강화 9 km 일)
+      text: >-
+        O'Neill, P. E., Chan, S., Njoku, E. G., Jackson, T., Bindlish, R., Chaubell, J., Colliander, A. (2023). SMAP Enhanced L3 Radiometer
+        Global and Polar Grid Daily 9 km EASE-Grid Soil Moisture, Version 6. Boulder, Colorado USA. NASA National Snow and Ice Data Center
+        Distributed Active Archive Center. https://doi.org/10.5067/M20OXIZHY3RJ. [Date Accessed]
+      doi: 10.5067/M20OXIZHY3RJ
+      bibtex: |
+        @misc{spl3smp_e_v6,
+          author    = {O'Neill, P. E. and Chan, S. and Njoku, E. G. and Jackson, T. and Bindlish, R. and Chaubell, J. and Colliander, A.},
+          title     = {{SMAP} Enhanced {L3} Radiometer Global and Polar Grid Daily 9 km {EASE-Grid} Soil Moisture, Version 6},
+          year      = {2023},
+          publisher = {NASA National Snow and Ice Data Center Distributed Active Archive Center},
+          address   = {Boulder, Colorado USA},
+          doi       = {10.5067/M20OXIZHY3RJ}
+        }
+    - label: SPL4SMGP V8 (L4 3시간 토양수분)
+      text: >-
+        Reichle, R. H., De Lannoy, G., Koster, R. D., Crow, W. T., Kimball, J. S., Liu, Q., Bechtold, M. (2025). SMAP L4 Global 3-hourly 9 km
+        EASE-Grid Surface and Root Zone Soil Moisture Geophysical Data, Version 8. Boulder, Colorado USA. NASA National Snow and Ice Data Center
+        Distributed Active Archive Center. https://doi.org/10.5067/T5RUATAQREF8. [Date Accessed]
+      doi: 10.5067/T5RUATAQREF8
+      bibtex: |
+        @misc{spl4smgp_v8,
+          author    = {Reichle, R. H. and De Lannoy, G. and Koster, R. D. and Crow, W. T. and Kimball, J. S. and Liu, Q. and Bechtold, M.},
+          title     = {{SMAP} {L4} Global 3-hourly 9 km {EASE-Grid} Surface and Root Zone Soil Moisture Geophysical Data, Version 8},
+          year      = {2025},
+          publisher = {NASA National Snow and Ice Data Center Distributed Active Archive Center},
+          address   = {Boulder, Colorado USA},
+          doi       = {10.5067/T5RUATAQREF8}
+        }
+    - label: SPL4CMDL V8 (L4 일 탄소 순생태계교환)
+      text: >-
+        Kimball, J. S., Endsley, A., Jones, L. A., Kundig, T., Reichle, R. (2025). SMAP L4 Global Daily 9 km EASE-Grid Carbon Net Ecosystem Exchange,
+        Version 8. Boulder, Colorado USA. NASA National Snow and Ice Data Center Distributed Active Archive Center.
+        https://doi.org/10.5067/U7SN8JDZL0UC. [Date Accessed]
+      doi: 10.5067/U7SN8JDZL0UC
+      bibtex: |
+        @misc{spl4cmdl_v8,
+          author    = {Kimball, J. S. and Endsley, A. and Jones, L. A. and Kundig, T. and Reichle, R.},
+          title     = {{SMAP} {L4} Global Daily 9 km {EASE-Grid} Carbon Net Ecosystem Exchange, Version 8},
+          year      = {2025},
+          publisher = {NASA National Snow and Ice Data Center Distributed Active Archive Center},
+          address   = {Boulder, Colorado USA},
+          doi       = {10.5067/U7SN8JDZL0UC}
+        }
+  papers:
+    - label: SMAP 임무 개요
+      text: >-
+        Entekhabi, D., Njoku, E. G., O'Neill, P. E., Kellogg, K. H., Crow, W. T., Edelstein, W. N., Entin, J. K., Goodman, S. D., Jackson, T. J.,
+        Johnson, J., Kimball, J., Piepmeier, J. R., Koster, R. D., Martin, N., McDonald, K. C., Moghaddam, M., Moran, S., Reichle, R., Shi, J. C.,
+        Spencer, M. W., Thurman, S. W., Tsang, L., Van Zyl, J. (2010): The Soil Moisture Active Passive (SMAP) Mission. Proceedings of the IEEE, 98(5), 704–716.
+      doi: 10.1109/JPROC.2010.2043918
+      bibtex: |
+        @article{entekhabi2010smap,
+          author  = {Entekhabi, Dara and Njoku, Eni G. and O'Neill, Peggy E. and Kellogg, Kent H. and Crow, Wade T. and Edelstein, Wendy N. and Entin, Jared K. and Goodman, Shawn D. and Jackson, Thomas J. and Johnson, Joel and Kimball, John and Piepmeier, Jeffrey R. and Koster, Randal D. and Martin, Neil and McDonald, Kyle C. and Moghaddam, Mahta and Moran, Susan and Reichle, Rolf and Shi, J. C. and Spencer, Michael W. and Thurman, Samuel W. and Tsang, Leung and Van Zyl, Jakob},
+          title   = {The Soil Moisture Active Passive ({SMAP}) Mission},
+          journal = {Proceedings of the IEEE},
+          volume  = {98},
+          number  = {5},
+          pages   = {704--716},
+          year    = {2010},
+          doi     = {10.1109/JPROC.2010.2043918}
+        }
+    - label: SMAP L4 토양수분 알고리즘 (Version 4 기준)
+      text: >-
+        Reichle, R. H., Liu, Q., Koster, R. D., Crow, W. T., De Lannoy, G. J. M., Kimball, J. S., Ardizzone, J. V., Bosch, D., Colliander, A., Cosh, M.,
+        Kolassa, J., Mahanama, S. P., Prueger, J., Starks, P., Walker, J. P. (2019): Version 4 of the SMAP Level-4 Soil Moisture Algorithm and Data Product.
+        Journal of Advances in Modeling Earth Systems, 11(10), 3106–3130.
+      doi: 10.1029/2019MS001729
+      bibtex: |
+        @article{reichle2019l4sm,
+          author  = {Reichle, Rolf H. and Liu, Qing and Koster, Randal D. and Crow, Wade T. and De Lannoy, Gabrielle J. M. and Kimball, John S. and Ardizzone, Joseph V. and Bosch, David and Colliander, Andreas and Cosh, Michael and Kolassa, Jana and Mahanama, Sarith P. and Prueger, John and Starks, Patrick and Walker, Jeffrey P.},
+          title   = {Version 4 of the {SMAP} Level-4 Soil Moisture Algorithm and Data Product},
+          journal = {Journal of Advances in Modeling Earth Systems},
+          volume  = {11},
+          number  = {10},
+          pages   = {3106--3130},
+          year    = {2019},
+          doi     = {10.1029/2019MS001729}
+        }
+  acknowledgement: >-
+    NSIDC는 실제로 쓴 제품·버전의 데이터셋 DOI를 인용하고, 쓴 영역·기간(subset)과 접근 날짜를 적으라고 안내합니다. 제품마다 DOI가 다르니
+    L3·L4를 함께 썼다면 각각 인용하세요. L4_SM 분석 증분(SPL4SMAU, 10.5067/02LGW4DGJYRX)과 모델 상수(SPL4SMLM, 10.5067/PXQIBL2ALDZD)는 별도 DOI입니다.
+
+transitions:
+  - from: SMAP L3 SPL3SMP V8 · SPL3SMP_E V5
+    to: SMAP L3 SPL3SMP V9 · SPL3SMP_E V6 (CRID R19)
+    status: completed
+    date: "2024-10"
+    summary: >-
+      입력 L1B·L1C 밝기온도의 처리 방법을 개선한 재처리로, 토양수분 알고리즘·파일 구조·변수는 그대로입니다. 2023년 12월 전방 처리를 시작해
+      2024년 10월 30일 2015년부터의 전 기간 재처리가 끝났고, 이전 버전은 2024년 12월 16일 내려갔습니다.
+    changes:
+      - aspect: 버전·CRID
+        before: "SPL3SMP V8, SPL3SMP_E V5 (L1B·L1C V5 기반)"
+        after: "SPL3SMP V9, SPL3SMP_E V6 (L1B·L1C V6 기반, 파일 이름 CRID R19xxx)"
+      - aspect: 바뀐 점
+        before: "이전 밝기온도 처리"
+        after: "입력 L2 복사계 밝기온도에 개선된 처리 방법 적용 (알고리즘·구조·내용·처리 코드는 동일)"
+      - aspect: 제공
+        before: "V8·V5는 2024-12-16 폐기"
+        after: "V9·V6만 제공, 2015-03-31~현재"
+    impacts:
+      - 옛 버전으로 만든 시계열은 새 버전으로 전 기간을 다시 받아 바꾸세요. 같은 날짜도 값이 조금씩 다릅니다.
+      - earthaccess·스크립트의 version 값을 '009'(SPL3SMP)·'006'(SPL3SMP_E)으로 고쳐야 합니다.
+    sources:
+      - name: NSIDC 공지 — Data set updates SMAP Level-1, Level-2, and Level-3 (2024-10-30)
+        url: https://nsidc.org/data/user-resources/data-announcements/data-set-updates-smap-level-1-level-2-and-level-3-data-sets-0
+      - name: SPL3SMP V9 사용자 안내서
+        url: https://nsidc.org/sites/default/files/documents/user-guide/spl3smp-v009-userguide.pdf
+  - from: SMAP L4 Version 7
+    to: SMAP L4 Version 8
+    status: completed
+    date: "2025-04"
+    summary: >-
+      L4 토양수분·탄소 제품이 Version 8로 2015년부터 재처리되었고, Version 7은 2025년 6월 30일 내려갔습니다. 강수 강제력·복사 전달 모델·눈 알베도가 바뀌고
+      입력 밝기온도가 R19(SPL1CTB V6)로 통일되었으며, 탄소 모델은 새 플럭스 관측망으로 다시 보정되었습니다.
+    changes:
+      - aspect: 강수 강제력 (SPL4SMGP)
+        before: "이전 강수 보정 체계"
+        after: "북미·고위도 밖은 IMERG Version 07 사용"
+      - aspect: 동화 입력
+        before: "이전 버전 밝기온도"
+        after: "SPL1CTB Version 6(R19) 밝기온도만 사용, 척도 매개변수를 2015-04~2024-03 자료로 재보정"
+      - aspect: 모델 물리 (SPL4SMGP)
+        before: "이전 마이크로파 복사 전달 모델·눈 알베도"
+        after: "마이크로파 복사 전달 모델(mwRTM) 갱신, 눈 알베도 매개변수화 변경, 버그 수정"
+      - aspect: 탄소 모델 (SPL4CMDL)
+        before: "La Thuile/FLUXNET2015 기반 보정, 낙엽 유입을 연평균 NPP의 고정 비율로 배분"
+        after: "410개 에디 공분산 관측탑으로 BPLUT 재보정, 위성 LAI 기반 계절 낙엽 배분, ISCN 자료로 SOC 분해 재보정·SOC 재초기화"
+      - aspect: 과학 버전 ID
+        before: "Vv7xxx"
+        after: "Vv8xxx (2026-10 파일 기준 SPL4SMGP Vv8011, SPL4CMDL Vv8041)"
+    impacts:
+      - V7과 V8을 섞지 말고 전 기간을 V8로 다시 받으세요. 강수 강제력이 바뀌어 근권 토양수분 기후값도 달라집니다.
+      - "SPL4SMGP V8의 `depth_to_water_table_from_surface` 변수는 이름과 달리 이탄지(peat) 지하수위 깊이라고 안내서가 밝힙니다."
+    sources:
+      - name: NSIDC 공지 — SMAP Level-4 Version 8 Release (2025-04-15)
+        url: https://nsidc.org/data/user-resources/data-announcements/data-set-updates-smap-level-4-version-8-release
+      - name: NSIDC SPL4SMGP Version 8 페이지
+        url: https://nsidc.org/data/spl4smgp/versions/8
+      - name: NSIDC SPL4CMDL Version 8 페이지
+        url: https://nsidc.org/data/spl4cmdl/versions/8
+
+notices:
+  - date: "2026-08-11"
+    level: warning
+    title: 2026-05-14~07-28 위치(geolocation) 오류 — 표준 제품 재처리 중
+    body: >-
+      SMAP 표준·근실시간 제품에 2026년 5월 14일~7월 28일 위치 오류가 있었습니다. 이 기간 표준 제품은 재처리해 몇 주 안에 교체하며,
+      근실시간(NRT) 제품은 교체하지 않습니다. 이 기간 자료를 이미 받았다면 재처리본으로 다시 받으세요.
+    source: https://nsidc.org/data/user-resources/data-announcements/user-notice-smap-data-reprocessing
+  - date: "2025-08-05"
+    level: critical
+    title: NSIDC 옛 온프레미스 보관소 접근 종료(2025-10-28) — Earthdata Cloud로 전환
+    body: >-
+      NSIDC DAAC의 옛(온프레미스) 보관소에서 SMAP 자료를 받는 경로(HTTPS 파일 시스템, Earthdata Search 주문, ESI·EGI 변환 서비스)가 2025년 10월 28일 닫혔습니다.
+      이제 NASA Earthdata Cloud가 주 보관소이므로 스크립트를 CMR·earthaccess·클라우드 HTTPS 경로로 바꿔야 합니다.
+    source: https://nsidc.org/data/user-resources/data-announcements/user-notice-retirement-legacy-data-archive-smap-data
+  - date: "2025-04-15"
+    level: info
+    title: SMAP L4 Version 8 공개 — Version 7은 2025-06-30 폐기
+    body: >-
+      L4 토양수분(SPL4SMGP·SPL4SMAU·SPL4SMLM)과 탄소(SPL4CMDL)가 Version 8로 갱신되어 2015-03-31부터 전 기간이 제공됩니다.
+      Version 7은 2025년 6월 30일 내려갔습니다.
+    source: https://nsidc.org/data/user-resources/data-announcements/data-set-updates-smap-level-4-version-8-release
+  - date: "2025-01-08"
+    level: warning
+    title: JPL 주변 산불로 SMAP 자료 처리 일시 중단 (2025-01-14 재개)
+    body: >-
+      캘리포니아 패서디나 JPL 주변 산불로 SMAP 과학자료 처리 시스템이 닫혀 자료 생산이 멈췄습니다. NSIDC는 2025년 1월 14일 처리가 재개되었다고 알렸습니다.
+    source: https://nsidc.org/data/user-resources/data-announcements/user-notice-smap-data-outage
+  - date: "2024-10-30"
+    level: info
+    title: L1~L3 재처리 완료 — SPL3SMP V9, SPL3SMP_E V6 (이전 버전 2024-12-16 폐기)
+    body: >-
+      SMAP L1·L2·L3 새 버전의 2015년부터 재처리가 끝났습니다. L3 토양수분은 SPL3SMP V9, SPL3SMP_E V6이며 이전 버전은 2024년 12월 16일 내려갔습니다.
+    source: https://nsidc.org/data/user-resources/data-announcements/data-set-updates-smap-level-1-level-2-and-level-3-data-sets-0
+  - date: "2022-08-22"
+    level: warning
+    title: SMAP 안전모드 (2022-08-06~09-20 관측 공백)
+    body: >-
+      SMAP가 2022년 8월 안전모드에 들어가 과학 관측이 멈췄습니다. NSIDC 공지는 진입일을 8월 8일로, 사용자 안내서는 공백을 8월 6일~9월 20일로 적고 있습니다.
+      L3는 이 기간 자료가 없고 L4는 SMAP 관측 없이 모델로만 계속 만들어졌으며, 복구 뒤 자료는 이전과 일관된다고 안내합니다.
+    source: https://nsidc.org/data/user-resources/data-announcements/user-notice-smap-safe-mode
+  - date: "2019-06-24"
+    level: warning
+    title: SMAP 안전모드 (2019-06-19~07-23 관측 공백)
+    body: >-
+      SMAP가 2019년 6월 19일 저녁 안전모드에 들어가 모든 기기가 꺼졌습니다. 7월 23일까지 관측이 없으며 L4는 이 기간 관측 없이 만들어졌습니다.
+    source: https://nsidc.org/data/user-resources/data-announcements/smap-safe-mode
+  - date: "2015-07"
+    level: critical
+    title: SMAP 레이더 고장 — 이후 복사계 단독 운용
+    body: >-
+      2015년 7월 SMAP 레이더가 멈춰 레이더·결합(능동-수동) 토양수분 제품 생산이 끝났습니다. 그 뒤 SMAP 제품은 모두 L밴드 복사계 관측으로만 만들어집니다.
+    source: https://nsidc.org/data/smap
+
+links:
+  - name: NSIDC SMAP 자료 모음
+    url: https://nsidc.org/data/smap
+  - name: NSIDC SMAP 자료 공지 (Data Announcements)
+    url: https://nsidc.org/data/smap/news
+  - name: SMAP 버전 이력
+    url: https://nsidc.org/data/smap/version-history
+  - name: SPL3SMP V9 사용자 안내서
+    url: https://nsidc.org/sites/default/files/documents/user-guide/spl3smp-v009-userguide.pdf
+  - name: SPL3SMP_E V6 사용자 안내서
+    url: https://nsidc.org/sites/default/files/documents/user-guide/spl3smp_e-v006-userguide.pdf
+  - name: SPL4SM V8 사용자 안내서
+    url: https://nsidc.org/sites/default/files/documents/user-guide/multi_spl4smau-v008-userguide.pdf
+  - name: L4_SM 제품 명세서 (PSD v17, Version 8)
+    url: https://nsidc.org/sites/default/files/documents/technical-reference/smap_l4_sm_psd_v17_for_l4sm_version_8.pdf
+  - name: SPL4CMDL V8 사용자 안내서
+    url: https://nsidc.org/sites/default/files/documents/user-guide/spl4cmdl-v008-userguide_1.pdf
+  - name: NASA JPL SMAP 임무 페이지
+    url: https://smap.jpl.nasa.gov/
+
+watch_urls:
+  - https://nsidc.org/data/smap/news
+  - https://nsidc.org/data/spl3smp
+
+last_verified: "2026-10-13"

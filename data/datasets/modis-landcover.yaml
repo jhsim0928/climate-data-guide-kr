@@ -1,0 +1,306 @@
+# ─────────────────────────────────────────────────────────────
+# MODIS Land Cover Type (MCD12Q1·MCD12C1) C6.1 — 데이터셋 정보 파일
+# 지면 탭 '토지피복'에 싣습니다. Terra·Aqua 운영 종료에 따라 '대체 예정'이지만, 2026-10-13 확인 시 VIIRS 토지피복 후속 제품은 공개되지 않았습니다.
+# 수정 후에는 공식 페이지에서 확인한 날짜로 last_verified 를 갱신하세요.
+# ─────────────────────────────────────────────────────────────
+id: modis-landcover
+name: "MODIS Land Cover (MCD12)"
+full_name: MODIS/Terra+Aqua Land Cover Type Yearly L3 Global, Collection 6.1 (MODIS 연간 전지구 토지피복 분류, 500 m 타일·0.05° 격자)
+category: satellite
+domain: land
+group: 토지피복
+order: 10
+domains: [육지, 원격탐사]
+provider: NASA MODIS 토지피복 과학팀(Friedl·Sulla-Menashe) / NASA LP DAAC (Earthdata Cloud)
+
+status: deprecated
+status_note: >-
+  C6.1(버전 061)이 현재 판이며 해마다 한 해씩 추가되고 있습니다(2026-10-13 확인 시 MCD12C1은 2025년, MCD12Q1은 2024년까지 CMR에 등록).
+  그러나 NASA는 Terra·Aqua가 연료·전력 한계로 과학 운영을 마칠 예정(Terra 2027년 2월, Aqua 2027년 9월 전망)이라며 VIIRS 유사 제품으로 옮기라고 안내하고 있어 '대체 예정'으로 분류했습니다.
+  다만 2026-10-13 기준 NASA CMR·LP DAAC에는 VIIRS 기반 토지피복 분류 제품이 없습니다. 또 과학팀이 학습 자료를 갱신하지 못해 2021년 이후 지도는 주의해서 쓰라는 공식 안내가 있습니다.
+
+period:
+  start: "2001-01"
+  end: present
+  note: >-
+    연 단위 지도로 2001년부터 있습니다. 2026-10-13 NASA CMR 확인 시 MCD12C1(0.05°)은 2025년 자료(2026-09-26 생산)까지,
+    MCD12Q1(500 m 타일)은 2024년 자료(2025-07 생산)까지 있고 MCD12Q1 2025년 타일은 아직 검색되지 않습니다.
+    LP DAAC·Earthdata 제품 페이지에는 기간이 '2001–2022'로 적혀 있으나 실제 파일은 그 뒤 해도 올라와 있습니다.
+
+resolution:
+  spatial_short: "0.5 km (0.005°)"
+  temporal_short: "1년"
+  spatial: >-
+    MCD12Q1: MODIS 사인곡선(Sinusoidal) 타일 격자, 500 m 화소(타일당 약 1200 km × 1200 km, 2400 × 2400 화소, hXXvYY 타일 번호) /
+    MCD12C1: 0.05° 전지구 위경도 기후모델 격자(CMG), 7200 × 3600 화소
+  vertical: 지표 단일면
+  temporal: 1년 (달력 연도마다 지도 1장)
+
+update: 연 1회 (해당 연도 이후 약 7~9개월 뒤 생산)
+license: NASA EOSDIS 자료 이용·인용 지침에 따라 제한 없이 공개 — 데이터셋 DOI 인용 요청
+account_required: true
+
+summary: >-
+  Terra·Aqua MODIS 반사도 자료를 감독 분류해 만든 NASA의 연간 전지구 토지피복 지도입니다. 한 파일에 IGBP·UMD·LAI·BIOME-BGC·PFT 다섯 가지
+  분류체계와 FAO LCCS 기반의 토지피복·토지이용·지표수문 세 층을 함께 담고 있어, 지면 모델 입력(식생 유형·PFT)이나 지역별 토지피복 통계에 많이 쓰입니다.
+  500 m 타일 제품(MCD12Q1)과 이를 0.05° 격자로 모은 제품(MCD12C1, IGBP·UMD·LAI 세 체계와 등급별 피복률)이 있습니다.
+
+time_convention:
+  summary: >-
+    모든 분류 층은 '해당 연도 분류 결과'입니다. 한 달력 연도의 Terra·Aqua 관측으로 만든 특징을 분류해 그해 지도 한 장을 만들며,
+    특정 날짜의 순간 상태가 아닙니다. 파일 이름의 A2024001처럼 연도 뒤 '001'은 그해 1월 1일부터의 연간 자료라는 뜻입니다.
+  points:
+    - "MCD12Q1과 MCD12C1 모두 시간 축은 연 단위 하나뿐입니다(CMR 기준 2024년 파일의 기간 = 2024-01-01~2024-12-31)."
+    - "사용자 안내서는 해마다 분류 결과가 흔들리는 정도(연간 변동)가 커서, 서로 다른 해의 지도를 빼서 토지피복 변화를 찾는 용도로 쓰지 말라고 권고합니다."
+    - "QC 값 8은 안정화 처리 전 결과로 채운 화소, 9는 기후 조건으로 산림 유형을 바꾼 화소처럼 후처리 내역을 담고 있습니다."
+    - "입력 관측 시각이 바뀌어 왔습니다. Terra(원래 오전 10:30 통과)는 2020년 마지막 궤도 조정 뒤 앞당겨져 2022년 가을에는 10:15경 통과했고, Aqua(원래 13:30)는 2021년 7월부터 늦어져 2023년 2월 13:45를 넘었고 2026년 8월경 15:50 무렵에 이를 것으로 예상되었습니다."
+    - "2021년 이후 지도는 학습 표본을 갱신하지 못한 채 만들어져 초지·관목·산림 등급의 연간 변동이 크게 나타난다는 공식 안내가 있습니다."
+  source: https://lpdaac.usgs.gov/documents/1409/MCD12_User_Guide_V61.pdf
+  source_name: MODIS C6.1 Land Cover Type Product User Guide (2022-04-20) + NASA CMR 그래뉼 정보 + LDOPE 공지(2024-09)
+
+variables:
+  note: >-
+    LP DAAC 제품 표와 NASA CMR 변수 정보에서 확인한 HDF4(HDF-EOS) 과학자료층(SDS) 이름입니다. 모든 층은 8비트 부호 없는 정수이고 채움값은 255이며 척도 인수는 없습니다.
+    분류 층의 값은 등급 번호이므로 평균·보간하지 말고 범례표로 해석하세요(등급표는 사용자 안내서 표 3~10).
+  full_list: https://lpdaac.usgs.gov/documents/1409/MCD12_User_Guide_V61.pdf
+  groups:
+    - name: MCD12Q1 분류체계 (500 m, 해당 연도 분류 결과)
+      kind: instant
+      items:
+        - text: "IGBP 분류(17등급) — `LC_Type1` (등급 1–17)"
+          std: [land_cover]
+          note: 해당 연도 분류 결과. 17 = 수체, 13 = 도시·건조지역, 12 = 경작지
+        - text: "UMD 분류 — `LC_Type2` (등급 0–15)"
+          std: [land_cover]
+          note: C6.1에서 C6의 잘못된 '경작지·자연식생 혼재' 등급과 습지 등급을 없앴습니다
+        - text: "LAI 분류(엽면적지수 산출용 식생 유형) — `LC_Type3` (등급 0–10)"
+          std: [land_cover]
+        - text: "BIOME-BGC 분류 — `LC_Type4` (등급 0–8)"
+          std: [land_cover]
+        - text: "식물기능형(PFT) 분류 — `LC_Type5` (등급 0–11)"
+          std: [land_cover]
+    - name: MCD12Q1 FAO LCCS 층 (500 m, 해당 연도 분류 결과)
+      kind: instant
+      items:
+        - text: "LCCS1 토지피복 층 — `LC_Prop1` (등급 1–43)"
+          std: [land_cover]
+        - text: "LCCS2 토지이용 층 — `LC_Prop2` (등급 1–40)"
+          std: [land_cover]
+        - text: "LCCS3 지표수문 층 — `LC_Prop3` (등급 1–51)"
+          std: [land_cover]
+        - text: "LCCS1·2·3 분류 신뢰도 — `LC_Prop1_Assessment`, `LC_Prop2_Assessment`, `LC_Prop3_Assessment` (%)"
+          std: []
+    - name: MCD12Q1 품질·마스크 (500 m)
+      kind: instant
+      items:
+        - text: "품질 플래그 — `QC` (값 0–10)"
+          note: 0 분류된 육지, 1 미분류 육지(나지로 표기), 2 분류된 물, 4 해빙→물로 전환, 6·7 눈·얼음 재분류, 8 안정화 전 결과로 채움, 10 물 마스크 자료 없음 등
+        - text: "육지·물 마스크 — `LW` (1 물, 2 육지)"
+          note: MOD44W에서 가져온 마스크
+    - name: MCD12C1 0.05° 집계 (IGBP·UMD·LAI 세 체계, 해당 연도 분류 결과)
+      kind: instant
+      items:
+        - text: "주(최빈) 등급 — `Majority_Land_Cover_Type_1`(IGBP), `Majority_Land_Cover_Type_2`(UMD), `Majority_Land_Cover_Type_3`(LAI) (등급 번호)"
+          std: [land_cover]
+          note: MCD12C1의 IGBP 범례는 수체가 0이고 0–16 범위입니다(MCD12Q1은 17이 수체)
+        - text: "주 등급 신뢰도 — `Majority_Land_Cover_Type_1_Assessment` 등 (%)"
+          std: []
+        - text: "등급별 피복률 — `Land_Cover_Type_1_Percent`, `Land_Cover_Type_2_Percent`, `Land_Cover_Type_3_Percent` (%)"
+          std: [land_cover]
+          note: 0.05° 격자 안 500 m 화소 중 각 등급이 차지하는 비율. 등급 수만큼 층이 있는 3차원 배열
+
+access:
+  - name: NASA LP DAAC — Earthdata Cloud (MCD12Q1 V061)
+    url: https://www.earthdata.nasa.gov/data/catalog/lpcloud-mcd12q1-061
+    method: HTTPS 다운로드 / earthaccess / AWS S3 직접 접근(us-west-2)
+    note: >-
+      파일 주소는 https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/MCD12Q1.061/ 아래에 있고 무료 NASA Earthdata 로그인이 필요합니다.
+      옛 LP DAAC Data Pool(e4ftl01)의 MODIS 배포는 2025년 6월 30일 종료되었습니다.
+  - name: NASA LP DAAC — Earthdata Cloud (MCD12C1 V061)
+    url: https://www.earthdata.nasa.gov/data/catalog/lpcloud-mcd12c1-061
+    method: HTTPS 다운로드 / earthaccess
+    note: 전지구 파일 하나가 한 해 분량입니다(2025년 파일 약 1.2 GB, HDF4).
+  - name: NASA Earthdata Search
+    url: https://search.earthdata.nasa.gov/search/granules?p=C2484079608-LPCLOUD
+    method: 웹 검색·다운로드
+    note: MCD12C1은 컬렉션 C2484078896-LPCLOUD입니다.
+  - name: AppEEARS
+    url: https://appeears.earthdatacloud.nasa.gov/
+    method: 웹·API 영역/지점 추출 (GeoTIFF·NetCDF 변환)
+    note: MCD12Q1.061을 지원합니다(2026-10 확인). 타일을 이어 붙이고 투영을 바꿔 받을 때 편리합니다.
+
+example:
+  lang: python
+  note: >-
+    earthaccess로 한반도를 덮는 2024년 MCD12Q1 타일(h27v05, h28v05 등)을 받아 pyhdf로 IGBP 층을 읽는 예입니다.
+    처음 실행할 때 NASA Earthdata 아이디·비밀번호를 묻습니다.
+  code: |
+    # pip install earthaccess pyhdf numpy
+    import earthaccess
+    import numpy as np
+    from pyhdf.SD import SD, SDC
+
+    earthaccess.login()
+    results = earthaccess.search_data(
+        short_name="MCD12Q1", version="061",
+        temporal=("2024-01-01", "2024-12-31"),
+        bounding_box=(124, 33, 132, 39),   # (서, 남, 동, 북)
+    )
+    files = earthaccess.download(results, "mcd12q1_2024")
+
+    for f in files:
+        hdf = SD(str(f), SDC.READ)
+        igbp = hdf.select("LC_Type1")[:]          # 2400 x 2400, 등급 1–17, 255 = 채움값
+        qc = hdf.select("QC")[:]
+        valid = igbp != 255
+        classes, counts = np.unique(igbp[valid], return_counts=True)
+        print(f, dict(zip(classes.tolist(), counts.tolist())))
+
+    # 0.05° 집계 제품: short_name="MCD12C1", version="061"
+    # 층 이름 예: "Majority_Land_Cover_Type_1", "Land_Cover_Type_1_Percent"
+
+tips:
+  - "MCD12Q1은 사인곡선(Sinusoidal) 투영 타일입니다. 위경도 격자 자료와 겹쳐 보려면 재투영이 필요하고, 등급 자료이므로 반드시 최근린(nearest) 방식으로 바꾸세요. 쌍선형 보간을 쓰면 존재하지 않는 등급 번호가 생깁니다."
+  - "IGBP 수체 코드가 제품마다 다릅니다. MCD12Q1 `LC_Type1`은 17, MCD12C1 `Majority_Land_Cover_Type_1`은 0입니다. 두 제품을 섞어 쓸 때 범례를 맞추세요."
+  - "2021년 이후 지도는 학습 표본을 갱신하지 못해 연간 변동(특히 초지·관목·산림)이 커졌다는 공식 경고가 있습니다. 최근 연도 사이의 등급 차이를 실제 변화로 해석하지 마세요."
+  - "사용자 안내서는 해마다 분류가 흔들리므로 연도별 지도를 빼서 변화를 탐지하는 방식을 권하지 않습니다. 변화 연구에는 여러 해를 묶어 보거나 변화 탐지용으로 설계된 자료를 쓰세요."
+  - "알려진 오분류: 영구 해빙·산그늘 빙하가 물로, 열대의 소규모 농경지가 자연식생으로, 일부 온대 상록침엽수림(일본 등)이 상록활엽수림으로 분류되는 사례가 있습니다. 습지는 과소 추정됩니다."
+  - "QC 층으로 후처리 내역(물 마스크로 바뀐 화소, 눈·얼음 재분류, 안정화 전 결과로 채운 화소)을 걸러 낼 수 있습니다. 255는 채움값입니다."
+  - "Terra·Aqua 궤도 표류로 관측 시각이 바뀌었고 두 위성 모두 2027년 과학 운영 종료가 예정되어 있습니다. 2022년 이후 연도를 장기 추세에 넣을 때는 입력 관측 변화를 함께 고려하세요."
+  - "옛 Data Pool 주소(e4ftl01.cr.usgs.gov)를 쓰는 스크립트는 2025년 6월 30일 이후 동작하지 않습니다. earthaccess나 data.lpdaac.earthdatacloud.nasa.gov 주소로 바꾸세요."
+
+citations:
+  dataset:
+    - label: MCD12Q1 V061 (500 m)
+      text: >-
+        Friedl, M., Sulla-Menashe, D. (2022). MODIS/Terra+Aqua Land Cover Type Yearly L3 Global 500m SIN Grid V061 [Data set].
+        NASA Land Processes Distributed Active Archive Center. https://doi.org/10.5067/MODIS/MCD12Q1.061 (Accessed YYYY-MM-DD)
+      doi: 10.5067/MODIS/MCD12Q1.061
+      bibtex: |
+        @misc{mcd12q1_v061,
+          author    = {Friedl, Mark and Sulla-Menashe, Damien},
+          title     = {{MODIS/Terra+Aqua} Land Cover Type Yearly {L3} Global 500m {SIN} Grid {V061}},
+          year      = {2022},
+          publisher = {NASA Land Processes Distributed Active Archive Center},
+          doi       = {10.5067/MODIS/MCD12Q1.061}
+        }
+    - label: MCD12C1 V061 (0.05°)
+      text: >-
+        Friedl, M., Sulla-Menashe, D. (2022). MODIS/Terra+Aqua Land Cover Type Yearly L3 Global 0.05Deg CMG V061 [Data set].
+        NASA Land Processes Distributed Active Archive Center. https://doi.org/10.5067/MODIS/MCD12C1.061 (Accessed YYYY-MM-DD)
+      doi: 10.5067/MODIS/MCD12C1.061
+      bibtex: |
+        @misc{mcd12c1_v061,
+          author    = {Friedl, Mark and Sulla-Menashe, Damien},
+          title     = {{MODIS/Terra+Aqua} Land Cover Type Yearly {L3} Global 0.05Deg {CMG} {V061}},
+          year      = {2022},
+          publisher = {NASA Land Processes Distributed Active Archive Center},
+          doi       = {10.5067/MODIS/MCD12C1.061}
+        }
+  papers:
+    - label: MODIS C6 토지피복 알고리즘 논문
+      text: >-
+        Sulla-Menashe, D., Gray, J. M., Abercrombie, S. P., Friedl, M. A. (2019): Hierarchical mapping of annual global land cover 2001 to present:
+        The MODIS Collection 6 Land Cover product. Remote Sensing of Environment, 222, 183–194.
+      doi: 10.1016/j.rse.2018.12.013
+      bibtex: |
+        @article{sullamenashe2019mcd12,
+          author  = {Sulla-Menashe, Damien and Gray, Josh M. and Abercrombie, S. Parker and Friedl, Mark A.},
+          title   = {Hierarchical mapping of annual global land cover 2001 to present: The {MODIS} Collection 6 Land Cover product},
+          journal = {Remote Sensing of Environment},
+          volume  = {222},
+          pages   = {183--194},
+          year    = {2019},
+          doi     = {10.1016/j.rse.2018.12.013}
+        }
+  acknowledgement: >-
+    LP DAAC 자료는 NASA EOSDIS 자료 이용·인용 지침에 따라 제한 없이 공개되며, 쓴 제품(MCD12Q1 또는 MCD12C1)의 데이터셋 DOI와 접근 날짜를 인용하도록 요청합니다.
+    알고리즘 설명에는 Sulla-Menashe et al. (2019)을 함께 인용하고, 논문에 C6.1(V061)과 사용한 분류체계(IGBP 등)를 밝혀 두세요.
+
+transitions:
+  - from: MODIS Land Cover C6 (V006)
+    to: MODIS Land Cover C6.1 (V061)
+    status: completed
+    date: "2022"
+    summary: >-
+      과학 알고리즘은 그대로 두고 MODIS L1B 보정 개선을 반영해 2001년부터 다시 만든 판입니다. 파일 형식과 층 구성은 같고,
+      UMD 범례의 잘못된 등급 두 개를 정리했습니다.
+    changes:
+      - aspect: 입력 보정
+        before: C6 L1B
+        after: Terra·Aqua MODIS L1B 보정 갱신(2012~2017년 Terra 전방 조견표 수정, 편광 보정 개정) 반영
+      - aspect: UMD 범례(LC_Type2)
+        before: C6에서 생긴 잘못된 '경작지·자연식생 혼재' 등급과 습지 등급 포함
+        after: 두 등급을 없애고 해당 화소를 알맞은 UMD 등급으로 재배정
+      - aspect: 눈 걸러내기
+        before: C6 방식
+        after: 식생지수 스플라인 맞춤에 쓰는 눈 걸러내기를 소폭 개선
+      - aspect: 파일 형식·층
+        before: HDF4, 13개 층 (MCD12Q1)
+        after: 변경 없음 (DOI 끝자리만 .006 → .061)
+    impacts:
+      - C6과 C6.1 지도를 한 시계열로 섞지 말고 전 기간을 V061로 다시 받으세요.
+      - UMD 분류(LC_Type2)로 경작지·습지 면적을 계산했다면 C6.1에서 값이 달라집니다.
+    sources:
+      - name: MODIS C6.1 Land Cover Type Product User Guide (2022-04-20)
+        url: https://lpdaac.usgs.gov/documents/1409/MCD12_User_Guide_V61.pdf
+      - name: NASA Earthdata — MCD12Q1 V061 제품 페이지
+        url: https://www.earthdata.nasa.gov/data/catalog/lpcloud-mcd12q1-061
+
+notices:
+  - date: "2026-03-26"
+    level: info
+    title: Terra 이상으로 MODIS 약 하루 대기 모드 — 해당 구간 자료 품질 의심
+    body: >-
+      2026년 3월 26일 20시경(UTC) Terra 위성 이상으로 MODIS가 대기(standby) 모드로 바뀌었다가 3월 27일 과학 모드로 돌아왔습니다.
+      그 사이 자료는 보정팀이 '의심 또는 불량'으로 표시했으며, 공지는 Terra 단독(MOD)과 Terra+Aqua 결합(MCD) 제품을 함께 영향 대상으로 들고 있습니다.
+    source: https://www.earthdata.nasa.gov/data/alerts-outages/terra-modis-placed-standby-mode
+  - date: "2026-03-20"
+    level: warning
+    title: Terra 2027년 2월, Aqua 2027년 9월 과학 운영 종료 전망
+    body: >-
+      NASA는 연료·전력 한계로 Terra의 과학 활동이 2027년 2월, Aqua는 2027년 9월에 끝날 것으로 내다봤습니다.
+      두 위성 모두 과학 운영 종료 때까지 관측을 이어 가며, 그 뒤에는 MODIS 결합 제품(MCD12 포함)도 새 연도가 나오지 않게 됩니다.
+    source: https://science.nasa.gov/science-research/earth-science/terra-the-end-of-an-era/
+  - date: "2025-06-03"
+    level: warning
+    title: LP DAAC Data Pool의 MODIS 배포 종료(2025-06-30) — Earthdata Cloud로 이전
+    body: >-
+      LP DAAC는 MODIS C6.1을 포함한 모든 MODIS 자료의 Data Pool 접근을 2025년 6월 30일 종료한다고 공지했습니다.
+      Earthdata Cloud가 주 보관소가 되었으므로 옛 주소를 쓰는 스크립트는 바꿔야 합니다. Earthdata Search·AppEEARS 이용자는 영향이 없습니다.
+    source: https://www.earthdata.nasa.gov/data/alerts-outages/lp-daac-discontinue-data-pool-distribution-modis-datasets
+  - date: "2025-05-02"
+    level: warning
+    title: MODIS에서 VIIRS로 전환 안내 — 마지막 재처리 후 MODIS 자료 수집 종료 예정
+    body: >-
+      NASA는 Terra·Aqua가 2026년 말~2027년 초부터 운영을 마치기 시작하고, MODIS 자료 수집이 멈추면 마지막 재처리를 한다고 밝혔습니다.
+      두 위성이 설계 궤도에서 벗어나 통과 시각이 바뀌고 있다며 VIIRS 유사 제품을 살펴보라고 권했습니다. 다만 MCD12 토지피복에 대응하는 VIIRS 제품은 아직 없습니다.
+    source: https://www.earthdata.nasa.gov/data/alerts-outages/transition-from-modis-viirs
+  - date: "2024-09-10"
+    level: warning
+    title: MCD12Q1 C6.1 2021년 이후 지도 사용 주의
+    body: >-
+      과학팀이 예산 부족으로 학습 표본 데이터베이스를 갱신하지 못해, 일부 학습 지점의 실제 피복이 바뀌었을 수 있습니다.
+      LDOPE 평가에서 위도대·타일별로 초지·관목·산림 등급의 연간 변화가 크게 나타났으며, 2021년 이후 층은 주의해서 쓰라고 안내했습니다.
+    source: https://landweb.modaps.eosdis.nasa.gov/displayissue?id=781
+
+links:
+  - name: LP DAAC — MCD12Q1 V061 제품 페이지 (층 표)
+    url: https://lpdaac.usgs.gov/products/mcd12q1v061/
+  - name: MODIS C6.1 Land Cover Type 사용자 안내서 (범례표·QC·알려진 문제)
+    url: https://lpdaac.usgs.gov/documents/1409/MCD12_User_Guide_V61.pdf
+  - name: MCD12 알고리즘 이론 문서(ATBD)
+    url: https://lpdaac.usgs.gov/documents/86/MCD12_ATBD.pdf
+  - name: MODIS Land 검증 현황 — MCD12
+    url: https://modis-land.gsfc.nasa.gov/ValStatus.php?ProductID=MCD12
+  - name: MODIS Land 소식 (Terra·Aqua 궤도 표류, Collection 7 계획)
+    url: https://modis-land.gsfc.nasa.gov/news.html
+  - name: LP DAAC — Aqua MODIS 관측 계획(2026년 8월까지)
+    url: https://lpdaac.usgs.gov/news/aqua-modis-acquisition-plan-through-august-2026/
+
+watch_urls:
+  - https://www.earthdata.nasa.gov/data/catalog/lpcloud-mcd12q1-061
+  - https://modis-land.gsfc.nasa.gov/news.html
+  - https://www.earthdata.nasa.gov/data/alerts-outages
+
+last_verified: "2026-10-13"

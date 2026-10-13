@@ -1,0 +1,289 @@
+# ─────────────────────────────────────────────────────────────
+# VIIRS LAI/FPAR V2 (VNP15A2H·VJ115A2H·VJ215A2H) — 데이터셋 정보 파일
+# 지면 탭 '식생'. MODIS LAI/FPAR(modis-lai.yaml)의 후속 자료입니다.
+# 수정 후에는 공식 페이지에서 확인한 날짜로 last_verified 를 갱신하세요.
+# ─────────────────────────────────────────────────────────────
+id: viirs-lai
+name: "VIIRS LAI/FPAR (VNP15)"
+full_name: VIIRS Leaf Area Index / FPAR (VNP15A2H·VJ115A2H·VJ215A2H) Version 2 (VIIRS 엽면적지수·광합성유효복사 흡수율, 500 m·8일)
+category: satellite
+domain: land
+group: 식생
+order: 11
+domains: [육지, 원격탐사]
+provider: NASA VIIRS 육상팀(보스턴대 Myneni 연구실) / LP DAAC
+
+status: active
+status_note: >-
+  Version 2(002)가 Suomi NPP(VNP15A2H)·NOAA-20(VJ115A2H)·NOAA-21(VJ215A2H) 세 위성별로 8일마다 나오고 있습니다(2026-10-13 확인 시 2026-09-14 시작 합성까지).
+  다만 NOAA는 Suomi NPP 자료 전달을 2026년 11월 2일(NASA 공지는 11월 1일) 13:00 UTC에 끝낸다고 밝혔고, LP DAAC는 VNP15A2H 대신
+  VJ215A2H(주)·VJ115A2H(보조)로 옮기라고 안내하고 있습니다. Version 1은 2025년 4월 배포가 끝났습니다.
+
+period:
+  start: "2012-01"
+  end: present
+  note: >-
+    VNP15A2H(Suomi NPP)는 2012년 1월부터(한반도 타일 첫 파일은 2012-01-17 시작 합성), VJ115A2H(NOAA-20)는 2018-01-01부터, VJ215A2H(NOAA-21)는 2023-02-10부터입니다.
+    2026-10-13에 CMR로 한반도 타일(h28v05)을 확인했을 때 세 제품 모두 2026-09-14~21 합성이 최신이었습니다. VNP15A2H는 2026년 11월 Suomi NPP 자료 전달 종료와 함께 멈출 예정입니다.
+
+resolution:
+  spatial_short: "0.5 km (0.005°)"
+  temporal_short: "8일"
+  spatial: "MODIS와 같은 Sinusoidal 타일 격자(가로 0~35, 세로 0~17 타일), 500 m"
+  vertical: 식생 캐노피(지표) 단일층
+  temporal: 8일 합성 (파일 날짜는 합성 기간 첫날의 연중일, 예 A2026257. 해마다 1월 1일에 다시 시작)
+
+update: 합성 기간이 끝나고 대략 1~3주 뒤 8일 단위로 추가 (VNP15A2H는 2026년 11월 종료 예정)
+license: NASA 지구과학 공개 자료 — 제한 없이 무료 이용(EOSDIS 자료 이용·인용 지침), 파일 다운로드에는 무료 NASA Earthdata 로그인 필요, 데이터셋 DOI 인용 요청
+account_required: true
+
+summary: >-
+  NASA가 MODIS LAI/FPAR 기록을 잇기 위해 같은 알고리즘을 VIIRS 센서에 옮겨 만든 전지구 엽면적지수(LAI)·광합성유효복사 흡수율(FPAR) 자료입니다.
+  VIIRS 적색(I1)·근적외(I2) 반사도를 센서에 맞춘 3차원 복사전달 조견표로 역산하고, 실패하면 NDVI 경험식을 씁니다.
+  MODIS와 같은 500 m Sinusoidal 타일·8일 합성이라 바로 비교할 수 있으며, Suomi NPP·NOAA-20·NOAA-21 위성별로 따로 제공됩니다.
+
+time_convention:
+  summary: >-
+    매일 계산한 LAI·FPAR 가운데 8일 동안 FPAR가 가장 큰 날을 골라 그날의 FPAR·LAI·품질 정보를 기록합니다(VNP15 ATBD 3.3.2절).
+    FPAR는 8일 최대값이고, LAI는 기간 평균이 아닌 선택된 하루의 값입니다. 파일 날짜는 합성 기간 시작일입니다.
+  points:
+    - "세 위성 모두 오후 13:30(현지 평균시) 상승 통과 궤도라 MODIS Aqua의 원래 관측 시각과 가깝고, MODIS Terra의 오전 관측을 잇는 VIIRS 제품은 없습니다."
+    - "위성별로 따로 만든 제품이라 VNP15A2H·VJ115A2H·VJ215A2H는 같은 날짜라도 값이 조금씩 다릅니다. 시계열을 이을 때는 한 위성 제품을 기준으로 정하세요."
+    - "파일 이름의 A2026257은 2026년 257일(9월 14일)에 시작한 8일 합성입니다. 선택된 관측일 자체는 파일에 기록되지 않습니다."
+    - "합성은 해마다 1월 1일에 다시 시작하므로 그해 마지막 합성은 다음 해 첫 합성과 기간이 겹칩니다."
+  source: https://lpdaac.usgs.gov/documents/125/VNP15_ATBD.pdf
+  source_name: "VNP15 ATBD V1.1(2018) + VNP15 사용자 안내서 V1.2(2018) + LP DAAC/CMR 컬렉션 설명"
+
+variables:
+  note: >-
+    LP DAAC 컬렉션 정보와 VNP15 사용자 안내서 기준입니다. 세 위성 제품 모두 같은 이름을 쓰며, MODIS와 달리 이름 끝에 `_500m`이 없습니다.
+    값은 부호 없는 8비트 정수로 저장되어 척도 인수를 곱해야 하고, 249~255는 비식생·결측 코드입니다.
+  full_list: https://www.earthdata.nasa.gov/data/catalog/lpcloud-vnp15a2h-002
+  groups:
+    - name: LAI·FPAR (500 m, 8일 합성)
+      kind: instant
+      period: 합성 기간 중 선택일
+      items:
+        - text: "광합성유효복사 흡수율(FPAR) — `Fpar` (비율 0~1, 저장값 × 0.01)"
+          kind: max
+          period: 8일
+          note: 8일 중 FPAR가 가장 큰 날의 값
+        - text: "엽면적지수(LAI) — `Lai` (m² m-2, 저장값 × 0.1)"
+          note: 합성 기간 중 선택된 관측일(FPAR 최대인 날)의 값
+        - "FPAR 표준편차 — `FparStdDev` (비율, 저장값 × 0.01, 248=백업 알고리즘이라 없음)"
+        - "LAI 표준편차 — `LaiStdDev` (m² m-2, 저장값 × 0.1, 248=백업 알고리즘이라 없음)"
+        - text: "LAI·FPAR 품질 플래그 — `FparLai_QC` (비트 필드)"
+          note: "0~2번 SCF_QC(알고리즘 경로), 3번 고장 검출기, 4~7번 생물군계 유형 — MODIS와 비트 배치가 다름"
+        - "보조 품질 플래그 — `FparExtra_QC` (비트 필드)"
+
+access:
+  - name: NASA Earthdata Search — VJ215A2H (NOAA-21, 권장)
+    url: https://search.earthdata.nasa.gov/search/granules?p=C2843640489-LPCLOUD
+    method: 웹 검색·HTTPS 다운로드 / earthaccess
+    note: >-
+      짧은 이름은 VJ215A2H(NOAA-21)·VJ115A2H(NOAA-20)·VNP15A2H(Suomi NPP), 버전은 002입니다. 파일은 HDF-EOS5(.h5) 타일 단위입니다.
+      Suomi NPP 자료 전달이 2026년 11월 끝나므로 LP DAAC는 VJ215A2H를 주, VJ115A2H를 보조로 쓰라고 안내합니다.
+  - name: NASA Earthdata Search — VNP15A2H (Suomi NPP, 2012~)
+    url: https://search.earthdata.nasa.gov/search/granules?p=C2545314545-LPCLOUD
+    method: 웹 검색·HTTPS 다운로드 / earthaccess
+    note: 2012~2017년 구간은 Suomi NPP 제품만 있습니다. 이미 만들어진 자료는 계속 내려받을 수 있는 것으로 보이나, 전달 종료 뒤 배포 정책은 아직 공지되지 않았습니다.
+  - name: AppEEARS (영역·지점 추출)
+    url: https://appeears.earthdatacloud.nasa.gov/
+    method: 웹·API — 영역(GeoTIFF·NetCDF4) 또는 지점(CSV) 추출, 투영 변환 가능
+    note: 타일·HDF5 구조를 다루지 않고 관심 지역만 받을 수 있습니다.
+
+example:
+  lang: python
+  note: >-
+    earthaccess로 2024년 7월 NOAA-20 VJ115A2H를 받아 한반도 중부 타일(h28v05)의 LAI를 읽는 예입니다. HDF-EOS5 파일 안 경로를 외우지 않도록
+    h5py로 이름이 `Lai`·`FparLai_QC`인 변수를 찾아 읽습니다. 품질 비트는 MODIS와 달리 0~2번이 SCF_QC입니다.
+  code: |
+    # pip install earthaccess h5py numpy
+    import earthaccess
+    import h5py
+    import numpy as np
+
+    earthaccess.login()  # 무료 NASA Earthdata 계정
+    results = earthaccess.search_data(
+        short_name="VJ115A2H", version="002",
+        temporal=("2024-07-01", "2024-07-31"),
+        bounding_box=(126.5, 35.5, 128.5, 37.5),   # (서, 남, 동, 북)
+    )
+    files = earthaccess.download(results, "./vj115a2h")
+
+    def find(h5, name):
+        hits = []
+        h5.visititems(lambda k, v: hits.append(k) if isinstance(v, h5py.Dataset) and k.endswith("/" + name) else None)
+        return h5[hits[0]][()]
+
+    for f in sorted(map(str, files)):
+        if ".h28v05." not in f:
+            continue
+        with h5py.File(f, "r") as h5:
+            raw = find(h5, "Lai").astype("float32")
+            qc = find(h5, "FparLai_QC")
+        lai = np.where(raw <= 100, raw * 0.1, np.nan)   # 249~255 = 비식생·결측
+        scf = qc & 0b111                                 # 0·1 = 주(RT) 알고리즘 (MODIS와 비트 위치 다름)
+        lai[scf > 1] = np.nan
+        print(f.split("/")[-1], "평균 LAI:", np.nanmean(lai))
+
+tips:
+  - "`FparLai_QC`의 비트 배치가 MODIS와 다릅니다. VIIRS는 0~2번이 SCF_QC(0 주 알고리즘, 1 주 알고리즘·포화, 2·3 NDVI 백업, 4 생산 안 됨), 3번이 고장 검출기, 4~7번이 생물군계입니다. MODIS용 `(qc >> 5) & 7` 코드를 그대로 쓰면 품질 선별이 엉망이 됩니다."
+  - "저장값 249~255(255 결측, 254 내륙 물, 253 나지·희소 식생, 252 만년설·빙하, 251 습지, 250 도시, 249 미분류)는 반드시 지우고 척도 인수(LAI × 0.1, FPAR × 0.01)를 곱하세요."
+  - "VNP15A2H(Suomi NPP)는 2026년 11월에 끝납니다. 2018년 이후는 VJ115A2H, 2023년 이후는 VJ215A2H로 이어 쓸 수 있으니 장기 분석의 기준 위성을 미리 정하고, 위성이 바뀌는 지점을 밝히세요."
+  - 보스턴대 비교 연구(VIIRS V1 기준)에서 VIIRS는 열대림처럼 반사도가 포화되는 곳에서 MODIS와 차이가 컸고, 입력 반사도 문제로 주 알고리즘 성공률의 연변동이 컸습니다. 울창한 숲의 연변동 해석은 품질 플래그와 함께 보세요.
+  - 생물군계 유형(4~7번 비트)이 들어 있어, 토지피복 자료 없이도 숲·초지·농경지 등으로 나눠 통계를 낼 수 있습니다. 다만 이 분류는 알고리즘 입력용 8개 생물군계라 일반 토지피복과 다릅니다.
+  - 파일이 HDF5(HDF-EOS5)라 MODIS용 pyhdf 코드로는 열리지 않습니다. h5py·xarray(h5netcdf)나 GDAL을 쓰세요.
+
+citations:
+  dataset:
+    - label: VJ215A2H V002 (NOAA-21)
+      text: >-
+        Myneni, R. (2026). VIIRS/JPSS2 Leaf Area Index/FPAR 8-Day L4 Global 500m SIN Grid V002 [Data set]. NASA Land Processes Distributed Active Archive Center.
+        https://doi.org/10.5067/VIIRS/VJ215A2H.002 (Accessed YYYY-MM-DD)
+      doi: 10.5067/VIIRS/VJ215A2H.002
+      bibtex: |
+        @misc{vj215a2h_v002,
+          author    = {Myneni, Ranga},
+          title     = {{VIIRS/JPSS2} Leaf Area Index/{FPAR} 8-Day {L4} Global 500m {SIN} Grid {V002}},
+          year      = {2026},
+          publisher = {NASA Land Processes Distributed Active Archive Center},
+          doi       = {10.5067/VIIRS/VJ215A2H.002}
+        }
+    - label: VJ115A2H V002 (NOAA-20)
+      text: >-
+        Myneni, R. (2023). VIIRS/JPSS1 Leaf Area Index/FPAR 8-Day L4 Global 500m SIN Grid V002 [Data set]. NASA Land Processes Distributed Active Archive Center.
+        https://doi.org/10.5067/VIIRS/VJ115A2H.002 (Accessed YYYY-MM-DD)
+      doi: 10.5067/VIIRS/VJ115A2H.002
+      bibtex: |
+        @misc{vj115a2h_v002,
+          author    = {Myneni, Ranga},
+          title     = {{VIIRS/JPSS1} Leaf Area Index/{FPAR} 8-Day {L4} Global 500m {SIN} Grid {V002}},
+          year      = {2023},
+          publisher = {NASA Land Processes Distributed Active Archive Center},
+          doi       = {10.5067/VIIRS/VJ115A2H.002}
+        }
+    - label: VNP15A2H V002 (Suomi NPP)
+      text: >-
+        Myneni, R. (2023). VIIRS/NPP Leaf Area Index/FPAR 8-Day L4 Global 500m SIN Grid V002 [Data set]. NASA Land Processes Distributed Active Archive Center.
+        https://doi.org/10.5067/VIIRS/VNP15A2H.002 (Accessed YYYY-MM-DD)
+      doi: 10.5067/VIIRS/VNP15A2H.002
+      bibtex: |
+        @misc{vnp15a2h_v002,
+          author    = {Myneni, Ranga},
+          title     = {{VIIRS/NPP} Leaf Area Index/{FPAR} 8-Day {L4} Global 500m {SIN} Grid {V002}},
+          year      = {2023},
+          publisher = {NASA Land Processes Distributed Active Archive Center},
+          doi       = {10.5067/VIIRS/VNP15A2H.002}
+        }
+  papers:
+    - label: VIIRS LAI/FPAR 알고리즘·구현
+      text: >-
+        Yan, K., Park, T., Chen, C., Xu, B., Song, W., Yang, B., Zeng, Y., Liu, Z., Yan, G., Knyazikhin, Y., Myneni, R. B. (2018): Generating Global Products
+        of LAI and FPAR From SNPP-VIIRS Data: Theoretical Background and Implementation. IEEE Transactions on Geoscience and Remote Sensing, 56(4), 2119–2137.
+      doi: 10.1109/TGRS.2017.2775247
+      bibtex: |
+        @article{yan2018viirslai,
+          author  = {Yan, Kai and Park, Taejin and Chen, Chi and Xu, Baodong and Song, Wanjuan and Yang, Bin and Zeng, Yelu and Liu, Zhao and Yan, Guangjian and Knyazikhin, Yuri and Myneni, Ranga B.},
+          title   = {Generating Global Products of {LAI} and {FPAR} From {SNPP-VIIRS} Data: Theoretical Background and Implementation},
+          journal = {IEEE Transactions on Geoscience and Remote Sensing},
+          volume  = {56},
+          number  = {4},
+          pages   = {2119--2137},
+          year    = {2018},
+          doi     = {10.1109/TGRS.2017.2775247}
+        }
+    - label: VIIRS·MODIS LAI/FPAR 일관성 (2012~2016)
+      text: >-
+        Xu, B., Park, T., Yan, K., Chen, C., Zeng, Y., Song, W., Yin, G., Li, J., Liu, Q., Knyazikhin, Y., Myneni, R. B. (2018): Analysis of Global LAI/FPAR
+        Products from VIIRS and MODIS Sensors for Spatio-Temporal Consistency and Uncertainty from 2012–2016. Forests, 9(2), 73.
+      doi: 10.3390/f9020073
+      bibtex: |
+        @article{xu2018viirsmodis,
+          author  = {Xu, Baodong and Park, Taejin and Yan, Kai and Chen, Chi and Zeng, Yelu and Song, Wanjuan and Yin, Gaofei and Li, Jing and Liu, Qinhuo and Knyazikhin, Yuri and Myneni, Ranga B.},
+          title   = {Analysis of Global {LAI/FPAR} Products from {VIIRS} and {MODIS} Sensors for Spatio-Temporal Consistency and Uncertainty from 2012--2016},
+          journal = {Forests},
+          volume  = {9},
+          number  = {2},
+          pages   = {73},
+          year    = {2018},
+          doi     = {10.3390/f9020073}
+        }
+  acknowledgement: >-
+    LP DAAC는 EOSDIS 자료 이용·인용 지침에 따라 실제로 쓴 위성 제품(VNP15A2H·VJ115A2H·VJ215A2H)의 데이터셋 DOI를 인용해 달라고 요청합니다.
+    알고리즘 설명에는 Yan et al. (2018), MODIS와의 연속성에는 Xu et al. (2018)을 함께 인용하세요.
+
+transitions:
+  - from: VIIRS LAI/FPAR V1 (VNP15A2H V001)
+    to: VIIRS LAI/FPAR V2 (VNP15A2H·VJ115A2H·VJ215A2H V002)
+    status: completed
+    date: "2023-08"
+    summary: >-
+      2023년 8월 Version 2(Suomi NPP·NOAA-20)가 나왔고, V1은 2024년 6월 17일 생산이 멈춘 뒤 2025년 4월 8일 배포가 끝났습니다.
+      V2에는 2026년 2월 NOAA-21 제품(VJ215A2H)이 더해졌습니다.
+    changes:
+      - aspect: 위성
+        before: "Suomi NPP만 (VNP15A2H V001)"
+        after: "Suomi NPP(VNP15A2H)·NOAA-20(VJ115A2H, 2018~)·NOAA-21(VJ215A2H, 2023-02~) — V002"
+      - aspect: 제공 상태
+        before: "2024-06-17 생산 종료, 2025-04-08 배포 종료 (사용자 안내서·ATBD는 DOI 페이지에 남음)"
+        after: "현재 유일한 판"
+      - aspect: 파일 형식·변수 이름
+        before: "HDF-EOS5, `Lai`·`Fpar` 등"
+        after: "같음"
+    impacts:
+      - V1로 만든 결과는 V2로 다시 확인하세요. V1 파일은 Earthdata Search·Data Pool·AppEEARS에서 더 이상 받을 수 없습니다.
+    sources:
+      - name: VIIRS Version 2 LAI/FPAR 제품 공개 (Earthdata 공지, 2023-08-21)
+        url: https://www.earthdata.nasa.gov/data/alerts-outages/viirs-version-2-leaf-area-index-fpar-products-released
+      - name: VIIRS V1 SR·VI·LAI/FPAR·LST·산불 제품 배포 종료 (Earthdata 공지, 2025-04-08)
+        url: https://www.earthdata.nasa.gov/data/alerts-outages/viirs-version-1-sr-vi-lai-fpar-lst-active-fires-data-products-decommissioned
+
+notices:
+  - date: "2026-08-07"
+    level: warning
+    title: Suomi NPP 자료 전달 2026년 11월 종료 — VNP15A2H 대신 VJ215A2H·VJ115A2H로 전환
+    body: >-
+      NOAA는 2026년 8월 3일 Suomi NPP의 VIIRS 등 모든 과학 자료 전달을 2026년 11월 2일 13:00 UTC에 영구히 끝낸다고 알렸고, NASA Earthdata는 8월 7일 공지에서
+      종료일을 11월 1일 13:00 UTC(변경 가능)로 안내했습니다. LP DAAC의 VNP15A2H 설명은 VJ215A2H(주)·VJ115A2H(보조)로 옮기라고 권합니다.
+    source: https://www.earthdata.nasa.gov/data/alerts-outages/suomi-npp-data-product-delivery-cease-november-1-2026
+  - date: "2026-02-20"
+    level: info
+    title: NOAA-21 VIIRS LAI/FPAR V2(VJ215A2H) 공개
+    body: >-
+      LP DAAC가 NOAA-21(옛 JPSS-2) VIIRS로 만든 Version 2 LAI/FPAR 제품을 추가로 공개했습니다. CMR 기준 자료 시작일은 2023-02-10입니다.
+    source: https://earthdata.nasa.gov/data/alerts-outages/additional-viirs-version-2-leaf-area-index-fraction-photosynthetically-active
+  - date: "2025-04-08"
+    level: info
+    title: VIIRS Version 1 LAI/FPAR 배포 종료
+    body: >-
+      LP DAAC가 VIIRS V1 지표 반사도·LAI/FPAR·지표면온도·산불 제품의 배포를 2025년 4월 8일 끝냈습니다. V1 생산은 2024년 6월 17일 이미 멈췄으며,
+      사용자 안내서·ATBD는 DOI 페이지에 남습니다. Suomi NPP·NOAA-20 V2로 옮기라고 안내했습니다.
+    source: https://www.earthdata.nasa.gov/data/alerts-outages/viirs-version-1-sr-vi-lai-fpar-lst-active-fires-data-products-decommissioned
+  - date: "2023-08-21"
+    level: info
+    title: VIIRS Version 2 LAI/FPAR(VNP15A2H·VJ115A2H) 공개
+    body: >-
+      Suomi NPP와 NOAA-20(옛 JPSS-1)의 Version 2 LAI/FPAR 8일 500 m 제품이 공개되었습니다. 공개 당시 Suomi NPP V1도 한동안 함께 생산되었습니다.
+    source: https://www.earthdata.nasa.gov/data/alerts-outages/viirs-version-2-leaf-area-index-fpar-products-released
+
+links:
+  - name: VNP15 사용자 안내서 V1.2 (PDF)
+    url: https://lpdaac.usgs.gov/documents/126/VNP15_User_Guide.pdf
+  - name: VNP15 알고리즘 이론 문서(ATBD, PDF)
+    url: https://lpdaac.usgs.gov/documents/125/VNP15_ATBD.pdf
+  - name: Earthdata 카탈로그 — VNP15A2H V002
+    url: https://www.earthdata.nasa.gov/data/catalog/lpcloud-vnp15a2h-002
+  - name: Earthdata 카탈로그 — VJ215A2H V002
+    url: https://www.earthdata.nasa.gov/data/catalog/lpcloud-vj215a2h-002
+  - name: VIIRS LAI/FPAR 검증 페이지 (VIIRS Land 팀)
+    url: https://viirsland.gsfc.nasa.gov/Val/LAI_Fpar_Val.html
+  - name: NOAA NESDIS — Suomi NPP 자료 전달 종료 공지
+    url: https://www.nesdis.noaa.gov/news/cessation-of-suomi-national-polar-orbiting-partnership-s-npp-data-users-onafter-november-2-2026
+
+watch_urls:
+  - https://www.earthdata.nasa.gov/data/alerts-outages/suomi-npp-data-product-delivery-cease-november-1-2026
+  - https://www.earthdata.nasa.gov/data/catalog/lpcloud-vj215a2h-002
+  - https://landweb.modaps.eosdis.nasa.gov/knownissue
+
+last_verified: "2026-10-13"

@@ -1,0 +1,318 @@
+# ─────────────────────────────────────────────────────────────
+# VIIRS BRDF/Albedo (VNP43·VJ143) C2 — 데이터셋 정보 파일
+# 지면 탭(지표면온도·알베도). MODIS MCD43(modis-albedo.yaml)의 후속 자료이며, MODIS → VIIRS 전환 정보는 modis-albedo.yaml에 있습니다.
+# 수정 후에는 공식 페이지에서 확인한 날짜로 last_verified 를 갱신하세요.
+# ─────────────────────────────────────────────────────────────
+id: viirs-albedo
+name: "VIIRS BRDF/Albedo (VNP43)"
+full_name: VIIRS BRDF/Albedo Collection 2 (VNP43 Suomi NPP · VJ143 NOAA-20 · VJ243 NOAA-21) (MODIS MCD43을 잇는 VIIRS 양방향 반사 분포 함수·알베도·천정 보정 반사도, 16일 창으로 매일 산출)
+category: satellite
+domain: land
+group: 지표면온도·알베도
+order: 21
+domains: [육지, 원격탐사]
+provider: NASA VIIRS 지면팀(UMass Boston Schaaf 연구실) / NASA LP DAAC
+
+status: active
+status_note: >-
+  Collection 2(V002)가 현재 판으로 매일 갱신됩니다(2026-10-13 확인 시 VJ143MA3 최신 파일 2026년 10월 4일자, VNP43MA3 10월 1일자).
+  다만 Suomi NPP 자료(VNP43) 전달은 NOAA 결정에 따라 2026년 11월 2일 13:00 UTC에 끝나므로, 앞으로는 NOAA-21(VJ243, 1순위)이나 NOAA-20(VJ143, 2순위) 제품을 써야 합니다.
+  Collection 1(V001)은 2025년 초 생산을 멈추고 대체되었습니다.
+
+period:
+  start: "2012-01"
+  end: present
+  note: >-
+    CMR 기준 VNP43(Suomi NPP)은 2012-01-17, VJ143(NOAA-20)은 2018-01-01, VJ243(NOAA-21)은 2023-02-10부터입니다(CMG 제품은 2~4일 늦게 시작).
+    VNP43은 2026년 11월 2일 이후 새 자료가 더 나오지 않을 예정이며, 2026년 7월 10~21일 Suomi NPP 이상으로 생긴 결측 일부는 복구되지 않았을 수 있습니다.
+
+resolution:
+  spatial_short: "0.5 km (0.005°)"
+  temporal_short: "1일"
+  spatial: >-
+    MODIS(VIIRS) Sinusoidal 타일 격자 — 500 m(IA 제품, 영상 밴드 I1~I3) · 1 km(MA 제품, 중해상도 밴드 M1~M5·M7·M8·M10·M11과 광대역) /
+    0.05° 기후모델격자(CMG, C1~C4) / 30 arc-second CMG(D 제품) / 주야간 밴드(DNB) 1 km 별도 제품
+  vertical: 지표면 단일층
+  temporal: 매일 산출 (각 산출은 16일 동안의 VIIRS 관측을 쓰고 9번째 날에 가중, 파일 이름 날짜 = 그 9번째 날)
+
+update: 매일 (16일 창이 차야 하므로 파일 날짜보다 약 1~2주 늦게 공개)
+license: NASA 지구과학 공개 자료 — 무료, 제한 없이 이용(EOSDIS 자료 이용·인용 지침). 다운로드에는 무료 NASA Earthdata 로그인이 필요합니다
+account_required: true
+
+summary: >-
+  MODIS MCD43과 같은 커널 기반 BRDF 모형(RossThick/LiSparse-Reciprocal)과 16일 창·9번째 날 가중 방식을 VIIRS 관측에 적용해,
+  MODIS BRDF/알베도 기록을 잇도록 만든 NASA 표준 제품군입니다. 흑색·백색 하늘 알베도(A3), 천정 보정 반사도 NBAR(A4), BRDF 매개변수(A1), 품질(A2)을
+  500 m(I 밴드)·1 km(M 밴드)·0.05°·30 arc-second 격자로 제공하며, 위성마다 VNP43(Suomi NPP), VJ143(NOAA-20), VJ243(NOAA-21)로 따로 나옵니다.
+  Collection 2는 Suomi NPP 전 기간 보정·위치 정확도·구름 마스크·해륙 마스크를 개선해 다시 만든 판입니다.
+
+time_convention:
+  summary: >-
+    MODIS MCD43과 같이 한 파일의 값은 16일 동안의 관측으로 맞춘 BRDF 모형에서 나온 값이며, 창의 9번째 날(파일 이름의 날짜)에 무게를 둡니다.
+    흑색 하늘 알베도·NBAR은 그날 현지 정오 태양 천정각 기준이고, 백색 하늘 알베도는 태양 위치와 무관한 확산광 조건의 값입니다.
+  points:
+    - "파일 이름의 AYYYYDDD는 16일 입력 창의 9번째 날입니다. 그 날짜 하루의 관측값이 아닙니다."
+    - "MODIS MCD43이 Terra(오전)·Aqua(오후) 관측을 섞은 것과 달리, VIIRS 제품은 위성 하나(오후 궤도)의 관측만으로 만듭니다. VNP43·VJ143·VJ243은 서로 다른 위성의 별도 산출물입니다."
+    - "관측이 충분하면 전체 역산, 부족하면 크기 역산으로 값을 내며 품질 플래그(0/1)로 구분합니다."
+    - "실제 하늘 조건 알베도(blue-sky albedo)는 제공되지 않습니다. 흑색·백색 하늘 알베도를 확산광 비율로 내삽해 직접 계산합니다."
+  source: https://www.umb.edu/spectralmass/viirs-user-guides-c1-and-c2/vnp43ia3-and-vnp43ma3-albedo-products/
+  source_name: "VIIRS BRDF/Albedo 사용자 안내서(UMass Boston) + LP DAAC VNP43MA3·VJ143MA3 V002 컬렉션 설명(CMR)"
+
+variables:
+  note: >-
+    변수 이름은 LAADS의 VNP43IA3·VNP43MA3 파일 명세(Collection 1)에서 확인한 것으로, Collection 2 컬렉션 설명의 변수 구성(IA3 9개, MA3 36개)과 일치합니다.
+    알베도는 INT16에 scale_factor 0.001(유효 범위 0~1000), 채움값 32767입니다. 파일 형식은 HDF-EOS5(HDF5)이며 받은 파일에서 그룹 경로를 확인하세요.
+  full_list: https://ladsweb.modaps.eosdis.nasa.gov/filespec/VIIRS/1/VNP43MA3
+  groups:
+    - name: 알베도 1 km (VNP43MA3 / VJ143MA3 / VJ243MA3)
+      kind: mean
+      period: 16일 창(9번째 날 가중)
+      items:
+        - text: "흑색 하늘 알베도(현지 정오) — `Albedo_BSA_M1`~`M5`, `Albedo_BSA_M7`, `M8`, `M10`, `M11`, `Albedo_BSA_vis`, `Albedo_BSA_nir`, `Albedo_BSA_shortwave` (무차원)"
+          note: 16일 관측으로 맞춘 BRDF 모형을 현지 정오 태양 천정각에서 적분한 값
+        - text: "백색 하늘 알베도 — `Albedo_WSA_M1`~`M11`(M6·M9 제외), `Albedo_WSA_vis`, `Albedo_WSA_nir`, `Albedo_WSA_shortwave` (무차원)"
+          note: 태양 위치와 무관한 완전 확산광 조건
+        - "밴드별 필수 품질 — `BRDF_Albedo_Band_Mandatory_Quality_M1`~`_shortwave` (0 전체 역산, 1 크기 역산, 255 채움)"
+    - name: 알베도 500 m (VNP43IA3 / VJ143IA3 / VJ243IA3)
+      kind: mean
+      period: 16일 창(9번째 날 가중)
+      items:
+        - "흑색 하늘 알베도 — `Albedo_BSA_I1`, `Albedo_BSA_I2`, `Albedo_BSA_I3` (무차원)"
+        - "백색 하늘 알베도 — `Albedo_WSA_I1`, `Albedo_WSA_I2`, `Albedo_WSA_I3` (무차원)"
+        - "밴드별 필수 품질 — `BRDF_Albedo_Band_Mandatory_Quality_I1`~`I3`"
+    - name: 알베도 0.05° CMG (VNP43C3 / VJ143C3 / VJ243C3)
+      kind: mean
+      period: 16일 창(9번째 날 가중)
+      items:
+        - "흑색·백색 하늘 알베도(M 밴드·광대역) (무차원)"
+        - text: "CMG 칸 안 적설 화소 비율 (%)"
+          note: 컬렉션 설명에 '눈 덮임' 보조층이 있다고 되어 있음. 변수 이름은 받은 파일에서 확인
+        - "불확도·품질·현지 정오·유효 입력 비율 보조층"
+    - name: 천정 보정 반사도·BRDF 매개변수 (IA4·MA4 / IA1·MA1)
+      kind: mean
+      period: 16일 창(9번째 날 가중)
+      items:
+        - "천정 보정 반사도 NBAR(현지 정오 태양각, 연직 시선) — VNP43IA4·MA4 (무차원)"
+        - "BRDF 커널 가중치(등방·체적·기하광학) — VNP43IA1·MA1 (무차원)"
+
+access:
+  - name: NASA Earthdata Search (LP DAAC, Earthdata Cloud)
+    url: https://search.earthdata.nasa.gov/search/granules?p=C2545314605-LPCLOUD
+    method: 웹 검색·다운로드 / earthaccess (HDF-EOS5)
+    note: >-
+      짧은 이름은 위성별 접두어(VNP43·VJ143·VJ243) + 제품(IA1~IA4, MA1~MA4, C1~C4, D, DNBA1~4)이며 버전은 002입니다. 무료 Earthdata 로그인이 필요합니다.
+      Suomi NPP(VNP43)는 2026년 11월 2일 이후 새 자료가 없으므로 장기 자료는 VJ143·VJ243을 함께 받아 두세요.
+  - name: NASA AppEEARS
+    url: https://appeears.earthdatacloud.nasa.gov/
+    method: 지점·영역 추출, 재투영 (GeoTIFF·NetCDF4)
+    note: 2025년 3월(AppEEARS 3.76)부터 Suomi NPP·NOAA-20 VIIRS BRDF/Albedo V2 500 m·1 km 제품 16종을 지원합니다.
+  - name: LP DAAC 제품 페이지 (VNP43MA3 V002)
+    url: https://doi.org/10.5067/VIIRS/VNP43MA3.002
+    method: 문서·변수표·DOI
+
+example:
+  lang: python
+  note: >-
+    earthaccess로 NOAA-20(VJ143MA3) 1 km 알베도 하루치를 받아 백색 하늘 단파 알베도를 읽는 예입니다(pip install earthaccess h5py numpy).
+    HDF-EOS5 그룹 경로를 몰라도 변수 이름으로 찾도록 썼습니다.
+  code: |
+    import earthaccess
+    import h5py
+    import numpy as np
+
+    earthaccess.login()  # 무료 NASA Earthdata 계정
+    results = earthaccess.search_data(
+        short_name="VJ143MA3", version="002",
+        temporal=("2024-04-15", "2024-04-15"),
+        bounding_box=(124, 33, 132, 39),   # (서, 남, 동, 북)
+    )
+    files = earthaccess.download(results, "vj143ma3")
+
+    def find(h5, name):
+        hits = []
+        h5.visititems(lambda k, v: hits.append(k) if k.endswith("/" + name) else None)
+        return h5[hits[0]]
+
+    for f in files:
+        with h5py.File(f, "r") as h5:
+            wsa = find(h5, "Albedo_WSA_shortwave")[:].astype("float32")
+            qa = find(h5, "BRDF_Albedo_Band_Mandatory_Quality_shortwave")[:]
+        wsa[wsa == 32767] = np.nan        # 채움값
+        wsa *= 0.001                      # scale_factor
+        wsa[qa != 0] = np.nan             # 전체 역산만 사용
+        print(f, np.nanmean(wsa))
+
+tips:
+  - "Suomi NPP 자료(VNP43) 전달이 2026년 11월 2일 끝납니다. 스크립트의 짧은 이름을 VJ243(NOAA-21) 또는 VJ143(NOAA-20)으로 바꾸고, 위성이 바뀌는 지점에서 값의 차이를 확인하세요."
+  - "VNP43·VJ143·VJ243은 같은 알고리즘이지만 서로 다른 센서의 관측입니다. 한 시계열로 이을 때는 겹치는 기간에 차이를 먼저 확인하고, 논문에 어느 위성 제품을 언제부터 썼는지 밝히세요."
+  - "알베도는 × 0.001, 32767은 채움값입니다. 품질 플래그 0(전체 역산)만 쓰는 것이 권장됩니다."
+  - "MODIS MCD43과 변수 이름이 다릅니다(밴드가 Band1~7이 아니라 M·I 밴드). 광대역(vis·nir·shortwave) 이름은 같지만 센서 분광 특성이 달라 값이 완전히 같지는 않습니다."
+  - "500 m 제품(IA)은 영상 밴드 I1~I3만 있고 광대역 알베도가 없습니다. 광대역 단파 알베도가 필요하면 1 km 제품(MA)이나 0.05° CMG(C3)를 쓰세요."
+  - "파일은 HDF-EOS5(HDF5)입니다. MODIS용 HDF4 코드(pyhdf)는 쓸 수 없습니다. Sinusoidal 투영 좌표는 MODIS와 같은 구(반지름 6371007.181 m) 기준입니다."
+  - "2026년 7월 10~21일 Suomi NPP 위성 이상으로 VNP43 생산이 멈췄던 기간이 있습니다. 이 기간이 16일 창에 들어간 VNP43 값은 관측 수가 적으니 품질을 확인하세요."
+
+citations:
+  dataset:
+    - label: VJ143MA3 V002 (NOAA-20 알베도 1 km)
+      text: >-
+        Schaaf, C., Wang, Z., Erb, A., Paynter, I. (2024). VIIRS/JPSS1 BRDF/Albedo Albedo Daily L3 Global 1km SIN Grid V002 [Data set].
+        NASA Land Processes Distributed Active Archive Center. https://doi.org/10.5067/VIIRS/VJ143MA3.002 (Accessed YYYY-MM-DD)
+      doi: 10.5067/VIIRS/VJ143MA3.002
+      bibtex: |
+        @misc{vj143ma3_v002,
+          author    = {Schaaf, Crystal and Wang, Zhuosen and Erb, Angela and Paynter, Ian},
+          title     = {{VIIRS/JPSS1 BRDF/Albedo Albedo Daily L3 Global 1km SIN Grid V002}},
+          year      = {2024},
+          publisher = {NASA Land Processes Distributed Active Archive Center},
+          doi       = {10.5067/VIIRS/VJ143MA3.002}
+        }
+    - label: VNP43MA3 V002 (Suomi NPP 알베도 1 km)
+      text: >-
+        Schaaf, C., Wang, Z., Erb, A., Paynter, I. (2024). VIIRS/NPP BRDF/Albedo Albedo Daily L3 Global 1km SIN Grid V002 [Data set].
+        NASA Land Processes Distributed Active Archive Center. https://doi.org/10.5067/VIIRS/VNP43MA3.002 (Accessed YYYY-MM-DD)
+      doi: 10.5067/VIIRS/VNP43MA3.002
+      bibtex: |
+        @misc{vnp43ma3_v002,
+          author    = {Schaaf, Crystal and Wang, Zhuosen and Erb, Angela and Paynter, Ian},
+          title     = {{VIIRS/NPP BRDF/Albedo Albedo Daily L3 Global 1km SIN Grid V002}},
+          year      = {2024},
+          publisher = {NASA Land Processes Distributed Active Archive Center},
+          doi       = {10.5067/VIIRS/VNP43MA3.002}
+        }
+    - label: VJ243MA3 V002 (NOAA-21 알베도 1 km)
+      text: >-
+        Schaaf, C., Wang, Z., Erb, A., Paynter, I. (2026). VIIRS/JPSS2 BRDF/Albedo Albedo Daily L3 Global 1km SIN Grid V002 [Data set].
+        NASA Land Processes Distributed Active Archive Center. https://doi.org/10.5067/VIIRS/VJ243MA3.002 (Accessed YYYY-MM-DD)
+      doi: 10.5067/VIIRS/VJ243MA3.002
+      bibtex: |
+        @misc{vj243ma3_v002,
+          author    = {Schaaf, Crystal and Wang, Zhuosen and Erb, Angela and Paynter, Ian},
+          title     = {{VIIRS/JPSS2 BRDF/Albedo Albedo Daily L3 Global 1km SIN Grid V002}},
+          year      = {2026},
+          publisher = {NASA Land Processes Distributed Active Archive Center},
+          doi       = {10.5067/VIIRS/VJ243MA3.002}
+        }
+  papers:
+    - label: VIIRS BRDF/Albedo/NBAR 평가와 MODIS 연속성
+      text: >-
+        Liu, Y., Wang, Z., Sun, Q., Erb, A. M., Li, Z., Schaaf, C. B., Zhang, X., Román, M. O., Scott, R. L., Zhang, Q., Novick, K. A.,
+        Bret-Harte, M. S., Petroy, S., SanClements, M. (2017): Evaluation of the VIIRS BRDF, Albedo and NBAR products suite and an assessment
+        of continuity with the long term MODIS record. Remote Sensing of Environment, 201, 256–274.
+      doi: 10.1016/j.rse.2017.09.020
+      bibtex: |
+        @article{liu2017viirsbrdf,
+          author  = {Liu, Yan and Wang, Zhuosen and Sun, Qingsong and Erb, Angela M. and Li, Zhan and Schaaf, Crystal B. and Zhang, Xiaoyang and Rom{\'a}n, Miguel O. and Scott, Russell L. and Zhang, Quan and Novick, Kimberly A. and Bret-Harte, M. Syndonia and Petroy, Shelley and SanClements, Mike},
+          title   = {Evaluation of the {VIIRS} {BRDF}, Albedo and {NBAR} products suite and an assessment of continuity with the long term {MODIS} record},
+          journal = {Remote Sensing of Environment},
+          volume  = {201},
+          pages   = {256--274},
+          year    = {2017},
+          doi     = {10.1016/j.rse.2017.09.020}
+        }
+    - label: MODIS C6.1과 VIIRS C2 지면 제품 연속성 (리뷰)
+      text: >-
+        Román, M. O., Justice, C., Paynter, I., Boucher, P. B., Devadiga, S., Endsley, A., Erb, A., Friedl, M., Gao, H., Giglio, L., Gray, J. M., Hall, D.,
+        Hulley, G., Kimball, J., Knyazikhin, Y., Lyapustin, A., Myneni, R. B., Noojipady, P., Pu, J., Riggs, G., Sarkar, S., Schaaf, C., Shah, D., Tran, K. H.,
+        Vermote, E., Wang, D., Wang, Z., Wu, A., Ye, Y., Shen, Y., Zhang, S., Zhang, X., Zhao, M., Davidson, C., Wolfe, R. (2024): Continuity between NASA MODIS
+        Collection 6.1 and VIIRS Collection 2 land products. Remote Sensing of Environment, 302, 113963.
+      doi: 10.1016/j.rse.2023.113963
+      bibtex: |
+        @article{roman2024continuity,
+          author  = {Rom{\'a}n, Miguel O. and Justice, Chris and Paynter, Ian and Boucher, Peter B. and Devadiga, Sadashiva and Endsley, Arthur and Erb, Angela and Friedl, Mark and Gao, Huilin and Giglio, Louis and Gray, Josh M. and Hall, Dorothy and Hulley, Glynn and Kimball, John and Knyazikhin, Yuri and Lyapustin, Alexei and Myneni, Ranga B. and Noojipady, Praveen and Pu, Jiabin and Riggs, George and Sarkar, Sudipta and Schaaf, Crystal and Shah, Deep and Tran, Khuong H. and Vermote, Eric and Wang, Dongdong and Wang, Zhuosen and Wu, Aisheng and Ye, Yongchang and Shen, Yu and Zhang, Shuai and Zhang, Xiaoyang and Zhao, Maosheng and Davidson, Carol and Wolfe, Robert},
+          title   = {Continuity between {NASA} {MODIS} Collection 6.1 and {VIIRS} Collection 2 land products},
+          journal = {Remote Sensing of Environment},
+          volume  = {302},
+          pages   = {113963},
+          year    = {2024},
+          doi     = {10.1016/j.rse.2023.113963}
+        }
+  acknowledgement: >-
+    LP DAAC은 제품마다 DOI 소개 페이지의 인용 문구를 쓰도록 안내합니다. 실제로 쓴 위성·제품(예: VJ143IA3 10.5067/VIIRS/VJ143IA3.002, VNP43IA3 10.5067/VIIRS/VNP43IA3.002, VNP43C3 10.5067/VIIRS/VNP43C3.002)의 DOI를 각각 인용하세요.
+    알고리즘은 MODIS MCD43과 같으므로 Schaaf et al. (2002)도 함께 인용하는 것이 일반적입니다.
+
+transitions:
+  - from: VIIRS BRDF/Albedo Collection 1 (V001)
+    to: VIIRS BRDF/Albedo Collection 2 (V002)
+    status: completed
+    date: "2024-10"
+    summary: >-
+      Suomi NPP 전 기간 보정과 위치 정확도, 구름·해륙 마스크를 개선해 다시 만든 판입니다. NOAA-20(VJ143) 제품이 C2에서 처음 생겼고,
+      NOAA-21(VJ243) 제품도 추가되었습니다. C1(VNP43 V001)은 2025년 초 생산을 멈췄습니다.
+    changes:
+      - aspect: 공개
+        before: "V001 (Suomi NPP만)"
+        after: "타일 제품 2024-10-31, CMG 2025-01-31 공개 / NOAA-21(VJ243) 제품 2026년 DOI 등록"
+      - aspect: 위성
+        before: "Suomi NPP(VNP43)"
+        after: "Suomi NPP(VNP43) + NOAA-20(VJ143) + NOAA-21(VJ243)"
+      - aspect: 보정·위치
+        before: "C1 보정 계수"
+        after: "Suomi NPP 전 기간 보정 알고리즘·계수 개선, 위치 정확도 향상(기동 기간 이상값 수정)"
+      - aspect: 입력 마스크
+        before: "C1 구름 마스크, 해륙 마스크"
+        after: "구름 마스크 입력 개선(해안선 오류·조잡한 기후값 흔적 감소), 에어로졸 양 플래그 수정(중·고위도 밝은 지표), VNP03 8분류 해륙 마스크로 교체(MODIS와 더 잘 맞음)"
+      - aspect: 기간
+        before: "2012-01~2025-02 (V001 마지막)"
+        after: "2012-01~현재"
+    impacts:
+      - C1과 C2를 섞지 말고 전 기간을 C2로 다시 받으세요.
+      - 해안선·고위도 밝은 지표 근처 값이 C1과 달라질 수 있습니다.
+    sources:
+      - name: LP DAAC VNP43MA4 V002 컬렉션 설명(버전 변경 사항, CMR)
+        url: https://doi.org/10.5067/VIIRS/VNP43MA4.002
+      - name: VIIRS Version 2 Albedo, BRDF, and NBAR Tiled Data Products Released (Earthdata)
+        url: https://www.earthdata.nasa.gov/data/alerts-outages/viirs-version-2-albedo-brdf-nbar-tiled-data-products-released
+      - name: VIIRS Version 2 Albedo, BRDF, and NBAR CMG Data Products Released (Earthdata)
+        url: https://www.earthdata.nasa.gov/data/alerts-outages/viirs-version-2-albedo-brdf-nbar-cmg-data-products-released
+
+notices:
+  - date: "2026-08-03"
+    level: critical
+    title: Suomi NPP 자료 전달 2026년 11월 2일 종료 — VNP43 신규 자료 중단
+    body: >-
+      NOAA는 2026년 11월 2일 13:00 UTC에 Suomi NPP의 남은 과학 산출물(VIIRS 포함) 전달을 영구히 끝낸다고 공지했고, NOAA-21(1순위)·NOAA-20(2순위)으로 옮기라고 권고했습니다.
+      LP DAAC의 VNP43 컬렉션 설명에도 같은 날짜와 함께 VJ243(1순위)·VJ143(2순위) 제품을 쓰라는 안내가 붙었습니다. 이미 공개된 과거 자료는 계속 받을 수 있습니다.
+    source: https://www.nesdis.noaa.gov/news/cessation-of-suomi-national-polar-orbiting-partnership-s-npp-data-users-onafter-november-2-2026
+  - date: "2026-07-13"
+    level: warning
+    title: Suomi NPP 위성 이상 — 2026년 7월 10일부터 VIIRS 산출물 생산 중단
+    body: >-
+      Suomi NPP가 7월 10일 14:50 UTC께 비정상 상태에 들어가 11일 01:30 UTC부터 모든 과학 산출물 생산이 멈췄습니다(VNP43 포함).
+      NSIDC 안내에 따르면 7월 21일 위성은 정상으로 돌아왔고 이후 생산이 재개되었지만, 이 기간 관측은 복구되지 않을 수 있습니다.
+    source: https://www.earthdata.nasa.gov/data/alerts-outages/suomi-npp-viirs-data-outage-anomaly-july-10-2026
+  - date: "2025-03-28"
+    level: info
+    title: AppEEARS에서 VIIRS BRDF/Albedo V2 제품 제공 시작
+    body: >-
+      AppEEARS 3.76에 Suomi NPP·NOAA-20 VIIRS BRDF/Albedo V2 제품 16종(500 m·1 km Sinusoidal 격자)이 추가되었습니다.
+    source: https://www.earthdata.nasa.gov/data/alerts-outages/viirs-brdf-albedo-version-2-products-available-appeears
+  - date: "2025-01-31"
+    level: info
+    title: VIIRS V2 BRDF/Albedo/NBAR 0.05° CMG 제품 공개
+    body: >-
+      BRDF 매개변수·무적설 매개변수·알베도·NBAR의 0.05° 기후모델격자 제품 8종(VNP43C1~C4, VJ143C1~C4)이 공개되었습니다.
+      V1 BRDF/알베도 제품의 정방향 생산은 2025년 1월 31일까지 이어졌습니다.
+    source: https://www.earthdata.nasa.gov/data/alerts-outages/viirs-version-2-albedo-brdf-nbar-cmg-data-products-released
+  - date: "2024-10-31"
+    level: info
+    title: VIIRS V2 BRDF/Albedo/NBAR 타일 제품 공개 (Suomi NPP·NOAA-20)
+    body: >-
+      VNP43IA1~4·VJ143IA1~4(500 m), VNP43MA1~4·VJ143MA1~4(1 km) V2 제품이 공개되었습니다. 전환 기간 동안 Suomi NPP V1도 함께 제공되었습니다.
+    source: https://www.earthdata.nasa.gov/data/alerts-outages/viirs-version-2-albedo-brdf-nbar-tiled-data-products-released
+
+links:
+  - name: VIIRS BRDF/Albedo 사용자 안내서 (C1·C2, UMass Boston)
+    url: https://www.umb.edu/spectralmass/viirs-user-guides-c1-and-c2/
+  - name: VNP43 알고리즘 이론 문서(ATBD)
+    url: https://lpdaac.usgs.gov/documents/194/VNP43_ATBD_V1.pdf
+  - name: VIIRS 지면 알베도 검증 현황
+    url: https://viirsland.gsfc.nasa.gov/Val/Albedo_Val.html
+  - name: LAADS 파일 명세 — VNP43MA3
+    url: https://ladsweb.modaps.eosdis.nasa.gov/filespec/VIIRS/1/VNP43MA3
+  - name: NOAA — S-NPP 자료 전달 종료 공지 (2026-08-03)
+    url: https://www.nesdis.noaa.gov/news/cessation-of-suomi-national-polar-orbiting-partnership-s-npp-data-users-onafter-november-2-2026
+
+watch_urls:
+  - https://www.earthdata.nasa.gov/data/alerts-outages
+  - https://doi.org/10.5067/VIIRS/VJ143MA3.002
+
+last_verified: "2026-10-13"

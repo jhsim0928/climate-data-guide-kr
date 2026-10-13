@@ -1,0 +1,378 @@
+# ─────────────────────────────────────────────────────────────
+# MODIS BRDF/Albedo (MCD43) C6.1 — 데이터셋 정보 파일
+# 지면 탭(지표면온도·알베도). Terra·Aqua 종료를 앞둔 대체 예정 자료이며, 후속 VIIRS 자료(viirs-albedo.yaml)로 전환 정보를 연결합니다.
+# 수정 후에는 공식 페이지에서 확인한 날짜로 last_verified 를 갱신하세요.
+# ─────────────────────────────────────────────────────────────
+id: modis-albedo
+name: "MODIS BRDF/Albedo (MCD43)"
+full_name: MODIS/Terra+Aqua BRDF/Albedo (MCD43) Collection 6.1 (MODIS 양방향 반사 분포 함수·지표 알베도·천정 보정 반사도, 16일 창으로 매일 산출)
+category: satellite
+domain: land
+group: 지표면온도·알베도
+order: 20
+domains: [육지, 원격탐사]
+provider: NASA MODIS 지면팀(UMass Boston Schaaf 연구실) / NASA LP DAAC
+
+status: deprecated
+status_note: >-
+  Collection 6.1(V061)이 현재 판으로 매일 갱신되고 있지만(2026-10-13 확인 시 MCD43A3 최신 파일은 2026년 10월 2일자), 자료를 만드는 Terra·Aqua 위성이
+  연료 고갈로 궤도가 표류하며 임무 종료를 앞두고 있습니다. NASA는 2025년 5월 공지에서 2026년 말~2027년 초 종료가 시작되면 MODIS 수집이 멈추고
+  마지막 재처리가 있을 것이라며 VIIRS 유사 제품(VNP43·VJ143)으로 옮기라고 권고했습니다. 처음 계획(Terra 2025년 12월, Aqua 2026년 8월 종료)보다 운용이 길어지고 있으나 종료일은 공식적으로 정해지지 않았습니다.
+
+period:
+  start: "2000-02"
+  end: present
+  note: >-
+    CMR 기준 시작일은 2000-02-16이며 끝나는 날짜가 없는 진행 중 자료입니다. 2002년 중반 Aqua 합류 전에는 Terra 관측만으로 만들어졌습니다.
+    16일 창의 가운데 날을 기준으로 삼기 때문에 최신 파일은 관측일보다 약 열흘 늦게 나옵니다(2026-10-13 확인 시 MCD43A3 최신 파일 날짜 A2026275 = 2026-10-02).
+
+resolution:
+  spatial_short: "0.5 km (0.005°)"
+  temporal_short: "1일"
+  spatial: >-
+    MODIS Sinusoidal 타일 격자, 500 m(MCD43A1~A4, 타일 하나 2400×2400 화소, 약 1200 km × 1200 km) /
+    0.05° 기후모델격자(CMG, MCD43C1~C4) / 30 arc-second CMG(MCD43D 밴드·변수별 제품, MCD43GF 빈칸 채움 무적설 제품)
+  vertical: 지표면 단일층
+  temporal: 매일 산출 (각 산출은 16일 동안의 Terra·Aqua 관측을 쓰고 9번째 날에 가중, 파일 이름 날짜 = 그 9번째 날)
+
+update: 매일 (16일 창의 끝까지 관측이 모여야 하므로 파일 날짜보다 약 10일 늦게 공개)
+license: NASA 지구과학 공개 자료 — 무료, 제한 없이 이용(EOSDIS 자료 이용·인용 지침). 다운로드에는 무료 NASA Earthdata 로그인이 필요합니다
+account_required: true
+
+summary: >-
+  MCD43은 Terra와 Aqua MODIS의 다각도 맑은 하늘 관측을 16일씩 모아 화소마다 커널 기반 양방향 반사 분포 함수(BRDF, RossThick/LiSparse-Reciprocal 모형)를
+  맞추고, 그 모형으로 흑색 하늘(black-sky)·백색 하늘(white-sky) 알베도와 천정 보정 반사도(NBAR)를 계산하는 MODIS 지면 표준 제품군입니다.
+  Collection 6부터는 16일 창을 하루씩 옮겨 가며 매일 산출하고, 창의 9번째 날 관측에 무게를 두어 빠르게 바뀌는 지면(눈 덮임·녹음, 작물 생장) 변화를 따라갑니다.
+  500 m 타일(A 제품)과 0.05°·30 arc-second 전지구 격자(C·D 제품)로 제공되며, 기후모델 지면 알베도 검증과 복사수지 연구의 표준 자료로 쓰입니다.
+
+time_convention:
+  summary: >-
+    한 파일의 값은 '한 시점의 관측'이 아니라 16일 동안의 관측으로 맞춘 BRDF 모형에서 나온 값이며, 창의 9번째 날(파일 이름의 날짜)에 무게를 둡니다.
+    흑색 하늘 알베도와 NBAR은 그날 '현지 정오의 태양 천정각'에서 계산한 값이고, 백색 하늘 알베도는 태양 위치와 무관한 확산광 조건의 값입니다.
+  points:
+    - "파일 이름의 AYYYYDDD는 16일 입력 창의 가운데(9번째 날)입니다. 예를 들어 A2026275(2026-10-02)는 그 날짜 앞뒤 관측을 모아 만든 값이며, 그 날짜 하루의 관측값이 아닙니다."
+    - "Collection 6 이전 재처리판은 창의 첫날을, 직접수신(Direct Broadcast)판은 창의 마지막 날을 날짜로 썼습니다. 옛 버전 자료와 날짜를 맞출 때 주의하세요."
+    - "같은 화소에 관측이 충분하면(현재 기준 7회 이상, 각도 분포가 고를 때) '전체 역산(full inversion)', 부족하면 미리 정한 BRDF 모양에 크기만 맞추는 '크기 역산(magnitude inversion)'으로 값을 냅니다. 품질 플래그로 구분됩니다."
+    - "Terra(오전)와 Aqua(오후) 관측을 섞어 쓰므로 하루 중 특정 시각의 값이 아닙니다. 두 위성의 궤도 표류로 통과 시각이 Terra는 더 이르게(2025년 말 약 오전 9시), Aqua는 더 늦게(2026년 8월 무렵 오후 3시 50분 안팎 예측) 바뀌어 태양 고도가 낮은 관측이 늘었습니다."
+    - "실제 하늘 조건의 알베도(blue-sky albedo)는 제공되지 않습니다. 확산광 비율(에어로졸 광학두께에 좌우)로 흑색·백색 하늘 알베도를 내삽해 직접 계산해야 합니다."
+    - "MCD43A2의 `BRDF_Albedo_ValidObs_Band*`는 16일 창 안에서 유효 관측이 있었던 날 수를 담고 있습니다."
+  source: https://www.umb.edu/spectralmass/modis-user-guide-v006-and-v0061/mcd43a3-albedo-product/
+  source_name: "MODIS BRDF/Albedo V006·V006.1 사용자 안내서(UMass Boston) + LP DAAC MCD43A3 V061 컬렉션 설명(CMR)"
+
+variables:
+  note: >-
+    LP DAAC 제품 페이지·LAADS 파일 명세(V061)에서 확인한 파일 속 이름입니다. 알베도·BRDF 매개변수는 INT16에 scale_factor 0.001, NBAR은 0.0001, 채움값은 32767입니다.
+    Band1~Band7은 MODIS 1~7번 밴드(620~2155 nm), vis·nir·shortwave는 광대역 값입니다. 파일 형식은 HDF-EOS2(HDF4)입니다.
+  full_list: https://lpdaac.usgs.gov/products/mcd43a3v061/
+  groups:
+    - name: 알베도 (MCD43A3 500 m / MCD43C3 0.05°)
+      kind: mean
+      period: 16일 창(9번째 날 가중)
+      items:
+        - text: "흑색 하늘 알베도(직달광, 현지 정오) — `Albedo_BSA_Band1`~`Albedo_BSA_Band7`, `Albedo_BSA_vis`, `Albedo_BSA_nir`, `Albedo_BSA_shortwave` (무차원)"
+          note: 16일 관측으로 맞춘 BRDF 모형을 현지 정오 태양 천정각에서 적분한 값. 산술 평균이 아니라 가중 모형 역산 결과
+        - text: "백색 하늘 알베도(완전 확산광) — `Albedo_WSA_Band1`~`Albedo_WSA_Band7`, `Albedo_WSA_vis`, `Albedo_WSA_nir`, `Albedo_WSA_shortwave` (무차원)"
+          note: 태양 위치와 무관한 값
+        - "밴드별 필수 품질 — `BRDF_Albedo_Band_Mandatory_Quality_Band1`~`_shortwave` (0 전체 역산, 1 크기 역산, 2~7 5·6번 밴드 결측 표시)"
+        - text: "CMG 칸 안 적설 화소 비율 — `Percent_Snow` (%)"
+          note: MCD43C3. 그 칸의 500 m 입력 중 눈으로 표시된 비율
+        - text: "CMG 칸 안 유효 입력 비율 — `Percent_Inputs` (%)"
+          note: MCD43C3
+        - text: "현지 정오 태양 천정각 — `Local_Solar_Noon` (도)"
+          kind: instant
+          note: MCD43C3. 파일 날짜의 현지 정오 태양 천정각
+    - name: 천정 보정 반사도 NBAR (MCD43A4 500 m / MCD43C4 0.05°)
+      kind: mean
+      period: 16일 창(9번째 날 가중)
+      items:
+        - text: "천정 보정 반사도(현지 정오 태양각, 연직 시선) — `Nadir_Reflectance_Band1`~`Nadir_Reflectance_Band7` (무차원)"
+          note: scale_factor 0.0001. 식생지수·토지피복 분석용 각도 효과 제거 반사도
+        - "밴드별 필수 품질 — `BRDF_Albedo_Band_Mandatory_Quality_Band1`~`Band7`"
+    - name: BRDF 모형 매개변수 (MCD43A1 500 m / MCD43C1·C2 0.05°)
+      kind: mean
+      period: 16일 창(9번째 날 가중)
+      items:
+        - text: "커널 가중치(등방·체적 산란·기하광학 3개) — `BRDF_Albedo_Parameters_Band1`~`Band7`, `_vis`, `_nir`, `_shortwave`"
+          note: "마지막 차원(Num_Parameters)이 iso·vol·geo 순서. 임의의 태양·관측 각도의 반사도와 알베도를 다시 계산할 때 사용. MCD43C2는 무적설 매개변수"
+    - name: 품질·보조 정보 (MCD43A2 500 m)
+      kind: mean
+      period: 16일 창
+      items:
+        - "눈 상태(적설/무적설 역산 구분) — `Snow_BRDF_Albedo`"
+        - "BRDF 역산 상세 품질 — `BRDF_Albedo_Band_Quality_Band1`~`Band7`"
+        - "알베도 불확도(백색 하늘 알베도 결정 가중치) — `BRDF_Albedo_Uncertainty`"
+        - text: "16일 창 안 유효 관측 일수 — `BRDF_Albedo_ValidObs_Band1`~`Band7` (일)"
+          kind: accum
+          note: 16일 창 안에서 관측이 있었던 날 수
+        - text: "현지 정오 태양 천정각 — `BRDF_Albedo_LocalSolarNoon` (도)"
+          kind: instant
+        - "사용 위성(Terra·Aqua) — `BRDF_Albedo_Platform`, 육지·물 구분 — `BRDF_Albedo_LandWaterType`"
+
+access:
+  - name: NASA Earthdata Search (LP DAAC, Earthdata Cloud)
+    url: https://search.earthdata.nasa.gov/search/granules?p=C2278860820-LPCLOUD
+    method: 웹 검색·다운로드 / earthaccess (HDF-EOS2)
+    note: >-
+      MCD43A1·A2·A3·A4(500 m 타일), MCD43C1~C4(0.05° CMG), MCD43D01~D68(30 arc-second 밴드·변수별), MCD43GF(무적설 빈칸 채움)가 모두 V061로 있습니다.
+      CMR 짧은 이름은 예를 들어 MCD43A3, 버전은 061입니다. 무료 Earthdata 로그인이 필요합니다.
+  - name: NASA AppEEARS
+    url: https://appeears.earthdatacloud.nasa.gov/
+    method: 지점·영역 추출, 재투영 (GeoTIFF·NetCDF4)
+    note: Sinusoidal 타일을 직접 다루지 않고 원하는 지점의 시계열이나 위경도 격자로 받을 수 있어 처음 쓰는 분께 편합니다.
+  - name: LP DAAC 제품 페이지 (MCD43A3 V061)
+    url: https://lpdaac.usgs.gov/products/mcd43a3v061/
+    method: 문서·변수표·DOI
+  - name: Google Earth Engine (MODIS/061/MCD43A4, MODIS/061/MCD43C3 등)
+    url: https://developers.google.com/earth-engine/datasets/catalog/MODIS_061_MCD43C3
+    method: 클라우드 분석 (Earth Engine 계정 필요)
+    note: NASA 원본을 재배포한 사본입니다. 갱신 시점이 원본과 다를 수 있습니다.
+
+example:
+  lang: python
+  note: >-
+    earthaccess로 2024년 4월 하루치 MCD43A3 타일을 받아 백색 하늘 단파 알베도를 읽는 예입니다. HDF4 파일이라 pyhdf로 엽니다(pip install earthaccess pyhdf numpy).
+    전체 역산(품질 0)만 남기는 처리를 함께 보여 줍니다.
+  code: |
+    import earthaccess
+    import numpy as np
+    from pyhdf.SD import SD, SDC
+
+    earthaccess.login()  # 무료 NASA Earthdata 계정
+    results = earthaccess.search_data(
+        short_name="MCD43A3", version="061",
+        temporal=("2024-04-15", "2024-04-15"),
+        bounding_box=(124, 33, 132, 39),   # (서, 남, 동, 북)
+    )
+    files = earthaccess.download(results, "mcd43a3")
+
+    for f in files:
+        sd = SD(f, SDC.READ)
+        wsa = sd.select("Albedo_WSA_shortwave")[:].astype("float32")
+        qa = sd.select("BRDF_Albedo_Band_Mandatory_Quality_shortwave")[:]
+        wsa[wsa == 32767] = np.nan        # 채움값
+        wsa *= 0.001                      # scale_factor
+        wsa[qa != 0] = np.nan             # 전체 역산(full inversion)만 사용
+        print(f, np.nanmean(wsa))
+
+    # 파일 이름의 A2024106 같은 날짜는 16일 창의 9번째 날입니다.
+
+tips:
+  - "값은 정수로 저장되어 있습니다. 알베도·BRDF 매개변수는 × 0.001, NBAR은 × 0.0001을 곱하고, 32767(채움값)은 먼저 결측으로 바꾸세요."
+  - "LP DAAC과 사용자 안내서는 밴드별 품질 플래그로 '전체 역산(값 0)' 결과만 골라 쓰라고 권합니다. 크기 역산(1) 값은 관측이 부족한 화소라 불확실성이 큽니다."
+  - "Collection 6.1에서 품질 값 2~7이 추가되었습니다. 검출기가 고장 나거나 잡음이 큰 5번·6번 밴드(1.24·1.64 µm)가 채움값이 된 경우를 표시하며, 특히 Aqua MODIS 6번 밴드는 검출기 상당수가 동작하지 않습니다. 해당 밴드를 쓰는 분석은 이 값을 확인하세요."
+  - "파일 날짜 하루의 '관측'으로 해석하지 마세요. 16일 창이 겹치므로 이웃한 날짜끼리 강하게 상관되어 있고, 하루 단위 차이로 변화 시점을 정밀하게 잡을 수 없습니다."
+  - "눈이 있는 기간에는 적설 상태 역산이 들어갑니다(`Snow_BRDF_Albedo`). 무적설 배경 알베도가 필요하면 MCD43C2(무적설 매개변수)나 MCD43GF를 쓰세요."
+  - "500 m 제품은 MODIS Sinusoidal 투영 타일(hXXvYY)입니다. 위경도 격자가 필요하면 AppEEARS로 재투영하거나 0.05° CMG(MCD43C3)를 쓰세요."
+  - "Terra·Aqua 궤도 표류로 통과 시각이 바뀌어 태양 고도가 낮은 관측과 그림자가 늘었고, 저고도화로 16일 반복 궤도도 엄밀히 지켜지지 않습니다. 2020년대 이후 추세 분석에서는 이 영향을 염두에 두세요."
+  - "MODIS 지면팀은 마지막 재처리인 Collection 7(모든 제품 netCDF4)을 준비 중이라고 밝혔지만, 2026-10-13 확인 시 CMR에 MCD43 C7 컬렉션은 아직 없습니다. C7이 나오면 전 기간 값이 바뀌므로 C6.1과 섞지 마세요."
+  - "2023년 7월 7일부터 야간 근무 없이 운용(Lights-Out-Operations)되어 복구 불가능한 관측 결손이 전보다 잦습니다. LDOPE 품질 게시판(landweb.modaps.eosdis.nasa.gov)에서 해당 날짜를 확인하세요."
+
+citations:
+  dataset:
+    - label: MCD43A3 V061 (알베도 500 m)
+      text: >-
+        Schaaf, C., Wang, Z. (2021). MODIS/Terra+Aqua BRDF/Albedo Daily L3 Global - 500m V061 [Data set].
+        NASA Land Processes Distributed Active Archive Center. https://doi.org/10.5067/MODIS/MCD43A3.061 (Accessed YYYY-MM-DD)
+      doi: 10.5067/MODIS/MCD43A3.061
+      bibtex: |
+        @misc{mcd43a3_v061,
+          author    = {Schaaf, Crystal and Wang, Zhuosen},
+          title     = {{MODIS/Terra+Aqua BRDF/Albedo Daily L3 Global - 500m V061}},
+          year      = {2021},
+          publisher = {NASA Land Processes Distributed Active Archive Center},
+          doi       = {10.5067/MODIS/MCD43A3.061}
+        }
+    - label: MCD43A4 V061 (NBAR 500 m)
+      text: >-
+        Schaaf, C., Wang, Z. (2021). MODIS/Terra+Aqua BRDF/Albedo Nadir BRDF Adjusted Ref Daily L3 Global - 500m V061 [Data set].
+        NASA Land Processes Distributed Active Archive Center. https://doi.org/10.5067/MODIS/MCD43A4.061 (Accessed YYYY-MM-DD)
+      doi: 10.5067/MODIS/MCD43A4.061
+      bibtex: |
+        @misc{mcd43a4_v061,
+          author    = {Schaaf, Crystal and Wang, Zhuosen},
+          title     = {{MODIS/Terra+Aqua BRDF/Albedo Nadir BRDF Adjusted Ref Daily L3 Global - 500m V061}},
+          year      = {2021},
+          publisher = {NASA Land Processes Distributed Active Archive Center},
+          doi       = {10.5067/MODIS/MCD43A4.061}
+        }
+    - label: MCD43C3 V061 (알베도 0.05° CMG)
+      text: >-
+        Schaaf, C., Wang, Z. (2021). MODIS/Terra+Aqua BRDF/Albedo Albedo Daily L3 Global 0.05Deg CMG V061 [Data set].
+        NASA Land Processes Distributed Active Archive Center. https://doi.org/10.5067/MODIS/MCD43C3.061 (Accessed YYYY-MM-DD)
+      doi: 10.5067/MODIS/MCD43C3.061
+      bibtex: |
+        @misc{mcd43c3_v061,
+          author    = {Schaaf, Crystal and Wang, Zhuosen},
+          title     = {{MODIS/Terra+Aqua BRDF/Albedo Albedo Daily L3 Global 0.05Deg CMG V061}},
+          year      = {2021},
+          publisher = {NASA Land Processes Distributed Active Archive Center},
+          doi       = {10.5067/MODIS/MCD43C3.061}
+        }
+  papers:
+    - label: MODIS BRDF/알베도 최초 운영 제품 논문
+      text: >-
+        Schaaf, C. B., Gao, F., Strahler, A. H., Lucht, W., Li, X., Tsang, T., Strugnell, N. C., Zhang, X., Jin, Y., Muller, J.-P., Lewis, P.,
+        Barnsley, M., Hobson, P., Disney, M., Roberts, G., Dunderdale, M., Doll, C., d'Entremont, R. P., Hu, B., Liang, S., Privette, J. L., Roy, D. (2002):
+        First operational BRDF, albedo nadir reflectance products from MODIS. Remote Sensing of Environment, 83(1–2), 135–148.
+      doi: 10.1016/S0034-4257(02)00091-3
+      bibtex: |
+        @article{schaaf2002mcd43,
+          author  = {Schaaf, Crystal B. and Gao, Feng and Strahler, Alan H. and Lucht, Wolfgang and Li, Xiaowen and Tsang, Trevor and Strugnell, Nicholas C. and Zhang, Xiaoyang and Jin, Yufang and Muller, Jan-Peter and Lewis, Philip and Barnsley, Michael and Hobson, Paul and Disney, Mathias and Roberts, Gareth and Dunderdale, Michael and Doll, Christopher and d'Entremont, Robert P. and Hu, Baoxin and Liang, Shunlin and Privette, Jeffrey L. and Roy, David},
+          title   = {First operational {BRDF}, albedo nadir reflectance products from {MODIS}},
+          journal = {Remote Sensing of Environment},
+          volume  = {83},
+          number  = {1-2},
+          pages   = {135--148},
+          year    = {2002},
+          doi     = {10.1016/S0034-4257(02)00091-3}
+        }
+    - label: Collection 6 일 단위 MCD43 논문
+      text: >-
+        Wang, Z., Schaaf, C. B., Sun, Q., Shuai, Y., Román, M. O. (2018): Capturing rapid land surface dynamics with Collection V006
+        MODIS BRDF/NBAR/Albedo (MCD43) products. Remote Sensing of Environment, 207, 50–64.
+      doi: 10.1016/j.rse.2018.02.001
+      bibtex: |
+        @article{wang2018mcd43v006,
+          author  = {Wang, Zhuosen and Schaaf, Crystal B. and Sun, Qingsong and Shuai, Yanmin and Rom{\'a}n, Miguel O.},
+          title   = {Capturing rapid land surface dynamics with Collection {V006} {MODIS} {BRDF/NBAR/Albedo} ({MCD43}) products},
+          journal = {Remote Sensing of Environment},
+          volume  = {207},
+          pages   = {50--64},
+          year    = {2018},
+          doi     = {10.1016/j.rse.2018.02.001}
+        }
+  acknowledgement: >-
+    LP DAAC은 제품마다 DOI 소개 페이지의 인용 문구를 쓰도록 안내합니다. 실제로 쓴 제품(A1·A2·A3·A4, C1~C4, D, GF)의 DOI를 각각 인용하고 접속 날짜를 적으세요.
+    방법론 설명에는 Schaaf et al. (2002)와 Collection 6 일 단위 산출을 다룬 Wang et al. (2018)을 함께 인용합니다.
+
+transitions:
+  - from: MODIS MCD43 C6.1 (Terra+Aqua)
+    to: VIIRS VNP43·VJ143 C2
+    to_id: viirs-albedo
+    status: planned
+    date: "2026"
+    summary: >-
+      Terra·Aqua 종료에 대비해 NASA는 같은 알고리즘(RossThick/LiSparse-Reciprocal BRDF, 16일 창·9번째 날 가중)을 VIIRS 관측에 적용한
+      VNP43(Suomi NPP)·VJ143(NOAA-20)·VJ243(NOAA-21) 제품을 MODIS 후속으로 내고 있습니다. 해상도·밴드·파일 형식·관측 시각이 달라 그대로 이어 붙일 수는 없습니다.
+    changes:
+      - aspect: 위성·센서
+        before: "Terra(2000-02~)·Aqua(2002-07~) MODIS 두 위성 관측을 합쳐 한 제품(MCD43)"
+        after: "Suomi NPP(VNP43, 2012-01~), NOAA-20(VJ143, 2018-01~), NOAA-21(VJ243, 2023-02~) VIIRS. 위성마다 따로 만든 별도 제품"
+      - aspect: 관측 시각
+        before: "오전(Terra) + 오후(Aqua) 관측 혼합"
+        after: "오후 궤도 위성 하나의 관측만 사용. Terra 같은 오전 관측을 잇는 후속은 없음(LAADS 안내)"
+      - aspect: 수평 해상도·밴드
+        before: "500 m, MODIS 1~7번 밴드 + vis·nir·shortwave 광대역 / 0.05°·30 arc-second CMG"
+        after: "500 m(I1~I3 영상 밴드, IA 제품) + 1 km(M1~M5, M7, M8, M10, M11 + vis·nir·shortwave, MA 제품) / 0.05°·30 arc-second CMG"
+      - aspect: 변수 이름
+        before: "`Albedo_WSA_Band1`~`Band7`, `Albedo_WSA_shortwave` 등"
+        after: "`Albedo_WSA_M1`~`M11`, `Albedo_WSA_I1`~`I3`, 광대역은 `Albedo_WSA_shortwave`처럼 같은 이름. scale_factor 0.001은 같음"
+      - aspect: 파일 형식
+        before: "HDF-EOS2 (HDF4)"
+        after: "HDF-EOS5 (HDF5)"
+      - aspect: 알고리즘
+        before: "16일 창, 9번째 날 가중, 전체/크기 역산"
+        after: "같은 방식 (MODIS BRDF/알베도 제품군을 잇도록 설계)"
+    impacts:
+      - "MODIS와 VIIRS 알베도를 한 시계열로 이을 때는 겹치는 기간(2012년 이후)에 같은 지점·밴드끼리 차이를 먼저 확인하세요. 밴드 중심 파장이 달라 분광 알베도는 1:1로 대응하지 않고, 광대역(vis·nir·shortwave) 값끼리 비교하는 것이 안전합니다."
+      - "MCD43은 오전·오후 관측을 합친 값이고 VIIRS 제품은 오후 위성 하나의 값입니다. 관측 수가 줄어 크기 역산 비율이 높아질 수 있으니 품질 플래그 분포를 함께 보세요."
+      - "Suomi NPP 자료(VNP43) 전달은 2026년 11월 2일 끝납니다. 앞으로 이어 쓸 자료는 VJ143(NOAA-20)이나 VJ243(NOAA-21)입니다."
+      - "HDF4용 코드(pyhdf 등)는 HDF5용(h5py·xarray)으로 바꿔야 합니다."
+    sources:
+      - name: Liu et al. (2017) — VIIRS BRDF/Albedo/NBAR 평가와 MODIS 장기 기록과의 연속성
+        url: https://doi.org/10.1016/j.rse.2017.09.020
+      - name: Román et al. (2024) — MODIS C6.1과 VIIRS C2 지면 제품의 연속성
+        url: https://doi.org/10.1016/j.rse.2023.113963
+      - name: NASA Earthdata — Transition from MODIS to VIIRS (2025-05-02)
+        url: https://www.earthdata.nasa.gov/data/alerts-outages/transition-from-modis-viirs
+      - name: LAADS DAAC — MODIS To VIIRS Transition
+        url: https://ladsweb.modaps.eosdis.nasa.gov/learn/modis-to-viirs-transition/
+  - from: MCD43 Collection 6
+    to: MCD43 Collection 6.1
+    status: completed
+    date: "2021-02"
+    summary: >-
+      Level 1B 보정 개선(반사 밴드 응답, Terra 적외 혼선 보정, 편광 보정)을 반영한 재처리판입니다. 알고리즘은 같고, 품질 플래그에 5·6번 밴드 결측 표시가 추가되었습니다.
+      Collection 6.0은 2023년 7월 31일 LP DAAC 배포가 끝났습니다(MCD43GF 제외).
+    changes:
+      - aspect: 입력 보정
+        before: "C6 Level 1B"
+        after: "반사 밴드 주사각 응답(RVS) 처리 변경, Terra 적외 밴드 광학 혼선 보정, Terra 2012~2017년 보정표 수정, 반사 밴드 편광 보정"
+      - aspect: 필수 품질 값
+        before: "0 전체 역산 / 1 크기 역산"
+        after: "0·1에 더해 2~7(5번·6번 밴드가 검출기 고장·잡음으로 채움값인 경우) 추가"
+      - aspect: 제공
+        before: "2023-07-31 배포 종료"
+        after: "현재 판 (CMR 공개일 2021-02-22)"
+    impacts:
+      - C6과 C6.1을 섞지 말고 전 기간을 C6.1로 다시 받으세요.
+      - "품질 값을 0/1로만 가정한 코드는 2~7을 처리하도록 고쳐야 합니다."
+    sources:
+      - name: LP DAAC MCD43A3 V061 제품 페이지 (Improvements/Changes)
+        url: https://lpdaac.usgs.gov/products/mcd43a3v061/
+      - name: MODIS Version 6.0 Land Data Products Decommissioned (Earthdata)
+        url: https://www.earthdata.nasa.gov/data/alerts-outages/modis-version-6-0-land-data-products-decommissioned
+
+notices:
+  - date: "2026-03-26"
+    level: warning
+    title: Terra MODIS 대기 모드 전환 — 2026년 3월 26~27일 자료 품질 불량
+    body: >-
+      3월 26일 약 20:00 UTC 위성 이상으로 Terra MODIS가 대기(standby) 모드로 들어갔다가 27일 과학 모드로 복귀했습니다.
+      보정팀은 2026년 085일 20:00 UTC부터 086일 19:23 UTC까지의 자료를 의심·불량으로 표시했으므로, 이 기간이 16일 창에 들어간 MCD43 값은 품질을 확인하세요.
+    source: https://www.earthdata.nasa.gov/data/alerts-outages/terra-modis-placed-standby-mode
+  - date: "2025-05-02"
+    level: warning
+    title: MODIS에서 VIIRS로 전환 권고 — Terra·Aqua 2026년 말~2027년 초 종료 예정
+    body: >-
+      NASA는 Terra·Aqua가 2026년 말~2027년 초에 종료 절차에 들어가면 MODIS 자료 수집이 멈추고, 그 전에 마지막 재처리를 하겠다고 밝혔습니다.
+      두 위성의 궤도 표류가 통과 시각과 자료에 영향을 준다며, 이용자에게 VIIRS 유사 제품으로 옮기라고 권고했습니다.
+    source: https://www.earthdata.nasa.gov/data/alerts-outages/transition-from-modis-viirs
+  - date: "2024-11-12"
+    level: info
+    title: MCD43GF V6.1(무적설 빈칸 채움 30 arc-second) 공개
+    body: >-
+      알베도·BRDF·NBAR의 빈칸을 채운 무적설 일자료 MCD43GF V6.1이 2013~2021년분부터 공개되었고, 나머지 기간은 차례로 추가됩니다.
+      남은 기간이 나올 때까지 V6 MCD43GF도 계속 제공됩니다.
+    source: https://www.earthdata.nasa.gov/data/alerts-outages/gap-filled-modis-version-6-1-albedo-brdf-nbar-data-product-released
+  - date: "2023-07-25"
+    level: info
+    title: MODIS Version 6.0 지면 제품 배포 종료(2023-07-31)
+    body: >-
+      LP DAAC이 Terra·Aqua·Terra+Aqua MODIS V6.0 지면 제품 배포를 끝냈습니다(MOD44W, MCD43GF 제외). V6.1로 옮겨야 합니다.
+    source: https://www.earthdata.nasa.gov/data/alerts-outages/modis-version-6-0-land-data-products-decommissioned
+  - date: "2023-07-07"
+    level: info
+    title: Terra·Aqua MODIS 야간 무인 운용(LOOps) 전환 — 관측 결손 증가 가능
+    body: >-
+      비행운영팀이 야간 12시간 상주 근무를 없애고, 위성 기록장치 재전송으로 결손을 메우는 작업도 하지 않게 되어 복구할 수 없는 자료 결손이 더 자주 생길 수 있습니다.
+      그래도 전체 수집률은 임무 기준(95%)을 넘을 것으로 봅니다. 모든 MODIS V6.1 제품에 해당합니다.
+    source: https://www.earthdata.nasa.gov/data/alerts-outages/modis-light-out-operations-potential-data-loss
+  - date: "2021-11-10"
+    level: warning
+    title: Aqua 궤도 표류 — 통과 시각이 점점 늦어짐
+    body: >-
+      Aqua는 2021년 3월 마지막 궤도 유지 기동 뒤 7월부터 통과 시각이 늦어지기 시작해 2023년 2월 오후 1시 45분을 넘겼고, 2026년 8월 무렵 오후 3시 50분 안팎에 이를 것으로 예측되었습니다.
+      제품은 대체로 과학 품질을 유지하지만 저고도로 격자 범위가 줄고 16일 반복 관측이 엄밀히 지켜지지 않습니다.
+    source: https://lpdaac.usgs.gov/news/aqua-modis-acquisition-plan-through-august-2026/
+
+links:
+  - name: MODIS BRDF/Albedo 사용자 안내서 (V006·V006.1, UMass Boston)
+    url: https://www.umb.edu/spectralmass/modis-user-guide-v006-and-v0061/
+  - name: MCD43 알고리즘 이론 문서(ATBD)
+    url: https://lpdaac.usgs.gov/documents/97/MCD43_ATBD.pdf
+  - name: LAADS 파일 명세 — MCD43A3 V061
+    url: https://ladsweb.modaps.eosdis.nasa.gov/filespec/MODIS/61/MCD43A3
+  - name: MODIS Land 검증 현황 (MCD43)
+    url: https://modis-land.gsfc.nasa.gov/ValStatus.php?ProductID=MCD43A3
+  - name: LDOPE 품질 게시판 (알려진 문제·기동 기록)
+    url: https://landweb.modaps.eosdis.nasa.gov
+  - name: MODIS Land News (Terra·Aqua 종료, Collection 7 계획)
+    url: https://modis-land.gsfc.nasa.gov/news.html
+
+watch_urls:
+  - https://modis-land.gsfc.nasa.gov/news.html
+  - https://www.earthdata.nasa.gov/data/alerts-outages
+  - https://aqua.nasa.gov/announcements/aqua-status
+
+last_verified: "2026-10-13"

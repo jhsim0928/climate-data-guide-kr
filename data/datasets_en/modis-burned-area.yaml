@@ -1,0 +1,330 @@
+# ─────────────────────────────────────────────────────────────
+# MODIS Burned Area MCD64A1 C6.1 — dataset information file
+# Listed under the Land tab, 'Fire'. Being phased out ahead of the end of Terra and Aqua; the successor is VIIRS VNP64A1 (viirs-burned-area.yaml).
+# After editing, update last_verified to the date you checked the official pages.
+# ─────────────────────────────────────────────────────────────
+id: modis-burned-area
+name: "MODIS Burned Area (MCD64A1)"
+full_name: MODIS/Terra+Aqua Burned Area Monthly L3 Global 500m SIN Grid V061 (MCD64A1, combined Terra and Aqua MODIS monthly burned area at 500 m)
+category: satellite
+domain: land
+group: 산불
+order: 10
+domains: [육지, 원격탐사]
+provider: NASA MODIS Land Science Team (University of Maryland, Louis Giglio) / produced by NASA GSFC MODAPS / distributed by LP DAAC (USGS EROS)
+
+status: deprecated
+status_note: >-
+  Still produced every month (on 2026-10-13 data were available through July 2026), but marked for replacement because both platforms are nearing the end of their missions.
+  NASA projects the end of science operations for Terra in February 2027 and for Aqua in September 2027, and advises users that a final reprocessing will follow the end of
+  data collection and that they should move to comparable VIIRS products. The burned area successor is VIIRS VNP64A1 (from March 2012), which uses the same algorithm and grid —
+  but it faces its own problem, since Suomi NPP data delivery stops in November 2026. See the viirs-burned-area page as well.
+
+period:
+  start: "2000-11"
+  end: present
+  note: >-
+    Starts in November 2000 (earlier data are not distributed because of unresolved Terra MODIS crosstalk and calibration issues). The early record uses Terra alone; Aqua observations were added once Aqua was operating.
+    A CMR query on 2026-10-13 returned July 2026 as the latest month (produced 2026-09-10). June 2001 is heavily degraded by an extended Terra outage.
+
+resolution:
+  spatial_short: "0.5 km (0.005°)"
+  temporal_short: "1개월"
+  spatial: >-
+    MODIS Sinusoidal (SIN) tile grid (horizontal h00–h35, vertical v00–v17, each tile about 10°×10°), 500 m — the true cell size is 463.31271653 m,
+    and each tile is 2400 × 2400 pixels (grid name MOD_Grid_Monthly_500m_DB_BA).
+  vertical: Single surface level
+  temporal: Monthly (one file per calendar month). Each pixel stores the day within that month on which burning was detected (day of year, daily precision).
+
+update: "Monthly (on 2026-10-13 the July 2026 files had been produced on 2026-09-10 — about six weeks after the end of the month)"
+license: NASA Earth science open data — freely shared without restriction. Citing the dataset DOI is encouraged
+account_required: true
+
+summary: >-
+  MCD64A1 is a monthly, global burned area product that combines 500 m Terra and Aqua MODIS surface reflectance with 1 km MODIS active fire detections and records, for every burned
+  500 m cell, the date on which it burned. Dynamic thresholds, trained on active fire observations, are applied to a burn-sensitive vegetation index from the shortwave infrared
+  bands 5 and 7 and to a temporal texture measure. It is the most widely used reference burned area record, underpinning fire emission inventories such as GFED and FINN as well as
+  carbon cycle and air quality research.
+
+time_convention:
+  summary: >-
+    Each file covers one calendar month, and `Burn Date` is the day of year (1–366) on which burning was detected within that month. The value is not a snapshot at an observation
+    time; it is the outcome of analysing a month of reflectance time series, with a separate date uncertainty (`Burn Date Uncertainty`, days). Observations from Terra
+    (10:30 descending) and Aqua (13:30 ascending) are combined, but both satellites have drifted far from their nominal overpass times.
+  points:
+    - "AYYYYDDD in the file name is the first day (day of year) of the calendar month. Example: A2026182 = July 2026 (1 July = day 182)."
+    - "In `Burn Date`, 0 is unburned land, -1 is unmapped because of insufficient data and -2 is water. Count only pixels with values 1–366 when computing burned area."
+    - "`First Day` and `Last Day` bracket the period over which change could be reliably detected. Under persistent cloud the window is shorter than the month and QA bit 2 (shortened mapping period) is set."
+    - "Annual burned area is built by pooling the burned pixels of 12 monthly files. A pixel can burn twice in a year, so decide whether you need total burned area or area burned at least once."
+    - "Terra stopped orbit maintenance in 2020; its equator crossing time was expected to drift from 10:30 to about 9:00 by late 2025, while Aqua was expected to drift from 13:30 to about 15:50 by August 2026. Solar elevation, shadowing and pixel spacing have changed, so detection behaviour in recent years may differ from earlier years."
+  source: https://lpdaac.usgs.gov/documents/1006/MCD64_User_Guide_V61.pdf
+  source_name: "MCD64A1 C6.1 User Guide (Giglio et al.) + LP DAAC Terra and Aqua MODIS acquisition plan notices"
+
+variables:
+  note: >-
+    The five science data sets (SDS) listed in the LP DAAC and LAADS file specifications (HDF-EOS2, HDF4). The layer names contain spaces (e.g. "Burn Date"), so use them exactly as written.
+    There is no scale factor. In Google Earth Engine (`MODIS/061/MCD64A1`) the bands are named without spaces (`BurnDate`, `Uncertainty`, `QA`, `FirstDay`, `LastDay`).
+  full_list: https://ladsweb.modaps.eosdis.nasa.gov/filespec/MODIS/61/MCD64A1
+  groups:
+    - name: Monthly burned area layers (500 m)
+      kind: instant
+      items:
+        - text: "Burn date (day of year) — `Burn Date` (day, int16)"
+          note: "Day within the month on which burning was detected. 0 = unburned, -1 = unmapped, -2 = water"
+          std: []
+        - text: "Burn date uncertainty — `Burn Date Uncertainty` (days)"
+          note: Always 0 for unburned and unmapped cells
+        - text: "First day of reliable change detection — `First Day` (day of year)"
+          note: First day on which burning in that month could be reliably mapped
+          std: []
+        - text: "Last day of reliable change detection — `Last Day` (day of year)"
+          std: []
+        - text: "Quality assurance — `QA` (8-bit field)"
+          note: "Bit 0 land/water, 1 valid data, 2 shortened mapping period, 3 contextual relabeling, 5–7 special-condition code for unburned cells (too few observations, too few training samples, persistent hot spot, etc.)"
+
+access:
+  - name: NASA Earthdata Search (LP DAAC, Earthdata Cloud)
+    url: https://search.earthdata.nasa.gov/search/granules?p=C2565786756-LPCLOUD
+    method: Web search and HTTPS download / earthaccess / direct S3 access in AWS us-west-2
+    note: >-
+      short_name MCD64A1, version 061. Files are per-tile HDF-EOS2 (.hdf) and need a free Earthdata Login.
+      The S3 prefix is s3://lp-prod-protected/MCD64A1.061/, with temporary credentials from https://data.lpdaac.earthdatacloud.nasa.gov/s3credentials.
+      MODIS distribution from the old LP DAAC Data Pool (e4ftl01) ended on 30 June 2025.
+  - name: AppEEARS
+    url: https://appeears.earthdatacloud.nasa.gov/
+    method: Area and point subsetting with reprojection (GeoTIFF, NetCDF4)
+    note: Convenient when you want only a region of interest on a lat-lon grid rather than raw tiles.
+  - name: LP DAAC product page (DOI landing page)
+    url: https://doi.org/10.5067/MODIS/MCD64A1.061
+    method: Documentation (User Guide, ATBD) and layer information
+  - name: University of Maryland burned area server (fuoco.geog.umd.edu)
+    url: https://lpdaac.usgs.gov/documents/1006/MCD64_User_Guide_V61.pdf
+    method: SFTP — Plate Carrée GeoTIFF and shapefile subsets
+    note: The science team provides regionally reprojected GeoTIFFs and burned area shapefiles; the openly shared login details are in the User Guide.
+  - name: Google Earth Engine
+    url: https://developers.google.com/earth-engine/datasets/catalog/MODIS_061_MCD64A1
+    method: Cloud analysis (`MODIS/061/MCD64A1`)
+  - name: NASA FIRMS (Burned Area mode)
+    url: https://firms.modaps.eosdis.nasa.gov/
+    method: Web map viewer
+    note: Monthly and annual burned area can be overlaid on VIIRS VNP64A1 for comparison.
+
+example:
+  lang: python
+  note: >-
+    Downloads the March 2025 tiles covering the eastern Korean Peninsula with earthaccess and counts burned pixels and area. HDF4 files are opened with rasterio built against GDAL with HDF4 support.
+    Pick the layer from the subdatasets list; one cell is 463.31271653 m squared.
+  code: |
+    # pip install earthaccess rasterio numpy   (rasterio needs a GDAL build with HDF4 support)
+    import earthaccess
+    import numpy as np
+    import rasterio
+
+    earthaccess.login()  # free NASA Earthdata account
+    results = earthaccess.search_data(
+        short_name="MCD64A1", version="061",
+        temporal=("2025-03-01", "2025-03-31"),
+        bounding_box=(127, 35, 130, 39),   # (west, south, east, north)
+    )
+    files = earthaccess.download(results, "mcd64a1")
+
+    for f in files:
+        with rasterio.open(f) as src:
+            sds = [s for s in src.subdatasets if s.endswith("Burn Date")][0]
+        with rasterio.open(sds) as b:
+            burn = b.read(1)
+        burned = (burn >= 1) & (burn <= 366)       # 0 unburned, -1 unmapped, -2 water
+        area_km2 = burned.sum() * 463.31271653**2 / 1e6
+        print(f, burned.sum(), "pixels,", round(area_km2, 1), "km2")
+
+tips:
+  - "`Burn Date` is a date, not an area. Compute area as the number of pixels with values 1–366 times the cell area (463.31271653 m squared, about 21.5 ha), excluding 0, -1 and -2."
+  - "The data are on a sinusoidal projection. Use nearest-neighbour resampling when moving to a lat-lon grid; averaging or bilinear interpolation mixes dates and creates spurious ones."
+  - "A 500 m product misses many small fires. Against Landsat 30 m reference data (Giglio et al. 2025), MCD64A1 had 71.5% omission and 34.2% commission error, and GFED5 adds small fires to reach roughly 90% more burned area than MCD64A1. Underestimation is large where small wildfires and crop-residue burning dominate, as on the Korean Peninsula."
+  - "The User Guide recommends treating burned area in croplands as low confidence. Do not rely on MCD64A1 alone for agricultural burning."
+  - "June 2001 (extended Terra outage) and August 2020 (about two weeks of lost Aqua telemetry, partly offset by direct broadcast data) are degraded months."
+  - "Under persistent cloud, `Burn Date` is -1 (unmapped) or the `First Day`–`Last Day` window is shorter than the month. Do not count missing data as unburned (check QA bits 1 and 2)."
+  - "Terra and Aqua orbit drift has changed observation times and pixel spacing in recent data. When examining trends in the 2020s, consider this change and compare with VIIRS VNP64A1, which overlaps from 2012."
+  - "The production timestamp at the end of the file name changes with every reprocessing. Search by date and tile in scripts rather than hard-coding full file names."
+
+citations:
+  dataset:
+    - label: MCD64A1 V061 (LP DAAC)
+      text: >-
+        Giglio, L., Justice, C., Boschetti, L., Roy, D. (2021). MODIS/Terra+Aqua Burned Area Monthly L3 Global 500m SIN Grid V061 [Data set].
+        NASA EOSDIS Land Processes Distributed Active Archive Center. Accessed YYYY-MM-DD from https://doi.org/10.5067/MODIS/MCD64A1.061
+      doi: 10.5067/MODIS/MCD64A1.061
+      bibtex: |
+        @misc{mcd64a1_v061,
+          author    = {Giglio, Louis and Justice, Christopher and Boschetti, Luigi and Roy, David},
+          title     = {{MODIS/Terra+Aqua} Burned Area Monthly {L3} Global 500m {SIN} Grid {V061}},
+          year      = {2021},
+          publisher = {NASA EOSDIS Land Processes Distributed Active Archive Center},
+          doi       = {10.5067/MODIS/MCD64A1.061}
+        }
+  papers:
+    - label: Collection 6 burned area algorithm (citation recommended in the User Guide)
+      text: >-
+        Giglio, L., Boschetti, L., Roy, D. P., Humber, M. L., Justice, C. O. (2018): The Collection 6 MODIS burned area mapping algorithm and product.
+        Remote Sensing of Environment, 217, 72–85.
+      doi: 10.1016/j.rse.2018.08.005
+      bibtex: |
+        @article{giglio2018mcd64,
+          author  = {Giglio, Louis and Boschetti, Luigi and Roy, David P. and Humber, Michael L. and Justice, Christopher O.},
+          title   = {The Collection 6 {MODIS} burned area mapping algorithm and product},
+          journal = {Remote Sensing of Environment},
+          volume  = {217},
+          pages   = {72--85},
+          year    = {2018},
+          doi     = {10.1016/j.rse.2018.08.005}
+        }
+    - label: Global validation of the Collection 6 product
+      text: >-
+        Boschetti, L., Roy, D. P., Giglio, L., Huang, H., Zubkova, M., Humber, M. L. (2019): Global validation of the collection 6 MODIS burned area product.
+        Remote Sensing of Environment, 235, 111490.
+      doi: 10.1016/j.rse.2019.111490
+      bibtex: |
+        @article{boschetti2019mcd64val,
+          author  = {Boschetti, Luigi and Roy, David P. and Giglio, Louis and Huang, Haiyan and Zubkova, Maria and Humber, Michael L.},
+          title   = {Global validation of the collection 6 {MODIS} burned area product},
+          journal = {Remote Sensing of Environment},
+          volume  = {235},
+          pages   = {111490},
+          year    = {2019},
+          doi     = {10.1016/j.rse.2019.111490}
+        }
+  acknowledgement: >-
+    LP DAAC shares the data without restriction and encourages citation of the dataset DOI (EOSDIS Data Use and Citation Guidance). Cite Giglio et al. (2018) for the algorithm as well.
+
+transitions:
+  - from: MCD64A1 C6
+    to: MCD64A1 C6.1
+    status: completed
+    date: "2021-11"
+    summary: >-
+      The full record was regenerated as Collection 6.1 with improved Level-1B calibration. The burned area algorithm itself is unchanged from C6, and C6 (version 006) distribution ended on 31 July 2023.
+    changes:
+      - aspect: Input calibration
+        before: "C6 L1B"
+        after: "Improved response-versus-scan-angle handling for Aqua and Terra reflective bands, Terra IR optical crosstalk correction, corrected 2012–2017 Terra forward look-up table, polarization correction for the reflective solar bands"
+      - aspect: Version label and DOI
+        before: "MCD64A1.006"
+        after: "MCD64A1.061, DOI 10.5067/MODIS/MCD64A1.061 (released 2021-11-08)"
+      - aspect: Availability
+        before: "LP DAAC distribution ended 2023-07-31"
+        after: "Current version, updated monthly"
+    impacts:
+      - Do not append C6.1 to a time series built from C6 files; download the whole record again as C6.1.
+    sources:
+      - name: MCD64A1 C6.1 User Guide
+        url: https://lpdaac.usgs.gov/documents/1006/MCD64_User_Guide_V61.pdf
+      - name: "Final Notice: MODIS Version 6.0 Land Data Products Decommissioned on July 31, 2023"
+        url: https://www.earthdata.nasa.gov/data/alerts-outages/final-notice-modis-version-6-0-land-data-products-decommissioned-july-31-2023
+  - from: MODIS MCD64A1 C6.1
+    to: VIIRS VNP64A1 C2
+    to_id: viirs-burned-area
+    status: planned
+    date: "2027"
+    summary: >-
+      VNP64A1 adapts the MCD64A1 C6.1 algorithm to Suomi NPP VIIRS and keeps the same 500 m sinusoidal grid and layer set. Over 2012–2023 the monthly global totals correlate at 0.989,
+      but VIIRS maps 2–6% more area every year, so the two records should not simply be spliced. And because Suomi NPP data delivery ends in November 2026, VIIRS continuity itself
+      depends on Collection 3, which is planned to add NOAA-20.
+    changes:
+      - aspect: Satellite and sensor
+        before: "Combined Terra (10:30) and Aqua (13:30) MODIS"
+        after: "Suomi NPP VIIRS only (13:30 ascending) — no morning overpass"
+      - aspect: Input resolution
+        before: "500 m reflectance + 1 km active fire (MOD14/MYD14 family)"
+        after: "750 m M-band reflectance resampled to 500 m + VNP14A1 active fire (750 m resampled to a 1 km grid)"
+      - aspect: Burn index bands
+        before: "Shortwave infrared bands 5 and 7 (band 7 at 2.105–2.155 µm)"
+        after: "Corresponding VIIRS bands (SWIR at 2.225–2.275 µm); the red band also differs"
+      - aspect: Algorithm parameters
+        before: "C6.1 defaults"
+        after: "Temporal texture threshold 8 → 7.5 days, relaxed morphological erosion (N → N−1 neighbours), minimum prior probability 0.01 → 0.005"
+      - aspect: Period
+        before: "2000-11 to present (end of science projected for Terra 2027-02, Aqua 2027-09)"
+        after: "2012-03 to present (Suomi NPP data delivery scheduled to end 2026-11-01)"
+      - aspect: Processing level and format
+        before: "L3, HDF-EOS2, file names MCD64A1.AYYYYDDD.hHHvVV.061.*.hdf"
+        after: "L4, HDF4 (HDF-EOS2) with a virtually identical structure, VNP64A1.AYYYYDDD.hHHvVV.002.*.hdf (netCDF4 planned from Collection 3)"
+      - aspect: Validation error (Landsat reference, 561 pairs)
+        before: "Omission 71.5%, commission 34.2%"
+        after: "Omission 72.4%, commission 36.7%"
+      - aspect: Burned area magnitude (2012–2023 mean)
+        before: "370.9 Mha per year"
+        after: "386.0 Mha per year (2.1–6.3% more every year, largest difference in Southeast Asia)"
+    impacts:
+      - Do not splice the two records naively. Check regional differences over the overlap period (2012 onward) first, and if you do join them, report how in the paper.
+      - Regional differences range from 0.1% in Europe to 33.1% in Southeast Asia, so a single global offset (about 4%) is not an adequate correction.
+      - The file structure and layer names match, so MCD64A1 code works almost unchanged. Without a morning overpass, though, VIIRS burn dates agree slightly less often with active fire dates (same-day agreement 38% vs 46%).
+      - Because Suomi NPP stops delivering data in November 2026, VIIRS burned area after that date depends on whether a NOAA-20-based product (planned Collection 3) is released.
+    sources:
+      - name: Giglio et al. (2025), The NASA VIIRS burned area product, global validation, and intercomparison with the NASA MODIS burned area product
+        url: https://doi.org/10.1016/j.rse.2025.115006
+      - name: Transition from MODIS to VIIRS (Earthdata, 2025-05-02)
+        url: https://www.earthdata.nasa.gov/data/alerts-outages/transition-from-modis-viirs
+      - name: VNP64A1 V002 (LP DAAC DOI landing page)
+        url: https://doi.org/10.5067/VIIRS/VNP64A1.002
+
+notices:
+  - date: "2026-03-26"
+    level: info
+    title: Terra MODIS placed in standby — use caution with data from 26 March 20:00 to 27 March 19:23 UTC, 2026
+    body: >-
+      A Terra spacecraft anomaly put MODIS into standby for almost a day before it returned to science mode on 27 March. Data from that window were flagged by the calibration team
+      as questionable or bad, and MCD64A1 V061 is among the products listed in the notice. The March 2026 burned area may be missing about a day of Terra observations.
+    source: https://www.earthdata.nasa.gov/data/alerts-outages/terra-modis-placed-standby-mode
+  - date: "2026-03-20"
+    level: warning
+    title: End of science projected for Terra in February 2027 and Aqua in September 2027
+    body: >-
+      NASA projects that fuel and power limits will end Terra science operations in February 2027 and Aqua in September 2027. Once both stop, routine MCD64A1 production ends too,
+      so long-term studies should secure an overlap period with VIIRS VNP64A1 now.
+    source: https://science.nasa.gov/science-research/earth-science/terra-the-end-of-an-era/
+  - date: "2025-06-03"
+    level: warning
+    title: LP DAAC Data Pool distribution of MODIS ends (2025-06-30) — move to Earthdata Cloud
+    body: >-
+      LP DAAC announced that Data Pool (e4ftl01) access to all MODIS datasets, including C6.1, would be retired on 30 June 2025, with Earthdata Cloud as the primary archive.
+      Earthdata Search and AppEEARS users are unaffected, but scripts pointing at Data Pool URLs must switch to earthaccess or cloud URLs.
+    source: https://www.earthdata.nasa.gov/data/alerts-outages/lp-daac-discontinue-data-pool-distribution-modis-datasets
+  - date: "2025-05-02"
+    level: warning
+    title: Transition from MODIS to VIIRS — Terra and Aqua expected to begin shutting down in late 2026 or early 2027
+    body: >-
+      Terra and Aqua are expected to begin shutting down in late 2026 or early 2027; MODIS data collection will then stop and a final reprocessing will take place. Both platforms are
+      drifting out of their designed orbits, changing crossing times and possibly affecting the data, so NASA encourages users to explore similar VIIRS products.
+    source: https://www.earthdata.nasa.gov/data/alerts-outages/transition-from-modis-viirs
+  - date: "2023-07-25"
+    level: info
+    title: MODIS Version 6.0 land products (including MCD64A1.006) decommissioned on 2023-07-31
+    body: >-
+      LP DAAC ended distribution of all Version 6.0 Terra, Aqua and combined MODIS land datasets on 31 July 2023 (MOD44W and MCD43GF excepted).
+      Use Version 6.1 (MCD64A1.061) for burned area.
+    source: https://www.earthdata.nasa.gov/data/alerts-outages/final-notice-modis-version-6-0-land-data-products-decommissioned-july-31-2023
+
+links:
+  - name: LP DAAC MCD64A1 V061 (Earthdata catalog)
+    url: https://www.earthdata.nasa.gov/data/catalog/lpcloud-mcd64a1-061
+  - name: MCD64A1 C6.1 User Guide
+    url: https://lpdaac.usgs.gov/documents/1006/MCD64_User_Guide_V61.pdf
+  - name: MCD64 ATBD (C6)
+    url: https://lpdaac.usgs.gov/documents/115/MCD64_ATBD_V6.pdf
+  - name: MCD64A1 file specification (LAADS)
+    url: https://ladsweb.modaps.eosdis.nasa.gov/filespec/MODIS/61/MCD64A1
+  - name: MODIS Land validation status (MCD64)
+    url: https://modis-land.gsfc.nasa.gov/ValStatus.php?ProductID=MOD64
+  - name: MODIS/VIIRS Land product quality assessment (LDOPE) — known issues
+    url: https://landweb.modaps.eosdis.nasa.gov/cgi-bin/QS/new/index.cgi
+  - name: Aqua MODIS acquisition plan (orbit drift, LP DAAC)
+    url: https://lpdaac.usgs.gov/news/aqua-modis-acquisition-plan-through-august-2026/
+  - name: Terra MODIS acquisition plan (orbit drift, Earthdata)
+    url: https://www.earthdata.nasa.gov/data/alerts-outages/terra-modis-acquisition-plan-through-december-2025
+
+watch_urls:
+  - https://www.earthdata.nasa.gov/data/catalog/lpcloud-mcd64a1-061
+  - https://www.earthdata.nasa.gov/data/alerts-outages
+  - https://modis-land.gsfc.nasa.gov/news.html
+
+last_verified: "2026-10-13"

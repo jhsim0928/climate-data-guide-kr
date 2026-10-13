@@ -7,7 +7,7 @@
 #   aliases  : 검색어로 받아줄 말 (한국어·영어·약어). 각 자료의 변수명(`tp`, `PRECTOT` 등)은 자동으로 더해짐
 #   include  : 한국어 변수 설명이 이 정규식 중 하나에 맞으면 이 변수로 봄
 #   exclude  : 맞아도 이 정규식에 걸리면 제외
-#   domains  : (선택) 이 분야 자료에서만 (atmosphere / ocean / seaice)
+#   domains  : (선택) 이 분야 자료에서만 (atmosphere / ocean / seaice / land)
 #   dataset_groups : (선택) 이 분류(group) 자료에서만
 #   related  : (선택) 함께 보여줄 관련 변수 id
 #
@@ -149,8 +149,8 @@ groups:
         ko: 유출량
         en: Runoff
         cf: runoff_flux
-        aliases: [유출, runoff, ro]
-        include: ['유출']
+        aliases: [유출, runoff, ro, 하천 유량, streamflow, discharge]
+        include: ['유출', '하천 유량']
         exclude: ['담수']
       - id: snow
         ko: 적설 (깊이·물당량)
@@ -158,8 +158,9 @@ groups:
         cf: surface_snow_thickness / surface_snow_amount
         aliases: [적설, 눈, snow, snow depth, SWE, snow water equivalent, sd, sde, weasd]
         include: ['적설', '융설']
-        domains: [atmosphere]
-        related: [snowfall, snow_on_ice]
+        exclude: ['면적|피복|비율|NDSI|적설값|범위|눈 여부|알베도|구름']
+        domains: [atmosphere, land]
+        related: [snowfall, snow_cover, snow_on_ice]
       - id: soil_moisture
         ko: 토양수분
         en: Soil moisture
@@ -445,3 +446,99 @@ groups:
         include: ['적설', '눈 (깊이|두께|밀도)', '해빙 위 눈']
         domains: [seaice, ocean]
         related: [sit]
+
+  - name: {ko: 지면, en: Land surface}
+    items:
+      - id: snow_cover
+        ko: 적설 면적·피복률
+        en: Snow cover extent / fraction
+        cf: surface_snow_area_fraction
+        aliases: [적설 면적, 적설 범위, 적설 피복, 눈 덮임, snow cover, snow extent, snow cover fraction, NDSI, SCF, snowc]
+        include: ['적설\s?(면적|피복|비율)', 'NDSI', '적설값', '적설 범위', '눈 여부']
+        exclude: ['알베도']
+        domains: [atmosphere, land]
+        related: [snow]
+      - id: lai
+        ko: 엽면적지수 (LAI)
+        en: Leaf area index (LAI)
+        cf: leaf_area_index
+        aliases: [엽면적지수, 잎면적지수, leaf area index, LAI, lai_hv, lai_lv]
+        include: ['엽면적지수', '\bLAI\b']
+        exclude: ['분류']
+        related: [fapar, ndvi]
+      - id: fapar
+        ko: 광합성유효복사 흡수율 (FAPAR)·식생 피복률
+        en: FAPAR / vegetation cover fraction
+        cf: fraction_of_surface_downwelling_photosynthetic_radiative_flux_absorbed_by_vegetation
+        aliases: [FAPAR, FPAR, 광합성유효복사, 식생 피복률, FCOVER, fraction of absorbed PAR, vegetation cover]
+        include: ['광합성\s?유효\s?복사', 'FA?PAR', '녹색 식생 피복률', 'FCOVER']
+        exclude: ['PAR\)$']
+        related: [lai, ndvi]
+      - id: ndvi
+        ko: 식생지수 (NDVI·EVI)
+        en: Vegetation index (NDVI, EVI)
+        cf: normalized_difference_vegetation_index
+        aliases: [식생지수, 정규식생지수, NDVI, EVI, EVI2, vegetation index, greenness]
+        include: ['식생지수', 'NDVI', '\bEVI']
+        exclude: ['NDSI']
+        related: [lai, fapar]
+      - id: albedo
+        ko: 지표 알베도·반사도
+        en: Surface albedo / reflectance
+        cf: surface_albedo
+        aliases: [알베도, 반사도, albedo, surface albedo, BSA, WSA, black-sky, white-sky, fal, BRDF, NBAR]
+        include: ['알베도', '천정 보정 반사도', 'BRDF']
+        related: [sw_sfc]
+      - id: land_cover
+        ko: 토지피복 분류
+        en: Land cover classification
+        cf: area_type
+        aliases: [토지피복, 토지이용, 피복 분류, land cover, land use, IGBP, LCCS, PFT, plant functional type]
+        include: ['토지\s?피복', '토지\s?이용', '분류\(', '\s분류 —', '최빈\) 등급', '등급별 피복률', 'LCCS\d']
+        exclude: ['신뢰도|화소 상태|관측 수|변화 횟수']
+        related: [lai]
+      - id: tws
+        ko: 육수저장량·지하수 저장량
+        en: Terrestrial water storage / groundwater storage
+        cf: land_water_amount
+        aliases: [육수저장량, 육지 물 저장량, 지하수, 등가수심, terrestrial water storage, TWS, groundwater, GWS, liquid water equivalent, lwe_thickness, GRACE]
+        include: ['육수\s?저장량', '지하수 저장량', '등가수심']
+        related: [soil_moisture, snow]
+      - id: ghf
+        ko: 지중 열플럭스
+        en: Ground heat flux
+        cf: downward_heat_flux_in_soil
+        aliases: [지중열, 지중 열플럭스, 토양 열플럭스, ground heat flux, soil heat flux, Qg]
+        include: ['지중 열\s?플럭스', '토양 열\s?플럭스']
+        related: [lhf, shf]
+      - id: carbon_flux
+        ko: 육상 탄소 플럭스 (GPP·NEE·호흡)
+        en: Land carbon fluxes (GPP, NEE, respiration)
+        cf: gross_primary_productivity_of_biomass_expressed_as_carbon
+        aliases: [총일차생산, 순일차생산, 순생태계 교환, 호흡, GPP, NPP, NEE, Rh, carbon flux, gross primary production]
+        include: ['총일차생산', '순1차생산', '순일차생산', '순생태계', '호흡', '\bGPP\b']
+        related: [lai]
+      - id: drought
+        ko: 가뭄 지수·물수지 부족량
+        en: Drought index / climatic water deficit
+        aliases: [가뭄, 가뭄지수, PDSI, 물부족, drought, drought index, water deficit, evaporative stress]
+        include: ['가뭄', '물부족', '증발 스트레스']
+        related: [soil_moisture, evap]
+      - id: burned_area
+        ko: 연소 면적·연소 날짜
+        en: Burned area / burn date
+        cf: burned_area_fraction
+        aliases: [연소 면적, 산불 면적, 불탄 면적, burned area, burnt area, burn date, fire, wildfire, MCD64A1]
+        include: ['연소 (면적|날짜|비율)']
+        exclude: ['불확실성']
+        related: [fire_emissions]
+      - id: fire_emissions
+        ko: 화재 배출량
+        en: Fire emissions
+        cf: tendency_of_atmosphere_mass_content_of_carbon_dioxide_due_to_emission_from_fires
+        aliases: [화재 배출, 산불 배출, 바이오매스 연소, fire emissions, biomass burning, GFED, 연소량]
+        include: ['배출', '건물질.*연소량', '화재 탄소']
+        exclude: ['비율']
+        dataset_groups: [산불]
+        related: [burned_area]
+

@@ -1,0 +1,449 @@
+# ─────────────────────────────────────────────────────────────
+# ESA CCI Snow — dataset information file (English edition)
+# Land tab (snow). ESA Snow_cci snow water equivalent (SWE v4.0) and snow cover fraction (SCFG/SCFV — MODIS and AVHRR v4.0, ATSR-2 v1.0),
+# together with its predecessor ESA GlobSnow (SWE v3.0, SE v2.0), on one page.
+# After editing, update last_verified to the date you checked the official pages.
+# ─────────────────────────────────────────────────────────────
+id: esa-cci-snow
+name: "ESA CCI Snow"
+full_name: ESA Snow Climate Change Initiative (Snow_cci) — Snow Water Equivalent (SWE) and Snow Cover Fraction (SCF) climate data records (including the predecessor ESA GlobSnow)
+category: satellite
+domain: land
+group: 적설
+order: 20
+domains: [육지, 수문, 원격탐사]
+provider: European Space Agency (ESA) Climate Change Initiative (CCI) Snow project — led by ENVEO (Austria); SWE produced by the Finnish Meteorological Institute (FMI) with Environment and Climate Change Canada (ECCC), AVHRR snow cover by the University of Bern / distributed by CEDA (UK)
+
+status: active
+status_note: >-
+  The project continues in CCI+ Phase 2. Its fourth Climate Research Data Package (CRDP v4) was archived at CEDA in the second half of 2025 — SWE and AVHRR snow cover v4.0 on 2025-09-04,
+  MODIS snow cover v4.0 on 2025-12-03, all running to December 2023. CCI products are research climate data records released as versions, so there are no routine updates (CEDA: "Not Planned").
+  From 2023 onward, snow cover is to be continued with Sentinel-3 SLSTR by the Copernicus Climate Change Service (C3S) for Cryosphere, with Climate Data Store publication in preparation.
+  Terra, which carries the MODIS instrument used here, is expected to end operations in late 2026 or early 2027, so the MODIS record is unlikely to be extended much further.
+
+transitions:
+  - from: ESA GlobSnow SWE v3.0
+    to: ESA CCI Snow SWE v4.0
+    status: completed
+    summary: >-
+      The Northern Hemisphere snow water equivalent (SWE) record that FMI built in the ESA GlobSnow project continued in ESA CCI Snow. It keeps the GlobSnow approach — Bayesian assimilation of
+      passive microwave radiometer data and ground-based snow depth observations — but the grid, period and algorithm details have changed, so do not splice the two into one time series.
+    changes:
+      - aspect: Project and archive
+        before: "ESA DUE GlobSnow (FMI) — globsnow.info (daily), PANGAEA (monthly)"
+        after: "ESA CCI Snow_cci (SWE produced by FMI with ECCC) — CEDA"
+      - aspect: Period
+        before: "1979–2018 (Luojus et al. 2021); the PANGAEA monthly record covers 1980–2018"
+        after: "1979-01 to 2023-12 (v3.1 ran to 2022-05; v4.0 extends to 2023-12)"
+      - aspect: Grid
+        before: "EASE-Grid 25 km × 25 km (Northern Hemisphere azimuthal equal-area projection)"
+        after: "0.1° × 0.1° latitude–longitude grid (resampled from the 12.5 km EASE-Grid 2.0 processing grid, 3600 × 1800)"
+      - aspect: Time steps provided
+        before: "Daily (Level A) + monthly mean (Level B) + bias-corrected monthly"
+        after: "Daily only (every second day in 1979–1987)"
+      - aspect: Snow density
+        before: "Up to CCI v2.0 and v3.0, density variation was applied during post-processing"
+        after: "From CCI v3.1, snow density varies in space and time inside the retrieval itself"
+      - aspect: CCI v3.1 → v4.0 (2025-09)
+        before: "v3.1: 1979-01 to 2022-05, earlier overpass handling"
+        after: "v4.0: extended to 2023-12, morning overpasses prioritised over evening ones, updated post-processing snow mask and North American uncertainty model (validation results similar to the previous version)"
+      - aspect: File format and naming
+        before: "GlobSnow NetCDF (CF)"
+        after: "YYYYMMDD-ESACCI-L3C_SNOW-SWE-<sensor>_<platform>-fv4.0.nc (e.g. 19910501-ESACCI-L3C_SNOW-SWE-SSMI_DMSP-fv4.0.nc)"
+    impacts:
+      - Do not mix GlobSnow v3.0 and CCI SWE in one time series. Grids and algorithms differ, so values differ even on the same day.
+      - The GlobSnow "bias-corrected monthly" product is a separate product corrected with snow course data for the underestimation of deep snow. Do not compare it directly with monthly means of CCI daily data.
+      - Like GlobSnow, CCI SWE excludes mountains, Greenland and glaciers. It cannot be used for mountain snow studies.
+    sources:
+      - name: CEDA — Snow_cci SWE v4.0 (1979–2023)
+        url: https://catalogue.ceda.ac.uk/uuid/edf8abd23f4a40aabd4d52e48dec06ea/
+      - name: CEDA — Snow_cci SWE v3.1 (1979–2022)
+        url: https://catalogue.ceda.ac.uk/uuid/9d9bfc488ec54b1297eca2c9662f9c81/
+      - name: Luojus et al. (2021) GlobSnow v3.0, Scientific Data
+        url: https://doi.org/10.1038/s41597-021-00939-2
+      - name: Snow_cci Product User Guide v5.1 (2025-12)
+        url: https://climate.esa.int/documents/3136/Snow_cci_D4.3_PUG_v5.1.pdf
+  - from: ESA GlobSnow Snow Extent v2.0
+    to: ESA CCI Snow snow cover fraction (SCFG, SCFV)
+    status: completed
+    date: "2021-05"
+    summary: >-
+      Building on the method behind GlobSnow's optical Snow Extent (SE; ATSR-2 and AATSR, 1995–2012; Metsämäki et al. 2015), CCI Snow produced global daily snow cover fraction from
+      MODIS (2000 onward), AVHRR (1979 onward) and ATSR-2 (first release v1.0 on 2021-05-10). With v4.0 in 2025, both the MODIS and AVHRR records run to December 2023.
+    changes:
+      - aspect: Coverage
+        before: "Northern Hemisphere (GlobSnow SE v2.0)"
+        after: "Global land (excluding Antarctica, the Greenland ice sheet and permanent snow and ice; coastal Greenland included)"
+      - aspect: Sensors and period
+        before: "ERS-2 ATSR-2 and Envisat AATSR, 1995–2012"
+        after: "Terra MODIS 2000-02-24 to 2023-12-31 (v4.0), NOAA/MetOp AVHRR 1979-01-01 to 2023-12-31 (v4.0), ATSR-2 1995-08-01 to 2003-06-22 (v1.0)"
+      - aspect: Retrieved variables
+        before: "Snow extent (SE)"
+        after: "Separate viewable snow on canopy (SCFV) and snow on ground corrected for forest canopy (SCFG), each with per-pixel uncertainty (unbiased RMSE)"
+      - aspect: MODIS v3.0 → v4.0 (2025-12)
+        before: "v3.0: 2000-02-24 to 2022-12-31"
+        after: "More permissive pre-classification, correction for low solar illumination, updated snow-free ground and forest reflectance layers, updated uncertainty, improved daily global merging, updated salt lake mask, extended to 2023-12"
+    impacts:
+      - "SCFV and SCFG differ only in forests and are identical elsewhere. For forested regions, always state which one you used."
+      - MODIS (1 km) and AVHRR (5 km) differ in resolution and sensor, so values differ even on the same day. Pick one to suit the purpose, e.g. AVHRR for long-term trends and MODIS for regional detail.
+      - Earlier versions (MODIS v1.0–v3.0, AVHRR v1.0 and v2.0) are marked "superseded" at CEDA. Download the whole period again in v4.0.
+    sources:
+      - name: CEDA — MODIS SCFG v4.0 (list of improvements)
+        url: https://catalogue.ceda.ac.uk/uuid/375ffdb8f0a445e380b4b9548655f5f9/
+      - name: CEDA — MODIS SCFG v1.0 (2000–2019, superseded)
+        url: https://catalogue.ceda.ac.uk/uuid/3b3fd2daf3d34c1bb4a09efeaf3b8ea9/
+      - name: Metsämäki et al. (2015) GlobSnow Snow Extent, Remote Sensing of Environment
+        url: https://doi.org/10.1016/j.rse.2014.09.018
+      - name: GlobSnow website (SE v2.0, SWE v2.0/v3.0)
+        url: https://www.globsnow.info/
+
+period:
+  start: "1979-01"
+  end: "2023-12"
+  note: >-
+    Periods differ by product. SWE v4.0 covers 1979-01-02 to 2023-12-31 (CEDA record; the PUG gives a 6 January 1979 start), every second day until May 1987 and daily from October 1987,
+    with values only in the Northern Hemisphere winter season (roughly November–May). Snow cover fraction: AVHRR v4.0 1979-01-01 to 2023-12-31 (gaps concentrated in 1979–1986, about 99% coverage overall),
+    MODIS v4.0 2000-02-24 to 2023-12-31, ATSR-2 v1.0 1995-08-01 to 2003-06-22. Sentinel-3 SLSTR v1.0 (2020–2022) is listed on the ESA project page, but its CEDA records were still
+    unpublished (preview only) when checked on 2026-10-13. The predecessor GlobSnow SWE v3.0 covers 1979–2018.
+
+resolution:
+  spatial_short: "1 km (0.01°)"
+  temporal_short: "1일"
+  spatial: >-
+    Snow cover fraction: MODIS, ATSR-2 and SLSTR on a 0.01° × 0.01° latitude–longitude grid (WGS 84, pixel-centre coordinates; MODIS files are 36000 × 18000); AVHRR on a 0.05° × 0.05° grid (about 5 km) —
+    global land excluding Antarctica and the Greenland ice sheet. Snow water equivalent: 0.10° × 0.10° latitude–longitude grid (3600 × 1800), resampled from processing on the 12.5 km EASE-Grid 2.0,
+    with values only over Northern Hemisphere land outside mountains, glaciers and Greenland. GlobSnow SWE v3.0 uses the 25 km EASE-Grid (Northern Hemisphere azimuthal equal-area projection).
+  vertical: Not applicable (two-dimensional surface fields)
+  temporal: Daily (SWE every second day in 1979–1987, Northern Hemisphere winter only) / GlobSnow v3.0 daily, monthly and bias-corrected monthly
+
+update: >-
+  No routine updates — a new version of the climate data records is released in each project phase (CEDA update frequency "Not Planned"). The latest is CRDP v4 (SWE and AVHRR 2025-09-04, MODIS 2025-12-03).
+  Snow cover after 2023 is to continue as SLSTR-based data from the C3S Cryosphere service.
+license: >-
+  ESA CCI Snow Terms and Conditions — free for any user and any purpose (CEDA "Any"). Publications must acknowledge "the ESA Climate Change Initiative and the Snow CCI project" together with
+  the individual data providers and cite the dataset DOIs. The GlobSnow v3.0 monthly data on PANGAEA are CC BY 4.0
+account_required: false
+
+summary: >-
+  A set of research climate data records produced by the snow project (Snow_cci) of ESA's Climate Change Initiative. Snow water equivalent (SWE) is a daily 0.1° Northern Hemisphere record (1979–2023)
+  that combines SMMR, SSM/I and SSMIS passive microwave observations with snow depth from synoptic weather stations through Bayesian assimilation. Snow cover fraction (SCF) is a global daily record
+  from optical MODIS (1 km, 2000–2023) and AVHRR (5 km, 1979–2023) data, with separate layers for snow visible from above, including on the forest canopy (SCFV), and snow on the ground beneath it (SCFG).
+  Both build on the methods of ESA GlobSnow (SWE v3.0, Snow Extent v2.0) and carry per-pixel uncertainty estimates.
+
+time_convention:
+  summary: >-
+    Every file is a daily product named by date (YYYYMMDD), built from that day's satellite observations by selecting one observation per pixel (not an average). Snow cover fraction comes from
+    Terra MODIS (an orbit designed for a 10:30 local equator crossing) or the individual AVHRR satellites, and the per-pixel acquisition time is stored in `scanline_time`. From v4.0, SWE prioritises
+    morning overpasses, and in 1979–1987 it is available only every second day.
+  points:
+    - "MODIS snow cover files merge several swaths into one daily map depending on solar and viewing zenith angle. The viewing zenith angle (`satzen`) and scanline time (`scanline_time`, 0.00–23.59 h) of the selected observation are included. The PUG does not say whether this time is UTC or local, so check the attributes of the files you download."
+    - "MODIS snow cover uses Terra only; Aqua was not used to fill gaps. Cloud (205) and polar night (206) pixels are left empty, and no temporal interpolation is applied."
+    - "AVHRR files at CEDA are daily files per satellite (file names contain AVHRR_NOAA18, AVHRR_METOPB, etc.). A separate gap-filled daily composite that combines morning and afternoon satellites and neighbouring days is on Zenodo (doi:10.5281/zenodo.16746237, GeoTIFF)."
+    - "SWE is retrieved only in the Northern Hemisphere winter season (roughly November–May) and is valid only for dry snow. Wet snow makes retrieval impossible, and the signal saturates above about 1 m of snow depth (PUG)."
+    - "GlobSnow v3.0 monthly data (Level B) are the mean of the month's daily estimates; the bias-corrected monthly product adds a time-invariant correction to them."
+  source: https://climate.esa.int/documents/3136/Snow_cci_D4.3_PUG_v5.1.pdf
+  source_name: Snow_cci Product User Guide v5.1 (2025-12) + CEDA catalogue records + Luojus et al. (2021)
+
+variables:
+  note: >-
+    Names checked against the CEDA catalogue records and the CCI THREDDS (OPeNDAP) variable listings. The PUG text writes the SWE variables in capitals (`SWE`, `SWE_STD`) and in one place calls the
+    uncertainty `SWE_VAR`, but the actual v4.0 files use lower-case `swe` and `swe_std`. Snow cover values outside 0–100 are status codes, so always filter them out before computing.
+  full_list: https://climate.esa.int/documents/3136/Snow_cci_D4.3_PUG_v5.1.pdf
+  groups:
+    - name: Snow water equivalent (SWE v4.0, Northern Hemisphere 0.1°)
+      kind: instant
+      period: Day
+      items:
+        - text: "Snow water equivalent — `swe` (mm)"
+          note: "Estimated from that day's overpasses (v4.0 prioritises morning). 0 = snow free, 1–500 mm. Negative values are mask codes (-1 no retrieval, -10 water, -20 mountain, -30 glacier/permanent ice)"
+        - text: "Standard deviation of the SWE estimate — `swe_std` (mm)"
+          note: "1–250 mm; negative codes as in `swe`"
+    - name: Snow cover fraction (SCFG, SCFV — MODIS and AVHRR v4.0, ATSR-2 v1.0)
+      kind: instant
+      period: Day
+      items:
+        - text: "Snow cover fraction on ground (corrected for forest canopy) — `scfg` (%)"
+          note: "Value of the observation selected for that day. 0 snow free, 1–100 %, 205 cloud, 206 polar night, 210 water, 213 salt lake (MODIS), 215 permanent snow and ice, 252 classification failed, 253 input data error, 254 no satellite acquisition, 255 not valid"
+        - text: "Snow cover fraction viewable (including snow on canopy) — `scfv` (%)"
+          note: Identical to `scfg` outside forests; same status codes
+        - "Snow cover fraction uncertainty (unbiased RMSE) — `scfg_unc`, `scfv_unc` (%)"
+        - text: "Sensor zenith angle — `satzen` (degrees)"
+          note: "MODIS and AVHRR v4.0. MODIS uses scale_factor 0.01; angles above 65° are flagged as classification failed"
+        - text: "Scanline acquisition time — `scanline_time` (hours, 0.00–23.59)"
+          note: "MODIS and AVHRR v4.0. MODIS uses scale_factor 0.001"
+
+access:
+  - name: CEDA — ESA CCI Snow data (HTTP, FTP, OPeNDAP)
+    url: https://catalogue.ceda.ac.uk/uuid/edf8abd23f4a40aabd4d52e48dec06ea/
+    method: HTTP download / anonymous FTP / OPeNDAP — no account needed
+    note: >-
+      Paths under https://data.ceda.ac.uk/neodc/esacci/snow/data/ are split into swe/MERGED/v4.0/ (about 9,580 files, 14 GB), scfg/MODIS/v4.0/, scfv/MODIS/v4.0/ (about 8,640 files, 816 GB),
+      scfv/AVHRR_SINGLE/v4.0/ (about 37,000 files, 533 GB) and so on, with year/month folders below. Anonymous FTP is at ftp://anon-ftp.ceda.ac.uk/neodc/esacci/snow/data/.
+  - name: CEDA — MODIS SCFG v4.0 / SCFV v4.0 records
+    url: https://catalogue.ceda.ac.uk/uuid/375ffdb8f0a445e380b4b9548655f5f9/
+    method: HTTP / FTP / OPeNDAP
+    note: "The SCFV v4.0 record is https://catalogue.ceda.ac.uk/uuid/bc13bb02a958449aac139853c4638f32/ ; AVHRR SCFG and SCFV v4.0 are uuid 80d96e3a14854420b6f742d70877c431 and 3c71c04cf08a410fac2c680cbf88cfd7."
+  - name: CCI THREDDS aggregated OPeNDAP (whole period at one address)
+    url: https://data.cci.ceda.ac.uk/thredds/catalog/esacci/snow/data/scfg/catalog.html
+    method: OPeNDAP — read only the region and period you need
+    note: >-
+      The whole SWE v4.0 period is aggregated at https://data.cci.ceda.ac.uk/thredds/dodsC/esacci.SNOW.day.L3C.SWE.multi-sensor.multi-platform.MERGED.4-0.r1 ,
+      and MODIS SCFG v4.0 at esacci.SNOW.day.L3C.SCFG.MODIS.Terra.MODIS_TERRA.4-0.r1. A single MODIS day is 36000 × 18000, so always subset by region.
+  - name: ESA CCI Open Data Portal
+    url: https://climate.esa.int/en/odp/#/dashboard
+    method: Web search and download (links to the CEDA data)
+  - name: GlobSnow v3.0 (predecessor SWE record)
+    url: https://www.globsnow.info/
+    method: HTTP download (daily at https://www.globsnow.info/swe/archive_v3.0/ ) / PANGAEA (monthly, doi:10.1594/PANGAEA.911944)
+    note: The GlobSnow-2 project has ended and its products remain archived on the website. When checked on 2026-10-13, the globsnow.info data folder did not respond.
+
+example:
+  lang: python
+  note: >-
+    Opens the aggregated SWE v4.0 address on the CCI THREDDS server via OPeNDAP and reads only the West Siberian Plain (60–80°E, 55–65°N) for winter 2020 (no account needed). Because of the mountain mask,
+    mountainous areas have almost no values, so a lowland region is used. Negative mask codes are set to missing before computing, and the latitude order is checked because it may be descending.
+  code: |
+    import xarray as xr
+
+    url = ("https://data.cci.ceda.ac.uk/thredds/dodsC/"
+           "esacci.SNOW.day.L3C.SWE.multi-sensor.multi-platform.MERGED.4-0.r1")
+    ds = xr.open_dataset(url)
+
+    lat_slice = slice(65, 55) if ds.lat[0] > ds.lat[-1] else slice(55, 65)
+    swe = ds["swe"].sel(time=slice("2020-01-01", "2020-03-31"),
+                        lat=lat_slice, lon=slice(60, 80))
+    swe = swe.where(swe >= 0)          # -1 no retrieval, -10 water, -20 mountain, -30 glacier -> NaN
+    print(swe.mean(["lat", "lon"]).values)   # mm, daily area mean
+
+    # In MODIS snow cover daily files only 0-100 are valid values.
+    # scf = xr.open_dataset("20200115-ESACCI-L3C_SNOW-SCFG-MODIS_TERRA-fv4.0.nc")["scfg"]
+    # scf = scf.where(scf <= 100)      # drops 205 cloud, 210 water, 215 permanent snow, etc.
+
+tips:
+  - "Values such as 205 (cloud), 206 (polar night), 210 (water), 215 (permanent snow and ice) and 254 (no acquisition) in snow cover files are status codes, not percentages. Keep only 0–100, or averages will be grossly inflated."
+  - "Negative SWE values (-1, -10, -20, -30) are mask codes. In particular, -20 (mountain) removes every grid cell with large sub-grid elevation variability, so mountainous regions (including the Korean Peninsula) can be largely missing. Do not use this record for mountain snow."
+  - "SWE is reliable only for dry snow up to about 1 m depth. It can underestimate during spring melt (wet snow) and for very deep snow."
+  - "SWE is available only every second day in 1979–1987 and daily from October 1987. Daily statistics spanning this boundary have different sample counts."
+  - "SCFV (viewable snow) and SCFG (snow on ground) differ only in forests. Use SCFG to compare with ground snow cover in models, and SCFV for satellite reflectance or albedo studies."
+  - "Some MODIS v4.0 files were replaced or removed on 2025-12-12 and 2026-02-12. If you downloaded MODIS files before December 2025, download the affected dates again (see notices)."
+  - "The AVHRR record joins many NOAA and MetOp satellites with different overpass times. CEDA files are split by satellite, so the same day can have several files."
+  - "GlobSnow v3.0, CCI v3.1 and CCI v4.0 all use 'the same method' but give different values. State the exact version and DOI in your paper."
+
+citations:
+  dataset:
+    - label: Snow_cci SWE v4.0 (CEDA)
+      text: >-
+        Luojus, K.; Venäläinen, P.; Moisander, M.; Pulliainen, J.; Takala, M.; Lemmetyinen, J.; Mortimer, C.; Mudryk, L.; Schwaizer, G.; Nagler, T. (2025):
+        ESA Snow Climate Change Initiative (Snow_cci): Snow Water Equivalent (SWE) level 3C daily global climate research data package (CRDP) (1979 - 2023), version 4.0.
+        NERC EDS Centre for Environmental Data Analysis, 05 September 2025. doi:10.5285/edf8abd23f4a40aabd4d52e48dec06ea
+      doi: 10.5285/edf8abd23f4a40aabd4d52e48dec06ea
+      bibtex: |
+        @misc{luojus2025snowcci_swe_v4,
+          author    = {Luojus, Kari and Ven{\"a}l{\"a}inen, Pinja and Moisander, Mikko and Pulliainen, Jouni and Takala, Matias and Lemmetyinen, Juha and Mortimer, Colleen and Mudryk, Lawrence and Schwaizer, Gabriele and Nagler, Thomas},
+          title     = {{ESA} Snow Climate Change Initiative ({Snow\_cci}): Snow Water Equivalent ({SWE}) level 3C daily global climate research data package ({CRDP}) (1979 - 2023), version 4.0},
+          publisher = {NERC EDS Centre for Environmental Data Analysis},
+          year      = {2025},
+          doi       = {10.5285/edf8abd23f4a40aabd4d52e48dec06ea}
+        }
+    - label: Snow_cci MODIS SCFG v4.0 (CEDA)
+      text: >-
+        Schwaizer, G.; Nagler, T.; Hetzenecker, M.; Heinrich, M.; Mölg, N.; Nemec, J.; Haslinger, B.; Fasching, U.; Scolamiero, A.; Malcher, P.; Metsämäki, S. (2025):
+        ESA Snow Climate Change Initiative (Snow_cci): Daily global Snow Cover Fraction - snow on ground (SCFG) from MODIS (2000-2023), version 4.0.
+        NERC EDS Centre for Environmental Data Analysis, 03 December 2025. doi:10.5285/375ffdb8f0a445e380b4b9548655f5f9
+      doi: 10.5285/375ffdb8f0a445e380b4b9548655f5f9
+      bibtex: |
+        @misc{schwaizer2025snowcci_scfg_modis_v4,
+          author    = {Schwaizer, Gabriele and Nagler, Thomas and Hetzenecker, Markus and Heinrich, Maria and M{\"o}lg, Nico and Nemec, Johanna and Haslinger, Beat and Fasching, Ursula and Scolamiero, Andrea and Malcher, Petra and Mets{\"a}m{\"a}ki, Sari},
+          title     = {{ESA} Snow Climate Change Initiative ({Snow\_cci}): Daily global Snow Cover Fraction - snow on ground ({SCFG}) from {MODIS} (2000-2023), version 4.0},
+          publisher = {NERC EDS Centre for Environmental Data Analysis},
+          year      = {2025},
+          doi       = {10.5285/375ffdb8f0a445e380b4b9548655f5f9}
+        }
+    - label: Snow_cci MODIS SCFV v4.0 (CEDA)
+      text: >-
+        Schwaizer, G.; Nagler, T.; Hetzenecker, M.; Heinrich, M.; Mölg, N.; Nemec, J.; Haslinger, B.; Fasching, U.; Scolamiero, A.; Malcher, P.; Metsämäki, S. (2025):
+        ESA Snow Climate Change Initiative (Snow_cci): Daily global Snow Cover Fraction - viewable snow (SCFV) from MODIS (2000 - 2023), version 4.0.
+        NERC EDS Centre for Environmental Data Analysis, 03 December 2025. doi:10.5285/bc13bb02a958449aac139853c4638f32
+      doi: 10.5285/bc13bb02a958449aac139853c4638f32
+      bibtex: |
+        @misc{schwaizer2025snowcci_scfv_modis_v4,
+          author    = {Schwaizer, Gabriele and Nagler, Thomas and Hetzenecker, Markus and Heinrich, Maria and M{\"o}lg, Nico and Nemec, Johanna and Haslinger, Beat and Fasching, Ursula and Scolamiero, Andrea and Malcher, Petra and Mets{\"a}m{\"a}ki, Sari},
+          title     = {{ESA} Snow Climate Change Initiative ({Snow\_cci}): Daily global Snow Cover Fraction - viewable snow ({SCFV}) from {MODIS} (2000 - 2023), version 4.0},
+          publisher = {NERC EDS Centre for Environmental Data Analysis},
+          year      = {2025},
+          doi       = {10.5285/bc13bb02a958449aac139853c4638f32}
+        }
+    - label: Snow_cci AVHRR SCFG v4.0 (CEDA)
+      text: >-
+        Xiao, X.; Naegeli, K.; Neuhaus, C.; Salberg, A.-B.; Schwaizer, G.; Wiesmann, A.; Wunderle, S.; Nagler, T. (2025):
+        ESA Snow Climate Change Initiative (Snow_cci): Daily global Snow Cover Fraction - snow on ground (SCFG) from AVHRR (1979 - 2023), version 4.0.
+        NERC EDS Centre for Environmental Data Analysis, 04 September 2025. doi:10.5285/80d96e3a14854420b6f742d70877c431
+      doi: 10.5285/80d96e3a14854420b6f742d70877c431
+      bibtex: |
+        @misc{xiao2025snowcci_scfg_avhrr_v4,
+          author    = {Xiao, X. and Naegeli, Kathrin and Neuhaus, Christoph and Salberg, Arnt-B{\o}rre and Schwaizer, Gabriele and Wiesmann, Andreas and Wunderle, Stefan and Nagler, Thomas},
+          title     = {{ESA} Snow Climate Change Initiative ({Snow\_cci}): Daily global Snow Cover Fraction - snow on ground ({SCFG}) from {AVHRR} (1979 - 2023), version 4.0},
+          publisher = {NERC EDS Centre for Environmental Data Analysis},
+          year      = {2025},
+          doi       = {10.5285/80d96e3a14854420b6f742d70877c431}
+        }
+    - label: Snow_cci AVHRR SCFV v4.0 (CEDA)
+      text: >-
+        Xiao, X.; Naegeli, K.; Neuhaus, C.; Salberg, A.-B.; Schwaizer, G.; Wiesmann, A.; Wunderle, S.; Nagler, T. (2025):
+        ESA Snow Climate Change Initiative (Snow_cci): Daily global Snow Cover Fraction - viewable (SCFV) from AVHRR (1979 - 2023), version 4.0.
+        NERC EDS Centre for Environmental Data Analysis, 04 September 2025. doi:10.5285/3c71c04cf08a410fac2c680cbf88cfd7
+      doi: 10.5285/3c71c04cf08a410fac2c680cbf88cfd7
+      bibtex: |
+        @misc{xiao2025snowcci_scfv_avhrr_v4,
+          author    = {Xiao, X. and Naegeli, Kathrin and Neuhaus, Christoph and Salberg, Arnt-B{\o}rre and Schwaizer, Gabriele and Wiesmann, Andreas and Wunderle, Stefan and Nagler, Thomas},
+          title     = {{ESA} Snow Climate Change Initiative ({Snow\_cci}): Daily global Snow Cover Fraction - viewable ({SCFV}) from {AVHRR} (1979 - 2023), version 4.0},
+          publisher = {NERC EDS Centre for Environmental Data Analysis},
+          year      = {2025},
+          doi       = {10.5285/3c71c04cf08a410fac2c680cbf88cfd7}
+        }
+    - label: GlobSnow v3.0 SWE monthly data (PANGAEA)
+      text: >-
+        Luojus, K.; Pulliainen, J.; Takala, M.; Lemmetyinen, J.; Moisander, M. (2020): GlobSnow v3.0 snow water equivalent (SWE). PANGAEA. doi:10.1594/PANGAEA.911944
+      doi: 10.1594/PANGAEA.911944
+      bibtex: |
+        @misc{luojus2020globsnow_v3,
+          author    = {Luojus, Kari and Pulliainen, Jouni and Takala, Matias and Lemmetyinen, Juha and Moisander, Mikko},
+          title     = {{GlobSnow} v3.0 snow water equivalent ({SWE})},
+          publisher = {PANGAEA},
+          year      = {2020},
+          doi       = {10.1594/PANGAEA.911944}
+        }
+  papers:
+    - label: GlobSnow v3.0 SWE data paper
+      text: >-
+        Luojus, K., Pulliainen, J., Takala, M., Lemmetyinen, J., Mortimer, C., Derksen, C., Mudryk, L., Moisander, M., Hiltunen, M., Smolander, T., Ikonen, J., Cohen, J.,
+        Salminen, M., Norberg, J., Veijola, K., Venäläinen, P. (2021): GlobSnow v3.0 Northern Hemisphere snow water equivalent dataset. Scientific Data, 8, 163.
+      doi: 10.1038/s41597-021-00939-2
+      bibtex: |
+        @article{luojus2021globsnow,
+          author  = {Luojus, Kari and Pulliainen, Jouni and Takala, Matias and Lemmetyinen, Juha and Mortimer, Colleen and Derksen, Chris and Mudryk, Lawrence and Moisander, Mikko and Hiltunen, Mwaba and Smolander, Tuomo and Ikonen, Jaakko and Cohen, Juval and Salminen, Miia and Norberg, Johannes and Veijola, Katriina and Ven{\"a}l{\"a}inen, Pinja},
+          title   = {{GlobSnow} v3.0 {Northern Hemisphere} snow water equivalent dataset},
+          journal = {Scientific Data},
+          volume  = {8},
+          pages   = {163},
+          year    = {2021},
+          doi     = {10.1038/s41597-021-00939-2}
+        }
+    - label: SWE retrieval algorithm (GlobSnow assimilation approach)
+      text: >-
+        Takala, M., Luojus, K., Pulliainen, J., Derksen, C., Lemmetyinen, J., Kärnä, J.-P., Koskinen, J., Bojkov, B. (2011): Estimating northern hemisphere snow water equivalent
+        for climate research through assimilation of space-borne radiometer data and ground-based measurements. Remote Sensing of Environment, 115(12), 3517–3529.
+      doi: 10.1016/j.rse.2011.08.014
+      bibtex: |
+        @article{takala2011swe,
+          author  = {Takala, Matias and Luojus, Kari and Pulliainen, Jouni and Derksen, Chris and Lemmetyinen, Juha and K{\"a}rn{\"a}, Juha-Petri and Koskinen, Jarkko and Bojkov, Bojan},
+          title   = {Estimating northern hemisphere snow water equivalent for climate research through assimilation of space-borne radiometer data and ground-based measurements},
+          journal = {Remote Sensing of Environment},
+          volume  = {115},
+          number  = {12},
+          pages   = {3517--3529},
+          year    = {2011},
+          doi     = {10.1016/j.rse.2011.08.014}
+        }
+    - label: Dynamic snow density (approach used from CCI SWE v3.1)
+      text: >-
+        Venäläinen, P., Luojus, K., Lemmetyinen, J., Pulliainen, J., Moisander, M., Takala, M. (2021): Impact of dynamic snow density on GlobSnow snow water equivalent retrieval accuracy.
+        The Cryosphere, 15, 2969–2981.
+      doi: 10.5194/tc-15-2969-2021
+      bibtex: |
+        @article{venalainen2021density,
+          author  = {Ven{\"a}l{\"a}inen, Pinja and Luojus, Kari and Lemmetyinen, Juha and Pulliainen, Jouni and Moisander, Mikko and Takala, Matias},
+          title   = {Impact of dynamic snow density on {GlobSnow} snow water equivalent retrieval accuracy},
+          journal = {The Cryosphere},
+          volume  = {15},
+          number  = {6},
+          pages   = {2969--2981},
+          year    = {2021},
+          doi     = {10.5194/tc-15-2969-2021}
+        }
+    - label: Basis of the snow cover fraction method (GlobSnow Snow Extent)
+      text: >-
+        Metsämäki, S., Pulliainen, J., Salminen, M., Luojus, K., Wiesmann, A., Solberg, R., Böttcher, K., Hiltunen, M., Ripper, E. (2015): Introduction to GlobSnow Snow Extent products
+        with considerations for accuracy assessment. Remote Sensing of Environment, 156, 96–108.
+      doi: 10.1016/j.rse.2014.09.018
+      bibtex: |
+        @article{metsamaki2015globsnow,
+          author  = {Mets{\"a}m{\"a}ki, Sari and Pulliainen, Jouni and Salminen, Miia and Luojus, Kari and Wiesmann, Andreas and Solberg, Rune and B{\"o}ttcher, Kristin and Hiltunen, Mwaba and Ripper, Elisabeth},
+          title   = {Introduction to {GlobSnow} Snow Extent products with considerations for accuracy assessment},
+          journal = {Remote Sensing of Environment},
+          volume  = {156},
+          pages   = {96--108},
+          year    = {2015},
+          doi     = {10.1016/j.rse.2014.09.018}
+        }
+  acknowledgement: >-
+    Under the CEDA terms of use, publications must acknowledge "the ESA Climate Change Initiative and the Snow CCI project" together with the individual data providers, and cite the dataset DOI of
+    each product used (SWE, MODIS or AVHRR SCFG/SCFV). If you used an earlier version (e.g. SWE v3.1, doi:10.5285/9d9bfc488ec54b1297eca2c9662f9c81), cite that version's DOI.
+
+notices:
+  - date: "2026-02-12"
+    level: info
+    title: MODIS snow cover v4.0 — erroneous file removed and another file replaced
+    body: >-
+      During the 2025-12-12 update an SCFG file (20130603-ESACCI-L3C_SNOW-SCFG-MODIS_TERRA-fv4.0.nc) was wrongly added to the SCFV folder and has been removed;
+      the SCFG file for the same date was replaced on 2026-02-12. If you downloaded these files between December 2025 and February 2026, download them again.
+    source: https://catalogue.ceda.ac.uk/uuid/bc13bb02a958449aac139853c4638f32/
+  - date: "2025-12-12"
+    level: info
+    title: MODIS snow cover v4.0 — files missing metadata and variables replaced
+    body: >-
+      A small number of files were found to be missing some metadata and variables and were replaced — SCFV 2002-02-04, 2006-02-06, 2022-02-08 and 2023-02-09, and SCFG 2012-06-01.
+    source: https://catalogue.ceda.ac.uk/uuid/bc13bb02a958449aac139853c4638f32/
+  - date: "2025-12-03"
+    level: info
+    title: MODIS snow cover fraction SCFG and SCFV v4.0 released (2000–2023) — supersedes v3.0
+    body: >-
+      The Terra MODIS global daily snow cover fraction v4.0 was released, extended to 2023-12-31, and v3.0 was marked "superseded".
+      Changes include a more permissive pre-classification, a low-illumination correction, updated reflectance layers, uncertainty and salt lake mask, and improved daily merging.
+    source: https://catalogue.ceda.ac.uk/uuid/375ffdb8f0a445e380b4b9548655f5f9/
+  - date: "2025-10-13"
+    level: info
+    title: AVHRR snow cover fraction v4.0 — corrupted file replaced, missing file added
+    body: >-
+      On 2025-09-08 the SCFG file 20170720-ESACCI-L3C_SNOW-SCFG-AVHRR_METOPB-fv4.0.nc was found to be corrupted and was replaced the same day;
+      on 2025-10-13 the SCFV file 20071108-ESACCI-L3C_SNOW-SCFV-AVHRR_NOAA18-fv4.0.nc, accidentally left out of the original archiving, was added.
+    source: https://catalogue.ceda.ac.uk/uuid/3c71c04cf08a410fac2c680cbf88cfd7/
+  - date: "2025-09-04"
+    level: info
+    title: SWE v4.0 and AVHRR snow cover fraction v4.0 released (1979–2023)
+    body: >-
+      Snow water equivalent v4.0 was released, extended by one year to 2023-12 and now prioritising morning overpasses.
+      AVHRR-based SCFG and SCFV v4.0 were released the same day for 1979-01 to 2023-12 (the previous AVHRR v2.0 covered 1982–2018).
+    source: https://catalogue.ceda.ac.uk/uuid/edf8abd23f4a40aabd4d52e48dec06ea/
+  - date: "2025-05-02"
+    level: info
+    title: Terra and Aqua expected to end operations in late 2026 to early 2027 — MODIS-based record cannot be extended
+    body: >-
+      NASA announced that the Terra and Aqua platforms carrying MODIS are expected to shut down in late 2026 or early 2027 and are drifting out of their designed orbits, which affects equator crossing times and may affect data quality.
+      The CCI Snow MODIS snow cover uses Terra only, so it is unlikely to continue; the project documents state that snow cover from 2023 onward continues with Sentinel-3 SLSTR within C3S.
+    source: https://www.earthdata.nasa.gov/data/alerts-outages/transition-from-modis-viirs
+
+links:
+  - name: ESA CCI Snow project page (products and data links)
+    url: https://climate.esa.int/en/projects/snow/
+  - name: Snow_cci Product User Guide v5.1 (2025-12)
+    url: https://climate.esa.int/documents/3136/Snow_cci_D4.3_PUG_v5.1.pdf
+  - name: Snow_cci Climate Research Data Package v5.1 (2025-12)
+    url: https://climate.esa.int/documents/3114/Snow_cci_D4.2_CRDP_v5.1.pdf
+  - name: Snow_cci Product Validation and Intercomparison Report v4.0 (2024-05)
+    url: https://climate.esa.int/documents/3034/Snow_cci_D4.1_PVIR_v4.0.pdf
+  - name: Gap-filled daily AVHRR snow cover fraction composite 1979–2023 (Zenodo, AVHRR10C1.V4)
+    url: https://doi.org/10.5281/zenodo.16746237
+  - name: AVHRR snow cover fraction method paper (Remote Sensing of Environment 334, 115235, 2026)
+    url: https://doi.org/10.1016/j.rse.2026.115235
+  - name: GlobSnow website
+    url: https://www.globsnow.info/
+  - name: CEDA terms of use — ESA CCI Snow Terms and Conditions
+    url: https://artefacts.ceda.ac.uk/licences/specific_licences/esacci_snow_terms_and_conditions.pdf
+
+watch_urls:
+  - https://climate.esa.int/en/projects/snow/
+  - https://catalogue.ceda.ac.uk/uuid/375ffdb8f0a445e380b4b9548655f5f9/
+  - https://catalogue.ceda.ac.uk/uuid/edf8abd23f4a40aabd4d52e48dec06ea/
+
+last_verified: "2026-10-13"

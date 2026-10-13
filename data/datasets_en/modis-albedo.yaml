@@ -1,0 +1,380 @@
+# ─────────────────────────────────────────────────────────────
+# MODIS BRDF/Albedo (MCD43) C6.1 — dataset information file (English edition)
+# Land tab (land surface temperature & albedo). Deprecated as Terra and Aqua near their end; linked to the VIIRS successor (viirs-albedo.yaml).
+# After editing, update last_verified to the date you checked the official pages.
+# ─────────────────────────────────────────────────────────────
+id: modis-albedo
+name: "MODIS BRDF/Albedo (MCD43)"
+full_name: MODIS/Terra+Aqua BRDF/Albedo (MCD43) Collection 6.1 — BRDF model parameters, surface albedo and nadir BRDF-adjusted reflectance, produced daily from a 16-day window
+category: satellite
+domain: land
+group: 지표면온도·알베도
+order: 20
+domains: [육지, 원격탐사]
+provider: NASA MODIS Land Science Team (Schaaf lab, UMass Boston) / NASA LP DAAC
+
+status: deprecated
+status_note: >-
+  Collection 6.1 (V061) is the current version and is still produced daily (the latest MCD43A3 file on 2026-10-13 was dated 2 October 2026), but the Terra and Aqua platforms that feed it
+  are out of fuel, drifting in orbit and approaching the end of their missions. In a May 2025 notice NASA said MODIS collection will stop once shutdown begins in late 2026 or early 2027,
+  that a final reprocessing will follow, and that users should move to the similar VIIRS products (VNP43, VJ143). Both satellites have outlived the originally planned end dates
+  (Terra December 2025, Aqua August 2026), but no official end date has been announced.
+
+period:
+  start: "2000-02"
+  end: present
+  note: >-
+    CMR lists 2000-02-16 as the start, with no end date (ongoing). Before Aqua joined in mid-2002 the product used Terra observations only.
+    Because each file is dated to the middle of its 16-day window, the newest file lags real time by about ten days (on 2026-10-13 the latest MCD43A3 file was A2026275 = 2026-10-02).
+
+resolution:
+  spatial_short: "0.5 km (0.005°)"
+  temporal_short: "1일"
+  spatial: >-
+    MODIS Sinusoidal tile grid, 500 m (MCD43A1–A4; each tile 2400 × 2400 pixels, about 1200 km × 1200 km) /
+    0.05° Climate Modeling Grid (CMG; MCD43C1–C4) / 30 arc-second CMG (per-band, per-variable MCD43D products and the gap-filled snow-free MCD43GF)
+  vertical: Land surface (single level)
+  temporal: Produced daily (each retrieval uses 16 days of Terra and Aqua observations weighted to the 9th day; the file-name date is that 9th day)
+
+update: Daily (the 16-day window must fill before processing, so files appear roughly 10 days after their nominal date)
+license: NASA Earth science open data — free and unrestricted under the EOSDIS Data Use and Citation Guidance. Downloads require a free NASA Earthdata Login
+account_required: true
+
+summary: >-
+  MCD43 is the MODIS land team's standard BRDF/albedo suite. For every pixel, cloud-free multi-angle observations from Terra and Aqua over 16 days are fitted with a kernel-driven
+  bidirectional reflectance distribution function (BRDF; the RossThick/LiSparse-Reciprocal model), and the fitted model is used to compute black-sky and white-sky albedo and
+  nadir BRDF-adjusted reflectance (NBAR). Since Collection 6 the 16-day window slides forward one day at a time to give daily retrievals, with the 9th day emphasized so that fast
+  surface changes such as snowfall, snowmelt, green-up and crop growth are captured. It comes as 500 m tiles (A products) and as global 0.05° and 30 arc-second grids (C and D products),
+  and is a reference dataset for evaluating land surface albedo in climate models and for surface radiation budget studies.
+
+time_convention:
+  summary: >-
+    A value is not a single observation: it comes from a BRDF model fitted to 16 days of observations, weighted towards the 9th day of the window (the date in the file name).
+    Black-sky albedo and NBAR are computed for the solar zenith angle at local solar noon on that date, while white-sky albedo is the fully diffuse case and does not depend on sun position.
+  points:
+    - "The AYYYYDDD date in the file name is the centre (9th day) of the 16-day input window. A2026275 (2026-10-02), for example, is built from observations on either side of that date, not from that one day."
+    - "Earlier reprocessed versions dated each retrieval to the first day of the window, and the Direct Broadcast version used the last day. Keep this in mind when aligning dates with old data."
+    - "When a pixel has enough well-distributed observations (currently seven or more) a full inversion is made; otherwise a magnitude inversion scales an a priori BRDF shape. The quality flags tell them apart."
+    - "Terra (morning) and Aqua (afternoon) observations are pooled, so the value does not belong to a particular time of day. Orbit drift has moved Terra's crossing earlier (about 09:00 by late 2025) and Aqua's later (projected around 15:50 by August 2026), so more observations are taken at low sun elevation."
+    - "Actual (blue-sky) albedo is not provided. It has to be computed by interpolating between black-sky and white-sky albedo using the diffuse skylight fraction, which depends on aerosol optical depth."
+    - "`BRDF_Albedo_ValidObs_Band*` in MCD43A2 records the days with valid observations within the 16-day window."
+  source: https://www.umb.edu/spectralmass/modis-user-guide-v006-and-v0061/mcd43a3-albedo-product/
+  source_name: "MODIS BRDF/Albedo V006/V006.1 User Guide (UMass Boston) + LP DAAC MCD43A3 V061 collection description (CMR)"
+
+variables:
+  note: >-
+    Names inside the files, checked against the LP DAAC product pages and LAADS V061 file specifications. Albedo and BRDF parameters are INT16 with scale_factor 0.001, NBAR uses 0.0001, and the fill value is 32767.
+    Band1–Band7 are MODIS bands 1–7 (620–2155 nm); vis, nir and shortwave are broadbands. The files are HDF-EOS2 (HDF4).
+  full_list: https://lpdaac.usgs.gov/products/mcd43a3v061/
+  groups:
+    - name: Albedo (MCD43A3 500 m / MCD43C3 0.05°)
+      kind: mean
+      period: 16-day window (9th day weighted)
+      items:
+        - text: "Black-sky albedo (direct beam, local solar noon) — `Albedo_BSA_Band1`–`Albedo_BSA_Band7`, `Albedo_BSA_vis`, `Albedo_BSA_nir`, `Albedo_BSA_shortwave` (dimensionless)"
+          note: The BRDF fitted to 16 days of data, integrated at the local-noon solar zenith angle. A weighted model inversion, not an arithmetic mean
+        - text: "White-sky albedo (fully diffuse) — `Albedo_WSA_Band1`–`Albedo_WSA_Band7`, `Albedo_WSA_vis`, `Albedo_WSA_nir`, `Albedo_WSA_shortwave` (dimensionless)"
+          note: Independent of sun position
+        - "Per-band mandatory quality — `BRDF_Albedo_Band_Mandatory_Quality_Band1`–`_shortwave` (0 full inversion, 1 magnitude inversion, 2–7 flag missing bands 5/6)"
+        - text: "Fraction of snow-flagged inputs in the CMG cell — `Percent_Snow` (%)"
+          note: MCD43C3. Share of the underlying 500 m inputs flagged as snow
+        - text: "Fraction of valid inputs in the CMG cell — `Percent_Inputs` (%)"
+          note: MCD43C3
+        - text: "Solar zenith angle at local solar noon — `Local_Solar_Noon` (degrees)"
+          kind: instant
+          note: MCD43C3. Local-noon solar zenith on the file date
+    - name: Nadir BRDF-adjusted reflectance, NBAR (MCD43A4 500 m / MCD43C4 0.05°)
+      kind: mean
+      period: 16-day window (9th day weighted)
+      items:
+        - text: "Nadir BRDF-adjusted reflectance (local-noon sun, nadir view) — `Nadir_Reflectance_Band1`–`Nadir_Reflectance_Band7` (dimensionless)"
+          note: scale_factor 0.0001. View-angle-corrected reflectance for vegetation index and land cover work
+        - "Per-band mandatory quality — `BRDF_Albedo_Band_Mandatory_Quality_Band1`–`Band7`"
+    - name: BRDF model parameters (MCD43A1 500 m / MCD43C1, C2 0.05°)
+      kind: mean
+      period: 16-day window (9th day weighted)
+      items:
+        - text: "Kernel weights (isotropic, volumetric, geometric) — `BRDF_Albedo_Parameters_Band1`–`Band7`, `_vis`, `_nir`, `_shortwave`"
+          note: "The last dimension (Num_Parameters) holds iso, vol and geo in that order. Use them to recompute reflectance and albedo for any sun/view geometry. MCD43C2 holds snow-free parameters"
+    - name: Quality and ancillary information (MCD43A2 500 m)
+      kind: mean
+      period: 16-day window
+      items:
+        - "Snow status (snow vs snow-free retrieval) — `Snow_BRDF_Albedo`"
+        - "Detailed BRDF inversion quality — `BRDF_Albedo_Band_Quality_Band1`–`Band7`"
+        - "Albedo uncertainty (weight of determination for white-sky albedo) — `BRDF_Albedo_Uncertainty`"
+        - text: "Days with valid observations in the 16-day window — `BRDF_Albedo_ValidObs_Band1`–`Band7` (days)"
+          kind: accum
+          note: Number of days within the 16-day window with valid observations
+        - text: "Solar zenith angle at local solar noon — `BRDF_Albedo_LocalSolarNoon` (degrees)"
+          kind: instant
+        - "Platform used (Terra/Aqua) — `BRDF_Albedo_Platform`; land/water type — `BRDF_Albedo_LandWaterType`"
+
+access:
+  - name: NASA Earthdata Search (LP DAAC, Earthdata Cloud)
+    url: https://search.earthdata.nasa.gov/search/granules?p=C2278860820-LPCLOUD
+    method: Web search and download / earthaccess (HDF-EOS2)
+    note: >-
+      MCD43A1, A2, A3 and A4 (500 m tiles), MCD43C1–C4 (0.05° CMG), MCD43D01–D68 (30 arc-second per band and variable) and MCD43GF (snow-free, gap-filled) are all available as V061.
+      In CMR the short name is, for example, MCD43A3 with version 061. A free Earthdata Login is required.
+  - name: NASA AppEEARS
+    url: https://appeears.earthdatacloud.nasa.gov/
+    method: Point and area extraction with reprojection (GeoTIFF, NetCDF4)
+    note: Returns point time series or latitude–longitude grids without handling Sinusoidal tiles yourself — the easiest route for first-time users.
+  - name: LP DAAC product page (MCD43A3 V061)
+    url: https://lpdaac.usgs.gov/products/mcd43a3v061/
+    method: Documentation, layer tables, DOI
+  - name: Google Earth Engine (MODIS/061/MCD43A4, MODIS/061/MCD43C3, etc.)
+    url: https://developers.google.com/earth-engine/datasets/catalog/MODIS_061_MCD43C3
+    method: Cloud analysis (Earth Engine account required)
+    note: A redistributed copy of the NASA data; update timing can differ from the original.
+
+example:
+  lang: python
+  note: >-
+    Downloads one day of MCD43A3 tiles for April 2024 with earthaccess and reads white-sky shortwave albedo. The files are HDF4, so pyhdf is used (pip install earthaccess pyhdf numpy).
+    The example keeps only full inversions (quality 0).
+  code: |
+    import earthaccess
+    import numpy as np
+    from pyhdf.SD import SD, SDC
+
+    earthaccess.login()  # free NASA Earthdata account
+    results = earthaccess.search_data(
+        short_name="MCD43A3", version="061",
+        temporal=("2024-04-15", "2024-04-15"),
+        bounding_box=(124, 33, 132, 39),   # (west, south, east, north)
+    )
+    files = earthaccess.download(results, "mcd43a3")
+
+    for f in files:
+        sd = SD(f, SDC.READ)
+        wsa = sd.select("Albedo_WSA_shortwave")[:].astype("float32")
+        qa = sd.select("BRDF_Albedo_Band_Mandatory_Quality_shortwave")[:]
+        wsa[wsa == 32767] = np.nan        # fill value
+        wsa *= 0.001                      # scale_factor
+        wsa[qa != 0] = np.nan             # keep full inversions only
+        print(f, np.nanmean(wsa))
+
+    # A file date such as A2024106 is the 9th day of the 16-day window.
+
+tips:
+  - "Values are stored as integers. Multiply albedo and BRDF parameters by 0.001 and NBAR by 0.0001, after first setting the fill value 32767 to missing."
+  - "LP DAAC and the user guide recommend using the per-band quality flags to keep only full inversions (value 0). Magnitude inversions (1) come from pixels with too few observations and are much less certain."
+  - "Collection 6.1 added quality values 2–7, which flag cases where band 5 or 6 (1.24 and 1.64 µm) was set to fill because of non-functional or noisy detectors — many Aqua MODIS band 6 detectors do not work. Check these values if your analysis uses those bands."
+  - "Do not treat a file as one day's observation. The 16-day windows overlap, so neighbouring dates are strongly correlated and day-to-day differences cannot pin down the timing of a change."
+  - "During snow-covered periods the retrieval is a snow retrieval (see `Snow_BRDF_Albedo`). For snow-free background albedo use MCD43C2 (snow-free parameters) or MCD43GF."
+  - "The 500 m products are MODIS Sinusoidal tiles (hXXvYY). For a latitude–longitude grid, reproject with AppEEARS or use the 0.05° CMG (MCD43C3)."
+  - "Orbit drift has shifted Terra and Aqua crossing times, increasing low-sun observations and shadows, and the lower orbits no longer keep a strict 16-day repeat. Keep this in mind when analysing trends from the 2020s onward."
+  - "The MODIS land team has said it is preparing a final reprocessing, Collection 7 (all products in netCDF4), but as of 2026-10-13 CMR lists no MCD43 C7 collection. When C7 appears the whole record will change, so do not mix it with C6.1."
+  - "Since 7 July 2023 the platforms have been flown with Lights-Out-Operations, so non-recoverable data gaps are more frequent than before. Check the dates on the LDOPE quality site (landweb.modaps.eosdis.nasa.gov)."
+
+citations:
+  dataset:
+    - label: MCD43A3 V061 (albedo, 500 m)
+      text: >-
+        Schaaf, C., Wang, Z. (2021). MODIS/Terra+Aqua BRDF/Albedo Daily L3 Global - 500m V061 [Data set].
+        NASA Land Processes Distributed Active Archive Center. https://doi.org/10.5067/MODIS/MCD43A3.061 (Accessed YYYY-MM-DD)
+      doi: 10.5067/MODIS/MCD43A3.061
+      bibtex: |
+        @misc{mcd43a3_v061,
+          author    = {Schaaf, Crystal and Wang, Zhuosen},
+          title     = {{MODIS/Terra+Aqua BRDF/Albedo Daily L3 Global - 500m V061}},
+          year      = {2021},
+          publisher = {NASA Land Processes Distributed Active Archive Center},
+          doi       = {10.5067/MODIS/MCD43A3.061}
+        }
+    - label: MCD43A4 V061 (NBAR, 500 m)
+      text: >-
+        Schaaf, C., Wang, Z. (2021). MODIS/Terra+Aqua BRDF/Albedo Nadir BRDF Adjusted Ref Daily L3 Global - 500m V061 [Data set].
+        NASA Land Processes Distributed Active Archive Center. https://doi.org/10.5067/MODIS/MCD43A4.061 (Accessed YYYY-MM-DD)
+      doi: 10.5067/MODIS/MCD43A4.061
+      bibtex: |
+        @misc{mcd43a4_v061,
+          author    = {Schaaf, Crystal and Wang, Zhuosen},
+          title     = {{MODIS/Terra+Aqua BRDF/Albedo Nadir BRDF Adjusted Ref Daily L3 Global - 500m V061}},
+          year      = {2021},
+          publisher = {NASA Land Processes Distributed Active Archive Center},
+          doi       = {10.5067/MODIS/MCD43A4.061}
+        }
+    - label: MCD43C3 V061 (albedo, 0.05° CMG)
+      text: >-
+        Schaaf, C., Wang, Z. (2021). MODIS/Terra+Aqua BRDF/Albedo Albedo Daily L3 Global 0.05Deg CMG V061 [Data set].
+        NASA Land Processes Distributed Active Archive Center. https://doi.org/10.5067/MODIS/MCD43C3.061 (Accessed YYYY-MM-DD)
+      doi: 10.5067/MODIS/MCD43C3.061
+      bibtex: |
+        @misc{mcd43c3_v061,
+          author    = {Schaaf, Crystal and Wang, Zhuosen},
+          title     = {{MODIS/Terra+Aqua BRDF/Albedo Albedo Daily L3 Global 0.05Deg CMG V061}},
+          year      = {2021},
+          publisher = {NASA Land Processes Distributed Active Archive Center},
+          doi       = {10.5067/MODIS/MCD43C3.061}
+        }
+  papers:
+    - label: First operational MODIS BRDF/albedo products
+      text: >-
+        Schaaf, C. B., Gao, F., Strahler, A. H., Lucht, W., Li, X., Tsang, T., Strugnell, N. C., Zhang, X., Jin, Y., Muller, J.-P., Lewis, P.,
+        Barnsley, M., Hobson, P., Disney, M., Roberts, G., Dunderdale, M., Doll, C., d'Entremont, R. P., Hu, B., Liang, S., Privette, J. L., Roy, D. (2002):
+        First operational BRDF, albedo nadir reflectance products from MODIS. Remote Sensing of Environment, 83(1–2), 135–148.
+      doi: 10.1016/S0034-4257(02)00091-3
+      bibtex: |
+        @article{schaaf2002mcd43,
+          author  = {Schaaf, Crystal B. and Gao, Feng and Strahler, Alan H. and Lucht, Wolfgang and Li, Xiaowen and Tsang, Trevor and Strugnell, Nicholas C. and Zhang, Xiaoyang and Jin, Yufang and Muller, Jan-Peter and Lewis, Philip and Barnsley, Michael and Hobson, Paul and Disney, Mathias and Roberts, Gareth and Dunderdale, Michael and Doll, Christopher and d'Entremont, Robert P. and Hu, Baoxin and Liang, Shunlin and Privette, Jeffrey L. and Roy, David},
+          title   = {First operational {BRDF}, albedo nadir reflectance products from {MODIS}},
+          journal = {Remote Sensing of Environment},
+          volume  = {83},
+          number  = {1-2},
+          pages   = {135--148},
+          year    = {2002},
+          doi     = {10.1016/S0034-4257(02)00091-3}
+        }
+    - label: Daily MCD43 in Collection 6
+      text: >-
+        Wang, Z., Schaaf, C. B., Sun, Q., Shuai, Y., Román, M. O. (2018): Capturing rapid land surface dynamics with Collection V006
+        MODIS BRDF/NBAR/Albedo (MCD43) products. Remote Sensing of Environment, 207, 50–64.
+      doi: 10.1016/j.rse.2018.02.001
+      bibtex: |
+        @article{wang2018mcd43v006,
+          author  = {Wang, Zhuosen and Schaaf, Crystal B. and Sun, Qingsong and Shuai, Yanmin and Rom{\'a}n, Miguel O.},
+          title   = {Capturing rapid land surface dynamics with Collection {V006} {MODIS} {BRDF/NBAR/Albedo} ({MCD43}) products},
+          journal = {Remote Sensing of Environment},
+          volume  = {207},
+          pages   = {50--64},
+          year    = {2018},
+          doi     = {10.1016/j.rse.2018.02.001}
+        }
+  acknowledgement: >-
+    LP DAAC asks users to cite each product with the citation given on its DOI landing page. Cite the DOI of every product you actually used (A1, A2, A3, A4, C1–C4, D, GF) with your access date.
+    For the method, cite Schaaf et al. (2002) together with Wang et al. (2018), which describes the daily Collection 6 retrievals.
+
+transitions:
+  - from: MODIS MCD43 C6.1 (Terra+Aqua)
+    to: VIIRS VNP43·VJ143 C2
+    to_id: viirs-albedo
+    status: planned
+    date: "2026"
+    summary: >-
+      To prepare for the end of Terra and Aqua, NASA produces VNP43 (Suomi NPP), VJ143 (NOAA-20) and VJ243 (NOAA-21) by applying the same algorithm
+      (RossThick/LiSparse-Reciprocal BRDF, 16-day window weighted to the 9th day) to VIIRS data as the MODIS follow-on. Resolution, bands, file format and observing time differ, so the records cannot simply be joined.
+    changes:
+      - aspect: Platform and sensor
+        before: "Terra (from 2000-02) and Aqua (from 2002-07) MODIS observations combined into one product (MCD43)"
+        after: "VIIRS on Suomi NPP (VNP43, from 2012-01), NOAA-20 (VJ143, from 2018-01) and NOAA-21 (VJ243, from 2023-02), each a separate product"
+      - aspect: Observing time
+        before: "Mix of morning (Terra) and afternoon (Aqua) observations"
+        after: "Observations from one afternoon-orbit satellite. No follow-on continues Terra's morning crossing (LAADS)"
+      - aspect: Spatial resolution and bands
+        before: "500 m, MODIS bands 1–7 plus vis, nir and shortwave broadbands / 0.05° and 30 arc-second CMG"
+        after: "500 m (imagery bands I1–I3, IA products) + 1 km (M1–M5, M7, M8, M10, M11 plus vis, nir and shortwave, MA products) / 0.05° and 30 arc-second CMG"
+      - aspect: Variable names
+        before: "`Albedo_WSA_Band1`–`Band7`, `Albedo_WSA_shortwave`, etc."
+        after: "`Albedo_WSA_M1`–`M11`, `Albedo_WSA_I1`–`I3`; broadbands keep names such as `Albedo_WSA_shortwave`. Same scale_factor 0.001"
+      - aspect: File format
+        before: "HDF-EOS2 (HDF4)"
+        after: "HDF-EOS5 (HDF5)"
+      - aspect: Algorithm
+        before: "16-day window, 9th day weighted, full/magnitude inversions"
+        after: "Same approach (designed to continue the MODIS BRDF/albedo suite)"
+    impacts:
+      - "Before joining MODIS and VIIRS albedo into one series, compare the two over their overlap (2012 onward) at the same sites and bands. Band centres differ, so spectral albedos do not map one-to-one; comparing broadband (vis, nir, shortwave) values is safer."
+      - "MCD43 pools morning and afternoon observations, whereas the VIIRS products use a single afternoon satellite. Fewer observations can raise the share of magnitude inversions, so look at the quality-flag distribution too."
+      - "Delivery of Suomi NPP data (VNP43) ends on 2 November 2026. Going forward, use VJ143 (NOAA-20) or VJ243 (NOAA-21)."
+      - "HDF4 code (pyhdf, etc.) must be rewritten for HDF5 (h5py, xarray)."
+    sources:
+      - name: Liu et al. (2017) — evaluation of VIIRS BRDF/Albedo/NBAR and continuity with the MODIS record
+        url: https://doi.org/10.1016/j.rse.2017.09.020
+      - name: Román et al. (2024) — continuity between MODIS C6.1 and VIIRS C2 land products
+        url: https://doi.org/10.1016/j.rse.2023.113963
+      - name: NASA Earthdata — Transition from MODIS to VIIRS (2025-05-02)
+        url: https://www.earthdata.nasa.gov/data/alerts-outages/transition-from-modis-viirs
+      - name: LAADS DAAC — MODIS To VIIRS Transition
+        url: https://ladsweb.modaps.eosdis.nasa.gov/learn/modis-to-viirs-transition/
+  - from: MCD43 Collection 6
+    to: MCD43 Collection 6.1
+    status: completed
+    date: "2021-02"
+    summary: >-
+      A reprocessing with improved Level 1B calibration (reflective-band response, Terra IR crosstalk correction, polarization correction). The algorithm is unchanged, and the quality flag gained values marking missing bands 5 and 6.
+      LP DAAC stopped distributing Collection 6.0 on 31 July 2023 (except MCD43GF).
+    changes:
+      - aspect: Input calibration
+        before: "C6 Level 1B"
+        after: "Revised response-versus-scan (RVS) approach for reflective bands, optical crosstalk correction for Terra IR bands, corrected Terra LUT updates for 2012–2017, polarization correction for reflective solar bands"
+      - aspect: Mandatory quality values
+        before: "0 full inversion / 1 magnitude inversion"
+        after: "0 and 1 plus 2–7 (band 5 and/or 6 set to fill because of non-functional or noisy detectors)"
+      - aspect: Availability
+        before: "Distribution ended 2023-07-31"
+        after: "Current version (CMR release date 2021-02-22)"
+    impacts:
+      - Do not mix C6 and C6.1; download the whole period again as C6.1.
+      - "Code that assumes quality values of only 0/1 must be updated to handle 2–7."
+    sources:
+      - name: LP DAAC MCD43A3 V061 product page (Improvements/Changes)
+        url: https://lpdaac.usgs.gov/products/mcd43a3v061/
+      - name: MODIS Version 6.0 Land Data Products Decommissioned (Earthdata)
+        url: https://www.earthdata.nasa.gov/data/alerts-outages/modis-version-6-0-land-data-products-decommissioned
+
+notices:
+  - date: "2026-03-26"
+    level: warning
+    title: Terra MODIS placed in standby — data for 26–27 March 2026 flagged as bad
+    body: >-
+      After a spacecraft anomaly at about 20:00 UTC on 26 March, Terra MODIS went into standby mode and returned to science mode on 27 March.
+      The calibration team flagged data from day 2026-085 20:00 UTC to day 2026-086 19:23 UTC as questionable or bad, so check the quality of MCD43 retrievals whose 16-day window includes this period.
+    source: https://www.earthdata.nasa.gov/data/alerts-outages/terra-modis-placed-standby-mode
+  - date: "2025-05-02"
+    level: warning
+    title: Move from MODIS to VIIRS — Terra and Aqua expected to shut down in late 2026 or early 2027
+    body: >-
+      NASA said MODIS data collection will stop once Terra and Aqua begin shutting down in late 2026 or early 2027, with a final reprocessing beforehand.
+      It noted that orbit drift is affecting crossing times and may affect the data, and encouraged users to switch to similar VIIRS products.
+    source: https://www.earthdata.nasa.gov/data/alerts-outages/transition-from-modis-viirs
+  - date: "2024-11-12"
+    level: info
+    title: MCD43GF V6.1 (snow-free, gap-filled, 30 arc-second) released
+    body: >-
+      The gap-filled, snow-free daily albedo, BRDF and NBAR product MCD43GF V6.1 was released starting with 2013–2021, with the remaining years to follow.
+      The V6 MCD43GF stays available until the rest of V6.1 is out.
+    source: https://www.earthdata.nasa.gov/data/alerts-outages/gap-filled-modis-version-6-1-albedo-brdf-nbar-data-product-released
+  - date: "2023-07-25"
+    level: info
+    title: MODIS Version 6.0 land products decommissioned (2023-07-31)
+    body: >-
+      LP DAAC stopped distributing Terra, Aqua and combined MODIS V6.0 land products (except MOD44W and MCD43GF). Users need to move to V6.1.
+    source: https://www.earthdata.nasa.gov/data/alerts-outages/modis-version-6-0-land-data-products-decommissioned
+  - date: "2023-07-07"
+    level: info
+    title: Terra and Aqua MODIS switch to Lights-Out-Operations — more data loss possible
+    body: >-
+      The Flight Operations Team no longer staffs the 12-hour night shift and no longer fills gaps with solid-state recorder replays, so non-recoverable data loss may occur more often.
+      Overall capture is still expected to exceed the 95% mission guideline. All MODIS V6.1 products are affected.
+    source: https://www.earthdata.nasa.gov/data/alerts-outages/modis-light-out-operations-potential-data-loss
+  - date: "2021-11-10"
+    level: warning
+    title: Aqua orbit drift — equator crossing getting later
+    body: >-
+      After its last orbit maintenance manoeuvre in March 2021, Aqua began drifting to later crossing times in July 2021, passed 13:45 in February 2023, and was projected to reach about 15:50 around August 2026.
+      Products are expected to stay mostly science quality, but the lower altitude reduces grid coverage and the strict 16-day repeat is no longer kept.
+    source: https://lpdaac.usgs.gov/news/aqua-modis-acquisition-plan-through-august-2026/
+
+links:
+  - name: MODIS BRDF/Albedo User Guide (V006 and V006.1, UMass Boston)
+    url: https://www.umb.edu/spectralmass/modis-user-guide-v006-and-v0061/
+  - name: MCD43 Algorithm Theoretical Basis Document (ATBD)
+    url: https://lpdaac.usgs.gov/documents/97/MCD43_ATBD.pdf
+  - name: LAADS file specification — MCD43A3 V061
+    url: https://ladsweb.modaps.eosdis.nasa.gov/filespec/MODIS/61/MCD43A3
+  - name: MODIS Land validation status (MCD43)
+    url: https://modis-land.gsfc.nasa.gov/ValStatus.php?ProductID=MCD43A3
+  - name: LDOPE quality site (known issues, manoeuvres)
+    url: https://landweb.modaps.eosdis.nasa.gov
+  - name: MODIS Land News (Terra/Aqua end of mission, Collection 7 plans)
+    url: https://modis-land.gsfc.nasa.gov/news.html
+
+watch_urls:
+  - https://modis-land.gsfc.nasa.gov/news.html
+  - https://www.earthdata.nasa.gov/data/alerts-outages
+  - https://aqua.nasa.gov/announcements/aqua-status
+
+last_verified: "2026-10-13"

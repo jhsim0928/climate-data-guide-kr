@@ -1,0 +1,338 @@
+# ─────────────────────────────────────────────────────────────
+# VIIRS Snow Cover (VNP10, VJ110) C2 — dataset information file (English edition)
+# Land tab (snow). Successor to MODIS snow cover (modis-snow.yaml); the MODIS → VIIRS transition is described in modis-snow.yaml.
+# After editing, update last_verified to the date you checked the official pages.
+# ─────────────────────────────────────────────────────────────
+id: viirs-snow
+name: "VIIRS Snow (VNP10)"
+full_name: VIIRS Snow Cover Version 2 (VNP10 Suomi NPP, VJ110 NOAA-20, VJ210 NOAA-21) — NDSI-based 375 m snow cover continuing the MODIS record, including cloud-gap-filled maps
+category: satellite
+domain: land
+group: 적설
+order: 11
+domains: [육지, 수문, 원격탐사]
+provider: NASA GSFC Snow Team (Riggs and Hall) / NASA NSIDC DAAC
+
+status: active
+status_note: >-
+  Version 2 (Collection 2) is current and is updated daily (on 2026-10-13 the latest VJ110A1 file was for 11 October 2026 and VNP10A1 for 8 October).
+  Delivery of Suomi NPP data (VNP10) ends at 13:00 UTC on 2 November 2026, however, and NSIDC directs users to the NOAA-20 (VJ110) and NOAA-21 (VJ210) products.
+  Version 1 stopped production on 17 June 2024.
+
+period:
+  start: "2012-01"
+  end: present
+  note: >-
+    VNP10 (Suomi NPP) starts on 2012-01-19, VJ110 (NOAA-20) on 2018-01-05 and VJ210 (NOAA-21) on 2023-02-10 (per CMR).
+    No new VNP10 data are expected after 2 November 2026, and production stopped during the Suomi NPP anomaly of 10–21 July 2026.
+
+resolution:
+  spatial_short: "0.375 km (0.0034°)"
+  temporal_short: "1일"
+  spatial: >-
+    MODIS Sinusoidal tile grid, 375 m (VNP10A1, A1F; each 10°×10° tile is 3000×3000 pixels) / 0.05° Climate Modeling Grid (CMG; VNP10C1, 3600×7200) /
+    375 m global latitude–longitude grid (VNP10D1F, cloud-gap-filled) / 375 m swath (VNP10, 6-minute granules)
+  vertical: Land surface (single level)
+  temporal: Daily (no 8-day or monthly composites)
+
+update: "Daily (on 2026-10-13, NOAA-20 VJ110 lagged observation by one to two days and Suomi NPP VNP10 by about five days)"
+license: NASA Earth science open data — free and unrestricted. Downloads require a free NASA Earthdata Login
+account_required: true
+
+summary: >-
+  Global snow cover from VIIRS, produced by the NASA snow team with an approach developed alongside the MODIS Collection 6 snow algorithm and almost identical to it (NDSI plus data screens),
+  so that the MODIS snow record begun in 2000 can continue. Using the VIIRS imagery bands I1 (0.64 µm) and I3 (1.61 µm), it has a finer 375 m resolution than MODIS (500 m),
+  and provides daily snow cover (A1), cloud-gap-filled daily snow cover (A1F), 0.05° snow cover percentage (C1) and a 375 m global cloud-gap-filled map (D1F) for each satellite (VNP10, VJ110, VJ210).
+
+time_convention:
+  summary: >-
+    Daily data (VNP10A1) hold the single "best" observation of the day for each cell — the swath with solar zenith nearest local solar noon, nearest nadir and with the greatest cell coverage — so they are instantaneous values.
+    All VIIRS satellites fly afternoon orbits, so their observing time differs from morning Terra MODIS. Cloud-gap-filled values (A1F) may be as old as the run of cloudy days.
+  points:
+    - "The swath each pixel came from can be found with `granule_pnt` and the GranulePointerArray and GranuleBeginningDateTime attributes in the file."
+    - "`Cloud_Persistence` in the gap-filled product counts consecutive cloudy days (0 = clear today). A value of n means the snow value is from the clear day n days earlier."
+    - "Gap filling restarts each water year (1 October in the Northern Hemisphere, 1 July in the Southern). On the first day cloudy pixels get persistence 1, and a nearly cloud-free map usually takes five to seven days."
+    - "When a whole tile is missing for a day, the previous day's gap-filled map is repeated and persistence increases by one for every pixel."
+    - "In VNP10C1 (0.05°) the snow percentage is the share of snow among all 375 m observations in the cell (snow, no snow, cloud and flagged values), with cloud percentage given separately. Antarctica is deliberately set to 100% snow (code 243)."
+    - "No data are produced at night or during polar darkness."
+  source: https://nsidc.org/sites/default/files/documents/user-guide/multi_vnp10a1f-v002-userguide.pdf
+  source_name: "NSIDC VNP10A1, VNP10A1F and VNP10C1 Version 2 User Guides (2023-06, updated 2026-01)"
+
+variables:
+  note: >-
+    Layer names from the NSIDC Version 2 user guides. Files are HDF-EOS5 (HDF5, CF-1.6); group paths can differ by satellite and product, so check your downloaded files.
+    `NDSI_Snow_Cover` values 0–100 are NDSI × 100; 201 no decision, 211 night, 237 lake/inland water, 239 ocean, 250 cloud, 251 missing L1B, 252 failed calibration, 253 bowtie trim, 254 L1B fill, 255 L2 fill.
+  full_list: https://nsidc.org/sites/default/files/documents/user-guide/multi_vnp10a1-v002-userguide.pdf
+  groups:
+    - name: Daily snow cover, 375 m (VNP10A1 / VJ110A1 / VJ210A1)
+      kind: instant
+      period: one selected observation per day
+      items:
+        - text: "NDSI snow cover — `NDSI_Snow_Cover` (0–100, dimensionless)"
+          note: Value from the best observation of the day. Not fractional snow cover
+        - "Raw NDSI — `NDSI` (scale_factor 0.001, valid −1000 to 1000)"
+        - "Basic quality — `Basic_QA` (0 best, 1 good, 2 poor, 3 other)"
+        - "Algorithm screen bits — `Algorithm_bit_flags_QA` (bit 0 inland water, 1 low visible, 2 low NDSI, 3 temperature/height, 5 high SWIR, 7 uncertain due to low illumination)"
+        - "Swath pointer — `granule_pnt`"
+    - name: Cloud-gap-filled daily snow cover, 375 m (VNP10A1F / VJ110A1F / VJ210A1F)
+      kind: instant
+      period: most recent clear-sky observation
+      items:
+        - text: "Cloud-gap-filled NDSI snow cover — `CGF_NDSI_Snow_Cover` (0–100)"
+          note: Cloudy pixels filled with the most recent clear value
+        - text: "Consecutive cloudy days — `Cloud_Persistence` (days)"
+          kind: accum
+          note: 0 = clear today; n = cloudy for n consecutive days
+        - "Copy of the same-day snow cover — `Daily_NDSI_Snow_Cover`"
+        - "Quality — `Basic_QA`, `Algorithm_Bit_Flags_QA`"
+    - name: 0.05° CMG snow cover percentage (VNP10C1 / VJ110C1 / VJ210C1)
+      kind: instant
+      period: one selected observation per day
+      items:
+        - text: "Snow cover — `Snow_Cover` (%)"
+          note: Share of snow among the 375 m observations in the cell. Antarctica is code 243 (treated as 100% snow)
+        - "Cloud cover — `Cloud_Cover` (%); clear index — `Clear_Index` (%)"
+        - "Representative quality for the cell — `Basic_QA`"
+    - name: 375 m global cloud-gap-filled map (VNP10D1F / VJ110D1F / VJ210D1F)
+      kind: instant
+      period: most recent clear-sky observation
+      items:
+        - text: "Cloud-gap-filled NDSI snow cover — `NDSI_Snow_Cover` (0–100)"
+          note: All of the day's A1F tiles reprojected to a global latitude–longitude grid
+        - text: "Consecutive cloudy days — `Cloud_Persistence` (days)"
+          kind: accum
+
+access:
+  - name: NSIDC DAAC data set page (VNP10A1 V2)
+    url: https://nsidc.org/data/vnp10a1/versions/2
+    method: NSIDC Data Access Tool / HTTPS (Earthdata Cloud) / documentation
+    note: NOAA-20 is VJ110A1 and NOAA-21 is VJ210A1. The VIIRS data set list and announcements are at https://nsidc.org/data/viirs.
+  - name: NASA Earthdata Search and earthaccess (Earthdata Cloud)
+    url: https://search.earthdata.nasa.gov/
+    method: Web search and download / earthaccess / AWS S3 (in us-west-2 only)
+    note: CMR short names are VNP10A1, VJ110A1, VJ210A1 and so on, with version 2. A free Earthdata Login is required.
+  - name: NASA AppEEARS
+    url: https://appeears.earthdatacloud.nasa.gov/
+    method: Point and area extraction with reprojection
+    note: Supports VNP10A1 and VJ110A1 (375 m daily snow cover) since March 2026.
+
+example:
+  lang: python
+  note: >-
+    Downloads one day of NOAA-20 (VJ110A1F) cloud-gap-filled snow cover with earthaccess and reads it (pip install earthaccess h5py numpy).
+    Variables are located by name, so you do not need to know the HDF-EOS5 group path.
+  code: |
+    import earthaccess
+    import h5py
+    import numpy as np
+
+    earthaccess.login()  # free NASA Earthdata account
+    results = earthaccess.search_data(
+        short_name="VJ110A1F", version="2",
+        temporal=("2024-01-15", "2024-01-15"),
+        bounding_box=(124, 33, 132, 39),   # (west, south, east, north)
+    )
+    files = earthaccess.download(results, "vj110a1f")
+
+    def find(h5, name):
+        hits = []
+        h5.visititems(lambda k, v: hits.append(k) if k.endswith("/" + name) else None)
+        return h5[hits[0]]
+
+    for f in files:
+        with h5py.File(f, "r") as h5:
+            ndsi = find(h5, "CGF_NDSI_Snow_Cover")[:].astype("float32")
+            cp = find(h5, "Cloud_Persistence")[:]
+        ndsi[ndsi > 100] = np.nan          # 201+ are codes for night, water, cloud, missing
+        snow = ndsi > 0                     # example: treat NDSI snow cover 1-100 as snow (tune for your study)
+        print(f, np.nanmean(snow), (cp == 0).mean())
+
+tips:
+  - "Delivery of Suomi NPP data (VNP10) ends on 2 November 2026. Switch the short names in your scripts to VJ110 (NOAA-20) or VJ210 (NOAA-21) and check for offsets where the satellite changes."
+  - "`NDSI_Snow_Cover` values 0–100 are NDSI, not fractional snow cover. Choose your own snow/no-snow threshold and report it in your paper."
+  - "Codes differ from MODIS: VIIRS has 251 (missing L1B), 252 (failed calibration), 253 (bowtie trim) and so on instead of 200 (missing), and the `NDSI` scale_factor is 0.001 (MODIS 0.0001). Quality variable names also differ (`Basic_QA`, `Algorithm_bit_flags_QA`)."
+  - "There are no VIIRS equivalents of the MODIS 8-day (A2) and monthly (CM) products or of the snow albedo layer. Composite the daily data yourself if needed."
+  - "Users reported that the PROJ string in the NSIDC user guide (WGS84 ellipsoid) does not georeference correctly in GIS, and NSIDC confirmed that the MODIS sphere (+proj=sinu +R=6371007.181) is correct. Set coordinates from the XDim and YDim variables."
+  - "Known issues include erroneous snow-free areas on the Antarctic Peninsula (difficult cloud detection), weave and stitching patterns at swath edges, day-to-day lake position wobble, and errors over warm surfaces, bright surfaces and lake ice."
+  - "Hall et al. (2024) report that VIIRS maps slightly more snow than MODIS (a less conservative cloud mask and different overpass time). Check the difference over the overlap period before joining with the MODIS record."
+
+citations:
+  dataset:
+    - label: VJ110A1 V2 (NOAA-20 daily, 375 m)
+      text: >-
+        Riggs, G. A. & Hall, D. K. (2023). VIIRS/JPSS1 Snow Cover Daily L3 Global 375m SIN Grid, Version 2 [Data Set].
+        Boulder, Colorado USA. NASA National Snow and Ice Data Center Distributed Active Archive Center. https://doi.org/10.5067/UAJGR7WVWDDI. Date Accessed MM-DD-YYYY.
+      doi: 10.5067/UAJGR7WVWDDI
+      bibtex: |
+        @misc{vj110a1_v2,
+          author    = {Riggs, George A. and Hall, Dorothy K.},
+          title     = {{VIIRS/JPSS1 Snow Cover Daily L3 Global 375m SIN Grid, Version 2}},
+          year      = {2023},
+          publisher = {NASA National Snow and Ice Data Center Distributed Active Archive Center},
+          address   = {Boulder, Colorado USA},
+          doi       = {10.5067/UAJGR7WVWDDI}
+        }
+    - label: VNP10A1 V2 (Suomi NPP daily, 375 m)
+      text: >-
+        Riggs, G. A. & Hall, D. K. (2023). VIIRS/NPP Snow Cover Daily L3 Global 375m SIN Grid, Version 2 [Data Set].
+        Boulder, Colorado USA. NASA National Snow and Ice Data Center Distributed Active Archive Center. https://doi.org/10.5067/45VDCKJBXWEE. Date Accessed MM-DD-YYYY.
+      doi: 10.5067/45VDCKJBXWEE
+      bibtex: |
+        @misc{vnp10a1_v2,
+          author    = {Riggs, George A. and Hall, Dorothy K.},
+          title     = {{VIIRS/NPP Snow Cover Daily L3 Global 375m SIN Grid, Version 2}},
+          year      = {2023},
+          publisher = {NASA National Snow and Ice Data Center Distributed Active Archive Center},
+          address   = {Boulder, Colorado USA},
+          doi       = {10.5067/45VDCKJBXWEE}
+        }
+    - label: VNP10A1F V2 (Suomi NPP cloud-gap-filled daily, 375 m)
+      text: >-
+        Riggs, G. A. & Hall, D. K. (2022). VIIRS/NPP CGF Snow Cover Daily L3 Global 375m SIN Grid, Version 2 [Data Set].
+        Boulder, Colorado USA. NASA National Snow and Ice Data Center Distributed Active Archive Center. https://doi.org/10.5067/PN50Y51IVNLE. Date Accessed MM-DD-YYYY.
+      doi: 10.5067/PN50Y51IVNLE
+      bibtex: |
+        @misc{vnp10a1f_v2,
+          author    = {Riggs, George A. and Hall, Dorothy K.},
+          title     = {{VIIRS/NPP CGF Snow Cover Daily L3 Global 375m SIN Grid, Version 2}},
+          year      = {2022},
+          publisher = {NASA National Snow and Ice Data Center Distributed Active Archive Center},
+          address   = {Boulder, Colorado USA},
+          doi       = {10.5067/PN50Y51IVNLE}
+        }
+    - label: VJ210A1 V2 (NOAA-21 daily, 375 m)
+      text: >-
+        Riggs, G. A. & Hall, D. K. (2026). VIIRS/JPSS2 Snow Cover Daily L3 Global 375m SIN Grid, Version 2 [Data Set].
+        Boulder, Colorado USA. NASA National Snow and Ice Data Center Distributed Active Archive Center. https://doi.org/10.5067/IX3NQYYS3MOV. Date Accessed MM-DD-YYYY.
+      doi: 10.5067/IX3NQYYS3MOV
+      bibtex: |
+        @misc{vj210a1_v2,
+          author    = {Riggs, George A. and Hall, Dorothy K.},
+          title     = {{VIIRS/JPSS2 Snow Cover Daily L3 Global 375m SIN Grid, Version 2}},
+          year      = {2026},
+          publisher = {NASA National Snow and Ice Data Center Distributed Active Archive Center},
+          address   = {Boulder, Colorado USA},
+          doi       = {10.5067/IX3NQYYS3MOV}
+        }
+  papers:
+    - label: Overview of the MODIS and VIIRS snow records
+      text: >-
+        Riggs, G. A., Hall, D. K., Román, M. O. (2017): Overview of NASA's MODIS and Visible Infrared Imaging Radiometer Suite (VIIRS)
+        snow-cover Earth System Data Records. Earth System Science Data, 9(2), 765–777.
+      doi: 10.5194/essd-9-765-2017
+      bibtex: |
+        @article{riggs2017snow,
+          author  = {Riggs, George A. and Hall, Dorothy K. and Rom{\'a}n, Miguel O.},
+          title   = {Overview of {NASA}'s {MODIS} and {Visible Infrared Imaging Radiometer Suite} ({VIIRS}) snow-cover {Earth System Data Records}},
+          journal = {Earth System Science Data},
+          volume  = {9},
+          number  = {2},
+          pages   = {765--777},
+          year    = {2017},
+          doi     = {10.5194/essd-9-765-2017}
+        }
+    - label: Comparison of MODIS and VIIRS snow products for a climate data record
+      text: >-
+        Hall, D. K., Riggs, G. A., DiGirolamo, N. E. (2024): Comparison of the NASA Standard MODerate-Resolution Imaging Spectroradiometer and
+        Visible Infrared Imaging Radiometer Suite Snow-Cover Products for Creation of a Climate Data Record: A Case Study in the Great Basin
+        of the Western United States. Remote Sensing, 16(16), 3029.
+      doi: 10.3390/rs16163029
+      bibtex: |
+        @article{hall2024modisviirs,
+          author  = {Hall, Dorothy K. and Riggs, George A. and DiGirolamo, Nicolo E.},
+          title   = {Comparison of the {NASA} Standard {MODerate-Resolution Imaging Spectroradiometer} and {Visible Infrared Imaging Radiometer Suite} Snow-Cover Products for Creation of a Climate Data Record: A Case Study in the {Great Basin} of the Western {United States}},
+          journal = {Remote Sensing},
+          volume  = {16},
+          number  = {16},
+          pages   = {3029},
+          year    = {2024},
+          doi     = {10.3390/rs16163029}
+        }
+  acknowledgement: >-
+    Follow the citation on each NSIDC data set page (authors, year, title, version, DOI, access date and a description of any subset used). Every satellite and product has its own DOI
+    (e.g. VJ110A1F 10.5067/2YJ7GZPW2NNB, VJ210A1F 10.5067/YAWW1AIS887J, VNP10C1 10.5067/PHOQ2G589HCC, VJ110C1 10.5067/DNC2SNXE6HJB, VNP10D1F 10.5067/F3VW9TYIK26A, VJ110D1F 10.5067/FPB0B5CD1RVA).
+
+transitions:
+  - from: VIIRS Snow Cover Version 1 (VNP10 C1)
+    to: VIIRS Snow Cover Version 2 (C2)
+    status: completed
+    date: "2024-06"
+    summary: >-
+      A version with improved algorithms, cloud masking and noise detection that added NOAA-20 (VJ110) products. Version 1 (Suomi NPP only) stopped production on 17 June 2024,
+      and NOAA-21 (VJ210) products were added in January 2026.
+    changes:
+      - aspect: Satellites
+        before: "Suomi NPP (VNP10) only"
+        after: "Suomi NPP (VNP10) + NOAA-20 (VJ110, released 2023-06) + NOAA-21 (VJ210, released 2026-01)"
+      - aspect: Algorithm and inputs
+        before: "C1 algorithm"
+        after: "Improved snow algorithm, better cloud masking, enhanced noise detection (per NSIDC)"
+      - aspect: Products
+        before: "L2, daily (A1), gap-filled daily (A1F), daily CMG (C1)"
+        after: "Same set + 375 m global gap-filled map (D1F, DOIs registered in 2025)"
+      - aspect: Metadata
+        before: "`mask_values` and `mask_meanings` attributes"
+        after: "Renamed `flag_values` and `flag_meanings` for CF-1.6; Projection variable added"
+      - aspect: Production
+        before: "Forward processing ended 2024-06-17"
+        after: "Current version"
+    impacts:
+      - Do not mix V1 and V2; download the whole period again as V2.
+      - "Code that reads the `mask_values` attribute must switch to `flag_values`."
+    sources:
+      - name: NSIDC — VIIRS Version 1 (Collection 1) cease forward processing notice
+        url: https://nsidc.org/data/user-resources/data-announcements/user-notice-visible-infrared-imaging-radiometer-suite-viirs-version-1-collection-1-cease-forward-0
+      - name: NSIDC VNP10A1 V2 User Guide (version history)
+        url: https://nsidc.org/sites/default/files/documents/user-guide/multi_vnp10a1-v002-userguide.pdf
+
+notices:
+  - date: "2026-10-06"
+    level: critical
+    title: Suomi NPP VIIRS data delivery ends on 2 November 2026 — no new VNP10 data
+    body: >-
+      NSIDC announced that delivery of Suomi NPP science data products is expected to stop at 13:00 UTC on 2 November 2026 and encouraged users to move to the equivalent JPSS-1 (NOAA-20) and JPSS-2 (NOAA-21) products (VJ110, VJ210).
+      Historical data and documentation remain available. The notice follows NOAA's 3 August 2026 announcement ending S-NPP data delivery.
+    source: https://nsidc.org/data/user-resources/data-announcements/user-notice-s-nppvisible-infrared-imaging-radiometer-suite-viirs-data-sets-cessation-data-delivery
+  - date: "2026-07-11"
+    level: warning
+    title: Suomi NPP anomaly — VIIRS snow production temporarily halted
+    body: >-
+      Suomi NPP entered a non-nominal state at about 14:50 UTC on 10 July, and all products were disabled from 01:30 UTC on 11 July. The spacecraft was back to nominal on 21 July and processing then resumed;
+      NSIDC said recoverable missing products would be published after review.
+    source: https://nsidc.org/data/vnp10a1/versions/2
+  - date: "2026-03-05"
+    level: info
+    title: VIIRS 375 m daily snow cover (VNP10A1, VJ110A1) now in AppEEARS
+    body: >-
+      Suomi NPP and NOAA-20 VIIRS daily 375 m snow cover V2 can now be extracted by point or area through AppEEARS.
+    source: https://nsidc.org/data/user-resources/data-announcements/user-notice-viirsjpss1-and-viirsnpp-snow-cover-daily-l3-global-375m-sin-grid-data-sets-are-now
+  - date: "2026-01-29"
+    level: info
+    title: NOAA-21 (JPSS-2) VIIRS Version 2 snow data released
+    body: >-
+      NSIDC released NOAA-21 VIIRS Version 2 data sets, including VJ210 snow cover. The record starts in February 2023 and becomes the main successor once Suomi NPP ends.
+    source: https://nsidc.org/data/user-resources/data-announcements/new-data-sets-released-viirs-jpss-2-version-2
+  - date: "2024-06-17"
+    level: info
+    title: VIIRS Version 1 snow and sea ice production ended
+    body: >-
+      Forward processing of VIIRS Version 1 (Collection 1) snow and sea ice data sets ended. V1 data stay downloadable for a while, but NSIDC strongly advised moving to Version 2.
+    source: https://nsidc.org/data/user-resources/data-announcements/user-notice-visible-infrared-imaging-radiometer-suite-viirs-version-1-collection-1-cease-forward-0
+
+links:
+  - name: VNP10A1, VJ110A1, VJ210A1 V2 User Guide (PDF)
+    url: https://nsidc.org/sites/default/files/documents/user-guide/multi_vnp10a1-v002-userguide.pdf
+  - name: VNP10A1F cloud-gap-filled V2 User Guide (PDF)
+    url: https://nsidc.org/sites/default/files/documents/user-guide/multi_vnp10a1f-v002-userguide.pdf
+  - name: VNP10C1 0.05° CMG V2 User Guide (PDF)
+    url: https://nsidc.org/sites/default/files/documents/user-guide/multi_vnp10c1-v002-userguide.pdf
+  - name: NSIDC VIIRS data sets and announcements
+    url: https://nsidc.org/data/viirs
+  - name: Earthdata Forum — answer on the VIIRS snow L3 CRS issue (2025)
+    url: https://forum.earthdata.nasa.gov/viewtopic.php?p=22710
+
+watch_urls:
+  - https://nsidc.org/data/viirs/news
+  - https://nsidc.org/data/vnp10a1/versions/2
+
+last_verified: "2026-10-13"

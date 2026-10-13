@@ -1,0 +1,422 @@
+# ─────────────────────────────────────────────────────────────
+# GLDAS — 데이터셋 정보 파일
+# 지면 탭 '육상 재분석·자료동화'에 싣습니다. GLDAS-2 계열(2.0·2.1·2.2)과 Noah·CLSM·VIC 제품을 한 페이지에서 다룹니다.
+# 수정 후에는 공식 페이지에서 확인한 날짜로 last_verified 를 갱신하세요.
+# ─────────────────────────────────────────────────────────────
+id: gldas
+name: "GLDAS-2"
+full_name: Global Land Data Assimilation System Version 2 (GLDAS-2.0·2.1·2.2, NASA 전지구 육상 자료동화 시스템 — Noah·CLSM·VIC 지면 모델 출력)
+category: reanalysis
+domain: land
+group: 육상 재분석·자료동화
+order: 20
+domains: [육지, 수문]
+provider: NASA GSFC 수문과학연구실(HSL) / GES DISC
+
+status: active
+status_note: >-
+  주력인 GLDAS-2.1(2000년~)과 GRACE 자료동화판 GLDAS-2.2(2003년 2월~)가 계속 갱신되고 있습니다. 2026-10-13 확인 시 본 제품은
+  2026년 6월 30일까지, 먼저 나오는 조기 제품(Early Product)은 2026년 9월 16일까지 올라와 있습니다. GLDAS-2.0(1948~2014년)은 더 이어지지 않는 고정 기록입니다.
+  2025년 6월 9일부터 GLDAS-2.1의 복사 강제력이 WWMCA 기반 AGRMET에서 GALWEM으로 바뀌었고, 자료를 받는 GES DISC 온프레미스 서버(hydro1)는 2026년 9월 30일 이후 언제든 닫힐 수 있습니다.
+
+period:
+  start: "1948-01"
+  end: present
+  note: >-
+    GLDAS-2.0은 1948-01-01 03Z~2014-12-31 21Z(Princeton 강제력), GLDAS-2.1은 2000-01-01부터 현재, GLDAS-2.2는 2003-02-01부터 현재입니다.
+    2026-10-13 확인 시 GLDAS-2.1·2.2 본 제품은 2026-06-30, 조기 제품(_EP)은 2026-09-16 자료까지 있습니다.
+    조기 제품은 2~3개월치만 유지하는 임시 기록으로, 본 제품이 나오면 지워집니다.
+
+resolution:
+  spatial_short: "28 km (0.25°)"
+  temporal_short: "3시간"
+  spatial: >-
+    전지구 육지 위경도 격자(60°S–90°N, 180°W–180°E, 남극 제외). 0.25°×0.25°는 1440×600 격자(첫 격자 중심 179.875°W·59.875°S)로 Noah(2.0·2.1)와
+    CLSM 일자료(2.0·2.2)가, 1.0°×1.0°는 360×150 격자(첫 격자 중심 179.5°W·59.5°S)로 Noah·CLSM·VIC(2.0·2.1)가 제공됩니다.
+  vertical: >-
+    지표 단일층 + 토양. Noah는 토양 4층(0–10, 10–40, 40–100, 100–200 cm). CLSM은 층 대신 지표(0–2 cm)·근권(0–100 cm)·전체 프로파일(깊이는 격자마다 다름)
+    저수조가 서로 포함 관계이고 토양온도는 6층(0–10, 10–29, 29–68, 68–144, 144–295, 295–1295 cm). VIC는 토양 3층(첫 층 0–30 cm).
+  temporal: "3시간(2.0·2.1 Noah·CLSM·VIC) / 일(CLSM 0.25°: 2.0, 2.2 GRACE-DA1) / 월(2.0·2.1 Noah·CLSM·VIC, 3시간 값의 단순 평균)"
+
+update: "GLDAS-2.1 본 제품 약 3~4개월 지연(GPCP 강수 대기), 조기 제품 약 1.5개월 지연 / GLDAS-2.2 본 제품 약 2~6개월(GRACE 자료 대기), 조기 제품 약 1.5개월 (README 기준)"
+license: NASA 지구과학 공개 자료 — 무료. GES DISC에서 받으려면 무료 NASA Earthdata 로그인이 필요하며, 제품별 DOI 인용을 요청합니다
+account_required: true
+
+summary: >-
+  GLDAS는 NASA GSFC가 관측 기반 강수·복사와 대기 분석장을 강제력으로 지면 모델을 돌려 토양수분·적설·증발산·유출·지표 에너지 플럭스를 전지구 육지에 대해
+  만든 자료입니다. 현재 판인 GLDAS-2는 세 갈래로, 2.0은 Princeton 강제력으로 1948~2014년을 일관되게 다시 계산한 기록, 2.1은 GDAS·GPCP·AGRMET 강제력으로
+  2000년부터 이어지는 준실시간 기록, 2.2는 ECMWF 강제력으로 돌린 Catchment 모델에 GRACE·GRACE-FO 육수저장량을 동화한 일자료입니다.
+  2.0과 2.1은 관측을 동화하지 않는 오픈루프(open-loop) 모의라서 엄밀히는 '자료동화' 산출물이 아니며, Noah 3.6·CLSM-F2.5·VIC 4.1.2 모델 출력을 0.25°·1° 격자로 제공합니다.
+
+time_convention:
+  summary: >-
+    변수 이름 끝의 접미사가 시간 특성을 알려 줍니다. 3시간 파일에서 `_inst`는 파일 시각의 순간값, `_tavg`는 파일 시각까지 직전 3시간 평균,
+    `_acc`는 직전 3시간 누적입니다(파일 전역 속성 'past 3-hour average/accumulation'). 월 파일은 3시간 값을 그대로 평균한 것이어서 `_acc` 변수는
+    '3시간당' 양이고, 일자료(CLSM 0.25°)는 모든 변수가 24시간 평균(`_tavg`)입니다.
+  points:
+    - "3시간 파일 시각은 구간의 '끝'입니다. 예: GLDAS_NOAH025_3H.A20000101.0300.021.nc4의 `Qle_tavg`는 00~03 UTC 평균, `Qs_acc`는 00~03 UTC 누적, `SoilMoi0_10cm_inst`는 03 UTC 값입니다. 그래서 GLDAS-2.0 기록은 1948-01-01 03Z부터 시작합니다."
+    - "강수·증발산 같은 `_tavg` 물 플럭스는 kg m-2 s-1(= mm s-1) 비율입니다. 3시간 양(mm)은 × 10800, 하루 양은 × 86400입니다."
+    - "월 파일은 3시간 값의 단순 평균입니다. 월합계는 `_tavg` 비율이면 × 86400 × 그달 일수, `_acc`(단위 kg m-2, 실제로는 3시간당)면 × 8 × 그달 일수입니다. 순간값 상태변수(`_inst`)에는 이런 환산을 하지 않습니다."
+    - "월 파일의 평균·누적 변수는 1일 03Z~다음 달 1일 00Z, 순간값 변수는 1일 00Z~말일 21Z의 3시간 값으로 평균합니다."
+    - "GLDAS-2.2 일자료는 상태변수(토양수분·적설·육수저장량)까지 모두 24시간 평균(`_tavg`)이고 `_acc` 변수가 없습니다. 유출도 kg m-2 s-1 비율입니다. README는 하루 구간을 따로 밝히지 않으며, 파일 메타데이터의 시간 범위는 해당 날짜 00:00~23:59:59 UTC입니다."
+    - "토양수분(`SoilMoi*`, `SoilMoist_*`, `RootMoist`)은 체적함수율이 아니라 층 안 물의 양(kg m-2 = mm)입니다."
+  source: https://docserver.gesdisc.eosdis.nasa.gov/public/project/hydrology/README_GLDAS2.pdf
+  source_name: "README for NASA GLDAS Version 2 Data (최종 수정 2025-08-13) + GLDAS netCDF 파일 전역 속성"
+
+variables:
+  note: >-
+    GLDAS-2 README 변수표와 GES DISC 파일(GLDAS_NOAH10_M 2.0) 기준 주요 변수입니다. 변수명은 netCDF 파일 안 이름이며 대소문자를 구분합니다
+    (Noah는 `Tveg_tavg`, CLSM·VIC는 `TVeg_tavg`). `_f`가 붙은 변수는 모델 출력이 아니라 강제력입니다. 아래 3시간 기준 그룹은 Noah 0.25°·1° 제품의 이름이며,
+    CLSM·VIC는 플럭스·적설 변수 이름이 같고 토양 변수만 다릅니다.
+  full_list: https://docserver.gesdisc.eosdis.nasa.gov/public/project/hydrology/README_GLDAS2.pdf
+  groups:
+    - name: 에너지 플럭스 (3시간 자료, 직전 3시간 평균)
+      kind: mean
+      period: 3시간
+      items:
+        - "순 단파복사 — `Swnet_tavg` (W m-2)"
+        - "순 장파복사 — `Lwnet_tavg` (W m-2)"
+        - "잠열 플럭스 — `Qle_tavg` (W m-2)"
+        - "현열 플럭스 — `Qh_tavg` (W m-2)"
+        - "지중 열플럭스 — `Qg_tavg` (W m-2)"
+        - "잠재증발률 — `PotEvap_tavg` (W m-2)"
+        - "수관 차단 증발·증산·나지 증발 — `ECanop_tavg`, `Tveg_tavg`, `ESoil_tavg` (W m-2)"
+    - name: 물 플럭스 (3시간 자료)
+      kind: mean
+      period: 3시간
+      items:
+        - text: "비(액체 강수) 강도 — `Rainf_tavg` (kg m-2 s-1)"
+          std: [precip_components]
+        - text: "강설 강도 — `Snowf_tavg` (kg m-2 s-1)"
+          std: [snowfall]
+        - "증발산 — `Evap_tavg` (kg m-2 s-1)"
+        - text: "지표 유출 — `Qs_acc` (kg m-2)"
+          kind: accum
+          note: 직전 3시간 누적
+        - text: "기저 유출(지하수 유출) — `Qsb_acc` (kg m-2)"
+          kind: accum
+          note: 직전 3시간 누적
+        - text: "융설량 — `Qsm_acc` (kg m-2)"
+          kind: accum
+          std: [snow]
+          note: 직전 3시간 누적
+    - name: 지표·토양 상태 (Noah 3시간 자료, 순간값)
+      kind: instant
+      items:
+        - "지표면(skin) 온도 — `AvgSurfT_inst` (K)"
+        - "알베도 — `Albedo_inst` (%)"
+        - text: "적설 수당량 — `SWE_inst` (kg m-2)"
+          std: [snow]
+        - text: "적설 깊이 — `SnowDepth_inst` (m)"
+          std: [snow]
+        - "토양수분 4층 — `SoilMoi0_10cm_inst`, `SoilMoi10_40cm_inst`, `SoilMoi40_100cm_inst`, `SoilMoi100_200cm_inst` (kg m-2)"
+        - "근권 토양수분 — `RootMoist_inst` (kg m-2)"
+        - "토양온도 4층 — `SoilTMP0_10cm_inst`, `SoilTMP10_40cm_inst`, `SoilTMP40_100cm_inst`, `SoilTMP100_200cm_inst` (K)"
+        - "수관 차단 저류수 — `CanopInt_inst` (kg m-2)"
+    - name: 강제력 (`_f`, 3시간 자료)
+      kind: instant
+      items:
+        - "지표 기온 (강제력) — `Tair_f_inst` (K)"
+        - "비습 (강제력) — `Qair_f_inst` (kg kg-1)"
+        - "지표 기압 (강제력) — `Psurf_f_inst` (Pa)"
+        - "지표 바람 속도 (강제력) — `Wind_f_inst` (m s-1)"
+        - text: "총강수율 (강제력) — `Rainf_f_tavg` (kg m-2 s-1)"
+          kind: mean
+          period: 3시간
+          std: [precip]
+        - text: "하향 단파·장파복사 (강제력) — `SWdown_f_tavg`, `LWdown_f_tavg` (W m-2)"
+          kind: mean
+          period: 3시간
+    - name: CLSM·VIC 1° 전용 변수 (3시간 자료)
+      kind: instant
+      items:
+        - "CLSM 지표·근권·프로파일 토양수분 — `SoilMoist_S_inst`, `SoilMoist_RZ_inst`, `SoilMoist_P_inst` (kg m-2)"
+        - "CLSM 육수저장량 — `TWS_inst` (mm)"
+        - "CLSM 토양온도 6층 — `SoilTMP0_10cm_inst` ~ `SoilTMP295_1295cm_inst` (K)"
+        - text: "CLSM 적설 표면온도 — `SnowT_tavg` (K)"
+          kind: mean
+          period: 3시간
+        - text: "공기역학 전도도(CLSM·VIC) — `ACond_tavg` (m s-1)"
+          kind: mean
+          period: 3시간
+        - "VIC 토양수분 3층 — `SoilMoi0_30cm_inst`, `SoilMoi_depth2_inst`, `SoilMoi_depth3_inst` (kg m-2)"
+        - "VIC 토양온도 3층 — `SoilTMP0_30cm_inst`, `SoilTMP_depth2_inst`, `SoilTMP_depth3_inst` (K)"
+    - name: 월자료 (GLDAS_*_M — 3시간 자료와 같은 변수 이름)
+      kind: mean
+      period: 월
+      items:
+        - text: "월평균 총강수율 — `Rainf_f_tavg` (kg m-2 s-1)"
+          std: [precip]
+          note: 월강수량(mm) = 값 × 86400 × 그달 일수
+        - text: "월평균 지표·기저 유출 — `Qs_acc`, `Qsb_acc` (kg m-2, 3시간당)"
+          note: 3시간 누적값의 월평균이라 월합계(mm) = 값 × 8 × 그달 일수
+        - text: "월평균 토양수분 — `SoilMoi0_10cm_inst` 등 (kg m-2)"
+          note: 이름은 `_inst`이지만 월 파일에서는 3시간 순간값의 월평균
+        - "월평균 잠열·현열 플럭스 — `Qle_tavg`, `Qh_tavg` (W m-2)"
+    - name: GLDAS-2.2 CLSM 일자료 (GLDAS_CLSM025_DA1_D, 24시간 평균)
+      kind: mean
+      period: 일
+      items:
+        - "지표·근권·프로파일 토양수분 — `SoilMoist_S_tavg`, `SoilMoist_RZ_tavg`, `SoilMoist_P_tavg` (kg m-2)"
+        - "육수저장량 — `TWS_tavg` (mm)"
+        - text: "지하수 저장량 — `GWS_tavg` (mm)"
+          note: GWS = TWS − 근권 토양수분 − 적설 수당량 − 수관 차단 저류수
+        - text: "적설 수당량·깊이 — `SWE_tavg` (kg m-2), `SnowDepth_tavg` (m)"
+          std: [snow]
+        - "증발산 — `Evap_tavg` (kg m-2 s-1)"
+        - "지표·기저 유출 — `Qs_tavg`, `Qsb_tavg` (kg m-2 s-1)"
+        - "잠열 플럭스 — `Qle_tavg` (W m-2)"
+        - "지표면(skin) 온도 — `AvgSurfT_tavg` (K)"
+
+access:
+  - name: NASA GES DISC — GLDAS 데이터셋 목록
+    url: https://disc.gsfc.nasa.gov/datasets?keywords=GLDAS
+    method: HTTPS 다운로드 / earthaccess / Earthdata Search / OPeNDAP / 부분 추출
+    note: >-
+      short name 규칙은 GLDAS_<모델><해상도>_<간격>(예: GLDAS_NOAH025_3H, GLDAS_NOAH10_M, GLDAS_CLSM025_DA1_D)이고 버전은 2.0·2.1·2.2로 구분합니다.
+      조기 제품은 이름 뒤에 _EP가 붙습니다(예: GLDAS_NOAH025_3H_EP). 무료 Earthdata 로그인이 필요합니다.
+      예전 서버(hydro1.gesdisc.eosdis.nasa.gov)는 2026년 9월 30일 이후 닫힐 수 있으니 data.gesdisc.earthdata.nasa.gov 또는 earthaccess로 바꾸세요.
+  - name: NASA Earthdata Search
+    url: https://search.earthdata.nasa.gov/search?q=GLDAS
+    method: 웹 검색·주문 / 부분 추출
+    note: 컬렉션별로 기간·영역을 골라 파일 목록과 다운로드 스크립트를 받을 수 있습니다.
+  - name: AWS us-west-2 직접 접근 (S3)
+    url: https://data.gesdisc.earthdata.nasa.gov/s3credentials
+    method: 클라우드 저장소(S3, us-west-2 안에서만)
+    note: "예: s3://gesdisc-cumulus-prod-protected/GLDAS/GLDAS_NOAH025_3H.2.1/ — 임시 자격증명이 필요합니다."
+  - name: NASA Giovanni
+    url: https://giovanni.gsfc.nasa.gov/
+    method: 웹 지도·시계열 분석, NetCDF·GeoTIFF·KMZ 내려받기
+    note: 영역 평균 시계열이나 지도로 먼저 값을 확인할 때 편합니다.
+
+example:
+  lang: python
+  note: >-
+    earthaccess로 2020년 Noah 0.25° 월자료(V2.1)를 받아 한반도 영역의 월강수량(mm)·월 지표유출(mm)과 표층 체적 토양수분으로 바꾸는 예입니다.
+    파일은 전지구 한 장씩이라 bounding_box는 검색만 좁혀 주고, 실제 잘라내기는 xarray에서 합니다.
+  code: |
+    import earthaccess
+    import xarray as xr
+
+    earthaccess.login()  # 무료 NASA Earthdata 계정
+    results = earthaccess.search_data(
+        short_name="GLDAS_NOAH025_M", version="2.1",
+        temporal=("2020-01-01", "2020-12-31"),
+        bounding_box=(124, 33, 132, 39),   # (서, 남, 동, 북)
+    )
+    files = earthaccess.download(results, "gldas_noah025_m")
+
+    ds = xr.open_mfdataset(files, combine="by_coords")
+    sub = ds.sel(lon=slice(124, 132), lat=slice(33, 39))
+    days = sub["time"].dt.days_in_month
+
+    precip_mm = sub["Rainf_f_tavg"] * 86400 * days   # 월평균 비율(kg m-2 s-1) → 월강수량(mm)
+    qs_mm = sub["Qs_acc"] * 8 * days                 # 3시간 누적의 월평균 → 월 지표유출(mm)
+    sm_vol = sub["SoilMoi0_10cm_inst"] / 100.0       # 0-10 cm 층의 kg m-2 → m3 m-3
+    print(precip_mm.mean(["lat", "lon"]).values)
+
+tips:
+  - "GLDAS-2.0(Princeton 강제력)과 2.1(GDAS·GPCP·AGRMET)은 강제력이 달라 2000~2014년 겹침 구간에서도 값이 다릅니다. README도 2.0·2.1·2.2를 한 시계열로 이으면 불연속이 생길 수 있다고 경고합니다. 이어 붙여야 한다면 겹침 구간에서 차이를 확인하고 연결 시점을 논문에 밝히세요."
+  - "GLDAS-2.1 안에서도 강제력이 바뀝니다. 2000-01~2001-02는 GDAS·GPCP만 썼고 2001-03부터 AGRMET 복사가 들어갔으며, AGRMET은 2011년 이후 보정으로도 없애지 못한 기후값 이동이 있고, 2025-06-09부터는 복사 입력이 GALWEM으로 바뀌었습니다. 추세 분석 때 이 시점들을 점검하세요."
+  - "GLDAS-2.2는 ECMWF 강제력과 GRACE·GRACE-FO 동화를 쓰는 별개의 CLSM 일자료입니다. 강제력 변수가 파일에 없고, 2.1 CLSM(1°)과 같은 모델이라도 값이 다릅니다. 육수저장량·지하수 연구에 적합합니다."
+  - "조기 제품(_EP)은 본 제품이 나오면 지워지고 본 제품과 값이 다릅니다(2.1 EP는 GPCP 강수 없이, 2.2 EP는 GRACE 동화 없이 만든 것). 최근 몇 달을 EP로 채웠다면 나중에 본 제품으로 바꿔 받으세요."
+  - "토양수분은 kg m-2(층 안 물의 깊이, mm)입니다. 체적함수율(m3 m-3)로 비교하려면 층 두께(mm)로 나누세요(Noah 0–10 cm는 ÷100, 10–40 cm는 ÷300)."
+  - "월 파일의 `_acc` 변수는 '3시간당 kg m-2'입니다. 단위 표기(kg m-2)만 보고 월합계로 오해하지 말고 × 8 × 그달 일수를 하세요."
+  - "빙상·빙하 모델이 없어 그린란드, 일부 북극 지점, 늘 얼어 있는 히말라야 지역에서는 적설 수당량이 끝없이 쌓입니다. 전지구 합계나 평균을 낼 때 이 격자를 가리세요."
+  - "2020년 10월 내륙 수면 위 잘못된 모델 값을 MODIS(MOD44W) 육지 마스크로 지웠습니다. 2020년 11월 1일 이전에 받은 2.0·2.1 3시간·월자료는 다시 받으세요."
+  - "GLDAS-2.0 CLSM 0.25° 일자료에서 적설 수당량과 깊이로 계산한 적설 밀도는 잘못된 값입니다(적설 깊이가 적설 피복률을 반영하지 않음). 2.1 3시간·월자료와 2.2 일자료는 해당 없습니다."
+
+citations:
+  dataset:
+    - label: GLDAS-2.1 Noah 0.25° 3시간 (GES DISC)
+      text: >-
+        Beaudoing, H. and M. Rodell, NASA/GSFC/HSL (2020), GLDAS Noah Land Surface Model L4 3 hourly 0.25 x 0.25 degree V2.1,
+        Greenbelt, Maryland, USA, Goddard Earth Sciences Data and Information Services Center (GES DISC), Accessed: [Data Access Date],
+        10.5067/E7TYRXPJKWOQ
+      doi: 10.5067/E7TYRXPJKWOQ
+      bibtex: |
+        @misc{gldas21_noah025_3h,
+          author    = {Beaudoing, H. and Rodell, M.},
+          title     = {{GLDAS} Noah Land Surface Model {L4} 3 hourly 0.25 x 0.25 degree, Version 2.1},
+          year      = {2020},
+          publisher = {Goddard Earth Sciences Data and Information Services Center (GES DISC)},
+          address   = {Greenbelt, MD, USA},
+          doi       = {10.5067/E7TYRXPJKWOQ}
+        }
+    - label: GLDAS-2.1 Noah 0.25° 월 (GES DISC)
+      text: >-
+        Beaudoing, H. and M. Rodell, NASA/GSFC/HSL (2020), GLDAS Noah Land Surface Model L4 monthly 0.25 x 0.25 degree V2.1,
+        Greenbelt, Maryland, USA, Goddard Earth Sciences Data and Information Services Center (GES DISC), Accessed: [Data Access Date],
+        10.5067/SXAVCZFAQLNO
+      doi: 10.5067/SXAVCZFAQLNO
+      bibtex: |
+        @misc{gldas21_noah025_m,
+          author    = {Beaudoing, H. and Rodell, M.},
+          title     = {{GLDAS} Noah Land Surface Model {L4} monthly 0.25 x 0.25 degree, Version 2.1},
+          year      = {2020},
+          publisher = {Goddard Earth Sciences Data and Information Services Center (GES DISC)},
+          address   = {Greenbelt, MD, USA},
+          doi       = {10.5067/SXAVCZFAQLNO}
+        }
+    - label: GLDAS-2.0 Noah 0.25° 3시간 (GES DISC)
+      text: >-
+        Beaudoing, H. and M. Rodell, NASA/GSFC/HSL (2019), GLDAS Noah Land Surface Model L4 3 hourly 0.25 x 0.25 degree V2.0,
+        Greenbelt, Maryland, USA, Goddard Earth Sciences Data and Information Services Center (GES DISC), Accessed: [Data Access Date],
+        10.5067/342OHQM9AK6Q
+      doi: 10.5067/342OHQM9AK6Q
+      bibtex: |
+        @misc{gldas20_noah025_3h,
+          author    = {Beaudoing, H. and Rodell, M.},
+          title     = {{GLDAS} Noah Land Surface Model {L4} 3 hourly 0.25 x 0.25 degree, Version 2.0},
+          year      = {2019},
+          publisher = {Goddard Earth Sciences Data and Information Services Center (GES DISC)},
+          address   = {Greenbelt, MD, USA},
+          doi       = {10.5067/342OHQM9AK6Q}
+        }
+    - label: GLDAS-2.2 CLSM 0.25° 일 GRACE-DA1 (GES DISC)
+      text: >-
+        Li, B., H. Beaudoing, and M. Rodell, NASA/GSFC/HSL (2020), GLDAS Catchment Land Surface Model L4 daily 0.25 x 0.25 degree GRACE-DA1 V2.2,
+        Greenbelt, Maryland, USA, Goddard Earth Sciences Data and Information Services Center (GES DISC), Accessed: [Data Access Date],
+        10.5067/TXBMLX370XX8
+      doi: 10.5067/TXBMLX370XX8
+      bibtex: |
+        @misc{gldas22_clsm025_da1_d,
+          author    = {Li, B. and Beaudoing, H. and Rodell, M.},
+          title     = {{GLDAS} Catchment Land Surface Model {L4} daily 0.25 x 0.25 degree {GRACE-DA1}, Version 2.2},
+          year      = {2020},
+          publisher = {Goddard Earth Sciences Data and Information Services Center (GES DISC)},
+          address   = {Greenbelt, MD, USA},
+          doi       = {10.5067/TXBMLX370XX8}
+        }
+  papers:
+    - label: GLDAS 대표 논문
+      text: >-
+        Rodell, M., Houser, P. R., Jambor, U., Gottschalck, J., Mitchell, K., Meng, C.-J., Arsenault, K., Cosgrove, B., Radakovich, J.,
+        Bosilovich, M., Entin, J. K., Walker, J. P., Lohmann, D., Toll, D. (2004): The Global Land Data Assimilation System.
+        Bulletin of the American Meteorological Society, 85(3), 381–394.
+      doi: 10.1175/BAMS-85-3-381
+      bibtex: |
+        @article{rodell2004gldas,
+          author  = {Rodell, M. and Houser, P. R. and Jambor, U. and Gottschalck, J. and Mitchell, K. and Meng, C.-J. and Arsenault, K. and Cosgrove, B. and Radakovich, J. and Bosilovich, M. and Entin, J. K. and Walker, J. P. and Lohmann, D. and Toll, D.},
+          title   = {The Global Land Data Assimilation System},
+          journal = {Bulletin of the American Meteorological Society},
+          volume  = {85},
+          number  = {3},
+          pages   = {381--394},
+          year    = {2004},
+          doi     = {10.1175/BAMS-85-3-381}
+        }
+    - label: GLDAS-2.2 GRACE 자료동화
+      text: >-
+        Li, B., Rodell, M., Kumar, S., Beaudoing, H. K., Getirana, A., Zaitchik, B. F., de Goncalves, L. G., Cossetin, C., Bhanja, S.,
+        Mukherjee, A., Tian, S., Tangdamrongsub, N., Long, D., Nanteza, J., Lee, J., Policelli, F., Goni, I. B., Daira, D., Bila, M.,
+        de Lannoy, G., Mocko, D., Steele-Dunne, S. C., Save, H., Bettadpur, S. (2019): Global GRACE Data Assimilation for Groundwater
+        and Drought Monitoring: Advances and Challenges. Water Resources Research, 55(9), 7564–7586.
+      doi: 10.1029/2018WR024618
+      bibtex: |
+        @article{li2019graceda,
+          author  = {Li, Bailing and Rodell, Matthew and Kumar, Sujay and Beaudoing, Hiroko Kato and Getirana, Augusto and Zaitchik, Benjamin F. and de Goncalves, Luis Gustavo and Cossetin, Camila and Bhanja, Soumendra and Mukherjee, Abhijit and Tian, Siyuan and Tangdamrongsub, Natthachet and Long, Di and Nanteza, Jamiat and Lee, Jejung and Policelli, Frederick and Goni, Ibrahim B. and Daira, Djoret and Bila, Mohammed and de Lannoy, Gabrielle and Mocko, David and Steele-Dunne, Susan C. and Save, Himanshu and Bettadpur, Srinivas},
+          title   = {Global {GRACE} Data Assimilation for Groundwater and Drought Monitoring: Advances and Challenges},
+          journal = {Water Resources Research},
+          volume  = {55},
+          number  = {9},
+          pages   = {7564--7586},
+          year    = {2019},
+          doi     = {10.1029/2018WR024618}
+        }
+  acknowledgement: >-
+    실제로 쓴 제품(모델·해상도·간격·버전)의 DOI를 각각 인용하세요. 다른 제품의 DOI는 README 표에 있습니다(예: GLDAS-2.1 Noah 1° 월 10.5067/LWTYSMP3VM5Z,
+    CLSM 1° 3시간 10.5067/VCO8OCV72XO0, VIC 1° 3시간 10.5067/ZOG6BCSE26HV, 2.2 조기 제품 10.5067/IIU5JWU2AGRP). NASA는 감사의 글에
+    "The data used in this study were acquired as part of the mission of NASA's Earth Science Division and archived and distributed by
+    the Goddard Earth Sciences (GES) Data and Information Services Center (DISC)."를 넣어 달라고 요청합니다. GLDAS-2.2를 쓰면 ECMWF 강제력에 대한 감사도 README 안내를 따르세요.
+
+transitions:
+  - from: GLDAS-1
+    to: GLDAS-2.1
+    status: completed
+    date: "2020-06"
+    summary: >-
+      GLDAS-1 생산은 2020년 3월 자료로 끝났고 2020년 6월 30일 GES DISC에서 모두 내려갔습니다. 강제력과 지면 모델을 새로 바꾼 GLDAS-2.1이 이를 대체합니다.
+    changes:
+      - aspect: 생산 상태
+        before: "2020년 3월 자료로 생산 종료, 2020-06-30 GES DISC에서 제거"
+        after: "GLDAS-2.1 2000-01부터 현재까지 계속 갱신 (1948~2014년은 GLDAS-2.0)"
+      - aspect: 강제력의 알려진 문제
+        before: "북반구 단파복사에 부자연스러운 경계선, 2009년부터 강수 특성 변화, SRB 대비 복사 과대·GPCP 대비 강수 과소"
+        after: "편향을 보정한 AGRMET 복사, GPCP 기반 강수, GDAS 기반 시간 분해로 개선"
+      - aspect: 지면 모델
+        before: "GLDAS-1 모델 판"
+        after: "Noah 3.6, CLSM-F2.5, VIC 4.1.2 (갱신된 LIS 소프트웨어)"
+      - aspect: 처리 이력
+        before: "-"
+        after: "2020년 1~2월 Noah 2.1 재처리, 2020-10 내륙 수면 마스크 적용"
+    impacts:
+      - "GLDAS-1 자료는 더 이상 받을 수 없습니다. 예전 논문을 재현하려면 GLDAS-2.0·2.1로 다시 계산해야 하며 값이 다를 수 있습니다."
+      - "GLDAS-1과 GLDAS-2 값을 한 시계열로 섞지 마세요."
+    sources:
+      - name: GLDAS-1 products will be decommissioned on 6/30/2020 (NASA LDAS)
+        url: https://ldas.gsfc.nasa.gov/gldas/news/gldas-1-products-will-be-decomissioned-6302020
+      - name: README for NASA GLDAS Version 2 Data
+        url: https://docserver.gesdisc.eosdis.nasa.gov/public/project/hydrology/README_GLDAS2.pdf
+
+notices:
+  - date: "2026-05-11"
+    level: warning
+    title: GES DISC 온프레미스 서버 종료 — GLDAS도 Earthdata Cloud로 전환 필요
+    body: >-
+      GES DISC는 온프레미스 서버의 HTTPS 접근을 2026년 9월 30일까지 닫고 온프레미스 OPeNDAP도 8월 20일~9월 30일 사이에 끈다고 안내했습니다.
+      GLDAS가 있는 hydro1.gesdisc.eosdis.nasa.gov 서버도 '빨라야 2026년 9월 30일 이후' 접근이 끝나며 Earthdata Cloud로 옮기라고 표시하고 있습니다(2026-10-13 확인 시 아직 응답).
+      스크립트 주소를 data.gesdisc.earthdata.nasa.gov나 earthaccess로 바꾸세요.
+    source: https://github.com/nasa/gesdisc-tutorials/blob/main/user-guidance/GES_DISC_Migration_to_Earthdata_Website_and_Earthdata_Cloud.md
+  - date: "2026-04-16"
+    level: info
+    title: GrADS Data Server(GDS) 서비스 종료 — GLDAS 포함
+    body: >-
+      GLDAS(Noah·CLSM·VIC 3시간·일·월)를 제공하던 GES DISC의 GDS가 2026년 4월 6일 종료되었습니다(1월 15일 예고).
+      같은 자료는 Earthdata Cloud에서 HTTPS와 부분 추출 서비스로 받을 수 있습니다.
+    source: https://www.earthdata.nasa.gov/data/alerts-outages/grads-data-server-gds-service-has-been-discontinued
+  - date: "2025-08-13"
+    level: info
+    title: GLDAS-2.1 복사 강제력이 2025-06-09부터 GALWEM으로 바뀜
+    body: >-
+      미 공군 기상청이 WWMCA에서 GALWEM으로 옮겨 가면서 WWMCA가 2025년 6월 8일부로 끊겼고, GLDAS-2.1은 6월 9일부터 GALWEM 복사장을 입력으로 씁니다.
+      README(2025-08-13 수정)에 기록되었으며, 전환 전후 불연속 여부에 대한 설명은 없습니다.
+    source: https://docserver.gesdisc.eosdis.nasa.gov/public/project/hydrology/README_GLDAS2.pdf
+  - date: "2020-10"
+    level: warning
+    title: 내륙 수면 마스크 후처리 — 2020-11-01 이전 다운로드분은 다시 받기
+    body: >-
+      재처리 때 추가된 하도 추적(routing) 때문에 내륙 수면 격자에 잘못된 값이 들어가 있어, 2.0·2.1의 3시간·월 모델 출력을 MODIS MOD44W 육지 마스크로 다시 처리했습니다.
+      강제력 변수(_f)는 바뀌지 않았습니다. 2020년 11월 1일 이전에 받은 자료는 다시 받으라고 안내합니다.
+    source: https://docserver.gesdisc.eosdis.nasa.gov/public/project/hydrology/README_GLDAS2.pdf
+  - date: "2020-06-30"
+    level: info
+    title: GLDAS-1 제품 폐기
+    body: GLDAS-1은 2020년 3월 자료로 생산을 마쳤고 2020년 6월 30일 GES DISC에서 내려갔습니다. GLDAS-2.1이 후속입니다.
+    source: https://ldas.gsfc.nasa.gov/gldas/news/gldas-1-products-will-be-decomissioned-6302020
+  - date: "2020-02"
+    level: info
+    title: GLDAS-2.1 Noah 재처리판 공개, 새 CLSM·VIC 제품과 2.2 추가
+    body: >-
+      2020년 1~2월 재처리한 GLDAS-2.1 Noah 3시간·월자료(GES DISC 공개 2020-01-30)가 이전 판을 대체했고, CLSM·VIC 2.1 제품과 GRACE 동화 GLDAS-2.2,
+      조기 제품이 새로 공개되었습니다(README 개정 기록 2020-02-27). 2.0 Noah는 2019년 말 Princeton 강제력 V2.2로 재처리되었고, 2.0 CLSM·VIC 1° 제품은 2020년 9월에 추가되었습니다.
+    source: https://ldas.gsfc.nasa.gov/gldas/news/new-and-reprocessed-gldas-2-simulations-released
+
+links:
+  - name: NASA LDAS — GLDAS
+    url: https://ldas.gsfc.nasa.gov/gldas
+  - name: README for NASA GLDAS Version 2 Data (변수표·시간 규칙·DOI 표)
+    url: https://docserver.gesdisc.eosdis.nasa.gov/public/project/hydrology/README_GLDAS2.pdf
+  - name: GES DISC GLDAS_NOAH025_3H 2.1
+    url: https://disc.gsfc.nasa.gov/datasets/GLDAS_NOAH025_3H_2.1/summary
+  - name: GES DISC GLDAS_CLSM025_DA1_D 2.2
+    url: https://disc.gsfc.nasa.gov/datasets/GLDAS_CLSM025_DA1_D_2.2/summary
+  - name: NASA LDAS 소식(GLDAS·NLDAS·FLDAS)
+    url: https://ldas.gsfc.nasa.gov/news
+
+watch_urls:
+  - https://ldas.gsfc.nasa.gov/news
+  - https://docserver.gesdisc.eosdis.nasa.gov/public/project/hydrology/README_GLDAS2.pdf
+  - https://www.earthdata.nasa.gov/data/alerts-outages
+
+last_verified: "2026-10-13"

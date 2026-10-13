@@ -1,0 +1,420 @@
+# ─────────────────────────────────────────────────────────────
+# GFED (Global Fire Emissions Database) — dataset information file
+# Listed under the Land tab, 'Fire'. The current release is GFED5.1 (1997–2022) + GFED5.1NRT (2023 onward, beta); the earlier GFED4.1s is still distributed.
+# The GFED4.1s → GFED5 comparison is a same-page transition (no to_id).
+# After editing, update last_verified to the date you checked the official pages.
+# ─────────────────────────────────────────────────────────────
+id: gfed
+name: "GFED"
+full_name: Global Fire Emissions Database version 5 (GFED5.1 / GFED5.1NRT — global fire emissions at 0.25° derived from satellite burned area)
+category: analysis
+domain: land
+group: 산불
+order: 20
+domains: [육지, 대기, 에어로졸]
+provider: GFED team at Wageningen University & Research, UC Irvine, University of Maryland and NASA GSFC (globalfiredata.org)
+
+status: active
+status_note: >-
+  The current version is GFED5: GFED5.1 covers 1997–2022 and was finalised with its papers, and from 2023 onward the near-real-time extension GFED5.1NRT, which estimates burned area
+  and emissions from VIIRS active fires, is updated daily. The official site labels data from 2023 onward as beta, subject to change until the accompanying paper (Chen et al., ESSD) is accepted.
+  The previous GFED4.1s (beta files based on MODIS active fires after 2016) can still be downloaded, but the team recommends GFED5 wherever possible.
+
+period:
+  start: "1997-01"
+  end: present
+  note: >-
+    GFED5.1 covers 1997–2022 (1997–2000 at 1°, estimated from ATSR and TRMM VIRS active fires; 0.25° from 2001), and GFED5.1NRT continues from 2023
+    (the reprocessed Zenodo release covers 2023–2024; later data are updated daily on the site's SFTP). GFED4.1s is burned-area based for 1997–2016 with beta files for 2017–2023
+    (on 2026-10-13 the latest file in the web directory was GFED4.1s_2023_beta, updated 2024-01-26).
+
+resolution:
+  spatial_short: "28 km (0.25°)"
+  temporal_short: "1일"
+  spatial: >-
+    Global 0.25° × 0.25° latitude-longitude grid (720 × 1440, cell centres from -89.875 to 89.875° and -179.875 to 179.875°) from 2001.
+    1997–2000 is provided only on a 1° × 1° grid because of its larger uncertainty. GFED4.1s is also on a 0.25° grid.
+  vertical: Surface emissions (no vertical distribution)
+  temporal: >-
+    Monthly (burned area and emissions) / daily (GFED5.1 daily emission files; GFED5.1NRT daily and monthly). For GFED4.1s, daily and 3-hourly values are obtained by multiplying
+    the monthly fields by daily fractions (daily_fraction) and the 3-hourly diurnal cycle (diurnal_cycle), available from 2003.
+
+update: "GFED5.1 (1997–2022) is fixed / GFED5.1NRT (2023 onward) is updated daily and reprocessed episodically once science-quality VIIRS data are available / GFED4.1s has not been updated since 2024-01"
+license: GFED5.1 and GFED5.1NRT are CC BY 4.0 (Zenodo records and file attributes). Free of charge, co-authorship is not expected, and the FAQ citation guidance applies
+account_required: false
+
+summary: >-
+  GFED estimates global fire emissions of carbon, trace gases and aerosols on a 0.25° grid by multiplying satellite burned area by fuel consumption from a biogeochemical model and by emission factors.
+  GFED5 builds on MODIS MCD64A1 C6.1 with omission and commission corrections constrained by Landsat and Sentinel-2, small fires from active fire detections and cropland burning from GloCAB,
+  which substantially increases burned area, and it also revises emission factors and fuel consumption. It is widely used as fire emission input for atmospheric chemistry and air quality models,
+  in carbon budgets such as the Global Carbon Project, and in IPCC assessments.
+
+time_convention:
+  summary: >-
+    Monthly fields are totals (accumulations) of burned area and emissions over the month, and GFED5.1 daily files hold the emission total for each day (UTC date).
+    From 2023, GFED5.1NRT converts counts of instantaneous VIIRS active fire detections (Suomi NPP and NOAA-20, overpasses around 13:30) into daily burned area and emissions
+    using biome- and region-specific lookup tables; no sub-daily resolution is provided.
+  points:
+    - "GFED4.1s `C` and `DM` are monthly emissions per unit area (g C m-2 month-1, kg DM m-2 month-1); multiply by `grid_cell_area` (m2) and sum for regional totals."
+    - "GFED4.1s daily and 3-hourly values are monthly emissions × `daily_fraction` (share for that day) × `diurnal_cycle` (shares for eight 3-hour UTC windows), from 2003. The diurnal shape is the same throughout the month."
+    - "In GFED5.1 daily files the units attribute reads 'g <species> per day' (e.g. `CO2` = 'g CO2 per day'). Check the attributes and README of the files you download to confirm whether values are per unit area or per grid cell."
+    - "In the GFED5.0 burned area files (BAYYYYMM.nc), values are burned area per grid cell for the month (km2). Divide the global sum by 1e6 for Mha."
+    - "From 2023 (GFED5.1NRT), fuel consumption is fixed at the 2013–2022 mean and land cover is static. The method differs from the earlier period."
+  source: https://www.globalfiredata.org/index.html
+  source_name: "GFED website + GFED4s Readme + GFED5 Zenodo README + van der Werf et al. (2025) and Chen et al. (2026) papers"
+
+variables:
+  note: >-
+    GFED5.1 daily emission files (GFED5.1_daily_YYYY-MM.nc) contain variables for 40 species following the same naming scheme. Variable names in the GFED5.1 monthly files
+    could not be confirmed from public documentation, so the verified GFED5.0 burned area files and GFED4.1s (HDF5, with group paths) variables are listed as well.
+  full_list: https://doi.org/10.1038/s41597-025-06127-w
+  groups:
+    - name: GFED5.1 daily emissions (GFED5.1_daily_YYYY-MM.nc, 0.25°)
+      kind: accum
+      period: Daily
+      items:
+        - text: "Dry matter burned — `DM` (g DM per day)"
+          std: []
+        - text: "Carbon emissions — `C` (g C per day)"
+          std: []
+        - text: "Carbon dioxide emissions — `CO2` (g CO2 per day)"
+          std: []
+        - text: "Carbon monoxide emissions — `CO` (g CO per day)"
+          std: []
+        - text: "Methane emissions — `CH4` (g CH4 per day)"
+          std: []
+        - text: "Nitrogen oxides emissions (as NO) — `NOx` (g NOx per day)"
+          std: []
+        - text: "PM2.5 emissions — `PM2.5` (g PM2.5 per day)"
+          std: []
+        - text: "Black carbon, organic carbon and total particulate carbon — `BC`, `OC`, `TPC` (g per day)"
+          std: []
+        - text: "Other trace gases — `N2O`, `NH3`, `SO2`, `H2`, `NMOC_g`, `HCN`, `CH2O`, `C2H6`, `C5H8`, `C10H16`, etc. (g per day)"
+          std: []
+    - name: GFED5.0 burned area (BAYYYYMM.nc, Chen et al. 2023 Zenodo, 2001–2020 at 0.25°)
+      kind: accum
+      period: Monthly
+      items:
+        - text: "Total burned area — `Total` (km2 per grid cell)"
+          note: The only variable provided for 1997–2000 (1°)
+          std: []
+        - text: "Normal burned area by 17 land cover types — `Norm` (km2)"
+          note: "Dimensions (time, iLCT, lat, lon). 17 of iLCT 0–19 are in use"
+          std: []
+        - text: "Cropland, deforestation and peatland burned area — `Crop`, `Defo`, `Peat` (km2)"
+          std: []
+    - name: GFED4.1s (GFED4.1s_YYYY.hdf5, monthly groups 01–12)
+      kind: accum
+      period: Monthly
+      items:
+        - text: "Burned fraction — `burned_area/MM/burned_fraction` (fraction of grid cell)"
+          note: Includes small-fire burned area (experimental estimate)
+          std: []
+        - text: "Carbon emissions — `emissions/MM/C` (g C m-2 month-1)"
+          std: []
+        - text: "Dry matter burned — `emissions/MM/DM` (kg DM m-2 month-1)"
+          std: []
+        - text: "Small-fire fraction of emissions — `emissions/MM/small_fire_fraction` (unitless)"
+          kind: mean
+          std: []
+        - text: "Emission partitioning by fire type — `emissions/MM/partitioning/C_SAVA` etc. for SAVA, BORF, TEMF, DEFO, PEAT, AGRI (unitless)"
+          kind: mean
+          std: []
+        - text: "Daily fraction — `emissions/MM/daily_fraction`, 3-hourly diurnal cycle — `diurnal_cycle` (unitless, 2003 onward)"
+          kind: mean
+          std: []
+        - text: "Fire carbon, net primary production, heterotrophic respiration — `biosphere/MM/BB`, `NPP`, `Rh` (g C m-2 month-1)"
+          std: []
+    - name: Invariant fields (GFED4.1s ancill group)
+      kind: static
+      items:
+        - text: "Grid cell area — `ancill/grid_cell_area` (m2)"
+          std: []
+        - text: "14 GFED basis regions — `ancill/basis_regions`"
+          std: []
+
+access:
+  - name: GFED website — GFED5 gridded files (SFTP)
+    url: https://www.globalfiredata.org/data.html
+    method: SFTP (server ftp.prd.dip.wur.nl, port 1022)
+    note: >-
+      Holds GFED5.1 (1997–2022) and GFED5.1NRT (2023 onward, in reprocessed and update directories) as netCDF4 files. Public login details are at
+      https://www.globalfiredata.org/ancill/GFED5_SFTP_info.txt (note port 1022).
+  - name: Zenodo — GFED5.1 (paper data)
+    url: https://doi.org/10.5281/zenodo.16794692
+    method: HTTPS download (four zip files, about 20.5 GB)
+    note: GFED5.1_monthly (1.7 GB, 1997–2022 monthly burned area and emissions), GFED5.1_daily (18.4 GB, daily emissions), GFED5.1_ecosystem (2002–2022 burned area and carbon emissions by category), GFED5.1_code
+  - name: Zenodo — GFED5NRT (near-real-time extension, reprocessed)
+    url: https://doi.org/10.5281/zenodo.18702700
+    method: HTTPS download
+    note: Daily and monthly data for 2023–2024, split into Species and Ecosystem files for each sensor combination (CMB combined, VNP Suomi NPP, VJ1 NOAA-20).
+  - name: GFED summary tables (global and regional annual emissions)
+    url: https://www.globalfiredata.org/tables
+    method: Text table download
+  - name: GFED4.1s (previous version, HDF5)
+    url: https://www.geo.vu.nl/~gwerf/GFED/GFED4/
+    method: HTTPS directory download
+    note: Contains GFED4.1s_1997–2016.hdf5, GFED4.1s_2017–2023_beta.hdf5, Readme.pdf and ancill (emission factor tables).
+  - name: ORNL DAAC — GFED4.1 (1997–2016)
+    url: https://doi.org/10.3334/ORNLDAAC/1293
+    method: Download after Earthdata login
+    note: NASA archive copy with GFED4 monthly and daily burned area without small fires (HDF) and GFED4.1s annual files (1997–2015).
+
+example:
+  lang: python
+  note: >-
+    Downloads a GFED4.1s HDF5 file to compute annual global carbon emissions, then opens a GFED5.1 daily file obtained from SFTP or Zenodo with xarray.
+    Check file names and variables against the README of the GFED5.1 release you download.
+  code: |
+    # pip install h5py numpy requests xarray netCDF4
+    import h5py
+    import numpy as np
+    import requests
+    import xarray as xr
+
+    # 1) GFED4.1s: global carbon emissions in 2015
+    url = "https://www.geo.vu.nl/~gwerf/GFED/GFED4/GFED4.1s_2015.hdf5"
+    with open("GFED4.1s_2015.hdf5", "wb") as out:
+        out.write(requests.get(url, timeout=600).content)
+
+    with h5py.File("GFED4.1s_2015.hdf5", "r") as f:
+        area = f["ancill/grid_cell_area"][:]                          # m2
+        c = sum(f[f"emissions/{m:02d}/C"][:] for m in range(1, 13))   # g C m-2 (sum of monthly totals)
+        print("2015 global carbon emissions:", (c * area).sum() / 1e15, "Pg C")
+
+    # 2) GFED5.1 daily emissions file (from SFTP or GFED5.1_daily.zip on Zenodo)
+    ds = xr.open_dataset("GFED5.1_daily_2020-01.nc")
+    co2 = ds["CO2"]                        # (time, lat, lon), 0.25°
+    print(co2.attrs.get("units"))          # 'g CO2 per day' — check whether per area or per cell
+    print(co2.sel(lat=slice(33, 39), lon=slice(124, 132)).sum(("lat", "lon")))
+
+tips:
+  - "GFED5 burned area is about 61% and carbon emissions about 65% higher than GFED4s (mostly small fires, omission corrections and cropland burning). Do not mix the two versions or drop GFED5 straight into model setups tuned to GFED4s."
+  - "From 2023 (GFED5.1NRT), burned area is not observed directly but converted from VIIRS active fire counts, and the official site labels it beta. State this change in method when extending pre-2023 trends."
+  - "The GFED5NRT combined (CMB) product is designed to fall back to the remaining instrument when Suomi NPP or NOAA-20 is missing. With Suomi NPP data delivery ending on 1 November 2026, later values will effectively be NOAA-20 only."
+  - "1997–2000 is at 1° and estimated from ATSR and VIRS active fires, with large uncertainty. The README warns of discontinuities in 1998 (VIRS introduced), 2001 (Terra MODIS) and 2003 (Aqua MODIS)."
+  - "Cropland burning emissions are the most uncertain component (very few field measurements of fuel consumption). State this uncertainty when analysing agricultural burning in Korea, China and elsewhere."
+  - "GFED4.1s _beta files from 2017 onward are estimated from MODIS active fires using 2003–2016 relationships and contain only `DM` and `C`. Compute species emissions yourself as `DM` × emission factor (tables in the ancill folder) × fire-type share (partitioning)."
+  - "GFED4.1s HDF5 arrays run from north (89.875°) to south. Check latitude order when overlaying other datasets."
+  - "The team notes that uncertainty grows at small scales such as individual 0.25° cells or sub-national regions. Aggregates over large regions and long periods are the safest use."
+
+citations:
+  dataset:
+    - label: GFED5.1 data (Zenodo)
+      text: >-
+        van der Werf, G., Randerson, J., van Wees, D., Chen, Y., Giglio, L., Hall, J., Vernooij, R., Mu, M., Binte Shahid, S., Barsanti, K., Yokelson, R.,
+        Morton, D. (2025). Global Fire Emissions Database version 5 (GFED5) [Data set]. Zenodo. https://doi.org/10.5281/zenodo.16794692
+      doi: 10.5281/zenodo.16794692
+      bibtex: |
+        @misc{gfed51_data,
+          author    = {van der Werf, Guido and Randerson, James and van Wees, Dave and Chen, Yang and Giglio, Louis and Hall, Joanne and Vernooij, Roland and Mu, Mingquan and Binte Shahid, Samiha and Barsanti, Kelley and Yokelson, Robert and Morton, Douglas},
+          title     = {Global Fire Emissions Database version 5 ({GFED5})},
+          year      = {2025},
+          publisher = {Zenodo},
+          doi       = {10.5281/zenodo.16794692}
+        }
+    - label: GFED5NRT data (Zenodo, V5.1)
+      text: >-
+        Chen, Y., van der Werf, G. R., Mu, M., van Wees, D., Hall, J. V., Giglio, L., Vernooij, R., Morton, D. C., Xu, L., Liu, T., Scholten, R. C.,
+        Coffield, S. R., Follette-Cook, M. B., Ott, L., Randerson, J. T. (2026). GFED5NRT: Global Fire Emissions Database Near-Real-Time Extension (V5.1) [Data set].
+        Zenodo. https://doi.org/10.5281/zenodo.18702700
+      doi: 10.5281/zenodo.18702700
+      bibtex: |
+        @misc{gfed5nrt_data,
+          author    = {Chen, Yang and van der Werf, Guido R. and Mu, Mingquan and van Wees, Dave and Hall, Joanne V. and Giglio, Louis and Vernooij, Roland and Morton, Douglas C. and Xu, Li and Liu, Tianjia and Scholten, Rebecca C. and Coffield, Shane R. and Follette-Cook, Melanie B. and Ott, Lesley and Randerson, James T.},
+          title     = {{GFED5NRT}: Global Fire Emissions Database Near-Real-Time Extension},
+          version   = {V5.1},
+          year      = {2026},
+          publisher = {Zenodo},
+          doi       = {10.5281/zenodo.18702700}
+        }
+    - label: GFED4.1 (ORNL DAAC, 1997–2016)
+      text: >-
+        Randerson, J.T., G.R. van der Werf, L. Giglio, G.J. Collatz, and P.S. Kasibhatla. 2018. Global Fire Emissions Database, Version 4.1 (GFEDv4).
+        ORNL DAAC, Oak Ridge, Tennessee, USA. https://doi.org/10.3334/ORNLDAAC/1293
+      doi: 10.3334/ORNLDAAC/1293
+      bibtex: |
+        @misc{gfed41_ornl,
+          author    = {Randerson, J. T. and van der Werf, G. R. and Giglio, L. and Collatz, G. J. and Kasibhatla, P. S.},
+          title     = {Global Fire Emissions Database, Version 4.1 ({GFEDv4})},
+          year      = {2018},
+          publisher = {ORNL DAAC},
+          address   = {Oak Ridge, Tennessee, USA},
+          doi       = {10.3334/ORNLDAAC/1293}
+        }
+  papers:
+    - label: GFED5 emissions (for emissions through 2022)
+      text: >-
+        van der Werf, G. R., Randerson, J. T., van Wees, D., Chen, Y., Giglio, L., Hall, J., Vernooij, R., Mu, M., Binte Shahid, S., Barsanti, K. C.,
+        Yokelson, R., Morton, D. C. (2025): Landscape fire emissions from the 5th version of the Global Fire Emissions Database (GFED5).
+        Scientific Data, 12, 1870. (Publisher correction: Scientific Data, 13, 44, 2026)
+      doi: 10.1038/s41597-025-06127-w
+      bibtex: |
+        @article{vanderwerf2025gfed5,
+          author  = {van der Werf, Guido R. and Randerson, James T. and van Wees, Dave and Chen, Yang and Giglio, Louis and Hall, Joanne and Vernooij, Roland and Mu, Mingquan and Binte Shahid, Samiha and Barsanti, Kelley C. and Yokelson, Robert and Morton, Douglas C.},
+          title   = {Landscape fire emissions from the 5th version of the Global Fire Emissions Database ({GFED5})},
+          journal = {Scientific Data},
+          volume  = {12},
+          pages   = {1870},
+          year    = {2025},
+          doi     = {10.1038/s41597-025-06127-w}
+        }
+    - label: GFED5 burned area (for burned area through 2022)
+      text: >-
+        Chen, Y., Hall, J., van Wees, D., Andela, N., Hantson, S., Giglio, L., van der Werf, G. R., Morton, D. C., Randerson, J. T. (2023):
+        Multi-decadal trends and variability in burned area from the fifth version of the Global Fire Emissions Database (GFED5).
+        Earth System Science Data, 15, 5227–5259.
+      doi: 10.5194/essd-15-5227-2023
+      bibtex: |
+        @article{chen2023gfed5ba,
+          author  = {Chen, Yang and Hall, Joanne and van Wees, Dave and Andela, Niels and Hantson, Stijn and Giglio, Louis and van der Werf, Guido R. and Morton, Douglas C. and Randerson, James T.},
+          title   = {Multi-decadal trends and variability in burned area from the fifth version of the Global Fire Emissions Database ({GFED5})},
+          journal = {Earth System Science Data},
+          volume  = {15},
+          number  = {11},
+          pages   = {5227--5259},
+          year    = {2023},
+          doi     = {10.5194/essd-15-5227-2023}
+        }
+    - label: GFED5NRT (for data from 2023 onward; ESSD discussion paper, revised version accepted)
+      text: >-
+        Chen, Y., van der Werf, G. R., Mu, M., van Wees, D., Hall, J. V., Giglio, L., Vernooij, R., Morton, D. C., Xu, L., Liu, T., Scholten, R. C.,
+        Coffield, S. R., Follette-Cook, M. B., Ott, L., Randerson, J. T. (2026): Tracking recent extremes and interannual variability of global fire emissions
+        using a near-real-time extension to the Global Fire Emissions Database. Earth System Science Data Discussions [preprint].
+      doi: 10.5194/essd-2026-158
+      bibtex: |
+        @article{chen2026gfed5nrt,
+          author  = {Chen, Yang and van der Werf, Guido R. and Mu, Mingquan and van Wees, Dave and Hall, Joanne V. and Giglio, Louis and Vernooij, Roland and Morton, Douglas C. and Xu, Li and Liu, Tianjia and Scholten, Rebecca C. and Coffield, Shane R. and Follette-Cook, Melanie B. and Ott, Lesley and Randerson, James T.},
+          title   = {Tracking recent extremes and interannual variability of global fire emissions using a near-real-time extension to the Global Fire Emissions Database},
+          journal = {Earth System Science Data Discussions},
+          year    = {2026},
+          doi     = {10.5194/essd-2026-158}
+        }
+    - label: GFED4s (previous version)
+      text: >-
+        van der Werf, G. R., Randerson, J. T., Giglio, L., van Leeuwen, T. T., Chen, Y., Rogers, B. M., Mu, M., van Marle, M. J. E., Morton, D. C.,
+        Collatz, G. J., Yokelson, R. J., Kasibhatla, P. S. (2017): Global fire emissions estimates during 1997–2016. Earth System Science Data, 9, 697–720.
+      doi: 10.5194/essd-9-697-2017
+      bibtex: |
+        @article{vanderwerf2017gfed4s,
+          author  = {van der Werf, Guido R. and Randerson, James T. and Giglio, Louis and van Leeuwen, Thijs T. and Chen, Yang and Rogers, Brendan M. and Mu, Mingquan and van Marle, Margreet J. E. and Morton, Douglas C. and Collatz, G. James and Yokelson, Robert J. and Kasibhatla, Prasad S.},
+          title   = {Global fire emissions estimates during 1997--2016},
+          journal = {Earth System Science Data},
+          volume  = {9},
+          pages   = {697--720},
+          year    = {2017},
+          doi     = {10.5194/essd-9-697-2017}
+        }
+    - label: Small-fire burned area (GFED4s method)
+      text: >-
+        Randerson, J. T., Chen, Y., van der Werf, G. R., Rogers, B. M., Morton, D. C. (2012): Global burned area and biomass burning emissions from small fires.
+        Journal of Geophysical Research: Biogeosciences, 117, G04012.
+      doi: 10.1029/2012JG002128
+      bibtex: |
+        @article{randerson2012smallfires,
+          author  = {Randerson, J. T. and Chen, Y. and van der Werf, G. R. and Rogers, B. M. and Morton, D. C.},
+          title   = {Global burned area and biomass burning emissions from small fires},
+          journal = {Journal of Geophysical Research: Biogeosciences},
+          volume  = {117},
+          number  = {G4},
+          year    = {2012},
+          doi     = {10.1029/2012JG002128}
+        }
+  acknowledgement: >-
+    Following the GFED FAQ, cite Chen et al. (2023) for burned area through 2022, van der Werf et al. (2025) for emissions through 2022, and Chen et al. (2026) for burned area or emissions
+    after 2022; studies using emissions across both periods should cite van der Werf et al. (2025) and Chen et al. (2026). Media and presentations should credit GFED and link to the website.
+
+transitions:
+  - from: GFED4.1s
+    to: GFED5 (GFED5.1 + GFED5.1NRT)
+    status: completed
+    date: "2025-10"
+    summary: >-
+      GFED5 is the largest overhaul since GFED4, replacing both the burned area input and the emission factors; global burned area rises by about 61% and carbon emissions by about 65%.
+      Burned area was published in 2023 (ESSD, Chen et al.) and emissions in 2025 (Scientific Data, van der Werf et al.), with a VIIRS active-fire-based near-real-time extension from 2023.
+      Because the magnitudes differ so much, the two versions must not be mixed within one study.
+    changes:
+      - aspect: Burned area input
+        before: "MODIS MCD64A1 Collection 5.1 + small fires estimated statistically from active fires (Randerson et al. 2012)"
+        after: "MCD64A1 C6.1 + omission/commission corrections constrained by Landsat and Sentinel-2 + small fires from active fires + cropland burning from GloCAB (Hall et al. 2023)"
+      - aspect: Global burned area
+        before: "GFED5 exceeds GFED4s by about 61% (2002–2016 overlap)"
+        after: "774 ± 63 Mha per year (2001–2020, Chen et al. 2023), about 93% more than MCD64A1"
+      - aspect: Global carbon emissions
+        before: "2.04 Pg C per year (comparison value in van der Werf et al. 2025, Table 7)"
+        after: "3.4 Pg C per year (2002–2022 mean, +65%)"
+      - aspect: Emission factors
+        before: "Fire-type values based mainly on Akagi et al. (2011)"
+        after: "NEIVA v1.1 means for six fire categories + dynamic CO2, CO, CH4 and N2O factors for savanna and grassland driven by weather and vegetation"
+      - aspect: Period and handling of recent years
+        before: "1997–2016 burned-area based / 2017–2023 beta from MODIS active fires (DM and C only)"
+        after: "1997–2022 GFED5.1 / 2023 onward GFED5.1NRT from VIIRS active fires (updated daily, beta)"
+      - aspect: Resolution
+        before: "0.25° throughout, monthly + daily and 3-hourly fractions"
+        after: "0.25° from 2001, 1° for 1997–2000 / monthly and daily files"
+      - aspect: File format and variables
+        before: "Annual HDF5 (GFED4.1s_YYYY.hdf5) with per-area `C` and `DM` under monthly groups; species emissions computed by the user from emission factors"
+        after: "netCDF4 with 40 species variables provided directly (`CO2`, `CO`, `CH4`, `PM2.5`, etc.)"
+      - aspect: Distribution and licence
+        before: "geo.vu.nl web directory, ORNL DAAC (1997–2016)"
+        after: "globalfiredata.org SFTP (port 1022) + Zenodo, CC BY 4.0"
+    impacts:
+      - Switching atmospheric chemistry model emissions or carbon budgets tuned to GFED4s over to GFED5 substantially increases fire emissions; re-evaluate model results accordingly.
+      - Do not combine GFED4.1s post-2016 beta values with GFED5.1 in a single time series. Use one version for the whole period.
+      - GFED5.1 (through 2022) and GFED5.1NRT (from 2023) use different methods; when joining them, cite both papers and describe the change in method.
+    sources:
+      - name: van der Werf et al. (2025), Scientific Data
+        url: https://doi.org/10.1038/s41597-025-06127-w
+      - name: Chen et al. (2023), ESSD
+        url: https://doi.org/10.5194/essd-15-5227-2023
+      - name: GFED Data page (GFED4s description, GFED5 recommended)
+        url: https://www.globalfiredata.org/data.html
+      - name: Chen et al. (2026), ESSD discussion paper (GFED5NRT)
+        url: https://doi.org/10.5194/essd-2026-158
+
+notices:
+  - date: "2026-09-04"
+    level: info
+    title: GFED website redesigned — current fire situation by region, country and state
+    body: >-
+      The site was rebuilt to make it easier to compare the current fire situation with previous years. Emission graphs are available by basis region, country and continent, and in some cases
+      by province or state, with the underlying text files and PDF figures available for download.
+    source: https://www.globalfiredata.org/news.html
+  - date: "2026-02-19"
+    level: warning
+    title: GFED5NRT 2023–2024 reprocessed data released — data from 2023 are beta and may change until the paper is accepted
+    body: >-
+      Emissions from 2023 onward come from the near-real-time extension (GFED5NRT), which converts VIIRS active fire detections into burned area and emissions using 2012–2022 relationships;
+      a reprocessed 2023–2024 release is on Zenodo. The official site labels this period as beta, subject to change until the accompanying ESSD paper is accepted.
+    source: https://doi.org/10.5281/zenodo.18702700
+  - date: "2025-11-28"
+    level: info
+    title: GFED5 emissions paper published — GFED5.1 (1997–2022) released
+    body: >-
+      With the GFED5 emissions paper in Scientific Data, monthly and daily emissions for 1997–2022 and burned area and carbon emissions by category (GFED5.1) were released on Zenodo (data posted 2025-10-01).
+      A publisher correction followed on 15 January 2026.
+    source: https://doi.org/10.1038/s41597-025-06127-w
+
+links:
+  - name: GFED website
+    url: https://www.globalfiredata.org/
+  - name: GFED Data page
+    url: https://www.globalfiredata.org/data.html
+  - name: GFED FAQ (citation guidance)
+    url: https://www.globalfiredata.org/faq.html
+  - name: GFED current fire situation
+    url: https://www.globalfiredata.org/current.html
+  - name: GFED5 burned area README (GFED5.0, Zenodo)
+    url: https://zenodo.org/records/7668424
+  - name: GFED4s Readme (HDF5 structure and emission calculation)
+    url: https://www.geo.vu.nl/~gwerf/GFED/GFED4/Readme.pdf
+  - name: ORNL DAAC GFED4.1 user guide
+    url: https://daac.ornl.gov/VEGETATION/guides/fire_emissions_v4_R1.html
+  - name: GFED5NRT code (GitHub)
+    url: https://github.com/ychenzgithub/GFED5NRT
+
+watch_urls:
+  - https://www.globalfiredata.org/news.html
+  - https://www.globalfiredata.org/data.html
+
+last_verified: "2026-10-13"

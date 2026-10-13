@@ -1,0 +1,318 @@
+# ─────────────────────────────────────────────────────────────
+# GLEAM — dataset information file
+# Listed under the Land tab, 'Evapotranspiration'. The GLEAM v3 → GLEAM4 and GLEAM4.2 → 4.3 version changes are in this file's transitions (no to_id).
+# After editing, update last_verified to the date you checked the official pages.
+# ─────────────────────────────────────────────────────────────
+id: gleam
+name: "GLEAM4"
+full_name: Global Land Evaporation Amsterdam Model (GLEAM) 4.3 (satellite-based global land evaporation and soil moisture, 0.1°, daily)
+category: analysis
+domain: land
+group: 증발산
+order: 10
+domains: [육지, 수문, 원격탐사]
+provider: Ghent University (Diego G. Miralles group)
+
+status: active
+status_note: >-
+  The server currently holds GLEAM4.3a (1980–2024, satellite and reanalysis forcing) and GLEAM4.3b (2003 onward, satellite forcing). A news item of 2026-09-21
+  says 4.3b now runs to the end of 2025, but the dataset description on the same page still says end-2024. Old versions are removed from the server when a new one is released,
+  so 4.2 and earlier are available only on request.
+
+period:
+  start: "1980-01"
+  end: "2025-12"
+  note: >-
+    4.3a covers 1980-01-01 to 2024-12-31 (44 years). 4.3b starts on 2003-01-01; the news item (2026-09-21) says it runs to the end of 2025, while the dataset description says 2024-12-31.
+    Records are normally extended to the previous year around April, but on 2026-10-13 4.3a still ended in 2024.
+
+resolution:
+  spatial_short: "11 km (0.1°)"
+  temporal_short: "1일"
+  spatial: >-
+    0.1° regular latitude-longitude grid, 1800 latitudes × 3600 longitudes (first cell centred at 89.95°N, 179.95°W). Land only; ocean cells are empty.
+    Inputs not already at 0.1° were resampled by bilinear interpolation.
+  vertical: Single-level surface fluxes + two soil moisture variables (surface SMs, root zone SMrz). From 4.3 the first two soil layers are set to 5 cm and 95 cm
+  temporal: Daily (monthly and yearly files also provided)
+
+update: Annually (usually extended to the previous year around April; users are notified by email of new releases)
+license: CC BY 4.0 (per the Zenodo technical note). Free for research; commercial use requires internal approval by the GLEAM team
+account_required: true
+
+summary: >-
+  GLEAM is a set of algorithms — and the resulting datasets — that estimate land evaporation and its components (transpiration, interception loss, bare-soil evaporation,
+  sublimation, open-water evaporation) from satellite observations of radiation, precipitation, temperature, soil moisture and vegetation. The fourth generation, GLEAM4,
+  moves to 0.1° and adds evaporative stress learned from eddy-covariance and sap-flow data, Penman-based potential evaporation and plant access to groundwater.
+  Two archives with different forcing are provided — 'a' (1980 onward, satellite and reanalysis) and 'b' (2003 onward, mostly satellite).
+
+time_convention:
+  summary: >-
+    Evaporation components in the daily files are daily totals (mm/day); the monthly and yearly files sum them to mm/month and mm/year.
+    The documentation does not define the day boundary (e.g. UTC) or whether state variables such as soil moisture are daily means or values at a given time.
+  points:
+    - "Evaporation (E etc.) is a water depth in mm. To get latent heat flux (W m-2), multiply by the latent heat of vaporization."
+    - "Negative values indicate net condensation (usually when surface net radiation is negative); missing data are -999."
+    - "Evaporative stress S is the ratio E/Ep (0 = maximum stress, 1 = no stress)."
+    - "Monthly (_MO) files are in mm/month and yearly (_YR) files in mm/year, unlike the daily files (mm/day)."
+  source: https://www.nature.com/articles/s41597-025-04610-y
+  source_name: Miralles et al. (2025) GLEAM4 paper, Data Records + gleam.eu FAQ
+
+variables:
+  note: >-
+    The 12 variables listed in the GLEAM4 paper (Data Records) and on gleam.eu. There is one file per variable per year, named <VARIABLE>_<YEAR>_GLEAM_<version>.nc (monthly and yearly files add _MO or _YR).
+    From 4.2a the aerodynamic and radiative components of potential evaporation are also provided, but their variable names could not be confirmed and are not listed.
+  full_list: https://www.gleam.eu/
+  groups:
+    - name: Evaporation components (daily totals)
+      kind: accum
+      period: Daily
+      items:
+        - "Actual evaporation (total evapotranspiration) — `E` (mm/day)"
+        - "Transpiration — `Et` (mm/day)"
+        - "Interception loss — `Ei` (mm/day)"
+        - "Bare-soil evaporation — `Eb` (mm/day)"
+        - "Snow sublimation — `Es` (mm/day)"
+        - "Surface condensation — `Ec` (mm/day)"
+        - "Open-water evaporation — `Ew` (mm/day)"
+        - "Potential evaporation — `Ep` (mm/day)"
+    - name: Stress and heat flux (daily)
+      kind: mean
+      period: Daily
+      items:
+        - text: "Evaporative stress — `S` (unitless, 0–1)"
+          note: Ratio E/Ep
+        - "Sensible heat flux — `H` (W m-2)"
+    - name: Soil moisture (daily model state)
+      kind: instant
+      items:
+        - text: "Surface soil moisture — `SMs` (m3 m-3)"
+          note: One value per day. The documentation does not say whether it is a daily mean or a value at a specific time
+        - text: "Root-zone soil moisture — `SMrz` (m3 m-3)"
+          note: One value per day. The documentation does not say whether it is a daily mean or a value at a specific time
+
+access:
+  - name: GLEAM website (registration, then SFTP)
+    url: https://www.gleam.eu/
+    method: Register on the web → connect by SFTP (port 2225) with the credentials sent by email
+    note: >-
+      Enter your first name, last name and email under Downloads, and login details are emailed to you (if nothing arrives within an hour, check spam and then contact info@gleam.eu).
+      Connect with SFTP, not plain FTP, and make sure your firewall does not block port 2225. A detailed README is on the server.
+  - name: Older versions (on request)
+    url: https://www.gleam.eu/
+    method: Email request
+    note: Old versions are removed from the server when a new one is released. If you need one (for example to reproduce a paper), it may be provided upon reasonable request.
+
+example:
+  lang: python
+  note: >-
+    Fill in the SFTP host, username and password from the registration email. The directory layout follows the v4.2a example in the paper
+    (v4.2a/daily/2023/E_2023_GLEAM_v4.2a.nc); check the README on the server for the actual paths.
+  code: |
+    # pip install paramiko xarray netCDF4
+    import paramiko
+    import xarray as xr
+
+    HOST, PORT = "<host from the email>", 2225
+    USER, PASSWORD = "<username>", "<password>"
+
+    transport = paramiko.Transport((HOST, PORT))
+    transport.connect(username=USER, password=PASSWORD)
+    sftp = paramiko.SFTPClient.from_transport(transport)
+    print(sftp.listdir("."))                      # check the version folder names first
+    remote = "v4.3a/daily/2024/E_2024_GLEAM_v4.3a.nc"   # example path
+    sftp.get(remote, "E_2024_GLEAM_v4.3a.nc")
+    sftp.close(); transport.close()
+
+    ds = xr.open_dataset("E_2024_GLEAM_v4.3a.nc")
+    e = ds["E"].sel(lat=slice(39, 33), lon=slice(124, 132))   # latitude runs north to south
+    print(e.sum("time").mean().values)            # area-mean 2024 annual evaporation (mm)
+
+tips:
+  - "Archives 'a' and 'b' share the method but use different forcing (per the GLEAM4 paper, a: MSWX meteorology and MSWEP precipitation; b: IMERG precipitation, AIRS temperature, CERES radiation). Use 'a' for long climate records and 'b' for a shorter, more observation-based record, and do not mix them."
+  - When a new version is released the old one is removed from the server and past values change. Record the version you downloaded (e.g. v4.3a) and state it in your paper.
+  - Evaporation is not measured directly from space; GLEAM values are model estimates. When comparing with eddy-covariance towers, the team notes footprint mismatch (~1 km vs ~10 km pixels), energy-balance non-closure and unreliable measurements during rain, and recommends masking rain and interception periods.
+  - Component partitioning differs strongly between versions. In GLEAM4 transpiration makes up about 62% of global evaporation, down from about 74% in v3.
+  - No uncertainty (error) estimates are provided with the data.
+  - "GLEAM4 assimilates ESA CCI surface soil moisture, so GLEAM soil moisture and ESA CCI SM are not independent when compared."
+  - "Forcing data and static parameters are not hosted on the GLEAM server; get them from their original portals (see the README and Miralles et al. 2025)."
+
+citations:
+  dataset:
+    - label: GLEAM4 technical notes and data record (Zenodo, the data citation given in the paper)
+      text: >-
+        Miralles, D. G., Bonte, O., Koppa, A., Baez-Villanueva, O. M., Tronquo, E., Zhong, F., Beck, H. E., Hulsman, P.,
+        Dorigo, W., Verhoest, N. E. C., Haghdoost, S. (2025): GLEAM4 (v4.2). Zenodo.
+      doi: 10.5281/zenodo.14056079
+      bibtex: |
+        @misc{gleam4_zenodo,
+          author    = {Miralles, Diego G. and Bonte, Olivier and Koppa, Akash and Baez-Villanueva, Oscar M. and Tronquo, Emma and Zhong, Feng and Beck, Hylke E. and Hulsman, Petra and Dorigo, Wouter and Verhoest, Niko E. C. and Haghdoost, Shekofeeh},
+          title     = {{GLEAM4}},
+          version   = {v4.2},
+          year      = {2025},
+          publisher = {Zenodo},
+          doi       = {10.5281/zenodo.14056079}
+        }
+  papers:
+    - label: GLEAM4 data paper
+      text: >-
+        Miralles, D. G., Bonte, O., Koppa, A., Baez-Villanueva, O. M., Tronquo, E., Zhong, F., Beck, H. E., Hulsman, P.,
+        Dorigo, W., Verhoest, N. E. C., Haghdoost, S. (2025): GLEAM4: global land evaporation and soil moisture dataset
+        at 0.1° resolution from 1980 to near present. Scientific Data, 12, 416.
+      doi: 10.1038/s41597-025-04610-y
+      bibtex: |
+        @article{miralles2025gleam4,
+          author  = {Miralles, Diego G. and Bonte, Olivier and Koppa, Akash and Baez-Villanueva, Oscar M. and Tronquo, Emma and Zhong, Feng and Beck, Hylke E. and Hulsman, Petra and Dorigo, Wouter and Verhoest, Niko E. C. and Haghdoost, Shekoofeh},
+          title   = {{GLEAM4}: global land evaporation and soil moisture dataset at 0.1{\textdegree} resolution from 1980 to near present},
+          journal = {Scientific Data},
+          volume  = {12},
+          pages   = {416},
+          year    = {2025},
+          doi     = {10.1038/s41597-025-04610-y}
+        }
+    - label: Original GLEAM paper
+      text: >-
+        Miralles, D. G., Holmes, T. R. H., De Jeu, R. A. M., Gash, J. H., Meesters, A. G. C. A., Dolman, A. J. (2011):
+        Global land-surface evaporation estimated from satellite-based observations. Hydrology and Earth System Sciences, 15, 453–469.
+      doi: 10.5194/hess-15-453-2011
+      bibtex: |
+        @article{miralles2011gleam,
+          author  = {Miralles, D. G. and Holmes, T. R. H. and De Jeu, R. A. M. and Gash, J. H. and Meesters, A. G. C. A. and Dolman, A. J.},
+          title   = {Global land-surface evaporation estimated from satellite-based observations},
+          journal = {Hydrology and Earth System Sciences},
+          volume  = {15},
+          number  = {2},
+          pages   = {453--469},
+          year    = {2011},
+          doi     = {10.5194/hess-15-453-2011}
+        }
+    - label: Evaporative stress module (hybrid deep learning)
+      text: >-
+        Koppa, A., Rains, D., Hulsman, P., Poyatos, R., Miralles, D. G. (2022): A deep learning-based hybrid model of global
+        terrestrial evaporation. Nature Communications, 13, 1912.
+      doi: 10.1038/s41467-022-29543-7
+      bibtex: |
+        @article{koppa2022hybrid,
+          author  = {Koppa, Akash and Rains, Dominik and Hulsman, Petra and Poyatos, Rafael and Miralles, Diego G.},
+          title   = {A deep learning-based hybrid model of global terrestrial evaporation},
+          journal = {Nature Communications},
+          volume  = {13},
+          pages   = {1912},
+          year    = {2022},
+          doi     = {10.1038/s41467-022-29543-7}
+        }
+    - label: Soil and groundwater module
+      text: >-
+        Hulsman, P., Keune, J., Koppa, A., Schellekens, J., Miralles, D. G. (2023): Incorporating Plant Access to Groundwater
+        in Existing Global, Satellite-Based Evaporation Estimates. Water Resources Research, 59(8), e2022WR033731.
+      doi: 10.1029/2022WR033731
+      bibtex: |
+        @article{hulsman2023groundwater,
+          author  = {Hulsman, P. and Keune, J. and Koppa, A. and Schellekens, J. and Miralles, D. G.},
+          title   = {Incorporating Plant Access to Groundwater in Existing Global, Satellite-Based Evaporation Estimates},
+          journal = {Water Resources Research},
+          volume  = {59},
+          number  = {8},
+          pages   = {e2022WR033731},
+          year    = {2023},
+          doi     = {10.1029/2022WR033731}
+        }
+  acknowledgement: >-
+    gleam.eu asks users of GLEAM4 data to cite Miralles et al. (2011) and Miralles et al. (2025), together with the interception module (Zhong et al., 2022, HESS),
+    the soil module (Hulsman et al., 2023) and the stress module (Koppa et al., 2022). Also give the version you used (e.g. GLEAM4.3a) and the access date.
+    The Zenodo technical note (10.5281/zenodo.14056079) documents v4.2.
+
+transitions:
+  - from: GLEAM v3 (e.g. v3.8a)
+    to: GLEAM4 (v4.1–4.2)
+    status: completed
+    date: "2024-07"
+    summary: >-
+      The fourth generation raises the resolution from 0.25° to 0.1°, reworks potential evaporation, interception and evaporative stress, and adds plant access to groundwater.
+      Component partitioning changed substantially (global transpiration fraction 74% → 62%), so v3 results must not be compared directly with, or appended to, GLEAM4.
+    changes:
+      - aspect: Horizontal resolution
+        before: "0.25°"
+        after: "0.1° (1800 × 3600)"
+      - aspect: Potential evaporation
+        before: "Priestley–Taylor (radiation-driven)"
+        after: "Penman equation — includes wind, vegetation height and VPD (aerodynamic term)"
+      - aspect: Interception loss
+        before: "Tall vegetation only"
+        after: "van Dijk–Bruijnzeel-based model constrained by satellite vegetation data, computed separately for tall and short vegetation"
+      - aspect: Evaporative stress
+        before: "Soil moisture and vegetation optical depth (VOD) formulation"
+        after: "Deep neural network trained on eddy-covariance and sap-flow data (replaced by XGBoost in 4.3)"
+      - aspect: Groundwater
+        before: "Not represented"
+        after: "Plant access to groundwater via a linear reservoir model"
+      - aspect: Period and archives
+        before: "v3a 1980–, v3b 2003–, v3c 2011– (per the v3 paper)"
+        after: "a 1980–, b 2003– (no 'c' archive)"
+      - aspect: Global transpiration fraction
+        before: "About 74%"
+        after: "About 62%"
+    impacts:
+      - Do not mix v3 climatologies or trends with GLEAM4, especially for component-level analyses such as transpiration and bare-soil evaporation.
+      - The grid changed, so regrid to a common grid before cell-by-cell comparison.
+    sources:
+      - name: Miralles et al. (2025), GLEAM4, Scientific Data
+        url: https://doi.org/10.1038/s41597-025-04610-y
+      - name: Martens et al. (2017), GLEAM v3, Geoscientific Model Development
+        url: https://doi.org/10.5194/gmd-10-1903-2017
+      - name: GLEAM website
+        url: https://www.gleam.eu/
+  - from: GLEAM4.2 (4.2a and 4.2b)
+    to: GLEAM4.3 (4.3a and 4.3b)
+    status: completed
+    summary: >-
+      Within the GLEAM4 framework, 4.3 changes how evaporative stress is learned, fixes the soil-layer depths and represents irrigation explicitly. 4.2 was removed from the server when 4.3 was released.
+    changes:
+      - aspect: Evaporative stress model
+        before: "Deep neural network"
+        after: "XGBoost, with a monotonic plant-available-water (PAW)–stress relationship enforced during training"
+      - aspect: Soil layers
+        before: "Multi-layer water balance (depths not stated in the paper)"
+        after: "First and second layers set to 5 cm and 95 cm"
+      - aspect: Irrigation
+        before: "Not represented"
+        after: "Irrigation represented explicitly (related paper under review)"
+      - aspect: Period available
+        before: "4.2a 1980–2023 (paper), later extended to 2024; 4.2b 2003–"
+        after: "4.3a 1980–2024; 4.3b 2003–2025 (per the 2026-09-21 news item)"
+    impacts:
+      - Do not join 4.2 and 4.3 into one series; download the full record again as 4.3.
+      - In irrigated regions (e.g. the North China Plain, northern India) 4.3 evaporation can differ markedly from 4.2, so state the version in regional analyses.
+    sources:
+      - name: GLEAM website (Datasets and News)
+        url: https://www.gleam.eu/
+
+notices:
+  - date: "2026-09-21"
+    level: info
+    title: GLEAM4.3b released (through end-2025)
+    body: >-
+      GLEAM4.3b was released on the server and is said to cover up to the end of 2025 at 0.1°. The dataset description on the same page still gives the 4.3b period as
+      2003-01-01 to 2024-12-31, so check the last date in the files you download.
+    source: https://www.gleam.eu/
+  - date: "2024-07"
+    level: info
+    title: GLEAM4 released — 0.1° resolution, new evaporative stress and potential evaporation
+    body: >-
+      The fourth generation of GLEAM was released, with resolution raised to 0.1° and the record extended from 1980 to near present, plus hybrid-learned evaporative stress,
+      Penman-based potential evaporation and plant access to groundwater. According to the FAQ, old versions are removed from the server when a new version is released.
+    source: https://www.gleam.eu/
+
+links:
+  - name: GLEAM website
+    url: https://www.gleam.eu/
+  - name: Miralles et al. (2025) GLEAM4 paper
+    url: https://www.nature.com/articles/s41597-025-04610-y
+  - name: GLEAM4 technical notes (Zenodo)
+    url: https://doi.org/10.5281/zenodo.14056079
+  - name: Martens et al. (2017) GLEAM v3 paper
+    url: https://doi.org/10.5194/gmd-10-1903-2017
+
+watch_urls:
+  - https://www.gleam.eu/
+
+last_verified: "2026-10-13"

@@ -1,0 +1,338 @@
+# ─────────────────────────────────────────────────────────────
+# VIIRS 적설 (VNP10·VJ110) C2 — 데이터셋 정보 파일
+# 지면 탭(적설). MODIS 적설(modis-snow.yaml)의 후속 자료이며, MODIS → VIIRS 전환 정보는 modis-snow.yaml에 있습니다.
+# 수정 후에는 공식 페이지에서 확인한 날짜로 last_verified 를 갱신하세요.
+# ─────────────────────────────────────────────────────────────
+id: viirs-snow
+name: "VIIRS Snow (VNP10)"
+full_name: VIIRS Snow Cover Version 2 (VNP10 Suomi NPP · VJ110 NOAA-20 · VJ210 NOAA-21) (MODIS 적설을 잇는 VIIRS 정규화 적설 지수(NDSI) 기반 375 m 적설 자료, 구름 채움판 포함)
+category: satellite
+domain: land
+group: 적설
+order: 11
+domains: [육지, 수문, 원격탐사]
+provider: NASA GSFC 적설팀(Riggs·Hall) / NASA NSIDC DAAC
+
+status: active
+status_note: >-
+  Version 2(Collection 2)가 현재 판으로 매일 갱신됩니다(2026-10-13 확인 시 VJ110A1 최신 파일 2026년 10월 11일자, VNP10A1 10월 8일자).
+  다만 Suomi NPP 자료(VNP10) 전달은 2026년 11월 2일 13:00 UTC에 끝나므로, NSIDC는 NOAA-20(VJ110)·NOAA-21(VJ210) 제품으로 옮기라고 안내합니다.
+  Version 1은 2024년 6월 17일 생산을 멈췄습니다.
+
+period:
+  start: "2012-01"
+  end: present
+  note: >-
+    VNP10(Suomi NPP)은 2012-01-19, VJ110(NOAA-20)은 2018-01-05, VJ210(NOAA-21)은 2023-02-10부터입니다(CMR 기준).
+    VNP10은 2026년 11월 2일 이후 새 자료가 나오지 않을 예정이고, 2026년 7월 10~21일 Suomi NPP 이상 기간에는 생산이 멈췄습니다.
+
+resolution:
+  spatial_short: "0.375 km (0.0034°)"
+  temporal_short: "1일"
+  spatial: >-
+    MODIS Sinusoidal 타일 격자 375 m(VNP10A1·A1F, 10°×10° 타일 하나 3000×3000 화소) / 0.05° 기후모델격자(CMG, VNP10C1, 3600×7200) /
+    375 m 전지구 위경도 격자(VNP10D1F, 구름 채움) / 원본 스와스 375 m(VNP10, 6분 단위)
+  vertical: 지표면 단일층
+  temporal: 일 (8일·월 합성 제품은 없음)
+
+update: "매일 (2026-10-13 확인 시 NOAA-20 VJ110은 관측 후 1~2일, Suomi NPP VNP10은 약 5일 지연)"
+license: NASA 지구과학 공개 자료 — 무료, 제한 없이 이용. 다운로드에는 무료 NASA Earthdata 로그인이 필요합니다
+account_required: true
+
+summary: >-
+  NASA 적설팀이 MODIS Collection 6 적설 알고리즘과 함께 개발해 거의 같은 방식(NDSI와 오류 걸러내기 검사)으로 VIIRS 관측에서 만든 전지구 적설 자료로,
+  2000년부터의 MODIS 적설 기록을 잇도록 설계되었습니다. VIIRS 영상 밴드 I1(0.64 µm)·I3(1.61 µm)을 써서 MODIS(500 m)보다 촘촘한 375 m 해상도를 가지며,
+  일 적설(A1), 구름 아래를 이전 맑은 날 값으로 채운 일 적설(A1F), 0.05° 격자 적설 비율(C1), 375 m 전지구 구름 채움 지도(D1F)를 위성별(VNP10·VJ110·VJ210)로 제공합니다.
+
+time_convention:
+  summary: >-
+    일자료(VNP10A1)는 그날 격자 위를 지나간 스와스 가운데 '가장 좋은' 관측 하나(태양 천정각이 현지 정오에 가장 가깝고, 직하점에 가깝고, 격자를 가장 많이 덮는 관측)를 담은 순간값입니다.
+    VIIRS 위성은 모두 오후 궤도이므로 오전에 지나는 Terra MODIS와는 관측 시각이 다릅니다. 구름 채움판(A1F)의 값은 구름이 이어진 날 수만큼 이전 관측일 수 있습니다.
+  points:
+    - "각 화소가 어느 스와스에서 왔는지는 `granule_pnt`와 파일의 GranulePointerArray·GranuleBeginningDateTime 속성으로 찾을 수 있습니다."
+    - "구름 채움판의 `Cloud_Persistence`는 연속 구름 일수입니다(0 = 오늘 맑음). 값이 n이면 그 화소의 적설값은 n일 전 맑은 날 관측입니다."
+    - "구름 채움은 물년도 단위로 다시 시작합니다(북반구 10월 1일, 남반구 7월 1일). 시작일에는 구름 화소의 지속 일수가 1이고, 거의 구름 없는 지도가 되려면 보통 5~7일이 걸립니다."
+    - "타일 전체가 빠진 날은 전날 구름 채움 지도가 그대로 반복되고 모든 화소의 지속 일수가 1씩 늘어납니다."
+    - "VNP10C1(0.05°)의 적설 비율은 칸 안 375 m 관측(눈·눈 없음·구름·표시값 모두) 중 눈의 비율이고, 구름 비율은 따로 줍니다. 남극은 일부러 100% 눈(코드 243)으로 처리됩니다."
+    - "밤 시간대와 극야에는 자료가 만들어지지 않습니다."
+  source: https://nsidc.org/sites/default/files/documents/user-guide/multi_vnp10a1f-v002-userguide.pdf
+  source_name: "NSIDC VNP10A1·VNP10A1F·VNP10C1 Version 2 사용자 안내서(2023-06, 2026-01 갱신)"
+
+variables:
+  note: >-
+    NSIDC Version 2 사용자 안내서의 자료층 이름입니다. 파일은 HDF-EOS5(HDF5, CF-1.6)이며 그룹 경로는 위성·제품마다 다를 수 있으니 받은 파일에서 확인하세요.
+    `NDSI_Snow_Cover` 값 0~100은 NDSI×100이고 201 판단 불가, 211 밤, 237 호수·내륙 수면, 239 바다, 250 구름, 251 L1B 결측, 252 보정 실패, 253 보타이 잘림, 254 L1B 채움, 255 L2 채움입니다.
+  full_list: https://nsidc.org/sites/default/files/documents/user-guide/multi_vnp10a1-v002-userguide.pdf
+  groups:
+    - name: 일 적설 375 m (VNP10A1 / VJ110A1 / VJ210A1)
+      kind: instant
+      period: 하루 중 선택된 관측 1회
+      items:
+        - text: "NDSI 적설값 — `NDSI_Snow_Cover` (0~100, 무차원)"
+          note: 그날 가장 좋은 관측 하나의 값. 적설 면적비가 아님
+        - "원시 NDSI — `NDSI` (scale_factor 0.001, 유효 −1000~1000)"
+        - "기본 품질 — `Basic_QA` (0 최상, 1 양호, 2 나쁨, 3 기타)"
+        - "알고리즘 검사 비트 — `Algorithm_bit_flags_QA` (비트 0 내륙 수면, 1 저반사, 2 저NDSI, 3 온도/고도, 5 고SWIR, 7 저조도 불확실)"
+        - "관측 스와스 포인터 — `granule_pnt`"
+    - name: 구름 채움 일 적설 375 m (VNP10A1F / VJ110A1F / VJ210A1F)
+      kind: instant
+      period: 가장 최근 맑은 날의 관측
+      items:
+        - text: "구름 채움 NDSI 적설값 — `CGF_NDSI_Snow_Cover` (0~100)"
+          note: 구름 화소는 가장 최근 맑은 날 값으로 채움
+        - text: "연속 구름 일수 — `Cloud_Persistence` (일)"
+          kind: accum
+          note: 0 = 오늘 맑음, n = n일 연속 구름
+        - "당일 일 적설 사본 — `Daily_NDSI_Snow_Cover`"
+        - "품질 — `Basic_QA`, `Algorithm_Bit_Flags_QA`"
+    - name: 0.05° CMG 적설 비율 (VNP10C1 / VJ110C1 / VJ210C1)
+      kind: instant
+      period: 하루 중 선택된 관측
+      items:
+        - text: "적설 비율 — `Snow_Cover` (%)"
+          note: 칸 안 375 m 관측 중 눈의 비율. 남극은 코드 243(100% 눈 처리)
+        - "구름 비율 — `Cloud_Cover` (%), 맑음 지수 — `Clear_Index` (%)"
+        - "칸별 대표 품질 — `Basic_QA`"
+    - name: 375 m 전지구 구름 채움 지도 (VNP10D1F / VJ110D1F / VJ210D1F)
+      kind: instant
+      period: 가장 최근 맑은 날의 관측
+      items:
+        - text: "구름 채움 NDSI 적설값 — `NDSI_Snow_Cover` (0~100)"
+          note: 그날 A1F 타일 전부를 전지구 위경도 격자로 다시 투영한 것
+        - text: "연속 구름 일수 — `Cloud_Persistence` (일)"
+          kind: accum
+
+access:
+  - name: NSIDC DAAC 자료 페이지 (VNP10A1 V2)
+    url: https://nsidc.org/data/vnp10a1/versions/2
+    method: NSIDC Data Access Tool / HTTPS(Earthdata Cloud) / 문서
+    note: NOAA-20은 VJ110A1, NOAA-21은 VJ210A1 페이지입니다. VIIRS 자료 목록과 공지는 https://nsidc.org/data/viirs 에 있습니다.
+  - name: NASA Earthdata Search · earthaccess (Earthdata Cloud)
+    url: https://search.earthdata.nasa.gov/
+    method: 웹 검색·다운로드 / earthaccess / AWS S3(us-west-2 안에서만)
+    note: CMR 짧은 이름은 VNP10A1·VJ110A1·VJ210A1 등, 버전은 2입니다. 무료 Earthdata 로그인이 필요합니다.
+  - name: NASA AppEEARS
+    url: https://appeears.earthdatacloud.nasa.gov/
+    method: 지점·영역 추출, 재투영
+    note: 2026년 3월부터 VNP10A1·VJ110A1(375 m 일 적설)을 지원합니다.
+
+example:
+  lang: python
+  note: >-
+    earthaccess로 NOAA-20(VJ110A1F) 구름 채움 일 적설 하루치를 받아 읽는 예입니다(pip install earthaccess h5py numpy).
+    HDF-EOS5 그룹 경로를 몰라도 변수 이름으로 찾도록 썼습니다.
+  code: |
+    import earthaccess
+    import h5py
+    import numpy as np
+
+    earthaccess.login()  # 무료 NASA Earthdata 계정
+    results = earthaccess.search_data(
+        short_name="VJ110A1F", version="2",
+        temporal=("2024-01-15", "2024-01-15"),
+        bounding_box=(124, 33, 132, 39),   # (서, 남, 동, 북)
+    )
+    files = earthaccess.download(results, "vj110a1f")
+
+    def find(h5, name):
+        hits = []
+        h5.visititems(lambda k, v: hits.append(k) if k.endswith("/" + name) else None)
+        return h5[hits[0]]
+
+    for f in files:
+        with h5py.File(f, "r") as h5:
+            ndsi = find(h5, "CGF_NDSI_Snow_Cover")[:].astype("float32")
+            cp = find(h5, "Cloud_Persistence")[:]
+        ndsi[ndsi > 100] = np.nan          # 201 이상은 밤·물·구름·결측 코드
+        snow = ndsi > 0                     # 예시로 NDSI 적설값 1~100을 눈으로 봄 (연구 목적에 맞게 조정)
+        print(f, np.nanmean(snow), (cp == 0).mean())
+
+tips:
+  - "Suomi NPP 자료(VNP10) 전달이 2026년 11월 2일 끝납니다. 스크립트의 짧은 이름을 VJ110(NOAA-20)이나 VJ210(NOAA-21)으로 바꾸고, 위성이 바뀌는 지점에서 값 차이를 확인하세요."
+  - "`NDSI_Snow_Cover` 0~100은 NDSI 값이지 적설 면적비가 아닙니다. 눈/눈 없음 판단 임계값은 직접 정하고 논문에 밝히세요."
+  - "MODIS와 코드값이 다릅니다. VIIRS에는 200(결측) 대신 251(L1B 결측)·252(보정 실패)·253(보타이 잘림) 등이 있고, `NDSI` scale_factor는 0.001(MODIS는 0.0001)입니다. 품질 변수 이름도 `Basic_QA`·`Algorithm_bit_flags_QA`로 다릅니다."
+  - "MODIS 8일(A2)·월(CM) 제품과 적설 알베도에 해당하는 VIIRS 제품은 없습니다. 필요하면 일자료로 직접 합성하세요."
+  - "NSIDC 안내서에 실린 PROJ 문자열(WGS84 타원체)로는 GIS에서 위치가 맞지 않는다는 보고가 있었고, NSIDC는 MODIS와 같은 구 좌표계(+proj=sinu +R=6371007.181)가 맞다고 답했습니다. 좌표는 XDim·YDim 변수로 지정하세요."
+  - "남극 반도는 구름 판별이 어려워 눈 없는 곳이 잘못 나타날 수 있고, 스와스 경계의 짜깁기 무늬, 날마다 흔들리는 호수 위치, 따뜻한 지표·밝은 지표·호수 얼음 오류가 알려져 있습니다."
+  - "Hall et al. (2024)은 VIIRS가 MODIS보다 눈을 약간 더 많이 잡는다고 보고했습니다(덜 보수적인 구름 마스크, 관측 시각 차이). MODIS 기록과 이을 때는 겹치는 기간에 차이를 먼저 확인하세요."
+
+citations:
+  dataset:
+    - label: VJ110A1 V2 (NOAA-20 일 375 m)
+      text: >-
+        Riggs, G. A. & Hall, D. K. (2023). VIIRS/JPSS1 Snow Cover Daily L3 Global 375m SIN Grid, Version 2 [Data Set].
+        Boulder, Colorado USA. NASA National Snow and Ice Data Center Distributed Active Archive Center. https://doi.org/10.5067/UAJGR7WVWDDI. Date Accessed MM-DD-YYYY.
+      doi: 10.5067/UAJGR7WVWDDI
+      bibtex: |
+        @misc{vj110a1_v2,
+          author    = {Riggs, George A. and Hall, Dorothy K.},
+          title     = {{VIIRS/JPSS1 Snow Cover Daily L3 Global 375m SIN Grid, Version 2}},
+          year      = {2023},
+          publisher = {NASA National Snow and Ice Data Center Distributed Active Archive Center},
+          address   = {Boulder, Colorado USA},
+          doi       = {10.5067/UAJGR7WVWDDI}
+        }
+    - label: VNP10A1 V2 (Suomi NPP 일 375 m)
+      text: >-
+        Riggs, G. A. & Hall, D. K. (2023). VIIRS/NPP Snow Cover Daily L3 Global 375m SIN Grid, Version 2 [Data Set].
+        Boulder, Colorado USA. NASA National Snow and Ice Data Center Distributed Active Archive Center. https://doi.org/10.5067/45VDCKJBXWEE. Date Accessed MM-DD-YYYY.
+      doi: 10.5067/45VDCKJBXWEE
+      bibtex: |
+        @misc{vnp10a1_v2,
+          author    = {Riggs, George A. and Hall, Dorothy K.},
+          title     = {{VIIRS/NPP Snow Cover Daily L3 Global 375m SIN Grid, Version 2}},
+          year      = {2023},
+          publisher = {NASA National Snow and Ice Data Center Distributed Active Archive Center},
+          address   = {Boulder, Colorado USA},
+          doi       = {10.5067/45VDCKJBXWEE}
+        }
+    - label: VNP10A1F V2 (Suomi NPP 구름 채움 일 375 m)
+      text: >-
+        Riggs, G. A. & Hall, D. K. (2022). VIIRS/NPP CGF Snow Cover Daily L3 Global 375m SIN Grid, Version 2 [Data Set].
+        Boulder, Colorado USA. NASA National Snow and Ice Data Center Distributed Active Archive Center. https://doi.org/10.5067/PN50Y51IVNLE. Date Accessed MM-DD-YYYY.
+      doi: 10.5067/PN50Y51IVNLE
+      bibtex: |
+        @misc{vnp10a1f_v2,
+          author    = {Riggs, George A. and Hall, Dorothy K.},
+          title     = {{VIIRS/NPP CGF Snow Cover Daily L3 Global 375m SIN Grid, Version 2}},
+          year      = {2022},
+          publisher = {NASA National Snow and Ice Data Center Distributed Active Archive Center},
+          address   = {Boulder, Colorado USA},
+          doi       = {10.5067/PN50Y51IVNLE}
+        }
+    - label: VJ210A1 V2 (NOAA-21 일 375 m)
+      text: >-
+        Riggs, G. A. & Hall, D. K. (2026). VIIRS/JPSS2 Snow Cover Daily L3 Global 375m SIN Grid, Version 2 [Data Set].
+        Boulder, Colorado USA. NASA National Snow and Ice Data Center Distributed Active Archive Center. https://doi.org/10.5067/IX3NQYYS3MOV. Date Accessed MM-DD-YYYY.
+      doi: 10.5067/IX3NQYYS3MOV
+      bibtex: |
+        @misc{vj210a1_v2,
+          author    = {Riggs, George A. and Hall, Dorothy K.},
+          title     = {{VIIRS/JPSS2 Snow Cover Daily L3 Global 375m SIN Grid, Version 2}},
+          year      = {2026},
+          publisher = {NASA National Snow and Ice Data Center Distributed Active Archive Center},
+          address   = {Boulder, Colorado USA},
+          doi       = {10.5067/IX3NQYYS3MOV}
+        }
+  papers:
+    - label: MODIS·VIIRS 적설 기록 개요
+      text: >-
+        Riggs, G. A., Hall, D. K., Román, M. O. (2017): Overview of NASA's MODIS and Visible Infrared Imaging Radiometer Suite (VIIRS)
+        snow-cover Earth System Data Records. Earth System Science Data, 9(2), 765–777.
+      doi: 10.5194/essd-9-765-2017
+      bibtex: |
+        @article{riggs2017snow,
+          author  = {Riggs, George A. and Hall, Dorothy K. and Rom{\'a}n, Miguel O.},
+          title   = {Overview of {NASA}'s {MODIS} and {Visible Infrared Imaging Radiometer Suite} ({VIIRS}) snow-cover {Earth System Data Records}},
+          journal = {Earth System Science Data},
+          volume  = {9},
+          number  = {2},
+          pages   = {765--777},
+          year    = {2017},
+          doi     = {10.5194/essd-9-765-2017}
+        }
+    - label: MODIS·VIIRS 적설 제품 비교 (기후자료 기록 관점)
+      text: >-
+        Hall, D. K., Riggs, G. A., DiGirolamo, N. E. (2024): Comparison of the NASA Standard MODerate-Resolution Imaging Spectroradiometer and
+        Visible Infrared Imaging Radiometer Suite Snow-Cover Products for Creation of a Climate Data Record: A Case Study in the Great Basin
+        of the Western United States. Remote Sensing, 16(16), 3029.
+      doi: 10.3390/rs16163029
+      bibtex: |
+        @article{hall2024modisviirs,
+          author  = {Hall, Dorothy K. and Riggs, George A. and DiGirolamo, Nicolo E.},
+          title   = {Comparison of the {NASA} Standard {MODerate-Resolution Imaging Spectroradiometer} and {Visible Infrared Imaging Radiometer Suite} Snow-Cover Products for Creation of a Climate Data Record: A Case Study in the {Great Basin} of the Western {United States}},
+          journal = {Remote Sensing},
+          volume  = {16},
+          number  = {16},
+          pages   = {3029},
+          year    = {2024},
+          doi     = {10.3390/rs16163029}
+        }
+  acknowledgement: >-
+    NSIDC 자료 페이지의 인용 문구(저자·연도·제목·버전·DOI·접속 날짜, 쓴 부분 자료 설명)를 따르세요. 위성·제품마다 DOI가 따로 있습니다
+    (예: VJ110A1F 10.5067/2YJ7GZPW2NNB, VJ210A1F 10.5067/YAWW1AIS887J, VNP10C1 10.5067/PHOQ2G589HCC, VJ110C1 10.5067/DNC2SNXE6HJB, VNP10D1F 10.5067/F3VW9TYIK26A, VJ110D1F 10.5067/FPB0B5CD1RVA).
+
+transitions:
+  - from: VIIRS 적설 Version 1 (VNP10 C1)
+    to: VIIRS 적설 Version 2 (C2)
+    status: completed
+    date: "2024-06"
+    summary: >-
+      알고리즘·구름 마스크·잡음 검출을 개선하고 NOAA-20(VJ110) 제품을 더한 판입니다. Version 1(Suomi NPP만)은 2024년 6월 17일 생산을 멈췄고,
+      NOAA-21(VJ210) 제품은 2026년 1월에 추가되었습니다.
+    changes:
+      - aspect: 위성
+        before: "Suomi NPP(VNP10)만"
+        after: "Suomi NPP(VNP10) + NOAA-20(VJ110, 2023-06 공개) + NOAA-21(VJ210, 2026-01 공개)"
+      - aspect: 알고리즘·입력
+        before: "C1 알고리즘"
+        after: "적설 알고리즘 개선, 구름 마스크 개선, 잡음 검출 강화(NSIDC 안내)"
+      - aspect: 제품
+        before: "L2, 일(A1), 구름 채움 일(A1F), 일 CMG(C1)"
+        after: "같은 구성 + 375 m 전지구 구름 채움(D1F, 2025년 DOI 등록)"
+      - aspect: 메타데이터
+        before: "`mask_values`·`mask_meanings` 속성"
+        after: "CF-1.6에 맞춰 `flag_values`·`flag_meanings`로 이름 변경, Projection 변수 추가"
+      - aspect: 생산
+        before: "2024-06-17 정방향 생산 종료"
+        after: "현재 판"
+    impacts:
+      - V1과 V2를 섞지 말고 전 기간을 V2로 다시 받으세요.
+      - "`mask_values` 속성을 읽던 코드는 `flag_values`로 고쳐야 합니다."
+    sources:
+      - name: NSIDC — VIIRS Version 1 (Collection 1) 생산 종료 공지
+        url: https://nsidc.org/data/user-resources/data-announcements/user-notice-visible-infrared-imaging-radiometer-suite-viirs-version-1-collection-1-cease-forward-0
+      - name: NSIDC VNP10A1 V2 사용자 안내서 (버전 이력)
+        url: https://nsidc.org/sites/default/files/documents/user-guide/multi_vnp10a1-v002-userguide.pdf
+
+notices:
+  - date: "2026-10-06"
+    level: critical
+    title: Suomi NPP VIIRS 자료 전달 2026년 11월 2일 종료 — VNP10 신규 자료 중단
+    body: >-
+      NSIDC는 Suomi NPP 과학 산출물 전달이 2026년 11월 2일 13:00 UTC에 끝난다고 공지하고, JPSS-1(NOAA-20)·JPSS-2(NOAA-21) 동등 제품(VJ110·VJ210)으로 옮기라고 권했습니다.
+      이미 공개된 과거 자료와 문서는 계속 받을 수 있습니다. 근거는 NOAA의 2026년 8월 3일 S-NPP 자료 전달 종료 공지입니다.
+    source: https://nsidc.org/data/user-resources/data-announcements/user-notice-s-nppvisible-infrared-imaging-radiometer-suite-viirs-data-sets-cessation-data-delivery
+  - date: "2026-07-11"
+    level: warning
+    title: Suomi NPP 위성 이상 — VIIRS 적설 생산 일시 중단
+    body: >-
+      Suomi NPP가 7월 10일 14:50 UTC께 비정상 상태에 들어가 11일 01:30 UTC부터 모든 산출물이 멈췄습니다. 7월 21일 위성이 정상으로 돌아와 이후 생산이 재개되었고,
+      복구할 수 있는 결측 자료는 검토 뒤 공개한다고 NSIDC가 안내했습니다.
+    source: https://nsidc.org/data/vnp10a1/versions/2
+  - date: "2026-03-05"
+    level: info
+    title: AppEEARS에서 VIIRS 375 m 일 적설(VNP10A1·VJ110A1) 제공 시작
+    body: >-
+      Suomi NPP와 NOAA-20 VIIRS 일 적설 375 m V2 자료를 AppEEARS로 지점·영역 추출할 수 있게 되었습니다.
+    source: https://nsidc.org/data/user-resources/data-announcements/user-notice-viirsjpss1-and-viirsnpp-snow-cover-daily-l3-global-375m-sin-grid-data-sets-are-now
+  - date: "2026-01-29"
+    level: info
+    title: NOAA-21(JPSS-2) VIIRS Version 2 적설 자료 공개
+    body: >-
+      NSIDC가 NOAA-21 VIIRS Version 2 자료(VJ210 적설 등)를 공개했습니다. 2023년 2월부터의 기록이며, Suomi NPP 종료 뒤 주 후속 자료가 됩니다.
+    source: https://nsidc.org/data/user-resources/data-announcements/new-data-sets-released-viirs-jpss-2-version-2
+  - date: "2024-06-17"
+    level: info
+    title: VIIRS Version 1 적설·해빙 자료 생산 종료
+    body: >-
+      VIIRS Version 1(Collection 1) 적설·해빙 자료의 정방향 생산이 끝났습니다. V1 자료는 한동안 받을 수 있지만 NSIDC는 Version 2로 옮기라고 강하게 권했습니다.
+    source: https://nsidc.org/data/user-resources/data-announcements/user-notice-visible-infrared-imaging-radiometer-suite-viirs-version-1-collection-1-cease-forward-0
+
+links:
+  - name: VNP10A1·VJ110A1·VJ210A1 V2 사용자 안내서 (PDF)
+    url: https://nsidc.org/sites/default/files/documents/user-guide/multi_vnp10a1-v002-userguide.pdf
+  - name: VNP10A1F 구름 채움 V2 사용자 안내서 (PDF)
+    url: https://nsidc.org/sites/default/files/documents/user-guide/multi_vnp10a1f-v002-userguide.pdf
+  - name: VNP10C1 0.05° CMG V2 사용자 안내서 (PDF)
+    url: https://nsidc.org/sites/default/files/documents/user-guide/multi_vnp10c1-v002-userguide.pdf
+  - name: NSIDC VIIRS 자료 목록·공지
+    url: https://nsidc.org/data/viirs
+  - name: Earthdata Forum — VIIRS 적설 L3 좌표계(CRS) 문제 답변 (2025)
+    url: https://forum.earthdata.nasa.gov/viewtopic.php?p=22710
+
+watch_urls:
+  - https://nsidc.org/data/viirs/news
+  - https://nsidc.org/data/vnp10a1/versions/2
+
+last_verified: "2026-10-13"

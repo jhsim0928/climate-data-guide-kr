@@ -1,0 +1,300 @@
+# ─────────────────────────────────────────────────────────────
+# ESA CCI Land Cover (1992–2015) + C3S Land Cover (2016~) — 데이터셋 정보 파일
+# 지면 탭 '토지피복'에 싣습니다. 같은 처리 체계로 이어지는 두 출처(ESA CCI v2.0.7cds, C3S v2.1.1)를 한 페이지에서 다룹니다.
+# 2023~2025년 지도는 2026년 7월부터 ECMWF 검토 중입니다(2026-10-13 확인 시 CDS에는 2022년까지).
+# 수정 후에는 공식 페이지에서 확인한 날짜로 last_verified 를 갱신하세요.
+# ─────────────────────────────────────────────────────────────
+id: esa-cci-landcover
+name: "ESA CCI / C3S Land Cover"
+full_name: ESA Land Cover CCI (1992–2015, v2.0.7cds) + Copernicus C3S Land cover classification gridded maps (2016~, v2.1.1) (300 m 연간 전지구 토지피복 지도, UN LCCS 22등급)
+category: satellite
+domain: land
+group: 토지피복
+order: 20
+domains: [육지, 원격탐사]
+provider: ESA Land Cover CCI 사업단(UCLouvain 등) / Copernicus Climate Change Service (C3S, ECMWF)
+
+status: delayed
+status_note: >-
+  CDS에서는 1992~2022년 지도를 받을 수 있습니다. 원래 '1년 지연 연 1회' 갱신이지만 사업 단계 전환(계약 교체)으로 2023·2024년 지도가 늦어졌고,
+  2026년 4월 공지에 따라 2023·2024·2025년 지도가 2026년 6월 말 ECMWF에 함께 넘겨졌습니다. 2026년 7월 기준 자료와 문서가 검토 중이며
+  CDS 공개까지 보통 약 3개월이 걸린다고 안내되었습니다. 2026-10-13 확인 시 아직 2022년이 마지막입니다.
+
+period:
+  start: "1992-01"
+  end: "2022-12"
+  note: >-
+    1992~2015년은 ESA CCI가 만든 v2.0.7cds, 2016년부터는 C3S가 같은 처리 체계로 이어 만든 v2.1.1입니다(2026-10-13 CDS 요청 양식 기준 2016~2022).
+    2023~2025년 지도는 ECMWF 검토 중이며 공개 날짜는 정해지지 않았습니다.
+
+resolution:
+  spatial_short: "0.3 km (0.0028°)"
+  temporal_short: "1년"
+  spatial: "300 m 전지구 Plate Carrée(WGS84 위경도) 격자, 화소 간격 0.002778°(1/360°)"
+  vertical: 지표 단일면
+  temporal: 1년 (연간 지도, 파일 1개 = 1개 연도)
+
+update: 원래 연 1회(1년 지연) — 2023~2025년분은 지연 중
+license: >-
+  CDS에서 받을 때 CC BY 4.0, ESA CCI 라이선스, VITO(PROBA-V) 라이선스 세 가지에 모두 동의해야 합니다. ESA CCI는 출처(ESA CCI Land Cover 사업) 표시와 논문 사본 송부를 요청합니다
+account_required: true
+
+summary: >-
+  ESA 기후변화 이니셔티브(CCI) 토지피복 사업이 만든 1992년부터의 300 m 연간 전지구 토지피복 지도와, 같은 처리 체계로 2016년부터 이어 만드는
+  Copernicus 기후변화 서비스(C3S) 지도를 하나의 연속 기록으로 묶은 자료입니다. MERIS 2003~2012년 자료로 기준 지도를 만든 뒤 AVHRR(1992~1999),
+  SPOT-VGT(1998~2012), PROBA-V·Sentinel-3 OLCI·SLSTR(2013~) 시계열로 변화를 찾아 앞뒤로 갱신합니다. FAO LCCS 기반 22개 등급(지역 세부 등급 포함)과
+  네 가지 품질 플래그를 제공하며, 기후모델용 식물기능형(PFT) 지도와 장기 토지피복 변화 연구에 널리 쓰입니다.
+
+time_convention:
+  summary: >-
+    `lccs_class`는 '해당 연도 분류 결과'입니다. 매년 새로 독립 분류하는 것이 아니라 2003~2012년 기준 지도에 연간 변화 탐지 결과를 반영해
+    그해 지도를 만들기 때문에, 탐지되지 않은 변화는 기준 지도의 등급이 그대로 남습니다. 파일의 시간 범위는 그 연도 1월 1일~12월 31일입니다.
+  points:
+    - "변화는 여러 해 연속으로 유지되어야 인정됩니다(PUG v2는 '최소 2년 연속'으로 설명). 그래서 실제 변화가 지도에는 한두 해 늦게 나타날 수 있고, 기록의 마지막 해는 확인할 다음 해가 없어 더 보수적입니다."
+    - "변화 탐지는 IPCC 6개 토지 범주(산림·초지·농경지·습지·정주지·기타) 사이의 변화만 잡아냅니다. 산림 유형 간, 천수답→관개 농경지, 순수↔혼합 등급 같은 범주 안 변화는 반영되지 않습니다."
+    - "변화는 약 1 km 규모에서 탐지한 뒤 300 m로 경계를 그립니다. 급격한 변화가 점진적 변화보다 잘 잡힙니다."
+    - "`change_count`는 1992년부터 그 지도 연도까지 등급이 바뀐 횟수(0이면 안정)입니다."
+  source: https://climate.esa.int/media/documents/CCI_Land_Cover_PUG_v2.0.pdf
+  source_name: Land Cover CCI Product User Guide v2.0 (CCI-LC-PUGV2, 2017) + CDS satellite-land-cover 개요
+
+variables:
+  note: >-
+    NetCDF 파일 속 변수 이름은 ESA CCI·C3S 공지와 v2.0.7cds 파일 메타데이터에서 확인했습니다. 모두 무차원 정수이며, CDS에서는 '모든 변수'를 한 번에 받습니다.
+    등급 코드표(0 = 자료 없음, 10~220)는 PUG와 Quick User Guide에 있습니다.
+  full_list: https://cds.climate.copernicus.eu/datasets/satellite-land-cover?tab=overview
+  groups:
+    - name: 토지피복 분류 (해당 연도 분류 결과)
+      kind: instant
+      items:
+        - text: "LCCS 토지피복 등급 — `lccs_class` (등급 코드 10–220, 0 = 자료 없음)"
+          std: [land_cover]
+          note: 22개 1단계 등급 + 지역 세부 등급(61·62, 71·72 등). 세부 등급은 상위 등급과 겹치지 않는 별도 코드입니다
+    - name: 품질 플래그
+      kind: instant
+      items:
+        - text: "처리 여부 플래그 — `processed_flag` (0 미처리, 1 처리)"
+        - text: "화소 상태 — `current_pixel_state` (0 무효, 1 맑은 육지, 2 맑은 물, 3 맑은 눈·얼음, 4 구름, 5 구름 그림자)"
+          note: 전처리 단계에서 판정한 화소 유형
+        - text: "유효 관측 수 — `observation_count` (개)"
+          kind: accum
+          period: 분류에 쓴 관측 기간
+          note: 분류에 쓰인 유효 위성 관측 개수
+        - text: "등급 변화 횟수 — `change_count` (회)"
+          kind: accum
+          period: 1992년부터 해당 연도까지
+          note: 0이면 1992년 이후 변화 없음
+
+access:
+  - name: Copernicus CDS — Land cover classification gridded maps from 1992 to present
+    url: https://cds.climate.copernicus.eu/datasets/satellite-land-cover
+    method: 웹 다운로드 / CDS API (cdsapi)
+    note: >-
+      연도와 버전(1992~2015는 v2_0_7cds, 2016~2022는 v2_1_1)을 골라 받습니다. 영역 선택이 가능하고 NetCDF-4(CF-1.6)로 제공됩니다.
+      ECMWF 계정과 세 가지 라이선스(CC BY·ESA CCI·VITO) 동의가 필요합니다.
+  - name: CEDA 보관소 — ESA Land_Cover_cci Global Land Cover Maps v2.0.7 (1992–2015)
+    url: https://catalogue.ceda.ac.uk/uuid/b382ebe6679d44b8b0e68ea4ef4b701c
+    method: HTTPS 다운로드 (NetCDF·GeoTIFF)
+    note: ESA CCI 원본 묶음(58개 파일, 약 67 GB)입니다. 2016년 이후는 CDS에서 받습니다.
+  - name: ESA CCI Land Cover 뷰어·다운로드 페이지 (UCLouvain)
+    url: https://maps.elie.ucl.ac.be/CCI/viewer/download.php
+    method: 웹 뷰어 / 다운로드 / CCI-LC User Tool
+    note: 지도 미리보기와 함께 PFT 지도(v2.0.8), 수체 지도, 사용자 도구(재격자화·PFT 변환)를 제공합니다.
+
+example:
+  lang: python
+  note: >-
+    ~/.cdsapirc에 url(https://cds.climate.copernicus.eu/api)과 본인 API key를 넣고, CDS 웹페이지에서 데이터셋 라이선스에 먼저 동의한 뒤 실행합니다.
+    2016년 이후는 version "v2_1_1", 1992~2015년은 "v2_0_7cds"로 요청해야 합니다. 받은 파일은 압축되어 있을 수 있으니 풀어서 엽니다.
+  code: |
+    # pip install --upgrade cdsapi xarray netCDF4
+    import cdsapi
+
+    client = cdsapi.Client()
+    client.retrieve(
+        "satellite-land-cover",
+        {
+            "variable": "all",
+            "year": ["2022"],
+            "version": ["v2_1_1"],          # 1992–2015는 "v2_0_7cds"
+            "area": [39, 124, 33, 132],      # 북, 서, 남, 동 (한반도 주변)
+        },
+        "c3s_lc_2022_korea.zip",
+    )
+
+    # 압축을 푼 뒤 (파일 이름 예: C3S-LC-L4-LCCS-Map-300m-P1Y-2022-v2.1.1.nc)
+    import glob, zipfile
+    import xarray as xr
+    if zipfile.is_zipfile("c3s_lc_2022_korea.zip"):
+        zipfile.ZipFile("c3s_lc_2022_korea.zip").extractall("c3s_lc")
+        nc = glob.glob("c3s_lc/*.nc")[0]
+    else:
+        nc = "c3s_lc_2022_korea.zip"   # 압축 없이 NetCDF 하나로 온 경우
+    ds = xr.open_dataset(nc)
+    lc = ds["lccs_class"]            # 등급 코드 (예: 190 = 도시, 210 = 수체)
+    forest = lc.isin([50, 60, 61, 62, 70, 71, 72, 80, 81, 82, 90])   # 수목 피복 등급 묶음
+
+tips:
+  - "세부 등급은 상위 등급과 별개 코드입니다. 예를 들어 60(활엽 낙엽수림, 피복 >15%)에는 61(>40%)·62(15~40%) 화소가 들어 있지 않으므로, 활엽 낙엽수림 전체 면적은 60·61·62를 합쳐야 합니다(70·71·72, 80·81·82도 같음). ECMWF 포럼에서 사업단이 2026년 9월에 이렇게 답했습니다."
+  - "v2.0.7cds(1992~2015)와 v2.1.1(2016~)은 같은 처리 체계로 이어지도록 만들어졌지만, 2016년을 경계로 생산 주체와 입력 위성이 바뀝니다. 2015→2016년 변화량이 유독 크면 경계 효과를 의심해 보세요."
+  - "변화 탐지가 IPCC 범주 사이 변화만 잡고 2년 이상 지속을 요구하므로, 산림 유형 교체·농경지 내부 변화·짧은 교란은 지도에 나타나지 않습니다. 면적 변화 통계는 '보수적 하한'으로 보세요."
+  - "등급 자료이므로 다른 격자로 옮길 때 평균·쌍선형 보간을 쓰지 말고 최빈값(mode) 집계나 최근린 방식을 쓰세요. 기후모델용 PFT 비율이 필요하면 사업단의 PFT 지도(v2.0.8)나 CCI-LC User Tool을 쓰는 편이 정확합니다."
+  - "MERIS 관측이 적은 지역(서부 아마존, 칠레, 콩고 분지 서부, 기니만, 동시베리아, 중국 동부, 인도네시아 등)은 기준 지도 품질이 낮다고 문서에 적혀 있습니다."
+  - "PUG v2의 초기 검증에서 전체 정확도는 약 71~75%였고, 혼합 자연식생·지의류·희소식생·담수 침수림 등급의 정확도가 낮았습니다."
+  - "CDS 요청 시 버전과 연도가 맞지 않으면(예: 2018년 + v2_0_7cds) 요청이 실패합니다."
+
+citations:
+  dataset:
+    - label: C3S 토지피복 지도 1992~현재 (CDS)
+      text: >-
+        Copernicus Climate Change Service (2019): Land cover classification gridded maps from 1992 to present derived from satellite observations.
+        ECMWF. DOI: 10.24381/cds.006f2c9a (Accessed on DD-MMM-YYYY)
+      doi: 10.24381/cds.006f2c9a
+      bibtex: |
+        @misc{c3s_landcover,
+          author    = {{Copernicus Climate Change Service}},
+          title     = {Land cover classification gridded maps from 1992 to present derived from satellite observations},
+          year      = {2019},
+          publisher = {ECMWF},
+          doi       = {10.24381/cds.006f2c9a},
+          note      = {Accessed on DD-MMM-YYYY}
+        }
+    - label: ESA CCI Land Cover Maps v2.0.7 (CEDA, DOI 없음)
+      text: >-
+        ESA Land Cover CCI project team; Defourny, P. (2019): ESA Land Cover Climate Change Initiative (Land_Cover_cci): Global Land Cover Maps, Version 2.0.7.
+        Centre for Environmental Data Analysis. https://catalogue.ceda.ac.uk/uuid/b382ebe6679d44b8b0e68ea4ef4b701c
+      bibtex: |
+        @misc{esacci_lc_v207,
+          author    = {{ESA Land Cover CCI project team} and Defourny, Pierre},
+          title     = {{ESA} Land Cover Climate Change Initiative ({Land\_Cover\_cci}): Global Land Cover Maps, Version 2.0.7},
+          year      = {2019},
+          publisher = {Centre for Environmental Data Analysis},
+          url       = {https://catalogue.ceda.ac.uk/uuid/b382ebe6679d44b8b0e68ea4ef4b701c}
+        }
+  papers:
+    - label: Land Cover CCI 제품 사용자 안내서 v2.0 — DOI 없음
+      text: >-
+        Defourny, P., et al. (2017): Land Cover CCI Product User Guide Version 2.0 (CCI-LC-PUGV2). UCLouvain-Geomatics.
+        https://climate.esa.int/media/documents/CCI_Land_Cover_PUG_v2.0.pdf
+      bibtex: |
+        @techreport{defourny2017lccipug,
+          author      = {Defourny, Pierre and others},
+          title       = {Land Cover {CCI} Product User Guide Version 2.0},
+          institution = {UCLouvain-Geomatics},
+          number      = {CCI-LC-PUGV2},
+          year        = {2017},
+          url         = {https://climate.esa.int/media/documents/CCI_Land_Cover_PUG_v2.0.pdf}
+        }
+    - label: 같은 시계열로 만든 PFT 지도(1992~2020) 논문
+      text: >-
+        Harper, K. L., Lamarche, C., Hartley, A., Peylin, P., Ottlé, C., Bastrikov, V., San Martín, R., Bohnenstengel, S. I., Kirches, G., Boettcher, M.,
+        Shevchuk, R., Brockmann, C., Defourny, P. (2023): A 29-year time series of annual 300 m resolution plant-functional-type maps for climate models.
+        Earth System Science Data, 15(3), 1465–1499.
+      doi: 10.5194/essd-15-1465-2023
+      bibtex: |
+        @article{harper2023pft,
+          author  = {Harper, Kandice L. and Lamarche, C{\'e}line and Hartley, Andrew and Peylin, Philippe and Ottl{\'e}, Catherine and Bastrikov, Vladislav and San Mart{\'i}n, Rodrigo and Bohnenstengel, Sylvia I. and Kirches, Grit and Boettcher, Martin and Shevchuk, Roman and Brockmann, Carsten and Defourny, Pierre},
+          title   = {A 29-year time series of annual 300 m resolution plant-functional-type maps for climate models},
+          journal = {Earth System Science Data},
+          volume  = {15},
+          number  = {3},
+          pages   = {1465--1499},
+          year    = {2023},
+          doi     = {10.5194/essd-15-1465-2023}
+        }
+  acknowledgement: >-
+    CDS에서 받았다면 CDS 데이터셋 DOI와 접근 날짜를 적습니다. ESA CCI 토지피복 사업단은 자료 출처로 'ESA Climate Change Initiative와 Land Cover 사업'을
+    밝히고, 과학 논문에 쓰면 본문에 감사 문구를 넣고 논문 사본을 contact@esa-landcover-cci.org로 보내 달라고 요청합니다.
+    사업단이 소개하는 연간 지도 논문(Defourny et al., 1992~2020 토지이용 변화)은 2026-10-13 기준 '준비 중'으로 표시되어 있습니다.
+
+transitions:
+  - from: ESA CCI Land Cover v2.0.7cds (1992–2015)
+    to: C3S Land Cover v2.1.1 (2016~)
+    status: completed
+    date: "2019-10"
+    summary: >-
+      ESA CCI 사업이 만든 1992~2015년 기록을 C3S가 같은 처리 체계로 이어 받아 2016년부터 해마다 지도를 추가하고 있습니다.
+      두 판은 한 시계열로 이어지도록 설계되었지만 생산 주체·입력 위성·파일 이름이 다릅니다.
+    changes:
+      - aspect: 기간
+        before: 1992–2015
+        after: 2016–2022 (2026-10 기준, 2023–2025 검토 중)
+      - aspect: 생산·배포
+        before: ESA CCI Land Cover 사업 (CEDA·CCI 뷰어, CDS에는 v2.0.7cds로 수록)
+        after: Copernicus C3S (CDS) — 2016~2018년은 2019년 10월, 2019년은 2021년 1월, 2020년은 2021년 5월 공개
+      - aspect: 변화 탐지 입력 위성
+        before: AVHRR(1992–1999), SPOT-VGT(1998–2012), PROBA-V(2013–2015)
+        after: PROBA-V, Sentinel-3 OLCI·SLSTR
+      - aspect: 파일 이름
+        before: ESACCI-LC-L4-LCCS-Map-300m-P1Y-…-v2.0.7cds
+        after: C3S-LC-L4-LCCS-Map-300m-P1Y-YYYY-v2.1.1.nc
+      - aspect: 변수·범례
+        before: lccs_class + 품질 플래그 4종, 22등급 LCCS 범례
+        after: 동일
+    impacts:
+      - CDS에서 연도에 맞는 버전을 골라야 합니다(1992~2015 v2_0_7cds, 2016~ v2_1_1). 두 판을 이어 쓰는 것은 공식적으로 의도된 사용법입니다.
+      - 2015→2016년 경계에서 입력 위성과 생산 체계가 바뀌므로, 이 해의 변화량이 튀면 실제 변화인지 확인하세요.
+    sources:
+      - name: CDS — Land cover classification gridded maps from 1992 to present (개요)
+        url: https://cds.climate.copernicus.eu/datasets/satellite-land-cover?tab=overview
+      - name: ESA CCI — Release of C3S Global Land Cover products for 2016, 2017 & 2018
+        url: https://climate.esa.int/en/projects/land-cover/news/new-release-c3s-global-land-cover-products-2016-2017-2018-consistent-cci-1992-2015-map-series/
+      - name: ESA CCI Land Cover 다운로드 페이지 (연도별 공개 이력)
+        url: https://maps.elie.ucl.ac.be/CCI/viewer/download.php
+
+notices:
+  - date: "2026-10-05"
+    level: info
+    title: CDS 이용약관 개정 (2026-10-28 시행)
+    body: >-
+      CDS 이용약관 제1조(제품·서비스 설명)가 2026년 10월 28일부터 바뀝니다. 계속 쓰면 동의한 것으로 보며,
+      동의하지 않으면 10월 27일까지 ECMWF 지원창구에 알려야 하고 그 경우 Copernicus 제품 접근이 끊깁니다.
+    source: https://forum.ecmwf.int/t/upcoming-cds-terms-of-use-change/15374
+  - date: "2026-07-17"
+    level: info
+    title: 2023~2025년 지도와 문서 ECMWF 검토 중 — 공개까지 보통 약 3개월
+    body: >-
+      ECMWF는 2023~2025년 자료와 관련 문서(PUGS·PQAR·ATBD)가 검토 단계에 있으며, 이 단계부터 CDS 공개까지 보통 3개월쯤 걸린다고 답했습니다.
+      여름 휴가철로 늦어질 수 있다고 덧붙였고, 정확한 공개일은 밝히지 않았습니다.
+    source: https://forum.ecmwf.int/t/esa-cci-lc-landcover-23-24-25-updates/15175
+  - date: "2026-04-16"
+    level: warning
+    title: 공개 일정 재조정 — 2023·2024·2025년 지도를 2026년 6월 함께 전달
+    body: >-
+      사업단은 2023·2024·2025년 지도를 2026년 6월 ECMWF에 함께 넘기고, 공개는 표준 검토 절차를 거친다고 밝혔습니다.
+      이전 계획(2023·2024년은 2026년 3월 말, 2025년은 2027년 2월 말)보다 2023·2024년은 약 3개월 늦고 2025년은 약 8개월 빠릅니다.
+    source: https://forum.ecmwf.int/t/update-of-land-cover-classification-gridded-maps/12957
+  - date: "2025-07-04"
+    level: warning
+    title: 사업 단계 전환으로 갱신 지연 — 2023·2024년 지도는 2026년 중 예정
+    body: >-
+      CDS 데이터셋 안내문은 사업 단계가 바뀌면서 갱신 일정이 달라졌고, 2023·2024년 자료는 2026년 중 나올 예정이라고 밝혔습니다.
+      평소에는 1년 지연으로 해마다 갱신됩니다.
+    source: https://cds.climate.copernicus.eu/datasets/satellite-land-cover
+  - date: "2024-09-26"
+    level: critical
+    title: 구 CDS 종료 — API 주소·키 갱신 필요
+    body: >-
+      구(legacy) CDS가 닫히고 새 CDS로 전환되었습니다. .cdsapirc의 url을 https://cds.climate.copernicus.eu/api로 바꾸고 새 CDS의 API key를 넣어야 하며,
+      예전 설정으로 보낸 요청은 실패합니다.
+    source: https://forum.ecmwf.int/t/goodbye-legacy-climate-data-store-hello-new-climate-data-store-cds/6380
+
+links:
+  - name: CDS — Land cover classification gridded maps from 1992 to present
+    url: https://cds.climate.copernicus.eu/datasets/satellite-land-cover
+  - name: Land Cover CCI Product User Guide v2.0 (방법·범례·한계)
+    url: https://climate.esa.int/media/documents/CCI_Land_Cover_PUG_v2.0.pdf
+  - name: ESA CCI LC Quick User Guide v2.0.7 (범례 코드표·품질 플래그)
+    url: https://maps.elie.ucl.ac.be/CCI/viewer/download/ESACCI-LC-QuickUserGuide-LC-Maps_v2-0-7.pdf
+  - name: C3S v2.1.1 제품 사용자 안내서(PUGS, 2021–2022 Sentinel-3)
+    url: https://dast.data.compute.cci2.ecmwf.int/documents/satellite-land-cover/WP2-FDDP-LC-2021-2022-SENTINEL3-300m-v2.1.1_PUGS_v1.1_final.pdf
+  - name: ESA Climate Office — Land Cover CCI 자료
+    url: https://climate.esa.int/en/projects/land-cover/data/
+  - name: ECMWF 포럼 — 세부 등급(60/61/62) 해석 답변
+    url: https://forum.ecmwf.int/t/land-cover-classes-in-c3s-lc-l4-lccs-map-differ-from-documentation/14878
+
+watch_urls:
+  - https://forum.ecmwf.int/t/update-of-land-cover-classification-gridded-maps/12957
+  - https://forum.ecmwf.int/c/announcements/c3s-announcements/7
+  - https://cds.climate.copernicus.eu/datasets/satellite-land-cover
+
+last_verified: "2026-10-13"

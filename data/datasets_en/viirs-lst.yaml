@@ -1,0 +1,336 @@
+# ─────────────────────────────────────────────────────────────
+# VIIRS land surface temperature and emissivity VNP21, VJ121 and VJ221 V2 — dataset information file
+# Land tab (Land surface temperature & albedo). Successor to MODIS MOD21 (TES); the MODIS → VIIRS comparison lives in the transitions of modis-lst.yaml.
+# Suomi NPP (VNP21) data delivery ends on 2026-11-02, so users need to move to NOAA-21 (VJ221) or NOAA-20 (VJ121).
+# After editing, update last_verified to the date you checked the official pages.
+# ─────────────────────────────────────────────────────────────
+id: viirs-lst
+name: "VIIRS LST (VNP21)"
+full_name: VIIRS Land Surface Temperature and Emissivity VNP21 (Suomi NPP), VJ121 (NOAA-20) and VJ221 (NOAA-21) Version 2 (VIIRS TES 1 km day and night land surface temperature and 3-band emissivity)
+category: satellite
+domain: land
+group: 지표면온도·알베도
+order: 11
+domains: [육지, 원격탐사]
+provider: NASA JPL (Hulley, Hook) / NASA VIIRS Land Team / NASA LP DAAC
+
+status: active
+status_note: >-
+  NOAA-20 (VJ121) and NOAA-21 (VJ221) data are produced normally every day (on 2026-10-13 VJ221A1D reached 11 October).
+  However, NOAA has announced that delivery of all Suomi NPP science data ends at 13:00 UTC on 2 November 2026, so the VNP21 series will receive no new data after that.
+  LP DAAC advises moving to the NOAA-21 (VJ221, primary) or NOAA-20 (VJ121, secondary) products. Maturity is Stage 1 Validation.
+
+period:
+  start: "2012-01"
+  end: present
+  note: >-
+    Suomi NPP (VNP21) from 2012-01-17 (delivery scheduled to end on 2026-11-02), NOAA-20 (VJ121) from 2018-01-01, NOAA-21 (VJ221) from 2023-02-10 (monthly CMG from the 2023-02 period).
+    VJ221 LST was released on 14 April 2026. The V2 collection was released on 29 June 2023, and distribution of the earlier V1 ended on 8 April 2025.
+
+resolution:
+  spatial_short: "1 km (0.01°)"
+  temporal_short: "1일"
+  spatial: >-
+    L3 tiles: MODIS Sinusoidal (SIN) grid at 1 km (resampled from 750 m, 1200×1200 pixels per tile) — VNP21A1D/A1N/A2 /
+    CMG: global 0.05° grid — VNP21C1/C2/C3 / L2 swath: 750 m at nadir (VNP21, 6-minute granules). NOAA-20 and NOAA-21 use the same grids (VJ121, VJ221)
+  vertical: Single surface (skin) temperature layer + emissivity in the VIIRS thermal infrared bands M14 (8.55 µm), M15 (10.76 µm) and M16 (12 µm)
+  temporal: >-
+    Each satellite gives one daytime overpass (13:30 ascending orbit) and one nighttime overpass per day (several at high latitudes) / daily (A1D, A1N, C1) / 8-day (A2, C2) / monthly (C3)
+
+update: Daily (1–2 days after observation); 8-day and monthly products after each period ends. No new Suomi NPP (VNP21) data after 2026-11-02
+license: Openly shared without restriction under the NASA EOSDIS Data Use and Citation Guidance. Downloading requires a free NASA Earthdata Login; citation of the dataset DOI is requested.
+account_required: true
+
+summary: >-
+  NASA's VIIRS land surface temperature product, which retrieves clear-sky land surface (skin) temperature together with emissivity from the VIIRS thermal infrared bands M14, M15 and M16.
+  It uses the same temperature/emissivity separation (TES) algorithm, atmospheric inputs and water vapour scaling as MODIS MOD21 so as to continue the MODIS record, and the developers report agreement between the two sensors' LST within about ±0.5 K.
+  There are Suomi NPP (VNP21), NOAA-20 (VJ121) and NOAA-21 (VJ221) versions, all on afternoon orbits crossing around 13:30, so they mainly take over from MODIS Aqua.
+  Products come as daily and 8-day 1 km tiles and as daily, 8-day and monthly 0.05° global grids.
+
+time_convention:
+  summary: >-
+    Daily products (A1D day, A1N night) are clear-sky observations at the overpass, computed as the coverage-weighted average of clear, good-quality observations that overlap the grid cell by more than 15% that day.
+    The 8-day (A2) and monthly (C3) products average the clear-sky daily values in the period, leaving out cloudy days. Observation time varies by pixel and is given in the `View_Time` layers.
+  points:
+    - "Suomi NPP, NOAA-20 and NOAA-21 are all afternoon orbits crossing the equator around 13:30 local time ascending (day); night observations come from the opposite orbit leg. There is no observation at the time of MODIS Terra's morning (10:30) overpass."
+    - "Even on the same afternoon orbit, the satellites' overpass times differ by 50 minutes to an hour. The VNP21 User's Guide reports a difference of about 0.5 K between VNP21 and VJ121 in August 2018 attributed to this timing difference (with negligible bias in January)."
+    - "The 8-day product (A2) is a simple average of the daily A1D and A1N values; LST, QC, view angle and view time are averaged separately for day and night, and emissivity over day and night together."
+    - "The User's Guide gives the view time in the CMG products (C1, C3) as UTC but does not state the time reference of `View_Time` in the 1 km tiles (A1, A2). Check the file attributes."
+    - "Suomi NPP data stop after 2026-11-02. To extend a VNP21 time series, compare it with VJ121 or VJ221 over an overlap period before switching."
+  source: https://lpdaac.usgs.gov/documents/1662/VNP21_User_Guide_V2.pdf
+  source_name: "VNP21 Collection 2 User's Guide + VNP21A1D and VNP21A2 V002 collection descriptions (CMR)"
+
+variables:
+  note: >-
+    Variables from the LP DAAC data catalog and the VNP21 Collection 2 User's Guide. Files are HDF-EOS5 (HDF5); physical value = stored value × scale_factor (+ offset).
+    LST uses scale 0.02 (K) and stored value 0 is fill. VJ121 and VJ221 files use the same names. As with MOD21, contaminated pixels are not removed, so you must screen them with QC yourself.
+  full_list: https://www.earthdata.nasa.gov/data/catalog/lpcloud-vnp21a1d-002
+  groups:
+    - name: Daily 1 km (VNP21A1D day / VNP21A1N night; same for VJ121 and VJ221)
+      kind: instant
+      period: overpass time
+      items:
+        - text: "Land surface temperature — `LST_1KM` (K, scale 0.02)"
+          std: [tskin]
+          note: Separate day (A1D) and night (A1N) files. Coverage-weighted average of clear, good-accuracy observations overlapping the grid cell by more than 15%
+        - "Band M14, M15 and M16 emissivity — `Emis_14`, `Emis_15`, `Emis_16` (dimensionless, scale 0.002, offset 0.49)"
+        - text: "View time — `View_Time` (hours, scale 0.1)"
+          note: Observation time of each pixel
+        - "View zenith angle — `View_Angle` (degrees, offset -65)"
+        - "Quality bits — `QC` (16 bits: mandatory QA, L1B data quality, cloud, TES iterations, atmospheric opacity, emissivity contrast, emissivity and LST accuracy)"
+    - name: 8-day 1 km (VNP21A2, VJ121A2, VJ221A2)
+      kind: mean
+      period: 8 days (clear days only)
+      items:
+        - text: "8-day day and night land surface temperature — `LST_Day_1KM`, `LST_Night_1KM` (K, scale 0.02)"
+          std: [tskin]
+          note: Simple average of clear-sky A1D and A1N values
+        - text: "8-day emissivity — `Emis_14`, `Emis_15`, `Emis_16` (dimensionless, scale 0.002, offset 0.49)"
+          note: Averaged over day and night together
+        - "Day and night view time — `View_Time_Day`, `View_Time_Night` (hours, scale 0.1)"
+        - "Day and night view zenith angle — `View_Angle_Day`, `View_Angle_Night` (degrees)"
+        - "Day and night quality bits — `QC_Day`, `QC_Night` (8-bit field)"
+    - name: 0.05° global grid (VNP21C1 daily / C2 8-day / C3 monthly)
+      kind: mean
+      period: daily, 8-day, monthly
+      items:
+        - text: "Day and night land surface temperature — `LST_Day`, `LST_Night` (K, scale 0.02)"
+          std: [tskin]
+          note: C1 averages the qualifying L2 pixels of the day; C2 and C3 average the C1 daily values over 8 days or a month
+        - "Day and night LST uncertainty — `LST_Day_err`, `LST_Night_err` (K, scale 0.04)"
+        - text: "Day and night observation counts — `Count_Day`, `Count_Night`"
+          kind: accum
+          note: Number of observations that entered the average
+    - name: Static information
+      kind: static
+      items:
+        - "Land fraction in grid cell (CMG) — `Percent_land_in_grid` (%)"
+
+access:
+  - name: NASA Earthdata Search (LP DAAC, Earthdata Cloud)
+    url: https://search.earthdata.nasa.gov/search/granules?p=C2545314555-LPCLOUD
+    method: HTTPS download / earthaccess / Earthdata Search
+    note: >-
+      Example short names: VNP21A1D, VNP21A1N, VNP21A2, VNP21C1, VNP21C2, VNP21C3, VNP21 (L2); replace VNP with VJ1 for NOAA-20 and VJ2 for NOAA-21. All are version 002.
+      Files are served over HTTPS from data.lpdaac.earthdatacloud.nasa.gov and need a free Earthdata Login.
+  - name: AppEEARS (area and point subsetting)
+    url: https://appeears.earthdatacloud.nasa.gov/
+    method: Web / API — point time series and area extracts as GeoTIFF or NetCDF4
+    note: Lets you request only the area, period and layers you need and reproject to geographic coordinates.
+  - name: Direct access in AWS us-west-2 (S3)
+    url: https://data.lpdaac.earthdatacloud.nasa.gov/s3credentials
+    method: Cloud storage (S3, from within us-west-2 only)
+    note: Stored in Earthdata Cloud and readable directly from within us-west-2 with temporary credentials.
+
+example:
+  lang: python
+  note: >-
+    Downloads NOAA-20 VJ121A1D (daytime) daily files with earthaccess and opens them with h5py, locating variables by name rather than hard-coding the HDF-EOS5 path.
+    Keeps only pixels whose mandatory QA (bits 0–1) is 00 (best) or 01 (nominal).
+  code: |
+    # pip install earthaccess h5py numpy
+    import earthaccess
+    import h5py
+    import numpy as np
+
+    earthaccess.login()  # free NASA Earthdata account
+    results = earthaccess.search_data(
+        short_name="VJ121A1D", version="002",
+        temporal=("2024-08-01", "2024-08-03"),
+        bounding_box=(126.5, 37.0, 127.5, 38.0),   # (west, south, east, north) around Seoul
+    )
+    files = earthaccess.download(results, "vj121")
+
+    def find(h5, name):
+        hits = []
+        h5.visititems(lambda path, obj: hits.append(path) if path.endswith("/" + name) else None)
+        return h5[hits[0]][()]
+
+    with h5py.File(files[0], "r") as f:
+        lst = find(f, "LST_1KM").astype("float64")
+        qc = find(f, "QC")
+
+    good = (lst > 0) & ((qc & 0b11) <= 1)          # drop fill + keep mandatory QA 00 or 01
+    lst_k = np.where(good, lst * 0.02, np.nan)      # K
+    print(np.nanmean(lst_k) - 273.15)
+
+tips:
+  - "Suomi NPP data delivery ends at 13:00 UTC on 2 November 2026 (NOAA notice; the Earthdata notice title says 1 November). Start new analyses with NOAA-21 (VJ221) or NOAA-20 (VJ121)."
+  - "VIIRS LST uses the same method as MOD21 (TES), so it continues MOD21 well, but it differs in algorithm from MOD11 (split-window) and can differ by several K over arid land."
+  - "Like MOD21, contaminated pixels are not set to fill. Dust and undetected cloud over deserts can produce hot outliers, so screen with the QC bits, emissivity and error estimates together."
+  - "Low emissivity does not always mean cloud. The User's Guide notes that real surfaces such as mafic rocks can have M15/M16 emissivity below 0.9."
+  - "Mandatory QA bits 01 (nominal) mean 'usable with caution'. The 'poor' boundary of the LST accuracy bits differs by product: 2.5 K for L2 and 2 K for A1 and A2."
+  - "The 1 km tiles are resampled from 750 m data. If you need the native 750 m resolution, use the L2 swath products (VNP21, VJ121, VJ221)."
+  - "The three satellites' overpass times differ slightly, which can produce differences of around 0.5 K in summer. When combining satellites, process each one separately and then compare."
+  - "LST is surface (skin) temperature, not 2 m air temperature. It is much higher than air temperature at midday and lower on clear nights."
+  - "Files are HDF-EOS5 (HDF5). pyhdf code written for MODIS (HDF4) will not work; read them with h5py or xarray (h5netcdf)."
+
+citations:
+  dataset:
+    - label: VNP21A1D V002 (Suomi NPP daytime daily)
+      text: >-
+        Hulley, G., Hook, S. (2023). VIIRS/NPP Land Surface Temperature/Emissivity Daily L3 Global 1km SIN Grid Day V002 [Data set].
+        NASA Land Processes Distributed Active Archive Center. https://doi.org/10.5067/VIIRS/VNP21A1D.002
+      doi: 10.5067/VIIRS/VNP21A1D.002
+      bibtex: |
+        @misc{vnp21a1d_v002,
+          author    = {Hulley, Glynn and Hook, Simon},
+          title     = {{VIIRS/NPP} Land Surface Temperature/Emissivity Daily {L3} Global 1km {SIN} Grid Day {V002}},
+          year      = {2023},
+          publisher = {NASA Land Processes Distributed Active Archive Center},
+          doi       = {10.5067/VIIRS/VNP21A1D.002}
+        }
+    - label: VNP21A2 V002 (Suomi NPP 8-day)
+      text: >-
+        Hulley, G., Hook, S. (2023). VIIRS/NPP Land Surface Temperature/Emissivity 8-Day L3 Global 1km SIN Grid V002 [Data set].
+        NASA Land Processes Distributed Active Archive Center. https://doi.org/10.5067/VIIRS/VNP21A2.002
+      doi: 10.5067/VIIRS/VNP21A2.002
+      bibtex: |
+        @misc{vnp21a2_v002,
+          author    = {Hulley, Glynn and Hook, Simon},
+          title     = {{VIIRS/NPP} Land Surface Temperature/Emissivity 8-Day {L3} Global 1km {SIN} Grid {V002}},
+          year      = {2023},
+          publisher = {NASA Land Processes Distributed Active Archive Center},
+          doi       = {10.5067/VIIRS/VNP21A2.002}
+        }
+    - label: VJ121A1D V002 (NOAA-20 daytime daily)
+      text: >-
+        Hulley, G., Hook, S. (2023). VIIRS/JPSS1 Land Surface Temperature/Emissivity Daily L3 Global 1km SIN Grid Day V002 [Data set].
+        NASA Land Processes Distributed Active Archive Center. https://doi.org/10.5067/VIIRS/VJ121A1D.002
+      doi: 10.5067/VIIRS/VJ121A1D.002
+      bibtex: |
+        @misc{vj121a1d_v002,
+          author    = {Hulley, Glynn and Hook, Simon},
+          title     = {{VIIRS/JPSS1} Land Surface Temperature/Emissivity Daily {L3} Global 1km {SIN} Grid Day {V002}},
+          year      = {2023},
+          publisher = {NASA Land Processes Distributed Active Archive Center},
+          doi       = {10.5067/VIIRS/VJ121A1D.002}
+        }
+    - label: VJ221A1D V002 (NOAA-21 daytime daily)
+      text: >-
+        Hulley, G., Hook, S. (2026). VIIRS/JPSS2 Land Surface Temperature/Emissivity Daily L3 Global 1km SIN Grid Day V002 [Data set].
+        NASA Land Processes Distributed Active Archive Center. https://doi.org/10.5067/VIIRS/VJ221A1D.002
+      doi: 10.5067/VIIRS/VJ221A1D.002
+      bibtex: |
+        @misc{vj221a1d_v002,
+          author    = {Hulley, Glynn and Hook, Simon},
+          title     = {{VIIRS/JPSS2} Land Surface Temperature/Emissivity Daily {L3} Global 1km {SIN} Grid Day {V002}},
+          year      = {2026},
+          publisher = {NASA Land Processes Distributed Active Archive Center},
+          doi       = {10.5067/VIIRS/VJ221A1D.002}
+        }
+  papers:
+    - label: VIIRS TES algorithm (Islam et al., 2017)
+      text: >-
+        Islam, T., Hulley, G. C., Malakar, N. K., Radocinski, R. G., Guillevic, P. C., Hook, S. J. (2017). A physics-based algorithm for the simultaneous retrieval of land surface temperature
+        and emissivity from VIIRS thermal infrared data. IEEE Transactions on Geoscience and Remote Sensing, 55(1), 563–576.
+      doi: 10.1109/TGRS.2016.2611566
+      bibtex: |
+        @article{islam2017viirslst,
+          author  = {Islam, Tanvir and Hulley, Glynn C. and Malakar, Nabin K. and Radocinski, Robert G. and Guillevic, Pierre C. and Hook, Simon J.},
+          title   = {A Physics-Based Algorithm for the Simultaneous Retrieval of Land Surface Temperature and Emissivity From {VIIRS} Thermal Infrared Data},
+          journal = {IEEE Transactions on Geoscience and Remote Sensing},
+          volume  = {55},
+          number  = {1},
+          pages   = {563--576},
+          year    = {2017},
+          doi     = {10.1109/TGRS.2016.2611566}
+        }
+    - label: MODIS–VIIRS TES LST continuity (Hulley et al., 2018)
+      text: >-
+        Hulley, G. C., Malakar, N. K., Islam, T., Freepartner, R. J. (2018). NASA's MODIS and VIIRS land surface temperature and emissivity products:
+        A long-term and consistent Earth system data record. IEEE Journal of Selected Topics in Applied Earth Observations and Remote Sensing, 11(2), 522–535.
+      doi: 10.1109/JSTARS.2017.2779330
+      bibtex: |
+        @article{hulley2018modisviirs,
+          author  = {Hulley, G. C. and Malakar, N. K. and Islam, T. and Freepartner, R. J.},
+          title   = {{NASA}'s {MODIS} and {VIIRS} Land Surface Temperature and Emissivity Products: A Long-Term and Consistent Earth System Data Record},
+          journal = {IEEE Journal of Selected Topics in Applied Earth Observations and Remote Sensing},
+          volume  = {11},
+          number  = {2},
+          pages   = {522--535},
+          year    = {2018},
+          doi     = {10.1109/JSTARS.2017.2779330}
+        }
+  acknowledgement: >-
+    Cite the LP DAAC dataset DOI of each product you used (pattern 10.5067/VIIRS/<short name>.002, e.g. 10.5067/VIIRS/VJ221A2.002 for NOAA-21 8-day).
+    Cite Islam et al. (2017) for the algorithm and Hulley et al. (2018) for continuity with MODIS.
+
+transitions:
+  - from: VIIRS LST V1 (VNP21 Collection 1)
+    to: VIIRS LST V2
+    status: completed
+    date: "2023-06"
+    summary: >-
+      Calibration coefficients and geolocation were improved for the whole Suomi NPP mission, and NOAA-20 (VJ121), NOAA-21 (VJ221) and 0.05° CMG products were added. The atmospheric input changed from MERRA-2 to GEOS-5,
+      and inland water bodies are now retrieved. Distribution of V1 ended on 8 April 2025.
+    changes:
+      - aspect: Calibration and geolocation
+        before: V1 calibration
+        after: "Improved calibration algorithm and coefficients for the whole Suomi NPP mission, better geolocation accuracy and fixes for outliers around manoeuvres"
+      - aspect: Inputs
+        before: "MERRA-2 atmospheric input, earlier cloud and land/water masks"
+        after: "GEOS-5 atmospheric input, improved cloud mask (including coastline fixes), 8-class land/water mask from VNP03, corrected aerosol quantity flag over bright surfaces"
+      - aspect: Retrieval coverage
+        before: Land
+        after: Inland water bodies included
+      - aspect: Product set
+        before: "Suomi NPP L2 and L3 tiles"
+        after: "Suomi NPP, NOAA-20 (VJ1) and NOAA-21 (VJ2) + daily, 8-day and monthly 0.05° CMG"
+    impacts:
+      - Do not mix V1 and V2; download the full period again in V2 (V1 has not been distributed since 2025-04-08).
+    sources:
+      - name: VNP21A1D V002 collection description (version description)
+        url: https://www.earthdata.nasa.gov/data/catalog/lpcloud-vnp21a1d-002
+      - name: VIIRS Version 1 SR, VI, LAI/FPAR, LST, Active Fires Data Products Decommissioned (2025-04-08)
+        url: https://www.earthdata.nasa.gov/data/alerts-outages/viirs-version-1-sr-vi-lai-fpar-lst-active-fires-data-products-decommissioned
+
+notices:
+  - date: "2026-08-03"
+    level: critical
+    title: Suomi NPP science data delivery ends 2 November 2026 — switch from VNP21 to VJ221 or VJ121
+    body: >-
+      NOAA NESDIS announced that delivery of all remaining Suomi NPP science data, including VIIRS, will permanently stop at 13:00 UTC on 2 November 2026 (the NASA Earthdata notice title says 1 November; the date may change).
+      LP DAAC's VNP21 collection descriptions give the same end date and advise moving to the NOAA-21 (VJ221, primary) or NOAA-20 (VJ121, secondary) products.
+    source: https://www.nesdis.noaa.gov/news/cessation-of-suomi-national-polar-orbiting-partnership-s-npp-data-users-onafter-november-2-2026
+  - date: "2026-04-14"
+    level: info
+    title: NOAA-21 VIIRS land surface temperature (VJ221) V2 released
+    body: >-
+      LP DAAC expanded the VIIRS V2 land surface temperature and emissivity products to NOAA-21 (formerly JPSS-2). The VJ221 series covers data from 10 February 2023.
+    source: https://www.earthdata.nasa.gov/data/alerts-outages/additional-viirs-version-2-land-surface-temperature-emissivity-data-products
+  - date: "2025-05-02"
+    level: info
+    title: Transition from MODIS to VIIRS — users encouraged to use similar VIIRS products
+    body: >-
+      NASA announced that Terra and Aqua will begin shutting down in late 2026 or early 2027 and encouraged MODIS users to explore similar VIIRS products. This VIIRS LST is the product that continues MODIS MOD21 land surface temperature.
+    source: https://www.earthdata.nasa.gov/data/alerts-outages/transition-from-modis-viirs
+  - date: "2025-04-08"
+    level: info
+    title: VIIRS V1 land surface temperature products decommissioned — move to V2
+    body: >-
+      LP DAAC stopped distributing the VIIRS V1 surface reflectance, LAI/FPAR, land surface temperature and active fire products. They are no longer available in Earthdata Search, Data Pool or AppEEARS; user guides and ATBDs remain on the DOI landing pages.
+    source: https://www.earthdata.nasa.gov/data/alerts-outages/viirs-version-1-sr-vi-lai-fpar-lst-active-fires-data-products-decommissioned
+
+links:
+  - name: VNP21A1D V002 data catalog (LP DAAC)
+    url: https://www.earthdata.nasa.gov/data/catalog/lpcloud-vnp21a1d-002
+  - name: VJ221A1D V002 data catalog (LP DAAC)
+    url: https://www.earthdata.nasa.gov/data/catalog/lpcloud-vj221a1d-002
+  - name: VNP21 Collection 2 User's Guide
+    url: https://lpdaac.usgs.gov/documents/1662/VNP21_User_Guide_V2.pdf
+  - name: VNP21 ATBD
+    url: https://lpdaac.usgs.gov/documents/1332/VNP21_ATBD_V1.pdf
+  - name: VIIRS Land — NASA land surface temperature and emissivity products
+    url: https://viirsland.gsfc.nasa.gov/Products/NASA/LSTESDR.html
+  - name: VIIRS LST validation (VIIRS Land)
+    url: https://viirsland.gsfc.nasa.gov/Val/LST_Val.html
+  - name: Suomi NPP Data Product Delivery to Cease (Earthdata)
+    url: https://www.earthdata.nasa.gov/data/alerts-outages/suomi-npp-data-product-delivery-cease-november-1-2026
+
+watch_urls:
+  - https://www.earthdata.nasa.gov/data/catalog/lpcloud-vj221a1d-002
+  - https://www.earthdata.nasa.gov/data/catalog/lpcloud-vnp21a1d-002
+  - https://landweb.modaps.eosdis.nasa.gov/knownissue?sensor=VIIRS
+
+last_verified: "2026-10-13"

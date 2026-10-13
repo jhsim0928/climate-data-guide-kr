@@ -1,0 +1,329 @@
+# ─────────────────────────────────────────────────────────────
+# MODIS 연소 면적 MCD64A1 C6.1 — 데이터셋 정보 파일
+# 지면 탭 '산불'에 싣습니다. Terra·Aqua 임무 종료를 앞두고 VIIRS 연소 면적(VNP64A1, viirs-burned-area.yaml)으로 넘어가는 중입니다.
+# 수정 후에는 공식 페이지에서 확인한 날짜로 last_verified 를 갱신하세요.
+# ─────────────────────────────────────────────────────────────
+id: modis-burned-area
+name: "MODIS Burned Area (MCD64A1)"
+full_name: MODIS/Terra+Aqua Burned Area Monthly L3 Global 500m SIN Grid V061 (MCD64A1, Terra·Aqua MODIS 월별 연소 면적, 500 m)
+category: satellite
+domain: land
+group: 산불
+order: 10
+domains: [육지, 원격탐사]
+provider: NASA MODIS 육상 과학팀(메릴랜드대학교, Louis Giglio) / NASA GSFC MODAPS 생산 / LP DAAC(USGS EROS) 배포
+
+status: deprecated
+status_note: >-
+  지금도 매달 생산되고 있지만(2026-10-13 확인 시 2026년 7월분까지 공개), 두 위성의 임무 종료가 다가와 대체 예정 상태입니다.
+  NASA는 Terra의 과학 운영 종료를 2027년 2월, Aqua는 2027년 9월로 내다보고 있으며, 자료 수집이 멈추면 마지막 재처리를 한 뒤
+  VIIRS 유사 제품으로 옮겨 가라고 안내합니다. 연소 면적의 후속은 같은 알고리즘·같은 격자의 VIIRS VNP64A1(2012년 3월~)이지만,
+  이 제품도 Suomi NPP 자료 공급이 2026년 11월 끊기는 문제를 안고 있으니 viirs-burned-area 페이지를 함께 보세요.
+
+period:
+  start: "2000-11"
+  end: present
+  note: >-
+    2000년 11월부터입니다(그 이전은 Terra MODIS 교차 간섭·보정 문제로 배포하지 않음). 초기에는 Terra만 쓰였고 Aqua 관측은 Aqua 운영 이후 더해졌습니다.
+    2026-10-13 CMR 확인 시 최신 파일은 2026년 7월 자료(2026-09-10 생산)였습니다. 2001년 6월은 Terra 장기 결측으로 품질이 크게 떨어집니다.
+
+resolution:
+  spatial_short: "0.5 km (0.005°)"
+  temporal_short: "1개월"
+  spatial: >-
+    MODIS Sinusoidal(SIN) 타일 격자(가로 h00–h35, 세로 v00–v17, 타일 하나 약 10°×10°), 500 m — 실제 격자 크기는 463.31271653 m이며
+    타일 하나가 2400 × 2400 화소입니다(격자 이름 MOD_Grid_Monthly_500m_DB_BA).
+  vertical: 지표 단일층
+  temporal: 월(달력 월 단위 파일). 각 화소에는 그달 안에서 연소가 감지된 날(연중 일수, 1일 단위)이 들어 있습니다.
+
+update: "매월 (2026-10-13 확인 시 2026년 7월분이 2026-09-10 생산 — 관측 월 종료 후 약 6주)"
+license: NASA 지구과학 공개 자료 — 제한 없이 무료 공개. 데이터셋 DOI 인용을 권장합니다
+account_required: true
+
+summary: >-
+  MCD64A1은 Terra·Aqua MODIS의 500 m 지표 반사도와 1 km 활성 화재(active fire) 탐지를 함께 써서, 화재로 탄 500 m 격자마다
+  '탄 날짜'를 기록한 월별 전지구 연소 면적 제품입니다. 단파적외(밴드 5·7) 기반 연소 민감 식생지수의 시간 변화에 활성 화재로 학습한
+  동적 문턱값을 적용해 연소 여부와 날짜를 정합니다. GFED·FINN 같은 화재 배출량 자료와 탄소순환·대기질 연구의 기준 연소 면적으로 가장 널리 쓰입니다.
+
+time_convention:
+  summary: >-
+    파일 하나는 한 달력 월을 담고, `Burn Date`는 그달에 연소가 감지된 날의 연중 일수(1~366)입니다. 값은 '그 시각의 관측'이 아니라
+    한 달 동안의 반사도 시계열을 분석해 정한 그달의 결과이며, 날짜 정확도는 하루 단위에 불확실성(`Burn Date Uncertainty`, 일)이 따로 붙습니다.
+    Terra(오전 10:30 하강)·Aqua(오후 1:30 상승) 두 위성의 관측을 함께 쓰지만, 두 위성 모두 궤도 표류로 통과 시각이 크게 바뀌었습니다.
+  points:
+    - "파일 이름의 AYYYYDDD는 그 달력 월의 첫날(연중 일수)입니다. 예: A2026182 = 2026년 7월(7월 1일 = 182일)."
+    - "`Burn Date`의 0은 타지 않은 육지, -1은 자료 부족으로 판정 불가, -2는 물입니다. 연소 면적을 셀 때는 1~366인 화소만 세세요."
+    - "`First Day`·`Last Day`는 변화를 믿을 만하게 감지할 수 있었던 첫날·마지막 날입니다. 구름이 오래 끼면 이 범위가 그달보다 좁아지고 QA 비트 2(판정 기간 단축)가 켜집니다."
+    - "연간 연소 면적은 12개 월 파일의 연소 화소를 모아 셉니다. 같은 화소가 한 해에 두 번 탈 수 있으니, '탄 면적'과 '한 번 이상 탄 면적' 중 무엇을 셀지 정하세요."
+    - "Terra는 2020년 이후 궤도 유지를 멈춰 적도 통과 시각이 10:30에서 2025년 말 약 9:00로, Aqua는 13:30에서 2026년 8월 약 15:50로 바뀔 것으로 안내되었습니다. 태양 고도·그림자·화소 간격이 달라져 최근 몇 해의 탐지 특성이 이전과 다를 수 있습니다."
+  source: https://lpdaac.usgs.gov/documents/1006/MCD64_User_Guide_V61.pdf
+  source_name: "MCD64A1 C6.1 User Guide (Giglio et al.) + LP DAAC Terra·Aqua MODIS 관측 계획 공지"
+
+variables:
+  note: >-
+    LP DAAC·LAADS 파일 명세(HDF-EOS2, HDF4) 기준 과학 자료 층(SDS) 5개입니다. 층 이름에 공백이 들어 있으니(예: "Burn Date") 읽을 때 그대로 쓰세요.
+    축척 인수(scale_factor)는 없습니다. Google Earth Engine(`MODIS/061/MCD64A1`)에서는 띄어쓰기 없는 밴드 이름(`BurnDate`, `Uncertainty`, `QA`, `FirstDay`, `LastDay`)을 씁니다.
+  full_list: https://ladsweb.modaps.eosdis.nasa.gov/filespec/MODIS/61/MCD64A1
+  groups:
+    - name: 월별 연소 면적 층 (500 m)
+      kind: instant
+      items:
+        - text: "연소 날짜(연중 일수) — `Burn Date` (일, int16)"
+          note: "그달 안에서 연소가 감지된 날. 0 = 타지 않음, -1 = 판정 불가, -2 = 물"
+          std: [burned_area]
+        - text: "연소 날짜 불확실성 — `Burn Date Uncertainty` (일)"
+          note: 타지 않은 화소·판정 불가 화소는 0
+        - text: "변화 감지 가능 첫날 — `First Day` (연중 일수)"
+          note: 그달의 연소를 믿을 만하게 판정할 수 있었던 첫날
+          std: []
+        - text: "변화 감지 가능 마지막 날 — `Last Day` (연중 일수)"
+          std: []
+        - text: "품질 정보 — `QA` (8비트 플래그)"
+          note: "비트 0 육지/물, 1 유효 자료, 2 판정 기간 단축, 3 주변 화소 기준 재분류, 5–7 타지 않은 화소의 특수 상황 코드(관측 부족·학습 표본 부족·지속 열원 등)"
+
+access:
+  - name: NASA Earthdata Search (LP DAAC, Earthdata Cloud)
+    url: https://search.earthdata.nasa.gov/search/granules?p=C2565786756-LPCLOUD
+    method: 웹 검색·HTTPS 다운로드 / earthaccess / AWS us-west-2 S3 직접 접근
+    note: >-
+      short_name MCD64A1, version 061입니다. 파일은 타일별 HDF-EOS2(.hdf)이며 무료 Earthdata 로그인이 필요합니다.
+      S3 경로는 s3://lp-prod-protected/MCD64A1.061/이며 임시 자격증명은 https://data.lpdaac.earthdatacloud.nasa.gov/s3credentials 에서 받습니다.
+      예전 LP DAAC Data Pool(e4ftl01)의 MODIS 배포는 2025년 6월 30일 종료되었습니다.
+  - name: AppEEARS
+    url: https://appeears.earthdatacloud.nasa.gov/
+    method: 영역·지점 부분 추출, 투영 변환(GeoTIFF·NetCDF4)
+    note: 타일을 직접 다루지 않고 관심 영역만 위경도 격자로 받을 때 편합니다.
+  - name: LP DAAC 제품 페이지 (DOI 랜딩)
+    url: https://doi.org/10.5067/MODIS/MCD64A1.061
+    method: 문서(사용자 안내서·ATBD)·층 정보
+  - name: 메릴랜드대학교 연소 면적 서버 (fuoco.geog.umd.edu)
+    url: https://lpdaac.usgs.gov/documents/1006/MCD64_User_Guide_V61.pdf
+    method: SFTP — 위경도(Plate Carrée) GeoTIFF·Shapefile 부분 자료
+    note: 과학팀이 지역별로 다시 투영한 GeoTIFF와 연소 구역 Shapefile을 제공합니다. 공개 접속 정보는 사용자 안내서에 있습니다.
+  - name: Google Earth Engine
+    url: https://developers.google.com/earth-engine/datasets/catalog/MODIS_061_MCD64A1
+    method: 클라우드 분석 (`MODIS/061/MCD64A1`)
+  - name: NASA FIRMS (Burned Area 모드)
+    url: https://firms.modaps.eosdis.nasa.gov/
+    method: 웹 지도 보기
+    note: 월·연 연소 면적을 VIIRS VNP64A1과 겹쳐 보며 비교할 수 있습니다.
+
+example:
+  lang: python
+  note: >-
+    earthaccess로 2025년 3월 한반도 동부를 덮는 타일을 받아 연소 화소 수와 면적을 세는 예입니다. HDF4 파일은 GDAL이 있는 rasterio로 엽니다.
+    층 이름은 subdatasets 목록에서 찾아 쓰고, 화소 한 칸 면적은 463.31271653 m의 제곱입니다.
+  code: |
+    # pip install earthaccess rasterio numpy   (rasterio는 HDF4를 지원하는 GDAL이 필요)
+    import earthaccess
+    import numpy as np
+    import rasterio
+
+    earthaccess.login()  # 무료 NASA Earthdata 계정
+    results = earthaccess.search_data(
+        short_name="MCD64A1", version="061",
+        temporal=("2025-03-01", "2025-03-31"),
+        bounding_box=(127, 35, 130, 39),   # (서, 남, 동, 북)
+    )
+    files = earthaccess.download(results, "mcd64a1")
+
+    for f in files:
+        with rasterio.open(f) as src:
+            sds = [s for s in src.subdatasets if s.endswith("Burn Date")][0]
+        with rasterio.open(sds) as b:
+            burn = b.read(1)
+        burned = (burn >= 1) & (burn <= 366)       # 0 미연소, -1 판정 불가, -2 물
+        area_km2 = burned.sum() * 463.31271653**2 / 1e6
+        print(f, burned.sum(), "화소,", round(area_km2, 1), "km2")
+
+tips:
+  - "`Burn Date`는 연소 '날짜'이지 면적이 아닙니다. 면적은 1~366인 화소 수 × 화소 면적(463.31271653 m의 제곱, 약 21.5 ha)으로 계산하고, 0·-1·-2를 빼세요."
+  - "Sinusoidal 투영이라 위경도 격자로 바꿀 때 최근접(nearest) 재표본을 쓰세요. 평균·쌍선형 보간을 하면 날짜 값이 섞여 엉뚱한 날짜가 생깁니다."
+  - "500 m 제품은 작은 불을 많이 놓칩니다. Landsat 30 m 기준 검증(Giglio et al. 2025)에서 MCD64A1의 누락 오차가 71.5%, 오탐 오차가 34.2%였고, GFED5는 작은 불을 보태 MCD64A1보다 연소 면적을 약 90% 크게 잡습니다. 한반도처럼 작은 산불·농경지 소각이 많은 곳은 과소 추정이 큽니다."
+  - "사용자 안내서는 농경지 연소를 '낮은 신뢰도'로 다루라고 권합니다. 농경지 소각을 따로 볼 때는 MCD64A1만으로 판단하지 마세요."
+  - "2001년 6월(Terra 장기 결측)과 2020년 8월(Aqua 약 2주 자료 손실, 직접 수신 자료로 일부 보완)은 품질이 떨어지는 달입니다."
+  - "구름이 오래 낀 곳은 `Burn Date`가 -1(판정 불가)이거나 `First Day`~`Last Day` 범위가 그달보다 좁습니다. 결측을 '타지 않음'으로 세지 마세요(QA 비트 1·2 확인)."
+  - "Terra·Aqua 궤도 표류로 최근 자료의 관측 시각·화소 간격이 달라졌습니다. 2020년대 추세를 볼 때는 이 변화와, 2012년 이후 겹치는 VIIRS VNP64A1 결과를 함께 확인하세요."
+  - "파일 이름 끝의 생산 일시는 재처리 때마다 바뀝니다. 스크립트에서 파일 이름을 통째로 고정하지 말고 날짜·타일로 찾으세요."
+
+citations:
+  dataset:
+    - label: MCD64A1 V061 (LP DAAC)
+      text: >-
+        Giglio, L., Justice, C., Boschetti, L., Roy, D. (2021). MODIS/Terra+Aqua Burned Area Monthly L3 Global 500m SIN Grid V061 [Data set].
+        NASA EOSDIS Land Processes Distributed Active Archive Center. Accessed YYYY-MM-DD from https://doi.org/10.5067/MODIS/MCD64A1.061
+      doi: 10.5067/MODIS/MCD64A1.061
+      bibtex: |
+        @misc{mcd64a1_v061,
+          author    = {Giglio, Louis and Justice, Christopher and Boschetti, Luigi and Roy, David},
+          title     = {{MODIS/Terra+Aqua} Burned Area Monthly {L3} Global 500m {SIN} Grid {V061}},
+          year      = {2021},
+          publisher = {NASA EOSDIS Land Processes Distributed Active Archive Center},
+          doi       = {10.5067/MODIS/MCD64A1.061}
+        }
+  papers:
+    - label: Collection 6 연소 면적 알고리즘 (사용자 안내서 권장 인용)
+      text: >-
+        Giglio, L., Boschetti, L., Roy, D. P., Humber, M. L., Justice, C. O. (2018): The Collection 6 MODIS burned area mapping algorithm and product.
+        Remote Sensing of Environment, 217, 72–85.
+      doi: 10.1016/j.rse.2018.08.005
+      bibtex: |
+        @article{giglio2018mcd64,
+          author  = {Giglio, Louis and Boschetti, Luigi and Roy, David P. and Humber, Michael L. and Justice, Christopher O.},
+          title   = {The Collection 6 {MODIS} burned area mapping algorithm and product},
+          journal = {Remote Sensing of Environment},
+          volume  = {217},
+          pages   = {72--85},
+          year    = {2018},
+          doi     = {10.1016/j.rse.2018.08.005}
+        }
+    - label: Collection 6 연소 면적 전지구 검증
+      text: >-
+        Boschetti, L., Roy, D. P., Giglio, L., Huang, H., Zubkova, M., Humber, M. L. (2019): Global validation of the collection 6 MODIS burned area product.
+        Remote Sensing of Environment, 235, 111490.
+      doi: 10.1016/j.rse.2019.111490
+      bibtex: |
+        @article{boschetti2019mcd64val,
+          author  = {Boschetti, Luigi and Roy, David P. and Giglio, Louis and Huang, Haiyan and Zubkova, Maria and Humber, Michael L.},
+          title   = {Global validation of the collection 6 {MODIS} burned area product},
+          journal = {Remote Sensing of Environment},
+          volume  = {235},
+          pages   = {111490},
+          year    = {2019},
+          doi     = {10.1016/j.rse.2019.111490}
+        }
+  acknowledgement: >-
+    LP DAAC는 자료를 제한 없이 공개하며 데이터셋 DOI 인용을 권장합니다(EOSDIS Data Use and Citation Guidance). 알고리즘 설명에는 Giglio et al. (2018)을 함께 인용하세요.
+
+transitions:
+  - from: MCD64A1 C6
+    to: MCD64A1 C6.1
+    status: completed
+    date: "2021-11"
+    summary: >-
+      입력 L1B 보정을 고친 Collection 6.1로 전 기간을 다시 만들었습니다. 연소 면적 알고리즘 자체는 C6과 같고, C6(버전 006)은 2023년 7월 31일 배포가 끝났습니다.
+    changes:
+      - aspect: 입력 자료 보정
+        before: "C6 L1B"
+        after: "Aqua·Terra 반사 밴드 주사각 응답(RVS) 처리 개선, Terra 적외 밴드 광학 교차 간섭 보정, 2012–2017 Terra 순방향 보정표 수정, 반사 태양 밴드 편광 보정"
+      - aspect: 버전 표기·DOI
+        before: "MCD64A1.006"
+        after: "MCD64A1.061, DOI 10.5067/MODIS/MCD64A1.061 (2021-11-08 공개)"
+      - aspect: 제공 상태
+        before: "2023-07-31 LP DAAC 배포 종료"
+        after: "현재 판, 매월 갱신"
+    impacts:
+      - C6 파일로 만든 시계열에 C6.1을 이어 붙이지 말고 전 기간을 C6.1로 다시 받으세요.
+    sources:
+      - name: MCD64A1 C6.1 User Guide
+        url: https://lpdaac.usgs.gov/documents/1006/MCD64_User_Guide_V61.pdf
+      - name: "Final Notice: MODIS Version 6.0 Land Data Products Decommissioned on July 31, 2023"
+        url: https://www.earthdata.nasa.gov/data/alerts-outages/final-notice-modis-version-6-0-land-data-products-decommissioned-july-31-2023
+  - from: MODIS MCD64A1 C6.1
+    to: VIIRS VNP64A1 C2
+    to_id: viirs-burned-area
+    status: planned
+    date: "2027"
+    summary: >-
+      VNP64A1은 MCD64A1 C6.1 알고리즘을 Suomi NPP VIIRS에 맞게 고친 후속 제품으로, 같은 500 m Sinusoidal 격자와 같은 층 구성을 씁니다.
+      2012~2023년 비교에서 월별 전지구 연소 면적의 상관이 0.989로 매우 높지만 VIIRS 쪽이 해마다 2~6% 많아, 두 자료를 그대로 이어 붙이면 안 됩니다.
+      다만 Suomi NPP 자료 공급이 2026년 11월 끝나므로, NOAA-20을 함께 쓰는 Collection 3이 나오기 전까지 VIIRS 쪽 연속성도 확정되지 않았습니다.
+    changes:
+      - aspect: 위성·센서
+        before: "Terra(오전 10:30)·Aqua(오후 1:30) MODIS 결합"
+        after: "Suomi NPP VIIRS 단독(오후 1:30 상승) — 오전 관측 없음"
+      - aspect: 입력 해상도
+        before: "500 m 반사도 + 1 km 활성 화재(MOD14/MYD14 계열)"
+        after: "750 m M밴드 반사도를 500 m로 재표본 + VNP14A1 활성 화재(750 m → 1 km 격자)"
+      - aspect: 연소 지수 밴드
+        before: "단파적외 밴드 5·7 (밴드 7 2.105–2.155 µm)"
+        after: "VIIRS 대응 밴드(단파적외 2.225–2.275 µm), 적색 밴드도 다름"
+      - aspect: 알고리즘 매개변수
+        before: "C6.1 기본값"
+        after: "시간 질감 문턱 8 → 7.5일, 형태학적 침식 완화(N → N−1 이웃), 최소 사전확률 0.01 → 0.005"
+      - aspect: 기간
+        before: "2000-11~현재 (Terra 2027-02, Aqua 2027-09 과학 운영 종료 전망)"
+        after: "2012-03~현재 (Suomi NPP 자료 공급 2026-11-01 종료 예정)"
+      - aspect: 처리 수준·형식
+        before: "L3, HDF-EOS2, 파일 이름 MCD64A1.AYYYYDDD.hHHvVV.061.*.hdf"
+        after: "L4, HDF4(HDF-EOS2) — 구조가 사실상 같음, VNP64A1.AYYYYDDD.hHHvVV.002.*.hdf (Collection 3부터 netCDF4 예정)"
+      - aspect: 검증 오차 (Landsat 기준, 561쌍)
+        before: "누락 71.5%, 오탐 34.2%"
+        after: "누락 72.4%, 오탐 36.7%"
+      - aspect: 연소 면적 크기 (2012–2023 평균)
+        before: "연 370.9 Mha"
+        after: "연 386.0 Mha (해마다 2.1~6.3% 많음, 동남아시아에서 차이가 가장 큼)"
+    impacts:
+      - 두 자료를 한 시계열로 단순히 이어 붙이지 마세요. 2012~현재 겹치는 기간으로 지역별 차이를 먼저 확인하고, 이어 붙였다면 그 사실과 보정 방법을 논문에 밝히세요.
+      - 지역별 차이가 유럽 0.1%에서 동남아시아 33.1%까지 크게 다르므로, 전지구 평균 차이(약 4%)로 일괄 보정하면 안 됩니다.
+      - 파일 구조와 층 이름이 같아 MCD64A1 코드를 거의 그대로 쓸 수 있습니다. 다만 VIIRS는 오전 관측이 없어 연소 날짜 일치율이 약간 낮습니다(활성 화재 날짜와 같은 날 일치 38% vs 46%).
+      - Suomi NPP가 2026년 11월 공급을 멈추므로, 2026년 11월 이후 VIIRS 연소 면적은 NOAA-20 결합 제품(Collection 3 예정)의 공개 여부를 확인해야 합니다.
+    sources:
+      - name: Giglio et al. (2025), The NASA VIIRS burned area product, global validation, and intercomparison with the NASA MODIS burned area product
+        url: https://doi.org/10.1016/j.rse.2025.115006
+      - name: Transition from MODIS to VIIRS (Earthdata, 2025-05-02)
+        url: https://www.earthdata.nasa.gov/data/alerts-outages/transition-from-modis-viirs
+      - name: VNP64A1 V002 (LP DAAC DOI 랜딩)
+        url: https://doi.org/10.5067/VIIRS/VNP64A1.002
+
+notices:
+  - date: "2026-03-26"
+    level: info
+    title: Terra MODIS 대기 모드 전환 — 2026년 3월 26일 20시~27일 19시 23분(UTC) 자료 주의
+    body: >-
+      Terra 위성 이상으로 MODIS가 하루 가까이 대기(standby) 모드에 들어갔다가 3월 27일 과학 모드로 돌아왔습니다. 그 사이 자료는 보정팀이
+      의심·불량으로 분류했고, 안내된 관련 제품 목록에 MCD64A1 V061도 들어 있습니다. 2026년 3월 연소 면적에는 Terra 관측이 하루 정도 빠졌을 수 있습니다.
+    source: https://www.earthdata.nasa.gov/data/alerts-outages/terra-modis-placed-standby-mode
+  - date: "2026-03-20"
+    level: warning
+    title: Terra 과학 운영 2027년 2월, Aqua 2027년 9월 종료 전망
+    body: >-
+      NASA는 연료·전력 한계로 Terra의 과학 운영 종료를 2027년 2월, Aqua를 2027년 9월로 전망한다고 밝혔습니다. 두 위성이 모두 멈추면
+      MCD64A1의 정규 생산도 끝나므로, 장기 연구는 VIIRS VNP64A1과 겹치는 기간을 확보해 두는 것이 좋습니다.
+    source: https://science.nasa.gov/science-research/earth-science/terra-the-end-of-an-era/
+  - date: "2025-06-03"
+    level: warning
+    title: LP DAAC Data Pool의 MODIS 배포 종료(2025-06-30) — Earthdata Cloud로 전환
+    body: >-
+      LP DAAC는 MODIS C6.1을 포함한 모든 MODIS 자료의 Data Pool(e4ftl01) 배포를 2025년 6월 30일 끝내고 Earthdata Cloud를 주 저장소로 쓴다고 공지했습니다.
+      Earthdata Search·AppEEARS 사용자는 그대로 쓰면 되지만, Data Pool 주소를 쓰던 스크립트는 earthaccess나 클라우드 주소로 바꿔야 합니다.
+    source: https://www.earthdata.nasa.gov/data/alerts-outages/lp-daac-discontinue-data-pool-distribution-modis-datasets
+  - date: "2025-05-02"
+    level: warning
+    title: MODIS에서 VIIRS로 전환 안내 — Terra·Aqua 2026년 말~2027년 초 종료 예정
+    body: >-
+      Terra·Aqua는 2026년 말~2027년 초부터 운영을 마칠 예정이며, MODIS 자료 수집이 끝나면 마지막 재처리를 하게 됩니다. 두 위성은 설계 궤도에서
+      벗어나 통과 시각이 바뀌고 있어 자료에 영향을 줄 수 있으므로, NASA는 비슷한 VIIRS 제품을 미리 검토하라고 권합니다.
+    source: https://www.earthdata.nasa.gov/data/alerts-outages/transition-from-modis-viirs
+  - date: "2023-07-25"
+    level: info
+    title: MODIS 버전 6.0 육상 제품(MCD64A1.006 포함) 2023-07-31 배포 종료
+    body: >-
+      LP DAAC는 Terra·Aqua·결합 MODIS 버전 6.0 육상 자료 전체의 배포를 2023년 7월 31일 끝냈습니다(MOD44W·MCD43GF만 예외).
+      연소 면적은 버전 6.1(MCD64A1.061)을 쓰세요.
+    source: https://www.earthdata.nasa.gov/data/alerts-outages/final-notice-modis-version-6-0-land-data-products-decommissioned-july-31-2023
+
+links:
+  - name: LP DAAC MCD64A1 V061 (Earthdata 자료 목록)
+    url: https://www.earthdata.nasa.gov/data/catalog/lpcloud-mcd64a1-061
+  - name: MCD64A1 C6.1 User Guide
+    url: https://lpdaac.usgs.gov/documents/1006/MCD64_User_Guide_V61.pdf
+  - name: MCD64 ATBD (C6)
+    url: https://lpdaac.usgs.gov/documents/115/MCD64_ATBD_V6.pdf
+  - name: MCD64A1 파일 명세 (LAADS)
+    url: https://ladsweb.modaps.eosdis.nasa.gov/filespec/MODIS/61/MCD64A1
+  - name: MODIS 육상 제품 검증 현황 (MCD64)
+    url: https://modis-land.gsfc.nasa.gov/ValStatus.php?ProductID=MOD64
+  - name: MODIS/VIIRS 육상 제품 품질 점검(LDOPE) — 알려진 문제
+    url: https://landweb.modaps.eosdis.nasa.gov/cgi-bin/QS/new/index.cgi
+  - name: Aqua MODIS 관측 계획(궤도 표류, LP DAAC)
+    url: https://lpdaac.usgs.gov/news/aqua-modis-acquisition-plan-through-august-2026/
+  - name: Terra MODIS 관측 계획(궤도 표류, Earthdata)
+    url: https://www.earthdata.nasa.gov/data/alerts-outages/terra-modis-acquisition-plan-through-december-2025
+
+watch_urls:
+  - https://www.earthdata.nasa.gov/data/catalog/lpcloud-mcd64a1-061
+  - https://www.earthdata.nasa.gov/data/alerts-outages
+  - https://modis-land.gsfc.nasa.gov/news.html
+
+last_verified: "2026-10-13"

@@ -1,0 +1,284 @@
+# ─────────────────────────────────────────────────────────────
+# ESA WorldCover 10 m (2020 v100, 2021 v200) — dataset information file (English edition)
+# Listed under the Land tab, 'Land cover'. The ESA project ended with the 2020 and 2021 maps; the successor is Copernicus LCFM (10 m).
+# After editing, update last_verified to the date you checked the official pages.
+# ─────────────────────────────────────────────────────────────
+id: esa-worldcover
+name: "ESA WorldCover"
+full_name: ESA WorldCover 10 m 2020 v100 / 2021 v200 (global 10 m land cover maps from Sentinel-1 and Sentinel-2, 11 classes)
+category: satellite
+domain: land
+group: 토지피복
+order: 30
+domains: [육지, 원격탐사]
+provider: ESA / WorldCover consortium (led by VITO) — distributed via VITO Terrascope, AWS and Zenodo
+
+status: ended
+status_note: >-
+  An ESA demonstration project that produced only two maps, 2020 (v100) and 2021 (v200), before it concluded. No WorldCover maps for 2022 or later will be produced;
+  in February 2026 the WorldCover website named the 10 m land cover product suite of the Copernicus Land Monitoring Service (CLMS) LCFM project as its operational successor.
+  Both maps remain freely available.
+successor:
+  name: Copernicus LCFM 10 m Global Land Cover Map (LCM-10)
+  url: https://land.copernicus.eu/en/products/global-dynamic-land-cover
+  note: >-
+    CLMS released a Sentinel-2-based 10 m global land cover map for 2020 in June 2025 and plans yearly maps for 2020–2026.
+    On 2026-10-13 only 2020 was listed on the product page; maps for 2021 onward had been announced for release in 2026. No official statement was found that LCFM uses the WorldCover legend or algorithm.
+
+period:
+  start: "2020-01"
+  end: "2021-12"
+  note: >-
+    Two maps: 2020 (v100, released October 2021) and 2021 (v200, released 28 October 2022). They were made with different algorithm versions,
+    so their difference mixes real change with algorithm effects and they should not be treated as a change-detection time series.
+
+resolution:
+  spatial_short: "0.01 km (0.00008°)"
+  temporal_short: "1년"
+  spatial: >-
+    2,651 tiles of 3°×3° in EPSG:4326 (WGS84 latitude–longitude); Map layer pixel size 1/12000° (about 10 m at the equator) / InputQuality layer 1/2000° (about 60 m)
+  vertical: Single surface level
+  temporal: Yearly (one map each for 2020 and 2021)
+
+update: Discontinued (closed with the 2020 and 2021 releases)
+license: CC BY 4.0 — free of charge with no restriction of use. Credit maps as "© ESA WorldCover project [year] / Contains modified Copernicus Sentinel data ([year]) processed by ESA WorldCover consortium"
+account_required: false
+
+summary: >-
+  The first global land cover maps at 10 m resolution, produced from Sentinel-1 radar and Sentinel-2 optical imagery by a VITO-led consortium funded by ESA.
+  They give 11 classes — tree cover, shrubland, grassland, cropland, built-up, bare/sparse vegetation, snow and ice, permanent water bodies, herbaceous wetland,
+  mangroves, and moss and lichen — for 2020 and 2021, with independently validated overall accuracies of 74.4% and 76.7%. The detail resolves urban, cropland and river
+  boundaries that 300 m and 500 m products miss, which makes WorldCover popular for regional land surface model inputs, ecology and hydrology studies, and as a reference for checking other maps.
+
+time_convention:
+  summary: >-
+    The Map layer is the classification result for that year: an annual map built from Sentinel-1 and Sentinel-2 observations from 1 January to 31 December, not the state on any particular date.
+    The InputQuality layer gives the number of observations used for that year's classification and the share discarded as cloud.
+  points:
+    - "The 2020 map was produced with algorithm v100 and the 2021 map with v200, with different numbers of training locations (259,734 → 319,415) and features (131 → 115). The official manual says most differences between the two maps come from the algorithm."
+    - "Because each map is an annual classification, seasonally flooded land or fallow fields receive a single class reflecting the whole year of observations."
+    - "Persistently cloudy regions have fewer valid Sentinel-2 observations and may be less reliable; check the observation counts in the InputQuality layer."
+  source: https://esa-worldcover.s3.eu-central-1.amazonaws.com/v200/2021/docs/WorldCover_PUM_V2.0.pdf
+  source_name: ESA WorldCover Product User Manual v2.0 (2022-10-24)
+
+variables:
+  note: >-
+    Based on the WorldCover Product User Manual (PUM v2.0). Files are Cloud Optimized GeoTIFFs named ESA_WorldCover_10m_<year>_<version>_<tile>_<layer>.tif
+    (e.g. ESA_WorldCover_10m_2021_v200_N36E126_Map.tif). `Map` and `InputQuality` below are the layer names at the end of the file name.
+  full_list: https://esa-worldcover.s3.eu-central-1.amazonaws.com/v200/2021/docs/WorldCover_PUM_V2.0.pdf
+  groups:
+    - name: Land cover map (10 m, classification for the year)
+      kind: instant
+      items:
+        - text: "Land cover class — `Map` layer (class codes 10–100, 8-bit)"
+          std: []
+          note: 10 tree cover, 20 shrubland, 30 grassland, 40 cropland, 50 built-up, 60 bare/sparse vegetation, 70 snow and ice, 80 permanent water bodies, 90 herbaceous wetland, 95 mangroves, 100 moss and lichen
+    - name: Input quality (60 m, 3 bands)
+      kind: accum
+      period: the map year
+      items:
+        - text: "Number of Sentinel-1 GAMMA0 observations used — `InputQuality` band 1 (count)"
+        - text: "Number of Sentinel-2 L2A observations used — `InputQuality` band 2 (count)"
+        - text: "Share of Sentinel-2 observations discarded as cloud or cloud shadow — `InputQuality` band 3 (%)"
+          kind: mean
+          note: 0–100. Combine with band 2 to get the number of valid Sentinel-2 observations
+
+access:
+  - name: Public AWS S3 bucket (esa-worldcover)
+    url: https://esa-worldcover.s3.eu-central-1.amazonaws.com/esa_worldcover_grid.geojson
+    method: S3 / HTTPS (no login)
+    note: >-
+      Tiles are under s3://esa-worldcover/v100/2020/map/ and s3://esa-worldcover/v200/2021/map/ (eu-central-1); use --no-sign-request.
+      The HTTPS root is https://esa-worldcover.s3.eu-central-1.amazonaws.com/... and the tile list is in esa_worldcover_grid.geojson. Only the Map layer is offered here.
+  - name: WorldCover viewer / Terrascope (VITO)
+    url: https://viewer.esa-worldcover.org/worldcover
+    method: Web viewer download / terracatalogueclient (Python)
+    note: Requires free Terrascope registration. The InputQuality layer is available only through this route (viewer or Terrascope).
+  - name: Zenodo (2020 v100, 2021 v200)
+    url: https://zenodo.org/record/7254221
+    method: HTTPS download (zipped 60°×60° macrotiles)
+    note: The 2020 v100 record is https://zenodo.org/record/5571936.
+  - name: Google Earth Engine
+    url: https://developers.google.com/earth-engine/datasets/catalog/ESA_WorldCover_v200
+    method: Earth Engine assets ESA/WorldCover/v100 and ESA/WorldCover/v200
+    note: Convenient for aggregation and visualization over large areas.
+
+example:
+  lang: python
+  note: >-
+    Reads the Cloud Optimized GeoTIFF directly from AWS with rasterio, without logging in, and counts class shares around Seoul.
+    Tile names give the lower-left corner; tile N36E126 covers 36–39°N, 126–129°E.
+  code: |
+    # pip install rasterio numpy
+    import numpy as np
+    import rasterio
+    from rasterio.windows import from_bounds
+
+    year, version, tile = 2021, "v200", "N36E126"   # use "v100" for 2020
+    url = (
+        "https://esa-worldcover.s3.eu-central-1.amazonaws.com/"
+        f"{version}/{year}/map/ESA_WorldCover_10m_{year}_{version}_{tile}_Map.tif"
+    )
+    with rasterio.open(url) as src:
+        win = from_bounds(126.8, 37.4, 127.2, 37.7, src.transform)   # around Seoul (W, S, E, N)
+        lc = src.read(1, window=win)
+
+    names = {10: "Tree cover", 20: "Shrubland", 30: "Grassland", 40: "Cropland", 50: "Built-up",
+             60: "Bare/sparse", 70: "Snow and ice", 80: "Water", 90: "Herbaceous wetland",
+             95: "Mangroves", 100: "Moss and lichen"}
+    vals, counts = np.unique(lc, return_counts=True)
+    for v, c in zip(vals, counts):
+        print(names.get(int(v), v), f"{100 * c / lc.size:.1f}%")
+
+tips:
+  - "Do not difference the 2020 (v100) and 2021 (v200) maps to estimate land cover change. The official manual says most of the difference is due to the algorithm change. Pick one year, or use another dataset for change studies."
+  - "When moving the 10 m classes to a coarser grid, use mode aggregation or per-class fractions; averaging or bilinear interpolation produces meaningless codes."
+  - "On a latitude–longitude grid the east–west width of a pixel shrinks toward the poles. To compute areas, weight pixels by their latitude-dependent area rather than counting them."
+  - "Known issues: cloud artefacts in persistently cloudy regions, straight-line seams along Sentinel-2 orbit or processing-block borders, glacier ablation zones and mountain shadows classified as water, and confusion between irrigated cropland and herbaceous wetland."
+  - "Downloads from AWS, Zenodo and ESA contain only the Map layer; the InputQuality layer with observation counts is available only from the WorldCover viewer or Terrascope."
+  - "The successor Copernicus LCFM 10 m map is a separate product. There is no official statement that it shares the WorldCover legend or algorithm, so check legends and definitions before joining the two."
+
+citations:
+  dataset:
+    - label: WorldCover 2021 v200
+      text: >-
+        Zanaga, D., Van De Kerchove, R., Daems, D., De Keersmaecker, W., Brockmann, C., Kirches, G., Wevers, J., Cartus, O., Santoro, M., Fritz, S.,
+        Lesiv, M., Herold, M., Tsendbazar, N.E., Xu, P., Ramoino, F., Arino, O. (2022). ESA WorldCover 10 m 2021 v200. Zenodo. https://doi.org/10.5281/zenodo.7254221
+      doi: 10.5281/zenodo.7254221
+      bibtex: |
+        @misc{zanaga2022worldcover,
+          author    = {Zanaga, Daniele and Van De Kerchove, Ruben and Daems, Dirk and De Keersmaecker, Wanda and Brockmann, Carsten and Kirches, Grit and Wevers, Jan and Cartus, Oliver and Santoro, Maurizio and Fritz, Steffen and Lesiv, Myroslava and Herold, Martin and Tsendbazar, Nandin-Erdene and Xu, Panpan and Ramoino, Fabrizio and Arino, Olivier},
+          title     = {{ESA WorldCover} 10 m 2021 v200},
+          year      = {2022},
+          publisher = {Zenodo},
+          doi       = {10.5281/zenodo.7254221}
+        }
+    - label: WorldCover 2020 v100
+      text: >-
+        Zanaga, D., Van De Kerchove, R., De Keersmaecker, W., Souverijns, N., Brockmann, C., Quast, R., Wevers, J., Grosu, A., Paccini, A., Vergnaud, S.,
+        Cartus, O., Santoro, M., Fritz, S., Georgieva, I., Lesiv, M., Carter, S., Herold, M., Li, L., Tsendbazar, N.E., Ramoino, F., Arino, O. (2021).
+        ESA WorldCover 10 m 2020 v100. Zenodo. https://doi.org/10.5281/zenodo.5571936
+      doi: 10.5281/zenodo.5571936
+      bibtex: |
+        @misc{zanaga2021worldcover,
+          author    = {Zanaga, Daniele and Van De Kerchove, Ruben and De Keersmaecker, Wanda and Souverijns, Niels and Brockmann, Carsten and Quast, Ralf and Wevers, Jan and Grosu, Alex and Paccini, Audrey and Vergnaud, Sylvain and Cartus, Oliver and Santoro, Maurizio and Fritz, Steffen and Georgieva, Ivelina and Lesiv, Myroslava and Carter, Sarah and Herold, Martin and Li, Linlin and Tsendbazar, Nandin-Erdene and Ramoino, Fabrizio and Arino, Olivier},
+          title     = {{ESA WorldCover} 10 m 2020 v100},
+          year      = {2021},
+          publisher = {Zenodo},
+          doi       = {10.5281/zenodo.5571936}
+        }
+  papers:
+    - label: WorldCover Product User Manual v2.0 — no DOI
+      text: >-
+        ESA WorldCover consortium (2022): ESA WorldCover Product User Manual, Version 2.0 (WorldCover_PUM_v2.0), 24 October 2022. VITO.
+        https://esa-worldcover.s3.eu-central-1.amazonaws.com/v200/2021/docs/WorldCover_PUM_V2.0.pdf
+      bibtex: |
+        @techreport{worldcover2022pum,
+          author      = {{ESA WorldCover consortium}},
+          title       = {{ESA WorldCover} Product User Manual, Version 2.0},
+          institution = {VITO},
+          number      = {WorldCover\_PUM\_v2.0},
+          year        = {2022},
+          url         = {https://esa-worldcover.s3.eu-central-1.amazonaws.com/v200/2021/docs/WorldCover_PUM_V2.0.pdf}
+        }
+  acknowledgement: >-
+    Cite the Zenodo DOI of the year you used (the official website says a reference publication is in preparation). On maps and figures, credit the source with the matching year, e.g.
+    "© ESA WorldCover project 2021 / Contains modified Copernicus Sentinel data (2021) processed by ESA WorldCover consortium".
+
+transitions:
+  - from: WorldCover 2020 v100
+    to: WorldCover 2021 v200
+    status: completed
+    date: "2022-10"
+    summary: >-
+      The 2021 map was produced from scratch with an improved algorithm (v200); the 2020 map was not reprocessed with v200. Format and legend are the same, but the two maps are different versions.
+    changes:
+      - aspect: Training data and features
+        before: "259,734 training locations, 131 features"
+        after: "319,415 training locations, 115 features"
+      - aspect: Overall accuracy (independent validation)
+        before: "74.4%"
+        after: "76.7% (±0.5%)"
+      - aspect: File format and legend
+        before: "COG, 3°×3° tiles, 11 classes"
+        after: "Unchanged"
+      - aspect: Distribution paths
+        before: "s3://esa-worldcover/v100/2020/, single tar.gz on Zenodo"
+        after: "s3://esa-worldcover/v200/2021/, 60°×60° macrotiles on Zenodo"
+    impacts:
+      - Do not read differences between the two maps as real land cover change (they are mostly algorithmic).
+      - If only one year is needed, the more accurate 2021 v200 map is the usual choice.
+    sources:
+      - name: ESA WorldCover Product User Manual v2.0
+        url: https://esa-worldcover.s3.eu-central-1.amazonaws.com/v200/2021/docs/WorldCover_PUM_V2.0.pdf
+      - name: ESA WorldCover — Data access (version notes)
+        url: https://esa-worldcover.org/en/data-access
+  - from: ESA WorldCover (2020–2021)
+    to: Copernicus LCFM 10 m Global Land Cover (2020–2026)
+    status: completed
+    date: "2026-02"
+    summary: >-
+      The ESA demonstration project has ended, and 10 m global land cover is now an operational product of the EU Copernicus Land Monitoring Service (CLMS) LCFM project, planned yearly for 2020–2026.
+      As of 2026-10-13 only the 2020 LCFM 10 m map has been released.
+    changes:
+      - aspect: Operator
+        before: "ESA demonstration project (VITO-led consortium)"
+        after: "EU Copernicus Land Monitoring Service (CLMS) — LCFM project"
+      - aspect: Period
+        before: "Two years, 2020 and 2021"
+        after: "Yearly for 2020–2026 as planned (only 2020 released as of October 2026; 2021 onward announced for 2026)"
+      - aspect: Input sensors
+        before: "Sentinel-1 + Sentinel-2"
+        after: "Sentinel-2 MSI (per the CLMS product description)"
+      - aspect: Distribution
+        before: "AWS, Zenodo, Terrascope, GEE"
+        after: "Copernicus Data Space Ecosystem (browser, OData API, S3) and the CLMS product page"
+    impacts:
+      - LCFM is a separate product; check legend, definitions and accuracy before joining it to WorldCover in one series.
+      - For 10 m global maps after 2021, follow the LCFM release schedule.
+    sources:
+      - name: ESA WorldCover news (2026-02-25, Copernicus LCFM operational successor)
+        url: https://esa-worldcover.org/en/news
+      - name: "CLMS — LCFM: a new chapter in global land cover monitoring (2025-06-26)"
+        url: https://land.copernicus.eu/en/news/lcfm-a-new-chapter-in-global-land-cover-monitoring
+      - name: CDSE forum — answer on LCM 10 m availability from 2021 onward (October 2025)
+        url: https://forum.dataspace.copernicus.eu/t/timeline-of-availability-for-lcm-global-10m-2021-onwards/4051
+
+notices:
+  - date: "2026-02-25"
+    level: warning
+    title: WorldCover project concluded — operational successor is Copernicus LCFM
+    body: >-
+      The WorldCover website announced that the ESA WorldCover project has been completed and that 10 m global land cover maps are now available through the Copernicus LCFM product suite.
+      WorldCover closes with its 2020 and 2021 maps.
+    source: https://esa-worldcover.org/en/news
+  - date: "2025-06-26"
+    level: info
+    title: Copernicus LCFM 10 m global land cover map (2020) released
+    body: >-
+      CLMS released the first LCFM products — a 10 m global land cover map and a pan-tropical tree cover density map, both for 2020 — and said yearly updates are planned for 2020–2026.
+    source: https://land.copernicus.eu/en/news/lcfm-a-new-chapter-in-global-land-cover-monitoring
+  - date: "2022-10-28"
+    level: info
+    title: WorldCover 2021 (v200) released
+    body: >-
+      The 2021 map, produced with an improved algorithm, was released with an overall accuracy of 76.7%. Differences from the 2020 (v100) map are mostly algorithmic.
+    source: https://esa-worldcover.org/en/about/about
+
+links:
+  - name: ESA WorldCover website
+    url: https://esa-worldcover.org/en
+  - name: WorldCover data access and citation
+    url: https://esa-worldcover.org/en/data-access
+  - name: Product User Manual v2.0 (2021 v200)
+    url: https://esa-worldcover.s3.eu-central-1.amazonaws.com/v200/2021/docs/WorldCover_PUM_V2.0.pdf
+  - name: WorldCover viewer
+    url: https://viewer.esa-worldcover.org/worldcover
+  - name: Copernicus CLMS — Global Dynamic Land Cover (including LCFM)
+    url: https://land.copernicus.eu/en/products/global-dynamic-land-cover
+
+watch_urls:
+  - https://esa-worldcover.org/en/news
+  - https://land.copernicus.eu/en/products/global-dynamic-land-cover
+
+last_verified: "2026-10-13"

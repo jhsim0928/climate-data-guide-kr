@@ -1,0 +1,307 @@
+# ─────────────────────────────────────────────────────────────
+# MODIS Land Cover Type (MCD12Q1, MCD12C1) C6.1 — dataset information file (English edition)
+# Listed under the Land tab, 'Land cover'. Marked deprecated because Terra and Aqua are ending, but no VIIRS land cover successor had been released as of 2026-10-13.
+# After editing, update last_verified to the date you checked the official pages.
+# ─────────────────────────────────────────────────────────────
+id: modis-landcover
+name: "MODIS Land Cover (MCD12)"
+full_name: MODIS/Terra+Aqua Land Cover Type Yearly L3 Global, Collection 6.1 (annual global land cover classification, 500 m tiles and 0.05° grid)
+category: satellite
+domain: land
+group: 토지피복
+order: 10
+domains: [육지, 원격탐사]
+provider: NASA MODIS Land Cover science team (Friedl, Sulla-Menashe) / NASA LP DAAC (Earthdata Cloud)
+
+status: deprecated
+status_note: >-
+  Collection 6.1 (version 061) is current and still gains one year at a time (on 2026-10-13 NASA CMR listed MCD12C1 through 2025 and MCD12Q1 through 2024).
+  NASA, however, expects Terra and Aqua to end science operations because of fuel and power limits (projected February 2027 for Terra, September 2027 for Aqua) and points users to similar VIIRS products, so the page is marked deprecated.
+  As of 2026-10-13 there is no VIIRS-based land cover type product in NASA CMR or at the LP DAAC. The science team has also warned that the 2021-and-later maps should be used with caution because the training data could not be updated.
+
+period:
+  start: "2001-01"
+  end: present
+  note: >-
+    Annual maps from 2001. On 2026-10-13 NASA CMR held MCD12C1 (0.05°) through the 2025 map (produced 2026-09-26) and MCD12Q1 (500 m tiles)
+    through the 2024 map (produced July 2025); no 2025 MCD12Q1 tiles were found yet.
+    The LP DAAC and Earthdata product pages still state an extent of 2001–2022, but files for later years are online.
+
+resolution:
+  spatial_short: "0.5 km (0.005°)"
+  temporal_short: "1년"
+  spatial: >-
+    MCD12Q1: MODIS Sinusoidal tile grid, 500 m pixels (tiles of about 1200 km × 1200 km, 2400 × 2400 pixels, hXXvYY tile IDs) /
+    MCD12C1: 0.05° global latitude–longitude Climate Modeling Grid (CMG), 7200 × 3600 pixels
+  vertical: Single surface level
+  temporal: Yearly (one map per calendar year)
+
+update: Once a year (produced roughly 7–9 months after the end of the map year)
+license: Openly shared without restriction under the NASA EOSDIS data use and citation guidance — please cite the dataset DOI
+account_required: true
+
+summary: >-
+  NASA's annual global land cover maps, produced by supervised classification of Terra and Aqua MODIS reflectance. Each file carries five legends —
+  IGBP, UMD, LAI, BIOME-BGC and PFT — plus three FAO LCCS-based layers for land cover, land use and surface hydrology, which makes the product a common
+  source of vegetation types and plant functional types for land surface models and of regional land cover statistics.
+  There is a 500 m tiled product (MCD12Q1) and a 0.05° aggregate (MCD12C1) that keeps the IGBP, UMD and LAI legends together with sub-grid class fractions.
+
+time_convention:
+  summary: >-
+    Every classification layer is the classification result for that year. Features built from one calendar year of Terra and Aqua observations are
+    classified into a single map for the year; it is not the state on any particular date. In file names such as A2024001, the '001' simply marks an annual file starting on 1 January.
+  points:
+    - "MCD12Q1 and MCD12C1 have a single annual time step (in CMR the 2024 files span 2024-01-01 to 2024-12-31)."
+    - "The user guide notes that year-to-year variability in the labels is high, and advises against detecting land cover change by differencing maps from different years."
+    - "QC value 8 marks pixels backfilled with the pre-stabilization result and 9 marks forest types changed by a climate-based rule, so the QC layer records post-processing steps."
+    - "The input observation times have shifted. Terra (originally a 10:30 a.m. crossing) has drifted earlier since its last orbit maintenance in 2020 and crossed at about 10:15 by autumn 2022; Aqua (originally 1:30 p.m.) has drifted later since July 2021, passed 1:45 p.m. in February 2023, and was expected to reach about 3:50 p.m. around August 2026."
+    - "The official notice says the 2021-and-later maps were produced without updated training samples and show large year-to-year swings among grassland, shrubland and forest classes."
+  source: https://lpdaac.usgs.gov/documents/1409/MCD12_User_Guide_V61.pdf
+  source_name: MODIS C6.1 Land Cover Type Product User Guide (2022-04-20) + NASA CMR granule metadata + LDOPE notice (2024-09)
+
+variables:
+  note: >-
+    HDF4 (HDF-EOS) science dataset (SDS) names as given in the LP DAAC layer table and NASA CMR variable records. All layers are 8-bit unsigned integers with fill value 255 and no scale factor.
+    Classification layers hold class codes, so never average or interpolate them; decode them with the legend tables (Tables 3–10 of the user guide).
+  full_list: https://lpdaac.usgs.gov/documents/1409/MCD12_User_Guide_V61.pdf
+  groups:
+    - name: MCD12Q1 legends (500 m, classification for the year)
+      kind: instant
+      items:
+        - text: "IGBP classification (17 classes) — `LC_Type1` (classes 1–17)"
+          std: []
+          note: Classification result for the year. 17 = water bodies, 13 = urban and built-up, 12 = croplands
+        - text: "UMD classification — `LC_Type2` (classes 0–15)"
+          std: []
+          note: C6.1 removed the erroneous cropland/natural vegetation mosaic class introduced in C6 and the wetlands class
+        - text: "LAI classification (vegetation types for the LAI retrieval) — `LC_Type3` (classes 0–10)"
+          std: []
+        - text: "BIOME-BGC classification — `LC_Type4` (classes 0–8)"
+          std: []
+        - text: "Plant functional type (PFT) classification — `LC_Type5` (classes 0–11)"
+          std: []
+    - name: MCD12Q1 FAO LCCS layers (500 m, classification for the year)
+      kind: instant
+      items:
+        - text: "LCCS1 land cover layer — `LC_Prop1` (classes 1–43)"
+          std: []
+        - text: "LCCS2 land use layer — `LC_Prop2` (classes 1–40)"
+          std: []
+        - text: "LCCS3 surface hydrology layer — `LC_Prop3` (classes 1–51)"
+          std: []
+        - text: "LCCS1, 2 and 3 confidence — `LC_Prop1_Assessment`, `LC_Prop2_Assessment`, `LC_Prop3_Assessment` (%)"
+          std: []
+    - name: MCD12Q1 quality and mask (500 m)
+      kind: instant
+      items:
+        - text: "Quality flags — `QC` (values 0–10)"
+          note: 0 classified land, 1 unclassified land (labelled barren), 2 classified water, 4 sea ice switched to water, 6 and 7 snow/ice relabelling, 8 backfilled with the pre-stabilization label, 10 missing from the water mask, among others
+        - text: "Land/water mask — `LW` (1 water, 2 land)"
+          note: Taken from MOD44W
+    - name: MCD12C1 0.05° aggregate (IGBP, UMD and LAI, classification for the year)
+      kind: instant
+      items:
+        - text: "Majority class — `Majority_Land_Cover_Type_1` (IGBP), `Majority_Land_Cover_Type_2` (UMD), `Majority_Land_Cover_Type_3` (LAI) (class code)"
+          std: []
+          note: The MCD12C1 IGBP legend runs 0–16 with water bodies coded 0 (MCD12Q1 codes water as 17)
+        - text: "Confidence in the majority class — `Majority_Land_Cover_Type_1_Assessment` etc. (%)"
+          std: []
+        - text: "Per-class percent cover — `Land_Cover_Type_1_Percent`, `Land_Cover_Type_2_Percent`, `Land_Cover_Type_3_Percent` (%)"
+          std: []
+          note: Share of the 500 m pixels in each 0.05° cell belonging to each class; a 3-D array with one layer per class
+
+access:
+  - name: NASA LP DAAC — Earthdata Cloud (MCD12Q1 V061)
+    url: https://www.earthdata.nasa.gov/data/catalog/lpcloud-mcd12q1-061
+    method: HTTPS download / earthaccess / direct AWS S3 access (us-west-2)
+    note: >-
+      Files live under https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/MCD12Q1.061/ and require a free NASA Earthdata login.
+      Distribution of MODIS data through the legacy LP DAAC Data Pool (e4ftl01) ended on 30 June 2025.
+  - name: NASA LP DAAC — Earthdata Cloud (MCD12C1 V061)
+    url: https://www.earthdata.nasa.gov/data/catalog/lpcloud-mcd12c1-061
+    method: HTTPS download / earthaccess
+    note: One global file per year (the 2025 file is about 1.2 GB, HDF4).
+  - name: NASA Earthdata Search
+    url: https://search.earthdata.nasa.gov/search/granules?p=C2484079608-LPCLOUD
+    method: Web search and download
+    note: The MCD12C1 collection is C2484078896-LPCLOUD.
+  - name: AppEEARS
+    url: https://appeears.earthdatacloud.nasa.gov/
+    method: Web and API area/point extraction (GeoTIFF or NetCDF output)
+    note: Supports MCD12Q1.061 (checked October 2026). Handy for mosaicking tiles and reprojecting on the fly.
+
+example:
+  lang: python
+  note: >-
+    Downloads the 2024 MCD12Q1 tiles covering the Korean Peninsula (h27v05, h28v05, etc.) with earthaccess and reads the IGBP layer with pyhdf.
+    The first run asks for your NASA Earthdata username and password.
+  code: |
+    # pip install earthaccess pyhdf numpy
+    import earthaccess
+    import numpy as np
+    from pyhdf.SD import SD, SDC
+
+    earthaccess.login()
+    results = earthaccess.search_data(
+        short_name="MCD12Q1", version="061",
+        temporal=("2024-01-01", "2024-12-31"),
+        bounding_box=(124, 33, 132, 39),   # (west, south, east, north)
+    )
+    files = earthaccess.download(results, "mcd12q1_2024")
+
+    for f in files:
+        hdf = SD(str(f), SDC.READ)
+        igbp = hdf.select("LC_Type1")[:]          # 2400 x 2400, classes 1–17, 255 = fill
+        qc = hdf.select("QC")[:]
+        valid = igbp != 255
+        classes, counts = np.unique(igbp[valid], return_counts=True)
+        print(f, dict(zip(classes.tolist(), counts.tolist())))
+
+    # 0.05° aggregate: short_name="MCD12C1", version="061"
+    # Layer names, e.g. "Majority_Land_Cover_Type_1", "Land_Cover_Type_1_Percent"
+
+tips:
+  - "MCD12Q1 comes in Sinusoidal-projection tiles. Overlaying it on latitude–longitude data requires reprojection, and because the values are class codes you must use nearest-neighbour resampling; bilinear interpolation invents class codes that do not exist."
+  - "The IGBP water code differs between products: 17 in MCD12Q1 `LC_Type1`, 0 in MCD12C1 `Majority_Land_Cover_Type_1`. Harmonize the legends before mixing the two."
+  - "There is an official warning that the 2021-and-later maps were made without updated training samples and show larger year-to-year swings, especially among grassland, shrubland and forest. Do not read class differences between recent years as real change."
+  - "The user guide discourages detecting change by differencing annual maps because labels fluctuate from year to year. For change studies, pool several years or use a dataset designed for change detection."
+  - "Known misclassifications include permanent sea ice and shaded glaciers mapped as water, small tropical fields labelled as natural vegetation, and some temperate evergreen needleleaf forests (e.g. Japan) labelled as evergreen broadleaf. Wetlands are under-represented."
+  - "Use the QC layer to screen post-processed pixels (switched by the water mask, relabelled snow/ice, backfilled with the pre-stabilization result). 255 is the fill value."
+  - "Terra and Aqua orbit drift has shifted observation times, and both satellites are projected to end science operations in 2027. Keep the changing inputs in mind when adding years after 2022 to long-term trend analyses."
+  - "Scripts that still use the old Data Pool host (e4ftl01.cr.usgs.gov) stopped working after 30 June 2025. Switch to earthaccess or data.lpdaac.earthdatacloud.nasa.gov URLs."
+
+citations:
+  dataset:
+    - label: MCD12Q1 V061 (500 m)
+      text: >-
+        Friedl, M., Sulla-Menashe, D. (2022). MODIS/Terra+Aqua Land Cover Type Yearly L3 Global 500m SIN Grid V061 [Data set].
+        NASA Land Processes Distributed Active Archive Center. https://doi.org/10.5067/MODIS/MCD12Q1.061 (Accessed YYYY-MM-DD)
+      doi: 10.5067/MODIS/MCD12Q1.061
+      bibtex: |
+        @misc{mcd12q1_v061,
+          author    = {Friedl, Mark and Sulla-Menashe, Damien},
+          title     = {{MODIS/Terra+Aqua} Land Cover Type Yearly {L3} Global 500m {SIN} Grid {V061}},
+          year      = {2022},
+          publisher = {NASA Land Processes Distributed Active Archive Center},
+          doi       = {10.5067/MODIS/MCD12Q1.061}
+        }
+    - label: MCD12C1 V061 (0.05°)
+      text: >-
+        Friedl, M., Sulla-Menashe, D. (2022). MODIS/Terra+Aqua Land Cover Type Yearly L3 Global 0.05Deg CMG V061 [Data set].
+        NASA Land Processes Distributed Active Archive Center. https://doi.org/10.5067/MODIS/MCD12C1.061 (Accessed YYYY-MM-DD)
+      doi: 10.5067/MODIS/MCD12C1.061
+      bibtex: |
+        @misc{mcd12c1_v061,
+          author    = {Friedl, Mark and Sulla-Menashe, Damien},
+          title     = {{MODIS/Terra+Aqua} Land Cover Type Yearly {L3} Global 0.05Deg {CMG} {V061}},
+          year      = {2022},
+          publisher = {NASA Land Processes Distributed Active Archive Center},
+          doi       = {10.5067/MODIS/MCD12C1.061}
+        }
+  papers:
+    - label: MODIS Collection 6 land cover algorithm paper
+      text: >-
+        Sulla-Menashe, D., Gray, J. M., Abercrombie, S. P., Friedl, M. A. (2019): Hierarchical mapping of annual global land cover 2001 to present:
+        The MODIS Collection 6 Land Cover product. Remote Sensing of Environment, 222, 183–194.
+      doi: 10.1016/j.rse.2018.12.013
+      bibtex: |
+        @article{sullamenashe2019mcd12,
+          author  = {Sulla-Menashe, Damien and Gray, Josh M. and Abercrombie, S. Parker and Friedl, Mark A.},
+          title   = {Hierarchical mapping of annual global land cover 2001 to present: The {MODIS} Collection 6 Land Cover product},
+          journal = {Remote Sensing of Environment},
+          volume  = {222},
+          pages   = {183--194},
+          year    = {2019},
+          doi     = {10.1016/j.rse.2018.12.013}
+        }
+  acknowledgement: >-
+    LP DAAC data are shared without restriction under the NASA EOSDIS data use and citation guidance; cite the DOI of the product you used (MCD12Q1 or MCD12C1) with an access date.
+    Cite Sulla-Menashe et al. (2019) for the algorithm, and state in the paper that you used Collection 6.1 (V061) and which legend (IGBP, etc.).
+
+transitions:
+  - from: MODIS Land Cover C6 (V006)
+    to: MODIS Land Cover C6.1 (V061)
+    status: completed
+    date: "2022"
+    summary: >-
+      A full reprocessing from 2001 that keeps the science algorithm and picks up the improved MODIS L1B calibration. The file format and layers are unchanged,
+      and two faulty classes in the UMD legend were cleaned up.
+    changes:
+      - aspect: Input calibration
+        before: C6 L1B
+        after: Updated Terra and Aqua MODIS L1B calibration (corrected Terra forward look-up table for 2012–2017, revised polarization correction)
+      - aspect: UMD legend (LC_Type2)
+        before: Included the erroneous cropland/natural vegetation mosaic class introduced in C6, and a wetlands class
+        after: Both classes removed and their pixels reassigned to appropriate UMD classes
+      - aspect: Snow screening
+        before: C6 method
+        after: Minor improvement to snow filtering in the vegetation index spline fitting
+      - aspect: File format and layers
+        before: HDF4, 13 layers (MCD12Q1)
+        after: Unchanged (only the DOI suffix changes from .006 to .061)
+    impacts:
+      - Do not mix C6 and C6.1 maps in one time series; download the whole period again as V061.
+      - Cropland or wetland areas computed from the UMD legend (LC_Type2) will differ in C6.1.
+    sources:
+      - name: MODIS C6.1 Land Cover Type Product User Guide (2022-04-20)
+        url: https://lpdaac.usgs.gov/documents/1409/MCD12_User_Guide_V61.pdf
+      - name: NASA Earthdata — MCD12Q1 V061 product page
+        url: https://www.earthdata.nasa.gov/data/catalog/lpcloud-mcd12q1-061
+
+notices:
+  - date: "2026-03-26"
+    level: info
+    title: Terra anomaly put MODIS in standby for about a day — data in that window flagged
+    body: >-
+      At about 20:00 UTC on 26 March 2026 a Terra spacecraft anomaly sent MODIS into standby; the instrument returned to science mode on 27 March.
+      The calibration team flagged data from that window as questionable or bad, and the notice lists both Terra-only (MOD) and combined Terra+Aqua (MCD) products as affected.
+    source: https://www.earthdata.nasa.gov/data/alerts-outages/terra-modis-placed-standby-mode
+  - date: "2026-03-20"
+    level: warning
+    title: Terra science operations projected to end February 2027, Aqua September 2027
+    body: >-
+      NASA projects that fuel and power limits will end Terra science activities in February 2027 and Aqua in September 2027.
+      Both keep observing until then; afterwards no new years of combined MODIS products, MCD12 included, can be produced.
+    source: https://science.nasa.gov/science-research/earth-science/terra-the-end-of-an-era/
+  - date: "2025-06-03"
+    level: warning
+    title: LP DAAC Data Pool stops distributing MODIS data (30 June 2025) — move to Earthdata Cloud
+    body: >-
+      The LP DAAC announced that Data Pool access to all MODIS data, including Collection 6.1, would be retired on 30 June 2025.
+      Earthdata Cloud is now the primary archive, so scripts using the old host must be updated. Earthdata Search and AppEEARS users are not affected.
+    source: https://www.earthdata.nasa.gov/data/alerts-outages/lp-daac-discontinue-data-pool-distribution-modis-datasets
+  - date: "2025-05-02"
+    level: warning
+    title: Transition from MODIS to VIIRS — MODIS collection to stop after a final reprocessing
+    body: >-
+      NASA said Terra and Aqua will begin shutting down in late 2026 or early 2027 and that a final reprocessing will follow the end of MODIS data collection.
+      Both platforms are drifting from their designed orbits, changing crossing times, and users are encouraged to explore similar VIIRS products. No VIIRS counterpart to MCD12 land cover exists yet.
+    source: https://www.earthdata.nasa.gov/data/alerts-outages/transition-from-modis-viirs
+  - date: "2024-09-10"
+    level: warning
+    title: Use MCD12Q1 C6.1 maps for 2021 and later with caution
+    body: >-
+      Lack of funding meant the science team could not keep the training sample database up to date, so land cover at some training sites may have changed.
+      LDOPE found large year-to-year changes in grassland, shrubland and forest classes across latitude zones and tiles, and urges caution with the 2021-and-later layers.
+    source: https://landweb.modaps.eosdis.nasa.gov/displayissue?id=781
+
+links:
+  - name: LP DAAC — MCD12Q1 V061 product page (layer table)
+    url: https://lpdaac.usgs.gov/products/mcd12q1v061/
+  - name: MODIS C6.1 Land Cover Type User Guide (legends, QC, known issues)
+    url: https://lpdaac.usgs.gov/documents/1409/MCD12_User_Guide_V61.pdf
+  - name: MCD12 Algorithm Theoretical Basis Document (ATBD)
+    url: https://lpdaac.usgs.gov/documents/86/MCD12_ATBD.pdf
+  - name: MODIS Land validation status — MCD12
+    url: https://modis-land.gsfc.nasa.gov/ValStatus.php?ProductID=MCD12
+  - name: MODIS Land news (Terra and Aqua orbit drift, Collection 7 plans)
+    url: https://modis-land.gsfc.nasa.gov/news.html
+  - name: LP DAAC — Aqua MODIS acquisition plan through August 2026
+    url: https://lpdaac.usgs.gov/news/aqua-modis-acquisition-plan-through-august-2026/
+
+watch_urls:
+  - https://www.earthdata.nasa.gov/data/catalog/lpcloud-mcd12q1-061
+  - https://modis-land.gsfc.nasa.gov/news.html
+  - https://www.earthdata.nasa.gov/data/alerts-outages
+
+last_verified: "2026-10-13"

@@ -1,0 +1,253 @@
+# ─────────────────────────────────────────────────────────────
+# GLASS (Global LAnd Surface Satellite) 제품군 — 데이터셋 정보 파일
+# 지면 탭 '식생'. LAI·FAPAR·FVC·알베도·순복사·증발산 등을 한 페이지에 제품별로 묶었습니다. 현재 주 배포처는 홍콩대(HKU) 아카이브입니다.
+# 수정 후에는 공식 페이지에서 확인한 날짜로 last_verified 를 갱신하세요.
+# ─────────────────────────────────────────────────────────────
+id: glass
+name: "GLASS"
+full_name: Global LAnd Surface Satellite (GLASS) product suite (AVHRR 장기판 1981~ / MODIS판 2000~, 베이징사범대·홍콩대 Shunlin Liang 연구진의 전지구 지표 위성 산출물)
+category: satellite
+domain: land
+group: 식생
+order: 30
+domains: [육지, 원격탐사]
+provider: 베이징사범대학(BNU) GLASS 연구진·홍콩대학(HKU) 지리학과 Liang 연구실 / 배포 HKU GLASS 아카이브·중국 국가지구시스템과학데이터센터(geodata.cn)
+
+status: active
+status_note: >-
+  MODIS 기반 제품은 연 단위로 한 해씩 덧붙여지고 있습니다(2026-10-13 확인 시 HKU 아카이브의 LAI·FAPAR 0.05°는 2025년분까지, 2026년 3월 생산).
+  반면 AVHRR 기반 장기판은 제품에 따라 2018~2022년에서 멈춰 있어, 1980년대부터 현재까지 한 센서·한 판으로 이어지는 제품은 알베도(AVHRR+MODIS 결합판) 정도입니다.
+  MODIS판은 Terra·Aqua 운영 종료(NASA 전망 Terra 2027년 2월, Aqua 2027년 9월) 뒤 입력이 끊기지만, GLASS 연구진의 후속 계획 공지는 찾지 못했습니다.
+
+period:
+  start: "1981-01"
+  end: present
+  note: >-
+    HKU 다운로드 표 기준 AVHRR판은 1981(또는 1982)년부터 2018~2022년까지(LAI·FAPAR·순복사 2018, ET 2022), MODIS판은 2000년부터 2024~2025년까지(LAI·FAPAR 2025, 알베도·순복사·ET 2024)입니다.
+    알베도 결합판(MODIS & AVHRR, 0.05°·0.5°)은 1981~2024년입니다. 정해진 갱신 일정은 공지되지 않았고, 새 연도는 보통 이듬해에 한꺼번에 올라옵니다.
+
+resolution:
+  spatial_short: "6 km (0.05°)"
+  temporal_short: "1일"
+  spatial: >-
+    AVHRR판: 0.05° 위경도 격자(일부 0.1°·0.5° 집계본) / MODIS판: 0.05° 위경도 격자(CMG) 또는 MODIS 사인곡선(Sinusoidal) 타일 격자 250 m·500 m·1 km
+    (LAI·FAPAR 250 m·500 m 타일, 0.05°·0.1°·0.25° 집계본; 알베도 250 m·500 m·0.5°; ET 1 km·0.05°·0.5°)
+  vertical: 지표 단일면
+  temporal: >-
+    LAI·FAPAR·FVC·알베도·ET·GPP·NPP 8일(파일 날짜 = 8일 구간 첫날, 연중 일자 001·009·…·361) / 순복사·하향단파·광합성유효복사 등 복사 제품은 1일
+
+update: 비정기, 대체로 연 1회 (새 연도를 이듬해에 일괄 추가·재처리)
+license: 무료 공개 자료(공식 개요 논문 '자유롭게 이용 가능'). HKU 아카이브는 로그인 없이 HTTPS로 받을 수 있습니다
+account_required: false
+
+summary: >-
+  GLASS는 베이징사범대학이 주도해 개발하고 현재 홍콩대학 Shunlin Liang 연구실이 배포·갱신하는 전지구 지표 위성 산출물 묶음입니다.
+  AVHRR 장기 기록(LTDR)과 MODIS 반사도·기타 위성·지상 자료를 써서 엽면적지수(LAI), 광합성유효복사 흡수율(FAPAR), 식생 피복률(FVC), 광대역 알베도,
+  순복사·하향단파복사, 증발산(ET), 총일차생산(GPP) 등 20여 개 변수를 1981년(AVHRR)·2000년(MODIS)부터 공간적으로 빈틈없이 제공합니다.
+  같은 알고리즘 계열의 여러 변수를 일관된 격자로 받을 수 있어 에너지·물·탄소 순환 연구에 많이 쓰입니다.
+
+time_convention:
+  summary: >-
+    8일 제품(LAI·FAPAR·FVC·알베도·ET 등)은 파일 이름의 A연도+연중일자부터 8일 구간(연말 구간은 짧음)을 대표하는 값이고, 복사 제품(순복사·하향단파)은 그날 하루 평균입니다.
+    LAI·FAPAR는 결측 없이 시간적으로 매끄러운 추정값이며 최대값 합성(MVC)이 아닙니다. FAPAR는 현지 태양시 10:30경 흑공(black-sky) 값으로 하루 평균을 근사한다고 설명합니다.
+  points:
+    - "파일 이름 GLASS01B01.V61.A2024001.2026063.hdf 에서 A2024001은 자료 시작일(2024년 1월 1일, 메타데이터상 1월 1~8일 구간), 마지막 2026063은 생산일(2026년 63일째)입니다."
+    - "LAI(V6)는 MODIS 8일 반사도 시계열 2년치를 양방향 LSTM에 넣어 8일 간격 값을 추정합니다. 구름 등으로 빈 기간도 시계열로 채워지므로 품질 비트로 원래 관측 여부를 확인하세요."
+    - "순복사 0.05° 일자료는 하루 평균 전파장 순복사로 소개되지만, 이전 판 문서와 검증 논문은 '주간(daytime) 순복사'로 부르기도 합니다. 쓰는 판의 정의를 확인하세요."
+    - "ET는 다섯 가지 증발산 알고리즘을 베이지안 모형 평균(BMA)으로 합친 8일 제품입니다. 공식 소개 페이지에 물리 단위와 '8일 평균인지 합계인지'가 적혀 있지 않으니 파일 속성으로 확인하세요."
+  source: https://glass.hku.hk/algorithms.html
+  source_name: "GLASS Product Algorithms (HKU) + BNU 제품 소개 페이지 + HKU 아카이브 파일 메타데이터(hdf.xml)"
+
+variables:
+  note: >-
+    제품마다 파일이 따로 있으며(HDF-EOS4), 공식 소개 페이지는 과학자료층(SDS) 이름을 대부분 공개하지 않아 여기에는 변수 이름을 적지 않았습니다.
+    척도 인수·유효 범위는 BNU 제품 소개 페이지 기준이며 판(V4·V5·V6)에 따라 다를 수 있으니 HDF 속성(scale_factor, _FillValue, valid_range)을 꼭 확인하세요.
+    BNU 알베도 소개 페이지는 이전 알베도 제품(GLASS02B05·B06·A06)의 층 이름으로 `ABD_BSA_shortwave`, `ABD_WSA_shortwave`, `ABD_BSA_VIS` 등을 들고 있습니다.
+  full_list: https://glass.hku.hk/download.html
+  groups:
+    - name: 엽면적지수 LAI (MODIS V6 250 m·500 m·0.05° 2000~ / AVHRR V4 0.05° 1981~2018, 8일)
+      kind: instant
+      period: 8일 구간 대표값
+      items:
+        - text: "엽면적지수 (m2 m-2)"
+          note: "V6 500 m·250 m는 저장값 × 0.1(유효 0–100, 채움·바다 255). 8비트 품질층에 고품질 여부·물·눈·구름 비트가 있습니다"
+    - name: 광합성유효복사 흡수율 FAPAR (MODIS V6 250 m~0.5° 2000~ / AVHRR V4 0.05° 1982~2018, 8일)
+      kind: instant
+      period: 8일 구간 대표값
+      items:
+        - text: "흡수 광합성유효복사 비율 (무차원, 0–1)"
+          note: "현지 태양시 10:30경 흑공 FAPAR로 하루 평균을 근사. MODIS판은 GLASS LAI와 반사도로 추정, AVHRR판은 LAI에서 1 − 군락 투과율로 계산. 저장값 × 0.004(유효 0–250, 채움 255)"
+    - name: 식생 피복률 FVC (MODIS 500 m~0.5° 2000~2024 / AVHRR 0.05°·0.5° 1981~2020, 8일)
+      kind: instant
+      period: 8일 구간 대표값
+      items:
+        - text: "녹색 식생 피복률 (무차원, 0–1)"
+          note: "저장값 × 0.004(유효 0–250)"
+    - name: 광대역 알베도 (MODIS·AVHRR 결합 0.05°·0.5° 1981~2024, MODIS 250 m·500 m, 8일)
+      kind: instant
+      period: 8일 구간 대표값
+      items:
+        - text: "흑공(black-sky) 알베도 — 단파·가시·근적외 (무차원)"
+          std: [albedo]
+          note: "저장값 × 0.0001(유효 0–10000, 채움 −1)"
+        - text: "백공(white-sky) 알베도 — 단파·가시·근적외 (무차원)"
+          std: [albedo]
+        - text: "청공(blue-sky, 실제 대기 조건) 알베도 (무차원)"
+          note: BNU 소개 페이지 기준 2000년 이후 0.05° 제품에만 있음
+    - name: 복사 (일자료)
+      kind: mean
+      period: 일
+      items:
+        - text: "전파장 지표 순복사 (W m-2)"
+          note: "MODIS 0.05° 2000~2024, AVHRR 0.05° 1981~2018. 저장값 × 0.01. 판에 따라 '주간 순복사'로 정의된 경우가 있음"
+        - text: "지표 하향 단파복사 (W m-2)"
+          note: "MODIS·AVHRR 0.05°. 하루 평균. 저장값 × 0.01"
+    - name: 증발산·탄소 (8일)
+      kind: mean
+      period: 8일
+      items:
+        - text: "증발산(잠열 플럭스) ET"
+          std: [evap]
+          note: "MODIS 1 km·0.05° 2000~2024, AVHRR 0.05°·0.5° 1981~2022. 다섯 알고리즘 BMA 결합. 저장값 × 0.01. 단위·평균/합계 여부는 파일 속성 확인"
+        - text: "총일차생산 GPP (g C m-2)"
+          note: "EC-LUE 모형. MODIS 500 m 2000~2025, AVHRR 0.05° 1981~2018. 저장값 × 0.01. 하루당인지 8일 합계인지 파일 속성 확인"
+
+access:
+  - name: HKU GLASS 다운로드 (아카이브)
+    url: https://glass.hku.hk/download.html
+    method: HTTPS 디렉터리 내려받기 (로그인 불필요, wget 등으로 일괄)
+    note: >-
+      https://glass.hku.hk/archive/<제품>/<센서>/<해상도>/<연도>/ 구조입니다(예: archive/LAI/MODIS/0.05D/2024/). 파일마다 HDF, 메타데이터(.hdf.xml), 미리보기 JPG가 있고,
+      500 m·250 m 타일 제품은 연도 아래에 연중일자 폴더가 하나 더 있습니다. 내려받기 전에 'HDF File Naming Convention' 문서를 읽으라고 안내합니다.
+  - name: BNU GLASS 제품 소개 (중국어)
+    url: https://glass-product.bnu.edu.cn/
+    method: 제품별 알고리즘·자료 형식 소개 / geodata.cn·HKU로 연결
+    note: 제품별 소개 페이지(예 introduction/LAI.html)에 척도 인수·유효 범위·품질 비트 설명이 있습니다.
+  - name: 국가지구시스템과학데이터센터(geodata.cn)
+    url: http://www.geodata.cn/thematicView/GLASS.html
+    method: 웹 검색·내려받기 (중국어 위주)
+    note: GLASS 개요 논문(Liang et al., 2021)이 밝힌 배포처입니다. 이전 판 일부는 여기에서만 찾을 수 있습니다.
+
+example:
+  lang: python
+  note: >-
+    HKU 아카이브에서 2024년 1월 첫 8일의 MODIS LAI 0.05° 파일을 받아 HDF4로 여는 예입니다. 파일 안 층 이름은 공식 문서에 없으므로 먼저 목록을 출력해 확인합니다.
+    HDF4를 읽으려면 GDAL(HDF4 드라이버 포함) 또는 pyhdf가 필요합니다.
+  code: |
+    import requests
+    from osgeo import gdal   # conda install -c conda-forge gdal (HDF4 지원 빌드)
+
+    fname = "GLASS01B01.V61.A2024001.2026063.hdf"   # LAI, MODIS, 0.05°, 2024년 1~8일
+    url = f"https://glass.hku.hk/archive/LAI/MODIS/0.05D/2024/{fname}"
+    with open(fname, "wb") as f:
+        f.write(requests.get(url, timeout=120).content)
+
+    ds = gdal.Open(fname)
+    for name, desc in ds.GetSubDatasets() or [(fname, "single layer")]:
+        print(name, "|", desc)                      # 층 이름 확인
+
+    sub = gdal.Open((ds.GetSubDatasets() or [(fname, "")])[0][0])
+    md = sub.GetMetadata()
+    print({k: v for k, v in md.items() if k.lower() in ("scale_factor", "_fillvalue", "valid_range", "units")})
+    arr = sub.ReadAsArray().astype("float32")
+    # 척도 인수·채움값을 적용한 뒤 사용 (속성값을 그대로 쓰세요)
+
+tips:
+  - "같은 이름이라도 판(V40·V50·V60·V61)과 센서(AVHRR·MODIS)에 따라 알고리즘·척도 인수가 다릅니다. 파일 이름의 V숫자를 기록하고, 판이 다른 파일을 한 시계열로 섞지 마세요. HKU 다운로드 표의 판 표기(예 LAI V60)와 실제 파일 이름(V61)이 다른 경우도 있습니다."
+  - "AVHRR판과 MODIS판은 서로 다른 자료입니다. 1981년부터 이어 쓰려면 2000년 이후 겹치는 기간의 차이를 먼저 확인하세요. 알베도처럼 공식 결합판(MIX)이 있는 변수는 그것을 쓰는 편이 안전합니다."
+  - "LAI·FAPAR는 시계열 모형으로 구름 공백을 채운 값입니다. 결측이 없다고 관측이 있었던 것은 아니니 품질층(구름·눈·채움 비트)을 함께 보세요."
+  - "HKU 아카이브의 파일 번호는 문서와 다를 수 있습니다(예 FAPAR 파일은 GLASS09, ET는 GLASS11, 순복사는 GLASS07로 시작). 'HDF File Naming Convention' 표의 번호보다 실제 폴더 이름을 기준으로 하세요."
+  - "MODIS판은 Terra·Aqua 궤도 표류와 운영 종료의 영향을 받습니다. 2020년대 이후 값의 추세는 입력 위성 변화와 함께 해석하세요."
+  - "0.05° 제품은 전지구 파일 하나가 수 MB~100 MB 이상입니다. 타일 제품(500 m·250 m)은 MODIS 사인곡선 타일 번호(hXXvYY)로 지역을 고릅니다. 한반도는 h28v05 부근입니다."
+
+citations:
+  dataset: []
+  papers:
+    - label: GLASS 제품군 개요 (BAMS)
+      text: >-
+        Liang, S., Cheng, J., Jia, K., Jiang, B., Liu, Q., Xiao, Z., Yao, Y., Yuan, W., Zhang, X., Zhao, X., Zhou, J. (2021):
+        The Global Land Surface Satellite (GLASS) Product Suite. Bulletin of the American Meteorological Society, 102(2), E323–E337.
+      doi: 10.1175/BAMS-D-18-0341.1
+      bibtex: |
+        @article{liang2021glass,
+          author  = {Liang, Shunlin and Cheng, Jie and Jia, Kun and Jiang, Bo and Liu, Qiang and Xiao, Zhiqiang and Yao, Yunjun and Yuan, Wenping and Zhang, Xiaotong and Zhao, Xiang and Zhou, Ji},
+          title   = {The Global Land Surface Satellite ({GLASS}) Product Suite},
+          journal = {Bulletin of the American Meteorological Society},
+          volume  = {102},
+          number  = {2},
+          pages   = {E323--E337},
+          year    = {2021},
+          doi     = {10.1175/BAMS-D-18-0341.1}
+        }
+    - label: GLASS 장기 자료 소개 (IJDE)
+      text: >-
+        Liang, S., Zhao, X., Liu, S., Yuan, W., Cheng, X., Xiao, Z., Zhang, X., Liu, Q., Cheng, J., Tang, H., Qu, Y., Bo, Y., Qu, Y., Ren, H., Yu, K., Townshend, J. (2013):
+        A long-term Global LAnd Surface Satellite (GLASS) data-set for environmental studies. International Journal of Digital Earth, 6(sup1), 5–33.
+      doi: 10.1080/17538947.2013.805262
+      bibtex: |
+        @article{liang2013glass,
+          author  = {Liang, Shunlin and Zhao, Xiang and Liu, Suhong and Yuan, Wenping and Cheng, Xiao and Xiao, Zhiqiang and Zhang, Xiaotong and Liu, Qiang and Cheng, Jie and Tang, Hairong and Qu, Yonghua and Bo, Yanchen and Qu, Ying and Ren, Huazhong and Yu, Kai and Townshend, John},
+          title   = {A long-term Global {LAnd} Surface Satellite ({GLASS}) data-set for environmental studies},
+          journal = {International Journal of Digital Earth},
+          volume  = {6},
+          number  = {sup1},
+          pages   = {5--33},
+          year    = {2013},
+          doi     = {10.1080/17538947.2013.805262}
+        }
+    - label: GLASS LAI V6 (250 m, Bi-LSTM)
+      text: >-
+        Ma, H., Liang, S. (2022): Development of the GLASS 250-m leaf area index product (version 6) from MODIS data using the bidirectional LSTM deep learning model.
+        Remote Sensing of Environment, 273, 112985.
+      doi: 10.1016/j.rse.2022.112985
+      bibtex: |
+        @article{ma2022glasslai,
+          author  = {Ma, Han and Liang, Shunlin},
+          title   = {Development of the {GLASS} 250-m leaf area index product (version 6) from {MODIS} data using the bidirectional {LSTM} deep learning model},
+          journal = {Remote Sensing of Environment},
+          volume  = {273},
+          pages   = {112985},
+          year    = {2022},
+          doi     = {10.1016/j.rse.2022.112985}
+        }
+    - label: GLASS FAPAR V6 (250 m, 8일)
+      text: >-
+        Ma, H., Liang, S., Xiong, C., Wang, Q., Jia, A., Li, B. (2022): Global land surface 250 m 8 d fraction of absorbed photosynthetically active radiation (FAPAR) product from 2000 to 2021.
+        Earth System Science Data, 14(12), 5333–5347.
+      doi: 10.5194/essd-14-5333-2022
+      bibtex: |
+        @article{ma2022glassfapar,
+          author  = {Ma, Han and Liang, Shunlin and Xiong, Changhao and Wang, Qian and Jia, Aolin and Li, Bing},
+          title   = {Global land surface 250 m 8 d fraction of absorbed photosynthetically active radiation ({FAPAR}) product from 2000 to 2021},
+          journal = {Earth System Science Data},
+          volume  = {14},
+          number  = {12},
+          pages   = {5333--5347},
+          year    = {2022},
+          doi     = {10.5194/essd-14-5333-2022}
+        }
+  acknowledgement: >-
+    GLASS는 대부분의 제품에 데이터셋 DOI가 없으므로, 제품군 개요 논문(Liang et al., 2021)과 쓴 변수의 알고리즘 논문(HKU 'Algorithms' 페이지 참고)을 인용하고
+    본문에 제품 이름·판(V숫자)·해상도·받은 곳(HKU 아카이브 등)과 접근 날짜를 밝히세요.
+
+notices: []
+
+links:
+  - name: HKU GLASS 다운로드 페이지 (제품·판·기간 표)
+    url: https://glass.hku.hk/download.html
+  - name: HKU GLASS 개요
+    url: https://glass.hku.hk/overview.html
+  - name: HKU GLASS 알고리즘·참고문헌
+    url: https://glass.hku.hk/algorithms.html
+  - name: GLASS HDF 파일 이름 규칙 (PDF)
+    url: https://glass.hku.hk/pdf/download/HDF%20File%20Naming%20Convention.pdf
+  - name: BNU GLASS LAI 소개 (척도 인수·품질 비트)
+    url: https://glass-product.bnu.edu.cn/introduction/LAI.html
+  - name: BNU GLASS 알베도 소개 (층 이름·척도 인수)
+    url: https://glass-product.bnu.edu.cn/introduction/abd.html
+
+watch_urls:
+  - https://glass.hku.hk/download.html
+  - https://glass-product.bnu.edu.cn/news.html
+
+last_verified: "2026-10-13"

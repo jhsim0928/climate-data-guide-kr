@@ -1,0 +1,419 @@
+# ─────────────────────────────────────────────────────────────
+# GFED (Global Fire Emissions Database) — 데이터셋 정보 파일
+# 지면 탭 '산불'에 싣습니다. 현재 판은 GFED5.1(1997~2022) + GFED5.1NRT(2023~, 베타)이고, 이전 판 GFED4.1s도 아직 배포됩니다.
+# GFED4.1s → GFED5 비교는 같은 페이지 안 transitions(to_id 없음)에 적었습니다.
+# 수정 후에는 공식 페이지에서 확인한 날짜로 last_verified 를 갱신하세요.
+# ─────────────────────────────────────────────────────────────
+id: gfed
+name: "GFED"
+full_name: Global Fire Emissions Database version 5 (GFED5.1 / GFED5.1NRT, 위성 연소 면적 기반 전지구 화재 배출량 자료, 0.25°)
+category: analysis
+domain: land
+group: 산불
+order: 20
+domains: [육지, 대기, 에어로졸]
+provider: 바헤닝언대학교(WUR)·UC 어바인·메릴랜드대학교·NASA GSFC GFED 연구진 (globalfiredata.org)
+
+status: active
+status_note: >-
+  현재 판은 GFED5로, 1997~2022년은 논문과 함께 확정된 GFED5.1, 2023년 이후는 VIIRS 활성 화재로 연소 면적·배출량을 추정하는 근실시간 확장판
+  GFED5.1NRT가 매일 갱신됩니다. 공식 사이트는 2023년 이후 자료를 '베타'로 표시하며 관련 논문(Chen et al., ESSD)이 승인될 때까지 바뀔 수 있다고 안내합니다.
+  이전 판 GFED4.1s(2017년 이후는 MODIS 활성 화재 기반 베타)도 내려받을 수 있지만, 연구진은 가능하면 GFED5를 쓰라고 권합니다.
+
+period:
+  start: "1997-01"
+  end: present
+  note: >-
+    GFED5.1은 1997~2022년(1997~2000년은 ATSR·TRMM VIRS 활성 화재로 추정한 1° 자료, 2001년부터 0.25°)이고, 2023년부터는 GFED5.1NRT가 이어집니다
+    (Zenodo 재처리본은 2023~2024년, 그 이후는 사이트 SFTP에서 매일 갱신). GFED4.1s는 1997~2016년이 연소 면적 기반, 2017~2023년이 베타 파일입니다
+    (2026-10-13 웹 디렉터리 기준 최신 GFED4.1s_2023_beta, 2024-01-26 갱신).
+
+resolution:
+  spatial_short: "28 km (0.25°)"
+  temporal_short: "1일"
+  spatial: >-
+    전지구 0.25° × 0.25° 위경도 격자(720 × 1440, 격자 중심 -89.875~89.875°, -179.875~179.875°), 2001년부터.
+    1997~2000년은 불확실성이 커서 1° × 1° 격자로만 제공합니다. GFED4.1s도 0.25° 격자입니다.
+  vertical: 지표 배출(연직 분포 없음)
+  temporal: >-
+    월(연소 면적·배출량) / 일(GFED5.1 일별 배출량 파일, GFED5.1NRT 일·월). GFED4.1s는 월자료에 일별 비율(daily_fraction)과
+    3시간 일변화 비율(diurnal_cycle, 2003년~)을 곱해 일·3시간 값을 만듭니다.
+
+update: "GFED5.1(1997~2022)은 고정 / GFED5.1NRT(2023~)는 매일 갱신, 과학 품질 VIIRS 자료가 나오면 비정기적으로 재처리 / GFED4.1s는 2024-01 이후 갱신 없음"
+license: GFED5.1·GFED5.1NRT는 CC BY 4.0(Zenodo 기록·파일 속성). 무료이며 공동저자 요구는 없고, FAQ의 인용 안내를 따르면 됩니다
+account_required: false
+
+summary: >-
+  GFED는 위성 연소 면적에 생지화학 모델로 계산한 연료 소비량과 배출계수를 곱해, 전지구 화재의 탄소·미량기체·에어로졸 배출량을 0.25° 격자로 만든 자료입니다.
+  GFED5는 MODIS MCD64A1 C6.1에 Landsat·Sentinel-2로 보정한 누락·오탐 보정, 활성 화재 기반 소규모 화재, 농경지 연소(GloCAB)를 더해 연소 면적을 크게 늘렸고,
+  배출계수와 연료 소비도 새로 정리했습니다. 대기화학·대기질 모델의 화재 배출 입력, 탄소순환 수지(Global Carbon Project 등), IPCC 평가에 널리 쓰입니다.
+
+time_convention:
+  summary: >-
+    월자료는 그달 전체의 연소 면적·배출량 합계(누적)이고, GFED5.1 일별 파일은 그날 하루(UTC 기준 날짜)의 배출 합계입니다.
+    2023년 이후 GFED5.1NRT는 VIIRS(Suomi NPP·NOAA-20, 오후 1시 30분 무렵 통과) 활성 화재의 '순간' 탐지 개수를 생물군계·지역별 환산표로
+    하루 연소 면적·배출량으로 바꾼 값이며, 하루보다 짧은 시간 해상도는 제공하지 않습니다.
+  points:
+    - "GFED4.1s의 `C`·`DM`은 단위 면적당 월 배출(g C m-2 month-1, kg DM m-2 month-1)이므로, 지역 합계는 `grid_cell_area`(m2)를 곱해 더합니다."
+    - "GFED4.1s의 일·3시간 값은 월 배출 × `daily_fraction`(그날 비율) × `diurnal_cycle`(8개 3시간 UTC 구간 비율)로 계산합니다(2003년부터). 일변화는 한 달 내내 같은 모양입니다."
+    - "GFED5.1 일별 파일의 단위 속성은 'g <물질> per day' 형식입니다(예: `CO2` = 'g CO2 per day'). 면적당 값인지 격자 칸 합계인지는 받은 파일의 속성과 README로 확인하세요."
+    - "GFED5.0 연소 면적 파일(BAYYYYMM.nc)의 값은 격자 칸당 그달 연소 면적(km2)입니다. 전지구 합계(Mha)는 합을 1e6으로 나눕니다."
+    - "2023년 이후(GFED5.1NRT)는 연료 소비량을 2013~2022년 평균으로 고정하고 토지피복도 바꾸지 않습니다. 그 전 기간과 산출 방식이 다릅니다."
+  source: https://www.globalfiredata.org/index.html
+  source_name: "GFED 공식 사이트 + GFED4s Readme + GFED5 Zenodo README + van der Werf et al. (2025)·Chen et al. (2026) 논문"
+
+variables:
+  note: >-
+    GFED5.1 일별 배출 파일(GFED5.1_daily_YYYY-MM.nc)에는 40종의 물질별 변수가 같은 이름 규칙으로 들어 있습니다. GFED5.1 월별 파일의 변수 이름은
+    공개 문서에서 확인하지 못해, 확인된 GFED5.0 연소 면적 파일과 GFED4.1s(HDF5, 그룹 경로 포함) 변수를 함께 적었습니다.
+  full_list: https://doi.org/10.1038/s41597-025-06127-w
+  groups:
+    - name: GFED5.1 일별 배출량 (GFED5.1_daily_YYYY-MM.nc, 0.25°)
+      kind: accum
+      period: 일
+      items:
+        - text: "건물질(dry matter) 연소량 — `DM` (g DM per day)"
+          std: [fire_emissions]
+        - text: "탄소 배출 — `C` (g C per day)"
+          std: [fire_emissions]
+        - text: "이산화탄소 배출 — `CO2` (g CO2 per day)"
+          std: [fire_emissions]
+        - text: "일산화탄소 배출 — `CO` (g CO per day)"
+          std: [fire_emissions]
+        - text: "메탄 배출 — `CH4` (g CH4 per day)"
+          std: [fire_emissions]
+        - text: "질소산화물 배출(NO 기준) — `NOx` (g NOx per day)"
+          std: [fire_emissions]
+        - text: "PM2.5 배출 — `PM2.5` (g PM2.5 per day)"
+          std: [fire_emissions]
+        - text: "블랙카본·유기탄소·총 탄소입자 배출 — `BC`, `OC`, `TPC` (g per day)"
+          std: [fire_emissions]
+        - text: "기타 미량기체 — `N2O`, `NH3`, `SO2`, `H2`, `NMOC_g`, `HCN`, `CH2O`, `C2H6`, `C5H8`, `C10H16` 등 (g per day)"
+          std: [fire_emissions]
+    - name: GFED5.0 연소 면적 (BAYYYYMM.nc, Chen et al. 2023 Zenodo, 2001~2020 0.25°)
+      kind: accum
+      period: 월
+      items:
+        - text: "총 연소 면적 — `Total` (km2, 격자 칸당)"
+          note: 1997~2000년(1°)은 이 변수만 제공
+          std: [burned_area]
+        - text: "일반 연소 면적(토지피복 17종별) — `Norm` (km2)"
+          note: "차원 (time, iLCT, lat, lon). iLCT 0~19 중 17종 사용"
+          std: [burned_area]
+        - text: "농경지·삼림 벌채·이탄지 연소 면적 — `Crop`, `Defo`, `Peat` (km2)"
+          std: [burned_area]
+    - name: GFED4.1s (GFED4.1s_YYYY.hdf5, 월 그룹 01~12)
+      kind: accum
+      period: 월
+      items:
+        - text: "연소 비율 — `burned_area/MM/burned_fraction` (격자 칸 대비 비율)"
+          note: 소규모 화재 연소 면적(시험적 추정) 포함
+          std: [burned_area]
+        - text: "탄소 배출 — `emissions/MM/C` (g C m-2 month-1)"
+          std: [fire_emissions]
+        - text: "건물질 연소량 — `emissions/MM/DM` (kg DM m-2 month-1)"
+          std: [fire_emissions]
+        - text: "소규모 화재 배출 비율 — `emissions/MM/small_fire_fraction` (무차원)"
+          kind: mean
+          std: []
+        - text: "화재 유형별 배출 비율 — `emissions/MM/partitioning/C_SAVA` 등 SAVA·BORF·TEMF·DEFO·PEAT·AGRI (무차원)"
+          kind: mean
+          std: []
+        - text: "일별 배출 비율 — `emissions/MM/daily_fraction`, 3시간 일변화 비율 — `diurnal_cycle` (무차원, 2003~)"
+          kind: mean
+          std: []
+        - text: "화재 탄소·순1차생산량·종속영양 호흡 — `biosphere/MM/BB`, `NPP`, `Rh` (g C m-2 month-1)"
+          std: [fire_emissions, carbon_flux]
+    - name: 고정 자료 (GFED4.1s ancill 그룹)
+      kind: static
+      items:
+        - text: "격자 칸 면적 — `ancill/grid_cell_area` (m2)"
+          std: []
+        - text: "GFED 14개 기본 권역 — `ancill/basis_regions`"
+          std: []
+
+access:
+  - name: GFED 공식 사이트 — GFED5 격자 파일 (SFTP)
+    url: https://www.globalfiredata.org/data.html
+    method: SFTP (서버 ftp.prd.dip.wur.nl, 포트 1022)
+    note: >-
+      GFED5.1(1997~2022)과 GFED5.1NRT(2023~, reprocessed·update 디렉터리) netCDF4 파일이 있습니다. 공개 접속 정보는
+      https://www.globalfiredata.org/ancill/GFED5_SFTP_info.txt 에 있습니다(포트 1022 주의).
+  - name: Zenodo — GFED5.1 (논문 자료)
+    url: https://doi.org/10.5281/zenodo.16794692
+    method: HTTPS 다운로드 (zip 4개, 약 20.5 GB)
+    note: GFED5.1_monthly(1.7 GB, 1997~2022 월 연소 면적·배출), GFED5.1_daily(18.4 GB, 일 배출), GFED5.1_ecosystem(2002~2022 유형별 연소 면적·탄소 배출), GFED5.1_code
+  - name: Zenodo — GFED5NRT (근실시간 확장, 재처리본)
+    url: https://doi.org/10.5281/zenodo.18702700
+    method: HTTPS 다운로드
+    note: 2023~2024년 일·월 자료. 물질별(Species)·생태계별(Ecosystem) 파일을 위성 조합별(CMB 결합, VNP Suomi NPP, VJ1 NOAA-20)로 나눠 제공합니다.
+  - name: GFED 요약표 (전지구·권역별 연 배출량)
+    url: https://www.globalfiredata.org/tables
+    method: 텍스트 표 다운로드
+  - name: GFED4.1s (이전 판, HDF5)
+    url: https://www.geo.vu.nl/~gwerf/GFED/GFED4/
+    method: HTTPS 디렉터리 다운로드
+    note: GFED4.1s_1997~2016.hdf5와 GFED4.1s_2017~2023_beta.hdf5, Readme.pdf, ancill(배출계수 표)가 있습니다.
+  - name: ORNL DAAC — GFED4.1 (1997~2016)
+    url: https://doi.org/10.3334/ORNLDAAC/1293
+    method: Earthdata 로그인 후 다운로드
+    note: 소규모 화재를 뺀 GFED4 월·일 연소 면적(HDF)과 GFED4.1s 연 파일(1997~2015)을 보관한 NASA 보관본입니다.
+
+example:
+  lang: python
+  note: >-
+    GFED4.1s HDF5를 받아 연간 전지구 탄소 배출량을 계산하고, SFTP나 Zenodo에서 받은 GFED5.1 일별 파일을 xarray로 여는 예입니다.
+    GFED5.1 파일 이름과 변수는 받은 판의 README로 다시 확인하세요.
+  code: |
+    # pip install h5py numpy requests xarray netCDF4
+    import h5py
+    import numpy as np
+    import requests
+    import xarray as xr
+
+    # 1) GFED4.1s: 2015년 전지구 탄소 배출량
+    url = "https://www.geo.vu.nl/~gwerf/GFED/GFED4/GFED4.1s_2015.hdf5"
+    with open("GFED4.1s_2015.hdf5", "wb") as out:
+        out.write(requests.get(url, timeout=600).content)
+
+    with h5py.File("GFED4.1s_2015.hdf5", "r") as f:
+        area = f["ancill/grid_cell_area"][:]                          # m2
+        c = sum(f[f"emissions/{m:02d}/C"][:] for m in range(1, 13))   # g C m-2 (월 합계를 더함)
+        print("2015 전지구 탄소 배출:", (c * area).sum() / 1e15, "Pg C")
+
+    # 2) GFED5.1 일별 배출 파일 (SFTP 또는 Zenodo GFED5.1_daily.zip에서 받은 파일)
+    ds = xr.open_dataset("GFED5.1_daily_2020-01.nc")
+    co2 = ds["CO2"]                        # (time, lat, lon), 0.25°
+    print(co2.attrs.get("units"))          # 'g CO2 per day' — 면적당/칸당 여부 확인
+    print(co2.sel(lat=slice(33, 39), lon=slice(124, 132)).sum(("lat", "lon")))
+
+tips:
+  - "GFED5는 GFED4s보다 연소 면적이 약 61%, 탄소 배출이 약 65% 많습니다(대부분 소규모 화재·누락 보정·농경지 연소 반영). 두 판의 값을 섞거나, GFED4s 기준으로 만든 모델 설정에 GFED5를 그대로 넣지 마세요."
+  - "2023년 이후(GFED5.1NRT)는 연소 면적을 직접 관측한 것이 아니라 VIIRS 활성 화재 개수로 환산한 값이고, 공식 사이트가 베타로 표시합니다. 2022년 이전과 이어 붙여 추세를 볼 때 이 방식 변화를 밝히세요."
+  - "GFED5NRT의 결합(CMB) 자료는 Suomi NPP·NOAA-20 중 하나가 없으면 남은 위성만으로 계산하도록 설계되어 있습니다. Suomi NPP 자료 공급이 2026년 11월 1일 끝나므로 그 뒤 값은 NOAA-20 단독에 가까워집니다."
+  - "1997~2000년은 1° 자료이며 ATSR·VIRS 활성 화재로 추정한 값이라 불확실성이 큽니다. 1998년(VIRS 도입)·2001년(Terra MODIS)·2003년(Aqua MODIS)에 자료 불연속이 있다고 README가 경고합니다."
+  - "농경지 연소 배출은 가장 불확실한 부분입니다(연료 소비 현장 자료가 매우 적음). 한국·중국 등 농경지 소각 배출을 따로 볼 때는 불확실성을 꼭 언급하세요."
+  - "GFED4.1s 2017년 이후 _beta 파일은 MODIS 활성 화재와 2003~2016년 관계로 추정한 값이며 `DM`·`C`만 들어 있습니다. 물질별 배출은 `DM` × 배출계수(ancill 폴더 표) × 유형별 비율(partitioning)로 직접 계산합니다."
+  - "GFED4.1s HDF5는 위도가 북쪽(89.875°)에서 남쪽으로 내려가는 순서입니다. 다른 자료와 겹칠 때 위도 방향을 확인하세요."
+  - "연구진은 0.25° 격자 하나하나나 국가 단위 이하의 작은 규모로 갈수록 불확실성이 커진다고 안내합니다. 넓은 지역·긴 기간의 합계로 쓰는 것이 안전합니다."
+
+citations:
+  dataset:
+    - label: GFED5.1 자료 (Zenodo)
+      text: >-
+        van der Werf, G., Randerson, J., van Wees, D., Chen, Y., Giglio, L., Hall, J., Vernooij, R., Mu, M., Binte Shahid, S., Barsanti, K., Yokelson, R.,
+        Morton, D. (2025). Global Fire Emissions Database version 5 (GFED5) [Data set]. Zenodo. https://doi.org/10.5281/zenodo.16794692
+      doi: 10.5281/zenodo.16794692
+      bibtex: |
+        @misc{gfed51_data,
+          author    = {van der Werf, Guido and Randerson, James and van Wees, Dave and Chen, Yang and Giglio, Louis and Hall, Joanne and Vernooij, Roland and Mu, Mingquan and Binte Shahid, Samiha and Barsanti, Kelley and Yokelson, Robert and Morton, Douglas},
+          title     = {Global Fire Emissions Database version 5 ({GFED5})},
+          year      = {2025},
+          publisher = {Zenodo},
+          doi       = {10.5281/zenodo.16794692}
+        }
+    - label: GFED5NRT 자료 (Zenodo, V5.1)
+      text: >-
+        Chen, Y., van der Werf, G. R., Mu, M., van Wees, D., Hall, J. V., Giglio, L., Vernooij, R., Morton, D. C., Xu, L., Liu, T., Scholten, R. C.,
+        Coffield, S. R., Follette-Cook, M. B., Ott, L., Randerson, J. T. (2026). GFED5NRT: Global Fire Emissions Database Near-Real-Time Extension (V5.1) [Data set].
+        Zenodo. https://doi.org/10.5281/zenodo.18702700
+      doi: 10.5281/zenodo.18702700
+      bibtex: |
+        @misc{gfed5nrt_data,
+          author    = {Chen, Yang and van der Werf, Guido R. and Mu, Mingquan and van Wees, Dave and Hall, Joanne V. and Giglio, Louis and Vernooij, Roland and Morton, Douglas C. and Xu, Li and Liu, Tianjia and Scholten, Rebecca C. and Coffield, Shane R. and Follette-Cook, Melanie B. and Ott, Lesley and Randerson, James T.},
+          title     = {{GFED5NRT}: Global Fire Emissions Database Near-Real-Time Extension},
+          version   = {V5.1},
+          year      = {2026},
+          publisher = {Zenodo},
+          doi       = {10.5281/zenodo.18702700}
+        }
+    - label: GFED4.1 (ORNL DAAC, 1997~2016)
+      text: >-
+        Randerson, J.T., G.R. van der Werf, L. Giglio, G.J. Collatz, and P.S. Kasibhatla. 2018. Global Fire Emissions Database, Version 4.1 (GFEDv4).
+        ORNL DAAC, Oak Ridge, Tennessee, USA. https://doi.org/10.3334/ORNLDAAC/1293
+      doi: 10.3334/ORNLDAAC/1293
+      bibtex: |
+        @misc{gfed41_ornl,
+          author    = {Randerson, J. T. and van der Werf, G. R. and Giglio, L. and Collatz, G. J. and Kasibhatla, P. S.},
+          title     = {Global Fire Emissions Database, Version 4.1 ({GFEDv4})},
+          year      = {2018},
+          publisher = {ORNL DAAC},
+          address   = {Oak Ridge, Tennessee, USA},
+          doi       = {10.3334/ORNLDAAC/1293}
+        }
+  papers:
+    - label: GFED5 배출량 (2022년까지 배출량을 쓸 때)
+      text: >-
+        van der Werf, G. R., Randerson, J. T., van Wees, D., Chen, Y., Giglio, L., Hall, J., Vernooij, R., Mu, M., Binte Shahid, S., Barsanti, K. C.,
+        Yokelson, R., Morton, D. C. (2025): Landscape fire emissions from the 5th version of the Global Fire Emissions Database (GFED5).
+        Scientific Data, 12, 1870. (출판사 정정: Scientific Data, 13, 44, 2026)
+      doi: 10.1038/s41597-025-06127-w
+      bibtex: |
+        @article{vanderwerf2025gfed5,
+          author  = {van der Werf, Guido R. and Randerson, James T. and van Wees, Dave and Chen, Yang and Giglio, Louis and Hall, Joanne and Vernooij, Roland and Mu, Mingquan and Binte Shahid, Samiha and Barsanti, Kelley C. and Yokelson, Robert and Morton, Douglas C.},
+          title   = {Landscape fire emissions from the 5th version of the Global Fire Emissions Database ({GFED5})},
+          journal = {Scientific Data},
+          volume  = {12},
+          pages   = {1870},
+          year    = {2025},
+          doi     = {10.1038/s41597-025-06127-w}
+        }
+    - label: GFED5 연소 면적 (2022년까지 연소 면적을 쓸 때)
+      text: >-
+        Chen, Y., Hall, J., van Wees, D., Andela, N., Hantson, S., Giglio, L., van der Werf, G. R., Morton, D. C., Randerson, J. T. (2023):
+        Multi-decadal trends and variability in burned area from the fifth version of the Global Fire Emissions Database (GFED5).
+        Earth System Science Data, 15, 5227–5259.
+      doi: 10.5194/essd-15-5227-2023
+      bibtex: |
+        @article{chen2023gfed5ba,
+          author  = {Chen, Yang and Hall, Joanne and van Wees, Dave and Andela, Niels and Hantson, Stijn and Giglio, Louis and van der Werf, Guido R. and Morton, Douglas C. and Randerson, James T.},
+          title   = {Multi-decadal trends and variability in burned area from the fifth version of the Global Fire Emissions Database ({GFED5})},
+          journal = {Earth System Science Data},
+          volume  = {15},
+          number  = {11},
+          pages   = {5227--5259},
+          year    = {2023},
+          doi     = {10.5194/essd-15-5227-2023}
+        }
+    - label: GFED5NRT (2023년 이후 자료를 쓸 때, ESSD 토론 원고 — 수정본 게재 승인)
+      text: >-
+        Chen, Y., van der Werf, G. R., Mu, M., van Wees, D., Hall, J. V., Giglio, L., Vernooij, R., Morton, D. C., Xu, L., Liu, T., Scholten, R. C.,
+        Coffield, S. R., Follette-Cook, M. B., Ott, L., Randerson, J. T. (2026): Tracking recent extremes and interannual variability of global fire emissions
+        using a near-real-time extension to the Global Fire Emissions Database. Earth System Science Data Discussions [preprint].
+      doi: 10.5194/essd-2026-158
+      bibtex: |
+        @article{chen2026gfed5nrt,
+          author  = {Chen, Yang and van der Werf, Guido R. and Mu, Mingquan and van Wees, Dave and Hall, Joanne V. and Giglio, Louis and Vernooij, Roland and Morton, Douglas C. and Xu, Li and Liu, Tianjia and Scholten, Rebecca C. and Coffield, Shane R. and Follette-Cook, Melanie B. and Ott, Lesley and Randerson, James T.},
+          title   = {Tracking recent extremes and interannual variability of global fire emissions using a near-real-time extension to the Global Fire Emissions Database},
+          journal = {Earth System Science Data Discussions},
+          year    = {2026},
+          doi     = {10.5194/essd-2026-158}
+        }
+    - label: GFED4s (이전 판)
+      text: >-
+        van der Werf, G. R., Randerson, J. T., Giglio, L., van Leeuwen, T. T., Chen, Y., Rogers, B. M., Mu, M., van Marle, M. J. E., Morton, D. C.,
+        Collatz, G. J., Yokelson, R. J., Kasibhatla, P. S. (2017): Global fire emissions estimates during 1997–2016. Earth System Science Data, 9, 697–720.
+      doi: 10.5194/essd-9-697-2017
+      bibtex: |
+        @article{vanderwerf2017gfed4s,
+          author  = {van der Werf, Guido R. and Randerson, James T. and Giglio, Louis and van Leeuwen, Thijs T. and Chen, Yang and Rogers, Brendan M. and Mu, Mingquan and van Marle, Margreet J. E. and Morton, Douglas C. and Collatz, G. James and Yokelson, Robert J. and Kasibhatla, Prasad S.},
+          title   = {Global fire emissions estimates during 1997--2016},
+          journal = {Earth System Science Data},
+          volume  = {9},
+          pages   = {697--720},
+          year    = {2017},
+          doi     = {10.5194/essd-9-697-2017}
+        }
+    - label: 소규모 화재 연소 면적 (GFED4s 방법)
+      text: >-
+        Randerson, J. T., Chen, Y., van der Werf, G. R., Rogers, B. M., Morton, D. C. (2012): Global burned area and biomass burning emissions from small fires.
+        Journal of Geophysical Research: Biogeosciences, 117, G04012.
+      doi: 10.1029/2012JG002128
+      bibtex: |
+        @article{randerson2012smallfires,
+          author  = {Randerson, J. T. and Chen, Y. and van der Werf, G. R. and Rogers, B. M. and Morton, D. C.},
+          title   = {Global burned area and biomass burning emissions from small fires},
+          journal = {Journal of Geophysical Research: Biogeosciences},
+          volume  = {117},
+          number  = {G4},
+          year    = {2012},
+          doi     = {10.1029/2012JG002128}
+        }
+  acknowledgement: >-
+    GFED FAQ의 안내에 따라, 2022년까지의 연소 면적은 Chen et al. (2023), 배출량은 van der Werf et al. (2025)을, 2023년 이후 연소 면적·배출량은 Chen et al. (2026)을
+    인용하고, 두 기간에 걸친 배출량을 쓰면 van der Werf et al. (2025)과 Chen et al. (2026)을 모두 인용합니다. 언론·발표 자료에는 GFED와 웹사이트 주소를 밝히세요.
+
+transitions:
+  - from: GFED4.1s
+    to: GFED5 (GFED5.1 + GFED5.1NRT)
+    status: completed
+    date: "2025-10"
+    summary: >-
+      GFED5는 GFED4 이후 가장 큰 개편으로, 연소 면적 입력과 배출계수를 모두 바꿔 전지구 연소 면적은 약 61%, 탄소 배출은 약 65% 커졌습니다.
+      연소 면적은 2023년(ESSD, Chen et al.), 배출량은 2025년(Scientific Data, van der Werf et al.)에 출판되었고, 2023년 이후는 VIIRS 활성 화재 기반 근실시간판이 이어집니다.
+      두 판은 크기가 크게 달라 같은 연구 안에서 섞으면 안 됩니다.
+    changes:
+      - aspect: 연소 면적 입력
+        before: "MODIS MCD64A1 Collection 5.1 + 활성 화재로 통계 추정한 소규모 화재(Randerson et al. 2012)"
+        after: "MCD64A1 C6.1 + Landsat·Sentinel-2로 보정한 누락·오탐 보정 + 활성 화재 기반 소규모 화재 + 농경지 연소 GloCAB(Hall et al. 2023)"
+      - aspect: 전지구 연소 면적
+        before: "GFED5가 GFED4s보다 약 61% 큼(2002–2016 겹치는 기간 비교)"
+        after: "연 774 ± 63 Mha(2001–2020, Chen et al. 2023), MCD64A1보다 약 93% 많음"
+      - aspect: 전지구 탄소 배출
+        before: "연 2.04 Pg C (van der Werf et al. 2025 표 7 비교값)"
+        after: "연 3.4 Pg C (2002–2022 평균, +65%)"
+      - aspect: 배출계수
+        before: "Akagi et al. (2011) 중심의 화재 유형별 값"
+        after: "NEIVA v1.1 6개 화재 유형 평균 + 사바나·초지의 CO2·CO·CH4·N2O는 기상·식생에 따라 변하는 동적 배출계수"
+      - aspect: 기간·최신 연도 처리
+        before: "1997–2016 연소 면적 기반 / 2017–2023 MODIS 활성 화재 기반 베타(DM·C만)"
+        after: "1997–2022 GFED5.1 / 2023~ VIIRS 활성 화재 기반 GFED5.1NRT(매일 갱신, 베타)"
+      - aspect: 해상도
+        before: "전 기간 0.25°, 월 + 일·3시간 비율"
+        after: "2001~ 0.25°, 1997–2000은 1° / 월·일 파일"
+      - aspect: 파일 형식·변수
+        before: "연도별 HDF5(GFED4.1s_YYYY.hdf5), 월 그룹 아래 `C`·`DM`(면적당), 물질별 배출은 사용자가 배출계수로 계산"
+        after: "netCDF4, 40종 물질별 변수(`CO2`, `CO`, `CH4`, `PM2.5` 등)를 바로 제공"
+      - aspect: 배포처·라이선스
+        before: "geo.vu.nl 웹 디렉터리, ORNL DAAC(1997–2016)"
+        after: "globalfiredata.org SFTP(포트 1022) + Zenodo, CC BY 4.0"
+    impacts:
+      - GFED4s로 맞춘 대기화학 모델 배출이나 탄소 수지를 GFED5로 바꾸면 화재 배출이 크게 늘어나므로, 모델 결과를 다시 평가하세요.
+      - GFED4.1s의 2017년 이후 베타 값과 GFED5.1을 한 시계열로 섞지 마세요. 전 기간을 한 판으로 통일하세요.
+      - 2022년까지(GFED5.1)와 2023년 이후(GFED5.1NRT)는 산출 방식이 달라, 이어 쓸 때 두 논문을 모두 인용하고 방식 변화를 밝히세요.
+    sources:
+      - name: van der Werf et al. (2025), Scientific Data
+        url: https://doi.org/10.1038/s41597-025-06127-w
+      - name: Chen et al. (2023), ESSD
+        url: https://doi.org/10.5194/essd-15-5227-2023
+      - name: GFED Data 페이지 (GFED4s 설명·GFED5 권장)
+        url: https://www.globalfiredata.org/data.html
+      - name: Chen et al. (2026), ESSD 토론 원고 (GFED5NRT)
+        url: https://doi.org/10.5194/essd-2026-158
+
+notices:
+  - date: "2026-09-04"
+    level: info
+    title: GFED 웹사이트 개편 — 지역·국가·주 단위 현재 화재 상황 비교
+    body: >-
+      현재 화재 상황을 예년과 비교하기 쉽도록 사이트를 새로 만들었습니다. 권역·국가·대륙, 일부는 주(州) 단위까지 배출량 그래프를 볼 수 있고,
+      그래프의 바탕 자료(텍스트)와 PDF 그림을 내려받을 수 있습니다.
+    source: https://www.globalfiredata.org/news.html
+  - date: "2026-02-19"
+    level: warning
+    title: GFED5NRT 2023~2024 재처리본 공개 — 2023년 이후 자료는 베타, 논문 승인 전까지 바뀔 수 있음
+    body: >-
+      2023년 이후 배출량은 VIIRS 활성 화재 탐지를 2012~2022년 관계로 연소 면적·배출량에 환산한 근실시간 확장판(GFED5NRT)이며, 2023~2024년 재처리본이 Zenodo에 공개되었습니다.
+      공식 사이트는 이 기간 자료를 베타로 표시하고, 동반 논문(ESSD)이 승인될 때까지 값이 바뀔 수 있다고 안내합니다.
+    source: https://doi.org/10.5281/zenodo.18702700
+  - date: "2025-11-28"
+    level: info
+    title: GFED5 배출량 논문 출판 — GFED5.1(1997~2022) 확정 공개
+    body: >-
+      GFED5 배출량 논문이 Scientific Data에 실리면서 1997~2022년 월·일 배출량과 유형별 연소 면적·탄소 배출 자료(GFED5.1)가 Zenodo에 함께 공개되었습니다(자료 공개 2025-10-01).
+      2026년 1월 15일 출판사 정정이 나왔습니다.
+    source: https://doi.org/10.1038/s41597-025-06127-w
+
+links:
+  - name: GFED 공식 사이트
+    url: https://www.globalfiredata.org/
+  - name: GFED Data 페이지
+    url: https://www.globalfiredata.org/data.html
+  - name: GFED FAQ (인용 안내)
+    url: https://www.globalfiredata.org/faq.html
+  - name: GFED 현재 화재 상황
+    url: https://www.globalfiredata.org/current.html
+  - name: GFED5 연소 면적 README (GFED5.0, Zenodo)
+    url: https://zenodo.org/records/7668424
+  - name: GFED4s Readme (HDF5 구조·배출 계산법)
+    url: https://www.geo.vu.nl/~gwerf/GFED/GFED4/Readme.pdf
+  - name: ORNL DAAC GFED4.1 사용자 안내서
+    url: https://daac.ornl.gov/VEGETATION/guides/fire_emissions_v4_R1.html
+  - name: GFED5NRT 코드 (GitHub)
+    url: https://github.com/ychenzgithub/GFED5NRT
+
+watch_urls:
+  - https://www.globalfiredata.org/news.html
+  - https://www.globalfiredata.org/data.html
+
+last_verified: "2026-10-13"

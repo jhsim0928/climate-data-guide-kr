@@ -1,0 +1,371 @@
+# ─────────────────────────────────────────────────────────────
+# FLDAS — dataset information file
+# Listed under the Land tab, 'Land reanalyses & data assimilation'. Covers the global Noah 0.1° monthly products (final and preliminary) and the Central Asia Noah-MP 0.01° daily product.
+# After editing, update last_verified to the date you checked the official pages.
+# ─────────────────────────────────────────────────────────────
+id: fldas
+name: "FLDAS"
+full_name: FEWS NET Land Data Assimilation System (FLDAS — NASA land modelling system for the Famine Early Warning Systems Network; global 0.1° monthly and Central Asia 0.01° daily)
+category: reanalysis
+domain: land
+group: 육상 재분석·자료동화
+order: 21
+domains: [육지, 수문]
+provider: NASA GSFC Hydrological Sciences Laboratory (HSL) / GES DISC (in support of FEWS NET)
+
+status: active
+status_note: >-
+  The global Noah 0.1° monthly product is updated every month in a final version (MERRA-2 and CHIRPS, 1982 onward) and a preliminary version (GDAS and CHIRPS-Prelim, 2019 onward),
+  and the Central Asia Noah-MP 0.01° daily product is produced every day with a one-day lag. On 2026-10-13 the final version reached August 2026, the preliminary version September 2026,
+  and the Central Asia daily data 11 October 2026. The African regional products (retired in 2019) and the Central Asia Noah 3.6 daily product (production stopped 2023-10-01) are no longer offered,
+  and the GES DISC on-premises server that hosts the files (hydro1) may close after 30 September 2026.
+
+period:
+  start: "1982-01"
+  end: present
+  note: >-
+    The global final version (FLDAS_NOAH01_C_GL_M) and the anomalies (MA) start in 1982-01, the preliminary version (FLDAS_NOAH01_CP_GL_M) in 2019-01, and the monthly climatology (MC) averages 1982–2016.
+    The Central Asia daily product (FLDAS_NOAHMP001_G_CA_D) starts on 2000-10-01. On 2026-10-13 the data extended to 2026-08 (final), 2026-09 (preliminary) and 2026-10-11 (Central Asia daily).
+
+resolution:
+  spatial_short: "11 km (0.1°)"
+  temporal_short: "1일"
+  spatial: >-
+    Global: 0.1° × 0.1° latitude-longitude grid, 60°S–90°N, 180°W–180°E (quasi-global land). Central Asia: 0.01° × 0.01° grid (3500 × 7000), 21–56°N, 30–100°E
+    (cell centres from 21.005°N, 30.005°E to 55.995°N, 99.995°E).
+  vertical: Single surface level + 4 soil layers (0–10, 10–40, 40–100, 100–200 cm)
+  temporal: "Monthly (global final and preliminary, monthly anomalies, 1982–2016 monthly climatology) / daily (Central Asia Noah-MP)"
+
+update: "Global preliminary version typically by the 5th of the following month, final version by the 20th (two runs per month) / Central Asia daily product every day with about a one-day lag"
+license: NASA Earth science open data — free of charge. Downloading from GES DISC requires a free NASA Earthdata Login; please cite the product DOI
+account_required: true
+
+summary: >-
+  FLDAS is a land surface modelling system that NASA GSFC runs with its Land Information System (LIS) for the USAID-funded Famine Early Warning Systems Network (FEWS NET).
+  It produces soil moisture, evapotranspiration, runoff and snow to support food and water security decisions in data-sparse developing countries. The main public product is
+  a global 0.1° monthly record from 1982, made by driving Noah 3.6.1 with CHIRPS precipitation and MERRA-2 (final) or GDAS (preliminary) meteorology; Central Asia, including Afghanistan,
+  has a 0.01° daily product from Noah-MP 4.0.1. Despite the name, the public products are open-loop simulations without data assimilation.
+
+time_convention:
+  summary: >-
+    Variable suffixes indicate the time meaning. `_tavg` is the average over the output interval (the month in monthly files, the day in the Central Asia daily files), and `_inst` is an
+    instantaneous value. Water fluxes such as precipitation, evapotranspiration and runoff are stored as mean rates (kg m-2 s-1), not totals, so multiply by the number of seconds to get amounts.
+  points:
+    - "In monthly files, `Rainf_f_tavg`, `Evap_tavg`, `Qs_tavg`, `Qsb_tavg` and similar fields are monthly mean rates in kg m-2 s-1 (= mm s-1). Monthly total (mm) = value × 86400 × days in the month."
+    - "Soil moisture `SoilMoi*_tavg` is the period mean of volumetric water content (m3 m-3), unlike GLDAS, which uses kg m-2."
+    - "Only the snow fields `SWE_inst`, `SnowDepth_inst` and `SnowCover_inst` are instantaneous (`_inst`). The README does not say at which time within the period they are taken, so be careful when interpreting within-month changes."
+    - "The Central Asia daily product is written once per day and `_tavg` fields are daily means. The README does not define the day window; granule metadata give 00 UTC of the date to 00 UTC of the next day."
+    - "`RadT_tavg_max` and `RadT_tavg_min` in the Central Asia daily files are the daily maximum and minimum surface radiative temperature."
+    - "Monthly anomalies (MA) are each month minus the 1982–2016 climatology for that month (MC). The NASA LDAS web maps state a 1991–2020 baseline for their anomalies, so the reference periods differ."
+  source: https://docserver.gesdisc.eosdis.nasa.gov/public/project/hydrology/README_FLDAS.pdf
+  source_name: "README for FLDAS (last revised 2026-06-12) + README for FLDAS2 Noah-MP Central Asia (2024-08-13) + CMR collection and granule metadata"
+
+variables:
+  note: >-
+    Main variables from the GES DISC README tables (Tables 5a and 5c; FLDAS2 Table 6). Names are the netCDF variable names; variables with `_f` are forcing, not model output.
+    Some README entries differ between tables (e.g. the unit of `Qs_tavg`, or `Snowcover_inst` capitalisation in the Central Asia product), so check them in a downloaded file.
+  full_list: https://docserver.gesdisc.eosdis.nasa.gov/public/project/hydrology/README_FLDAS.pdf
+  groups:
+    - name: Water fluxes (global monthly, monthly mean rates)
+      kind: mean
+      period: Monthly
+      items:
+        - text: "Total precipitation rate (forcing, CHIRPS) — `Rainf_f_tavg` (kg m-2 s-1)"
+          note: Outside 50°S–50°N, MERRA-2 (final) or GDAS (preliminary) precipitation
+        - "Snowfall rate — `Snowf_tavg` (kg m-2 s-1)"
+        - "Evapotranspiration — `Evap_tavg` (kg m-2 s-1)"
+        - "Surface runoff — `Qs_tavg` (kg m-2 s-1)"
+        - "Subsurface (baseflow) runoff — `Qsb_tavg` (kg m-2 s-1)"
+    - name: Energy fluxes and surface (global monthly)
+      kind: mean
+      period: Monthly
+      items:
+        - "Latent heat flux — `Qle_tavg` (W m-2)"
+        - "Sensible heat flux — `Qh_tavg` (W m-2)"
+        - "Ground heat flux — `Qg_tavg` (W m-2)"
+        - "Net shortwave and longwave radiation — `Swnet_tavg`, `Lwnet_tavg` (W m-2)"
+        - "Surface radiative temperature — `RadT_tavg` (K)"
+    - name: Soil (global monthly, 4 layers)
+      kind: mean
+      period: Monthly
+      items:
+        - "Soil moisture, 4 layers — `SoilMoi00_10cm_tavg`, `SoilMoi10_40cm_tavg`, `SoilMoi40_100cm_tavg`, `SoilMoi100_200cm_tavg` (m3 m-3)"
+        - "Soil temperature, 4 layers — `SoilTemp00_10cm_tavg`, `SoilTemp10_40cm_tavg`, `SoilTemp40_100cm_tavg`, `SoilTemp100_200cm_tavg` (K)"
+    - name: Snow (global monthly, instantaneous)
+      kind: instant
+      items:
+        - "Snow water equivalent — `SWE_inst` (kg m-2)"
+        - "Snow depth — `SnowDepth_inst` (m)"
+        - "Snow cover — `SnowCover_inst`"
+    - name: Forcing (global monthly, monthly means)
+      kind: mean
+      period: Monthly
+      items:
+        - "Near-surface air temperature (forcing) — `Tair_f_tavg` (K)"
+        - "Specific humidity (forcing) — `Qair_f_tavg` (kg kg-1)"
+        - "Surface pressure (forcing) — `Psurf_f_tavg` (Pa)"
+        - "Near-surface wind speed (forcing) — `Wind_f_tavg` (m s-1)"
+        - "Downward shortwave and longwave radiation (forcing) — `SWdown_f_tavg`, `LWdown_f_tavg` (W m-2)"
+    - name: Central Asia Noah-MP daily (FLDAS_NOAHMP001_G_CA_D)
+      kind: mean
+      period: Daily
+      items:
+        - "Total precipitation rate — `Rainf_tavg` (kg m-2 s-1)"
+        - "Evapotranspiration — `Evap_tavg` (kg m-2 s-1)"
+        - "Surface and subsurface runoff — `Qs_tavg`, `Qsb_tavg` (kg m-2 s-1)"
+        - "Snowmelt — `Qsm_tavg` (kg m-2 s-1)"
+        - "Soil moisture, 4 layers — `SoilMoi00_10cm_tavg` to `SoilMoi100_200cm_tavg` (m3 m-3)"
+        - "Terrestrial water storage — `TWS_tavg` (mm)"
+        - text: "Daily maximum surface radiative temperature — `RadT_tavg_max` (K)"
+          kind: max
+        - text: "Daily minimum surface radiative temperature — `RadT_tavg_min` (K)"
+          kind: min
+        - text: "Snow water equivalent — `SWE_inst` (kg m-2)"
+          kind: instant
+    - name: Monthly anomalies and climatology (FLDAS_NOAH01_C_GL_MA, MC)
+      kind: mean
+      period: Monthly
+      items:
+        - text: "Total runoff — `Qtotal_tavg` (kg m-2 s-1)"
+          note: Only in the anomaly and climatology files
+        - "Evapotranspiration, precipitation, air temperature, 4-layer soil moisture — `Evap_tavg`, `Rainf_f_tavg`, `Tair_f_tavg`, `SoilMoi*_tavg`"
+
+access:
+  - name: NASA GES DISC — FLDAS dataset list
+    url: https://disc.gsfc.nasa.gov/datasets?keywords=FLDAS
+    method: HTTPS download / earthaccess / Earthdata Search / OPeNDAP / subsetting
+    note: >-
+      Global final FLDAS_NOAH01_C_GL_M, preliminary FLDAS_NOAH01_CP_GL_M, anomalies FLDAS_NOAH01_C_GL_MA, climatology FLDAS_NOAH01_C_GL_MC, and Central Asia daily FLDAS_NOAHMP001_G_CA_D,
+      all version 001. A free Earthdata Login is required. The old server (hydro1.gesdisc.eosdis.nasa.gov) may close after 30 September 2026, so switch to data.gesdisc.earthdata.nasa.gov or earthaccess.
+  - name: AWS us-west-2 direct access (S3)
+    url: https://data.gesdisc.earthdata.nasa.gov/s3credentials
+    method: Cloud storage (S3, in-region us-west-2 only)
+    note: "Example: s3://gesdisc-cumulus-prod-protected/FLDAS/FLDAS_NOAH01_C_GL_M.001/ — temporary credentials are required."
+  - name: NASA Giovanni
+    url: https://giovanni.gsfc.nasa.gov/giovanni/#dataKeyword=FLDAS
+    method: Web maps and time series; NetCDF, GeoTIFF and KMZ downloads
+    note: Lets you check area-mean time series and anomaly maps before downloading.
+  - name: NASA LDAS — FLDAS model descriptions
+    url: https://ldas.gsfc.nasa.gov/fldas
+    method: Documentation and maps
+    note: Describes the Global, Central Asia and Forecast systems and their parameter data. The 0.25° Africa and Middle East forecasts are available on request, not from a public archive.
+
+example:
+  lang: python
+  note: >-
+    Uses earthaccess to download the 2024 global final monthly files and compute monthly precipitation and evapotranspiration (mm) over Korea. You will be asked for your Earthdata credentials on the first run.
+    Check the coordinate names in the downloaded file (lon and lat are assumed below).
+  code: |
+    import earthaccess
+    import xarray as xr
+
+    earthaccess.login()  # free NASA Earthdata account
+    results = earthaccess.search_data(
+        short_name="FLDAS_NOAH01_C_GL_M", version="001",
+        temporal=("2024-01-01", "2024-12-31"),
+        bounding_box=(124, 33, 132, 39),   # (west, south, east, north)
+    )
+    files = earthaccess.download(results, "fldas_global_monthly")
+
+    ds = xr.open_mfdataset(files, combine="by_coords")
+    print(ds)                                   # check coordinate and variable names
+    sub = ds.sel(lon=slice(124, 132), lat=slice(33, 39))
+    days = sub["time"].dt.days_in_month
+
+    precip_mm = sub["Rainf_f_tavg"] * 86400 * days   # monthly mean rate (kg m-2 s-1) -> monthly total (mm)
+    et_mm = sub["Evap_tavg"] * 86400 * days          # monthly evapotranspiration (mm)
+    print((precip_mm - et_mm).mean(["lat", "lon"]).values)
+
+tips:
+  - "The preliminary (CP: GDAS, CHIRPS-Prelim) and final (C: MERRA-2, CHIRPS) versions use different forcing and give different values for the same month. The preliminary run restarts each month from the previous month's final state, so if you filled the latest months with preliminary data, replace them once the final data appear and state which version you used."
+  - "CHIRPS covers only 50°S–50°N; poleward of that, MERRA-2 (final) or GDAS (preliminary) precipitation is used. Precipitation characteristics can change near the 50° latitude lines."
+  - "Soil moisture is in m3 m-3 (volumetric). Convert units before comparing with GLDAS (kg m-2)."
+  - "Water fluxes are rates in kg m-2 s-1. Monthly totals are × 86400 × days in the month; summing the raw values without converting gives numbers hundreds of thousands of times too small."
+  - "The anomaly files (MA) use the 1982–2016 climatology (MC). Anomalies on the NASA LDAS web maps or FEWS NET products may use other baselines (e.g. 1991–2020), so state your baseline when you compute your own."
+  - "In November 2020, invalid model values over inland water were masked with the MODIS (MOD44W) land mask. Re-download data obtained before then (forcing variables `_f` were not affected)."
+  - "NASA LDAS reports reprocessing of the global preliminary run for May 2023, Central Asia Noah 3.6 for 2023-05-22 to 06-25, and Central Asia Noah-MP for 2021-10-01 to 2023-03-25 and 2023-05-22 to 06-21 (no posting date shown). Re-download these periods if you obtained them earlier."
+  - "The NASA LDAS FAQ still lists East, Southern and West Africa regional domains, but according to the GES DISC README the regional products were retired in 2019 and replaced by the global product."
+
+citations:
+  dataset:
+    - label: FLDAS global monthly, final (MERRA-2 and CHIRPS)
+      text: >-
+        Amy McNally NASA/GSFC/HSL (2018), FLDAS Noah Land Surface Model L4 Global Monthly 0.1 x 0.1 degree (MERRA-2 and CHIRPS), Greenbelt, MD, USA,
+        Goddard Earth Sciences Data and Information Services Center (GES DISC), Accessed: [Data Access Date], 10.5067/5NHC22T9375G
+      doi: 10.5067/5NHC22T9375G
+      bibtex: |
+        @misc{fldas_noah01_c_gl_m,
+          author    = {McNally, Amy},
+          title     = {{FLDAS} Noah Land Surface Model {L4} Global Monthly 0.1 x 0.1 degree ({MERRA-2} and {CHIRPS})},
+          year      = {2018},
+          publisher = {Goddard Earth Sciences Data and Information Services Center (GES DISC)},
+          address   = {Greenbelt, MD, USA},
+          doi       = {10.5067/5NHC22T9375G}
+        }
+    - label: FLDAS global monthly, preliminary (GDAS and CHIRPS-Prelim)
+      text: >-
+        Jossy Jacob, Kimberly Slinski NASA/GSFC/HSL (2021), FLDAS Noah Land Surface Model L4 Global Monthly 0.1 x 0.1 degree (GDAS and CHIRPS-PRELIM),
+        Greenbelt, MD, USA, Goddard Earth Sciences Data and Information Services Center (GES DISC), Accessed: [Data Access Date], 10.5067/L8GPRQWAWHE3
+      doi: 10.5067/L8GPRQWAWHE3
+      bibtex: |
+        @misc{fldas_noah01_cp_gl_m,
+          author    = {Jacob, Jossy and Slinski, Kimberly},
+          title     = {{FLDAS} Noah Land Surface Model {L4} Global Monthly 0.1 x 0.1 degree ({GDAS} and {CHIRPS-PRELIM})},
+          year      = {2021},
+          publisher = {Goddard Earth Sciences Data and Information Services Center (GES DISC)},
+          address   = {Greenbelt, MD, USA},
+          doi       = {10.5067/L8GPRQWAWHE3}
+        }
+    - label: FLDAS2 Noah-MP Central Asia daily
+      text: >-
+        Kimberly Slinski, Daniel Sarmiento NASA/GSFC/HSL (2023), FLDAS2 Noah-MP GDAS Land Surface Model L4 Central Asia Daily 0.01 degree x 0.01 degree,
+        Greenbelt, MD, USA, Goddard Earth Sciences Data and Information Services Center (GES DISC), Accessed: [Data Access Date], 10.5067/C4IOYF41EEZB
+      doi: 10.5067/C4IOYF41EEZB
+      bibtex: |
+        @misc{fldas2_noahmp001_g_ca_d,
+          author    = {Slinski, Kimberly and Sarmiento, Daniel},
+          title     = {{FLDAS2} {Noah-MP} {GDAS} Land Surface Model {L4} Central Asia Daily 0.01 degree x 0.01 degree},
+          year      = {2023},
+          publisher = {Goddard Earth Sciences Data and Information Services Center (GES DISC)},
+          address   = {Greenbelt, MD, USA},
+          doi       = {10.5067/C4IOYF41EEZB}
+        }
+  papers:
+    - label: FLDAS reference paper (sub-Saharan Africa)
+      text: >-
+        McNally, A., Arsenault, K., Kumar, S., Shukla, S., Peterson, P., Wang, S., Funk, C., Peters-Lidard, C. D., Verdin, J. P. (2017):
+        A land data assimilation system for sub-Saharan Africa food and water security applications. Scientific Data, 4, 170012.
+      doi: 10.1038/sdata.2017.12
+      bibtex: |
+        @article{mcnally2017fldas,
+          author  = {McNally, Amy and Arsenault, Kristi and Kumar, Sujay and Shukla, Shraddhanand and Peterson, Pete and Wang, Shugong and Funk, Chris and Peters-Lidard, Christa D. and Verdin, James P.},
+          title   = {A land data assimilation system for sub-{Saharan} {Africa} food and water security applications},
+          journal = {Scientific Data},
+          volume  = {4},
+          pages   = {170012},
+          year    = {2017},
+          doi     = {10.1038/sdata.2017.12}
+        }
+    - label: FLDAS Central Asia dataset
+      text: >-
+        McNally, A., Jacob, J., Arsenault, K., Slinski, K., Sarmiento, D. P., Hoell, A., Pervez, S., Rowland, J., Budde, M., Kumar, S.,
+        Peters-Lidard, C., Verdin, J. P. (2022): A Central Asia hydrologic monitoring dataset for food and water security applications in Afghanistan.
+        Earth System Science Data, 14(7), 3115–3135.
+      doi: 10.5194/essd-14-3115-2022
+      bibtex: |
+        @article{mcnally2022centralasia,
+          author  = {McNally, Amy and Jacob, Jossy and Arsenault, Kristi and Slinski, Kimberly and Sarmiento, Daniel P. and Hoell, Andrew and Pervez, Shahriar and Rowland, James and Budde, Mike and Kumar, Sujay and Peters-Lidard, Christa and Verdin, James P.},
+          title   = {A {Central} {Asia} hydrologic monitoring dataset for food and water security applications in {Afghanistan}},
+          journal = {Earth System Science Data},
+          volume  = {14},
+          number  = {7},
+          pages   = {3115--3135},
+          year    = {2022},
+          doi     = {10.5194/essd-14-3115-2022}
+        }
+  acknowledgement: >-
+    Cite the DOI of each product you use (anomalies FLDAS_NOAH01_C_GL_MA 10.5067/GNKZZBAYDF4W, climatology FLDAS_NOAH01_C_GL_MC 10.5067/9JBLK69HNL3V).
+    NASA asks that publications include: "The data used in this study were acquired as part of the mission of NASA's Earth Science Division and archived and distributed by
+    the Goddard Earth Sciences (GES) Data and Information Services Center (DISC)."
+
+transitions:
+  - from: FLDAS Central Asia Noah 3.6 daily (FLDAS_NOAH001_G_CA_D)
+    to: FLDAS2 Central Asia Noah-MP daily (FLDAS_NOAHMP001_G_CA_D)
+    status: completed
+    date: "2023-10"
+    summary: >-
+      An FLDAS2 product rebuilt with Noah-MP 4.0.1 over the same domain, resolution and period (2000-10 onward) was released in November 2023; the Noah 3.6 daily product stopped updating
+      on 1 October 2023 and was announced for decommissioning in March 2024. On 2026-10-13 the Noah 3.6 collection no longer appears in NASA CMR.
+    changes:
+      - aspect: Land surface model
+        before: Noah 3.6
+        after: Noah-MP 4.0.1 (FLDAS2, LIS-based)
+      - aspect: Short name and DOI
+        before: "FLDAS_NOAH001_G_CA_D (10.5067/VQ4CD3Y9YC0R)"
+        after: "FLDAS_NOAHMP001_G_CA_D (10.5067/C4IOYF41EEZB)"
+      - aspect: Variables
+        before: "23"
+        after: "27 — adds daily maximum and minimum surface radiative temperature (`RadT_tavg_max`, `RadT_tavg_min`), terrestrial water storage (`TWS_tavg`) and snow cover"
+      - aspect: Domain, resolution, forcing
+        before: "21–56°N, 30–100°E, 0.01°, GDAS"
+        after: "Unchanged"
+    impacts:
+      - "Because the model differs, soil moisture and runoff differ even for the same dates. Do not splice the two into one series; download Noah-MP data from October 2000 instead."
+      - "Anomaly indices for Central Asia are stated to use a 2000-10-01 to 2022-09-30 baseline (water years 2001–2022)."
+    sources:
+      - name: NASA LDAS — FLDAS Central Asia
+        url: https://ldas.gsfc.nasa.gov/fldas/models/central-asia
+      - name: README for FLDAS2 Noah-MP Central Asia
+        url: https://docserver.gesdisc.eosdis.nasa.gov/public/project/hydrology/README_FLDAS2.pdf
+  - from: FLDAS Africa regional products (East, Southern, West Africa)
+    to: FLDAS global product (0.1° monthly)
+    status: completed
+    date: "2019-11"
+    summary: >-
+      The separate East, Southern and West Africa monthly and daily products were retired in September–November 2019 and replaced by a quasi-global monthly product with the same Noah 0.1° configuration.
+    changes:
+      - aspect: Domain
+        before: "East, Southern and West Africa regional grids"
+        after: "Quasi-global, 60°S–90°N"
+      - aspect: Products
+        before: "Regional 'C' monthly (retired 2019-09-16); regional 'A' Noah and VIC daily and monthly (retired 2019-11-01)"
+        after: "FLDAS_NOAH01_C_GL_M, MA, MC (Noah, monthly)"
+      - aspect: Time step
+        before: "Daily and monthly (regional 'A' at 0.1° and 0.25°)"
+        after: "Monthly only (no African daily product)"
+    impacts:
+      - "Daily data for Africa are not available from the public GES DISC products. Work with the monthly data or contact FEWS NET or NASA LDAS."
+    sources:
+      - name: README for FLDAS
+        url: https://docserver.gesdisc.eosdis.nasa.gov/public/project/hydrology/README_FLDAS.pdf
+
+notices:
+  - date: "2026-05-11"
+    level: warning
+    title: GES DISC on-premises servers closing — FLDAS users must move to Earthdata Cloud
+    body: >-
+      GES DISC announced that HTTPS access to its on-premises servers ends by 30 September 2026 and that on-premises OPeNDAP is switched off between 20 August and 30 September.
+      The hydro1.gesdisc.eosdis.nasa.gov server that hosts FLDAS states that access will end 'no earlier than 30 September 2026' (still responding on 2026-10-13).
+      Point scripts to data.gesdisc.earthdata.nasa.gov or use earthaccess.
+    source: https://github.com/nasa/gesdisc-tutorials/blob/main/user-guidance/GES_DISC_Migration_to_Earthdata_Website_and_Earthdata_Cloud.md
+  - date: "2023-11-07"
+    level: warning
+    title: Central Asia daily product replaced by Noah-MP (FLDAS2) — Noah 3.6 production ended
+    body: >-
+      Updates of the Central Asia Noah 3.6 daily product (FLDAS_NOAH001_G_CA_D) stopped on 1 October 2023, and it was announced for decommissioning in March 2024.
+      The Noah-MP 4.0.1 daily product for the same domain (FLDAS_NOAHMP001_G_CA_D) was released on 7 November 2023; switch to it.
+    source: https://ldas.gsfc.nasa.gov/fldas/models/central-asia
+  - date: "2020-11"
+    level: warning
+    title: Inland-water mask post-processing — re-download data obtained before November 2020
+    body: >-
+      Some inland-water cells contained invalid model values, so all output was post-processed with the MODIS MOD44W land mask. Forcing variables (_f) were unchanged.
+      Users who downloaded FLDAS data before November 2020 are asked to download it again.
+    source: https://docserver.gesdisc.eosdis.nasa.gov/public/project/hydrology/README_FLDAS.pdf
+  - date: "2019-11-01"
+    level: info
+    title: African regional products retired — replaced by the global product
+    body: >-
+      The regional 'C' monthly data were retired on 16 September 2019 and the regional 'A' Noah and VIC daily and monthly data on 1 November 2019. The README directs users to the global 0.1° monthly data.
+    source: https://docserver.gesdisc.eosdis.nasa.gov/public/project/hydrology/README_FLDAS.pdf
+
+links:
+  - name: NASA LDAS — FLDAS
+    url: https://ldas.gsfc.nasa.gov/fldas
+  - name: NASA LDAS — FLDAS Global (final and preliminary run schedule)
+    url: https://ldas.gsfc.nasa.gov/fldas/models/global
+  - name: README for FLDAS (variable tables, DOI table)
+    url: https://docserver.gesdisc.eosdis.nasa.gov/public/project/hydrology/README_FLDAS.pdf
+  - name: README for FLDAS2 Noah-MP Central Asia
+    url: https://docserver.gesdisc.eosdis.nasa.gov/public/project/hydrology/README_FLDAS2.pdf
+  - name: GES DISC FLDAS_NOAH01_C_GL_M 001
+    url: https://disc.gsfc.nasa.gov/datasets/FLDAS_NOAH01_C_GL_M_001/summary
+  - name: NASA LDAS — Reprocessed FLDAS Data
+    url: https://ldas.gsfc.nasa.gov/fldas/news/reprocessed-fldas-data
+
+watch_urls:
+  - https://ldas.gsfc.nasa.gov/news
+  - https://ldas.gsfc.nasa.gov/fldas/models/central-asia
+  - https://docserver.gesdisc.eosdis.nasa.gov/public/project/hydrology/README_FLDAS.pdf
+
+last_verified: "2026-10-13"

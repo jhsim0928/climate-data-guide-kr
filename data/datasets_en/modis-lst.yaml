@@ -1,0 +1,463 @@
+# ─────────────────────────────────────────────────────────────
+# MODIS land surface temperature and emissivity MOD11/MYD11 and MOD21/MYD21 C6.1 — dataset information file
+# Land tab (Land surface temperature & albedo). Covers both algorithms — split-window (MOD11) and TES (MOD21) — on one page.
+# The key caveats are Terra and Aqua orbit drift (changing overpass times) and the end of both missions. The VIIRS successor is viirs-lst.yaml.
+# After editing, update last_verified to the date you checked the official pages.
+# ─────────────────────────────────────────────────────────────
+id: modis-lst
+name: "MODIS LST (MOD11·MOD21)"
+full_name: MODIS/Terra and Aqua Land Surface Temperature and Emissivity MOD11/MYD11 (split-window) and MOD21/MYD21 (TES) Version 6.1 (1 km day and night land surface temperature and emissivity from MODIS)
+category: satellite
+domain: land
+group: 지표면온도·알베도
+order: 10
+domains: [육지, 원격탐사]
+provider: NASA MODIS Land Team (MOD11 Wan, Hook, Hulley; MOD21 Hulley, Hook / NASA JPL) / NASA LP DAAC
+
+status: deprecated
+status_note: >-
+  Collection 6.1 is still produced daily (on 2026-10-13 MOD11A1 reached 6 October and MYD21A1D 11 October), but Terra and Aqua have drifted from their orbits because of fuel and power limits,
+  shifting their overpass times substantially, and are expected to begin shutting down in late 2026 to early 2027; NASA advises moving to similar VIIRS products (VNP21, VJ121, VJ221).
+  Because land surface temperature is very sensitive to observation time, values from the drift period (2020–2021 onward) should not be treated as taken at the same time of day as earlier values.
+
+period:
+  start: "2000-02"
+  end: present
+  note: >-
+    Terra (MOD11, MOD21) from 2000-02-24 (8-day and monthly products start with the periods beginning 2000-02-18 and 2000-02-01); Aqua (MYD11, MYD21) from 2002-07-04.
+    On 2026-10-13 LP DAAC held data up to early to mid October 2026. Terra data from 2026-03-26 20:00 UTC to 2026-03-27 19:23 UTC were flagged as questionable or bad by the calibration team.
+    A final reprocessing is planned once MODIS data collection ends.
+
+resolution:
+  spatial_short: "1 km (0.01°)"
+  temporal_short: "1일"
+  spatial: >-
+    L3 tiles: MODIS Sinusoidal (SIN) grid at 1 km (actual 0.928 km, 1200×1200 pixels per tile) — MOD11A1/A2, MOD21A1D/A1N/A2 /
+    MOD11B1/B2/B3: SIN grid at 6 km (5.568 km) / CMG: global 0.05° equal-angle grid — MOD11C1/C2/C3, MOD21C1/C2/C3 /
+    L2 swath: about 1 km at nadir (MOD11_L2, MOD21, 5-minute granules)
+  vertical: Single surface (skin) temperature layer + per-band thermal infrared emissivity (MOD11 bands 31 and 32; MOD21 bands 29, 31 and 32)
+  temporal: >-
+    Each satellite gives one daytime and one nighttime overpass per day (several at high latitudes) / daily (A1, C1) / 8-day (A2, C2) / monthly (B3, C3). Nominal equator crossing times are 10:30 descending (day) for Terra
+    and 13:30 ascending (day) for Aqua local time, with night observations on the opposite orbit leg, but orbit drift has changed them.
+
+update: Daily (1–2 days after observation); 8-day and monthly products after each period ends
+license: Openly shared without restriction under the NASA EOSDIS Data Use and Citation Guidance. Downloading requires a free NASA Earthdata Login; citation of the dataset DOI is requested.
+account_required: true
+
+summary: >-
+  Clear-sky land surface (skin) temperature and emissivity retrieved from the MODIS thermal infrared bands. Collection 6.1 contains two product families with different algorithms.
+  MOD11/MYD11 use the generalized split-window method, based on the band 31–32 brightness temperature difference, with emissivity assumed from land cover classification, and screen out suspected cloudy pixels.
+  MOD21/MYD21 use the ASTER-heritage temperature/emissivity separation (TES) method, which solves physically for band 29, 31 and 32 emissivity together with temperature; this reduces MOD11's 3–5 K cold bias over deserts and arid land, but unscreened hot outliers remain.
+  There are separate Terra (morning and late evening) and Aqua (afternoon and early morning) versions, with daily, 8-day and monthly products on 1 km tiles and a 0.05° global grid.
+
+time_convention:
+  summary: >-
+    Daily products (A1, C1) are clear-sky observations at the moment of the satellite overpass (at high latitudes with several overpasses per day, the average of the qualifying observations). Observation time varies
+    from pixel to pixel, so check the view time layers that come with the data (`Day_view_time`, `View_Time`, etc.). The 8-day (A2, C2) and monthly (B3, C3) products are simple averages of the clear-sky daily values; cloudy days are left out.
+  points:
+    - "Nominally Terra crosses the equator at 10:30 local time descending (day) and Aqua at 13:30 ascending (day); night observations come from the opposite orbit leg. Even for one satellite the observation time of each pixel varies with position in the swath and latitude, so check the view time layers."
+    - "Orbit drift: after its final inclination adjustment on 27 February 2020, Terra moved steadily earlier, reaching 10:15 by autumn 2022, and was predicted to reach about 9:00 around December 2025. Aqua began drifting later in July 2021, passed 13:45 in February 2023 and was expected to reach about 15:50 around August 2026."
+    - "Land surface temperature changes strongly over the day, so computing trends straight across the period of changing overpass times mixes the time shift into the temperature signal. Since 2020, daytime Terra LST is sampled earlier (cooler) and daytime Aqua LST later in the afternoon, past midday."
+    - "In MOD11A1 and A2, `Day_view_time` and `Night_view_time` are local solar time (UTC + longitude/15). The User's Guide describes the view time in the CMG products (C1, C2, C3) as UTC, so the reference may differ; check the file attributes."
+    - "The 8-day day and night values in MOD11A2 and MOD21A2 average clear days only, so a single clear day out of eight still produces a value. In MOD11A2 the clear-sky bitmaps (`Clear_sky_days`, `Clear_sky_nights`) show which days went into the average."
+    - "The file date (AYYYYDDD) of an 8-day product is the first day of the composite; for monthly products (B3, C3) it is the first day of the month."
+  source: https://lpdaac.usgs.gov/documents/715/MOD11_User_Guide_V61.pdf
+  source_name: "MOD11 C6.1 and MOD21 C6.1 User's Guides + LP DAAC 'Aqua MODIS Acquisition Plan Through August 2026' + Terra mission orbit information"
+
+variables:
+  note: >-
+    Science datasets (SDS) from the LP DAAC data catalog and the C6.1 User's Guides. In the HDF-EOS2 (HDF4) files, physical value = stored value × scale_factor (+ offset).
+    LST uses scale 0.02 (K) and stored value 0 is fill. MYD (Aqua) files use the same names. MOD11 sets suspected contaminated pixels to fill, whereas MOD21 keeps their values, so you must screen them with QC yourself.
+  full_list: https://www.earthdata.nasa.gov/data/catalog/lpcloud-mod11a1-061
+  groups:
+    - name: MOD11 split-window — daily 1 km (MOD11A1, MYD11A1)
+      kind: instant
+      period: overpass time
+      items:
+        - text: "Daytime land surface temperature — `LST_Day_1km` (K, scale 0.02)"
+          std: [tskin]
+          note: Clear-sky value at that day's daytime overpass. Above 30° latitude, the average of qualifying observations when there are several
+        - text: "Nighttime land surface temperature — `LST_Night_1km` (K, scale 0.02)"
+          std: [tskin]
+          note: Value at that day's nighttime overpass
+        - "Band 31 and 32 emissivity (land-cover based) — `Emis_31`, `Emis_32` (dimensionless, scale 0.002, offset 0.49)"
+        - text: "Day and night view time — `Day_view_time`, `Night_view_time` (hours, local solar time, scale 0.1)"
+          note: Actual observation time of each pixel; essential for orbit drift analysis
+        - "Day and night view zenith angle — `Day_view_angl`, `Night_view_angl` (degrees, offset -65)"
+        - "Day and night quality bits — `QC_Day`, `QC_Night` (bit field: 0–1 mandatory QA, 2–3 data quality, 4–5 emissivity error, 6–7 LST error)"
+    - name: MOD11 split-window — 8-day and monthly (MOD11A2 1 km / MOD11C3 0.05°)
+      kind: mean
+      period: 8 days or month (clear days only)
+      items:
+        - text: "8-day day and night land surface temperature — `LST_Day_1km`, `LST_Night_1km` (K, scale 0.02)"
+          std: [tskin]
+          period: 8 days
+          note: Simple average of clear-sky MOD11A1 values
+        - text: "Monthly day and night land surface temperature (0.05°) — `LST_Day_CMG`, `LST_Night_CMG` (K, scale 0.02)"
+          std: [tskin]
+          period: Monthly
+          note: Monthly average of the MOD11C1 daily values
+        - text: "Clear-sky day and night bitmaps — `Clear_sky_days`, `Clear_sky_nights`"
+          kind: accum
+          note: Bits mark the days in the period with a clear observation; use them to check how many days entered the average
+    - name: MOD21 TES — daily 1 km (MOD21A1D day / MOD21A1N night; same for MYD21)
+      kind: instant
+      period: overpass time
+      items:
+        - text: "Land surface temperature — `LST_1KM` (K, scale 0.02)"
+          std: [tskin]
+          note: Separate day (A1D) and night (A1N) files. Coverage-weighted average of clear, good-accuracy observations overlapping the grid cell by more than 15%
+        - "Band 29, 31 and 32 emissivity (retrieved by TES) — `Emis_29`, `Emis_31`, `Emis_32` (dimensionless, scale 0.002, offset 0.49)"
+        - text: "View time — `View_Time` (hours, scale 0.1)"
+          note: Observation time of each pixel
+        - "View zenith angle — `View_Angle` (degrees, offset -65)"
+        - "Quality bits — `QC` (16 bits: mandatory QA, data quality, cloud, TES iterations, atmospheric opacity, emissivity contrast, emissivity and LST accuracy)"
+    - name: MOD21 TES — 8-day and monthly (MOD21A2 1 km / MOD21C3 0.05°)
+      kind: mean
+      period: 8 days or month (clear days only)
+      items:
+        - text: "8-day day and night land surface temperature — `LST_Day_1KM`, `LST_Night_1KM` (K, scale 0.02)"
+          std: [tskin]
+          period: 8 days
+          note: Simple average of clear-sky MOD21A1D/A1N values; emissivity is averaged over day and night together
+        - text: "Monthly day and night land surface temperature (0.05°) — `LST_Day`, `LST_Night` (K, scale 0.02)"
+          std: [tskin]
+          period: Monthly
+          note: Monthly average of the MOD21C1 daily values
+        - text: "Monthly LST uncertainty (0.05°) — `LST_Day_err`, `LST_Night_err` (K, scale 0.04)"
+          period: Monthly
+    - name: Static information
+      kind: static
+      items:
+        - "Land fraction in grid cell (CMG) — `Percent_land_in_grid` (%)"
+
+access:
+  - name: NASA Earthdata Search (LP DAAC, Earthdata Cloud)
+    url: https://search.earthdata.nasa.gov/search/granules?p=C1748058432-LPCLOUD
+    method: HTTPS download / earthaccess / Earthdata Search
+    note: >-
+      Example short names: MOD11A1, MOD11A2, MOD11C1, MOD11C3, MOD11_L2, MOD21A1D, MOD21A1N, MOD21A2, MOD21C1, MOD21C3, MOD21 (L2); replace MOD with MYD for Aqua. All are version 061.
+      Files are served over HTTPS from data.lpdaac.earthdatacloud.nasa.gov and need a free Earthdata Login. Distribution through the old LP DAAC Data Pool ended on 2025-06-30.
+  - name: AppEEARS (area and point subsetting)
+    url: https://appeears.earthdatacloud.nasa.gov/
+    method: Web / API — point time series and area extracts as GeoTIFF or NetCDF4
+    note: Lets you request only the area, period and layers you need and reproject to geographic coordinates; handy for comparisons with station points.
+  - name: Direct access in AWS us-west-2 (S3)
+    url: https://data.lpdaac.earthdatacloud.nasa.gov/s3credentials
+    method: Cloud storage (S3, from within us-west-2 only)
+    note: Stored under paths such as s3://lp-prod-protected/MOD11A1.061/ and accessed with temporary credentials.
+
+example:
+  lang: python
+  note: >-
+    Downloads Terra MOD11A1 daily files with earthaccess, reads them with pyhdf and keeps only pixels whose mandatory QA (bits 0–1) is 'good' (00). Read the view time too, to check the effect of orbit drift.
+  code: |
+    # pip install earthaccess pyhdf numpy
+    import earthaccess
+    import numpy as np
+    from pyhdf.SD import SD, SDC
+
+    earthaccess.login()  # free NASA Earthdata account
+    results = earthaccess.search_data(
+        short_name="MOD11A1", version="061",
+        temporal=("2024-08-01", "2024-08-03"),
+        bounding_box=(126.5, 37.0, 127.5, 38.0),   # (west, south, east, north) around Seoul
+    )
+    files = earthaccess.download(results, "mod11")
+
+    hdf = SD(files[0], SDC.READ)
+    lst = hdf.select("LST_Day_1km").get().astype("float64")
+    qc = hdf.select("QC_Day").get()
+    vt = hdf.select("Day_view_time").get().astype("float64")
+
+    good = (lst > 0) & ((qc & 0b11) == 0)        # drop fill + keep mandatory QA 'good'
+    lst_k = np.where(good, lst * 0.02, np.nan)    # K
+    view_time = np.where(vt < 255, vt * 0.1, np.nan)  # local solar time (hours)
+    print(np.nanmean(lst_k) - 273.15, np.nanmedian(view_time))
+
+tips:
+  - "MOD11 and MOD21 give different values for the same place and day. Over deserts, arid land and bare soil MOD11 can read 3–5 K low (cold bias), while MOD21 more often has hot outliers from unscreened dust and cloud contamination. Do not mix the two families in one study."
+  - "MOD21 does not set contaminated pixels to fill. The User's Guide recommends screening with the QC bits (especially mandatory QA and LST accuracy), emissivity (band 31 or 32 below 0.95 is suspect) and the error estimates together."
+  - "Because of orbit drift, the observation time has shifted year by year since 2020 (Terra) and 2021 (Aqua). For long-term trends and anomalies, look at `Day_view_time` / `View_Time` as well, and consider a time-of-day adjustment or selecting samples from the same time window."
+  - "According to LP DAAC, the lower, drifting orbit reduces the grid size and breaks the strict 16-day repeat cycle, and later crossing times mean lower sun elevation and more shadows. The MODIS land QA team reports that impacts such as widening scan gaps became significant from late 2024."
+  - "An official notice (2024-01) reports that Aqua MODIS band 29 brightness temperature has drifted upward since 2018 because of electronic crosstalk, making MYD21 land surface temperatures warmer than expected. Be careful with post-2018 trends from Aqua TES data."
+  - "Terra MOD21 shows striping in L2 from 2006-08-29 because of a dead band 29 detector; those pixels are flagged in the QC bits and filled with nearest-neighbour values, so they must not be used for science."
+  - "The 8-day and monthly products average clear days only and carry a clear-sky bias. In the cloudy monsoon season few days enter the average and representativeness drops."
+  - "LST is surface (skin) temperature, not 2 m air temperature. It is much higher than air temperature at midday and lower on clear nights. Do not compare it directly with station air temperature."
+  - "Value = stored value × 0.02 (K), with stored value 0 as fill. Emissivity = stored value × 0.002 + 0.49."
+
+citations:
+  dataset:
+    - label: MOD11A1 V6.1 (Terra split-window daily)
+      text: >-
+        Wan, Z., Hook, S., Hulley, G. (2021). MODIS/Terra Land Surface Temperature/Emissivity Daily L3 Global 1km SIN Grid V061 [Data set].
+        NASA Land Processes Distributed Active Archive Center. https://doi.org/10.5067/MODIS/MOD11A1.061
+      doi: 10.5067/MODIS/MOD11A1.061
+      bibtex: |
+        @misc{mod11a1_v061,
+          author    = {Wan, Zhengming and Hook, Simon and Hulley, Glynn},
+          title     = {{MODIS/Terra} Land Surface Temperature/Emissivity Daily {L3} Global 1km {SIN} Grid {V061}},
+          year      = {2021},
+          publisher = {NASA Land Processes Distributed Active Archive Center},
+          doi       = {10.5067/MODIS/MOD11A1.061}
+        }
+    - label: MOD11A2 V6.1 (Terra split-window 8-day)
+      text: >-
+        Wan, Z., Hook, S., Hulley, G. (2021). MODIS/Terra Land Surface Temperature/Emissivity 8-Day L3 Global 1km SIN Grid V061 [Data set].
+        NASA Land Processes Distributed Active Archive Center. https://doi.org/10.5067/MODIS/MOD11A2.061
+      doi: 10.5067/MODIS/MOD11A2.061
+      bibtex: |
+        @misc{mod11a2_v061,
+          author    = {Wan, Zhengming and Hook, Simon and Hulley, Glynn},
+          title     = {{MODIS/Terra} Land Surface Temperature/Emissivity 8-Day {L3} Global 1km {SIN} Grid {V061}},
+          year      = {2021},
+          publisher = {NASA Land Processes Distributed Active Archive Center},
+          doi       = {10.5067/MODIS/MOD11A2.061}
+        }
+    - label: MOD21A1D V6.1 (Terra TES daytime daily)
+      text: >-
+        Hulley, G., Hook, S. (2021). MODIS/Terra Land Surface Temperature/3-Band Emissivity Daily L3 Global 1km SIN Grid Day V061 [Data set].
+        NASA Land Processes Distributed Active Archive Center. https://doi.org/10.5067/MODIS/MOD21A1D.061
+      doi: 10.5067/MODIS/MOD21A1D.061
+      bibtex: |
+        @misc{mod21a1d_v061,
+          author    = {Hulley, Glynn and Hook, Simon},
+          title     = {{MODIS/Terra} Land Surface Temperature/3-Band Emissivity Daily {L3} Global 1km {SIN} Grid Day {V061}},
+          year      = {2021},
+          publisher = {NASA Land Processes Distributed Active Archive Center},
+          doi       = {10.5067/MODIS/MOD21A1D.061}
+        }
+    - label: MOD21A2 V6.1 (Terra TES 8-day)
+      text: >-
+        Hulley, G., Hook, S. (2021). MODIS/Terra Land Surface Temperature/3-Band Emissivity 8-Day L3 Global 1km SIN Grid V061 [Data set].
+        NASA Land Processes Distributed Active Archive Center. https://doi.org/10.5067/MODIS/MOD21A2.061
+      doi: 10.5067/MODIS/MOD21A2.061
+      bibtex: |
+        @misc{mod21a2_v061,
+          author    = {Hulley, Glynn and Hook, Simon},
+          title     = {{MODIS/Terra} Land Surface Temperature/3-Band Emissivity 8-Day {L3} Global 1km {SIN} Grid {V061}},
+          year      = {2021},
+          publisher = {NASA Land Processes Distributed Active Archive Center},
+          doi       = {10.5067/MODIS/MOD21A2.061}
+        }
+  papers:
+    - label: Generalized split-window algorithm (Wan & Dozier, 1996)
+      text: >-
+        Wan, Z., Dozier, J. (1996). A generalized split-window algorithm for retrieving land-surface temperature from space.
+        IEEE Transactions on Geoscience and Remote Sensing, 34(4), 892–905.
+      doi: 10.1109/36.508406
+      bibtex: |
+        @article{wan1996splitwindow,
+          author  = {Wan, Zhengming and Dozier, J.},
+          title   = {A generalized split-window algorithm for retrieving land-surface temperature from space},
+          journal = {IEEE Transactions on Geoscience and Remote Sensing},
+          volume  = {34},
+          number  = {4},
+          pages   = {892--905},
+          year    = {1996},
+          doi     = {10.1109/36.508406}
+        }
+    - label: MOD11 Collection 6 refinements and validation (Wan, 2014)
+      text: >-
+        Wan, Z. (2014). New refinements and validation of the collection-6 MODIS land-surface temperature/emissivity product.
+        Remote Sensing of Environment, 140, 36–45.
+      doi: 10.1016/j.rse.2013.08.027
+      bibtex: |
+        @article{wan2014c6,
+          author  = {Wan, Zhengming},
+          title   = {New refinements and validation of the collection-6 {MODIS} land-surface temperature/emissivity product},
+          journal = {Remote Sensing of Environment},
+          volume  = {140},
+          pages   = {36--45},
+          year    = {2014},
+          doi     = {10.1016/j.rse.2013.08.027}
+        }
+    - label: Consistent TES retrievals for ASTER and MODIS (Hulley & Hook, 2011)
+      text: >-
+        Hulley, G. C., Hook, S. J. (2011). Generating consistent land surface temperature and emissivity products between ASTER and MODIS data for Earth science research.
+        IEEE Transactions on Geoscience and Remote Sensing, 49(4), 1304–1315.
+      doi: 10.1109/TGRS.2010.2063034
+      bibtex: |
+        @article{hulley2011tes,
+          author  = {Hulley, Glynn C. and Hook, Simon J.},
+          title   = {Generating Consistent Land Surface Temperature and Emissivity Products Between {ASTER} and {MODIS} Data for Earth Science Research},
+          journal = {IEEE Transactions on Geoscience and Remote Sensing},
+          volume  = {49},
+          number  = {4},
+          pages   = {1304--1315},
+          year    = {2011},
+          doi     = {10.1109/TGRS.2010.2063034}
+        }
+    - label: MODIS–VIIRS TES LST continuity (Hulley et al., 2018)
+      text: >-
+        Hulley, G. C., Malakar, N. K., Islam, T., Freepartner, R. J. (2018). NASA's MODIS and VIIRS land surface temperature and emissivity products:
+        A long-term and consistent Earth system data record. IEEE Journal of Selected Topics in Applied Earth Observations and Remote Sensing, 11(2), 522–535.
+      doi: 10.1109/JSTARS.2017.2779330
+      bibtex: |
+        @article{hulley2018modisviirs,
+          author  = {Hulley, G. C. and Malakar, N. K. and Islam, T. and Freepartner, R. J.},
+          title   = {{NASA}'s {MODIS} and {VIIRS} Land Surface Temperature and Emissivity Products: A Long-Term and Consistent Earth System Data Record},
+          journal = {IEEE Journal of Selected Topics in Applied Earth Observations and Remote Sensing},
+          volume  = {11},
+          number  = {2},
+          pages   = {522--535},
+          year    = {2018},
+          doi     = {10.1109/JSTARS.2017.2779330}
+        }
+  acknowledgement: >-
+    Cite the LP DAAC dataset DOI of each product you used (pattern 10.5067/MODIS/<short name>.061, e.g. 10.5067/MODIS/MYD11A1.061 for Aqua daily).
+    Cite Wan & Dozier (1996) and Wan (2014) for MOD11, and Hulley & Hook (2011) with the MOD21 ATBD for MOD21.
+
+transitions:
+  - from: MODIS LST C6 (MOD11 and MOD21)
+    to: MODIS LST C6.1
+    status: completed
+    date: "2021-02"
+    summary: >-
+      For MOD11 the science algorithm and file format are unchanged and the input L1B calibration improved. For MOD21 the atmospheric correction input changed from MERRA-2 (partly NCEP) to GEOS-5 FP,
+      and new 0.05° global (CMG) products MxD21C1, C2 and C3 were added. Distribution of C6 ended on 2023-07-31.
+    changes:
+      - aspect: Input L1B calibration
+        before: C6 calibration
+        after: "Revised response-versus-scan-angle approach for reflective bands, optical crosstalk correction for Terra IR bands, corrected Terra forward look-up table for 2012–2017, polarization correction"
+      - aspect: MOD11 algorithm
+        before: Generalized split-window (C6)
+        after: Unchanged (format also identical)
+      - aspect: MOD21 atmospheric input
+        before: MERRA-2 / NCEP operational and near-real-time combination
+        after: GEOS-5 FP (about 1/3°×1/4°, 3-hourly); the User's Guide reports no apparent change in quality
+      - aspect: MOD21 product set
+        before: L2, A1D, A1N, A2
+        after: L2, A1D, A1N, A2 + 0.05° CMG daily, 8-day and monthly (MxD21C1, C2, C3)
+    impacts:
+      - Do not mix C6 and C6.1; download the full period again from C6.1 (C6 has not been distributed since 2023-07-31).
+    sources:
+      - name: MOD21A1D V061 collection description (version description)
+        url: https://www.earthdata.nasa.gov/data/catalog/lpcloud-mod21a1d-061
+      - name: MOD11 C6.1 User's Guide
+        url: https://lpdaac.usgs.gov/documents/715/MOD11_User_Guide_V61.pdf
+      - name: MOD21 C6.1 User's Guide
+        url: https://lpdaac.usgs.gov/documents/1398/MOD21_User_Guide_V61.pdf
+  - from: MODIS LST MOD11 and MOD21 C6.1
+    to: VIIRS LST VNP21, VJ121 and VJ221 V2
+    to_id: viirs-lst
+    status: planned
+    summary: >-
+      NASA's VIIRS land surface temperature products are VNP21 (Suomi NPP), VJ121 (NOAA-20) and VJ221 (NOAA-21) V2, made with the same TES algorithm and inputs as MOD21; the developers report that MODIS (MxD21)
+      and VIIRS LST agree within about ±0.5 K. There is no NASA VIIRS product continuing the MOD11 split-window method, so MOD11 users also change algorithm.
+      The transition completes when Terra and Aqua end, from late 2026 onward.
+    changes:
+      - aspect: Algorithm
+        before: "MOD11/MYD11 split-window (assumed emissivity) / MOD21/MYD21 TES"
+        after: "TES only (VNP21, VJ121, VJ221, same method and inputs as MOD21)"
+      - aspect: Thermal infrared bands
+        before: "MODIS bands 29 (8.55 µm), 31 (11 µm), 32 (12 µm)"
+        after: "VIIRS M14 (8.55 µm), M15 (10.76 µm), M16 (12 µm)"
+      - aspect: Resolution
+        before: "L2 1 km at nadir → L3 1 km SIN / 0.05° CMG"
+        after: "L2 750 m → L3 1 km SIN (resampled from 750 m) / 0.05° CMG"
+      - aspect: Overpass time
+        before: "Terra 10:30 descending, Aqua 13:30 ascending (drifting since 2020–2021)"
+        after: "13:30 ascending (Suomi NPP, NOAA-20 and NOAA-21 are all afternoon orbits). No VIIRS continues Terra's morning orbit"
+      - aspect: Period
+        before: "Terra 2000-02 onward / Aqua 2002-07 onward"
+        after: "Suomi NPP from 2012-01-17 (delivery ending early November 2026) / NOAA-20 from 2018-01-01 / NOAA-21 from 2023-02-10"
+      - aspect: Daily file layout and variable names
+        before: "MOD11A1: day and night in one file (`LST_Day_1km`, `LST_Night_1km`) / MOD21A1D and A1N: separate day and night files (`LST_1KM`)"
+        after: "VNP21A1D and A1N: separate day and night files (`LST_1KM`), emissivity `Emis_14`, `Emis_15`, `Emis_16`"
+      - aspect: File format
+        before: HDF-EOS2 (HDF4)
+        after: HDF-EOS5 (HDF5)
+    impacts:
+      - Joining a MOD11 (split-window) series to VIIRS introduces a discontinuity from the algorithm difference (e.g. the 3–5 K arid-land bias). To join records, compare MOD21 (TES) and VIIRS over their overlap.
+      - No VIIRS observation continues the Terra (morning) series. Even when joining Aqua (afternoon) to VIIRS, Aqua's drift period (2021 onward) samples a different time of day from VIIRS at 13:30.
+      - VIIRS satellites also differ from each other in overpass time by 50 minutes to an hour, and a summer difference of about 0.5 K has been reported (VNP21 User's Guide).
+    sources:
+      - name: Hulley et al. (2018), IEEE JSTARS — MODIS and VIIRS LST consistency
+        url: https://doi.org/10.1109/JSTARS.2017.2779330
+      - name: VNP21 Collection 2 User's Guide
+        url: https://lpdaac.usgs.gov/documents/1662/VNP21_User_Guide_V2.pdf
+      - name: Transition from MODIS to VIIRS (Earthdata, 2025-05-02)
+        url: https://www.earthdata.nasa.gov/data/alerts-outages/transition-from-modis-viirs
+
+notices:
+  - date: "2026-03-26"
+    level: info
+    title: Terra MODIS placed in standby — some 2026-03-26/27 data flagged questionable or bad
+    body: >-
+      After a Terra spacecraft anomaly, MODIS went to standby at about 20:00 UTC on 26 March 2026 and returned to science mode on the 27th. The calibration team flagged data from 20:00 UTC on 26 March (DOY 085)
+      until the blackbody reached its nominal temperature at 19:23 UTC on 27 March (DOY 086) as questionable or bad; data after that are considered safe to use.
+    source: https://www.earthdata.nasa.gov/data/alerts-outages/terra-modis-placed-standby-mode
+  - date: "2026-03-20"
+    level: warning
+    title: NASA projects end of science for Terra in February 2027 and Aqua in September 2027
+    body: >-
+      The editor's note in the NASA Science article 'Terra: The End of An Era' (published 2025-12-29, updated 2026-03-20) projects that, because of fuel and power limits, science operations will end
+      in February 2027 for Terra, September 2027 for Aqua and August 2028 for Aura, with the missions operating until then. This is later than the earlier plans (Terra in December 2025, Aqua in August 2026).
+    source: https://science.nasa.gov/science-research/earth-science/terra-the-end-of-an-era
+  - date: "2026-03-18"
+    level: info
+    title: MODIS L1B and geolocation Version 7.0 released — land products still C6.1
+    body: >-
+      LAADS DAAC released MODIS calibrated radiances and geolocation V7.0 and announced that the V6.1 Level-1 collection would be decommissioned after 2026-09-30.
+      On 2026-10-13, CMR listed only V061 for the MOD11 and MOD21 land products, and no release schedule for C7 land products had been confirmed in an official notice.
+    source: https://www.earthdata.nasa.gov/data/alerts-outages/version-7.0-modis-calibrated-radiances-geolocation-data-products-now-available
+  - date: "2026-01-08"
+    level: warning
+    title: Impact of Terra and Aqua orbit drift on MODIS data under investigation (LDOPE)
+    body: >-
+      The MODIS Land Data Operational Product Evaluation team (LDOPE) reported that, as Terra and Aqua drift after ending orbit maintenance, pixel size and spacing, scan gaps,
+      bow-tie overlap and diurnal sampling have changed, with significant impacts seen from late 2024, and that the effects on MODIS products are under investigation. Changes in diurnal sampling directly affect land surface temperature.
+    source: https://landweb.modaps.eosdis.nasa.gov/displayissue?id=1254
+  - date: "2025-06-03"
+    level: info
+    title: LP DAAC Data Pool distribution of MODIS ends (2025-06-30) — move to Earthdata Cloud
+    body: >-
+      LP DAAC ended Data Pool distribution of all MODIS datasets, including C6.1, on 30 June 2025. Scripts using Data Pool URLs must switch to Earthdata Cloud (HTTPS or earthaccess);
+      Earthdata Search and AppEEARS continue to work.
+    source: https://www.earthdata.nasa.gov/data/alerts-outages/lp-daac-discontinue-data-pool-distribution-modis-datasets
+  - date: "2025-05-02"
+    level: warning
+    title: Transition from MODIS to VIIRS — Terra and Aqua to begin shutting down in late 2026 to early 2027
+    body: >-
+      NASA announced that Terra and Aqua will begin shutting down in late 2026 or early 2027, and that both platforms are drifting from their designed orbits, changing crossing times and possibly affecting the data.
+      A final reprocessing of MODIS data will follow the end of data collection, and users are encouraged to explore similar VIIRS products.
+    source: https://www.earthdata.nasa.gov/data/alerts-outages/transition-from-modis-viirs
+  - date: "2024-01-16"
+    level: warning
+    title: Aqua MYD21 land surface temperature warm bias — band 29 brightness temperature drift since 2018
+    body: >-
+      LDOPE reported that Aqua MODIS band 29 brightness temperature has trended significantly upward since 2018 because of increasing electronic crosstalk among the LWIR bands, so that C6.1 Aqua TES land surface temperature (MYD21)
+      is warmer than expected. A crosstalk correction from the calibration team is being tested and will be added to forward production once confirmed; whether the period since 2018 will be reprocessed has not been decided.
+    source: https://landweb.modaps.eosdis.nasa.gov/displayissue?id=220
+  - date: "2023-07-25"
+    level: info
+    title: MODIS V6.0 land products decommissioned (2023-07-31) — move to V6.1
+    body: >-
+      LP DAAC stopped distributing MODIS V6.0 land products, including MOD11 and MOD21, on 31 July 2023. User guides and ATBDs remain on the DOI landing pages; use V6.1 for data.
+    source: https://www.earthdata.nasa.gov/data/alerts-outages/final-notice-modis-version-6-0-land-data-products-decommissioned-july-31-2023
+
+links:
+  - name: MOD11A1 V061 data catalog (LP DAAC)
+    url: https://www.earthdata.nasa.gov/data/catalog/lpcloud-mod11a1-061
+  - name: MOD21A1D V061 data catalog (LP DAAC)
+    url: https://www.earthdata.nasa.gov/data/catalog/lpcloud-mod21a1d-061
+  - name: MOD11 C6.1 User's Guide
+    url: https://lpdaac.usgs.gov/documents/715/MOD11_User_Guide_V61.pdf
+  - name: MOD21 C6.1 User's Guide
+    url: https://lpdaac.usgs.gov/documents/1398/MOD21_User_Guide_V61.pdf
+  - name: MOD21 ATBD
+    url: https://lpdaac.usgs.gov/documents/1399/MOD21_ATBD.pdf
+  - name: Aqua MODIS Acquisition Plan Through August 2026 (LP DAAC, orbit drift schedule)
+    url: https://lpdaac.usgs.gov/news/aqua-modis-acquisition-plan-through-august-2026/
+  - name: Terra mission home page (equator crossing time and altitude)
+    url: https://terra.nasa.gov/
+  - name: MODIS/VIIRS Land Quality Assessment (LDOPE) known issues
+    url: https://landweb.modaps.eosdis.nasa.gov/knownissue?sensor=MODIS
+
+watch_urls:
+  - https://www.earthdata.nasa.gov/data/catalog/lpcloud-mod11a1-061
+  - https://landweb.modaps.eosdis.nasa.gov/knownissue?sensor=MODIS
+  - https://modis-land.gsfc.nasa.gov/news.html
+
+last_verified: "2026-10-13"

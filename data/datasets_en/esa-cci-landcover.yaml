@@ -1,0 +1,300 @@
+# ─────────────────────────────────────────────────────────────
+# ESA CCI Land Cover (1992–2015) + C3S Land Cover (2016 onward) — dataset information file (English edition)
+# Listed under the Land tab, 'Land cover'. One page covers both sources of the same processing chain (ESA CCI v2.0.7cds and C3S v2.1.1).
+# The 2023–2025 maps have been under ECMWF review since July 2026 (the CDS ended at 2022 when checked on 2026-10-13).
+# After editing, update last_verified to the date you checked the official pages.
+# ─────────────────────────────────────────────────────────────
+id: esa-cci-landcover
+name: "ESA CCI / C3S Land Cover"
+full_name: ESA Land Cover CCI (1992–2015, v2.0.7cds) + Copernicus C3S Land cover classification gridded maps (2016 onward, v2.1.1) (annual global 300 m land cover maps, 22-class UN LCCS legend)
+category: satellite
+domain: land
+group: 토지피복
+order: 20
+domains: [육지, 원격탐사]
+provider: ESA Land Cover CCI project (UCLouvain and partners) / Copernicus Climate Change Service (C3S, ECMWF)
+
+status: delayed
+status_note: >-
+  Maps for 1992–2022 are available from the CDS. Updates are normally yearly with a one-year lag, but a contractual transition between project phases delayed the 2023 and 2024 maps;
+  following an April 2026 update, the 2023, 2024 and 2025 maps were delivered to ECMWF together at the end of June 2026. As of July 2026 the data and documentation were in review,
+  and ECMWF said publication on the CDS usually takes about three months from that point. On 2026-10-13 the CDS still ended at 2022.
+
+period:
+  start: "1992-01"
+  end: "2022-12"
+  note: >-
+    1992–2015 is the ESA CCI v2.0.7cds record; from 2016 the record continues as C3S v2.1.1 produced with the same processing chain (2016–2022 in the CDS request form on 2026-10-13).
+    The 2023–2025 maps are under ECMWF review with no announced release date.
+
+resolution:
+  spatial_short: "0.3 km (0.0028°)"
+  temporal_short: "1년"
+  spatial: "300 m global Plate Carrée (WGS84 latitude–longitude) grid, pixel spacing 0.002778° (1/360°)"
+  vertical: Single surface level
+  temporal: Yearly (annual maps, one file per year)
+
+update: Normally once a year with a one-year lag — the 2023–2025 maps are delayed
+license: >-
+  Downloading from the CDS requires accepting three licences: CC BY 4.0, the ESA CCI licence and the VITO (PROBA-V) licence. ESA CCI asks users to credit the ESA CCI Land Cover project and send a copy of publications
+account_required: true
+
+summary: >-
+  A single continuous record that joins the annual 300 m global land cover maps produced from 1992 onward by ESA's Climate Change Initiative (CCI) Land Cover project
+  with the maps the Copernicus Climate Change Service (C3S) has produced from 2016 with the same processing chain. A baseline map is built from the 2003–2012 MERIS archive and then
+  back- and up-dated with change detection from AVHRR (1992–1999), SPOT-VGT (1998–2012) and PROBA-V, Sentinel-3 OLCI and SLSTR (from 2013). The maps use a 22-class legend based on the
+  FAO LCCS (plus regional sub-classes) with four quality flags, and are widely used for plant-functional-type maps in climate models and for long-term land cover change studies.
+
+time_convention:
+  summary: >-
+    `lccs_class` is the classification result for that year. Rather than classifying each year independently, the yearly map is the 2003–2012 baseline updated with the changes detected
+    for that year, so wherever no change is detected the baseline class carries through. Each file covers 1 January to 31 December of its year.
+  points:
+    - "A change must persist over consecutive years before it is accepted (PUG v2 describes at least two consecutive years). Real changes can therefore appear a year or two late, and the last year of the record is more conservative because there is no following year to confirm it."
+    - "Change detection only captures transitions between the six IPCC land categories (forest, grassland, cropland, wetland, settlement, other). Changes within a category — between forest types, from rainfed to irrigated cropland, between pure and mosaic classes — are not mapped."
+    - "Changes are detected at about 1 km and then delineated at 300 m; abrupt changes are captured better than gradual ones."
+    - "`change_count` gives the number of class changes from 1992 up to the map year (0 means stable)."
+  source: https://climate.esa.int/media/documents/CCI_Land_Cover_PUG_v2.0.pdf
+  source_name: Land Cover CCI Product User Guide v2.0 (CCI-LC-PUGV2, 2017) + CDS satellite-land-cover overview
+
+variables:
+  note: >-
+    NetCDF variable names as given in ESA CCI and C3S release notes and v2.0.7cds file metadata. All are dimensionless integers, and the CDS delivers all variables in one request.
+    The class code table (0 = no data, 10–220) is in the PUG and the Quick User Guide.
+  full_list: https://cds.climate.copernicus.eu/datasets/satellite-land-cover?tab=overview
+  groups:
+    - name: Land cover classification (classification for the year)
+      kind: instant
+      items:
+        - text: "LCCS land cover class — `lccs_class` (class codes 10–220, 0 = no data)"
+          std: []
+          note: 22 level-1 classes plus regional sub-classes (61/62, 71/72, etc.). Sub-classes are separate codes that do not overlap their parent class
+    - name: Quality flags
+      kind: instant
+      items:
+        - text: "Processed flag — `processed_flag` (0 not processed, 1 processed)"
+        - text: "Pixel state — `current_pixel_state` (0 invalid, 1 clear land, 2 clear water, 3 clear snow/ice, 4 cloud, 5 cloud shadow)"
+          note: Pixel type identified during pre-processing
+        - text: "Number of valid observations — `observation_count` (count)"
+          kind: accum
+          period: observation period used for the classification
+          note: Number of valid satellite observations used in the classification
+        - text: "Number of class changes — `change_count` (count)"
+          kind: accum
+          period: from 1992 to the map year
+          note: 0 means no change since 1992
+
+access:
+  - name: Copernicus CDS — Land cover classification gridded maps from 1992 to present
+    url: https://cds.climate.copernicus.eu/datasets/satellite-land-cover
+    method: Web download / CDS API (cdsapi)
+    note: >-
+      Choose the year and the version (v2_0_7cds for 1992–2015, v2_1_1 for 2016–2022). Area subsetting is available; files are NetCDF-4 (CF-1.6).
+      Requires an ECMWF account and acceptance of all three licences (CC BY, ESA CCI, VITO).
+  - name: CEDA archive — ESA Land_Cover_cci Global Land Cover Maps v2.0.7 (1992–2015)
+    url: https://catalogue.ceda.ac.uk/uuid/b382ebe6679d44b8b0e68ea4ef4b701c
+    method: HTTPS download (NetCDF and GeoTIFF)
+    note: The original ESA CCI package (58 files, about 67 GB). Use the CDS for 2016 onward.
+  - name: ESA CCI Land Cover viewer and download page (UCLouvain)
+    url: https://maps.elie.ucl.ac.be/CCI/viewer/download.php
+    method: Web viewer / download / CCI-LC User Tool
+    note: Map preview plus the PFT maps (v2.0.8), the water body map and the user tool for re-gridding and PFT conversion.
+
+example:
+  lang: python
+  note: >-
+    Put the url (https://cds.climate.copernicus.eu/api) and your API key in ~/.cdsapirc and accept the dataset licences on the CDS web page first.
+    Request version "v2_1_1" for 2016 onward and "v2_0_7cds" for 1992–2015. The download may be zipped, so unpack it before opening.
+  code: |
+    # pip install --upgrade cdsapi xarray netCDF4
+    import cdsapi
+
+    client = cdsapi.Client()
+    client.retrieve(
+        "satellite-land-cover",
+        {
+            "variable": "all",
+            "year": ["2022"],
+            "version": ["v2_1_1"],          # use "v2_0_7cds" for 1992–2015
+            "area": [39, 124, 33, 132],      # north, west, south, east (around Korea)
+        },
+        "c3s_lc_2022_korea.zip",
+    )
+
+    # Unpack (file name e.g. C3S-LC-L4-LCCS-Map-300m-P1Y-2022-v2.1.1.nc)
+    import glob, zipfile
+    import xarray as xr
+    if zipfile.is_zipfile("c3s_lc_2022_korea.zip"):
+        zipfile.ZipFile("c3s_lc_2022_korea.zip").extractall("c3s_lc")
+        nc = glob.glob("c3s_lc/*.nc")[0]
+    else:
+        nc = "c3s_lc_2022_korea.zip"   # delivered as a single NetCDF without zipping
+    ds = xr.open_dataset(nc)
+    lc = ds["lccs_class"]            # class codes (e.g. 190 = urban, 210 = water bodies)
+    forest = lc.isin([50, 60, 61, 62, 70, 71, 72, 80, 81, 82, 90])   # tree cover classes
+
+tips:
+  - "Sub-classes are separate codes from their parent class. Class 60 (broadleaved deciduous tree cover, >15%) does not contain the pixels coded 61 (>40%) or 62 (15–40%), so total broadleaved deciduous tree cover is the sum of 60, 61 and 62 (likewise 70/71/72 and 80/81/82). The project team confirmed this on the ECMWF forum in September 2026."
+  - "v2.0.7cds (1992–2015) and v2.1.1 (2016 onward) are designed to join into one series, but the producer and input sensors change at 2016. If the 2015→2016 change looks unusually large, suspect a seam."
+  - "Because change detection only captures transitions between IPCC categories and requires changes to persist for two or more years, forest type replacement, changes within cropland and short-lived disturbances do not appear. Treat area-change statistics as a conservative lower bound."
+  - "These are class codes: when moving them to another grid use mode aggregation or nearest neighbour, never averaging or bilinear interpolation. If you need PFT fractions for a climate model, the project's PFT maps (v2.0.8) or the CCI-LC User Tool are more accurate."
+  - "The documentation notes poorer baseline quality where MERIS coverage was sparse (western Amazon, Chile, western Congo basin, Gulf of Guinea, eastern Russia, eastern China, Indonesia, among others)."
+  - "Preliminary validation in PUG v2 gave an overall accuracy of about 71–75%, with low accuracy for mosaic natural vegetation, lichens and mosses, sparse vegetation and fresh-water flooded forest."
+  - "CDS requests fail if the version does not match the year (for example 2018 with v2_0_7cds)."
+
+citations:
+  dataset:
+    - label: C3S land cover maps, 1992 to present (CDS)
+      text: >-
+        Copernicus Climate Change Service (2019): Land cover classification gridded maps from 1992 to present derived from satellite observations.
+        ECMWF. DOI: 10.24381/cds.006f2c9a (Accessed on DD-MMM-YYYY)
+      doi: 10.24381/cds.006f2c9a
+      bibtex: |
+        @misc{c3s_landcover,
+          author    = {{Copernicus Climate Change Service}},
+          title     = {Land cover classification gridded maps from 1992 to present derived from satellite observations},
+          year      = {2019},
+          publisher = {ECMWF},
+          doi       = {10.24381/cds.006f2c9a},
+          note      = {Accessed on DD-MMM-YYYY}
+        }
+    - label: ESA CCI Land Cover Maps v2.0.7 (CEDA, no DOI)
+      text: >-
+        ESA Land Cover CCI project team; Defourny, P. (2019): ESA Land Cover Climate Change Initiative (Land_Cover_cci): Global Land Cover Maps, Version 2.0.7.
+        Centre for Environmental Data Analysis. https://catalogue.ceda.ac.uk/uuid/b382ebe6679d44b8b0e68ea4ef4b701c
+      bibtex: |
+        @misc{esacci_lc_v207,
+          author    = {{ESA Land Cover CCI project team} and Defourny, Pierre},
+          title     = {{ESA} Land Cover Climate Change Initiative ({Land\_Cover\_cci}): Global Land Cover Maps, Version 2.0.7},
+          year      = {2019},
+          publisher = {Centre for Environmental Data Analysis},
+          url       = {https://catalogue.ceda.ac.uk/uuid/b382ebe6679d44b8b0e68ea4ef4b701c}
+        }
+  papers:
+    - label: Land Cover CCI Product User Guide v2.0 — no DOI
+      text: >-
+        Defourny, P., et al. (2017): Land Cover CCI Product User Guide Version 2.0 (CCI-LC-PUGV2). UCLouvain-Geomatics.
+        https://climate.esa.int/media/documents/CCI_Land_Cover_PUG_v2.0.pdf
+      bibtex: |
+        @techreport{defourny2017lccipug,
+          author      = {Defourny, Pierre and others},
+          title       = {Land Cover {CCI} Product User Guide Version 2.0},
+          institution = {UCLouvain-Geomatics},
+          number      = {CCI-LC-PUGV2},
+          year        = {2017},
+          url         = {https://climate.esa.int/media/documents/CCI_Land_Cover_PUG_v2.0.pdf}
+        }
+    - label: PFT maps (1992–2020) derived from the same series
+      text: >-
+        Harper, K. L., Lamarche, C., Hartley, A., Peylin, P., Ottlé, C., Bastrikov, V., San Martín, R., Bohnenstengel, S. I., Kirches, G., Boettcher, M.,
+        Shevchuk, R., Brockmann, C., Defourny, P. (2023): A 29-year time series of annual 300 m resolution plant-functional-type maps for climate models.
+        Earth System Science Data, 15(3), 1465–1499.
+      doi: 10.5194/essd-15-1465-2023
+      bibtex: |
+        @article{harper2023pft,
+          author  = {Harper, Kandice L. and Lamarche, C{\'e}line and Hartley, Andrew and Peylin, Philippe and Ottl{\'e}, Catherine and Bastrikov, Vladislav and San Mart{\'i}n, Rodrigo and Bohnenstengel, Sylvia I. and Kirches, Grit and Boettcher, Martin and Shevchuk, Roman and Brockmann, Carsten and Defourny, Pierre},
+          title   = {A 29-year time series of annual 300 m resolution plant-functional-type maps for climate models},
+          journal = {Earth System Science Data},
+          volume  = {15},
+          number  = {3},
+          pages   = {1465--1499},
+          year    = {2023},
+          doi     = {10.5194/essd-15-1465-2023}
+        }
+  acknowledgement: >-
+    If you downloaded from the CDS, cite the CDS dataset DOI with an access date. The ESA CCI Land Cover project asks users to credit the ESA Climate Change Initiative
+    and its Land Cover project as the data source, acknowledge the project in scientific publications and send a copy to contact@esa-landcover-cci.org.
+    The project's reference paper for the annual maps (Defourny et al., land-use change 1992–2020) was still listed as 'in preparation' on 2026-10-13.
+
+transitions:
+  - from: ESA CCI Land Cover v2.0.7cds (1992–2015)
+    to: C3S Land Cover v2.1.1 (2016 onward)
+    status: completed
+    date: "2019-10"
+    summary: >-
+      C3S took over the 1992–2015 ESA CCI record and has extended it yearly from 2016 with the same processing chain.
+      The two versions are designed to form one series but differ in producer, input sensors and file names.
+    changes:
+      - aspect: Period
+        before: 1992–2015
+        after: 2016–2022 (as of October 2026; 2023–2025 under review)
+      - aspect: Production and distribution
+        before: ESA CCI Land Cover project (CEDA and the CCI viewer; included in the CDS as v2.0.7cds)
+        after: Copernicus C3S (CDS) — 2016–2018 released October 2019, 2019 in January 2021, 2020 in May 2021
+      - aspect: Sensors for change detection
+        before: AVHRR (1992–1999), SPOT-VGT (1998–2012), PROBA-V (2013–2015)
+        after: PROBA-V, Sentinel-3 OLCI and SLSTR
+      - aspect: File names
+        before: ESACCI-LC-L4-LCCS-Map-300m-P1Y-…-v2.0.7cds
+        after: C3S-LC-L4-LCCS-Map-300m-P1Y-YYYY-v2.1.1.nc
+      - aspect: Variables and legend
+        before: lccs_class + four quality flags, 22-class LCCS legend
+        after: Unchanged
+    impacts:
+      - Pick the version that matches the year in CDS requests (v2_0_7cds for 1992–2015, v2_1_1 from 2016). Joining the two is the officially intended use.
+      - Input sensors and production change at the 2015→2016 boundary; if change in that year looks anomalous, check whether it is real.
+    sources:
+      - name: CDS — Land cover classification gridded maps from 1992 to present (overview)
+        url: https://cds.climate.copernicus.eu/datasets/satellite-land-cover?tab=overview
+      - name: ESA CCI — Release of C3S Global Land Cover products for 2016, 2017 & 2018
+        url: https://climate.esa.int/en/projects/land-cover/news/new-release-c3s-global-land-cover-products-2016-2017-2018-consistent-cci-1992-2015-map-series/
+      - name: ESA CCI Land Cover download page (release history by year)
+        url: https://maps.elie.ucl.ac.be/CCI/viewer/download.php
+
+notices:
+  - date: "2026-10-05"
+    level: info
+    title: CDS terms of use change (effective 2026-10-28)
+    body: >-
+      Article 1 (Description of Products and Services) of the CDS terms of use changes on 28 October 2026. Continued use counts as acceptance;
+      users who decline must tell ECMWF Support by 27 October and will then lose access to Copernicus Products.
+    source: https://forum.ecmwf.int/t/upcoming-cds-terms-of-use-change/15374
+  - date: "2026-07-17"
+    level: info
+    title: 2023–2025 maps and documentation under ECMWF review — publication usually about three months later
+    body: >-
+      ECMWF said the 2023–2025 data and documentation (PUGS, PQAR, ATBD) were in review and that publication on the CDS usually follows about three months after this stage,
+      possibly longer because of summer leave. No exact release date was given.
+    source: https://forum.ecmwf.int/t/esa-cci-lc-landcover-23-24-25-updates/15175
+  - date: "2026-04-16"
+    level: warning
+    title: Release plan revised — 2023, 2024 and 2025 maps delivered together in June 2026
+    body: >-
+      The project team said the 2023, 2024 and 2025 maps would be delivered to ECMWF together in June 2026, with public release subject to the standard review.
+      Compared with the earlier plan (2023–2024 by end of March 2026, 2025 by end of February 2027), 2023–2024 are about three months later and 2025 about eight months earlier.
+    source: https://forum.ecmwf.int/t/update-of-land-cover-classification-gridded-maps/12957
+  - date: "2025-07-04"
+    level: warning
+    title: Updates delayed by a project phase transition — 2023 and 2024 maps expected during 2026
+    body: >-
+      A message on the CDS dataset said the update timeline changed because of a transition between project phases and that the 2023 and 2024 data were now expected during 2026.
+      Normally the dataset is updated yearly with a one-year lag.
+    source: https://cds.climate.copernicus.eu/datasets/satellite-land-cover
+  - date: "2024-09-26"
+    level: critical
+    title: Legacy CDS closed — update the API URL and key
+    body: >-
+      The legacy CDS was shut down and replaced by the new CDS. Set the url in .cdsapirc to https://cds.climate.copernicus.eu/api and use your key from the new CDS;
+      requests sent with the old configuration fail.
+    source: https://forum.ecmwf.int/t/goodbye-legacy-climate-data-store-hello-new-climate-data-store-cds/6380
+
+links:
+  - name: CDS — Land cover classification gridded maps from 1992 to present
+    url: https://cds.climate.copernicus.eu/datasets/satellite-land-cover
+  - name: Land Cover CCI Product User Guide v2.0 (method, legend, limitations)
+    url: https://climate.esa.int/media/documents/CCI_Land_Cover_PUG_v2.0.pdf
+  - name: ESA CCI LC Quick User Guide v2.0.7 (legend codes, quality flags)
+    url: https://maps.elie.ucl.ac.be/CCI/viewer/download/ESACCI-LC-QuickUserGuide-LC-Maps_v2-0-7.pdf
+  - name: C3S v2.1.1 Product User Guide and Specification (PUGS, 2021–2022 Sentinel-3)
+    url: https://dast.data.compute.cci2.ecmwf.int/documents/satellite-land-cover/WP2-FDDP-LC-2021-2022-SENTINEL3-300m-v2.1.1_PUGS_v1.1_final.pdf
+  - name: ESA Climate Office — Land Cover CCI data
+    url: https://climate.esa.int/en/projects/land-cover/data/
+  - name: ECMWF forum — answer on sub-classes (60/61/62)
+    url: https://forum.ecmwf.int/t/land-cover-classes-in-c3s-lc-l4-lccs-map-differ-from-documentation/14878
+
+watch_urls:
+  - https://forum.ecmwf.int/t/update-of-land-cover-classification-gridded-maps/12957
+  - https://forum.ecmwf.int/c/announcements/c3s-announcements/7
+  - https://cds.climate.copernicus.eu/datasets/satellite-land-cover
+
+last_verified: "2026-10-13"

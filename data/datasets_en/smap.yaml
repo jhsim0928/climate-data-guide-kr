@@ -1,0 +1,402 @@
+# ─────────────────────────────────────────────────────────────
+# NASA SMAP soil moisture — dataset information file
+# Listed under the Land tab, 'Soil moisture'. L3 (SPL3SMP, SPL3SMP_E) and L4 (SPL4SMGP, SPL4CMDL) are covered on one page.
+# Same-page version changes (L3 V8→V9 and V5→V6, L4 V7→V8) are in transitions (no to_id).
+# After editing, update last_verified to the date you checked the official pages.
+# ─────────────────────────────────────────────────────────────
+id: smap
+name: "SMAP (L3·L4)"
+full_name: Soil Moisture Active Passive (SMAP) — L3 radiometer soil moisture (SPL3SMP V9, SPL3SMP_E V6) and L4 assimilated soil moisture and carbon (SPL4SMGP V8, SPL4CMDL V8)
+category: satellite
+domain: land
+group: 토양수분
+order: 20
+domains: [육지, 원격탐사, 수문]
+provider: NASA JPL/GSFC SMAP Science Team (distributed by NSIDC DAAC)
+
+status: active
+status_note: >-
+  SMAP has continued with its L-band radiometer alone since the radar failed in July 2015, and the L3 and L4 products are updated daily (on 2026-10-13, SPL3SMP_E ran to 9 October, SPL4SMGP to 5 October and SPL4CMDL to 29 September).
+  Standard products for 14 May to 28 July 2026 had a geolocation issue and are being reprocessed; Near Real-Time (NRT) products will not be replaced.
+  Current versions are L1–L3 CRID R19 (SPL3SMP V9, SPL3SMP_E V6) and L4 Version 8.
+
+period:
+  start: "2015-03"
+  end: present
+  note: >-
+    All four products run from 2015-03-31 to the present. Safe-mode events interrupted observations on 2019-06-19 to 07-23 and 2022-08-06 to 09-20; L3 has no data then,
+    and L4 continued but without SMAP observations (model only). Files for the geolocation-issue period (2026-05-14 to 07-28) are being replaced with reprocessed versions;
+    on 2026-10-13 the SPL3SMP file for 2026-06-01 already carried a higher file counter (_004) and was updated on 2026-09-23.
+
+resolution:
+  spatial_short: "9 km (0.083°)"
+  temporal_short: "3시간"
+  spatial: >-
+    SPL3SMP: 36 km EASE-Grid 2.0 Global (EPSG:6933, 964 × 406). SPL3SMP_E: 9 km EASE-Grid 2.0 Global (3856 × 1624) and North Polar grid (EPSG:6931, 2000 × 2000) —
+    the radiometer footprint is about 36 km and is resampled to the 9 km grid by Backus-Gilbert interpolation. SPL4SMGP and SPL4CMDL: 9 km EASE-Grid 2.0 Global (EPSG:6933).
+  vertical: "L3 surface (about 0–5 cm) / L4 surface 0–5 cm average, root zone 0–100 cm average, full model soil profile (sm_profile)"
+  temporal: L3 daily (6 a.m. descending and 6 p.m. ascending passes kept separately) / SPL4SMGP 3-hourly averages / SPL4CMDL daily
+
+update: "Daily (on 2026-10-13 CMR showed the latest data as 9 October for SPL3SMP_E, 5 October for SPL4SMGP and 29 September for SPL4CMDL — see the NSIDC latency FAQ for official latencies)"
+license: NASA Earth science open data — free. Free NASA Earthdata Login required; citation of the dataset DOI requested
+account_required: true
+
+summary: >-
+  NASA's SMAP satellite measures soil moisture in roughly the top 5 cm globally with an L-band (1.4 GHz) microwave radiometer. Its radar failed in July 2015,
+  so all products since then are radiometer-based. The L3 products (SPL3SMP at 36 km, SPL3SMP_E at 9 km) composite a day of half-orbit retrievals into separate morning and evening fields,
+  while L4 assimilates SMAP brightness temperatures into the NASA GEOS land model to give gap-free 3-hourly surface and root-zone soil moisture (SPL4SMGP) and daily net ecosystem carbon exchange (SPL4CMDL).
+
+time_convention:
+  summary: >-
+    L3 values are instantaneous retrievals at the satellite overpass, composited over a day: descending passes (about 6 a.m. local solar time) are in the AM group and ascending passes (about 6 p.m.)
+    in the PM group (variable names end in `_pm`). SPL4SMGP fields are 3-hourly averages, and the time in the file name is the centre of the interval (e.g. T013000 = 00–03 UTC average). SPL4CMDL gives daily mean carbon fluxes (g C m-2 d-1).
+  points:
+    - "The actual L3 observation time is in `tb_time_utc` (UTC string). Where swaths overlap at high latitudes (poleward of about 65°), the observation nearest 6 a.m. or 6 p.m. local solar time is kept."
+    - "The L3 file date is the date of the first data element, and a grid cell can be observed twice a day (AM and PM). The two values are snapshots at different times, so consider the time difference before averaging them."
+    - "There are eight SPL4SMGP files per day (T013000, T043000 … T223000), each value being the average over that 3-hour interval. Average the eight for a daily mean."
+    - "SPL4SMGP runoff and evapotranspiration fluxes are mean rates in kg m-2 s-1 (= mm s-1); multiply by 10800 for a 3-hour total in mm."
+    - "SPL4CMDL GPP, NEE and Rh are daily mean fluxes (g C m-2 d-1), while soil organic carbon (SOC) is a stock in g C m-2."
+  source: https://nsidc.org/data/spl4smgp/versions/8
+  source_name: NSIDC user guides for SPL3SMP V9, SPL3SMP_E V6, SPL4SMGP V8 and SPL4CMDL V8; L4_SM Product Specification Document (PSD v17)
+
+variables:
+  note: >-
+    Main variables per the NSIDC user guides and the L4_SM Product Specification Document. Files are HDF5 and variables sit inside groups
+    (L3: `Soil_Moisture_Retrieval_Data_AM`/`_PM`, with `..._Polar_AM`/`_Polar_PM` for the SPL3SMP_E polar grid; SPL4SMGP: `Geophysical_Data`; SPL4CMDL: `NEE`, `GPP`, `RH`, `SOC`, `QA`).
+    The fill value for floating-point fields is -9999.0; for L3 integer (uint16) flags it is 65534.
+  full_list: https://nsidc.org/sites/default/files/documents/technical-reference/smap_l4_sm_psd_v17_for_l4sm_version_8.pdf
+  groups:
+    - name: L3 radiometer soil moisture (SPL3SMP 36 km / SPL3SMP_E 9 km, daily)
+      kind: instant
+      items:
+        - text: "Surface soil moisture, morning descending pass — `soil_moisture` (m3/m3)"
+          note: Value at the overpass. Baseline algorithm is DCA since V8
+        - text: "Surface soil moisture, evening ascending pass — `soil_moisture_pm` (m3/m3)"
+          note: PM-group variables carry the _pm suffix
+        - "Retrieval quality flag — `retrieval_qual_flag` (16-bit; 0 or 8 = recommended quality)"
+        - "Observation time — `tb_time_utc` (UTC string)"
+        - "Effective soil temperature — `surface_temperature` (K)"
+        - "Vegetation opacity — `vegetation_opacity` (unitless)"
+    - name: L4 soil moisture and land surface (SPL4SMGP, 3-hourly averages)
+      kind: mean
+      period: 3-hourly
+      items:
+        - "Surface soil moisture, 0–5 cm — `sm_surface` (m3 m-3)"
+        - "Root-zone soil moisture, 0–100 cm — `sm_rootzone` (m3 m-3)"
+        - "Profile soil moisture — `sm_profile` (m3 m-3)"
+        - "Surface and root-zone wetness — `sm_surface_wetness`, `sm_rootzone_wetness` (dimensionless)"
+        - "Surface temperature — `surface_temp` (K)"
+        - "Soil temperature, layer 1 — `soil_temp_layer1` (K)"
+        - "Snow mass (water equivalent) — `snow_mass` (kg m-2)"
+        - "Snow depth — `snow_depth` (m)"
+        - "Evapotranspiration — `land_evapotranspiration_flux` (kg m-2 s-1)"
+        - "Overland runoff and baseflow — `overland_runoff_flux`, `baseflow_flux` (kg m-2 s-1)"
+    - name: L4 carbon (SPL4CMDL, daily means)
+      kind: mean
+      period: Daily
+      items:
+        - "Net ecosystem CO2 exchange (NEE) — `NEE/nee_mean` (g C m-2 d-1)"
+        - "Gross primary production (GPP) — `GPP/gpp_mean` (g C m-2 d-1)"
+        - "Heterotrophic respiration (Rh) — `RH/rh_mean` (g C m-2 d-1)"
+        - text: "Soil organic carbon — `SOC/soc_mean` (g C m-2)"
+          note: A stock, not a flux
+        - "NEE error estimate — `QA/nee_rmse_mean` (g C m-2 d-1)"
+
+access:
+  - name: NSIDC DAAC — SPL3SMP V9
+    url: https://nsidc.org/data/spl3smp/versions/9
+    method: Earthdata Search / earthaccess / HTTPS (CMR virtual directory) / NSIDC Data Access Tool / Harmony
+    note: A free NASA Earthdata Login is required. The legacy on-premises access routes closed on 2025-10-28; NASA Earthdata Cloud is now the primary archive.
+  - name: NSIDC DAAC — SPL3SMP_E V6
+    url: https://nsidc.org/data/spl3smp_e/versions/6
+    method: Earthdata Search / earthaccess / HTTPS / Harmony
+    note: The 9 km global and North Polar grids are in the same file.
+  - name: NSIDC DAAC — SPL4SMGP V8
+    url: https://nsidc.org/data/spl4smgp/versions/8
+    method: Earthdata Search / earthaccess / HTTPS / Harmony / AppEEARS
+    note: Eight files per day (3-hourly averages). Analysis updates (SPL4SMAU) and land model constants (SPL4SMLM) are separate collections. AppEEARS can extract points or areas.
+  - name: NSIDC DAAC — SPL4CMDL V8
+    url: https://nsidc.org/data/spl4cmdl/versions/8
+    method: Earthdata Search / earthaccess / HTTPS / Harmony / AppEEARS / Worldview
+    note: Each daily file holds NEE, GPP, Rh and SOC, plus per-plant-functional-type (PFT) means.
+  - name: NASA Earthdata Cloud (AWS S3, us-west-2)
+    url: https://nsidc.org/data/user-resources/help-center/nasa-earthdata-cloud-data-access-guide
+    method: Direct cloud access (S3, from us-west-2 only)
+    note: Requires temporary S3 credentials. Useful for bulk processing on compute in the same region.
+
+example:
+  lang: python
+  note: >-
+    Uses earthaccess to download a week of SPL3SMP_E V6 in July 2024 and read morning (AM) soil moisture, keeping only recommended-quality values. You will be asked for your Earthdata username and password on first use.
+    EASE-Grid 2.0 files have no 1-D latitude/longitude coordinates, so use the latitude/longitude arrays in the same group (or EASE-Grid 2.0 coordinate files) for mapping.
+  code: |
+    import earthaccess
+    import h5py
+    import numpy as np
+
+    earthaccess.login()  # free NASA Earthdata account
+    results = earthaccess.search_data(
+        short_name="SPL3SMP_E", version="006",
+        temporal=("2024-07-01", "2024-07-07"),
+        bounding_box=(124, 33, 132, 39),   # (west, south, east, north)
+    )
+    files = earthaccess.download(results, "smap_l3e")
+
+    with h5py.File(files[0], "r") as f:
+        g = f["Soil_Moisture_Retrieval_Data_AM"]
+        sm = g["soil_moisture"][:]               # (1624, 3856), m3/m3
+        qf = g["retrieval_qual_flag"][:]
+    sm = np.where((sm == -9999.0) | ~np.isin(qf, [0, 8]), np.nan, sm)
+    print(np.nanmean(sm))
+
+    # L4 3-hourly data: short_name="SPL4SMGP", version="008", group "Geophysical_Data", variable "sm_rootzone"
+
+tips:
+  - "For L3, keep only values whose `retrieval_qual_flag` is 0 or 8, which the user guide defines as recommended quality. Without this filter, lower-quality retrievals get mixed in."
+  - The 9 km SPL3SMP_E grid is interpolated from ~36 km observations. The scale actually resolved is still tens of kilometres, so do not treat individual 9 km cells as independent observations.
+  - During the safe-mode periods (2019-06-19 to 07-23, 2022-08-06 to 09-20) L3 has no data and L4 was filled by the model without observations. A data-quality caution was issued for a period after the 2019 recovery.
+  - "If you downloaded data for 2026-05-14 to 07-28 before reprocessing, those files have the geolocation error. Download them again once the reprocessed files appear (a higher counter at the end of the file name marks the new file)."
+  - "L4 values are model estimates constrained by assimilated SMAP brightness temperatures, so they exist at depths (root zone) and on days without observations. Root-zone soil moisture is a GEOS land model estimate, not an observation."
+  - "SPL4SMGP file times are the centre of the 3-hour averaging interval (T013000 = 00–03 UTC). For a Korean-time daily mean, group the eight files using a 15 UTC day boundary."
+  - "Each new version reprocesses the whole record and the old version is retired (L3 V8 on 2024-12-16, L4 V7 on 2025-06-30). In your paper give the short_name and version, plus the CRID (R19…) or science version (Vv80…) from the file name."
+
+citations:
+  dataset:
+    - label: SPL3SMP V9 (L3 36 km daily)
+      text: >-
+        O'Neill, P. E., Chan, S., Njoku, E. G., Jackson, T., Bindlish, R., Chaubell, J. (2023). SMAP L3 Radiometer Global Daily 36 km
+        EASE-Grid Soil Moisture, Version 9. Boulder, Colorado USA. NASA National Snow and Ice Data Center Distributed Active Archive Center.
+        https://doi.org/10.5067/4XXOGX0OOW1S. [Date Accessed]
+      doi: 10.5067/4XXOGX0OOW1S
+      bibtex: |
+        @misc{spl3smp_v9,
+          author    = {O'Neill, P. E. and Chan, S. and Njoku, E. G. and Jackson, T. and Bindlish, R. and Chaubell, J.},
+          title     = {{SMAP} {L3} Radiometer Global Daily 36 km {EASE-Grid} Soil Moisture, Version 9},
+          year      = {2023},
+          publisher = {NASA National Snow and Ice Data Center Distributed Active Archive Center},
+          address   = {Boulder, Colorado USA},
+          doi       = {10.5067/4XXOGX0OOW1S}
+        }
+    - label: SPL3SMP_E V6 (L3 enhanced 9 km daily)
+      text: >-
+        O'Neill, P. E., Chan, S., Njoku, E. G., Jackson, T., Bindlish, R., Chaubell, J., Colliander, A. (2023). SMAP Enhanced L3 Radiometer
+        Global and Polar Grid Daily 9 km EASE-Grid Soil Moisture, Version 6. Boulder, Colorado USA. NASA National Snow and Ice Data Center
+        Distributed Active Archive Center. https://doi.org/10.5067/M20OXIZHY3RJ. [Date Accessed]
+      doi: 10.5067/M20OXIZHY3RJ
+      bibtex: |
+        @misc{spl3smp_e_v6,
+          author    = {O'Neill, P. E. and Chan, S. and Njoku, E. G. and Jackson, T. and Bindlish, R. and Chaubell, J. and Colliander, A.},
+          title     = {{SMAP} Enhanced {L3} Radiometer Global and Polar Grid Daily 9 km {EASE-Grid} Soil Moisture, Version 6},
+          year      = {2023},
+          publisher = {NASA National Snow and Ice Data Center Distributed Active Archive Center},
+          address   = {Boulder, Colorado USA},
+          doi       = {10.5067/M20OXIZHY3RJ}
+        }
+    - label: SPL4SMGP V8 (L4 3-hourly soil moisture)
+      text: >-
+        Reichle, R. H., De Lannoy, G., Koster, R. D., Crow, W. T., Kimball, J. S., Liu, Q., Bechtold, M. (2025). SMAP L4 Global 3-hourly 9 km
+        EASE-Grid Surface and Root Zone Soil Moisture Geophysical Data, Version 8. Boulder, Colorado USA. NASA National Snow and Ice Data Center
+        Distributed Active Archive Center. https://doi.org/10.5067/T5RUATAQREF8. [Date Accessed]
+      doi: 10.5067/T5RUATAQREF8
+      bibtex: |
+        @misc{spl4smgp_v8,
+          author    = {Reichle, R. H. and De Lannoy, G. and Koster, R. D. and Crow, W. T. and Kimball, J. S. and Liu, Q. and Bechtold, M.},
+          title     = {{SMAP} {L4} Global 3-hourly 9 km {EASE-Grid} Surface and Root Zone Soil Moisture Geophysical Data, Version 8},
+          year      = {2025},
+          publisher = {NASA National Snow and Ice Data Center Distributed Active Archive Center},
+          address   = {Boulder, Colorado USA},
+          doi       = {10.5067/T5RUATAQREF8}
+        }
+    - label: SPL4CMDL V8 (L4 daily carbon net ecosystem exchange)
+      text: >-
+        Kimball, J. S., Endsley, A., Jones, L. A., Kundig, T., Reichle, R. (2025). SMAP L4 Global Daily 9 km EASE-Grid Carbon Net Ecosystem Exchange,
+        Version 8. Boulder, Colorado USA. NASA National Snow and Ice Data Center Distributed Active Archive Center.
+        https://doi.org/10.5067/U7SN8JDZL0UC. [Date Accessed]
+      doi: 10.5067/U7SN8JDZL0UC
+      bibtex: |
+        @misc{spl4cmdl_v8,
+          author    = {Kimball, J. S. and Endsley, A. and Jones, L. A. and Kundig, T. and Reichle, R.},
+          title     = {{SMAP} {L4} Global Daily 9 km {EASE-Grid} Carbon Net Ecosystem Exchange, Version 8},
+          year      = {2025},
+          publisher = {NASA National Snow and Ice Data Center Distributed Active Archive Center},
+          address   = {Boulder, Colorado USA},
+          doi       = {10.5067/U7SN8JDZL0UC}
+        }
+  papers:
+    - label: SMAP mission overview
+      text: >-
+        Entekhabi, D., Njoku, E. G., O'Neill, P. E., Kellogg, K. H., Crow, W. T., Edelstein, W. N., Entin, J. K., Goodman, S. D., Jackson, T. J.,
+        Johnson, J., Kimball, J., Piepmeier, J. R., Koster, R. D., Martin, N., McDonald, K. C., Moghaddam, M., Moran, S., Reichle, R., Shi, J. C.,
+        Spencer, M. W., Thurman, S. W., Tsang, L., Van Zyl, J. (2010): The Soil Moisture Active Passive (SMAP) Mission. Proceedings of the IEEE, 98(5), 704–716.
+      doi: 10.1109/JPROC.2010.2043918
+      bibtex: |
+        @article{entekhabi2010smap,
+          author  = {Entekhabi, Dara and Njoku, Eni G. and O'Neill, Peggy E. and Kellogg, Kent H. and Crow, Wade T. and Edelstein, Wendy N. and Entin, Jared K. and Goodman, Shawn D. and Jackson, Thomas J. and Johnson, Joel and Kimball, John and Piepmeier, Jeffrey R. and Koster, Randal D. and Martin, Neil and McDonald, Kyle C. and Moghaddam, Mahta and Moran, Susan and Reichle, Rolf and Shi, J. C. and Spencer, Michael W. and Thurman, Samuel W. and Tsang, Leung and Van Zyl, Jakob},
+          title   = {The Soil Moisture Active Passive ({SMAP}) Mission},
+          journal = {Proceedings of the IEEE},
+          volume  = {98},
+          number  = {5},
+          pages   = {704--716},
+          year    = {2010},
+          doi     = {10.1109/JPROC.2010.2043918}
+        }
+    - label: SMAP L4 soil moisture algorithm (as of Version 4)
+      text: >-
+        Reichle, R. H., Liu, Q., Koster, R. D., Crow, W. T., De Lannoy, G. J. M., Kimball, J. S., Ardizzone, J. V., Bosch, D., Colliander, A., Cosh, M.,
+        Kolassa, J., Mahanama, S. P., Prueger, J., Starks, P., Walker, J. P. (2019): Version 4 of the SMAP Level-4 Soil Moisture Algorithm and Data Product.
+        Journal of Advances in Modeling Earth Systems, 11(10), 3106–3130.
+      doi: 10.1029/2019MS001729
+      bibtex: |
+        @article{reichle2019l4sm,
+          author  = {Reichle, Rolf H. and Liu, Qing and Koster, Randal D. and Crow, Wade T. and De Lannoy, Gabrielle J. M. and Kimball, John S. and Ardizzone, Joseph V. and Bosch, David and Colliander, Andreas and Cosh, Michael and Kolassa, Jana and Mahanama, Sarith P. and Prueger, John and Starks, Patrick and Walker, Jeffrey P.},
+          title   = {Version 4 of the {SMAP} Level-4 Soil Moisture Algorithm and Data Product},
+          journal = {Journal of Advances in Modeling Earth Systems},
+          volume  = {11},
+          number  = {10},
+          pages   = {3106--3130},
+          year    = {2019},
+          doi     = {10.1029/2019MS001729}
+        }
+  acknowledgement: >-
+    NSIDC asks users to cite the DOI of each product and version actually used, describe the subset (region and period) and give the access date. Each product has its own DOI,
+    so cite L3 and L4 separately if you used both. The L4_SM analysis update (SPL4SMAU, 10.5067/02LGW4DGJYRX) and land model constants (SPL4SMLM, 10.5067/PXQIBL2ALDZD) have separate DOIs.
+
+transitions:
+  - from: SMAP L3 SPL3SMP V8 · SPL3SMP_E V5
+    to: SMAP L3 SPL3SMP V9 · SPL3SMP_E V6 (CRID R19)
+    status: completed
+    date: "2024-10"
+    summary: >-
+      A reprocessing that applied an improved method to the input L1B/L1C brightness temperatures; the soil moisture algorithms, file structure and variables are unchanged.
+      Forward processing began in December 2023, reprocessing of the full record from 2015 finished on 30 October 2024, and the previous versions were retired on 16 December 2024.
+    changes:
+      - aspect: Version and CRID
+        before: "SPL3SMP V8, SPL3SMP_E V5 (based on L1B/L1C V5)"
+        after: "SPL3SMP V9, SPL3SMP_E V6 (based on L1B/L1C V6; file names carry CRID R19xxx)"
+      - aspect: What changed
+        before: "Previous brightness-temperature processing"
+        after: "Improved processing applied to the input L2 radiometer brightness temperatures (algorithms, structure, content and processor code unchanged)"
+      - aspect: Availability
+        before: "V8 and V5 retired on 2024-12-16"
+        after: "Only V9 and V6 available, 2015-03-31 to present"
+    impacts:
+      - Replace time series built from the old versions by downloading the full record again; values for the same date differ slightly.
+      - Update the version value in earthaccess calls and scripts to '009' (SPL3SMP) and '006' (SPL3SMP_E).
+    sources:
+      - name: NSIDC notice — Data set updates SMAP Level-1, Level-2, and Level-3 (2024-10-30)
+        url: https://nsidc.org/data/user-resources/data-announcements/data-set-updates-smap-level-1-level-2-and-level-3-data-sets-0
+      - name: SPL3SMP V9 user guide
+        url: https://nsidc.org/sites/default/files/documents/user-guide/spl3smp-v009-userguide.pdf
+  - from: SMAP L4 Version 7
+    to: SMAP L4 Version 8
+    status: completed
+    date: "2025-04"
+    summary: >-
+      The L4 soil moisture and carbon products were reprocessed from 2015 as Version 8, and Version 7 was retired on 30 June 2025. Precipitation forcing, the radiative transfer model and snow albedo changed,
+      input brightness temperatures were standardised on R19 (SPL1CTB V6), and the carbon model was recalibrated against a new flux-tower network.
+    changes:
+      - aspect: Precipitation forcing (SPL4SMGP)
+        before: "Previous precipitation correction scheme"
+        after: "IMERG Version 07 outside North America and high latitudes"
+      - aspect: Assimilation input
+        before: "Brightness temperatures from earlier versions"
+        after: "Only SPL1CTB Version 6 (R19) brightness temperatures; scaling parameters recalibrated with April 2015 – March 2024 data"
+      - aspect: Model physics (SPL4SMGP)
+        before: "Previous microwave radiative transfer model and snow albedo"
+        after: "Updated microwave radiative transfer model (mwRTM), changed snow albedo parameterization, bug fixes"
+      - aspect: Carbon model (SPL4CMDL)
+        before: "Calibration on La Thuile/FLUXNET2015; litterfall allocated as a fixed fraction of mean annual NPP"
+        after: "BPLUT recalibrated with 410 eddy-covariance towers, seasonal litterfall allocation from satellite LAI, SOC decay recalibrated with ISCN data and SOC re-initialized"
+      - aspect: Science version ID
+        before: "Vv7xxx"
+        after: "Vv8xxx (as of October 2026 files: SPL4SMGP Vv8011, SPL4CMDL Vv8041)"
+    impacts:
+      - Do not mix V7 and V8; download the full record again as V8. The new precipitation forcing changes root-zone soil moisture climatologies as well.
+      - "The user guide notes that the SPL4SMGP V8 variable `depth_to_water_table_from_surface` is, despite its name, the water table depth in peat."
+    sources:
+      - name: NSIDC notice — SMAP Level-4 Version 8 Release (2025-04-15)
+        url: https://nsidc.org/data/user-resources/data-announcements/data-set-updates-smap-level-4-version-8-release
+      - name: NSIDC SPL4SMGP Version 8 page
+        url: https://nsidc.org/data/spl4smgp/versions/8
+      - name: NSIDC SPL4CMDL Version 8 page
+        url: https://nsidc.org/data/spl4cmdl/versions/8
+
+notices:
+  - date: "2026-08-11"
+    level: warning
+    title: Geolocation issue from 14 May to 28 July 2026 — standard products being reprocessed
+    body: >-
+      SMAP Standard and Near Real-Time data sets had a geolocation issue from 14 May to 28 July 2026. Standard products for this period are being reprocessed and will be replaced in the coming weeks;
+      Near Real-Time products will not be replaced. If you already downloaded data for this period, download the reprocessed files.
+    source: https://nsidc.org/data/user-resources/data-announcements/user-notice-smap-data-reprocessing
+  - date: "2025-08-05"
+    level: critical
+    title: Retirement of the NSIDC legacy on-premises archive (2025-10-28) — move to Earthdata Cloud
+    body: >-
+      Access to SMAP data in the NSIDC DAAC legacy on-premises archive (HTTPS File System, Earthdata Search orders, ESI and EGI transformation services) ended on 28 October 2025.
+      NASA Earthdata Cloud is now the primary archive, so scripts must be switched to CMR, earthaccess or the cloud HTTPS paths.
+    source: https://nsidc.org/data/user-resources/data-announcements/user-notice-retirement-legacy-data-archive-smap-data
+  - date: "2025-04-15"
+    level: info
+    title: SMAP L4 Version 8 released — Version 7 retired on 2025-06-30
+    body: >-
+      The L4 soil moisture (SPL4SMGP, SPL4SMAU, SPL4SMLM) and carbon (SPL4CMDL) products were updated to Version 8, with the full record from 2015-03-31.
+      Version 7 was retired on 30 June 2025.
+    source: https://nsidc.org/data/user-resources/data-announcements/data-set-updates-smap-level-4-version-8-release
+  - date: "2025-01-08"
+    level: warning
+    title: SMAP data processing halted by wildfires near JPL (resumed 2025-01-14)
+    body: >-
+      Wildfire activity near JPL in Pasadena, California closed the SMAP Science Data System facility and halted data processing. NSIDC announced on 14 January 2025 that processing had resumed.
+    source: https://nsidc.org/data/user-resources/data-announcements/user-notice-smap-data-outage
+  - date: "2024-10-30"
+    level: info
+    title: L1–L3 reprocessing complete — SPL3SMP V9, SPL3SMP_E V6 (previous versions retired 2024-12-16)
+    body: >-
+      Reprocessing of the new SMAP L1, L2 and L3 versions back to 2015 is complete. L3 soil moisture is now SPL3SMP V9 and SPL3SMP_E V6; the previous versions were retired on 16 December 2024.
+    source: https://nsidc.org/data/user-resources/data-announcements/data-set-updates-smap-level-1-level-2-and-level-3-data-sets-0
+  - date: "2022-08-22"
+    level: warning
+    title: SMAP in safe mode (data gap 2022-08-06 to 09-20)
+    body: >-
+      SMAP entered safe mode in August 2022, halting science data acquisition. The NSIDC notice gives the entry date as 8 August, while the user guides give the gap as 6 August to 20 September.
+      L3 has no data for this period; L4 continued without SMAP observations (model only). Post-recovery data are described as consistent with earlier data.
+    source: https://nsidc.org/data/user-resources/data-announcements/user-notice-smap-safe-mode
+  - date: "2019-06-24"
+    level: warning
+    title: SMAP in safe mode (data gap 2019-06-19 to 07-23)
+    body: >-
+      SMAP entered safe mode on the evening of 19 June 2019 and all instruments were shut down. There are no observations until 23 July; L4 was produced without observations during this period.
+    source: https://nsidc.org/data/user-resources/data-announcements/smap-safe-mode
+  - date: "2015-07"
+    level: critical
+    title: SMAP radar failure — radiometer-only operations since
+    body: >-
+      The SMAP radar stopped in July 2015, ending the radar and combined active-passive soil moisture products. All SMAP products since then rely on the L-band radiometer alone.
+    source: https://nsidc.org/data/smap
+
+links:
+  - name: NSIDC SMAP data collection
+    url: https://nsidc.org/data/smap
+  - name: NSIDC SMAP Data Announcements
+    url: https://nsidc.org/data/smap/news
+  - name: SMAP version history
+    url: https://nsidc.org/data/smap/version-history
+  - name: SPL3SMP V9 user guide
+    url: https://nsidc.org/sites/default/files/documents/user-guide/spl3smp-v009-userguide.pdf
+  - name: SPL3SMP_E V6 user guide
+    url: https://nsidc.org/sites/default/files/documents/user-guide/spl3smp_e-v006-userguide.pdf
+  - name: SPL4SM V8 user guide
+    url: https://nsidc.org/sites/default/files/documents/user-guide/multi_spl4smau-v008-userguide.pdf
+  - name: L4_SM Product Specification Document (PSD v17, Version 8)
+    url: https://nsidc.org/sites/default/files/documents/technical-reference/smap_l4_sm_psd_v17_for_l4sm_version_8.pdf
+  - name: SPL4CMDL V8 user guide
+    url: https://nsidc.org/sites/default/files/documents/user-guide/spl4cmdl-v008-userguide_1.pdf
+  - name: NASA JPL SMAP mission page
+    url: https://smap.jpl.nasa.gov/
+
+watch_urls:
+  - https://nsidc.org/data/smap/news
+  - https://nsidc.org/data/spl3smp
+
+last_verified: "2026-10-13"

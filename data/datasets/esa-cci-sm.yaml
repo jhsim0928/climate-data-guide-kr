@@ -1,0 +1,316 @@
+# ─────────────────────────────────────────────────────────────
+# ESA CCI Soil Moisture — 데이터셋 정보 파일
+# 지면 탭 '토양수분'에 싣습니다. 같은 알고리즘으로 만드는 C3S 토양수분(CDS)과의 관계도 이 파일에 함께 적었습니다.
+# 수정 후에는 공식 페이지에서 확인한 날짜로 last_verified 를 갱신하세요.
+# ─────────────────────────────────────────────────────────────
+id: esa-cci-sm
+name: "ESA CCI Soil Moisture"
+full_name: ESA Soil Moisture Climate Change Initiative (Soil_Moisture_cci) v09.2 — ACTIVE·PASSIVE·COMBINED (다중위성 마이크로파 표층 토양수분 기후자료, 0.25°·일)
+category: satellite
+domain: land
+group: 토양수분
+order: 10
+domains: [육지, 원격탐사, 수문]
+provider: ESA Climate Change Initiative (TU Wien 주관 컨소시엄) / CEDA 배포
+
+status: active
+status_note: >-
+  최신 버전은 v09.2로, v09.1을 2024년 12월 31일까지 시간 연장한 판입니다(CEDA 공개 2025-12-03). 기후자료(CDR)라서 1년에 한 번 갱신되며,
+  다음 버전 일정은 아직 공지되지 않았습니다. 최근 자료가 필요하면 같은 알고리즘으로 약 10일 지연 갱신되는 C3S 토양수분(CDS, v202505)을 쓰라고 ESA가 안내합니다.
+
+period:
+  start: "1978-11"
+  end: "2024-12"
+  note: >-
+    PASSIVE·COMBINED는 1978-11-01~2024-12-31, ACTIVE는 1991-08-05~2024-12-31입니다(v09.2).
+    1978~1987년 무렵은 SMMR 하나뿐이라 관측 빈도가 낮고 궤도 줄무늬가 보이며, PASSIVE·COMBINED의 불확실성 변수는 1987-07-09부터 있습니다(v09.1 사용자 안내서 기준).
+
+resolution:
+  spatial_short: "28 km (0.25°)"
+  temporal_short: "1일"
+  spatial: 0.25° × 0.25° 전지구 정규 위경도 격자 (1440 × 720 격자점, 이 가운데 육지 244,243개)
+  vertical: 표층 토양수분 단일층 (대략 지표 0~5 cm, 실제 감지 깊이는 센서·주파수에 따라 다름)
+  temporal: 일 (00:00 UTC 기준일 하나에 영상 1장). 월평균은 ESA CCI 웹 뷰어·C3S에서 별도 제공
+
+update: 매년 (CDR 연 1회 연장) — 최근 자료는 C3S ICDR이 10일 주기·약 10일 지연으로 갱신
+license: ESA CCI Soil Moisture 이용 약관 v2 — 무료·등록 없이 이용 가능, CEDA 카탈로그의 인용 문구로 데이터셋을 인용해야 함
+account_required: false
+
+summary: >-
+  ESA 기후변화 이니셔티브(CCI)가 1978년부터 쓰인 여러 위성의 마이크로파 토양수분을 하나로 이어 붙인 전지구 표층 토양수분 기후자료입니다.
+  산란계(능동) 자료를 합친 ACTIVE, 복사계(수동) 자료를 합친 PASSIVE, 둘을 결합한 COMBINED 세 가지가 있고, 모두 0.25° 일 영상으로 제공됩니다.
+  ESA는 대부분의 용도에 COMBINED를 권하며, v09 계열부터 오차 전파에 기반한 불확실성이 처음으로 들어갔습니다.
+  같은 알고리즘으로 C3S가 근실시간 판(CDS)을 만듭니다.
+
+time_convention:
+  summary: >-
+    파일 하나가 하루(00:00 UTC 기준 시각)이고, 값은 그날 위성이 실제로 관측한 순간의 토양수분입니다. 실제 관측 시각은 `t0`(1970-01-01 00:00 UTC 기준 일수)에 들어 있고,
+    두 센서 값이 섞인 격자는 관측 시각도 평균됩니다. 일평균이 아니며, 관측이 없는 날은 비어 있습니다.
+  points:
+    - "`time`은 그날의 기준 시각(00:00 UTC)일 뿐이고, 실제 관측 시각은 `t0`를 보세요. 위성마다 통과 시각(오전·오후, 상승·하강)이 다르며 `mode`·`dnflag`로 확인할 수 있습니다."
+    - "관측 빈도가 시대마다 다릅니다. 초기(SMMR 시대)는 며칠에 한 번꼴이고 최근은 거의 매일입니다. 월평균·기후값을 만들 때 표본 수 차이를 고려하세요."
+    - "ACTIVE의 `sm`은 포화도(%), PASSIVE·COMBINED는 체적 함수율(m3 m-3)이라 단위가 다릅니다."
+  source: https://climate.esa.int/documents/2960/ESA_CCI_SM_RD_D4.2_v2_Product_Users_Guide_v09.1_i1.0.pdf
+  source_name: ESA CCI SM Product User Guide v09.1 + CEDA v09.2 카탈로그
+
+variables:
+  note: >-
+    CEDA v09.2 카탈로그와 v09.1 사용자 안내서(PUG) 기준 변수입니다. 세 제품 모두 같은 변수 구성이며 `sm`의 단위만 다릅니다.
+    파일 이름은 ESACCI-SOILMOISTURE-L3S-SSMV-<제품>-<YYYYMMDD>000000-fv<버전>.nc 형식이고 연도별 폴더에 들어 있습니다.
+  full_list: https://climate.esa.int/documents/2960/ESA_CCI_SM_RD_D4.2_v2_Product_Users_Guide_v09.1_i1.0.pdf
+  groups:
+    - name: 토양수분 (그날 관측값)
+      kind: instant
+      items:
+        - text: "표층 토양수분(COMBINED·PASSIVE) — `sm` (m3 m-3)"
+          note: "관측 시각은 `t0`. COMBINED는 공통 모델 기후값에 맞춰 척도를 조정한 값"
+        - text: "표층 토양수분 포화도(ACTIVE) — `sm` (%)"
+          note: 산란계 기반, 포화 대비 백분율
+        - "토양수분 불확실성 — `sm_uncertainty` (sm과 같은 단위)"
+    - name: 관측 정보·품질 (그날 관측 기준)
+      kind: instant
+      items:
+        - "관측 시각 — `t0` (days since 1970-01-01 00:00:00 UTC)"
+        - "품질 플래그(비트) — `flag`"
+        - "주파수 대역 식별 — `freqbandID`"
+        - "주간·야간 구분 — `dnflag` (1 주간, 2 야간, 3 둘 다)"
+        - "위성 궤도 방향 — `mode` (1 상승, 2 하강, 3 둘 다)"
+        - "사용 센서 — `sensor` (정수 코드)"
+
+access:
+  - name: CEDA Archive (ESA CCI SM 공식 배포)
+    url: https://data.ceda.ac.uk/neodc/esacci/soil_moisture/data/daily_files/COMBINED/v09.2
+    method: HTTP 다운로드 / 익명 FTP / OPeNDAP
+    note: >-
+      등록 없이 모든 버전을 받을 수 있습니다. daily_files 아래 ACTIVE·PASSIVE·COMBINED → 버전(v09.2) → 연도 폴더 순서입니다.
+      익명 FTP 주소는 ftp://anon-ftp.ceda.ac.uk/neodc/esacci/soil_moisture/data/daily_files/ 입니다.
+  - name: ESA CCI Open Data Portal
+    url: https://climate.esa.int/en/odp/#/dashboard
+    method: 웹 검색·다운로드
+    note: ESA CCI 전 변수를 한곳에서 찾을 수 있는 포털입니다.
+  - name: Copernicus Climate Data Store — C3S 토양수분 (근실시간·월평균)
+    url: https://cds.climate.copernicus.eu/datasets/satellite-soil-moisture
+    method: 웹 다운로드 / CDS API (cdsapi)
+    note: >-
+      ESA CCI SM 알고리즘으로 만든 C3S 제품입니다(v202505 = CCI 알고리즘 버전 9). 일·10일·월 평균, 연 1회 갱신되는 CDR과 10일 주기로 이어 붙는 ICDR,
+      근권 토양수분(RZSM)·동결/융해(F/T) 제품을 함께 제공합니다. ECMWF 계정이 필요합니다.
+  - name: esa_cci_sm 파이썬 패키지 (TU Wien)
+    url: https://github.com/TUW-GEO/esa_cci_sm
+    method: pip install esa_cci_sm
+    note: 일 영상 파일을 격자점별 시계열 형식으로 바꿔 지점 분석을 빠르게 할 수 있습니다.
+
+example:
+  lang: python
+  note: >-
+    CEDA 익명 FTP에서 COMBINED v09.2 한 달치를 받아 한반도 영역 평균을 구하는 예입니다(계정 불필요). 파일 이름 규칙은 v09.1 사용자 안내서·esa_cci_sm 예시를 따른 것이니
+    받기 전에 폴더 목록으로 확인하세요.
+  code: |
+    from ftplib import FTP
+    import xarray as xr
+
+    base = "/neodc/esacci/soil_moisture/data/daily_files/COMBINED/v09.2/2024"
+    ftp = FTP("anon-ftp.ceda.ac.uk"); ftp.login()
+    ftp.cwd(base)
+    names = [n for n in ftp.nlst() if "202407" in n]   # 2024년 7월 파일
+    for n in names:
+        with open(n, "wb") as f:
+            ftp.retrbinary(f"RETR {n}", f.write)
+    ftp.quit()
+
+    ds = xr.open_mfdataset(sorted(names), combine="by_coords")
+    sm = ds["sm"].sel(lat=slice(39, 33), lon=slice(124, 132))  # 위도는 북→남
+    good = sm.where(ds["flag"].sel(lat=slice(39, 33), lon=slice(124, 132)) == 0)
+    print(good.mean(["lat", "lon"]).values)   # 날짜별 영역 평균 (m3 m-3)
+
+tips:
+  - "`flag`가 0이 아닌 값(눈·동결, 밀집 식생, 물리적 범위 초과 등)은 빼고 쓰세요. 64(나지 주의)는 참고용이라 값이 지워지지 않습니다. 여러 비트가 더해진 값이므로 2진수로 풀어 읽습니다."
+  - 밀집 식생(열대림), 산악, 얼음·눈, 큰 수면, 극건조 사막은 가려져 값이 없습니다. 결측이 많은 지역의 평균은 계절별 표본 편향이 생기기 쉽습니다.
+  - COMBINED의 절대값은 공통 모델 기후값에 맞춰 척도를 조정한 결과라 독립적인 절대 토양수분 관측이 아닙니다. 편차(이상값)·변동 분석에 쓰고, 절대값 비교는 신중히 하세요.
+  - "버전이 바뀔 때마다 과거 기간도 다시 계산됩니다. v09.1과 v09.2를 섞지 말고, 논문에 버전과 제품(ACTIVE/PASSIVE/COMBINED)을 적으세요."
+  - 센서 조합이 바뀌는 시점에 단절이 생길 수 있습니다. COMBINED는 단절 보정(homogenization)을 거쳤지만, 장기 추세 분석에서는 센서 교체 시기를 함께 확인하세요.
+  - C3S 토양수분(CDS)은 같은 알고리즘이지만 버전 이름(v202505 등)·입력 자료 흐름·갱신 주기가 다른 별도 제품입니다. CCI v09.2와 C3S를 이어 붙일 때는 겹치는 기간으로 차이를 먼저 확인하세요.
+  - GLEAM4 등 일부 증발산·재분석 자료는 ESA CCI SM을 동화하므로, 이런 자료와 비교하면 독립 검증이 되지 않습니다.
+
+citations:
+  dataset:
+    - label: COMBINED v09.2 (CEDA)
+      text: >-
+        Dorigo, W., Preimesberger, W., Hahn, S., Van der Schalie, R., De Jeu, R., Kidd, R., Rodriguez-Fernandez, N., Hirschi, M.,
+        Stradiotti, P., Frederikse, T., Gruber, A., Duchemin, D. (2026): ESA Soil Moisture Climate Change Initiative (Soil_Moisture_cci):
+        COMBINED product, Version 09.2. NERC EDS Centre for Environmental Data Analysis, 13 April 2026. doi:10.5285/d4e66299f5054129b8076fb7502949e1
+      doi: 10.5285/d4e66299f5054129b8076fb7502949e1
+      bibtex: |
+        @misc{esacci_sm_combined_v092,
+          author    = {Dorigo, W. and Preimesberger, W. and Hahn, S. and Van der Schalie, R. and De Jeu, R. and Kidd, R. and Rodriguez-Fernandez, N. and Hirschi, M. and Stradiotti, P. and Frederikse, T. and Gruber, A. and Duchemin, D.},
+          title     = {{ESA} Soil Moisture Climate Change Initiative ({Soil\_Moisture\_cci}): {COMBINED} product, Version 09.2},
+          publisher = {NERC EDS Centre for Environmental Data Analysis},
+          year      = {2026},
+          doi       = {10.5285/d4e66299f5054129b8076fb7502949e1}
+        }
+    - label: PASSIVE v09.2 (CEDA)
+      text: >-
+        Dorigo, W., Preimesberger, W., Hahn, S., et al. (2026): ESA Soil Moisture Climate Change Initiative (Soil_Moisture_cci):
+        PASSIVE product, Version 09.2. NERC EDS Centre for Environmental Data Analysis. doi:10.5285/c93c99588d5848b1ac7833e3bc6d5c2d
+      doi: 10.5285/c93c99588d5848b1ac7833e3bc6d5c2d
+      bibtex: |
+        @misc{esacci_sm_passive_v092,
+          author    = {Dorigo, W. and Preimesberger, W. and Hahn, S. and Van der Schalie, R. and De Jeu, R. and Kidd, R. and Rodriguez-Fernandez, N. and Hirschi, M. and Stradiotti, P. and Frederikse, T. and Gruber, A. and Duchemin, D.},
+          title     = {{ESA} Soil Moisture Climate Change Initiative ({Soil\_Moisture\_cci}): {PASSIVE} product, Version 09.2},
+          publisher = {NERC EDS Centre for Environmental Data Analysis},
+          year      = {2026},
+          doi       = {10.5285/c93c99588d5848b1ac7833e3bc6d5c2d}
+        }
+    - label: ACTIVE v09.2 (CEDA)
+      text: >-
+        Dorigo, W., Preimesberger, W., Hahn, S., et al. (2026): ESA Soil Moisture Climate Change Initiative (Soil_Moisture_cci):
+        ACTIVE product, Version 09.2. NERC EDS Centre for Environmental Data Analysis. doi:10.5285/2600f842cfeb481bb21f032a5741c353
+      doi: 10.5285/2600f842cfeb481bb21f032a5741c353
+      bibtex: |
+        @misc{esacci_sm_active_v092,
+          author    = {Dorigo, W. and Preimesberger, W. and Hahn, S. and Van der Schalie, R. and De Jeu, R. and Kidd, R. and Rodriguez-Fernandez, N. and Hirschi, M. and Stradiotti, P. and Frederikse, T. and Gruber, A. and Duchemin, D.},
+          title     = {{ESA} Soil Moisture Climate Change Initiative ({Soil\_Moisture\_cci}): {ACTIVE} product, Version 09.2},
+          publisher = {NERC EDS Centre for Environmental Data Analysis},
+          year      = {2026},
+          doi       = {10.5285/2600f842cfeb481bb21f032a5741c353}
+        }
+    - label: C3S 토양수분 (CDS, 같은 알고리즘의 근실시간 판)
+      text: >-
+        Copernicus Climate Change Service (2018): Soil moisture gridded data from 1978 to present.
+        ECMWF. DOI: 10.24381/cds.d7782f18 (Accessed on DD-MMM-YYYY)
+      doi: 10.24381/cds.d7782f18
+      bibtex: |
+        @misc{c3s_soil_moisture,
+          author    = {{Copernicus Climate Change Service}},
+          title     = {Soil moisture gridded data from 1978 to present},
+          year      = {2018},
+          publisher = {ECMWF},
+          doi       = {10.24381/cds.d7782f18},
+          note      = {Accessed on DD-MMM-YYYY}
+        }
+  papers:
+    - label: ESA CCI SM 병합 방법론과 버전 변천
+      text: >-
+        Gruber, A., Scanlon, T., van der Schalie, R., Wagner, W., Dorigo, W. (2019): Evolution of the ESA CCI Soil Moisture climate data records
+        and their underlying merging methodology. Earth System Science Data, 11, 717–739.
+      doi: 10.5194/essd-11-717-2019
+      bibtex: |
+        @article{gruber2019esacci,
+          author  = {Gruber, Alexander and Scanlon, Tracy and van der Schalie, Robin and Wagner, Wolfgang and Dorigo, Wouter},
+          title   = {Evolution of the {ESA CCI} Soil Moisture climate data records and their underlying merging methodology},
+          journal = {Earth System Science Data},
+          volume  = {11},
+          number  = {2},
+          pages   = {717--739},
+          year    = {2019},
+          doi     = {10.5194/essd-11-717-2019}
+        }
+    - label: ESA CCI SM 개관
+      text: >-
+        Dorigo, W., Wagner, W., Albergel, C., et al. (2017): ESA CCI Soil Moisture for improved Earth system understanding:
+        State-of-the art and future directions. Remote Sensing of Environment, 203, 185–215.
+      doi: 10.1016/j.rse.2017.07.001
+      bibtex: |
+        @article{dorigo2017esacci,
+          author  = {Dorigo, Wouter and Wagner, Wolfgang and Albergel, Clement and Albrecht, Franziska and Balsamo, Gianpaolo and Brocca, Luca and Chung, Daniel and Ertl, Martin and Forkel, Matthias and Gruber, Alexander and Haas, Eva and Hamer, Paul D. and Hirschi, Martin and Ikonen, Jaakko and de Jeu, Richard and Kidd, Richard and Lahoz, William and Liu, Yi Y. and Miralles, Diego and Mistelbauer, Thomas and Nicolai-Shaw, Nadine and Parinussa, Robert and Pratola, Chiara and Reimer, Christoph and van der Schalie, Robin and Seneviratne, Sonia I. and Smolander, Tuomo and Lecomte, Pascal},
+          title   = {{ESA CCI} Soil Moisture for improved Earth system understanding: State-of-the art and future directions},
+          journal = {Remote Sensing of Environment},
+          volume  = {203},
+          pages   = {185--215},
+          year    = {2017},
+          doi     = {10.1016/j.rse.2017.07.001}
+        }
+    - label: COMBINED 단절 보정 (COMBINED 사용 시)
+      text: >-
+        Preimesberger, W., Scanlon, T., Su, C.-H., Gruber, A., Dorigo, W. (2021): Homogenization of Structural Breaks in the Global
+        ESA CCI Soil Moisture Multisatellite Climate Data Record. IEEE Transactions on Geoscience and Remote Sensing, 59(4), 2845–2862.
+      doi: 10.1109/TGRS.2020.3012896
+      bibtex: |
+        @article{preimesberger2021homogenization,
+          author  = {Preimesberger, Wolfgang and Scanlon, Tracy and Su, Chun-Hsu and Gruber, Alexander and Dorigo, Wouter},
+          title   = {Homogenization of Structural Breaks in the Global {ESA CCI} Soil Moisture Multisatellite Climate Data Record},
+          journal = {IEEE Transactions on Geoscience and Remote Sensing},
+          volume  = {59},
+          number  = {4},
+          pages   = {2845--2862},
+          year    = {2021},
+          doi     = {10.1109/TGRS.2020.3012896}
+        }
+  acknowledgement: >-
+    ESA는 쓴 제품의 CEDA 데이터셋 DOI와 함께 Gruber et al. (2019), Dorigo et al. (2017)을, COMBINED를 쓰면 Preimesberger et al. (2021)도 인용하라고 안내합니다.
+    CEDA 카탈로그의 인용 문구를 쓰는 것이 이용 약관 조건입니다. C3S(CDS) 제품을 받았다면 C3S DOI와 접근 날짜를 따로 적으세요.
+
+transitions:
+  - from: ESA CCI SM v08.1
+    to: ESA CCI SM v09.x (v09.1 → v09.2)
+    status: completed
+    summary: >-
+      v09.1에서 처음으로 오차 전파 기반 불확실성이 들어가고, SMOS 여러 입사각을 합치는 방식과 COMBINED 척도 조정 방법이 바뀌었으며 기간이 2023년 말까지 늘었습니다.
+      v09.2는 알고리즘 변경 없이 v09.1을 2024년 말까지 연장한 판입니다. C3S의 v202505가 이 'CCI 알고리즘 버전 9'에 해당합니다.
+    changes:
+      - aspect: 기간 (PASSIVE·COMBINED / ACTIVE)
+        before: "v08.1 1978-11~2022-12 / 1991-01~2022-12 (FAQ 기준)"
+        after: "v09.1 ~2023-12, v09.2 1978-11-01~2024-12-31 / 1991-08-05~2024-12-31"
+      - aspect: 불확실성
+        before: "입력 오차 추정 위주"
+        after: "처음으로 end-to-end 불확실성 예산(오차 전파) 제공"
+      - aspect: PASSIVE 처리
+        before: "기존 방식"
+        after: "SMOS 여러 입사각을 결합하는 새 방법, 밝기온도 병합 개선"
+      - aspect: COMBINED 척도 조정
+        before: "기존 방식"
+        after: "갱신된 척도 조정(rescaling) 방법"
+      - aspect: CEDA 공개
+        before: "v08.1 (2023)"
+        after: "v09.1 2024-10, v09.2 2025-12-03"
+    impacts:
+      - 버전을 바꾸면 과거 기간도 모두 다시 받으세요. 같은 날짜라도 버전마다 값이 다릅니다.
+      - 새 불확실성(`sm_uncertainty`)은 정의가 바뀌었으므로 v08 이전 오차 값과 직접 비교하지 마세요.
+    sources:
+      - name: ESA CCI Soil Moisture 프로젝트 페이지
+        url: https://climate.esa.int/en/projects/soil-moisture/
+      - name: ESA 소식 — v09.1 공개
+        url: https://climate.esa.int/en/news-events/New-upgrade-to-ESACCI-SoilMoisture-Dataset-v091/
+      - name: CEDA — COMBINED v09.2 카탈로그
+        url: https://catalogue.ceda.ac.uk/uuid/d4e66299f5054129b8076fb7502949e1
+
+notices:
+  - date: "2025-12-12"
+    level: info
+    title: C3S 토양수분(CDS) 표층 토양수분 변수 이름 변경
+    body: >-
+      CDS의 알려진 문제(Known issues)에 C3S 토양수분 제품의 표층 토양수분 두 변수(체적 함수율·포화도) 이름을 더 알기 쉽게 바꿨다는 항목이 올라왔습니다.
+      CDS API로 받는 스크립트는 다운로드 양식에서 새 변수 이름을 확인해 고쳐야 합니다. CEDA의 ESA CCI SM 파일 변수(`sm`)와는 무관합니다.
+    source: https://cds.climate.copernicus.eu/datasets/satellite-soil-moisture?tab=documentation
+  - date: "2025-12-03"
+    level: info
+    title: ESA CCI SM v09.2 공개 (2024년 말까지 연장)
+    body: >-
+      ACTIVE·PASSIVE·COMBINED v09.2가 CEDA에 공개되었습니다. v09.1을 2024-12-31까지 시간 연장한 판이며, 사용자 안내서(PUG)와 검증 보고서(PVIR)도 함께 갱신되었습니다.
+      데이터셋 DOI는 2026-04-13에 등록되었습니다.
+    source: https://catalogue.ceda.ac.uk/uuid/d4e66299f5054129b8076fb7502949e1
+  - date: "2024-10"
+    level: info
+    title: ESA CCI SM v09.1 공개 — 불확실성 예산 첫 도입
+    body: >-
+      v09.1은 기간을 2023년 말까지 늘리고, 처음으로 오차 전파 기반 불확실성을 제공하며, COMBINED 척도 조정과 PASSIVE 밝기온도 병합 방식을 개선했습니다.
+    source: https://climate.esa.int/en/news-events/New-upgrade-to-ESACCI-SoilMoisture-Dataset-v091/
+
+links:
+  - name: ESA CCI Soil Moisture 프로젝트 페이지
+    url: https://climate.esa.int/en/projects/soil-moisture/
+  - name: CEDA 카탈로그 — v09.2 데이터 묶음
+    url: https://catalogue.ceda.ac.uk/uuid/935c5f5035954a68ba0a2d25f54b17d1/
+  - name: 사용자 안내서(PUG) v09.2 (Zenodo)
+    url: https://doi.org/10.5281/zenodo.19565425
+  - name: 사용자 안내서(PUG) v09.1 (변수·플래그 표)
+    url: https://climate.esa.int/documents/2960/ESA_CCI_SM_RD_D4.2_v2_Product_Users_Guide_v09.1_i1.0.pdf
+  - name: ESA CCI SM 자주 묻는 질문
+    url: https://climate.esa.int/en/projects/soil-moisture/data/frequently-asked-questions/
+  - name: C3S 토양수분 (CDS)
+    url: https://cds.climate.copernicus.eu/datasets/satellite-soil-moisture
+
+watch_urls:
+  - https://climate.esa.int/en/projects/soil-moisture/
+  - https://cds.climate.copernicus.eu/datasets/satellite-soil-moisture?tab=documentation
+
+last_verified: "2026-10-13"
