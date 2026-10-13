@@ -496,4 +496,23 @@
   }
   if (typeof document$ !== "undefined") document$.subscribe(init);
   else document.addEventListener("DOMContentLoaded", init);
+
+  // ── 바깥 사이트 링크(기관 페이지·포털·DOI 등)는 새 탭으로, 사이트 안 링크는 같은 탭 ──
+  // 클릭 순간에 판단하므로 검색 결과·비교표처럼 나중에 그려지는 링크에도 적용됨
+  function markExternal(a) {
+    if (!a || !a.href || a.hasAttribute("download")) return;
+    var u;
+    try { u = new URL(a.href, location.href); } catch (e) { return; }
+    if ((u.protocol !== "http:" && u.protocol !== "https:") || u.host === location.host) return;
+    a.target = "_blank";
+    var rel = (a.getAttribute("rel") || "").split(/\s+/).filter(Boolean);
+    ["noopener", "noreferrer"].forEach(function (r) { if (rel.indexOf(r) < 0) rel.push(r); });
+    a.setAttribute("rel", rel.join(" "));
+  }
+  ["click", "auxclick", "keydown"].forEach(function (ev) {
+    document.addEventListener(ev, function (e) {
+      if (ev === "keydown" && e.key !== "Enter") return;
+      markExternal(e.target && e.target.closest ? e.target.closest("a[href]") : null);
+    }, true);
+  });
 })();
