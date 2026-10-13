@@ -1,0 +1,405 @@
+# ─────────────────────────────────────────────────────────────
+# Aura OMI — dataset information file
+# Satellite tab (Aerosols and atmospheric composition). The reference long-term record of total ozone, NO2, SO2, HCHO and the UV aerosol index.
+# Collection 4 (V004) is current. Key caveats: the row anomaly since 2007, Aura orbit drift and the projected end of science operations (2028).
+# The OMI → Sentinel-5P TROPOMI comparison is in this file's transitions.
+# After editing, update last_verified to the date you checked the official pages.
+# ─────────────────────────────────────────────────────────────
+id: omi
+name: "Aura OMI"
+full_name: Ozone Monitoring Instrument (OMI) on Aura — Level 2 and Level 3 Collection 4 (V004) trace gas and aerosol products (total ozone, NO2, SO2, HCHO and more)
+category: satellite
+domain: satellite
+group: 에어로졸·대기 성분
+order: 50
+domains: [대기, 에어로졸, 원격탐사]
+provider: NASA GSFC, KNMI (Netherlands) and FMI (Finland) OMI science teams / NASA GES DISC
+
+status: active
+status_note: >-
+  As of 2026-10-13, Aura and OMI are observing normally and GES DISC extends the V004 L2 and L3 products daily (OMNO2d and OMTO3d reached 10–11 October when checked).
+  To save fuel, however, Aura stopped orbit maintenance manoeuvres in 2023 and its equator crossing time had drifted by about an hour by mid-2026; NASA projects that
+  power limits will end Aura science operations around August 2028. Because of the row anomaly that began in 2007, a substantial part of the swath is unusable.
+
+transitions:
+  - from: OMI Collection 3 (V003)
+    to: OMI Collection 4 (V004)
+    status: completed
+    date: "2024-12"
+    summary: >-
+      A reprocessing of the full record (from October 2004) using recalibrated Collection 4 L1B radiances. Release dates differ by product: NO2 came first in December 2024,
+      followed by ozone, SO2 and HCHO during 2025. Values change between versions, so do not mix V004 with V003.
+    changes:
+      - aspect: Release date (CMR citation)
+        before: V003 (Collection 3)
+        after: "OMNO2/OMNO2d 2024-12-17, OMTO3/OMTO3d 2025-02-06, OMSO2 2025-06-10, OMHCHO 2025-11-21, OMSO2e 2025-12-02"
+      - aspect: Input L1B
+        before: Collection 3 L1B
+        after: Collection 4 L1B radiance and irradiance
+      - aspect: NO2 algorithm (OMNO2 v5.0)
+        before: "Previous NO2 standard product (v4)"
+        after: "A priori profiles from a high-resolution (about 25 km) GMI simulation, new de-striping and flagging, geometry-dependent surface reflectivity (GLER), new O2-O2 cloud product, improved snow/ice treatment"
+      - aspect: Row anomaly handling (NO2)
+        before: "Flagged only, via `XTrackQualityFlags`"
+        after: "No vertical column retrieved for affected pixels (fill values inserted); `XTrackQualityFlagsModified` added"
+      - aspect: SO2 (OMSO2 v2.1)
+        before: "PCA v2 algorithm with Collection 3 L1B"
+        after: "Same PCA v2 algorithm with Collection 4 L1B; fit residual `RootMeanSquareFittingResiduals` added"
+      - aspect: V003 production
+        before: Continuing
+        after: "Last OMNO2d V003 file in CMR is for 2026-03-15 (OMTO3d V003 was still being produced in 2026-10)"
+    impacts:
+      - "Re-download the full record as V004 for trends and climatologies. The NO2 README warns about discontinuities introduced by version changes and urges care in trend studies that mix versions."
+      - The V004 NO2, ozone and SO2 collection metadata state that the products are not yet fully validated and recommend checking with the algorithm leads about known problems before trend analysis.
+      - "Code that read HCHO from V003 must change: V004 OMHCHO is netCDF4, with its variables under the `key_science_data` group."
+    sources:
+      - name: OMNO2 Collection 4 v5.0 README (2024-12)
+        url: https://acdisc.gesdisc.eosdis.nasa.gov/data/Aura_OMI_Level3/OMNO2d.004/doc/README.OMNO2.c4v5.pdf
+      - name: OMSO2 V004 README (v2.1.0, 2025-06-17)
+        url: https://aura.gesdisc.eosdis.nasa.gov/data/Aura_OMI_Level2/OMSO2.004/doc/README.OMSO2_004.pdf
+      - name: OMHCHO V004 README (2026-02-28)
+        url: https://aura.gesdisc.eosdis.nasa.gov/data/Aura_OMI_Level2/OMHCHO.004/doc/README.OMHCHO_004.pdf
+      - name: CMR — OMTO3d V004 collection record
+        url: https://cmr.earthdata.nasa.gov/search/concepts/C3377057241-GES_DISC.html
+  - from: Aura OMI
+    to: Sentinel-5P TROPOMI
+    to_id: tropomi
+    status: planned
+    date: "2028-08"
+    summary: >-
+      Since April 2018 TROPOMI has observed from the same early-afternoon orbit (13:30 equator crossing) with pixels more than ten times smaller, making it OMI's de facto successor.
+      The two records overlap from 2018, so the usual approach is to calibrate their differences over that period before joining them; Aura science operations are projected to end around August 2028.
+    changes:
+      - aspect: Period
+        before: "2004-10 to present (Aura science operations projected to end 2028-08)"
+        after: "2018-04-30 to present"
+      - aspect: Nadir pixel
+        before: "13 × 24 km (UV2 and VIS, along × across track)"
+        after: "5.5 × 3.5 km for NO2, SO2, HCHO and others (7 × 3.5 km before 2019-08-06); 5.5 × 7 km for CO and CH4"
+      - aspect: Swath and orbit
+        before: "About 2,600 km; Aura 705 km orbit, ascending node 13:45 (drifting since 2023)"
+        after: "2,600 km; about 824 km altitude, ascending node 13:30 (maintained)"
+      - aspect: Spectral range
+        before: "UV–visible 270–500 nm"
+        after: "UV–visible plus near-infrared and shortwave infrared (SWIR), enabling CO and CH4"
+      - aspect: Row anomaly
+        before: "Part of the swath blocked since 2007 (row anomaly); affected pixels unusable"
+        after: No such problem
+      - aspect: Column units and file format
+        before: "molecules cm-2 or DU; HDF-EOS5 (.he5; HCHO in netCDF4)"
+        after: "mol m-2 (SI); netCDF-4 (`PRODUCT` group)"
+      - aspect: Distribution
+        before: NASA GES DISC
+        after: "Copernicus Data Space Ecosystem (ESA), redistributed by NASA GES DISC"
+    impacts:
+      - "Units differ. Multiply TROPOMI mol m-2 values by 6.02214×10^19 to get molecules cm-2 (file attribute `multiplication_factor_to_convert_to_molecules_percm2`)."
+      - Algorithms, a priori profiles and cloud treatment differ, so NO2 and HCHO show systematic differences even for the same place and day. Check the offsets over the post-2018 overlap before joining the records.
+      - For a consistent multi-satellite NO2 record, consider NASA MEaSUREs MINDS NO2 (OMI_MINDS_NO2, TROPOMI_MINDS_NO2), which applies the OMI algorithm uniformly to TROPOMI and other sensors.
+    sources:
+      - name: Levelt et al. (2018) The Ozone Monitoring Instrument — overview of 14 years in space, ACP
+        url: https://doi.org/10.5194/acp-18-5699-2018
+      - name: Veefkind et al. (2012) TROPOMI on the ESA Sentinel-5 Precursor, RSE
+        url: https://doi.org/10.1016/j.rse.2011.09.027
+      - name: NASA — Potential Evolution of the Aura Mission (updated 2026-09-08)
+        url: https://science.nasa.gov/missions/potential-evolution-of-the-aura-mission/
+      - name: CMR — OMI_MINDS_NO2 V2 (MEaSUREs multi-satellite NO2)
+        url: https://cmr.earthdata.nasa.gov/search/concepts/C4128585682-GES_DISC.html
+
+period:
+  start: "2004-10"
+  end: present
+  note: >-
+    Science observations began on 1 October 2004 (Aura launched 2004-07-15). As checked on 2026-10-13, V004 OMNO2d, OMTO3d and OMSO2e run to 10–11 October 2026.
+    The latest OMHCHO V004 file in CMR is for 30 April 2025, so recent HCHO data are not yet available. OMNO2d V003 stopped at 2026-03-15.
+
+resolution:
+  spatial_short: "24 km (0.22°)"
+  temporal_short: "1일"
+  spatial: >-
+    L2: swath about 2,600 km wide with 60 cross-track pixels (rows). Nadir pixel 13 × 24 km (UV2 and VIS, along × across track), 13 × 48 km for UV1, growing toward the swath edges /
+    L3: OMNO2d 0.25° × 0.25°, OMSO2e 0.25° × 0.25° (single best pixel), OMTO3d 1° × 1° latitude-longitude grids
+  vertical: Column totals (including tropospheric and stratospheric columns). Profile products are not covered on this page
+  temporal: >-
+    L2: one file per daylit part of an orbit (about 53 minutes), about 14–15 orbits a day with near-global daily coverage; Aura 16-day repeat /
+    L3: daily (L2 pixels within the UTC day gridded)
+
+coverage:
+  short: 전지구
+  note: "Daytime only; some cross-track positions lost to the row anomaly"
+update: "Daily (L3 about two days after observation, based on CMR file production times)"
+license: NASA Earth science open data — free and unrestricted. File downloads require a free NASA Earthdata Login; dataset DOI citation is requested
+account_required: true
+
+summary: >-
+  OMI is a UV–visible imaging spectrometer built by the Netherlands and Finland and flown on NASA's Aura satellite. Since 2004 it has measured total ozone, nitrogen dioxide (NO2),
+  sulphur dioxide (SO2), formaldehyde (HCHO), the UV aerosol index and more, with near-global coverage every day. GES DISC distributes the along-orbit L2 swath data and
+  L3 daily products gridded at 0.25° and 1°. With more than 20 years of data it is a reference for air quality trends, emission estimates and ozone layer monitoring;
+  Collection 4 (V004), reprocessed in 2024–2025, is the current version.
+
+time_convention:
+  summary: >-
+    L2 values are observations at the moment of overpass. Aura crosses the equator on its ascending pass at about 13:45 local time, so each location is seen once a day in the early afternoon.
+    L3 daily values either average the good-quality pixels in each grid cell over the UTC day (OMNO2d, OMTO3d) or keep the single best pixel (OMSO2e).
+  points:
+    - "The 13:45 crossing time is nominal. After its last orbit manoeuvres in January (altitude) and April 2023 (inclination), Aura has drifted: the mean crossing time shifted by under 15 minutes through late 2024, about 30 minutes by mid-2025 and about an hour by mid-2026, and is projected to reach about 105 minutes by September 2027 and about 150 minutes by August 2028."
+    - "NASA says the drift has only a minor effect on data quality and that the retrievals account for the changing solar geometry, but long-term trends in NO2 and HCHO, which have strong diurnal cycles, can still absorb the change in observing time."
+    - "Because the drift turned OMI's solar port away from the Sun, daily yaw manoeuvres for solar irradiance calibration have been flown since July 2026 and are planned through August 2027."
+    - "OMSO2e is not an average but one 'good' L2 pixel chosen per grid cell (best pixel). It is selected from observations between 00 and 24 UTC, so near the date line neighbouring cells can come from different observation days."
+    - "The L3 day is the UTC day. Korea's early-afternoon overpass (about 13–14 KST) falls in the file for the same UTC date."
+  source: https://science.nasa.gov/missions/potential-evolution-of-the-aura-mission/
+  source_name: NASA Potential Evolution of the Aura Mission (2026-09-08) + OMI Data User's Guide + OMSO2e V004 CMR description
+
+variables:
+  note: >-
+    Names as given in the GES DISC READMEs and file specifications (.fs). Most L2 and L3 files are HDF-EOS5 (.he5), with variables under `HDFEOS/SWATHS/…/Data Fields`
+    or `HDFEOS/GRIDS/…/Data Fields`; OMHCHO V004 is netCDF4. The OMNO2d fill value is −1.26765×10^30.
+  full_list: https://disc.gsfc.nasa.gov/datasets?keywords=OMI&project=Aura
+  groups:
+    - name: L3 NO2 (OMNO2d, 0.25° daily)
+      kind: mean
+      period: daily (UTC)
+      items:
+        - text: "Tropospheric NO2 column, cloud-screened (cloud fraction below 30%) — `ColumnAmountNO2TropCloudScreened` (molecules cm-2)"
+          std: []
+        - text: "Total NO2 column, cloud-screened — `ColumnAmountNO2CloudScreened` (molecules cm-2)"
+          std: []
+        - text: "Tropospheric and total NO2 column, all conditions — `ColumnAmountNO2Trop`, `ColumnAmountNO2` (molecules cm-2)"
+          std: []
+    - name: L3 ozone and aerosol index (OMTO3d, 1° daily)
+      kind: mean
+      period: daily (UTC)
+      items:
+        - "Total column ozone — `ColumnAmountO3` (DU)"
+        - text: "UV aerosol index — `UVAerosolIndex` (dimensionless)"
+          std: [aerosol]
+        - text: "Radiative cloud fraction — `RadiativeCloudFraction` (0–1)"
+          std: []
+    - name: L2 NO2, SO2 and HCHO swaths (OMNO2, OMSO2, OMHCHO)
+      kind: instant
+      period: observation time
+      items:
+        - text: "Tropospheric NO2 column — `ColumnAmountNO2Trop` (molecules cm-2); quality `VcdQualityFlags`; row anomaly `XTrackQualityFlagsModified`"
+          std: []
+        - text: "SO2 column (air quality / 1 km boundary-layer assumption) — `ColumnAmountSO2`, `ColumnAmountSO2_PBL` (DU)"
+          std: []
+        - text: "Volcanic SO2 columns (lower 3 km, middle 8 km, upper 13 km troposphere, lower stratosphere 18 km) — `ColumnAmountSO2_TRL`, `_TRM`, `_TRU`, `_STL` (DU)"
+          std: []
+        - text: "HCHO column — `key_science_data/column_amount` (molecules cm-2); quality `key_science_data/main_data_quality_flag`"
+          std: []
+
+access:
+  - name: NASA GES DISC — OMI datasets
+    url: https://disc.gsfc.nasa.gov/datasets?keywords=OMI&project=Aura
+    method: Web, HTTPS, OPeNDAP, subsetting
+    note: >-
+      Product pages include OMNO2d_004, OMTO3d_004, OMSO2e_004, OMNO2_004, OMSO2_004 and OMHCHO_004. A free Earthdata Login is required.
+  - name: Earthdata Cloud HTTPS directory (data.gesdisc.earthdata.nasa.gov)
+    url: https://data.gesdisc.earthdata.nasa.gov/data/Aura_OMI_Level3/
+    method: HTTPS (wget/curl, Earthdata Login)
+    note: File paths follow …/Aura_OMI_Level3/OMNO2d.004/YYYY/. The legacy servers (acdisc and aura.gesdisc.eosdis.nasa.gov) may close at any time after 30 September 2026.
+  - name: NASA Earthdata Search — OMNO2d V004
+    url: https://search.earthdata.nasa.gov/search/granules?p=C3333493715-GES_DISC
+    method: Earthdata Search / earthaccess
+  - name: NASA Giovanni
+    url: https://giovanni.gsfc.nasa.gov/
+    method: Web maps and time series
+    note: Handy for checking magnitudes and gap patterns with area-mean time series or maps before downloading.
+
+example:
+  lang: python
+  note: >-
+    Downloads OMNO2d V004 daily files with earthaccess and reads them with h5py. The code looks up the HDF-EOS5 internal path by variable name.
+  code: |
+    # pip install earthaccess h5py numpy
+    import earthaccess
+    import h5py
+    import numpy as np
+
+    earthaccess.login()
+    results = earthaccess.search_data(
+        short_name="OMNO2d", version="004",
+        temporal=("2024-01-01", "2024-01-31"),
+    )
+    files = earthaccess.download(results[:1], "./omi")
+
+    with h5py.File(files[0], "r") as h:
+        paths = []
+        h.visit(lambda n: paths.append(n) if n.endswith("ColumnAmountNO2TropCloudScreened") else None)
+        no2 = h[paths[0]][:].astype(float)          # (720 lat, 1440 lon), molecules cm-2
+    no2[no2 < -1e29] = np.nan                       # fill value -1.26765e30
+    print(paths[0], no2.shape, np.nanmean(no2))
+
+tips:
+  - "The row anomaly began on 25 June 2007 and spread in steps (May 2008, January 2009 and later); a substantial part of the swath (up to about 50% in some periods) is still affected. Always screen L2 with the row-anomaly flags (for NO2 keep pixels where `XTrackQualityFlagsModified` is 0 or fill; for SO2 require `Flag_RowAnomaly` = 0)."
+  - "Because of the row anomaly, daily global coverage has gaps since 2009. Missing cells in daily grids may be due to the anomaly rather than clouds, so check how sample counts change when building monthly means."
+  - "The NO2 README recommends using only L2 pixels whose `VcdQualityFlags` least significant bit is zero. Keep negative values when averaging to avoid a systematic bias."
+  - "For SO2 PBL columns the recommended conditions are cloud radiance fraction below 0.3, solar zenith angle below 65°, excluding edge rows (0 and 59) and excluding the South Atlantic Anomaly (`Flag_SAA`). Use `ColumnAmountSO2_PBL` or `ColumnAmountSO2` for non-volcanic sources, and pick TRL, TRM, TRU or STL to match plume height for eruptions."
+  - "The HCHO README says not to use pixels whose `main_data_quality_flag` is 'bad', and to take particular care with solar zenith angles above 70°, cloud fractions above 0.4, and snow or ice. Single pixels are noisy, so HCHO is usually averaged over days to a month."
+  - "For OMTO3 (ozone) only error flags 0 (good) and 1 (glint corrected) are recommended; this screening also removes row-anomaly pixels. Flagging was tightened for the Hunga Tonga eruption period, 11–28 January 2022."
+  - "OMI gives one early-afternoon observation. When comparing NO2, with its strong diurnal cycle, against daily means from ground monitors, match the observation time."
+  - "The V004 collection metadata describe the data as not yet fully validated. Before trend studies, check the known issues on the GES DISC product pages and the READMEs."
+
+citations:
+  dataset:
+    - label: OMNO2d V004 (L3 NO2)
+      text: >-
+        Krotkov, N. A., Lamsal, L. N., Marchenko, S. V., Fisher, B. L., Bucsela, E. J., Fasnacht, Z., Yang, E.-S., Qin, W., Vasilkov, A., Li, C.,
+        Joiner, J., Choi, S., Swartz, W. H. (2024), OMI/Aura NO2 Cloud-Screened Total and Tropospheric Column L3 Global Gridded 0.25 degree x 0.25 degree V004,
+        Greenbelt, MD, USA, Goddard Earth Sciences Data and Information Services Center (GES DISC), Accessed: [Data Access Date], 10.5067/Aura/OMI/DATA3407
+      doi: 10.5067/Aura/OMI/DATA3407
+      bibtex: |
+        @misc{omno2d_v004,
+          author    = {Krotkov, Nickolay A. and Lamsal, Lok N. and Marchenko, Sergey V. and Fisher, Bradford L. and Bucsela, Eric J. and Fasnacht, Zachary and Yang, Eun-Su and Qin, Wenhan and Vasilkov, Alexander and Li, Can and Joiner, Joanna and Choi, Sunny and Swartz, William H.},
+          title     = {{OMI/Aura} {NO2} Cloud-Screened Total and Tropospheric Column {L3} Global Gridded 0.25 degree x 0.25 degree {V004}},
+          year      = {2024},
+          publisher = {Goddard Earth Sciences Data and Information Services Center (GES DISC)},
+          address   = {Greenbelt, MD, USA},
+          doi       = {10.5067/Aura/OMI/DATA3407}
+        }
+    - label: OMTO3d V004 (L3 ozone and aerosol index)
+      text: >-
+        Bandel, M., Haffner, D., Fasnacht, Z., Bhartia, P. K., Li, C. (2025), OMI/Aura TOMS-Like Ozone, Aerosol Index, Cloud Radiance Fraction L3 1 day
+        1 degree x 1 degree V004, Greenbelt, MD, USA, Goddard Earth Sciences Data and Information Services Center (GES DISC), Accessed: [Data Access Date],
+        10.5067/Aura/OMI/DATA3401
+      doi: 10.5067/Aura/OMI/DATA3401
+      bibtex: |
+        @misc{omto3d_v004,
+          author    = {Bandel, Matthew and Haffner, David and Fasnacht, Zachary and Bhartia, Pawan K. and Li, Can},
+          title     = {{OMI/Aura} {TOMS}-Like Ozone, Aerosol Index, Cloud Radiance Fraction {L3} 1 day 1 degree x 1 degree {V004}},
+          year      = {2025},
+          publisher = {Goddard Earth Sciences Data and Information Services Center (GES DISC)},
+          address   = {Greenbelt, MD, USA},
+          doi       = {10.5067/Aura/OMI/DATA3401}
+        }
+    - label: OMSO2 V004 (L2 SO2)
+      text: >-
+        Li, C., Krotkov, N. A., Leonard, P., Joiner, J. (2025), OMI/Aura Sulphur Dioxide (SO2) Total Column 1-orbit L2 Swath 13x24 km V004,
+        Greenbelt, MD, USA, Goddard Earth Sciences Data and Information Services Center (GES DISC), Accessed: [Data Access Date], 10.5067/Aura/OMI/DATA2422
+      doi: 10.5067/Aura/OMI/DATA2422
+      bibtex: |
+        @misc{omso2_v004,
+          author    = {Li, Can and Krotkov, Nickolay A. and Leonard, Peter and Joiner, Joanna},
+          title     = {{OMI/Aura} Sulphur Dioxide ({SO2}) Total Column 1-orbit {L2} Swath 13x24 km {V004}},
+          year      = {2025},
+          publisher = {Goddard Earth Sciences Data and Information Services Center (GES DISC)},
+          address   = {Greenbelt, MD, USA},
+          doi       = {10.5067/Aura/OMI/DATA2422}
+        }
+    - label: OMHCHO V004 (L2 HCHO)
+      text: >-
+        Gonzalez Abad, G. (2025), OMI/Aura Formaldehyde (HCHO) Total Column 1-orbit L2 Swath 13x24 km V004, Greenbelt, MD, USA,
+        Goddard Earth Sciences Data and Information Services Center (GES DISC), Accessed: [Data Access Date], 10.5067/AURA/OMI/DATA2415
+      doi: 10.5067/AURA/OMI/DATA2415
+      bibtex: |
+        @misc{omhcho_v004,
+          author    = {Gonzalez Abad, Gonzalo},
+          title     = {{OMI/Aura} Formaldehyde ({HCHO}) Total Column 1-orbit {L2} Swath 13x24 km {V004}},
+          year      = {2025},
+          publisher = {Goddard Earth Sciences Data and Information Services Center (GES DISC)},
+          address   = {Greenbelt, MD, USA},
+          doi       = {10.5067/AURA/OMI/DATA2415}
+        }
+  papers:
+    - label: OMI instrument paper
+      text: >-
+        Levelt, P. F., van den Oord, G. H. J., Dobber, M. R., Malkki, A., Visser, H., de Vries, J., Stammes, P., Lundell, J. O. V., Saari, H. (2006):
+        The ozone monitoring instrument. IEEE Transactions on Geoscience and Remote Sensing, 44(5), 1093–1101.
+      doi: 10.1109/TGRS.2006.872333
+      bibtex: |
+        @article{levelt2006omi,
+          author  = {Levelt, P. F. and van den Oord, G. H. J. and Dobber, M. R. and Malkki, A. and Visser, Huib and de Vries, Johan and Stammes, P. and Lundell, J. O. V. and Saari, H.},
+          title   = {The ozone monitoring instrument},
+          journal = {IEEE Transactions on Geoscience and Remote Sensing},
+          volume  = {44},
+          number  = {5},
+          pages   = {1093--1101},
+          year    = {2006},
+          doi     = {10.1109/TGRS.2006.872333}
+        }
+    - label: Overview of 14 years of OMI operations (including the row anomaly)
+      text: >-
+        Levelt, P. F., Joiner, J., Tamminen, J., Veefkind, J. P., Bhartia, P. K., Stein Zweers, D. C., et al. (2018): The Ozone Monitoring Instrument:
+        overview of 14 years in space. Atmospheric Chemistry and Physics, 18, 5699–5745.
+      doi: 10.5194/acp-18-5699-2018
+      bibtex: |
+        @article{levelt2018omi,
+          author  = {Levelt, Pieternel F. and Joiner, Joanna and Tamminen, Johanna and Veefkind, J. Pepijn and Bhartia, Pawan K. and Stein Zweers, Deborah C. and others},
+          title   = {The Ozone Monitoring Instrument: overview of 14 years in space},
+          journal = {Atmospheric Chemistry and Physics},
+          volume  = {18},
+          number  = {8},
+          pages   = {5699--5745},
+          year    = {2018},
+          doi     = {10.5194/acp-18-5699-2018}
+        }
+  acknowledgement: >-
+    GES DISC asks that each collection used be cited in the form above (authors, year, title, version, distributor, access date, DOI). Authors and years follow the CMR citation
+    records; the creator lists registered with DataCite can differ, so confirm against the citation on the GES DISC product page. Cite Levelt et al. (2006, 2018) for the instrument.
+
+notices:
+  - date: "2026-09-18"
+    level: warning
+    title: Legacy GES DISC data servers to close (no earlier than 2026-09-30) — move to Earthdata Cloud
+    body: >-
+      The notice on aura.gesdisc.eosdis.nasa.gov says access to this and all other GES DISC data servers will end no earlier than 30 September 2026 and that users must move to
+      Earthdata Cloud to keep access (anonymous FTP has already stopped). GES DISC posted the same message as an urgent alert on 18 September 2026. Point scripts to data.gesdisc.earthdata.nasa.gov or use earthaccess.
+    source: https://aura.gesdisc.eosdis.nasa.gov/data/
+  - date: "2026-09-08"
+    level: warning
+    title: Aura orbit drift — about one hour of crossing-time change; daily yaw manoeuvres for OMI solar calibration
+    body: >-
+      NASA reports the shift in Aura's mean crossing time at about one hour by mid-2026 and projects about 150 minutes by August 2028. With OMI's solar port no longer facing the Sun,
+      daily yaw manoeuvres for solar irradiance calibration run from July 2026 to August 2027. Power is conservatively expected to become limiting in mid-2028.
+    source: https://science.nasa.gov/missions/potential-evolution-of-the-aura-mission/
+  - date: "2026-03-20"
+    level: info
+    title: Aura science operations projected to end in August 2028
+    body: >-
+      The editor's note on the NASA Science article 'Terra: The End of An Era' projects end of science operations for Terra in February 2027, Aqua in September 2027 and Aura in
+      August 2028 because of fuel and power limits, with operations continuing until then.
+    source: https://science.nasa.gov/science-research/earth-science/terra-the-end-of-an-era
+  - date: "2025-11-21"
+    level: info
+    title: OMHCHO V004 (Collection 4) released in netCDF4
+    body: >-
+      The HCHO L2 product was reprocessed as Collection 4 and released as V004. Files are netCDF4, with the main variables in the `key_science_data` group.
+      As checked in 2026-10, the latest file in CMR is for 30 April 2025.
+    source: https://cmr.earthdata.nasa.gov/search/concepts/C3828870481-GES_DISC.html
+  - date: "2025-02-06"
+    level: info
+    title: Ozone OMTO3 and OMTO3d V004 released
+    body: >-
+      The TOMS-type total ozone L2 (OMTO3) and 1° daily product (OMTO3d) were reprocessed with Collection 4 input and released as V004. SO2 followed in June (OMSO2) and December 2025 (OMSO2e).
+    source: https://cmr.earthdata.nasa.gov/search/concepts/C3377057241-GES_DISC.html
+  - date: "2024-12-17"
+    level: warning
+    title: NO2 standard product Collection 4 (v5.0, V004) released
+    body: >-
+      OMNO2 and OMNO2d were reprocessed for the full record as v5.0, with new L1B, high-resolution a priori profiles, de-striping and fill values for row-anomaly pixels.
+      Values differ from V003, so use V004 consistently for trend analysis.
+    source: https://acdisc.gesdisc.eosdis.nasa.gov/data/Aura_OMI_Level3/OMNO2d.004/doc/README.OMNO2.c4v5.pdf
+  - date: "2007-06-25"
+    level: critical
+    title: OMI row anomaly began
+    body: >-
+      On 25 June 2007 something began partly blocking OMI's nadir port, lowering or raising radiances at particular cross-track positions (rows); the affected area grew in
+      May and December 2008, January 2009 and July 2011. Affected pixels cannot be used for retrievals and must be screened out with the L2 flags.
+    source: https://projects.knmi.nl/omi/research/product/rowanomaly-background.php
+
+links:
+  - name: NASA Science — Aura mission
+    url: https://science.nasa.gov/mission/aura/
+  - name: NASA — Potential Evolution of the Aura Mission
+    url: https://science.nasa.gov/missions/potential-evolution-of-the-aura-mission/
+  - name: KNMI — OMI row anomaly background
+    url: https://projects.knmi.nl/omi/research/product/rowanomaly-background.php
+  - name: OMI Data User's Guide (GES DISC)
+    url: https://docserver.gesdisc.eosdis.nasa.gov/repository/Mission/OMI/3.3_ScienceDataProductDocumentation/3.3.2_ProductRequirements_Designs/README.OMI_DUG.pdf
+  - name: KNMI — Ozone Monitoring Instrument
+    url: https://www.knmiprojects.nl/projects/ozone-monitoring-instrument
+
+watch_urls:
+  - https://science.nasa.gov/missions/potential-evolution-of-the-aura-mission/
+  - https://science.nasa.gov/mission/aura/
+
+last_verified: "2026-10-13"

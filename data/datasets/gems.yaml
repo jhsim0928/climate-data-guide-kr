@@ -1,0 +1,266 @@
+# ─────────────────────────────────────────────────────────────
+# 천리안위성 2B호 GEMS — 데이터셋 정보 파일
+# 위성 탭(에어로졸·대기 성분). 국립환경과학원 환경위성센터가 생산·배포하는 정지궤도 환경위성 L2·L3·L4 자료입니다.
+# 받으려면 웹다운로드(신청 키), Open-API(키 발급 승인 약 7일), SFTP(이용신청서·IP 등록) 중 하나를 거쳐야 합니다.
+# 수정 후에는 공식 페이지에서 확인한 날짜로 last_verified 를 갱신하세요.
+# ─────────────────────────────────────────────────────────────
+id: gems
+name: "GEMS (천리안 2B호)"
+full_name: Geostationary Environment Monitoring Spectrometer (GEMS) on GEO-KOMPSAT-2B (천리안위성 2B호 정지궤도 환경탑재체 — 동아시아 대기오염물질·에어로졸 시간별 관측)
+category: satellite
+domain: satellite
+group: 에어로졸·대기 성분
+order: 70
+domains: [대기, 에어로졸, 원격탐사]
+provider: 국립환경과학원 환경위성센터(NIER ESC)
+
+status: active
+status_note: >-
+  2020년 2월 발사된 천리안위성 2B호의 GEMS가 낮 동안 매시간 동아시아를 관측하고 있으며, 환경위성센터가 L2 산출물 11종과 L3 이산화질소 일·월평균, L4 지상 미세먼지 추정 농도를 배포합니다.
+  2026-10-13 확인 시 SFTP 안내에 적힌 현재 판은 NO2 v4.0.1, SO2·CHOCHO v3.0.1, HCHO·CLOUD·O3P·BSR v3.0.0, O3T v2.1.2, AERAOD·AEH·UVI v2.1.0이며,
+  2026년 9월 GEMS 국제 워크숍에서는 SO2·AOD v3.0과 NO2 v4.0 평가 결과가 발표되었습니다. 산출물마다 판 번호가 따로 올라가므로 쓴 판을 꼭 기록하세요.
+
+period:
+  start: "2020"
+  end: present
+  note: >-
+    천리안위성 2B호는 2020년 2월 19일 발사되어 3월 6일 목표 궤도에 들어갔습니다(Cho et al., 2024; 연세대 GEMS 알고리즘사업단).
+    환경위성센터 누리집에서는 자료서비스 첫 날짜와 산출물별 제공 기간을 확인하지 못했습니다. 공개 연구 논문은 2021년 11월 이후 L2 자료를 주로 쓰고 있으니,
+    필요한 기간이 실제로 있는지는 웹다운로드 검색이나 Open-API의 관측시간 조회(getFileDateList)로 먼저 확인하세요.
+
+resolution:
+  spatial_short: "7 km (0.06°)"
+  temporal_short: "1시간"
+  spatial: >-
+    정지궤도 관측 화소 — 서울 기준 기체 7 km × 8 km, 에어로졸 3.5 km × 8 km(Kim et al., 2020; 에어로졸 논문은 3.5 × 7.7 km²로 적음).
+    관측 영역(field of regard)은 5°S–45°N, 75°E–145°E이고, 시각에 따라 Full West(FW, 인도 일부까지)·Full Central(FC)·Half Korea(HK)·Half East(HE) 영역을 나눠 훑습니다.
+    L3 이산화질소 일·월평균은 격자 자료입니다(격자 간격은 공식 페이지에서 확인하지 못함).
+  vertical: 연직 기둥 총량(대류권·성층권·전층 칼럼)과 오존 연직 분포(O3P), 에어로졸 유효 고도(AEH)
+  temporal: >-
+    매시 45분(UTC)에 촬영을 시작해 30분 동안 훑으며, 운영정보 표 기준 하루 최대 11회(UTC 22:45~08:45, 한국 시간 07:45~17:45) 관측합니다.
+    소개 페이지는 '1일 8회(평균)'로 적고 있어, 계절(해 뜨고 지는 시각)과 영역에 따라 하루 관측 횟수가 달라집니다. L3는 일·월평균입니다.
+
+coverage:
+  short: 아시아
+  note: "관측 영역 5°S–45°N, 75°E–145°E (시각별로 관측 범위가 다름)"
+update: 매시간 관측 자료를 지상국에서 처리해 배포 (배포 지연 시간은 공식 페이지에 명시되지 않음)
+license: >-
+  무료. 환경위성센터 저작권 정책상 센터가 저작재산권을 모두 가진 공공누리 표시 자료는 출처를 밝히면 자유롭게 쓸 수 있습니다.
+  논문·기고문에는 센터가 권고하는 감사 문구를 넣어야 합니다. 받으려면 신청 키(웹다운로드·Open-API) 또는 이용신청서(SFTP)가 필요합니다
+account_required: true
+
+summary: >-
+  GEMS는 2020년 2월 발사된 천리안위성 2B호에 실린 세계 첫 정지궤도 대기환경 관측 장비로, 300~500 nm 자외·가시 초분광계(분해능 0.6 nm)로 동아시아·동남아시아를
+  낮 동안 매시간 관측합니다. 국립환경과학원 환경위성센터가 이산화질소(NO2)·이산화황(SO2)·포름알데히드(HCHO)·글리옥살(CHOCHO)·오존(전량·연직 분포)·에어로졸(광학두께·단일산란알베도·유효 고도)·
+  구름·자외선 지수 등 L2 산출물과 NO2 일·월평균(L3), 지상 PM10·PM2.5 추정 농도(L4)를 배포합니다. 저궤도 위성(TROPOMI·OMI)은 하루 한 번 지나가지만 GEMS는 같은 지역의 하루 변화를 볼 수 있어
+  배출원 추적, 장거리 이동, 일변화 연구에 쓰입니다.
+
+time_convention:
+  summary: >-
+    L2 값은 해당 시각 관측(매시 45분 UTC부터 약 30분 동안 동→서 또는 영역별로 훑은 스캔)의 순간값입니다. 같은 파일 안에서도 화소마다 실제 관측 시각이 조금씩 다르며,
+    L3 이산화질소는 이 L2를 하루·한 달 모아 평균한 값입니다.
+  points:
+    - "관측은 매시 45분(UTC)에 시작해 30분간 진행됩니다. 예를 들어 '03:45 UTC' 관측은 한국 시간 12:45~13:15에 훑은 자료입니다."
+    - "하루 첫 관측은 UTC 22:45(한국 시간 07:45)로 UTC 날짜가 전날입니다. 한국 시간 하루를 기준으로 모을 때 날짜 경계를 조심하세요."
+    - "계절과 태양천정각에 따라 관측 횟수와 영역(FW·FC·HK·HE)이 바뀝니다. 아침·저녁 관측은 한반도·일본 쪽 절반 영역만 훑는 경우가 있어, 시각마다 자료가 있는 지역이 다릅니다."
+    - "TROPOMI(오후 13:30 무렵 통과)와 비교할 때는 같은 시각대 GEMS 관측을 골라야 합니다. NO2 같은 성분은 하루 안에서 크게 변합니다."
+    - "준실시간판과 확정판의 구분, 배포 지연 시간은 환경위성센터 누리집에 따로 적혀 있지 않습니다. 판 번호(예 v4.0.1)를 기준으로 자료를 구분하세요."
+  source: https://nesc.nier.go.kr/ko/html/satellite/operation.do
+  source_name: 환경위성센터 운영정보(관측 일정·영역) + Kim et al. (2020) BAMS
+
+variables:
+  note: >-
+    환경위성센터 SFTP 안내와 웹다운로드 목록 기준 산출물입니다. 괄호 속 영문 약어는 '파일 속 변수 이름'이 아니라 환경위성센터의 산출물 코드입니다.
+    파일 안 변수 이름·단위·품질 플래그는 누리집에서 확인하지 못했으므로, 받은 파일의 속성과 알고리즘 문서(ATBD)를 직접 확인하세요.
+  full_list: https://nesc.nier.go.kr/ko/html/cntnts/104/static/page.do
+  groups:
+    - name: L2 기체 (시간별 관측)
+      kind: instant
+      period: 관측 시각
+      items:
+        - text: "이산화질소 연직 칼럼(전층·성층권·대류권) — 산출물 NO2"
+          note: SFTP 안내 기준 v4.0.1
+        - text: "이산화황 연직 칼럼 — 산출물 SO2"
+          note: v3.0.1
+        - text: "포름알데히드 연직 칼럼 — 산출물 HCHO"
+          note: v3.0.0
+        - text: "글리옥살 연직 칼럼 — 산출물 CHOCHO"
+          note: v3.0.1
+        - text: "오존 전량 — 산출물 O3T"
+          note: v2.1.2
+        - text: "오존 연직 분포(성층권·대류권 오존 포함) — 산출물 O3P"
+          note: v3.0.0
+    - name: L2 에어로졸·구름·지표·자외선 (시간별 관측)
+      kind: instant
+      period: 관측 시각
+      items:
+        - text: "에어로졸 광학두께(443 nm)·단일산란알베도·자외선/가시광 에어로졸 지수 — 산출물 AERAOD"
+          note: v2.1.0
+          std: [aerosol]
+        - text: "에어로졸 유효 고도 — 산출물 AEH"
+          note: v2.1.0
+        - text: "구름 유효운량·구름 중심 기압·구름 복사 비율 — 산출물 CLOUD"
+          note: v3.0.0
+        - text: "지표면 반사도(배경 반사도) — 산출물 BSR"
+          note: v3.0.0
+        - text: "자외선 지수·식물 반응 지수·DNA 영향 지수·비타민D 합성 지수 — 산출물 UVI"
+          note: v2.1.0
+    - name: L3 이산화질소 평균
+      kind: mean
+      period: 일/월
+      items:
+        - text: "전층 이산화질소 일·월평균 — NO2-TOTAL-daily, NO2-TOTAL_monthly"
+          note: 웹다운로드 목록 이름
+        - text: "대류권 이산화질소 일·월평균 — NO2-TROP-daily, NO2-TROP_monthly"
+          note: 웹다운로드 목록 이름
+        - text: "이산화질소 격자 일·월평균 — NO2-GRID-daily, NO2-GRID_monthly"
+          note: 웹다운로드 목록 이름
+    - name: L4 지상 농도 추정
+      kind: instant
+      period: 관측 시각
+      items:
+        - text: "지상 미세먼지(PM10) 추정 농도"
+          note: 시간 간격·단위는 공식 페이지에서 확인하지 못함
+        - text: "지상 초미세먼지(PM2.5) 추정 농도"
+          note: 시간 간격·단위는 공식 페이지에서 확인하지 못함
+
+access:
+  - name: 환경위성센터 웹다운로드 (자료서비스 장바구니)
+    url: https://nesc.nier.go.kr/ko/html/datasvc/index.do
+    method: 웹 검색·장바구니 신청 → 신청 키로 내려받기
+    note: >-
+      회원가입·로그인은 없습니다. 위성·형식(이미지/데이터)·산출물을 골라 검색한 뒤 장바구니에 담아 이용 목적과 알림 이메일을 적고 개인정보 수집에 동의해 신청하면 '신청 발급키'가 나옵니다.
+      이 키를 복사하거나 키 파일로 저장해 두고, 처리 완료 메일을 받으면 같은 페이지 '신청 현황'에 키를 넣거나 키 파일을 올려 조회한 뒤 내려받습니다.
+      이미 받은 키가 있으면 다음 신청 때 함께 넣으면 됩니다.
+  - name: GEMS Open-API
+    url: https://nesc.nier.go.kr/ko/html/svc/openapi/explain.do
+    method: REST API (JSON·XML·TEXT 응답) — 키 발급 후 'URL 생성' 페이지에서 요청 주소 작성
+    note: >-
+      '키발급' 페이지(https://nesc.nier.go.kr/ko/html/svc/openapi/insert.do)에 이메일과 이용 목적만 적어 신청하면 관리자 승인 뒤 이메일로 키가 옵니다.
+      승인에 약 7일이 걸릴 수 있고 키 유효 기간은 1년이며, 메일이 스팸함으로 갈 수 있습니다. 조회 종류는 관측시간 조회(getFileDateList)·파일명 조회(getFileList)·다운로드(getFileItem)이고,
+      날짜는 yyyyMMddHHmm(date·sDate·eDate), 산출물 판은 ver(예 v2.1.0)로 지정합니다. 셸 스크립트 예제 묶음(api_sample_download.zip)이 같은 페이지에 있습니다.
+  - name: 환경위성센터 SFTP 서비스 (대량 자료)
+    url: https://nesc.nier.go.kr/ko/html/cntnts/104/static/page.do
+    method: SFTP (이용신청서 제출 → 공인 IP 방화벽 등록 → 계정 발급)
+    note: >-
+      긴 기간·여러 산출물을 받을 때 씁니다. '환경위성자료이용신청서'(HWP)를 작성해 국내 기관은 공문으로, 해외는 이메일로 담당자(김구 kimgoo9@korea.kr, 서정현 savetheearth@korea.kr)에게 보냅니다.
+      접속할 컴퓨터의 공인 IP가 센터 웹방화벽에 등록되어야 계정이 나오며, 이미 계정이 있어도 새 산출물을 받으려면 신청서를 다시 내야 합니다. 외장 하드를 우편으로 보내 받는 방법도 있습니다.
+      알고리즘 문의는 홍현기(wanju77@korea.kr).
+  - name: 환경위성 활용도구 GEMSAT
+    url: https://nesc.nier.go.kr/ko/html/satellite/program/introduce.do
+    method: 데스크톱 프로그램 (Lite·Standard·Expert v120, Linux v110)
+    note: GEMS 영상 표출·편집·비교 도구입니다. 연구자용 Expert 판은 파이썬 연동을 지원하며 한국어 설명서가 함께 있습니다.
+  - name: 위성영상전시·GIS 뷰어
+    url: https://nesc.nier.go.kr/ko/html/satellite/gis/index.do
+    method: 웹 지도 보기
+    note: 내려받기 전에 시각별 분포를 미리 훑어보기 좋습니다.
+
+example:
+  lang: python
+  note: >-
+    받은 L2 파일(netCDF4/HDF5 계열이라고 가정)의 그룹·변수 구조를 먼저 출력해 보는 예입니다. GEMS 파일 속 변수 이름은 산출물·판마다 다르므로,
+    이렇게 구조와 속성(units, _FillValue, scale_factor)을 확인한 뒤 필요한 변수를 고르세요. 파일 이름은 예시입니다.
+  code: |
+    # pip install h5py
+    import h5py
+
+    path = "GEMS_L2_NO2_example.nc"   # 웹다운로드·SFTP로 받은 파일 경로로 바꾸세요
+
+    with h5py.File(path, "r") as f:
+        def show(name, obj):
+            if isinstance(obj, h5py.Dataset):
+                units = obj.attrs.get("units", b"")
+                print(f"{name:60s} {obj.shape} {units}")
+        f.visititems(show)          # 그룹/변수 이름, 배열 크기, 단위 출력
+        print(dict(f.attrs))        # 전역 속성(산출물 판, 관측 시각 등)
+
+tips:
+  - "판 번호를 꼭 기록하세요. 산출물마다 판이 따로 올라가며(2026-10 기준 NO2 v4.0.1, AERAOD v2.1.0 등), 2024년 논문들은 NO2 v2.0을 썼습니다. 판이 다른 자료를 한 시계열로 섞지 마세요."
+  - "품질 플래그와 구름 조건을 반드시 적용하세요. 예컨대 Yang et al. (2024)은 NO2 v2.0에서 품질 플래그·최종 알고리즘 플래그와 함께 태양·위성 천정각 70° 미만, 구름 비율 0.3 미만 자료만 썼습니다. 판마다 플래그 정의가 다를 수 있으니 ATBD를 확인하세요."
+  - "정지궤도라 한반도는 비스듬히 보지 않지만 관측 영역 가장자리(인도·인도네시아 쪽)로 갈수록 위성 천정각이 커지고 화소가 커집니다. 화소 크기 '7 km × 8 km'는 서울 기준입니다."
+  - "아침·저녁 관측은 태양천정각이 커서 품질이 낮고, 영역도 절반만 훑는 경우가 많습니다. 일변화를 분석할 때 시각별 표본 수와 영역을 함께 보세요."
+  - "Open-API 키는 승인까지 약 7일 걸리고 1년 뒤 만료됩니다. 장기 연구라면 만료일을 기록해 두고, 대량 자료는 SFTP 신청(공문 필요)을 미리 진행하세요."
+  - "환경위성센터는 논문에 감사 문구를 넣으라고 권고합니다. 대표 인용 논문은 Kim et al. (2020, BAMS)이고, 산출물별 검증 논문(예: 에어로졸 Cho et al., 2024)도 함께 인용하는 것이 일반적입니다."
+  - "GEMS 자료는 NASA CMR·Earthdata에 등록되어 있지 않습니다(2026-10-13 확인). 같은 정지궤도 대기질 위성인 미국 TEMPO, 유럽 Sentinel-4와 비교할 때 제공처와 판 체계가 다릅니다."
+
+citations:
+  dataset: []
+  papers:
+    - label: GEMS 임무 개요 (BAMS)
+      text: >-
+        Kim, J., Jeong, U., Ahn, M.-H., Kim, J. H., Park, R. J., Lee, H., et al. (2020): New Era of Air Quality Monitoring from Space:
+        Geostationary Environment Monitoring Spectrometer (GEMS). Bulletin of the American Meteorological Society, 101(1), E1–E22.
+      doi: 10.1175/BAMS-D-18-0013.1
+      bibtex: |
+        @article{kim2020gems,
+          author  = {Kim, Jhoon and Jeong, Ukkyo and Ahn, Myoung-Hwan and Kim, Jae H. and Park, Rokjin J. and Lee, Hanlim and others},
+          title   = {New Era of Air Quality Monitoring from Space: Geostationary Environment Monitoring Spectrometer ({GEMS})},
+          journal = {Bulletin of the American Meteorological Society},
+          volume  = {101},
+          number  = {1},
+          pages   = {E1--E22},
+          year    = {2020},
+          doi     = {10.1175/BAMS-D-18-0013.1}
+        }
+    - label: GEMS 에어로졸 첫 관측 결과 (AMT)
+      text: >-
+        Cho, Y., Kim, J., Go, S., Kim, M., Lee, S., Kim, M., Chong, H., Lee, W.-J., Lee, D.-W., Torres, O., and Park, S. S. (2024):
+        First atmospheric aerosol-monitoring results from the Geostationary Environment Monitoring Spectrometer (GEMS) over Asia.
+        Atmospheric Measurement Techniques, 17, 4369–4390.
+      doi: 10.5194/amt-17-4369-2024
+      bibtex: |
+        @article{cho2024gemsaerosol,
+          author  = {Cho, Yeseul and Kim, Jhoon and Go, Sujung and Kim, Mijin and Lee, Seoyoung and Kim, Minseok and Chong, Heesung and Lee, Won-Jin and Lee, Dong-Won and Torres, Omar and Park, Sang Seo},
+          title   = {First atmospheric aerosol-monitoring results from the Geostationary Environment Monitoring Spectrometer ({GEMS}) over Asia},
+          journal = {Atmospheric Measurement Techniques},
+          volume  = {17},
+          pages   = {4369--4390},
+          year    = {2024},
+          doi     = {10.5194/amt-17-4369-2024}
+        }
+    - label: GEMS NO2 일변화 해석 (ACP)
+      text: >-
+        Yang, L. H., Jacob, D. J., Dang, R., Oak, Y. J., Lin, H., Kim, J., et al. (2024): Interpreting Geostationary Environment Monitoring Spectrometer (GEMS)
+        geostationary satellite observations of the diurnal variation in nitrogen dioxide (NO2) over East Asia. Atmospheric Chemistry and Physics, 24, 7027–7039.
+      doi: 10.5194/acp-24-7027-2024
+      bibtex: |
+        @article{yang2024gemsno2,
+          author  = {Yang, Laura Hyesung and Jacob, Daniel J. and Dang, Ruijun and Oak, Yujin J. and Lin, Haipeng and Kim, Jhoon and others},
+          title   = {Interpreting Geostationary Environment Monitoring Spectrometer ({GEMS}) geostationary satellite observations of the diurnal variation in nitrogen dioxide ({NO2}) over East Asia},
+          journal = {Atmospheric Chemistry and Physics},
+          volume  = {24},
+          pages   = {7027--7039},
+          year    = {2024},
+          doi     = {10.5194/acp-24-7027-2024}
+        }
+  acknowledgement: >-
+    GEMS 자료에는 데이터셋 DOI가 없습니다. 환경위성센터는 논문·기고문에 "본 연구는 국립환경과학원 환경위성센터에서 제공한 정지궤도 환경위성의 자료를 이용하여 수행된 연구임"
+    (영문: "This study was conducted using the GEMS (Geostationary Environment Monitoring Spectrometer) data provided by the Environmental Satellite Center of the National Institute of Environmental Research (NIER).")
+    문구를 넣도록 권고합니다. 쓴 산출물 이름과 판(예 NO2 v4.0.1)도 본문에 밝히세요.
+
+notices: []
+
+links:
+  - name: 환경위성센터 누리집
+    url: https://nesc.nier.go.kr/
+  - name: GEMS 운영정보 (관측 일정·영역)
+    url: https://nesc.nier.go.kr/ko/html/satellite/operation.do
+  - name: GEMS Open-API 안내
+    url: https://nesc.nier.go.kr/ko/html/svc/openapi/explain.do
+  - name: SFTP 서비스 안내 (산출물별 현재 판)
+    url: https://nesc.nier.go.kr/ko/html/cntnts/104/static/page.do
+  - name: 알고리즘 문서(ATBD)
+    url: https://nesc.nier.go.kr/ko/html/satellite/doc/doc.do
+  - name: GEMS 국제 워크숍
+    url: https://nesc.nier.go.kr/en/html/mtg/workshop.do
+  - name: 환경위성센터 저작권 보호 정책
+    url: https://nesc.nier.go.kr/ko/html/cntnts/22/etc/policy.do
+  - name: 연세대학교 GEMS 알고리즘사업단
+    url: http://gems1.yonsei.ac.kr/
+
+watch_urls:
+  - https://nesc.nier.go.kr/ko/html/board/bbs/24/list.do
+  - https://nesc.nier.go.kr/ko/html/cntnts/104/static/page.do
+  - https://nesc.nier.go.kr/ko/html/svc/openapi/explain.do
+
+last_verified: "2026-10-13"

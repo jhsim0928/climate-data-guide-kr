@@ -1,0 +1,216 @@
+# ─────────────────────────────────────────────────────────────
+# PATMOS-x — dataset information file
+# Listed under the satellite tab, 'Clouds and radiation'. v6.0 (v06r00); final files through 2022, preliminary after; v7.0 announced.
+# After editing, update last_verified to the date you checked the official pages.
+# ─────────────────────────────────────────────────────────────
+id: patmos-x
+name: "PATMOS-x"
+full_name: Pathfinder Atmospheres – Extended (PATMOS-x) Version 6.0 — NOAA Climate Data Record of AVHRR and HIRS Reflectance, Brightness Temperature, and Cloud Products
+category: satellite
+domain: satellite
+group: 구름·복사
+order: 30
+domains: [대기, 원격탐사]
+provider: NOAA NCEI (CDR Program) / University of Wisconsin–Madison SSEC/CIMSS (M. Foster, A. Heidinger)
+
+status: active
+status_note: >-
+  Version 6.0 (v06r00 in file names) is current. Preliminary files are added daily and replaced by final files every one to two years.
+  When checked on 2026-10-13, the AWS copy ran to observations in early July 2026, with final files through 2022 and preliminary files from 2023.
+  NCEI reports that much of the NOAA-20 data has cloud optical properties biased high and says the fix will come in Version 7.0.
+
+transitions:
+  - from: PATMOS-x v5.3 (AVHRR only)
+    to: PATMOS-x v6.0 (AVHRR+HIRS)
+    status: completed
+    date: "2021"
+    summary: Adds HIRS infrared spectral data to the AVHRR-only v5.3 to improve cloud-top height retrievals. A version change within this page.
+    changes:
+      - aspect: Input sensors
+        before: AVHRR (GAC)
+        after: AVHRR + HIRS (gaps where HIRS is missing, Metop-C and late Metop-B, filled by other methods; later extended with VIIRS)
+      - aspect: Period
+        before: The v05r03 files still on NCEI THREDDS run through 2022
+        after: 1981-08 to present (NCEI metadata)
+      - aspect: Satellites
+        before: NOAA and Metop AVHRR
+        after: TIROS-N, NOAA-6 to 19, Metop-A and B (+ Metop-C, S-NPP and NOAA-20 in preliminary files)
+      - aspect: File name
+        before: "`patmosx_v05r03[-preliminary]_<satellite>_<asc|des>_d<date>_c<creation>.nc`"
+        after: "`patmosx_v06r00[-preliminary]_<satellite>_<asc|des>_d<date>_c<creation>.nc`"
+    impacts:
+      - The NCEI THREDDS 'PATMOS-X Cloud Properties' file listing still holds v05r03 files (through 2022). Always check the version in the file name and do not mix v5.3 with v6.0.
+      - Cloud-top height, temperature and pressure changed the most, so cloud-height results obtained with v5.3 are worth re-checking with v6.0.
+    sources:
+      - name: Foster et al. (2023), J. Climate — PATMOS-x Version 6.0
+        url: https://doi.org/10.1175/JCLI-D-22-0147.1
+      - name: NCEI metadata — PATMOS-x v6.0 (C00926)
+        url: https://www.ncei.noaa.gov/access/metadata/landing-page/bin/iso?id=gov.noaa.ncdc:C00926
+
+period:
+  start: "1981-08"
+  end: present
+  note: >-
+    NCEI metadata gives 1981-08-25 as the start (the CDR overview page says '1979–present'). When checked on 2026-10-13, the latest files in the AWS copy were
+    NOAA-20 for 2026-07-04 and Metop-B and C for 2026-06-30. NOAA-15, 18 and 19 files end in late June 2025.
+
+resolution:
+  spatial_short: "11 km (0.1°)"
+  temporal_short: "1일"
+  spatial: 0.1° × 0.1° global equal-angle (latitude-longitude) grid — AVHRR GAC pixels (about 4 km at nadir) sampled onto the grid, choosing the pixel closest to nadir where orbits overlap; HIRS interpolated to AVHRR pixel locations
+  vertical: Cloud-top height, temperature and pressure (single layer)
+  temporal: One file per satellite, per orbit direction (ascending/descending) and per day; two to ten overpasses a day depending on the number of satellites
+
+coverage:
+  short: 전지구
+update: Preliminary files daily (within 7 days of real time); final files replace them every one to two years
+license: NOAA CDR — publicly available with no restrictions on use; credit to NCEI and the developers and citation of the DOI requested
+account_required: false
+
+summary: >-
+  PATMOS-x is a global cloud climate data record from the early 1980s onward, combining AVHRR imagery and HIRS infrared spectral data from the NOAA and Metop polar orbiters.
+  For each satellite it provides daily ascending and descending orbit files on a 0.1° grid with cloud fraction and type, cloud-top temperature, pressure and height,
+  emissivity, optical depth and particle size, plus calibrated reflectances and brightness temperatures. Because each satellite's overpass time is preserved,
+  users can deal with orbital drift and observation time directly.
+
+time_convention:
+  summary: >-
+    Each file holds one satellite's ascending (asc) or descending (des) observations for one day placed on the 0.1° grid. Each grid value is an observation at the moment
+    the satellite passed, not an average, and the time is tied to the satellite's local overpass time.
+  points:
+    - "Afternoon-orbit satellites (NOAA-7, 9, 11, 14, 16, 18, 19) cross the equator northbound (ascending) at 13:30 local time; morning-orbit satellites (NOAA-6, 8, 10, 12, 15) cross southbound (descending) at 07:30; NOAA-17 at 10:00; Metop is held at 09:30."
+    - "NOAA satellites drift the longer they operate, so their overpass times get later. The developers note that this changes the sampling of the diurnal cycle and must be corrected for in cloud trend analyses (Metop keeps a controlled orbit and drifts little)."
+    - "Where orbits overlap at high latitudes, the observation closest to nadir is kept, so the observation time for the same grid cell can differ from day to day."
+    - "Cloud optical depth and particle size use solar reflectance channels and are daytime products."
+    - "`-preliminary` in a file name marks files made with extrapolated calibration before the latest coefficients are available; values may change slightly in the final version. In file names `d` is the observation date and `c` the creation date."
+  source: https://doi.org/10.1175/JCLI-D-22-0147.1
+  source_name: Foster et al. (2023) J. Climate + NCEI PATMOS-x CDR overview
+
+variables:
+  note: >-
+    This is the variable list from the NCEI CDR overview. In-file variable names could not be confirmed in the official documentation, so they are not given;
+    check them in a downloaded file (`ds.data_vars`). Units are given only where the algorithm documents (ATBD) state them.
+  full_list: https://www.ncei.noaa.gov/products/climate-data-records/avhrr-hirs-cloud-properties-patmos
+  groups:
+    - name: Cloud properties (observations at overpass time)
+      kind: instant
+      items:
+        - "Cloud fraction"
+        - "Cloud type"
+        - "Cloud-top temperature (K)"
+        - "Cloud-top pressure (hPa)"
+        - "Cloud-top height (km)"
+        - "Cloud emissivity (11 µm)"
+        - text: "Cloud optical depth (dimensionless)"
+          note: Retrieved from daytime observations only
+        - text: "Cloud particle effective radius (µm)"
+          note: Retrieved from daytime observations only
+    - name: Atmosphere and radiances
+      kind: instant
+      items:
+        - "Total precipitable water"
+        - "Calibrated reflectances (0.63, 0.86, 1.6 µm) and brightness temperatures (3.75, 11, 12 µm; HIRS 6.7 µm and CO2 channels)"
+
+access:
+  - name: NCEI direct download (2000 to present)
+    url: https://www.ncei.noaa.gov/data/avhrr-hirs-reflectance-and-cloud-properties-patmosx/access/
+    method: HTTPS directory (by year)
+    note: According to NCEI this path holds 2000 onward only. Get 1981–1999 from AWS or Google Cloud.
+  - name: AWS open bucket (noaa-cdr-patmosx-radiances-and-clouds-pds)
+    url: https://noaa-cdr-patmosx-radiances-and-clouds-pds.s3.amazonaws.com/index.html
+    method: S3 (anonymous access)
+    note: "The full period is under `data/<year>/`. Single files are large, about 400–500 MB."
+  - name: Google Cloud open bucket (noaa-cdr-patmosx-radiances-and-clouds)
+    url: https://console.cloud.google.com/storage/browser/noaa-cdr-patmosx-radiances-and-clouds
+    method: GCS
+  - name: CIMSS PATMOS-x page (Climate Data Portal, subsetting)
+    url: https://cimss.ssec.wisc.edu/patmosx/
+    method: Web
+    note: For a small area or a few variables, the CIMSS Climate Data Portal offers spatial and variable subsetting.
+
+example:
+  lang: python
+  note: "Opens one daily file from AWS without an account. Check variable names with `ds.data_vars` after opening."
+  code: |
+    # pip install s3fs xarray h5netcdf
+    import s3fs
+    import xarray as xr
+
+    fs = s3fs.S3FileSystem(anon=True)
+    # NOAA-19 ascending (afternoon) orbit, observed 2020-12-01. The c<creation> part varies, so use glob.
+    keys = fs.glob("noaa-cdr-patmosx-radiances-and-clouds-pds/data/2020/"
+                   "patmosx_v06r00_NOAA-19_asc_d20201201_*.nc")
+    ds = xr.open_dataset(fs.open(keys[0]), engine="h5netcdf")
+    print(ds.attrs.get("title"))
+    for name, v in ds.data_vars.items():
+        print(name, v.attrs.get("long_name"), v.attrs.get("units"))
+
+tips:
+  - One file is 'one satellite, one orbit direction, one day'. When you average several satellites into daily or monthly means, remember that different overpass times mix in the diurnal cycle. For trends it is safer to analyse each orbit family separately.
+  - NCEI says much of the NOAA-20 data has reflectances processed too high at oblique sun angles, biasing cloud optical properties high in some regions. Data for July 2018, January 2019 and after 13 January 2026 are not affected, and the fix is planned for Version 7.0.
+  - The NOAA-18 HIRS 13.3 µm channel produced corrupt data from January to 29 April 2023, so NOAA-18 cloud detection and height may be inconsistent in that period.
+  - Metop-C carries no HIRS, and HIRS failed in the later part of the Metop-B record. Cloud heights from these satellites are filled by other methods without HIRS.
+  - NOAA-15, 18 and 19 files end in late June 2025, leaving Metop-B, Metop-C and NOAA-20. Around 2025 the afternoon-orbit source effectively switches from AVHRR (NOAA-19) to VIIRS (NOAA-20), so take care when joining time series.
+  - The PATMOS-x file listing on NCEI THREDDS is the old v05r03 version. Get v6.0 from NCEI direct download, AWS or Google Cloud.
+
+citations:
+  dataset:
+    - label: PATMOS-x Version 6.0 CDR
+      text: >-
+        Foster, Michael J.; Phillips, Coda; Heidinger, Andrew K.; and NOAA CDR Program (2021): NOAA Climate Data Record (CDR) of Advanced Very High Resolution Radiometer (AVHRR)
+        and High-resolution Infra-Red Sounder (HIRS) Reflectance, Brightness Temperature, and Cloud Products from Pathfinder Atmospheres - Extended (PATMOS-x), Version 6.0.
+        NOAA National Centers for Environmental Information. https://doi.org/10.7289/V5X9287S [access date]
+      doi: 10.7289/V5X9287S
+      bibtex: |
+        @misc{patmosx_v6_cdr,
+          author    = {Foster, Michael J. and Phillips, Coda and Heidinger, Andrew K. and {NOAA CDR Program}},
+          title     = {{NOAA} Climate Data Record ({CDR}) of Advanced Very High Resolution Radiometer ({AVHRR}) and High-resolution Infra-Red Sounder ({HIRS}) Reflectance, Brightness Temperature, and Cloud Products from Pathfinder Atmospheres - Extended ({PATMOS-x}), Version 6.0},
+          year      = {2021},
+          publisher = {NOAA National Centers for Environmental Information},
+          doi       = {10.7289/V5X9287S}
+        }
+  papers:
+    - label: PATMOS-x v6.0 description paper
+      text: >-
+        Foster, M. J., Phillips, C., Heidinger, A. K., Borbas, E. E., Li, Y., Menzel, W. P., Walther, A., and Weisz, E. (2023):
+        PATMOS-x Version 6.0: 40 Years of Merged AVHRR and HIRS Global Cloud Data. Journal of Climate, 36, 1143–1160.
+      doi: 10.1175/JCLI-D-22-0147.1
+      bibtex: |
+        @article{foster2023patmosx,
+          author  = {Foster, Michael J. and Phillips, Coda and Heidinger, Andrew K. and Borbas, Eva E. and Li, Yue and Menzel, W. Paul and Walther, Andi and Weisz, Elisabeth},
+          title   = {{PATMOS-x} Version 6.0: 40 Years of Merged {AVHRR} and {HIRS} Global Cloud Data},
+          journal = {Journal of Climate},
+          volume  = {36},
+          pages   = {1143--1160},
+          year    = {2023},
+          doi     = {10.1175/JCLI-D-22-0147.1}
+        }
+  acknowledgement: >-
+    The NOAA CDR use agreement asks users to state that the data were acquired from NOAA NCEI and to credit the developers (Andy Heidinger, Mike Foster) and the NOAA CDR Program.
+    The use agreement also gives a citation in the form 'Heidinger, A.; Foster, M. and NOAA CDR Program (2020): NOAA Climate Data Record (CDR) PATMOS-x Cloud Properties, Version 6.0'.
+
+notices:
+  - date: "2026-08-14"
+    level: warning
+    title: High-biased cloud optical properties in NOAA-20 data — fix planned for Version 7.0
+    body: >-
+      According to the NCEI PATMOS-x page (revised 2026-08-14), much of the NOAA-20 data has high reflectance at oblique sun angles, biasing cloud optical properties high in some regions.
+      Data for July 2018, January 2019 and after 13 January 2026 are not affected, and the fix is planned for Version 7.0.
+    source: https://www.ncei.noaa.gov/products/climate-data-records/avhrr-hirs-cloud-properties-patmos
+
+links:
+  - name: NCEI — PATMOS-x Cloud Properties CDR (notices and documents)
+    url: https://www.ncei.noaa.gov/products/climate-data-records/avhrr-hirs-cloud-properties-patmos
+  - name: NCEI metadata — PATMOS-x v6.0
+    url: https://www.ncei.noaa.gov/access/metadata/landing-page/bin/iso?id=gov.noaa.ncdc:C00926
+  - name: Algorithm documents (ACHA, DCOMP, Rev 2)
+    url: https://www.ncei.noaa.gov/pub/data/sds/cdr/CDRs/AVHRR-HIRS_Cloud_Properties_PATMOS-x/AlgorithmDescription/
+  - name: CIMSS — PATMOS-x
+    url: https://cimss.ssec.wisc.edu/patmosx/
+  - name: Foster et al. (2023), J. Climate
+    url: https://doi.org/10.1175/JCLI-D-22-0147.1
+
+watch_urls:
+  - https://www.ncei.noaa.gov/products/climate-data-records/avhrr-hirs-cloud-properties-patmos
+
+last_verified: "2026-10-13"

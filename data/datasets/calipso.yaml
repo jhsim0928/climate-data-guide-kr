@@ -1,0 +1,375 @@
+# ─────────────────────────────────────────────────────────────
+# CALIPSO CALIOP — 데이터셋 정보 파일
+# 위성 탭(에어로졸·대기 성분). 2023년 8월 과학 임무가 끝난 자료로, 관측은 2023-06-30이 마지막입니다.
+# 2025년 10월 전 기간을 다시 처리한 V5.00이 공개되어 V4.51을 대신하는 현행판입니다.
+# 후속 위성 라이다는 ESA·JAXA EarthCARE의 ATLID(355 nm, 고분광분해 라이다)입니다.
+# 수정 후에는 공식 페이지에서 확인한 날짜로 last_verified 를 갱신하세요.
+# ─────────────────────────────────────────────────────────────
+id: calipso
+name: "CALIPSO"
+full_name: Cloud-Aerosol Lidar and Infrared Pathfinder Satellite Observations (CALIPSO) CALIOP Level 2·Level 3 (NASA·CNES 위성 라이다 에어로졸·구름 연직 분포)
+category: satellite
+domain: satellite
+group: 에어로졸·대기 성분
+order: 40
+domains: [대기, 에어로졸, 원격탐사]
+provider: NASA Langley Research Center CALIPSO 팀·CNES / NASA Atmospheric Science Data Center (ASDC)
+
+status: ended
+status_note: >-
+  NASA와 CNES는 2023년 8월 1일 CALIPSO 과학 임무를 끝냈습니다. 연료가 바닥나 궤도가 늦은 통과 시각 쪽으로 표류하며 전력 여유가 줄었고,
+  표준 자료는 2023년 6월 30일 관측이 마지막입니다(위성은 2023년 12월 비활성화). 이후 CALIPSO 팀은 2006~2023년 전 기간을 다시 처리한
+  V5.00을 2025년 10월 공개했으며, 지금 연구에는 V5.00을 쓰는 것이 기본입니다.
+successor:
+  name: EarthCARE ATLID (ESA·JAXA)
+  url: https://earth.esa.int/eogateway/missions/earthcare
+  note: >-
+    2024년 5월 발사된 EarthCARE의 355 nm 고분광분해 라이다(ATLID)가 우주 라이다 관측을 잇습니다. 파장·측정 방식·궤도 시각이 달라
+    CALIOP 기록과 그대로 이어 붙일 수 없고, 2023년 7월~2024년 8월에는 두 위성 모두 공개 자료가 없습니다.
+
+transitions:
+  - from: CALIOP V4.51
+    to: CALIOP V5.00
+    status: completed
+    date: "2025-10"
+    summary: >-
+      2006~2023년 전 기간을 다시 처리한 판으로, 저에너지 레이저 펄스 처리(LEM)를 강화하고 L3 품질 선별 규칙을 손봤습니다.
+      L3 대류권 에어로졸 광학두께(AOD)는 선별 규칙 변화만으로도 전지구 평균이 10% 넘게 달라질 수 있어 두 판을 섞으면 안 됩니다.
+    changes:
+      - aspect: 공개 시점
+        before: "V4.51 — L2 컬렉션 메타데이터 생성 2023-06 (L3 대류권 에어로졸은 V4.21까지, 2022-01에서 멈춤)"
+        after: "V5.00 — 품질 요약서 기준 2025-10-01 공개 (CMR 인용 정보의 공개일은 2025-12-12)"
+      - aspect: 기간
+        before: "L2 2006-06-12 ~ 2023-06-30 / L3 대류권 에어로졸 V4.20 ~2020-06, V4.21 2020-07 ~ 2021-12"
+        after: "L1·L2 2006-06-12 ~ 2023-06-30, L3 2006-06 ~ 2023-06 전 기간"
+      - aspect: 저에너지 레이저 펄스 처리
+        before: "L3에서 남대서양 이상대(SAA) 영역 전체를 2016년 9월부터 결측 처리(V4.20 방식)"
+        after: "L2에서 펄스별 저에너지 완화(LEM) 필터를 강화해 쓰고, 5 km 평균에 들어간 펄스 수를 QC 플래그로 제공"
+      - aspect: L2 프로파일 처리
+        before: V4.51
+        after: "에어로졸 다중산란 계수를 모든 아형·두 파장에서 1로 통일, 지표 검출 플래그 13번 비트 검사 해제, 고도 배열 `Lidar_Data_Altitudes`를 메타데이터에서 데이터셋으로 이동"
+      - aspect: L3 대류권 에어로졸 선별
+        before: "소광 QC 값을 정해진 목록만 받아들임, 구름층 비율 문턱 '> 28'(0~30 척도)"
+        after: "QC 비트별 거부 방식(라이다비 낮춤 QC=2 허용), 상부 왕복 투과율 하한(0.005) 추가, 구름층 비율 문턱 0.94(0~1 척도), 7개 에어로졸 아형별 통계"
+      - aspect: 새 제품
+        before: 없음
+        after: "5 km 병합 층 진단 베타 제품(1064 nm 해양 기반 광학두께 등) 추가"
+    impacts:
+      - "V5.00 L3 문서는 같은 달(2015년 6~8월) 기준 전지구 평균 AOD가 V4.20보다 전천(all-sky) 약 17%, 맑은 하늘(cloud-free) 약 12% 커졌다고 밝힙니다. 기후값·추세는 V5.00으로 처음부터 다시 계산하세요."
+      - LEM 적용으로 SAA 부근 표본이 크게 줄어(80~100%) 해당 격자가 결측일 수 있습니다. 남미·남대서양 지역 분석은 표본 수를 확인하세요.
+      - "V4.x용 코드에서 고도 배열을 파일 메타데이터에서 읽었다면 V5.00에서는 `Lidar_Data_Altitudes` 데이터셋으로 바꾸세요."
+    sources:
+      - name: CALIOP Level 2 Profile Data Description and Quality Summary (V5.00, 2026-01-30)
+        url: https://asdc.larc.nasa.gov/documents/calipso/quality_summaries/cal_lid_l2_pro_v5-00_desc_qs.pdf
+      - name: CALIOP Level 3 Tropospheric Aerosol Profile Data Description and Quality Summary (V5.00)
+        url: https://asdc.larc.nasa.gov/documents/calipso/quality_summaries/cal_lid_l3_tropoaero_V5-00_desc_qs.pdf
+      - name: CALIOP Level 2 Layer Data Description and Quality Summary (V5.00)
+        url: https://asdc.larc.nasa.gov/documents/calipso/quality_summaries/cal_lid_l2_lay_v5-00_desc_qs_mod2.pdf
+  - from: CALIPSO CALIOP
+    to: EarthCARE ATLID
+    to_id: earthcare
+    status: completed
+    date: "2024-08"
+    summary: >-
+      532·1064 nm 탄성 산란 라이다(CALIOP)에서 355 nm 고분광분해 라이다(ATLID)로 바뀌었습니다. ATLID는 입자(Mie)와 공기분자(Rayleigh) 신호를
+      나눠 받아 소광계수와 후방산란계수를 따로 구하므로, 에어로졸 종류에 따라 라이다비를 '가정'하던 CALIOP와 산출 방식이 근본적으로 다릅니다.
+    changes:
+      - aspect: 관측 기간 (공개 자료)
+        before: "2006-06-12 ~ 2023-06-30"
+        after: "L1 2024-08-11 ~ 현재, ESA L2 2025-03-11 ~ 현재"
+      - aspect: 파장
+        before: "532 nm(편광 2채널) + 1064 nm"
+        after: "354.8 nm(약 355 nm) 한 파장"
+      - aspect: 측정 방식
+        before: "탄성 후방산란 + 532 nm 편광해소. 소광계수는 에어로졸 아형별로 정한 라이다비(소광/후방산란 비)를 가정해 계산"
+        after: "고분광분해(HSRL) — 에탈론 필터로 Mie(동일·교차 편광)와 Rayleigh 신호를 분리해 소광·후방산란·라이다비·편광해소비를 직접 산출"
+      - aspect: 발자국·표본 간격
+        before: "발자국 지름 약 70 m, 펄스 간격 약 333 m(20.16 Hz)"
+        after: "수신 발자국 30 m 이하, 51 Hz 펄스 2개를 기내 누적해 진행 방향 285 m 간격"
+      - aspect: 연직 분해능
+        before: "원시 30 m(8.2 km 아래) — L2 프로파일은 60 m(−0.5~20.2 km), 180 m(20.2 km 위)"
+        after: "103 m(20.2 km 아래), 500 m(20.2~40 km). L2는 약 100 m × 약 1 km 공통 격자(JSG)"
+      - aspect: 궤도·관측 시각
+        before: "고도 705 km(2018-09 이후 688 km), 상승 노드 적도 통과 13:30 지방시"
+        after: "고도 약 393 km, 하강 노드 14:00 평균 태양시, 25일(389궤도) 반복"
+      - aspect: 함께 관측하는 측기
+        before: "같은 위성의 IIR·WFC, 편대비행 CloudSat 레이더·A-Train 위성"
+        after: "같은 위성의 도플러 구름 레이더(CPR), 다중분광 영상기(MSI), 광대역 복사계(BBR)"
+      - aspect: 파일 형식·배포
+        before: "HDF4, NASA ASDC (Earthdata 로그인)"
+        after: "NetCDF4/HDF5(.h5)+XML 헤더를 묶은 zip, ESA MAAP (EO Sign In)"
+    impacts:
+      - "파장이 달라 AOD·후방산란·편광해소비·라이다비 값을 그대로 비교할 수 없습니다. 에어로졸 종류에 따라 355 nm와 532 nm 비가 달라지므로, 두 기록을 잇는 연구는 파장 변환 가정과 그 불확실성을 밝히세요."
+      - 두 자료의 에어로졸 분류 체계(아형 이름과 개수)가 다릅니다. 분류 결과를 비교할 때는 '먼지', '연기'처럼 공통 범주로 묶어야 합니다.
+      - 2023년 7월~2024년 8월에는 공개된 우주 라이다 자료가 없어 시계열에 빈틈이 생깁니다.
+      - "관측 시각(13:30 → 14:00)과 고도가 달라 일변화가 큰 경계층 에어로졸·구름은 표본 시각 차이를 고려하세요."
+    sources:
+      - name: Wehr et al. (2023) The EarthCARE mission – science and system overview, AMT
+        url: https://doi.org/10.5194/amt-16-3581-2023
+      - name: ESA Earth Online — ATLID 측기 설명
+        url: https://earth.esa.int/eogateway/instruments/atlid
+      - name: CALIPSO Data User's Guide FAQ
+        url: https://asdc.larc.nasa.gov/documents/calipso/user_guides/CALIPSO_Data_Users_Guide_FAQ_mod2.pdf
+      - name: CALIPSO Final Report (NASA/TP-20260000771)
+        url: https://ntrs.nasa.gov/citations/20260000771
+
+period:
+  start: "2006-06"
+  end: "2023-06"
+  note: >-
+    L1·L2 V5.00은 2006-06-12 ~ 2023-06-30, L3 월자료는 2006년 6월 ~ 2023년 6월입니다. 2018년 9월 13일 궤도를 705 km에서 688 km로 낮추는 동안
+    과학 관측을 멈췄다가 9월 25일 다시 시작했습니다. 이전 판 L3 대류권 에어로졸(V4.20·V4.21)은 2021년 12월까지만 있습니다.
+
+resolution:
+  spatial_short: "5 km (0.045°)"
+  temporal_short: "1일"
+  spatial: >-
+    L2: 궤도 아래 한 줄(커튼) 자료. 펄스 발자국 약 70 m, 펄스 간격 약 333 m. 에어로졸·구름 프로파일(05kmAPro·05kmCPro)은 진행 방향 5 km(펄스 15개) 평균,
+    층 제품은 333 m·1 km·5 km(에어로졸 층은 5·20·80 km 수평 평균 중 검출된 값) /
+    L3 대류권 에어로졸: 위도 2° × 경도 5° 등각 격자(85 × 72)
+  vertical: >-
+    L2 프로파일: 399개 고도 구간, −0.5~20.2 km는 60 m, 20.2 km 위는 180 m(명목 상한 30 km. 8.2 km 아래 원시 분해능 30 m를 60 m로 평균) /
+    L3 대류권 에어로졸: −0.5~12 km, 60 m 간격 208층
+  temporal: >-
+    L2: 궤도를 따라 이어지는 스와스 자료(궤도 주기 99분, 16일 반복). 하루 약 14.5궤도지만 레이저가 직하점만 보므로 지역별 재방문은 드뭅니다 /
+    L3: 월평균(낮·밤 파일 별도)
+
+coverage:
+  short: 전지구
+  note: "궤도 바로 아래 한 줄(커튼) 관측, 약 82°S–82°N"
+update: "갱신 종료 — 관측은 2023-06-30이 마지막. 2025-10에 전 기간 재처리판 V5.00 공개"
+license: NASA 지구과학 공개 자료 — 제한 없이 무료. 파일 내려받기에는 무료 NASA Earthdata 로그인이 필요하며 데이터셋 DOI 인용과 ASDC 감사 문구를 요청합니다
+account_required: true
+
+summary: >-
+  CALIPSO는 NASA·CNES가 2006년 발사한 위성으로, 탑재 라이다 CALIOP이 532·1064 nm 레이저로 대기를 수직으로 잘라 보며 구름과 에어로졸의
+  높이·두께·종류·소광계수를 17년 동안 관측했습니다. 궤도 아래 한 줄의 '커튼' 단면을 주는 L2 층·프로파일 자료와, 이를 월별 2°×5° 격자로 모은
+  L3 대류권·성층권 에어로졸 자료가 대표 제품입니다. 에어로졸 연직 분포, 먼지·연기 수송, 극성층권운, 모델 연직 구조 검증에 표준처럼 쓰였고,
+  임무가 끝난 뒤 2025년 전 기간을 다시 처리한 V5.00이 현행판입니다.
+
+time_convention:
+  summary: >-
+    L2 값은 위성이 지나간 순간의 관측이며, 5 km 프로파일은 그 구간 펄스 15개를 평균한 값입니다. 프로파일마다 관측 시각(`Profile_UTC_Time`)과
+    낮·밤 구분(`Day_Night_Flag`)이 들어 있습니다. L3는 품질 선별을 거친 L2 프로파일을 달마다 격자에 모은 평균이며 낮과 밤을 따로 냅니다.
+  points:
+    - "`Profile_UTC_Time`은 'yymmdd.ffffffff'(날짜 + 하루 중 경과 비율) 형식이고, `Profile_Time`은 1993-01-01부터의 TAI 초입니다."
+    - "적도 통과 지방시는 상승 노드(주간) 13:30, 하강 노드(야간) 약 01:30입니다. 임무 말기에는 연료가 떨어져 통과 시각이 점점 늦어졌습니다(CALIPSO 최종 보고서)."
+    - "주간 자료는 태양 배경광 때문에 신호 대 잡음비가 야간보다 크게 낮습니다. 같은 지역이라도 낮·밤 값을 섞어 평균하면 검출 한계 차이가 결과에 섞입니다."
+    - "L3 월자료는 8개 파일(전천·맑은 하늘·투명 구름·불투명 구름 × 낮·밤)로 나옵니다. 하늘 조건마다 표본이 다르므로 같은 달이라도 값이 다릅니다."
+    - "임무가 끝났으므로 새 관측이나 준실시간 자료는 없습니다. 이 페이지의 모든 제품은 ASDC가 배포하는 표준(Standard) 재처리 자료입니다."
+  source: https://asdc.larc.nasa.gov/documents/calipso/quality_summaries/cal_lid_l2_pro_v5-00_desc_qs.pdf
+  source_name: CALIOP L2 Profile·L3 Tropospheric Aerosol Data Description and Quality Summary (V5.00) + CALIPSO Data User's Guide FAQ
+
+variables:
+  note: >-
+    V5.00 품질 요약서와 V4.20 자료 설명서에서 확인한 HDF4 SDS 이름입니다. 결측값은 대부분 -9999이고, 소광 산출 실패는 -333, 저에너지 펄스는 -111 등
+    특수값이 있습니다. 에어로졸 아형은 따로 변수가 없고 `Atmospheric_Volume_Description`(프로파일)·`Feature_Classification_Flags`(층)의 비트 9~11에 들어 있습니다.
+  full_list: https://asdc.larc.nasa.gov/documents/calipso/CALIPSO_DPC_Rev5x00.pdf
+  groups:
+    - name: L2 에어로졸 프로파일 (CAL_LID_L2_05kmAPro, 5 km)
+      kind: instant
+      period: 관측 시각 (5 km 구간 평균)
+      items:
+        - text: "에어로졸 소광계수 532 nm — `Extinction_Coefficient_532` (km-1)"
+          std: [aerosol]
+        - text: "총 후방산란계수 532 nm — `Total_Backscatter_Coefficient_532` (km-1 sr-1)"
+          std: [aerosol]
+        - text: "입자 편광해소비 532 nm — `Particulate_Depolarization_Ratio_Profile_532` (무차원)"
+          std: [aerosol]
+        - text: "대류권 에어로졸 광학두께 532 nm — `Column_Optical_Depth_Tropospheric_Aerosols_532` (무차원)"
+          std: [aerosol]
+        - text: "성층권 에어로졸 광학두께 532 nm — `Column_Optical_Depth_Stratospheric_Aerosols_532` (무차원)"
+          std: [aerosol]
+        - "구름·에어로졸 판별 점수 — `CAD_Score` (−100~100, 음수가 에어로졸)"
+        - "소광 산출 품질 플래그 — `Extinction_QC_Flag_532` (비트 플래그)"
+        - "대기 부피 분류(종류·아형) — `Atmospheric_Volume_Description` (비트 플래그)"
+    - name: L2 에어로졸 층 (CAL_LID_L2_05kmALay, 5 km)
+      kind: instant
+      period: 관측 시각
+      items:
+        - "층 꼭대기·바닥 고도 — `Layer_Top_Altitude`, `Layer_Base_Altitude` (km)"
+        - text: "층 광학두께 532 nm — `Feature_Optical_Depth_532` (무차원)"
+          std: [aerosol]
+        - "검출된 층 수 — `Number_Layers_Found` (개)"
+        - "검출에 쓴 수평 평균 길이 — `Horizontal_Averaging` (km, 5·20·80)"
+        - "층 분류 플래그(종류·아형·위상) — `Feature_Classification_Flags` (비트 플래그)"
+    - name: L3 대류권 에어로졸 (CAL_LID_L3_Tropospheric_APro_*, 2°×5° 월평균)
+      kind: mean
+      period: 월
+      items:
+        - text: "대류권 에어로졸 광학두께 532 nm 월평균 — `AOD_Mean` (무차원)"
+          std: [aerosol]
+        - text: "에어로졸 소광계수 532 nm 월평균 연직 분포 — `Extinction_Coefficient_532_Mean` (단위는 파일 속성 확인)"
+          std: [aerosol]
+        - text: "아형별 AOD·소광계수 — `AOD_Mean_[아형]`, `Extinction_Coefficient_532_Mean_[아형]` (먼지·해염·오염 대륙/연기 등 7종)"
+          std: [aerosol]
+          note: 정확한 이름은 받은 파일에서 확인 (문서에는 이름 규칙만 있음)
+
+access:
+  - name: NASA ASDC — CALIPSO 자료 목록
+    url: https://asdc.larc.nasa.gov/project/CALIPSO
+    method: 웹 (제품별 페이지 → Earthdata Search·직접 다운로드)
+    note: 2026-10 확인 시 프로젝트 페이지 목록은 V4.51까지만 보여 줍니다. V5.00 컬렉션은 Earthdata Search·CMR에서 찾으세요.
+  - name: NASA Earthdata Search — CAL_LID_L2_05kmAPro-Standard-V5-00
+    url: https://search.earthdata.nasa.gov/search/granules?p=C3551627908-LARC_CLOUD
+    method: Earthdata Search / earthaccess (HDF4)
+    note: 무료 Earthdata 로그인이 필요합니다. 층 제품은 CAL_LID_L2_05kmALay-Standard-V5-00, L3는 CAL_LID_L3_Tropospheric_APro_AllSky-Standard-V5-00 등입니다.
+  - name: CMR 가상 디렉터리 (L2 에어로졸 프로파일 V5.00)
+    url: https://cmr.earthdata.nasa.gov/virtual-directory/collections/C3551627908-LARC_CLOUD
+    method: HTTPS 디렉터리 (wget·curl, Earthdata 로그인)
+  - name: CALIPSO 브라우즈 영상 (궤도별 단면 미리보기)
+    url: https://www-calipso.larc.nasa.gov/products/lidar/browse_images/std_v451_index.php
+    method: 웹
+    note: 받기 전에 궤도 단면에서 관심 사례를 고르는 데 씁니다(V4.51 기준).
+
+example:
+  lang: python
+  note: >-
+    earthaccess로 V5.00 L2 에어로졸 프로파일을 받아 pyhdf로 읽는 예입니다. 처음 실행 때 Earthdata 계정을 묻습니다.
+    CALIPSO 파일은 HDF4라 xarray로 바로 열리지 않습니다.
+  code: |
+    # pip install earthaccess pyhdf numpy
+    import earthaccess
+    import numpy as np
+    from pyhdf.SD import SD, SDC
+
+    earthaccess.login()
+    results = earthaccess.search_data(
+        short_name="CAL_LID_L2_05kmAPro-Standard-V5-00", version="V5-00",
+        temporal=("2021-03-15", "2021-03-16"),
+        bounding_box=(115, 30, 135, 45),          # (서, 남, 동, 북) — 동아시아
+    )
+    files = earthaccess.download(results[:1], "./calipso")
+
+    f = SD(files[0], SDC.READ)
+    ext = f.select("Extinction_Coefficient_532")[:].astype(float)   # (프로파일, 399 고도), km-1
+    qc = f.select("Extinction_QC_Flag_532")[:]
+    cad = f.select("CAD_Score")[:]
+    alt = f.select("Lidar_Data_Altitudes")[:]                       # V5.00부터 데이터셋 (km)
+    ext[ext < 0] = np.nan                                          # -9999·-333·-111 등 특수값 제거
+    print(ext.shape, alt[:3], np.nanmax(ext))
+
+tips:
+  - "소광계수를 그대로 평균하지 마세요. -9999(입자 없음)·-333(산출 실패)·-111(저에너지)·-444(구름 제거 의심) 같은 특수값과, `CAD_Score`가 −20~0 사이인 신뢰 낮은 판정, 거부 대상 `Extinction_QC_Flag_532`를 먼저 걸러야 합니다."
+  - "`CAD_Score`는 음수면 에어로졸, 양수면 구름입니다. |점수| ≤ 20이면 판별 신뢰도가 낮습니다."
+  - "빛이 완전히 가려지는 두꺼운 구름·먼지층 아래는 신호가 없어, 기둥 광학두께가 '보이는 층 바닥까지'의 값입니다. 불투명 여부를 확인하지 않으면 AOD가 과소평가됩니다."
+  - "CALIOP AOD는 532 nm 값이고 라이다비 가정에 따라 달라집니다. MODIS·AERONET(550·500 nm)과 비교할 때는 파장 차이와 라이다비 불확실성을 함께 따지세요."
+  - "주간 자료는 잡음이 커서 옅은 에어로졸층을 놓치기 쉽습니다. 기후값·추세는 야간 자료로 먼저 확인하는 경우가 많습니다."
+  - "남대서양 이상대(SAA)에서는 방사선 잡음과 저에너지 펄스 때문에 V5.00 L3 표본이 80~100% 줄어 결측 격자가 많습니다."
+  - "V4.20 자료 설명서에는 대류권 AOD 이름이 `Column_Optical_Depth_Aerosols_532`로 적혀 있습니다. 옛 판 파일을 함께 쓴다면 판마다 SDS 이름을 확인하세요."
+  - "2018년 9월 고도를 705 km에서 688 km로 낮춰 CloudSat과 C-Train을 이룬 뒤로는 A-Train(Aqua·Aura)과 같은 궤적을 지나지 않습니다. 이후 기간 MODIS·OMI와의 동시 관측 짝짓기는 시공간 거리를 다시 확인하세요."
+
+citations:
+  dataset:
+    - label: L2 에어로졸 프로파일 V5-00
+      text: >-
+        Winker, D. (2026), CALIPSO Lidar Level 2 Aerosol Profile, V5-00. NASA Langley Atmospheric Science Data Center DAAC.
+        https://doi.org/10.5067/CALIOP/CALIPSO/CAL_LID_L2_05kmAPro-Standard-V5-00 (Accessed DD MMM YYYY)
+      doi: 10.5067/CALIOP/CALIPSO/CAL_LID_L2_05kmAPro-Standard-V5-00
+      bibtex: |
+        @misc{calipso_l2_apro_v500,
+          author    = {Winker, David},
+          title     = {{CALIPSO} Lidar Level 2 Aerosol Profile, {V5-00}},
+          year      = {2026},
+          publisher = {NASA Langley Atmospheric Science Data Center Distributed Active Archive Center},
+          doi       = {10.5067/CALIOP/CALIPSO/CAL_LID_L2_05kmAPro-Standard-V5-00}
+        }
+    - label: L2 5 km 에어로졸 층 V5-00
+      text: >-
+        Winker, D. (2026), CALIPSO Lidar Level 2 5 km Aerosol Layer Data, V5-00. NASA Langley Atmospheric Science Data Center DAAC.
+        https://doi.org/10.5067/CALIOP/CALIPSO/CAL_LID_L2_05kmALay-Standard-V5-00 (Accessed DD MMM YYYY)
+      doi: 10.5067/CALIOP/CALIPSO/CAL_LID_L2_05kmALay-Standard-V5-00
+      bibtex: |
+        @misc{calipso_l2_alay_v500,
+          author    = {Winker, David},
+          title     = {{CALIPSO} Lidar Level 2 5 km Aerosol Layer Data, {V5-00}},
+          year      = {2026},
+          publisher = {NASA Langley Atmospheric Science Data Center Distributed Active Archive Center},
+          doi       = {10.5067/CALIOP/CALIPSO/CAL_LID_L2_05kmALay-Standard-V5-00}
+        }
+    - label: L3 대류권 에어로졸 프로파일(전천) V5-00
+      text: >-
+        Winker, D. (2026), CALIPSO Lidar Level 3 Tropospheric Aerosol Profiles, All Sky Data, Standard V5-00. NASA Langley Atmospheric Science
+        Data Center DAAC. https://doi.org/10.5067/CALIOP/CALIPSO/LID_L3_Tropospheric_APro_AllSky-Standard-V5-00 (Accessed DD MMM YYYY)
+      doi: 10.5067/CALIOP/CALIPSO/LID_L3_Tropospheric_APro_AllSky-Standard-V5-00
+      bibtex: |
+        @misc{calipso_l3_tropo_allsky_v500,
+          author    = {Winker, David},
+          title     = {{CALIPSO} Lidar Level 3 Tropospheric Aerosol Profiles, All Sky Data, Standard {V5-00}},
+          year      = {2026},
+          publisher = {NASA Langley Atmospheric Science Data Center Distributed Active Archive Center},
+          doi       = {10.5067/CALIOP/CALIPSO/LID_L3_Tropospheric_APro_AllSky-Standard-V5-00}
+        }
+  papers:
+    - label: CALIPSO 임무·CALIOP 처리 알고리즘 개관
+      text: >-
+        Winker, D. M., Vaughan, M. A., Omar, A., Hu, Y., Powell, K. A., Liu, Z., Hunt, W. H., Young, S. A. (2009): Overview of the CALIPSO
+        Mission and CALIOP Data Processing Algorithms. Journal of Atmospheric and Oceanic Technology, 26(11), 2310–2323.
+      doi: 10.1175/2009JTECHA1281.1
+      bibtex: |
+        @article{winker2009calipso,
+          author  = {Winker, David M. and Vaughan, Mark A. and Omar, Ali and Hu, Yongxiang and Powell, Kathleen A. and Liu, Zhaoyan and Hunt, William H. and Young, Stuart A.},
+          title   = {Overview of the {CALIPSO} Mission and {CALIOP} Data Processing Algorithms},
+          journal = {Journal of Atmospheric and Oceanic Technology},
+          volume  = {26},
+          number  = {11},
+          pages   = {2310--2323},
+          year    = {2009},
+          doi     = {10.1175/2009JTECHA1281.1}
+        }
+    - label: V4 에어로졸 분류·라이다비 선택 알고리즘
+      text: >-
+        Kim, M.-H., Omar, A. H., Tackett, J. L., Vaughan, M. A., Winker, D. M., Trepte, C. R., Hu, Y., Liu, Z., Poole, L. R., Pitts, M. C.,
+        Kar, J., Magill, B. E. (2018): The CALIPSO version 4 automated aerosol classification and lidar ratio selection algorithm.
+        Atmospheric Measurement Techniques, 11, 6107–6135.
+      doi: 10.5194/amt-11-6107-2018
+      bibtex: |
+        @article{kim2018caliopv4,
+          author  = {Kim, Man-Hae and Omar, Ali H. and Tackett, Jason L. and Vaughan, Mark A. and Winker, David M. and Trepte, Charles R. and Hu, Yongxiang and Liu, Zhaoyan and Poole, Lamont R. and Pitts, Michael C. and Kar, Jayanta and Magill, Brian E.},
+          title   = {The {CALIPSO} version 4 automated aerosol classification and lidar ratio selection algorithm},
+          journal = {Atmospheric Measurement Techniques},
+          volume  = {11},
+          pages   = {6107--6135},
+          year    = {2018},
+          doi     = {10.5194/amt-11-6107-2018}
+        }
+  acknowledgement: >-
+    ASDC는 감사 문구로 "These data were obtained from the NASA Langley Research Center Atmospheric Science Data Center."를 권장하며,
+    정확한 인용 형식은 각 컬렉션 DOI 페이지의 인용 생성기를 쓰라고 안내합니다. 위 인용문은 DataCite 메타데이터(작성자·연도·제목)로 만든 것입니다.
+    쓴 제품과 판(V5-00 등)을 모두 밝히세요.
+
+notices:
+  - date: "2025-10-01"
+    level: warning
+    title: V5.00 공개 — 2006~2023년 전 기간 재처리, V4.51 대신 사용
+    body: >-
+      CALIPSO 팀이 L1·L2·L3를 모두 다시 처리한 V5.00을 공개했습니다(품질 요약서 기준 공개일 2025-10-01, CMR 인용 정보는 2025-12-12).
+      저에너지 펄스 처리 강화와 L3 선별 규칙 변경으로 값이 달라졌으니, 새 분석은 V5.00으로 하고 이전 판과 섞지 마세요.
+    source: https://asdc.larc.nasa.gov/documents/calipso/quality_summaries/cal_lid_l2_pro_v5-00_desc_qs.pdf
+  - date: "2023-09-26"
+    level: critical
+    title: CALIPSO 과학 임무 종료 — 마지막 관측 2023-06-30
+    body: >-
+      NASA와 CNES는 2023년 8월 1일 CALIPSO 과학 임무를 끝냈습니다. 연료가 바닥나 궤도가 낮아지고 전력이 부족해 과학 측기를 계속 켤 수 없었으며,
+      표준 자료는 2023년 6월 30일 관측까지입니다. 위성은 2023년 12월 비활성화되었습니다.
+    source: https://www.nasa.gov/missions/calipso/first-long-duration-lidar-satellite-mission-calipso-ends/
+
+links:
+  - name: NASA ASDC — CALIPSO
+    url: https://asdc.larc.nasa.gov/project/CALIPSO
+  - name: NASA Science — CALIPSO 임무
+    url: https://science.nasa.gov/mission/calipso/
+  - name: CALIPSO Data Products Catalog (Release 5.00)
+    url: https://asdc.larc.nasa.gov/documents/calipso/CALIPSO_DPC_Rev5x00.pdf
+  - name: CALIPSO Data User's Guide FAQ
+    url: https://asdc.larc.nasa.gov/documents/calipso/user_guides/CALIPSO_Data_Users_Guide_FAQ_mod2.pdf
+  - name: CALIPSO Final Report (NASA NTRS)
+    url: https://ntrs.nasa.gov/citations/20260000771
+  - name: CNES — CALIPSO
+    url: https://cnes.fr/projets/calipso
+
+watch_urls:
+  - https://asdc.larc.nasa.gov/project/CALIPSO
+  - https://science.nasa.gov/mission/calipso/
+
+last_verified: "2026-10-13"

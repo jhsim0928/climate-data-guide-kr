@@ -1,0 +1,285 @@
+# ─────────────────────────────────────────────────────────────
+# GNSS radio occultation (RO) — UCAR CDAAC (COSMIC-2 and others) and EUMETSAT ROM SAF — dataset information file (English edition)
+# Satellite tab (Temperature and water vapour). Processing centres and product levels (bending angle, refractivity, dry/wet temperature, water vapour, monthly grids) on one page.
+# As of 2026-10, COSMIC-2 near-real-time processing is running normally; ROM SAF climate data are CDR v1.0 (2001-09 to 2016-12) plus the Metop ICDR (2017-01 onward).
+# After editing, update last_verified to the date you checked the official pages.
+# ─────────────────────────────────────────────────────────────
+id: gnss-ro
+name: "GNSS-RO (COSMIC-2·ROM SAF)"
+full_name: GNSS Radio Occultation — UCAR CDAAC (COSMIC-2, Metop, commercial RO and others) and EUMETSAT ROM SAF climate data records
+category: satellite
+domain: satellite
+group: 기온·수증기
+order: 40
+domains: [대기, 원격탐사]
+provider: UCAR COSMIC Program Data Processing Center (CDAAC) / EUMETSAT ROM SAF (consortium of DMI, Met Office, ECMWF, IEEC and WEGC)
+
+status: active
+status_note: >-
+  COSMIC-2 (FORMOSAT-7) near-real-time data are produced every day (as checked on 2026-10-13, Level 2 for day 284 of 2026, i.e. 11 October, was posted on 12 October). Post-processed (postProc) Level 2 stops in May 2022.
+  ROM SAF provides a multi-mission climate data record (CDR v1.0, 2001-09 to 2016-12) and its Metop extension (ICDR, 2017-01 onward), with the next reprocessing announced for 2026.
+  Metop-A reached end of life in November 2021, and bending angles from its successor Metop-SG A1 (Metop-D, launched 2025-08-13) have been disseminated since November 2025.
+
+transitions:
+  - from: ROM SAF CDR v1.0 (GRM-28/29/30/32/33-R1) + Metop ICDR (GRM-29-I1)
+    to: Next ROM SAF reprocessed climate record (CDR v2.0 series)
+    status: planned
+    summary: >-
+      The ROM SAF product status table now includes a 'CDR v2.0 (+ICDR v2)' column, and the operations reports announce the next reprocessing for 2026. No release date or DOI has been confirmed yet.
+    changes:
+      - aspect: Period
+        before: CDR 2001-09 to 2016-12, ICDR (Metop) 2017-01 to present
+        after: To be announced (to be extended by the reprocessing)
+      - aspect: Input missions (status table)
+        before: Metop, COSMIC, CHAMP, GRACE (+ Metop ICDR)
+        after: Metop, COSMIC, CHAMP, GRACE (+ Metop ICDR) — planetary boundary layer height (PBLH) not in the v2.0 list
+      - aspect: CDS distribution
+        before: Only the monthly gridded humidity distributed through the C3S CDS
+        after: Monthly gridded dry temperature to be added to the CDS after the reprocessing
+    impacts:
+      - When the new version appears, join CDR and ICDR of the same version; do not mix, for example, a v1 CDR with a v2 ICDR.
+      - State the product ID (e.g. GRM-29-R1, GRM-29-I1) and version in publications.
+    sources:
+      - name: ROM SAF Product Status overview (2026-06-22)
+        url: https://rom-saf.eumetsat.int/product_documents/Product_status_overview_2026-06-22.pdf
+      - name: ROM SAF News Archive (operations report notices)
+        url: https://rom-saf.eumetsat.int/previous_news.php
+
+period:
+  start: "2001-09"
+  end: present
+  note: >-
+    ROM SAF CDR v1.0 covers September 2001 to December 2016 (CHAMP, GRACE, COSMIC, Metop) and the Metop ICDR starts in January 2017. COSMIC-2 near-real-time data run from 1 October 2019 to the present,
+    and post-processed Level 2 covers 2019 to May 2022 (day 151 of 2022). UCAR CDAAC also holds earlier missions such as GPS/MET (1995), CHAMP and COSMIC-1 (reprocessings repro2013 and repro2021).
+
+resolution:
+  spatial_short: "555 km (5°)"
+  temporal_short: "1일"
+  spatial: >-
+    Level 1b and 2 are one vertical profile per occultation (tangent-point latitude and longitude, drifting horizontally with height). COSMIC-2 is a six-satellite constellation at 24° inclination, concentrated at low latitudes, producing more than 4,000 profiles a day.
+    ROM SAF Level 3 is a monthly grid of 5° latitude bands × 200 m height (longitude dimension of one); the UCAR RO CDR temperature is on a 5° × 10° latitude-longitude grid.
+  vertical: >-
+    atmPrf (COSMIC-2) at full resolution; wetPf2 at 100 m mean-sea-level altitude spacing. ROM SAF Level 3 uses impact altitude for bending angle and mean-sea-level altitude for refractivity, temperature and specific humidity, at 200 m spacing up to 40 km or 50 km
+  temporal: >-
+    Profiles are observations at the occultation time (bundled daily). COSMIC-2 near-real-time by 02 UTC the next day, post-processed about 6 weeks behind. ROM SAF Level 3 and the UCAR CDR are monthly means
+
+coverage:
+  short: 전지구
+  note: "COSMIC-2 concentrates on low latitudes (roughly 40°S–40°N); Metop is global"
+update: "COSMIC-2 near real time: daily (by 02 UTC the next day) / ROM SAF Metop ICDR and Offline: about 5 days to 6 months after measurement / UCAR RO CDR monthly grids: released in periodic bundles"
+license: "UCAR CDAAC data are free with no login and DOI citation is requested. ROM SAF products are CC BY 4.0 and need free registration and login to download"
+account_required: false
+
+summary: >-
+  Low-Earth-orbit satellites measure how much GNSS (GPS, GLONASS, Galileo and others) signals bend as they graze the atmosphere (the bending angle), from which refractivity and profiles of temperature, pressure and water vapour are derived.
+  Because the measurement is a phase delay referenced to atomic clocks, it has almost no instrument calibration bias and is unaffected by clouds, making it a climate benchmark for upper-tropospheric and stratospheric temperature and an 'anchor' that reanalyses assimilate without bias correction.
+  In the US, UCAR CDAAC produces Level 0–2 data for COSMIC-2 and many other missions; in Europe, EUMETSAT ROM SAF produces Metop-centred near-real-time and offline data and multi-mission climate records (CDR and ICDR).
+
+time_convention:
+  summary: >-
+    Level 1b and 2 profiles are observations made at the time of the occultation (start and stop times are recorded in each file) and are distributed in daily bundles (tar). ROM SAF Level 3 and the UCAR RO CDR are monthly means of the profiles falling in each grid cell.
+  points:
+    - "In COSMIC-2 atmPrf files the start and stop times (`start_time`, `stop_time`) are in GPS seconds; the date and time are also given as file attributes (year, month, day, hour, minute, second)."
+    - "atmPrf temperature (`Temp`) and pressure (`Pres`) are 'dry' values that ignore water vapour. In the moist lower troposphere they are colder than the real temperature, so use 1D-Var products (wetPf2, ROM SAF 1D-Var), which include background information, at those heights."
+    - "wetPf2 separates refractivity into temperature, pressure and water vapour using a forecast or analysis as background, so it mixes in model information. The pure observational information is in the bending angle and refractivity."
+    - "Near-real-time versions (COSMIC-2 nrt, ROM SAF NRT) are produced quickly for forecast assimilation; post-processed and reprocessed versions re-apply precise orbits and corrections and are better suited to climate work. COSMIC-2 post-processed Level 2 is not available after May 2022."
+    - "COSMIC-2's 24° inclination concentrates occultations at low latitudes; polar sampling comes from Metop and commercial missions (Spire, PlanetiQ)."
+    - "Monthly grids carry sampling error because occultations fall irregularly. ROM SAF supplies a sampling-error estimate (`_samperr`), while the UCAR RO CDR applies no sampling-error correction (generally below 0.2 K for zonal monthly means outside polar regions)."
+  source: https://cdaac-www.cosmic.ucar.edu/cdaac/cgi_bin/fileFormats.cgi?type=atmPrf
+  source_name: CDAAC file format documents (atmPrf, wetPf2) + COSMIC-2 Data page + ROM SAF Level 3 Product User Manual v3.2
+
+variables:
+  note: >-
+    COSMIC-2 (CDAAC) names are from the CDAAC file format documents; for ROM SAF Level 3 only the refractivity example (`REF`) in the Product User Manual was verified.
+    Check ROM SAF Level 1b/2 and other Level 3 variable names in your files.
+  full_list: https://cdaac-www.cosmic.ucar.edu/cdaac/doc/formats.html
+  groups:
+    - name: COSMIC-2 Level 2 atmPrf (dry retrieval, full resolution)
+      kind: instant
+      period: occultation time
+      items:
+        - "Bending angle (raw) — `Bend_ang` (rad)"
+        - "Optimized bending angle — `Opt_bend_ang` (rad)"
+        - "Impact parameter — `Impact_parm` (km)"
+        - "Refractivity — `Ref` (N)"
+        - "Dry temperature — `Temp` (°C)"
+        - "Dry pressure — `Pres` (hPa)"
+        - "Mean-sea-level altitude — `MSL_alt` (km)"
+    - name: COSMIC-2 Level 2 wetPf2 (1D-Var moist retrieval, 100 m spacing)
+      kind: instant
+      period: occultation time
+      items:
+        - "Temperature — `Temp` (°C)"
+        - "Water vapour pressure — `Vp` (hPa)"
+        - "Pressure — `Pres` (hPa)"
+        - "Observed refractivity (interpolated from atmPrf) — `Ref_obs` (N)"
+    - name: ROM SAF Level 3 monthly grids (CDR and ICDR)
+      kind: mean
+      period: Monthly
+      items:
+        - "Refractivity — `REF` (N-units)"
+        - "Bending angle (mrad)"
+        - "Dry temperature (K)"
+        - "1D-Var temperature (K)"
+        - "1D-Var specific humidity (g/kg)"
+        - "Tropopause height (m)"
+
+access:
+  - name: UCAR CDAAC data archive (COSMIC-2, Metop, commercial RO, COSMIC-1 and others)
+    url: https://data.cosmic.ucar.edu/gnss-ro/
+    method: Direct HTTPS download (no login; tar.gz by date and level)
+    note: >-
+      COSMIC-2 near-real-time Level 2 is under cosmic2/nrt/level2/<year>/<day-of-year>/ as daily bundles of atmPrf, wetPf2, bfrPrf (BUFR) and others.
+      The monthly gridded climate record (UCAR RO CDR) is under gridded/cdr/.
+  - name: COSMIC-2 data guide (processing streams, latency, citation)
+    url: https://www.cosmic.ucar.edu/what-we-do/cosmic-2/data
+    method: Web
+  - name: EUMETSAT ROM SAF product archive (NRT, Offline, CDR, ICDR)
+    url: https://rom-saf.eumetsat.int/product_archive.php
+    method: Web download (free registration and login, netCDF)
+    note: Monthly gridded humidity is also distributed through the C3S Climate Data Store. Products are CC BY 4.0.
+
+example:
+  lang: python
+  note: "Downloads a no-login COSMIC-2 near-real-time wetPf2 daily bundle (about 200 MB), extracts it and opens the first profile. Member names may not end in .nc, so they are not filtered by extension."
+  code: |
+    # pip install requests xarray netCDF4
+    import tarfile, requests, xarray as xr
+
+    url = ("https://data.cosmic.ucar.edu/gnss-ro/cosmic2/nrt/level2/"
+           "2026/284/wetPf2_nrt_2026_284.tar.gz")          # day 284 of 2026 (11 October)
+    with open("wetPf2.tar.gz", "wb") as f:
+        f.write(requests.get(url, timeout=600).content)
+
+    with tarfile.open("wetPf2.tar.gz") as tar:
+        members = [m for m in tar.getmembers() if m.isfile()]
+        tar.extractall("wetPf2", members=members[:1])     # extract a single profile
+
+    ds = xr.open_dataset("wetPf2/" + members[0].name, engine="netcdf4")
+    print(ds[["MSL_alt", "Temp", "Vp", "Pres"]])           # altitude (km), temperature (°C), vapour pressure (hPa), pressure (hPa)
+
+tips:
+  - "COSMIC-2 atmPrf `Temp` is in Celsius and `Pres` in hPa (written mb in the files). Convert units before comparing with reanalyses (K, Pa)."
+  - "atmPrf carries a quality flag `bad` (1 means the profile failed QC). Remove those before computing statistics."
+  - "atmPrf attributes include the lowest height of the straight-line GPS–LEO path (`hslbot`) and signal-quality indicators (`snr1avg`, `s4` and others). Use them to select profiles for lower-tropospheric analysis."
+  - "The COSMIC-2 initial-operations notice (2020-03) reported larger bias and standard deviation at about 19–29 km for GPS L2P occultations than for others. Split by signal type for precise lower-stratosphere work."
+  - "Dry temperature equals the real temperature only where water vapour is negligible, in the upper troposphere and stratosphere. ROM SAF and UCAR climate records mainly provide dry-temperature grids in that range (UCAR CDR temperature 10–40 km)."
+  - "ROM SAF CDR (2001–2016) and ICDR (2017 onward) come from different processing systems, so there may be a seam. Use a matching CDR–ICDR pair (e.g. GRM-29-R1 + GRM-29-I1) and mark the join."
+  - "Metop-A ended in November 2021, so later Metop data come from Metop-B and -C (and from November 2025 also Metop-SG A1). Check for sampling changes when the satellite mix changes."
+  - "The UCAR RO CDR monthly grids use COSMIC-2 only between 30°N and 30°S and drop Spire data south of 60°S, so the mission mix varies with latitude."
+
+citations:
+  dataset:
+    - label: COSMIC-2 Data Products (UCAR)
+      text: >-
+        UCAR COSMIC Program, 2019: COSMIC-2 Data Products [Data set]. UCAR/NCAR - COSMIC, Access date [insert date], https://doi.org/10.5065/T353-C093
+      doi: 10.5065/T353-C093
+      bibtex: |
+        @misc{ucar2019cosmic2,
+          author    = {{UCAR COSMIC Program}},
+          title     = {{COSMIC-2} Data Products},
+          year      = {2019},
+          publisher = {UCAR/NCAR - COSMIC},
+          doi       = {10.5065/T353-C093},
+          note      = {Accessed DD MMM YYYY}
+        }
+    - label: ROM SAF multi-mission reprocessed climate record GRM-28-R1 (monthly grids)
+      text: >-
+        EUMETSAT ROM SAF (2021): Radio Occultation Reprocessed Climate Data Record - Multimission (GRM-28-R1). EUMETSAT.
+        https://doi.org/10.15770/EUM_SAF_GRM_0001
+      doi: 10.15770/EUM_SAF_GRM_0001
+      bibtex: |
+        @misc{romsaf2021grm28,
+          author    = {{EUMETSAT ROM SAF}},
+          title     = {Radio Occultation Reprocessed Climate Data Record - Multimission ({GRM-28-R1})},
+          year      = {2021},
+          publisher = {EUMETSAT},
+          doi       = {10.15770/EUM_SAF_GRM_0001}
+        }
+    - label: ROM SAF Metop climate record GRM-29-R1 (ROM SAF citation example)
+      text: >-
+        EUMETSAT ROM SAF Radio Occultation Climate Data Record (v1.0, 2019), GRM-29-R1, DOI:10.15770/EUM_SAF_GRM_0002, https://doi.org/10.15770/EUM_SAF_GRM_0002
+      doi: 10.15770/EUM_SAF_GRM_0002
+      bibtex: |
+        @misc{romsaf2019grm29r1,
+          author    = {{EUMETSAT ROM SAF}},
+          title     = {{ROM SAF} Radio Occultation Climate Data Record - Metop ({GRM-29-R1}), v1.0},
+          year      = {2019},
+          publisher = {EUMETSAT},
+          doi       = {10.15770/EUM_SAF_GRM_0002}
+        }
+    - label: ROM SAF Metop interim climate record GRM-29-I1 (2017 onward)
+      text: >-
+        EUMETSAT ROM SAF (2019): ROM SAF Radio Occultation Interim Climate Data Record - Metop (GRM-29-I1). EUMETSAT. https://doi.org/10.15770/EUM_SAF_GRM_0006
+      doi: 10.15770/EUM_SAF_GRM_0006
+      bibtex: |
+        @misc{romsaf2019grm29i1,
+          author    = {{EUMETSAT ROM SAF}},
+          title     = {{ROM SAF} Radio Occultation Interim Climate Data Record - Metop ({GRM-29-I1})},
+          year      = {2019},
+          publisher = {EUMETSAT},
+          doi       = {10.15770/EUM_SAF_GRM_0006}
+        }
+  papers:
+    - label: COSMIC-2 first results
+      text: >-
+        Schreiner, W. S., Weiss, J. P., Anthes, R. A., Braun, J., Chu, V., Fong, J., Hunt, D., Kuo, Y.-H., Meehan, T., Serafino, W., Sjoberg, J., Sokolovskiy, S., Talaat, E., Wee, T. K., Zeng, Z. (2020):
+        COSMIC-2 Radio Occultation Constellation: First Results. Geophysical Research Letters, 47(4), e2019GL086841.
+      doi: 10.1029/2019GL086841
+      bibtex: |
+        @article{schreiner2020cosmic2,
+          author  = {Schreiner, W. S. and Weiss, J. P. and Anthes, R. A. and Braun, J. and Chu, V. and Fong, J. and Hunt, D. and Kuo, Y.-H. and Meehan, T. and Serafino, W. and Sjoberg, J. and Sokolovskiy, S. and Talaat, E. and Wee, T. K. and Zeng, Z.},
+          title   = {{COSMIC-2} Radio Occultation Constellation: First Results},
+          journal = {Geophysical Research Letters},
+          volume  = {47},
+          number  = {4},
+          pages   = {e2019GL086841},
+          year    = {2020},
+          doi     = {10.1029/2019GL086841}
+        }
+  acknowledgement: >-
+    UCAR recommends citing the DOI rather than a URL because DOIs persist. ROM SAF products are CC BY 4.0: figures should carry 'EUMETSAT ROM SAF [product ID]' (e.g. EUMETSAT ROM SAF GRM-29-R1),
+    text should give the product name, version, product ID and DOI, and authors are asked to send the title and DOI of peer-reviewed papers to romsafom@dmi.dk.
+
+notices:
+  - date: "2026-04-28"
+    level: info
+    title: Report on Metop-SG A1 (Metop-D) radio occultation data published
+    body: >-
+      ROM SAF Report 49 states that Level 1 bending angles from EPS-SG A1 (Metop-D), launched on 13 August 2025, have been on EUMETCast since 6 November 2025 at about 1,200 occultations a day.
+      Observation-minus-background standard deviations were smaller than for Metop-B and -C, PlanetiQ and Spire, and the Met Office expected operational assimilation around June 2026.
+    source: https://rom-saf.eumetsat.int/previous_news.php#April28-26_205
+  - date: "2026-03-20"
+    level: info
+    title: ROM SAF demonstration dataset — decadal atmospheric temperature trends (CDR GRM-28-R1 + ICDR GRM-29-I1)
+    body: >-
+      ROM SAF released sampling-error-corrected decadal trends computed from monthly grids that join the multi-mission CDR (GRM-28-R1) for 2002–2016 with the Metop ICDR (GRM-29-I1) afterwards.
+      It is a useful official example of joining CDR and ICDR.
+    source: https://rom-saf.eumetsat.int/previous_news.php
+  - date: "2024-03-08"
+    level: info
+    title: ROM SAF Metop near-real-time processing updated (GPAC 3.4) — file names and attributes changed
+    body: >-
+      The Metop near-real-time processor moved from GPAC 0.4.3 to 3.4.0; netCDF file names and global attributes now follow other ROM SAF products, and the bgr file was replaced by a bgo file.
+      High-altitude hemispheric bias decreased and a QC change increased the number of nominal occultations. Check file-name patterns in automated scripts.
+    source: https://rom-saf.eumetsat.int/previous_news.php
+
+links:
+  - name: UCAR COSMIC — COSMIC-2 mission overview
+    url: https://www.cosmic.ucar.edu/global-navigation-satellite-system-gnss-background/cosmic-2
+  - name: UCAR COSMIC — data table for other RO missions
+    url: https://www.cosmic.ucar.edu/what-we-do/data-processing-center/data
+  - name: UCAR RO Climate Data Record (monthly grids)
+    url: https://www.cosmic.ucar.edu/RO_Climate_Data_Record
+  - name: CDAAC file format document (atmPrf)
+    url: https://cdaac-www.cosmic.ucar.edu/cdaac/cgi_bin/fileFormats.cgi?type=atmPrf
+  - name: ROM SAF product documents (user manuals, validation reports)
+    url: https://rom-saf.eumetsat.int/product_documents.php
+  - name: ROM SAF usage policy and citation guidance
+    url: https://rom-saf.eumetsat.int/rom-saf-usage-policy
+
+watch_urls:
+  - https://rom-saf.eumetsat.int/previous_news.php
+  - https://www.cosmic.ucar.edu/what-we-do/cosmic-2/data
+
+last_verified: "2026-10-13"

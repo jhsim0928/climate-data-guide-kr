@@ -1,0 +1,436 @@
+# ─────────────────────────────────────────────────────────────
+# MODIS clouds MOD06_L2/MYD06_L2 (cloud top and optical properties), MOD35_L2 (cloud mask) and MOD08 L3 cloud C6.1 — dataset information file
+# Satellite tab (Clouds & radiation). Covers the cloud mask, cloud top pressure, temperature and height, cloud optical thickness, effective radius and water path, and 1° L3 statistics on one page.
+# The key caveats are Terra and Aqua orbit drift and the end of both missions. The MODIS-VIIRS continuity cloud products (CLDPROP, CLDMSK) are in viirs-cloud.yaml.
+# After editing, update last_verified to the date you checked the official pages.
+# ─────────────────────────────────────────────────────────────
+id: modis-cloud
+name: "MODIS Cloud (MOD06·MOD35)"
+full_name: MODIS/Terra and Aqua Clouds 5-Min L2 Swath 1km and 5km (MOD06_L2, MYD06_L2), Cloud Mask and Spectral Test Results (MOD35_L2, MYD35_L2) and MOD08/MYD08 L3 1° cloud, Collection 6.1 (MODIS cloud mask, cloud top and optical properties)
+category: satellite
+domain: satellite
+group: 구름·복사
+order: 60
+domains: [대기, 원격탐사]
+provider: NASA GSFC MODIS Atmosphere Team (cloud optical properties Platnick et al.; cloud top and cloud mask University of Wisconsin SSEC) / NASA LAADS DAAC (MODAPS)
+
+status: deprecated
+status_note: >-
+  Collection 6.1 is still produced every day (on 2026-10-13 MOD08_D3 reached 9 October), but Terra and Aqua have drifted from their orbits, shifting their overpass times,
+  and NASA expects Terra science operations to end in February 2027 and Aqua's in September 2027. LAADS DAAC points users to the continuity cloud products (CLDMSK, CLDPROP), which use only bands common to MODIS and VIIRS,
+  and says a final calibration (v8.0) will support one last reprocessing after operations end. As of 2026-10-13, CMR lists only Version 6.1.
+
+period:
+  start: "2000-02"
+  end: present
+  note: >-
+    Terra (MOD06, MOD35, MOD08) from 2000-02-24; Aqua (MYD06, MYD35, MYD08) from 2002-07-04. On 2026-10-13 LAADS held data up to early October 2026 (MOD08_D3 A2026282).
+    C6.1 was reprocessed for the full record from September to December 2017 (Terra) and January to March 2018 (Aqua); since 30 April 2018 only C6.1 has been produced.
+
+resolution:
+  spatial_short: "1 km (0.01°)"
+  temporal_short: "1일"
+  spatial: >-
+    L2 swath (at nadir): cloud mask MOD35 at 1 km (with 250 m visible test bits) / MOD06 cloud optical properties and 1 km cloud top (`cloud_top_*_1km`) at 1 km, heritage cloud top properties (`Cloud_Top_Pressure` etc.) at 5 km —
+    pixels grow away from nadir / L3: global 1°×1° equal-angle grid (360×180, MOD08_D3/E3/M3)
+  vertical: Cloud top pressure, temperature and height, plus column-integrated cloud properties (optical thickness, effective radius, water path)
+  temporal: >-
+    L2 in 5-minute granules (orbital swaths). Cloud mask and cloud top are produced day and night; optical properties in daytime only / L3 daily (D3), 8-day (E3) and monthly (M3).
+    Nominal equator crossing times are 10:30 descending (Terra, day) and 13:30 ascending (Aqua, day) local time, with night observations on the opposite orbit leg, but orbit drift has changed them.
+
+coverage:
+  short: 전지구
+update: Daily (L3 daily files around the day after observation); 8-day and monthly products after each period ends. A near-real-time (NRT) version is served separately by LANCE
+license: Freely available without restriction under the NASA EOSDIS data use policy. Downloading (including HTTPS and OPeNDAP) needs a free NASA Earthdata Login; citation of the dataset DOI is requested.
+account_required: true
+
+summary: >-
+  NASA's standard cloud products made from the 36 MODIS bands. MOD35 is a cloud mask that combines visible and infrared threshold tests into a per-pixel confidence that the view is clear.
+  MOD06 holds cloud top pressure, temperature, height and infrared phase, retrieved with the CO2 absorption bands (CO2 slicing) and the infrared window, plus cloud optical thickness, effective particle radius and water path from visible and shortwave infrared reflectance (daytime).
+  MOD08 L3 gathers these into daily, 8-day and monthly statistics on a 1° grid, in the same files as aerosol, water vapour and atmospheric profile statistics. There are separate Terra (morning) and Aqua (afternoon) versions.
+  Because the algorithms use CO2 and water vapour absorption bands that only MODIS has, they cannot simply be carried over to VIIRS.
+
+time_convention:
+  summary: >-
+    L2 values (MOD06, MOD35) are observations at the moment of the overpass. The time in the file name (AYYYYDDD.HHMM) is the start of the first scan in the 5-minute granule (UTC). The cloud mask and cloud top properties
+    are produced day and night; optical properties (optical thickness, effective radius, water path) need sunlight and exist only in daytime. The L3 daily product (MOD08_D3) holds statistics of the day's L2 values in each 1° cell,
+    with separate daytime (`_Day`) and nighttime (`_Night`) statistics, and the 8-day (E3) and monthly (M3) products average the daily means (`_Mean_Mean`).
+  points:
+    - "Nominally Terra crosses the equator descending at 10:30 local time and Aqua ascending at 13:30, both in daylight, with night observations on the opposite orbit leg. Cloudiness changes strongly through the day (especially convective clouds and marine stratus), so Terra–Aqua differences include the time-of-day difference."
+    - "Orbit drift: after its last inclination adjustment on 27 February 2020, Terra moved earlier, reaching 10:15 by autumn 2022; Aqua, after its last adjustment on 8 March 2021, has moved later and was expected to reach about 15:50 around August 2026. Long-term trends in cloud variables with a strong diurnal cycle need to account for this."
+    - "L3 daily files follow the UTC date, but since C6 the window is widened by up to 3 hours on either side to reduce gaps and overlaps near the date line (L3 ATBD)."
+    - "8-day (E3) products use 8 consecutive daily files starting from 1 January, and monthly (M3) products use all daily files in the month. According to the L3 ATBD, 8-day and monthly cloud optical property means weight each daily mean by its pixel count."
+    - "Cloud optical thickness is close to log-normally distributed, so L3 carries both an arithmetic mean (`_Mean`) and a log mean (`_Log_Mean`). For radiative calculations and model comparisons, state which mean you used."
+    - "The near-real-time (NRT, LANCE) version is made separately from the standard product (LAADS); use the standard product for research time series."
+  source: https://atmosphere-imager.gsfc.nasa.gov/sites/default/files/ModAtmo/L3_ATBD_C6_C61_2019_02_20.pdf
+  source_name: "MODIS Atmosphere L3 Global Gridded Product User's Guide & ATBD (C6 and C6.1) + MOD06_L2 and MOD35_L2 collection descriptions (CMR) + NASA Terra article and LP DAAC Aqua orbit plan"
+
+variables:
+  note: >-
+    SDS names and units from the CMR variable records (UMM-Var). Files are HDF-EOS2 (HDF4) with integer storage, so physical value = scale_factor × (stored value − add_offset) (the MODIS Atmosphere definition; add_offset is subtracted).
+    For example `Cloud_Top_Temperature` has scale 0.01 and add_offset −15000, so the physical value is 0.01 × (stored value + 15000) K. MYD (Aqua) files use the same names.
+  full_list: https://atmosphere-imager.gsfc.nasa.gov/products/cloud
+  groups:
+    - name: L2 cloud mask 1 km (MOD35_L2, MYD35_L2)
+      kind: instant
+      period: overpass time
+      items:
+        - text: "Cloud mask and spectral test results — `Cloud_Mask` (6-byte bit field)"
+          std: []
+          note: Byte 1 bits 0–2 hold whether the mask was determined and four confidence levels (cloudy, probably cloudy, probably clear, confident clear), plus day/night, sunglint, snow/ice and land/water paths. Bytes 2–4 hold 1 km tests, bytes 5–6 the 250 m visible tests
+        - "250 m reflectance dispersion index — `Cloud_Mask_SPI` (bands 1 and 2)"
+    - name: L2 cloud top and phase (MOD06_L2, MYD06_L2)
+      kind: instant
+      period: overpass time
+      items:
+        - "Cloud top pressure (5 km) — `Cloud_Top_Pressure` (hPa, scale 0.1)"
+        - "Cloud top pressure (1 km) — `cloud_top_pressure_1km` (hPa)"
+        - "Cloud top height (1 km, geopotential height) — `cloud_top_height_1km` (m)"
+        - "Cloud top temperature (5 km) — `Cloud_Top_Temperature` (K, scale 0.01, add_offset −15000)"
+        - text: "Cloud fraction (5×5 1 km pixels, from the cloud mask) — `Cloud_Fraction` (dimensionless, scale 0.01)"
+          std: [cloud]
+        - "Infrared cloud phase (1 km) — `Cloud_Phase_Infrared_1km` (0 = clear, 1 = water, 2 = ice, 3 = mixed, 6 = undetermined)"
+    - name: L2 cloud optical properties 1 km, daytime (MOD06_L2, MYD06_L2)
+      kind: instant
+      period: overpass time (daytime)
+      items:
+        - "Cloud optical thickness (2.1 µm band pair) — `Cloud_Optical_Thickness` (dimensionless, scale 0.01)"
+        - "Cloud effective particle radius (2.1 µm) — `Cloud_Effective_Radius` (µm, scale 0.01)"
+        - text: "Cloud water path (liquid or ice column, 2.1 µm) — `Cloud_Water_Path` (g m-2)"
+          std: [cloud_water]
+        - "Cloud phase used in the optical retrieval — `Cloud_Phase_Optical_Properties` (0 = mask undetermined, 1 = clear, 2 = liquid, 3 = ice, 4 = undetermined, retrieved as liquid)"
+        - "Optical thickness from the 1.6 µm and 1.6/2.1 µm pairs — `Cloud_Optical_Thickness_16`, `Cloud_Optical_Thickness_1621` (dimensionless)"
+        - "Partly cloudy (cloud edge) pixel retrieval (PCL) — `Cloud_Optical_Thickness_1621_PCL` (dimensionless)"
+    - name: L3 daily 1° (MOD08_D3, MYD08_D3)
+      kind: mean
+      period: daily (UTC date, widened by up to 3 hours)
+      items:
+        - text: "Cloud fraction (cloud mask 'cloudy + probably cloudy' / total), daily mean — `Cloud_Fraction_Mean` (dimensionless, scale 0.0001)"
+          std: [cloud]
+        - text: "Daytime and nighttime cloud fraction, daily mean — `Cloud_Fraction_Day_Mean`, `Cloud_Fraction_Night_Mean` (dimensionless)"
+          std: [cloud]
+        - "Cloud top pressure, daily mean — `Cloud_Top_Pressure_Mean` (hPa, scale 0.1)"
+        - "Cloud top temperature, daily mean — `Cloud_Top_Temperature_Mean` (K, scale 0.01, add_offset −15000)"
+        - "Cloud top height, daily mean — `Cloud_Top_Height_Mean` (m)"
+        - "Liquid and ice cloud optical thickness, daily mean — `Cloud_Optical_Thickness_Liquid_Mean`, `Cloud_Optical_Thickness_Ice_Mean` (dimensionless, scale 0.01)"
+        - "Liquid cloud effective radius, daily mean — `Cloud_Effective_Radius_Liquid_Mean` (µm, scale 0.01)"
+        - text: "Liquid cloud water path, daily mean — `Cloud_Water_Path_Liquid_Mean` (g m-2)"
+          std: [cloud_water]
+    - name: L3 8-day and monthly 1° (MOD08_E3 8-day / MOD08_M3 monthly)
+      kind: mean
+      period: 8 days or month (mean of daily means)
+      items:
+        - text: "Cloud fraction — `Cloud_Fraction_Mean_Mean` (dimensionless, scale 0.0001)"
+          std: [cloud]
+        - "Cloud top temperature — `Cloud_Top_Temperature_Mean_Mean` (K)"
+        - "Liquid cloud optical thickness — `Cloud_Optical_Thickness_Liquid_Mean_Mean` (dimensionless)"
+        - "Liquid cloud effective radius — `Cloud_Effective_Radius_Liquid_Mean_Mean` (µm)"
+        - text: "Liquid cloud water path — `Cloud_Water_Path_Liquid_Mean_Mean` (g m-2)"
+          std: [cloud_water]
+
+access:
+  - name: LAADS DAAC (search, order and direct download)
+    url: https://ladsweb.modaps.eosdis.nasa.gov/search/order/2/MOD06_L2--61
+    method: Web search, direct HTTPS download (archive/allData/61/<short name>/) / LAADS API-V2 / OPeNDAP
+    note: >-
+      Example short names: MOD06_L2, MYD06_L2, MOD35_L2, MYD35_L2, MOD08_D3, MOD08_E3, MOD08_M3 (MYD for Aqua). All are C6.1 (archive 61; CMR version "6.1").
+      Since 2026-04-30 OPeNDAP also requires Earthdata Login, and the old LAADS Classic API was retired on 2026-08-31, so scripts must move to API-V2.
+  - name: NASA Earthdata Search
+    url: https://search.earthdata.nasa.gov/search/granules?p=C1443535037-LAADS
+    method: Web search / earthaccess (Python)
+    note: The link points to MOD06_L2 C6.1; search other products by short name. Files are also served from Earthdata Cloud.
+  - name: Worldview (imagery)
+    url: https://worldview.earthdata.nasa.gov/
+    method: Web map
+    note: Shows MODIS cloud product imagery by date, which helps when choosing case studies.
+
+example:
+  lang: python
+  note: >-
+    Downloads an Aqua MYD08_M3 monthly file with earthaccess and reads the monthly mean cloud fraction with pyhdf. MODIS atmosphere products subtract add_offset from the stored value before multiplying by scale_factor, so convert by hand.
+  code: |
+    # pip install earthaccess pyhdf numpy
+    import earthaccess
+    import numpy as np
+    from pyhdf.SD import SD, SDC
+
+    earthaccess.login()  # free NASA Earthdata account
+    results = earthaccess.search_data(
+        short_name="MYD08_M3", version="6.1",
+        temporal=("2024-07-01", "2024-07-31"),
+    )
+    files = earthaccess.download(results[:1], "myd08")
+
+    hdf = SD(files[0], SDC.READ)
+    sds = hdf.select("Cloud_Fraction_Mean_Mean")
+    raw = sds.get().astype("float64")
+    att = sds.attributes()
+    cf = np.where(raw == att["_FillValue"], np.nan,
+                  att["scale_factor"] * (raw - att["add_offset"]))  # 1° grid, 180×360
+    lat = 89.5 - np.arange(180)                     # row 0 = 89–90°N
+    w = np.cos(np.deg2rad(lat))[:, None] * np.ones((1, 360))
+    ok = np.isfinite(cf)
+    print("Global area-weighted cloud fraction:", (cf[ok] * w[ok]).sum() / w[ok].sum())
+
+tips:
+  - "'Cloud fraction' means different things in different fields. L3 `Cloud_Fraction_Mean` is the share of 'cloudy + probably cloudy' pixels in the cloud mask, while `Cloud_Retrieval_Fraction_*` is the share of pixels with a successful optical property retrieval. Match the definition when comparing with ISCCP or reanalysis cloud cover."
+  - "Optical thickness, effective radius and water path exist only in daytime, and only where cloud fills the pixel and the retrieval succeeds. Polar night, high-latitude winter with large solar zenith angles, and regions with much thin cirrus have few samples and may be biased."
+  - "Cloud top properties come at 5 km (`Cloud_Top_Pressure`) and 1 km (`cloud_top_pressure_1km`). The MODIS Atmosphere team recommends the 1 km products for new work, but L3 statistics are still built from the 5 km L2."
+  - "In the HDF4 files the physical value is scale_factor × (stored value − add_offset). With a variable like `Cloud_Top_Temperature`, whose add_offset is −15000, getting the sign wrong gives nonsense instead of about 300 K."
+  - "The MODIS Atmosphere known issues list notes that warming of Aqua band 29 (8.6 µm) has created artificial trends in the Aqua C6.1 infrared cloud phase (largest in the tropics), and that Aqua 5 km cloud top data over southern Africa between 09:00 and 12:30 UTC are intermittently missing."
+  - "A Terra part failure (PWA) on 5 October 2020 removed visible and near-infrared reflectance in some high-latitude scenes, creating false clouds in the daytime polar and subpolar cloud mask. MOD35 and MOD06 for 2020-10-05 to 2021-09-25 were reprocessed with updated algorithms, so use the reprocessed files for that period (check the production date)."
+  - "After NOAA stopped producing Reynolds SST in December 2022, MOD35 and MOD06 kept using the last Reynolds SST (week of 2022-11-27), according to a LAADS notice. Whether a replacement SST was applied and the period reprocessed could not be confirmed from notices as of 2026-10-13, so take care with ocean cloud mask and low cloud top analyses after December 2022."
+  - "The MODIS Atmosphere issues list has a 'C7.0 Cloud L3' entry (updated 2026-09), but on 2026-10-13 no MODIS C7 cloud products were public in CMR or at LAADS. Check LAADS notices for a release."
+
+citations:
+  dataset:
+    - label: MOD06_L2 C6.1 (Terra L2 clouds)
+      text: >-
+        Platnick, S., Ackerman, S., King, M., et al. (2015). MODIS Atmosphere L2 Cloud Product (06_L2). NASA MODIS Adaptive Processing System, Goddard Space Flight Center, USA.
+        https://doi.org/10.5067/MODIS/MOD06_L2.061
+      doi: 10.5067/MODIS/MOD06_L2.061
+      bibtex: |
+        @misc{mod06_l2_c61,
+          author    = {Platnick, S. and Ackerman, S. and King, M. and others},
+          title     = {{MODIS} Atmosphere {L2} Cloud Product (06\_L2)},
+          year      = {2015},
+          publisher = {NASA MODIS Adaptive Processing System, Goddard Space Flight Center, USA},
+          doi       = {10.5067/MODIS/MOD06_L2.061}
+        }
+    - label: MOD35_L2 C6.1 (Terra L2 cloud mask)
+      text: >-
+        Ackerman, S., et al. (2015). MODIS Atmosphere L2 Cloud Mask Product. NASA MODIS Adaptive Processing System, Goddard Space Flight Center, USA.
+        https://doi.org/10.5067/MODIS/MOD35_L2.061
+      doi: 10.5067/MODIS/MOD35_L2.061
+      bibtex: |
+        @misc{mod35_l2_c61,
+          author    = {Ackerman, S. and others},
+          title     = {{MODIS} Atmosphere {L2} Cloud Mask Product},
+          year      = {2015},
+          publisher = {NASA MODIS Adaptive Processing System, Goddard Space Flight Center, USA},
+          doi       = {10.5067/MODIS/MOD35_L2.061}
+        }
+    - label: MOD08_D3 C6.1 (Terra L3 daily)
+      text: >-
+        Platnick, S., et al. (2015). MODIS Atmosphere L3 Daily Product. NASA MODIS Adaptive Processing System, Goddard Space Flight Center, USA.
+        https://doi.org/10.5067/MODIS/MOD08_D3.061
+      doi: 10.5067/MODIS/MOD08_D3.061
+      bibtex: |
+        @misc{mod08_d3_c61,
+          author    = {Platnick, S. and others},
+          title     = {{MODIS} Atmosphere {L3} Daily Product},
+          year      = {2015},
+          publisher = {NASA MODIS Adaptive Processing System, Goddard Space Flight Center, USA},
+          doi       = {10.5067/MODIS/MOD08_D3.061}
+        }
+    - label: MOD08_M3 C6.1 (Terra L3 monthly)
+      text: >-
+        Platnick, S., et al. (2015). MODIS Atmosphere L3 Monthly Product. NASA MODIS Adaptive Processing System, Goddard Space Flight Center, USA.
+        https://doi.org/10.5067/MODIS/MOD08_M3.061
+      doi: 10.5067/MODIS/MOD08_M3.061
+      bibtex: |
+        @misc{mod08_m3_c61,
+          author    = {Platnick, S. and others},
+          title     = {{MODIS} Atmosphere {L3} Monthly Product},
+          year      = {2015},
+          publisher = {NASA MODIS Adaptive Processing System, Goddard Space Flight Center, USA},
+          doi       = {10.5067/MODIS/MOD08_M3.061}
+        }
+  papers:
+    - label: MODIS cloud optical and microphysical products, C6 (Platnick et al., 2017)
+      text: >-
+        Platnick, S., Meyer, K., King, M. D., Wind, G., Amarasinghe, N., Marchant, B., Arnold, G. T., Zhang, Z., Hubanks, P. A., Holz, R. E., Yang, P., Ridgway, W. L., Riedi, J. (2017).
+        The MODIS cloud optical and microphysical products: Collection 6 updates and examples from Terra and Aqua. IEEE Transactions on Geoscience and Remote Sensing, 55, 502–525.
+      doi: 10.1109/TGRS.2016.2610522
+      bibtex: |
+        @article{platnick2017c6,
+          author  = {Platnick, S. and Meyer, K. and King, M. D. and Wind, G. and Amarasinghe, N. and Marchant, B. and Arnold, G. T. and Zhang, Z. and Hubanks, P. A. and Holz, R. E. and Yang, P. and Ridgway, W. L. and Riedi, J.},
+          title   = {The {MODIS} cloud optical and microphysical products: {Collection 6} updates and examples from {Terra} and {Aqua}},
+          journal = {IEEE Transactions on Geoscience and Remote Sensing},
+          volume  = {55},
+          pages   = {502--525},
+          year    = {2017},
+          doi     = {10.1109/TGRS.2016.2610522}
+        }
+    - label: MODIS cloud top property refinements for C6 (Baum et al., 2012)
+      text: >-
+        Baum, B. A., Menzel, W. P., Frey, R. A., Tobin, D. C., Holz, R. E., Ackerman, S. A., Heidinger, A. K., Yang, P. (2012). MODIS cloud-top property refinements for Collection 6.
+        Journal of Applied Meteorology and Climatology, 51, 1145–1163.
+      doi: 10.1175/JAMC-D-11-0203.1
+      bibtex: |
+        @article{baum2012c6,
+          author  = {Baum, B. A. and Menzel, W. P. and Frey, R. A. and Tobin, D. C. and Holz, R. E. and Ackerman, S. A. and Heidinger, A. K. and Yang, P.},
+          title   = {{MODIS} cloud-top property refinements for {Collection 6}},
+          journal = {Journal of Applied Meteorology and Climatology},
+          volume  = {51},
+          pages   = {1145--1163},
+          year    = {2012},
+          doi     = {10.1175/JAMC-D-11-0203.1}
+        }
+  acknowledgement: >-
+    Cite the LAADS dataset DOI of each product you use (pattern 10.5067/MODIS/<short name>.061, e.g. 10.5067/MODIS/MYD06_L2.061 for Aqua clouds and 10.5067/MODIS/MOD08_E3.061 for the 8-day product).
+    Cite Platnick et al. (2017) for cloud optical properties, Baum et al. (2012) for cloud top properties, and the MOD35 ATBD (Ackerman et al.) and Frey et al. (2008, J. Atmos. Oceanic Technol., 25, 1057–1072) for the cloud mask.
+
+transitions:
+  - from: MODIS clouds C6 (MOD06, MOD35, MOD08)
+    to: MODIS clouds C6.1
+    status: completed
+    date: "2018-03"
+    summary: >-
+      A reprocessing that fixed problems in the input L1B data; changes to the cloud products are mostly small (ancillary inputs, QA, handling of cloud top fill values). C6.1 fixed false ocean clouds caused by Terra band 29 calibration drift
+      and the C6 December bias in low-cloud pressure over ocean. Since 30 April 2018 only C6.1 has been produced.
+    changes:
+      - aspect: Input L1B
+        before: C6 L1B (Terra band 29 calibration drift; 1–2% step in Aqua from July 2016)
+        after: Calibration problems fixed in C6.1 L1B
+      - aspect: Cloud top
+        before: "False low clouds over ocean in Terra from band 29 drift (from 2010, worst after 2014); December bias in 1 km low-cloud pressure over ocean"
+        after: Both problems fixed
+      - aspect: Cloud optical properties
+        before: C6
+        after: Minor changes such as updated ancillary inputs and QA
+      - aspect: Production
+        before: C6 (produced in parallel until 2018-04-30)
+        after: C6.1 only
+    impacts:
+      - Do not mix C6 and C6.1 in one time series; download the whole record again as C6.1.
+    sources:
+      - name: MODIS Atmosphere — Data Versions (collections overview)
+        url: https://atmosphere-imager.gsfc.nasa.gov/collections/overview
+      - name: MODIS Cloud (06_L2) known issues
+        url: https://atmosphere-imager.gsfc.nasa.gov/issues/cloud
+      - name: C6.1 cloud optical properties change summary
+        url: https://modis-atmos.gsfc.nasa.gov/sites/default/files/ModAtmo/C6.1_Change_Summary_Cloud_Optical_%2806_OD%29_v2.pdf
+  - from: MODIS clouds MOD06, MOD35, MOD08 C6.1
+    to: MODIS-VIIRS continuity cloud products CLDMSK and CLDPROP
+    to_id: viirs-cloud
+    status: planned
+    summary: >-
+      VIIRS lacks the MODIS CO2 absorption bands (around 13 µm) and water vapour bands (6.7 and 7.3 µm), and its shortwave infrared band is at 2.25 µm instead of 2.13 µm, so MOD06 and MOD35 cannot be ported directly.
+      NASA therefore built a cloud mask (CLDMSK) and cloud properties (CLDPROP) with algorithms that use only bands common to both sensors, applied in the same way to VIIRS (Suomi NPP, NOAA-20) and to Aqua MODIS.
+      The key point is the Aqua MODIS CLDPROP, which remakes the MODIS record with the same algorithm so it can be joined to VIIRS.
+    changes:
+      - aspect: Cloud mask algorithm
+        before: "MOD35 (all MODIS bands, including CO2 and water vapour absorption tests)"
+        after: "MODIS-VIIRS Cloud Mask (MVCM): MOD35 heritage using common bands only (no 0.905, 0.936, 6.7, 7.3, 13.3 or 13.9 µm tests)"
+      - aspect: Cloud top algorithm
+        before: "CO2 slicing (13 µm bands) + infrared window"
+        after: "NOAA CLAVR-x AWG Cloud Height Algorithm (ACHA), mainly infrared window — results differ structurally"
+      - aspect: Cloud optical properties
+        before: "MOD06 (2.13 µm; liquid refractive index from a 300 K data set)"
+        after: "MOD06 heritage with common bands (0.65, 0.86, 1.24, 1.6, 2.2, 3.7, 11 µm), liquid refractive index from a 265 K data set, no multilayer detection"
+      - aspect: Satellites and overpass time
+        before: "Terra 10:30 descending, Aqua 13:30 ascending (drifting)"
+        after: "Aqua MODIS, Suomi NPP and NOAA-20 all in afternoon orbits ascending around 13:30. No continuity product for Terra's morning observations"
+      - aspect: Resolution and format
+        before: "L2 1 km and 5 km, L3 1° (D3, E3, M3), HDF-EOS2 (HDF4)"
+        after: "L2 VIIRS 750 m and MODIS 1 km, L3 1° (D3, M3; no 8-day), NetCDF-4"
+      - aspect: Period
+        before: "Terra 2000-02 onward / Aqua 2002-07 onward"
+        after: "Aqua MODIS 2002-07 onward / Suomi NPP 2012-03 onward (delivery ends 2026-11-02) / NOAA-20 2018-02 onward"
+    impacts:
+      - "MOD06 C6.1 and CLDPROP give different values even for the same Aqua observations (different refractive index, cloud top algorithm and QA). Do not join the MODIS standard record directly to VIIRS CLDPROP; use Aqua MODIS CLDPROP as the bridge."
+      - Platnick et al. (2021) report systematic differences in effective radius and phase because of the VIIRS 2.25 µm versus MODIS 2.13 µm band, part of which has not yet been separated from radiometric calibration differences between the sensors.
+      - "No continuity product carries on the Terra (morning) cloud record. Do not mix observations from different times of day."
+    sources:
+      - name: Platnick et al. (2021), Remote Sensing — The NASA MODIS-VIIRS Continuity Cloud Optical Properties Products
+        url: https://doi.org/10.3390/rs13010002
+      - name: LAADS DAAC — MODIS to VIIRS Transition (continuity product table)
+        url: https://ladsweb.modaps.eosdis.nasa.gov/learn/modis-to-viirs-transition
+      - name: MODIS-VIIRS Cloud Mask (MVCM) User Guide
+        url: https://ladsweb.modaps.eosdis.nasa.gov/api/v2/content/archives/Document%20Archive/Science%20Data%20Product%20Documentation/MVCM_User_Guide_Oct_2020.pdf
+
+notices:
+  - date: "2026-08-03"
+    level: info
+    title: LAADS Classic API retired on 2026-08-31 — move to API-V2
+    body: >-
+      LAADS DAAC announced that its old Classic web service API would be retired on 31 August 2026. Automated download scripts and clients need to move to LAADS API-V2, a JSON/REST interface.
+    source: https://ladsweb.modaps.eosdis.nasa.gov/alerts-and-issues/199517
+  - date: "2026-04-30"
+    level: info
+    title: Earthdata Login now required for LAADS OPeNDAP
+    body: >-
+      From 30 April 2026 the LAADS OPeNDAP service also requires NASA Earthdata Login authentication. Scripts that read OPeNDAP URLs without credentials must add them.
+    source: https://ladsweb.modaps.eosdis.nasa.gov/alerts-and-issues/199527
+  - date: "2026-03-31"
+    level: info
+    title: Terra anomaly put MODIS in standby — data from 2026-03-26 to 27 questionable or bad
+    body: >-
+      A Terra spacecraft anomaly around 20:00 UTC on 26 March 2026 put MODIS into standby mode; it returned to science mode on the afternoon of 27 March. The calibration team flagged data from 20:00 UTC on 26 March
+      to 19:30 UTC on 27 March as questionable or bad and considers data after that safe to use.
+    source: https://ladsweb.modaps.eosdis.nasa.gov/alerts-and-issues/199533
+  - date: "2026-03-20"
+    level: warning
+    title: NASA expects Terra science operations to end in February 2027 and Aqua in September 2027
+    body: >-
+      The editor's note on the NASA Science article 'Terra: The End of An Era' (published 2025-12-29, updated 2026-03-20) projects that fuel and power limits will end science operations for Terra in February 2027
+      and Aqua in September 2027, with both continuing to operate until then. When Aqua ends, the Aqua MODIS continuity cloud products (CLDPROP, CLDMSK) end with it.
+    source: https://science.nasa.gov/science-research/earth-science/terra-the-end-of-an-era/
+  - date: "2026-03-18"
+    level: info
+    title: MODIS L1B and geolocation Version 7.0 released — cloud products still C6.1
+    body: >-
+      LAADS DAAC released Version 7.0 MODIS calibrated radiances (L1B) and geolocation and said the V6.1 L1 data would be removed on 2026-09-30. V7 L1B includes an electronic crosstalk correction for Aqua bands 27–30
+      and a bias correction for Terra band 29. On 2026-10-13 CMR listed only Version 6.1 for MOD06, MOD35 and MOD08.
+    source: https://www.earthdata.nasa.gov/data/alerts-outages/version-7.0-modis-calibrated-radiances-geolocation-data-products-now-available
+  - date: "2025-05-02"
+    level: warning
+    title: Transition from MODIS to VIIRS — Terra and Aqua begin shutting down in late 2026 to early 2027
+    body: >-
+      NASA LAADS DAAC announced that Terra and Aqua will begin shutting down in late 2026 or early 2027, and that both are drifting out of their designed orbits, changing crossing times and possibly affecting the data.
+      A final reprocessing will follow once MODIS data collection stops, and users are encouraged to use similar VIIRS products.
+    source: https://www.earthdata.nasa.gov/data/alerts-outages/transition-from-modis-viirs
+  - date: "2022-12-19"
+    level: warning
+    title: NOAA Reynolds SST discontinued — MOD35 and MOD06 frozen on the last SST
+    body: >-
+      NOAA stopped producing Reynolds SST, so MODAPS kept making the Terra and Aqua cloud mask (MxD35_L2) and cloud top (MxD06) products with the last Reynolds SST, from the week of 2022-11-27, until a replacement is chosen.
+      It said the affected period would be reprocessed once an alternative SST is adopted.
+    source: https://ladsweb.modaps.eosdis.nasa.gov/alerts-and-issues/199628
+  - date: "2022-11-29"
+    level: info
+    title: Terra L1B and atmosphere products reprocessed after constellation exit maneuvers (2022-10-23 to 11-21)
+    body: >-
+      After Terra's constellation exit maneuvers (12 and 19 October), the crosstalk behaviour of some detectors in bands 27–30 changed, so Terra C6.1 L1B and atmosphere products for 23 October to 21 November 2022 were reprocessed.
+      Cloud and water vapour products are the most affected; production from 22 November uses corrected L1B. Users are advised to use the reprocessed versions for this period.
+    source: https://ladsweb.modaps.eosdis.nasa.gov/alerts-and-issues/199633
+  - date: "2022-11-04"
+    level: info
+    title: Aqua L1B and atmosphere products reprocessed after safe mode (2022-04-17 to 07-26)
+    body: >-
+      After Aqua MODIS returned from safe mode (31 March to 14 April 2022), the crosstalk correction for bands 27–30 drifted, so Aqua C6.1 L1B and atmosphere products for 17 April to 26 July were reprocessed.
+      Cloud and water vapour products are the most affected; production from 27 July already includes the fix.
+    source: https://ladsweb.modaps.eosdis.nasa.gov/alerts-and-issues/199635
+  - date: "2021-08-06"
+    level: warning
+    title: Terra part failure (2020-10-05) caused high-latitude cloud mask and cloud top errors
+    body: >-
+      A Terra MODIS Printed Wire Assembly (PWA) failure on 5 October 2020 removed visible and near-infrared reflectance in some high-latitude scenes; the cloud mask then assumed no snow or ice and flagged many false clouds in daytime,
+      and the cloud top product mislabelled these scenes as 'night'. A follow-up notice (2021-11-23) says MOD35 and MOD06 for 2020-10-05 to 2021-09-25 were reprocessed with updated algorithms, and the instrument returned to normal after a recorder reboot in September 2021.
+    source: https://ladsweb.modaps.eosdis.nasa.gov/alerts-and-issues/199683
+
+links:
+  - name: MOD06_L2 product page (LAADS DAAC)
+    url: https://ladsweb.modaps.eosdis.nasa.gov/missions-and-measurements/products/MOD06_L2
+  - name: MOD35_L2 product page (LAADS DAAC)
+    url: https://ladsweb.modaps.eosdis.nasa.gov/missions-and-measurements/products/MOD35_L2
+  - name: MOD08_M3 product page (LAADS DAAC)
+    url: https://ladsweb.modaps.eosdis.nasa.gov/missions-and-measurements/products/MOD08_M3
+  - name: MODIS Cloud Optical Properties User's Guide (C6 and C6.1)
+    url: https://modis-atmos.gsfc.nasa.gov/sites/default/files/ModAtmo/MODISCloudOpticalPropertyUserGuideFinal_v1.1_1.pdf
+  - name: MOD35 cloud mask user's guide
+    url: https://modis-atmos.gsfc.nasa.gov/sites/default/files/ModAtmo/CMUSERSGUIDE_0.pdf
+  - name: MODIS Atmosphere L3 User's Guide & ATBD (C6 and C6.1)
+    url: https://atmosphere-imager.gsfc.nasa.gov/sites/default/files/ModAtmo/L3_ATBD_C6_C61_2019_02_20.pdf
+  - name: MODIS Atmosphere — Cloud (06_L2) known issues
+    url: https://atmosphere-imager.gsfc.nasa.gov/issues/cloud
+  - name: LAADS DAAC — MODIS to VIIRS Transition
+    url: https://ladsweb.modaps.eosdis.nasa.gov/learn/modis-to-viirs-transition
+
+watch_urls:
+  - https://atmosphere-imager.gsfc.nasa.gov/issues/cloud
+  - https://ladsweb.modaps.eosdis.nasa.gov/learn/modis-to-viirs-transition
+  - https://ladsweb.modaps.eosdis.nasa.gov/missions-and-measurements/products/MOD06_L2
+
+last_verified: "2026-10-13"

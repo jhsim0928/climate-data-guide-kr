@@ -1,0 +1,285 @@
+# ─────────────────────────────────────────────────────────────
+# MISR (Terra) aerosol — Level 2 V23 (4.4 km) and Level 3 — dataset information file
+# Satellite tab (Aerosols and atmospheric composition). Since the October 2022 Terra orbit change, FINAL L2 and L3 production has stopped and only FIRSTLOOK L2 continues.
+# Key caveats: projected end of Terra science operations (February 2027) and orbit drift (changing overpass time).
+# After editing, update last_verified to the date you checked the official pages.
+# ─────────────────────────────────────────────────────────────
+id: misr
+name: "MISR"
+full_name: Terra Multi-angle Imaging SpectroRadiometer (MISR) Level 2 Aerosol (V23, 4.4 km) and Level 3 Component Global Aerosol
+category: satellite
+domain: satellite
+group: 에어로졸·대기 성분
+order: 30
+domains: [대기, 에어로졸, 원격탐사]
+provider: NASA JPL MISR Science Team / NASA Langley ASDC
+
+status: delayed
+status_note: >-
+  The standard (FINAL) L2 aerosol product (MIL2ASAE V003, algorithm V23) and the daily and monthly L3 products stop at 12 October 2022, because the change in Terra's orbit altitude required a reworked processing system.
+  Since then only the provisional FIRSTLOOK L2 (MIL2ASAF, product version 30) is produced daily (as checked on 2026-10-13, through the 11 October orbits). No schedule for FINAL L2 and L3 processing after October 2022 could be confirmed,
+  and NASA projects the end of Terra science operations in February 2027 because of fuel and power limits.
+
+transitions:
+  - from: MISR L2 Aerosol V22 (17.6 km)
+    to: MISR L2 Aerosol V23 (4.4 km)
+    status: completed
+    date: "2018-02"
+    summary: >-
+      V23 raised the aerosol retrieval resolution from 17.6 km to 4.4 km and moved from HDF4 to NetCDF-4; the whole mission was reprocessed as V23 (MIL2ASAE V003).
+    changes:
+      - aspect: Retrieval resolution
+        before: 17.6 km
+        after: 4.4 km × 4.4 km
+      - aspect: File format
+        before: HDF4 stacked-block format
+        after: NetCDF-4, with latitude, longitude and time for each retrieval
+      - aspect: Field names
+        before: V22-specific names
+        after: Streamlined names consistent with other satellite products (e.g. `Aerosol_Optical_Depth`)
+      - aspect: Algorithm
+        before: V22 algorithm
+        after: "Additional cloud screening, extra lookup-table AOD grid points below 0.025, veiling-light correction of L1B2 radiances, chlorophyll (underlight) correction over dark water, near-surface wind from MISR glint, standardised land mixture selection and uncertainty"
+      - aspect: Validation level
+        before: V22 level
+        after: "`Aerosol_Optical_Depth` Stage 3 validated; other particle properties Stage 2"
+    impacts:
+      - Analyses built on V22 files and code need rewriting for V23, since both field names and grid changed.
+      - The quality statement reports wider coverage and better agreement with AERONET-DRAGON deployments at 4.4 km, though formal validation of V23 AOD was still ongoing when it was written.
+    sources:
+      - name: Data Quality Statement for the MISR Level 2 Aerosol Product (V023, 2018-02-07)
+        url: https://asdc.larc.nasa.gov/documents/misr/quality_summaries/DQS_AEROSOL_V023.20180207.pdf
+      - name: Garay et al. (2020), AMT — introducing the 4.4 km MISR aerosol product
+        url: https://doi.org/10.5194/amt-13-593-2020
+
+period:
+  start: "2000-02"
+  end: present
+  note: >-
+    FINAL L2 (MIL2ASAE V003) runs from 2000-03-01 to 2022-10-12, daily L3 (MIL3DAEN) to 2022-10-12, and monthly L3 (MIL3MAEN) from February 2000 to September 2022.
+    FIRSTLOOK L2 (MIL2ASAF) runs from 2017-11-01 to the present; orbits from 2022-10-13 onward are produced with the new processing system (product version 30), and as checked on 2026-10-13 they extend to the 2026-10-11 orbits.
+
+resolution:
+  spatial_short: "4.4 km (0.04°)"
+  temporal_short: "1일"
+  spatial: >-
+    L2: 4.4 km × 4.4 km retrieval grid (orbit swaths in the MISR path/block system) / L3: 0.5° × 0.5° global latitude-longitude grid (MISR_AM1_CGAS files)
+  vertical: Single total-column aerosol optical depth (surface to top of atmosphere)
+  temporal: >-
+    L2: one file per orbit (path and orbit numbers in the file name), global coverage every 9 days / L3: daily, monthly, seasonal (quarterly) and yearly
+
+coverage:
+  short: 전지구
+  note: "Daytime orbital swath (about 380 km wide); global coverage every 9 days"
+update: "FIRSTLOOK L2 daily (as checked on 2026-10-13, the 11 October orbits were produced on the 12th). FINAL L2 and L3 production has been halted since 2022-10-12"
+license: Open NASA Earth science data, free and unrestricted. File downloads need a free NASA Earthdata Login; data citation and the ASDC acknowledgement are requested
+account_required: true
+
+summary: >-
+  MISR on NASA's Terra satellite images each location with nine cameras at angles from nadir to 70.5° fore and aft in four bands (446, 558, 672 and 867 nm), and uses those multi-angle views
+  to retrieve aerosol optical depth and particle size, absorption and non-sphericity over land and ocean. Its record since 2000 is widely used alongside MODIS for long-term aerosol change,
+  wildfire smoke and dust, and climate model evaluation. Global coverage takes nine days, and since October 2022 the standard (FINAL) products have stopped, leaving only provisional (FIRSTLOOK) data for recent years.
+
+time_convention:
+  summary: >-
+    L2 values are snapshots at the time Terra passed overhead (morning orbit); L3 values are statistics of those L2 retrievals collected on a 0.5° grid by day, month, season and year.
+  points:
+    - "Terra is a morning-orbit satellite with a nominal 10:30 local equator crossing, and MISR observes only the sunlit side. NASA says that after inclination manoeuvres stopped in late 2020 the orbit drifted, so by autumn 2022 it was about 5 km lower and crossing the equator at 10:15."
+    - "L2 files carry an observation time (`Time`, ±30 s) plus year, month, day, hour and minute fields for each retrieval. When building daily means, distinguish UTC dates from local dates."
+    - "FIRSTLOOK is a provisional product processed quickly with ancillary data from an earlier period (the quality statement says the prior year); FINAL is the definitive product. The quality statement asks users to check whether the file name contains FIRSTLOOK."
+    - "MISR needs nine days for global coverage. Daily L3 files have many gaps, and the number of observations in monthly means varies strongly by region."
+  source: https://asdc.larc.nasa.gov/documents/misr/quality_summaries/DQS_AEROSOL_V023.20180207.pdf
+  source_name: MISR L2 Aerosol V23 Data Quality Statement + DPS + NASA 'Terra The End of An Era'
+
+variables:
+  note: >-
+    L2 field names follow the V23 L2 aerosol Data Product Specification; the main fields sit in the NetCDF group `4.4_KM_PRODUCTS` (raw values in `4.4_KM_PRODUCTS/AUXILIARY`, angles in `GEOMETRY`).
+    Optical depth fields refer to 550 nm and the fill value is -9999.0. L3 in-file variable names could not be confirmed, so only descriptions are given.
+  full_list: https://asdc.larc.nasa.gov/documents/misr/DPS_AEROSOL_V023.20180125.pdf
+  groups:
+    - name: L2 aerosol (MIL2ASAE, MIL2ASAF, 4.4 km)
+      kind: instant
+      period: overpass time
+      items:
+        - text: "Aerosol optical depth (550 nm) — `Aerosol_Optical_Depth` (unitless)"
+          note: Stage 3 validated — the most reliable field
+        - "Optical depth uncertainty — `Aerosol_Optical_Depth_Uncertainty` (unitless)"
+        - "Ångström exponent (550–860 nm) — `Angstrom_Exponent_550_860nm` (unitless)"
+        - "Absorption aerosol optical depth — `Absorption_Aerosol_Optical_Depth` (unitless)"
+        - "Non-spherical aerosol optical depth — `Nonspherical_Aerosol_Optical_Depth` (unitless)"
+        - "Optical depth by size (radius < 0.35 µm, 0.35–0.7 µm, > 0.7 µm) — `Small_Mode_Aerosol_Optical_Depth`, `Medium_Mode_Aerosol_Optical_Depth`, `Large_Mode_Aerosol_Optical_Depth` (unitless)"
+        - "Observation time — `Time` (seconds, ±30 s)"
+    - name: L3 Component Global Aerosol (MIL3DAEN daily / MIL3MAEN monthly, 0.5°)
+      kind: mean
+      period: Daily / monthly
+      items:
+        - "Statistics of 555 nm column aerosol optical depth (unitless)"
+        - text: "Aerosol compositional type frequency histogram"
+          note: Frequency of the mixture types selected in the L2 retrievals
+
+access:
+  - name: NASA Earthdata Search — MIL2ASAE V003 (FINAL L2, 2000-03 to 2022-10)
+    url: https://search.earthdata.nasa.gov/search/granules?p=C2854336973-LARC_CLOUD
+    method: Earthdata Search / earthaccess / HTTPS, OPeNDAP (NetCDF-4)
+  - name: NASA Earthdata Search — MIL2ASAF V002 (FIRSTLOOK L2, 2017-11 to present)
+    url: https://search.earthdata.nasa.gov/search/granules?p=C2873769608-LARC_CLOUD
+    method: Earthdata Search / earthaccess / HTTPS, direct S3 access
+    note: This provisional product is the only source for data after October 2022.
+  - name: NASA Earthdata Search — MIL3MAEN V004 (L3 monthly, 0.5°)
+    url: https://search.earthdata.nasa.gov/search/granules?p=C2873771604-LARC_CLOUD
+    method: Earthdata Search / earthaccess
+  - name: ASDC MISR project page (product list, tools, notices)
+    url: https://asdc.larc.nasa.gov/project/MISR
+    method: Web
+    note: The MISR Toolkit, L2 Browse and Path/Block tools are set up only for orbits before 2022-10-14; updates for later orbits are still pending.
+
+example:
+  lang: python
+  note: "Run earthaccess.login() once with a NASA Earthdata account first. For data after October 2022, change short_name to MIL2ASAF and version to 002 (provisional)."
+  code: |
+    # pip install earthaccess xarray netCDF4 numpy
+    import earthaccess
+    import xarray as xr
+
+    earthaccess.login()
+    results = earthaccess.search_data(
+        short_name="MIL2ASAE", version="003",          # FINAL L2 aerosol V23, 4.4 km
+        temporal=("2020-08-01", "2020-08-02"),
+        bounding_box=(124, 33, 131, 39),               # around the Korean Peninsula (W, S, E, N)
+    )
+    files = earthaccess.download(results[:1], "./misr")
+
+    ds = xr.open_dataset(files[0], group="4.4_KM_PRODUCTS")
+    aod = ds["Aerosol_Optical_Depth"].where(ds["Aerosol_Optical_Depth"] > -9999)
+    print(float(aod.mean()), ds["Latitude"].shape)
+
+tips:
+  - "After October 2022 only FIRSTLOOK (provisional) data exist. FIRSTLOOK uses ancillary data from an earlier period, and later orbits come from the new processing system (product version 30). State this when splicing a time series across 2022."
+  - "The quality statement says only `Aerosol_Optical_Depth` is Stage 3 validated, while particle properties (Ångström exponent, absorbing, non-spherical and size-resolved AOD) are Stage 2. Particle properties are more reliable when mid-visible AOD exceeds about 0.15."
+  - "Known issues: high AOD from unscreened clouds, thin cirrus (optical depth below 0.3) appearing as non-spherical particles, thick plumes screened as cloud, anomalously high values over snow and ice, and no retrievals above AOD 3.0."
+  - "Retrievals over Greenland and Antarctica are screened out of the user fields; the guidance is to look at the raw (`_Raw`) fields in the `AUXILIARY` group if needed."
+  - "Terra has drifted since late 2020, with an earlier equator crossing time and lower altitude. Orbits after October 2022 no longer line up with the fixed 233 WRS-2 paths, so finding the same location by path number may not work."
+  - "Because global coverage takes nine days, a location is not seen every day. When comparing monthly means with daily-global sensors such as MODIS, account for the difference in sampling."
+
+citations:
+  dataset:
+    - label: L2 aerosol FINAL (MIL2ASAE V003)
+      text: >-
+        Diner, D. MISR Level 2 Aerosol parameters V003. NASA Langley Atmospheric Science Data Center Distributed Active Archive Center.
+        https://doi.org/10.5067/TERRA/MISR/MIL2ASAE_L2.003 (Accessed DD MMM YYYY)
+      doi: 10.5067/TERRA/MISR/MIL2ASAE_L2.003
+      bibtex: |
+        @misc{misr_mil2asae_v003,
+          author    = {Diner, David},
+          title     = {{MISR} Level 2 Aerosol parameters {V003}},
+          publisher = {NASA Langley Atmospheric Science Data Center Distributed Active Archive Center},
+          doi       = {10.5067/TERRA/MISR/MIL2ASAE_L2.003},
+          note      = {Accessed DD MMM YYYY}
+        }
+    - label: L2 aerosol FIRSTLOOK (MIL2ASAF V002)
+      text: >-
+        Diner, D. MISR Level 2 FIRSTLOOK Aerosol parameters V002. NASA Langley Atmospheric Science Data Center Distributed Active Archive Center.
+        https://doi.org/10.5067/Terra/MISR/MIL2ASAF_L2.002 (Accessed DD MMM YYYY)
+      doi: 10.5067/Terra/MISR/MIL2ASAF_L2.002
+      bibtex: |
+        @misc{misr_mil2asaf_v002,
+          author    = {Diner, David},
+          title     = {{MISR} Level 2 {FIRSTLOOK} Aerosol parameters {V002}},
+          publisher = {NASA Langley Atmospheric Science Data Center Distributed Active Archive Center},
+          doi       = {10.5067/Terra/MISR/MIL2ASAF_L2.002},
+          note      = {Accessed DD MMM YYYY}
+        }
+    - label: L3 monthly aerosol (MIL3MAEN V004)
+      text: >-
+        Diner, D. MISR Level 3 Component Global Aerosol product in netCDF format covering a month V004. NASA Langley Atmospheric Science Data Center
+        Distributed Active Archive Center. https://doi.org/10.5067/Terra/MISR/MIL3MAEN_L3.004 (Accessed DD MMM YYYY)
+      doi: 10.5067/Terra/MISR/MIL3MAEN_L3.004
+      bibtex: |
+        @misc{misr_mil3maen_v004,
+          author    = {Diner, David},
+          title     = {{MISR} Level 3 Component Global Aerosol product in netCDF format covering a month {V004}},
+          publisher = {NASA Langley Atmospheric Science Data Center Distributed Active Archive Center},
+          doi       = {10.5067/Terra/MISR/MIL3MAEN_L3.004},
+          note      = {Accessed DD MMM YYYY}
+        }
+  papers:
+    - label: V23 4.4 km aerosol product
+      text: >-
+        Garay, M. J., Witek, M. L., Kahn, R. A., Seidel, F. C., Limbacher, J. A., Bull, M. A., Diner, D. J., Hansen, E. G., Kalashnikova, O. V., Lee, H.,
+        Nastan, A. M., and Yu, Y. (2020): Introducing the 4.4 km spatial resolution Multi-Angle Imaging SpectroRadiometer (MISR) aerosol product.
+        Atmospheric Measurement Techniques, 13(2), 593–628.
+      doi: 10.5194/amt-13-593-2020
+      bibtex: |
+        @article{garay2020misr,
+          author  = {Garay, Michael J. and Witek, Marcin L. and Kahn, Ralph A. and Seidel, Felix C. and Limbacher, James A. and Bull, Michael A. and Diner, David J. and Hansen, Earl G. and Kalashnikova, Olga V. and Lee, Huikyo and Nastan, Abigail M. and Yu, Yan},
+          title   = {Introducing the 4.4 km spatial resolution Multi-Angle Imaging SpectroRadiometer ({MISR}) aerosol product},
+          journal = {Atmospheric Measurement Techniques},
+          volume  = {13},
+          number  = {2},
+          pages   = {593--628},
+          year    = {2020},
+          doi     = {10.5194/amt-13-593-2020}
+        }
+    - label: Dark-water AOD and uncertainty retrieval (V23)
+      text: >-
+        Witek, M. L., Garay, M. J., Diner, D. J., Bull, M. A., and Seidel, F. C. (2018): New approach to the retrieval of AOD and its uncertainty
+        from MISR observations over dark water. Atmospheric Measurement Techniques, 11(1), 429–439.
+      doi: 10.5194/amt-11-429-2018
+      bibtex: |
+        @article{witek2018misr,
+          author  = {Witek, Marcin L. and Garay, Michael J. and Diner, David J. and Bull, Michael A. and Seidel, Felix C.},
+          title   = {New approach to the retrieval of {AOD} and its uncertainty from {MISR} observations over dark water},
+          journal = {Atmospheric Measurement Techniques},
+          volume  = {11},
+          number  = {1},
+          pages   = {429--439},
+          year    = {2018},
+          doi     = {10.5194/amt-11-429-2018}
+        }
+  acknowledgement: >-
+    ASDC asks users to generate citations with the citation generator on each DOI landing page and to include "These data were obtained from the NASA Langley Research Center Atmospheric Science Data Center."
+    The CMR citation metadata ask that the data be credited as produced by the MISR Science Team and processed and stored at the Langley DAAC.
+
+notices:
+  - date: "2026-03-20"
+    level: warning
+    title: NASA projects the end of Terra science operations in February 2027
+    body: >-
+      The editor's note in the NASA Science article 'Terra: The End of An Era' (published 2025-12-29, updated 2026-03-20) projects the end of Terra science operations in February 2027 because of fuel and power limits.
+      The article also explains that after inclination adjustments stopped in late 2020, by autumn 2022 the orbit was about 5 km lower and crossing the equator at 10:15 instead of 10:30. The MISR record is tied to this schedule.
+    source: https://science.nasa.gov/science-research/earth-science/terra-the-end-of-an-era
+  - date: "2023-11"
+    level: critical
+    title: Terra orbit altitude change forces new MISR processing — FINAL L2 and L3 stop at 2022-10-12
+    body: >-
+      ASDC states that the October 2022 change in Terra's orbit altitude meant orbit tracks no longer follow the fixed 233 WRS-2 paths, requiring a major update to MISR L1 and L2 production.
+      Data from 2022-10-14 (orbit 121388) onward are processed with the updates; orbits from 126974 (2023-11-01) were released first and earlier ones are being filled in (the notice itself is undated).
+      As checked in CMR on 2026-10-13, FINAL L2 (MIL2ASAE) and L3 have no data after 2022-10-12, while FIRSTLOOK L2 has been back-filled from 2022-10-13 and continues to the present.
+    source: https://asdc.larc.nasa.gov/project/MISR
+  - date: "2018-02-07"
+    level: info
+    title: L2 aerosol V23 released — 4.4 km resolution, NetCDF-4
+    body: >-
+      MISR L2 aerosol moved to V23 (file version F13_0023), raising retrieval resolution to 4.4 km and switching to NetCDF-4. The whole mission was reprocessed as MIL2ASAE V003;
+      optical depth is Stage 3 validated and the other particle properties Stage 2.
+    source: https://asdc.larc.nasa.gov/documents/misr/quality_summaries/DQS_AEROSOL_V023.20180207.pdf
+
+links:
+  - name: ASDC MISR project page
+    url: https://asdc.larc.nasa.gov/project/MISR
+  - name: MISR L2 aerosol V23 Data Quality Statement
+    url: https://asdc.larc.nasa.gov/documents/misr/quality_summaries/DQS_AEROSOL_V023.20180207.pdf
+  - name: MISR L2 aerosol V23 Data Product Specification
+    url: https://asdc.larc.nasa.gov/documents/misr/DPS_AEROSOL_V023.20180125.pdf
+  - name: MISR L3 Component Global Aerosol DPS
+    url: https://asdc.larc.nasa.gov/documents/misr/DPS_CGAS_V032.20180125.pdf
+  - name: MISR project (NASA JPL)
+    url: https://misr.jpl.nasa.gov/
+  - name: "NASA Science — Terra: The End of An Era"
+    url: https://science.nasa.gov/science-research/earth-science/terra-the-end-of-an-era
+
+watch_urls:
+  - https://asdc.larc.nasa.gov/project/MISR
+  - https://science.nasa.gov/science-research/earth-science/terra-the-end-of-an-era
+
+last_verified: "2026-10-13"

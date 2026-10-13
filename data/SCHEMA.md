@@ -12,7 +12,7 @@
 | `name` | 표시 이름 (예: `MERRA-2`) |
 | `full_name` | (선택) 정식 명칭과 한국어 설명 |
 | `category` | `reanalysis` 재분석 / `analysis` 관측 기반 분석장 / `satellite` 위성자료 / `forcing` 모델 강제력 / `in_situ` / `model_output` / `model_source` |
-| `domain` | 메뉴 탭: `atmosphere` 대기 / `ocean` 해양 / `seaice` 해빙 / `land` 지면 |
+| `domain` | 메뉴 탭: `atmosphere` 대기 / `ocean` 해양 / `seaice` 해빙 / `land` 지면 / `satellite` 위성 |
 | `group` | 탭 안 소분류 (아래 표) |
 | `order` | 소분류 안 표시 순서 (작을수록 위) |
 | `also_in` | (선택) 다른 탭에도 실을 때: `[{domain, group, label}]` |
@@ -22,7 +22,7 @@
 | `status_note` | 현재 상태 설명 (한국어 2~3문장) |
 | `successor` | `ended`이면 필수: `{name, url, note}` (후속이 없으면 `name: 없음`) |
 | `period` | `{start: "YYYY-MM", end: present 또는 "YYYY-MM", note}` |
-| `resolution` | `{spatial_short, temporal_short, spatial, vertical, temporal}` — `spatial_short`은 목록·비교용 대표 값 `"31 km (0.28°)"` 형식, `temporal_short`는 가장 짧은 제공 간격 `30분`/`1시간`/`3시간`/`6시간`/`1일`/`5일`/`7일`/`8일`/`10일`/`15일`/`16일`/`1개월`/`1년` 중 하나. `spatial`·`vertical`·`temporal`은 데이터셋 상세 페이지 '한눈에 보기'에 그대로 나가므로 **공식 문서의 격자 정보를 정확히**(모델 원본 격자 + 제공 격자, 격자 이름·크기) 적고, 직접 계산한 km·° 환산값은 넣지 않습니다. `spatial_short`·`temporal_short`는 목록·비교표에서만 쓰입니다 |
+| `resolution` | `{spatial_short, temporal_short, spatial, vertical, temporal}` — `spatial_short`은 목록·비교용 대표 값 `"31 km (0.28°)"` 형식, `temporal_short`는 가장 짧은 제공 간격 `10분`/`30분`/`1시간`/`3시간`/`6시간`/`1일`/`5일`/`7일`/`8일`/`10일`/`15일`/`16일`/`1개월`/`1년` 중 하나. `spatial`·`vertical`·`temporal`은 데이터셋 상세 페이지 '한눈에 보기'에 그대로 나가므로 **공식 문서의 격자 정보를 정확히**(모델 원본 격자 + 제공 격자, 격자 이름·크기) 적고, 직접 계산한 km·° 환산값은 넣지 않습니다. `spatial_short`·`temporal_short`는 목록·비교표에서만 쓰입니다 |
 | `coverage` | 공간 범위 `{short, note}` — `short`는 목록·비교표 '범위' 열 값으로 `전지구`/`준전지구`/`양극`/`북극`/`북극·북대서양`/`북극 일부`/`남극`/`아시아`/`북미` 중 하나(영어판도 같은 한국어 값, 화면에서 번역). 큰 영역이 빠지면(예: 북극해 없음) `전지구` 대신 `준전지구`. `note`(선택)는 빠진 곳·위경도 범위·육지만 여부 등 — 표 칸에 마우스를 올리면 보이고 상세 페이지 '한눈에 보기'에 나옴. 영어판 `note`는 영어로 |
 | `update` | 갱신 주기 |
 | `license` | 라이선스·이용 조건 요약 |
@@ -46,6 +46,7 @@
 | `ocean` | `재분석`(상태 추정 포함), `해수면온도 분석장`, `수온·염분 분석장`, `위성 관측 자료`, `모델 강제력` |
 | `seaice` | `재분석`, `관측 기반 분석장`(SST 자료의 해빙 농도 교차 수록), `위성 관측 자료`, `해빙 이동`, `해빙 지수` |
 | `land` | `육상 재분석·자료동화`, `토양수분`, `증발산`, `식생`, `토지피복`, `지표면온도·알베도`, `적설`, `육수저장량`, `산불` |
+| `satellite` | `강수`, `구름·복사`, `기온·수증기`, `에어로졸·대기 성분`, `해수면온도`, `해상풍`, `해색`, `해면 염분`, `해면고도·파랑`, `해빙`, `빙하·빙상`, `지면` — 위성 자료를 관측 대상별로 모은 탭. 다른 탭의 위성 자료는 `also_in`으로 교차 수록 |
 
 ## 변수 목록 형식
 

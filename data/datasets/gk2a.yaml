@@ -1,0 +1,255 @@
+# ─────────────────────────────────────────────────────────────
+# 천리안위성 2A호(GK-2A) AMI 기상 산출물 — 데이터셋 정보 파일
+# 위성 탭 '구름·복사'에 싣습니다. 2025년 말 자료 제공 창구가 국가기상위성센터 누리집에서
+# 기상자료개방포털(다운로드)·기상청 API허브(API)로 옮겨졌습니다.
+# 수정 후에는 공식 페이지에서 확인한 날짜로 last_verified 를 갱신하세요.
+# ─────────────────────────────────────────────────────────────
+id: gk2a
+name: "GK-2A (천리안 2A호)"
+full_name: GEO-KOMPSAT-2A (천리안위성 2A호) Advanced Meteorological Imager (AMI) 기상 산출물 — 기상청 국가기상위성센터(NMSC)
+category: satellite
+domain: satellite
+group: 구름·복사
+order: 80
+domains: [대기, 해양, 육지, 원격탐사]
+provider: 기상청 국가기상위성센터(NMSC) / 한국항공우주연구원(KARI, 위성 개발)
+
+status: active
+status_note: >-
+  동경 128.2° 정지궤도에서 전구를 10분마다 관측하며 정상 운영 중입니다(WMO OSCAR 기준 예상 수명 2029년 이후).
+  자료 받는 곳이 바뀌었습니다. 국가기상위성센터 누리집의 위성 자료 제공 서비스는 2025년 말 종료되었고, 지금은 기상청 기상자료개방포털(내려받기)과
+  기상청 API허브(API)에서 받습니다. 매년 봄·가을 한 번씩 몇 시간 관측·자료 서비스가 멈추는 정기 점검이 있습니다.
+
+period:
+  start: "2019-07"
+  end: present
+  note: >-
+    2018년 12월 발사, 2019년 7월 25일 위성방송 서비스를 시작했습니다. 기상자료개방포털·API허브에서 받을 수 있는 과거 자료 범위는 공식 안내에서 확인하지 못했으니
+    포털에서 직접 확인하세요. NOAA 공개 자료 사업(AWS)의 1단계(L1B) 사본은 2023년 2월분부터 있습니다(2026-10-13 확인).
+
+resolution:
+  spatial_short: "2 km (0.02°)"
+  temporal_short: "10분"
+  spatial: >-
+    AMI 16채널 — 가시 1 km(0.64 µm 채널만 0.5 km), 근적외·적외 2 km(천정 기준). 구름탐지·운량·운정·강우강도·지표면온도 등
+    2단계 산출물은 ATBD 기준 2 km 화소이며, 정지궤도 투영 화소 배열로 제공됩니다.
+  vertical: 구름 상단 높이·기압·온도(단일 층), 지표와 대기 상단 복사, 대기 연직 정보(산출물별)
+  temporal: >-
+    전구(FD) 10분 간격, 확장한반도(ELA)·한반도 영역 2분 간격. 일부 산출물(예: 해수면온도)은 1일·5일·10일 합성장도 만듭니다.
+    (비교표에는 전구 관측 간격인 10분으로 표시되며, 확장한반도·한반도 영역은 2분 간격입니다.)
+
+coverage:
+  short: 아시아
+  note: "128.2°E 정지궤도 전구(full disk) — 동아시아·서태평양·오세아니아, 한반도 영역은 별도 고빈도 관측"
+update: 실시간 (10분·2분 간격 관측 직후)
+license: >-
+  국가기상위성센터 누리집 저작물에는 공공누리 '출처표시-상업적 이용금지-변경금지' 조건이 붙어 있습니다. 기상자료개방포털·API허브로 받은 자료는
+  각 누리집의 이용 약관을 따르며, NOAA 공개 버킷(AWS) 사본은 출처를 밝히면 자유롭게 쓸 수 있습니다.
+account_required: true
+
+summary: >-
+  천리안위성 2A호(GK-2A)는 2018년 12월 발사된 한국의 정지궤도 기상위성으로, 16채널 기상영상기(AMI)로 동경 128.2° 상공에서 보이는 지구 원반 전체(전구)를 10분마다,
+  한반도 주변을 2분마다 관측합니다. 국가기상위성센터는 이 자료로 구름(탐지·운량·운형·운정·광학특성), 강우강도, 지표면·해수면 온도, 복사, 에어로졸·황사,
+  대기운동벡터 등 기본 산출물 23종과 부가 산출물 29종, 모두 52종의 기상 산출물을 만듭니다.
+  한반도 집중호우·태풍·황사·안개 연구와 지역 기후 분석에 가장 촘촘한 시간 해상도를 주는 국내 위성자료입니다.
+
+time_convention:
+  summary: >-
+    2단계 산출물은 각 관측(전구 10분, 확장한반도 2분)의 순간값입니다. 한 장의 전구 영상도 북쪽에서 남쪽으로 훑으며 몇 분에 걸쳐 찍히므로,
+    위도에 따라 실제 관측 순간이 파일 대표 시각과 조금 다릅니다.
+  points:
+    - "파일 이름은 `gk2a_ami_<레벨>_<채널·산출물>_<영역·해상도·투영>_<YYYYMMDDhhmm>.nc` 형식입니다(예: AWS 사본 `gk2a_ami_le1b_ir087_fd020ge_202610010000.nc`). 끝의 12자리가 관측 시각이며, 기준 시간대(UTC/KST)는 받은 파일의 속성으로 확인하세요."
+    - "구름 광학두께·유효입자반경·수액·빙정 경로는 주간(태양천정각 80° 미만)에만 산출되고, 해수면온도·지표면온도는 맑은 하늘 화소에서만 산출됩니다(각 ATBD)."
+    - "운량은 2 km 화소 주변 반경 약 5 km 안의 구름 화소 비율(위성운량 CF)과, 지상 관측자가 보는 하늘을 흉내 낸 기하학적 운량(지상운량 CA) 두 가지가 있습니다."
+    - "해수면온도는 실시간 산출과 함께 1일·5일·10일 단순 평균 합성장을 만든다고 ATBD에 적혀 있습니다. 합성장은 기간 평균(mean)입니다."
+    - "정기 점검(보통 5월·11월, 4~6시간) 동안은 관측 자체가 없어 시계열에 빈 시간이 생기고, 점검 직후 약 1시간은 영상 위치 정확도가 떨어질 수 있습니다."
+  source: https://nmsc.kma.go.kr/homepage/html/base/cmm/selectPage.do?page=static.edu.atbdGk2a
+  source_name: 국가기상위성센터 천리안위성 2A호 산출물 알고리즘 기술서(ATBD)
+
+variables:
+  note: >-
+    국가기상위성센터 ATBD(2019년판)의 산출물 표에 적힌 변수명만 적었습니다. 운영 파일의 이름·단위·척도 인수는 받은 파일에서 다시 확인하세요.
+    변수명을 확인하지 못한 산출물은 이름과 약어만 적었습니다. 산출물 52종 전체는 ATBD 목록 페이지에 있습니다.
+  full_list: https://nmsc.kma.go.kr/homepage/html/base/cmm/selectPage.do?page=static.edu.atbdGk2a
+  groups:
+    - name: 구름 (관측 시각 순간값, 2 km)
+      kind: instant
+      items:
+        - "구름탐지(구름·구름 가능·맑음) — CLD 산출물"
+        - text: "위성운량 — `CF` (%)"
+          note: "ATBD 표 기준 scale_factor 0.01. 품질 변수 `CF_DQF`"
+        - text: "지상운량 — `CA` (무차원)"
+          note: "ATBD 표 기준 scale_factor 0.01. 품질 변수 `CA_DQF`"
+        - "운상(맑음·물·얼음·불확실) — `CPH`"
+        - "운정온도 — `CTT` (K)"
+        - "운정기압 — `CTP` (hPa)"
+        - "운정고도 — `CTH` (km)"
+        - "운형·구름 층/고도 — CT 산출물"
+        - text: "구름 광학두께·유효입자반경·수액경로·빙정경로 — COT·CER·LWP·IWP 산출물"
+          std: [cloud_water]
+          note: 주간만 산출
+    - name: 강수 (관측 시각 순간값)
+      kind: instant
+      items:
+        - text: "강우강도 — RR 산출물 (mm/h)"
+          std: [precip]
+        - "정량적 강수예측 — POR·PAR 산출물"
+    - name: 지표·해양 (맑은 화소, 관측 시각 순간값)
+      kind: instant
+      items:
+        - text: "지표면온도 — `LST` (K)"
+          std: [tskin]
+          note: "맑은 육지 화소만, 10분 주기. ATBD 표 기준 scaling 0.01, 품질 변수 `DQF_LST`"
+        - "해수면온도 — SST 산출물"
+        - "지표면반사도·지표면방출률 — SAL·LSE 산출물"
+        - "적설·해빙 탐지, 적설깊이 — SCSI·SD 산출물"
+        - "식생지수·식생률 — NDVI·FVC 산출물"
+    - name: 복사 (관측 시각 순간값)
+      kind: instant
+      items:
+        - "복사량·단파복사 — RAD·SWRAD 산출물"
+        - "대기 상단 상향장파복사 — OLR 산출물"
+        - "지표면 상향·하향 장파복사 — ULR·DLR 산출물"
+    - name: 에어로졸·대기
+      kind: instant
+      items:
+        - "에어로졸 광학두께 — AOD 산출물"
+        - "황사·에어로졸 탐지, 황사 광학두께 — ADPS·DAOD 산출물"
+        - "대기운동벡터 — AMV 산출물"
+        - "대기 연직 정보 — AAP 산출물"
+
+access:
+  - name: 기상청 기상자료개방포털 (위성자료 내려받기)
+    url: https://data.kma.go.kr
+    method: 웹 (회원가입·로그인 후 자료 검색·내려받기)
+    note: >-
+      2025년 말부터 천리안위성 2A호 자료의 공식 내려받기 창구입니다. 국가기상위성센터는 '위성자료 다운로드는 기상자료개방포털'로 안내합니다.
+      메뉴 위치와 제공 기간·산출물 목록은 포털에서 직접 확인하세요(자동 접속을 막아 이 사이트에서 확인하지 못했습니다).
+  - name: 기상청 API허브 (위성자료 API)
+    url: https://apihub.kma.go.kr
+    method: Open API (회원가입 → 인증키 발급 → 호출)
+    note: >-
+      국가기상위성센터 누리집 Open API는 2025년 12월 종료되어 이곳으로 옮겨졌습니다. 기존 사용자도 API허브에서 새 인증키를 받고 호출 주소를 바꿔야 합니다.
+      API 목록·요청 형식·호출 한도는 API허브에서 확인하세요.
+  - name: NOAA 공개 자료 사업 — AWS 버킷 noaa-gk2a-pds (1단계 L1B)
+    url: https://registry.opendata.aws/noaa-gk2a-pds/
+    method: S3 (계정 없이 익명 접근)
+    note: >-
+      NOAA가 기상청과 협력해 올리는 사본으로, 2단계 산출물이 아니라 1단계(L1B) 채널 자료입니다. `AMI/L1B/FD/`(전구)·`AMI/L1B/LA/`(국지)
+      아래 연월/일/시 폴더에 2023년 2월분부터 있습니다. 새 파일 알림용 SNS 주제도 있습니다.
+  - name: 국가기상위성센터 — 산출물 알고리즘 기술서(ATBD)
+    url: https://nmsc.kma.go.kr/homepage/html/base/cmm/selectPage.do?page=static.edu.atbdGk2a
+    method: 웹 (PDF)
+    note: 산출물별 정의·변수·품질 정보가 있는 국문 문서 목록입니다.
+  - name: 국가기상위성센터 — 소프트웨어·예제 자료 (위경도 격자, 보정표, 예제 코드)
+    url: https://nmsc.kma.go.kr/homepage/html/base/cmm/selectPage.do?page=static.utilization.software
+    method: 웹
+    note: 정지궤도 투영 화소를 위경도로 바꾸는 격자 파일(NetCDF), 해륙 마스크, L1B 파이썬·포트란 예제, 수신·표출 도커 패키지(2026-09 배포판)가 있습니다.
+
+example:
+  lang: python
+  note: >-
+    계정 없이 AWS의 L1B 전구 적외(10.5 µm) 영상 한 장을 엽니다. 2단계 산출물은 기상자료개방포털·API허브에서 받아야 하며, 변수명은 받은 파일에서 확인하세요.
+    화소 → 위경도 변환은 국가기상위성센터 소프트웨어 페이지의 위경도 격자 파일을 쓰면 됩니다.
+  code: |
+    # pip install s3fs xarray h5netcdf
+    import s3fs
+    import xarray as xr
+
+    fs = s3fs.S3FileSystem(anon=True)
+    # 전구(FD) L1B, 2026-10-01 00시 폴더의 ir105 채널 파일 목록
+    keys = fs.glob("noaa-gk2a-pds/AMI/L1B/FD/202610/01/00/gk2a_ami_le1b_ir105_fd020ge_*.nc")
+    print(keys[:3])
+
+    ds = xr.open_dataset(fs.open(keys[0]), engine="h5netcdf")
+    print(ds)                                  # 변수명·차원·속성 확인
+    print(ds.attrs)                            # 관측 시각·보정 정보 등 전역 속성
+
+tips:
+  - 국가기상위성센터 누리집(datasvc.nmsc.kma.go.kr)의 자료 신청·다운로드와 Open API는 2025년 말 끝났습니다. 옛 주소로 짠 내려받기 스크립트는 기상자료개방포털·API허브 방식으로 바꿔야 합니다.
+  - 2단계 산출물은 정지궤도 투영(GEOS) 2 km 화소 배열입니다. 위경도 격자로 쓰려면 국가기상위성센터가 배포하는 위경도 파일로 좌표를 붙이고, 원반 가장자리(고위도·먼 경도)는 시야각이 커져 화소가 크게 늘어난다는 점을 기억하세요.
+  - 해수면·지표면 온도는 맑은 화소에서만 나오므로 장마·태풍처럼 구름이 많은 시기의 평균은 맑은 날 쪽으로 치우칩니다. 품질 플래그(DQF)를 꼭 함께 보세요.
+  - 정기 점검(보통 5월·11월) 시간에는 관측이 없습니다. 10분 자료로 일평균을 낼 때 결측 시간을 확인하세요.
+  - WMO OSCAR는 천리안위성 2A호 예상 수명을 2029년 이후로, 후속 천리안위성 5호(GEO-KOMPSAT-5)를 2031~2041년으로 적고 있습니다. 장기 연구라면 위성 교체 시점의 불연속을 미리 염두에 두세요.
+  - 해외 연구자에게는 같은 시간 해상도의 일본 Himawari(AHI) 자료와 비교·보완하는 방법도 많이 쓰입니다. 두 위성은 채널 구성이 비슷하지만 보정과 산출 알고리즘이 다릅니다.
+
+citations:
+  dataset: []
+  papers:
+    - label: 천리안위성 2A호 기상 산출물 소개
+      text: >-
+        Chung, S.-R., Ahn, M.-H., Han, K.-S., Lee, K.-T., and Shin, D.-B. (2020): Meteorological Products of Geo-KOMPSAT 2A (GK2A) Satellite.
+        Asia-Pacific Journal of Atmospheric Sciences, 56(2).
+      doi: 10.1007/s13143-020-00199-x
+      bibtex: |
+        @article{chung2020gk2a,
+          author  = {Chung, Sung-Rae and Ahn, Myoung-Hwan and Han, Kyung-Soo and Lee, Kyu-Tae and Shin, Dong-Bin},
+          title   = {Meteorological Products of {Geo-KOMPSAT 2A} ({GK2A}) Satellite},
+          journal = {Asia-Pacific Journal of Atmospheric Sciences},
+          volume  = {56},
+          number  = {2},
+          year    = {2020},
+          doi     = {10.1007/s13143-020-00199-x}
+        }
+    - label: AMI 궤도상 시험·성능 검증
+      text: >-
+        Kim, D., Gu, M., Oh, T.-H., Kim, E.-K., and Yang, H.-J. (2021): Introduction of the Advanced Meteorological Imager of Geo-Kompsat-2a:
+        In-Orbit Tests and Performance Validation. Remote Sensing, 13(7), 1303.
+      doi: 10.3390/rs13071303
+      bibtex: |
+        @article{kim2021ami,
+          author  = {Kim, Dohyeong and Gu, Minju and Oh, Tae-Hyeong and Kim, Eun-Kyu and Yang, Hye-Ji},
+          title   = {Introduction of the Advanced Meteorological Imager of {Geo-Kompsat-2a}: In-Orbit Tests and Performance Validation},
+          journal = {Remote Sensing},
+          volume  = {13},
+          number  = {7},
+          pages   = {1303},
+          year    = {2021},
+          doi     = {10.3390/rs13071303}
+        }
+  acknowledgement: >-
+    자료 DOI는 없습니다. 논문에는 자료를 기상청 국가기상위성센터(NMSC)가 제공했다는 점과 받은 경로(기상자료개방포털, 기상청 API허브 또는 NOAA Open Data Dissemination)를 밝히고,
+    쓴 산출물 이름·판(파일 속성의 알고리즘 판)을 적으세요. 국가기상위성센터 저작물은 출처를 구체적으로 표시해야 합니다.
+
+notices:
+  - date: "2026-05-06"
+    level: info
+    title: 정기 점검으로 관측·자료 서비스 중단 (2026-05-07 09:00~15:00 KST)
+    body: >-
+      연 2회 하는 AMI 스캐너 보정과 위성자료 저장장치 성능 개선 작업으로 2026년 5월 7일 09~15시(KST) 관측과 자료 서비스가 멈췄습니다.
+      점검 직후 약 1시간은 영상 위치 정확도가 떨어질 수 있다고 안내했습니다. 같은 성격의 점검이 2025년 5월·11월에도 있었습니다.
+    source: https://nmsc.kma.go.kr/homepage/html/base/bbs/selectBbs.do?bbsCd=00237&bbsUsq=203145
+  - date: "2025-12-22"
+    level: warning
+    title: 국가기상위성센터 누리집 위성 자료 제공 서비스 종료 (2025-12-23)
+    body: >-
+      국가기상위성센터 누리집의 위성 자료 제공 서비스가 2025년 12월 23일 종료되었습니다. 위성자료 내려받기는 기상자료개방포털(data.kma.go.kr),
+      API는 기상청 API허브(apihub.kma.go.kr)에서 이용합니다.
+    source: https://nmsc.kma.go.kr/homepage/html/base/bbs/selectBbs.do?bbsCd=00237&bbsUsq=203013
+  - date: "2025-09-05"
+    level: warning
+    title: 자료 서비스 통합 이전 안내 — 다운로드는 기상자료개방포털, Open API는 API허브로
+    body: >-
+      국가기상위성센터 자료 제공 서비스(datasvc.nmsc.kma.go.kr)를 기상자료개방포털과 기상청 API허브로 통합 이전한다고 알렸습니다.
+      처음 안내된 종료일은 자료 제공 2025년 10월 31일, Open API 2025년 12월 22일이며, Open API 사용자는 API허브에서 새 인증키를 받고 호출 주소를 바꿔야 합니다.
+    source: https://nmsc.kma.go.kr/homepage/html/base/bbs/selectBbs.do?bbsCd=00237&bbsUsq=202887
+
+links:
+  - name: 국가기상위성센터 누리집
+    url: https://nmsc.kma.go.kr/homepage/html/main/main.do
+  - name: 천리안위성 2A호 소개 (국가기상위성센터)
+    url: https://nmsc.kma.go.kr/homepage/html/base/cmm/selectPage.do?page=static.satllite.introGk2a
+  - name: GK2A Fact Sheets (영문, PDF 묶음)
+    url: https://nmsc.kma.go.kr/enhome/html/base/cmm/selectPage.do?page=satellite.gk2a.fact
+  - name: GK2A AMI 신속관측(Rapid Scan) 서비스 (영문)
+    url: https://nmsc.kma.go.kr/enhome/html/special/specialIntro.do?lang=en
+  - name: WMO OSCAR — GEO-KOMPSAT-2A
+    url: https://space.oscar.wmo.int/satellites/view/geo_kompsat_2a
+  - name: AWS Registry of Open Data — KMA GK-2A
+    url: https://registry.opendata.aws/noaa-gk2a-pds/
+
+watch_urls:
+  - https://nmsc.kma.go.kr/homepage/json/base/bbs/listBbs.do?bbsCd=00237
+  - https://nmsc.kma.go.kr/homepage/html/base/bbs/listBbs.do?bbsCd=00237
+
+last_verified: "2026-10-13"

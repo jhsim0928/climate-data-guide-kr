@@ -1,0 +1,267 @@
+# ─────────────────────────────────────────────────────────────
+# GEMS on GEO-KOMPSAT-2B (Chollian-2B) — dataset information file
+# Satellite tab (Aerosols and atmospheric composition). L2, L3 and L4 geostationary environmental satellite data produced and distributed by the NIER Environmental Satellite Center.
+# Downloading requires one of: web download (request key), Open-API (key approval takes about 7 days) or SFTP (application form and IP registration).
+# After editing, update last_verified to the date you checked the official pages.
+# ─────────────────────────────────────────────────────────────
+id: gems
+name: "GEMS (GEO-KOMPSAT-2B)"
+full_name: Geostationary Environment Monitoring Spectrometer (GEMS) on GEO-KOMPSAT-2B — hourly air-pollutant and aerosol observations over Asia
+category: satellite
+domain: satellite
+group: 에어로졸·대기 성분
+order: 70
+domains: [대기, 에어로졸, 원격탐사]
+provider: Environmental Satellite Center, National Institute of Environmental Research (NIER ESC), Republic of Korea
+
+status: active
+status_note: >-
+  GEMS on GEO-KOMPSAT-2B, launched in February 2020, observes Asia every hour during daylight. The NIER Environmental Satellite Center distributes 11 Level 2 products,
+  Level 3 daily and monthly NO2 means, and Level 4 estimates of surface PM10 and PM2.5. As checked on 2026-10-13, the SFTP page lists the current versions as NO2 v4.0.1, SO2 and CHOCHO v3.0.1,
+  HCHO, CLOUD, O3P and BSR v3.0.0, O3T v2.1.2, and AERAOD, AEH and UVI v2.1.0; evaluations of SO2 and AOD v3.0 and NO2 v4.0 were presented at the September 2026 GEMS International Workshop.
+  Each product is versioned separately, so record the version you use.
+
+period:
+  start: "2020"
+  end: present
+  note: >-
+    GEO-KOMPSAT-2B was launched on 19 February 2020 and reached its target orbit on 6 March (Cho et al., 2024; Yonsei University GEMS algorithm team).
+    The Environmental Satellite Center website does not state when the data service began or the period available for each product. Published studies mostly use L2 data from November 2021 onward,
+    so check that the period you need exists with a web-download search or the Open-API observation-time query (getFileDateList) before planning an analysis.
+
+resolution:
+  spatial_short: "7 km (0.06°)"
+  temporal_short: "1시간"
+  spatial: >-
+    Geostationary pixels — 7 km × 8 km for gases and 3.5 km × 8 km for aerosols at Seoul (Kim et al., 2020; the aerosol paper gives 3.5 × 7.7 km²).
+    The field of regard spans 5°S–45°N and 75°E–145°E, scanned in different areas depending on time of day: Full West (FW, reaching parts of India), Full Central (FC), Half Korea (HK) and Half East (HE).
+    The L3 daily and monthly NO2 means are gridded (grid spacing not confirmed on the official pages).
+  vertical: Vertical column amounts (tropospheric, stratospheric and total columns), ozone profiles (O3P) and aerosol effective height (AEH)
+  temporal: >-
+    Each scan starts at 45 minutes past the hour (UTC) and lasts 30 minutes; the operations table lists up to 11 scans per day (22:45–08:45 UTC, 07:45–17:45 KST).
+    The introduction page describes '8 times per day on average', so the number of daily scans varies with season (sunrise and sunset) and scan area. L3 products are daily and monthly means.
+
+coverage:
+  short: 아시아
+  note: "Field of regard 5°S–45°N, 75°E–145°E (scan area varies by hour)"
+update: Processed and distributed hourly by the ground station (distribution latency is not stated on the official pages)
+license: >-
+  Free of charge. Under the center's copyright policy, materials wholly owned by the center and carrying the KOGL (Korea Open Government License) mark may be used freely with clear attribution.
+  Publications should include the acknowledgement the center recommends. Downloads require a request key (web download, Open-API) or an application form (SFTP)
+account_required: true
+
+summary: >-
+  GEMS, on the GEO-KOMPSAT-2B (Chollian-2B) satellite launched in February 2020, is the first geostationary instrument dedicated to air-quality monitoring. Its UV–visible
+  imaging spectrometer (300–500 nm, 0.6 nm resolution) observes East and Southeast Asia every daylight hour. The NIER Environmental Satellite Center distributes Level 2 products for NO2, SO2,
+  formaldehyde (HCHO), glyoxal (CHOCHO), ozone (total column and profile), aerosols (optical depth, single-scattering albedo, effective height), clouds and UV indices, plus daily and monthly NO2 means (L3)
+  and estimated surface PM10 and PM2.5 (L4). Unlike low-Earth-orbit sensors such as TROPOMI and OMI, which pass once a day, GEMS captures the diurnal cycle over the same region,
+  which makes it useful for tracking emission sources, long-range transport and daily variation.
+
+time_convention:
+  summary: >-
+    L2 values are instantaneous retrievals from the scan at the stated time (beginning at 45 minutes past the hour, UTC, and taking about 30 minutes to sweep the scan area). Pixels within one file
+    therefore have slightly different observation times. The L3 NO2 products are daily and monthly averages of the L2 retrievals.
+  points:
+    - "Scans start at 45 minutes past each hour (UTC) and last 30 minutes. For example, the '03:45 UTC' scan covers 12:45–13:15 KST."
+    - "The first scan of the day, at 22:45 UTC (07:45 KST), falls on the previous UTC date. Take care with day boundaries when aggregating by Korean local day."
+    - "The number of scans and the scan area (FW, FC, HK, HE) change with season and solar zenith angle. Morning and evening scans may cover only the eastern half (Korea and Japan), so the area with data differs from hour to hour."
+    - "When comparing with TROPOMI (overpass around 13:30 local time), select the GEMS scans from the same time window; species such as NO2 vary strongly through the day."
+    - "The center's website does not distinguish near-real-time and final products or state the latency. Use the product version (e.g. v4.0.1) to tell data apart."
+  source: https://nesc.nier.go.kr/en/html/satellite/operation.do
+  source_name: NIER ESC GEMS operation page (scan schedule and areas) + Kim et al. (2020) BAMS
+
+variables:
+  note: >-
+    Products as listed on the center's SFTP page and web-download menu. The abbreviations in parentheses are the center's product codes, not variable names inside the files.
+    File variable names, units and quality flags could not be confirmed on the website, so check the attributes of the files you receive and the algorithm documents (ATBDs).
+  full_list: https://nesc.nier.go.kr/en/html/cntnts/105/static/page.do
+  groups:
+    - name: L2 trace gases (hourly scans)
+      kind: instant
+      period: observation time
+      items:
+        - text: "Nitrogen dioxide vertical columns (total, stratospheric, tropospheric) — product NO2"
+          note: v4.0.1 per the SFTP page
+        - text: "Sulfur dioxide vertical column — product SO2"
+          note: v3.0.1
+        - text: "Formaldehyde vertical column — product HCHO"
+          note: v3.0.0
+        - text: "Glyoxal vertical column — product CHOCHO"
+          note: v3.0.1
+        - text: "Total column ozone — product O3T"
+          note: v2.1.2
+        - text: "Ozone profile (including stratospheric and tropospheric ozone) — product O3P"
+          note: v3.0.0
+    - name: L2 aerosol, cloud, surface and UV (hourly scans)
+      kind: instant
+      period: observation time
+      items:
+        - text: "Aerosol optical depth (443 nm), single-scattering albedo, UV and visible aerosol indices — product AERAOD"
+          note: v2.1.0
+          std: [aerosol]
+        - text: "Aerosol effective height — product AEH"
+          note: v2.1.0
+        - text: "Effective cloud fraction, cloud centroid pressure, cloud radiance fraction — product CLOUD"
+          note: v3.0.0
+        - text: "Surface (background) reflectance — product BSR"
+          note: v3.0.0
+        - text: "UV index, plant response index, DNA damage index, vitamin D index — product UVI"
+          note: v2.1.0
+    - name: L3 NO2 means
+      kind: mean
+      period: Daily / monthly
+      items:
+        - text: "Total NO2 daily and monthly means — NO2-TOTAL-daily, NO2-TOTAL_monthly"
+          note: names as in the web-download menu
+        - text: "Tropospheric NO2 daily and monthly means — NO2-TROP-daily, NO2-TROP_monthly"
+          note: names as in the web-download menu
+        - text: "Gridded NO2 daily and monthly means — NO2-GRID-daily, NO2-GRID_monthly"
+          note: names as in the web-download menu
+    - name: L4 surface concentration estimates
+      kind: instant
+      period: observation time
+      items:
+        - text: "Estimated surface PM10 concentration"
+          note: time step and units not confirmed on the official pages
+        - text: "Estimated surface PM2.5 concentration"
+          note: time step and units not confirmed on the official pages
+
+access:
+  - name: NIER ESC Web Download (data service cart)
+    url: https://nesc.nier.go.kr/en/html/datasvc/index.do
+    method: Web search and cart request → download with the issued request key
+    note: >-
+      There is no user account or login. Select satellite, format (image or data) and product, search, add files to the cart, enter the purpose of use and a notification e-mail,
+      agree to the personal-data notice and submit; the page then issues a request key. Copy the key or save it as a key file, and once the completion e-mail arrives,
+      enter the key (or upload the key file) under 'Data request status' to look up and download the files. An existing key can be reused with later requests.
+  - name: GEMS Open-API
+    url: https://nesc.nier.go.kr/en/html/svc/openapi/explain.do
+    method: REST API (JSON, XML or TEXT responses) — build request URLs on the 'Create Open-API URL' page after a key is issued
+    note: >-
+      Apply on the key-issuance page with an e-mail address and purpose of use; after administrator approval the key is sent by e-mail. Approval can take about 7 days, keys are valid for one year,
+      and the e-mail may land in a spam folder. Query types are observation-time listing (getFileDateList), file-name listing (getFileList) and download (getFileItem);
+      dates use yyyyMMddHHmm (date, sDate, eDate) and the product version is set with ver (e.g. v2.1.0). A package of shell-script samples (api_sample_download.zip) is on the same page.
+  - name: NIER ESC SFTP service (bulk data)
+    url: https://nesc.nier.go.kr/en/html/cntnts/105/static/page.do
+    method: SFTP (application form → public IP registered with the center's web firewall → account issued)
+    note: >-
+      Use this for long periods or many products. Overseas users e-mail the 'Application for GEMS Data' form (.docx) to Kim Goo (kimgoo9@korea.kr) or Seo Jeonghyeon (savetheearth@korea.kr);
+      Korean users submit an official letter. An account is issued only after the public IP of your machine is allowed through the center's firewall, and existing users must reapply for each new product.
+      Mailing an external hard drive to the center is an alternative. Algorithm questions go to Hong Hyunkee (wanju77@korea.kr).
+  - name: GEMSAT environmental satellite toolkit
+    url: https://nesc.nier.go.kr/ko/html/satellite/program/introduce.do
+    method: Desktop software (Lite, Standard, Expert v120; Linux v110)
+    note: Display, editing and comparison tool for GEMS imagery; the researcher (Expert) edition supports Python. Manuals are in Korean.
+  - name: Satellite image viewer and GIS viewer
+    url: https://nesc.nier.go.kr/ko/html/satellite/gis/index.do
+    method: Web map viewer
+    note: Useful for browsing hourly fields before downloading.
+
+example:
+  lang: python
+  note: >-
+    Prints the group and variable structure of a downloaded L2 file (assumed to be netCDF4/HDF5-based). GEMS variable names differ between products and versions,
+    so inspect the structure and attributes (units, _FillValue, scale_factor) first and then pick the variables you need. The file name is a placeholder.
+  code: |
+    # pip install h5py
+    import h5py
+
+    path = "GEMS_L2_NO2_example.nc"   # replace with a file from web download or SFTP
+
+    with h5py.File(path, "r") as f:
+        def show(name, obj):
+            if isinstance(obj, h5py.Dataset):
+                units = obj.attrs.get("units", b"")
+                print(f"{name:60s} {obj.shape} {units}")
+        f.visititems(show)          # group/variable names, array shapes, units
+        print(dict(f.attrs))        # global attributes (product version, scan time, etc.)
+
+tips:
+  - "Always record the product version. Each product is versioned separately (as of October 2026, NO2 v4.0.1, AERAOD v2.1.0 and so on), and 2024 papers used NO2 v2.0. Do not join different versions into one time series."
+  - "Apply the quality flags and cloud screening. For example, Yang et al. (2024) used NO2 v2.0 retrievals passing the quality and final-algorithm flags, with solar and viewing zenith angles below 70° and cloud fraction below 0.3. Flag definitions can change between versions, so check the ATBD."
+  - "Korea is viewed nearly head-on from geostationary orbit, but viewing zenith angles and pixel sizes grow toward the edges of the field of regard (India, Indonesia). The 7 km × 8 km pixel size refers to Seoul."
+  - "Morning and evening scans have large solar zenith angles, lower quality and often cover only half the area. When analysing diurnal cycles, report the number of samples and the area for each hour."
+  - "Open-API keys take about 7 days to approve and expire after one year. For long projects note the expiry date, and start the SFTP application (which needs a formal request) early for bulk data."
+  - "The center asks for an acknowledgement in publications. The standard reference is Kim et al. (2020, BAMS); product-specific validation papers (e.g. Cho et al., 2024, for aerosols) are usually cited as well."
+  - "GEMS data are not registered in NASA CMR/Earthdata (checked 2026-10-13). When comparing with the other geostationary air-quality missions, TEMPO (US) and Sentinel-4 (Europe), note that distributors and versioning differ."
+
+citations:
+  dataset: []
+  papers:
+    - label: GEMS mission overview (BAMS)
+      text: >-
+        Kim, J., Jeong, U., Ahn, M.-H., Kim, J. H., Park, R. J., Lee, H., et al. (2020): New Era of Air Quality Monitoring from Space:
+        Geostationary Environment Monitoring Spectrometer (GEMS). Bulletin of the American Meteorological Society, 101(1), E1–E22.
+      doi: 10.1175/BAMS-D-18-0013.1
+      bibtex: |
+        @article{kim2020gems,
+          author  = {Kim, Jhoon and Jeong, Ukkyo and Ahn, Myoung-Hwan and Kim, Jae H. and Park, Rokjin J. and Lee, Hanlim and others},
+          title   = {New Era of Air Quality Monitoring from Space: Geostationary Environment Monitoring Spectrometer ({GEMS})},
+          journal = {Bulletin of the American Meteorological Society},
+          volume  = {101},
+          number  = {1},
+          pages   = {E1--E22},
+          year    = {2020},
+          doi     = {10.1175/BAMS-D-18-0013.1}
+        }
+    - label: First GEMS aerosol results (AMT)
+      text: >-
+        Cho, Y., Kim, J., Go, S., Kim, M., Lee, S., Kim, M., Chong, H., Lee, W.-J., Lee, D.-W., Torres, O., and Park, S. S. (2024):
+        First atmospheric aerosol-monitoring results from the Geostationary Environment Monitoring Spectrometer (GEMS) over Asia.
+        Atmospheric Measurement Techniques, 17, 4369–4390.
+      doi: 10.5194/amt-17-4369-2024
+      bibtex: |
+        @article{cho2024gemsaerosol,
+          author  = {Cho, Yeseul and Kim, Jhoon and Go, Sujung and Kim, Mijin and Lee, Seoyoung and Kim, Minseok and Chong, Heesung and Lee, Won-Jin and Lee, Dong-Won and Torres, Omar and Park, Sang Seo},
+          title   = {First atmospheric aerosol-monitoring results from the Geostationary Environment Monitoring Spectrometer ({GEMS}) over Asia},
+          journal = {Atmospheric Measurement Techniques},
+          volume  = {17},
+          pages   = {4369--4390},
+          year    = {2024},
+          doi     = {10.5194/amt-17-4369-2024}
+        }
+    - label: Diurnal NO2 from GEMS (ACP)
+      text: >-
+        Yang, L. H., Jacob, D. J., Dang, R., Oak, Y. J., Lin, H., Kim, J., et al. (2024): Interpreting Geostationary Environment Monitoring Spectrometer (GEMS)
+        geostationary satellite observations of the diurnal variation in nitrogen dioxide (NO2) over East Asia. Atmospheric Chemistry and Physics, 24, 7027–7039.
+      doi: 10.5194/acp-24-7027-2024
+      bibtex: |
+        @article{yang2024gemsno2,
+          author  = {Yang, Laura Hyesung and Jacob, Daniel J. and Dang, Ruijun and Oak, Yujin J. and Lin, Haipeng and Kim, Jhoon and others},
+          title   = {Interpreting Geostationary Environment Monitoring Spectrometer ({GEMS}) geostationary satellite observations of the diurnal variation in nitrogen dioxide ({NO2}) over East Asia},
+          journal = {Atmospheric Chemistry and Physics},
+          volume  = {24},
+          pages   = {7027--7039},
+          year    = {2024},
+          doi     = {10.5194/acp-24-7027-2024}
+        }
+  acknowledgement: >-
+    GEMS data have no dataset DOI. The center recommends that publications include: "This study was conducted using the GEMS (Geostationary Environment Monitoring Spectrometer) data
+    provided by the Environmental Satellite Center of the National Institute of Environmental Research (NIER)." Also state the product names and versions used (e.g. NO2 v4.0.1).
+
+notices: []
+
+links:
+  - name: NIER Environmental Satellite Center (English)
+    url: https://nesc.nier.go.kr/en/html/index.do
+  - name: GEMS operation (scan schedule and areas)
+    url: https://nesc.nier.go.kr/en/html/satellite/operation.do
+  - name: GEMS Open-API guide
+    url: https://nesc.nier.go.kr/en/html/svc/openapi/explain.do
+  - name: SFTP service (current product versions)
+    url: https://nesc.nier.go.kr/en/html/cntnts/105/static/page.do
+  - name: Algorithm documents (ATBD, Korean site)
+    url: https://nesc.nier.go.kr/ko/html/satellite/doc/doc.do
+  - name: GEMS International Workshop
+    url: https://nesc.nier.go.kr/en/html/mtg/workshop.do
+  - name: NIER ESC copyright policy (Korean)
+    url: https://nesc.nier.go.kr/ko/html/cntnts/22/etc/policy.do
+  - name: Yonsei University GEMS algorithm team
+    url: http://gems1.yonsei.ac.kr/
+
+watch_urls:
+  - https://nesc.nier.go.kr/ko/html/board/bbs/24/list.do
+  - https://nesc.nier.go.kr/ko/html/cntnts/104/static/page.do
+  - https://nesc.nier.go.kr/ko/html/svc/openapi/explain.do
+
+last_verified: "2026-10-13"

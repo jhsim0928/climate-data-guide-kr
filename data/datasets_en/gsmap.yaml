@@ -1,0 +1,400 @@
+# ─────────────────────────────────────────────────────────────
+# GSMaP — dataset information file (English edition)
+# Satellite tab (precipitation). The main line is algorithm v8 (G-Portal product version V05); G-Portal has announced V06 for 2026-10-19.
+# After editing, update last_verified to the date you checked the official pages.
+# ─────────────────────────────────────────────────────────────
+id: gsmap
+name: "GSMaP"
+full_name: Global Satellite Mapping of Precipitation (GSMaP), algorithm version 8
+category: satellite
+domain: satellite
+group: 강수
+order: 10
+also_in:
+  - domain: atmosphere
+    group: 강수 자료
+domains: [대기, 육지, 해양, 원격탐사]
+provider: JAXA Earth Observation Research Center (EORC) (distributed via the JAXA Global Rainfall Watch FTP site and JAXA G-Portal)
+
+status: active
+status_note: >-
+  Algorithm version 8 (G-Portal product version V05) has been the main line since December 2021, and its real-time (NOW), near-real-time (NRT) and standard (MVK) products are all produced daily.
+  Updates to v7 ended in 2026 (standard on 31 May, near-real-time on 29 June), and G-Portal, which moved to a new system on 1 October 2026, plans to release a new product version V06 (NetCDF4) on 19 October 2026.
+  When checked on 2026-10-13, the v8 operational collection in Google Earth Engine ran through 2026-10-12.
+
+period:
+  start: "1998-01"
+  end: present
+  note: >-
+    v8 standard (MVK, Gauge) and near-real-time (NRT, Gauge_NRT) records run from 1998-01-01 thanks to the July 2023 reprocessing (1998-01 to 2000-01 uses GridSat-B1 IR only; 2000-02 blends GridSat-B1 and CPC 4-km IR).
+    Operational production started on 2021-12-01, and real-time GSMaP_NOW v8 on 2021-12-06. The older reanalysis GSMaP_RNL (v6) covers 2000-03 to 2014-02.
+
+resolution:
+  spatial_short: "11 km (0.1°)"
+  temporal_short: "1시간"
+  spatial: >-
+    0.1° latitude–longitude grid. FTP binary and text files cover 60°N–60°S on a 3600×1200 grid (first cell centre 59.95°N, 0.05°E; last 59.95°S, 0.05°W);
+    NetCDF and G-Portal HDF files use a 90°N–90°S 3600×1800 grid. From v8, values poleward of 60° exist only at times when a passive microwave radiometer passes, and sea ice and Greenland remain missing.
+  vertical: Surface precipitation (single level)
+  temporal: >-
+    Hourly (the base product, HH:00–HH:59 UTC) / daily (00Z–23Z, or 12Z of the previous day to 11Z, at 0.1° and 0.25°) / monthly. GSMaP_NOW is refreshed every 30 minutes.
+    JAXA also provides daily, 3-day, pentad, weekly, 10-day and monthly statistics through GSMaP_CLM.
+
+coverage:
+  short: 준전지구
+  note: "Mainly 60°N–60°S; poleward values only at passive-microwave overpass times, missing over sea ice and Greenland"
+update: "GSMaP_NOW real time (0-hour latency, refreshed every 30 minutes) / GSMaP_NRT about 4 hours after observation / standard GSMaP_MVK and Gauge about 3 days later; all produced continuously at hourly resolution"
+license: >-
+  Free of charge for research, education and personal use as well as commercial use; copyright belongs to JAXA. Both the JAXA Global Rainfall Watch FTP site and G-Portal require free user registration.
+  The suggested credit line is "GSMaP data by Japan Aerospace Exploration Agency (JAXA)", and publications are asked to cite the major GSMaP papers
+account_required: true
+
+summary: >-
+  GSMaP is JAXA's multi-satellite precipitation map. It combines passive microwave (PMW) radiometer estimates from the GPM Core Observatory and many low-Earth-orbit satellites,
+  propagated with cloud motion vectors from geostationary IR imagery and a Kalman filter, into global hourly 0.1° precipitation. There is a real-time product (NOW) available right after observation,
+  a near-real-time product (NRT) about 4 hours later and a standard product (MVK) about 3 days later, each paired with a Gauge version adjusted to the NOAA CPC daily gauge analysis.
+  Its rapid updates over Asia and the Pacific, using Himawari data, make it widely used for flood and disaster monitoring.
+
+time_convention:
+  summary: >-
+    Hourly values are precipitation rates in mm/hr, and HH in the file name is the start of the interval. JAXA explains that "01:00Z" means 01:00–01:59 UTC,
+    and the format description states that hourly values represent minutes 00 to 59 of the given hour. Daily and monthly binary files are also stored as mean rates (mm/hr), not totals,
+    so the daily amount (mm) is the daily mean × 24 and the monthly amount is the monthly mean rate × the valid-pixel count (second layer). Only monthly text (CSV) files hold accumulations (mm/mo).
+  points:
+    - "The hourly amount (mm) equals the mm/hr value. Using daily files (mm/hr) as daily totals underestimates them by a factor of 24."
+    - "Daily files come with two day boundaries, 00Z–23Z (09:00 to 09:00 next day in Korea) and 12Z of the previous day to 11Z. For a local-time day, sum the hourly files yourself."
+    - "The actual microwave observation time is given by the observation time flag (observationTimeFlag) in hours from the file start (e.g. 0.2 in the 01 UTC file → 01:12 UTC; negative values point to the previous overpass)."
+    - "NOW (0 h), NRT (4 h) and MVK (3 days) use different numbers of satellites and different morphing, so their values differ for the same hour. JAXA notes that shorter latency generally means lower accuracy."
+    - "The Gauge versions are adjusted with the NOAA CPC global daily gauge analysis, so the adjustment is weak where gauges are sparse."
+  source: https://sharaku.eorc.jaxa.jp/GSMaP/document/new/DataFormatDescription_MVK_RNL_v8.0000.pdf
+  source_name: "GSMaP_MVK and Gauge v8 Data Format Description + GSMaP FAQ Q4 and Q5 (JAXA)"
+
+variables:
+  note: >-
+    Variable names from the G-Portal HDF files (product format specification V5). FTP binary files carry no names: they are 4-byte little-endian float arrays (gzip-compressed), with the satellite information, observation time and reliability flags in separate files.
+    Negative values mean missing or no retrieval (-4 sea ice, -8 low temperature, -99 no IR or microwave observation; -999.9 in daily and monthly binaries).
+  full_list: https://www.eorc.jaxa.jp/GPM/doc/product/format/en/07.GPM_GSMaP_Product_Format_V5_E.pdf
+  groups:
+    - name: Hourly (GSMaP_MVK and Gauge, NRT and Gauge_NRT, NOW)
+      kind: mean
+      period: Hourly
+      items:
+        - text: "Satellite precipitation rate — `hourlyPrecipRate` (mm/hr)"
+          note: "Represents minutes 00–59 of the hour. FTP binary files gsmap_mvk and gsmap_nrt"
+        - text: "Gauge-adjusted precipitation rate — `hourlyPrecipRateGC` (mm/hr)"
+          note: "Adjusted with the NOAA CPC daily gauge analysis. FTP binary files gsmap_gauge"
+        - text: "Microwave observation time flag — `observationTimeFlag` (hours)"
+          kind: instant
+          note: Time of the latest microwave observation relative to the file start
+        - text: "Satellite/sensor information flag — `satelliteInfoFlag` (bits)"
+          kind: instant
+        - text: "Gauge adjustment information — `gaugeQualityInfo` (counts/day)"
+          note: "Whether adjustment was applied (1/0) in near-real-time products; daily mean number of gauges used in standard products"
+        - text: "Snow probability — `snowProbability` (%)"
+          std: [precip_components]
+        - text: "Reliability flag — `reliabilityFlag` (1–10)"
+          kind: instant
+          note: 10 is best; use values below 4 with care
+        - text: "Surface type — `surfaceType` (0 ocean, 1 coast, 2 land, -4 sea ice, -8 low temperature)"
+          kind: instant
+        - text: "Orographic rain pixel counts — `orographicRainFlag` (bit-coded)"
+          kind: accum
+    - name: Monthly (G-Portal HDF)
+      kind: mean
+      period: Monthly
+      items:
+        - "Monthly mean satellite precipitation rate — `monthlyPrecipRate` (mm/hr)"
+        - "Monthly mean gauge-adjusted precipitation rate — `monthlyPrecipRateGC` (mm/hr)"
+        - text: "Standard deviation of precipitation rate — `standardDeviation` (mm/hr)"
+          std: []
+        - text: "Number of observation days — `observationNumber` (days/month)"
+          kind: accum
+        - text: "Snowfall frequency — `snowProbability` (%)"
+          std: [precip_components]
+        - "Orographic rain frequency — `orographicRainRatio` (%)"
+    - name: Daily (FTP binary, 0.1° and 0.25°)
+      kind: mean
+      period: "Daily (00Z–23Z or 12Z–11Z)"
+      items:
+        - text: "Daily mean precipitation rate (mm/hr)"
+          note: "File names gsmap_mvk.YYYYMMDD.0.1d.daily.00Z-23Z…. Daily amount = value × 24"
+
+access:
+  - name: JAXA Global Rainfall Watch (FTP; binary, text and NetCDF)
+    url: https://sharaku.eorc.jaxa.jp/GSMaP/index.htm
+    method: FTP (username and password issued after registration), web maps and CSV subsetting
+    note: >-
+      FTP connection details are emailed after registration. Standard products are under /standard/v8/ (hourly, hourly_G, daily, monthly, netcdf),
+      near-real-time products under /realtime_ver/v8/ (the latest 24 hours in latest/). HDF files from January 2024 onward are under /HDF/.
+      Web browsers cannot open the FTP site, so JAXA recommends an FTP client such as FileZilla or WinSCP. The web map lets you download hourly CSV for points or areas for up to six months at a time.
+  - name: JAXA G-Portal (HDF5; NetCDF4 from V06)
+    url: https://www.gportal.jaxa.jp/
+    method: Web search and download, SFTP (sftp.gportal.jaxa.jp, public-key authentication), CSW
+    note: >-
+      The new system opened on 1 October 2026 and the old system (gportal.jaxa.jp/gpr) is planned to close at the end of October. A new account is required and SFTP accepts public-key authentication only.
+      GSMaP Hourly and Monthly V05 are available; V06 will be offered only on the new system.
+  - name: Google Earth Engine
+    url: https://developers.google.com/earth-engine/datasets/catalog/JAXA_GPM_L3_GSMaP_v8_operational
+    method: Cloud analysis (JAXA/GPM_L3/GSMaP/v8/operational)
+    note: Near-real-time images are later replaced by standard ones; the image property status (provisional/permanent) tells them apart.
+  - name: JAXA Climate Rainfall Watch (GSMaP_CLM)
+    url: https://sharaku.eorc.jaxa.jp/GSMaP_CLM/index.htm
+    method: Web maps and statistics
+    note: Daily, 3-day, pentad, weekly, 10-day and monthly means, normals and a drought index (SPI) based on Gauge_NRT.
+
+example:
+  lang: python
+  note: >-
+    Reads one standard hourly binary file (gzip) from the FTP site with numpy and clips the Korean Peninsula. As the format description states, it is a 3600×1200 grid of 4-byte little-endian floats,
+    stored from the north (59.95°N) southward and from 0.05°E eastward. Replace the version string (vP.RSKI.J) in the file name with the one in your files.
+  code: |
+    import gzip
+    import numpy as np
+
+    fname = "gsmap_mvk.20230715.0300.v8.0000.1.dat.gz"   # replace with your file name
+    with gzip.open(fname, "rb") as f:
+        rain = np.frombuffer(f.read(), dtype="<f4").reshape(1200, 3600)   # (lat, lon), mm/hr
+
+    lat = 59.95 - 0.1 * np.arange(1200)
+    lon = 0.05 + 0.1 * np.arange(3600)
+    rain = np.where(rain < 0, np.nan, rain)   # -4 sea ice, -8 low temperature, -99 no observation
+
+    jj = (lat >= 33) & (lat <= 39)
+    ii = (lon >= 124) & (lon <= 132)
+    korea = rain[np.ix_(jj, ii)]
+    print("Area-mean rate 03-04 UTC (mm/hr):", np.nanmean(korea))
+
+    # Daily files (...daily.00Z-23Z...) hold mean rates (mm/hr) on the same grid, so multiply by 24 for daily totals
+
+tips:
+  - "Daily and monthly binary files hold mean rates in mm/hr. Multiply daily values by 24, and get monthly totals from the first layer (mean rate) × the second layer (valid-pixel count) of the monthly file."
+  - "NOW, NRT, MVK and their Gauge versions are different datasets. Use the standard products (MVK, Gauge) for long-term work, and if you appended recent days from NRT, say so in your paper."
+  - "Do not mix versions. v7 stopped updating in 2026, and v8 is a separate record rebuilt from 1998. On G-Portal, 'product version V05' is algorithm v8, and values for the whole period may change once V06 is out."
+  - "1998-01 to 2000-02 is built from GridSat-B1 IR data, which JAXA says has not been fully evaluated, so use it with caution. Be careful too with the 1997/98 El Niño period, when TRMM PR and TMI disagreed strongly."
+  - "JAXA's usage guidelines note low accuracy in areas of orographic heavy rain and that snowfall estimation is still under development, with poorer performance along the Sea of Japan coast in the cold season. Take particular care with mountain and winter precipitation over Korea."
+  - "JAXA advises caution when the reliability flag (reliabilityFlag) is below 4. Real-time products can underestimate rain when the interval between microwave overpasses is long."
+  - "Changes in input satellites change the character of the data; for example, NOAA-19 AMSU-A/MHS has not been used since 2025-06-17. Check the satellite information flag together with the official list of input changes."
+  - "FTP binary files start at 59.95°N and run southward, so plotting them as is flips the map. NetCDF and HDF files use a 90°N–90°S grid with different array sizes."
+
+citations:
+  dataset:
+    - label: GSMaP(Hourly) — JAXA dataset DOI
+      text: >-
+        Japan Aerospace Exploration Agency. 1998. GSMaP(Hourly). https://doi.org/10.57746/EO.01gs73bkt358gfpy92y2qns5e9
+      doi: 10.57746/EO.01gs73bkt358gfpy92y2qns5e9
+      bibtex: |
+        @misc{jaxa_gsmap_hourly,
+          author    = {{Japan Aerospace Exploration Agency}},
+          title     = {{GSMaP(Hourly)}},
+          year      = {1998},
+          publisher = {Japan Aerospace Exploration Agency (JAXA)},
+          doi       = {10.57746/EO.01gs73bkt358gfpy92y2qns5e9}
+        }
+  papers:
+    - label: GSMaP products in the GPM era (chapter in Satellite Precipitation Measurement)
+      text: >-
+        Kubota, T., Aonashi, K., Ushio, T., Shige, S., Takayabu, Y. N., Kachi, M., Arai, Y., Tashima, T., Masaki, T., Kawamoto, N., Mega, T.,
+        Yamamoto, M. K., Hamada, A., Yamaji, M., Liu, G., Oki, R. (2020): Global Satellite Mapping of Precipitation (GSMaP) Products in the GPM Era.
+        In: Satellite Precipitation Measurement, Advances in Global Change Research, vol. 67, Springer, Cham, 355–373.
+      doi: 10.1007/978-3-030-24568-9_20
+      bibtex: |
+        @incollection{kubota2020gsmap,
+          author    = {Kubota, Takuji and Aonashi, Kazumasa and Ushio, Tomoo and Shige, Shoichi and Takayabu, Yukari N. and Kachi, Misako and Arai, Yoriko and Tashima, Tomoko and Masaki, Takeshi and Kawamoto, Nozomi and Mega, Tomoaki and Yamamoto, Munehisa K. and Hamada, Atsushi and Yamaji, Moeka and Liu, Guosheng and Oki, Riko},
+          title     = {Global Satellite Mapping of Precipitation ({GSMaP}) Products in the {GPM} Era},
+          booktitle = {Satellite Precipitation Measurement},
+          series    = {Advances in Global Change Research},
+          volume    = {67},
+          publisher = {Springer International Publishing},
+          address   = {Cham},
+          pages     = {355--373},
+          year      = {2020},
+          doi       = {10.1007/978-3-030-24568-9_20}
+        }
+    - label: GSMaP production and validation (Kubota et al., 2007)
+      text: >-
+        Kubota, T., Shige, S., Hashizume, H., Aonashi, K., Takahashi, N., Seto, S., Hirose, M., Takayabu, Y. N., Ushio, T., Nakagawa, K., Iwanami, K.,
+        Kachi, M., Okamoto, K. (2007): Global Precipitation Map Using Satellite-Borne Microwave Radiometers by the GSMaP Project: Production and Validation.
+        IEEE Transactions on Geoscience and Remote Sensing, 45(7), 2259–2275.
+      doi: 10.1109/TGRS.2007.895337
+      bibtex: |
+        @article{kubota2007gsmap,
+          author  = {Kubota, Takuji and Shige, Shoichi and Hashizume, Hiroshi and Aonashi, Kazumasa and Takahashi, Nobuhiro and Seto, Shinta and Hirose, Masafumi and Takayabu, Yukari N. and Ushio, Tomoo and Nakagawa, Katsuhiro and Iwanami, Koyuru and Kachi, Misako and Okamoto, Ken'ichi},
+          title   = {Global Precipitation Map Using Satellite-Borne Microwave Radiometers by the {GSMaP} Project: Production and Validation},
+          journal = {IEEE Transactions on Geoscience and Remote Sensing},
+          volume  = {45},
+          number  = {7},
+          pages   = {2259--2275},
+          year    = {2007},
+          doi     = {10.1109/TGRS.2007.895337}
+        }
+    - label: Gauge-adjusted GSMaP (Mega et al., 2019)
+      text: >-
+        Mega, T., Ushio, T., Takahiro, M., Kubota, T., Kachi, M., Oki, R. (2019): Gauge-Adjusted Global Satellite Mapping of Precipitation.
+        IEEE Transactions on Geoscience and Remote Sensing, 57(4), 1928–1935.
+      doi: 10.1109/TGRS.2018.2870199
+      bibtex: |
+        @article{mega2019gauge,
+          author  = {Mega, Tomoaki and Ushio, Tomoo and Takahiro, Matsuda and Kubota, Takuji and Kachi, Misako and Oki, Riko},
+          title   = {Gauge-Adjusted Global Satellite Mapping of Precipitation},
+          journal = {IEEE Transactions on Geoscience and Remote Sensing},
+          volume  = {57},
+          number  = {4},
+          pages   = {1928--1935},
+          year    = {2019},
+          doi     = {10.1109/TGRS.2018.2870199}
+        }
+  acknowledgement: >-
+    JAXA asks users to credit the data, e.g. "GSMaP data by Japan Aerospace Exploration Agency (JAXA)", and to cite the major GSMaP papers.
+    If you used a Gauge product, also cite Mega et al. (2019), and state the product (NOW, NRT or MVK; with or without gauge adjustment) and the algorithm version (v8) in the text.
+    JAXA's usage guidelines also ask that publications using GSMaP be reported to JAXA.
+
+transitions:
+  - from: GSMaP v7 (product version V04)
+    to: GSMaP v8 (product version V05)
+    status: completed
+    date: "2021-12"
+    summary: >-
+      Distribution of algorithm v8 began on 1 December 2021, and the July 2023 reprocessing produced a record from 1998. Microwave retrievals were extended to the poles,
+      and the input sensors, database, orographic-rain detection and gauge adjustment all changed. Updates to v7 ended in 2026.
+    changes:
+      - aspect: Period
+        before: "v7 standard 2014-03 to 2026-05-31, near-real-time 2017-04 to 2026-06-29 (updates ended)"
+        after: "v8 1998-01 to present (operational from 2021-12-01; 1998 to 2021-11 reprocessed)"
+      - aspect: Spatial coverage
+        before: "60°S–60°N"
+        after: "Extended to the poles with microwave-only values (sea ice and Greenland missing). NetCDF uses a 90°S–90°N grid"
+      - aspect: Microwave algorithm
+        before: "Precipitation profile database from 2 years of KuPR V04A"
+        after: "Database from 5 years of DPR V06A, frozen precipitation depth added, improved snowfall and sea-ice screening, new normalization module across sensors"
+      - aspect: Input sensors
+        before: "GMI, AMSR2, SSMIS, AMSU/MHS and others"
+        after: "Metop-C MHS and Suomi NPP / NOAA-20 ATMS added"
+      - aspect: Orographic rain
+        before: "Orographic scheme switched off in strong-lightning regions, underestimating warm orographic rain"
+        after: "Warm orographic rain detected using low-level static stability"
+      - aspect: Gauge adjustment
+        before: "v7 scheme (artificial patterns appeared)"
+        after: "Adjustment based on the NOAA CPC global daily gauge analysis, with fewer artificial patterns"
+      - aspect: File formats
+        before: "Binary and text (FTP), HDF (G-Portal)"
+        after: "Same binary and text formats + NetCDF for real-time and near-real-time products"
+    impacts:
+      - Do not splice v7 and v8 into one time series; download the whole period again as v8. Values in the v7 period (2014 onward) also differ from v8.
+      - Change v7 to v8 in FTP paths (/standard/v8/, /realtime_ver/v8/). On G-Portal, product version V05 is v8.
+      - The reprocessed standard data first released in July 2023 (V8.0000.0) were regenerated as V8.0000.1 in September 2023, so files downloaded in between must be fetched again.
+    sources:
+      - name: GSMaP version05 / Algorithm version8 summary (JAXA)
+        url: https://www.eorc.jaxa.jp/GPM/doc/product_info/release_note_gsmapv05-v8_en.pdf
+      - name: GSMaP V05/v8 Release Note (2023-11-10)
+        url: https://www.eorc.jaxa.jp/GPM/doc/product/ReleaseNote/08_note_GPM-GSMaP_20231110.pdf
+      - name: GSMaP reprocessing note (2023-07)
+        url: https://www.eorc.jaxa.jp/GPM/doc/reprocessing_note/GSMaP_reprocessing_note202307A.pdf
+      - name: JAXA EORC GPM news (end of v7 updates, 2026-06-16 and 07-29)
+        url: https://www.eorc.jaxa.jp/GPM/en/news.html
+  - from: GSMaP product version V05 (algorithm v8)
+    to: GSMaP product version V06
+    status: planned
+    date: "2026-10"
+    summary: >-
+      JAXA announced that a new version V06 of the GSMaP hourly and monthly products will be released on G-Portal on 19 October 2026. The format changes from HDF5 to NetCDF4,
+      V06 will be offered only on the new G-Portal system, and V05 will continue to be provided. When checked on 2026-10-13, details of the algorithm changes and of any change on the FTP (Global Rainfall Watch) side had not yet been published.
+    changes:
+      - aspect: File format
+        before: "HDF5 (.h5)"
+        after: "NetCDF4 (.nc)"
+      - aspect: Where to get it
+        before: "Old G-Portal (gportal.jaxa.jp/gpr) and the new G-Portal"
+        after: "Only the new G-Portal opened in October 2026 (new account required)"
+      - aspect: Products
+        before: "GSMaP L3 Hourly and Monthly V05"
+        after: "GSMaP Precipitation (Hourly) and (Monthly) V06; V05 continues"
+    impacts:
+      - When V06 appears, read the algorithm and format documents, and do not mix V05 and V06.
+      - HDF5 reading code needs to change to NetCDF4. Check the new specification for file naming as well.
+    sources:
+      - name: Plan for the GSMaP product version up (V06) (G-Portal, 2026-10-09)
+        url: https://gportal.jaxa.jp/gpr/notice/notice/view/1510
+      - name: Notice Regarding G-Portal System Renewal
+        url: https://gportal.jaxa.jp/gpr/notice/case/view/1502
+
+notices:
+  - date: "2026-10-09"
+    level: warning
+    title: "Plan for the GSMaP product version up (V06) — release on G-Portal on 2026-10-19 (NetCDF4)"
+    body: >-
+      JAXA plans to release a new version (V06) of the GSMaP hourly and monthly precipitation products on G-Portal on 19 October 2026. The format will be NetCDF4 rather than HDF5,
+      V06 will be available only through the new G-Portal system that began service in October 2026 (account required), and V05 will continue to be provided. Algorithm improvements are to be described on the JAXA EORC GPM website.
+    source: https://gportal.jaxa.jp/gpr/notice/notice/view/1510
+  - date: "2026-09-15"
+    level: warning
+    title: "New G-Portal system released on 2026-10-01 — account re-registration, new SFTP address and authentication, old system to close at the end of October"
+    body: >-
+      G-Portal switched to a new system (www.gportal.jaxa.jp) on 1 October 2026, with the current system planned to shut down at the end of October after about a month of parallel operation.
+      Continued use requires registering a new account (settings and public keys are not carried over), and SFTP moves to sftp.gportal.jaxa.jp (port 22) with public-key authentication only. Update automated download scripts.
+    source: https://gportal.jaxa.jp/gpr/notice/case/view/1502
+  - date: "2026-06-16"
+    level: info
+    title: "Termination of updates for GSMaP algorithm version 7 (standard 2026-05-31, near-real-time 2026-06-29)"
+    body: >-
+      Updates to the v7 standard products on the FTP site (MVK and Gauge, /standard/v7) ended with data for 31 May 2026, and the near-real-time products (NRT and Gauge_NRT, /realtime_ver/v7) with data for 29 June (notice updated 29 July).
+      Past v7 data, as well as v6 and v8, remain available. G-Portal also ended distribution of the V04 (v7) standard products on 31 May.
+    source: https://www.eorc.jaxa.jp/GPM/en/news.html
+  - date: "2025-06-17"
+    level: info
+    title: NOAA-19 AMSU-A/MHS no longer used as input
+    body: >-
+      According to the list of input satellite changes in the JAXA Global Rainfall Watch guide, GSMaP has not used NOAA-19 AMSU-A/MHS data since 17 June 2025.
+      Microwave sampling changes accordingly, so quality characteristics may differ before and after this date.
+    source: https://sharaku.eorc.jaxa.jp/GSMaP/guide.html
+  - date: "2024-11-29"
+    level: info
+    title: "GSMaP_NOW algorithm revision (from 2024-12-01)"
+    body: >-
+      From 1 December 2024, GSMaP_NOW and GSMaP_Gauge_NOW are produced with a revised v8 algorithm: GSMaP_NOW has an improved processing algorithm and bugs in GSMaP_Gauge_NOW were fixed.
+    source: https://www.eorc.jaxa.jp/GPM/en/news.html
+  - date: "2023-09-15"
+    level: warning
+    title: "Reprocessed v8 standard products regenerated (V8.0000.0 → V8.0000.1) — download again"
+    body: >-
+      Issues were found in the reprocessed GSMaP_MVK and Gauge v8 data released in July 2023, so the data were reprocessed and the product version changed from V8.0000.0 to V8.0000.1.
+      Users who downloaded the earlier files were asked to download them again.
+    source: https://sharaku.eorc.jaxa.jp/GSMaP/document/20230915_GSMaP_STD_v8_repro_list.pdf
+  - date: "2023-07-10"
+    level: info
+    title: Reprocessed v8 data available from January 1998
+    body: >-
+      Reprocessed v8 data covering the TRMM era were released, so v8 can now be downloaded from January 1998. Before March 2000, gaps in IR input were filled with GridSat-B1 data.
+    source: https://www.eorc.jaxa.jp/GPM/doc/reprocessing_note/GSMaP_reprocessing_note202307A.pdf
+  - date: "2021-12-01"
+    level: info
+    title: Distribution of GSMaP algorithm version 8 begins
+    body: >-
+      JAXA started distributing GSMaP algorithm version 8. Binary and text formats are unchanged, and NetCDF was added for the real-time and near-real-time v8 products. v6 and v7 remained available at the time.
+    source: https://www.eorc.jaxa.jp/GPM/en/news.html
+
+links:
+  - name: JAXA Global Rainfall Watch user guide (products and input satellite changes)
+    url: https://sharaku.eorc.jaxa.jp/GSMaP/guide.html
+  - name: GSMaP FAQ list (product differences Q6, format documents Q18)
+    url: https://sharaku.eorc.jaxa.jp/GSMaP/faq/GSMaP_faq_list.html
+  - name: GSMaP_MVK and Gauge v8 Data Format Description
+    url: https://sharaku.eorc.jaxa.jp/GSMaP/document/new/DataFormatDescription_MVK_RNL_v8.0000.pdf
+  - name: GSMaP_NRT and Gauge_NRT v8 Data Format Description
+    url: https://sharaku.eorc.jaxa.jp/GSMaP/document/new/DataFormatDescription_NRT8.pdf
+  - name: G-Portal GSMaP product format specification V5 (HDF)
+    url: https://www.eorc.jaxa.jp/GPM/doc/product/format/en/07.GPM_GSMaP_Product_Format_V5_E.pdf
+  - name: GSMaP Guidelines, second edition (2026-02)
+    url: https://www.eorc.jaxa.jp/GPM/doc/data_utilization/GSMaP_Guidelines_E.pdf
+  - name: JAXA EORC GSMaP documents page
+    url: https://www.eorc.jaxa.jp/GPM/en/gsmap.html
+  - name: User registration (Global Rainfall Watch)
+    url: https://sharaku.eorc.jaxa.jp/GSMaP/registration.html
+  - name: NASA IMERG in the same satellite precipitation tab (for comparison)
+    url: https://gpm.nasa.gov/data/imerg
+
+watch_urls:
+  - https://www.eorc.jaxa.jp/GPM/en/news.html
+  - https://gportal.jaxa.jp/gpr/notice/notice/list
+  - https://sharaku.eorc.jaxa.jp/GSMaP/guide.html
+
+last_verified: "2026-10-13"

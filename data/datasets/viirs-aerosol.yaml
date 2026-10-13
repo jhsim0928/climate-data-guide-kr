@@ -1,0 +1,392 @@
+# ─────────────────────────────────────────────────────────────
+# VIIRS 에어로졸 Deep Blue AERDB(L2·D3·M3)·Dark Target AERDT(L2) V2.1 — 데이터셋 정보 파일
+# 위성 탭(에어로졸·대기 성분). MODIS MOD04의 두 알고리즘을 VIIRS(Suomi NPP·NOAA-20·NOAA-21)로 잇는 연속성 제품입니다.
+# MODIS → VIIRS 비교는 modis-aerosol.yaml의 transitions에 있습니다. Suomi NPP 자료 전달은 2026-11-02에 끝납니다.
+# 수정 후에는 공식 페이지에서 확인한 날짜로 last_verified 를 갱신하세요.
+# ─────────────────────────────────────────────────────────────
+id: viirs-aerosol
+name: "VIIRS Aerosol (AERDB·AERDT)"
+full_name: VIIRS Deep Blue Aerosol (AERDB_L2·AERDB_D3·AERDB_M3) 및 Dark Target Aerosol (AERDT_L2) Version 2.1 — Suomi NPP·NOAA-20·NOAA-21 (MODIS 에어로졸을 잇는 VIIRS 에어로졸 광학두께)
+category: satellite
+domain: satellite
+group: 에어로졸·대기 성분
+order: 11
+domains: [대기, 에어로졸, 원격탐사]
+provider: NASA GSFC Deep Blue 팀·Dark Target 팀 / NASA VIIRS Atmosphere SIPS / NASA LAADS DAAC
+
+status: active
+status_note: >-
+  Deep Blue V2.1(2026-09-14 공개)과 Dark Target V2.1(2025-12-18 공개)이 NOAA-20·NOAA-21 자료로 정상 생산되고 있습니다(2026-10-13 확인 시 AERDB_M3 NOAA-20은 2026년 9월분까지).
+  다만 NOAA가 Suomi NPP 과학 자료 전달을 2026년 11월 2일 13:00 UTC에 끝내므로 SNPP 판(AERDB_*_VIIRS_SNPP·AERDT_L2_VIIRS_SNPP)은 그 뒤 새 자료가 없고, LAADS는 NOAA-20·NOAA-21 판으로 옮기라고 안내합니다.
+  Deep Blue V2.0은 2027-03-31까지 함께 제공되며, Dark Target V2.0은 2026-08-31 배포가 끝났습니다.
+
+period:
+  start: "2012-03"
+  end: present
+  note: >-
+    Suomi NPP는 2012-03-01부터(2026-11-02 전달 종료 예정), NOAA-20은 2018년 초부터(DB V2.1 2018-01-05, DT 2018-02-17), NOAA-21은 2023-02-10부터입니다.
+    Deep Blue는 L2와 1° 일·월 L3가, Dark Target은 L2만 LAADS에 있습니다(2026-10-13 확인).
+
+resolution:
+  spatial_short: "6 km (0.05°)"
+  temporal_short: "1일"
+  spatial: >-
+    L2 스와스: 직하점 6 km × 6 km(VIIRS M밴드 약 750 m 화소 8×8 묶음), 직하에서 멀어질수록 커짐 — AERDB_L2·AERDT_L2 /
+    L3: 전지구 1°×1° 격자 — AERDB_D3(일)·AERDB_M3(월)
+  vertical: 기주(column) 전체 적분값(에어로졸 광학두께) — 연직 분포 정보 없음
+  temporal: >-
+    L2는 6분 단위 그래뉼(궤도 스와스), 위성마다 하루 1회 주간 관측(고위도는 여러 번) / L3 일(D3)·월(M3, DB만). Suomi NPP·NOAA-20·NOAA-21 모두 지방시 13:30 무렵 적도를 상승 통과하는 오후 궤도입니다.
+
+coverage:
+  short: 전지구
+  note: "주간 맑은 하늘만, 눈·얼음 위 제외"
+update: 매일 (L2·일자료는 관측 후 수일 안), 월자료는 달이 끝난 뒤 약 1개월. 준실시간 Dark Target(AERDT_L2_*_NRT)은 Atmosphere SIPS에서 별도 제공
+license: NASA EOSDIS 자료 이용 정책에 따라 제한 없이 공개된 무료 자료입니다. 내려받기(HTTPS·OPeNDAP 포함)에는 무료 NASA Earthdata 로그인이 필요하며, 데이터셋 DOI 인용을 요청합니다.
+account_required: true
+
+summary: >-
+  MODIS에서 쓰던 두 에어로졸 알고리즘을 VIIRS에 적용해 MODIS 기록을 잇도록 만든 NASA 연속성 에어로졸 자료입니다.
+  Deep Blue(AERDB)는 육지에서는 Deep Blue, 해양에서는 SOAR 알고리즘으로 550 nm 에어로졸 광학두께(AOD)를 구해 육지·해양을 함께 담으며, 1° 일·월 격자 자료도 있습니다.
+  Dark Target(AERDT)은 MODIS DT 방식 그대로 해양과 어두운 식생 육지에서 산출하는 L2 자료입니다. Suomi NPP·NOAA-20·NOAA-21 세 위성 판이 있고 모두 오후 1시 30분 무렵 지나는 궤도라
+  주로 MODIS Aqua 관측을 잇습니다. MODIS와 달리 DT·DB를 합친 결합 AOD는 없습니다.
+
+time_convention:
+  summary: >-
+    L2는 위성이 지나간 순간의 맑은 하늘 관측값이며 반사광을 쓰므로 주간에만 있습니다. 파일 이름의 시각(AYYYYDDD.HHMM)은 6분 그래뉼의 시작 시각(UTC)입니다.
+    Deep Blue L3 일자료(D3)는 그날 L2 `_Best_Estimate` 값을 1° 칸마다 단순 평균한 값(칸마다 산출 3개 이상)이고, 월자료(M3)는 그달 일평균의 단순 평균(유효한 날 3일 이상)입니다.
+  points:
+    - "세 위성 모두 지방시 13:30 무렵 상승 궤도로 적도를 지나는 주간 관측이며, MODIS Terra(오전 10:30) 같은 오전 관측은 없습니다. 같은 위성이라도 스와스 안 위치·위도에 따라 화소별 관측 시각이 다릅니다."
+    - "같은 오후 궤도라도 위성끼리 통과 시각이 조금씩 다르고 보정도 달라, 위성별 AOD 수준이 다릅니다. Sawyer et al. (2025)에 따르면 DT V2.0에서 NOAA-20은 Aqua MODIS와 가깝고 Suomi NPP가 더 높게 나옵니다."
+    - "Deep Blue 일자료는 한 날짜(00:00:00~23:59:59)의 L2만 담습니다. 사용자 가이드에 시간대가 명시되어 있지는 않지만 그래뉼 시각이 UTC이므로 UTC 날짜로 보는 것이 자연스럽고, 지방시 하루와 다를 수 있습니다."
+    - "L3에는 품질 2·3인 산출만 들어갑니다. 월값은 맑은 날만 모은 평균이라 흐린 날이 많은 장마철·우기에는 유효 일수(`_Count`)를 함께 보세요."
+    - "준실시간 DT(AERDT_L2_VIIRS_*_NRT, 2026-07부터 v2.2)는 확정판과 따로 만들어지므로 연구용 시계열에는 LAADS 확정판을 쓰세요."
+  source: https://ladsweb.modaps.eosdis.nasa.gov/api/v2/content/archives/Document%20Archive/Science%20Data%20Product%20Documentation/VIIRS_Deep_Blue_Aerosol_UG_Aug_2026.pdf
+  source_name: "VIIRS Deep Blue Aerosol User's Guide (2026-08) + AERDB·AERDT V2.1 컬렉션 설명(CMR) + Sawyer et al. (2020, 2025)"
+
+variables:
+  note: >-
+    CMR 변수 목록(UMM-Var)과 컬렉션 설명 기준 이름입니다. 파일은 NetCDF-4(CF 1.6)이며 xarray·netCDF4로 바로 읽힙니다. Deep Blue 변수는 파일 최상위에, Dark Target 변수는 `geophysical_data/` 그룹 안에 있습니다.
+    AOD는 무차원이며 550 nm 기준입니다. NOAA-20·NOAA-21·SNPP 파일의 변수 이름은 같습니다. DB의 채움값은 -999입니다.
+  full_list: https://ladsweb.modaps.eosdis.nasa.gov/api/v2/content/archives/Document%20Archive/Science%20Data%20Product%20Documentation/VIIRS_Deep_Blue_Aerosol_UG_Aug_2026.pdf
+  groups:
+    - name: Deep Blue L2 스와스 6 km (AERDB_L2_VIIRS_NOAA20·NOAA21·SNPP)
+      kind: instant
+      period: 통과 시각
+      items:
+        - text: "DB·SOAR 육지·해양 에어로졸 광학두께 550 nm(품질 2·3) — `Aerosol_Optical_Thickness_550_Land_Ocean_Best_Estimate` (무차원)"
+          std: [aerosol]
+          note: 대부분의 사용자에게 권장되는 필드(품질 1은 채움값으로 바뀜)
+        - text: "DB 육지 에어로졸 광학두께 550 nm(품질 2·3) — `Aerosol_Optical_Thickness_550_Land_Best_Estimate` (무차원)"
+          std: [aerosol]
+        - text: "SOAR 해양 에어로졸 광학두께 550 nm(품질 필터) — `Aerosol_Optical_Thickness_550_Ocean_Best_Estimate` (무차원)"
+          std: [aerosol]
+        - "DB 육지 AOD 기대 불확실성 — `Aerosol_Optical_Thickness_550_Expected_Uncertainty_Land` (무차원)"
+        - "DB·SOAR 옹스트롬 지수(품질 필터) — `Angstrom_Exponent_Land_Ocean_Best_Estimate` (무차원)"
+        - "육지·해양 품질 플래그 — `Aerosol_Optical_Thickness_QA_Flag_Land`, `Aerosol_Optical_Thickness_QA_Flag_Ocean` (0=산출 없음, 1=나쁨, 2=보통(육지), 3=좋음)"
+    - name: Dark Target L2 스와스 6 km (AERDT_L2_VIIRS_NOAA20·NOAA21·SNPP)
+      kind: instant
+      period: 통과 시각
+      items:
+        - text: "DT 해양·육지 에어로졸 광학두께 550 nm(권장 품질) — `geophysical_data/Optical_Depth_Land_And_Ocean` (무차원, scale 0.001)"
+          std: [aerosol]
+          note: 해양은 품질 1~3, 육지는 품질 3만 담은 과학 분석용 필드. V2.1에서 육지 값이 잘못 섞이던 오류가 고쳐짐
+        - text: "DT 해양·육지 에어로졸 광학두께 550 nm(모든 품질) — `geophysical_data/Image_Optical_Depth_Land_And_Ocean` (무차원)"
+          std: [aerosol]
+          note: 영상 표출용. 정량 분석에는 쓰지 않음
+        - "DT 해양·육지 품질 플래그 — `geophysical_data/Land_Ocean_Quality_Flag` (0=나쁨, 1=보통, 2=좋음, 3=매우 좋음)"
+    - name: Deep Blue L3 일자료 1° (AERDB_D3_VIIRS_NOAA20·NOAA21·SNPP)
+      kind: mean
+      period: 일 (단일 날짜)
+      items:
+        - text: "DB·SOAR 육지·해양 에어로졸 광학두께 550 nm 일평균 — `Aerosol_Optical_Thickness_550_Land_Ocean_Mean` (무차원)"
+          std: [aerosol]
+          note: 그날 L2 `_Best_Estimate` 산출의 단순 평균(칸마다 3개 이상)
+        - text: "DB 육지 에어로졸 광학두께 550 nm 일평균 — `Aerosol_Optical_Thickness_550_Land_Mean` (무차원)"
+          std: [aerosol]
+        - "육지·해양 옹스트롬 지수 일평균 — `Angstrom_Exponent_Land_Ocean_Mean` (무차원)"
+        - text: "육지·해양 AOD 일 최댓값 — `Aerosol_Optical_Thickness_550_Land_Ocean_Maximum` (무차원)"
+          kind: max
+    - name: Deep Blue L3 월자료 1° (AERDB_M3_VIIRS_NOAA20·NOAA21·SNPP)
+      kind: mean
+      period: 월 (일평균의 평균)
+      items:
+        - text: "DB·SOAR 육지·해양 에어로졸 광학두께 550 nm 월평균 — `Aerosol_Optical_Thickness_550_Land_Ocean_Mean` (무차원)"
+          std: [aerosol]
+          note: 그달 일평균의 단순 평균(유효한 날 3일 이상인 칸만)
+        - text: "월평균에 쓴 날 수(육지·해양) — `Aerosol_Optical_Thickness_550_Land_Ocean_Count` (일)"
+          kind: accum
+        - text: "육지·해양 AOD 표준편차 — `Aerosol_Optical_Thickness_550_Land_Ocean_Standard_Deviation` (무차원)"
+
+access:
+  - name: LAADS DAAC (검색·주문·직접 받기)
+    url: https://ladsweb.modaps.eosdis.nasa.gov/missions-and-measurements/products/AERDB_L2_VIIRS_NOAA20
+    method: 웹 검색·HTTPS 직접 받기(archive/allData/5201/<short name>/ — V2.1) / LAADS API-V2 / OPeNDAP
+    note: >-
+      short name 예: AERDB_L2_VIIRS_NOAA20·AERDB_D3_VIIRS_NOAA20·AERDB_M3_VIIRS_NOAA20, AERDT_L2_VIIRS_NOAA20(NOAA-21은 NOAA21, Suomi NPP는 SNPP). CMR version은 V2.1이 "2.1", DB V2.0은 "2"입니다.
+      2026-04-30부터 OPeNDAP도 Earthdata 로그인이 필요하고, 옛 LAADS Classic API는 2026-08-31 폐지되어 API-V2로 바꿔야 합니다.
+  - name: NASA Earthdata Search
+    url: https://search.earthdata.nasa.gov/search?q=AERDB
+    method: 웹 검색 / earthaccess(파이썬)
+    note: AERDB·AERDT로 검색하면 위성·버전별 컬렉션이 나옵니다. V2.1을 고르세요.
+  - name: 준실시간 Dark Target (Atmosphere SIPS)
+    url: https://search.earthdata.nasa.gov/search?q=AERDT_L2_VIIRS_NOAA20_NRT
+    method: 웹 검색 / HTTPS
+    note: AERDT_L2_VIIRS_NOAA20_NRT·AERDT_L2_VIIRS_SNPP_NRT(v2.2, 2026-07-01부터). 빠른 감시용이며 연구용 시계열에는 확정판을 쓰세요.
+
+example:
+  lang: python
+  note: >-
+    earthaccess로 NOAA-20 Deep Blue 월자료(V2.1)를 받아 xarray로 육지·해양 AOD 월평균을 읽는 예입니다. 좌표 변수 이름은 `print(ds)`로 확인하세요.
+  code: |
+    # pip install earthaccess xarray netCDF4
+    import earthaccess
+    import xarray as xr
+
+    earthaccess.login()  # 무료 NASA Earthdata 계정
+    results = earthaccess.search_data(
+        short_name="AERDB_M3_VIIRS_NOAA20", version="2.1",
+        temporal=("2024-04-01", "2024-04-30"),
+    )
+    files = earthaccess.download(results[:1], "aerdb")
+
+    ds = xr.open_dataset(files[0])          # NetCDF-4, 채움값(-999)은 자동으로 NaN
+    print(ds)                               # 변수·좌표 이름 확인
+    aod = ds["Aerosol_Optical_Thickness_550_Land_Ocean_Mean"]
+    ndays = ds["Aerosol_Optical_Thickness_550_Land_Ocean_Count"]
+    print(float(aod.where(ndays >= 10).mean()))   # 유효 일수 10일 이상인 칸만
+
+tips:
+  - "Suomi NPP 판은 2026-11-02 이후 끊깁니다. SNPP로 만든 시계열을 이어 가려면 겹치는 기간(2018년 이후 NOAA-20, 2023년 이후 NOAA-21)에 위성 간 차이를 확인한 뒤 바꾸세요. DT V2.0 기준으로 SNPP가 NOAA-20보다 AOD가 높고 AERONET 대비 양의 편향도 더 컸습니다(Sawyer et al., 2025)."
+  - "AERDB는 육지(Deep Blue)와 해양(SOAR)을 함께 담지만 해양 품질 플래그는 0·1·3만 쓰고, 육지는 0~3을 씁니다. 정량 분석에는 품질 2·3만 남긴 `_Best_Estimate`를 쓰세요."
+  - "MODIS 결합 AOD(DT+DB)에 해당하는 VIIRS 변수는 없습니다. 장기 분석은 DB(AERDB)나 DT(AERDT) 한쪽을 골라 MODIS의 같은 알고리즘 시계열과 비교하세요."
+  - "DT는 LAADS에 L2만 있습니다(2026-10 확인). 격자 자료가 필요하면 직접 1° 등으로 모아야 하며, 그때 품질 3(육지) 필터를 유지하세요."
+  - "DB V2.1에서는 해양 태양 반사광(glint) 선별이 엄격해져 해양 산출 범위가 줄었고, 짙은 황사는 덜 지우도록 구름 선별이 바뀌었습니다. V2.0과 V2.1을 섞지 마세요(V2.0은 2027-03-31까지 제공)."
+  - "Suomi NPP는 2026년 여러 차례 이상(3월 9~13일, 7월 10~17일, 8월 2~6일)으로 자료가 비었고, 7월에는 5월 1일 이후 자료를 새 보정표로 다시 만들었습니다. SNPP 2026년 자료를 쓸 때는 생산 날짜를 확인하세요."
+  - "AOD는 지상 PM2.5와 같은 양이 아닙니다. 기주 전체 소광량이므로 경계층 높이·습도에 따라 지상 농도와의 관계가 달라집니다."
+
+citations:
+  dataset:
+    - label: AERDB_L2_VIIRS_NOAA20 V2.1 (NOAA-20 Deep Blue L2)
+      text: >-
+        NASA VIIRS Atmosphere SIPS (2026). NOAA20 VIIRS Deep Blue Aerosol Level 2 6-Min Swath 6 km, Version 2.1. L1 and Atmosphere Archive and Distribution System (LAADS).
+        https://doi.org/10.5067/VIIRS/AERDB_L2_VIIRS_NOAA20.021
+      doi: 10.5067/VIIRS/AERDB_L2_VIIRS_NOAA20.021
+      bibtex: |
+        @misc{aerdb_l2_noaa20_v21,
+          author    = {{NASA VIIRS Atmosphere SIPS}},
+          title     = {{NOAA20 VIIRS} {Deep Blue} Aerosol Level 2 6-Min Swath 6 km, Version 2.1},
+          year      = {2026},
+          publisher = {L1 and Atmosphere Archive and Distribution System (LAADS)},
+          doi       = {10.5067/VIIRS/AERDB_L2_VIIRS_NOAA20.021}
+        }
+    - label: AERDB_M3_VIIRS_NOAA20 V2.1 (NOAA-20 Deep Blue 월자료)
+      text: >-
+        NASA VIIRS Atmosphere SIPS (2026). NOAA20 VIIRS Deep Blue Level 3 Monthly Aerosol Data, 1x1 Degree Grid, Version 2.1. L1 and Atmosphere Archive and Distribution System (LAADS).
+        https://doi.org/10.5067/VIIRS/AERDB_M3_VIIRS_NOAA20.021
+      doi: 10.5067/VIIRS/AERDB_M3_VIIRS_NOAA20.021
+      bibtex: |
+        @misc{aerdb_m3_noaa20_v21,
+          author    = {{NASA VIIRS Atmosphere SIPS}},
+          title     = {{NOAA20 VIIRS} {Deep Blue} Level 3 Monthly Aerosol Data, 1x1 Degree Grid, Version 2.1},
+          year      = {2026},
+          publisher = {L1 and Atmosphere Archive and Distribution System (LAADS)},
+          doi       = {10.5067/VIIRS/AERDB_M3_VIIRS_NOAA20.021}
+        }
+    - label: AERDT_L2_VIIRS_NOAA20 V2.1 (NOAA-20 Dark Target L2)
+      text: >-
+        NASA VIIRS Atmosphere SIPS (2025). NOAA20 VIIRS Dark Target Aerosol Level-2 6-Minute Swath 6 km, Version 2.1. L1 and Atmosphere Archive and Distribution System (LAADS).
+        https://doi.org/10.5067/VIIRS/AERDT_L2_VIIRS_NOAA20.021
+      doi: 10.5067/VIIRS/AERDT_L2_VIIRS_NOAA20.021
+      bibtex: |
+        @misc{aerdt_l2_noaa20_v21,
+          author    = {{NASA VIIRS Atmosphere SIPS}},
+          title     = {{NOAA20 VIIRS} {Dark Target} Aerosol Level-2 6-Minute Swath 6 km, Version 2.1},
+          year      = {2025},
+          publisher = {L1 and Atmosphere Archive and Distribution System (LAADS)},
+          doi       = {10.5067/VIIRS/AERDT_L2_VIIRS_NOAA20.021}
+        }
+  papers:
+    - label: VIIRS Version 2 Deep Blue 산출물 (Lee et al., 2024)
+      text: >-
+        Lee, J., Hsu, N. C., Kim, W. V., Sayer, A. M., Tsay, S.-C. (2024). VIIRS Version 2 Deep Blue aerosol products. Journal of Geophysical Research: Atmospheres, 129, e2023JD040082.
+      doi: 10.1029/2023JD040082
+      bibtex: |
+        @article{lee2024viirsdb,
+          author  = {Lee, J. and Hsu, N. C. and Kim, W. V. and Sayer, A. M. and Tsay, S.-C.},
+          title   = {{VIIRS} {Version 2} {Deep Blue} aerosol products},
+          journal = {Journal of Geophysical Research: Atmospheres},
+          volume  = {129},
+          pages   = {e2023JD040082},
+          year    = {2024},
+          doi     = {10.1029/2023JD040082}
+        }
+    - label: VIIRS Deep Blue 육지 산출물 (Hsu et al., 2019)
+      text: >-
+        Hsu, N. C., Lee, J., Sayer, A. M., Kim, W., Bettenhausen, C., Tsay, S.-C. (2019). VIIRS Deep Blue aerosol products over land: Extending the EOS long-term aerosol data records.
+        Journal of Geophysical Research: Atmospheres, 124, 4026–4053.
+      doi: 10.1029/2018JD029688
+      bibtex: |
+        @article{hsu2019viirsdb,
+          author  = {Hsu, N. C. and Lee, J. and Sayer, A. M. and Kim, W. and Bettenhausen, C. and Tsay, S.-C.},
+          title   = {{VIIRS} {Deep Blue} aerosol products over land: Extending the {EOS} long-term aerosol data records},
+          journal = {Journal of Geophysical Research: Atmospheres},
+          volume  = {124},
+          pages   = {4026--4053},
+          year    = {2019},
+          doi     = {10.1029/2018JD029688}
+        }
+    - label: MODIS Dark Target 시계열을 VIIRS로 잇기 (Sawyer et al., 2020)
+      text: >-
+        Sawyer, V., Levy, R. C., Mattoo, S., Cureton, G., Shi, Y., Remer, L. A. (2020). Continuing the MODIS Dark Target aerosol time series with VIIRS. Remote Sensing, 12(2), 308.
+      doi: 10.3390/rs12020308
+      bibtex: |
+        @article{sawyer2020viirsdt,
+          author  = {Sawyer, V. and Levy, R. C. and Mattoo, S. and Cureton, G. and Shi, Y. and Remer, L. A.},
+          title   = {Continuing the {MODIS} {Dark Target} Aerosol Time Series with {VIIRS}},
+          journal = {Remote Sensing},
+          volume  = {12},
+          number  = {2},
+          pages   = {308},
+          year    = {2020},
+          doi     = {10.3390/rs12020308}
+        }
+    - label: 갱신된 VIIRS Dark Target과 MODIS 연속성·지역 추세 (Sawyer et al., 2025)
+      text: >-
+        Sawyer, V., Levy, R. C., Mattoo, S., Shi, Y. R., Kim, M., Remer, L. A., Cureton, G. (2025). An updated VIIRS dark target aerosol product for continuity with MODIS: assessing regional aerosol trends.
+        Frontiers in Environmental Science, 13, 1602145.
+      doi: 10.3389/fenvs.2025.1602145
+      bibtex: |
+        @article{sawyer2025viirsdt,
+          author  = {Sawyer, V. and Levy, R. C. and Mattoo, S. and Shi, Y. R. and Kim, M. and Remer, L. A. and Cureton, G.},
+          title   = {An updated {VIIRS} dark target aerosol product for continuity with {MODIS}: assessing regional aerosol trends},
+          journal = {Frontiers in Environmental Science},
+          volume  = {13},
+          pages   = {1602145},
+          year    = {2025},
+          doi     = {10.3389/fenvs.2025.1602145}
+        }
+  acknowledgement: >-
+    쓴 제품·위성마다 LAADS 데이터셋 DOI(10.5067/VIIRS/<short name>.021 형식, 예: NOAA-21 DB 일자료 10.5067/VIIRS/AERDB_D3_VIIRS_NOAA21.021)를 인용하세요.
+    Deep Blue 사용자 가이드는 감사 문구로 "We thank the Deep Blue science team (https://deepblue.gsfc.nasa.gov) for the VIIRS Deep Blue aerosol data record."를 제안합니다.
+    Dark Target 제품 페이지는 Sawyer et al. (2025)·Sawyer et al. (2020)·Levy et al. (2015, AMT, doi:10.5194/amt-8-4083-2015)의 인용을 요청합니다.
+
+transitions:
+  - from: VIIRS Deep Blue V2.0 / Dark Target V2.0
+    to: VIIRS Deep Blue V2.1 / Dark Target V2.1
+    status: completed
+    date: "2026-09"
+    summary: >-
+      Dark Target V2.1은 2025년 12월, Deep Blue V2.1은 2026년 9월에 공개되었고 NOAA-21 판이 새로 생겼습니다. 두 제품 모두 위성 간 교차 보정이 들어가 위성별 AOD 차이를 줄였습니다.
+      DT V2.0은 2026-08-31 배포가 끝났고, DB V2.0은 2027-03-31까지 함께 제공됩니다.
+    changes:
+      - aspect: 위성
+        before: Suomi NPP·NOAA-20
+        after: Suomi NPP·NOAA-20·NOAA-21
+      - aspect: 보정
+        before: 위성 간 교차 보정 없음
+        after: "DB: 남극 Dome C로 SNPP와 NOAA-21 교차 보정 / DT: SNPP·NOAA-20·NOAA-21 교차 보정 계수 추가"
+      - aspect: Deep Blue 알고리즘
+        before: V2.0
+        after: "북아프리카·남아시아 AOD 분포 개선, 북미·사헬·남아프리카·인도 에어로졸 모델(단산란 알베도) 조정, 해양 태양 반사광 선별 강화, 짙은 황사는 남기고 얇은 구름·해무는 지우도록 구름 선별 수정"
+      - aspect: Dark Target 알고리즘
+        before: "V2.0 (보조 기상 GEOS-FPIT)"
+        after: "해양 구름 마스크 개선, 먼지 검출(`Dust_Flag_Ocean`) 추가, 지표 반사도·도시 보정 수정, 보조 기상 GEOS-IT로 교체, `Optical_Depth_Land_And_Ocean`에 육지 값이 잘못 들어가던 오류 수정"
+      - aspect: 버전 표기
+        before: "CMR version 2, 파일 이름 .002, 아카이브 5200"
+        after: "CMR version 2.1, 파일 이름 .021, 아카이브 5201"
+    impacts:
+      - V2.0과 V2.1을 한 시계열에 섞지 말고 전 기간을 V2.1로 다시 받으세요.
+      - DB V2.1은 해양 산출 범위가 V2.0보다 줄어든 곳이 있습니다(태양 반사광 선별 강화).
+    sources:
+      - name: Version 2.1 VIIRS Deep Blue Aerosol Data Products Released (LAADS, 2026-09-14)
+        url: https://ladsweb.modaps.eosdis.nasa.gov/alerts-and-issues/199512
+      - name: AERDT_L2_VIIRS_SNPP V2.1 컬렉션 설명 (CMR 메타데이터)
+        url: https://cmr.earthdata.nasa.gov/search/collections.umm_json?concept_id=C3702902851-LAADS
+      - name: V2.1 Level-2 Dark Target Aerosol Data Products Released (LAADS, 2025-12-18)
+        url: https://ladsweb.modaps.eosdis.nasa.gov/alerts-and-issues/199536
+
+notices:
+  - date: "2026-10-06"
+    level: critical
+    title: Suomi NPP 자료 전달 2026년 11월 2일 종료 — AERDB·AERDT SNPP 판 대신 NOAA-20·NOAA-21로
+    body: >-
+      LAADS DAAC는 NOAA NESDIS 결정(2026-08-03 발표)에 따라 Suomi NPP 과학 자료 전달이 2026년 11월 2일 13:00 UTC(2026년 306일)에 끝난다고 공지했습니다(일정은 바뀔 수 있음).
+      AERDB_L2·D3·M3_VIIRS_SNPP와 AERDT_L2_VIIRS_SNPP도 대상이며, 각각 NOAA-20(…_NOAA20)·NOAA-21(…_NOAA21) 판으로 옮기라고 안내합니다. 과거 SNPP 자료는 계속 받을 수 있습니다.
+    source: https://ladsweb.modaps.eosdis.nasa.gov/alerts-and-issues/199516
+  - date: "2026-09-14"
+    level: info
+    title: VIIRS Deep Blue 에어로졸 V2.1 공개 — NOAA-21 추가, V2.0은 2027-03-31까지
+    body: >-
+      LAADS DAAC가 Deep Blue V2.1(L2·D3·M3)을 Suomi NPP·NOAA-20·NOAA-21용으로 공개했습니다. Dome C 교차 보정, 북아프리카·남아시아 AOD 개선, 에어로졸 모델 조정,
+      해양 태양 반사광 선별 강화, 구름 선별 수정이 들어갔으며, V2.0은 2027년 3월 31일까지 함께 제공됩니다.
+    source: https://ladsweb.modaps.eosdis.nasa.gov/alerts-and-issues/199512
+  - date: "2026-09-01"
+    level: info
+    title: VIIRS Dark Target V2.0 배포 종료 — V2.1 사용
+    body: >-
+      LAADS DAAC가 Suomi NPP·NOAA-20 Dark Target V2.0 컬렉션 배포를 끝냈습니다(2026-08-31). 앞으로는 SNPP·NOAA-20·NOAA-21 V2.1(AERDT_L2_VIIRS_*)을 쓰면 됩니다.
+    source: https://ladsweb.modaps.eosdis.nasa.gov/alerts-and-issues/199514
+  - date: "2026-08-11"
+    level: warning
+    title: Suomi NPP 이상(2026-08-02) — 8월 3~6일 자료 처리 제외
+    body: >-
+      8월 2일 02:05 UTC Suomi NPP 위성 이상으로 과학 자료가 끊겼다가 8월 4일 준실시간 처리가, 10일 확정판 처리가 재개되었습니다. 8월 3일 02:00 UTC~6일 16:24 UTC 자료는
+      주야 플래그 문제 등으로 처리하지 않는다고 공지했습니다.
+    source: https://ladsweb.modaps.eosdis.nasa.gov/alerts-and-issues/199518
+  - date: "2026-07-27"
+    level: warning
+    title: Suomi NPP 이상(2026-07-10~17) — 5월 1일 이후 자료를 새 보정표로 재생산
+    body: >-
+      7월 10일 Suomi NPP가 비정상 상태에 들어가 7월 17일까지 과학 자료가 생산되지 않았고, 이 기간 자료는 복구되지 않을 수 있다고 밝혔습니다. 확정판 처리는 VIIRS 보정팀의 새 보정표를 기다려 재개되었고,
+      2026년 5월 1일 04:00 UTC 이후 자료를 새 보정표로 다시 만든다고 공지했습니다.
+    source: https://ladsweb.modaps.eosdis.nasa.gov/alerts-and-issues/199520
+  - date: "2026-03-23"
+    level: info
+    title: Suomi NPP 자료 지연 — 2026-03-09~13 자료 결측
+    body: >-
+      3월 9일 17:45 UTC께부터 Suomi NPP 과학 자료가 끊겼다가 3월 12일 위성이 정상으로 돌아왔고, 3월 16일부터 다시 써도 된다고 밝혔습니다. 3월 9일 18:00 UTC~13일 VIIRS 자료는
+      복구할 수 없는 지오로케이션 오류로 처리하지 않습니다.
+    source: https://ladsweb.modaps.eosdis.nasa.gov/alerts-and-issues/199535
+  - date: "2025-12-18"
+    level: info
+    title: VIIRS Dark Target V2.1 L2 공개 — NOAA-21 추가
+    body: >-
+      LAADS DAAC가 Suomi NPP·NOAA-20·NOAA-21 Dark Target V2.1 L2(6분 스와스, 6 km)를 공개하고, V2.0은 2026년 6월 30일 내린다고 안내했습니다(실제 배포 종료는 2026-08-31 공지).
+    source: https://ladsweb.modaps.eosdis.nasa.gov/alerts-and-issues/199536
+  - date: "2025-05-02"
+    level: info
+    title: MODIS에서 VIIRS로 전환 안내 — VIIRS 유사 산출물 사용 권고
+    body: >-
+      NASA LAADS DAAC는 Terra·Aqua가 2026년 말~2027년 초부터 운용 종료에 들어간다며 MODIS 사용자에게 VIIRS 유사 산출물을 쓰라고 권고했습니다. MODIS MOD04 에어로졸을 잇는 제품이 이 AERDB·AERDT입니다.
+    source: https://www.earthdata.nasa.gov/data/alerts-outages/transition-from-modis-viirs
+  - date: "2025-02-27"
+    level: info
+    title: Suomi NPP Deep Blue V1.1 배포 종료(2025-02-28)
+    body: >-
+      LAADS DAAC가 Suomi NPP VIIRS Deep Blue V1.1 컬렉션(L2·일·월)을 2025년 2월 28일 내린다고 공지했습니다. V1.1로 받은 자료가 있다면 V2.1로 다시 받으세요.
+    source: https://ladsweb.modaps.eosdis.nasa.gov/alerts-and-issues/199546
+
+links:
+  - name: AERDB_L2_VIIRS_NOAA20 제품 페이지 (LAADS DAAC)
+    url: https://ladsweb.modaps.eosdis.nasa.gov/missions-and-measurements/products/AERDB_L2_VIIRS_NOAA20
+  - name: AERDT_L2_VIIRS_NOAA20 제품 페이지 (LAADS DAAC)
+    url: https://ladsweb.modaps.eosdis.nasa.gov/missions-and-measurements/products/AERDT_L2_VIIRS_NOAA20
+  - name: VIIRS Deep Blue Aerosol User's Guide (2026-08)
+    url: https://ladsweb.modaps.eosdis.nasa.gov/api/v2/content/archives/Document%20Archive/Science%20Data%20Product%20Documentation/VIIRS_Deep_Blue_Aerosol_UG_Aug_2026.pdf
+  - name: VIIRS Deep Blue Aerosol ATBD (2025-03)
+    url: https://ladsweb.modaps.eosdis.nasa.gov/api/v2/content/archives/Document%20Archive/Science%20Data%20Product%20Documentation/Product%20Generation%20Algorithms/VIIRS_Deep_Blue_Aerosol_ATBD_March_2025.pdf
+  - name: VIIRS Dark Target User's Guide (2025-04)
+    url: https://ladsweb.modaps.eosdis.nasa.gov/api/v2/content/archives/Document%20Archive/Science%20Data%20Product%20Documentation/DT_Aerosol_VIIRS_UG_April_2025.pdf
+  - name: Dark Target ATBD (MODIS·VIIRS)
+    url: https://darktarget.gsfc.nasa.gov/atbd/overview
+  - name: LAADS DAAC — MODIS to VIIRS Transition
+    url: https://ladsweb.modaps.eosdis.nasa.gov/learn/modis-to-viirs-transition
+  - name: Suomi NPP Data Product Delivery to Cease (Earthdata)
+    url: https://www.earthdata.nasa.gov/data/alerts-outages/suomi-npp-data-product-delivery-cease-november-1-2026
+
+watch_urls:
+  - https://ladsweb.modaps.eosdis.nasa.gov/missions-and-measurements/products/AERDB_L2_VIIRS_NOAA20
+  - https://ladsweb.modaps.eosdis.nasa.gov/missions-and-measurements/products/AERDT_L2_VIIRS_NOAA20
+  - https://ladsweb.modaps.eosdis.nasa.gov/learn/modis-to-viirs-transition
+
+last_verified: "2026-10-13"

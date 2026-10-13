@@ -312,12 +312,13 @@ details.hint summary { cursor: pointer; }
 /* 사이트 인용 문구: 가로 스크롤 없이 줄바꿈 */
 .cite-block pre > code { white-space: pre-wrap; word-break: break-word; }
 
-/* ── 전체 목록: 분야(대기·해양·해빙·지면) > 소분류 구분을 눈에 띄게 ── */
+/* ── 전체 목록: 분야(대기·해양·해빙·지면·위성) > 소분류 구분을 눈에 띄게 ── */
 :root {
   --dom-atmosphere: #2f7fc1;
   --dom-ocean: #1f6f8b;
   --dom-seaice: #5aa7c7;
   --dom-land: #5b8a3a;
+  --dom-satellite: #6a4fa3;
 }
 .md-typeset .domain-jump { display: flex; flex-wrap: wrap; gap: .5rem; margin: .8rem 0 1.2rem; }
 .md-typeset .domain-chip {
@@ -332,6 +333,7 @@ details.hint summary { cursor: pointer; }
 .md-typeset .domain-ocean { --dom-c: var(--dom-ocean); }
 .md-typeset .domain-seaice { --dom-c: var(--dom-seaice); }
 .md-typeset .domain-land { --dom-c: var(--dom-land); }
+.md-typeset .domain-satellite { --dom-c: var(--dom-satellite); }
 
 .md-typeset h2.domain-head {
   display: flex; align-items: baseline; justify-content: space-between; gap: 1rem;
@@ -350,7 +352,7 @@ details.hint summary { cursor: pointer; }
 }
 .md-typeset h2.group-head { font-size: 1.15em; }
 .md-typeset .group-intro { margin: -.2rem 0 .6rem .7rem; font-size: .9em; color: var(--md-default-fg-color--light); }
-[data-md-color-scheme="slate"] { --dom-atmosphere: #3a78ad; --dom-ocean: #2a6b80; --dom-seaice: #4a8eaa; --dom-land: #557f37; }
+[data-md-color-scheme="slate"] { --dom-atmosphere: #3a78ad; --dom-ocean: #2a6b80; --dom-seaice: #4a8eaa; --dom-land: #557f37; --dom-satellite: #64519a; }
 
 /* 체크박스 크게 + 동의 문구 전체를 눌러도 체크되게 (처리방침 링크는 따로) */
 .cdg-form input[type="checkbox"] { width: 1.05rem; height: 1.05rem; accent-color: var(--md-accent-fg-color); cursor: pointer; }

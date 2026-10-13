@@ -6,7 +6,7 @@ hooks/datasets.py 가 만드는 페이지·폼·메뉴의 한국어 화면 문�
 (영어판 빌드 뒤 scripts/check_en.py 로 남은 한국어를 찾을 수 있습니다)
 """
 
-DOMAIN_LABEL = {"atmosphere": "Atmosphere", "ocean": "Ocean", "seaice": "Sea ice", "land": "Land"}
+DOMAIN_LABEL = {"atmosphere": "Atmosphere", "ocean": "Ocean", "seaice": "Sea ice", "land": "Land", "satellite": "Satellite"}
 
 GROUP = {
     "재분석": "Reanalyses",
@@ -32,6 +32,18 @@ GROUP = {
     "적설": "Snow",
     "육수저장량": "Terrestrial water storage",
     "산불": "Fire",
+    "강수": "Precipitation",
+    "구름·복사": "Clouds & radiation",
+    "기온·수증기": "Temperature & water vapour",
+    "에어로졸·대기 성분": "Aerosols & atmospheric composition",
+    "해수면온도": "Sea surface temperature",
+    "해상풍": "Ocean surface wind",
+    "해색": "Ocean colour",
+    "해면 염분": "Sea surface salinity",
+    "해면고도·파랑": "Sea level & waves",
+    "해빙": "Sea ice",
+    "빙하·빙상": "Glaciers & ice sheets",
+    "지면": "Land",
 }
 
 DOMAIN_INTRO = {
@@ -39,6 +51,7 @@ DOMAIN_INTRO = {
     "ocean": "Ocean reanalyses and state estimates, sea surface temperature analyses, 3-D temperature and salinity analyses, satellite sea level, and atmospheric forcing for ocean–sea-ice models.",
     "seaice": "Sea-ice concentration, thickness, volume and drift: model-based reanalyses, observation-based analyses, satellite products, drift vectors and extent/area indices.",
     "land": "Land data assimilation systems and land reanalyses, plus satellite-based soil moisture, evapotranspiration, vegetation (LAI, NDVI), land cover, land surface temperature, albedo, snow, terrestrial water storage and fire products for hydrology, agriculture, ecology and land-surface studies.",
+    "satellite": "Satellite-derived datasets grouped by what they observe: precipitation, clouds, radiation, temperature and atmospheric composition; sea surface temperature, winds, ocean colour, salinity and sea level; sea ice and ice sheets; and land. Satellite datasets listed under other tabs appear here too.",
 }
 
 GROUP_INTRO = {
@@ -57,12 +70,21 @@ GROUP_INTRO = {
     "적설": "Satellite snow cover extent and snow water equivalent (SWE) products.",
     "육수저장량": "Changes in terrestrial water storage (the sum of groundwater, soil moisture, snow and surface water) from satellite gravimetry.",
     "산불": "Satellite-detected burned area and fire emissions estimated from it.",
+    "강수": "Precipitation estimated from satellite microwave and infrared observations. Gauge adjustment and latency differ between products.",
+    "구름·복사": "Satellite observations of cloud properties and top-of-atmosphere and surface radiation.",
+    "기온·수증기": "Atmospheric temperature and water-vapour profiles and layer-mean temperatures from satellite microwave, infrared and GNSS radio-occultation observations.",
+    "에어로졸·대기 성분": "Satellite aerosol optical depth and atmospheric trace gases such as ozone, NO₂, SO₂, CO, CH₄ and CO₂.",
+    "해상풍": "10 m ocean surface winds from scatterometers and microwave radiometers.",
+    "해색": "Ocean optical properties from ocean-colour satellites, such as chlorophyll-a concentration and remote-sensing reflectance.",
+    "해면 염분": "Sea surface salinity from L-band microwave satellites.",
+    "해면고도·파랑": "Sea surface height and significant wave height from satellite altimetry.",
+    "빙하·빙상": "Satellite observations of glacier and ice-sheet velocity, elevation and mass change.",
 }
 
 DOMAIN_TAG = {"대기": "Atmosphere", "해양": "Ocean", "해빙": "Sea ice", "육지": "Land", "극지": "Polar",
               "해양파랑": "Ocean waves", "원격탐사": "Remote sensing", "빙상": "Ice sheets", "수문": "Hydrology", "에어로졸": "Aerosols"}
 
-TEMPORAL = {"30분": "30 min", "1시간": "1 h", "3시간": "3 h", "6시간": "6 h", "1일": "1 day",
+TEMPORAL = {"10분": "10 min", "30분": "30 min", "1시간": "1 h", "3시간": "3 h", "6시간": "6 h", "1일": "1 day",
             "5일": "5 days", "7일": "7 days", "8일": "8 days", "10일": "10 days", "15일": "15 days",
             "16일": "16 days", "1개월": "1 month", "1년": "1 year"}
 

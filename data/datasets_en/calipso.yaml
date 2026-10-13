@@ -1,0 +1,377 @@
+# ─────────────────────────────────────────────────────────────
+# CALIPSO CALIOP — dataset information file
+# Satellite tab (Aerosols and atmospheric composition). The science mission ended in August 2023; the last observations are from 2023-06-30.
+# V5.00, a full-record reprocessing released in October 2025, replaces V4.51 as the current version.
+# The follow-on spaceborne lidar is ATLID on ESA/JAXA EarthCARE (355 nm high-spectral-resolution lidar).
+# After editing, update last_verified to the date you checked the official pages.
+# ─────────────────────────────────────────────────────────────
+id: calipso
+name: "CALIPSO"
+full_name: Cloud-Aerosol Lidar and Infrared Pathfinder Satellite Observations (CALIPSO) CALIOP Level 2 and Level 3 aerosol and cloud profiles
+category: satellite
+domain: satellite
+group: 에어로졸·대기 성분
+order: 40
+domains: [대기, 에어로졸, 원격탐사]
+provider: NASA Langley Research Center CALIPSO Team and CNES / NASA Atmospheric Science Data Center (ASDC)
+
+status: ended
+status_note: >-
+  NASA and CNES ended the CALIPSO science mission on 1 August 2023. With its fuel exhausted, the orbit drifted toward later crossing times and
+  power margins shrank; the standard products end with observations on 30 June 2023 (the spacecraft was passivated in December 2023).
+  The CALIPSO team then reprocessed the whole 2006–2023 record as V5.00, released in October 2025, which is now the version to use.
+successor:
+  name: EarthCARE ATLID (ESA/JAXA)
+  url: https://earth.esa.int/eogateway/missions/earthcare
+  note: >-
+    The 355 nm high-spectral-resolution lidar (ATLID) on EarthCARE, launched in May 2024, continues spaceborne lidar observations. Its wavelength,
+    measurement technique and overpass time differ, so it cannot simply be appended to the CALIOP record, and no public data from either mission exist for July 2023 to August 2024.
+
+transitions:
+  - from: CALIOP V4.51
+    to: CALIOP V5.00
+    status: completed
+    date: "2025-10"
+    summary: >-
+      A reprocessing of the full 2006–2023 record that strengthens the handling of low-energy laser shots (LEM) and revises the Level 3 screening.
+      The screening changes alone can shift the global mean Level 3 tropospheric aerosol optical depth (AOD) by more than 10%, so the two versions must not be mixed.
+    changes:
+      - aspect: Release date
+        before: "V4.51 — L2 collection metadata created 2023-06 (L3 tropospheric aerosol only up to V4.21, stopping in 2022-01)"
+        after: "V5.00 — released 2025-10-01 per the quality summaries (CMR citation release date 2025-12-12)"
+      - aspect: Period
+        before: "L2 2006-06-12 to 2023-06-30 / L3 tropospheric aerosol V4.20 to 2020-06, V4.21 2020-07 to 2021-12"
+        after: "L1 and L2 2006-06-12 to 2023-06-30; L3 covers the full 2006-06 to 2023-06"
+      - aspect: Low-energy laser shots
+        before: "Level 3 set the whole South Atlantic Anomaly (SAA) region to fill from September 2016 (V4.20 approach)"
+        after: "Enhanced shot-by-shot low energy mitigation (LEM) filter in Level 2, with a QC flag giving the number of shots in each 5 km average"
+      - aspect: Level 2 profile processing
+        before: V4.51
+        after: "Aerosol multiple-scattering factors set to 1 for all subtypes at both wavelengths; surface detection flag bit 13 test disabled; altitude array `Lidar_Data_Altitudes` moved from file metadata to a dataset"
+      - aspect: Level 3 tropospheric aerosol screening
+        before: "Accepted only a fixed list of extinction QC values; cloud layer fraction threshold '> 28' on a 0–30 scale"
+        after: "Bit-wise rejection of QC flags (lidar-ratio-reduced QC = 2 accepted); new minimum overlying two-way transmittance filter (0.005); cloud layer fraction threshold 0.94 on a 0–1 scale; statistics for all seven aerosol subtypes"
+      - aspect: New product
+        before: None
+        after: "Beta 5 km merged-layer diagnostic product (including 1064 nm ocean-derived column optical depth)"
+    impacts:
+      - "The V5.00 Level 3 document reports that, for June–August 2015, global mean AOD rose by about 17% (all-sky) and 12% (cloud-free) relative to V4.20. Recompute climatologies and trends from scratch with V5.00."
+      - LEM sharply reduces samples near the SAA (by 80–100%), so those grid cells can be fill values. Check sample counts in South American and South Atlantic analyses.
+      - "If V4.x code read the altitude array from file metadata, switch to the `Lidar_Data_Altitudes` dataset in V5.00."
+    sources:
+      - name: CALIOP Level 2 Profile Data Description and Quality Summary (V5.00, 2026-01-30)
+        url: https://asdc.larc.nasa.gov/documents/calipso/quality_summaries/cal_lid_l2_pro_v5-00_desc_qs.pdf
+      - name: CALIOP Level 3 Tropospheric Aerosol Profile Data Description and Quality Summary (V5.00)
+        url: https://asdc.larc.nasa.gov/documents/calipso/quality_summaries/cal_lid_l3_tropoaero_V5-00_desc_qs.pdf
+      - name: CALIOP Level 2 Layer Data Description and Quality Summary (V5.00)
+        url: https://asdc.larc.nasa.gov/documents/calipso/quality_summaries/cal_lid_l2_lay_v5-00_desc_qs_mod2.pdf
+  - from: CALIPSO CALIOP
+    to: EarthCARE ATLID
+    to_id: earthcare
+    status: completed
+    date: "2024-08"
+    summary: >-
+      The record moves from an elastic-backscatter lidar at 532 and 1064 nm (CALIOP) to a 355 nm high-spectral-resolution lidar (ATLID). ATLID separates
+      particle (Mie) and molecular (Rayleigh) returns, so it retrieves extinction and backscatter independently, whereas CALIOP had to assume a lidar ratio for each aerosol type.
+    changes:
+      - aspect: Observation period (public data)
+        before: "2006-06-12 to 2023-06-30"
+        after: "L1 2024-08-11 to present; ESA L2 2025-03-11 to present"
+      - aspect: Wavelength
+        before: "532 nm (two polarisation channels) + 1064 nm"
+        after: "354.8 nm (about 355 nm) only"
+      - aspect: Measurement technique
+        before: "Elastic backscatter plus 532 nm depolarisation; extinction computed by assuming a lidar ratio (extinction-to-backscatter ratio) per aerosol subtype"
+        after: "High spectral resolution (HSRL) — an etalon separates Mie (co- and cross-polar) from Rayleigh returns, giving extinction, backscatter, lidar ratio and depolarisation ratio directly"
+      - aspect: Footprint and sampling
+        before: "Footprint about 70 m across, shots about 333 m apart (20.16 Hz)"
+        after: "Receiver footprint 30 m or less; 51 Hz shots accumulated in pairs on board, 285 m along-track sampling"
+      - aspect: Vertical resolution
+        before: "Native 30 m below 8.2 km — L2 profiles at 60 m (−0.5 to 20.2 km) and 180 m above 20.2 km"
+        after: "103 m below 20.2 km, 500 m from 20.2 to 40 km; L2 on the Joint Standard Grid (about 100 m × about 1 km)"
+      - aspect: Orbit and overpass time
+        before: "705 km altitude (688 km from 2018-09), ascending-node equator crossing at 13:30 local time"
+        after: "About 393 km altitude, descending node at 14:00 mean solar time, 25-day (389-orbit) repeat"
+      - aspect: Companion instruments
+        before: "IIR and WFC on the same satellite; CloudSat radar and A-Train satellites in formation"
+        after: "Doppler cloud profiling radar (CPR), multi-spectral imager (MSI) and broadband radiometer (BBR) on the same satellite"
+      - aspect: File format and distribution
+        before: "HDF4, NASA ASDC (Earthdata Login)"
+        after: "NetCDF4/HDF5 (.h5) plus XML header in a zip, ESA MAAP (EO Sign In)"
+    impacts:
+      - "Because the wavelengths differ, AOD, backscatter, depolarisation and lidar ratio cannot be compared one-to-one. The 355/532 nm ratio depends on aerosol type, so studies that bridge the two records should state their wavelength-conversion assumptions and uncertainties."
+      - The aerosol classification schemes (subtype names and number) differ. Compare classifications only after mapping both to common categories such as dust or smoke.
+      - No public spaceborne lidar data exist from July 2023 to August 2024, leaving a gap in any combined time series.
+      - "Overpass time (13:30 versus 14:00) and altitude differ, so account for sampling-time differences for boundary-layer aerosol and clouds with strong diurnal cycles."
+    sources:
+      - name: Wehr et al. (2023) The EarthCARE mission – science and system overview, AMT
+        url: https://doi.org/10.5194/amt-16-3581-2023
+      - name: ESA Earth Online — ATLID instrument description
+        url: https://earth.esa.int/eogateway/instruments/atlid
+      - name: CALIPSO Data User's Guide FAQ
+        url: https://asdc.larc.nasa.gov/documents/calipso/user_guides/CALIPSO_Data_Users_Guide_FAQ_mod2.pdf
+      - name: CALIPSO Final Report (NASA/TP-20260000771)
+        url: https://ntrs.nasa.gov/citations/20260000771
+
+period:
+  start: "2006-06"
+  end: "2023-06"
+  note: >-
+    L1 and L2 V5.00 cover 2006-06-12 to 2023-06-30, and the L3 monthly products June 2006 to June 2023. Science observations paused while the orbit was lowered
+    from 705 km to 688 km on 13 September 2018 and resumed on 25 September. The earlier L3 tropospheric aerosol versions (V4.20, V4.21) only run to December 2021.
+
+resolution:
+  spatial_short: "5 km (0.045°)"
+  temporal_short: "1일"
+  spatial: >-
+    L2: a single curtain beneath the ground track. Laser footprint about 70 m, shots about 333 m apart. Aerosol and cloud profiles (05kmAPro, 05kmCPro) are 5 km
+    (15-shot) along-track averages; layer products come at 333 m, 1 km and 5 km (aerosol layers detected at 5, 20 or 80 km horizontal averaging) /
+    L3 tropospheric aerosol: 2° latitude × 5° longitude equal-angle grid (85 × 72)
+  vertical: >-
+    L2 profiles: 399 altitude bins, 60 m from −0.5 to 20.2 km and 180 m above 20.2 km (nominal top 30 km; the native 30 m resolution below 8.2 km is averaged to 60 m) /
+    L3 tropospheric aerosol: −0.5 to 12 km in 208 levels of 60 m
+  temporal: >-
+    L2: continuous along-orbit swath data (99-minute orbit, 16-day repeat). About 14.5 orbits a day, but the laser only looks at nadir, so any given location is revisited rarely /
+    L3: monthly means (separate day and night files)
+
+coverage:
+  short: 전지구
+  note: "Curtain directly beneath the orbit, about 82°S–82°N"
+update: "Ended — last observations 2023-06-30. A full-record reprocessing (V5.00) was released in 2025-10"
+license: NASA Earth science open data — free and unrestricted. File downloads require a free NASA Earthdata Login; dataset DOI citation and the ASDC acknowledgement are requested
+account_required: true
+
+summary: >-
+  CALIPSO, launched by NASA and CNES in 2006, carried the CALIOP lidar, which sliced vertically through the atmosphere at 532 and 1064 nm for 17 years to observe
+  the height, thickness, type and extinction of clouds and aerosols. Its flagship products are the Level 2 layer and profile data, which give a curtain
+  beneath the ground track, and the Level 3 tropospheric and stratospheric aerosol products, which aggregate them on a monthly 2° × 5° grid.
+  It became a reference for aerosol vertical distribution, dust and smoke transport, polar stratospheric clouds and evaluation of model vertical structure;
+  V5.00, a reprocessing of the full record released in 2025 after the mission ended, is the current version.
+
+time_convention:
+  summary: >-
+    Level 2 values are observations at the moment of overpass; each 5 km profile averages the 15 shots in that segment. Every profile carries its
+    observation time (`Profile_UTC_Time`) and a day/night indicator (`Day_Night_Flag`). Level 3 values are monthly averages of quality-screened Level 2 profiles on a grid,
+    issued separately for day and night.
+  points:
+    - "`Profile_UTC_Time` uses the format 'yymmdd.ffffffff' (date plus fraction of the day); `Profile_Time` is TAI seconds since 1993-01-01."
+    - "The equator crossing is at 13:30 local solar time on the ascending (daytime) node and around 01:30 on the descending (night-time) node. Late in the mission, with no fuel left, the crossing time drifted later (CALIPSO Final Report)."
+    - "Daytime data have a much lower signal-to-noise ratio than night-time data because of solar background light. Averaging day and night together mixes their different detection limits into the result."
+    - "Level 3 monthly data come in eight files (all-sky, cloud-free, cloudy-sky transparent, cloudy-sky opaque × day and night). Each sky condition samples differently, so values differ even for the same month."
+    - "With the mission over, there are no new or near-real-time data. All products on this page are standard reprocessed products distributed by the ASDC."
+  source: https://asdc.larc.nasa.gov/documents/calipso/quality_summaries/cal_lid_l2_pro_v5-00_desc_qs.pdf
+  source_name: CALIOP L2 Profile and L3 Tropospheric Aerosol Data Description and Quality Summaries (V5.00) + CALIPSO Data User's Guide FAQ
+
+variables:
+  note: >-
+    HDF4 SDS names as given in the V5.00 quality summaries and the V4.20 data description. Most fill values are -9999, with special values such as -333 (extinction retrieval failed)
+    and -111 (low-energy shots). Aerosol subtype has no variable of its own; it is in bits 9–11 of `Atmospheric_Volume_Description` (profiles) and `Feature_Classification_Flags` (layers).
+  full_list: https://asdc.larc.nasa.gov/documents/calipso/CALIPSO_DPC_Rev5x00.pdf
+  groups:
+    - name: L2 aerosol profile (CAL_LID_L2_05kmAPro, 5 km)
+      kind: instant
+      period: observation time (5 km segment average)
+      items:
+        - text: "Aerosol extinction coefficient at 532 nm — `Extinction_Coefficient_532` (km-1)"
+          std: [aerosol]
+        - text: "Total backscatter coefficient at 532 nm — `Total_Backscatter_Coefficient_532` (km-1 sr-1)"
+          std: [aerosol]
+        - text: "Particulate depolarisation ratio at 532 nm — `Particulate_Depolarization_Ratio_Profile_532` (dimensionless)"
+          std: [aerosol]
+        - text: "Tropospheric aerosol optical depth at 532 nm — `Column_Optical_Depth_Tropospheric_Aerosols_532` (dimensionless)"
+          std: [aerosol]
+        - text: "Stratospheric aerosol optical depth at 532 nm — `Column_Optical_Depth_Stratospheric_Aerosols_532` (dimensionless)"
+          std: [aerosol]
+        - "Cloud-aerosol discrimination score — `CAD_Score` (−100 to 100, negative for aerosol)"
+        - "Extinction retrieval QC flag — `Extinction_QC_Flag_532` (bit flags)"
+        - "Atmospheric volume classification (type and subtype) — `Atmospheric_Volume_Description` (bit flags)"
+    - name: L2 aerosol layer (CAL_LID_L2_05kmALay, 5 km)
+      kind: instant
+      period: observation time
+      items:
+        - "Layer top and base altitude — `Layer_Top_Altitude`, `Layer_Base_Altitude` (km)"
+        - text: "Layer optical depth at 532 nm — `Feature_Optical_Depth_532` (dimensionless)"
+          std: [aerosol]
+        - "Number of layers detected — `Number_Layers_Found` (count)"
+        - "Horizontal averaging used for detection — `Horizontal_Averaging` (km; 5, 20 or 80)"
+        - "Layer classification flags (type, subtype, phase) — `Feature_Classification_Flags` (bit flags)"
+    - name: L3 tropospheric aerosol (CAL_LID_L3_Tropospheric_APro_*, 2° × 5° monthly)
+      kind: mean
+      period: month
+      items:
+        - text: "Monthly mean tropospheric aerosol optical depth at 532 nm — `AOD_Mean` (dimensionless)"
+          std: [aerosol]
+        - text: "Monthly mean aerosol extinction profile at 532 nm — `Extinction_Coefficient_532_Mean` (check units in the file attributes)"
+          std: [aerosol]
+        - text: "AOD and extinction by subtype — `AOD_Mean_[subtype]`, `Extinction_Coefficient_532_Mean_[subtype]` (seven subtypes such as dust, marine, polluted continental/smoke)"
+          std: [aerosol]
+          note: Check exact names in your files (the documentation gives only the naming pattern)
+
+access:
+  - name: NASA ASDC — CALIPSO data holdings
+    url: https://asdc.larc.nasa.gov/project/CALIPSO
+    method: Web (product pages → Earthdata Search, direct download)
+    note: As checked in 2026-10, the project page list shows versions only up to V4.51. Find the V5.00 collections in Earthdata Search or CMR.
+  - name: NASA Earthdata Search — CAL_LID_L2_05kmAPro-Standard-V5-00
+    url: https://search.earthdata.nasa.gov/search/granules?p=C3551627908-LARC_CLOUD
+    method: Earthdata Search / earthaccess (HDF4)
+    note: A free Earthdata Login is required. The layer product is CAL_LID_L2_05kmALay-Standard-V5-00 and Level 3 includes CAL_LID_L3_Tropospheric_APro_AllSky-Standard-V5-00.
+  - name: CMR virtual directory (L2 aerosol profile V5.00)
+    url: https://cmr.earthdata.nasa.gov/virtual-directory/collections/C3551627908-LARC_CLOUD
+    method: HTTPS directory (wget/curl, Earthdata Login)
+  - name: CALIPSO browse images (per-orbit curtain previews)
+    url: https://www-calipso.larc.nasa.gov/products/lidar/browse_images/std_v451_index.php
+    method: Web
+    note: Useful for picking cases from orbit curtains before downloading (V4.51 based).
+
+example:
+  lang: python
+  note: >-
+    Downloads a V5.00 Level 2 aerosol profile file with earthaccess and reads it with pyhdf. The first run asks for your Earthdata credentials.
+    CALIPSO files are HDF4, which xarray cannot open directly.
+  code: |
+    # pip install earthaccess pyhdf numpy
+    import earthaccess
+    import numpy as np
+    from pyhdf.SD import SD, SDC
+
+    earthaccess.login()
+    results = earthaccess.search_data(
+        short_name="CAL_LID_L2_05kmAPro-Standard-V5-00", version="V5-00",
+        temporal=("2021-03-15", "2021-03-16"),
+        bounding_box=(115, 30, 135, 45),          # (west, south, east, north) — East Asia
+    )
+    files = earthaccess.download(results[:1], "./calipso")
+
+    f = SD(files[0], SDC.READ)
+    ext = f.select("Extinction_Coefficient_532")[:].astype(float)   # (profiles, 399 altitudes), km-1
+    qc = f.select("Extinction_QC_Flag_532")[:]
+    cad = f.select("CAD_Score")[:]
+    alt = f.select("Lidar_Data_Altitudes")[:]                       # a dataset from V5.00 on (km)
+    ext[ext < 0] = np.nan                                          # drop -9999, -333, -111 and other special values
+    print(ext.shape, alt[:3], np.nanmax(ext))
+
+tips:
+  - "Do not average extinction as is. First remove special values such as -9999 (no particulates), -333 (retrieval failed), -111 (low energy) and -444 (suspect cloud clearing), low-confidence features with `CAD_Score` between −20 and 0, and rejected `Extinction_QC_Flag_532` values."
+  - "`CAD_Score` is negative for aerosol and positive for cloud. A magnitude of 20 or less means low confidence."
+  - "Below fully attenuating cloud or dust layers there is no signal, so the column optical depth only reaches the base of the lowest visible layer. Ignoring opacity leads to underestimated AOD."
+  - "CALIOP AOD is at 532 nm and depends on the assumed lidar ratio. When comparing with MODIS or AERONET (550 or 500 nm), consider both the wavelength difference and the lidar-ratio uncertainty."
+  - "Daytime data are noisy and easily miss tenuous aerosol layers. Climatologies and trends are often checked against night-time data first."
+  - "In the South Atlantic Anomaly, radiation noise and low-energy shots cut V5.00 Level 3 samples by 80–100%, leaving many fill cells."
+  - "The V4.20 data description lists the tropospheric AOD as `Column_Optical_Depth_Aerosols_532`. If you also use older files, check the SDS names for each version."
+  - "After the orbit was lowered from 705 km to 688 km in September 2018 to form the C-Train with CloudSat, CALIPSO no longer followed the A-Train (Aqua, Aura) track. Re-check space-time collocation distances for MODIS or OMI matchups after that date."
+
+citations:
+  dataset:
+    - label: L2 aerosol profile V5-00
+      text: >-
+        Winker, D. (2026), CALIPSO Lidar Level 2 Aerosol Profile, V5-00. NASA Langley Atmospheric Science Data Center DAAC.
+        https://doi.org/10.5067/CALIOP/CALIPSO/CAL_LID_L2_05kmAPro-Standard-V5-00 (Accessed DD MMM YYYY)
+      doi: 10.5067/CALIOP/CALIPSO/CAL_LID_L2_05kmAPro-Standard-V5-00
+      bibtex: |
+        @misc{calipso_l2_apro_v500,
+          author    = {Winker, David},
+          title     = {{CALIPSO} Lidar Level 2 Aerosol Profile, {V5-00}},
+          year      = {2026},
+          publisher = {NASA Langley Atmospheric Science Data Center Distributed Active Archive Center},
+          doi       = {10.5067/CALIOP/CALIPSO/CAL_LID_L2_05kmAPro-Standard-V5-00}
+        }
+    - label: L2 5 km aerosol layer V5-00
+      text: >-
+        Winker, D. (2026), CALIPSO Lidar Level 2 5 km Aerosol Layer Data, V5-00. NASA Langley Atmospheric Science Data Center DAAC.
+        https://doi.org/10.5067/CALIOP/CALIPSO/CAL_LID_L2_05kmALay-Standard-V5-00 (Accessed DD MMM YYYY)
+      doi: 10.5067/CALIOP/CALIPSO/CAL_LID_L2_05kmALay-Standard-V5-00
+      bibtex: |
+        @misc{calipso_l2_alay_v500,
+          author    = {Winker, David},
+          title     = {{CALIPSO} Lidar Level 2 5 km Aerosol Layer Data, {V5-00}},
+          year      = {2026},
+          publisher = {NASA Langley Atmospheric Science Data Center Distributed Active Archive Center},
+          doi       = {10.5067/CALIOP/CALIPSO/CAL_LID_L2_05kmALay-Standard-V5-00}
+        }
+    - label: L3 tropospheric aerosol profiles (all-sky) V5-00
+      text: >-
+        Winker, D. (2026), CALIPSO Lidar Level 3 Tropospheric Aerosol Profiles, All Sky Data, Standard V5-00. NASA Langley Atmospheric Science
+        Data Center DAAC. https://doi.org/10.5067/CALIOP/CALIPSO/LID_L3_Tropospheric_APro_AllSky-Standard-V5-00 (Accessed DD MMM YYYY)
+      doi: 10.5067/CALIOP/CALIPSO/LID_L3_Tropospheric_APro_AllSky-Standard-V5-00
+      bibtex: |
+        @misc{calipso_l3_tropo_allsky_v500,
+          author    = {Winker, David},
+          title     = {{CALIPSO} Lidar Level 3 Tropospheric Aerosol Profiles, All Sky Data, Standard {V5-00}},
+          year      = {2026},
+          publisher = {NASA Langley Atmospheric Science Data Center Distributed Active Archive Center},
+          doi       = {10.5067/CALIOP/CALIPSO/LID_L3_Tropospheric_APro_AllSky-Standard-V5-00}
+        }
+  papers:
+    - label: CALIPSO mission and CALIOP processing algorithms overview
+      text: >-
+        Winker, D. M., Vaughan, M. A., Omar, A., Hu, Y., Powell, K. A., Liu, Z., Hunt, W. H., Young, S. A. (2009): Overview of the CALIPSO
+        Mission and CALIOP Data Processing Algorithms. Journal of Atmospheric and Oceanic Technology, 26(11), 2310–2323.
+      doi: 10.1175/2009JTECHA1281.1
+      bibtex: |
+        @article{winker2009calipso,
+          author  = {Winker, David M. and Vaughan, Mark A. and Omar, Ali and Hu, Yongxiang and Powell, Kathleen A. and Liu, Zhaoyan and Hunt, William H. and Young, Stuart A.},
+          title   = {Overview of the {CALIPSO} Mission and {CALIOP} Data Processing Algorithms},
+          journal = {Journal of Atmospheric and Oceanic Technology},
+          volume  = {26},
+          number  = {11},
+          pages   = {2310--2323},
+          year    = {2009},
+          doi     = {10.1175/2009JTECHA1281.1}
+        }
+    - label: Version 4 aerosol classification and lidar ratio selection
+      text: >-
+        Kim, M.-H., Omar, A. H., Tackett, J. L., Vaughan, M. A., Winker, D. M., Trepte, C. R., Hu, Y., Liu, Z., Poole, L. R., Pitts, M. C.,
+        Kar, J., Magill, B. E. (2018): The CALIPSO version 4 automated aerosol classification and lidar ratio selection algorithm.
+        Atmospheric Measurement Techniques, 11, 6107–6135.
+      doi: 10.5194/amt-11-6107-2018
+      bibtex: |
+        @article{kim2018caliopv4,
+          author  = {Kim, Man-Hae and Omar, Ali H. and Tackett, Jason L. and Vaughan, Mark A. and Winker, David M. and Trepte, Charles R. and Hu, Yongxiang and Liu, Zhaoyan and Poole, Lamont R. and Pitts, Michael C. and Kar, Jayanta and Magill, Brian E.},
+          title   = {The {CALIPSO} version 4 automated aerosol classification and lidar ratio selection algorithm},
+          journal = {Atmospheric Measurement Techniques},
+          volume  = {11},
+          pages   = {6107--6135},
+          year    = {2018},
+          doi     = {10.5194/amt-11-6107-2018}
+        }
+  acknowledgement: >-
+    The ASDC recommends the acknowledgement "These data were obtained from the NASA Langley Research Center Atmospheric Science Data Center."
+    and points to the citation generator on each collection's DOI landing page for the exact citation format. The citations above are built from
+    the DataCite metadata (creator, year, title). State every product and version (such as V5-00) you used.
+
+notices:
+  - date: "2025-10-01"
+    level: warning
+    title: V5.00 released — full 2006–2023 reprocessing replaces V4.51
+    body: >-
+      The CALIPSO team released V5.00, reprocessing all Level 1, 2 and 3 products (release date 2025-10-01 per the quality summaries; the CMR citation lists 2025-12-12).
+      Stronger low-energy-shot handling and revised Level 3 screening change the values, so run new analyses with V5.00 and do not mix it with earlier versions.
+    source: https://asdc.larc.nasa.gov/documents/calipso/quality_summaries/cal_lid_l2_pro_v5-00_desc_qs.pdf
+  - date: "2023-09-26"
+    level: critical
+    title: CALIPSO science mission ended — last observations 2023-06-30
+    body: >-
+      NASA and CNES ended the CALIPSO science mission on 1 August 2023. With its fuel exhausted the orbit was decaying and the spacecraft could no longer
+      generate enough power to run the science instruments; the standard products end with observations on 30 June 2023. The spacecraft was passivated in December 2023.
+    source: https://www.nasa.gov/missions/calipso/first-long-duration-lidar-satellite-mission-calipso-ends/
+
+links:
+  - name: NASA ASDC — CALIPSO
+    url: https://asdc.larc.nasa.gov/project/CALIPSO
+  - name: NASA Science — CALIPSO mission
+    url: https://science.nasa.gov/mission/calipso/
+  - name: CALIPSO Data Products Catalog (Release 5.00)
+    url: https://asdc.larc.nasa.gov/documents/calipso/CALIPSO_DPC_Rev5x00.pdf
+  - name: CALIPSO Data User's Guide FAQ
+    url: https://asdc.larc.nasa.gov/documents/calipso/user_guides/CALIPSO_Data_Users_Guide_FAQ_mod2.pdf
+  - name: CALIPSO Final Report (NASA NTRS)
+    url: https://ntrs.nasa.gov/citations/20260000771
+  - name: CNES — CALIPSO
+    url: https://cnes.fr/projets/calipso
+
+watch_urls:
+  - https://asdc.larc.nasa.gov/project/CALIPSO
+  - https://science.nasa.gov/mission/calipso/
+
+last_verified: "2026-10-13"

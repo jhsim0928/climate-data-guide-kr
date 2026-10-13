@@ -1,0 +1,340 @@
+# ─────────────────────────────────────────────────────────────
+# AIRS (Aqua) Version 7 L2/L3 — dataset information file
+# Satellite tab (Temperature and water vapour). The AIRS-only stream (AIRS2RET, AIRS3STD, AIRS3STM) is the current baseline;
+# AIRS+AMSU (AIRX*) ended with the AMSU-A2 failure on 2016-09-24. CLIMCAPS-Aqua is a separate retrieval system run on the same observations.
+# Key caveats: projected end of Aqua science operations (September 2027) and orbit drift.
+# After editing, update last_verified to the date you checked the official pages.
+# ─────────────────────────────────────────────────────────────
+id: airs
+name: "AIRS V7"
+full_name: Aqua Atmospheric Infrared Sounder (AIRS) Version 7 Level 2 and Level 3 Standard Physical Retrieval
+category: satellite
+domain: satellite
+group: 기온·수증기
+order: 10
+domains: [대기, 원격탐사]
+provider: NASA JPL AIRS Project / NASA GES DISC
+
+status: active
+status_note: >-
+  The AIRS-only Version 7 products (L2 AIRS2RET, L3 AIRS3STD and AIRS3STM) are still produced daily (as checked on 2026-10-13: L2 through 9 October, daily L3 through 6 October, monthly L3 through September 2026).
+  Aqua, however, has been drifting since its last drag-makeup manoeuvre in December 2021, and NASA projects the end of Aqua science operations in September 2027 because of fuel and power limits.
+  The AIRS+AMSU products (AIRX2RET, AIRX3STD, AIRX3STM) ended in September 2016 when AMSU-A2 lost power.
+
+transitions:
+  - from: AIRS+AMSU (AIRX2RET·AIRX3STD·AIRX3STM)
+    to: AIRS-only (AIRS2RET·AIRS3STD·AIRS3STM)
+    status: completed
+    date: "2016-09"
+    summary: >-
+      The combined infrared plus microwave retrieval ended when AMSU-A2 lost power on 24 September 2016; the only continuing record since then is the infrared-only AIRS-only stream,
+      which has been processed consistently for the whole mission from 2002.
+    changes:
+      - aspect: Period
+        before: "2002-08-30 to 2016-09-25 (AIRX2RET V7.0, COMPLETE)"
+        after: "2002-08-30 to present (AIRS2RET V7.0, ACTIVE)"
+      - aspect: Input instruments
+        before: AIRS infrared + AMSU-A microwave
+        after: AIRS infrared only (no AMSU; surface classification uses landFrac plus forecast snow and sea-ice fields)
+      - aspect: Microwave-only products
+        before: "MW-only temperature, precipitable water and others (`TAirMWOnlyStd`, `totH2OMWOnlyStd`)"
+        after: No MW-only products
+      - aspect: Quality control (ocean surface air temperature QC threshold)
+        before: 1.1 K
+        after: 1.2 K
+      - aspect: Why it exists
+        before: Baseline product (microwave helps with cloud effects)
+        after: "Built because noise in several AMSU channels rose sharply from June 2007; it became the only continuing stream after the AMSU-A2 failure"
+    impacts:
+      - Use AIRS-only (AIRS2RET, AIRS3STM) from the start for long time series. Splicing AIRX and AIRS at September 2016 mixes processing differences into the climate signal.
+      - According to the V7 L2 guide, the AIRS+AMSU stream has a larger share of QC 0/1 (best/good) cases. Even over the same period, the samples entering AIRS-only averages can differ, so check the count (`_ct`) fields.
+    sources:
+      - name: AIRS/AMSU/HSB Version 7 Level 2 Product User Guide (V1.1, 2021-07-14)
+        url: https://docserver.gesdisc.eosdis.nasa.gov/public/project/AIRS/V7_L2_Product_User_Guide.pdf
+      - name: CMR — AIRX2RET V7.0 (ended with AMSU-A2 power loss)
+        url: https://cmr.earthdata.nasa.gov/search/concepts/C1701805641-GES_DISC.html
+      - name: AIRS outages and anomalies (AIRS Project)
+        url: https://airs.jpl.nasa.gov/data/outages/
+  - from: AIRS Version 6
+    to: AIRS Version 7
+    status: completed
+    date: "2019-12"
+    summary: >-
+      Version 7, released at the end of 2019, is the current full-mission reprocessing. At Level 3 the monthly averaging method changed, and the 8-day products and some total-column trace-gas fields were dropped.
+    changes:
+      - aspect: Release date
+        before: Version 6
+        after: "L2 AIRS2RET V7.0 2019-11-27; L3 AIRS3STD and AIRS3STM V7.0 2019-12-15 (CMR citation metadata)"
+      - aspect: L3 monthly averaging
+        before: "Weighted by observation counts (Averaged By Observation)"
+        after: "Simple arithmetic mean of the daily products (Averaged By Day), not count-weighted"
+      - aspect: L3 8-day products
+        before: "8-day products such as AIRS3ST8"
+        after: Not produced; build multi-day means yourself from daily files and the count (`_ct`) fields
+      - aspect: Trace gases
+        before: Total-column CO and CH4 fields
+        after: "Total-column CO and CH4 removed; only the CO profile `CO_VMR` remains"
+    impacts:
+      - V6 and V7 monthly means are computed differently, so values for the same month can differ. Do not mix versions.
+      - Code that used the old 8-day product (AIRS3ST8 V006) should be rewritten to aggregate V7 daily files (AIRS3STD) with count weighting.
+    sources:
+      - name: AIRS Version 7 Level 3 Product User Guide
+        url: https://docserver.gesdisc.eosdis.nasa.gov/public/project/AIRS/V7_L3_User_Guide.pdf
+      - name: AIRS documentation index (including V7 Changes from V6)
+        url: https://docserver.gesdisc.eosdis.nasa.gov/public/project/AIRS/AIRS_Documentation.pdf
+
+period:
+  start: "2002-08"
+  end: present
+  note: >-
+    AIRS-only L2 (AIRS2RET) starts on 2002-08-30, daily L3 (AIRS3STD) on 2002-08-31 and monthly L3 (AIRS3STM) in September 2002. As checked on 2026-10-13,
+    L2 runs through 2026-10-09, daily L3 through 2026-10-06 and monthly L3 through September 2026. AIRS+AMSU (AIRX*) ended on 2016-09-25 and AIRS+AMSU+HSB on 2003-02-05.
+    No L2 or L3 products were generated for 19–28 January 2026 because of an AIRS detector anomaly.
+
+resolution:
+  spatial_short: "50 km (0.45°)"
+  temporal_short: "1일"
+  spatial: >-
+    L2: swath data, one retrieval per field of regard (a 3×3 array of AIRS infrared fields of view of about 15 km at nadir; about 50 km at nadir),
+    each granule 30 footprints across track × 45 lines along track / L3: 1° × 1° global latitude-longitude grid (180°W–180°E, 90°S–90°N, grid edges on the dateline)
+  vertical: >-
+    L2 standard product: temperature on 28 levels (1100–0.1 hPa), water vapour on 15 levels (the lowest 15 standard levels) / L3: temperature and geopotential height
+    on 24 levels (1000–1 hPa, `StdPressureLev`), water vapour on 12 levels (1000–100 hPa, `H2OPressureLev`) and 12 layers (`H2OPressureLay`)
+  temporal: >-
+    L2: 6-minute granules (240 per day), orbital period 98.8 minutes, 16-day (233-orbit) repeat / L3: daily (separate ascending and descending grids) and monthly (mean of daily files).
+    There is no 8-day product in V7. Near-real-time (NRT) L2 appears within about 3 hours of observation.
+
+coverage:
+  short: 전지구
+update: "Daily (standard products within 72 hours of observation, NRT within about 3 hours). Monthly files appear early to mid following month"
+license: Open NASA Earth science data, free and unrestricted. File downloads need a free NASA Earthdata Login; citation of the dataset DOI is requested
+account_required: true
+
+summary: >-
+  Temperature and water vapour profiles, surface air temperature, clouds, and ozone, carbon monoxide and methane retrieved since 2002 from AIRS,
+  the 2,378-channel hyperspectral infrared sounder on NASA's Aqua satellite, using cloud clearing to work in partly cloudy scenes.
+  It comes as 6-minute L2 swath granules along the orbit and as L3 daily and monthly 1° grids kept separate for the ascending (day) and descending (night) passes.
+  Since parts of the AMSU microwave instrument failed, the infrared-only AIRS-only stream is the baseline; its 20-plus-year record is widely used for tropospheric temperature and humidity change and for evaluating reanalyses and models.
+
+time_convention:
+  summary: >-
+    L2 values are snapshots at the time the satellite viewed each field of regard. Daily L3 values are grid-cell averages for the day, kept separately for the ascending
+    (day, nominal equator crossing about 13:30 local time) and descending (night, about 01:30) passes (`_A`, `_D`); monthly values are means of the daily files.
+  points:
+    - "A daily L3 file does not run from midnight to midnight UTC. It covers 24 hours starting at the dateline and progressing westward, so neighbouring cells are at most about 90 minutes apart; scan lines that cross the dateline are split between the two dates."
+    - "Field suffixes: `_A` ascending (day), `_D` descending (night), `_ct` number of observations averaged, `_sdev` standard deviation. For temperature–humidity correlations the guide recommends the `_TqJ_A` and `_TqJ_D` grids, which share one observation set and one QC criterion."
+    - "V7 monthly means are simple averages of the daily files (not weighted by counts). Daily files have gores between orbit tracks."
+    - "The 13:30 and 01:30 crossing times are nominal. Aqua stopped station-keeping in December 2021 and is drifting to later local crossing times, so 'daytime' values in recent years come from a different time of day."
+    - "Near-real-time L2 (AIRS2RET_NRT) appears within about 3 hours but is kept online for only 7 days. Use the standard products (within about 72 hours) for research."
+  source: https://docserver.gesdisc.eosdis.nasa.gov/public/project/AIRS/V7_L3_User_Guide.pdf
+  source_name: AIRS Version 7 Level 3 Product User Guide + AIRS3STD V7.0 CMR description + Aqua mission home page
+
+variables:
+  note: >-
+    L3 names are the field names in the AIRS V7 L3 user guide; each carries an `_A` (ascending) or `_D` (descending) suffix and comes with `_ct` and `_sdev` companions (for example `Temperature_A`).
+    For L2 field names see the tables in the V7 L2 user guide. The fill value is -9999.
+  full_list: https://docserver.gesdisc.eosdis.nasa.gov/public/project/AIRS/V7_L3_User_Guide.pdf
+  groups:
+    - name: L3 temperature and water vapour (AIRS3STD daily / AIRS3STM monthly)
+      kind: mean
+      period: Daily / monthly
+      items:
+        - "Air temperature profile (24 levels) — `Temperature_A`, `Temperature_D` (K)"
+        - "Surface air temperature — `SurfAirTemp_A`, `SurfAirTemp_D` (K)"
+        - "Surface skin temperature — `SurfSkinTemp_A`, `SurfSkinTemp_D` (K)"
+        - "Water vapour mass mixing ratio (12 levels) — `H2O_MMR_A`, `H2O_MMR_D` (g/kg)"
+        - "Relative humidity — `RelHum_A`, `RelHum_D` (%)"
+        - "Total precipitable water vapour — `TotH2OVap_A`, `TotH2OVap_D` (kg/m2)"
+        - "Geopotential height (24 levels) — `GPHeight_A`, `GPHeight_D` (m)"
+    - name: L3 clouds, radiation and trace gases
+      kind: mean
+      period: Daily / monthly
+      items:
+        - "Cloud fraction — `CloudFrc_A`, `CloudFrc_D` (0–1)"
+        - "Outgoing longwave radiation (all-sky and clear-sky) — `OLR_A`, `ClrOLR_A` etc. (W/m2)"
+        - "Total ozone — `TotO3_A`, `TotO3_D` (DU)"
+        - "Carbon monoxide volume mixing ratio — `CO_VMR_A`, `CO_VMR_D` (unitless)"
+    - name: L2 swath (AIRS2RET)
+      kind: instant
+      period: overpass time
+      items:
+        - text: "Surface skin temperature — `TSurfStd` (K), quality flag `TSurfStd_QC`"
+          note: QC 0 best, 1 good, 2 do not use
+        - text: "Temperature (28 levels) and water vapour (15 levels) profiles, ozone, CO and methane profiles, with error estimates"
+          note: See the V7 L2 user guide for field names
+
+access:
+  - name: NASA GES DISC — AIRS3STM V7.0 (monthly)
+    url: https://disc.gsfc.nasa.gov/datacollection/AIRS3STM_7.0.html
+    method: Web, HTTPS, OPeNDAP and subsetting (HDF-EOS2)
+    note: Daily data are on the AIRS3STD_7.0 page and L2 on AIRS2RET_7.0. A free NASA Earthdata Login is required.
+  - name: GES DISC HTTPS data directory (L3 monthly)
+    url: https://acdisc.gesdisc.eosdis.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/
+    method: HTTPS (wget, curl with Earthdata Login)
+  - name: NASA Earthdata Search — AIRS2RET V7.0 (L2)
+    url: https://search.earthdata.nasa.gov/search/granules?p=C1701805619-GES_DISC
+    method: Earthdata Search / earthaccess
+  - name: CLIMCAPS-Aqua V2 (the same AIRS observations processed with a different algorithm, netCDF)
+    url: https://search.earthdata.nasa.gov/search/granules?p=C1693440795-GES_DISC
+    method: Earthdata Search / earthaccess (SNDRAQIL2CCPRET and others)
+    note: CLIMCAPS uses MERRA-2 as its first guess, so it has no NRT version; the same algorithm is applied to CrIS (Suomi NPP, NOAA-20) to carry the record beyond AIRS.
+
+example:
+  lang: python
+  note: "Run earthaccess.login() once with a NASA Earthdata account first. AIRS L2 and L3 files are HDF-EOS2 (HDF4), so read them with pyhdf."
+  code: |
+    # pip install earthaccess pyhdf numpy
+    import earthaccess
+    import numpy as np
+    from pyhdf.SD import SD, SDC
+
+    earthaccess.login()
+    results = earthaccess.search_data(
+        short_name="AIRS3STM", version="7.0",          # AIRS-only L3 monthly
+        temporal=("2025-01-01", "2025-12-31"),
+    )
+    files = earthaccess.download(results[:1], "./airs")
+
+    f = SD(files[0], SDC.READ)
+    t = f.select("Temperature_A")[:].astype(float)   # (24 levels, 180 lat, 360 lon), ascending (day) orbit
+    t[t == -9999] = np.nan                            # fill value
+    print(t.shape, np.nanmean(t[0]))                  # mean 1000 hPa temperature (not area-weighted)
+
+tips:
+  - "Use only AIRS-only (AIRS2RET, AIRS3STD, AIRS3STM) for long-term trends. AIRX (AIRS+AMSU) ended on 2016-09-25, and the two streams differ in retrieval sampling and quality control."
+  - "The L3 user guide notes unrealistic relative humidity values above 200% (sometimes up to 500%); screen them out."
+  - "L3 grid values average only retrievals that pass QC (0 or 1), so heavily cloudy or rainy regions are biased toward clearer scenes. Treat cells with low counts (`_ct`) as less representative, but do not use the grid-box cloud fraction for extra QC (per the guide)."
+  - "L3 grid edges fall on the dateline (180°), so longitudes run -180 to 180. Reorder the longitude bins to draw a map centred on 0°."
+  - "Aqua has been drifting since December 2021, with later equator crossing times and lower altitude. Recent trends in variables with a strong diurnal cycle (surface air temperature, skin temperature, low-level humidity) can be affected by the change in observation time."
+  - "No L2 or L3 products exist for 19–28 January 2026, and the January 2026 monthly mean is missing that period."
+  - "V7 has no 8-day product. To combine several days, weight the daily files by `_ct`."
+
+citations:
+  dataset:
+    - label: L3 monthly (AIRS-only) V7.0
+      text: >-
+        AIRS project (2019), Aqua/AIRS L3 Monthly Standard Physical Retrieval (AIRS-only) 1 degree x 1 degree V7.0, Greenbelt, MD, USA,
+        Goddard Earth Sciences Data and Information Services Center (GES DISC), Accessed: [Data Access Date], 10.5067/UBENJB9D3T2H
+      doi: 10.5067/UBENJB9D3T2H
+      bibtex: |
+        @misc{airs3stm_v7,
+          author    = {{AIRS project}},
+          title     = {Aqua/{AIRS} {L3} Monthly Standard Physical Retrieval ({AIRS}-only) 1 degree x 1 degree {V7.0}},
+          year      = {2019},
+          publisher = {Goddard Earth Sciences Data and Information Services Center (GES DISC)},
+          address   = {Greenbelt, MD, USA},
+          doi       = {10.5067/UBENJB9D3T2H}
+        }
+    - label: L3 daily (AIRS-only) V7.0
+      text: >-
+        AIRS project (2019), Aqua/AIRS L3 Daily Standard Physical Retrieval (AIRS-only) 1 degree x 1 degree V7.0, Greenbelt, MD, USA,
+        Goddard Earth Sciences Data and Information Services Center (GES DISC), Accessed: [Data Access Date], 10.5067/UO3Q64CTTS1U
+      doi: 10.5067/UO3Q64CTTS1U
+      bibtex: |
+        @misc{airs3std_v7,
+          author    = {{AIRS project}},
+          title     = {Aqua/{AIRS} {L3} Daily Standard Physical Retrieval ({AIRS}-only) 1 degree x 1 degree {V7.0}},
+          year      = {2019},
+          publisher = {Goddard Earth Sciences Data and Information Services Center (GES DISC)},
+          address   = {Greenbelt, MD, USA},
+          doi       = {10.5067/UO3Q64CTTS1U}
+        }
+    - label: L2 swath (AIRS-only) V7.0
+      text: >-
+        AIRS project (2019), Aqua/AIRS L2 Standard Physical Retrieval (AIRS-only) V7.0, Greenbelt, MD, USA,
+        Goddard Earth Sciences Data and Information Services Center (GES DISC), Accessed: [Data Access Date], 10.5067/VP1M6OG1X7M1
+      doi: 10.5067/VP1M6OG1X7M1
+      bibtex: |
+        @misc{airs2ret_v7,
+          author    = {{AIRS project}},
+          title     = {Aqua/{AIRS} {L2} Standard Physical Retrieval ({AIRS}-only) {V7.0}},
+          year      = {2019},
+          publisher = {Goddard Earth Sciences Data and Information Services Center (GES DISC)},
+          address   = {Greenbelt, MD, USA},
+          doi       = {10.5067/VP1M6OG1X7M1}
+        }
+    - label: L2 swath (AIRS+AMSU) V7.0, 2002-08 to 2016-09
+      text: >-
+        AIRS project (2019), Aqua/AIRS L2 Standard Physical Retrieval (AIRS+AMSU) V7.0, Greenbelt, MD, USA,
+        Goddard Earth Sciences Data and Information Services Center (GES DISC), Accessed: [Data Access Date], 10.5067/URTYDAGTM548
+      doi: 10.5067/URTYDAGTM548
+      bibtex: |
+        @misc{airx2ret_v7,
+          author    = {{AIRS project}},
+          title     = {Aqua/{AIRS} {L2} Standard Physical Retrieval ({AIRS}+{AMSU}) {V7.0}},
+          year      = {2019},
+          publisher = {Goddard Earth Sciences Data and Information Services Center (GES DISC)},
+          address   = {Greenbelt, MD, USA},
+          doi       = {10.5067/URTYDAGTM548}
+        }
+  papers:
+    - label: AIRS mission overview
+      text: >-
+        Chahine, M. T., Pagano, T. S., Aumann, H. H., Atlas, R., Barnet, C., Blaisdell, J., et al. (2006): AIRS: Improving Weather Forecasting
+        and Providing New Data on Greenhouse Gases. Bulletin of the American Meteorological Society, 87(7), 911–926.
+      doi: 10.1175/BAMS-87-7-911
+      bibtex: |
+        @article{chahine2006airs,
+          author  = {Chahine, Moustafa T. and Pagano, Thomas S. and Aumann, Hartmut H. and Atlas, Robert and Barnet, Christopher and Blaisdell, John and others},
+          title   = {{AIRS}: Improving Weather Forecasting and Providing New Data on Greenhouse Gases},
+          journal = {Bulletin of the American Meteorological Society},
+          volume  = {87},
+          number  = {7},
+          pages   = {911--926},
+          year    = {2006},
+          doi     = {10.1175/BAMS-87-7-911}
+        }
+  acknowledgement: >-
+    GES DISC asks that each collection used be cited in the form above (author, year, title, version, distributor, access date, DOI).
+    It is good practice to cite the V7 L2/L3 user guides (see the AIRS documentation index) for the algorithm and quality description as well.
+
+notices:
+  - date: "2026-03-20"
+    level: warning
+    title: NASA projects the end of Aqua science operations in September 2027
+    body: >-
+      The editor's note in the NASA Science article 'Terra: The End of An Era' (published 2025-12-29, updated 2026-03-20) projects the end of science operations, because of fuel and power limits,
+      in February 2027 for Terra, September 2027 for Aqua and August 2028 for Aura, with operations continuing until then. The end of the AIRS record is tied to this schedule.
+    source: https://science.nasa.gov/science-research/earth-science/terra-the-end-of-an-era
+  - date: "2026-03-02"
+    level: warning
+    title: AIRS detector DC Restore anomaly — no L2/L3 for 2026-01-19 to 01-28
+    body: >-
+      From about 03:14 UTC on 19 January 2026 the AIRS DC Restore circuit stopped working and signals from modules M3–M10 drifted out of range until a routine guard test on 28 January restored it.
+      No L2 or L3 products were generated in between; the 19 and 28 January daily files and the January 2026 monthly file are incomplete and should be used with caution.
+    source: https://docserver.gesdisc.eosdis.nasa.gov/public/project/AIRS/DC-Restore_Anomaly_Note_Final_260302_ADF1122.pdf
+  - date: "2019-12-15"
+    level: info
+    title: AIRS Version 7 L3 released (L2 on 2019-11-27)
+    body: >-
+      Version 7, a full-mission reprocessing, was released. Monthly L3 means became simple averages of the daily files, and the 8-day products were dropped.
+      Version 6 collections remain in CMR, but V7 is the default for new work.
+    source: https://cmr.earthdata.nasa.gov/search/concepts/C1701805662-GES_DISC.html
+  - date: "2016-09-24"
+    level: critical
+    title: AMSU-A2 power loss — AIRS+AMSU (AIRX) products end
+    body: >-
+      Aqua's AMSU-A2 lost power, so the combined AIRS+AMSU products (AIRX2RET, AIRX3STD, AIRX3STM) end with 24 September 2016 data.
+      Users are directed to the AIRS-only products (AIRS2RET and others) after that date. AMSU-A1 keeps operating but has problem channels (5, 7 and 14).
+    source: https://airs.jpl.nasa.gov/data/outages/
+
+links:
+  - name: AIRS Project (NASA JPL)
+    url: https://airs.jpl.nasa.gov/
+  - name: AIRS Version 7 L2/L3 products
+    url: https://airs.jpl.nasa.gov/data/products/v7-L2-L3/
+  - name: AIRS V7 L3 Product User Guide
+    url: https://docserver.gesdisc.eosdis.nasa.gov/public/project/AIRS/V7_L3_User_Guide.pdf
+  - name: AIRS V7 L2 Product User Guide
+    url: https://docserver.gesdisc.eosdis.nasa.gov/public/project/AIRS/V7_L2_Product_User_Guide.pdf
+  - name: Overview of the AIRS Mission (2nd ed., 2021, includes CLIMCAPS)
+    url: https://docserver.gesdisc.eosdis.nasa.gov/public/project/AIRS/Overview_of_the_AIRS_Mission.pdf
+  - name: Aqua mission home page (orbit drift, instrument status)
+    url: https://aqua.nasa.gov/
+
+watch_urls:
+  - https://airs.jpl.nasa.gov/data/outages/
+  - https://docserver.gesdisc.eosdis.nasa.gov/public/project/AIRS/AIRS_Documentation.pdf
+  - https://aqua.nasa.gov/
+
+last_verified: "2026-10-13"

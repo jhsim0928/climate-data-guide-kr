@@ -1,0 +1,252 @@
+# ─────────────────────────────────────────────────────────────
+# GEO-KOMPSAT-2A (GK-2A) AMI meteorological products — dataset information file
+# Listed under the satellite tab, 'Clouds and radiation'. At the end of 2025 data distribution moved from the NMSC website
+# to the KMA Open MET Data Portal (downloads) and the KMA API Hub (API).
+# After editing, update last_verified to the date you checked the official pages.
+# ─────────────────────────────────────────────────────────────
+id: gk2a
+name: "GK-2A (GEO-KOMPSAT-2A)"
+full_name: GEO-KOMPSAT-2A (Chollian-2A) Advanced Meteorological Imager (AMI) meteorological products — KMA National Meteorological Satellite Center (NMSC)
+category: satellite
+domain: satellite
+group: 구름·복사
+order: 80
+domains: [대기, 해양, 육지, 원격탐사]
+provider: KMA National Meteorological Satellite Center (NMSC) / Korea Aerospace Research Institute (KARI, satellite development)
+
+status: active
+status_note: >-
+  GK-2A operates normally from geostationary orbit at 128.2°E and images the full disk every 10 minutes (WMO OSCAR expects end of life no earlier than 2029).
+  Where to get the data has changed: the satellite data service on the NMSC website ended at the end of 2025, and data now come from the KMA Open MET Data Portal (downloads)
+  and the KMA API Hub (API). Routine maintenance in spring and autumn stops observations and data services for a few hours each time.
+
+period:
+  start: "2019-07"
+  end: present
+  note: >-
+    Launched in December 2018; the satellite broadcast service started on 25 July 2019. The archive depth available from the Open MET Data Portal and the API Hub could not be confirmed
+    from official guidance, so check it on the portal. The NOAA Open Data Dissemination copy of level-1B data on AWS starts in February 2023 (checked 2026-10-13).
+
+resolution:
+  spatial_short: "2 km (0.02°)"
+  temporal_short: "10분"
+  spatial: >-
+    AMI has 16 channels — visible 1 km (0.5 km for the 0.64 µm channel only), near-infrared and infrared 2 km (at nadir). Level-2 products such as cloud detection, cloud amount,
+    cloud top, rain rate and land surface temperature are 2 km pixels according to the ATBDs, delivered as arrays in the geostationary projection.
+  vertical: Cloud-top height, pressure and temperature (single layer); surface and top-of-atmosphere radiation; atmospheric profiles (depending on product)
+  temporal: >-
+    Full disk (FD) every 10 minutes; extended local area (ELA) and Korean Peninsula areas every 2 minutes. Some products (for example SST) also have 1-, 5- and 10-day composites.
+    (Comparison tables show 10 minutes, the full-disk interval; the extended Korean Peninsula and Korean Peninsula areas are scanned every 2 minutes.)
+
+coverage:
+  short: 아시아
+  note: "Full disk from 128.2°E geostationary orbit — East Asia, western Pacific and Oceania, with a separate rapid-scan Korean Peninsula area"
+update: Real time (right after each 10-minute or 2-minute observation)
+license: >-
+  Works on the NMSC website carry the Korea Open Government License (KOGL) 'Attribution–NonCommercial–NoDerivatives' condition. Data from the Open MET Data Portal and the API Hub
+  follow those sites' terms of use, and the NOAA open bucket (AWS) copy may be used freely with attribution.
+account_required: true
+
+summary: >-
+  GEO-KOMPSAT-2A (GK-2A, Chollian-2A), launched in December 2018, is Korea's geostationary weather satellite. Its 16-channel Advanced Meteorological Imager (AMI) scans
+  the full Earth disk visible from 128.2°E every 10 minutes and the area around the Korean Peninsula every 2 minutes. From these data NMSC produces 52 meteorological products,
+  23 baseline and 29 additional: clouds (detection, amount, type, top properties, optical properties), rain rate, land and sea surface temperature, radiation, aerosol and Asian dust,
+  atmospheric motion vectors and more. It gives the finest time resolution available from Korean satellites for heavy rain, typhoon, dust and fog studies and regional climate analysis.
+
+time_convention:
+  summary: >-
+    Level-2 products are instantaneous values for each observation (10 minutes for the full disk, 2 minutes for the extended local area). A full-disk image is scanned from north to south
+    over several minutes, so the actual observation moment differs slightly from the file's nominal time depending on latitude.
+  points:
+    - "File names follow `gk2a_ami_<level>_<channel or product>_<area, resolution, projection>_<YYYYMMDDhhmm>.nc` (for example the AWS copy `gk2a_ami_le1b_ir087_fd020ge_202610010000.nc`). The last 12 digits are the observation time; check the file attributes for the time zone (UTC or KST)."
+    - "Cloud optical thickness, effective radius and liquid and ice water path are retrieved only in daytime (solar zenith angle below 80°), and sea and land surface temperature only for clear-sky pixels (according to each ATBD)."
+    - "There are two cloud amounts: the satellite cloud fraction (CF), the share of cloudy pixels within about 5 km of each 2 km pixel, and a geometric cloud amount (CA) that mimics what a ground observer sees."
+    - "The SST ATBD says that besides real-time retrievals, simple-average composites are made over 1, 5 and 10 days. Composites are period means."
+    - "During routine maintenance (usually May and November, 4–6 hours) there are no observations, leaving gaps in time series, and image navigation accuracy can be degraded for about an hour afterwards."
+  source: https://nmsc.kma.go.kr/homepage/html/base/cmm/selectPage.do?page=static.edu.atbdGk2a
+  source_name: NMSC GK-2A product Algorithm Theoretical Basis Documents (ATBD, in Korean)
+
+variables:
+  note: >-
+    Only variable names given in the product tables of the NMSC ATBDs (2019 editions) are listed. Confirm names, units and scale factors in the operational files you download.
+    Products whose variable names could not be confirmed are listed by name and product code. The full list of 52 products is on the ATBD page.
+  full_list: https://nmsc.kma.go.kr/homepage/html/base/cmm/selectPage.do?page=static.edu.atbdGk2a
+  groups:
+    - name: Clouds (instantaneous at observation time, 2 km)
+      kind: instant
+      items:
+        - "Cloud detection (cloud, probably cloud, clear) — CLD product"
+        - text: "Satellite cloud fraction — `CF` (%)"
+          note: "scale_factor 0.01 according to the ATBD table; quality variable `CF_DQF`"
+        - text: "Ground-equivalent cloud amount — `CA` (dimensionless)"
+          note: "scale_factor 0.01 according to the ATBD table; quality variable `CA_DQF`"
+        - "Cloud phase (clear, water, ice, uncertain) — `CPH`"
+        - "Cloud-top temperature — `CTT` (K)"
+        - "Cloud-top pressure — `CTP` (hPa)"
+        - "Cloud-top height — `CTH` (km)"
+        - "Cloud type and cloud layer/height — CT product"
+        - text: "Cloud optical thickness, effective radius, liquid water path, ice water path — COT, CER, LWP and IWP products"
+          note: Daytime only
+    - name: Precipitation (instantaneous at observation time)
+      kind: instant
+      items:
+        - "Rain rate — RR product (mm/h)"
+        - "Quantitative precipitation forecast — POR and PAR products"
+    - name: Land and ocean (clear pixels, instantaneous at observation time)
+      kind: instant
+      items:
+        - text: "Land surface temperature — `LST` (K)"
+          note: "Clear land pixels only, every 10 minutes; scaling 0.01 and quality variable `DQF_LST` according to the ATBD table"
+        - "Sea surface temperature — SST product"
+        - "Surface albedo and land surface emissivity — SAL and LSE products"
+        - "Snow and sea-ice detection, snow depth — SCSI and SD products"
+        - "Vegetation index and fractional vegetation cover — NDVI and FVC products"
+    - name: Radiation (instantaneous at observation time)
+      kind: instant
+      items:
+        - "Radiation and shortwave radiation — RAD and SWRAD products"
+        - "Top-of-atmosphere outgoing longwave radiation — OLR product"
+        - "Surface upward and downward longwave radiation — ULR and DLR products"
+    - name: Aerosol and atmosphere
+      kind: instant
+      items:
+        - "Aerosol optical depth — AOD product"
+        - "Asian dust and aerosol detection, dust optical depth — ADPS and DAOD products"
+        - "Atmospheric motion vectors — AMV product"
+        - "Atmospheric vertical profiles — AAP product"
+
+access:
+  - name: KMA Open MET Data Portal (satellite data downloads)
+    url: https://data.kma.go.kr
+    method: Web (register and log in, then search and download)
+    note: >-
+      The official download point for GK-2A data since the end of 2025; NMSC directs users there for satellite data downloads. Check the menu location, archive period and product list
+      on the portal itself (it blocks automated access, so they could not be confirmed for this page). The portal is mainly in Korean.
+  - name: KMA API Hub (satellite data API)
+    url: https://apihub.kma.go.kr
+    method: Open API (register → issue an authentication key → call)
+    note: >-
+      The NMSC website Open API ended in December 2025 and moved here. Existing users must also get a new key from the API Hub and change their request URLs.
+      Check the API list, request format and call limits on the API Hub.
+  - name: NOAA Open Data Dissemination — AWS bucket noaa-gk2a-pds (level 1B)
+    url: https://registry.opendata.aws/noaa-gk2a-pds/
+    method: S3 (anonymous access)
+    note: >-
+      A copy uploaded by NOAA in coordination with KMA. It holds level-1B channel data, not level-2 products, under `AMI/L1B/FD/` (full disk) and `AMI/L1B/LA/` (local area)
+      in year-month/day/hour folders from February 2023. An SNS topic announces new files.
+  - name: NMSC — product Algorithm Theoretical Basis Documents (ATBD)
+    url: https://nmsc.kma.go.kr/homepage/html/base/cmm/selectPage.do?page=static.edu.atbdGk2a
+    method: Web (PDF, in Korean)
+    note: Per-product definitions, variables and quality information.
+  - name: NMSC — software and sample data (lat/lon grids, calibration tables, sample code)
+    url: https://nmsc.kma.go.kr/homepage/html/base/cmm/selectPage.do?page=static.utilization.software
+    method: Web
+    note: Latitude-longitude files (NetCDF) for converting geostationary-projection pixels, land-sea masks, L1B Python and Fortran samples, and a receive-and-display Docker package (September 2026 release).
+
+example:
+  lang: python
+  note: >-
+    Opens one full-disk level-1B infrared (10.5 µm) image from AWS without an account. Level-2 products must come from the Open MET Data Portal or the API Hub; confirm variable names in the files.
+    Use the latitude-longitude grid files on the NMSC software page to geolocate pixels.
+  code: |
+    # pip install s3fs xarray h5netcdf
+    import s3fs
+    import xarray as xr
+
+    fs = s3fs.S3FileSystem(anon=True)
+    # Full-disk (FD) L1B, ir105 channel files in the 2026-10-01 00h folder
+    keys = fs.glob("noaa-gk2a-pds/AMI/L1B/FD/202610/01/00/gk2a_ami_le1b_ir105_fd020ge_*.nc")
+    print(keys[:3])
+
+    ds = xr.open_dataset(fs.open(keys[0]), engine="h5netcdf")
+    print(ds)                                  # variable names, dimensions, attributes
+    print(ds.attrs)                            # global attributes such as observation time and calibration
+
+tips:
+  - Data ordering and downloads on the NMSC website (datasvc.nmsc.kma.go.kr) and its Open API ended at the end of 2025. Download scripts written for the old addresses must be rewritten for the Open MET Data Portal and the API Hub.
+  - Level-2 products are arrays of 2 km pixels in the geostationary (GEOS) projection. Attach coordinates with the latitude-longitude files distributed by NMSC, and remember that pixels grow large near the disk edge (high latitudes, distant longitudes) because of the large viewing angle.
+  - Sea and land surface temperatures exist only for clear pixels, so averages over cloudy periods (the summer monsoon, typhoons) are biased toward clear days. Always use the quality flags (DQF).
+  - There are no observations during routine maintenance (usually May and November). Check for missing times when building daily means from 10-minute data.
+  - WMO OSCAR lists GK-2A's expected end of life as 2029 or later and the follow-on GEO-KOMPSAT-5 as 2031–2041. For long-term studies, plan for a discontinuity at the satellite changeover.
+  - Many studies compare or combine GK-2A with Japan's Himawari (AHI), which has similar time resolution. The channel sets are similar, but calibration and retrieval algorithms differ.
+
+citations:
+  dataset: []
+  papers:
+    - label: GK-2A meteorological products overview
+      text: >-
+        Chung, S.-R., Ahn, M.-H., Han, K.-S., Lee, K.-T., and Shin, D.-B. (2020): Meteorological Products of Geo-KOMPSAT 2A (GK2A) Satellite.
+        Asia-Pacific Journal of Atmospheric Sciences, 56(2).
+      doi: 10.1007/s13143-020-00199-x
+      bibtex: |
+        @article{chung2020gk2a,
+          author  = {Chung, Sung-Rae and Ahn, Myoung-Hwan and Han, Kyung-Soo and Lee, Kyu-Tae and Shin, Dong-Bin},
+          title   = {Meteorological Products of {Geo-KOMPSAT 2A} ({GK2A}) Satellite},
+          journal = {Asia-Pacific Journal of Atmospheric Sciences},
+          volume  = {56},
+          number  = {2},
+          year    = {2020},
+          doi     = {10.1007/s13143-020-00199-x}
+        }
+    - label: AMI in-orbit tests and performance validation
+      text: >-
+        Kim, D., Gu, M., Oh, T.-H., Kim, E.-K., and Yang, H.-J. (2021): Introduction of the Advanced Meteorological Imager of Geo-Kompsat-2a:
+        In-Orbit Tests and Performance Validation. Remote Sensing, 13(7), 1303.
+      doi: 10.3390/rs13071303
+      bibtex: |
+        @article{kim2021ami,
+          author  = {Kim, Dohyeong and Gu, Minju and Oh, Tae-Hyeong and Kim, Eun-Kyu and Yang, Hye-Ji},
+          title   = {Introduction of the Advanced Meteorological Imager of {Geo-Kompsat-2a}: In-Orbit Tests and Performance Validation},
+          journal = {Remote Sensing},
+          volume  = {13},
+          number  = {7},
+          pages   = {1303},
+          year    = {2021},
+          doi     = {10.3390/rs13071303}
+        }
+  acknowledgement: >-
+    The data have no DOI. In publications, state that the data were provided by the KMA National Meteorological Satellite Center (NMSC), how you obtained them
+    (Open MET Data Portal, KMA API Hub or NOAA Open Data Dissemination), and the product name and version (algorithm version in the file attributes). NMSC works require specific attribution of the source.
+
+notices:
+  - date: "2026-05-06"
+    level: info
+    title: Observations and data services suspended for routine maintenance (2026-05-07, 09:00–15:00 KST)
+    body: >-
+      Twice-yearly AMI scanner calibration and storage performance work stopped observations and data services on 7 May 2026 from 09:00 to 15:00 KST.
+      NMSC warned that image navigation accuracy could be degraded for about an hour afterwards. Similar maintenance took place in May and November 2025.
+    source: https://nmsc.kma.go.kr/homepage/html/base/bbs/selectBbs.do?bbsCd=00237&bbsUsq=203145
+  - date: "2025-12-22"
+    level: warning
+    title: NMSC website satellite data service ended (2025-12-23)
+    body: >-
+      The satellite data service on the NMSC website ended on 23 December 2025. Satellite data downloads are now on the KMA Open MET Data Portal (data.kma.go.kr)
+      and APIs on the KMA API Hub (apihub.kma.go.kr).
+    source: https://nmsc.kma.go.kr/homepage/html/base/bbs/selectBbs.do?bbsCd=00237&bbsUsq=203013
+  - date: "2025-09-05"
+    level: warning
+    title: Data services consolidated — downloads to the Open MET Data Portal, Open API to the API Hub
+    body: >-
+      NMSC announced that its data service (datasvc.nmsc.kma.go.kr) would be merged into the KMA Open MET Data Portal and the KMA API Hub.
+      The originally announced end dates were 31 October 2025 for data provision and 22 December 2025 for the Open API; Open API users must get a new key from the API Hub and change their request URLs.
+    source: https://nmsc.kma.go.kr/homepage/html/base/bbs/selectBbs.do?bbsCd=00237&bbsUsq=202887
+
+links:
+  - name: NMSC website (English)
+    url: https://nmsc.kma.go.kr/enhome/html/main/main.do
+  - name: GK-2A introduction (NMSC)
+    url: https://nmsc.kma.go.kr/enhome/html/base/cmm/selectPage.do?page=satellite.gk2a.intro
+  - name: GK2A Fact Sheets (PDF set)
+    url: https://nmsc.kma.go.kr/enhome/html/base/cmm/selectPage.do?page=satellite.gk2a.fact
+  - name: GK2A AMI Rapid Scan service
+    url: https://nmsc.kma.go.kr/enhome/html/special/specialIntro.do?lang=en
+  - name: WMO OSCAR — GEO-KOMPSAT-2A
+    url: https://space.oscar.wmo.int/satellites/view/geo_kompsat_2a
+  - name: AWS Registry of Open Data — KMA GK-2A
+    url: https://registry.opendata.aws/noaa-gk2a-pds/
+
+watch_urls:
+  - https://nmsc.kma.go.kr/homepage/json/base/bbs/listBbs.do?bbsCd=00237
+  - https://nmsc.kma.go.kr/homepage/html/base/bbs/listBbs.do?bbsCd=00237
+
+last_verified: "2026-10-13"
