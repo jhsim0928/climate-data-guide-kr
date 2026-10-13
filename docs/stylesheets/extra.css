@@ -473,4 +473,7 @@ details.hint summary { cursor: pointer; }
   .md-typeset .var-tbl .md-typeset__table { overflow-x: auto; }
   .md-typeset .var-tbl table:not([class]) { min-width: 40rem; }
 }
-.md-typeset .var-en-hint { font-size: 0.72rem; color: var(--md-default-fg-color--light); }
+.md-typeset .var-en-hint { font-size: 0.68rem; color: var(--md-default-fg-color--light); margin: 0.8em 0 0; }
+.table-tools.has-note { justify-content: space-between; align-items: center; gap: 0.6em; flex-wrap: wrap; }
+.md-typeset .table-tools .var-en-hint { margin: 0; }
+.table-tools.has-note .xlsx-btn { margin-left: auto; }

@@ -590,7 +590,7 @@ def split_var(text: str) -> tuple[str, str, str, str]:
     return name, ", ".join(codes), units, note
 
 
-def var_table(g: dict) -> list[str]:
+def var_table(g: dict, hint: str = "") -> list[str]:
     """변수 그룹 → 표 (변수 · 변수명 · 단위 · 시간 특성 · 참고)"""
     rows, any_note = [], False
     for it in g["items"]:
@@ -604,7 +604,7 @@ def var_table(g: dict) -> list[str]:
     any_note = True  # 모든 표의 열 구성을 같게 (참고 칸이 비어도 둠)
     head = loc("| 변수 | 변수명 | 단위 | 시간 특성 |") + (loc(" 참고 |") if any_note else "")
     sep = "|---|---|---|---|" + ("---|" if any_note else "")
-    out = ['<div class="var-tbl" markdown>', "", head, sep]
+    out = ['<div class="var-tbl" markdown>', ""] + ([hint, ""] if hint else []) + [head, sep]
     for name, codes, units, kind, note in rows:
         out.append(f"| {md(name)} | {md(codes) or '-'} | {md(units) or '-'} | {kind or '-'} |" + (f" {md(note) or ''} |" if any_note else ""))
     return out + ["", "</div>"]
@@ -630,12 +630,13 @@ def variables_block(v: dict, tc: dict | None = None, ds_id: str | None = None) -
         + ' <span class="hint">— 순간값: 표시 시각의 값 · 평균/누적/최대/최소: 표시된 구간 동안의 값 · 고정값: 시간에 따라 변하지 않음</span></p>',
         "",
     ]
-    # 한국어판에만: 변수 이름의 원래 영어 표기는 같은 자료의 영어판 페이지로 안내 (첫 표 바로 위)
+    # 한국어판에만: 변수의 원래 영어 이름은 같은 자료의 영어판 페이지로 안내 — 표마다 "엑셀로 저장" 버튼 옆에 표시 (excel.js가 옮김)
+    hint = ""
     if ds_id and not is_en() and (DATA_DIR_EN / f"{ds_id}.yaml").exists():
-        L += [f'<p class="var-en-hint">변수 이름은 우리말로 옮겨 적었습니다. 원래 영어 이름은 '
-              f'<a href="../../en/datasets/{ds_id}/" hreflang="en">영어판 이 페이지</a>에서 볼 수 있습니다.</p>', ""]
+        hint = (f'<p class="var-en-hint">영어 변수 이름은 '
+                f'<a href="../../en/datasets/{ds_id}/" hreflang="en">영어판 이 페이지</a>에서 볼 수 있습니다.</p>')
     for g in v["groups"]:
-        L += [f"### {g['name']}", ""] + var_table(g) + [""]
+        L += [f"### {g['name']}", ""] + var_table(g, hint) + [""]
     if v.get("full_list"):
         L += [f"전체 변수 목록은 [공식 문서]({v['full_list']})에서 확인하세요.", ""]
     return L

@@ -169,6 +169,9 @@
       bar.innerHTML = '<button type="button" class="xlsx-btn" title="' + L("화면에 보이는 그대로 엑셀 파일로 저장", "Save the table as shown to an Excel file") + '">' + L("엑셀로 저장", "Save as Excel") + '</button>';
       bar.querySelector("button").addEventListener("click", function () { download(table); });
       anchor.parentNode.insertBefore(bar, anchor);
+      // 변수 표: 표 위 안내 문구(영어 이름 보기)를 버튼 왼쪽에 함께 표시
+      var box = table.closest(".var-tbl"), note = box && box.querySelector(":scope > .var-en-hint");
+      if (note) { bar.insertBefore(note, bar.firstChild); bar.classList.add("has-note"); }
       if (table.id === "cmp-table") bar.classList.add("cmp-tools");
     });
   }
