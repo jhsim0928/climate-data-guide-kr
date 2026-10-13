@@ -1,10 +1,23 @@
 {
  "date_kst": "2026-10-13",
- "run_at": "2026-10-13T08:13:55+09:00",
+ "run_at": "2026-10-13T10:24:39+09:00",
  "baseline": false,
  "checked": 135,
- "ok": 129,
+ "ok": 130,
  "changes": [
+  {
+   "url": "https://gmao.gsfc.nasa.gov/operations/status.php",
+   "datasets": [
+    "merra2"
+   ],
+   "added": [
+    "20261012 12z",
+    "20261011 09z",
+    "20261003 18z",
+    "20261012 18z"
+   ],
+   "removed_count": 0
+  },
   {
    "url": "https://essd.copernicus.org/preprints/essd-2026-412/",
    "datasets": [
@@ -206,18 +219,6 @@
    "removed_count": 2
   },
   {
-   "url": "https://gmao.gsfc.nasa.gov/operations/status.php",
-   "datasets": [
-    "merra2"
-   ],
-   "added": [
-    "20261012 12z",
-    "20261011 09z",
-    "20261003 18z"
-   ],
-   "removed_count": 3
-  },
-  {
    "url": "https://nsidc.org/data/g02202/versions/6",
    "datasets": [
     "nsidc-cdr-sic"
@@ -297,7 +298,7 @@
     "cera20c"
    ],
    "error": "HTTP 401 / HTTP 401 (브라우저)",
-   "fails": 6,
+   "fails": 7,
    "last_ok": null
   },
   {
@@ -306,7 +307,7 @@
     "imerg"
    ],
    "error": "HTTP 403 / HTTP 403 (브라우저)",
-   "fails": 6,
+   "fails": 7,
    "last_ok": null
   },
   {
@@ -315,7 +316,7 @@
     "merra2"
    ],
    "error": "HTTP 403 / HTTP 403 (브라우저)",
-   "fails": 6,
+   "fails": 7,
    "last_ok": null
   }
  ]

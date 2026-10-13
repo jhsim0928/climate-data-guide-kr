@@ -24,7 +24,7 @@
   "mode": "http"
  },
  "https://catalogue.ceda.ac.uk/uuid/3587430e588b491e8a795664466a27d1/": {
-  "fails": 1,
+  "fails": 2,
   "file": "b9207fef1e63870d.txt",
   "last_error": "HTTP 503",
   "last_ok": "2026-10-12",
@@ -37,17 +37,15 @@
   "mode": "http"
  },
  "https://catalogue.ceda.ac.uk/uuid/73ec447ea99457c77c0ef9692f76393f": {
-  "fails": 1,
+  "fails": 0,
   "file": "4652e910b3b46ddb.txt",
-  "last_error": "HTTP 503",
-  "last_ok": "2026-10-12",
+  "last_ok": "2026-10-13",
   "mode": "http"
  },
  "https://catalogue.ceda.ac.uk/uuid/887ebbe3aa4345f3bbcbe2dd1834d955/": {
-  "fails": 1,
+  "fails": 0,
   "file": "7399b8807458d064.txt",
-  "last_error": "HTTP 503",
-  "last_ok": "2026-10-12",
+  "last_ok": "2026-10-13",
   "mode": "http"
  },
  "https://cds.climate.copernicus.eu/datasets/satellite-sea-level-global?tab=documentation": {
@@ -350,8 +348,9 @@
   "mode": "http"
  },
  "https://gdex.ucar.edu/datasets/d115000/": {
-  "fails": 0,
+  "fails": 1,
   "file": "fc290ac0b4fc57c4.txt",
+  "last_error": "ReadTimeout: HTTPSConnectionPool(host='gdex.ucar.edu', port=443): Read timed out. (read timeout=40)",
   "last_ok": "2026-10-13",
   "mode": "http"
  },
@@ -675,11 +674,11 @@
   "mode": "http"
  },
  "https://www.earthdata.nasa.gov/data/alerts-outages": {
-  "fails": 6,
+  "fails": 7,
   "last_error": "HTTP 403 / HTTP 403 (브라우저)"
  },
  "https://www.earthdata.nasa.gov/data/projects/merra-2/news": {
-  "fails": 6,
+  "fails": 7,
   "last_error": "HTTP 403 / HTTP 403 (브라우저)"
  },
  "https://www.ecmwf.int/en/about/media-centre/news": {
@@ -696,7 +695,7 @@
   "mode": "http"
  },
  "https://www.ecmwf.int/en/forecasts/datasets/reanalysis-datasets/cera-20c": {
-  "fails": 6,
+  "fails": 7,
   "last_error": "HTTP 401 / HTTP 401 (브라우저)"
  },
  "https://www.ecmwf.int/en/publications/newsletters": {
