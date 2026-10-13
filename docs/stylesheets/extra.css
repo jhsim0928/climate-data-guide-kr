@@ -445,16 +445,17 @@ details.hint summary { cursor: pointer; }
 .md-typeset .list-table table:not([class]) { display: table; width: 100%; table-layout: fixed; }
 .md-typeset .list-table th, .md-typeset .list-table td { overflow-wrap: anywhere; }
 .md-typeset .list-table th.pick-col, .md-typeset .list-table td.pick-col { width: 4.2rem; }
-.md-typeset .list-table th:nth-last-child(6) { width: 24%; }   /* 자료 */
-.md-typeset .list-table th:nth-last-child(5) { width: 13%; }   /* 종류 */
-.md-typeset .list-table th:nth-last-child(4) { width: 17%; }   /* 기간 */
-.md-typeset .list-table th:nth-last-child(3) { width: 17%; }   /* 제공 해상도 */
-.md-typeset .list-table th:nth-last-child(2) { width: 10%; }   /* 시간 간격 */
-.md-typeset .list-table th:nth-last-child(1) { width: 13%; }   /* 상태 */
+.md-typeset .list-table th:nth-last-child(7) { width: 21%; }   /* 자료 */
+.md-typeset .list-table th:nth-last-child(6) { width: 11%; }   /* 종류 */
+.md-typeset .list-table th:nth-last-child(5) { width: 15%; }   /* 기간 */
+.md-typeset .list-table th:nth-last-child(4) { width: 11%; }   /* 범위 */
+.md-typeset .list-table th:nth-last-child(3) { width: 15%; }   /* 제공 해상도 */
+.md-typeset .list-table th:nth-last-child(2) { width: 9%; }    /* 시간 간격 */
+.md-typeset .list-table th:nth-last-child(1) { width: 12%; }   /* 상태 */
 .md-typeset .list-table td.nowrap { white-space: normal; }
 @media screen and (max-width: 44.9375em) {
   .md-typeset .list-table .md-typeset__table { overflow-x: auto; }
-  .md-typeset .list-table table:not([class]) { min-width: 44rem; }
+  .md-typeset .list-table table:not([class]) { min-width: 50rem; }
 }
 
 /* 자료 페이지 — 변수 표: 모든 그룹 표의 가로 길이·열 너비를 같게 */

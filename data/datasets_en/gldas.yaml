@@ -38,6 +38,9 @@ resolution:
     (depth varies by grid cell) reservoirs instead of layers, plus 6 soil temperature layers (0–10, 10–29, 29–68, 68–144, 144–295, 295–1295 cm). VIC has 3 soil layers (top layer 0–30 cm).
   temporal: "3-hourly (2.0, 2.1 Noah, CLSM, VIC) / daily (CLSM 0.25°: 2.0 and 2.2 GRACE-DA1) / monthly (2.0, 2.1 Noah, CLSM, VIC; straight averages of the 3-hourly data)"
 
+coverage:
+  short: 전지구
+  note: "Land only, 60°S–90°N (Antarctica excluded)"
 update: "GLDAS-2.1 main products about 3–4 months behind (waiting for GPCP precipitation), Early Products about 1.5 months / GLDAS-2.2 main product about 2–6 months (waiting for GRACE), Early Product about 1.5 months (per the README)"
 license: NASA Earth science open data — free of charge. Downloading from GES DISC requires a free NASA Earthdata Login; please cite the product DOI
 account_required: true

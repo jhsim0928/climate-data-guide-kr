@@ -44,6 +44,7 @@
       [L("상태", "Status"), function (d) { return d.status; }],
       [L("제공 기관", "Provider"), function (d) { return esc(d.provider); }],
       [L("기간", "Period"), function (d) { return esc(d.period); }],
+      [L("공간 범위", "Coverage"), function (d) { return esc(d.coverage); }],
       [L("제공 해상도 (단순 비교)", "Provided resolution (simplified)"), function (d) { return esc(d.spatial) + ' <span class="hint">' + L("(km는 적도 기준 근사)", "(km approximate at the equator)") + '</span>'; }],
       [L("시간 간격 (단순 비교)", "Interval (simplified)"), function (d) { return esc(d.temporal_s); }],
       [L("수평 해상도 (공식)", "Horizontal resolution (official)"), function (d) { return esc(d.spatial_d); }],

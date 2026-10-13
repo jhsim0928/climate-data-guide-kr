@@ -39,6 +39,8 @@ resolution:
     월(연소 면적·배출량) / 일(GFED5.1 일별 배출량 파일, GFED5.1NRT 일·월). GFED4.1s는 월자료에 일별 비율(daily_fraction)과
     3시간 일변화 비율(diurnal_cycle, 2003년~)을 곱해 일·3시간 값을 만듭니다.
 
+coverage:
+  short: 전지구
 update: "GFED5.1(1997~2022)은 고정 / GFED5.1NRT(2023~)는 매일 갱신, 과학 품질 VIIRS 자료가 나오면 비정기적으로 재처리 / GFED4.1s는 2024-01 이후 갱신 없음"
 license: GFED5.1·GFED5.1NRT는 CC BY 4.0(Zenodo 기록·파일 속성). 무료이며 공동저자 요구는 없고, FAQ의 인용 안내를 따르면 됩니다
 account_required: false

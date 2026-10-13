@@ -37,6 +37,9 @@ resolution:
   temporal: >-
     10-daily (dekads) with nominal dates on the 10th, 20th and last day of each month. Each nominal date is issued as RT0 (near real time), then updated as RT1 and RT2 (one and two dekads later) and RT6 (final, six dekads later)
 
+coverage:
+  short: 전지구
+  note: "80°N–60°S (75°N–60°S for the PROBA-V period)"
 update: "Every dekad — RT0 within about 2 days after the end of the synthesis period; RT1, RT2 and RT6 after 1, 2 and 6 dekads (no updates for the 1 km V2)"
 license: "Full, open and free access under the Copernicus data policy (credit the source, state any modifications, do not imply EU endorsement). Downloading from CDSE requires a free account"
 account_required: true

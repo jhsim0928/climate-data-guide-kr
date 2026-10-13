@@ -58,6 +58,17 @@ def t_label(t: str) -> str:
     return EN.TEMPORAL.get(t, t) if is_en() else t
 
 
+def cov_label(c: str) -> str:
+    return EN.COVERAGE.get(c, c) if is_en() else c
+
+
+def cov_text(d: dict) -> str:
+    """상세 페이지·비교표용 '범위 — 메모' 한 줄"""
+    c = d.get("coverage") or {}
+    s = cov_label(c.get("short") or "-")
+    return f"{s} — {oneline(c['note'])}" if c.get("note") else s
+
+
 def cat_label(c: str) -> str:
     return EN.CATEGORY[c] if is_en() else CATEGORY[c]
 
@@ -155,6 +166,8 @@ SPATIAL_SHORT_RE = re.compile(r"^\d+(\.\d+)? km \(\d+(\.\d+)?°(×\d+(\.\d+)?°)
 TEMPORAL_SHORT = ["30분", "1시간", "3시간", "6시간", "1일", "5일", "7일", "8일", "10일", "15일", "16일", "1개월", "1년"]
 TEMPORAL_HOURS = {"30분": 0.5, "1시간": 1, "3시간": 3, "6시간": 6, "1일": 24, "5일": 120, "7일": 168, "8일": 192,
                   "10일": 240, "15일": 360, "16일": 384, "1개월": 720, "1년": 8760}
+# 공간 범위 (목록·비교표 '범위' 열). 순서 = 정렬 순서. 빠진 곳·위경도는 coverage.note에
+COVERAGE = ["전지구", "준전지구", "양극", "북극", "북극·북대서양", "북극 일부", "남극", "아시아", "북미"]
 
 # 해상도 표기 주의 — 목록·비교·데이터셋 페이지에 접힌 상자로 표시
 RES_NOTE = [
@@ -307,6 +320,8 @@ def validate(d: dict, src: Path) -> None:
         errors.append('resolution.spatial_short는 "28 km (0.25°)" 또는 "56 km (0.5°×0.625°)" 형식으로 적어주세요')
     if r.get("temporal_short") not in TEMPORAL_SHORT:
         errors.append(f"resolution.temporal_short는 {TEMPORAL_SHORT} 중 하나")
+    if (d.get("coverage") or {}).get("short") not in COVERAGE:
+        errors.append(f"coverage.short(공간 범위)는 {COVERAGE} 중 하나")
     if not DATE_RE.match(str(d.get("last_verified", ""))):
         errors.append("last_verified 형식은 YYYY-MM-DD")
     if d.get("status") == "ended" and not d.get("successor"):
@@ -748,6 +763,7 @@ def render_dataset(d: dict, site_cite: dict) -> str:
         ("분야", tags_label(d.get("domains"))),
         ("제공 기관", nt(d["provider"])),
         ("기간", period_text(d["period"])),
+        ("공간 범위", cov_text(d)),
         ("수평 해상도", r.get("spatial")),
         ("연직 해상도", r.get("vertical")),
         ("시간 해상도", r.get("temporal")),
@@ -884,6 +900,7 @@ def group_table(entries, href_prefix: str, compare_href: str) -> list[str]:
     rows = ""
     for d, label, cross in entries:
         r = d.get("resolution") or {}
+        cov = d["coverage"]
         sp, tm, km, hrs = short_res(d)
         mark = ' <span class="hint" title="다른 분야에도 실린 자료">↔</span>' if cross else ""
         rows += (
@@ -891,6 +908,7 @@ def group_table(entries, href_prefix: str, compare_href: str) -> list[str]:
             f'<td data-sort="{html.escape(label)}"><a href="{href_prefix}{d["id"]}/">{nt(html.escape(label))}</a>{mark}</td>'
             f"<td>{cat_label(d['category'])}</td>"
             f'<td class="nowrap" data-sort="{d["period"]["start"]}">{period_text(d["period"])}</td>'
+            f'<td data-sort="{COVERAGE.index(cov["short"])}" title="{html.escape(oneline(cov.get("note") or ""))}">{cov_label(cov["short"])}</td>'
             f'<td class="nowrap" data-sort="{km}" title="{html.escape(oneline(r.get("spatial") or ""))}">{sp}</td>'
             f'<td class="nowrap" data-sort="{hrs}" title="{html.escape(oneline(r.get("temporal") or ""))}">{t_label(tm)}</td>'
             f'<td data-sort="{STATUS_ORDER[d["status"]]}">{badge(d["status"])}</td>'
@@ -899,6 +917,7 @@ def group_table(entries, href_prefix: str, compare_href: str) -> list[str]:
     return [
         f'<div class="list-table" data-compare="{compare_href}"><table>'
         "<thead><tr><th>자료</th><th>종류</th><th>기간</th>"
+        '<th title="자료가 덮는 지역 (빠진 곳·위경도는 칸에 마우스를 올리거나 각 자료 페이지에서)">범위</th>'
         '<th title="주 제공처에서 받는 격자 간격 (km는 적도 기준 근사)">제공 해상도</th>'
         '<th title="가장 짧은 제공 간격 (세부는 각 자료 페이지)">시간 간격</th><th>상태</th></tr></thead>'
         f"<tbody>{rows}</tbody></table></div>"
@@ -1146,7 +1165,8 @@ def compare_data(datasets: list[dict]) -> list[dict]:
         out.append({
             "id": d["id"], "name": d["name"], "domain": domain_label(d["domain"]), "group": g_label(d["group"]),
             "category": cat_label(d["category"]), "provider": d["provider"], "status": badge(d["status"]),
-            "period": period_text(d["period"]), "spatial": r.get("spatial_short") or "-",
+            "period": period_text(d["period"]), "coverage": cov_text(d),
+            "spatial": r.get("spatial_short") or "-",
             "spatial_d": oneline(r.get("spatial") or "-"),
             "temporal_s": t_label(r.get("temporal_short") or "-"),
             "vertical": oneline(r.get("vertical") or "-"), "temporal": oneline(r.get("temporal") or "-"),
