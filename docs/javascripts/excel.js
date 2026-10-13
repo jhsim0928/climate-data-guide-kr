@@ -107,7 +107,7 @@
   }
   function headText(h) {
     var c = h.cloneNode(true);
-    c.querySelectorAll(".domain-count, .headerlink").forEach(function (e) { e.remove(); });
+    c.querySelectorAll(".domain-count, .headerlink, .h2-tools").forEach(function (e) { e.remove(); });
     return c.textContent.replace("¶", "").trim();
   }
   function tableTitle(table) {
@@ -176,7 +176,53 @@
     });
   }
 
-  function init() { setTimeout(addButtons, 0); }  // 다른 스크립트가 표를 정리한 뒤 실행
+  // ── 자료 페이지: "활용 가능한 변수" 제목 옆에 전체 변수 한 번에 저장 ──
+  function prevHeading(el, tags) {
+    var n = el;
+    while (n) {
+      if (n.previousElementSibling) {
+        n = n.previousElementSibling;
+        if (tags.indexOf(n.tagName) >= 0) return n;
+      } else n = n.parentElement;
+      if (n && n.classList && n.classList.contains("md-content__inner")) return null;
+    }
+    return null;
+  }
+  function downloadAllVars(boxes) {
+    var rows = [], head = null;
+    boxes.forEach(function (box) {
+      var table = box.querySelector("table");
+      if (!table) return;
+      var r = tableRows(table), h3 = prevHeading(box, ["H3", "H2"]);
+      var group = h3 && h3.tagName === "H3" ? headText(h3) : "";
+      if (!head) { head = [L("구분", "Group")].concat(r[0]); rows.push(head); }
+      r.slice(1).forEach(function (row) { rows.push([group].concat(row)); });
+    });
+    if (rows.length < 2) { alert(L("저장할 내용이 없습니다.", "Nothing to save.")); return; }
+    var page = ((document.querySelector(".md-content__inner h1") || {}).textContent || document.title).replace("¶", "").trim();
+    var title = page + L(" - 전체 변수", " - all variables");
+    var safe = title.replace(/[\\/:*?"<>|\[\]]/g, "").slice(0, 80);
+    var blob = buildXlsx(rows, L("전체 변수", "All variables"), citeFooter());
+    var a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = safe + ".xlsx";
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 1000);
+  }
+  function addAllVarsButton() {
+    var boxes = Array.prototype.slice.call(document.querySelectorAll(".var-tbl"));
+    if (!boxes.length) return;
+    var h2 = prevHeading(boxes[0], ["H2"]);
+    if (!h2 || h2.querySelector(".h2-tools")) return;
+    var span = document.createElement("span");
+    span.className = "h2-tools";
+    span.innerHTML = '<button type="button" class="xlsx-btn" title="' + L("이 자료의 모든 변수 표를 한 시트로 저장", "Save every variable table of this dataset to one sheet") + '">' + L("전체 변수 엑셀로 저장", "Save all variables as Excel") + "</button>";
+    span.querySelector("button").addEventListener("click", function () { downloadAllVars(boxes); });
+    h2.appendChild(span);
+  }
+
+  function init() { setTimeout(function () { addButtons(); addAllVarsButton(); }, 0); }  // 다른 스크립트가 표를 정리한 뒤 실행
   if (typeof document$ !== "undefined") document$.subscribe(init);
   else document.addEventListener("DOMContentLoaded", init);
 })();

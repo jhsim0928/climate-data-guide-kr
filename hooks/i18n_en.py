@@ -115,6 +115,8 @@ UI = {
     "## 활용 가능한 변수": "## Available variables",
     "아직 공개 전이라 변수 목록이 확정되지 않았습니다. 공개되면 정리하겠습니다.": "Not released yet, so the variable list is not final. It will be added after release.",
     "시간 표기 규칙 — 순간값인가, 평균인가, 누적인가": "Time-stamp convention — instantaneous, mean or accumulated?",
+    "시간 표기 규칙 — 순간값인가, 평균인가, 누적인가 — 눌러서 보기": "Time-stamp convention — instantaneous, mean or accumulated? — click to show",
+    "전체 변수 엑셀로 저장": "Save all variables as Excel",
     "근거:": "Source:",
     "공식 문서": "official documentation",
     "— 순간값: 표시 시각의 값 · 평균/누적/최대/최소: 표시된 구간 동안의 값 · 고정값: 시간에 따라 변하지 않음":

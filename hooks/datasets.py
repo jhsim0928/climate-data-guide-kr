@@ -618,7 +618,7 @@ def variables_block(v: dict, tc: dict | None = None, ds_id: str | None = None) -
     if v.get("note"):
         L += [oneline(v["note"]), ""]
     if tc:
-        L += ['!!! info "시간 표기 규칙 — 순간값인가, 평균인가, 누적인가"', ""]
+        L += ['??? info "시간 표기 규칙 — 순간값인가, 평균인가, 누적인가 — 눌러서 보기"', ""]
         L += ["    " + oneline(tc["summary"]), ""]
         L += [f"    - {oneline(p)}" for p in tc.get("points") or []]
         if tc.get("source"):
