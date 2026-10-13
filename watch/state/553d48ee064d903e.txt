@@ -1,0 +1,96 @@
+# https://ladsweb.modaps.eosdis.nasa.gov/missions-and-measurements/products/MOD04_L2
+LAADS DAAC | NASA
+MOD04_L2 - MODIS/Terra Aerosol 5-Min L2 Swath 10km
+The MODIS Aerosol Product monitors the ambient aerosol optical thickness over the oceans globally and over a portion of the continents. Further, the aerosol size distribution is derived over the oceans, and the aerosol type is derived over the continents. Daily Level-2 data are produced at the spatial resolution of a 10x10 1-km pixel array (at nadir).
+Prior to MODIS, satellite measurements were limited to reflectance measurements in one (GOES, METEOSAT) or two (AVHRR) channels. There was no real attempt to retrieve aerosol content over land on a global scale. Algorithms had been developed for use only over dark vegetation. The blue channel on MODIS, not present on AVHRR, offers the possibility to extend the derivation of optical thickness over land to additional surfaces. The algorithms use MODIS bands 1 through 7 and 20 and require prior cloud screening using MODIS data. Over the land, the dynamic aerosol models are derived from ground-based sky measurements and used in the net retrieval process.
+Over the ocean, three parameters that describe the aerosol loading and size distribution are retrieved. Pre-assumptions on the general structure of the size distribution are required in the inversion of MODIS data, and the volume-size distribution is described with two log-normal modes: a single mode to describe the accumulation mode particles (radius < 0.5 µm) and a single coarse mode to describe dust and/or salt particles (radius > 1.0 µm).
+The quality assurance control of these products will be based on comparison with ground stations and climatology.
+For additional details see the MODIS Atmospheres web site page on
+Collection 6.1 Updates
+Links
+Search for Product Files
+Data Archive
+File Specification
+DOI:
+10.5067/MODIS/MOD04_L2.061
+Shortname:
+MOD04_L2
+Platform:
+Terra
+Instrument:
+MODIS
+Processing Level:
+Level-2
+Temporal Resolution:
+5 minute
+ArchiveSet(s):
+Collection:
+MODIS Collection 6.1 - Level 1, Atmosphere, Land (ArchiveSet 61)
+PGE Number:
+PGE04
+File Naming Convention:
+MOD04_L2.AYYYYDDD.HHMM.CCC.YYYYDDDHHMMSS.hdf
+YYYYDDD
+Year and Day of Year of acquisition
+HHMM
+Hour and Minute of acquisition
+Collection number
+YYYYDDDHHMMSS
+Production Date and Time
+AYYYYDDD
+Year and Day of Year of acquisition
+Citation:
+Levy, R., Hsu, C., et al., 2015. MODIS Atmosphere L2 Aerosol Product. NASA MODIS Adaptive Processing System, Goddard Space Flight Center, USA: http://dx.doi.org/10.5067/MODIS/MOD04_L2.061
+Keywords:
+Climate Change, Atmospheric Correction, Aerosol Optical Depth/Thickness
+Currently Viewing ArchiveSet61 Dates: Loading...
+Fetching product availability data from the API. This may take a moment.
+Data Availability Legend
+High
+: >75% available
+Medium
+: 25-75% available
+: <25% available
+The chart displays data availability percentages over time. Click and drag to pan, use buttons to zoom.
+Chart Options
+Tokens for Downloading LAADS DAAC Data
+A LAADS DAAC download token will help make file downloads faster, but is only usable for LAADS DAAC web sites. A LAADS DAAC token
+will not work with other Earthdata sites.
+Generating LAADS DAAC token …
+Please copy and save the token below for use with any supported LAADS download utilities or scripts.
+To test, run the following
+wget
+download command in your terminal and see if it successfully downloaded the README text file located at the root of the LAADS archive. See also
+LAADS documentation on how to use wget
+wget -e robots=off -m -np -R .html,.tmp -nH --cut-dirs=3 "https://ladsweb.modaps.eosdis.nasa.gov/archive/README" --header "Authorization: Bearer
+" -P .
+We are currently unable to generate a LAADS DAAC token. Please try again later or contact
+MODAPS Support
+with any questions.
+An Earthdata Download token (EDL) will work on any Earthdata site including all LAADS DAAC sites, but download performance from the LAADS DAAC can be much slower due to the extra network connections needed to check credentials at Earthdata.
+Confirm Download of Multiple Files
+Verifying login status…
+Please confirm before starting this batch download of
+listed below totaling
+, one file at a time.
+Once a batch download begins, your browser may not provide a way to cancel the batch aside from closing the browser entirely or stopping individual downloads one at a time. If in doubt, try selecting a smaller number of files for download.
+MODAPS Support
+is available to help with any questions.
+Browser configurations
+Some users might have to approve once (e.g., click "Allow") to allow for future downloads of multiple files.
+To avoid a new download prompt for each file, ensure the following settings are configured in your browser:
+Chrome: Settings > Advanced > Ask where to save each file before downloading >
+Firefox:
+Preferences > Files and Applications >
+Save files to
+Click checkbox “Do this automatically for files like this from now on”
+Safari: Preferences > General > File download location >
+[specified folder]
+Edge: Settings > Downloads > Ask where to save each file before downloading >
+Unsupported browsers for multi-file downloads (use
+instead):
+Internet Explorer 11 and below
+Please log in and try again
+We are currently having issues verifying your request. Please try again later or contact
+MODAPS Support
+with any questions.

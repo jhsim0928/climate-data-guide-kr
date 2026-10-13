@@ -1,0 +1,169 @@
+# https://ldas.gsfc.nasa.gov/nldas/v3
+NLDAS-3 | LDAS
+LDAS
+Land Data Assimilation System
+NLDAS-3
+The third phase of North American Land Data Assimilation System (NLDAS-3) is currently in development. We're expanding spatial coverage to all of North America and Central America, improving spatial resolution to 1-km, reducing latency, upgrading land-surface modeling, and realizing the original vision of assimilating remote sensing data for near real-time insights.
+The NLDAS-3 meteorological model input (forcing) data is
+now publicly available
+. Instructions for access are provided on the
+NLDAS-3 GitHub README
+. Hourly, daily, and monthly collections are provided. Variables are listed in Table 1 below, with the daily collection also including daily-minimum and daily-maximum near-surface air temperature fields.
+Please read a
+NASA EarthData VEDA story on the development of NLDAS-3
+. It includes some sample not-final precipitation data from NLDAS-3 as well as Jupyter Notebooks to examine the data and compare it to NLDAS-2 precipitation.
+Please feel free to ask questions and contribute to discussions on the NLDAS-3 GitHub.
+POC (Points of Contact) for NLDAS-3:
+Dr. Sujay Kumar (NASA Goddard SFC):
+sujay.v.kumar@nasa.gov
+Dr. Chris Hain (NASA Marshall SFC):
+christopher.hain@nasa.gov
+To receive updates on NLDAS-3 datasets and workshops,
+please sign up using this Google Form
+Third NLDAS-3 workshop (10 April 2025)
+Recording of NLDAS-3 Drought Monitoring Workshop
+(co-hosted with NOAA NIDIS and the National Drought Mitigation Center).
+Slides presented during the 3rd NLDAS-3 workshop
+Feedback and breakout sessions slides from the 3rd NLDAS-3 workshop
+Second NLDAS-3 workshop (29 July 2024)
+Recording of 2nd NLDAS-3 Stakeholder Workshop
+, with updates on NLDAS-3 development.
+Following this workshop, we published a
+question/answers and discussion document on NLDAS-3
+First NLDAS-3 workshop (08 November 2023)
+Recording of 1st NLDAS-3 Stakeholder Workshop
+Table 1
+: List of NLDAS-3 meteorological model input (forcing) variables. Data is available hourly, daily-averaged, and monthly-averaged. The daily collection also includes fields of the daily-minimum and daily-maximum near-surface air temperature.
+Variable
+Short Name
+Units
+Near-surface air temperature
+Tair
+Near-surface specific humidity
+Qair
+kg kg
+Surface pressure
+PSurf
+Northward wind
+Wind_N
+Eastward wind
+Wind_E
+Downward longwave radiation at the surface
+LWdown
+Downward shortwave radiation at the surface
+SWdown
+Total precipitation rate
+Rainf
+kg m
+Table 2
+: List of expected Noah-MP LSM output variables from NLDAS-3. Data is daily-averaged except where noted below.
+Variable
+Short Name
+Units
+Surface net downward shortwave flux
+SWnet_tavg
+Surface net downward longwave flux
+LWnet_tavg
+Surface upward latent heat flux
+Qle_tavg
+Surface upward sensible heat flux
+Qh_tavg
+Downward heat flux in soil
+Qg_tavg
+Snowfall rate (frozen)
+Snowf_tavg
+kg m
+Rainfall rate (liquid)
+Rainf_tavg
+kg m
+Total evapotranspiration
+Evap_tavg
+kg m
+Surface runoff amount
+Qs_tavg
+kg m
+Subsurface runoff amount
+Qsb_tavg
+kg m
+Surface temperature
+AvgSurfT_tavg
+Daily minimum surface temperature
+AvgSurfT_min
+Daily maximum surface temperature
+AvgSurfT_max
+Liquid water content of surface snow
+SWE_tavg
+kg m
+Snow depth
+SnowDepth_tavg
+Soil moisture - 4 layers
+[0-10cm; 10-40cm; 40-100cm; 100-200cm]
+SoilMoist_tavg
+Soil temperature - 4 layers
+[0-10cm; 10-40cm; 40-100cm; 100-200cm]
+SoilTemp_tavg
+Potential evapotranspiration
+PotEvap_tavg
+kg m
+Vapor pressure deficit
+VPD_tavg
+Vegetation transpiration
+TVeg_tavg
+kg m
+Bare soil evaporation
+ESoil_tavg
+kg m
+Total canopy water storage
+CanopInt_tavg
+kg m
+Water table depth
+WaterTableD_tavg
+Terrestrial water storage
+TWS_tavg
+Groundwater storage
+GWS_tavg
+Surface snow area fraction
+Snowcover_tavg
+Gross primary productivity
+GPP_tavg
+Net primary productivity
+NPP_tavg
+Net ecosystem exchange
+NEE_tavg
+Leaf area index
+LAI_tavg
+Table 3
+: List of expected HyMAP routing output variables from NLDAS-3. Data is daily-averaged.
+Variable
+Short Name
+Units
+Streamflow
+Streamflow_tavg
+River depth
+RiverDepth_tavg
+Flooded fraction
+FloodedFrac_tavg
+Surface water elevation
+SurfElev_tavg
+Surface water storage
+SWS_tavg
+Get the Data
+LDAS datasets are available from the NASA GES DISC
+The NASA Goddard Earth Sciences Data and Information Services Center (GES DISC) provides access to LDAS datasets using multiple methods, including HTTPS, GDS, and the ability to subset spatially, temporally, and/or by variable:
+GLDAS
+NLDAS
+NCA-LDAS
+FLDAS
+WLDAS
+These datasets are also available via
+Giovanni
+. Giovanni is an online application developed by the GES DISC that allows researchers to rapidly explore data, so that spatial-temporal variability, anomalous conditions, and patterns of interest can be directly and easily analyzed online before optionally downloading the data. Supported download formats include NetCDF, GeoTIFF, and KMZ.
+Latest News
+NLDAS-2 data re-processed from 2022-08-01 to 2024-03-01
+NLDAS-2 datasets for all collections (FORA, FORB, MOS, NOAH, and VIC) were re-processed for the dates 2022-08-81 to 2024-03-01.
+NLDAS-2 GRIB-1 files no longer updated as of 1 August 2024
+The NLDAS Version 002 (GRIB-1) files are no longer being updated daily from the GES DISC starting from files valid at 23Z on August 1, 2024.
+Reprocessed FLDAS Data
+Output data for several FLDAS model runs and selected periods have been reprocessed.
+View All News
+Jump to Top

@@ -1,0 +1,1334 @@
+# https://rom-saf.eumetsat.int/previous_news.php
+ROM SAF - News Archive
+Login
+Forgot password
+Print
+Follow us:
+About
+Home
+RO method
+⇒News Archive
+Contact
+Search
+Documentation
+Product Documents
+Publications
+ROM SAF Reports
+Visiting Scientist
+User Workshops
+Data & Software
+Product Archive
+Product Quality
+NRT Monitoring
+Climate Monitoring
+Software
+User Service
+Helpdesk
+Helpdesk History
+UNS Notifications
+RSS Feeds
+Registration
+Login
+News Archive
+The news listed below have previously been shown in the "News" column
+of the ROM SAF
+Main page
+Update to GNSS-RO Desroziers uncertainty products for ROM SAF NRT monitoring
+We are pleased to announce an update to the visual presentation of the Met Office Desroziers uncertainty products available through the ROM SAF near-real-time (NRT) monitoring pages. The
+previous release
+saw the introduction of new Desroziers plots by the Met Office and ECMWF on the ROM SAF NRT website.
+We have since updated these plots for the Met Office, having introduced a refreshed layout and style, designed to improve readability and interpretation of the diagnostics, while maintaining the same underlying methodology as previously stated. It now shows the Desroziers-diagnosed and prescribed observation-error uncertainties for each mission and phase.
+The updated monitoring products are available at:
+https://rom-saf.eumetsat.int/monitoring/desroziers
+Figure: Estimated uncertainties (standard deviations normalised by background, %) as a function of impact height (km) for rising occultations from Metop-D, based on data from September 2026. The black line shows the Desroziers-diagnosed observation-error uncertainties, and the blue line shows the prescribed observation-error uncertainties.
+[October 8, 2026]
+Update to GNSS-RO bending angle uncertainty for NRT monitoring
+We are pleased to announce an update to the ROM SAF near-real-time (NRT) monitoring of GNSS-RO bending angle uncertainty estimates. This update introduces new Desroziers observation-uncertainty estimates from the Met Office and displays together with existing Desroziers estimates from ECMWF within the NRT monitoring pages, supporting demonstration and monitoring use.
+The Desroziers diagnostics are based on innovations (O-B) and residuals (O-A) and are provided for all GNSS-RO missions assimilated at the Met Office. Note that the Desroziers diagnostics are a consistency check on the input covariances provided to the data assimilation. They can be used to provide updated estimates of observation-, background- and analysis-error covariance matrices. However, these estimates depend upon the matrices which are provided as input, so should be carefully considered before being used.
+The release includes:
+• Monthly plots and statistics files available in PNG and Python pickle formats;
+• Products split by satellite group (e.g. Metop results combine Metop-B and Metop-C) and by observation phase (rising and setting occultations);
+• A README providing background information and example code to access and plot the date located in the demo folder.
+The theory and methodology follow Desroziers et al. (2005). The resulting estimates are provided for diagnostic and monitoring purposes and may support any future consideration of prescribed observation-error specifications used in data assimilation.
+In addition to the newly provided Met Office estimates, Desroziers uncertainty estimates produced by ECMWF are also available within the NRT monitoring pages, allowing for direct comparison between independently produced diagnostics.
+Data and plots, including a README, are available in the demonstration directory:
+https://rom-saf.eumetsat.int/pub/demo/desroziers
+The NRT monitoring pages can be viewed online at:
+https://rom-saf.eumetsat.int/monitoring/desroziers.php
+Figure: Estimated uncertainties (standard deviations, %) as a function of impact height (km) for rising occultations from Metop satellites (Metop-B and Metop-C), computed for March 2026. The blue line shows the observation estimates while the orange line shows the background-error estimates.
+[May 14, 2026]
+Publication of ROM SAF Report 49
+An initial assessment of the quality of radio occultation data from EPS-SG-A1
+The EUMETSAT Polar System Second Generation Satellite A1 (EPS-SG-A1, hereafter referred to as Metop-D), was successfully launched on 13th August 2025. All the instruments on Metop-D, including radio occultation data, provide critical data for numerical weather prediction (NWP), weather and climate monitoring. Dissemination of radio occultation L1 bending angle data via EUMETCast first started on 6th November 2025, and the Met Office first received data on 17th November 2025, and these data have been monitored since.
+Metop-D provides around 1,200 occultations per day, around double the volume from Metop-B and Metop-C separately. L1 bending angle data from Metop-D were compared with those from Metop-B, Metop-C, PlanetiQ and Spire. Notably, Metop-D shows improved O-B standard deviations particularly at higher and lower levels relative to all comparison satellites. Bending angle O-B biases are broadly similar to those of Metop-B, Metop-C, PlanetiQ and Spire in the core region, with slightly larger biases at higher levels (more positive) compared to all the other satellites and in the lower troposphere (more negative) compared to PlanetiQ and Spire. Met Office statistics also show a more positive mean bias in the upper stratosphere, while ECMWF statistics show a negative bias in the same region; this behaviour is consistent across all other satellites.
+An NWP experiment assimilating Metop-D data was conducted over a three-month period and verified using the root mean square error, or RMSE. The addition of observations from Metop-D improves the forecast skill, with a mean impact of 0.19% and 0.20%, against observations and ECMWF analyses. The addition of these ~1,200 profiles per day (~1,100 after quality control) shows improvements in all regions across different variables with minimal degradation. The inclusion of Metop-D clearly decreases the standard-deviation ratios for the radio occultation observation type. There is little reduction in the standard-deviation ratios for other observation types.
+The timeliness of Metop-D L1 data has not improved relative to Metop-B and Metop-C, averaging 52 and 25 minutes longer to receive data, respectively. This is understood to be due to the data transfer method that the Met Office uses while Metop-D is pre-operational. In comparison to FY-3E, Metop-D is much quicker, having received data 2 hours and 20 minutes sooner than FY-3E for the same time period. This allows the majority of observations to be included within the assimilation window. Timeliness is expected to improve once EUMETSAT makes Metop-D operational. Operational assimilation of bending angles from Metop-D by the Met Office is expected around June 2026.
+Figure: RMSE scorecards showing the impact of assimilating Metop-D data relative to the control, without Metop-D observations. This is for the period from 24th November 2025 to 17th February 2026. The left plot verified each trial against observations and the right plot verified against ECMWF analyses.
+PMSL, W, T
+represent the pressure at mean sea level, wind vectors, temperature and geopotential height respectively. NH, SH and TR are Northern Hemisphere extratropics, Southern Hemisphere extratropics and Tropics, respectively. The scorecards are also separated by vertical levels in each region -- NH_T500 which represents temperature in the Northern Hemisphere extratropics at 500 hPa. The forecast lead times are shown in hours (i.e.
+is a 1-day forecast,
+is a 3-day forecast and so on). Green (purple) triangles indicate improvements (degradations); triangle area represents impact magnitude and shaded squares denotes statistical significance.
+[April 28, 2026]
+Publication of ROM SAF Operations Report 2025 H2
+This report covers the 7-month period June–December (H2) of 2025. During this period the following ROM SAF data products have been produced and disseminated: Metop NRT profiles (since February 2010), Metop Offline profiles and gridded products (since April 2019), Interim Climate Data Records from Metop (since April 2019), Sentinel-6 Non Time Critical (NTC) profiles and gridded products (since December 2021). Since 27 October 2022 demonstration product from commercial RO data (Spire) (purchased by EUMETSAT) has been generated and disseminated to NRT users. Commercial NRT data procured by NOAA has been generated as demonstration products as well and disseminated over EUMETCast. The last ROM SAF Operations Review (OR17) was held on the 11 of June 2025.
+The comparison of the Metop NRT Level 2A refractivity products to profiles from ECMWF operational forecasts is within the limits of the Service Specifications (SeSp). Distinct differences in biases at high altitudes between rising and setting occultations were significantly reduced with the upgrade to PPF 6 in April 2024, but some differences still remain. These differences seem to have become smaller over time.
+The comparison of the Metop Offline Level 1B bending angle and 2A refractivity products to profiles from ECMWF ERA5 reanalysis forecasts is mainly within the limits of the SeSp. The standard deviation at high altitudes has increased gradually since the beginning of 2022, but has decreased since the beginning of 2025. It has become evident that this is related to solar cycle activity, which peaked in 2024.
+The comparison of the Sentinel-6 NTC Level 2A refractivity and dry temperature products to profiles from ECMWF operational forecasts is mainly within the limits of the SeSp. However, there was an anomaly in late August related to clocks and orbits in the processing upstream, which resulted in a few hundred GLONASS occultations of very poor quality.
+Spire NRT products based on EUMETSAT-procured data are provided in demonstration mode since 27 October 2022. Commercial NRT data procured by NOAA are also provided in demonstration mode. Some of these products are assumed to achieve operational status in the near future, and the formal procedure for defining the Service Specifications for Spire NRT has begun.
+The comparisons of the Metop NRT, Metop Offline and Sentinel-6A NTC Level 2B and 2C products to ECMWF (OPER) and ERA5 reanalysis are mainly within the limits of the SeSp. Exceptions include Metop Offline temperature and surface pressure. The Offline surface pressure has shown persistent increased S-A standard deviation up to and around the solar peak. In May to August 2025 the surface pressure SeSp started to be fulfilled again, but since then the Offline surface pressurehas not fulfilled requirements.
+The quality assessment of Level 2C tropopause height products derived from the WMO temperature lapse rate definition show no noticeable issues in the period July to December 2025.
+The quality of the Metop Offline and ICDR Level 3 gridded data is predominantly in line with the SeSp requirements. The main deviations from ERA5 reanalysis are found in the dry variables, in the wintertime polar stratosphere where values outside the nominal Service Specifications can be found. For the Sentinel-6 NTC Level 3 tropopause height product based on the dry-temperature lapse rate, we also find occasional deviations from the nominal Service Specifications. The reasons for these latter deviations may be related to sampling errors in the tropopause height product, which will be addressed in the next ROM SAF reprocessing planned for in 2026.
+During the reporting period, a subset of ROM SAF CDR and ICDR products have continued to be provided through the Climate Data Store (CDS) of the Copernicus C3S service. Currently, it is only the gridded monthly-mean humidity data that are distributed through the CDS, but following the next reprocessing planned for in 2026, gridded monthly-mean dry temperature will also be made available through the CDS. The user statistics from the CDS demonstrate the potential for reaching new user groups through alternative distribution channels. In line with this, the ROM SAF is also contributing data to a project in which RO data from several processing centers are made available through the Registry of Open Data on the Amazon Web Services (AWS) Data Exchange.
+The Radio Occultation Processing Package (ROPP) software package was originally released in 2004 and the current version is ROPP version 11.3 which was released on the 11th of July 2024 and is available on the ROM SAF website.
+The Operations Report is available here:
+https://rom-saf.eumetsat.int/opr.php
+[April 16, 2026]
+New demonstrational dataset: Decadal climate trends in the atmosphere
+The radio occultation (RO) climate data record now covers more than 20 years, which is sufficient to estimate long-term trends in parts of the Earth's atmosphere. The RO data show that in the first two decades of the 21st century, the Earth's lowest atmospheric layer---the troposphere---warmed significantly, by up to 0.5 K per decade, while the layer above that---the stratosphere---cooled by about the same amount (see figure below).
+The ROM SAF now releases a set of plots demonstrating the main results from a ROM SAF study: latitude- and altitude-resolved decadal trends for physical variables including temperature, refractivity, and bending angle. Trends are shown for ROM SAF climate data records, as well as for ERA5 reanalysis data, and regions with statistically significant trends are indicated as hatched regions in the plots. More information is found at the ROM SAF web page:
+https://rom-saf.eumetsat.int/pub/demo/decadal_climate_trends/
+The gridded monthly-mean RO trends are based on data that are sampling-error corrected. The time series consists of the multi-mission CDR (GRM-28-R1) from 2002 to 2016, which is extended by the Metop ICDR (GRM-29-I1) after that. The ROM SAF gridded monthly-mean data are available for download from:
+https://rom-saf.eumetsat.int/cdrpage.php
+[March 20, 2026]
+Release of ROPP-12.0, the latest update of the Radio Occultation Processing Package
+The ROM SAF announces the release of ROPP-12.0, the latest update of the Radio Occultation Processing Package (ROPP). The main differences from the previous release, ROPP-11.3, are the following:
+Addition of a new tool combining the Abel inversion and the Chapman model with a linearly increasing scale height to retrieve ionospheric electron density vertical profiles (EDVPs) from truncated sounding radio occultation data (AVHIRO2).
+Implementation of cubic spline interpolation as a new option for interpolation between height, geopotential height and impact height layers in the bending angle and refractivity forward models.
+Inclusion of the kappa formula for residual ionospheric correction.
+Improvements of the QC and the first guess settings of the ionospheric 1D-Var.
+Improved processing of EUMETSAT level 1a data (for all missions).
+Recoding of routines to handle ingested GNSS frequencies (e.g. from Sentinel-6) rather than assuming default L1 and L2 frequencies.
+Introduction of code to read Sentinel-6 RO data from EUMETSAT.
+Enable encoding/decoding of the new satellite sub-identifier and alternative sub-centre in BUFR.
+Building of separate BUFR encode/decode tools for each BUFR library that is available.
+Improve ROPP IO and ROPP UTILS core testing, which brings the I/O and UTILS module in line with the other modules’ core tests.
+Update/change of the build system.
+Details of all changes, together with the updated software and documentation, are available on the ROPP download website:
+https://rom-saf.eumetsat.int/ropp/files.php
+[January 14, 2026]
+Publication of ROM SAF Operations Report 2025 H1
+This report covers the 5-month period January-May (H1) of 2025. During this period the following ROM SAF data products have been produced and disseminated: Metop NRT profiles (since February 2010), Metop Offline profiles and gridded products (since April 2019), Interim Climate Data Records from Metop (since April 2019), Sentinel-6 Non Time Critical (NTC) profiles and gridded products (since December 2021). Since 27 October 2022 demonstration product from commercial RO data (Spire) (purchased by EUMETSAT) has been generated and provided over WIS 2.0 to NRT users. Commercial NRT data procured by NOAA has been generated as demonstration products as well and disseminated over EUMETCast. The last ROM SAF Operations Review (OR17) was held on the 11 of June 2025.
+The comparison of the Metop NRT Level 2A refractivity products to profiles from ECMWF operational forecasts is within the limits of the Service Specifications (SeSp). Distinct differences in biases at high altitudes between rising and setting occultations were significantly reduced with the upgrade to PPF 6 in April 2024, but some differences still remain. These differences seem to have become smaller during H1 2025.
+The comparison of the Metop Offline Level 1B bending angle and 2A refractivity products to profiles from ECMWF ERA5 reanalysis forecasts is mainly within the limits of the SeSp. The standard deviation at high altitudes has increased gradually since the beginning of 2022, but has decreased during H1 2025. It has become evident that this is related to solar cycle activity, which peaked in 2024.
+The comparison of the Sentinel-6 NTC Level 2A refractivity and dry temperature products to profiles from ECMWF operational forecasts is mainly within the limits of the SeSp. Galileo occultations have been included in the Sentinel-6 NTC processing since late April 2025.
+Spire NRT products based on EUMETSAT-procured data are provided in demonstration mode since 27 October 2022. Commercial NRT data procured by NOAA are also provided in demonstration mode. Some of these products are assumed to achieve operational status in the near future, and the formal procedure for defining the Service Specifications for Spire NRT has begun.
+The comparisons of the Metop NRT, Metop Offline and Sentinel-6A NTC Level 2B and 2C products to ECMWF (OPER) and ERA5 reanalysis are mainly within the limits of the SeSp. Exceptions are Metop Offline temperature and surface pressure. Especially the Offline surface pressure has shown persistent increased S-A standard deviation up to and around the solar peak, but the in May and June 2025 the surface pressure SeSp starts to be fulfilled again.
+The quality assessment of Level 2C tropopause height products derived from the WMO temperature lapse rate definition show no noticeable issues regarding the tropopause products in the period Jan to June 2025.
+The quality of the Metop Offline and ICDR Level 3 gridded data is predominantly in line with the SeSp requirements. The main deviations from ERA5 reanalysis are found in the dry variables, in the wintertime polar stratosphere where values outside the nominal Service Specifications can be found. For the relatively short Sentinel-6 NTC Level 3 tropopause height product based on the dry-temperature lapse rate, we also find occasional deviations from the nominal Service Specifications. The reasons for these latter deviations may be related to sampling errors in the tropopause height product, which will be addressed in the next ROM SAF reprocessing planned for in 2025.
+During the reporting period, a subset of ROM SAF CDR and ICDR products have continued to be provided through the Climate Data Store (CDS) of the Copernicus C3S service. Currently, it is only the gridded monthly-mean humidity data that are distributed through the CDS, but following the next reprocessing planned for in 2025, gridded monthly-mean dry temperature will also be made available through the CDS. The user statistics from the CDS demonstrate the potential for reaching new user groups through alternative distribution channels. In line with this, the ROM SAF is also contributing data to a project in which RO data from several processing centers are made available through the Registry of Open Data on the Amazon Web Services (AWS) Data Exchange.
+The Radio Occultation Processing Package (ROPP) software package was originally released in 2004 and the current version is ROPP version 11.3 which was released on the 11th of July 2024 and is available on the ROM SAF website.
+The Operations Report is available here:
+https://rom-saf.eumetsat.int/opr.php
+[September 30, 2025]
+Publication of ROM SAF Report 44
+An investigation into the impacts of the vertical smoothing of GNSS-RO bending angle observations on Met Office NWP forecasts
+Motivated by apparent forecast improvements in the Met Office system with Spire-processed GNSS radio occultation bending angle observations, various experiments have been run to test the effect of increased vertical smoothing on forecast quality.
+The initial experiments were run with additional smoothing applied to Spire's observations as part of the EUMETSAT Secretariat processing. In these experiments it was seen that increasing the smoothing decreased the standard deviation of the observation departures, but also increased the vertical correlation length-scales. These observations with additional smoothing were then ingested within a low-resolution version of the Met Office NWP system, and the forecast quality was seen to be improved with the observations using additional smoothing compared with the observations using the operational processing.
+A second set of experiments were run which applied additional smoothing as a pre-processing step within the Met Office system. The smoothing is thus applied to the low-resolution BUFR observations which are normally assimilated operationally. This method has the advantage that it is applied to the whole observations dataset, but a disadvantage that it is applied to the low-resolution observations which posed some technical challenges. It also meant that it was possible to make the smoothing length-scale proportional to the spacing between vertical levels in the Met Office model. Tests with applying the additional smoothing in this way demonstrated improved forecast performance over a wide range of variables. However, using a large smoothing length-scale produced degraded results, and the degradation was seen first in the tropical region, suggesting that less smoothing is beneficial there.
+Further experimentation is planned which would demonstrate the impact of additional smoothing on a second NWP system. If these experiments show that additional, or different, smoothing is optimal in that system then it would demonstrate that this method provides an opportunity for all EUMETSAT members that assimilate bending angles to improve their forecasting systems. To achieve this would require data processing centres, such as EUMETSAT, make their observations available at high-resolution. It would also need tools to be made available for NWP centres to process these high-resolution observations in a manner which is best suited to their system.
+Figure: Forecast verification scorecard showing the impact of using a smoothing length-scale of 900m in the troposphere compared with the operational smoothing. The area of the triangles is proportional to the change in root-mean-square error (RMSE), relative to the system with EUMETSAT Secretariat-processed observations, measured against ECMWF analyses. Green upwards-pointing (purple-blue downwards-pointing) triangles indicate better (worse) performance for the experiment with Spire processing. The y-axis denotes the forecast variable being considered. NH, TR and SH denote the northern hemisphere > 20 degrees, tropics and southern hemisphere < −20 degrees, respectively. The letter following the underscore indicates the weather parameter, with W, T and Z signifying vector wind field, temperature and geopotential height, respectively. The numbers after this indicate the height of the observation in hPa, except for 2m and 10m that are heights above the surface. The x-axis shows the forecast lead time in hours.
+[June 30, 2025]
+Publication of ROM SAF Report 47
+An initial assessment of the quality of RO data from FY-3E
+Feng-Yun 3E is a satellite flown by The Chinese Meteorological Agency (CMA) and the National Remote Sensing Centre of China (NRSCC). The satellite was launched on the 4
+July 2021 in a sun synchronous orbit. On board the satellite has a GNSS Radio Occultation Sounder – 2 (GNOS2) instrument measuring the phase delay between a GNSS satellite and the low earth orbiting satellite. Observations from the GNOS2 instrument were first received over the Global Telecommunications system in March 2024.
+The performance of the bending angles and the refractivity from FY-3E have been assessed and compared to similar observations such as those from FY-3D and Metop-C. Overall the quality of observations is similar to that seen from other operational instruments. The bending angle observations indicated an improved standard deviation above 35 km compared to FY-3D but there was a greater positive bias above 50 km for rising occultations. For refractivity bias increases above 30 km as is seen for FY-3D and Metop-C. This bias is smaller than that seen in FY-3D.
+An experiment assimilating FY-3E into the Met Office’s Global model system was also conducted. The results of this experiment indicate that the inclusion of FY-3E Bending Angle observations had a neutral to slightly negative impact.
+Timeliness of FY-3E observations being disseminated on the GTS during September were slower when compared with FY-3D and Metop-C. Around half of the received observations from FY-3E would miss the global model assimilation cut-off.
+It should be noted that in January 2025 the data processing software at CMA was updated, which appears to have improved the data quality. This report covers the period before this update was made.
+Figure: The bias and standard deviation of the normalised difference between the observation and the NWP model background forecast (O-B)/B for bending angle from 02/07/2024 to 02/10/2024. Left is FY-3D vs FY-3E and right is Metop-C vs FY-3E.
+[June 19, 2025]
+Publication of ROM SAF Operations Report 2024 H2
+This report covers the 7-months’ period June–December (H2) of 2024. During this period the following ROM SAF data products have been produced and disseminated: Metop NRT profiles (since February 2010), Metop Offline profiles and gridded products (since April 2019), Interim Climate Data Records from Metop (since April 2019), Sentinel-6 Non Time Critical (NTC) profiles and gridded products (since December 2021). Since 27 October 2022 demonstration product from commercial RO data (Spire) (purchased by EUMETSAT) has been generated and provided over GTS to NRT users. Commercial NRT data procured by NOAA has been generated as demonstration products as well and disseminated over EUMETCast. The last ROM SAF Operations Review (OR16) was held on the 27–28 of May 2024.
+The comparison of the Metop NRT Level 2A refractivity products to profiles from ECMWF operational forecasts is within the limits of the Service Specifications (SeSp). The comparison of the Metop Offline Level 1B bending angle and 2A refractivity products to profiles from ECMWF ERA5 reanalysis forecasts is mainly within the limits of the SeSp. The standard deviation at high altitudes has increased gradually since the beginning of 2022, which is likely related to the increased solar activity. The comparison of the Sentinel-6 NTC Level 2A refractivity and dry temperature products to profiles from ECMWF operational forecasts is mainly within the limits of the SeSp.
+Spire NRT products based on EUMETSAT-procured data are provided in demonstration mode since 27 October 2022. Commercial NRT data procured by NOAA are also provided in demonstration mode. These products are assumed to achieve operational status in the future, and Service Specifications will be defined then.
+The comparisons of the Metop NRT, Metop Offline and Sentinel-6A NTC Level 2B and 2C products to ECMWF (OPER) and ERA5 reanalysis are mainly within the limits of the SeSp. Exceptions are Metop Offline temperature and surface pressure. Especially the Offline surface pressure has shown persistent increased S-A standard deviation since introduction beginning of 2023.
+The quality assessment of Level 2C tropopause height products derived from the WMO temperature lapse rate definition show no noticeable issues regarding the tropopause products in the period 1 June to 31 December 2024.
+The quality of the Metop Offline and ICDR Level 3 gridded data is predominantly in line with the SeSp requirements. The main deviations are dry pressure and dry geopotential height at high altitudes and in the polar regions. Here, there are sometimes deviations up to two times the nominal threshold value.
+For the relatively short Sentinel-6 NTC Level 3 tropopause height product based on the dry-temperature lapse rate, we also find deviations that are a factor of two larger than the threshold. The reasons for these latter deviations may be related to sampling errors in the tropopause height product, which will be addressed in the next ROM SAF reprocessing planned for in 2025.
+During the reporting period, a subset of ROM SAF CDR and ICDR products have continued to be provided through the Climate Data Store (CDS) of the Copernicus C3S service. Currently, it is only the gridded monthly-mean humidity data that are distributed through the CDS, but following the next reprocessing planned for in 2025, gridded monthly-mean
+dry temperature will also be made available through the CDS. The user statistics from the CDS demonstrate the potential for reaching new user groups through alternative distribution channels. In line with this, the ROM SAF is also contributing data to a project in which RO data from several processing centers are made available through the Registry of Open Data
+on the Amazon Web Services (AWS) Data Exchange.
+The Radio Occultation Processing Package (ROPP) software package was originally released in 2004 and the current version is ROPP version 11.3 which was released on the 11th of July 2024 and is available on the ROM SAF website.
+The Operations Report is available here:
+https://rom-saf.eumetsat.int/opr.php
+[March 13, 2025]
+Publication of report from the 8th ROM SAF User Workshop
+ROM SAF Report 46:
+8th EUMETSAT ROM SAF user workshop on GNSS radio occultation measurements
+GNSS radio occultation (GNSS-RO) measurements are an important and well-established component of the global observing system. With more than 10,000 occultations per day available, we are now starting a data-rich era and it is important to exploit the measurements in the best way possible.
+This workshop, organized by ECMWF and the EUMETSAT Radio Occultation Meteorology Satellite Application Facility (ROM SAF), reviewed the use of the GNSS-RO data at the major NWP centres, and explored how the assimilation of the measurements can be improved using more sophisticated observation operators. The value of GNSS-RO as "anchor measurements" for estimating the bias correction of satellite radiances was emphasised. The workshop also covered new work on polarimetric RO (PRO), and reviewed the work on climate monitoring and space weather with GNSS-RO.
+This workshop was co-sponsored by ECMWF and the EUMETSAT ROM SAF. The workshop helped to inform future research and development directions for the ROM SAF.
+The workshop was attended by around 35 international scientists, with expertise in using GNSS radio occultations for NWP, climate applications and space weather. It followed the standard format of a series of presentations, followed by NWP, climate working and space weather working groups, and then a plenary session. The presentations from the 8th user workshop are available at the website: https://rom-saf.eumetsat.int/workshops/uw8/
+The NWP working group highlighted that there is a strong need to exploit the data as much as possible, in terms of looking into improving observation uncertainty models, refining approaches in forward modelling and making use of new observations.
+The climate working group emphasised the need for more actively engaging in using RO data as a tool for answering questions that are relevant for IPCC and also to continue developing and implementing rigorous uncertainty quantification for the full processing chain.
+Overall, this was a useful and enjoyable workshop, which benefited greatly from the diversity of the participant’s research interests.
+[December 20, 2024]
+Publication of ROM SAF VS41 Report on Intercomparison of GNSS RO quality control methods in NWP
+The ROM SAF is pleased to release
+Visiting Scientist report No. 41
+by Dr. Hailing Zhang, UCAR, Boulder, CO, USA
+Abstract
+This project looked at the quality control procedures that NWP centres use for assimilating GNSS-RO bending angle observations. The super-refraction checks were examined in detail, and large differences were found between the methods that various centres use.
+While understanding that quality control (QC) processes crucially affect the statistics of the observations compared to short-range NWP forecasts and the subsequent analyses, we also realize the fact that many centres implement entirely different QC methods from each other in operations. The overall objective of this visiting scientist project is to catalogue and compare the QC methods of GNSS RO observations used for data assimilation (DA) by NWP centres within EUMETSAT member states and in other major NWP centres. This should provide guidance to members of the ROM SAF and EUMETSAT communities about the differences between the methods, and potentially improve the exploitation of this data.
+This study was conducted with the JEDI framework that contains unified generic QC filters and facilitates easy implementation of new QC methods. The inter-comparison of RO QC methods is based on the same framework, i.e., the Met Office forecast model and bending angle forward operator, and a common RO observation dataset. This project is composed of three major steps of work. The first step is the collection of the QC methods from the major NWP centres around the world. The second effort is the implementation of the QC methods as filters in JEDI. The third effort is the evaluation and inter-comparison of the implemented QC methods through conducting a series of month-long experiments.
+The inter-comparison demonstrates that the different QC methods for super refraction behave very differently. The methods used by NRL (U.S. Naval Research Laboratory) and Météo France remove the most observations, those used by Met Office and NCEP (U.S. National Centers for Environmental Prediction) remove the next most, and a method based on differences in impact parameter removed the least. There are subtle differences in the number of observations removed when comparing the different RO missions, with a higher proportion of COSMIC-2 observations being identified as having super refractions, presumably due to the fact that these observations penetrate deeper into the lower troposphere. Comparisons of the vertical refractivity gradients from the observations and the model highlight systematic differences, with sharp refractivity gradients being largely absent from the observations.
+[November 5, 2024]
+Publication of ROM SAF Operations Report 2024 H1
+This report covers the 5-month period January-May (H1) of 2024. During this period the following ROM SAF data products have been produced and disseminated: Metop NRT profiles (since February 2010), Metop Offline profiles and gridded products (since April 2019), Interim Climate Data Records from Metop (since April 2019), Sentinel-6 Non Time Critical (NTC) profiles and gridded products (since December 2021). Since 27 October 2022 demonstration product from commercial RO data (Spire) (purchased by EUMETSAT) has been generated and provided over GTS to NRT users. Commercial NRT data procured by NOAA has been generated as demonstration products as well and disseminated over EUMETCast. The last ROM SAF Operations Review (OR16) was held on the 27–28 of May 2024.
+The Metop NRT processing system (GPAC) was upgraded on 18 March 2024, and the system was migrated to new servers at DMI. The EUMETSAT Secretariat Metop NRT processing system (PPF) was upgraded on 16 April 2024. Both upgrades included quality improvements at high altitudes as well as technical changes to the BUFR files. All ROM SAF Metop NRT products were affected by the changes. The changes to the PPF (upgraded to PPF 6) also a ected the Metop Offline and ICDR products.
+The comparison of the Metop NRT Level 2A refractivity products to profiles from ECMWF operational forecasts is within the limits of the Service Specifications (SeSp). Distinct differences in biases at high altitudes between rising and setting occultations were significantly reduced with the upgrade to PPF 6.
+The comparison of the Metop Offline Level 1B bending angle and 2A refractivity products to profiles from ECMWF ERA5 reanalysis forecasts is mainly within the limits of the SeSp. Also here we see that distinct di erences in biases at high altitudes between rising and setting occultations were significantly reduced with the upgrade to PPF 6. The standard deviation at high altitudes has increased gradually since the beginning of 2022, which is likely related to the increased solar activity.
+The comparison of the Sentinel-6 NTC Level 2A refractivity and dry temperature products to profiles from ECMWF operational forecasts is mainly within the limits of the SeSp.
+Spire NRT products based on EUMETSAT-procured data are provided in demonstration mode since 27 October 2022. Commercial NRT data procured by NOAA are also provided in demonstration mode. These products are assumed to achieve operational status in the future, and Service Specifications will be defined then.
+The comparison of the Metop NRT and Offline Level 2B and 2C temperature and humidity products to ECMWF ERA5 reanalysis is mainly within the limits of the SeSp. Exceptions are Metop NRT specific humidity (tropics and mid lat), very consistent with previous years, and Metop Offline surface pressure, which has shown gradually increased standard deviation since introduction of Offline v1.2.
+The quality assessment of Level 2C tropopause height products derived from the WMO temperature lapse rate definition show no noticeable issues regarding the tropopause products in the period 1 January to 31 May 2024.
+The quality of the Metop Offline and ICDR Level 3 gridded data is predominantly in line with the SeSp requirements. The main deviations are dry pressure and dry geopotential height at high altitudes and in the polar regions. Here, it is quite common that the deviations are two times the nominal threshold value. For the relatively short Sentinel-6 NTC Level 3
+tropopause height product based on the dry-temperature lapse rate, we also find deviations that are a factor of two larger than the threshold. The reasons for these latter deviations may be related to sampling errors in the tropopause height product, which will be addressed in the next ROM SAF reprocessing planned in the second half of 2024.
+During the reporting period, a subset of ROM SAF CDR and ICDR products have continued to be provided through the Climate Data Store of the Copernicus C3S service. It is only the Level 3 gridded monthly mean humidity data that are distributed through the CDS, but the data has nevertheless attracted quite a few users. The available user statistics demonstrate the potential for reaching new user groups through alternative distribution channels. In line with this, the ROM SAF is also contributing data to a project in which RO data from several processing centers are made available through the Registry of Open Data on the Amazon Web Services (AWS) Data Exchange.
+The Radio Occultation Processing Package (ROPP) software package was originally released in 2004 and the current version is ROPP version 11.0 which was released on the 26th of January 2022 and is available on the ROM SAF website.
+The Operations Report is available here:
+https://rom-saf.eumetsat.int/opr.php
+[September 6, 2024]
+Release of software package ROPP version 11.3
+The ROM SAF announces the release of ROPP-11.3, the latest update of the Radio Occultation Processing Package (ROPP). The main difference from the previous release, ROPP-11.0, is the following:
+The update of the ROPP BUFR library:
+Enable encoding/decoding of the new satellite sub-identifier (descriptor 001016) in the RO BUFR using Master Table Version 39, which is available in ecCodes v2.28)
+Enable encode/decode alternative sub-centre in BUFR
+Enable encode/decode of nominal reporting time instead of start time in BUFR
+Revise GTS header area codes
+Add auto-configuration of ropp packages
+Refactor/Simplify formulation of pressure in ECMWF forward, tangent linear and adjoint calculations
+Include configuration and B-matrices used in ROM SAF production.
+Bug fixes:
+Fix conversion from calendar date to Julian date
+Fix wrong assignment of obs_corr_file in read config of 1DVar.
+The user documentation for the BUFR specifications has been updated and is available as draft version. As soon as the review has been finished the document will be updated to its final version.
+Details of all changes, together with the updated software, are available on the ROPP download website:
+https://rom-saf.eumetsat.int/ropp/files.php
+[July 11, 2024]
+Updates to ROM SAF Metop NRT processing and products (GPAC 3.4)
+On 18 March, the ROM SAF will update the Metop NRT processing system from GPAC 0.4.3 to GPAC 3.4.0 in coordination with the upgrade to PPF v6 at the EUMETSAT Secretariat. The implications for the Metop NRT products can be found in the announcement here:
+https://user.eumetsat.int/news-events/news/updated-gras-ro-processor-offers-eumetsat-s-first-space-weather-data
+Related to this upgrade, the Metop NRT netCDF product files will become more similar to other ROM SAF netCDF files (like, e.g., Spire NRT, Sentinel-6 NTC, Metop Offline/ICDR). This includes:
+- Additional global attributes
+- Inclusion of optimized bending angle in atm files
+- Corresponding height levels between level 1B and level 2A data
+- Additional diagnostics, e.g., LC model bending angle in atm files
+- Orbit samples in dedicated reference group
+- Forward modelled bending angle and refractivity in bgo and bgn files
+- Geopotential height in bgo and bgn files
+Filenames will change, e.g.:
+Currently: atm20240204_203457_M01_2140880086_N0023_XXXX.nc
+To become: atm_20240204_203457_METB_G014_N_3400_0020.nc
+The following netCDF filetypes will become publicly available:
+atm netCDF-3 observed profile (lat, lon, bending angle, refractivity, dry temperature, and tropopause height)
+wet netCDF-3 observed profile (output from 1D-Var, i.e., temperature, pressure, humidity)
+dis netCDF-3 observed profile (thinned products from the atm file together with products from the wet file)
+bgn netCDF-3 ECMWF operational analysis profile (bending angle, refractivity, temperature, etc.)
+bgo netCDF-3 ECMWF operational forecast profile (bending angle, refractivity, temperature, etc.)
+The bgo file replaces the current bgr file. The data in the bgo and bgn files are extracted from GRIB files and interpolated in time between the two nearest 6-hourly forecasts (bgo) or analyses (bgn). They are not made available in NRT, but are available with a delay of about one day.
+In addition, there will also be changes to the BUFR (bfr) files. Please see the announcement concerning the BUFR files here:
+https://user.eumetsat.int/news-events/news/updated-gras-ro-processor-offers-eumetsat-s-first-space-weather-data
+Besides the changes mentioned above, there are changes to the quality of the observations as follows:
+- Reduction of hemispheric-dependent biases between rising and setting occultations at high altitudes
+- Improvement to the statistical optimization in the refractivity retrieval
+- Significant increase in the number of nominal occultations (due to changed QC at the ROM SAF)
+- Slightly larger standard deviation (a consequence of the larger number of nominal occultations)
+- Larger standard deviation of level 2B specific humidity
+[March 8, 2024]
+Publication of ROM SAF Operations Report 2023 H2
+This report covers the 7-months’ period June–December (H2) of 2023. During this period the following ROM SAF data products have been produced and disseminated: Metop NRT profiles (since February 2010), Metop Offline profiles and gridded products (since April 2019), Interim Climate Data Records from Metop (since April 2019), Sentinel-6 Non Time Critical (NTC) profiles and gridded products (since December 2021). Since 27 October 2022 demonstration product from commercial RO data (Spire) (purchased by EUMETSAT) has been generated and provided over GTS to NRT users. Commercial NRT data procured by NOAA has been generated as demonstration products as well and disseminated over EUMETCast. The last ROM SAF Operations Review (OR15) was held on the 26–27 of June 2023.
+The comparison of the Metop NRT Level 2A refractivity products to profiles from ECMWF operational forecasts is within the limits of the Service Specifications (SeSp). Distinct differences in biases at high altitudes between rising and setting occultations have been identified to be an issue with the processing system at the EUMETSAT Secretariat. The differences were introduced with PPF 5, and the problem will be fixed with an upcoming upgrade to PPF 6.
+The comparison of the Metop Offline Level 1B bending angle and 2A refractivity products to profiles from ECMWF ERA5 reanalysis forecasts is mainly within the limits of the SeSp. Also here we see distinct differences in biases at high altitudes between rising and setting occultations for the same reason as for Metop NRT. The standard deviation at high altitudes has increased gradually since the beginning of 2022, which is likely related to the increased solar activity.
+The comparison of the Sentinel-6 NTC Level 2A refractivity and dry temperature products to profiles from ECMWF operational forecasts is mainly within the limits of the SeSp.
+Spire NRT products based on EUMETSAT poduced data are provided in demonstration mode since 27 October 2022. More recently, commercial NRT data procured by NOAA are also provided in demonstration mode. These products are assumed to achieve operational status in the future, and Service Specifications will be defined then.
+The comparison of the Metop NRT Level 2B and 2C temperature and humidity products to ECMWF ERA5 reanalysis is mainly within the limits of the SeSp. Exceptions are Metop NRT specific humidity (tropics and mid lat), very consistent with previous years, and Metop Offline surface pressure, which has shown gradually increased standard deviation since introduction of Offline v1.2.
+The quality assessment of Level 2C tropopause height products show no noticeable issues regarding the tropopause products in the period June to December 2023.
+The quality of the Metop Level 3 gridded data is generally according to expectations. The data are predominantly in line with the SeSp requirements: the main deviations are dry pressure and dry geopotential height at high altitudes and in the polar regions. For the still relatively short Sentinel-6 NTC Level 3 data record, we also find some deviations for the tropopause height product based on the dry-temperature lapse rate. The reasons for these deviations may be related to sampling errors in the tropopause height product, which will be adressed in the next ROM SAF reprocessing.
+During the reporting period, a subset of ROM SAF CDR and ICDR data have continued to be provided through the Climate Data Store of the Copernicus C3S service. It is only the Level 3 gridded monthly mean humidity data that are distributed through the CDS, but the data has nevertheless attracted quite a few users. The available user statistics is still incomplete (72 during 2022 and 45 during Q2+Q3 2023) but nevertheless points to the potential for reaching new user groups through alternative distribution channels. In line with this, the ROM SAF is also contributing data to a project in which RO data from several processing centers are made available through the Amazon Web Services (AWS).
+The Radio Occultation Processing Package (ROPP) software package was originally released in 2004 and the current version is ROPP version 11.0 which was released on the 26th of January 2022 and is available on the ROM SAF website.
+The Operations Report is available here:
+https://rom-saf.eumetsat.int/opr.php
+[February 27, 2024]
+8th ROM SAF User Workshop on GNSS radio occultation measurements
+ECMWF hosts the 8th EUMETSAT ROM SAF user workshop on GNSS radio occultation measurements, on June 11-13, 2024.
+GNSS radio occultation (GNSS-RO) measurements are an important and well-established component of the global observing system. With more than 10,000 occultations per day available, we are now starting a data-rich era and it is important to exploit the measurements in the best way possible.
+This workshop, organized by ECMWF and the EUMETSAT Radio Occultation Meteorology Satellite Application Facility (ROM SAF), will review the use of the GNSS-RO data at the major NWP centres, and explore how the assimilation of the measurements can be improved using more sophisticated observation operators. The value of GNSS-RO as "anchor measurements" for estimating the bias correction of satellite radiances will be emphasised. The workshop will also cover new work on polarimetric RO (PRO), and review the work on climate monitoring and space weather with GNSS-RO.
+This workshop is co-sponsored by ECMWF and the EUMETSAT Radio Occultation Meteorology Satellite Application Facility (ROM SAF). The workshop will help inform future research and development directions for the ROM SAF.
+Workshop page:
+8th EUMETSAT ROM SAF user workshop on GNSS radio occultation measurements
+[February 6, 2024]
+Ionospheric 1D-Var papers
+The ROM SAF has recently had two papers on ionospheric electron density retrieval published in Space Weather:
+https://agupubs.onlinelibrary.wiley.com/doi/10.1029/2023SW003572
+https://agupubs.onlinelibrary.wiley.com/doi/full/10.1029/2023SW003571
+These papers outline and then test a novel approach for retrieving electron density profile information from GNSS-RO measurements using the one-dimensional variational retrieval (1D-Var) technique. The ionospheric 1D-Var approach was primarily developed to accommodate the truncated GNSS-RO measurement geometry of EPS-SG, but it can be applied to other missions. The testing published in Space Weather suggests that the 1D-Var performance is comparable to the Abel transform method used in the processing of COSMIC-2 GNSS-RO measurements.
+A key innovation is the use of bending angles above 100 km in the 1D-Var code, because this circumvents the need for differential code biases (DCBs). More generally, the use of bending angles may have implications for how GNSS-RO measurements are assimilated in ionospheric data assimilation systems, but this hypothesis needs to be tested in future work.
+An F90 version of the ionospheric 1D-Var code is available in version 11 of ROM SAF’s Radio Occultation Processing Package (ROPP-11) and further updates are anticipated in ROPP-12 which is due to be released in Q4, 2024 (see
+https://rom-saf.eumetsat.int/ropp/
+[February 1, 2024]
+Updates to Radio Occultation BUFR products
+RO BUFR products from EUMETSAT and the ROM SAF will be updated in December 2023 for the Spire commercial RO products, and in the first quarter of 2024 for the Metop GRAS products. Please see the EUMETSAT announcement here:
+https://www.eumetsat.int/updates-radio-occultation-bufr-products
+ROM SAF BUFR test data can be downloaded via anonymous FTP:
+ftp ftp.dmi.dk
+Login: anonymous
+Password: <email>
+The test data are located under romsaf/testBUFR_newSpire.
+We are currently preparing an update of the ROM SAF BUFR documentation to include the changes mentioned in the announcement above. A draft of this document can be provided upon request by email to:
+helpdesk@romsaf.org
+[November 7, 2023]
+Publication of ROM SAF Operations Report 2023 H1
+This report covers the 5-month period January-May (H1) of 2023. During this period the following ROM SAF data products have been produced and disseminated: Metop NRT profiles (since February 2010), Metop Offline profiles and gridded products (since April 2019), Interim Climate Data Records from Metop (since April 2019), Sentinel-6 Non Time Critical (NTC) profiles and gridded products (since December 2021). Since 27 October 2022 demonstration product from commercial RO data (Spire) (purchased by EUMETSAT) has been generated and provided over GTS to NRT users. The last ROM SAF Operations Review (OR15) was held on the 26th--27th of June 2023.
+The comparison of the Metop NRT Level 2A refractivity products to profiles from ECMWF operational forecasts is within the limits of the Service Specifications (SeSp). Significant differences in biases at high altitudes between rising and setting occultations have been identified to be an issue with the processing system at the EUMETSAT Secretariat. The differences were introduced with PPF 5, and the problem will be fixed with an upcoming upgrade to PPF 6.
+The comparison of the Metop Offline Level 1B Bending Angle and 2A refractivity products to profiles from ECMWF ERA5 reanalysis forecasts is mainly within the limits of the SeSp.
+Also here we see significant differences in biases at high altitudes between rising and setting occultations for the same reason as for Metop NRT. The standard deviation at high altitudes has increased gradually since the beginning of 2022, which is likely related to the increased solar activity. One very bad dry temperature profile in May 2023 was not caught in the QC.
+The comparison of the Sentinel-6 NTC Level 2A refractivity and dry temperature products to profiles from ECMWF operational forecasts is mainly within the limits of the SeSp.
+Spire NRT products is provided in demonstration mode since 27 October 2022. These products are assumed to achieve operational status in the future, and Service Specifications will be defined then.
+The comparison of the Metop NRT Level 2B and 2C temperature and humidity products to ECMWF ERA5 reanalysis is mainly within the limits of the SeSp. Exceptions are Metop NRT specific humidity (tropics and mid lat), very consistent with previous years, and Metop Offline surface pressure, which has shown gradually increased standard deviation since introduction of Offline v1.2. There seems to be a persistent increased surface pressure standard deviation and bias S-A across platforms (and missions).
+The quality assessment of Level 2C tropopause height products show no noticeable issues regarding the tropopause products in the period Jan to May 2023.
+The quality of the Metop Level 3 gridded data is generally according to expectations. The data are predominantly in line with the SeSp requirements: the main deviations are dry pressure and dry geopotential height at high altitudes and in the polar regions. For the still relatively short Sentinel-6 NTC Level 3 data record, we also find some deviations for the tropopause height product based on the dry-temperature lapse rate. The reasons for these deviations may be related to sampling errors in the tropopause height product, which will be adressed in the next ROM SAF reprocessing.
+The Radio Occultation Processing Package (ROPP) software package was originally released in 2004 and the current version is ROPP version 11.0 which was released on the 26th of January 2022 and is available on the ROM SAF website.
+The Operations Report is available here:
+https://rom-saf.eumetsat.int/opr.php
+[November 6, 2023]
+Publication of ROM SAF Report 43
+Applying the ROPP ionospheric 1D-Var retrieval to Metop extension data
+A one-dimensional variational (1D-Var) retrieval approach for ionospheric GNSS radio occultation (GNSS-RO) measurements is now included in version 11 of the Radio Occultation Processing Package (ROPP-11: see https://rom-saf.eumetsat.int/ropp/). This 1D-Var code is applied to Metop extension data, where the bending angles extend up to 600 km. It is shown that the 1D-Var code can process the Metop data, but around 15 % of the retrievals either converge to a high cost at convergence value, or fail to converge in 50 iterations. Various problematic cases are presented. Missing bending angles and inconsistent bending angles at the L1 and L2 frequencies can cause retrieval problems. In some cases, the retrieval produces ionospheric layers peaking well below 100 km. A number of additional quality control (QC) checks are suggested. It is found that single frequency retrievals can be performed with simple source code changes.
+[September 18, 2023]
+Announcement of availability of ROM SAF PlanetiQ (procured by NOAA) NRT products
+The ROM SAF is pleased to announce that PlanetiQ data procured by NOAA, but made available under a global licence to EUMETSAT, and processed to Level 2 at the ROM SAF, are now available on the
+ROM SAF archive
+. The products are provided with the status “demonstration”. Please also see the earlier ROM SAF announcement
+here
+Products:
+The ROM SAF PlanetiQ NRT products consists of the following geophysical variables:
+- Level 2A: refractivity, dry temperature (GRM-220, GRM-225)
+- Level 2B: temperature, humidity, pressure (GRM-221, GRM-222, GRM-223)
+- Level 2C: surface pressure (GRM-224)
+In addition, the files include a copy of the EUMETSAT Secretariat PlanetiQ NRT bending angle (Level 1B) at vertical levels corresponding to those of the Level 2A products. The files are formatted as netCDF files, with a subset of the products formatted as BUFR.
+Dissemination:
+GTS: The ROM SAF BUFR files based on NOAA-procured PlanetiQ data are not made available on GTS.
+EUMETCast: The BUFR files are disseminated on EUMETCast
+Website: The ROM SAF netCDF and BUFR files are available at the
+ROM SAF product archive
+. The archived NOAA-procured PlanetiQ data cover the time period from 4 September 2023 up to the present.
+[September 7, 2023]
+ROM SAF website has been successfully migrated to a new web server!
+Today, 24th July 2023, the ROM SAF website has been successfully migrated to a new web server!
+Because DMI is moving to a new location, the ROM SAF IT infrastructure has been migrated to a new system. Therefore, the ROM SAF website has been migrated, updated and installed in a new environment based on virtual servers. Our product quality charts were also migrated/upgraded to that new infrastructure, which involved upgrading our scripts from python2 to python3; so the appearance of quality plots has changed slightly.
+This migration also meant a change of IP of the main domain
+https://rom-saf.eumetsat.int/
+, which became effective around 11:20 CEST.
+[July 24, 2023]
+ROM SAF has moved the domain to https://rom-saf.eumetsat.int
+On Wednesday 28 June 2023, ROM SAF has moved the domain to
+https://rom-saf.eumetsat.int
+. This change has been seamless while maintaining all the functionalities. The purpose of this change is to create visibility around the relationship between ROM SAF and EUMETSAT.
+[June 28, 2023]
+Announcement of availability of ROM SAF Spire (procured by NOAA) NRT products
+The ROM SAF is pleased to announce that Spire data procured by NOAA, but made available under a global licence to EUMETSAT, and processed to Level 2 at the ROM SAF, are now available on the
+ROM SAF archive
+. The products are provided with the status “demonstration”. Please also see the earlier ROM SAF announcement
+here
+Products:
+The ROM SAF Spire NRT products consists of the following geophysical variables:
+Level 2A: refractivity, dry temperature (GRM-210, GRM-215)
+Level 2B: temperature, humidity, pressure (GRM-211, GRM-212, GRM-213)
+Level 2C: surface pressure (GRM-214)
+In addition, the files include a copy of the EUMETSAT Secretariat Spire NRT bending angle (Level 1B) at vertical levels corresponding to those of the Level 2A products. The files are formatted as netCDF files, with a subset of the products formatted as BUFR.
+Dissemination:
+GTS:
+The ROM SAF BUFR files based on NOAA-procured Spire data are not made available on GTS.
+EUMETCast:
+The BUFR files are disseminated on EUMETCast. Please see the EUMETSAT announcement
+here
+Website:
+The ROM SAF netCDF and BUFR files are available at the
+ROM SAF product archive
+. The archived NOAA-procured Spire data cover the time period from 7 June 2023 up to the present.
+[June 20, 2023]
+ROM SAF Spire NRT production based on data procured by NOAA
+The ROM SAF is pleased to announce an upcoming production of near real-time (NRT) products based on a subset of radio occultation (RO) measurements from the Spire constellation of nanosatellites. The production is expected to start in the week commencing on 29th May and a follow-up announcement will be sent out with the specific date.
+These Spire data are procured by NOAA, but made available under a global licence to EUMETSAT. The products contain vertical profiles of atmospheric pressure, temperature, humidity and refractivity. The ROM SAF data generation is based on the Level 1B NRT data (bending angle) provided by the EUMETSAT Secretariat, and will include a copy of the EUMETSAT Secretariat NRT bending angle. The ROM SAF Spire products are provided with the status "demonstration".
+The BUFR files for these data contain an extra descriptor for the satellite sub-identifier (descriptor 0 01 016) in BUFR Section 3. This descriptor comes immediately before the RO BUFR sequence of descriptors (descriptor 3 10 026). Master Table Version 39 (or higher) is required to decode the BUFR data.
+To indicate that these data are procured by NOAA, the sub-centre code in BUFR Section 1 is set to 220.
+The time significance in the BUFR files (descriptor 0 08 021) is set to 25, meaning 'nominal reporting time', and consequently the time increment (descriptor 0 04 016) is always zero.
+The ROM SAF BUFR files will be disseminated on EUMETCast Terrestrial, and this will be announced separately.
+[May 25, 2023]
+Provision of GNSS-RO bending angle uncertainty estimates
+The ROM SAF now provides monthly estimates of the bending angle uncertainty for Metop/GRAS, COSMIC-2 and Spire GNSS-RO measurements. This information can be viewed on the ROM SAF monitoring pages via:
+https://www.ecmwf.int/en/forecasts/quality-our-forecasts/monitoring/gpsro-monitoring
+, where we show both standard deviation of the bending angle errors and the bending angle error correlations matrices, similar to Figure 1 and 2, respectively. In addition, the data and python routines used to generate these figures can be downloaded from the ROM SAF webpage at:
+https://www.romsaf.org/pub/demo/RO_error_stats
+We hope this information will be useful for colleagues outside the ROM SAF, who are working on the assimilation of GNSS-RO measurements. These error statistic estimates will be updated each month. At the moment, the statistics are only split into all data and rising/setting observations, but the plan is to add splitting by GNSS type (GPS, Galileo, etc) later in 2023.
+Note that recent work in this area by the ROM SAF and colleagues NASA and UCAR can be found here: Todling, R, Semane, N, Anthes, R and S Healy (2022). The Relationship Between Two Methods for Estimating Uncertainties in Data Assimilation, Quarterly Journal of the Royal Meteorological Society, available from:
+https://doi.org/10.1002/qj.4343
+Figure 1: Black line - the standard deviation the bending angle errors (percentage) given as a function of impact height, computed with the
+Desroziers et al
+(2005) method (
+https://rmets.onlinelibrary.wiley.com/doi/10.1256/qj.05.108
+) for Metop/GRAS data in February 2023. The blue line shows the error statistics currently assumed at ECMWF when assimilating the Metop/GRAS data.
+Figure 2: The estimated error correlation matrix for Metop/GRAS data in February 2023.
+[March 22, 2023]
+Atmospheric temperature changes in the first two decades of the 21st century
+The radio occultation (RO) climate data record now covers more than 20 years, which is sufficient to estimate long-term trends in parts of the Earth's atmosphere. The RO data show that in the first two decades of the 21st century, the Earth's lowest atmospheric layer---the troposphere---warmed significantly, by up to 0.5 K per decade, while the layer above that---the stratosphere---cooled by about the same amount (see figure below). The high vertical resolution of the RO measurements allows for a detailed view of important parts of the climate system, that also have an impact on the weather patterns of our planet.
+Details of these temperature changes have been investigated in a recent study by Wegener Center at the University of Graz and the Danish Meteorological Institute, partner institutes in the ROM SAF consortium. The high-resolution RO data confirm an amplified warming in the tropical upper troposphere: "In the last two decades, the upper troposphere has warmed by one degree Celsius in the tropics and mid-southern latitudes, more than twice as much as the Earth's surface. The temperature increase extends up into the lower layers of the stratosphere", says Florian Ladstädter from the Wegener Center, lead author of the study. The study was published in the journal
+Scientific Reports
+The possibilities of RO data for observing temperature trends in the Earth's global atmosphere are outlined in a
+satellite data case study
+published by EUMETSAT. In that case study, it is described in some detail what is actually measured by the RO technique, how the RO data are prepared for climate applications, and how RO data made important contributions to the
+6th IPCC Assessment Report
+(August 2021). The case study also provides web links to the RO climate data records, which are continuously updated to show the most recent evolution of the climate system.
+[March 16, 2023]
+Publication of ROM SAF Operations Report 2022 H2
+This report covers the 7-months period June–December (H2) of 2022. During this period the following ROM SAF data products have been produced and disseminated: Metop NRT profiles (since February 2010), Offline Metop profiles and gridded products (since April 2019), Interim Climate Data Records from Metop (since April 2019), Sentinel-6 Non Time Critical (NTC) profiles and gridded products (since December 2021), and Spire NRT profiles (since October 2022). The Metop-A mission reached its end-of-life in mid-November 2021 and therefore starting with November 2021 Metop data products are based on Metop-B and Metop-C. Since 27th October 2022 demonstration product from commercial RO data (Spire) (purchased by EUMETSAT) has been generated and provided over GTS to NRT users. The last ROM SAF Operations Review (OR14) was held on the 13th of June 2022 as a teleconference.
+The comparison of the Metop NRT Level 2A refractivity products to profiles from ECMWF operational forecasts is within the limits of the Service Specifications (SeSp). Significant differences in biases at high altitudes between rising and setting occultations have been identified to be an issue with the processing system at the EUMETSAT Secretariat. Work to find
+the root cause for the biases is ongoing.
+The comparison of the Metop Offline Level 1B and 2A products to profiles from ECMWF ERA5 reanalysis forecasts is mainly within the limits of the SeSp. Also here we see significant differences in biases at high altitudes between rising and setting occultations. This also seems related to the processing system at the EUMETSAT Secretariat.
+The comparison of the Sentinel-6 NTC Level 2A refractivity and dry temperature products to profiles from ECMWF operational forecasts is mainly within the limits of the SeSp. A minor exception near the end of September, beginning of October, is related to the changing local time coverage of the Sentinel-6 satellite.
+Spire NRT products is provided in demonstration mode since 27 October 2022. These products are assumed to achieve operational status in the near future, and Service Specifications will be defined then.
+The comparison of the Level 2B and 2C products to ECMWF ERA5 reanalysis is mainly within the limits of the SeSp. Exceptions are NRT specific humidity (tropics and mid lat), very consistent with previous years, and Offline surface pressure, which has shown increased standard deviation with introduction of Offline v1.2.
+For all product types there are no noticeable issues regarding the tropopause products in the period June to December 2022.
+The Metop Level 3 gridded data are predominantly in line with the SeSp requirements. The main deviations are dry pressure and dry geopotential height at high altitudes and in the polar regions, as well as bending angles in the tropical lower troposphere. For the still relatively short Sentinel-6 NTC data record, we also find some deviations for the tropopause height
+product based on the dry-temperature lapse rate. Note, however, that the deviations from the SeSp requirements are not necessarily due to the observed data.
+The ROPP software package was originally released in 2004 and the current version is ROPP version 11.0 which was released on the 26th of January 2022 and is available on the ROM SAF website.
+Operations Report available here:
+http://www.romsaf.org/opr.php
+[March 3, 2023]
+Start of dissemination of ROM SAF Spire NRT products on GTS
+The ROM SAF is pleased to announce the start of production of near real-time (NRT) products based on a subset of radio occultation (RO) measurements from the Spire constellation of nanosatellites. The products contain vertical profiles of atmospheric pressure, temperature, humidity and refractivity. The ROM SAF data generation is based on the Spire Level 1B NRT data (bending angle) provided by the EUMETSAT Secretariat.
+Products:
+The ROM SAF Spire NRT products consists of the following geophysical variables:
+Level 2A: refractivity, dry temperature (GRM-210, GRM-215)
+Level 2B: temperature, humidity, pressure (GRM-211, GRM-212, GRM-213)
+Level 2C: surface pressure (GRM-214)
+Formats:
+The products are provided with the status “demonstration”. They are formatted as netCDF files, with a subset of the products formatted as BUFR. In addition, the files include a copy of the EUMETSAT Secretariat Spire NRT bending angle (Level 1B) at vertical levels corresponding to those of the Level 2A products. The available archived data cover the time period from 17 October 2022 up to the present.
+Dissemination:
+The ROM SAF BUFR data are disseminated over the GTS, and are available shortly after they are processed (the GTS abbreviated bulletin headers are: IUT[A-L]14 EKMI). In addition, the netCDF data are published on the ROM SAF website in compressed tar (tgz) files containing a full day, though with the current day updated every 10 minutes with additional occultations as they are processed. Access to products is available (after registration) at the ROM SAF Product Archive (
+http://www.romsaf.org/product_archive.php
+License:
+Please note that the ROM SAF Spire NRT products are made available under a "Global License". See the details at EUMETSAT here:
+https://www.eumetsat.int/commercial-radio-occultation-data-gts-soon
+(23 March 2022); link to the license:
+https://www.eumetsat.int/commercial-radio-occultation-data-usage-terms-conditions
+[October 27, 2022]
+Announcement of upcoming ROM SAF Spire NRT production
+The ROM SAF is pleased to announce the upcoming production of near real-time (NRT) products based on a subset of radio occultation (RO) measurements from the Spire constellation of nanosatellites. The products contain vertical profiles of atmospheric pressure, temperature, humidity and refractivity. The ROM SAF data generation is based on the Spire Level 1B NRT data (bending angle) provided by the EUMETSAT Secretariat, and will include a copy of the EUMETSAT Secretariat Spire NRT bending angle. The ROM SAF Spire products are provided with the status “demonstration”.
+The ROM SAF BUFR data will be disseminated on the GTS starting on 2022-10-27 around 12:00 UTC.
+The GTS abbreviated bulletin headers are: IUT[A-L]14 EKMI.
+The products are made available under a "Global Licence". Please see details here:
+https://www.eumetsat.int/commercial-radio-occultation-data-gts-soon
+(and follow this link:
+https://www.eumetsat.int/commercial-radio-occultation-data-usage-terms-conditions
+We will send out another announcement once the data are on the GTS.
+[October 20, 2022]
+Publication of ROM SAF Operations Report 2022 H1
+This report covers the 5-month period January – May (H1) of 2022. During this period the following ROM SAF data products have been produced and disseminated: NRT Metop profiles (since February 2010), Offine Metop profiles and gridded products (since April 2019), Interim Climate Data Records from Metop (since April 2019), and Sentinel-6 Non Time Critical (NTC) profiles and gridded products (since December 2021). The Metop-A mission reached its end-of-life in mid-November and therefore starting with November 2021 Metop data products are based on Metop-B and Metop-C. Metop-A data is therefore not analyzed in this report. The last ROM SAF Operations Review (OR14) was held on the 13th of June 2022 as a teleconference.
+The comparison of the Metop NRT Level 2A refractivity products to profiles from ECMWF operational forecasts is within the limits of the Service Specifications (SeSp). Significant differences in biases at high altitudes between rising and setting occultations have been discovered.
+The comparison of the Metop Offine Level 1B and 2A products to profiles from ECMWF ERA5 reanalysis forecasts is mainly within the limits of the SeSp. Also here we see significant differences in biases at high altitudes between rising and setting occultations that seems to have been introduced with an upgrade to the processing system at the EUMETSAT Secretariat in 2021.
+The comparison of the Sentinel-6 NTC Level 2A refractivity and dry temperature products to profiles from ECMWF operational forecasts is mainly within the limits of the SeSp. A minor exception is during a short period with satellite attitude yaw-flips in late April 2022. Generally, the data quality has improved as a result of an upgrade to the processing system at the EUMETSAT Secretariat in early April 2022.
+There are no noticeable issues regarding the 1D-Var and tropopause products in the period January to May 2022.
+The Metop Level 3 gridded data are predominantly in line with the SeSp requirements. The main deviations are dry pressure and dry geopotential height at high altitudes and in the polar regions, as well as bending angles in the tropical lower troposphere. For the still very short Sentinel-6 NTC data record, we also find some deviations for the tropopause height product based on the dry-temperature lapse rate. Note, however, that the deviations from the SeSp requirements are not necessarily due to the observed data.
+The ROPP software package was originally released in 2004 and the current version is ROPP version 11.0 which was released on the 26th of January 2022 and is available on the ROM SAF website.
+Operations Report available here:
+http://www.romsaf.org/opr.php
+[August 24, 2022]
+Release of Obs4MIPs formatted monthly mean gridded data
+Obs4MIPs (Observations for Model Intercomparisons Projects) is an effort to make observational data more accessible for climate model applications. This is done through the Obs4MIPs Data Specifications, which are a set of requirements for formatting of netCDF files such that the observational data can be handled similar to the climate-model data (
+https://pcmdi.github.io/obs4MIPs
+The ROM SAF now releases a demonstration data record that is formatted according to the Obs4MIPs Data Specifications, with the aim to eventually release it as a formal Obs4MIPs product. The data record consists of reprocessed multi-mission RO data covering the time period January 2002 to December 2016. This demonstration product is essentially a subset of the ROM SAF product GRM-28-R1 (Multimission reprocessed RO gridded Level 3 climate data record), with the Level 3 netCDF files slightly reformatted to conform with the Obs4MIPs Data Specifications (ODS v2.1). The reformatting affects the netCDF meta data, attributes, and variable names, but the data themself are not affected. The Obs4MIPs data record includes gridded monthly-mean data of four geophysical variables: bending angle, refractivity, dry temperature, and dry geopotential height.
+This product was a result of the ROM SAF CDOP 3 work package WP2550. The purpose was to demonstrate the format and contents of a potential Obs4MIPs data record to be used in climate-model related studies, e.g., within CMIP projects. The data are available at:
+https://www.romsaf.org/pub/demo/obs4mips
+[July 7, 2022]
+New technique for inverting truncated ionospheric RO from GNSS measurements
+The challenging ionospheric radio occultations (RO) scenario of the upcoming EUMETSAT EPS-SG mission has given rise to the development of a new technique of electron density retrieval. The method (denoted AVHIRO for Abel Vary-Chapman Hybrid model of Incomplete RO data) is a new way of inverting truncated ionospheric RO measurement of Global Navigation Satellite Systems (GNSS) dual-frequency carrier phase measurements.
+In the AVHIRO approach we compute the electron density values that fit, in a least mean squares sense, the Abel inversion of the available carrier-phase measurements in the EPS-SG illuminated region (impact parameter heights below 500 km). The upper contribution is estimated by seaching through the possible values of the four parameter values that drive Chapman’s model under the assumption of vertical linearly increasing scale height.
+The resulting performance (see an example below) is better than a previous version of the AVHIRO method in terms of both accuracy (reducing the number of outlier results), processing speed (up to one thousand times faster from more than 15 min to less than 2 seconds) and integrity (providing an error estimate sensitive to the actual error).
+A data package containing results obtained with AVHIRO (version 2) is available at the ROM SAF Product Archive. Each plot contains the electron density from the AVHIROv2 solution, truncated above 500 km of impact parameter height vs. geocentric distance.
+Data access (registered users*):
+NE_AVHIROv2
+(* New users can register
+here
+[June 23, 2022]
+Publication of Visiting Scientist report on ionospheric 1D-Var retrieval assessment
+The ROM SAF is pleased to release
+Visiting Scientist report No. 39
+by Dr Sean Elvidge, University of Birmingham, UK.
+Abstract
+This visiting scientist activity has tested the new ionospheric 1D-Var electron density retrieval method. This method, developed by the ROM SAF, was originally outlined in
+ROM SAF Report 42
+, and the retrieval code is now part of the
+ROPP-11 software package
+. The main motivation for developing the new approach is the truncated measurement geometry for EPS-SG, where the ionospheric measurements will stop near 500 km, meaning that it is difficult to apply a simple Abel transform approach.
+We have tested the 1D-Var retrieval using both COSMIC-2 and Spire ionospheric measurements, and the retrieval results have been compared with ionosondes. Possible improvements arising from a more accurate background state, and the sensitivity of the retrieval quality to the number of “VaryChap” layers, have also been investigated.
+Overall, the results suggest that this is a potentially useful method for retrieving electron density from ionospheric radio occultation measurements. New studies assessing the impact of assimilating bending angles into ionospheric data assimilation systems are suggested, noting that the assimilation of “slant TEC” usually requires differential code bias (DCB) estimates.
+[March 18, 2022]
+Release of ROM SAF atmospheric gridded products generated from Sentinel-6 radio occultation observations
+The ROM SAF is pleased to announce the release of operational products containing monthly gridded atmospheric temperature, humidity, pressure, refractivity and bending angles based on radio occultation (RO) measurements onboard the Sentinel-6 Michael Freilich satellite. The ROM SAF Sentinel-6 products are based on bending angle data generated at the EUMETSAT Secretariat derived from measurements from the NASA GNSS-RO instrument flying onboard Sentinel-6. The purpose of the released ROM SAF products is to provide a stable and quality controlled RO dataset for non-time critical (NTC) applications.
+The ROM SAF Sentinel-6 NTC products contain the following geophysical parameters:
+- bending angle, refractivity (Level 3, product identifiers GRM-123, GRM-124)
+- dry temperature, dry pressure, geopotential height (Level 3, GRM-128, GRM-129, GRM-127)
+- temperature, humidity (Level 3, GRM-125, GRM-126)
+- tropopause height (Level 3, GRM-195)
+All products are released with status "operational", with the exception of the tropopause height which has "pre-operational" status until validation is completed successfully. The products are provided in netCDF files and include monthly standard deviations, sampling errors, and uncertainty estimates in addition the the monthly means. The released ROM SAF Sentinel-6 Level 3 gridded monthly-mean products starts with December 2021 and new products will be released monthly about three weeks after end of a month. NTC products are generated with similar algorithms as used for the ROM SAF Offline products based on the GRAS sensors onboard the Metop satellites.
+User documentation about the ROM SAF Sentinel-6 products includes the following:
+Algorithm Theoretical Baseline Documents (ATBDs):
+- ATBD for Sentinel-6 Level 3 NTC gridded products (GRM-123 to GRM-129, GRM-195)
+Validation Reports:
+- Validation Report: Sentinel-6 NTC Level 3 gridded products (GRM-123 to GRM-129, GRM-195)
+Product User Manual:
+- Product User Manual for Sentinel-6 NTC Level 3 gridded products (GRM-123 to GRM-129, GRM-195)
+Access to products and user documentation is available (after registration) at the:
+ROM SAF Product Archive
+The figure shows monthy mean dry temperature for January 2022 for all latitudes and between 8 and 50 km.
+The data were retrieved from Sentinel-6 NTC RO data.
+[March 14, 2022]
+Publication of ROM SAF Operations Report 2021 H2
+During the 7-month period June – December (H2) of 2021 the following ROM SAF data products have been produced and disseminated: Metop NRT profiles (since February 2010), Metop Offline profiles and gridded products (since April 2019), Interim Climate Data Records from Metop (since April 2019), and Sentinel-6 Non Time Critical (NTC) profiles and gridded products (since December 2021). The Metop-A mission reached its end-of-life in mid-November and therefore starting with November 2021 Metop data products are based on Metop-B and Metop-C. The last ROM SAF Operations Review (OR12) was held on the 22nd of April 2021 as a teleconference. The summary of the quality of the data products are as follows:
+The comparison of the Metop NRT Level 2A refractivity products to profiles from ECMWF operational forecasts is within the limits of the Service Specifications. The data quality has improved substantially as a result of an upgrade to the processing system at the EUMETSAT Secretariat.
+The comparison of the Metop Offline Level 1B and 2A products to profiles from ECMWF ERA5 reanalysis forecasts is mainly within the limits of the Service Specifications. The reasons for minor exceptions for Metop-A are associated with a sudden drop in the signal-to-noise ratio (SNR) on the Metop-A rising antenna and an apparent shift of the antenna phase center since 10 August 2019. The root cause for the drop in SNR on the Metop-A rising antenna is unknown.
+Metop NRT 1D-Var products improved noticeably on 14 September 2021 when EUMETSAT Secreatariat updated the processor to version 5. Offline data were only produced up to August 2021, and for 1D-Var and tropopause products there were no noticeable departures from usual performance.
+The Metop Level 3 gridded data are predominantly in line with the Service Specifications. The bending angle, refractivity, and dry variables exhibit a close match with ERA5 in the 8-30 km altitude range. The main deviations are dry pressure and dry geopotential height at high laltitudes and in the polar regions, as well as bending angles in the tropical lower troposphere.
+The released version of the ROPP software package is ROPP version 10.0 which was released on the 9th of February 2021 and is available on the ROM SAF website.
+Operations Report available here:
+http://www.romsaf.org/opr.php
+[February 11, 2022]
+Monitoring global climate change using GNSS radio occultation
+15 years ago, a study of climate change based on the Met Office Hadley Center climate model HadGEM1 predicted that toward the 2020s, climate trends would be clearly evident in the tropical stratosphere GNSS-RO bending angles [
+Healy and Ringer, 2008
+]. That prediction has now been tested with the nearly 20 years of ROM SAF data available. The results are presented in a short letter in the journal
+npj Climate and Atmospheric Science
+Gleisner et al., 2022
+Results from that new study are shown in the figure below. The observed bending-angle trends at low- and mid-latitudes are remarkably similar to those predicted by the Hadley Center climate model HadGEM1 dating from 2006 using a plausible IPCC emissions scenario for the 21st century. The 20 year RO data record shows the expected atmospheric responses to increased greenhouse gas concentrations: a warming of the upper troposphere and a cooling of the lower stratosphere with a sharp gradient at the tropopause, and a general upward expansion of the atmosphere manifested as an increase of the pressure at fixed altitudes. The model and observation data differ near the poles, consistent with the higher variability at high latitudes. Near the poles a stable bending-angle signal is not expected to be clearly established until the 2040's.
+Not only are the observed bending-angle trends at low- and mid-latitudes structurally very similar to the HadGEM1 model projections but they also have similar magnitudes. For example, in the lower stratosphere the observed trends are around three-quarters of those predicted by the HadGEM1 model.
+The figure shows the long-term trends in the observed RO data and in the climate model data: (a) Trends in RO bending angle as a function of latitude and height. (b) The corresponding trends in bending angle from HadGEM1 climate model integrations under the IPCC A1B scenario. (c) The corresponding trends in RO refractivity and (d) in dry temperature. All observed trends are based on data from 2002 to 2020.
+[February 3, 2022]
+Release of software package ROPP version 11
+The ROM SAF announces the release of ROPP-11.0, the latest update of the Radio Occultation Processing Package (ROPP). The main differences from the previous release, ROPP-10.0, are:
+a) The introduction of a tool to carry out 1dvar retrievals of electron density, using observations of the difference between the bending angles at two frequencies, and modelling the ionosphere by multiple VaryChap layers;
+b) A change in the default 1dvar solver from minROPP to LevMarq;
+c) An update to the supported ECMWF ecCodes software library;
+d) The introduction of BUFR codes for Spire, PlanetiQ, GeoOptics and Sentinel-6 satellites.
+All user documentation has been reviewed and updated. Details of all changes, together with the updated software, are available on the ROPP download website:
+http://www.romsaf.org/ropp/files.php
+[January 26, 2022]
+Release of ROM SAF atmospheric profile products generated from Sentinel-6 radio occultation observations
+The ROM SAF is pleased to announce the release of operational products containing vertical profiles of atmospheric pressure, temperature, humidity and refractivity based on radio occultation (RO) measurements onboard the Sentinel-6 Michael Freilich satellite. The ROM SAF Sentinel-6 products are based on bending angle data generated at the EUMETSAT Secretariat derived from measurements from the NASA GNSS-RO instrument flying onboard Sentinel-6. The purpose of the released ROM SAF products is to provide a stable and quality controlled RO dataset for non time critical (NTC) applications. See also the
+user message about Sentinel-6
+from the EUMETSAT Secretariat (17 November 2021).
+The ROM SAF Sentinel-6 NTC products contain the following geophysical parameters:
+- Refractivity, dry temperature (Level 2A, product identifiers GRM-117, GRM-122)
+- Temperature, humidity, pressure (Level 2B, product identifiers GRM-118, GRM-119, GRM-120)
+- Surface pressure (Level 2C, product identifier GRM-121)
+All products are released with status “operational”, with the exception of the temperature (GRM-118) and humidity (GRM-119) profiles. They have “pre-operational” status until validation is completed successfully. The products are formatted as NetCDF files with a subset of the products formatted as BUFR. In addition, the files include a copy of the EUMETSAT Secretariat Level 1B NTC bending angle.
+The released ROM SAF Sentinel-6 products starts with 14 November 2021 and new products will be released regularly once a day about two weeks after sensing time. NTC products are generated with similar algorithms as used for the ROM SAF Offline products based on the GRAS sensors onboard the Metop Satellites.
+User documentation about the ROM SAF Sentinel-6 products includes the following:
+Algorithm Theoretical Baseline Documents (ATBDs):
+- ATBD for ROM SAF Sentinel-6 refractivity product (GRM-117)
+- ATBD for ROM SAF Sentinel-6 dry temperature product (GRM-122)
+- ATBD for ROM SAF Sentinel-6 temperature, humidity, pressure products (GRM-118, GRM-119, GRM-120, GRM-121)
+Validation Reports:
+- Validation Report for ROM SAF Sentinel-6 refractivity and dry temperature products (GRM-117, GRM-122)
+- Validation Report for ROM SAF Sentinel-6 temperature, humidity, pressure products (GRM-118, GRM-119, GRM-120, GRM-121)
+Product User Manual:
+- Product User Manual for ROM SAF Sentinel-6 atmospheric profile products
+Access to products and user documentation is available (after registration) at the:
+ROM SAF Product Archive
+Additionally, the ROM SAF will produce Sentinel-6 gridded products every month. The gridded products (Level 3) are calculated as monthly means from Level 1B and Level 2 profile products. The Level 3 products will be available shortly after the end of a completed month. The release of the first month of Level 3 products will cover December 2021 and its release will be announced in a separate user announcement.
+[December 16, 2021]
+Publication of ROM SAF Report 42
+A one-dimensional variational ionospheric retrieval for truncated GNSS Radio Occultation measurements
+A new one-dimensional variational (1D-Var) retrieval approach for ionospheric GNSS radio occultation (GNSS-RO) measurements has been developed. The approach maps a one-dimensional ionospheric electron density profile, modeled with multiple "VaryChap'' layers, to bending angle space. This new, general retrieval method is applicable to both standard GNSS-RO retrieval problems, and the truncated geometry of EUMETSAT's Metop Second Generation (Metop-SG), which will provide GNSS-RO measurements up to ~500 km above the surface.
+The use of bending angles may also be relevant for how Metop-SG and other GNSS-RO measurements are used in ionospheric data assimilation systems in the future.
+Figure: The 1D-Var electron density retrievals using one (blue line) and two (red line) VaryChap layers, compared with other ionospheric retrieval methods.
+[October 20, 2021]
+Publication of VS report on decadal trends in RO data
+The ROM SAF is pleased to release
+Visiting Scientist report No. 40
+by Florian Ladstädter, Wegener Center, Graz, Austria.
+Abstract
+The latest IPCC Assessment Report (AR6) included a discussion about upper-air temperature trends in RO data in which ROM SAF data played an important role. This Visiting Scientist report summarizes and extends the work performed in the course of this contribution to the IPCC, also building on previous work.
+While, in general, the properties of the RO technique are favorable for the high-accuracy requirements of (short-term) trend detection, there are still open questions related to the impacts of various RO specifics on trend estimates. A detailed knowledge about sources of trend uncertainty is therefore required. This report addresses some of the potential factors influencing the trend estimates, such as inter-mission biases, the choice of vertical coordinates, and sampling-error correction. General aspects of computing trend estimates and their significance from shorter time series in the presence of comparatively strong natural variability are also discussed.
+[September 10, 2021]
+Publication of Operations Report 2021 H1
+This report covers the 5-month period January -- May (H1) of 2021.
+The ROM SAF level 2 NRT refractivity product has been disseminated via GTS and EUMETCast with operational status since (i) 1st of February 2010 (GRM-01 for Metop-A) (ii) 17th of June 2014 (GRM-40 for Metop-B) (iii) 7th of March 2019 (GRM-60 for Metop-C). The ROM SAF level 2 NRT 1D-Var products have been disseminated via GTS and EUMETCast since 22nd July 2014 for both Metop-A and Metop-B. For temperature and humidity with operational status since 22 July 2014; for pressure and surface pressure initially with pre-operational status until 20 October 2016 due to limitations of input data. The ROM SAF level 2 NRT 1D-Var products have been disseminated via GTS and EUMETCast since 7th of March 2019 for Metop-C. The ROM SAF website has been operational since 2009 and provides access to the ROM SAF help desk, downloading of the ROPP package and monitoring of product quality. The ROM SAF Offline Level 3 monthly-mean gridded data based on Metop-A and Metop-B was initially released on 15th of April 2019. On 20th of November 2020 version 1.1 of this data set was released, starting in August 2019 and including data from all three Metop satellites. The ROPP package, ROPP version 10.0 was released the 9th of February 2021 and is available on the ROM SAF website (the previous version of the ROPP software is also available on the ROM SAF web site).
+The last operations review (OR12) was held on the 22nd of April 2021 as a teleconference.
+Report available here:
+http://www.romsaf.org/opr.php
+[July 14, 2021]
+Publication of ROM SAF Report 41
+Assessment of sensitivity of the ROM SAF 1D-Var solutions to various error covariance choices
+A series of experiments were performed to test the 1D-Var sensitivity to various choices of observation uncertainty and error correlation. The test data set chosen was a series of Metop and COSMIC GNSS radio occultations, collocated with nighttime GRUAN RS92 radiosondes. Six perturbations of the refractivity error covariance matrix were probed, to test sensitivity to both uncertainty magnitude and correlation structure. Results were evaluated in terms of changes in bias, Desroziers diagnostics and averaging kernels, broken down on mission and latitude bands.
+Generally 1D-Var temperature is negatively biased in the troposphere and positively biased in the stratosphere. 1D-Var specific humidity is dry biased in most of the troposphere. Deflation of the refractivity error covariance enhances these biases. Suppression of refractivity error correlations also increases 1D-Var temperature bias structures in the stratosphere, but has little effect on tropospheric temperature retrievals. The negative specific humidity bias in the middle and upper troposphere is enhanced by suppression of refractivity error correlations. Desroziers diagnostics suggest that a substantial deflation of tropospheric refractivity error covariance, with a factor of 2 or 3, can be justified. By comparing Desroziers estimates of refractivity variance, with assumed variance, and relate that to the analytical expression for Desroziers matrices it can be inferred that the current ROM SAF background uncertainties are overestimated.
+[July 7, 2021]
+Publication of ROM SAF Report 40
+Anomalous GRAS radio occultations
+This report briefly discusses the ‘anomalous’ occultations — those for which the L1 bending angle exceeds the L2 bending angle — that are observed surprisingly often (10–15% of the time) by the GRAS instruments on the Metop satellites. Their distribution in space and time is examined. They are found to be more abundant than average in winter, at night and in a patch in the southern hemisphere. In the first two cases the background electron density is smaller than average; in the third various localised ionospheric features may be at work.
+[June 25, 2021]
+GRACE-C observations added to NRT monitoring
+Observations from GRACE-C are now available on the ROM SAF NRT monitoring webpage at:
+https://www.romsaf.org/monitoring/index.php
+The major objective of the German GRACE Follow On (FO) mission with its two satellites GF1 and GF2 is to obtain precise global and high-resolution models for both the static and the time variable components of the Earth's gravity field. Additional goal is the continuation of the GPS radio occultation (RO) measurements from the predecessor GRACE, successfully performed between 2006 and 2017. More information on GRACE-C can be found in the following presentation by Torsten Schmidt (GFZ, Potsdam) made at IROWG-8:
+https://cpaess.ucar.edu/sites/default/files/meetings/2020/presentations/schmidt-presentation.pdf
+[June 11, 2021]
+Release of multi-mission RO CDR version 1.0 based on Metop, COSMIC, GRACE, and CHAMP data
+The ROM SAF is pleased to announce that the multi-mission Climate Data Record (CDR) based on Metop, COSMIC, GRACE, and CHAMP radio occultation data is now available (product id: GRM-28-R1, product version 1.0, doi:
+10.15770/EUM_SAF_GRM_0001
+The multi-mission CDR contains Level 3 gridded monthly mean radio occultation data and it covers the time period from September 2001 to December 2016. The gridded data are based on corresponding Level 1B and Level 2 profile data (bending angle, refractivity, dry temperature, dry pressure, temperature, humidity, tropopause height) from the ROM SAF CDR version 1.0 released in 2019.
+The multi-mission CDR product is available from the
+ROM SAF product archive
+For more information see the following product documents:
+ATBD for Level 3 gridded data
+: Document describing the algorithms used in the retrieval of level 3 gridded data
+Validation Report: Reprocessed Level 3 gridded CDR v1.0 products
+: Validation report describing the validation of CDR v1.0 gridded Level 3 products from Metop, COSMIC, CHAMP, and GRACE
+ROM SAF Report 39
+: Report describing impacts of RO mission differences on trends in the multi-mission data record (GRM-28-R1)
+Product User Manual for level 3 gridded data
+: User manual describing level 3 gridded monthly-mean data product contents, format types, and briefly reviews the algorithms used in the processing
+Figure showing refractivity monthly mean anomalies as function of altitude in the latitude band from 10 South to 10 North for the period September 2001 to December 2016.
+[June 9, 2021]
+Publication of ROM SAF Operations Report 2020 H2
+This report covers the 7-month period June -- December (H2) of 2020.
+The ROM SAF level 2 NRT refractivity product has been disseminated via GTS and EUMETCAST with operational status since (i) 1st of February 2010 (GRM-01 for Metop-A) (ii) 17th of June 2014 (GRM-40 for Metop-B) (iii) 7th of March 2019 (GRM-60 for Metop-C). The ROM SAF level 2 NRT 1D-Var products have been disseminated via GTS and EUMETCAST since 22nd July 2014 for both Metop-A and Metop-B. For temperature and humidity with operational status since 22 July 2014; for pressure and surface pressure initially with pre-operational status until 20 October 2016 due to limitations of input data. The ROM SAF level 2 NRT 1D-Var products have been disseminated via GTS and EUMETCAST since 7th of March 2019 for Metop-C. The ROM SAF website has been operational since 2009 and provides access to the ROM SAF help desk, downloading of the ROPP package and monitoring of product quality. The ROM SAF Offline Level 3 monthly-mean gridded data based on Metop-A and Metop-B was initially released on 15th of April 2019. On 20th of November 2020 version 1.1 of this data set was released, starting in August 2019 and including data from all three Metop satellites. The ROPP package, ROPP version 9.1 was released the 18th of September 2019 and is available on the ROM SAF website (the previous version of the ROPP software is also available on the ROM SAF web site).
+The last operations review (OR12) was held on the 25th of May 2020 as a teleconference.
+Report available here:
+http://www.romsaf.org/opr.php
+[February 26, 2021]
+Release of software package ROPP version 10.0
+The ROM SAF announces the release of ROPP-10.0, the latest update of the Radio Occultation Processing Package (ROPP).
+The main differences from the previous release, ROPP-9.1, are:
+a) The introduction of a two-dimensional wave optics propagation code;
+b) Updates to the Levenberg-Marquardt solver in the 1dvar module;
+c) The provision of support for the ECMWF ecCodes software library;
+d) The ability to read newer format EUMETSAT data files;
+e) Updates to the other external dependency packages (netCDF, SOFA etc) that are used by ROPP.
+All user documentation has been reviewed and updated. Details of all changes, together with the updated software, are available on the ROPP download website
+http://www.romsaf.org/ropp/files.php
+[February 9, 2021]
+Publication of VS report on impacts of under-sampling the diurnal cycle
+The ROM SAF is pleased to release
+Visiting Scientist report No. 38
+by Stephen Leroy, Principal Scientist at the Atmospheric and Environmental Research Inc., Lexington, MA, USA.
+Abstract:
+Bayesian interpolation is applied to COSMIC RO data and to collocated ERA-Interim data in order to analyse and map the atmospheric diurnal cycle and to produce the highest quality analyses to date of the diurnal cycle related to the migrating solar tide in the atmosphere. RO-reanalysis differences are analysed to achieve a better understanding of the impacts on RO climatologies of undersampling the diurnal cycle.
+[January 19, 2021]
+Offline products version 1.1 released since August 2019
+The ROM SAF is pleased to announce that the Offline products based on Metop data are available covering the period from January 2017 (including data from Metop-C since August 2019) and are regularly updated every month.
+Offline products (version 1.1) starting with the month of August 2019 is using ECMWF ERA5 as background field for the 1D-Var products (temperature, humidity, pressure). Offline products (version 1.0) for the period ending with the month of July 2019 has used ECMWF ERA-Interim as background field.
+The ROM SAF Offline products are based on the following data:
+| Mission | Time period | Input from | Background | Version |
+| Metop-A,B | Jan 2017 - Jul 2019 | EUMETSAT | ERA-Interim | 1.0 |
+| Metop-A,B,C | since Aug 2019 | EUMETSAT | ERA5 | 1.1 |
+For more information see
+Validation Reports for Offline version 1.1
+The ROM SAF product archive contains the resulting Level 1B, 2A, 2B and 2C data (atmospheric profiles), and Level 3 data (gridded monthly means) formatted as netCDF files, with a subset of the atmospheric profiles formatted as BUFR. The definition of processing levels are as follows:
+Level 1A: excess phases, amplitudes, satellite orbital data (input)
+Level 1B: bending angle
+Level 2A: refractivity, dry temperature
+Level 2B: temperature, humidity, pressure
+Level 2C: surface pressure, tropopause height
+Level 3: gridded monthly means of all geophysical variables
+Documentation (including algorithm descriptions, product user manuals and validation reports) and access to the products are available at the
+Product Archive
+[November 20, 2020]
+Publication of VS report on ionospheric correction of bending angles
+The ROM SAF is pleased to release
+Visiting Scientist report No. 34
+by Congliang Liu, postdoc Scientist at Wegener Center, University of Graz, Austria.
+Abstract:
+The VS project studied the bi-local correction approach and the Kappa correction for the purpose of mitigating the residual ionospheric errors (RIEs) in the radio occultation (RO) data. A first detailed evaluation and statistical comparison analysis has been performed between these two higher-order ionospheric correction approaches for RO bending angle profiles. Additionally, a comparison of these two advanced ionospheric correction approaches with the standard linear dual-frequency bending angle correction method and SABER data has been done.
+[September 28, 2020]
+ICDR product version 1.1 released since August 2019
+The ROM SAF is pleased to announce that the Interim Climate Data Record (ICDR) products based on Metop data are now available covering the period from January 2017 and are regularly updated every month.
+ICDR (version 1.1) starting with the month of August 2019 is using ECMWF ERA5 as background field for the 1D-Var products (temperature, humidity, pressure). ICDR (version 1.0) for the period ending with the month of July 2019 has used ECMWF ERA-Interim as background field.
+The ROM SAF ICDR products are based on the following data:
+| Mission | Time period | Input from | Background | ICDR version |
+| Metop-A,B | Jan 2017 - Jul 2019 | EUMETSAT | ERA-Interim | 1.0 |
+| Metop-A,B,C | since Aug 2019 | EUMETSAT | ERA5 | 1.1 |
+For more information see the
+Validation Report for ICDR version 1.1
+The ROM SAF product archive contains the resulting Level 1B, 2A, 2B and 2C data (atmospheric profiles), and Level 3 data (gridded monthly means) formatted as netCDF files, with a subset of the atmospheric profiles formatted as BUFR. The definition of processing levels are as follows:
+Level 1A: excess phases, amplitudes, satellite orbital data (input)
+Level 1B: bending angle
+Level 2A: refractivity, dry temperature
+Level 2B: temperature, humidity, pressure
+Level 2C: surface pressure, tropopause height
+Level 3: gridded monthly means of all geophysical variables
+Documentation (including algorithm descriptions, product user manuals and validation reports) and access to the products are available at the
+Product Archive
+[September 22, 2020]
+Publication of ROM SAF Report 39
+Impacts of RO mission differences on trends in multi-mission data records
+The ROM SAF CDR v1.0 COSMIC and Metop data records during 2007–2016 are characterised by a relatively constant offset between the two missions. The magnitude of the offset vary with latitude and altitude. During the same time period the weight of Metop in a combined RO data set increase from contributing less than 20% to about 70% of data. These two factors in combination (constant offset and changing data numbers) are expected to introduce a spurious trend in the multi-mission data record. We have investigated differences in bending angle, refractivity, and dry temperature trends amongst 10-year time series (2007–2016) of RO data based on Metop, COSMIC, and the multi-mission data set, all of them part of the ROM SAF monthly-mean gridded CDR v1.0.
+[September 14, 2020]
+Publication of ROM SAF Report 38
+An initial assessment of the quality of RO data from COSMIC-2
+The COSMIC-2 / FORMOSAT-7 constellation of six satellites were launched in June 2019 into low-inclination orbits. These provide radio-occultation observations that are principally focussed on the tropical region. Each satellite carries a TGRS receiver that can make observations from both the GPS and GLONASS GNSS networks.
+The constellation provides a substantial increase in the total amount of radio occultation data available, with between 5000 and 6000 per day being expected to be provided. This is more than a 100% increase on the current operational network. The observations are generally of good quality and comparable to observations from the Metop satellites. There are some differences between the COSMIC-2 and Metop constellations, with some indications that COSMIC-2 is performing better in the troposphere. The design of the TGRS receiver gives a higher signal-to-noise ratio compared to other receivers with the hope that this will improve the performance in lower regions of the atmosphere.
+Assimilation of these observations indicates that there are substantial benefits from assimilating these data, particularly to NWP forecast performance in the tropics. This study has been focussed on offline data that have been provided. These observations have recently become available in near-real time on the Global Telecommunications System (GTS). Therefore operational assimilation of these data is something that is being actively investigated.
+[August 20, 2020]
+Publication of ROM SAF Operations Report 2020 H1
+This report covers the 5-month period January – May (H1) of 2020.
+The ROM SAF level 2 NRT refractivity product has been disseminated via GTS and EUMETCAST with operational status since (i) 1st of February 2010 (GRM-01 for Metop-A) (ii) 17th of June 2014 (GRM-40 for Metop-B) (iii) 7th of March 2019 (GRM-60 for Metop-C). The ROM SAF level 2 NRT 1D-Var products have been disseminated via GTS and EUMETCAST since 22nd July 2014 for both Metop-A and Metop-B. For temperature and humidity with operational status since 22 July 2014; for pressure and surface pressure initially with pre-operational status until 20 October 2016 due to limitations of input data. The ROM SAF level 2 NRT 1D-Var products have been disseminated via GTS and EUMETCAST since 7th of March 2019 for Metop-C. The ROM SAF website has been operational since 2009 and provides access to the ROM SAF help desk, downloading of the ROPP package and monitoring of product quality. The ROM SAF offline level-3 gridded monthly-mean data based on Metop-A and Metop-B respectively was released on 15th of April 2019. The ROPP package, ROPP version 9.1 was released the 18th of September 2019 and is available on the ROM SAF website (the previous version of the ROPP software is also available on the ROM SAF web site). The last operations review (OR12) was held on the 25th of May 2020 as a teleconference.
+Report available here:
+http://www.romsaf.org/opr.php
+[July 16, 2020]
+Publication of ROM SAF Report 36
+An initial assessment of the quality of RO data from PAZ
+The PAZ satellite was launched on 22nd February 2018 into a sun-synchronous polar orbit. This satellite carries a polarimetric instrument for taking radio-occultation measurements of the atmosphere. The instrument, known as ROHPP (Radio Occultations and Heavy Precipitation with PAZ) is a variant of an earlier IGOR (Integrated GPS Occultation Receiver) instrument which has been adapted to measure horizontally and vertically polarised signals. Only one radio-occultation instrument is carried by the satellite, and therefore it is only able to measure setting occultations. Due to the dual-polarisation nature of the instrument, the calculation of bending angles follows a slightly different path from conventional instruments.
+Overall the performance of the bending angle data is similar to that from other operational instruments. There are differences for the bending angle data in the troposphere, but this is most likely to be due to differences between processing centres, rather than instrumental differences. The refractivity data above 35 km is more accurate than similar data from FY-3C, even though the bending angle accuracy is similar at these levels. This is believed to be due to differences in the choice of climatology used in the processing.
+The data have recently been made available in near-real-time. Due to problems with connection between the satellite to the ground infrastructure, the data is experiencing long delays. Improvements have been made recently, but more work in this area is still needed.
+[June 23, 2020]
+Publication of new study on ROM SAF Climate Data Records v1.0
+A new study on the quality of the ROM SAF Climate Data Records (CDR v1.0) has been published in Atmospheric Measurement Techniques (
+https://doi.org/10.5194/amt-13-3081-2020
+). CDR v1.0 includes reprocessed RO data from several satellite missions. In the new study, systematic differences between RO missions, as well as differences of RO data relative to ERA-Interim reanalysis data, are quantified. The methods used to generate gridded monthly mean data are described, and the correction of monthly mean RO climatologies for sampling errors, which is essential for combining data from RO missions with different sampling characteristics, is evaluated.
+In the 8–30 km altitude region, the observational data record exhibits a high degree of internal consistency between the RO satellite missions, allowing us to combine data into multi-mission records. For global mean bending angle, the consistency is better than 0.04 %, for refractivity it is better than 0.05 %, and for global mean dry temperature the consistency is better than 0.15 K in this height interval. At altitudes up to 40 km, these numbers increase to 0.08 %, 0.11 %, and 0.50 K, respectively. The numbers can be up to a factor of 2 larger for certain latitude bands compared to global means. Below about 8 km, the RO mission differences are larger, reducing the possibilities to generate multi-mission data records. We also find that the residual sampling errors are about one-third of the original and that they include a component most likely related to diurnal or semi-diurnal cycles.
+The figure shows the global monthly mean bending angle anomalies, for the four RO missions included in the ROM SAF CDR v1.0. Data are given on a 5 degrees by 200 m latitude–altitude grid and have been sampling-error corrected. The anomalies for the four satellite missions are computed based on the same reference climatology, obtained from RO data.
+[June 11, 2020]
+Publication of ROM SAF Operations Report 2019 H2
+This report covers the 7-month period June – December (H2) of 2019.
+The ROM SAF level 2 NRT refractivity product has been disseminated via GTS and EUMETCast with operational status since (i) 1st of February 2010 (GRM-01 for Metop-A) (ii) 17th of June 2014 (GRM-40 for Metop-B) (iii) 7th of March 2019 (GRM-60 for Metop-C). The ROM SAF level 2 NRT 1D-Var products have been disseminated via GTS and EUMETCast since 22nd July 2014 for both Metop-A and Metop-B. For temperature and humidity with operational status since 22 July 2014; for pressure and surface pressure initially with pre-operational status until 20 October 2016 due to limitations of input data. The ROM SAF level 2 NRT 1D-Var products have been disseminated via GTS and EUMETCast since 7th of March 2019 for Metop-C. The ROM SAF website has been operational since 2009 and provides access to the ROM SAF help desk, downloading of the ROPP package and monitoring of product quality. The ROM SAF oine level-3 gridded monthly-mean data based on Metop-A and Metop-B respectively was released on 15th of April 2019. The ROPP package, ROPP version 9.1 was released the 18th of September 2019 and is available on the ROM SAF website (the previous version of the ROPP software is also available on the ROM SAF web site). The last operations review (OR11) was held on the 9-10th of April 2019 at DMI.
+Report available here:
+http://www.romsaf.org/opr.php
+[April 24, 2020]
+COSMIC-2/FORMOSAT-7 data included in the NRT monitoring pages
+Data from COSMIC-2/FORMOSAT-7 is now available on the GTS, and different types of statistics have been added to the ROM SAF NRT monitoring pages:
+https://www.romsaf.org/monitoring/
+COSMIC-2/FORMOSAT-7 is a constellation of six satellites in a low-inclination orbit, providing data mostly in the tropics. When combined they more than double the amount of radio occultation information available to meteorological centres. More information available here:
+https://www.tasa.org.tw/en-US/missions/detail/FORMOSAT-7
+https://www.cosmic.ucar.edu/what-we-do/cosmic-2/
+[March 25, 2020]
+Publication of VS35 report on ROPP integration in Wegener Center RO processing system
+The ROM SAF is pleased to release
+Visiting Scientist report No. 35
+by Marc Schwärz, Wegener Center, Graz University, Austria.
+Abstract
+The Wegener Center and the ROM SAF are embarking on a closer collaboration through the Federate Activity ”ATROMSAF1-FA05”, with the overall purpose to improve the ROM SAF data processing and especially its embedded error characterization. Along these line, this study contains an assessment of biases of ERA5 (forecast and analysis), ERA-Interim (analysis) and ECMWF operational data (analysis), and it assesses the potential impact on ROM SAF level 2B offline products. The bias assessment focuses on seasonal and latitudinal dependence of biases in ERA5 analysis and forecasts, ERA-Interim, and ECMWF operational analysis datasets.
+The figure shows the comparison of ROM SAF temperature products, ERA5, ERA-I and operational ECMWF fields compared to Wegener Center data.
+[February 27, 2020]
+Publication of ROM SAF Report 37
+6th ROM SAF User Workshop
+This report summarises the recommendations from the 6th ROM SAF User Workshop which was held jointly with the 7th IROWG Workshop (ROM SAF – IROWG 2019) at Konventum, Helsingør (Elsinore), Denmark on 19 - 25 September, 2019. The workshop attracted 103 international scientists, and over 100 oral and poster presentations were given.
+Presentations and abstracts are available at the ROM SAF – IROWG 2019 workshop website:
+https://www.romsaf.org/romsaf-irowg-2019/
+[February 11, 2020]
+Radio occultation data from the PAZ satellite available via GTS
+Radio occultation data from the PAZ satellite began to be made available via the GTS on 19th December. The ROM SAF is now analysing these data, and statistics have been added to the NRT monitoring system:
+http://www.romsaf.org/monitoring/index.php
+These statistics can be displayed by selecting PAZ/UCAR from the drop-down list. The quality of the data is very similar to that from other operational satellites. Contentions in the ground infrastructure yield delays in receiving the data, while waiting for a second ground station.
+The following figure shows an example from the NRT monitoring system:
+[January 10, 2020]
+Interim Climate Data Record and Offline products from Metop up to July 2019
+The ROM SAF is pleased to announce that the Interim Climate Data Record (ICDR) and Offline products now covers the period up to and including July 2019.
+The month of July 2019 will be the last month where the ICDR and Offline Level 2B products (temperature, humidity, pressure) are based on ECMWF ERA-Interim as background fields in the 1D-Variational retrieval. We are currently preparing a change to using ECMWF ERA5 as background fields and more information about this upgrade will be made available in the future.
+The ROM SAF product archive contains the resulting Level 1B, 2A, 2B and 2C data (atmospheric profiles), and Level 3 data (gridded monthly means) formatted as netCDF files, with a subset of the atmospheric profiles formatted as BUFR. The definition of processing levels are as follows:
+Level 1A: excess phases, amplitudes, satellite orbital data (input)
+Level 1B: bending angle
+Level 2A: refractivity, dry temperature
+Level 2B: temperature, humidity, pressure
+Level 2C: surface pressure, tropopause height
+Level 3: gridded monthly means of all geophysical variables
+Documentation and access to the products are available at the Product Archive:
+http://www.romsaf.org/product_archive.php
+[January 9, 2020]
+Publication of ROM SAF Report 35
+An initial assessment of the quality of RO data from FY-3D
+Abstract
+The Feng-Yun 3D (FY-3D) satellite was launched on 14th November 2017 into a sun-synchronous polar orbit. After considerable work the data were made available via the GTS on 11th January 2019. Just under 500 occultations are provided each day, so the satellite represents an important component of the (Global Navigation Satellite System - Radio Occultation) GNSS-RO observing system. Both bending angle and refractivity measurements are made available.
+Overall the quality of this data is similar to that from FY-3C. However there are two issues where the data from FY-3D is noticeably worse than that from FY-3C: a bias in setting occultations above 40km and a reduction in the number of observations below 20km. Work is being actively undertaken at the China Meteorological Administration (CMA) to address these issues. Tests have been run to assimilate bending angles from FY-3D into the Met Office system, but excluding setting occultations above 40km. These demonstrate a small but statistically significant improvement from using the data. Therefore, it is planned to include data from FY-3D into the Met Office’s operational system in early 2020.
+[October 11, 2019]
+Release of software package ROPP version 9.1
+The ROM SAF is pleased to announce the release of ROPP-9.1, the latest update of the Radio Occultation Processing Package (ROPP).
+The main differences from the previous release, ROPP-9.0, are:
+a) The introduction of code to process excess phase data from the GNOS radio occultation instrument carried on board CMA's FY-3C satellite;
+b) The introduction of routines to carry out transformations between standard ECI reference frames, and to generalise the transformations between ECF and ECI frames;
+c) Modifications to the single frequency bending angles resulting from the finite electron density at the LEO;
+d) Developments to the 1D wave optics propagator;
+e) The introduction of routines to process leap seconds.
+All user documentation has been reviewed and updated. Details of all changes, together with the updated software, are available on the ROPP download website
+http://www.romsaf.org/ropp/files.php
+[September 18, 2019]
+The ROM SAF reanalyses
+The ROM SAF is pleased to announce the release of two ROM SAF reanalyses based on "anchor measurements". These cover the period 20070101-20151231, and they were originally recommended by IROWG climate sub-group in 2013.
+The reanalyses are performed with the ERA5 system, but run at lower resolution (T159 ~ 125 km), and using a climatological background error covariance matrix. They provide global daily and monthly-mean gridded data, and departure statistics for the assimilated data.
+The first reanalysis assimilates just reprocessed GNSS-RO data produced by the ROM SAF, and AMSU-A channel 14 to constrain the upper-stratosphere (RO). The second reanalysis also assimilates conventional data which is not bias corrected within the variational bias correction scheme (RO+CONV).
+The download information and links retrieval script examples can be found here:
+https://confluence.ecmwf.int/display/ROMSAF/The+EUMETSAT+ROM+SAF+reanalyses
+A summary of science results will be presented at the EUMETSAT ROM SAF - IROWG 2019 workshop (
+http://www.romsaf.org/romsaf-irowg-2019/en/abstract/107
+) and this will elaborated further in a forthcoming ROM SAF Report. However, one interesting result currently under investigation is that the reanalysis assimilating just GNSS-RO and AMSU-A channel 14 produces a realistic QBO for the zonal winds in the tropical stratosphere. For example, below we show the time-series of monthly mean zonal winds at 30 hPa in the Singapore region, for the two ROM SAF reanalyses, the full ERA5 system, and Free University Berlin (FUB) wind measurements.
+[September 13, 2019]
+Publication of ROM SAF Operations Report 2019 H1
+This report covers the 5-month period January - May (H1) of 2019. The ROM SAF level 2 NRT refractivity product has been disseminated via GTS and EUMETCast with operational status since (i) 1st of February 2010 (GRM-01 for Metop-A) (ii) 17th of June 2014 (GRM-40 for Metop-B) (iii) 7th of March 2019 (GRM-60 for Metop-C). The ROM SAF level 2 NRT 1D-Var products have been disseminated via GTS and EUMETCast since 22nd July 2014 for both Metop-A and Metop-B. For temperature and humidity with operational status since 22 July 2014; for pressure and surface pressure initially with pre-operational status until 20 October 2016 due to limitations of input data. The ROM SAF level 2 NRT 1D-Var products have been disseminated via GTS and EUMETCast since 7th of March 2019 for Metop-C. The ROM SAF website has been operational since 2009 and provides access to the ROM SAF help desk, downloading of the ROPP package and monitoring of product quality. The ROM SAF level 3 climate products based on COSMIC RO data was released the 10th of June 2013 and was updated the 16th of March 2015. The products are available on the ROM SAF website together with the ROM SAF level 3 climate monitoring plots. The ROM SAF offline level-3 gridded monthly-mean data based on Metop-A and Metop-B respectively was released on 15th of April 2019. The ROPP package, ROPP version 9 was released the 28th of February 2017 and is available on the ROM SAF website (the previous version of the ROPP software is also available on the ROM SAF web site). The last operations review (OR11) was held on the 9-10th of April 2019 at DMI.
+Report available here:
+http://www.romsaf.org/opr.php
+[September 6, 2019]
+Publication of VS report on using RO as anchor in NWP systems
+The ROM SAF is pleased to release
+Visiting Scientist report No. 37
+by Jordis S. Tradowsky, Bodeker Scientific, New Zealand
+Abstract:
+For the purpose of numerical weather prediction (NWP), both radio occultation (RO) and radiosonde (RS) measurements are used to anchor the temperature. Thus, it is important to know if these observation types are consistent and to eliminate any existing biases between them prior to their assimilation into NWP systems. Following the development of a new method to compare RO and RS departures (with respect to model background) using a tangent linear dry temperature retrieval, and the use of this method to estimate RS temperature biases, this report will focus on the comparison of RO with specifically high-quality RS types and reference-quality reprocessed RS data. Besides, this report will further investigate structural uncertainties in the tangent linear RO retrieval.
+[August 21, 2019]
+Release of the software deliverable GBGP, Version 1.0
+The ROM SAF is pleased to announce the release of the software deliverable GBGP, Version 1.0. GBGP (Ground-Based GNSS Processing) is a package of software, data files and documentation developed for the purpose of encoding the E-GVAP 'COST-format' data (ground-based GNSS observations) to WMO-standard BUFR for dissemination to NWP users via the GTS. The package also contains some pre-converter tools to output COST-format files from other formats such as the UCAR NetCDF file. The GBGP package is essentially a re-branding of the E-GVAP 'GWV' and 'GWVBUFR' export packages written by the Met Office; GBGP now replaces those packages. The ROM SAF will take over responsibility for maintaining this package alongside the existing ROPP software.
+This release of GBGP Version 1.0 has undergone the ROM SAF's formal release procedure with a code review, a test suite, independent beta-test reviews, a DRR Review and formal approval to release by the ROM SAF Steering Group. The application code is a redevelopment of the E-GVAP packages which has been in regular use for many years. The refactored code has been tested, is known to be highly portable and is currently used in the Met Office for operational dissemination of E-GVAP GB-GNSS data in BUFR via the GTS to global NWP users.
+Documentation and download of GBGP available here: http://www.romsaf.org/gbgp/
+[June 11, 2019]
+Release of Interim Climate Data Record radio occultation products from Metop
+The ROM SAF is pleased to announce the release of the first version of the Interim Climate Data Record (ICDR) based on radio occultation (RO) data from the Metop satellite mission. The ROM SAF ICDR v1.0 is processed using the same algorithms as those used in generating the ROM SAF CDR v1.0. The ICDR covers the time period from January 2017 up to the present.
+The ROM SAF product archive contains the resulting Level 1B, 2A, 2B and 2C data (atmospheric profiles), and Level 3 data (gridded monthly means) formatted as netCDF files, with a subset of the atmospheric profiles formatted as BUFR. The definition of processing levels are as follows:
+Level 1A: excess phases, amplitudes, satellite orbital data (input)
+Level 1B: bending angle
+Level 2A: refractivity, dry temperature
+Level 2B: temperature, humidity, pressure
+Level 2C: surface pressure, tropopause height
+Level 3: gridded monthly means of all geophysical variables
+The figure below shows the tropical dry temperature anomalies based on data from the Metop satellites. The Interim CDR provides a continuation of the CDR from January 2017 onward.
+Documentation and access to the products are available at the Product Archive:
+http://www.romsaf.org/product_archive.php
+[May 24, 2019]
+EUMETSAT ROM SAF - IROWG 2019 Workshop
+We are pleased to announce the next ROM SAF User Workshop:
+http://www.romsaf.org/romsaf-irowg-2019
+It will be held as a joint workshop together with IROWG (International Radio Occultation Working Group,
+www.irowg.org
+) and it will take place on 19 - 25 September 2019 at Konventum hotel and conference centre, located in Helsingør (Elsinore), Denmark.
+The scope of the joint workshop is to be an international forum for atmospheric remote sensing by GNSS radio occultation methods and the use of radio occultation data in atmospheric and ionospheric physics, meteorology and climate. The workshop is an opportunity for the GNSS RO community to present and discuss the latest developments in the area. Another objective of the workshop is to formulate a set of user driven recommendations for the operational space agencies, and to inform and recommend future work by the EUMETSAT ROM SAF.
+Please visit the workshop website for registration and abstract submission:
+http://www.romsaf.org/romsaf-irowg-2019
+[May 20, 2019]
+KOMPSAT-5/AOPOD data included in the NRT monitoring pages
+Recently dissemination of operational AOPOD radio occultation data from the KOMPSAT-5 satellite are available. Statistics from this data have now been added to the NRT monitoring system:
+http://www.romsaf.org/monitoring/
+. This satellite is operated by KARI, and the radio occultation data is processed by UCAR.
+These data can be displayed by selecting KOMPSAT-5/UCAR from the drop-down list. An initial assessment of the data quality was performed on historical data (
+http://www.romsaf.org/general-documents/rsr/rsr_32.pdf
+). Rising occultations are not currently available from this satellite, due to problems with the on-board software.
+[May 14, 2019]
+Publication of ROM SAF Report 31
+Sensitivity of some RO measurements to the shape of the ionospheric electron density profile
+Abstract
+This report contains brief notes on the bending angles and slantwise total electron contents that result from the use of a single, spherically symmetric ‘VaryChap’ ionosphere. This is a simple but realistic model of the ionospheric electron density distribution whose shape can be easily altered. It is used to give some insight into the sensitivity of radio occultation results to the shape of the electron density profile.
+[May 7, 2019]
+Release of offline radio occultation products from Metop
+The ROM SAF is pleased to announce the release of the first version of offline radio occultation (RO) data generated from the Metop satellite mission. The data covers the time period from January 2017 up to the present.
+The offline products are generated with similar algorithms as used for the reprocessed Climate Data Records (CDR) v1.0, but the algorithms may (will) change somewhat from the algorithms used in the last reprocessing. The ROM SAF product archive contains the resulting Level 1B, 2A, 2B and 2C data (atmospheric profiles), and Level 3 data (gridded monthly means) formatted as netCDF files, with a subset of the atmospheric profiles formatted as BUFR. The definition of processing levels are as follows:
+Level 1A: excess phases, amplitudes, satellite orbital data (input)
+Level 1B: bending angle
+Level 2A: refractivity, dry temperature
+Level 2B: temperature, humidity, pressure
+Level 2C: surface pressure, tropopause height
+Level 3: gridded monthly means of all geophysical variables
+The figure shows an example of two tropopause temperatures (based on cold point and lapse rate definitions) compared to ERA-Interim in the narrow tropical region.
+Documentation and access to the products are available at the Product Archive:
+http://www.romsaf.org/product_archive.php
+[April 15, 2019]
+ROM SAF Metop-C GRAS Level 2 data now available on GTS and EUMETCast
+We are pleased to announce that the ROM SAF Metop-C GRAS Level 2 products (GRM-60 to 65) are operational and that we have initiated the dissemination both on GTS and EUMETCast.
+If you have questions or encounter any problems with the data please do not hesitate to contact the ROM SAF helpdesk:
+http://www.romsaf.org/helpdesk.php
+[March 7, 2019]
+Publication of ROM SAF Operations Report 2018 H2
+This report covers the 7-month period June -- December (H2) of 2018. The ROM SAF level 2 NRT refractivity product has been disseminated via GTS and EUMETCast with operational status since (i) 1st of February 2010 after being disseminated with pre-operational status since March 2009 (GRM-01 for Metop-A) (ii) 17th of June 2014 after being disseminated with demonstration status since 10th December 2012 (GRM-40 for Metop-B). The ROM SAF level 2 NRT 1D-Var products have been disseminated via GTS and EUMETCast with (pre-)operational status since 22nd July 2014 for both Metop-A and Metop-B. The ROM SAF website has been operational since 2009 and provides access to the ROM SAF help desk, downloading of the ROPP package and monitoring of product quality. The ROM SAF level 3 climate products based on COSMIC RO data was released the 10th of June 2013 and was updated the 16th of March 2015. The products are available on the ROM SAF website together with the ROM SAF level 3 climate monitoring plots. The ROPP package, ROPP version 9 was released the 28th of February 2017 and is available on the ROM SAF website (the previous version of the ROPP software is also available on the ROM SAF web site). The last operations review (OR10) was held on the 17-18th of May 2018 at DMI.
+Report available here:
+http://www.romsaf.org/opr.php
+[February 27, 2019]
+Release of Climate Data Records v1.0 generated from radio occultation data
+The ROM SAF is pleased to announce the release of the first version of Climate Data Records generated from a reprocessing of radio occultation (RO) data. The CDRs are based on RO data from the Metop, CHAMP, GRACE and COSMIC RO missions and cover the period 2002-2016. The figure shows an example of the QBO signal visible in the de-seasonalized temperature in the tropical latitude band.
+Documentation and access to the CDRs are available at the Product Archive:
+http://www.romsaf.org/product_archive.php
+[February 19, 2019]
+FY-3D/GNOS data included in the NRT monitoring pages
+Recently CMA have begun dissemination of pre-operational GNOS radio-occultation data from the FY-3D satellite. Statistics from this data have now been added to the NRT monitoring system:
+http://www.romsaf.org/monitoring/
+These data can be displayed by selecting FY-3D/CMA from the drop-down list. Early results indicate that the quality of the data is broadly similar to that from the FY-3C satellite.
+[January 17, 2019]
+Metop-C data now available on NRT monitoring pages
+Following the successful launch of the Metop-C satellite, new data has been added to the NRT monitoring system:
+http://www.romsaf.org/monitoring/index.php
+These can be displayed by selecting either GRAS-C/DMI or GRAS-C/EUM from the drop-down list. Early results indicate that the quality of the data is similar to Metop-A/B. Users should be aware that Metop-C processing is in pre-operational status, therefore data outages and changes may occur without notice.
+[December 19, 2018]
+Publication of ROM SAF Report 32
+An initial assessment of the quality of RO data from KOMPSAT-5
+Abstract:
+The KOMPSAT-5 satellite was launched in 2013 into a sun-synchronous polar orbit. Recently UCAR have started processing the RO data which was being produced by this satellite. These data are made available via FTP from the CDAAC website. The observations are processed twice per day, with a delay of a few hours, which means that they are not currently suitable for operational implementation.
+Overall the quality of this data is excellent - approximately as good as from the COSMIC-1 satellites. There is no evidence of systematic biases in the data. The standard deviation of differences between the observation and NWP model background is generally comparable to that of other satellites, except in the lower-stratosphere where they are slightly larger. Due to the orbital period the satellite produces occultations in a regular pattern across the globe. In the one-month period considered we received 12901 observations (approx 440 per day) which compares with 16874 for Metop-A and 7956 for COSMIC-1 FM1.
+[September 14, 2018]
+Publication of ROM SAF Report 33
+Some science changes in ROPP-9.1
+Abstract:
+ROPP-9.1 is a minor release of the ROM SAF’s Radio Occultation Processing Package (ROPP). This report summarises some of the main science changes in ROPP 9.1. These include 1) modifications for GNOS processing, 2) improvements in the wave optics propagator and 3) changes to the L1/L2 bending angle forward models. Possible developments for future ROPP releases are discussed briefly.
+[September 14, 2018]
+Publication of ROM SAF Report 28
+Description of wave optics modelling in ROPP-9 and suggested improvements for ROPP-9.1
+Abstract:
+The physical basis of the wave optics simulation code included in ROPP-9 is described. The ROPP wave optics simulation code is based on a multiple phase screen (MPS) approach which is well known, and so it is only reviewed briefly. A new method for computing the phase and amplitude at the LEO satellite, given the phase and amplitude at the final phase screen, is described in detail. More specifically, it is shown that the solution at the LEO can be computed efficiently in terms of standard Fresnel integrals. The simulations are tested by inverting the phase and amplitudes with a Full Spectrum Inversion (FSI) approach to produce bending angle profiles, and then comparing these with a one-dimensional geometrical optics forward model.
+Some errors for large bending angle cases in the lowest 2 km are identified, and improvements for implementation in ROPP-9.1 are presented.
+ROPP-9 users can contact S. B. Healy (
+sean.healy@ecmwf.int
+) directly for more information relating to the ROPP-9.1 changes.
+[March 29, 2018]
+Publication of ROM SAF Report 30
+A first look at the feasibility of assimilating single and dual frequency bending angles
+Abstract:
+The report describes the results of some numerical experiments designed to investigate the feasibility of carrying out 1D variational retrievals using dual or single frequency radio occultation bending angles, rather than the usual ionospherically corrected ‘neutral’ bending angles. A detailed analysis of the results of carrying out these experiments on two example radio occultation profiles is followed by a statistical analysis of the results of doing so on 3500 consecutive profiles observed by the GRAS instrument on Metop-A. The retrieved ionospheric parameters are briefly reviewed. Further work is suggested.
+[March 29, 2018]
+Publication of report on RO, IASI and CrIS comparisons
+The ROM SAF is pleased to release
+Visiting Scientist report No. 33
+by Michelle Feltz, University of Wisconsin - Madison, USA
+Abstract:
+Comparisons of ROM SAF Metop/GRAS RO and hyperspectral IR sounders CrIS and IASI are made in brightness temperature (BT) space for channels sensitive to the ~10-200 hPa region over the years 2015-2016. ROM SAF RO stochastic temperature error estimates are converted to BT units and used to assess the agreement between the RO and IR sounders. Seasonal, zonal results show general agreement of the ROM SAF background and wet temperatures with the IR sounders with exceptions for the tropical zones. The dry temperature results showed disagreement with the IR sounders for all channels with contributions above ~70 hPa.
+[November 3, 2017]
+NRT monitoring of GNOS data
+ROM SAF NRT data monitoring now includes data from the GNOS instrument onboard the FY-3C satellite operated by CMA. See
+http://www.romsaf.org/monitoring/
+Details of the processing can be found in
+ROM SAF Visiting Scientist Report 32
+[August 30, 2017]
+NWP model refractivity profile dataset generated in EUMETSAT Study
+A set of refractivity profiles generated from the ECMWF NWP model as part of a EUMETSAT Study is made available from the ROM SAF web pages. These profiles can be used e.g. to do realistic wave optics GPS radio occultation measurements. Please note that these profile data are not part of the operational ROM SAF product portfolio.
+The dataset consists of 55 profiles of refractivity, N, as a function of altitude, N(z). The profiles were originally derived from ECMWF forecasts on 91 levels from the surface to ~80 km. The profiles were selected with the aim of finding some challenging cases for the GPS receiver. Consequently, the dataset includes some large gradients and ducting cases. The profile dataset is described more fully in a technical report available with the dataset. This dataset can be used with the ROPP-9 wave optics propagation tool.
+Data access (registered users*):
+55_refractivity_profiles
+(* New users can register
+here
+[August 29, 2017]
+Release of ROM SAF ROPP-9.0 software package
+The ROM SAF is pleased to announce the ninth full release of the software deliverable 'ROPP', Version 9.0.
+The main changes from the previous release, Version 8.0, are as follows.
+1) The introduction of a facility to diagnose the Planetary Boundary Layer Height (PBLH) from profiles of bending angle, refractivity and dry temperature, as well as from model fields of temperature, specific humidity and relative humidity.
+2) The introduction of a Wave Optics Propagation tool, which allows users to diagnose the excess phase delay incurred by a radio signal as it passes through a specified refractivity field.
+3) Generalisation of the interface to the 1D Forward Model.
+Full details are provided in the Change Log on the
+ROPP download site
+[March 15, 2017]
+Publication of ROM SAF Report 25
+Survey on user requirements for potential ionospheric products from EPS-SG radio occultation measurements
+Abstract:
+EUMETSAT's Polar System-Second Generation (EPS-SG) satellites will continue and enhance the currently flying EPS satellite observations from about 2021 onwards. The Radio Occultation (RO) instrument on the satellites is primarily designed to sound the lower neutral atmospheric layers, from about 80 km downwards (similar to the current EPS/GRAS instrument). But they also include the possibility of sounding the ionosphere up to 500 km. In order to compile the interests and suggested requirements of ionospheric data users, a survey was conducted among space-weather, ionospheric, GNSS, and other scientific communities that might be interested in such EPS-SG RO products.
+The users were explicitly asked about the sampling, precision and latency requirements, their preferred formats and dissemination channels, or the application they target, among other questions. In addition, they were invited to read the information about the EPS-SG RO mission provided with the questionnaire and to comment on potential limitations identified and their impact in the user’s application or operations.
+A ROM SAF report has been prepared to present the survey and to summarize its outcome. It shows that the range of applications of such data sets would span beyond space-weather and ionospheric monitoring applications, with some specific targets of interest for other EUMETSAT SAFs, and are also relevant for other RO missions. Regarding EPS-SG, the suggested ionospheric user requirements would generally be met, with restrictions on latency (which is driven by the neutral atmospheric requirements) aspects for some space-weather operational applications.
+[March 7, 2017]
+Release of a prototype Planetary Boundary Layer Height (PBLH) dataset
+Version 9.0 of the ROM SAF's Radio Occultation Processing Package (ROPP9.0), will include tools to diagnose Planetary Boundary Layer Height (PBLH). These are defined as the locations of maxima in the vertical gradients of bending angle, refractivity, dry temperature, model temperature, model specific humidity and model relative humidity. Prototype datasets containing the various ROPP-calculated PBLHs, for every available profile in March, April and May 2013 (around 194 000 profiles in total), are now available for study and research by interested users.
+This figure shows the diagnosed PBLHs from various fields for an occultation situated over the marine stratocumulus deck off the west coast of South America.
+This figure shows a map of the mean refractivity-based PBLH during April 2013.
+Data access (registered users*):
+PBLH_prototype
+Documentation: ROPP APPS User Guide (available on request until ROPP9.0 is released), ROM SAF Report 24, ROM SAF Visiting Scientist report VS30.
+(* New users can register
+here
+[November 23, 2016]
+Retrieval of gravity waves from RO measurements: Capacities and limitations
+The ROM SAF is pleased to release
+Visiting Scientist report No. 29
+by Sergey Khaykin, LATMOS-CNRS/UVSQ
+Abstract:
+The study addresses the problematics of gravity waves (GWs) retrieval from GNSS radio occultation (RO) measurements and projects it onto the demonstration ROM SAF CDR Version 0 data set, based on CHAMP, GRACE, COSMIC and Metop-A observations altogether spanning 14 years. A review of the existing methods for retrieving GW parameters (potential energy, wavelengths and momentum flux) as well as of their capacities and limitations is provided. After a description of the analysis applied to the ROM SAF CDR V.0, we present a new 14-year global climatology of the two essential GW parameters: potential energy and dominant vertical wavelength. The potential energy was derived for two vertical wavelength spectral ranges. The obtained geographical distribution, annual cycle and temporal variability of GW activity is interpreted under consideration of the known GW sources (flow over orography, convection, jet stream instabilities, planetary wave activity) and GW propagation or filtering in the background flow. After analysis of the statistical errors associated with different data gridding options, a set of recommendations for the future ROM SAF L2 and L3 products relevant for GW analysis is provided.
+[November 14, 2016]
+First prototype release of the software deliverable 'GBGP'
+The ROM SAF is pleased to announce the first prototype release of the software deliverable 'GBGP', Version 1.0.
+GBGP (Ground-Based GNSS Processing) is a package of software, data files and documentation whose principal purpose is to encode the E-GVAP 'COST-format' data (ground-based GNSS observations) to WMO-standard BUFR for dissemination to NWP users via the GTS. The package also contains some pre-converter tools to output COST-format files from other formats. The GBGP package is essentially a re-branding of the E-GVAP 'GWV' and 'GWVBUFR' export packages written by the Met Office; GBGP now replaces those packages. The ROM SAF will take over responsibility for maintaining this package alongside the existing ROPP software.
+This release is designated 'prototype' because the software has not yet undergone the ROM SAF's formal release procedure which includes code review, a comprehensive test suite, independent beta-testing, a Delivery Readiness Inspection Review and formal approval to release by the ROM SAF Steering Group. Nevertheless, the application code is effectively the same as that in the E-GVAP packages which has been in regular use for many years. The refactored code has been informally tested, is known to be highly portable and is being used in the Met Office for operational dissemination of E-GVAP GB-GNSS data in BUFR via the GTS to global NWP users.
+[September 23, 2016]
+Publication of ROM SAF Report 16
+Simplifying EGM96 undulation calculation in ROPP
+Abstract
+This report reviews the calculation of undulation – the difference between the (WGS-84) ellipsoid and the (EGM96) geoid – in ROPP. The undulation value at the nominal RO profile location is subtracted from the Impact Height to obtain the height with respect to the geoid of any point in the profile.
+For practical purposes, the resulting geoid height can be considered to be the same as height above mean sea level. The current method of calculating undulations (or geoid heights in ROPP) uses a full spherical harmonic expansion which is both complex and cpu-intensive. An alternative grid interpolation method has been developed which is shown to be significantly simpler in code terms and so substantially quicker to run, and without any practical loss of accuracy when compared to the present full calculation method. The interpolation method is proposed to replace the current undulation code in ROPP.
+[August 3, 2016]
+Upgrade of NRT production at EUMETSAT and ROM SAF
+The NRT production for Metop-A and B has been upgraded on July 5, 2016 as previously announced. Please read more in the User Notification Notices related to this upgrade:
+UNS 791
+(4 July 2016)
+UNS 781
+(25 June 2016)
+[July 6, 2016]
+Assimilation of GNSS RO data at CPTEC, Brazil, using the ROPP refractivity observation operator
+A new paper in Met Apps (doi:
+10.1002/met.1559
+) by L. Sapucci and colleagues at CPTEC[1], Brazil, describes the use of the ROPP[2] refractivity forward operator in the LETKF[3] data assimilation system which is under development at CPTEC. They report beneficial impacts in the Southern Hemisphere and Tropics, and particularly over South America. They take this last result as a sign that GPS-RO data is more significant in areas where the forecast model is already performing well. A slight reduction in Northern Hemisphere skill, as measured by the anomaly correlation coefficient, is attributed to the impact of RO observations on the quality control of conventional observations. Mid-level temperature forecasts from analyses incorporating GNSS-RO observations verify better against radiosonde observations than those from analyses constructed without GNSS-RO observations. One notable feature of Sapucci et. al.’s implementation is that the ROPP refractivity operator is used largely intact, without modification, so that future developments in the operator should be easy to introduce into their data assimilation system.
+[1] Centro de Previsao de Tempo e Estudos Climaticos
+[2] Radio Occultation Processing Package
+[3] Local Ensemble Transform Kalman Filter
+[July 4, 2016]
+Publication of ROM SAF Report 24
+The calculation of planetary boundary layer heights in ROPP
+Abstract
+This report concerns the Planetary Boundary Layer Height (PBLH) diagnostics that have been implemented in the ROM SAF’s Radio Occultation Processing Package, ROPP. Algorithms for calculating the PBLH are briefly described. PBLHs calculated from six different profile variables — three ‘observation fields’ and three ‘model fields’ — are compared and contrasted, both by profile-by-profile scrutiny of selected examples, and by inspection of the average of a month of occultations. PBLHs derived from forward modelled background fields are also briefly considered. Tentative conclusions are drawn before possible future work is considered.
+[June 20, 2016]
+Development of wave optics code for the retrieval of bending angle profiles for reflected rays
+The ROM SAF is pleased to release a
+visiting scientist report
+by Michael Gorbunov, Institute of Atmospheric Physics, Moscow
+Abstract
+The report describes a wave optics based algorithm to extract the reflected bending angle profiles from radio occultation data. Related to this, a methodology to identify and flag reflected signals in RO data is developed. The developed method is validated by comparing it to a database with reflections for COSMIC data (
+Reflection flag data
+[May 10, 2016]
+Release of updated gridded data based on the COSMIC satellites
+The ROM SAF is now releasing an update of the gridded data based on data from the US-Taiwanese satellite mission FORMOSAT-3/COSMIC. The monthly mean time series now covers the period from September 2006 to June 2015.
+This ROM SAF gridded data (products GRM-17 to 21) consists of zonal monthly means of bending angle, refractivity, temperature, humidity, and geopotential height, on a 5 degree by 200 meter latitude-height grid. The monthly data are delivered as CF compliant netCDF files that also incorporates related data: data numbers, error estimates, and comparisons to the ECMWF operational model fields.
+The data can also be viewed on the
+ROM SAF Climate Monitoring pages
+, which includes time series plots for the full length of the gridded data, as well as various quality indicators.
+User documentation and access to the gridded data are available at the
+Product Archive
+[March 18, 2016]
+Release of an experimental reflection flag dataset
+Since January 4, 2016, the ROM SAF data archive includes a list of RO events flagged with the occurrence of reflected signals. This is a prototype product and is provided for demonstration and research purposes.
+The original set contains more than 4 million COSMIC RO events, since 2006 to the beginning of 2014, and some of 2015. A ROM SAF report has also been published on the ROM SAF website to facilitate the understanding of the flag, methodology used to determine the presence of reflected signals, and its validation. The report also presents some statistics of the occurrence of reflected signals in RO, their geographic and seasonal behavior, an initial investigations about the potential nature of their occurrence (instruments, scattering surface and/or atmospheric conditions).
+Data access (registered users*):
+Reflection flag data
+Documentation:
+ROM SAF Report 23
+(* New users can register
+here
+[February 9, 2016]
+Characterisation of radiosonde temperature biases and errors
+using radio occultation measurements
+The ROM SAF is pleased to release a
+visiting scientist report
+by Jordis S. Tradowsky, Bodeker Scientific, New Zealand.
+Abstract
+Measurements of atmospheric temperature have been made for decades and nowadays radiosonde (RS) and radio occultation (RO) measurements are used to anchor the temperature in numerical weather prediction (NWP) models. However, the impact of the high quality RO data might be limited due to opposing biases between the observation types. Therefore, for better exploitation of highly accurate RO measurements an improved bias correction in RS temperatures is needed. Here we use a novel method to calculate the RS temperature bias on a station-by-station basis for different solar elevation angle ranges. The temperature bias corrections are calculated using fields from the Met Office Unified Model as a transfer medium.
+The results of this project show that RS temperature biases vary from station-to-station and are highly affected by the position of the sun. The results are intended to be used in a forecast impact study and could afterwards be implemented into operational weather forecast systems, where they would need to be updated on a regular basis.
+[December 3, 2015]
+User Survey
+The ROM SAF has launched a User Survey, open to everybody until May 20. If you wish to participate, please follow this link:
+http://www.romsaf.org/usersurveys/us4/
+The results of the User Survey will be compiled into a report which will be made available at the website.
+[May 12, 2015]
+Release of updated gridded data based on the COSMIC satellites
+The ROM SAF is now releasing an update of the gridded data based on data from the US-Taiwanese satellite mission FORMOSAT-3/COSMIC. The monthly mean time series now covers the period from September 2006 to April 2014.
+This ROM SAF gridded data (products GRM-17 to 21) consists of zonal monthly means of bending angle, refractivity, temperature, humidity, and geopotential height, on a 5 degree by 200 meter latitude-height grid. The monthly data are delivered as CF compliant netCDF files that also incorporates related data: data numbers, error estimates, and comparisons to the ECMWF operational model fields.
+The data can also be viewed on the
+ROM SAF Climate Monitoring pages
+, which includes time series plots for the full length of the gridded data, as well as various quality indicators.
+User documentation and access to the gridded data are available at the
+Product Archive
+[March 16, 2015]
+Release of ROM SAF ROPP-8.0 software package
+The ROM SAF is pleased to announce the eighth full release of the software deliverable 'ROPP', Version 8.0.
+The changes from the previous release, v7.0, are: an improved vertical interpolation scheme in the refractivity and bending angle forward models, which has been found to reduce anomalies in O-B statistics seen with coarsely gridded model data; the introduction of a facility to forward model, and make 1dvar retrievals using, L1 and L2 bending angles (by means of a simple model ionosphere); acceleration of the tool that extracts background profiles from GRIB files; the provision of informative shell return codes from all the tools; increased flexibility in the output levels of the 1d forward model; more robust and user-friendly automatic testing of the modules during the build; and numerous technical developments and small bug-fixes.
+Full details are provided in the Change Log on the
+ROPP download site
+[February 24, 2015]
+Improved Helpdesk
+In order to add more interaction in the Helpdesk between the user and the ROM SAF team, the Helpdesk has been updated with the following new features:
+Added the possibility to append comments/replies while the enquiry is "open".
+These intermediate comments/replies are private; i.e., only the user and the ROM SAF team are able to see them.
+Status changed to only two states: open and closed (when there is a final answer).
+Multiple attachments: Attachments can be uploaded in the enquiry form and with the possibility to append multiple attachments.
+Attachments can be added during all stages: initial enquiries, comments/replies and answers.
+Enhanced helpdesk view using fieldsets.
+[November 12, 2014]
+Upgrade of Metop-A and Metop-B NRT production
+We are pleased to announce the improvement of QC procedure for level 2a products and the dissemination of NRT temperature, specific humidity, pressure and surface pressure products from the Metop-A and B satellites.
+The temperature, humidity, and pressure products are derived from a standard 1D-Var algorithm using ECMWF short-term forecasts as the background. The products are archived as ROPP netCDF files. In addition, the products are reformatted and included in the currently disseminated BUFR files containing the NRT refractivity products from Metop-A and B. This means, BUFR files are disseminated by the ROM SAF containing the following products:
+- The BUFR code is "IUT[A-L]14 EKMI" for both Metop-A and -B;
+- The satellite identifier (3=Metop-B, 4=Metop-A) is in the BUFR header;
+- NRT Level 1b bending angle (Copy of the EUMETSAT Central Facilities NRT Level 1b bending angles used as input for the ROM SAF refractivity retrieval);
+- NRT Level 2a refractivity;
+- NRT Level 2b and 2c temperature, humidity, pressure, and surface pressure;
+For the complete contents of the BUFR files please see the BUFR specification available here:
+http://www.romsaf.org/product_archive.php
+[July 22, 2014]
+Operational dissemination of NRT Metop-B refractivity product over EUMETCast
+We are pleased to announce the operational dissemination over EUMETCast of the ROM SAF Near Real Time Refractivity Profile derived from Metop-B/GRAS data (GRM-40). It has been available since 17 June 2014.
+The NRT refractivity product contains a profile of neutral refractivity as a function of height (geometric and geopotential) above the EGM-96 geoid.
+More information can be found on the web page:
+http://www.romsaf.org/GRM-01.php
+The product is distributed on EUMETCast Europe:
+Channel: SAF-Europe
+PID: 500
+Multicast Address: 224.223.222.28
+Example filename: S-GRM_-GRAS_RO_L12_20140505141159_001_METOPB_1090523859_DMI.BUFR
+Access to this product will be automatically provided for EUMETSAT Member/Cooperating State NMS and registered manufacturers.
+[June 25, 2014]
+Operational dissemination of Metop-B/GRAS refractivity product
+We are pleased to announce the upgrade of the Near Real Time Level 2a Refractivity Profile Product derived from Metop-B/GRAS data (GRM-40) to full operational status.
+The product has since 20 June 2013 been disseminated in BUFR format over GTS with unchanged quality. There is no change in the quality of the product as a result of the upgrade to full operational status.
+The Metop-B/GRAS GRM-40 product is now also available in the Product Archive. Please see more information here:
+http://www.romsaf.org/product_archive.php
+[June 4, 2014]
+Trial dissemination of NRT Metop-B refractivity product over EUMETCast
+We are pleased to announce the trial dissemination over EUMETCast of the ROM SAF Near Real Time Refractivity Profile derived from Metop-B/GRAS data (GRM-40), to commence on 20 May 2014.
+The NRT refractivity product contains a profile of neutral refractivity as a function of height (geometric and geopotential) above the EGM-96 geoid.
+More information can be found on the web page:
+http://www.romsaf.org/GRM-01.php
+The product will be distributed on EUMETCast Europe:
+Channel: SAF-Europe
+PID: 500
+Multicast Address: 224.223.222.28
+Example filename: S-GRM_-GRAS_RO_L12_20140505141159_001_METOPB_1090523859_DMI.BUFR
+Access to this product will be automatically provided for EUMETSAT Member/Cooperating State NMS and registered manufacturers. Following a successful trial, it is planned to make the product available to the wider EUMETCast User community.
+[May 7, 2014]
+Release of ROM SAF ROPP-7 software package
+The ROM SAF is pleased to announce the seventh full release of the software deliverable 'ROPP', Version 7.0.
+The main change from the previous release, v6.1, is the inclusion of a tool to diagnose tropopause heights from profiles of bending angle, refractivity, dry temperature or background temperature. The first two are derived from the covariance transform of the bending angle or refractivity profile; the last two from the lapse rate (and cold point) of the temperature profile. Quality control flags help the user to assign the appropriate level of confidence to the diagnosed tropopause heights.
+All user documentation has been reviewed and updated. Details of all changes are available together with the updated software on the
+ROPP download website
+[October 21, 2013]
+Release of updated gridded data based on the COSMIC satellites
+The ROM SAF is now releasing an update of the gridded data based on data from the US-Taiwanese satellite mission FORMOSAT-3/COSMIC. The monthly mean time series now covers the period from September 2006 to December 2012.
+This ROM SAF gridded data (products GRM-17 to 21) consists of zonal monthly means of bending angle, refractivity, temperature, humidity, and geopotential height, on a 5 degree by 200 meter latitude-height grid. The monthly data are delivered as CF compliant netCDF files that also incorporates related data: data numbers, error estimates, and comparisons to the ECMWF operational model fields.
+The data can also be viewed on the ROM SAF Climate Monitoring pages , which includes time series plots for the full length of the gridded data, as well as various quality indicators.
+User documentation and access to the gridded data are available at the
+Product Archive
+[August 26, 2013]
+ROM SAF Visiting Scientist position
+The ROM SAF is seeking a Visiting Scientist to perform the tasks described in this
+PDF file
+. The duration is estimated to be three months to be carried out in the period from September/October to December 2013. The successful candidate should spend three weeks at the Danish Meteorological Institute (DMI) in the beginning of this activity and the remaining time at the home institute.
+The payment for this Visiting Scientist Activity (VSA) will consist of half a salary compensation for ten weeks to be paid to the home institute. In addition, the ROM SAF will pay the trip and per diem for the three weeks stay at DMI.
+If you are interested in this Visiting Scientist activity, please email a brief application and short CV to the ROM SAF Helpdesk (
+email
+) before 24 July 2013.
+[July 5, 2013]
+Release of gridded data based on the COSMIC satellites
+The ROM SAF is pleased to announce the release of a new set of gridded data, based on data from the US-Taiwanese satellite mission FORMOSAT-3/COSMIC. Launched in April 2006, the satellites still continues to make important contributions to the set of global RO climate data, even though their 5-year design life time ended in 2011.
+This ROM SAF gridded data (products GRM-17 to 21) consists of zonal monthly means of bending angle, refractivity, temperature, humidity, and geopotential height, on a 5 degree by 200 meter latitude-height grid. The monthly data are delivered as CF compliant netCDF files that also incorporates related data: data numbers, error estimates, and comparisons to the ECMWF operational model fields.
+The data can also be viewed on the ROM SAF
+Climate Monitoring pages
+, which includes time series plots for the full length of the gridded data, as well as various quality indicators.
+Starting on June 10, 2013, the ROM SAF gridded data includes monthly data from January 2008 to June 2012. During the following weeks, the data set will be extended back to August 2006 and forward into 2013. After that, the gridded data will be continuously updated, lagging the stream of new observational data with less than 6 months.
+User documentation and access to the gridded data are available at the
+Product Archive
+[June 10, 2013]
+Software Release
+The ROM SAF is pleased to announce an update to the sixth full release for the software deliverable 'ROPP', Version 6.1.
+The main changes from the previous release, v6.0, are as follows.
+(1) A tool to read background profiles of RO data from gridded datasets in GRIB format. The resulting background profiles can be converted to a form suitable for use with the ROPP 1D-Var retrieval module ropp_1dvar.
+(2) A tool to read "grouped" EUMETSAT-style RO data in netcdf-4 format, and to output in standard ROPP or BUFR format.
+(3) The automatic calculation of dry temperature by tools in the ROPP pre-processing package ropp_pp, and its full incorporation within the standard ROprof structure.
+All user documentation has been reviewed and updated. Details of all changes are available together with the updated software on the ROPP download website.
+There are few other changes, so unless users wish to take advantage of these new features there is no need to update their applications to use this latest ROPP distribution.
+Details of all changes are available together with the updated software on the
+ROPP download website
+[April 9, 2013]
+Refractivity data from the Metop-B satellite, Resumed
+Today the ROM SAF resumes the demonstration dissemination of the Metop-B refractivity products.
+The products will be level 2 BUFR files with a similar content as the current BUFR files from GRAS on Metop-A, i.e. they will contain the retrieved refractivities and a copy of the thinned bending angle that is disseminated by EUMETSAT CAF.
+More information is given in
+this UNS-message
+(requires login). Please do not hesitate to contact the ROM SAF team if you have any questions related to this.
+[April 8, 2013]
+NRT monitoring of Metop-B data
+The ROM SAF is pleased to announce that our NRT monitoring page now includes GRAS RO data from the Metop-B satellite ("GRAS-B").
+Mozilla Firefox users may have to do CTRL+SHIFT+R to refresh javascripts before viewing the data. Note that the matched occultations (RO-RO and RO-sonde) are not yet linked but this will happen as soon as possible.
+[December 19, 2012]
+Refractivity data from the Metop-B satellite
+The EUMETSAT Central Application Facilities (CAF) started the dissemination of GRAS level 1b bending angle data from the Metop-B satellite on November 15.
+The subsequent ROM SAF processing into level 2a refractivities has been running since October and these products have now undergone validation. Today the ROM SAF starts a demonstration dissemination of these products.
+The products will be level 2 BUFR files with a similar content as the current BUFR files from GRAS on Metop-A, i.e. they will contain the retrieved refractivities and a copy of the thinned bending angle that is disseminated by EUMETSAT CAF.
+More information is given in
+this UNS-message
+(requires login). Please do not hesitate to contact the ROM SAF team if you have any questions related to this.
+[December 10, 2012]
+ROM SAF on Twitter
+The ROM SAF recently created a twitter account:
+https://twitter.com/rom_saf
+Follow @rom_saf
+We intend to use Twitter for brief information about our UNS information and other news.
+[December 10, 2012]
+Metop-B succesfully launched
+EUMETSATs newest polar-orbiting weather satellite Metop-B was successfully launched from Baikonur in Kazakhstan on a Soyuz rocket on September 17.
+Metop-B's role is to ensure continuity of observations from polar orbit which are vital to Numerical Weather Prediction as well as climate and environmental monitoring. This service is currently provided by the first satellite in the series, Metop-A (launched October 19, 2006), which has exceeded its nominal lifetime. The value of Metop data for weather forecasting is illustrated by recent studies of the impact of various data sources (in situ, airborne and space-based) on the performance of 24-hour forecasts, in which Metop-A accounts for the highest level of contribution at 25%. Focusing on the contribution of data from individual satellites, Metop-A's contribution is nearly 40%, which is more than double the contribution of a polar orbiting satellite of the previous generation.
+Like Metop-A, Metop-B is carrying a GRAS instrument (Global navigation satellite system Receiver for Atmospheric Sounding), which will supply radio occultation data to the ROM SAF. The first test occultation from the instrument is expected on September 24, and commissioning and cal/val-activities will last until February 2013, whereafter the first ROM SAF GRAS products from Metop-B are expected to be declared operational and become publicly available. In parallel, ROM SAF GRAS products from Metop-A will continue to be produced, as long as this satellite is operational.
+[September 21, 2012]
+2012 EUMETSAT conference
+The ROM SAF participated in the EUMETSAT Meteorological Satellite Conference held in Sopot, Poland, September 3-7, 2012.
+The contribution consisted of one presentation:
+ROM SAF and Radio Occultation Products
+and two posters:
+Improvement Metrics for Water Vapour and Temperature Profiles Retrieved from GPS RO Profiles through 1D-Var
+ROM SAF Global Climate Data Based on GNSS-RO Measurements
+[September 21, 2012]
+GRAS SAF becomes ROM SAF
+From March 1, 2012, the GRAS SAF has a new name: ROM SAF (Radio Occultation Meteorology SAF). The new name reflects the fact that the products and services are not limited to RO data from the GRAS instrument. The change of name also marks the beginning of the 2nd Continuous Development and Operations Phase (CDOP-2) for the SAF.
+The new domain name is:
+http://www.romsaf.org
+Although www.grassaf.org will redirect to the new domain for some time, we encourage users to update their bookmarks, web links, etc. accordingly.
+[March 1, 2012]
+Software Release
+The GRAS SAF is pleased to announce the sixth full release for the software deliverable 'ROPP', Version 6.0.
+The principal changes from the previous release, v5.0, are a consolidation of the ropp_pp module and a better thinning of occultations near the pole. Numerous bug-fixes and minor enhancements, particularly with regard to the building and testing of ROPP, have also been included. All user documentation has been reviewed and updated. Details of all changes are available together with the updated software on the
+ROPP download website
+Users are recommended to update their applications to use this latest ROPP distribution.
+[February 27, 2012]
+Software Release
+The GRAS SAF is pleased to announce the fifth full release for the software deliverable 'ROPP', Version 5.0.
+The principal changes from the previous release, v4.1, are the inclusion of non-ideal gas effects (compressibility factors) in the forward model and 1D-Var modules, and support for the ECMWF BUFR library. Numerous bug-fixes and minor enhancements, particularly in the ropp_pp module, have also been included. All user documentation has been reviewed and updated. Details of all changes are available together with the updated software on the
+ROPP download website
+Users are recommended to update their applications to use this latest ROPP distribution.
+[July 11, 2011]
+NRT Monitoring of SAC-C and C/NOFS Data
+The GRAS SAF is pleased to announce that our NRT monitoring page now includes RO data from two more satellites: The Argentinian satellite
+SAC-C
+and the US satellite
+C/NOFS
+The data are processed and disseminated by UCAR and are now on the GTS, though data since February 2011 are provided.
+Firefox users may have to do CTRL+SHIFT+R to refresh javascripts before viewing the data. Note that the matched occultations (RO-RO and RO-sonde) are not yet linked but this will happen soon.
+[May 30, 2011]
+1D-Var Products Declared Operational
+The GRAS SAF is pleased to announce, that the following 1D-Var products have been officially declared operational: GRM-02 (NRT temperature profile), GRM-05 (NRT surface pressure), and GRM-07 (Error covariance matrix for NRT products). The following 1D-Var products have been officially declared pre-operational: GRM-03 (NRT specific humidity profile) and GRM-04 (NRT pressure profile).
+The products are expected to become available to users through dissemination and download in Q4 2011.
+[May 3, 2011]
+NRT Monitoring of TerraSAR-X Data
+The GRAS SAF is pleased to announce that our NRT monitoring page now includes RO data from the German
+TerraSAR-X satellite
+The data, processed and disseminated by the
+, have an improved stratospheric bias from October 21 onwards. Corresponding
+ECMWF statistics
+are available.
+Firefox users may have to do ctrl+shift+R to refresh javascripts before viewing the data.
+[October 26, 2010]
+Successful GRAS SAF Climate Workshop
+On September 6-11, 2010, the GRAS SAF co-organized OPAC2010 (International Occultations for Probing Atmosphere and Climate Workshop) together with the University of Graz. OPAC2010 comprised the Joint OPAC-4, GRAS SAF Climate, and IROWG-1 workshops, and was held in Graz, Austria.
+OPAC2010 was a successful forum for everybody interested in atmospheric remote sensing by occultation methods and/or the use of occultation data in atmospheric physics, chemistry, and meteorology, this time with special focus on climate applications.
+For program, abstracts, and presentations, please visit the
+OPAC2010 web page
+[September 20, 2010]
+Software Update
+The GRAS SAF is pleased to announce an update to the fourth full release for the software deliverable 'ROPP', Version 4.1.
+The principle change from the previous release, Version 4.0, is an update to the radio occultation pre-processing module to provide more robust processing of open loop data. Additional functionality to process GRAS occultation phase and amplitude data has also been included. The 1DVar module has also been updated to provide improved support in defining observation and background error structures, and to output additional diagnostic information. All user documentation has been reviewed and updated. Details of all changes are available together with the updated software on the
+ROPP download website
+Users are recommended to update their applications to use this latest ROPP distribution.
+[July 20, 2010]
+Climate Workshop
+The GRAS SAF is co-organizing OPAC2010 (International Occultations for Probing Atmosphere and Climate Workshop) together with the University of Graz. OPAC2010 will comprise the Joint OPAC-4, GRAS SAF Climate, and IROWG-1 workshops, and will be held on September 6-11, 2010 in Graz, Austria.
+OPAC2010 will be an attractive forum for everybody interested in atmospheric remote sensing by occultation methods and/or the use of occultation data in atmospheric physics, chemistry, and meteorology, this time with special focus on climate applications.
+For more information please visit the
+OPAC2010 web page
+[April 23, 2010]
+NRT refractivity product operational
+The GRAS SAF is pleased to announce that the GRAS SAF level 2 NRT refractivity product (GRM-01) has been declared operational. This is happening in connection with an upgrade of the GRAS SAF operational processing software, which will significantly reduce the current bias in GRM-01 above about 30 km. The standard deviation above 40 km will in general be a little larger than before. The influence on the data below 30 km should be insignificant.
+The details of the change are described in the associated Validation Report (available at the
+Product Archive
+). The main thing is a shift from statistical optimization based on a 1-parameter background fit to a 2-parameter fit in combination with a global search in a library of climatological profiles. The statistical optimization used is known as optimal linear combination (OLC).
+Due to the change of approach in processing the data at high altitudes, some profiles are dismissed as outliers above 40 km, and they are not further processed. As a consequence the number of refractivity profiles after the upgrade will on average be less than before (a reduction of about 5%).
+Other minor changes:
+NetCDF variables:
+- time_offset [Time offset for georeferencing (since start of occ.)] is currently incorrect and will therefore be set to missing value.
+- azimuth [GNSS->LEO line of sight angle (from True North) for the reference coordinate] will now be provided in 'atm' files.
+BUFR variables:
+Local Earth parameters:
+- Time increment [data field 29; descriptor 0 04 016] is currently incorrect and will therefore be set to missing value.
+- Bearing or azimuth [data field 36; descriptor 0 05 021] will now be provided.
+Until today the GRAS SAF refractivity product had the status of pre-operational (version 1.2). After the upgrade the refractivity product is now declared operational (version 1.3).
+The upgraded refractivity product is disseminated over the GTS and EUMETCast systems in BUFR format in NRT. It is also being archived at our website in both NetCDF and BUFR files for offline access.
+[February 1, 2010]
+Software Update
+The GRAS SAF is pleased to announce the fourth full release for the software deliverable 'ROPP', Version 4.0.
+The principle change from the previous release, v3.0, is the addition of a new two-dimensional bending angle observation operator, together with the corresponding two-dimensional tangent linear and adjoint codes and I/O support. Additional functionality has been provided in the pre-processing of excess phase data to ionospheric corrected bending angle and refractivity profiles, including use of external navigation bit data (this algorithm has experimental status and is suitable for research use only), revised filtering algorithms and additional options for initialising the Abel transform. Output diagnostic and error information from any ROPP routine may now be controlled by the user. Dependence on the third-party udunits library has been removed. All user documentation has been reviewed and updated. Details of all changes are available together with the updated software on the
+ROPP download website
+Users are recommended to update their applications to use this latest ROPP distribution.
+[January 11, 2010]
+New GRAS SAF user survey
+The GRAS SAF is conducting a new user survey, the questionnaire results can be found
+here
+. Initially, email invitations have been sent out to 574 recipients.
+[December 15, 2009]
+GRAS SAF web site updated
+The GRAS SAF web site has undergone a major update. Notable changes are a modified look, individual product pages, and merging of the two previously separated parts www.grassaf.org and garf.grassaf.org. Users, who previously logged in to access the garf.grassaf.org part, will notice that login is now only required to download product, software, and documents.
+[November 17, 2009]
+New GRAS SAF Report (GSR 09)
+A new GRAS SAF report addressing the issue of refractivity coefficients has been published. The report is written by Sean Healy, ECMWF, and has the name "Refractivity coefficients used in the assimilation of GPS radio occultation measurements"
+Summary: The sensitivity of ECMWF numerical weather prediction analyses to the empirical refractivity coefficients and the introduction of non-ideal gas effects in the bending angle operator have been investigated. A review of the literature on the refractivity coefficients suggests that the uncertainty in the values is probably larger than has been recognised. The results reinforce the need for new measurements of the refractivity coefficients at radio frequencies.
+The GSR 09 report can be viewed
+here
+[October 9, 2009]
+Software Release
+The GRAS SAF is pleased to announce an update release for the software deliverable 'ROPP', Version 3.0.
+The principle changes from the previous release, v2.0, is to provide functionality to process excess phase and amplitude time series to compute L1 and L2 channel bending angle profiles by geometric optics and wave optics methods. This complements existing functionality to compute ionospheric corrected bending angle and refractivity profiles from L1 and L2 channel bending angle data.
+Users are recommended to update their applications to use this latest ROPP distribution.
+Details of all the changes are available together with the updated software package on the
+ROPP download website
+[July 6, 2009]
+Feature on GRAS SAF
+EUMETSATs web page has a feature on the GRAS SAF and our refractivity product this week.
+[April 17, 2009]
+Data access on GARF
+The GRAS SAF is pleased to announce that the product archive GARF is open for access to archived NRT data. Read more
+here
+[March 30, 2009]
+Refractivity (GRM-01) product via EUMETCast
+The GRAS SAF is pleased to announce that the GRAS SAF level 2 NRT refractivity product (GRM-01) is being disseminated in trial mode via the EUMETCast at EUMETSAT. The dissemination started 30 March 2009, at about 11:00 UTC. For more information see EUMETSAT's announcement below:
+Subject: Trial Dissemination of the GRAS SAF NRT refractivity product (GRM-01)
+Date: Friday, March 27, 2009 12:15 PM
+Dear Members of the STG-OPS Working Group
+We are pleased to announce on 30 March 2009, the inclusion of new GRAS SAF products on EUMETCast.
+The GRAS SAF level 2 NRT refractivity product (GRM-01) is generated for every occultation in BUFR format. The product has "pre-operational" status.
+For more information about the BUFR files please read the following document:
+BUFR Specification
+EUMETCast requirements: Files will appear on the channel "SAF-Europe" (PID 500, multicast address 224.223.222.28:3011) The filenames start with "S-GRM_-GRAS_RO_L12" with full details in the Product User Manual, see:
+For further information, please consult the SAF web site via the link provided above.
+Access to the above product will be automatically provided for Member/Cooperating State NMS and registered manufacturers. Following the successful trial, it is planned to make the products available to the wider EUMETCast User community.
+With best regards
+Sally Wannop
+User Relations Manager
+EUMETSAT User Service
+[March 30, 2009]
+NRT refractivity product pre-operational
+The GRAS SAF is pleased to announce that the GRAS SAF level 2 NRT refractivity product (GRM-01) has been declared pre-operational.
+The product is disseminated in NRT via the GTS system and is in the final stages of being made available over the EUMETCast system; a separate announcement will be issued when this is ready. On Thursday this week we will open the GRAS SAF Archive and Retrieval Facility (GARF) where archived NRT data can be retrieved.
+The current level 1b bending angle is obtained by GO and cannot be recommended for usage below about 8 km; this is also true for the refractivity. The quality of the refractivity product can be seen in the attached figure which shows the global O-B/B statistics compared to ECMWF. The figure shows the O-B/B mean and standard deviation and the product requirements accuracies: threshold (green) and target (red). We are currently improving on the standard deviation and the bias above 35 km and we expect to be able to provide an updated product within 1-2 months time.
+On GARF we provide continuous
+NRT monitoring
+of the data quality and data flow. The monitoring does not only include MetOp/GRAS RO data from EUMETSAT and the GRAS SAF but also RO data from the following missions: FORMOSAT-3/COSMIC, CHAMP, and GRACE-A.
+The BUFR file that is being disseminated via GTS contains in addition to the refractivity product a GRAS SAF produced thinnned version of EUMETSAT's NRT level 1b bending angle. The thinning is consistent with the thinning algorithm applied by EUMETSAT. In order to start receiving the GRAS SAF BUFR file please follow the normal procedures at your organization. The files are generated at DMI and carries the WMO bulletin headers: "IUT[A-L]14 EKMI". For more information about the BUFR files please read
+this
+document.
+If you have questions please do not hesitate to ask us. Please address your questions directly to the GRAS SAF helpdesk by using this link:
+Helpdesk
+[March 25, 2009]
+Software Release
+The GRAS SAF is pleased to announce an update release for the software deliverable 'ROPP', Version 2.0.
+Details of the changes are available together with the updated software package on the
+ROPP download website
+[December 1, 2008]
+Software Release
+The GRAS SAF is pleased to announce an update release for the software deliverable 'ROPP', Version 1.2.
+The principle changes from the previous release, v1.1, is to increase flexibility to support other than the ECMWF NWP model levels, significantly decrease dependencies on 3rd party code and to fix some reported bugs relating to the processing of Level 1 GRAS data.
+Details of the changes are available together with the updated software on the
+ROPP download website
+[September 3, 2008]
+User workshop
+A joint ECMWF/GRAS SAF workshop on the assimilation of GPS radio occultation measurements was held at ECMWF in Reading, UK, from 16 to 18 June 2008. Read more
+here
+[June 16, 2008]
+NRT monitoring
+The GRAS SAF is pleased to announce
+NRT monitoring
+of level 2 demonstration products based on pre-operational level 1b GRAS bending angle data from EUMETSAT.
+[April 11, 2008]
+Software Release
+The GRAS SAF is pleased to announce an update release for the software deliverable 'ROPP', Version 1.1. The principle change from the first release, v1.0 is to make the code in general much more robust to non- nominal data inputs and to support new forthcoming RO missions. The v1.1 code has also been successfully tested with a wider range of compilers, so portability is significantly enhanced.
+Details of the changes are available together with the updated software on the
+ROPP download website
+[April 9, 2008]
+Software Release
+The GRAS SAF is pleased to announce the first full release of the Radio Occultation Processing Package (ROPP-1 v1.0).
+The package provides software to support GRAS (and other RO missions such as COSMIC and CHAMP) data to be assimilated into NWP models, RO data file interfaces plus various stand-alone tools such as 1D-Var retrieval and BUFR encoding/decoding. Full documentation is provided. There are no charges for this downloading or using this package.
+The ROPP-1 software, test data, documentation and supporting items can be downloaded from the GRAS SAF Product Archive, from where ialso an overview document describing ROPP can be freely downloaded. In order to download the package components, you will first need to register as an ROPP user via this website. This is an automatic process and very simple and quick to obtain the access details. Users who have previously registered for the Beta release will need to re-register for the full release.
+When you have your access details, you will be able to log in and navigate to the ROPP downloads page where - for the first login only - you will be required to agree to the terms of a Software Licence. Please first look at the Release Notes which contain a description of the available files, the current status of the packages components and a quick installation guide.
+We thank you for your interest in ROPP and we look forward to hearing of your experiences in using the package. If you have any comments or questions about ROPP, please use the
+Helpdesk
+facilities.
+[April 11, 2007]
+previous page
+go to top
+Print
+The ROM SAF products are licensed under the
+Creative Commons Attribution 4.0 International License (CC BY 4.0)
+by EUMETSAT. Whether you're displaying the product as-is or if you have used it as input data, please use the attribution suggested on
+ROM SAF usage policy and acknowledgement
+Privacy policies

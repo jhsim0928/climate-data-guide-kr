@@ -1,0 +1,45 @@
+# https://www.globalfiredata.org/data.html
+GFED Home
+Global Fire Emissions Database (GFED)
+GFED5 Gridded Files
+NetCDF4 files containing gridded estimates of burned area and emissions can be downloaded via SFTP.
+Login details are available
+here
+(note that the port number is 1022).
+GFED5.1
+— data for 1997–2022 (see accompanying README for details)
+GFED5.1NRT
+— near‑real‑time data for 2023 onward, divided into reprocessed and update directories
+Ancillary
+— summary tables, input datasets, and code used for GFED5 publications
+Trace gas and aerosol species include carbon (C), dry matter (DM), CO₂, CO, CH₄, NMOC (gaseous), H₂,
+NOₓ (as NO), N₂O, PM2.5, TPC, OC, BC, SO₂, NH₃, C₂H₆, CH₃OH, C₂H₅OH, C₃H₈, C₂H₂, C₂H₄, C₃H₆,
+C₅H₈, C₁₀H₁₆, C₇H₈, C₆H₆, C₈H₁₀, toluene lump, higher alkenes, higher alkanes, CH₂O, C₂H₄O,
+C₃H₆O, C₂H₆S, HCN, HCOOH, CH₃COOH, MEK, CH₃COCHO, and HOCH₂CHO. Additional species can be computed on request.
+Summary Tables
+Summary tables for global and regional emission estimates from 1997 onward are available
+here
+. Regional estimates are based on the 14 basis regions shown below, using the abbreviations listed in the tables.
+Related Datasets
+GFED4
+GFED4s was released in 2017 and described in
+van der Werf et al. (2017)
+It was the first GFED version to include small‑fire burned area, using the statistical approach introduced in
+Randerson et al. (2012)
+After 2016, emissions are no longer based on burned area due to changes in MODIS burned‑area collections.
+GFED4s used Collection 5.1, which was superseded by Collection 6. Emissions for the post‑2016 period are derived
+from MODIS active‑fire detections and a grid‑cell‑specific conversion calibrated using the 2003–2016 overlap period.
+GFED4s covers 1997–2025 at 0.25° spatial resolution. We recommend using GFED5 when possible.
+GFED 500‑meter
+Although GFED spatial resolution has increased over successive versions, it remains coarser (0.25°) than the
+satellite data used (mostly 500 m). To better align model and data resolution, a simplified GFED model was run
+at 500‑meter resolution for the 2002 onward period, described in
+Van Wees et al. (2022)
+GFED5 is not provided at 500‑meter resolution because the small‑fire burned‑area algorithm requires spatial aggregation.
+GFED500m offers greater spatial detail, whereas GFED5 includes small‑fire burned area and is available in near real time.
+Historic Emissions (BB4CMIP)
+Fire emissions prior to the satellite era are uncertain, but proxy data and modeling help characterize variability
+and trends. The BB4CMIP dataset, described in
+Van Marle et al. (2017)
+was constructed for CMIP6 using GFED4s as an anchor dataset.
+Ongoing efforts aim to harmonize BB4CMIP with GFED5 and update the dataset.

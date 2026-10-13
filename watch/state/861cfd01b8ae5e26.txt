@@ -1,0 +1,178 @@
+# https://ladsweb.modaps.eosdis.nasa.gov/missions-and-measurements/products/CLDPROP_L2_VIIRS_NOAA20
+LAADS DAAC | NASA
+CLDPROP_L2_VIIRS_NOAA20 - VIIRS/NOAA20 Cloud Properties L2 6-Min Swath 750 m
+The National Oceanic and Atmospheric Administration (NOAA) 20 Visible Infrared Imaging Radiometer Suite (VIIRS) NASA Level-2 (L2) Cloud Properties is a continuity product like its counterpart product from the Suomi National Polar-orbiting Partnership (SNPP) VIIRS. Judiciously leveraging a common set of spectral channels, they help sustain the long-term records of both MODIS and VIIRS heritages. A commonly applicable algorithm to both MODIS and VIIRS inputs is the hallmark of this continuity approach. CLDPROP_L2_VIIRS_NOAA20 is the short name for the NOAA-20 VIIRS incarnation of the orbital swath-based Cloud Properties continuity product.
+The original MODIS cloud-top and cloud optical properties algorithms (MOD06 suite) benefit from their access, via the MODIS instrument, to thermal infrared absorption channels that provide information on cloud thermodynamic phase and cloud-top properties, including the 7.5 µm water vapor channel and several channels within the 13 µm CO2 absorption band that facilitate a CO2-slicing method to retrieve cloud-top pressure. Given the lack of such spectral channels in the VIIRS instrument, in addition to the spectral offset between the MODIS 2.13 µm and VIIRS 2.25 µm shortwave infrared (SWIR) channels in which ice and liquid cloud absorption differs, a direct porting of the original MODIS MOD35 and MOD06 algorithms to VIIRS is precluded. The commonly applicable CLDPROP algorithm provides a continuity of approach between MODIS and VIIRS, leveraging only those spectral channels that are common to both instruments. In the CLDPROP algorithm, cloud-top property retrievals are derived through NOAA’s operational algorithms developed for Advanced Very-High Resolution Radiometer (AVHRR), VIIRS, and Geostationary Operational Environmental Satellites (GOES)-16/17, specifically the Clouds from AVHRR Extended (CLAVR-x) processing system for cloud-top phase (algorithm based primarily on infrared spectral channels, with additional information from select SWIR channels) and NOAA’s Enterprise Algorithm Working Group (AWG) Cloud Height Algorithm (ACHA) for cloud-top properties. Besides a modified version of the NOAA-20 VIIRS Level-1B (including restored bow-tie deleted pixels and radiometric adjustments to several shortwave channels to address known radiometric offsets between MODIS and VIIRS), this product uses the NOAA-20 VIIRS Cloudmask Continuity product, and several ancillary data inputs; they include gap-filled MODIS snow/ice surface spectral albedos, Near-real-time Ice and Snow Extent (NISE) inputs, and National Centers for Environmental Prediction (NCEP) Global Data Assimilation System (GDAS) forecast analysis fields. The nominal spatial resolution of the NOAA-20 VIIRS Level-2 Cloud Properties product is 750-meters.
+The L2 netCDF product, acquired and processed every 6 minutes, contains the following four data groups and Science Data Set (SDS) layers in each group:
+Cloud model data
+Ice particle asymmetry parameter
+Liquid water droplet asymmetry parameter
+Ice particle extinction efficiency
+Liquid water droplet extinction efficiency
+Ice particle single scattering albedo
+Liquid water droplet single scattering albedo
+Geophysical data
+Atmospherically corrected reflectance used during cloud optical and microphysical properties retrieval
+Cloud Effective Emissivity from NOAA CLAVR-x AWG algorithm at 11µm
+Cloud Particle Effective Radius two-channel retrieval using 2.2 µm and either 0.65 µm, 0.86 µm or 1.24 µm (specified in Quality_Assurance) from best points: not failed in any way, not marked for clear sky restoral
+Cloud Particle Effective Radius two-channel retrieval using 1.6 µm and either 0.65 µm, 0.86 µm or 1.24 µm (specified in Quality_Assurance) from best points: not failed in any way, not marked for clear sky restoral
+Cloud Particle Effective Radius two-channel retrieval using 2.2 µm and 1.6 µm from best points: not failed in any way, not marked for clear sky restoral
+Cloud Particle Effective Radius two-channel retrieval using 2.2 µm and 1.6 µm from points identified as partly cloudy from cloud edges
+Cloud Particle Effective Radius two-channel retrieval using 1.6 µm and either 0.65 µm, 0.86 µm or 1.24 µm (specified in Quality_Assurance) from points identified as partly cloudy from cloud edges
+Cloud Particle Effective Radius two-channel retrieval using 3.7 µm and either 0.65 µm, 0.86 µm or 1.24 µm (specified in Quality_Assurance) from best points: not failed in any way, not marked for clear sky restoral
+Cloud Particle Effective Radius two-channel retrieval using 3.7 µm and either 0.65 µm, 0.86 µm or 1.24 µm (specified in Quality_Assurance) from points identified as partly cloudy from cloud edges
+Cloud Particle Effective Radius two-channel retrieval using 2.2 µm and either 0.65 µm, 0.86 µm or 1.24 µm (specified in Quality_Assurance) from points identified as partly cloudy from cloud edges
+Cloud Effective Particle Radius from 2.2 µm Relative Uncertainty (Percent) from both best points and points identified as cloud edge
+Cloud Effective Particle Radius from 1.6 µm Relative Uncertainty (Percent) from both best points and points identified as cloud edge
+Cloud Effective Particle Radius Relative Uncertainty (Percent) using 2.2 µm and 1.6 µm from both best points and points identified as cloud edge
+Cloud Effective Particle Radius from 3.7 µm Relative Uncertainty (Percent) from both best points and points identified as cloud edge
+3-d byte array from which cloud mask information can be extracted
+Cloud Optical Thickness two-channel retrieval using 2.2 µm and either 0.65 µm, 0.86 µm or 1.24 µm (specified in Quality_Assurance) from best points: not failed in any way, not marked for clear sky restoral
+Cloud Optical Thickness two-channel retrieval using 1.6 µm and either 0.65 µm, 0.86 µm or 1.24 µm (specified in Quality_Assurance) from best points: not failed in any way, not marked for clear sky restoral
+Cloud Optical Thickness two-channel retrieval using 2.2 µm and 1.6 µm from best points: not failed in any way, not marked for clear sky restoral
+Cloud Optical Thickness two-channel retrieval using 2.2 µm and 1.6 µm from points identified as partly cloudy from cloud edges
+Cloud Optical Thickness two-channel retrieval using 1.6 µm and either 0.65 µm, 0.86 µm or 1.24 µm (specified in Quality_Assurance) from points identified as partly cloudy from cloud edges
+Cloud Optical Thickness two-channel retrieval using 3.7 µm and either 0.65 µm, 0.86 µm or 1.24 µm (specified in Quality_Assurance) from best points: not failed in any way, not marked for clear sky restoral
+Cloud Optical Thickness two-channel retrieval using 3.7 µm and either 0.65 µm, 0.86 µm or 1.24 µm (specified in Quality_Assurance) from points identified as partly cloudy from cloud edges
+Cloud Optical Thickness two-channel retrieval using 2.2 µm and either 0.65 µm, 0.86 µm or 1.24 µm (specified in Quality_Assurance) from points identified as partly cloudy from cloud edges
+Cloud Optical Thickness from 2.2 µm Relative Uncertainty (Percent) from both best points and points identified as cloud edge
+Cloud Optical Thickness from 1.6 µm Relative Uncertainty (Percent) from both best points and points identified as cloud edge
+Cloud Optical Thickness Relative Uncertainty (Percent) using 2.2 µm and 1.6 µm from both best points and points identified as cloud edge
+Cloud Optical Thickness from 3.7 µm Relative Uncertainty (Percent) from both best points and points identified as cloud edge
+Cloud Phase Determination from NOAA CLAVR-x AWG algorithm
+Cloud Phase Determination Used in Optical Thickness/Effective Radius Retrieval
+Cloud Top Height from NOAA CLAVR-x AWG algorithm
+Cloud Top Height uncertainty from NOAA CLAVR-x AWG algorithm
+Cloud Top Pressure from NOAA CLAVR-x AWG algorithm
+Cloud Top Pressure uncertainty from NOAA CLAVR-x AWG algorithm
+Cloud Top Temperature from NOAA CLAVR-x AWG algorithm
+Cloud Top Temperature uncertainty from NOAA CLAVR-x AWG algorithm
+Column Water Path two-channel retrieval using 2.2 µm and either 0.65 µm, 0.86 µm or 1.24 µm (specified in Quality_Assurance) from best points: not failed in any way, not marked for clear sky restoral
+Column Water Path two-channel retrieval using 1.6 µm and either 0.65 µm, 0.86 µm or 1.24 µm (specified in Quality_Assurance) from best points: not failed in any way, not marked for clear sky restoral
+Column Water Path two-channel retrieval using 2.2 µm and 1.6 µm from best points: not failed in any way, not marked for clear sky restoral
+Column Water Path two-channel retrieval using 2.2 µm and 1.6 µm from points identified as partly cloudy from cloud edges
+Column Water Path two-channel retrieval using 1.6 µm and either 0.65 µm, 0.86 µm or 1.24 µm (specified in Quality_Assurance) from points identified as partly cloudy from cloud edges
+Column Water Path two-channel retrieval using 3.7 µm and either 0.65 µm, 0.86 µm or 1.24 µm (specified in Quality_Assurance) from best points: not failed in any way, not marked for clear sky restoral
+Column Water Path two-channel retrieval using 3.7 µm and either 0.65 µm, 0.86 µm or 1.24 µm (specified in Quality_Assurance) from points identified as partly cloudy from cloud edges
+Column Water Path two-channel retrieval using 2.2 µm and either 0.65 µm, 0.86 µm or 1.24 µm (specified in Quality_Assurance) from points identified as partly cloudy from cloud edges
+Cloud Water Path from 2.2 µm Relative Uncertainty (Percent) from both best points and points identified as cloud edge
+Cloud Water Path from 1.6 µm Relative Uncertainty (Percent) from both best points and points identified as cloud edge
+Cloud Water Path Relative Uncertainty (Percent) using 2.2 µm and 1.6 µm from both best points and points identified as cloud edge
+Cloud Water Path from 3.7 µm Relative Uncertainty (Percent) from both best points and points identified as cloud edge
+Low Cloud Temperature from IR Window retrieval using cloud emissivity based on cloud optical thickness
+3-D byte array from which much info about quality (QA) of retrieval data can be extracted
+Retrievals and other information for points that failed to retrieve via standard solution logic for retrieval using 2.2 µm and either 0.65 µm, 0.86 µm or 1.2 µm (specified in Quality_Assurance)
+Retrievals and other information for points that failed to retrieve via standard solution logic for retrieval using 1.6 µm and either 0.65 µm, 0.86 µm or 1.2 µm (specified in Quality_Assurance)
+Retrievals and other information for points that failed to retrieve via standard solution logic for retrieval using 2.2 µm and 1.6 µm
+Retrievals and other information for points that failed to retrieve via standard solution logic for retrieval using 3.7 µm and either 0.65 µm, 0.86 µm or 1.2 µm (specified in Quality_Assurance)
+Surface pressure from ancillary data
+Geolocation data
+Latitude from instrument geolocation
+Longitude from instrument geolocation
+Sensor Azimuth Angle, Cell to Sensor
+Sensor Zenith Angle, Cell to Sensor
+Solar Azimuth Angle, Cell to Sun
+Solar Zenith Angle, Cell to Sun
+Scanline attributes
+• Scan start time (TAI93)
+Consult the
+Level-2 Continuity Cloud Properties (CLDPROP_L2) Swath Products User Guide
+for additional information regarding the SNPP VIIRS CLDPROP product and its variables, its algorithm, output file, file naming conventions, and quality flags. Users are also encouraged to consult the User Guide and ATBD for the original MODIS version of the Cloud Top/Optical Properties product, referenced in the links below, to understand this product’s heritage.
+Links
+Search for Product Files
+Data Archive
+Level-2 Continuity Cloud Properties (CLDPROP_L2) Swath Products User Guide
+Cloud Properties Product Version-1.1 Change Summary
+MODIS Cloud Top Properties & Cloud Optical Properties ATBDs
+MODIS Cloud Optical Properties User Guide
+Level-2 Continuity Cloud Properties (CLDPROP_L2) Swath Products User Guide
+Cloud Properties Product Version-1.1 Change Summary
+MODIS Cloud Top Properties & Cloud Optical Properties ATBDs
+MODIS Cloud Optical Properties User Guide
+Shortname:
+CLDPROP_L2_VIIRS_NOAA20
+Platform:
+JPSS1(NOAA20)
+Instrument:
+VIIRS
+Processing Level:
+Level-2
+Data Format:
+netCDF4
+Temporal Resolution:
+6 minute
+ArchiveSet(s):
+Collection:
+NPP VIIRS Atmosphere data 1.1.0 (UWisc) (ArchiveSet 5111)
+PGE Number:
+NONE
+File Naming Convention:
+Syntax:
+ESDT.AYYYYDDD.HHMM.VVV.YYYYDDDHHMMSS.Format
+Example:
+CLDPROP_L2_VIIRS_NOAA20.A2020004.1700.011.2020008150544.nc
+ESDT
+Earth Science Data Type or Shortname
+Stands for Acquisition
+YYYYDDD
+Data acquisition year and Day-of-year per the Julian Calendar
+HHMM
+Acquisition Hour and Minute
+Version ID of the data collection
+YYYYDDDHHMMSS
+Processing year, Day-of-year, UTC time (hour, minutes, seconds)
+Format
+File format suffix, which in the above case represents netCDF4
+Keywords:
+NOAA20 VIIRS, L2 Swath, 6-Minute, Cloud Top, Optical, Microphysical Properties
+Currently Viewing ArchiveSet5111 Dates: Loading...
+Fetching product availability data from the API. This may take a moment.
+Data Availability Legend
+High
+: >75% available
+Medium
+: 25-75% available
+: <25% available
+The chart displays data availability percentages over time. Click and drag to pan, use buttons to zoom.
+Chart Options
+Tokens for Downloading LAADS DAAC Data
+A LAADS DAAC download token will help make file downloads faster, but is only usable for LAADS DAAC web sites. A LAADS DAAC token
+will not work with other Earthdata sites.
+Generating LAADS DAAC token …
+Please copy and save the token below for use with any supported LAADS download utilities or scripts.
+To test, run the following
+wget
+download command in your terminal and see if it successfully downloaded the README text file located at the root of the LAADS archive. See also
+LAADS documentation on how to use wget
+wget -e robots=off -m -np -R .html,.tmp -nH --cut-dirs=3 "https://ladsweb.modaps.eosdis.nasa.gov/archive/README" --header "Authorization: Bearer
+" -P .
+We are currently unable to generate a LAADS DAAC token. Please try again later or contact
+MODAPS Support
+with any questions.
+An Earthdata Download token (EDL) will work on any Earthdata site including all LAADS DAAC sites, but download performance from the LAADS DAAC can be much slower due to the extra network connections needed to check credentials at Earthdata.
+Confirm Download of Multiple Files
+Verifying login status…
+Please confirm before starting this batch download of
+listed below totaling
+, one file at a time.
+Once a batch download begins, your browser may not provide a way to cancel the batch aside from closing the browser entirely or stopping individual downloads one at a time. If in doubt, try selecting a smaller number of files for download.
+MODAPS Support
+is available to help with any questions.
+Browser configurations
+Some users might have to approve once (e.g., click "Allow") to allow for future downloads of multiple files.
+To avoid a new download prompt for each file, ensure the following settings are configured in your browser:
+Chrome: Settings > Advanced > Ask where to save each file before downloading >
+Firefox:
+Preferences > Files and Applications >
+Save files to
+Click checkbox “Do this automatically for files like this from now on”
+Safari: Preferences > General > File download location >
+[specified folder]
+Edge: Settings > Downloads > Ask where to save each file before downloading >
+Unsupported browsers for multi-file downloads (use
+instead):
+Internet Explorer 11 and below
+Please log in and try again
+We are currently having issues verifying your request. Please try again later or contact
+MODAPS Support
+with any questions.

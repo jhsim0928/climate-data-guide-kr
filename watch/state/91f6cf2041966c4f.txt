@@ -1,0 +1,334 @@
+# https://its-live.jpl.nasa.gov/
+ITS_LIVE a NASA MEaSURES Program | NASA JPL
+ITS_LIVE
+A NASA MEaSUREs project to provide automated, low latency, global glacier flow and elevation change datasets.
+Overview
+Satellite observations reveal how the world’s glaciers have responded to recent changes in climate, and can inform predictions of future sea level rise. To enable the next generation of ice sheet models and process-based studies, ITS_LIVE provides a decades-long, high-resolution record of global ice velocity and elevation change. The cloud-based ITS_LIVE architecture continually processes and synthesizes new data from multiple optical, radar, and laser satellite sensors, resulting in a high-resolution, low-latency product that can be used for scientific studies within days of data collection.
+Spatial coverage: Global!
+Temporal coverage: 1985 - Present
+Resolution: 120m
+Frequency: Variable, Monthly, Annual
+Formats: NetCDF, QGIS VRT, GeoTIFF, Zarr
+Have any questions? Ask the ITS_LIVE community on GITTER
+Instant Global Data Access
+Datasets
+Regional Velocity Mosaics (1985-Present)
+Antarctic Elevation Change (1985-2020)
+Elevation change of the Greenland Ice Sheet and its peripheral glaciers: (1992–2023)
+Global Image-pair Velocities (1985-Present)
+Antarctic Annual Ice Sheet Extent Masks (1997-2021)
+Antarctic Quarterly Ice Shelf Height Change and Basal Melt Rates (1992-2017)
+Greenland Monthly Ice Sheet Extent Masks (1972-Present)
+Regional Velocity Mosaics (1985-Present)
+Regional velocity mosaics created from the synthesis of all scene-pair velocities.
+Coverage: All major land ice
+Date range: 1985-present
+Resolution: 120 m
+Frequency: Monthly & Annual
+Antarctic Elevation Change (1985-2020)
+Elevation change from multi altimetry mission synthesis.
+Coverage: Ice sheets & ice shelves
+Date range: 1985-2020
+Resolution: 1920 m
+Frequency: Monthly
+Antarctic grounded ice
+Ice Shelves & Greenland Summer 2024
+Elevation change of the Greenland Ice Sheet and its peripheral glaciers: (1992–2023)
+Coverage: Greenland
+Date range: 1992-2023
+Temporal resolution: Monthly
+Spatial resolution: 1920 m
+Spatial Reference System(s): WGS 84 / NSIDC Sea Ice Polar Stereographic North EPSG:3413
+Spatial Coverage: N:81.51, S:58.33, E:11.32, W:-94.4
+Global Image-pair Velocities (1985-Present)
+Scene-pair velocities generated from satellite optical and radar imagery.
+Coverage: All land ice
+Date range: 1985-present
+Temporal resolution: Variable, 6 to 546 days separation
+Spatial resolution: 120 m
+Spatial Reference System(s): WGS 84 / NSIDC Sea Ice Polar Stereographic North EPSG:3413
+Spatial Coverage: N:81.51, S:58.33, E:11.32, W:-94.4
+Antarctic Annual Ice Sheet Extent Masks (1997-2021)
+MEaSUREs ITS_LIVE Antarctic Annual 240 m Ice Sheet Extent Masks, 1997-2021, Version 1
+Coverage: Antarctica
+Date range: October 1997 to March 2021
+Temporal resolution: Yearly
+Spatial resolution: 240m
+Spatial Reference System(s): WGS 84 / Antarctic Polar Stereographic EPSG:3031
+Spatial Coverage: N:-57.6, S:-90, E:180, W:-180
+Antarctic Quarterly Ice Shelf Height Change and Basal Melt Rates (1992-2017)
+MEaSUREs ITS_LIVE Antarctic Quarterly 1920 m Ice Shelf Height Change and Basal Melt Rates, 1992-2017, Version 1
+Coverage: Antarctica
+Platform(s): CRYOSAT-2, ENVISAT, ERS-1, ERS-2
+Date range: March 1992 to December 2017
+Temporal resolution: 3 Month
+Spatial resolution: 1920 m
+Spatial Reference System(s): WGS 84 / Antarctic Polar Stereographic EPSG:3031
+Spatial Coverage: N:-54, S:-90, E:180, W:-180
+Greenland Monthly Ice Sheet Extent Masks (1972-Present)
+MEaSUREs ITS_LIVE Greenland Monthly 120 m Ice Sheet Extent Masks, 1972-2022, Version 1
+Coverage: Greenland
+Date range: 1972-present
+Temporal resolution: Monthly
+Spatial resolution: 120 m
+Spatial Reference System(s): WGS 84 / NSIDC Sea Ice Polar Stereographic North EPSG:3413
+Spatial Coverage: N:81.51, S:58.33, E:11.32, W:-94.4
+Data Access
+Data Portal
+Web app to explore and download annual velocity mosaics and image pair data:
+STAC API
+ITS_LIVE data is now accessible through a
+STAC
+API at
+https://stac.itslive.cloud
+. The API supports two collections:
+itslive-granules
+: Individual image pair velocity measurements (Landsat, Sentinel-1, Sentinel-2)
+itslive-cubes
+: Cloud-optimized Zarr data cubes for time series analysis
+The API supports spatial, temporal, and property-based filtering.
+Python with pystac-client
+The recommended way to access the STAC API is using the
+pystac-client
+library:
+from
+pystac_client
+import
+Client
+# Connect to the ITS_LIVE STAC API
+catalog
+Client
+open
+"https://stac.itslive.cloud"
+# Search for image pairs over a region and time range
+# Example: Iceland, 2015-2020
+search
+catalog
+search
+collections
+"itslive-granules"
+bbox
+# west, south, east, north
+datetime
+"2015-01-01"
+"2020-12-31"
+max_items
+# Iterate through results
+item
+search
+items
+print
+"ID:
+item
+print
+"Date:
+item
+properties
+'datetime'
+print
+"Data URL (HTTPS):
+item
+assets
+'data'
+href
+# Access S3 URL directly for cloud workflows
+s3_url
+item
+assets
+'data'
+extra_fields
+'alternate'
+'s3'
+'href'
+print
+"S3 URL:
+s3_url
+Advanced Filtering
+The API supports CQL2 (Common Query Language) filters for more complex queries:
+from
+pystac_client
+import
+Client
+catalog
+Client
+open
+"https://stac.itslive.cloud"
+# Search with property filters
+search
+catalog
+search
+collections
+"itslive-granules"
+bbox
+datetime
+"2015-01-01"
+"2020-12-31"
+query
+"sat:platform"
+"eq"
+"LANDSAT-8"
+# Filter by satellite
+item
+search
+items
+# Access the NetCDF file
+data_url
+item
+assets
+'data'
+href
+# Download or process the data...
+Accessing Zarr Data Cubes
+from
+pystac_client
+import
+Client
+import
+xarray
+catalog
+Client
+open
+"https://stac.itslive.cloud"
+# Search for data cubes
+search
+catalog
+search
+collections
+"itslive-cubes"
+bbox
+item
+next
+search
+items
+# Open Zarr cube directly with xarray
+open_zarr
+item
+assets
+'zarr'
+href
+print
+Note
+: For V1 data hosted at NSIDC (before April 2023), access requires authentication with NASA Earthdata Login (EDL). See:
+NSIDC Programmatic Access Guide
+earthaccess library
+for EDL authentication in Python
+Jupyter Notebooks
+Interactive Notebooks & Tutorials
+Jupyter notebooks to access and visualize ice velocity time series from ITS_LIVE data cubes.
+Repository:
+https://github.com/nasa-jpl/its_live
+Click the binder link below to browse the data now
+Data Cubes
+GeoJSON Data Cubes Catalog (5MB)
+In addition to NetCDF image pairs and mosaics, ITS_LIVE produces cloud-optimized
+Zarr
+datacubes, which contain all image-pair data, co-aligned on a common grid for simplified data access. Cloud optimization enables rapid analysis without intermediary data servers, and ITS_LIVE datacubes map directly into Python
+xarray
+or Julia
+ZArray
+structures. ITS_LIVE provides basic access and plotting tools in both Python and Julia, making it easy to incorporate the datacubes into workflows locally or on remote servers.
+Documentation
+Regional Glacier and Ice Sheet Surface Velocities - Version 1 (PDF - 0.3MB)
+Landsat Image-Pair Glacier and Ice Sheet Surface Velocities: Version 1 (PDF - 2MB)
+Regional Glacier and Ice Sheet Surface Velocities - known issues (PDF - 2MB)
+Getting started
+Have any questions? Ask the ITS_LIVE community on
+GITTER
+Working with ITS_LIVE data and basemaps in QGIS without downloading the data (PDF - 26MB)
+Open source tools
+autoRIFT
+A highly accurate and efficient algorithm for finding the pixel displacement between two radar or optical images
+NSIDC notebook
+A Jupyter notebook to search and download ITS_LIVE scene-pair velocity.
+Chad Greene's Matlab collection
+A set of Matlab functions for accessing, analyzing, and plotting ITS_LIVE velocity data. These functions are intended to streamline the process of loading ITS_LIVE mosaics, interpolating, generating flowlines, and creating maps of ice flow.
+ITS_LIVE API
+An API for searching ITS_LIVE scene-pair velocities.
+Geogrid
+A Python module for precise mapping between (pixel index, pixel displacement) in imaging coordinates and (geolocation, motion velocity) in geographic Cartesian (northing/easting) coordinates
+Emma Marshall's ITS_LIVE tutorial
+A Jupyterbook tutorial to demonstrate how to access and work with with multi-dimensional remote sensing data from ITS_LIVE using xarray.
+Jacob Fahnestock's velocity webapp
+A serverless React-Leaflet website to plot and share ITS_LIVE data
+How to Cite
+The recommended citation for the
+Regional Glacier and Ice Sheet Surface Velocities
+"Velocity data generated using auto-RIFT (Gardner et al., 2018) and provided by the NASA MEaSUREs ITS_LIVE project (Gardner et al., 20XX)."
+The recommended citation for the
+Antarctic Ice Sheet Elevation Change data
+"Antarctic Ice Sheet Elevation Change data (Nilsson et al., 2022) provided by the NASA MEaSUREs ITS_LIVE project (Nilsson et al., 20XX)."
+Gardner, A. S., M. A. Fahnestock, and T. A. Scambos, 2019 [update to time of data download]: MEaSUREs ITS_LIVE Landsat Image-Pair Glacier and Ice Sheet Surface Velocities: Version 1. Data archived at National Snow and Ice Data Center. https://doi.org/10.5067/IMR9D3PEI28U
+Gardner, A. S., M. A. Fahnestock, and T. A. Scambos, 2019 [update to time of data download]: ITS_LIVE Regional Glacier and Ice Sheet Surface
+Velocities: Version 1. Data archived at National Snow and Ice Data Center; https://doi:10.5067/6II6VW8LLWJ7.
+Gardner, A. S., G. Moholdt, T. Scambos, M. Fahnstock, S. Ligtenberg, M. van den Broeke, and J. Nilsson, 2018: Increased West Antarctic and unchanged East Antarctic ice discharge over the last 7 years, Cryosphere, 12(2): 521–547, https://doi:10.5194/tc-12-521-2018.
+Nilsson, J., Gardner, A., & Paolo, F. [update to time of data download]: MEaSUREs ITS_LIVE Antarctic Grounded Ice Sheet Elevation Change, Version 1, https://doi.org/10.5067/L3LSVDZS15ZV.
+Nilsson, J., Gardner, A. S., and Paolo, F. S.: Elevation change of the Antarctic Ice Sheet: 1985 to 2020, Earth Syst. Sci. Data, 14, 3573–3598, https://doi.org/10.5194/essd-14-3573-2022, 2022.
+Data used
+Landsat
+4,5,7,8 data were provided by the U.S. Geological Survey.
+Copernicus
+Sentinel-1
+Sentinel-2
+data were acquired, processed, and generated by the European Space Agency (ESA).
+ERS-1
+ERS-2
+altimetry data were provided by ESA’s Reprocessed ESA ERS Altimetry (REAPER) project.
+Envisat
+CryoSat
+altimetry data were acquired, processed, and generated by the European Space Agency (ESA).
+ICESat & ICESat-2
+altimetry data was provided by NASA through NSIDC.
+All questions can be addressed to NSIDC User Services:
+nsidc@nsidc.org
+People
+Principal Investigator
+Alex Gardner
+JPL, Caltech
+Co-Investigators
+Mark Fahnestock
+Geophysical Institute, UAF
+Ted Scambos
+ESOC, CU Boulder
+Chad Greene
+JPL, Caltech
+Joe Kennedy
+ASF, UAF
+Maria Liukis
+JPL, Caltech
+Luis López
+NSIDC, CU Boulder
+Johan Nilsson
+JPL, Caltech
+Researchers, Technologists, Interns, & Collaborators
+Alex Goodman
+JPL, Caltech
+Yang Lei
+GPS, Caltech
+Piyush Agram
+Descartes Labs
+Daniel Cheng
+JPL, Caltech
+Anshul Singhvi
+JPL, Caltech
+Andrew Player
+ASF, UAF
+Former Members
+Amaury Dehecq
+Fernando Paolo
+Global Fishing Watch
+Catherine Walker
+WHOI
+Franz Meyer
+Geophysical Institute, UAF
+Advisory Board
+Noel Gourmelen
+U. Edinburgh
+Hamish Pritchard
+British Antarctic Survey
+NASA
+CALTECH
+PRIVACY
+IMAGE POLICY
+FEEDBACK
+Site Manager: Alex Gardner
+Webmasters: Jon Nelson, Anil Natha, Luis Lopez CL#18-7388

@@ -1,0 +1,99 @@
+# https://atmosphere-imager.gsfc.nasa.gov/issues/aerosol
+Aerosol Issues (04_L2) | Atmosphere Discipline Team Imager Products
+Atmosphere Discipline Team Imager Products
+Aerosol Issues (04_L2)
+Tracking of known problems and subsequent fixes is an important issue for MODIS data users. This page will act as a repository of all known MODIS Atmosphere Data Product problems, as well as how to determine the problematic version (and the fixed version) of the HDF data -- therefore data users should check this page for updates regularly. Data Users unfamiliar with how to properly track problems and fixes by determining the version of their downloaded HDF files should refer to the documentation in the Introduction sublink (the top link along the LHS of this page).
+Note that a checkmark (✔) in the tables below means Data Issue or Quality Statement applies. A blank means it's been fixed or does not apply.
+Aerosol Data Issues: Table of Contents & Anchor Links
+(Note: Anchor Links point to a specific place within this page.)
+Collection/Platform where Issues Apply
+Issue
+Impact
+C6.1/Terra
+C6.1/Aqua
+C6.0/Terra
+C6.0/Aqua
+#1. Minor Issues in 3km Aerosol
+#2. Minor Issues in 10km Aerosol
+#3. Low Stratus Cloud Contamination Deep Blue Aerosol
+Aerosol Data Quality Statements: Table of Contents & Anchor Links
+(Note: Anchor Links point to a specific place within this page.)
+Collection/Platform where Quality Statements Apply
+Quality Statement
+Impact
+C6.1/Terra
+C6.1/Aqua
+C6.0/Terra
+C6.0/Aqua
+#1. Missing Granules Aug 2017
+Issue #1: Two Minor Issues in Aerosol 3km (04_3K) Data
+Description:
+The Aerosol Team uncovered and then fixed a few issues in the MOD04_3K (3km) Aerosol Product. The problems are:
+Bad Scan Start Time
+: Scan_Start_Time SDS issue for Aerosol 3km (04_3K) has been resolved and the current forward processing will be correct.
+Bad Aerosol Cloud Fraction (Land and Ocean)
+: Incorrect values in 'Aerosol_Cloud_Fraction_Land' and 'Aerosol_Cloud_Fraction_Ocean' SDSs for the Aerosol 3km product (04_3K), there was a bug in the code resulting in both SDSs being filled with only zeros and ones. This bug has been resolved, and the current forward processing will be corrected.
+PGE Versions & Production Dates of Problematic & Corrected Data:
+Problematic Data
+Corrected Data
+PGE Versions
+Production Dates
+PGE Versions
+Production Dates
+≤ PGE04 v6.0.43
+≤ 2014 313 (11/09/2014)
+≥ PGE04 v6.0.44
+≥ 2014 314 (11/10/2014)
+Data Dates Affected:
+≥ July 2002 to November 2014
+Affected Platform:
+Aqua and Terra
+Collections Affected:
+Collection 6.0
+Return to Menu at Top of Page
+Issue #2: Three Minor Issues in Aerosol 10km (04_L2) Data
+Description:
+There are three known problems in 04_L2 (10km res.) and 04_3K (3km res.) files for Collection 6. None of these problems are planned to be fixed at this time, but could be fixed in a future delivery. The problems are:
+Non-populating Mean_Reflectance_Ocean SDS in some scenerios (04_L2): The SDS Mean_Reflectance_Ocean is not populating when Aerosol_Optical_Depth = 0.
+Long Name descriptor omission (04_L2): There is an omission in the "long_name" local attribute for one parameter: PSML003_Ocean. It should be noted that this abbreviated SDS name is an acronym for "Particles of the Small Mode Aerosol larger than 0.03 microns". The long_name currently reads "Inferred column number concentration (number per area) of particles larger than 0.03 micron for 'best' (1) and 'average' (2) solutions"; and it should read "Inferred column number concentration (number per area) of particles of Small Mode Aerosol larger than 0.03 micron for 'best' (1) and 'average' (2) solutions".
+Scan_Start_Time SDS issue for 3km Aerosol (04_3K): For the Aerosol 3km Product (04_3K), there is a bug in interpolation routine to compute SDS "Scan_Start_Time", causing some incorrect values. Scanline 1 in the 04_3K granule has the correct start time. However an interpolation error causes the start time to increment too fast for subsequent scans, and by the end of the 04_3K granule, the start time is off by nearly 7000 seconds (nearly 12 minues).
+PGE Versions & Production Dates of Problematic & Corrected Data:
+Problematic Data
+Corrected Data
+PGE Versions
+Production Dates
+PGE Versions
+Production Dates
+≤ PGE04 (All Versions)
+≤ Current Date
+Not Corrected
+Data Dates Affected:
+≥ February 2000 to Current
+Affected Platform:
+Aqua and Terra
+Collections Affected:
+Collection 6.0 and Collection 6.1
+Return to Menu at Top of Page
+Issue #3: Low Stratus Cloud Contamination in Deep Blue Aerosol
+Description:
+To be consistent with the VIIRS Deep Blue aerosol continuity products, the cloud screening procedures in the MODIS C6.1 Deep Blue algorithm have updated. This helps remove some cloud contamination issues in MODIS aerosol retrievals over low-level stratus clouds regions. Although such issues occur only over small percentage of the overall retrieved data, to avoid creating artificial trends in the long-term aerosol products, this fix is applied only in the forward near-real time MODIS data stream for both Terra and Aqua. The entire time series of the standard MODIS Deep Blue aerosol products will be updated using the revised algorithm during the next MODIS reprocessing cycle.
+Data Dates Affected:
+February 2000 to Fall 2019
+Affected Platform:
+Aqua and Terra
+Collections Affected:
+Collection 6.1
+Return to Menu at Top of Page
+Quality Statement #1: Missing Terra Data Granules between 5 Aug 2017 and 6 Aug 2017
+Description:
+Following the Terra Deep Space Calibration on August 5th, 2017 (2017 217) there were some faulty C6 Terra MODIS Atmosphere data as the focal plane temperatures did not return to nominal values until the day after - August 6th, 2017 (2017 218) 1420 UTC. So the granules for the time period between 2017 217 23:00 UTC and 2017 218 14:15 UTC were removed before the downstream Atmosphere processing. Data users will notice missing MODIS Atmosphere Data during this period for all Level-2 (L2) and Level-3 (L3) Daily atmosphere products.
+Here is a sample L3 animation of Scattering Angle for 6 Aug 2017, which shows the missing data issue fairly clearly. The animation loops between the C6.0 data and the C6.1 data. The C6.1 data is improved showing less missing data, however a gap still exists in C6.1
+C6.0 vs C6.1 comparison of missing data gap (slight improvement shown in C6.1)
+Data Dates Affected:
+Note there will be Missing Terra Data between 2017 217 (5 Aug 2017) at 23:00 UTC and 2017 218 (6 Aug 2017) at 14:15 UTC for all MODIS Atmosphere L2 and L3 Daily products.
+Affected Platform:
+Terra Only
+Collections Affected:
+Collection 6.0 and Collection 6.1 (some improvement noted in C6.1)
+Return to Menu at Top of Page
+Jump to Top

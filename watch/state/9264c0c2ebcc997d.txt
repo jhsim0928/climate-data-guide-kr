@@ -1,0 +1,202 @@
+# https://www.remss.com/missions/ssmi/
+Remote Sensing Systems
+Access Data
+Browse Static Images
+HTTP
+Documentation
+F17 Uncertainties
+Crossing Time
+Known Issues
+Related Announcements
+DMSP SSMIS Discontinued
+CLICK HERE TO REGISTER FOR AN FTP ACCOUNT TO ACCESS DATA
+SSMI / SSMIS
+Introduction
+The Special Sensor Microwave Imager (SSM/I) and the Special Sensor Microwave Imager Sounder (SSMIS) are satellite passive microwave radiometers. This series of instruments has been carried onboard Defense Meteorological Satellite Program (DMSP) satellites since 1987. These are near-polar orbiting satellites. The instruments are referred to by satellite number starting with F08 and are listed in the table below. Currently operating instruments are: F15, F16, F17 and F18. Ocean measurements we derive from the radiometer observations include Surface Wind Speed, Atmospheric Water Vapor, Cloud Liquid Water, and Rain Rate.
+Instrument
+Start Date
+Stop Date
+F08 SSM/I
+Jul 1987
+Dec 1991
+F10 SSM/I
+Dec 1990
+Nov 1997
+F11 SSM/I
+Dec 1991
+May 2000
+F13 SSM/I
+May 1995
+Nov 2009
+F14 SSM/I
+May 1997
+Aug 2008
+F15 SSM/I
+Dec 1999
+present (do not use after Aug 2006 for climate study)
+F16 SSMIS
+Oct 2003
+present
+F17 SSMIS
+Dec 2006
+present
+F18 SSMIS
+Oct 2009
+present
+F19 SSMIS
+Apr 2014
+Feb 2016 (data are NOT currently available at RSS)
+Instrument Description
+Data Processing
+These Special Sensor Microwave/Imager (SSM/I) and Special Sensor Microwave Imager Sounder (SSMIS) data products are produced as part of the NASA's MEaSUREs Program. Remote Sensing Systems generates SSM/I and SSMIS data products using a unified, physically based algorithm to simultaneously retrieve the products. This algorithm is a product of 20 years of refinements, improvements, and verifications. While the algorithm has evolved over time, a substantial background to the radiative transfer function used to derive the ocean measurements is described in several publications.
+Band [GHz]
+Polarization
+Spatial Resolution
+(3-dB footprint size)
+[km x km]
+69 x 43
+50 x 40
+37 x 28
+15 x 13
+Remote Sensing Systems performs a detailed processing of SSM/I & SSMIS instrument data in two stages. The first stage produces an interim product (identified by "rt" within the file name) which we make available as soon as possible, generally within hours of when the data are recorded. This product can be incomplete or contain geolocation errors and erroneous brightness temperatures inherent in the data supplied to us. These errors are removed with final processing, usually completed within a few days of the initial product. The final product replaces the interim product automatically, with the "rt" designation in the file name changing to "v7".
+RSS Ocean Products
+The SSM/I & SSMIS ocean data products include daily files consisting of ascending and descending swaths, and time-averaged data as follows:
+daily
+orbital data mapped to 0.25 degree grid, data overwritten by later data
+3-day
+average of 3 days ending on file date
+weekly
+average of 7 days ending on the Saturday file date
+monthly
+average of all data within month
+Geophysical graphic images can be viewed on our web page and binary data files can be downloaded from our ftp server:
+ftp.ssmi.com/ssmi
+Gridded Binary Files
+We produce Daily binary data files and Time-Averaged (3-day, weekly and monthly) data files. The daily files consist of SSM/I or SSMIS geophysical products mapped to a regular grid complete with data gaps between orbits. Two maps exist for each ocean measurement, one of ascending orbit segments and the other of descending orbit segments. Data on each of the segment maps are overwritten at both the high latitudes where successive orbits cross and at the "seam" or region where the last orbit of the day overlaps the first orbit of the day. Daily data files contain time values representing the time (in minutes UTC) of the data for that cell. Time-Averaged data files do not contain any time values.
+Each binary data file available from our
+ftp site
+consists of ten (daily) or four (averaged) 0.25 x 0.25 degree grid (1440,720) byte maps. For daily files, five local morning (descending, except F08) maps in the following order, Time (T), 10 meter Surface Wind Speed (W), Atmospheric Water Vapor (V), Cloud Liquid Water (L), and Rain Rate (R), are followed by five local evening (ascending, except F08) maps in the same order. Time-Averaged files contain just the geophysical layers in the same order [W,V,L,R].
+Table 2: RSS SSMI and SSMIS ocean measurement product details. Measurements are provided in the order contained in the data files.
+Acronym
+Product
+Name
+Product Description
+Scale
+Offset
+Valid Data Range
+Reason for no data
+TIME
+Time
+Minutes since midnight GMT
+Fractional hour of day GMT
+0 to 1440
+0.0 to 24.0
+no data
+WSPD_MF
+10-m surface wind speed
+Wind speed using 18.7 GHz through 37 GHz channels
+0. to 50.0 m/s
+sun glint, rain, RFI, near sea ice or land (~50 km)
+VAPOR
+Columnar atmospheric water vapor
+Total gaseous water contained in a vertical column of the atmosphere
+0. to 75.0 mm
+(1gm/cm2=10mm)
+heavy rain or near land (~25 km)
+CLOUD
+Columnar cloud liquid water
+Total cloud liquid water contained in a vertical column of the atmosphere
+-0.05 to 2.45 mm
+near land (~25 km)
+RAIN
+Rain rate
+Rate of liquid water precipitation
+0. to 25.0 mm/hr
+near land (~25 km)
+The data values between 0 and 250 need to be scaled to obtain meaningful geophysical data. To scale the data, multiply by the scale factors listed in the table above (and add the offset to cloud). Values above 250 have been reserved for the following:
+0 to 250
+valid geophysical data
+missing wind speed due to rain,
+missing water vapor due to heavy rain
+sea ice
+observations exist, but are bad (not used in composite maps)
+no observations
+land mass
+The daily, 3-day and monthly maps are stored by instrument in appropriate year and month subdirectories. The weekly data files are stored by instrument in the /weeks directory. The file names have the following naming conventions:
+Daily
+fs_yyyymmddvv.gz
+3-Day
+fs_yyyymmddvv_d3d.gz
+Weekly
+fs_yyyymmddv7.gz
+Monthly
+fs_yyyymmv7.gz
+Where ss, yyyy, mm, dd, and vv stand for:
+file specifier
+F08, F10 ,F11, F13, F14, F15, F16, F17, F18
+yyyy
+year
+1998, 1999, 2000, etc.
+month
+01 (Jan), 02 (Feb), etc.
+version
+rt = real time
+v7 = version 7 (final product)
+The center of the first cell of the 1440 column and 720 row map is at 0.125 E longitude and -89.875 latitude. The center of the second cell is 0.375 E longitude, -89.875 latitude.
+Browse Images
+Each daily, 3-day, weekly and monthly graphic image map displays one geophysical parameter, 10 meter Surface Wind Speed (W), Atmospheric Water Vapor (V), Cloud Liquid Water (L), or Rain Rate (R). The daily maps display the local morning or evening satellite passes separately. The date of the data displayed is the date at Greenwich Mean Time when each orbit occurred and the data were collected. The scale for each map is located next to the map for reference. Though the valid data range (minimum to maximum) is given in the geophysical variable table above, the scale bars in the browse images are set to visually enhance the data and may vary.
+White areas on the daily map represent regions of ice (greater than 0% sea ice) as determined by the SSM/I or SSMIS instrument. In the time-averaged maps, ice is shown when ice is present over 50% of the time, or when the number of times a cell is identified as containing ice is greater than the number of times the cell contains data. Land regions are colored gray. Those areas where data are not available are black. For the daily maps, the black color includes areas where the satellite did not pass over and no data were collected, areas where data were collected but were determined to be bad, coastal areas, areas affected by sun glint, areas of rain on the surface wind speed map, and areas of heavy rain on the water vapor map.
+Missing Data
+There are gaps within these data. If you select a date for which no data is available, either a list of acceptable dates will appear, or a blank map with text stating "Data not available" will be posted. Please select another date if this occurs.
+Data Access
+SSM/I and SSMIS data products are available for each instrument for the time periods listed in Table 1 above. Due to successive satellite launches, there is often more than one instrument in operation at a time. As with all the other RSS satellite products, the data are provided in a gridded, binary format file. Graphic browse images of the ocean measurements can be
+viewed on our web page
+and the binary data files can be downloaded from our ftp server:
+ftp.ssmi.com/ssmi
+. SSMI and SSMIS data are available in netCDF data format from the NASA GHRC. See Related Data Sets section below.
+Read Routines
+Binary file read routines and verification files are available on our ftp server in the
+ssmi/ssmi_support
+directory. The routines are for IDL, MatLab, Fortran and Python.
+Related Data Sets
+These SSM/I and SSMIS ocean measurement data products are available in netCDF format from the
+Global Hydrology Resource Center (GHRC)
+, a NASA DAAC. Each netCDF file with metadata at the GHRC corresponds to one binary file at RSS. For more information and data access, visit
+ghrc.nsstc.nasa.gov.
+References
+Wentz, F. J., (2013),
+SSM/I Version-7 Calibration Report
+, report number 011012, Remote Sensing Systems, Santa Rosa, CA, 46pp.
+Meissner, T., and F. J. Wentz, (2012),
+The emissivity of the ocean surface between 6 - 90 GHz over a large range of wind speeds and Earth incidence angles
+, IEEE TGRS, 50(8), 3004-3026.
+Hilburn, K. A., and F. J. Wentz, (2008),
+Intercalibrated passive microwave rain products from the unified microwave ocean retrieval algorithm
+, Journal of Applied Meteorology and Climatology, 47, 778-795.
+Wentz, F. J. and T. Meissner, (2007),
+AMSR-E Ocean Algorithms; Supplement 1
+, report number 051707, Remote Sensing Systems, Santa Rosa, CA, 6 pp.
+Wentz, Frank J. and Thomas Meissner, (2000),
+AMSR Ocean Algorithm, Version 2
+, report number 121599A-1, Remote Sensing Systems, Santa Rosa, CA, 66 pp.
+Wentz, Frank J. and Roy W. Spencer, (1998),
+SSM/I Rain Retrievals within a Unified All-Weather Ocean Algorithm
+, Journal of the Atmospheric Sciences, 55, 1613-1627.
+Wentz F. J., (1997),
+A Well-calibrated Ocean Algorithm for SSM/I
+, Journal of Geophysical Research, 102 (C4), pg. 8703-8718.
+Acknowledgements
+These SSM/I and SSMIS data are produced by Remote Sensing Systems with support NASA. Data are available at
+www.remss.com
+. We are grateful to NOAA for access to SSM/I and SSMIS TDR data.
+How to Cite These Data
+Continued production of this data set requires support from NASA. We need you to be sure to cite these data when used in your publications so that we can demonstrate the value of this data set to the scientific community. Please include the following statement in the acknowledgement section of your paper:
+"SSM/I and SSMIS data are produced by Remote Sensing Systems. Data are available at
+www.remss.com/missions/ssmi
+An official data citation for use in publications is given below. Insert the appropriate information in brackets.
+Wentz, F.J., K.A. Hilburn, D.K. Smith, 2012: Remote Sensing Systems DMSP [SSM/I or SSMIS] [Daily, 3-Day, Weekly, Monthly] Environmental Suite on 0.25 deg grid, Version 7, [indicate subset if used]. Remote Sensing Systems, Santa Rosa, CA. Available online at
+www.remss.com/missions/ssmi
+. [Accessed dd mmm yyyy].
+Access Data Links:
+Browse Static Images
+HTTP

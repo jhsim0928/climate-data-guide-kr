@@ -1,0 +1,187 @@
+# https://www.remss.com/missions/smap/salinity/
+Remote Sensing Systems
+Browse Imagery
+Browse Salinity Images
+Browse Wind Images
+Download Data
+Get FTP Account
+HTTPS Salinity Data
+HTTPS Wind Speed
+Documentation
+SMAP
+Surface Wind Speed Product Description
+Related Announcements
+CLICK HERE TO REGISTER FOR AN FTP ACCOUNT TO ACCESS DATA
+SMAP Salinity V6.0 Validated Release
+SMAP sea surface salinity (SSS) V6.0 validated
+data are available from Remote Sensing Systems.
+The near-polar orbit of SMAP allows for complete global coverage of the oceans in 3 days with a repeat cycle of 8 days.
+SMAP SSS V6.0 validated release
+contains 3 products:
+Level 2C swath data
+Level 3 8-day running averages
+Level 3 monthly averages
+The major achievement in going from Version 2.0 to Version 3.0 was
+consistency with the Aquarius Version 5 end of mission release
+(Meissner et al. 2017, 2018).
+SMAP V3.0 SSS also saw a reduction of spurious temporal and zonal biases over the open ocean that had been observed in the SMAP Version 2.0 release.
+Consistency with Aquarius Version 5 and the reduction of spurious temporal and zonal biases over the open ocean remain consistent in the SMAP Version 6.0 release.
+The major change in Version 4.0 from Version 3.0 is an
+improved land correction
+, which allows for SMAP salinity retrievals closer to the coast.
+The 40-km and 70-km fields in V4.0 onward have been consolidated as variables within a single data product rather than being made available as distinct datasets.
+The 70-km data are based on a smoothing of the 40-km product, which is retrieved directly from the geophysical model (see Meissner et al. 2018).
+The 70-km version should be considered the official product with the 40-km included for experimental purposes.
+For most open ocean applications, the 70-km fields are the best used since they have significantly lower noise than the 40-km data.
+The major changes in Version 5.0 from V4.0 are an
+improved sea-ice detection and correction algorithm
+and the
+inclusion of formal uncertainty estimates
+The major changes in Version 6.0 when compared to Version 5.0 are:
+The removal of salty biases that “haloed” land masses during the early part of the SMAP mission (April 2015 – August 2015).
+The removal of a look angle dependent bias seen when the SMAP look angle was
+restricted to approximately the same look angle (240-260º) as Aquarius Horn 2.
+The removal of a salty bias at high Northern latitudes seen in previous SMAP
+versions.
+A small change to the sun-glint flagging has been applied in V6.
+All files are in netCDF4 format and are CF/ACDD compliant.
+For detailed documentation see:
+RSS SMAP SSS V6.0 validated release (release notes, file and data formats, description of the algorithm, ATBD, validation).
+Meissner, T., F.J. Wentz, and D.M. Le Vine, 2018, The Salinity Retrieval Algorithms for the NASA Aquarius Version 5 and SMAP Version 3 Releases, doi:10.3390/rs1007112
+Meissner, T., and A. Manaster, SMAP Salinity Retrievals near the Sea-Ice Edge Using Multi-Channel AMSR2 Bright-ness Temperatures. Remote Sens. 2021, vol. 13, pp. 5120. https://doi.org/10.3390/rs13245120
+Version Update Notes:
+SUMMARY OF UPDATES IN THE V6.0 RELEASE:
+The source of the input SMAP RFI filtered TA is: Piepmeier J. et al., 2023. SMAP L1B
+SMAP L1B Radiometer Half-Orbit Time-Ordered Brightness Temperatures, Version 6.
+Boulder, Colorado USA. NASA National Snow and Ice Data Center Distributed Active
+Archive Center. https://doi.org/10.5067/GWYQTF307Y9Y
+During the early months of the SMAP mission (until 08/11/2015) the SMAP radiometer
+operated in two modes: high-rate (HR) data collection over and close to land and low-rate
+(LR) data collection over most of the open ocean. This was because, during the operation of
+the SMAP radar (until July 2015), it was necessary to reduce the data volume that was
+downlinked from the satellite. Starting 08/11/2015, data have only been collected in HR
+mode. There is a bias between the HR and LR TA of about 0.25 Kelvin in all polarizations,
+which is not corrected in the L1B TA processing. This bias results in salty salinity biases near
+the continental shelf during the early months of the SMAP mission, when both HR and LR
+collection were done. In the V6.0 SSS release, this bias between HR and LR TA has been
+manually removed.
+Small SSS biases that depend on the SMAP look direction have been observed up to and
+including V5.0. They can be traced back to the reflected galaxy correction. In V6.0 a small
+adjustment has been made to the reflected galaxy correction, which mitigates these look
+angle dependent biases.
+Salty biases at high N latitudes have been observed up to and including V5.0. They can be
+traced back to the model for the physical temperature of the SMAP mesh antenna. In V6.0 a
+small adjustment has been made to the physical reflector temperature model, which mitigates
+these biases.
+A small revision to the flagging for sun-glint has been made in V6.0.
+SUMMARY OF UPDATES IN THE V5.0 RELEASE:
+The source of the input SMAP RFI filtered TA are now consistently: Piepmeier J. et
+al., 2020. SMAP L1B SMAP L1B Radiometer Half-Orbit Time-Ordered Brightness
+Temperatures, Version 5. Boulder, Colorado USA. NASA National Snow and Ice
+Data Center Distributed Active Archive Center.
+https://doi.org/10.5067/ZHHBN1KQLI20
+Formal uncertainty estimates (error bars) are added to all SMAP L2C and L3 salinity
+retrievals. The empirical uncertainty estimates in the V4.0 L3 products have been
+removed.
+The sea-ice flagging and masking is based on the discriminant analysis of Meissner
+and Manaster, 2021. It directly ingests 8-day averaged AMSR-2 TB measurements
+rather than an external, derived ancillary sea-ice concentration. Sea-ice zones that
+indicate increasing levels of sea-ice contamination in the antenna field of view are
+identified based on nearest neighbors and next to nearest neighbors of observations
+that are flagged as sea-ice contaminated.
+A correction for sea-ice contamination in the sidelobes is applied to the measured
+SMAP TB before salinity is retrieved.
+fland
+threshold for moderate land contamination was increased from 0.001
+(Version 4.0) to 0.005 in Version 5.0.
+The land correction is not applied if the values of either gland or fland exceed 0.1,
+which is defined as strong land contamination (bit 2 of Q/C flag set, section 6 ).
+Ancillary atmospheric data, which are required as input into the NASA/RSS SMAP
+salinity retrieval algorithm to correct for the intervening atmosphere, are now
+provided by the NCEP 0.25° resolution products. V4.0 and earlier had used the NCEP
+1° products for this purpose.
+The computation of the atmospheric absorption solely uses the NCEP 0.25° cloud water
+mixing ratio profiles and the L-band cloud water absorption.
+This is in contrast to V4.0, which used IMERG rain rate for this calculation.
+The antenna pattern coefficients (APC) and the ocean target calibration
+have been updated to reflect the calibration changes in the V5 SMAP TA. In
+particular, the value of the coefficient A_II was increased from 1.0929 (V3.0, V4.0,
+pre-launch AP) to 1.1046 in V5.0.
+The unfiltered TA field has been added to the L2C files.
+The TEC (total electron content) has been added as an ancillary field in the L2C files.
+The aggregate wind speed average has been added to the L3 files.
+The rain filtered L3 products (8-day running and monthly) have been included as
+additional fields into the corresponding netCDF L3 files. In V4.0 and before they had
+been provided as separate ‘rain-filtered’ (RF) netCDF files. The ARGO salinity field
+is no longer provided.
+SUMMARY OF UPDATES IN THE V4.0 RELEASE:
+Improved land correction: The land tables in V4.0 are derived at 1/8º resolution.
+In V3.0 the spatial resolution of the land tables resolution had been 1/2º.
+The land surface TB that is used in the derivation of the land tables in V4.0 is based on a monthly climatology of SMAP land TB measurements.
+In V3.0, the land surface TB was based on a land surface emission model.
+The sea-ice mask in V4.0 is taken from the
+RSS AMSR-2 sea-ice maps.
+In V3.0, the sea-ice mask was from NCEP.
+The threshold for sea-ice exclusion in V4.0 has been changed to gice > 0.003.
+This threshold was gice > 0.001 in V3.0.
+The sun-glint flag has been revised.
+In V4.0, the sun-glint exclusion is based on sun-glint angle and surface wind speed.
+The V4.0 sun-glint flag excludes less data then the V3.0 flag did.
+The Version 4.0 salinity retrieval algorithm is run solely on the 0.25º Earth grid using the 40-km spatial resolution Backus Gilbert Optimum Interpolation (OI).
+The resulting salinity product is called sss_smap_40km.
+From this 40-km product, a smoothed product with a spatial resolution of approximately 70km (called sss_smap) is derived using simple next-neighbor averaging.
+This smoothed 70-km sss_smap is to be regarded as the default (standard) salinity product.
+In Version 4, both sss_smap and sss_smap_40km are provided in the same file.
+SUMMARY OF UPDATES IN THE V3.0 RELEASE:
+Use of Version 4 L1B SMAP RFI filtered antenna temperatures.
+Implementation of the geophysical model function from Aquarius Version 5 adapted to SMAP
+(Meissner et al. 2018).
+Use of the
+near real time CCMP wind speed and direction
+data as ancillary input.
+Inclusion of
+IMERG rain rate
+for the atmospheric liquid cloud water correction and rain flagging.
+Improved computation of antenna weighted land fraction (gland) and enhanced correction for land radiation intrusion from antenna sidelobes.
+Improved correction for emissive SMAP mesh antenna.
+An error in the computation of the gain-weighted sea ice fraction (gice) during 2017 and 2018 in V2.0 has been corrected.
+The salty biases at low latitudes and the fresh biases at high N latitudes that were observed in the V2.0 release have disappeared or have been greatly reduced in V3.0.
+KNOWN ISSUES:
+Undetected RFI is suspected to occur near Japan/China/Taiwan during certain time periods
+resulting in fresh biases.
+Undetected RFI is suspected to occur in some areas in the Arabian Sea during certain time
+periods resulting in fresh biases.
+Undetected RFI is suspected to occur in some areas in the Mediterranean Sea during certain
+time periods resulting in fresh biases. The issue has become worse after November 2022 in
+the area between 15E-35E and 33N-40N.
+Starting in 2020 an increasing salty bias is observed at high Southern latitudes (around 60S).
+Possible causes are: (1) A change in the emissivity of the SMAP antenna. (2) A degradation
+of accuracy of the CCMP ancillary wind speed in the Southern Ocean due to the loss of
+WindSat as major input source to CCMP.
+MISSING DATA:
+The SMAP instrument experienced an extended downtime August 6 - September 23, 2022. No salinity data are available during this period.
+The SMAP instrument experienced an extended downtime 19 June – 23, July 2019. No salinity data are available during this period.
+List of orbits for which no V6 L2 salinity data are produced due to known instrument calibration problems or because the instrument was not Earth pointing.
+Note that the first number in the list denotes the total numbers of orbits in the list.
+List of orbits for which no V6 L2 salinity data are produced due to missing or incomplete ancillary data (CCMP wind speed, RSS AMSR2 sea-ice mask).
+Note that the first number in the list denotes the total numbers of orbits in the list.
+List of orbits for which no V6 L2 salinity data are produced, because the Version L1B
+TB files from NSIDC contained time or pointing values that did not pass the internal RSS
+Q/C check.
+REFERENCES:
+RSS SMAP SSS V6.0 validated release (release notes, file and data formats, description of the algorithm, ATBD, validation).
+Meissner, T., F.J. Wentz, and D.M. Le Vine, 2018, The Salinity Retrieval Algorithms for the NASA Aquarius Version 5 and SMAP Version 3 Releases, doi:10.3390/rs1007112
+Meissner, T., and A. Manaster, SMAP Salinity Retrievals near the Sea-Ice Edge Using Multi-Channel AMSR2 Bright-ness Temperatures. Remote Sens. 2021, vol. 13, pp. 5120. https://doi.org/10.3390/rs13245120
+HOW TO CITE THE RSS SMAP SALINITY DATA:
+As a condition of using these data, we require you to use the following citation:
+T. Meissner, F. J. Wentz, A. Manaster, R. Lindsley, M. Brewer, M. Densberger, 2024: Remote Sensing
+Systems SMAP Ocean Surface Salinities [Level 2C, Level 3 Running 8-day, Level 3 Monthly], Version 6.0
+validated release. Remote Sensing Systems, Santa Rosa, CA, USA. Available online at
+www.remss.com/missions/smap, doi: 10.5067/SMP60-xxxxx
+In the doi, the string xxxxx is:
+2SOCS for the L2C files.
+3SPCS for the L3 8-day running maps.
+3SMCS for the L3 monthly maps.
+Continued production of this data set requires support from NASA. We need you to be sure to cite these data when used in your publications so that we can demonstrate the value of this data set to the scientific community. Please include the following statement in the acknowledgement section of your paper:
+"SMAP salinity data are produced by Remote Sensing Systems and sponsored by the NASA Ocean Salinity Science Team. Data are available at
+www.remss.com."

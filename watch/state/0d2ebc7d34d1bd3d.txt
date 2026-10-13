@@ -1,0 +1,169 @@
+# https://catalogue.ceda.ac.uk/uuid/edf8abd23f4a40aabd4d52e48dec06ea/
+Dataset Record: ESA Snow Climate Change Initiative (Snow_cci): Snow Water Equivalent (SWE) level 3C daily global climate research data package (CRDP) (1979 - 2023), version 4.0
+This website uses cookies.
+By continuing to use this website you are agreeing to our use of cookies.
+About
+News
+Search Catalogue
+Get Data
+Deposit
+Tools
+Sign in
+Register
+Dataset
+View XML
+ESA Snow Climate Change Initiative (Snow_cci): Snow Water Equivalent (SWE) level 3C daily global climate research data package (CRDP) (1979 - 2023), version 4.0
+Permitted Use:
+Open Access
+Download
+Related Documents
+Update Frequency:
+Not Planned
+Status:
+Completed
+Online Status:
+ONLINE
+Publication State:
+Citable
+Publication Date:
+DOI Publication Date:
+Download Stats:
+last 12 months
+Dataset Size:
+9.58K Files | 14GB
+Abstract
+This dataset contains v4.0 of the Daily Snow Water Equivalent (SWE) product from the ESA Climate Change Initiative (CCI) Snow project, at 0.1 degree resolution.
+Snow water equivalent (SWE) is the depth of liquid water that would result if the of snow cover melted completely, which equates to the snow cover mass per unit area. The SWE product covers the Northern Hemisphere from 1979/01 to 2023/12 with complex terrain, land ice, and large lakes masked. The dataset covers the Northern Hemisphere winter season (October – May; occasional data produced during June and September) at a daily frequency starting in October 1987 and every second day from 1979 to May 1987. Retrievals are not produced for coastal regions of Greenland.
+The product combines passive microwave data with ground-based snow depth measurements, via Bayesian non-linear iterative assimilation, to estimate SWE. It is based on data from the recalibrated enhanced resolution CETB ESDR dataset (MEaSUREs Calibrated Enhanced-Resolution Passive Microwave Daily EASE-Grid 2.0 Brightness Temperature (CETB) Earth System Data Record (ESDR) https://nsidc.org/pmesdr/data/), resampled to the 12.5km EASE-Grid 2.0.
+A background snow-depth field, derived from re-gridded snow-depth observations made at synoptic weather stations, and a passive microwave emission model are the key components of the retrieval scheme. Snow density, which varies in both time and space, is parameterized from interpolated in situ observations from snow courses and snow pillows equipped with co-located snow depth sensors.
+The dataset is aimed to serve the needs of users working on climate research and monitoring activities, including the detection of variability and trends, climate modelling, and aspects of hydrology and meteorology.
+The Finnish Meteorological Institute (FMI) is responsible for the SWE product generation. The SWE development is carried out in collaboration by FMI and Environment and Climate Change Canada (ECCC).
+Changes from v3.1
+The time series has been extended from version 3.1 by one year, to 2023. The retrieval algorithm has been modified to prioritize morning overpass (descending) data over evening (ascending) data. This change affects the SWE retrieval for all years except 1988–1991. Data from those years is from the F08 satellite, which has a reversed orbit, and evening (descending) data is prioritized, as in earlier versions of the SWE retrieval. Snow masking in post-production now uses CryoClim SCE data for 35–40° latitude and −30–3° longitude. Elsewhere, the baseline snow mask and CryoClim are combined so that any pixel flagged by either is marked snow-covered, as in v3.1. The pixel-wise uncertainty model has been updated for North America using extensive snow course data.
+Citable as:
+Luojus, K.; Venäläinen, P.; Moisander, M.; Pulliainen, J.; Takala, M.; Lemmetyinen, J.; Mortimer, C.; Mudryk, L.; Schwaizer, G.; Nagler, T. (2025): ESA Snow Climate Change Initiative (Snow_cci): Snow Water Equivalent (SWE) level 3C daily global climate research data package (CRDP) (1979 - 2023), version 4.0. NERC EDS Centre for Environmental Data Analysis,
+05 September 2025
+. doi:10.5285/edf8abd23f4a40aabd4d52e48dec06ea.
+https://dx.doi.org/10.5285/edf8abd23f4a40aabd4d52e48dec06ea
+Cite this dataset
+Cite this dataset as:
+Luojus, K.; Venäläinen, P.; Moisander, M.; Pulliainen, J.; Takala, M.; Lemmetyinen, J.; Mortimer, C.; Mudryk, L.; Schwaizer, G.; Nagler, T. (2025): ESA Snow Climate Change Initiative (Snow_cci): Snow Water Equivalent (SWE) level 3C daily global climate research data package (CRDP) (1979 - 2023), version 4.0. NERC EDS Centre for Environmental Data Analysis,
+05 September 2025
+. doi:10.5285/edf8abd23f4a40aabd4d52e48dec06ea.
+https://dx.doi.org/10.5285/edf8abd23f4a40aabd4d52e48dec06ea
+Abbreviation:
+Not defined
+Keywords:
+ESA, CCI, Snow, SWE
+Details
+Previous Info:
+No news update for this record
+Previously used record identifiers:
+No related previous identifiers.
+Access rules:
+Public data: access to these data is available to both registered and non-registered users.
+Use of these data is covered by the following licence(s):
+https://artefacts.ceda.ac.uk/licences/specific_licences/esacci_snow_terms_and_conditions.pdf
+When using these data you must cite them correctly using the citation given on the CEDA Data Catalogue record.
+Data lineage:
+Data were produced by the project team and supplied for archiving at the Centre for Environmental Data Analysis (CEDA) as part of the CCI Knowledge Exchange project.
+Data Quality:
+For information on data quality see the Snow_cci documentation
+File Format:
+NetCDF
+Related Documents
+Takala et al, 2011, Estimating northern hemisphere snow water equivalent for climate research through assimilation of space-borne radiometer data and ground-based measurements, Remote Sensing of Environment. DOI:10.1016/j.rse.2011.08.014
+Impact of dynamic snow density on Globsnow snow water equivalent retrieval accuracy. DOI: 10.5194/tc-15-2969-2021
+Technical Documentation for Snow CCI
+Snow CCI webpages
+ESA Climate Change Initiative website
+HUT Snow Emission Model and its Applicability to Snow Water Equivalent Retrieval. DOI: 10.1109/36.763302
+Mapping of snow water equivalent and snow depth in boreal and sub-arctic zones by assimilating space-borne microwave radiometer data and ground-based observations. DOI: 10.1016/j.rse.2006.01.002
+Product User Guide
+Climate Research Data Package (CRDP) v4.1
+Process overview
+This dataset was generated by a combination of instruments deployed on platforms
+and computations as detailed below.
+Instrument/Platform pairings
+Special Sensor Microwave / Imager (SSM/I)
+Deployed on:
+Defense Meteorological Satellite Program (DMSP) Satellites
+Scanning Multichannel Microwave Radiometer (SMMR)
+Deployed on:
+NIMBUS 7 Satellite
+Special Sensor Microwave Imager Sounder (SSMIS)
+Deployed on:
+Defense Meteorological Satellite Program (DMSP) Satellites
+Computation Element: 1
+Title
+ESA Snow Climate Change Initiative (snow_cci): SWE, v4
+Abstract
+The snow_cci SWE product has been based on the ESA GlobSnow SWE retrieval approach (Takala et al. 2011). The retrieval is based on passive microwave radiometer (PMR) data considering the change of brightness temperature due to different snow depth, snow density, grain size and more. The retrieval algorithm handles data from the sensors SMMR, SSM/I, SSMIS, AMSR-E and AMSR-2. The retrieval methodology combines the satellite passive microwave radiometer (PMR) measurements with ground-based synoptic weather station observations by Bayesian non-linear iterative assimilation. A background snow-depth field from re-gridded surface snow-depth observations and a passive microwave emission model are required components of the retrieval scheme. The GlobSnow algorithm implemented for snow_cci version 4 includes the utilisation of an advanced emission model with an improved forest transmissivity module and treatment of sub-grid lake ice. Because of the importance of the weather station snow-depth observations on the SWE retrieval, there is improved screening for consistency through the time series. Passive microwave radiometer data are obtained from the recalibrated enhanced resolution CETB ESDR dataset (MEaSUREs Calibrated Enhanced-Resolution Passive Microwave Daily EASE-Grid 2.0 Brightness Temperature (CETB) Earth System Data Record (ESDR) https://nsidc.org/pmesdr/data/). The retrieval algorithm has been modified relative to snow_cci v3.1 to prioritize morning overpass (descending) data over evening (ascending) data. This change affects the SWE retrieval for all years except 1988–1991. Data from those years is from the F08 satellite, which has a reversed orbit, and evening (descending) data is prioritized, as in earlier versions of the SWE retrieval. Snow masking in post-production now uses CryoClim SCE data for 35–40° latitude and −30–3° longitude. Elsewhere, the baseline snow mask and CryoClim are combined so that any pixel flagged by either is marked snow-covered, as in v3.1. The pixel-wise uncertainty model has been updated for North America using extensive snow course data. The time series has been extended from version 3.1 by one year, to 2023. SWE products are based on SMMR, SSM/I and SSMIS passive microwave radiometer data for non-alpine regions of the Northern Hemisphere.
+Input Description
+None
+Output Description
+None
+Software Reference
+None
+Output Description
+None
+long_name
+: Coordinate reference system definition
+var_id
+: spatial_ref
+units
+: mm
+long_name
+: Snow Water Equivalent
+var_id
+: swe
+var_id
+: lat_bnds
+var_id
+: lon_bnds
+units
+: mm
+long_name
+: statistical standard deviation of estimate
+var_id
+: swe_std
+Co-ordinate Variables
+units
+: degree_north
+standard_name
+: latitude
+var_id
+: lat
+long_name
+: WGS84 latitude coordinates, center of pixel
+units
+: degree_east
+standard_name
+: longitude
+var_id
+: lon
+long_name
+: WGS84 longitude coordinates, center of pixel
+long_name
+: time
+standard_name
+: time
+var_id
+: time
+units
+: hours
+CEDA Archive Web Download Service
+CEDA OPeNDAP service
+Anonymous ftp site for CCI data download
+Coverage
+Temporal Range
+Start time:
+End time:
+Geographic Extent
+90.0000°
+-180.0000°
+180.0000°
+-90.0000°
+Related parties
+Authors (10)
+Publishers (1)

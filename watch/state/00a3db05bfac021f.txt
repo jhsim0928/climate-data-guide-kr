@@ -1,0 +1,216 @@
+# https://www.gleam.eu/
+GLEAM | Global Land Evaporation Amsterdam Model
+Home
+Method
+Datasets
+Downloads
+Usage
+Highlights
+Contact
+Logos
+Home
+Method
+Datasets
+Downloads
+Usage
+Highlights
+Contact
+Logos
+Home
+Method
+Datasets
+Downloads
+Usage
+Highlights
+Contact
+Logos
+Home
+Method
+Datasets
+Downloads
+Usage
+Highlights
+Contact
+Logos
+New GLEAM4.3b Data
+New 4.3b release already available under Downloads; and GLEAM4 paper available
+here
+ESA GLEAM-HR
+ESA project exploring the potential of GLEAM for high-resolution monitoring of evaporation
+ESA CCI Land Evaporation
+ESA project
+aiming to provide long-term climate records of evaporation globally
+Method
+GLEAM | Global Land Evaporation Amsterdam Model
+General
+GLEAM
+provides data of the different components of land evaporation (or '
+evapotranspiration
+’): transpiration, bare-soil evaporation, interception loss, open-water evaporation and sublimation, in addition to other related variables such as surface and root-zone soil moisture, sensible heat flux, potential evaporation and evaporative stress conditions
+The rationale
+is to maximize the recovery of information on evaporation contained in current satellite observations of climatic and environmental variables
+Description
+The Penman equation in GLEAM calculates potential evaporation (
+) using observations of surface net radiation (
+), near-surface air temperature (
+), wind speed (
+), leaf area index (LAI), and vapor pressure deficit (VPD). Estimates of
+for bare soil, tall canopy, and short canopy land fractions are converted into bare soil evaporation (
+) and transpiration (
+) using a multiplicative evaporative stress factor (
+derived from deep neural networks trained on global eddy-covariance and sapflow data. Stress predictors include soil moisture, VPD, [CO
+, and vegetation conditions (VOD, LAI)
+Root-zone soil moisture (SM
+) is computed using a multi-layer running-water balance. To correct for random forcing errors, satellite observations of surface soil moisture (SM
+) are assimilated into the soil profile. Interception loss (
+) is calculated separately in GLEAM using an analytical model driven by precipitation (
+) and vegetation properties. Finally, estimates of actual evaporation for water bodies (
+) and regions covered by ice and/or snow (
+) are derived using a modified Penman equation
+Features
+– Soil moisture constraints on evaporation
+– Detailed treatment of forest interception
+– Extensive use of microwave observations
+– Long-term continuous records
+Datasets
+General
+GLEAM has been continuously revised and updated since its first release in 2011
+The current version, GLEAM4, was released in July 2024
+Updates in GLEAM4 wrt GLEAM v3
+Hybrid learning of evaporative stress from eddy-covariance and sapflow (Koppa
+et al
+Improved representation of interception including short vegetation (Zhong
+et al
+Potential evaporation based on Penman's equation, including aerodynamic demand
+Explicit accounting of plant access to groundwater (Hulsman
+et al
+Higher spatial resolution (0.1°) and longer record (1980–2024)
+GLEAM4 datasets are described in detail by Miralles
+et al
+Updates in GLEAM4.3 wrt GLEAM4.2
+Replaced the deep neural network vegetative stress (S) framework with an XGBoost implementation
+Enforced monotonic relationship between PAW and S during training
+Updated the depths of the first and second soil layers to 5 cm and 95 cm to improve consistency during soil moisture data assimilation
+Explicit representation of irrigation practices in evaporation and soil according to
+Baez-Villanueva
+et al
+. (in review)
+GLEAM4.3 datasets
+GLEAM4 includes the following
+variables
+Actual evaporation (
+Transpiration (
+Interception loss (
+Soil evaporation (
+Snow sublimation (
+Surface condensation (
+Open-water evaporation (
+Potential evaporation (
+Evaporative stress (
+Root-zone soil moisture (SM
+Surface soil moisture (SM
+Sensible heat flux (
+Two data
+archives
+differing in terms of forcing and temporal coverage:
+GLEAM4.3a
+: global dataset spanning the 44-year period from 1980 (January 1st) to 2024 (December 31st). The dataset is based on satellite and reanalysis data
+GLEAM4.3b
+: global dataset spanning the 21-year period from 2003 (January 1st) to 2024 (December 31st). The dataset is based on satellite data
+For more detailed information, users are directed to the readme file on the server, Miralles
+et al
+. (2025), and the
+section
+Downloads
+Fill in your details to access our
+SFTP-site
+First Name
+Last Name
+Email
+Comment
+User policy
+GLEAM4 datasets are freely available; GLEAM datasets can only be used for commercial purposes after internal approval
+Acknowledgements
+When GLEAM4 datasets are used in a scientific publication, the following references should be cited:
+GLEAM
+Miralles, D.G., Holmes, T.R.H., de Jeu, R.A.M., Gash, J.H., Meesters, A.G.C.A., Dolman, A.J.
+Global land-surface evaporation estimated from satellite-based observations
+Hydrology and Earth System Sciences
+, 15, 453–469, doi: 10.5194/hess-15-453-2011,
+GLEAM4 dataset
+Miralles, D.G., Bonte, O., Koppa, A., Baez-Villanueva, O.M., Tronquo, E., Zhong, F., Beck, H.E., Hulsman, P., Dorigo, W.A., Verhoest, N.E.C., Haghdoost, S.,
+GLEAM4: global land evaporation and soil moisture dataset at 0.1° resolution from 1980 to near present
+Scientific Data
+Interception module
+Zhong, F., Jiang, S., Dijk, A.I.J.M. van, Ren, L., Schellekens, J., Miralles, D.G.
+Revisiting large-scale interception patterns constrained by a synthesis of global experimental data
+Hydrology and Earth System Sciences
+Soil module
+Hulsman, P., Keune, J., Koppa, A., Schellekens, J. & Miralles, D. G.
+Incorporating Plant Access to Groundwater in Existing Global, Satellite‐Based Evaporation Estimates
+Water Resources Research
+Stress module
+Koppa, A., Rains, D., Hulsman, P., Poyatos, R., Miralles, D.G.
+A deep learning-based hybrid model of global terrestrial evaporation
+Nature Communications
+Highlights
+GLEAM4.3b datasets now available
+The new GLEAM4.3b just got released in our server. It covers up to the end of 2025 at 0.1-degree spatial resolution. Paper description
+here
+ESA CCI Land Evaporation kicks off
+During CCI Land Evaporation we will aim to provide reliable long-term records building upon the work in GLEAM.
+The project just started!
+GLEAM-HR project starts
+The new GLEAM-HR project of ESA
+just started
+! We will aim to provide 1-km evaporation data based on GLEAM for the whole world.
+Frequently Asked Questions
+After registration on the website, I didn’t receive the login details. What should I do?
+Login details are automatically sent to the email address submitted on the website. If you did not receive login details within one hour after registration, please check your SPAM-folder. If you did not receive any email after that time, you can send your request to
+info@gleam.eu
+I am not able to connect to the server, what am I doing wrong?
+Carefully read the login details and make sure that you are using the right credentials. Also make sure that you are defining the right file transfer protocol, being SFTP (Secure File Transfer Protocol). Check your firewall settings to make sure that the access to our server through port 2225 is not blocked.
+What is terrestrial evaporation, and how does it relate to the latent heat flux and '
+evapotranspiration
+Terrestrial evaporation is the total flux of water from land into the atmosphere (typically expressed in mm) from soil (bare soil evaporation), plant surfaces (interception loss), water surfaces (open-water evaporation), and through plant stomata (transpiration). This flux is often referred to as
+evapotranspiration
+. The associated consumption of energy to change the phase of water from liquid to gas during the process, is the latent heat flux (typically expressed in W.m
+), and can be calculated by accounting for the latent heat of vaporization.
+More information on the use of the term
+evapotranspiration
+Where can I find more information about GLEAM?
+A detailed description of the methodology is provided in different scientific articles listed under
+Publications
+Are the data direct observations? What is their accuracy?
+Actual evaporation is not directly measured from space. The articles under
+Publications
+contain a subset of the validations, product inter-comparisons and error analyses undergone to date.
+Are the estimates from GLEAM directly comparable with eddy-covariance latent heat flux measurements?
+Due to several issues, both estimates cannot be directly compared, and validation studies should be carefully designed: (1) the footprint of eddy-covariance towers is typically on the order of 1 km, while GLEAM pixels cover an area that is substantially larger (aprox. 10 x 10 km). This results in a representativity error, especially in heterogeneous areas; (2) the energy balance at eddy-covariance sites is generally not closed, and the actual latent heat flux tends to be underestimated; (3) eddy-covariance measurements are unreliable during rain events. Because interception fluxes can be large in nature – and so will GLEAM estimates of this flux – we strongly recommend masking times of rain and interception fluxes when comparing to eddy-covariance measurements. This is common practice in validation studies.
+Why are there negative values in the evaporation dataset?
+Missing data is indicated with a value of “–999” for all variables. Negative values (apart from “–999”) in the evaporation data indicate a negative latent heat flux, and thus a net condensation of water vapor. This typically occurs when the net radiation at the surface is negative.
+At what spatial and temporal resolution are the data available?
+All datasets are available on a 0.1° latitude-longitude regular grid and at daily temporal resolution.
+Why is there no data available over oceans?
+GLEAM is only designed to estimate evaporation over land surfaces.
+Is the forcing data of GLEAM available on the server?
+The forcing of GLEAM is not available from the server. All data used to force GLEAM are freely available from the respective data portals. References for all datasets are provided in the README file on the server and/or in Miralles
+et al
+Are the static parameters of GLEAM available from the server?
+The static parameters of GLEAM (e.g. soil properties) are not available from the server. All data used are freely available from the respective data portals. References for all datasets are provided in the README file on the server and/or in Miralles
+et al
+How is the data structured?
+The data is provided in netCDF format. A README file is available on the server describing the structure of the data in full detail.
+What is the difference between the 'a' and 'b' datasets?
+These datasets are produced using the same methodology, but different forcing datasets. They also differ in their temporal coverage. A detailed description is provided under
+Datasets
+and in the README file available on the server.
+How often are the datasets updated?
+Datasets are typically updated and extended once a year, and are generally released around April. All users are notified when new data are available.
+Are old versions of the dataset still available for download?
+When a new version of a dataset is released, the older version becomes obsolete and is removed from the server. However, previous versions may still be available upon reasonable request.
+Contact
+Any questions or feedback? Contact us!
+info@gleam.eu
+We use cookies to ensure a smooth browsing experience. By continuing we assume you accept the use of cookies.
+Learn More

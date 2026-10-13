@@ -1,0 +1,389 @@
+# https://ladsweb.modaps.eosdis.nasa.gov/learn/modis-to-viirs-transition
+LAADS DAAC | NASA
+MODIS To VIIRS Transition
+This document outlines key information related to the decommissioning plan for the Terra MODIS (Moderate Resolution
+Imaging Spectroradiometer) and Aqua MODIS missions and NASA's efforts to provide continuity between the MODIS and
+VIIRS (Visible Infrared Imaging Radiometer Suite) atmospheric data records. This information will better prepare our
+atmospheric science user community to plan and adapt to the forthcoming end of the MODIS era. It addresses the
+following topics:
+End of MODIS operations
+VIIRS data options for the atmospheric science user community
+Mapping of NASA MODIS products to NASA Atmosphere Team VIIRS products
+Other aerosol and cloud property contemporary sources
+End of MODIS Operations
+The NASA Earth Observing System (EOS) platforms, Terra and Aqua, each carry a
+MODIS
+instrument that have
+been successfully in operation since 2000 and 2002, respectively. After ending satellite operations, NASA plans to stop science data collection from the Aqua and Terra MODIS instruments. At that time, NASA will develop a final MODIS v8.0 calibration that will support
+the last reprocessing cycle to produce the full v8.0 MODIS data collection.
+Further, due to fuel limitations,
+Terra
+Aqua
+are currently drifting from their closely controlled morning and afternoon sun-synchronous orbits. This orbital
+drift results in their respective earlier and later equatorial-crossing mean local times (MLT). The
+Terra
+Aqua
+home pages provide
+interactive plots showing current and projected changes in MLTs and altitudes. Users should monitor these MLT
+changes and assess the impact on their specific science goals and applications.
+Finally, the NASA Earth Science Division has invested in developing, testing, and producing continuity products for
+instruments on the Suomi National Polar-orbiting Partnership (SNPP) and Joint Polar Satellite System (JPSS)
+satellite series. These instruments are designed to provide observations suitable for continuing NASA EOS data
+records. The LAADS DAAC encourages Aqua MODIS data users to explore using similar NASA data products from
+VIIRS
+on the NASA-NOAA SNPP,
+NOAA-20, and NOAA-21 platforms, which operate in sun-synchronous MLT orbits similar to Aqua.
+No follow-on
+MODIS-like instrument with an orbit at the Terra morning equatorial-crossing MLT exists in the current or
+planned NASA-managed Earth observation missions.
+VIIRS Data Options for the Atmospheric Science User Community
+As the Terra MODIS and Aqua MODIS missions transition into their decommissioning phases (Phase-F), natural concerns
+exist in the user community about what other current and future products will likely serve as practical
+replacements. The Visible Infrared Imaging Radiometer Suite (VIIRS) instrument was first launched aboard the
+NOAA-NASA pathfinder mission called Suomi NPP in 2011. The VIIRS instrument has since been deployed on NOAA-20 and
+NOAA-21 missions, with additional instruments scheduled for launch on JPSS-3 (NOAA-22) and JPSS-4 (NOAA-23).
+The VIIRS instrument observes and collects global satellite observations that span the visible and infrared
+wavelengths across land, atmosphere, cryosphere, and oceans. As a primary imager on the SNPP and the JPSS platform
+series, its visible and infrared spectral channels are designed to vastly improve upon two of its operational
+predecessors, the Advanced Very-High Resolution Radiometer (AVHRR) and the Operational Linescan System (OLS). As a
+natural successor to the MODIS instruments, VIIRS offers several improvements that include a wider swath width and
+higher spatial resolutions. However, VIIRS offers 22 spectral bands between 0.4 µm to 12.5 µm (including 8 dual-gain
+bands) while MODIS has 36 bands between 0.4 µm to 14.5 µm. Importantly for MODIS atmosphere product users, VIIRS
+lacks key CO
+and water vapor Infrared (IR) absorption bands, which are critical for temperature and
+moisture profiling. The VIIRS instrument's Signal-to-Noise Ratio (SNR) and Noise-Equivalent Temperature Differences
+(NE∆T) are generally comparable or superior to the MODIS SNR and NE∆T when they are normalized to the same spatial scale and radiance levels. With on-board spatial aggregation, VIIRS
+M-bands (0.75 km) do not suffer significantly from MODIS' edge-of-swath bow-tie effect. The following table portrays
+some of the basic differences between VIIRS and Aqua MODIS.
+Attribute
+VIIRS
+Aqua MODIS
+Equator-crossing time
+13:30 Local Time
+Swath width
+3,040 km
+2,330 km
+Orbital altitude
+824 km
+705 km
+Nadir pixel size (primary retrieval band)
+0.75 km (M-bands)
+1.0 km
+Swath-edge pixel size (primary bands)
+1.5 km
+2.0 km (along-) x 4.8 km (cross-track)
+Spatial resolutions
+375 m, 750 m
+250 m, 500 m, 1000 m
+Nominal temporal duration (NASA L1)
+6 min.
+5 min.
+Mapping of NASA MODIS Atmosphere Products to Those in the VIIRS Era
+In anticipation of the time when both MODIS missions are decommissioned, the NASA-funded MODIS-VIIRS atmosphere
+science teams have developed continuity products that use common algorithms that are applied to VIIRS and Aqua MODIS
+observations. Continuity products are designed to sustain the long-term observational records. To ensure a commonly
+applicable continuity approach to data is maintained across the VIIRS and Aqua MODIS missions, the continuity
+products use a minimum set of spectral channels that are common, or approximately so, to both the VIIRS and MODIS
+instruments.
+The NASA Atmosphere Team continuity effort generates five core atmospheric product suites*:
+Product
+Level
+Spatial Res.
+Temp. Cadence
+Instrument
+Platform
+Cloud Mask
+L2 (Orb. swath)
+750 m | 1 km
+6-min | 5-min
+VIIRS | MODIS
+SNPP/N-20/N-21 | Aqua
+Cloud Properties
+L2 (Orb. swath)
+750 m | 1 km
+6-min | 5-min
+VIIRS | MODIS
+SNPP/N-20 | Aqua
+Deep Blue Aerosol
+L2 (Orb. swath)
+6 km
+6-min
+VIIRS
+SNPP/N-20
+Cloud Properties
+L3 (Gridded)
+1-deg.
+Daily/Monthly
+VIIRS | MODIS
+SNPP/N-20 | Aqua
+Deep Blue Aerosol
+L3 (Gridded)
+1-deg.
+Daily/Monthly
+VIIRS
+SNPP/N-20
+N-20 = NOAA-20, N-21 = NOAA-21
+*Currently, cloud products are produced from both VIIRS and Aqua MODIS while Deep Blue Aerosol products are produced
+from VIIRS only. Additional new platform/instrument sources are planned for the future.
+Cloud Mask:
+The Continuity MODIS-VIIRS Cloud Mask (MVCM) algorithm is used to produce the
+Cloud Mask (CLDMSK) product. This provides an ideal example of how the original MODIS product is extended to
+continue in the VIIRS era by using only those channels that are common to both instruments. The MVCM algorithm
+effectively extends the MODIS MYD35 cloud mask product into the VIIRS era, resulting in four continuity CLDMSK
+products: one from MODIS onboard Aqua and three from VIIRS onboard SNPP, NOAA-20, and NOAA-21.
+Cloud Properties:
+The original MODIS cloud-top and cloud optical properties algorithms
+benefitted from certain MODIS-specific channels that are absent on VIIRS, including thermal infrared, water vapor,
+and CO2 absorption channels. Additionally, a spectral offset between the MODIS 2.13 µm and VIIRS 2.25 µm shortwave
+infrared (SWIR) channels, in which ice and liquid cloud absorption differs, preclude directly porting those
+algorithms to benefit VIIRS observations. The commonly applicable CLDPROP algorithm provides a continuity approach
+between MODIS and VIIRS, relying on spectral channels that are common to both instruments.
+Dark Target Aerosol & Deep Blue Aerosol:
+The MODIS era introduced two separate aerosol
+retrieval algorithms. The Dark Target (DT) algorithm focused on oceans and dark vegetative surfaces, while the Deep
+Blue (DB) algorithm originally focused on bright land surfaces. Both algorithms provide global data on Aerosol
+Optical Depth (AOD) and related aerosol properties. Together, they provide complementary coverage, enabling robust
+global aerosol characterization across diverse surface types.
+The Dark Target aerosol product (AERDT) is provided for VIIRS only (currently from SNPP and NOAA-20). AERDT
+continuity products are not produced for Aqua MODIS. The Deep Blue aerosol product (AERDB) relies on two
+sub-algorithms: Deep Blue over land, and the Satellite Ocean Aerosol Retrieval (SOAR) algorithm over ocean. The
+AERDB (L2 and L3) is only produced for VIIRS from SNPP and NOAA-20.
+Water Vapor:
+The SNPP VIIRS does not have sounding channels; however, it does offer some
+spectral bands to help integrate total column water vapor under clear-sky conditions. To compensate for its lack of
+water vapor absorption channels, this product benefits from water vapor soundings from two additional sounder
+instruments that are co-located with VIIRS aboard the SNPP platform: Advanced Technology Microwave Sounder (ATMS)
+and Cross-track Infrared Sounder (CrIS).
+The water vapor product is derived by adapting the MODIS atmospheric profile algorithm and assisted by
+sounding-based measurements from ATMS and CrIS. This approach enables the SNPP VIIRS Level-2 water vapor products to
+provide global clear-sky total column water vapor properties at a high spatial resolution. These products extend the
+long-term record of observations that began with MODIS on the Terra and Aqua platforms.
+The table below provides the landing-page links to all the VIIRS atmosphere products that are available from the
+LAADS DAAC.
+VIIRS Atmospheric Science Products from the LAADS DAAC
+Product
+Version
+Time Epoch
+NOAA20
+VIIRS Deep Blue Aerosol L2 6-Min Swath 6 km
+v2.0
+2018-048 -- current
+NOAA20
+VIIRS Deep Blue Level 3 daily aerosol data, 1x1 degree grid
+v2.0
+2018-048 -- current
+NOAA20
+VIIRS Deep Blue Level 3 monthly aerosol data, 1x1 degree grid
+v2.0
+2018-048 -- current
+SNPP
+VIIRS Deep Blue Aerosol L2 6-Min Swath 6 km
+v2.0
+2012-061 -- current
+SNPP
+VIIRS Deep Blue Level 3 daily aerosol data, 1x1 degree grid
+v2.0
+2012-061 -- current
+SNPP
+VIIRS Deep Blue Level 3 monthly aerosol data, 1x1 degree grid
+v2.0
+2012-061 -- current
+NOAA20
+VIIRS Dark Target Aerosol L2 6-Min Swath 6 km
+v2.0
+2018-048 -- current
+SNPP
+VIIRS Dark Target Aerosol L2 6-Min Swath 6 km
+v2.0
+2012-086 -- current
+NOAA20
+VIIRS Cloud Properties L2 6-Min Swath 750 m
+v1.1
+2018-048 -- current
+NOAA20
+VIIRS Cloud Properties Level 3 daily, 1x1 degree grid
+v1.1
+2018-048 -- current
+NOAA20
+VIIRS Cloud Properties Level 3 monthly, 1x1 degree grid
+v1.1
+2018-048 -- current
+SNPP
+VIIRS Cloud Properties L2 6-Min Swath 750 m
+v1.1
+2012-061 -- current
+SNPP
+VIIRS Cloud Properties Level 3 daily, 1x1 degree grid
+v1.1
+2012-061 -- current
+SNPP
+VIIRS Cloud Properties Level 3 monthly, 1x1 degree grid
+v1.1
+2012-061 -- current
+Aqua
+MODIS Cloud Properties L2 6-Min Swath 750 m
+v1.1
+2012-061 -- current
+Aqua
+MODIS Cloud Properties Level 3 daily, 1x1 degree grid
+v1.1
+2012-061 -- current
+Aqua
+MODIS Cloud Properties Level 3 monthly, 1x1 degree grid
+v1.1
+2012-061 -- current
+NOAA21
+VIIRS Cloud Mask 6-Min Swath 750 m
+v1.0
+2023-041 -- current
+NOAA20
+VIIRS Cloud Mask 6-Min Swath 750 m
+v1.0
+2018-048 -- current
+SNPP
+VIIRS Cloud Mask 6-Min Swath 750 m
+v1.0
+2012-061 -- current
+Aqua
+MODIS Cloud Mask 5-Min Swath 1000 m
+v1.0
+2012-061 -- current
+NOAA20
+VIIRS+CrIS Fusion 6-Min L2 Swath 750 m
+v2.0
+2018-048 -- current
+SNPP
+VIIRS+CrIS Fusion 6-Min L2 Swath 750 m
+v2.0
+2012-061 -- current
+NOAA20
+VIIRS Cloud Properties COSP Level 3 daily, 1x1 degree grid
+v1.1
+2018-048 -- current
+NOAA20
+VIIRS Cloud Properties COSP Level 3 monthly, 1x1 degree grid
+v1.1
+2018-060 -- current
+SNPP
+VIIRS Cloud Properties COSP Level 3 daily, 1x1 degree grid
+v1.1
+2012-061 -- current
+SNPP
+VIIRS Cloud Properties COSP Level 3 monthly, 1x1 degree grid
+v1.1
+2012-061 -- current
+Aqua
+MODIS Cloud Properties COSP Level 3 daily, 1x1 degree grid
+v1.1
+2002-185 -- current
+Aqua
+MODIS Cloud Properties COSP Level 3 monthly, 1x1 degree grid
+v1.1
+2002-213 -- current
+SNPP
+VIIRS Cirrus Reflectance 6-min L2 Swath 750m
+v1.0
+VIIRS/SNPP
+Water Vapor 6-min L2 Swath 750m
+v1.0
+VIIRS/SNPP
+Water Vapor Daily Level-3 0.5-degree grid
+v1.0
+VIIRS/SNPP
+Water Vapor Monthly Level-3 0.5-degree grid
+v1.0
+MODIS versus VIIRS Atmosphere Products: A Visual Comparison of a Handful of Products
+The following images provide a visual comparison of aerosol, cloud mask, cloud properties, and water vapor
+retrievals between MODIS- and VIIRS-derived products. Two points to bear in mind about the following comparisons
+include the following:
+The products being compared are not identical and are not based on coincident observations.
+The MODIS and VIIRS products being compared do have differences in spatial coverages and temporal resolutions as
+well as data observation times.
+Left:
+MODIS combined Dark Target (DT) and Deep Blue (DB) Aerosol Optical
+Thickness (AOT) with all quality data for granules at 18:00 and 17:55 UTC.
+Right:
+Aerosol Team provides VIIRS_SNPP AOT at 0.55 micron with all quality
+for granules at
+17:54 and 17:48 UTC. Both images are largely consistent. Since SNPP VIIRS provides
+higher-resolution data, it displays less fill-data compared to MODIS.
+A SNPP VIIRS image at 17:36 UTC (right) shows how Cloud Optical Thickness captures the
+tropical storm similar to the MODIS image at 18:35 (left). The VIIRS image does provide more
+detailed information near the center of storm given its higher resolution.
+Left:
+MYD35_L2 provides the 6 spectral test results separately, which we
+need to combine to compute the final Cloud Mask. MYD35_L2 also provides the Cloud_Mask_SPI
+index to present the Cloud distribution. We can observe the tropical storm in the MYD35_L2
+Cloud_Mask image for granule 2019247 at 18:35 UTC.
+Right:
+The Cloud_Mask in two neighboring images (day 2019247 at 17:42 and
+17:36 UTC) from CLDPROP_VIIRS_SNPP also depicts the tropical storm.
+The distribution of Total Precipitable Water (TPW) in IR band for MYD35_L2 image at 18:10
+UTC (left) is consistent with the WATVP_L2_VIIRS_SNPP image (composited with observations
+from 18:06 and 18:00 UTC) (right).
+The NIR TPW is very sensitive to boundary-layer water vapor, which is derived from the
+attenuation of reflected solar light from the surface and clearly shows the storm’s
+boundaries.
+Other Aerosol and Cloud Property Contemporary Sources
+Other contemporary atmospheric remote sensing data orbital platforms include Geostationary Earth Orbit (GEO)
+missions, for instance, the NOAA Geostationary Operational Environmental Satellites (GOES) and the Japanese Himawari
+series. A NASA Low-Earth Orbiting (LEO) satellite mission called, the Plankton, Aerosol, Cloud ocean Ecosystem
+(PACE), was launched on February 8, 2024. Aerosol and cloud products from the PACE mission are still in their
+evaluation and implementation phases. The PACE
+Data
+Products Table
+provides an update on product status.
+The LAADS DAAC manages two suites of NASA aerosol products that were generated for the first time from GEO satellite
+sources. The following two GEO-LEO project pages contain more details:
+GEO-LEO Dark
+Target Aerosol MEaSUREs project
+GEO-LEO
+Deep Blue Aerosol ESROGSS project
+The GEO-LEO Dark Target Aerosol suite was produced through a NASA
+Making Earth System Data Records for Use in Research Environments
+MEaSUREs
+) project and covers
+January 2019 through December 2022 timespan. The GEO-LEO Deep Blue Aerosol suite was produced through a NASA
+Earth Science Research from Operational Geostationary Satellite Systems
+(ESROGSS)-funded project that covers May 2019 through April 2020.
+Tokens for Downloading LAADS DAAC Data
+A LAADS DAAC download token will help make file downloads faster, but is only usable for LAADS DAAC web sites. A LAADS DAAC token
+will not work with other Earthdata sites.
+Generating LAADS DAAC token …
+Please copy and save the token below for use with any supported LAADS download utilities or scripts.
+To test, run the following
+wget
+download command in your terminal and see if it successfully downloaded the README text file located at the root of the LAADS archive. See also
+LAADS documentation on how to use wget
+wget -e robots=off -m -np -R .html,.tmp -nH --cut-dirs=3 "https://ladsweb.modaps.eosdis.nasa.gov/archive/README" --header "Authorization: Bearer
+" -P .
+We are currently unable to generate a LAADS DAAC token. Please try again later or contact
+MODAPS Support
+with any questions.
+An Earthdata Download token (EDL) will work on any Earthdata site including all LAADS DAAC sites, but download performance from the LAADS DAAC can be much slower due to the extra network connections needed to check credentials at Earthdata.
+Confirm Download of Multiple Files
+Verifying login status…
+Please confirm before starting this batch download of
+listed below totaling
+, one file at a time.
+Once a batch download begins, your browser may not provide a way to cancel the batch aside from closing the browser entirely or stopping individual downloads one at a time. If in doubt, try selecting a smaller number of files for download.
+MODAPS Support
+is available to help with any questions.
+Browser configurations
+Some users might have to approve once (e.g., click "Allow") to allow for future downloads of multiple files.
+To avoid a new download prompt for each file, ensure the following settings are configured in your browser:
+Chrome: Settings > Advanced > Ask where to save each file before downloading >
+Firefox:
+Preferences > Files and Applications >
+Save files to
+Click checkbox “Do this automatically for files like this from now on”
+Safari: Preferences > General > File download location >
+[specified folder]
+Edge: Settings > Downloads > Ask where to save each file before downloading >
+Unsupported browsers for multi-file downloads (use
+instead):
+Internet Explorer 11 and below
+Please log in and try again
+We are currently having issues verifying your request. Please try again later or contact
+MODAPS Support
+with any questions.

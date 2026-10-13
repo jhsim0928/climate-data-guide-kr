@@ -1,0 +1,173 @@
+# https://zenodo.org/records/8253971
+Spatiotemporally consistent global dataset of the GIMMS Normalized Difference Vegetation Index (PKU GIMMS NDVI) from 1982 to 2022 (V1.2) | Zenodo
+Skip to main
+Service Notice:
+We are currently experiencing an issue with download statistics not updating on records. Our team is investigating the problem. We apologize for the inconvenience.
+Published August 17, 2023
+| Version V1.2
+Dataset
+Open
+Spatiotemporally consistent global dataset of the GIMMS Normalized Difference Vegetation Index (PKU GIMMS NDVI) from 1982 to 2022 (V1.2)
+Authors/Creators
+Muyi Li
+Sen Cao
+Zaichun Zhu
+Zhe Wang
+Ranga B. Myneni
+Shilong Piao
+Peking University
+Boston University
+Description
+Brief Introduction:
+The PKU GIMMS Normalized Difference Vegetation Index product (PKU GIMMS NDVI, version 1.2) provides spatiotemporally consistent global NDVI data in half-month and 1/12° from 1982 to 2022. It is created to address the major uncertainties presented in current global long-term NDVI products, i.e., the effects of NOAA satellite orbital drift and AVHRR sensor degradation.
+The PKU GIMMS NDVI was generated based on biome-specific BPNN models that employed GIMMS NDVI3g product and 3.6 million high-quality global Landsat NDVI samples. It was then consolidated with the MODIS NDVI (MOD13C1) to extend the temporal coverage to 2022 via a pixel-wise Random Forests fusion method.
+The PKU GIMMS NDVI exhibits overall high accuracy evaluated by Landsat NDVI samples. Besides, it efficiently eliminated the effects of satellite orbital drift and sensor degradation and presents a good temporal consistency with MODIS NDVI in terms of pixel value and global vegetation trend. It could potentially provide a more solid data basis for global change studies.
+Here we provide two versions of PKU GIMMS NDVI for download, one solely based on AVHRR data (1982−2015) and the other consolidated with the MODIS NDVI (1982−2022).
+We strongly recommend an adequate use of the quality control (QC) layer in the product.
+Please refer to the Readme file for more details.
+We also recommend removing sparse vegetation by a threshold (e.g., 0.1) in trend analysis (Zhou et al., 2001; Liu et al., 2016)
+Major updates:
+Version 1.0 (December 15, 2022):
+· The original version of the product.
+Version 1.1 (June 17, 2023):
+· A pixel-wise Random Forests consolidation method is used to replace the linear one.
+· The data files have been re-organized on a decade basis.
+Version 1.2 (August 17, 2023):
+· The BPNN model without explanatory variables of NOAA satellite number and years since launch is used to generate NDVI values of EBF during the periods of 1982−1984 and all October to April, when the Landsat NDVI samples were relatively scarce.
+Dataset Characteristics:
+Spatial Coverage: 180ºW~180ºE, 63ºS~90ºN
+Projection: Geographic
+Spatial Resolution: 1/12 degree
+Temporal Resolution: Half month
+Temporal Coverage: January 1982 to December 2022
+Image Dimension: Rows-2160; Columns-4320
+Units: unitless
+Fill Value: 65535
+Data Type: uint16
+Valid Range: 0-1000
+Scale Factor: 0.001
+File Format: TIFF(.tif)
+File Size: ~8Mb each file
+References:
+Li, M., Cao, S., Zhu, Z., Wang, Z., Myneni, R. B., and Piao, S.: Spatiotemporally consistent global dataset of the GIMMS Normalized Difference Vegetation Index (PKU GIMMS NDVI) from 1982 to 2022, Earth Syst. Sci. Data, 15, 4181–4203,
+https://doi.org/10.5194/essd-15-4181-2023
+Liu, Q., Fu, Y. H., Zhu, Z., Liu, Y., Liu, Z., Huang, M., Janssens, I. A., and Piao, S.: Delayed autumn phenology in the Northern Hemisphere is related to change in both climate and spring phenology, Global Change Biology, 22, 3702–3711,
+https://doi.org/10.1111/gcb.13311
+Zhou, L., Tucker, C. J., Kaufmann, R. K., Slayback, D., Shabanov, N. V., and Myneni, R. B.: Variations in northern vegetation activity inferred from satellite data of vegetation index during 1981 to 1999, J. Geophys. Res., 106, 20069–20083,
+https://doi.org/10.1029/2000JD000115
+Files
+PKU_GIMMS_NDVI_AVHRR_MODIS_consolidated_1982_1990.zip
+Files
+(5.0 GB)
+Name
+Size
+PKU_GIMMS_NDVI_AVHRR_MODIS_consolidated_1982_1990.zip
+md5:a838b1be402938ad3a5ceac2c3707949
+595.8 MB
+Preview
+Download
+PKU_GIMMS_NDVI_AVHRR_MODIS_consolidated_1991_2000.zip
+md5:ad646d67a89a10d3838844437260916e
+660.4 MB
+Preview
+Download
+PKU_GIMMS_NDVI_AVHRR_MODIS_consolidated_2001_2010.zip
+md5:c8f95d9e7edba87cb4a3bdb59ba4a8be
+646.1 MB
+Preview
+Download
+PKU_GIMMS_NDVI_AVHRR_MODIS_consolidated_2011_2022.zip
+md5:225cf139bb1ed40c720c23c90dd659cc
+775.1 MB
+Preview
+Download
+PKU_GIMMS_NDVI_AVHRR_solely_1982_1990.zip
+md5:05e0e7744c644de87c8209f3e9029d09
+600.9 MB
+Preview
+Download
+PKU_GIMMS_NDVI_AVHRR_solely_1991_2000.zip
+md5:ad30d1d6baae9edcaa97e5829b5b57fe
+667.2 MB
+Preview
+Download
+PKU_GIMMS_NDVI_AVHRR_solely_2001_2010.zip
+md5:680866e7d0c191fc4c711249e9610d72
+671.0 MB
+Preview
+Download
+PKU_GIMMS_NDVI_AVHRR_solely_2011_2015.zip
+md5:f5a55180ba9d7298585715931d61470d
+340.1 MB
+Preview
+Download
+Readme_for_PKU_GIMMS_NDVI_Product_updated_20230817.pdf
+md5:b5b1660b670222493d0f8edf59a37497
+184.4 kB
+Preview
+Download
+Additional details
+References
+Li, M., Cao, S., Zhu, Z., Wang, Z., Myneni, R. B., and Piao, S.: Spatiotemporally consistent global dataset of the GIMMS Normalized Difference Vegetation Index (PKU GIMMS NDVI) from 1982 to 2022, Earth Syst. Sci. Data Discuss. [preprint],
+https://doi.org/10.5194/essd-2023-1
+, accepted, 2023.
+Views
+163K
+Downloads
+Show more details
+All versions
+This version
+Views
+Total views
+Downloads
+Total downloads
+Data volume
+Total data volume
+59.0 TB
+44.7 TB
+More info on how stats are collected....
+Versions
+External resources
+Indexed in
+OpenAIRE
+Communities
+Keywords and subjects
+Keywords
+PKU GIMMS NDVI
+Landsat
+MODIS
+Back Propagation Neural Network
+Details
+DOI Badge
+10.5281/zenodo.8253971
+Markdown
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.8253971.svg)](https://doi.org/10.5281/zenodo.8253971)
+reStructuredText
+.. image:: https://zenodo.org/badge/DOI/10.5281/zenodo.8253971.svg
+:target: https://doi.org/10.5281/zenodo.8253971
+HTML
+<a href="https://doi.org/10.5281/zenodo.8253971"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.8253971.svg" alt="DOI"></a>
+Image URL
+https://zenodo.org/badge/DOI/10.5281/zenodo.8253971.svg
+Target URL
+https://doi.org/10.5281/zenodo.8253971
+Resource type
+Dataset
+Publisher
+Zenodo
+Languages
+English
+Rights
+License
+Creative Commons Attribution 4.0 International
+The Creative Commons Attribution license allows re-distribution and re-use of a licensed work on the condition that the creator is appropriately credited.
+Read more
+Citation
+Export
+Technical metadata
+Created
+August 17, 2023
+Modified
+July 11, 2024
+This site uses cookies. Find out more on
+how we use cookies

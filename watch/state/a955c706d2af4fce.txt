@@ -1,0 +1,309 @@
+# https://www.remss.com/measurements/upper-air-temperature/
+Remote Sensing Systems
+Access Data
+Browse Air Temperatures
+Browse Air Temp Time Series
+FTP Air Temperatures in netcdf
+FTP Air Temperatures in binary
+FTP Air Temperatures in text
+FTP Air Temp Time Series
+Documentation
+Peer Reviewed Journal Papers
+Algorithm Theoretical Basis Document
+Validation Studies
+Related Announcements
+CLICK HERE TO REGISTER FOR AN FTP ACCOUNT TO ACCESS DATA
+Upper Air Temperature
+Introduction
+RSS Sounding Products
+Uncertainty
+Recent Updates
+References
+Introduction
+The term "upper air" refers to the part of the atmosphere well above Earth's surface. The temperature of the atmosphere in this region is a fundamental climate variable. Recent changes in atmospheric temperature have been attributed to human-induced climate change. Continued monitoring of atmospheric temperature is critical to advancing our understanding of the sensitivity of Earth's climate to changing atmospheric composition.
+Measurement Methods for Upper Air Temperatures
+There are several methods available for the measurement of the upper air.
+Radiosondes
+(commonly called weather balloons).These are small instruments lifted aloft by helium-filled balloons. Measurements made by temperature, pressure, and humidity sensors are radioed back to the surface.
+Advantages
+Direct measurement of temperature
+High vertical resolution
+Disadvantages
+Limited spatial sampling
+Calibration problems with changing instruments and methods
+Microwave Sounders.
+These are satellite-borne instruments that measure the radiance of Earth at microwave frequencies, which allows scientists to deduce the temperature of thick atmospheric layers.
+Advantages
+Global coverage at a high samplng rate
+Disadvantages
+Coarse vertical resolution
+Infrared Sounders.
+These are satellite-borne instruments that measure the radiance of Earth at infrared frequencies, which allows scientists to retrieve the temperature of thick atmospheric layers using inversion algorithms.
+Advantages
+Global coverage at a high sampling rate
+Moderate vertical resolution
+Disadvantages
+Sensitivity to contamination by clouds and other aerosols
+GPS Radio Occultation.
+The approach uses satellite-borne GPS receivers to measure the refraction of the GPS signals by the Earth's atmosphere. This allows for the retrieval of vertical temperature and moisture profiles.
+Advantages
+Absolute calibration
+High vertical resolution
+Global coverage
+Disadvantages
+Only about 10 years of data
+Less frequent sampling compared to satellite-borne sounders.
+RSS Upper Air Temperature Products
+RSS upper air temperature products are based on measurements made by
+microwave sounders
+. Microwave sounders are capable of retrieving vertical temperature profiles of the atmosphere by measuring the thermal emission from oxygen molecules at different frequencies. These measurements are a crucial element in the development of an accurate system for long-term monitoring of atmospheric temperature, particularly in regions with large numbers of radiosonde measurements. RSS air temperature products are assembled from measurements made by the
+AMSU
+instruments on polar orbiting satellites. We are working toward the use of measurements from the most recent microwave sounder, ATMS.
+The Microwave Sounding Units (MSU) operating on NOAA polar-orbiting platforms were the principal sources of satellite temperature profiles from late 1978 to the early 2000's. The MSUs were cross-track scanners that made measurements of microwave radiance in four channels ranging from 50.3 to 57.95 GHz on the lower shoulder of the Oxygen absorption band. These four channels measured the atmospheric temperature in four thick layers spanning the surface through the lower stratosphere. The last MSU instrument, NOAA-14, ceased reliable operation in 2005.
+AMSU
+A series of follow-on instruments, the Advanced Microwave Sounding Units (AMSUs), began operation in 1998. The AMSU instruments are similar to the MSUs, but make measurements using a greater number of channels, thus sampling the atmosphere in more layers, and with smaller measurement footprints, thus increasing the spatial resolution. By using the AMSU channels that most closely match the channels in the MSU instruments, we can extended the MSU-based datasets to the present. In addition, we have completed a preliminary analysis of AMSU channels 10-14, which measure temperatures from the lower to upper stratosphere, much higher than the highest MSU channel. These AMSU-only datasets began in mid 1998 with the launch of the first AMSU on the NOAA-15 satellite. The AMSU-only datasets, now 14 years long, are beginning to be long enough for investigating long-term changes in the mid and upper stratosphere.
+ATMS
+In the future, the AMSU instruments will be phased out, and replaced with the Advanced Technology Microwave Sounder (ATMS). The first ATMS was launched on October 28, 2011. Measurements made by the ATMS are not yet used in our data set. We are working to cross-calibrate ATMS with AMSU so that ATMS measurements can be included in the future.
+All microwave sounding instruments were developed for day to day operational use in weather forecasting and thus are typically not calibrated to the precision needed for climate studies. A climate quality data set can be extracted from their measurements only by careful intercalibration of the data from the MSU, AMSU and ATMS instruments.
+Microwave Sounding Data Products from RSS
+We produce 3 single-channel MSU/AMSU data sets (TMT, TTS, and TLS) that extend back to late 1978, and 5 single channel AMSU-only datasets (C10, C11, C12, C13, and C14) that begin in mid 1998. TLT is a more complex data set constructed by calculating a weighted difference between measurements made at different Earth incidence angles to extrapolate MSU channel 2 and AMSU channel 5 measurements lower in the atmosphere. In addition, there are 2 multi-channel data sets, TTT and C25, that are constructed from weighted combinations of the single channel data sets. The satellites and channels used in each RSS data product, as well as the weighting functions for each product are shown below. The AMSU-only datasets (C10-C14, C25) are relatively early in their development process and should be considered preliminary, or in the case of C13 and C14, experimental.
+Channels and Satellites used in RSS Atmospheric Temperature Products:
+TIROS-N
+NOAA-06
+NOAA-07
+NOAA-08
+NOAA-09
+NOAA-10
+NOAA-11
+NOAA-12
+NOAA-14
+NOAA-15
+NOAA-16
+NOAA-17
+NOAA-18
+METOP-A
+AQUA
+NOAA-19
+METOP-B
+Start Year
+End Year
+Present
+Maturity
+Stable
+Prelim.
+Exper.
+Prelim.
+Each product measures the mean temperature of the atmosphere in the thick layer. This brightness temperature T
+measured by the satellite can be described as an integral over the height above Earth's surface Z of the atmospheric temperature T
+ATMOSPHERE
+weighted by a weighting function W(Z), plus a small contribution due to emission by Earth's Surface τεT
+SURF
+The exact form of the weighting function depends on the temperature, humidity, and liquid water content of the atmospheric column being measured. However, representative weighting functions based on the mean state of the atmosphere are sometimes useful. We provide weighting functions based on the U.S. Standard Atmosphere on our FTP site at
+/msu/weighting_functions
+for each of the MSU/AMSU products. These weighting functions are also plotted in Fig. 1 below.
+Figure 1. Weighting function for each RSS product. The vertical weighting function describes the relative contribution that microwave radiation emitted by a layer in the atmosphere makes to the total intensity measured above the atmosphere by the satellite.
+Single Channel Datasets (TMT, TTS, TLS, C10, C11, C12, C13, C14)
+The single channel datasets are mostly constructed by calculating an average of near-nadir views (central 5 views for MSU, central 12 views for AMSU). The exception to this is TLS from AMSU, which uses a set of off-nadir views to match the measurements from MSU channel 4 more closely. See
+Mears et al, 2009a
+for more details. A map showing the footprints used for near-nadir products and TLT is shown in Figure 2 below. TLT, TTT, and C25 are constructed using more complicated methods.
+Figure 2. Two example scans for the MSU instrument. The satellite is traveling in the South to North direction, and scanning (roughly) West to East, making 11 discrete measurements in each scan. Footprints used to construct the near-nadir MSU products (TMT, TTS, TLS) from the top scan are shown in green. The numbers in each footprint are the weights assigned to the footprint when constructing the average for a given scan. The footprints used to construct TLT are shown in red and blue in the lower scan, with red denoting negative weight.
+TLT (Temperature Lower Troposphere)
+TLT is constructed by calculating a weighted difference between MSU2 (or AMSU5) measurements from near limb views and measurements from the same channels taken closer to nadir, as can be seen in Figure 2 for the case of MSU. This has the effect of extrapolating the MSU2 (or AMSU5) measurements lower in the troposphere, and removing most of the stratospheric influence. Because of the difference involves measurements made at different locations, and because of the large absolute values of the weights used, additional noise is added by this process, increasing the uncertainty in the final results. For more details see
+Mears et al., 2009b
+TTT (Temperature Total Troposphere)
+TTT is a multi-channel combined product made by calculating a linear combination of TMT and TLS. TTT = 1.1*TMT - 0.1*TLS. This combination has the effect of reducing the influence of the lower stratosphere, as shown Figure 3. In the simpler TMT product, about 10% of the weight is from the lower stratosphere. Because the lower stratosphere is cooling at most locations, this causes the decadal trends in TMT to be less than the trends in the mid and upper troposphere. TTT was proposed by
+Fu and Johanson, 2005
+Figure 3. The left panel shows the weighted versions of the TMT and TLS weighting functions. The right panel shows the weighting function for TTT = 1.1*TMT – 0.1*TLS in blue, with the unmodified TMT weighting function shown in black.
+As shown in Figure 4, C25 is constructed using a linear combination of AMSU channels 10,11,12, and 13.
+C25 = 0.258*C10 + 0.215*C11 + 0.409*C12 + 0.122*C13
+The weighting function of this channel closely matches the weighting function of Channel 25 (sometimes called Channel 1) of the stratospheric sounding unit (SSU), and this product is intended to be used to extend the existing SSU channel 25.
+Figure 4. The left panel shows the weighted versions of the C10 through C13 weighting functions. The right panel shows the weighting function for C25 in black, with the weighting function for SSU channel 25 (sometimes called SSU channel 1) in blue.
+Microwave Sounding Data Products From Other Research Groups
+A number of other research groups have produced datasets from the MSU and AMSU instruments. Of these, only the
+STAR
+datasets are currently being updated. Other previous work was performed by Prabhakara, et al. and Vinnikov et al., but these datasets are not currently being updated and do not extend to the present.
+Global and Regional Time Series
+Plots of time series of globally and regionally averaged time series of temperature anomaly for each dataset can be viewed using a
+time series browse tool
+. Several examples of the plots available are shown below.
+Figure 5. Globally averaged temperature anomaly time series for the Temperature Lower Troposphere (TLT). The plot shows the warming ot the troposphere over the last 3 decades which has been attributed to human-caused global warming. (Click on the figure to go to the time series browse tool.)
+Figure 6. Globally averaged temperature anomaly time series for the Temperature Lower Stratosphere (TLS). The plot shows the cooling of the lower stratosphere over the past 3 decades. This cooling is caused by a combination of ozone depletion and the increase of greenhouse gases. During the most recent decade, the rate of cooling has reduced substantially. (Click on the figure to go to the time series browse tool.)
+Figure 7. Globally averaged temperature anomaly time series for the AMSU Channel 13, in the middle stratosphere. The plot shows the that middle stratosphere cooled during the most recent 15 years, even as the lower stratosphere ceased cooling. (Click on the figure to go to the time series browse tool.)
+Decadal Trends
+Long term trends are useful for detecting global climate change, and for comparing these measured results with the output from climate models.
+Maps of global trend on a 2.5-degree scale have been made for all MSU/AMSU datasets we produce and can be viewed using a
+browse tool
+. Trend maps are computed over the time period for each channel that contains complete years of valid data for each dataset type.
+Globally averaged trends computed over latitudes from 82.5S to 82.5N (70S to 82.5N for channel TLT) are shown in the table below, and include data through March, 2013:
+Start Time
+Stop Time
+# Years
+Global Trend
+Channel TLT
+0.184 K/Decade
+Channel TMT
+0.139 K/Decade
+Channel TTT
+0.179 K/Decade
+Channel TTS
+Channel TLS
+See the monthly, global time series of brightness temperature anomalies for each channel, as well as linear fits to the time series (Figure 7)
+. Anomalies are computed by subtracting the mean monthly value (averaged from 1979 through 1998 for each channel) from the average brightness temperature for each month.
+Zonally Averaged Monthly Anomalies
+We also provide text files containing monthly anomalies of each MSU/AMSU channel averaged over a number of zonal bands. In addition, these averages are performed over land, ocean, and land+ocean spacial subsets. Anomalies are computed by subtracting the a mean monthly value determined by averaging 1979 through 1998 data for each channel from the average brightness temperature for each month. The set of 12 month means for 1979 to 1998 are included in the netCDF files available on the ftp server
+(ftp.remss.com/msu)
+Zonally Averaged Monthly Anomalies are available here in text format
+Monthly Browse Images
+Monthly maps of MSU/AMSU brightness temperatures and brightness temperature anomalies for each dataset are available for browsing using a
+browse tool
+, or download, from our FTP server
+(ftp.remss.com/msu)
+. Each monthly map is a 144 x 72 (2.5 degree resolution) gridded dataset of brightness temperatures. Brightness temperatures are adjusted to correspond to a local time of midnight using our monthly diurnal cycle climatology. Brightness temperature anomalies are the difference between the monthly brightness temperatures and the average value for that month. The references period varies from product to product due to the different dataset lengths available.
+Each monthly image consists of the average brightness temperature or brightness temperature anomaly. The scale for each map is located at the bottom of the map for reference. Missing data are shown in grey. We do not provide monthly means poleward of 82.5 degrees (or south of 70S for TLT) due to difficulties in merging measurements in these regions.
+Monthly Data Files
+Each data product is available in 3 formats, netCDF, binary, and text. (See links at top left of this page to access the data). We prefer that users work with the netCDF versions, but will continue to provide the earlier formats for the time being. As of February 2016, TMT and TTT are Version 4.0 - all other products are Version 3.3.
+netCDF Files
+File Name Format
+Contents
+rss_tb_maps_ch_###_v3_3.nc
+Average monthly brightness temperature in degrees K.
+rss_tb_anom_maps_ch_###_v3_3.nc
+Average monthly brightness temperature anomalies in degrees K. The reference period 1978-1998 for TLT, TMT, TTT, TTS and TLS. The reference period is 1999-2008 for AMSU only channels C10 thru C14. The reference period data are provided in the netCDF files.
+uat4_tb_V03r03_avrg_ch###_yyyymm_yyyymm.nc3.nc
+Average monthly brightness temperature in degrees K. These files are identical to the versions archived at NCDC, except that they are in netCDF3 instead of netCDF4.
+uat4_tb_V03r03_anom_ch###_yyyymm_yyyymm.nc3.nc
+Average monthly brightness temperature anomaly in degrees K. These files are identical to the versions archived at NCDC, except that they are in netCDF3 instead of netCDF4. These files also contain the 12 monthly 1979-1998 (TLT,TMT, TTT, TTS and TLS) or 1999-2008 (C10 thru C14) mean maps used to determine the anomalies.
+Binary Files
+Each binary data file located on our MSU FTP site consists of a 144 x 72 x
+number_of_months
+array of 4 byte real numbers. The
+number_of_months
+is currently set to 420, but grows by 12 as each new year of data is begun. The first two indices correspond to longitude and latitude (at 2.5 degree resolution), and the last index is the month number, starting in January 1978. The first 10 months contain no valid data, but are included so that the first month corresponds to the first month of the year. The files are also padded with empty data to fill in months through the end of the current year. As of February 2016, TMT and TTT are Version 4.0 - all other products are Version 3.3.
+File Name Format
+Contents
+channel_###_tb_v03_3.dat
+Average monthly brightness temperature
+channel_###_tb_anom_v03_3.dat
+Average monthly brightness temperature anomalies in degrees K. The reference period 1978-1998 for TLT, TTT, TMT, TTS and TLS. The reference period is 1999-2008 for AMSU only channels C10 thru C14
+Text formatted data.
+This format is provided as a service to users who have existing methods to read in the text-formatted data from the UAH group. Please do not use this format for new code!
+Read routines
+written in Fortran, C, IDL and Matlab are available in the /msu/
+support directory
+(ftp.remss.com/msu/support).
+These data are also available in netCDF4 format with CF-compliant metadata from the
+National Climatic Data Center
+, where they are called
+Mean Layer Temperatures - RSS.
+Uncertainty in our MSU/AMSU atmospheric temperature datasets
+(NOTE: the discussion below only directly applies to the V3.3 versions of the RSS datasets. We have not yet completed the uncertainty analysis for V4.0 datasets)
+Why study the uncertainty?
+Without realistic uncertainty estimates we are not doing science!
+In the past, numerous conclusions have been drawn from MSU/AMSU data with little regard to the long term uncertainty in the data.
+Most previous error analyses for MSU/AMSU data sets have focused on
+decadal-scale
+trends in
+global-scale means
+, while in contrast, many applications are focused on shorter time scales and smaller spatial scales.
+Here we describe a comprehensive analysis of the uncertainty in the RSS MSU/AMSU products. The results can be used to evaluate the estimated uncertainty on all relevant temporal and spatial scales.
+Issues
+Our MSU/AMSU products use data from 14 different satellites. The data need to be intercalibrated before being merged together. This is a complex process, as shown in the flow chart below.
+First, adjustments are made for changes in local measurement time (diurnal adjustment) and Earth incidence angle.
+Then, intercalibration is performed by comparing measurements from co-orbiting satellites, yielding a set of “merging parameters”.
+Uncertainty that arises earlier in the process (e.g. from the adjustments for local measurement time) can cause uncertainty in the merging parameters, which adds to the uncertainty in the final results.
+Because of the complex nature of the errors, they are difficult to calculate and describe using simple statistical methods. Instead, we use a Monte Carlo technique to produce a large number of possible realizations of the errors that are consistent with the sources of error that we have studied.
+A detailed description of the methods used to generate the uncertainty ensembles, and a summary of the results is given in
+Mears et al, 2011
+Available Uncertainty Information and Recommendations
+We have constructed a 100 realization uncertainty ensemble for each of the MSU/AMSU products we produce. (No uncertainty analysis has yet been performed on the AMSU-only stratospheric channels.) These
+uncertainty realizations are available
+in netCDF, with exactly the same form as the baseline temperature data. We recommend that researchers evalutate the uncertainty in any results they obtain using our MSU/AMSU data by re-running their analysis using each member of the uncertainty ensemble, and then evaluating the spread in the distribution of results obtained.
+Recent Updates
+RSS Version 4.0 Channel TLT product released June 28, 2016. The TTS and TLS products remain Version 3.3.
+The most important differences between the previous version (Version 3.3) and the new version (Version 4.0) are:
+The method used to make adjustments for drifting satellite measurement time was changed. In the new method, the model based diurnal cycle climatology used for these adjustments was optimized so that differences between satellites making measurements are different times of day are more accurately removed.
+Intersatellite offsets are now calculated separately for land and ocean scenes. This prevents possible errors over land, where the adjustment for changing measurement times are large, from adversely affecting measurements over the ocean, where the diurnal cycle is close to zero.
+Several periods of suspect data were removed (see the paper for more details).
+Two new satellites, NOAA-19 and METOP-B are now included in the processing. This serves to reduce sampling error and any remaining errors due to the diurnal adjustment during the last part of the record.
+RSS Version 4.0 Channel TMT and TTT products released March 2, 2016.
+Change from 3.3 to 4.0:
+This change represents a major upgrade. There are 4 important changes to the methods used to construct the new products.
+The method used to make adjustments from drifting satellite measurement time, the “diurnal adjustment” was changed. In the new method, the model-based diurnal cycle climatology used for these adjustments was optimized so that it more accurately removes intersatellite differences due to drifting local measurement times. This is the most important change, and leads to substantially more warming during the 1999-2005 period when the NOAA-15 satellite was drifting rapidly.
+Intersatellite offsets are now calculated separately for land and ocean scenes. This prevents errors in the much larger land measurement time adjustments from adversely affecting the ocean measurements, where the adjustments for measurement time are much smaller.
+More fields of view are now included in the dataset. The previous version used the central 5 (out of 11 total) fields of view for MSU, and the central 12 (out of 30) fields of view for AMSU. This new version uses the central 9 MSU fields of view, and the central 24 AMSU fields of view. This reduces the size of the gaps between satellite swaths, and serves to reduce spatial noise in the monthly mean maps.
+Two new satellites, NOAA-19 (data start in 2009) and METOP-B (data start in 2012), have been added to the dataset.
+For more details on the new version, refer to the recently accepted paper describing this upgrade in the Journal of Climate. An early online edition of the paper is
+available online
+For more details and information about earlier version changes, see our
+RSS_MSU_AMSU_Version_Notes
+References
+Mears, C. A. and F. J. Wentz, (2017)
+A satellite-derived lower tropospheric atmospheric temperature dataset using an optimized adjustment for diurnal effects
+, Journal of Climate, 30(19), 7695-7718, doi: 10.1175/jcli-d-16-0768.1.
+Mears, C. A. and F. J. Wentz, (2016)
+Sensitivity of satellite-derived tropospheric temperature trends to the diurnal cycle adjustment
+, Journal of Climate, 29(10), 3629-3646, doi: DOI: 10.1175/JCLI-D-15-0744.1.
+Mears, C. A., F. J. Wentz and P. W. Thorne, (2012)
+Assessing the Value of Microwave Sounding Unit-Radiosonde Comparisons in Ascertaining Errors in Climate Data Records of Tropospheric Temperatures
+, J. Geophys. Res., 117(D19), D19103, doi:10.1029/2012JD017710.
+Mears, C. A., F. J. Wentz, P. Thorne and D. Bernie, (2011)
+Assessing Uncertainty in Estimates of Atmospheric Temperature Changes From MSU and AMSU Using a Monte-Carlo Estimation Technique
+, J. Geophys. Res., 116, D08112, doi:10.1029/2010JD014954.
+Mears, C. A. and F. J. Wentz, (2009)
+Construction of the RSS V3.2 Lower Tropospheric Dataset From the MSU and AMSU Microwave Sounders
+, Journal of Atmospheric and Oceanic Technology, 26, 1493-1509.
+Mears, C. A. and F. J. Wentz, (2009)
+Construction of the Remote Sensing Systems V3.2 Atmospheric Temperature Records From the MSU and AMSU Microwave Sounders
+, Journal of Atmospheric and Oceanic Technology, 26, 1040-1056.
+Mears, C. A. and F. J. Wentz, (2005)
+The Effect of Drifting Measurement Time on Satellite-Derived Lower Tropospheric Temperature
+, Science, 309, 1548-1551.
+Mears, C. A., M. C. Schabel and F. J. Wentz, (2003)
+A Reanalysis of the MSU Channel 2 Tropospheric Temperature Record
+, Journal of Climate, 16(22), 3650-3664.
+Prabhakara, C., R. Iacovazzi Jr, J.-M. Yoo, G. Dalu. "Global warming: Estimation from satellite observations"
+Geophysical Research Letters
+, Vol. 27(21), 3517-3520, 2000.
+Vinnikov, K. Y., N. C. Grody, A. Robock, R. J. Stouffer, P. D. Jones, and M. D. Goldberg. "Temperature Trends at the Surface and in the Troposphere"
+Journal of Geophysical Research
+, 111, D03106, 2005.
+Prabhakara, C., R. Iaacovazzi, J. M. Yoo, and G. Dalu. "Global Warming: Evidence From Satellite Observations"
+Geophysical Research Letters
+Fu, Q. and C. M. Johanson. "Satellite-Derived Vertical Dependence of Tropospheric Temperature Trends"
+Geophysical Research Letters
+, 32, L10703, 2005.
+J. R. Christy, R. W. Spencer, W. D. Braswell. "MSU Tropospheric Temperatures: Dataset Construction and Radiosonde Comparisons"
+Journal of Atmospheric and Oceanic Technology
+, vol. 17, pp. 1153-1170, 2000.
+Acknowledgement
+MSU/AMSU data are produced by Remote Sensing Systems. Over the years, we have received support for the development of this dataset from a number of sources, including NOAA's Office of Global Programs, NOAA's Climate Program Office, and NOAA's Climate Data Record Program. Production of the current dataset (version 3.3) is supported by NOAA's Climate Data Record Program, while improvements to the methods used to produce the dataset are currently supported by NASA's Earth Science Division, which is part of the Science Mission Directorate.
+How to Cite These Data
+TLT:
+Mears, C. A. and F. J. Wentz, (2017)
+A satellite-derived lower tropospheric atmospheric temperature dataset using an optimized adjustment for diurnal effects
+, Journal of Climate, 30(19), 7695-7718, doi: 10.1175/jcli-d-16-0768.1.
+TMT:
+Mears, C. A. and F. J. Wentz, (2016)
+Sensitivity of satellite-derived tropospheric temperature trends to the diurnal cycle adjustment
+, Journal of Climate, 29(10), 3629-3646, doi: DOI: 10.1175/JCLI-D-15-0744.1.
+Mears, C. A. and F. J. Wentz, (2016)
+Sensitivity of satellite-derived tropospheric temperature trends to the diurnal cycle adjustment
+, Journal of Climate, 29(10), 3629-3646, doi: DOI: 10.1175/JCLI-D-15-0744.1.
+Fu, Q. and C. M. Johanson. "Satellite-Derived Vertical Dependence of Tropospheric Temperature Trends"
+Geophysical Research Letters
+, 32, L10703, 2005.
+TTS and TLS:
+Mears, C. A. and F. J. Wentz, (2009)
+Construction of the Remote Sensing Systems V3.2 Atmospheric Temperature Records From the MSU and AMSU Microwave Sounders
+, Journal of Atmospheric and Oceanic Technology, 26, 1040-1056.
+Uncertainty Estimates:
+Mears, C. A., F. J. Wentz, P. Thorne and D. Bernie, (2011)
+Assessing Uncertainty in Estimates of Atmospheric Temperature Changes From MSU and AMSU Using a Monte-Carlo Estimation Technique
+, J. Geophys. Res., 116, D08112, doi:10.1029/2010JD014954.
+Radiosonde Comparisons:
+Mears, C. A., F. J. Wentz, P. Thorne and D. Bernie, (2011)
+Assessing Uncertainty in Estimates of Atmospheric Temperature Changes From MSU and AMSU Using a Monte-Carlo Estimation Technique
+, J. Geophys. Res., 116, D08112, doi:10.1029/2010JD014954.
+Mears, C. A., F. J. Wentz and P. W. Thorne, (2012)
+Assessing the Value of Microwave Sounding Unit-Radiosonde Comparisons in Ascertaining Errors in Climate Data Records of Tropospheric Temperatures
+, J. Geophys. Res., 117(D19), D19103, doi:10.1029/2012JD017710.

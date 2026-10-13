@@ -1,0 +1,178 @@
+# https://www.climatologylab.org/terraclimate.html
+TerraClimate - Climatology Lab
+Climatology Lab
+Home
+Team
+Lab Retreat Photos
+Openings
+Products
+Datasets
+gridMET
+TerraClimate
+MACA
+SnowClim
+Tools
+Teaching
+About
+Download
+Updates
+TerraClimate v1.1
+References
+TERRACLIMATE
+What is terraclimate?
+TerraClimate is a dataset of monthly climate and climatic water balance for global terrestrial surfaces from 1950-present. These data provide important inputs for ecological and hydrological studies at global scales that require high spatial resolution and time-varying data. All data have monthly temporal resolution and a ~4-km (1/24th degree) spatial resolution. We plan to update these data annually. We have also provided future TerraClimate layers commensurate with global mean temperatures +2C and +4C above preindustrial levels, as well as a counterfactual simulation that removes the modeled influence of anthropogenic climate change. These data are available for pseudo years 1950-2025 and described in more detail below.
+Datasets
+Primary Climate Variables:
+Maximum temperature, minimum temperature, vapor pressure, precipitation accumulation, downward surface shortwave radiation, wind-speed
+Derived variables:
+Reference evapotranspiration (ASCE Penman-Monteith corrected for CO2,
+Yang et al., 2018
+), Runoff, Actual Evapotranspiration, Climate Water Deficit, Soil Moisture, Snow Water Equivalent, Palmer Drought Severity Index, Vapor pressure deficit
+Methods
+TerraClimate uses climatically aided interpolation, combining high-spatial resolution climatological normals from the
+WorldClim dataset
+, with coarser spatial resolution. The original TerraClimate data used time-varying data from
+CRU Ts4.0
+and the
+Japanese 55-year Reanalysis (JRA55)
+. However, TerraClimate v1.1 now uses time-varying data solely from
+ERA5
+. Conceptually, the procedure applies interpolated time-varying anomalies to the high-spatial resolution climatology of WorldClim to create a high-spatial resolution dataset that covers a broader temporal record.
+TerraClimate additionally produces monthly surface water balance datasets using a water balance model that incorporates reference evapotranspiration, precipitation, temperature, and interpolated plant extractable soil water capacity. We used a modified Thornthwaite-Mather climatic water-balance model and extractable soil water storage capacity data at a 0.5° grid from Wang-Erlandsson
+et al.
+For more information on TerraClimate refer to the publication in Scientific Data (
+Abatzoglou et al., 2018
+). For information on TerraClimate v1.1, please see the tab above.
+accuracy
+TerraClimate exhibited strong validation with a number of station-based observations from a variety of networks including the Global Historical Climate Network, SNOTEL, and RAWS. Validation statistics were slightly better than those achieved using the parent CRU Ts 4.0 data, primarily for measures of error due to the improved spatial realism of TerraClimate. In addition, TerraClimate fields of annual reference evapotranspiration were well linked to station-based reference evapotranspiration from FLUXNET stations. Finally, we found that interannual runoff modeled by TerraClimate correlated well to measured streamflow from a number of watersheds globally.
+Climate Projections
+Future climate projections were developed for two different climate futures: (1) when global mean temperatures are 2C warmer than pre-industrial, and (2) when global mean temperatures are 4C above preindustrial. We use a pattern scaling approach that makes use of monthly projections from 20 CMIP6 global climate models, following the approach described in
+Qin et al., 2020
+and provide projections for monthly climate by imposing projected changes in means and variance from the modes scalable to the change in global mean temperature. This approach is computationally more efficient and provides projections that are mainly agnostic with respect to which model and energy/climate policy pathways we take. A similar approach is taken to develop a counterfactual pseudo-climate dataset that removes the influence of climate change as simulated by GCM. This approach removes the
+low-pass filtered
+signal of change calculated from 20-GCMs for each variable and month during 1950-2025 following prior studies (e.g.,
+Williams et al. 2025
+). Data are provided for pseudo-years 1950-2025, where we use the observational record and scale changes in individual climate variables.
+Data limitations
+Long-term trends in data such as temperature and precipitation are inherited from parent datasets. TerraClimate should not be used directly for
+independent
+assessments of trends relative to these parent datasets.
+TerraClimate will not capture temporal variability at finer scales than their parent datasets and thus is not able to capture
+temporal variability
+in orographic precipitation ratios and inversions.
+The water balance model is simple and uses a static reference landcover – hence does not account for heterogeneity in vegetation types.
+Limited validation in data-sparse regions (e.g., Antarctica).
+Likely unrealistic extrapolation of winter inversions into high elevations in boreal systems (e.g., Alaska) inherited from WorldClim v2.1
+We do not recommend mixing data from TerraClimate v1.0 with TerraClimate v1.1.
+Due to water balance model spin-up, users may not want to use the first year (1950) of data.
+Visualizations
+Seasonal and interannual animations of selected TerraClimate variables
+Netcdf files from THREDDS web server (
+guide for dataset abbreviations
+Individual years
+(1958-present)
+Aggregated years
+(1958-present)
+Individual years for +2C climate scenario
+Individual years for +4C climate scenario
+Individual years for counterfactual scenario
+Climatologies
+(1981-2010 and 1991-2020)
+Read me first: Best practices for accessing our datasets
+Download individual netCDF files
+for individual variables and years
+directly from
+data catalogs
+using
+wget script
+tool to batch download files
+Download subsets and point data using
+THREDDS
+web services
+using
+OPeNDAP and these example scripts
+rectangular subsets (
+MATLAB
+Python
+, and
+alternative R version
+point data (
+MATLAB
+Python
+, and
+using NCSS and these example batch scripts for
+subsets
+points
+Google Earth Engine
+'Get an account' ->
+https://earthengine.google.com/new_signup/
+'code in the playground' ->
+https://developers.google.com/earth-engine/
+'data' ->
+https://code.earthengine.google.com/dataset/IDAHO_EPSCOR/TERRACLIMATE
+Updates to data products (recalls, new variables) will be highlighted here:
+February 15, 2025
+TerraClimate v1.1 has been released. These data simplify the process of annual updates and overcome limitations with existing products being discontinued (JRA-55). In short, the TerraClimate v1.1 combines monthly anomalies from ERA5 with high-resolution climatologies from WorldClim. Additional updates on version 1.1 are available here.
+Legacy TerraClimate datasets have been migrated to an ftp server. Please contact us for information on access.
+April 15, 2021
+Data for 2020 have been updated and added to Google Earth Engine and the Thredds server.
+February 1, 2021
+An update to netCDF software may create problems for users accessing netCDF files from the cloud. A workaround involves adding #fillmismatch at the end of the netcdf file name. For example,
+http://thredds.northwestknowledge.net/thredds/dodsC/MET/erc/erc_2012.nc#fillmismatch
+Subsequent improvements to the netCDF infrastructure will fix this problem.
+July 1, 2020
+Added +2C and +4C TerraClimate datasets for pseudo-years 1985-2015 and projections from 23 climate models described in
+Qin et al., 2020
+Annual data for
+are available through THREDDS services in netCDF format
+30-year climatological summaries are provided
+here
+also through THREDDS services
+April 1, 2020
+Data for 2019 added
+August 1, 2019
+File formats have been updated to NETCDF4 format to improve data efficiency. Note that these files will contain a scale_factor and offset that need to be considered upon reading the data in.
+Preliminary data for 2018 is now available.
+January 23, 2018
+Added Palmer Drought Severity Index (PDSI) and Vapor Pressure Deficit (VPD) to the list of variables provided
+Added 2016 and 2017 data. These are considered preliminary data due to the lack of CRU data currently.
+March 13, 2018
+Solar radiation and wind data have been revised due to substantial inhomogeneities in the record. We now use a combination of JRA-55, JRA-55C, and ERA Interim data as follow:
+JRA-55 1958-1972; JRA-55C 1973-1978; ERA-Interim 1979-2017
+We bias correct these three data such that monthly means are equivalent for JRA-55 1963-1972 and JRA-55C 1973-1982 (e.g., January mean solar radiation for these two 10-year periods is assumed to be unchanged), and JRA-55C 1979-1988 and ERA-Interim 1979-1988. This is done to facilitate a single time series of solar radiation and wind speed anomalies that is used in TerraClimate.
+Potential evapotranspiration and water balance variables were rerun to account for this update
+Updated 15 February 2026
+TerraClimate was originally designed to be a static database covering 1958-2015. However, given the interest in its use for a host of applications, we have continued to add years and features. Due to
+JRA-55
+being discontinued and delays in incorporating data from CRU, we have refreshed TerraClimate and introduce TerraClimate v1.1. Below we highlight five key updates for users.
+What's New
+TerraClimate now uses climatically aided interpolation from ERA5 reanalyses monthly anomalies superposed with high-spatial resolution climatological normals from the WorldClim version 1.4 and version 2 datasets to calculate precipitation, maximum and minimum temperature, wind speed, vapor pressure, and solar radiation starting from 1950-present. We additionally derive vapor pressure deficit using standard formulas.
+Reference evapotranspiration is calculated using a modified Penman-Monteith approach that accounts for rising carbon dioxide concentrations (
+Yang et al., 2018
+). This approach accounts for the role that changing CO2 concentrations have on stomatal resistance.
+Runoff calculations now account for carryover contributions of surplus month to month (
+Wolock and McCabe
+. An rfractor of 0.5 is applied, also see
+Kinnebrew et al., (2025)
+. This results in improved seasonality of runoff when compared with observed streamflow.
+We have updated the +2C and +4C scenarios of TerraClimate using pattern scaling from a multimodel average from GCM participating in CMIP6. These scenarios are considered pseudo climate change experiments in that they preserve the interannual variability from observations (1950-2025) while accounting for the first-order influence of climate change on individual climate variables at the monthly scale.
+We have produced a counterfactual climate scenario that removes the influence of modeled climate change on the observed data during 1950-2025. This approach removes a low-pass filtered signal derived from a multi-model GCM participating in CMIP6 from the observational data.
+Legacy TerraClimate data are made available as netCDF files from an ftp server. Please contact either John Abatzoglou or Katherine Hegewisch for access information.
+Abatzoglou, J.T., S.Z. Dobrowski, S.A. Parks, K.C. Hegewisch, 2018,
+Terraclimate,
+a high-resolution global dataset of monthly climate and climatic water balance from 1958-2015
+, Scientific Data,
+Proudly powered by
+Weebly
+Home
+Team
+Lab Retreat Photos
+Openings
+Products
+Datasets
+gridMET
+TerraClimate
+MACA
+SnowClim
+Tools
+Teaching

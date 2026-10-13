@@ -1,0 +1,95 @@
+# https://ladsweb.modaps.eosdis.nasa.gov/missions-and-measurements/products/MOD06_L2
+LAADS DAAC | NASA
+MOD06_L2 - MODIS/Terra Clouds 5-Min L2 Swath 1km and 5km
+The MODIS Level-2 Cloud product consists of cloud optical and physical parameters. These parameters are derived using remotely sensed infrared, visible and near infrared solar reflected radiances. MODIS infrared channel radiances are used to derive cloud top temperature, cloud top height, effective emissivity, cloud phase (ice vs. water, opaque vs. non-opaque), and cloud fraction under both daytime and nighttime conditions. MODIS visible radiances are used to derive cloud optical thickness and effective particle radius and cloud shadow effects. Near-infrared solar reflected radiance provides additional information for the retrieval of cloud particle phase (ice vs. water, clouds vs. snow). The shortname for this Level-2 MODIS cloud product is MOD06_L2. MOD06_L2 consists of parameters at a spatial resolution of either 1km or 5km (at nadir). Each MOD06_L2 product file covers a 5-minute time interval. This means that for 5km resolution parameters, the output grid is 270 pixels wide by 406 pixels in length. Every tenth granule has an output grid size of 270 by 408 pixels. For 1-km resolution parameters, the output grid is 1354 pixels in width by 2030 pixels in length and every tenth granule has an output grid size of 1354 by 2040 pixels.
+MOD06_L2 product files are stored in Hierarchical Data Format (HDF-EOS). All gridded cloud parameters are stored as Scientific Data Sets (SDS) within the file, except two (band number and statistics). These are stored as Vdata (table arrays). Approximately 288 files are produced daily. Nighttime files are smaller than their daytime counterparts since only the cloud top properties are retrieved at night.
+The MODIS Cloud Product will be used to investigate seasonal and inter-annual changes in cirrus (semi-transparent) global cloud cover and cloud phase with multispectral observations at 1km spatial resolution.
+For additional details see the MODIS Atmospheres web site page on
+Collection 6.1 Updates
+Links
+Search for Product Files
+Data Archive
+File Specification
+DOI:
+10.5067/MODIS/MOD06_L2.061
+Shortname:
+MOD06_L2
+Platform:
+Terra
+Instrument:
+MODIS
+Processing Level:
+Level-2
+Temporal Resolution:
+5 minute
+ArchiveSet(s):
+Collection:
+MODIS Collection 6.1 - Level 1, Atmosphere, Land (ArchiveSet 61)
+PGE Number:
+PGE06
+File Naming Convention:
+MOD06_L2.AYYYYDDD.HHMM.CCC.YYYYDDDHHMMSS.hdf
+AYYYYDDD
+Acqusition Year and Day of Year
+HHMM
+Hour and Minute of acquisition
+Collection number
+YYYYDDDHHMMSS
+Production Date and Time
+AYYYYDDD
+Year and Day of Year of acquisition
+Citation:
+Platnick, S., Ackerman, S., King, M., et al., 2015. MODIS Atmosphere L2 Cloud Product (06_L2). NASA MODIS Adaptive Processing System, Goddard Space Flight Center, USA: http://dx.doi.org/10.5067/MODIS/MOD06_L2.061
+Keywords:
+Water Vapor, Precipitable Water
+Currently Viewing ArchiveSet61 Dates: Loading...
+Fetching product availability data from the API. This may take a moment.
+Data Availability Legend
+High
+: >75% available
+Medium
+: 25-75% available
+: <25% available
+The chart displays data availability percentages over time. Click and drag to pan, use buttons to zoom.
+Chart Options
+Tokens for Downloading LAADS DAAC Data
+A LAADS DAAC download token will help make file downloads faster, but is only usable for LAADS DAAC web sites. A LAADS DAAC token
+will not work with other Earthdata sites.
+Generating LAADS DAAC token …
+Please copy and save the token below for use with any supported LAADS download utilities or scripts.
+To test, run the following
+wget
+download command in your terminal and see if it successfully downloaded the README text file located at the root of the LAADS archive. See also
+LAADS documentation on how to use wget
+wget -e robots=off -m -np -R .html,.tmp -nH --cut-dirs=3 "https://ladsweb.modaps.eosdis.nasa.gov/archive/README" --header "Authorization: Bearer
+" -P .
+We are currently unable to generate a LAADS DAAC token. Please try again later or contact
+MODAPS Support
+with any questions.
+An Earthdata Download token (EDL) will work on any Earthdata site including all LAADS DAAC sites, but download performance from the LAADS DAAC can be much slower due to the extra network connections needed to check credentials at Earthdata.
+Confirm Download of Multiple Files
+Verifying login status…
+Please confirm before starting this batch download of
+listed below totaling
+, one file at a time.
+Once a batch download begins, your browser may not provide a way to cancel the batch aside from closing the browser entirely or stopping individual downloads one at a time. If in doubt, try selecting a smaller number of files for download.
+MODAPS Support
+is available to help with any questions.
+Browser configurations
+Some users might have to approve once (e.g., click "Allow") to allow for future downloads of multiple files.
+To avoid a new download prompt for each file, ensure the following settings are configured in your browser:
+Chrome: Settings > Advanced > Ask where to save each file before downloading >
+Firefox:
+Preferences > Files and Applications >
+Save files to
+Click checkbox “Do this automatically for files like this from now on”
+Safari: Preferences > General > File download location >
+[specified folder]
+Edge: Settings > Downloads > Ask where to save each file before downloading >
+Unsupported browsers for multi-file downloads (use
+instead):
+Internet Explorer 11 and below
+Please log in and try again
+We are currently having issues verifying your request. Please try again later or contact
+MODAPS Support
+with any questions.

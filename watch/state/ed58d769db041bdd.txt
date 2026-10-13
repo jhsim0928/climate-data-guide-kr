@@ -1,0 +1,328 @@
+# https://www.ncei.noaa.gov/products/international-satellite-cloud-climatology
+International Satellite Cloud Climatology Project (ISCCP)-H Series | National Centers for Environmental Information (NCEI)
+An official website of the United States government
+Here's how you know
+The .gov means it’s official.
+Federal government websites often end in .gov or .mil. Before sharing sensitive information, make sure you’re on a federal government site.
+The site is secure.
+https://
+ensures that you are connecting to the official website and that any information you provide is encrypted and transmitted securely.
+NCEI is currently moving its data and applications to the cloud. This upgrade may result in temporary data access delays. Please see our
+cloud migration overview
+frequently asked questions
+for more information and resources. Check the
+NCEI Alerts page
+for impacted products and datasets. Current Impact: Intermittent degraded order fulfillment services.
+International Satellite Cloud Climatology Project (ISCCP)-H Series
+The International Satellite Cloud Climatology Project (ISCCP) provides data on various aspects of cloud variables like cloud amount, optical thickness, and cloud top temperature. The data, which have been collected since 1983, are available at 3-hour and monthly intervals with global coverage. The product has more than 200 variables for physical and chemical characteristics, identification methods, and ancillary data (e.g., snow and ice cover, atmospheric temperature and humidity, etc.).
+ISCCP began in 1982 as a project to develop a climatology of cloud radiative properties. The legacy dataset (ISCCP-D series) ended production at NASA Goddard Institute for Space Studies (GISS) in 2009, when NCEI transitioned ISCCP processing to NOAA as the ISCCP-H series.
+To help the project receive continued support, updates, and improvement, tell us how you use ISCCP data by completing our User Registration Form.
+Optional User Registration
+About
+Project Details
+Support
+Algorithm
+References
+ISCCP Climate Data Record
+NOAA's Climate Data Records (CDRs) are robust, sustainable, and scientifically sound datasets that provide trustworthy information on how, where, and to what extent the land, oceans, atmosphere and ice sheets are changing. CDRs are thoroughly vetted time series measurements with the longevity, consistency, and continuity to assess and measure climate variability and change. They are vetted using standards established by the National Research Council (NRC).
+ISCCP CDR Page
+About
+The ISCCP Interim Climate Data Record (ICDR) is a temporary product of the ISCCP-H series data set. The ICDR is available to users for data covering the period from July 2017 through December 2018. The ICDR will remain available until the final (non-interim) CDR data is released through the official archive. The ICDR is produced using the same methods as the official CDR product with the exception of using ancillary atmospheric temperature and moisture data that are based on the Neural Network High resolution Infra-Red Sounder (nnHIRS) climatology from 1995-2015.
+Comparison of ICDR versus final ISCCP data
+Prior to releasing the ICDR to the public, the official product was compared to data that use the nnHIRS climatology for 2012. These differences are captured in the following
+ICDR 2015 statistics document
+. The performance of the ICDR and comparison with the actual CDR for every month of 2012 are shown for a sample of 12 variables. It provides standard deviation of the difference between ICDR and CDR variable in column 2, the monthly mean value and standard deviation of the variable for the actual CDR (columns 2 & 3 respectively), and monthly mean and standard deviation of the variable for the ICDR which employs the nnHIRS climatology (columns 4 & 5 respectively).
+ICDR Data Access on FTP
+ISCCP FULL DATA
+ISCCP BASIC DATA
+Note:
+Google and Mozilla recently deprecated support for FTP server access on Chrome and Firefox. Review the documentation to learn about FTP access options.
+FTP DOCUMENTATION
+Google FTP Deprecation
+Mozilla FTP Deprecation
+Features
+High Resolution Input Satellite Data
+ISCCP uses input data from full-resolution Advanced Very High Resolution Radiometer (AVHRR) Global Area Coverage (GAC) and ~10 km geostationary imagery—an increase from ~30 km in the ISCCP-D series.
+High Resolution Gridded Products
+The higher resolution inputs allow 1 degree gridded products.
+Long Period of Record
+The H series CDR period of record extends from July 1983 through June 2017.
+Interim Climate Data Record
+Available for data covering the period from July 2017 through December 2018.
+Temporally Stable Atmospheric Profiles
+Neural network profiles from the High resolution Infra-Red Sounder (HIRS) provide stable retrievals during the period of record.
+Partners
+NASA and NOAA, in partnership with many other agencies worldwide, have been operationally collecting and processing data for ISCCP since July 1983.
+ISCCP Legacy D Series
+Citing ISCCP
+Please cite the following references when using ISCCP-H series data in any publication:
+Publication
+Young, A. H., Knapp, K. R., Inamdar, A., Hankins, W., and Rossow, W. B.: The International Satellite Cloud Climatology Project H-Series climate data record product,
+Earth Syst. Sci. Data
+doi.org/10.5194/essd-10-583-2018
+Dataset
+Ensure that your citation corresponds to the version of the data you used. The latest version (v01r00) is:
+Rossow, W.B.; Walker, A.; Golea, V.; Knapp, K. R.; Young, A.; Inamdar A.; Hankins, B.; and NOAA's Climate Data Record Program (2016): International Satellite Cloud Climatology Project Climate Data Record, H-Series [indicate subset used] NOAA National Centers for Environmental Information. [access date].
+doi:10.7289/V5QZ281S
+If the publication format does not allow citations, reference the data as “ISCCP-H series cloud data from NOAA/NCEI.”
+Products
+ISCCP products are available in full and basic versions. The full version provides access to the complete set of ISCCP variables, while the basic version makes it easier to find more widely used general interest products.
+More Information
+ISCCP Basic vs. Full
+Fair use statement of ISCCP data
+Full Version
+Basic Version
+Target audience
+Earth science
+General interest
+Mapping
+Equal area
+Equal angle
+Variables
+143 variables
+All cloud parameters
+Ancillary atmospheric and surface data
+48 variables
+Basic cloud parameters
+Format
+netCDF
+netCDF (CF Compliant)
+Access methods
+Direct Download
+Order from tape
+Direct Download
+THREDDS
+About
+ISCCP data products are derived from global meteorological satellite observations. The full ISCCP dataset can be used to study the role of clouds in weather and climate. These data are particularly useful for characterizing cloud properties and their variations that affect solar and terrestrial radiation fluxes.
+Full ISCCP Data Includes:
+All ISCCP cloud variables (especially information about the retrieval process and uncertainties)
+ISCCP ancillary data (ozone amount, temperature/humidity profiles, aerosol, snow/ice cover)
+The ISCCP-H data in the satellite projection (HXS and HGS)
+Other retrieved variables (surface reflectance, surface temperature, etc.)
+Note:
+The 3-hourly data are averaged for each synoptic time (8 times per day), producing HGH files. The HGH data are averaged to produce the monthly average data: HGM.
+Documentation
+Caveats document
+provides up-to-date documentation of caveats and issues associated with the most current product release.
+Climate Algorithm Theoretical Basis Document (C-ATBD)
+gives details of the ISCCP cloud detection algorithm.
+Format
+ISCCP HGM/HGH
+ISCCP HGG
+ISCCP HXG
+ISCCP HXS
+Temporal
+Monthly averages
+Instantaneous @ 3 hr intervals
+Spatial
+1 deg equal area
+0.1 deg equal angle
+Approx 0.1 deg Satellite projection
+Monthly Volume
+~100 MB
+~4 GB
+~9000 MB (~9GB)
+~70 GB (all satellites)
+Format
+netCDF
+binary
+Access Method
+Direct download
+Order from archive
+Sample
+Sample file
+About
+The ISCCP Basic data are a CF-compliant reformat and subset of the variables from the complete ISCCP dataset. The Basic data focus on the most fundamental cloud parameters (e.g., cloud amount, temperature, optical thickness, etc).
+THREDDS Server
+ISCCP HGM and HGG data are also provided via a THREDDS data server that allows subsetting.
+Note:
+The 3-hourly data are averaged for each synoptic time (8 times per day), producing HGH files. The HGH data are averaged to produce the monthly average data: HGM.
+ISCCP HGM/HGH
+ISCCP HXS
+Source Product
+HGH/HGM
+Temporal
+Monthly averages
+Instantaneous @ 3 hr intervals
+Spatial
+1 deg equal angle
+Monthly Volume
+~30 MB
+~800 MB
+Format
+netCDF (CF compliant)
+Variables
+HGM/HGH Basic Variable List
+HGG Basic Variable List
+Access Method
+Direct download
+THREDDS
+Direct download
+THREDDS
+Ancillary Data
+Ancillary data used in ISCCP-H processing is available upon request. Available ancillary data during the ISCCP period of record include:
+3-hourly temperature and humidity profiles
+Daily total column ozone
+Daily snow and ice cover
+Monthly aerosol data
+Legacy Data
+ISCCP-D series
+is still available for order through NCEI. Interested users can contact
+NCEI.Sat.Info@noaa.gov
+to order ISCCP-D (legacy) series data (see Rossow and Schiffer 1999 for more information on the ISCCP-D series).
+Legacy ISCCP data are only available in binary formats.
+Metadata
+ISCCP Metadata Landing Page
+Registration
+Providing information on how you use ISCCP data helps the project receive continued support, updates, and improvements.
+User Registration Survey
+Send questions and inquiries about ISCCP to the
+ISCCP Community Q&A forum
+News
+ISCCP Community News Forum
+provides the latest information on ISCCP status changes, bugs, data releases, etc.
+ISCCP Team
+The NCEI ISCCP team consists of the following members:
+Kenneth R. Knapp, Subject Matter Expert
+Hilawe Semunegus, Subject Matter Expert
+Bill Hankins, Data Processing
+Anand Inamdar, Calibration Processing
+Alisa Holley Young, Contributor
+Related Links and Information
+See the References tab for papers that describe the ISCCP.
+Legacy ISCCP D-Series website
+Satellite Browse Imagery
+GEWEX Cloud Assessment
+ISCCP-H Series Weather States (WS)
+Description
+The basic ISCCP cloud analysis procedure is described in:
+Rossow, W.B., and L.C. Garder, 1993a: Cloud detection using satellite measurements of infrared and visible radiances for ISCCP.
+Journal of Climate
+doi:10.1175/1520-0442(1993)006<2341:CDUSMO>2.0.CO;2
+More information about the complete analysis, including information about previous versions, can be found in
+Rossow & Schiffer 1991 and 1999
+. Additional details on the legacy ISCCP-D series are available at the
+NASA ISCCP page
+Components
+Cloud detection
+Radiative model analysis
+Statistical analysis
+Climate Algorithm Theoretical Basis Document
+contains a thorough description of the ISCCP algorithm.
+Cloud Detection
+Cloud detection is accomplished by segregating each pixel in a satellite image into cloudy and clear scenes. The cloud algorithm used for ISCCP was developed by comparing several legacy cloud algorithms to perform cloud detection processing. The initial space and time radiance contrast tests are used to construct a first guess of clear sky radiance scenes. The algorithm then compares observed satellite pixels to clear sky radiances. Pixels that are significantly different from the clear sky values are flagged as cloudy.
+Parameter Retrievals
+The radiances in cloudy pixels are used to retrieve two basic cloud properties, cloud top temperature and cloud visible optical depth; and two derived cloud properties, cloud top pressure and cloud water path. Clear pixels provide information to retrieve surface reflectance and temperature. The retrievals are based on radiative transfer models.
+Spatial and Temporal Aggregation
+Results from each satellite are collected into one-degree equal area bins (e.g., mean, standard deviation, and frequency distributions) and merged into global products.
+There are two primary satellite input datasets and six ancillary datasets.
+Geostationary Radiance Data (ISCCP B1U)
+Resolution:
+10 km pixel, three hour, individual satellites
+Contents:
+Radiances with calibration and navigation appended; uniform format for all satellites. See the
+dataset description
+paper for more information.
+Polar Orbiting Radiance Data (AVHRR GAC)
+Resolution:
+4 km pixel (morning and afternoon orbits only)
+Contents:
+Radiances with calibration and navigation
+Surface Type Dataset
+Resolution:
+0.25 degree and 1 degree
+Contents:
+Fixed data product that characterizes the Earth's surface at each map location as water or permanent ice shelf or as land in terms of vegetation type or permanent glaciers
+Topography Dataset
+Resolution:
+0.25 degree and 1 degree
+Contents:
+Fixed data product providing a land-water mask together with topographic height information over land
+Ice/Snow Dataset
+Resolution:
+0.25 degree and 1 degree, equal-area grid, daily, global
+Contents:
+Time varying data product that provides snow and sea ice fractional coverage deduced from ship/shore station reports and satellite visible, infrared, and microwave imagery data. Coverage by permanent glaciers and ice shelves is also reported.
+Neural Network High resolution Infra-Red Sounder (nnHIRS) Dataset
+Resolution:
+1 degree, three hour, equal-area grid
+Contents:
+Atmosphere and surface data including temperature and water vapor profiles obtained from HIRS observations using a neural network
+Ozone Dataset
+Resolution:
+1.0 degree, daily, global
+Contents:
+Time-varying data product that characterizes the daily global distribution of total column ozone abundance in Dobson units, as well as flags that indicate the source of each value
+Aerosol Dataset
+Resolution:
+1 degree, monthly, global
+Contents:
+Time varying aerosol properties characterized by optical depth reported at 0.65 micrometers and 10.5 micrometers, together with the fine fraction for tropospheric aerosols, and the optical depths at the same wavelengths for stratospheric aerosols
+ISCCP-H Series Related Publications
+The dataset evolution from the predecessor ISCCP-D series to the ISCCP-H series is detailed in the following papers:
+Rossow, W. B., Knapp, K. R., & Young, A. H. (2022). International Satellite Cloud Climatology Project: Extending the Record, Journal of Climate, 35(1), 141-158,
+https://doi.org/10.1175/JCLI-D-21-0157.1
+Young, A. H., Knapp, K. R., Inamdar, A., Hankins, W., & Rossow, W. B. (2018). The International Satellite Cloud Climatology Project H-Series climate data record product, Earth Syst. Sci. Data, 10, 583–593,
+https://doi.org/10.5194/essd-10-583-2018
+ISCCP-H Series C-ATBD
+: ISCCP-H Series Climate Algorithm Theoretical Basis Document
+ISCCP-H Data Users Guide
+NNHIRS White Paper
+: A description of the ISCCP Atmospheric Temperature-Humidity Profile Data Product
+History of the International Satellite Cloud Climatology Project
+: A 40 year history of ISCCP, detailing its inception through potential future uses.
+The following papers provide details and studies based on ISCCP-H Series:
+Knapp, K. R., Young, A. H., Semunegus, H., Inamdar, A. K., & Hankins, W. (2021). Adjusting ISCCP Cloud Detection to Increase Consistency of Cloud Amount and Reduce Artifacts, Journal of Atmospheric and Oceanic Technology, 38(2), 155-165.
+doi.org/10.1175/JTECH-D-20-0045.1
+ISCCP-D Series Related Publications
+Nearly 10,000 papers cite one of the primary documents for the legacy ISCCP-D Series. The following selection includes important papers that describe ISCCP processing.
+ISCCP BAMS Articles
+Rossow, W.B. and R.A. Schiffer, 1999: Advances in Understanding Clouds from ISCCP.
+Bulletin of the American Meteorological Society
+, 80, 2261–2287, 2.0.CO;2",
+doi: 10.1175/1520-0477(1999)080<2261:AIUCFI>2.0.CO;2.
+Rossow, W.B., and R.A. Schiffer, 1991: ISCCP cloud data products.
+Bulletin of the American Meteorological Society
+doi:10.1175/1520-0477(1991)072<0002:ICDP>2.0.CO;2.
+Schiffer, R.A., and W.B. Rossow, 1985: ISCCP global radiance data set: A new resource for climate research.
+Bulletin of the American Meteorological Society,
+Soc., 66, 1498-1505,
+doi:10.1175/1520-0477(1985)066<1498:IGRDSA>2.0.CO;2
+Schiffer, R. A., & Rossow, W. B., 1983: The International Satellite Cloud Climatology Project (ISCCP): The first project of the world climate research programme.
+Bulletin of the American Meteorological Society
+Cloud Detection Algorithm
+Rossow, W.B., A.W. Walker, and L.C. Garder, 1993: Comparison of ISCCP and other cloud amounts.
+Journal of Climate
+doi:10.1175/1520-0442(1993)006<2394:COIAOC>2.0.CO;2
+Rossow, W.B., and L.C. Garder, 1993a: Cloud detection using satellite measurements of infrared and visible radiances for ISCCP.
+Journal of Climate
+doi:10.1175/1520-0442(1993)006<2341:CDUSMO>2.0.CO;2
+Rossow, W.B., and L.C. Garder, 1993b: Validation of ISCCP cloud detections.
+Journal of Climate
+doi:10.1175/1520-0442(1993)006<2370:VOICD>2.0.CO;2
+Rossow, W.B., and Coauthors, 1985: ISCCP cloud algorithm intercomparison.
+Journal of Climate and Applied Meteorology
+doi:10.1175/1520-0450(1985)024<0887:ICAI>2.0.CO;2
+Satellite Calibration
+Rossow, W.B. and J. Ferrier, 2015: Evaluation of Long-Term Calibrations of the AVHRR Visible Radiances.
+Journal of Atmospheric and Oceanic Technology
+doi: 10.1175/JTECH-D-14-00134.1
+Brest, C.L., W.B. Rossow, and M.D. Roiter, 1997: Update of radiance calibrations for ISCCP.
+Journal of Atmospheric and Oceanic Technology
+doi:10.1175/1520-0426(1997)014<1091:UORCFI>2.0.CO;2
+Desormeaux, Y., W.B. Rossow, C.L. Brest, and C.G. Campbell, 1993: Normalization and calibration of geostationary satellite radiances for ISCCP.
+Journal of Atmospheric and Oceanic Technology
+doi:10.1175/1520-0426(1993)010<0304:NACOGS>2.0.CO;2
+Brest, C.L., and W.B. Rossow, 1992: Radiometric calibration and monitoring of NOAA AVHRR data for ISCCP.
+Int. J. Remote Sens
+doi:10.1080/01431169208904037
+Related News
+September 15, 2025
+New NOAA Space Weather Portal Now Available
+Read More
+April 29, 2024
+What Is Space Weather?
+Read More
+April 28, 2023
+In Like a Lion, Out Like a Lamb: Studying Sea Ice
+Read More

@@ -1,0 +1,430 @@
+# https://earth.esa.int/eogateway/missions/earthcare/data/data-quality
+Data Quality - Earth Online
+earth online
+EarthCARE
+Data
+Data Quality
+Data quality, which includes quality control, performance monitoring, and calibration and validation, is routinely carried out to ensure that EarthCARE meets its mission and data quality requirements.
+If you have any questions about the quality of EarthCARE data please contact the EarthCARE User Support Team by submitting your query or request to
+ESA’s User Services Portal.
+Quality Control Reports
+EarthCARE Quality Control (QC) Reports are produced on a daily, weekly and monthly basis, covering products produced from all three ESA instruments, ATLID, BBR and MSI.
+Daily Quality Control Reports
+The daily QC reports provide the quality status of the instruments and products from the previous day. Information in the daily QC reports includes a daily production visualization, data completeness, quality flag warnings and failures, and comparison with Numerical Weather Prediction (NWP) forecasts.
+Download EarthCARE daily reports
+Monthly Quality Control Reports
+The monthly QC reports offer a comprehensive overview of the reporting month quality. Information in the monthly QC reports includes instrument status, data coverage, degraded data summary, data quality disclaimers, mission configuration baseline and long-term performance analysis.
+Download EarthCARE monthly reports
+Quarterly Monitoring Reports
+EarthCARE Monitoring Reports are produced on a quarterly basis, assessing the quality of EarthCARE ATLID and CPR data through comparison with the European Centre for Medium-Range Weather Forecasts (ECMWF) global NWP model. Three reports are produced each quarter:
+ATLID Aerosols, which assesses ATLID level 2A particulate backscatter coefficient from aerosols
+ATLID Cloud, which assesses ATLID level 1B molecular (Rayleigh) attenuated backscatter and total backscatter (Rayleigh plus both Mie channels)
+CPR, which assesses CPR level 1B attenuated radar reflectivity
+Quarter
+Quarterly Report
+Q1 2025
+(January - March)
+ATLID Aerosol
+ATLID Cloud
+Q2 2025
+(April - June)
+ATLID Aerosol
+ATLID Cloud
+Q3 2025
+(July - September)
+ATLID Aerosol
+ATLID Cloud
+Q4 2025
+(October - December)
+ATLID Aerosol
+ATLID Cloud
+Q1 2026
+(January - March)
+ATLID Aerosol
+ATLID Cloud
+Q2 2026
+(April - June)
+ATLID Aerosol
+ATLID Cloud
+Quality Control Timeline
+QC Timeline visualisations are available for L1 and L2A ATLID, BBR, and MSI products, as well as L2B synergy products. These visualisations include:
+Data gaps
+Degraded periods (QC disclaimers)
+GPS outages
+Planned/executed operations
+Processor baseline.
+You can access these visualisations from the links below:
+ATLID QC Timeline
+BBR QC Timeline
+MSI QC Timeline
+Synergy QC Timeline
+Product Availability
+Information related to the availability of EarthCARE data, including periods of planned and unplanned data unavailability, is provided in an Excel spreadsheet report. This report is updated weekly with the latest gaps.
+Download the data unavailability report
+BBR Operations
+To extend the instrument lifetime, the Broadband Radiometer (BBR) alternates between Standby mode, during which no observations are taken, and Nominal mode, during which the instrument is active and scientifically valid observations are taken. Over a 20-day period, roughly 15 days (233 orbits) will be in Standby mode and roughly 5 days (78 orbits) will be in Nominal mode.
+Further information on the new operating schedule is available in this
+EarthCARE BBR life‑extending operations
+news item.
+The table and plot below provide the planned operations for BBR over the next three weeks. A full historical record is available in the downloadable data unavailability report above.
+BBR Timeline
+Type
+Status
+Start
+State
+BBR Active
+State
+BBR Standby
+State
+BBR Active
+State
+BBR Standby
+Quality Control Disclaimers
+This section describes the different Quality Control disclaimers that affect the publicly available EarthCARE data products. Each disclaimer has been given an ID number. The disclaimers are sorted by the date in which the issue first occurred, with all subsequent occurrences of this issue listed in the same section. This table will be updated with new disclaimers as they are identified.
+ATLID Quality Control Disclaimers
+Anomaly Start Time
+First Affected Frame
+Anomaly Stop Time
+Last Affected Frame
+Data Types Affected
+Baseline
+Disclaimer Description
+L1 Data Release
+00894G
+End of Commissioning Phase
+03569A
+ATL_NOM_1B, all L2 products
+Data from the EarthCARE commissioning phase (prior to 15 January 2025)
+is provided for completeness only. During this period, both instrument calibration
+and mission configuration underwent multiple changes,
+and the data should therefore not be considered representative of stable operations.
+L1 Data Release
+03569B
+04681A
+ATL_NOM_1B
+After Orbital Control Manoeuvres (OCMs) and Dark Current Calibrations (DCC), the ATL_NOM_1B backscatter exhibits anomalous signatures in all three channels.
+This is because of the re-alignment of the LIDAR after orbital maneouvres.
+The first frame after an OCM is considered degraded and should not be used for scientific exploitation.
+Since 25/03/2025, the affected epochs are flagged and are not further processed to L1, and they appear as gaps in the data.
+03617H
+03683B
+ATL_NOM_1B
+Data processed with anomalous DCC that contained two outliers.
+This introduced a bias in data, specially evident in C and H frames, due to the smaller geophysical signal (degradation was a constant bias not dependant on signal power).
+The anomaly was corrected by disseminating the previously available Calibration and Characterisation Database (CCDB) calibration, containing nominal measurements.
+Multiple, single frames
+05518G
+Multiple, single frames
+05907G
+ATL_NOM_1B
+ATL frames filled with NaNs, caused by an unphysical temperature value in the input, stemming from interpolation issues in XMET.
+It has since been resolved.
+05920E
+05968D
+ATL_NOM_1B
+The wrong DSNU map was being used as an incorrect CCDC was disseminated mistakenly to CPF.
+Multiple, single frames
+06747G
+Multiple, single frames
+07136G
+ATL_NOM_1B
+NaNs present in the G frames of ATLID L1 data for the orbits 06747, 06778, 06872,
+and 07136 originating from an SPR on the L1 ATLID processor which was then resolved following the X-MET update.
+07323G
+ATL_NOM_1B
+NaNs present in the G frames of ATLID L1 data for the orbits 06747, 06778, 06872, and 07136
+originating from an SPR on the L1 ATLID processor which was then resolved following the X-MET update.
+09366D
+ATL_NOM_1B, ATLID related L2 & SYN products
+No data in ATLID frame 09366D originating from a GPS outage.
+09515E
+A-PRO Products
+The A-PRO processor failed (error code 148) for frame 09515E (30/01/2026),
+and the data are non-nominal, showing an unphysical dip with returns ~1–1.5 km below the surface,
+likely due to a spacecraft manoeuvre.
+This frame should be considered invalid.
+08380B
+09452B
+ATL_NOM_1B
+From the introduction of BC baseline until frame 09452B,
+the DCC calibrations were not properly taken into account. Therefore, during this period the offset has not been periodically updated,
+and a larger number of hot pixels can be observed. See Hot Pixel analysis tables for a detailed tracking of the active HP.
+Affected fames starting from 09338C to 09452B will be regenerated with the correct DCC calibration files.
+Multiple frames
+Ongoing
+Multiple frames
+A-LAY Products
+Multiple frames missing in A-ALD & A-CTH production due to an SPR on the A-LAY processor, currently tracked under Jira issue E2ECL2-32.
+Multiple frames
+A-LAY Products
+Multiple frames missing in A-ALD & A-CTH production due to an SPR on the A-LAY processor, currently tracked under Jira issue E2ECL2-55.
+Data Release
+Multiple frames
+Ongoing
+Multiple frames
+L2 Products
+BA, BC
+The `degraded ProductQualityFlag` in the HDR is frequently set to 1 for L2 products,
+as it is currently triggered by the processor exit code.
+This behavior is under investigation, and the appropriate
+logic to distinguish between degraded and nominal frames will be implemented.
+ATL_NOM_1B
+CCDC files were wrongly updated to January versions,
+impacting hot pixel detection. The issue, originating from ATL product
+reprocessing due to the BB-BC DCC anomaly, has been identified,
+and the procedure has been updated.
+10484D
+ATLID Products
+Because a strong Rayleigh-channel hot pixel emerged at pixel 42,
+the removal of the 20 km spike was compromised, and the effect propagated
+into the crosstalk measurements.
+10675H
+A-LAY Products
+Unavailability in A-LAY production originating from
+a processing error (error code 999), currently under investigation.
+Reference Jira issue E2ECL2-99.
+10769H
+ATLID Products
+Degradation in data quality has been identified affecting the ATLID channels.
+This is related to a potential bug on the Laser energy normalization that comes
+into play when the energy is below a configurable threshold of 30 mJ.
+This introduced bands of low backscatter for certain epochs for the 3 bands
+due to the incorrect normalization.
+As a fix, the CCOG auxiliary was updated to lower the threshold.
+Multiple frames
+ATLID L1 Products
+For BD baseline, anomalous negative crosspol values are observed
+in the stratospheric range. This is due to an identified SPR in the L1C processor.
+The anomaly has been fully resolved in CA baseline,
+and all affected data will be reprocessed.
+ATLID Products
+Following the unexpectedly short ATL Dark Current Calibration (DCC)
+acquisition on 05 July 2026, striping has been observed in the ATL_NOM_1B
+Mie and cross-polar channels. The root cause is currently under investigation
+by the software team. The affected L1 and L2 products will be reprocessed.
+Multiple frames
+Ongoing
+Multiple frames
+A-FM Products
+In Baseline BD, A-FM products may contain non clear-sky features
+which are cut-off around 28km, most commonly occurring in frames containing
+high-altitude features associated with strong tropical convection.
+This is due to the A-FM processor stratospheric feature detection
+configuration being set to a maximum height of 28km.
+Users analysing high altitude features around 28km are advised
+to take this behaviour into consideration when using this product.
+12951A
+A-PRO Products
+A-TC data show smoke aerosol incorrectly classified as continental pollution due to an issue with the
+configuration file.
+The affected A-TC products have been regenerated; however, the corresponding forward-chain products will be
+reprocessed with the next baseline.
+MSI Quality Control Disclaimers
+Anomaly Start Time
+First Affected Frame
+Anomaly Stop Time
+Last Affected Frame
+Data Types Affected
+Baseline
+Disclaimer Description
+L1 Data Release
+End of Commissioning Phase
+03569A
+MSI_NOM_1B, MSI_RGR_1C, all L2 products
+MSI_RGR_1C
+Data from the EarthCARE commissioning phase (prior to 15 January 2025)
+is provided for completeness only. During this period,
+both instrument calibration and mission configuration
+underwent multiple changes, and the data should therefore
+not be considered representative of stable operations.
+MSI_NOM_1B
+MSI_RGR_1C
+MSI products from the AF baseline are computed
+using an incorrect CCDB file, due to an orchestration problem.
+Consequently, the Solar Spectral Irradiances are not properly
+computed and shouldn’t be trusted.
+The orchestration was corrected and the
+anomaly resolved from frame 03807C onwards.
+Data Release
+Multiple frames
+Ongoing
+Multiple frames
+L2 Products
+BA, BC, BD
+The `degradedProductQualityFlag` in the HDR is frequently set to 1 for L2 products,
+as it is currently triggered by the processor exit code. This behavior is under investigation,
+and the appropriate logic to distinguish between degraded and nominal frames will be implemented.
+09930B
+MSI_CM__2A, MSI_COP_2A
+BC, BD
+MSI_CM__2A & MSI_COP_2A frames 09930B and 09930C
+were not generated due to a M-CLD processor failure (exit code 2)
+linked to an incorrect AUX_MET_1D input parameter.
+No sensing gaps were observed, and the issue
+is planned to be fixed in the next release.
+BBR Quality Control Disclaimers
+Anomaly Start Time
+First Affected Frame
+Anomaly Stop Time
+Last Affected Frame
+Data Types Affected
+Baseline
+Disclaimer Description
+L1 Data Release
+00447E
+End of Commissioning Phase
+03569BA
+BBR_NOM_1B, BBR_SNG_1B, all L2 products
+MSI_RGR_1C
+Data from the EarthCARE commissioning phase (prior to 15 January 2025)
+is provided for completeness only. During this period,
+both instrument calibration and mission configuration underwent multiple changes,
+and the data should therefore not be considered representative of stable operations.
+L1 Data Release
+03569B
+04769A
+BBR_NOM_1B
+For the period highlighted, BBR_NOM_1B frames exhibited short gaps populated with NaN, distributed at random.
+This was due to a too strict limit of the encoder.
+Note that not all frames are affected.
+There is no evidence of quality degradation outside the missing data.
+From 04769B onwards, the encoder limit in the AUX_CCOG_B was updated, with no further ocurrences being detected.
+Multiple, single frames
+03658D
+Multiple, single frames
+03658D
+BBR_NOM_1B
+BBR_SNG_1B
+Unphysical radiances values in the affected frame.
+This is due to the use of malformed calibration sequences due to donwlink gaps.
+A method to only consider well-formed calibrations is currently being implemented.
+BBR_NOM_1B
+BBR_SNG_1B
+Due to an incorrect CCDB introduced in the BA baseline deployment,
+the across-track artifacts AFT correction was incorrectly applied
+to FOR and NAD channels, resulting in overcorrection.
+This was solved with the dissemination of a corrected CCDB file on 5 June.
+The LT analysis confirmed that the accross-track signatures
+are properly corrected from that date onwards.
+06098E
+06099B
+BBR_NOM_1B
+BBR_NOM_1B frames exhibited short gaps populated with NaN, distributed at random.
+This is a recurrence of the previous issue related to the encoder limit.
+The fix was implemented with no further occurences being detected.
+06365F
+06394G
+BBR_NOM_1B
+BBR_SNG_1B
+NaNs present in the F and G frames of BBR L1 data for orbits 06365 to 06394 in the Antarctic region originating from Solar calibration.
+07479E
+BBR_NOM_1B
+BBR_SNG_1B
+Unphysical radiance values have been observed in BBR_NOM_1B and BBR_SNG_1B.
+This known issue originates from malformed calibrations caused by downlink gaps,
+which propagate unphysical measurements into subsequent sequences.
+Methods to filter these values during processing are currently under investigation.
+Data Release
+Multiple frames
+Ongoing
+Multiple frames
+BM__RAD_2B
+Portions of several night frames in BM__RAD_2B contain fill values
+instead of valid filtered radiances. This known issue arises from the
+propagation of L1 data to L2 and is currently under investigation.
+Moreover, the LW and SW quality status parameters contain fill values and should not be used.
+Multiple frames
+Ongoing
+Multiple frames
+BBR_NOM_1B
+Several frames within the BA baseline reprocessed BBR NOM_1B
+production contain degradations in start time and latitude/longitude data. It is advised to disregard the following frames,
+04919C, 04886E, 04886G, 04886H, 04887A.
+Ongoing
+Multiple frames
+Ongoing
+Multiple frames
+BBR_NOM_1B, BBR_SNG_1B, BM_RAD_2B,
+BMA_FLX_2B
+After switch-on, the BBR instrument gains do not immediately reach full stability,
+as the instrument requires time to achieve thermal equilibrium.
+The warm-up period is estimated to be approximately 5 hours.
+During this time, gain variations may affect data quality.
+Users are therefore advised to exercise caution when using
+frames acquired within the first 5 hours of operation.
+08875E
+BBR_NOM_1B
+Unphysical thermal filtered radiances are observed in frame 08875E
+(processed during temperature inversion calibration), with negative values present across all views.
+Standard quality indicators (nonnominal_calibrated_row_count and invalid_flag)
+do not flag these anomalies; interpret with caution.
+Ongoing
+Multiple frames
+Ongoing
+Multiple frames
+L2 Products
+BA, BC
+The `degradedProductQualityFlag` in the HDR is frequently set to 1 for L2 products,
+as it is currently triggered by the processor exit code.
+This behavior is under investigation, and the appropriate logic
+to distinguish between degraded and nominal frames will be implemented.
+ATLID Hot Pixel
+The list below summarises the hot pixels identified in ATL_NOM_1B data since the data release. The list contains pixels exhibiting persistent hot pixel behaviour (>20 % of observations within a frame) . These pixels are subject to further investigation, and their evolution is continuously monitored.
+Download the ATLID Hot Pixel list.
+GPS Outage
+EarthCARE data may occasionally be affected by degraded Global Positioning System (GPS) Position, Velocity, and Time (PVT) measurements. Caution is advised when these data are used in applications requiring high precision geopositioning, such as Doppler velocity assessments. The complete list of frames affected by GPS flags since the data release is provided below.
+Download the GPS Flags list.
+Reprocessing Quality Updates
+EarthCARE data will be reprocessed periodically. The first full reprocessing of EarthCARE L1 and L2 1- and 2-sensor products occurred during the summer of 2025, reprocessing the data to Baseline BA. Relevant quality information related to reprocessed data will be provided here.
+Overpass Information
+An overpass is when the field of view of a satellite’s instrument passes over an area of interest (AOI). EarthCARE overpass information is provided by the ESA Validation Data Centre (EVDC) using their
+Orbit Prediction and Overpass Tool
+(OPOT).
+EarthCARE overpasses of radioastronomy (RAS) sites are also available from the Payload Data Ground Segment (PDGS).
+View the list of time periods
+when the Cloud Profiling Radar (CPR) instrument on-board EarthCARE is visible from RAS.
+Download flyover reports from the overpasses
+Calibration/Validation
+Calibration activities ensure that the EarthCARE instruments are performing well and to their established baselines. Validation activities ensure that the EarthCARE data and products are meaningful and well characterised with respect to uncertainties due to sensitivity or resolution.
+FIND OUT MORE
+Tweet
+Share
+Featured
+EarthCARE shows how smoke dims the sky
+How wildfire smoke dims the sky, seen through the eyes of EarthCARE
+New EarthCARE Science seminar in October
+EarthCARE helps scientists fine-tune climate models over Greenland
+EarthCARE Data Unavailability Due to Planned Orbit Manoeuvres – 8–11 September 2026
+EarthCARE Related Information
+EarthCARE Science website
+ESA EarthCARE Applications website
+JAXA EarthCARE mission website
+JAXA EarthCARE/CPR website
+EarthCARE Workshops website
+EarthCARE on X
+Follow EarthCARE on X
+Search with keywords
+Active Remote Sensing
+Aerosols
+Altimeters
+ATLID
+Atmosphere
+Atmospheric Radiation
+Clouds
+EarthCARE
+Imaging Spectrometers/Radiometers
+Lidar/Laser Sounders
+Passive Remote Sensing
+Profilers/Sounders
+Radar Altimeters
+Radiometers
+Spectrometers/Radiometers
+People also search for
+Data
+News
+Missions
+Events
+Tools and toolboxes
+Activities
+Campaigns
+Learn & Discover

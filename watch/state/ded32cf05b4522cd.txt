@@ -1,0 +1,41 @@
+# https://cds.climate.copernicus.eu/datasets/satellite-soil-moisture?tab=documentation
+Soil moisture gridded data from 1978 to present
+Known issues
+Start date
+Status
+Impact
+Description
+What to do
+Closed
+API requests targeting 'surface_soil_moisture' and 'volumetric_surface_soil_moisture'
+As of 2025-12-12, the two surface soil moisture variables have been renamed to add clarity.
+Users should adjust their API requests accordingly. 'surface_soil_moisture' should be replaced with ...
+Closed
+Period: From 2021-11-21 until 2023-08-20
+Variable: Surface soil moisture
+Type of sensor: Active
+Vers...
+The Active Soil Moisture data contains only NaN values for the period between 21/11/2021 and 20/08/2...
+Users are advised to use the newest dataset version or download the corrected dataset version v20191...
+Closed
+Affected data: Root-zone Soil Moisture (RZSM) daily, dekadal and monthly data between 2025-11-11 and...
+RZSM data within the specified range contain a high number of NaN values in regions, that were affec...
+Users should use the reprocessed dataset version v202505.1 for RZSM data from 2025-11-11 onwards, wh...
+Quality Assurance
+Data Management
+Data records
+Metadata
+Documentation
+References
+DOI:
+10.24381/cds.d7782f18
+Licence
+Publication date
+Update date
+Standard metadata
+STAC
+About C3S
+Help
+Privacy
+Terms of Use
+Background

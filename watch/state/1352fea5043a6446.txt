@@ -1,0 +1,223 @@
+# https://nsidc.org/data/vnp10a1/versions/2
+VIIRS/NPP Snow Cover Daily L3 Global 375m SIN Grid, Version 2 | National Snow and Ice Data Center
+All S-NPP Science products were disabled at 01:30 UTC on July 11, 2026 after the spacecraft entered a non-nominal state at ~14:50 UTC on July 10, 2026. As of July 21, 2026, the spacecraft has been recovered to a nominal state. Forward processing will recommence next week, and all missing data science products which are recoverable will be published following review.
+VIIRS/NPP Snow Cover Daily L3 Global 375m SIN Grid, Version 2
+Data set id:
+VNP10A1
+DOI: 10.5067/45VDCKJBXWEE
+Data Citation and Acknowledgment
+As a condition of using these data, you must cite the use of this data set. Such a practice gives credit to data set producers and advances principles of transparency and reproducibility.
+Riggs, G. A. & Hall, D. K. (2023).
+VIIRS/NPP Snow Cover Daily L3 Global 375m SIN Grid
+. (VNP10A1, Version 2). [Data Set]. Boulder, Colorado USA. NASA National Snow and Ice Data Center Distributed Active Archive Center.
+https://doi.org/10.5067/45VDCKJBXWEE
+describe subset used if applicable
+]. Date Accessed 10-13-2026.
+Copied
+Other standard citation formats may be found on the
+DOI Citation Formatter website
+(paste
+10.5067/45VDCKJBXWEE
+into the top form field).
+Describing subset: When applicable, include the information a reader would need to extract the same subset at the end of your citation. If multiple or complex steps were incolved, it may be more appropriate to include this information in the paper itself.
+See our
+Citation Policies
+for more details about how to structure your data citation.
+Subscribe here to receive email updates of the data set VNP10A1
+COMPREHENSIVE Level of Service
+Data:
+Data integrity and usability verified; data customization services available for select data
+Documentation:
+Key metadata and comprehensive user guide available
+User Support:
+Assistance with data access and usage; guidance on use of data in tools and data customization services
+See All Level of Service Details
+This is the most recent version of these data.
+Version Summary
+Data update as part of VIIRS/JPSS-1 Collection 2
+In this section
+Rendering Links ...
+Overview
+This data set contains daily snow cover derived from radiance data acquired by the Visible Infrared Imaging Radiometer Suite (VIIRS) on board the Suomi National Polar-orbiting Partnership (NPP) satellite. The data is a gridded composite, generated from 6 minute swaths, and projected to a 375 m Sinusoidal grid. Snow cover is identified using the Normalized Difference Snow Index (NDSI) and a series of screens designed to alleviate errors and flag uncertain snow cover detections.
+Parameter(s):
+SNOW COVER
+Platform(s):
+Suomi-NPP
+Sensor(s):
+VIIRS
+Data Format(s):
+HDF-EOS5
+Temporal Coverage:
+19 January 2012 to present
+Temporal Resolution:
+1 day
+Spatial Resolution:
+375 m
+Spatial Reference System(s):
+Not Specified
+Spatial Coverage:
+Northern latitude
+Southern latitude
+Eastern longitude
+Western longitude
+Blue outlined yellow areas on the map below indicate the spatial coverage for this data set.
+View Metadata Record
+Data Access & Tools
+A free NASA Earthdata Login account is required to access these data.
+Learn More
+Data Access Tool
+Filter files before downloading based on date, spatial area, or file name. Choose from various download options, such as Python script. Export bounding boxes as a GeoJSON.
+Search & Discover
+Get Data
+Related Help Resources
+How to filter and order from a data set web page
+How to use Earthdata Download
+Type:
+Web Application
+April 2025
+View Metadata
+NASA Earthdata Search
+Search and order data from all NASA DAACs using spatial and temporal filters in a map interface. Reformatting, reprojecting, and subsetting options are available for some data sets.
+Visualize
+Search & Discover
+Get Data
+Related Help Resources
+How to search, order, and customize data with NASA Earthdata Search
+Type:
+Web Application
+HTTPS File System
+Get Data
+Quickly download a few files using a web browser, or access data through a command-line utility such as WGET.
+Related Help Resources
+NASA Earthdata Cloud Data Access Guide
+Type:
+service
+earthaccess
+earthaccess is a python library to search and access NASA Earth science data with just a few lines of code.
+Get Data
+Search & Discover
+Supported software languages:
+Python
+Related Help Resources
+GitHub Repository
+Type:
+Downloadable Software
+May 2026
+View Metadata
+NASA Earthdata Cloud (AWS S3)
+Get Data
+Access data directly from the NASA Earthdata Cloud via Amazon Web Services Simple Storage Service (AWS S3). This access option is only available when working within the us-west-2 region and requires additional AWS S3 credentials.
+Related Help Resources
+NASA Earthdata Cloud Data Access Guide
+AWS S3 Credentials
+Type:
+service
+View Metadata
+AppEEARS
+Extract point and area samples from geospatial data via spatial, temporal, and/or parameter subsetting. Preview and interact with samples before downloading. The Application for Extracting and Exploring Analysis Ready Samples tool is only available for select NSIDC data products.
+Visualize
+Analyze
+Get Data
+Search & Discover
+Customize
+Related Help Resources
+How to extract point and area data
+Type:
+Web Application
+Customization Capabilities:
+data reformatting
+reprojection
+spatial subsetting
+temporal subsetting
+variable subsetting
+Documentation
+User Guide
+VIIRS/[NPP|JPSS1|JPSS2] Snow Cover Daily L3 Global 375m SIN Grid, Version 2 User Guide
+ATBDs
+JPSS VIIRS Radiometric Calibration Algorithm Theoretical Basis Document [2014]
+VIIRS Snow Cover Algorithm Theoretical Basis Document [2015]
+General Resources
+Continuity of MODIS and VIIRS Snow Cover Extent Data Products for Development of an Earth Science Data Record
+Product Specification Documents
+SNPP/JPSS1 VIIRS Snow Cover Products Collection 2 User Guide [2021]
+Sensor and Instrument Information
+VIIRS Bands and Bandwidths
+VIIRS Sensor Data Record User Guide [2013]
+Help Articles
+General Questions & FAQs
+FAQs About NSIDC DAAC's Earthdata Cloud Migration
+This article covers frequently asked questions about the NASA NSIDC DAAC's Earthdata cloud migration project and what it means to data users.
+Read More
+How does VIIRS snow and sea ice data compare to MODIS
+Data products from VIIRS are created to be similar to MODIS data products to ensure the continuity needed for the development of snow and sea ice climate records beyond the life expectancy of MODIS. The temporal resolution and spatial extent are identical in MODIS and VIIRS.
+Read More
+Missing and delayed VIIRS data
+The lag time between observations and availability of VIIRS products is only a few days. Lag time may be extended due to satellite maneuvers and extra quality assurance required for the geolocation data after the maneuver.
+Read More
+How to Articles
+Filter and order from a data set web page using the Data Access Tool
+Many NSIDC DAAC data sets can be accessed using NSIDC DAAC's Data Access Tool. This tool provides the ability to search and filter data with spatial and temporal constraints using a map-based interface.Users have the option to:
+Read More
+How do I convert an HDF5/HDF-EOS5 file into binary format?
+To convert HDF5 files into binary format you will need to use the h5dump utility, which is part of the HDF5 distribution available from the HDF Group. How you install HDF5 depends on your operating system.
+Read More
+How to extract point and area data samples using AppEEARS
+This step-by-step tutorial demonstrates how to access MODIS and SMAP data using the Application for Extracting and Exploring Analysis Ready Samples (AppEEARS). AppEEARS allows users to access, explore, and download point and area data with spatial, temporal, and parameter subsets.
+Read More
+NASA Earthdata Cloud Data Access Guide
+The NASA Earthdata Cloud is the NASA cloud-based archive of Earth observations. It is hosted by Amazon Web Services (AWS). Learn how to find and access NSIDC DAAC data directly in the cloud.
+Read More
+Search, order, and customize NSIDC DAAC data with NASA Earthdata Search
+This article highlights the NSIDC DAAC data sets available with customization options and outlines a workflow for searching, ordering, and customizing data in NASA Earthdata Search. This approach is ideal for users who want to download data to their local machine.
+Read More
+News & Analyses
+News & Stories
+Sea Ice Today
+Ice Sheets Today
+Snow Today
+About our Analyses
+Multimedia
+Data
+Explore Data
+Visualize Data
+Submit Data
+User Resources
+Get Started with Data
+Data Announcements
+Help Center
+Data Tools
+Documents
+Levels of Service
+NASA Earthdata Forum
+Data Programs
+About our Programs
+NASA National Snow and Ice Data Center Distributed Active Archive Center (NSIDC DAAC)
+NOAA at NSIDC
+Exchange for Observations and Local Knowledge of the Arctic (ELOKA)
+Data Policies
+Our Research
+Learn
+What is the Cryosphere?
+Parts of the Cryosphere
+Arctic Weather & Climate
+Frozen Ground & Permafrost
+Glaciers
+Ice Sheets
+Ice Shelves
+Sea Ice
+Snow
+Ask a Scientist
+Cryosphere glossary
+About
+About NSIDC
+What We Do
+Our People
+Published Research
+Our History
+Careers
+50th Anniversary
+For the Media
+Contact Us
+Citation Policies
+Protecting Your Privacy
+Land Acknowledgement

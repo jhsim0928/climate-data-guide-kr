@@ -1,0 +1,218 @@
+# https://www.remss.com/measurements/ccmp/
+Remote Sensing Systems
+Download Data
+Get FTP Account
+HTTPS CCMP 3.1
+Browse Imagery
+Browse Images 3.1
+Wind Speed 2.0 Animation
+Wind Anomaly 2.0 Animation
+Documentation
+CCMP V3.0
+CCMP V2.0 + NRT
+Related Announcements
+CLICK HERE TO REGISTER FOR AN FTP ACCOUNT TO ACCESS DATA
+CCMP Wind Vector Analysis Product
+What is CCMP?
+The Cross-Calibrated Multi-Platform (CCMP) is a gridded Level 4 (L4) product that provides
+vector wind over the world's oceans. CCMP is a combination of ocean surface (10m) wind
+retrievals from multiple types of satellite microwave sensors and a background field from
+reanalysis. The resulting product is a spatially complete dataset available every six hours that
+remains closely tied to the satellite retrievals where they are available and closely collocated in
+time and space. Where satellite retrievals are not available, CCMP is statistically consistent with
+satellite winds. Creating a L4 product using this method of combining satellite and reanalysis
+data ensures a smooth transition in the wind field between regions with and without satellite
+retrievals.
+What satellites are included?
+CCMP includes most of the wind-sensing U.S., Japanese, and European satellites flown to date. This includes the scatterometers QuikScat, ASCAT-A and ASCAT-B as well as the SSM/I, SSMIS, TMI, GMI, ASMR-E, AMSR2, and WindSat radiometers. Winds from ASCAT-C were withheld from the current version of CCMP (V3.1) so that they can serve as an independent source of winds to validate the product.
+What is the background field?
+CCMP V3.1 used ERA5 10m Neutral Stability (NS) winds as the background field. Note that several substantial adjustments (described briefly below) were applied to the ERA5 winds before they were used in the analysis.
+Introduction, Motivation, and History
+Gap-free ocean surface wind data of high quality and high temporal and spatial resolution are useful for a variety of purposes and are necessary for studying large scale air-sea interactions that affect the atmosphere and the ocean. Ocean vector winds are dynamic and continuously evolve over short time and length scales. This characteristic makes the production of global, gridded, gap-free wind fields a challenge, especially at temporal scales of less than one day. Accurate research requires consistent ocean vector wind data for a long enough time period to resolve wind-induced patterns such as the El Niño-Southern Oscillation (ENSO) and the Madden-Julian Oscillation (MJO).
+Remote Sensing Systems has invested many years of research into validating and cross-calibrating passive and active microwave wind retrievals from satellites. The "raw" satellite data contain gaps (of the order of a few hundred km) between satellite swaths and are available at irregular times. Furthermore, satellites are continuously being launched and decommissioned. This means that the total amount of available satellite data can vary from year to year. This all complicates any research efforts using satellite winds.
+The motivation for CCMP is to merge all satellite data together to produce spatially complete wind maps at evenly spaced times. To do this, we use a Variational Analysis Method (VAM) of data assimilation developed by Hoffman, Atlas, and co-workers [Atlas et al. 1996, 2011; Hoffman et al, 2003] which has been shown to be a dynamically suitable way to combine satellite observations into gap-free wind fields. The VAM generates a gridded surface wind analysis which minimizes an objective function measuring the misfit of the analysis to the background. The data are subject to a number of smoothness and dynamical constraints.
+The CCMP Version 3.1 (V3.1) data product described here is a continuation of the widely-used original CCMP product and builds on decades of careful VAM and dataset development. CCMP V3.1 is more completely described in [Mears et al., 2022]. Information from this peer-reviewed manuscript is summarized here.
+The development of V3.0 and V3.1 was driven by several goals:
+Use a more up-to-date and regularly updated reanalysis product for the background wind field. Production of the ERA-Interim reanalysis ceased in July, 2019, forcing us to adopt a new background if we wanted to be able to extend CCMP beyond this time. We chose to move to ERA5 because it is available hourly, facilitating a future enhancement to CCMP for higher frequency analysis.
+Improve performance and agreement with satellite winds at high wind speed.
+Minimize spurious trends caused by the interaction between the amount of satellite measurements available and the satellite/model biases.
+The development philosophy we adopted assumes that the RSS-produced wind datasets from scatterometers (QuikSCAT and ASCAT) are accurate at all wind speeds. These winds have been validated via comparison with winds from moored buoys at low and moderate wind speeds. Above ~20 m/s buoy winds become increasingly less reliable. RSS scatterometer winds are validated at high winds in by:
+comparison with airborne Stepped Frequency Microwave Radiometer (SFMR) measurements flown in tropical cyclones, which are, in turn, anchored by wind speeds from dropsondes [Meissner et al 2017]. The SMAP winds validated in [Meissner et al 2017] are compared to ASCAT winds in [Ricciardulli et al. 2021].
+comparison with winds measured by Saildrones in tropical cyclones [Ricciardulli et al. 2022].
+comparison with winds from oil platforms in the North Sea [Manaster et al 2019].
+Our work revealed that sources of wind data (radiometer derived wind speeds and the ERA5 background winds) had systematic biases relative to scatterometer wind. In particular, ERA5 winds were systematically biased low relative the RSS scatterometer winds. These systematic biases were removed before including ERA5 winds and radiometer winds in the analysis.
+What's new in V3.0?
+V3.0 uses ERA5 Neutral Stability (NS) winds as a background field. V2.0 used unadjusted ERA-Interim 10m winds as its background field.
+ERA5 NS winds are adjusted to account for ocean surface currents using the Ocean Surface Current Analysis Real-time (OSCAR) dataset. Satellite winds are measured relative to the moving ocean surface.
+A speed adjustment was applied to match the distribution of wind speeds to QuikSCAT and ASCAT measurements. The adjustment depends on time of year and latitude, but does not change from year to year, so it has no direct effect on long-term trends.
+A small seasonally dependent regional vector adjustment was applied to improve agreement between the adjusted ERA5 NS winds and scatterometers.
+Small regional adjustments were applied to radiometer winds before they are included. These adjustments are the largest for the "medium frequency" radiometers whose lowest frequency channel is 19 GHz (e.g., SSM/I and SSMIS). The 19 GHz winds are more strongly affected by anomalous atmospheric conditions than wind retrievals that use the lower 11 GHz channel. These adjustments were not used in CCMP V2.0.
+Because of the dependence on OSCAR ocean currents, CCMP 3.0 starts in 1993 when the OSCAR dataset begins.
+These changes improve the accuracy of CCMP, particularly at winds above 15 m/s. The long-term trends are also more reliable and agree better with other long-term records of wind speed. Earlier versions of CCMP likely included spurious wind trends due to the mismatch between the satellite and background winds.
+What's the difference between V3.1 and V3.0?
+Version 3.1 uses the same processing system as Version 3.0.
+The current adjusts applied to ERA5 before using in the CCMP VAM have changed slightly. After January 2021, we use the NRT version of OSCAR (OSCAR025-nrt) to do the adjustment.
+After 2016, we use ASCAT-A V2.1.1 instead of ASCAT-A V2.1. (ASCAT-A ends in Nov 2021).
+We use AMSR2 V8.2 for entire AMSR2 Mission instead of 8.0 (2012-07-02 to present). The new version of AMSR2 winds removes a small spurious trend in wind speed.
+We now include ASCAT-B for entire ASCAT-B mission (2012-12-13 to present)
+These changes:
+Make it possible to produce CCMP 3.1 with low latency.
+Improve the quality of the winds after 2012-07-02 due the more accurate AMSR2 wind.
+Improve the quality of the wind after 2012-12-13 when ASCAT-B is included. ASCAT-B fills in gaps where observed winds were missing.
+Before 2012-07-02, V3.1 and V3.0 are identical.
+CCMP Dataset Structure
+4x Daily (6 hourly)
+The L4.0 CCMP V3.1 products consist of daily files containing four daily maps (00, 06, 12, and 18Z) of each variable. The files are in netCDF-4 format with CF-1.8 compliant metadata. Note that winds are provided for both ocean and land regions. The winds over land are from ERA5 but were subjected to the same adjustments as the oceanic winds which are unlikely to be correct for land surfaces. Therefore, we do not recommend using winds over land.
+The variables in the L4.0 files are:
+variable
+description
+units
+10m wind speed, 10m above the ocean surface
+uwnd
+10m zonal wind (U)
+vwind
+10m meridional wind (V)
+nobs
+number of satellite retrievals included
+The U and V components are relative to true north and use the oceanographic direction convention.
+Monthly
+The L4.5 CCMP V3.1 products contain monthly winds averaged over the calendar month as well as anomalies relative to a 1995-2014 baseline. Vector averages are computed for U and V. The average wind speed W is computed using a scalar average.
+The variables in the L4.5 files are:
+variable
+description
+units
+mean 10m zonal wind (U)
+u_anom
+10m zonal wind anomaly
+mean 10m meridional wind (V)
+v_anom
+10m meridional wind anomaly
+mean 10m wind speed
+w_anom
+10m wind speed anomaly
+number of satellite retrievals included
+L4.0 file names have the structure CCMP_Wind_Analysis_YYYYMMDD_V03.1_L4.0_RSS.nc where YYYY is the 4-digit year, MM is the month, and DD is the day-of-month. Each L4.0 file contains an entire day of data i.e., gridded maps at 4 times of day: 00:00Z, 06:00Z, 12:00Z, and 18:00Z. L4.5 file names have the structure CCMP_Wind_Analysis_YYYYMM_V03.1_L4.0.nc where YYYY is the 4-digit year and MM is the month. Both L4.0 and L4.5 files are stored in a v03.1/Yyyyy/Mmm/ directory structure.
+Currently, CCMP V3.1 covers January 1993 - July 2023. We plan to update the dataset approximately monthly.
+Because a quirk in our processing system each update is missing the last day of the month. This is filled in during the subsequent update.
+Read Routines / Data Access
+The CCMP netCDF4 files can be explored using tools such as Panoply or ncBrowse. Matlab, IDL, and Python have built-in routines for reading netCDF files and netCDF4 packages are available for most compiled languages (e.g. C++, Fortran). We have provided a sample read routine in Python. The routine will plot the wind speed data for an example file. CCMP data files can be obtained from RSS by https and/or ftp after registration.
+Product Details
+Product
+Cross-Calibrated Multi-Platform (CCMP) Ocean Winds V3.1
+Full Name
+Remote Sensing Systems Cross-Calibrated Multi-Platform (CCMP) 6-hourly ocean vector wind analysis product on 0.25 deg grid, Version 3.1
+Spatial Coverage
+Region: Global
+Northernmost Latitude: 80 degrees
+Southernmost Latitude: -80 degrees
+Westernmost Longitude: 0 degrees
+Easternmost Longitude: 360 degrees
+Temporal Coverage
+1993-Jan-02 to 2019-Dec-30
+Spatial Resolution
+0.25 degrees (Latitude) x 0.25 degrees (Longitude)
+Temporal Resolution
+6 Hour
+Input Data
+Platform
+Sensor
+Data Version
+AQUA
+AMSR-E
+V7.0
+GCOM-W1
+AMSR2
+V8.2
+TRMM
+V7.1
+V8.2
+QUIKSCAT
+SEAWINDS
+V4.0
+METOP-A
+ASCAT
+V2.1
+DMSP-F08
+SSM/I
+V7.0
+DMSP-F10
+SSM/I
+V7.0
+DMSP-F11
+SSM/I
+V7.0
+DMSP-F13
+SSM/I
+V7.0
+DMSP-F14
+SSM/I
+V7.0
+DMSP-F15
+SSM/I
+V7.0
+DMSP-F16
+SSMIS
+V7.0
+DMSP-F17
+SSMIS
+V7.0
+DMSP-F17
+SSMIS
+V8.0
+Coriolis
+WindSat
+V7.0.1 All Weather
+The differences between V7 and V8 radiometer winds are very small. V8 was developed to improve the radiometric calibration for imaging radiometers. The changes in radiometric calibration between V7 and V8 were mostly offset by changes in the wind retrieval algorithm.
+Data Format
+NetCDF-4, CF-1.8 compliant
+File Sizes
+~65 Mb per 4x-daily file
+~28 Mb per monthly file
+Parameter
+ocean surface vector winds at 10 meters height
+Valid Range
+-100 m/s to 100 m/s for wind components
+0 to 140 m/s for wind speed
+Unit of Measurement
+meters/second
+Contact
+support@remss.com
+Data Provider
+Remote Sensing Systems
+Known Issues / Data Caveats
+The following information should be taken into consideration when using this data product:/
+Users should exercise caution when using CCMP V3.1 to study long-term global trends. The actual global scale trends in wind speed are likely small and comparable to the uncertainty in long-term trends from CCMP (or any other dataset). For smaller regions, the actual variability and trends are usually much larger, and more likely discernable in CCMP.
+The V3.1 winds are different from the V1.1, V2.0, V3.0, and CCMP-NRT winds. Users should not compare or mix the two products. Differences between the versions do exist and are related to the changes in the satellite data, the background wind field and whether or not moored buoys were included.
+Related Data
+The original CCMP V1.1 FLK data are available at the NASA Physical Oceanography DAAC (podaac.jpl.nasa.gov)
+CCMP V3.0, CCMP V2.0 and CCMP NRT are available from RSS
+References
+Mears, C.; Lee, T.; Ricciardulli, L.; Wang, X.; Wentz, F. Improving the Accuracy of the Cross-Calibrated Multi-Platform (CCMP) Ocean Vector Winds. Remote Sens. 2022, 14, 4230. https://doi.org/10.3390/rs14174230
+Meissner, T., L. Ricciardulli, and F.J. Wentz, 2017, Capability of the SMAP Mission to Measure Ocean Surface Winds in Storms, Bulletin of the American Meteorological Society 98(8), 1660-1677, https://doi.org/10.1175/BAMS-D-16-0052.1
+Ricciardulli, L.; Foltz, G.R.; Manaster, A.; Meissner, T. Assessment of Saildrone Extreme Wind Measurements in Hurricane Sam Using MW Satellite Sensors. Remote Sens. 2022, 14, 2726. https://doi.org/10.3390/rs14122726
+Ricciardulli L., Manaster A., 2021: Intercalibration of ASCAT Scatterometer Winds from MetOp-A, -B, and -C, for a Stable Climate Data Record. Remote Sensing, 13(18), 3678. https://doi.org/10.3390/rs13183678
+Manaster, A., L. Ricciardulli, and T. Meissner, 2019: Validation of High Ocean Surface Winds from Satellites Using Oil Platform Anemometers. J. Atmos. Oceanic Technol., 36, 803–818, https://doi.org/10.1175/JTECH-D-18-0116.1
+Atlas, R., R. N. Hoffman, J. Ardizzone, S. M. Leidner, J. C. Jusem, D. K. Smith, D. Gombos, 2011: A cross-calibrated, multiplatform ocean surface wind velocity product for meteorological and oceanographic applications. Bull. Amer. Meteor. Soc., 92, 157-174. https://doi.org/10.1175/2010BAMS2946.1
+Atlas, R., R.N. Hoffman, S.C. Bloom, J.C. Jusem, and J. Ardizzone, 1996: A multiyear global surface wind velocity dataset using SSM/I wind observations. Bull. Amer. Meteor. Soc., 77, 5, 869-882.
+Hoffman, R. N., M. Leidner, J. M. Henderson, R. Atlas, J. V. Ardizzone, and S. C. Bloom, 2003: A two-dimensional variational analysis method for NSCAT ambiguity removal: methodology, sensitivity, and tuning. Journal of Atmospheric & Oceanic Technology, 20, 585-605.
+How to Cite These Data
+Continued production of this data set requires support from NASA. We need you to be sure to cite these data when used in your publications so that we can demonstrate the value of this data set to the scientific community. Please include the following statement in the acknowledgement section of your paper:
+"CCMP Version-3.1 vector wind analyses are produced by Remote Sensing Systems. Data are available at www.remss.com."
+4x Daily
+data set
+citation
+Mears, C.; Lee, T.; Ricciardulli, L.; Wang, X.; Wentz, F., 2022: RSS Cross-Calibrated Multi-Platform (CCMP) 6-hourly ocean vector wind analysis on 0.25 deg grid, Version 3.0, Remote Sensing Systems, Santa Rosa, CA. Available at www.remss.com
+https://doi.org/10.56236/RSS-uv6h30
+Monthly
+data set
+citation
+Mears, C.; Lee, T.; Ricciardulli, L.; Wang, X.; Wentz, F., 2022: RSS Cross-Calibrated Multi-Platform (CCMP) monthly ocean vector wind analysis on 0.25 deg grid, Version 3.0, Remote Sensing Systems, Santa Rosa, CA. Available at www.remss.com
+https://doi.org/10.56236/RSS-uv1m30
+License
+The Remote Sensing Systems Cross-Calibrated Multi-Platform (CCMP) ocean vector wind analysis products on 0.25 deg grid, Version 3.0
+Remote Sensing Systems
+is licensed under a
+Creative Commons Attribution 4.0 International License
+Peer-reviewed manuscripts
+Mears, C.; Lee, T.; Ricciardulli, L.; Wang, X.; Wentz, F. Improving the Accuracy of the Cross-Calibrated Multi-Platform (CCMP) Ocean Vector Winds. Remote Sens. 2022, 14, 4230. https://doi.org/10.3390/rs14174230
+Atlas, R., R. N. Hoffman, J. Ardizzone, S. M. Leidner, J. C. Jusem, D. K. Smith, D. Gombos, 2011: A cross-calibrated, multiplatform ocean surface wind velocity product for meteorological and oceanographic applications. Bull. Amer. Meteor. Soc., 92, 157-174. https://doi.org/10.1175/2010BAMS2946.1

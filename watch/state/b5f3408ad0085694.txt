@@ -1,0 +1,121 @@
+# https://marine.copernicus.eu/user-corner/product-roadmap/transition-information?product=OCEANCOLOUR_GLO_BGC_L4_MY_009_104
+Product Roadmap | CMEMS
+Implemented by
+Mercator Ocean International
+as part of
+The Copernicus Programme
+English
+Български
+Czech
+Danish
+Deutsch
+Estonian
+Greek
+Español
+Français
+Croatian
+Italiano
+Latvian
+Lithuanian
+Hungarian
+Maltese
+Nederlands
+Polski
+Português
+Română
+Slovak
+Slovenian
+Finnish
+Swedish
+Copernicus Marine Roadmap
+Summary
+Last update: 30 Sep 2026
+Nov 2026
+update , New Dataset, Quality Improvement, Updated Dataset, Updated File Format
+Update of OC5 algorithm, introduction of GLOPHYTS algorithm, new carbon dataset and 300m PFT variables
+OCEANCOLOUR_GLO_BGC_L4_MY_009_104
+Green
+Satellite
+Update of OC5 algorithm, introduction of GLOPHYTS algorithm, new carbon dataset and 300m PFT variables
+New Dataset, Quality Improvement, Updated Dataset, Updated File Format
+Release date:
+Nov 2026
+Product change:
+- Integration of the OCROC algorithms from LOG into ACRI-ST's processing chain in GLO products. The new POC and DOC variables will be integrated in newly created carbon (""car"") datasets. POC algorithm results in a combination of different algorithms in function of the optical water classes. The DOC algorithm approach consider a temporal window to account for the fate of the organic matter with neural network.
+- Update and improve of the phytoplankton functional type (PFT) time series for the OLCI era by integration of the GLOPHYTS algorithm into ACRI-ST's processing chain. The improvement of the PFT product is based on a recalibration of the OLCI product allowing to get a consistent time-series over the ocean colour archive.
+- PFT variables will be added to the existing olci-300m-plankton datasets, the method is adjusted from our existing PFT algorithms.
+- Update of ACRI-ST's OC5 coefficients from the latest reprocessing of upstream reflectance data. From these coefficients, the multi-sensor CHL, transparency, and PP data will be reprocessed.
+Complementary information:
+Update of the scripts for handling data is needed.
+Reference
+OCEANCOLOUR_GLO_BGC_L4_MY_009_104
+Nov 2026
+update , New Dataset, Quality Improvement, Updated Dataset, Updated File Format
+Update of OC5 algorithm, introduction of GLOPHYTS algorithm, new carbon dataset and 300m PFT variables
+OCEANCOLOUR_GLO_BGC_L4_MY_009_104
+Green
+Satellite
+Update of OC5 algorithm, introduction of GLOPHYTS algorithm, new carbon dataset and 300m PFT variables
+New Dataset, Quality Improvement, Updated Dataset, Updated File Format
+Release date:
+Nov 2026
+Product change:
+- Integration of the OCROC algorithms from LOG into ACRI-ST's processing chain in GLO products. The new POC and DOC variables will be integrated in newly created carbon (""car"") datasets. POC algorithm results in a combination of different algorithms in function of the optical water classes. The DOC algorithm approach consider a temporal window to account for the fate of the organic matter with neural network.
+- Update and improve of the phytoplankton functional type (PFT) time series for the OLCI era by integration of the GLOPHYTS algorithm into ACRI-ST's processing chain. The improvement of the PFT product is based on a recalibration of the OLCI product allowing to get a consistent time-series over the ocean colour archive.
+- PFT variables will be added to the existing olci-300m-plankton datasets, the method is adjusted from our existing PFT algorithms.
+- Update of ACRI-ST's OC5 coefficients from the latest reprocessing of upstream reflectance data. From these coefficients, the multi-sensor CHL, transparency, and PP data will be reprocessed.
+Technical details:
+Update of the scripts for handling data is needed.
+Reference
+OCEANCOLOUR_GLO_BGC_L4_MY_009_104
+Mar 2026
+update , Quality Improvement, Updated Dataset
+Update of GLO-MY (L3 and L4) and ATL-MY-L4
+OCEANCOLOUR_GLO_BGC_L4_MY_009_104
+Green
+Satellite
+Update of GLO-MY (L3 and L4) and ATL-MY-L4
+Quality Improvement, Updated Dataset
+Release date:
+Mar 2026
+Product change:
+Updates include:
+- Retirement of MODIS data from multi-sensor datasets starting in early 2023, compensated by the introduction of VIIRS-NOAA21.
+- Introduction of VIIRS-NOAA21 in the production system for multi-sensor datasets starting in November 2022.
+Reference
+OCEANCOLOUR_GLO_BGC_L4_MY_009_104
+Nov 2024
+update , Updated Dataset
+Quality improvements for MY PFT in GLO and ATL L4 products
+OCEANCOLOUR_GLO_BGC_L4_MY_009_104
+and 1 more
+Blue
+Quality improvements for MY PFT in GLO and ATL L4 products
+Updated Dataset
+Release date:
+Nov 2024
+Product change:
+Improvements to the PFT variables in MYP mode. The PFT algorithm remains the same but has been recalibrated with up-to-date data.
+The impacted datasets are:
+OCEANCOLOUR_ATL_BGC_L4_MY_009_118/cmems_obs-oc_atl_bgc-plankton_my_l4-multi-1km_P1M
+OCEANCOLOUR_GLO_BGC_L4_MY_009_104/cmems_obs-oc_glo_bgc-plankton_my_l4-multi-4km_P1M
+Reference
+OCEANCOLOUR_GLO_BGC_L4_MY_009_104
+OCEANCOLOUR_ATL_BGC_L4_MY_009_118
+Nov 2023
+update
+Global Ocean Colour (Copernicus-GlobColour), Bio-Geo-Chemical, L4 (monthly and interpolated) from Satellite Observations (1997-ongoing)
+OCEANCOLOUR_GLO_BGC_L4_MY_009_104
+Green
+Satellite
+Global Ocean Colour (Copernicus-GlobColour), Bio-Geo-Chemical, L4 (monthly and interpolated) from Satellite Observations (1997-ongoing)
+Release date:
+Nov 2023
+Product change:
+Update of the whole MY time series.
+RRS multi-sensor merging improved using the new OLCI A & B EUMETSAT 3.01 reprocessing, the MERIS 4th re-processing and NASA’s R2022 reprocessing for AQUA and VIIRS.
+BBP & CDM algorithms updated.
+Technical details:
+Users do not need to update download scripts
+Reference
+OCEANCOLOUR_GLO_BGC_L4_MY_009_104

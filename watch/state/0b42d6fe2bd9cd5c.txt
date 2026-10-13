@@ -1,0 +1,150 @@
+# https://seaice.uni-bremen.de/news-archive/
+News Archive
+Sea Ice Concentration
+Thin Ice Thickness
+Melt Ponds
+Snow
+Surface Roughness
+Ice Type
+ASIMIR
+Data Browser
+Group
+Start
+› News Archive
+Start
+Sea Ice Concentration
+Sea Ice Concentration (MODIS-AMSR2, 1 km)
+Thin Ice Thickness
+Melt Ponds
+Snow Depth
+Multiyear Ice / Type
+ASIMIR multi-parameter
+Data Browser
+Data Archive
+News Archive
+Research Group
+News Archive
+Intermittent service disruptions from Feb 23 until March 13
+Because of infrastructure works on which we have no influence, there will be several service disruptions between Monday, 23 February and Friday, 13 March. The exact timing is not fixed.
+The disruptions can last from a few hours up to several days. During these times, this webpage will still be online, but without access to the data archive, and without daily updates. We will try to process missed data between service disruptions, whenever services are back.
+We regret the inconvenience.
+AMSR2-Data provision resumted (Sep 24, 2025)
+AMSR2 data provision has resumed, and the incomplete data from Sep 22 will be fixed as soon as possible
+2025-09-23: No AMSR2 data from JAXA, September 22 until September 24
+JAXA has suspended AMSR2 data provision on 22 September, 6:00 UTC, until 24 September. Therefore, the current sea ice maps (22 Sep.) are incomplete and there will be no new data on Sept. 24.
+June 2025: data server not available for 9 days
+data.seaice.uni-bremen.de not accessible during nine days in June 2025
+Update 20 June: the power maintenance is finished and operation has returned back to normal
+Update 4 June: We had some mistake in our synchronization this morning. Should work now.
+Wed–Fri 4–6 June, 11–13 June, and 18–20 June
+We will continue processing of ASI sea ice concentration and make them available under
+https://seaice.uni-bremen.de/data/
+That address already works now and if you already now exchange
+data.seaice.uni-bremen.de
+with
+seaice.uni-bremen.de/data
+you will not see an impact for the sea ice concentration data.
+Processing of all other datasets will be stopped during these days: SMOS and SMAP ice thickness, MODIS sea ice concentration, multi-parameter retrieval
+Older data from the archive will also not be accessible during these days
+1 April 2025: Delayed processing
+Because of a server upgrade by the satellite data supplier, data processing is being delayed by about half a day.
+2025-02-13: Network problems - data server not available
+Update 2025-04-18:
+Our servers are back up again. We are currently reprocessing the missing data, which should appear here within the next hours.
+Update 2025-02-14:
+We are very sorry but the network maintenance could not be finished today. We now hope that our services are back online on Monday.
+We are very sorry but we have again problems with our infrastructure. Some network components need to be exchange, which also affected the accessibility of our data server.
+Services should be up again tomorrow, 14.2.2025, evening CET. We are sorry for the inconvenience.
+2025-01-29: Power outage - data server not available
+Update 2025-01-29, 15:02:
+all services are up again. All data should be fully available again.
+We had a power outage today, 2025-01-29, which also impacted our server with the sea ice data. We expect the data server to be back within the next hours.
+2024-10-18: Delayed data
+Update Oct 25:
+all files should be reprocessed and available again.
+Update Oct 21:
+data processing has resumed. Some files (geotiffs, netcdf) might be still missing but that should be resolved by end of the day.
+Because of server changes at JAXA, data processing of sea ice concentration from October 18 on is delayed. We are working on a solution but cannot give an exact date, probably the situation should improve by Monday evening, 21 Oct.
+2023-12-06: Delayed data
+Because of server updates, data processing for Dec 5 data is delayed, probably until the afternoon
+Resolved:
+data processing continues and the missing data was reprocessed.
+2023-09-04: Data for 1 - 3 September now complete
+The missing and incomplete data should now all be there. If you still find some irregularity, contact us.
+If you still see old or incomplete maps in your browser, make sure you reload that page.
+2023-09-01 Server and AMSR2 Data Outages
+Resolved:
+The missing and incomplete data should now all be there. If you still find some irregularity, contact us.
+If you still see old or incomplete maps in your browser, make sure you reload that page.
+2023-01-23 Service Interruption
+We had server issues from 3:50 to 07:45 UTC on 21 January 2023.
+Resolved
+: All data got reprocessed (21 Jan 2023).
+2022-11-13 MODIS-AMSR2 processing stopped until further notice
+Due to problems with the download of MODIS data, the processing of the MODIS-AMSR2 sea-ice concentration (SIC) has been put on hold. The latest available MODIS-AMSR2 SIC data are from November 12th, 2022. Users are referred to our
+ASI-AMSR2 sea-ice concentration data
+instead.
+Update: MODIS-AMSR2 sea-ice concentration processing resumed on 1.12.2022. We are planning to reprocess the gap.
+2022-10-09 Delayed processing
+We have server issues and there has been a
+delay in processing
+. The data for 8 and 9 Oct should be ready on Monday, 10th October 2022.
+Resolved
+: all data got reprocessed (10 Oct 2022).
+2022-10-08 New SMOS/SMAP dataset and SMAP data outage
+We released a new dataset
+version 300
+of the SMOS/SMAP thin sea ice thickness data in our data browser. SMAP data is currently not available (since 6th of August 2022) so that our NRT product only includes SMOS data.
+Changes compared to the previous version 205 are
+updated projection information for better GIS compatibility
+fixed slight grid shift to match official NSIDC north polar stereo grid coordinates
+fixed issue with missing SMAP data in products after September 2021
+updated to latest released SMAP L1B data (17000 to 18290)
+2022-10 Start of Archive
+2021-05-02 New version of merged MODIS-AMSR2 sea-ice concentration dataset available
+As of May 02, 2021, a new and improved version of the merged MODIS-AMSR2 sea-ice concentration (SIC) dataset is provided. The changes comprise:
+an uncertainty estimate for the merged SIC which has been added as additional field to the netCDF file.
+a stricter MODIS cloud masking. Now, only pixels which are labeled "confident clear" are accepted, while previously all pixels which were not labeled "confident cloudy" were accepted.
+a new threshold for the MODIS ice tie-point: Now, MODIS SIC are only retrieved for pixels with an ice tie-point beneath 266.5 K, while the previous threshold was 270 K.
+The entire dataset is being updated to the new version, but as of now only data after May 2nd are available in the new version. The changes are described in more detail in
+Ludwig et al., 2020
+. The daily mean merged SIC and uncertainty are available publically. A netCDF file with the daily mean, daily mean uncertainty, daily standard deviation and daily number of measurements for each pixel is available upon request. The same holds for netCDF files of the merged, MODIS and AMSR2 SIC of single overflights. Questions can be directed to
+vludwig(at)uni-bremen.de
+2020-11-27 Twitter
+Follow us on Twitter:
+https://twitter.com/polarbremen
+2018-11-23 Switched to ASI Sea Ice Concentration Version 5.4
+The announced switch to ASI version 5.4 for the daily sea ice concentration datal has taken place on Nov 23, 2018. The only effect is a slight change in file names, as explained
+here
+('v5.4' instead of 'v5').
+For backwards compatibility, symbolic links of the HDF and TIFF files are being created which still have the old file name. This will only be done temporarily.
+Reprocessed ASI data from 2002 to Oct 2018: Version 5.4
+We have just completed reprocessing all ASI ice concentration data based on AMSR-E or AMSR2 data for the complete period, i.e.,
+1 June, 2002 to 4 Oct, 2011 (AMSR-E)
+July, 2012 to 17 Nov, 2018 (AMSR2).
+The reprocessing has been done for the hemispheric maps only. i.e., Arctic/Antarctic (6.25 km grid spacing) and Arctic3125/Antarctic3125 (3.125 km grid spacing).
+The tie points of the ASI algorithm were the same (version 5). However, some other details as the version of GMT (generic mapping tools) used for gridding the data and defining land masks and coast lines have changed over the years. The reprocessed data are therefore consistent with respect to all this, and have the
+version number 5.4
+. The full version number is also part of all file names (
+'v5.4'
+); the new files are stored alongside the files of previous versions 5.2 and 5.3 which just have
+'v5'
+in their file names.
+The new data being processed every day have been switched to version 5.4 on Nov. 23, 2018 which implies the mentioned change in the file names (
+'v5.4'
+instead of just
+'v5')
+All details about the ASI ice concentration data can be found in the the new
+ASI user guide
+2018-06-19 News: CIMR
+A new website is available for the Copernicus Imaging Microwave Radiometer (CIMR) proposed as EU Copernicus Sentinel-9 satellite:
+cimr.eu
+CIMR will allow retrieval of global, daily
+sea ice concentration at 5 km
+resolution (as on this website) but
+with higher accuracy
+. Lower frequencies will be used that also will allow all-weather SST observations (and many more sea ice parameters). If you like to support CIMR please use the hashtag
+#CIMREU
+Data Privacy
+Legal Notice
+Notfall

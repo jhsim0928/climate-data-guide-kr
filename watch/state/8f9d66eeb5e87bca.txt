@@ -1,0 +1,174 @@
+# https://ladsweb.modaps.eosdis.nasa.gov/missions-and-measurements/products/AERDT_L2_VIIRS_NOAA20
+LAADS DAAC | NASA
+AERDT_L2_VIIRS_NOAA20 - VIIRS/NOAA20 Dark Target Aerosol 6-Min L2 Swath 6 km
+The NOAA-20 Visible Infrared Imaging Radiometer Suite (VIIRS) NASA Standard Level-2 (L2) Dark Target (DT) Aerosol product provides satellite-derived measurements of Aerosol Optical Thickness (AOT) and aerosol properties over land and ocean. It delivers spectral AOT measurements and their size parameters over oceans every 6 minutes globally.
+This aerosol product uses the same dark target algorithm originally developed for the Terra and Aqua missions' Moderate Resolution Imaging Spectroradiometer (MODIS) instruments. It includes two separate and distinct algorithms:
+One retrieves aerosol information over ocean (which appears dark in visible and longer wavelengths).
+The second retrieves aerosol data over vegetated and dark-soiled land (which appears dark in visible wavelengths).
+This orbit-level product (Short-name:
+AERDT_L2_VIIRS_NOAA20
+) has an at-nadir resolution of 6 km x 6 km and progressively increases away from nadir due to the sensor's scanning geometry and Earth's curvature. The product uses 8 x 8 native VIIRS moderate-resolution (M-band) pixels that nominally have approximately 750 m horizontal pixel size at nadir. Therefore, the Level-2 Dark Target Aerosol Optical Thickness data product incorporates 64 (750 m) pixels over a 6-minute period.
+As of December 2025, Version 2.1 is the latest collection of the NOAA-20 VIIRS L2 Dark Target Aerosol product and contains improvements over its previous collection (v2.0):
+Level-2 Dark Target Aerosol: NOAA20 VIIRS v2.1 Improvements over v2.0
+Data Quality Fixes:
+Corrected write error in Mean_Reflectance_Land and STD_Reflectance_Land.
+Enhanced Dust Detection:
+New Dust_Flag_Ocean Science Data Sets (SDS) and additional retrieval model for dust detection.
+Improved Cloud Filtering:
+Multiple updates to cloud mask over ocean to prevent cloud-contaminated retrievals.
+Cross Platform Calibration:
+Cross-calibration coefficients for SNPP, NOAA-20, and NOAA-21.
+Surface Reflectance Updates:
+Revised surface reflectance parameterization and urban correction.
+Updated Meteorological Data:
+Transitioned Global Modeling and Assimilation Office (GMAO) ancillary data from Global Earth Observing System Forward Processing for Instrument Teams (GEOS-FPIT) to its successor, Global Earth Observing System Instrument Teams (GEOS-IT).
+Quality Assurance Fix:
+Fixed a bug that incorrectly included land Aerosol Optical Depth (AOD) values and replaced these values with Quality Assurance values of 1 and 2 in the Optical_Depth_Land_And_Ocean dataset.
+The Level-2 netCDF product's geophysical data contains 38 Science Data Set (SDS) layers:
+Aerosol_Cldmask_Land_Ocean
+Aerosol_Cloud_Fraction_Land
+Aerosol_Cloud_Fraction_Ocean
+Aerosol_Type_Land
+Angstrom_Exponent_1_Ocean
+Angstrom_Exponent_2_Ocean
+Asymmetry_Factor_Average_Ocean
+Average_Cloud_Pixel_Distance_Land_Ocean
+Backscattering_Ratio_Average_Ocean
+Cloud_Pixel_Distance_Land_Ocean
+Corrected_Optical_Depth_Land
+Dust_Flag_Ocean
+Effective_Optical_Depth_Average_Ocean
+Effective_Radius_Ocean
+Error_Flag_Land_And_Ocean
+Fitting_Error_Land
+Image_Optical_Depth_Land_And_Ocean
+Land_Ocean_Quality_Flag
+Land_Sea_Flag
+Least_Squares_Error_Ocean
+Mass_Concentration_Land
+Mass_Concentration_Ocean
+Mean_Reflectance_Land
+Mean_Reflectance_Ocean
+Number_Pixels_Used_Land
+Number_Pixels_Used_Ocean
+Optical_Depth_By_Models_Ocean
+Optical_Depth_Land_And_Ocean
+Optical_Depth_Large_Average_Ocean
+Optical_Depth_Ratio_Small_Land
+Optical_Depth_Ratio_Small_Ocean_0p55micron
+Optical_Depth_Small_Average_Ocean
+PSML003_Ocean
+STD_Reflectance_Land
+STD_Reflectance_Ocean
+Surface_Reflectance_Land
+Topographic_Altitude_Land
+Wind_Speed_GMAO_Ocean
+The geolocation data group includes Glint Angle, Geodetic Latitude and Longitude, Scattering Angle, Sensor Azimuth and Zenith Angles, and Solar Azimuth and Zenith Angles.
+Dark Target Aerosol Product User Guide
+provides additional information regarding these SDS parameters.
+Links
+Search for Product Files
+Data Archive
+NASA Dark Target Aerosol Website
+Dark Target Aerosol Product User Guide
+Dark Target Algorithm Theoretical Basis Document
+DOI:
+10.5067/VIIRS/AERDT_L2_VIIRS_NOAA20.021
+Shortname:
+AERDT_L2_VIIRS_NOAA20
+Platform:
+JPSS1(NOAA20)
+Instrument:
+VIIRS
+Processing Level:
+Level-2
+Data Format:
+netCDF4
+File Size:
+7 - 12 MB
+Spatial Resolution:
+6 km at nadir
+Spatial Coverage:
+Global (daytime only)
+Production Frequency:
+~130 files/day
+Temporal Resolution:
+6 minute
+ArchiveSet(s):
+Collection:
+NPP and JPSS1 VIIRS data 2.1 (ArchiveSet 5201)
+PGE Number:
+NONE
+File Naming Convention:
+Syntax:
+ESDT.AYYYYDDD.HHMM.CCC.YYYYDDDHHMMSS.Format
+Example:
+AERDT_L2_VIIRS_NOAA20.A2025181.1836.021.2025191191300.nc
+ESDT
+Earth Science Data Type or Shortname
+Stands for Acquisition
+YYYYDDD
+Data acquisition year and Day-of-year per the Julian Calendar
+HHMM
+Acquisition Hour and Minute
+Version ID of the data collection
+YYYYDDDHHMMSS
+Processing year, Day-of-year, UTC time (hour, minutes, seconds)
+Format
+File format suffix, which in the above case represents netCDF4
+Citation:
+Please cite the use of this product in publications using the following references:
+Sawyer, V., R.C. Levy, S. Mattoo, Y.R. Shi, M. Kim, L.A. Remer, and G. Cureton (2025), An updated VIIRS dark target aerosol product for continuity with MODIS: assessing regional aerosol trends. Front. Environ. Sci. 13, https://doi.org/10.3389/fenvs.2025.1602145
+Sawyer, V., R.C. Levy, S. Mattoo, G. Cureton, Y. Shi, and L.A. Remer (2020), Continuing the MODIS Dark Target Aerosol Time Series with VIIRS. Remote Sens. 2020, 12, 308, https://doi.org/10.3390/rs12020308
+Levy, R.C., L. A. Munchak, S. Mattoo, F. Patadia, L. A. Remer, and R. E. Holz (2015), Towards a long-term global aerosol optical depth record: applying a consistent aerosol retrieval algorithm to MODIS and VIIRS-observed reflectance, Atmos. Meas. Tech., 8, 4083-4110.
+Currently Viewing ArchiveSet5201 Dates: Loading...
+Fetching product availability data from the API. This may take a moment.
+Data Availability Legend
+High
+: >75% available
+Medium
+: 25-75% available
+: <25% available
+The chart displays data availability percentages over time. Click and drag to pan, use buttons to zoom.
+Chart Options
+Tokens for Downloading LAADS DAAC Data
+A LAADS DAAC download token will help make file downloads faster, but is only usable for LAADS DAAC web sites. A LAADS DAAC token
+will not work with other Earthdata sites.
+Generating LAADS DAAC token …
+Please copy and save the token below for use with any supported LAADS download utilities or scripts.
+To test, run the following
+wget
+download command in your terminal and see if it successfully downloaded the README text file located at the root of the LAADS archive. See also
+LAADS documentation on how to use wget
+wget -e robots=off -m -np -R .html,.tmp -nH --cut-dirs=3 "https://ladsweb.modaps.eosdis.nasa.gov/archive/README" --header "Authorization: Bearer
+" -P .
+We are currently unable to generate a LAADS DAAC token. Please try again later or contact
+MODAPS Support
+with any questions.
+An Earthdata Download token (EDL) will work on any Earthdata site including all LAADS DAAC sites, but download performance from the LAADS DAAC can be much slower due to the extra network connections needed to check credentials at Earthdata.
+Confirm Download of Multiple Files
+Verifying login status…
+Please confirm before starting this batch download of
+listed below totaling
+, one file at a time.
+Once a batch download begins, your browser may not provide a way to cancel the batch aside from closing the browser entirely or stopping individual downloads one at a time. If in doubt, try selecting a smaller number of files for download.
+MODAPS Support
+is available to help with any questions.
+Browser configurations
+Some users might have to approve once (e.g., click "Allow") to allow for future downloads of multiple files.
+To avoid a new download prompt for each file, ensure the following settings are configured in your browser:
+Chrome: Settings > Advanced > Ask where to save each file before downloading >
+Firefox:
+Preferences > Files and Applications >
+Save files to
+Click checkbox “Do this automatically for files like this from now on”
+Safari: Preferences > General > File download location >
+[specified folder]
+Edge: Settings > Downloads > Ask where to save each file before downloading >
+Unsupported browsers for multi-file downloads (use
+instead):
+Internet Explorer 11 and below
+Please log in and try again
+We are currently having issues verifying your request. Please try again later or contact
+MODAPS Support
+with any questions.

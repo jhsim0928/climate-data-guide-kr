@@ -1,0 +1,249 @@
+# https://landweb.modaps.eosdis.nasa.gov/knownissue?sensor=VIIRS
+LDOPE KNOWNISSUE
+NASA
+LDOPE
+About us
+Contact us
+Help/FAQs
+ABOUT LDOPE
+Quality assessment (QA) is an integral part of the MODIS/VIIRS Land production chain. The objective of land products QA is to evaluate and document the scientific quality of the land products with respect to their intended performance. The results of land products QA are made available on a routine basis and are formally stored as product metadata and as per-pixel information. Land products QA results are also placed on the Product Quality web pages located at this site. Users are encouraged to check these QA results when they order and use individual products to ensure that they were generated without error or artifacts.
+MODIS/VIIRS Land Product Quality Assessment
+Home
+Known Issue
+OPERATIONAL QA
+BROWSE
+TIME SERIES
+GOLDEN TILE
+LEVEL 1B
+LTDR AERONET
+WATER RESERVOIR
+PRODUCT STATISTICS
+NACP Browse
+QA INFO
+KNOWN ISSUES
+MANEUVERS
+UPCOMING ACTIVITIES
+DATA OUTAGE
+SOLAR/LUNAR ECLIPSE
+DNB CALIBRATION
+PRODUCT QUALITY
+QA NEWS
+MODLAND TILE CALCULATOR
+ALGORITHM EVALUATION
+WHAT IS NRT
+NRT BROWSE
+NRT KNOWN ISSUES
+DOCUMENTS
+USER GUIDE
+FILE SPECS
+ATBD
+JPSS DOCUMENTS
+Error
+MODIS
+VIIRS
+AVHRR
+SNPP
+Year
+- all -
+Case Name
+Opening Date
+Last Update
+Status
+Description
+TM_NPP_L1B_26280
+Note
+SNPP End-of-Life Data Loss Record
+<h1>SNPP End-of-Life Data Loss Record</h1> <p style="font-size: 16px;text-align:left;"> This rolling note documents known occurrences of SNPP data loss events affecting SNPP VIIRS data occurring on or after October 1st, 2026 (2026/274).
+TM_NPP_L1B_26271
+Note
+SNPP Data Outage
+<h1>SNPP Data Outage</h1> <p style="font-size: 16px;text-align:left;"> On 09/28/2026 (2026/271) SNPP missed data contact during rev. 77309. Data was not received due to higher priority support demands at Fairbanks. Data recovery was attempted on subsequent orbits and successfully recovered a portion of lost data. The remaining missing data will not be recovered. The below image shows the impact of final data loss on the global browse. <br><br><b>Final outage period: 09/28/2026 (2026/271) 09:48 - 12:06 (inclusive)</b>
+TM_NPP_L1B_26260
+Note
+SNPP Data Outage
+<h1>SNPP Data Outage</h1> <p style="font-size: 16px;text-align:left;"> On 09/17/2026 (2026/260) SNPP experienced an data processing anomaly due to radio frequency interference. The data is unrecoverable. The below image shows the impact of data loss on the global browse. <br><br><b>Outage Period: 09/17/2026 (2026/260) 16:00 - 16:24 (inclusive) </b>.
+TM_NPP_L1B_26243
+Note
+SNPP Data Processing Anomaly
+<h1>SNPP Data Processing Anomaly</h1> <p style="font-size: 16px;text-align:left;"> On 08/31/2026 (2026/243) SNPP experienced a data processing anomaly. Partial data was recovered but the remaining data gap is unrecoverable. The below image shows the impact of data loss on the global browse. <br><br><b>Final Outage: 08/31/2026 (2026/243) 01:24 - 01:30 </b>(inclusive).
+TM_NPP_VNP16_26226
+Note
+Important Update for VIIRS ET/PET Data Users: Transition to Collection 2.1
+<h1> Important Update for VIIRS ET/PET Data Users: Transition to Collection 2.1</h1><div style="font-size: 16px;text-align:left;"> Data users are advised that the Collection 2 (C2) VIIRS Evapotranspiration (ET) and Potential Evapotranspiration (PET) 8-day and annual data products-derived from Suomi-NPP (VNP16A2GF/A3GF), JPSS-I (VJ116A2GF/A3GF), and JPSS-2 (VJ216A2GF/A3GF)- contain known issues. To ensure the highest data quality for ET/PET estimates, users should transition to the reprocessed Collection 2.1 (C2.1) data products.<br>The anomalies in the C2 data stem from two issues within the ET/PET Product Generation Executables (PGEs):<ol><li><b>Wet Canopy Fraction Calculation:</b> During a biophysiological parameter update, the equation used to estimate the fraction of wet canopy was inadvertently modified. Consequently, the fraction of wet canopy is underestimated when the relative humidity exceeds 70%. This perceived reduction in available water leads to an underestimation of ET, particularly in humid ecosystems. </li><li><b>PGE Memory Leak:</b>Updates to the 8-day composite processing introduced a memory leak, resulting in inconsistent processing behavior. As a result, certain 10-degree Sinusoidal map projection tiles generated 8-day composites utilizing fewer than the full 8 days of data.</li></ol>The C2.1 VIIRS ET/PET reprocessing corrects both of these issues by restoring the proper wet canopy equation and resolving the memory leak. The C2.1 products are confirmed to be free of these anomalies. To ensure the correct files are being used, product versions can be verified via their HDF5 filenames: legacy C2 utilizes the string ".002.", while the updated C2.1 uses ".021.".<br>Further technical details regarding the C2 data are documented on the LDOPE website at: <a href='https://landweb.modaps.eosdis.nasa.gov/data/filePost/C2_VIIRS_ET_PET_Issues_TechnicalDocument.pdf' target="_blank" rel="noopener noreferrer">C2 VIIRS ET PET Issues Technical Document</a></div>
+TM_NPP_L1B_26214
+Note
+SNPP Product Outage 2026/214
+<h1>SNPP Product Outage 2026/214</h1><p style="font-size: 16px;text-align:left;"> On August 02, 2026 (2026/214) at 02:02Z SNPP entered a non-nominal safe state. SNPP data was not received on rev. 76510 and could not be recovered on subsequent orbits. Engineering team is continuing to investigate and troubleshoot the issue. SNPP science data is currently unavailable while recovery efforts continue. Following recovery, SNPP data will be assessed by Cal/Val and LDOPE teams for assured data quality prior to public release.<br><br>NRT data unavailable beginning 2026/215 00:06 UTC.<br>Operational Data unavailable beginning 2026/214 21:54 UTC</p><h2 style="text-align:center;"> *** UPDATE 08/10/2026 ***</h2><p style="font-size: 16px;text-align:left;">SNPP recovery efforts completed on Tuesday, August 4, 2026 (2026/216) and was returned to operational status at 19:02:09 UTC. Cal/Val, VCST, and LDOPE teams completed review of operational data following the recovery period on Monday, August 10 (2026/222). An anomaly in the Day/Night flagging algorithm was found in post-recovery data, impacting L1b and all downstream data products. Day/Night operations were restored on Thursday, August 6, 2026 (2026/218) at 16:30 UTC. <br><br><b>Final Outage period: 2026/215 02:00 - 2026/218 16:24 (inclusive)</b>
+TM_NPP_L1B_26215
+Note
+SNPP Decomission 11/02/2026
+<h1>SNPP Decommission 11/02/2026</h1><p style="font-size: 16px;text-align:left;">Delivery of science data products from the Suomi National Polar-orbiting Partnership (Suomi NPP) satellite will cease at 13:00 Universal Time (UTC) on November 2, 2026 (2026/305), NOAA's National Environmental Satellite, Data, and Information Service (NESDIS) announced on August 3, 2026. NASA archives and distributes data from Suomi NPP through Earthdata and multiple distributed data archive centers.<br>Please note that the cessation date for Suomi NPP data is subject to change, and further updates will be provided as November 2 approaches.<br>In general, Suomi NPP data users can transition to NOAA-21 and NOAA-20 data products, which are accessible via NASA's Earthdata Search and NOAA's Product Distribution and Access (PDA) system. NOAA-21 and NOAA-20 are part of the Joint Polar Satellite System (JPSS) fleet and were designed to continue the Suomi NPP legacy by providing comparable science data products via similar instruments.<br>Starting the transition now will allow users to adapt and implement algorithms and workflows before Suomi NPP data delivery ends. Additional information about complementary science data products will be shared as soon as they are available.<br><b>For reference, the official announcements are available here:</b><ul><li><a href='https://www.nesdis.noaa.gov/news/cessation-of-suomi-national-polar-orbiting-partnership-s-npp-data-users-onafter-november-01-2026' target="_blank" rel="noopener noreferrer">https://www.nesdis.noaa.gov/news/cessation-of-suomi-national-polar-orbiting-partnership-s-npp-data-users-onafter-november-2-2026</a></li><li><a href='https://www.earthdata.nasa.gov/data/alerts-outages/suomi-npp-data-product-delivery-cease-november-1-2026' target="_blank" rel="noopener noreferrer">https://www.earthdata.nasa.gov/data/alerts-outages/suomi-npp-observations-cease-november-2-2026</a></li>
+TM_NPP_L1B_26194
+Note
+SNPP Safe Mode Outage 2026/191 - 198
+<h1>SNPP Safe Mode Outage 2026/191 - 198</h1><p style="font-size: 16px;text-align:left;"> On July 10, 2026 (2026/191) SNPP entered a non-nominal safe mode at approximately 14:50 UTC. All requests for SNPP science data products were disabled at 1:30 UTC on July 11, 2026 (2026/192). SNPP science data is currently unavailable and will not be recoverable until further notice.</p>
+TM_NPP_L1B_26152
+Note
+NPP Anomaly Mode Outage 2026/152
+<h1>NPP Anomaly Mode Outage 2026/152</h1> On June 1, 2026 (2026/152) at 01:45 UTC the SNPP spacecraft entered anomaly mode. SNPP data is currently unavailable while engineering teams investigate the anomaly..<h2 style="text-align:center;"> *** UPDATE 06/11/2026 *** </h2>SNPP VIIRS operational data processing has resumed with a LUT update provided by VCST. <br><b>Final Outage Period: 2026/152 00:00 to 2026/154 01:54 (inclusive)</b><br><br>
+TM_NPP_L1B_26118
+Note
+NPP Data Delay 2026/118
+<h1>NPP Data Delay 2026/118</h1> On April 28, 2026 (2026/118) the SNPP satellite did not receive Stored Mission Data during Revolution 75133. Data recovery during the following revolution was unsuccessful. SNPP data will not be available until further notice as engineering teams troubleshoot the system. <h2 style="text-align:center;"> *** UPDATE 04/29/2026 *** </h2>S-NPP spacecraft entered a non-nominal state at 00:33 UTC on April 28, 2026. Engineering has started spacecraft recovery activities. The S-NPP spacecraft remains in sun point. All science data remains unavailable and will not be recoverable until further notice; however, all instruments are in a safe state. PDA OPS requests for all S-NPP Science products were disabled at 15:04 UTC on April 28, 2026. NOAA-21 and NOAA-20 remain the primary JPSS series spacecraft, and Key Performance Parameters from their instruments continue to be delivered. S-NPP is a Tertiary satellite with no performance and latency requirements. <h2 style="text-align:center;"> *** UPDATE 04/30/2026 *** </h2> Engineering continued spacecraft recovery efforts on S-NPP April 29, 2026 (2026/119). The S-NPP spacecraft is back to nominal mission point as of 15:37:35Z on April 29, 2026. VIIRS recovery is scheduled to commence on the next business day. When S-NPP VIIRS data becomes available, LDOPE and Cal/Val teams will evaluate observed data following recovery.<h2 style="text-align:center;"> *** UPDATE 05/01/2026 *** </h2>The S-NPP VIIRS instrument was placed in operational mode on April 30, 2026 at 13:33:23 UTC (2026/120). As stated in the previous update, LDOPE and Cal/Val teams will confirm data for operational use before operational processing resumes. While NRT data flow is available, all users should be aware that this science data is not approved for operational use at this time.<h2 style="text-align:center;"> *** UPDATE 05/07/2026 *** </h2>LDOPE and Cal/Val teams have completed their assessment of SNPP VIIRS data following recovery and determined an extended outage period due to non-nominal temperature in data immediately following the recovery.<br><b>Final Outage Period: 04/28/26 (2026/118) 00:00 - 05/01/26 (2026/121) 04:54 (inclusive)</b>
+TM_NPP_VNP19_26111
+Note
+VIIRS MAIAC Reduced Tiles
+<h1>VIIRS MAIAC Reduced Tiles</h1> We would like to inform users of a recent update to the VIIRS MAIAC data processing. To improve efficiency and remove duplicate data, the Science team has recommended stopping the processing of certain overlapping tiles in the forward stream starting day 2026/104. Because the data in these tiles is already contained in other active tiles, no unique data is being lost. A complete list of the excluded tiles can be found at <a href='https://landweb.modaps.eosdis.nasa.gov/data/filePost/shaded_tiles.txt' download>VIIRS MAIAC Shaded Tiles </a>: <br><br><h3>VIIRS MAIAC Shaded tiles (NOT in process list):</h3>Total: 144 tiles <ul> <li>h00v00</li> <li>h01v00</li> <li>h02v00</li> <li>h06v00</li> <li>h07v00</li> <li>h08v00</li> <li>h09v00</li> <li>h10v00</li> <li>h11v00</li> <li>h15v00</li> <li>h16v00</li> <li>h17v00</li> <li>h18v00</li> <li>h19v00</li> <li>h20v00</li> <li>h24v00</li> <li>h25v00</li> <li>h26v00</li> <li>h27v00</li> <li>h28v00</li> <li>h29v00</li> <li>h33v00</li> <li>h34v00</li> <li>h35v00</li> <li>h00v01</li> <li>h01v01</li> <li>h07v01</li> <li>h08v01</li> <li>h09v01</li> <li>h10v01</li> <li>h16v01</li> <li>h17v01</li> <li>h18v01</li> <li>h19v01</li> <li>h25v01</li> <li>h26v01</li> <li>h27v01</li> <li>h28v01</li> <li>h34v01</li> <li>h35v01</li> <li>h00v02</li> <li>h01v02</li> <li>h07v02</li> <li>h08v02</li> <li>h09v02</li> <li>h10v02</li> <li>h16v02</li> <li>h17v02</li> <li>h18v02</li> <li>h19v02</li> <li>h25v02</li> <li>h26v02</li> <li>h27v02</li> <li>h28v02</li> <li>h34v02</li> <li>h35v02</li> <li>h00v03</li> <li>h08v03</li> <li>h09v03</li> <li>h17v03</li> <li>h18v03</li> <li>h26v03</li> <li>h27v03</li> <li>h35v03</li> <li>h00v04</li> <li>h08v04</li> <li>h09v04</li> <li>h17v04</li> <li>h18v04</li> <li>h26v04</li> <li>h27v04</li> <li>h35v04</li> <li>h00v13</li> <li>h08v13</li> <li>h09v13</li> <li>h17v13</li> <li>h18v13</li> <li>h26v13</li> <li>h27v13</li> <li>h35v13</li> <li>h00v14</li> <li>h08v14</li> <li>h09v14</li> <li>h17v14</li> <li>h18v14</li> <li>h26v14</li> <li>h27v14</li> <li>h35v14</li> <li>h00v15</li> <li>h01v15</li> <li>h07v15</li> <li>h08v15</li> <li>h09v15</li> <li>h10v15</li> <li>h16v15</li> <li>h17v15</li> <li>h18v15</li> <li>h19v15</li> <li>h25v15</li> <li>h26v15</li> <li>h27v15</li> <li>h28v15</li> <li>h34v15</li> <li>h35v15</li> <li>h00v16</li> <li>h01v16</li> <li>h07v16</li> <li>h08v16</li> <li>h09v16</li> <li>h10v16</li> <li>h16v16</li> <li>h17v16</li> <li>h18v16</li> <li>h19v16</li> <li>h25v16</li> <li>h26v16</li> <li>h27v16</li> <li>h28v16</li> <li>h34v16</li> <li>h35v16</li> <li>h00v17</li> <li>h01v17</li> <li>h02v17</li> <li>h06v17</li> <li>h07v17</li> <li>h08v17</li> <li>h09v17</li> <li>h10v17</li> <li>h11v17</li> <li>h15v17</li> <li>h16v17</li> <li>h17v17</li> <li>h18v17</li> <li>h19v17</li> <li>h20v17</li> <li>h24v17</li> <li>h25v17</li> <li>h26v17</li> <li>h27v17</li> <li>h28v17</li> <li>h29v17</li> <li>h33v17</li> <li>h34v17</li> <li>h35v17</li> </ul>
+TM_NPP_L1B_26072
+Note
+Geomagnetic Activty Outage 2026/072
+<h1>Geomagnetic Activty Outage 2026/072</h1> On March 13, 2026 (2026/072), around 10:00 UTC, the Earth was experiencing active geomagnetic conditions, with Kp4 levels reported earlier in the morning (04:47 UTC) and a minor G1 geomagnetic storm (Kp5) threshold reached at 11:59 UTC. A moderate M1.19 solar flare was also recorded at 10:18 UTC. The geomagnetic activity caused a surge in geolocation inaccuracies during this time that were recorded following the <a href="https://landweb.modaps.eosdis.nasa.gov/displayissue?id=1290" target="_blank">SNPP GPS recovery.</a> SNPP data is back to nominal status as of this update.<br><br><b>Final Outage Period (inclusive):<br><ul><li>2026/072 08:12 - 11:36</li></b> </p>
+TM_NPP_L1B_26065
+Note
+SNPP Data Outage 2026/065
+<h1>SNPP Data Outage 2026/065</h1> On 03/06/2026 (2026/065) SNPP missed data contact during rev #74391. An attempt to replay the data was made during the following rev, #74392, resulting in replacement data for the loss period. Replacement granules 16:00 - 16:06 (inclusive) continue to contain bad data and will be hidden from processing. <br><br>
+TM_NPP_L1B_26068
+Note
+SNPP Data Outage 2026/068
+<h1>SNPP Data Outage 2026/068</h1> On 03/09/2026 (2026/068) at approximately 17:45 UTC, SNPP science data flow halted and will be unavailable until further notice. NOAA Engineering teams are actively working to restore observational data. An update will be made to this note once data flow has resumed and has been confirmed by the LDOPE team.<h2 style="text-align:center;" >**** UPDATE 03/17/2026 ****</h2> <p style="text-align:left;"> On March 9, 2026 (DOY 068), a GPS instrument anomaly caused an outage for SNPP. Following recovery efforts on March 12 and 13, the Geolocation team identified significant Ground Control Point (GCP) residuals around 10:00 UTC on March 13, resulting in geolocation uncertainties of up to 750 meters (~ Two I-band pixels). After reviewing the science data for artifacts, LDOPE corroborated these findings and defined the final outage period to hide the degraded data. <br><br><b>Final Outage Period (inclusive):<br><ul><li>2026/068 18:00 - 2026/071 23:54</li></b> </p>
+TM_NPP_L1B_25315
+Note
+SNPP L0 Data Outage
+<h1> SNPP L0 Data Outage</h1> <p style="text-align:left;">On November 11, 2025 (2025/315) SNPP began experiencing a data outage during Rev 72755. The outage was caused by a single event upset within the rotating telescope assembly. Engineering was able to restore the S-NPP VIIRS instrument to an operational state. Data lost during this period is unrecoverable. This note will be updated with the final outage range once LDOPE and Cal/Val teams have evaluated data quality. </p>
+TM_NPP_L1B_25185
+Note
+SNPP Fairbanks Network Outage
+<h1>SNPP Fairbanks Network Outage</h1> <p style="text-align:left;"><b>Fairbanks:</b> OMS Network Engineers receive a call from GSE reporting degraded data rates for the Fairbanks site. OMS Network checked exinda and confirmed packet loss started 07/03/2025 @ 20:40 UTC and is still ongoing. Called NWAVE and reported the problem and NWAVE confirmed that there is a problem with wildfire in Alaska impacting communication and their on-call Engineer was notified and is currently investigating. 07/04/2025 8:08 PM EST Site Engineers have been contacted. Alaska Communications has indicated that their network has been impacted by the interior wildfires and is affecting services across the Greater Interior Alaska Region. ACS advises situation has not changed since last update advising conditions are unsafe to enter. Fire Chief on scene does not have an estimated time of when it will be safe. No ETR has been provided.</p>
+TM_NPP_L1B_25168
+Note
+SNPP Missed Contact 2025/163
+<h1>SNPP Missed Contact 2025/163</h1> On 06/12/2025 (2025/163), the SNPP satellite missed data contact for orbit #70602 due to misconfiguration during security activities. The data is non-recoverable. Final Outage Period: 2025/163 16:42 - 17:24 (inclusive).
+TM_NPP_L1B_25094
+Note
+SNPP Emissive Band Calibration Events
+<h1>SNPP Emissive Band Calibration Events</h1>The blackbody calibrator for the VIIRS instrument will perform an annual/biennial Emissive Band calibration that may result in data delay or data loss. The calibration performs a systematic blackbody warm-up and cool-down to evaluate the thermal emissive bands' calibration coefficients. This calibration event can cause artifacts and anomalous fire detection in VIIRS fire products. The L1B QA Flags are expected to detect temperature exceeding nominal levels. LDOPE will review data during the calibration period to ensure data quality and report any issues.<br><br>
+TM_NPP_L1B_25069
+Note
+C2 SNPP & J1 L1Bs CC Reprocessing 2025/062 - 065
+<h1>C2 SNPP & J1 L1Bs CC Reprocessing 2025/062 - 065</h1>On 03/03/2025 (2025/062), low cross-calibrated radiance values were observed in the C2 VIIRS/SNPP and NOAA-20 cross-calibrated L1B bands. The issue has affected the data from 2025/062 onwards and is under investigation. All daily SNPP and NOAA-20 cross-calibrated L1Bs for the period 2025/062-065 and DNB BRDF for 2025/041-058 will be reprocessed with the prior stable PGE version. Users are requested to use the reprocessed data from DOY2025/062 onwards. The images below show the impacted J1 and SNPP Cross-Calibrated L1B Band M5 and the reprocessed data. An update will be made to this note once all data has been reprocessed and confirmed by the LDOPE team.<br><br>
+TM_NPP_L1B_25020
+Note
+SNPP Downlink 2025/020 Data Gap
+<h1>SNPP Downlink 2025/020 Data Gap</h1>On January 20, 2025 (2025/020), SNPP contacts were deleted, resulting in an unrecoverable data gap from 2025/020 17:12 - 20:12 inclusive. The below images demonstrate the impacted global area. <br><br>
+TM_NPP_L1B_25017
+Note
+C001/VIIRS Black Marble Discontinuation
+<h1>C001/VIIRS Black Marble Discontinuation</h1>The C1/VIIRS SNPP Black Marble products, VNP46A1, VNP46A2, VNP46A3, and VNP46A4 will be discontinued after January 31, 2025. These v1.0 products (from Jan 19, 2012 through Jan 31, 2025) will remain available in the LAADS archive until September 30, 2025. Users are encouraged to use the C2/VIIRS SNPP (VNP46A[1][2][3][4]) and NOAA-20 (VJ146A[1][2][3][4]) products moving forward.
+TM_NPP_L1B_24309
+Note
+SNPP GPS Anomaly 2024/307
+<h1>SNPP GPS Anomaly 2024/307</h1>On November 2, 2024 (2024/307) at approximately 22:15Z, the geolocation data for the SNPP satellite entered into a degraded state. NRT and Operational distributions of SNPP data products have been suspended as of November 3, 2024 (2024/308). NOAA Operations team recovery activities are expected to begin Thursday, November 7th (2024/312). Geolocation assessment on archived testing data confirms geolocation degradation from 22:15Z on 11/2/24 through 11/4/2024.<br><br>
+TM_NPP_L1B_24284
+Note
+VIIRS Black Marble Reprocessing 2024/226 - 2024/279
+<h1>VIIRS Black Marble Reprocessing 2024/226 - 2024/279</h1> A significant drop was found in the SNPP Black Marble Night-time radiance data values VNP46A1 and VNP46A2 since July/August 2024 and is back to normal form the recent days. The drop is due to unexpected larger prediction error of calibration coefficients in LUT v3.1.0.35 delivered on Aug 9 after the <a href="https://landweb.modaps.eosdis.nasa.gov/displayissue?id=716)">S/C CDP Reset Anomaly</a> (07/24-07/29). VCST will deliver a new LUT update which will be used to reprocess impacted days, <br><ul><li>VNP46A1: August 13, 2024 (2024/226) - September 28, 2024 (2024/272)</li><li>VNP46A2: August 13, 2024 (2024/226) - October 5, 2024 (2024/279)</li>
+TM_NPP_L1B_24269
+Note
+SNPP GPS Anomaly 2024/269
+<h1>SNPP GPS Anomaly 2024/269</h1>The SNPP/VIIRS spacecraft's geolocation entered a degraded state starting 22:44:05z on September 24, 2024. The engineering team is planning for spacecraft recovery on Friday, September 27, 2024. All PDA OPS subscriptions for all S-NPP science products were disabled at 14:00z on September 25, 2024. Data assessment by Cal/Val teams will follow to ensure S-NPP products are meeting mission specs. The SNPP/VIIRS recovery updates will be provided when further information becomes available.<br><br><h2 style="text-align:center;">*** UPDATE 10/01/2024 ***</h2>SNPP recovery efforts were successful on Friday, September 27, 2024. Thorough geolocation assessment was performed on the SNPP data following the recovery to approve data for operational use. The geolocation residuals returned to nominal range at approximately 17:33Z on 09/27/2024 (Figure 1). The final outage range is 9/26/2024 00:00z to 9/27/2024 17:30z (inclusive).<br><br>
+TM_NPP_VNP46_24267
+Note
+DNB Sensor Zenith Valid Range Update
+<h1>DNB Sensor Zenith Valid Range Update</h1>The valid range minimum of "Sensor_Zenith" in the SNPP DNB daily (VNP46A1) and gap-filled (VNP46A2) products has been modified from "-90" to "0". The updated PGE554 with modified valid_min is currently operational as of September 19,2024 (2024/263). The prior mission period will not be reprocessed and users are requested to take note of the updated valid range.
+TM_NPP_L1B_24248
+Note
+SNPP Downlink 2024/243 Data Gap
+<h1>SNPP Downlink 2024/243 Data Gap</h1>On August 30, 2024 (2024/243), the SNPP suffered an unrecoverable data gap from 19:58:21 - 19:59:46 due to a lost downlink. The data loss impacted DOY 2024/243 granule 19:54.
+TM_NPP_VNP64_24247
+Note
+Burned Area Early Mission Degradation
+<h1>Burned Area Early Mission Degradation</h1>The C2/SNPP VIIRS monthly burned area product (VNP64A1) for the first month of 2012 (2012/032) will not be distributed and removed from the archive. The extensive quality assessment of the product revealed significant degradation in the data due to incomplete SNPP VIIRS data record during the early days of the mission.
+TM_NPP_L1B_24215
+Note
+No-Data Artifact in Early Mission Period VNP46A1
+<h1>No-Data Artifact in Early Mission Period VNP46A1</h1>High latitude artifacts were observed in the VIIRS/NPP L3 Daily Gridded Day/Night Band 500m (VNP46A1) product. Erroneous fill values exist where VNP35_L2 cloud-mask are indicated "clear". The artifact occurs in one/two high latitude tiles (Figure 1) in most records throughout the mission period and is carried into the downstream products. All VNP46A1 SDS layers carry the artifact. All SDS layers in VNP46A2 are impacted except for Gap_Filled_DNB_BRDF, Corrected_NTL, and Latest_High_Quality_Retrieval. The number of No-Data Values varies with changes to seasonality. Due to the consistent frequency of the anomaly and the significant impacts carried into downstream products (Figure 2), the C2/SNPP L3 DNB data will be reprocessed with the updated PGE for fixed periods listed below.<br><ul><li>SNPP<ul> <li>2014/001 - 2024/200</li> <li>Note: No reprocessing between 2012-2013 and will retain the artifact.</li> </ul> </li> <li>J1 <ul> <li>Entire mission period.</li></ul></li></ul>
+TM_NPP_L1B_24212
+Note
+SNPP VIIRS - Bus Anomaly
+<h1>SNPP VIIRS - Bus Anomaly</h1>On 7/29/2024, the SNPP VIIRS 1394 bus alarms occurred at 09:58:20z impacting data quality. The 1394 reset is planned soon and further updates will be provided when available. The SNPP VIIRS NRT processing will be put on hold until the issue is resolved.<br><h2 style="text-align:center;">*** UPDATE 07/31/2024***</h2><br>The SNPP VIIRS 1394 bus alarm reset occurred as a result of the <a href="https://landweb.modaps.eosdis.nasa.gov/displayissue?id=716">Command Data Processor (CDP) Anomaly event </a> on 07/24/2024. The Geolocation and calibration teams have evaluated the data staged in test achieve set and have approved the data for operational use. Please see below the SNPP VIIRS Ground Control Point (GCP) residual plots between 07/24/2024 - 07/30/2024.
+TM_NPP_L1B_24208
+Note
+S-NPP CDP Anomaly
+<h1>SNPP CDP Anomaly</h1>On July 24, 2024, 05:28:00Z, the SNPP satellite entered into a non-nominal state due to a Command Data Processor (CDP) reset anomaly. Loss of data began in revolution 66013. Attempts to recover data in the following revolutions were unsuccessful. SNPP returned to Mission Point mode as of July 24, 2024 18:22Z. VIIRS recovery efforts will continue next week. All SNPP data will be unavailable until further notice while recovery efforts and data quality evaluation is underway.<br><h2 style="text-align:center;">*** UPDATE 2 ***</h2><br>Geolocation team has evaluated the available data and reported nominal GCP residual values in the period from 07/24/2024 - 07/30/2024. The following figure demonstrates the nadir equivalent shift in meters of track vs scan data across the evaluated period.
+TM_NPP_L1B_24194
+Note
+S-NPP GPS Anomaly 07/12/2024
+<h1>SNPP GPS Anomaly</h1>On 07/09/2024 (2024/191), the S-NPP GPS receiver toggled to invalid at approximately 21:46:00z. The invalid GPS caused inaccurate geolocation of all observation data following the start of the anomaly. Engineering Team will perform a reset of the GPS unit no earlier than 07/12/2024. The NASA VIIRS/SNPP products for land and atmosphere have been suspended until further notice. Details of a previous SNPP GPS Anomaly can be found in this Known Issue : <a href = "https://landweb.modaps.eosdis.nasa.gov/displayissue?id=605"> SNPP GPS Anomaly May 5th, 2024 </a> Updates will be added to this rolling note documenting LDOPE and Geolocation Team evaluations, anomaly status updates, and product availability.<br><h2 style="text-align:center;">*** UPDATE 07/19/2024***</h2><br>SNPP forward processing has resumed from 2024-07-16 (DOY 198) 17:42:00z to the leading edge. All SNPP Operational and NRT data during the anomaly period will be unavailable due to invalid geolocation data and invalid timestamps in data packets. <b>Final outage range: 2024/191 21:42 - 2024/198 17:36 (inclusive) </b>
+TM_NPP_VNP14_24177
+Note
+VIIRS C2 False Fire from L1 M13
+<h1>VIIRS C2 False Fire from L1 M13</h1>Spurious "arcs" of false fires observed in the C2/SNPP VIIRS L2 fire product (VNP14; Figure 1, Figure 2) for ~40 granules during the mission period. All cases are the result of spurious, high-radiance M13 scans in the Level-1B input product (VNP02MOD). These spurious M13 values are typically confined to an individual scan or scan line, but in extreme cases can span hundreds of adjacent lines (Figure 3). In most instances the bad M13 scans were not flagged in the pixel-level M13 quality flags(QF13) in the VNP02MOD, causing false fires. In rest of the instances, the false fire occurrence is due to the fire code ignoring the M13 pixels flagged with "Temp_not_nominal" condition (Figure 4). In such instances, the science team plans to eliminate the spurious fires by adjusting the handling of different QF13 flag combinations in the VNP14 production software, but raises caution in the overall viability of such a fix due to the dependency of frequency of individual flags. The science team also recommended that the NASA VIIRS Characterization Support Team (VCST) to eliminate the unflagged bad M13 scans in the Level-1B VNP02MOD product.<br><br>
+TM_NPP_L1B_24149
+Note
+S-NPP GPS Anomaly
+<h1>SNPP GPS Anomaly</h1>On 5/25/2024, the S-NPP GPS started toggling from valid to invalid at approximately 22:23:14z before finally "latching" as invalid at 22:30:10z. As of the last pass, it has remained at invalid and mitigation steps are underway. Based on the geolocation teams investigation, the SNPP geolocation performance degradation is significant and exceeded 1km on 05/26/2024 (see below). The NASA VIIRS/SNPP/L2+ products for land/atmosphere/land has been suspended until further notice and only L1 product generation is underway for diagnosis purposes.
+TM_NPP_L1B_24116
+Note
+NPP Single Board Computer Lockup; Data Delay
+<h1>NPP Single Board Computer Lockup; Data Delay</h1>On April 24, 2024 SNPP entered into an anomalous state, caused by a single board computer lockup. Operations team received notice of the non-nominal state during Revolution 65729 (AOS 18:29:46z). Engineering teams restored SNPP VIIRS to operational state by 21:54Z on April 24. The remaining recovery processes will continue Thursday, April 25, 2024. The single board computer lockup has resulted in an SNPP VIIRS data gap: granules 18:06 - 20:18 (inclusive) are non-recoverable. A rolling note of instrument Petulant Mode/SBC Lockup Events can be found here: <a href='https://landweb.modaps.eosdis.nasa.gov/displayissue?id=669' target='_blank'>PM_NPP_L1B_20212</a><br><br><br>
+TM_NPP_L1B_24031
+Note
+2024/031 SNPP X-Band Anomaly Data Loss
+On January 31, 2024 (2024/031), beginning at 01:10z, no SNPP Stored Mission Data (SMD) was received for SVL Rev 63527 due to ground issues at Svalbard. Data recovery was attempted on following SVL Rev 63528 and SVL Rev 63529. Recovery was unsuccessful. <br><br><font color='red'><b>Update 02/01/2024:</b></font><br>The NPP SMD X-band transmitter anomaly has been resolved. SMD flow resumed at 16:00 UTC on 2024.031 with small intermittent data losses due to FCDAS downlink issues. Data loss from the period 030/23:21z - 031/16:00z is considered unrecoverable. <br><br>
+PM_NPP_L1B_21032
+Note
+C2 SNPP and C2.1 J1 L1 TOA radiance comparison
+While all the Reflective Solar Bands (RSB) have been performing well since launch with good quality TOA L1B data for both S-NPP and J1/N20, past studies, carried out by different groups, have documented a persistent bias between the S-NPP and JPSS J1/N20 L1B TOA values, for RSB. This bias has a spectral dependency but ranges between ~2% - 6% for most RSB bands. In all cases, the S-NPP TOA radiance seems to be brighter (higher) than the J1/N20. The exact cause of this is not known at this time but is most likely caused by some differences/flaw in S-NPP sensor characteristics. It is imperative to have radiometric consistency between the two VIIRS instruments to avoid any impact of this relative bias on the downstream L2/L3 products, especially the ones that seek to combine observations from both the instruments.<br><br>Note that the Thermal Emissive Bands (TEB) are more closely aligned between S-NPP and J1/N20 and we have not discovered any significant bias in any of the TEB bands.<br><br>Below we have provided links to different such studies and presentations made by the VIIRS Calibration Support Team (VCST) and the Land Science Team. Similar conclusions have been reached by the Atmosphere and Ocean teams and by the NOAA STAR team.<br><br><b>VCST:<br><li><a href="https://landweb.modaps.eosdis.nasa.gov/data/filePost/VIIRS_Xcal_Land_Meeting_final.pdf" target=doc onclick="doc=window.open('','doc','toolbar=no,scrollbars=yes,resizable=yes,height=550,width=750'); doc.focus()">SNPP and N20 VIIRS reflective solar bands calibration difference assessment</a><br><br><b>Land Science Team:</b><li><a href="https://landweb.modaps.eosdis.nasa.gov/data/filePost/VIIRSMODISCrossComparison12182020.pdf" target=doc onclick="doc=window.open('','doc','toolbar=no,scrollbars=yes,resizable=yes,height=550,width=750'); doc.focus()">Cross Comparison of SNPP and J1/N20 VIIRS and Aqua MODIS</a></b><br><br><b>Atmosphere Science Team:</b><li><a href="https://landweb.modaps.eosdis.nasa.gov/data/filePost/Cloud_team_intercalibration.pdf" target=doc onclick="doc=window.open('','doc','toolbar=no,scrollbars=yes,resizable=yes,height=550,width=750'); doc.focus()">Inter-sensor Shortwave Radiometry</a><br><br><b>NOAA-STAR team:</b><li><a href="https://landweb.modaps.eosdis.nasa.gov/data/filePost/SPIE_2018_paper.pdf" target=doc onclick="doc=window.open('','doc','toolbar=no,scrollbars=yes,resizable=yes,height=550,width=750'); doc.focus()">SPIE Proceedings 2018</a><br><li><a href="https://landweb.modaps.eosdis.nasa.gov/data/filePost/SPIE_2020_paper.pdf" target=doc onclick="doc=window.open('','doc','toolbar=no,scrollbars=yes,resizable=yes,height=550,width=750'); doc.focus()">SPIE Proceedings 2020</a><br><br><br>The Land Science team is using <A href="https://landweb.modaps.eosdis.nasa.gov/data/filePost/SNPP_J1_calibration_factors_01_05_22_2.pdf"> the following set of SNPP and J1 cross-calibration factors </A>for their Collection 2 (C2) land products, based on the work done by Eric Vermote et al.<br><br><br><br>
+PM_NPP_L1B_20212
+Note
+S-NPP VIIRS instrument Petulant Mode/SBC Lockup Events
+<h1>S-NPP VIIRS instrument Petulant Mode/SBC Lockup Events</h1>On occasion the SNPP VIIRS instrument experiences an anomaly due to a VIIRS Single Board Computer (SBC) Lock-up. As a result, VIIRS science data output has been found to be directly impacted during these events (<A href="https://landweb.modaps.eosdis.nasa.gov/cgi-bin/NPP_QA/displayCase.cgi?esdt=NPP_L1B&caseNum=PM_NPP_L1B_19021&caseLocation=cases_data">01.21.19 (2019.021), </A> <A href="https://landweb.modaps.eosdis.nasa.gov/cgi-bin/NPP_QA/displayCase.cgi?esdt=NPP_L1B&caseNum=PM_NPP_L1B_17239&caseLocation=cases_data">08.27.17 (2017.239), </A><A href="https://landweb.modaps.eosdis.nasa.gov/cgi-bin/NPP_QA/displayCase.cgi?esdt=NPP_L1B&caseNum=PM_NPP_L1B_16355&caseLocation=cases_data">12.20.16 (2016.355), </A><A href="https://landweb.modaps.eosdis.nasa.gov/cgi-bin/NPP_QA/displayCase.cgi?esdt=NPP_L1B&caseNum=PM_NPP_L1B_16226&caseLocation=cases_data">08.13.16 (2016.226), </A><A href="https://landweb.modaps.eosdis.nasa.gov/cgi-bin/NPP_QA/displayCase.cgi?esdt=NPP_L1B&caseNum=PM_NPP_L1B_14282&caseLocation=cases_data">10.09.14 (2014.282) </A>). In some instances, the VIIRS instrument can operate in Day mode for periods of multiple day and night orbits, impacting day/ night flag assignments in L1B data. During which, multiple L1B DNB granules are found to be corrupt for these periods. LandSIPS has previously identified and removed these corrupt L1B granules from production that were either affected by data outage or were observed to negatively impact downstream L2 land products. However, most of the DNB daytime reflectance and downstream dependent products (the SIN DNB BRDF/Albdeo - VNP43DNBA* and the DNB NTL - VNP46A2 ) are being recently developed and were produced after the initial QA review. Therefore, additional granules impacting the DNB reflectance have not been removed for these products.<br><br> During the most recent review, additional artifacts have been identified in the DNB daytime reflectance granules for these lockup events, which include new granules previously unaccounted for by the original LandSIPS review. This has led to the removal of these additional granules, specifically for the processing of the downstream L3 DNB products like the VNP43DNBA1/A2/A3/A4 and the DNB NTL (VNP46A2). However, some of these DNB L3 day and night products like the DNB BRDF and the DNB NTL had already been produced prior to the discovery of these additional artifacts. So, users are urged to maintain caution while using these products and check against such SBC event days that are listed below.<br><br>The first examples below shows the impact of this event on the daytime DNB reflectance (VNP39) for day A2012050 (2012-02-19). Additionally, the second global browse image of the daily DNB L2G lite reflectance (VNPLG39GA) that is used as input to the VNP43DNBA* suite of products, show the impacts of the corrupt data on the downstream products where these granules have not been removed from the archive. Additionally, L1B granule examples from AS5000 and 5110 are provided, which show the artifacts observed at the granule level during these events. The last example image shows a recent production date of VNP39, where corrupt granules are observed during daytime orbits over North America and the Pacific Ocean.<br><br><br>
+PM_NPP_L1B_17024
+Note
+Lunar Intrusion events data gap rolling record
+Lunar intrusion events routinely occur during the Lunar Roll Maneuvers and calibration activities. In some rare cases false fire is observed when L1B data reports poor M13 SDR quality in short segments of 4 adjacent orbits to a lunar roll maneuver. The cause is associated to an issue with the width of the exclusion / flagging zone for corrupted data, and results in spurious fire and striping artifacts. The poor M13 quality in short segments of adjacent orbits is observed in the global browse image during night time orbits of VNP35_L2(Cloud Mask) and both daytime and night time orbits VNP14C (Active Fire) products where the M13 band is referenced as input. The examples below shows one of these impacted days and also lists the occurrences of the known lunar intrusion events to date.<br><br><br>
+PM_NPP_L1B_16062
+Note
+VIIRS HAM Sync Data Loss Rolling Note
+The NPP VIIRS instrument experiences Half-Angle Mirror (HAM) sync errors, which result in data loss of the L1B and geolocation information. These are a self-recovering anomaly. The most probable root cause determined by Raytheon is the motor cable shielding on the RTA. About two inches of the RTA motor cable is not covered by the shielding and is exposed to the elements, which accounts for the long duration sync losses. The motor cable shielding on the HAM sees a small amount of exposure to the elements as well, which accounts for the short duration sync losses. These data losses can be observed as gaps in the L1B granules for the specified time periods reported. This rolling post will document the HAM sync errors.<br><br>History: The 67th and 68th were the 15th and 16th occurrences of this event in 2016. They have occurred on Day 35, 36, 37, 46, 52, 56(2), 70, 97, 114, 137, 155, 247, 257, and 293(2). All have been long or combination sync loss events. There were 11 events in 2015, 6 events in 2014, 11 events in 2013, 20 events in 2012, and 4 events in 2011. <br><br><br><br><br><br>#36. The 36th VIIRS scan sync loss occurred on 03/08/2014, data day 2014.067 from 16:29:26 to 16:31:06 UTC. This data loss occurred during the end of a daytime orbit over Northern Canada as the instrument was crossing the day/night line. The L1 data from the two granules 1625 and 1630 were reviewed. The data loss was only observed in granule 1625. Below, the first and second image show the latitude geolocation layer and the Brightness Temperature band M13 from the L1B NPP_VMAE for IDPS (AS3000). Both the data layers contain fill values for a portion of granule 1625. Additionally, the data loss was observed in both the IDPS and LPEATE data streams (3000 and 3001). The last two images show the latitude and Brightness Temperature band M13 for LPEATE (AS 3001).
+Science Team - SCFs
+Land Surface Reflectance
+Snow Cover & Sea Ice
+Land Surface Temperature
+Land Cover Type and Change
+Vegetation Indices
+Active Fire and Burned Area Products
+LAI and FPAR
+Net Vegetation Production
+BRDF/Albedo
+Vegetation Continuous Fields
+Data Centers
+The Level-1 and Atmosphere Archive & Distribution System
+EROS Center
+Goddard Earth Sciences Data & Information Services Center
+Land Processes DAAC
+Langley Atmospheric Sciences DAAC
+ORNL DAAC for Biogeochemical Dynamics
+National Snow and Ice Data Center DAAC (NSIDC-DAAC)
+Ocean Biology Distributed Active Archive Center (OB.DAAC)
+LANCE Near Real Time Data
+MODAPS
+Discipline Teams
+MODIS
+VIIRS
+Land Team
+Atmosphere Team
+Ocean Team
+Calibration Team
+Missions
+Terra
+Aqua
+Suomi NPP
+JPSS-1/N20
+Responsible NASA Official:
+Sadashiva Devadiga
+Web Curator:
+Kevin Vermeesch
+Version: 0.38
+Privacy Policy & Important Notices
+LDOPE login

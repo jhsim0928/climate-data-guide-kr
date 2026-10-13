@@ -1,0 +1,280 @@
+# https://nsidc.org/data/spl3smp
+SMAP L3 Radiometer Global Daily 36 km EASE-Grid Soil Moisture, Version 9 | National Snow and Ice Data Center
+The SMAP Standard and Near Real-Time data sets experienced a geolocation issue from 14 May 2026 to 28 July 2026. All Standard products for that time period are currently being reprocessed and will be replaced in coming months.
+SMAP L3 Radiometer Global Daily 36 km EASE-Grid Soil Moisture, Version 9
+Data set id:
+SPL3SMP
+DOI: 10.5067/4XXOGX0OOW1S
+Data Citation and Acknowledgment
+As a condition of using these data, you must cite the use of this data set. Such a practice gives credit to data set producers and advances principles of transparency and reproducibility.
+O'Neill, P. E., Chan, S., Njoku, E. G., Jackson, T., Bindlish, R. & Chaubell, J. (2023).
+SMAP L3 Radiometer Global Daily 36 km EASE-Grid Soil Moisture
+. (SPL3SMP, Version 9). [Data Set]. Boulder, Colorado USA. NASA National Snow and Ice Data Center Distributed Active Archive Center.
+https://doi.org/10.5067/4XXOGX0OOW1S
+describe subset used if applicable
+]. Date Accessed 10-13-2026.
+Copied
+Other standard citation formats may be found on the
+DOI Citation Formatter website
+(paste
+10.5067/4XXOGX0OOW1S
+into the top form field).
+Describing subset: When applicable, include the information a reader would need to extract the same subset at the end of your citation. If multiple or complex steps were incolved, it may be more appropriate to include this information in the paper itself.
+See our
+Citation Policies
+for more details about how to structure your data citation.
+Subscribe here to receive email updates of the data set SPL3SMP
+COMPREHENSIVE Level of Service
+Data:
+Data integrity and usability verified; data customization services available for select data
+Documentation:
+Key metadata and comprehensive user guide available
+User Support:
+Assistance with data access and usage; guidance on use of data in tools and data customization services
+See All Level of Service Details
+This is the most recent version of these data.
+Version Summary
+Changes to this version include:
+• An improved processing methodology was applied to the input Level-2 radiometer brightness temperatures.
+• The data algorithms, structure, content, or processor code are otherwise unchanged from the previous version.
+For the full major and minor version history, go to
+https://nsidc.org/data/smap/version-history
+In this section
+Rendering Links ...
+Overview
+This Level-3 (L3) soil moisture product provides a composite of daily estimates of global land surface conditions retrieved by the Soil Moisture Active Passive (SMAP) passive microwave radiometer. SMAP L-band soil moisture data are resampled to a global, cylindrical 36 km Equal-Area Scalable Earth Grid, Version 2.0 (EASE-Grid 2.0).
+Parameter(s):
+BRIGHTNESS TEMPERATURE
+SURFACE SOIL MOISTURE
+Platform(s):
+SMAP
+Sensor(s):
+SMAP L-BAND RADIOMETER
+Data Format(s):
+HDF5
+Temporal Coverage:
+31 March 2015 to present
+Temporal Resolution:
+1 day
+Spatial Resolution:
+36 km
+Spatial Reference System(s):
+WGS 84 / NSIDC EASE-Grid 2.0 Global
+EPSG:6933
+Spatial Coverage:
+Northern latitude
+Southern latitude
+Eastern longitude
+Western longitude
+Blue outlined yellow areas on the map below indicate the spatial coverage for this data set.
+View Metadata Record
+Data Access & Tools
+A free NASA Earthdata Login account is required to access these data.
+Learn More
+Data Access Tool
+Filter files before downloading based on date, spatial area, or file name. Choose from various download options, such as Python script. Export bounding boxes as a GeoJSON.
+Search & Discover
+Get Data
+Related Help Resources
+How to filter and order from a data set web page
+How to use Earthdata Download
+Type:
+Web Application
+April 2025
+View Metadata
+NASA Earthdata Search
+Search and order data from all NASA DAACs using spatial and temporal filters in a map interface. Reformatting, reprojecting, and subsetting options are available for some data sets.
+Visualize
+Search & Discover
+Get Data
+Related Help Resources
+How to search, order, and customize data with NASA Earthdata Search
+Type:
+Web Application
+HTTPS File System
+Get Data
+Quickly download a few files using a web browser, or access data through a command-line utility such as WGET.
+Related Help Resources
+NASA Earthdata Cloud Data Access Guide
+Type:
+service
+earthaccess
+earthaccess is a python library to search and access NASA Earth science data with just a few lines of code.
+Get Data
+Search & Discover
+Supported software languages:
+Python
+Related Help Resources
+GitHub Repository
+Type:
+Downloadable Software
+May 2026
+View Metadata
+Harmony Transformation Services
+Customize
+Get Data
+Prepare analysis ready data and reduce time-to-science. Achieve seamless access to data across different NASA data centers. Customization options, which vary by data set, can include spatial, temporal, and variable subsetting, as well as regridding and reformatting.
+Related Help Resources
+NASA Earthdata Harmony documentation
+Search, order and customize NSIDC DAAC data using NASA Earthdata Search
+Subsetting NASA Earthdata using Harmony (harmony-py)
+Harmony API Quickstart Guide: Customizing NASA NSIDC DAAC data in Earthdata Cloud
+Type:
+service
+NASA Worldview
+Browse and display global satellite imagery layers from NASA GIBS. Download raw data, share screenshots, and create animations from the imagery.
+Visualize
+Search & Discover
+Get Data
+Customize
+Related Help Resources
+How to visualize and download data with NASA Worldview
+Type:
+Web Application
+Customization Capabilities:
+data reformatting
+NASA Earthdata Cloud (AWS S3)
+Get Data
+Access data directly from the NASA Earthdata Cloud via Amazon Web Services Simple Storage Service (AWS S3). This access option is only available when working within the us-west-2 region and requires additional AWS S3 credentials.
+Related Help Resources
+NASA Earthdata Cloud Data Access Guide
+AWS S3 Credentials
+Type:
+service
+View Metadata
+AppEEARS
+Extract point and area samples from geospatial data via spatial, temporal, and/or parameter subsetting. Preview and interact with samples before downloading. The Application for Extracting and Exploring Analysis Ready Samples tool is only available for select NSIDC data products.
+Visualize
+Analyze
+Get Data
+Search & Discover
+Customize
+Related Help Resources
+How to extract point and area data
+Type:
+Web Application
+Customization Capabilities:
+data reformatting
+reprojection
+spatial subsetting
+temporal subsetting
+variable subsetting
+SMAP Python Notebooks
+Search, download, and plot L3 SMAP data, guided by Python-based Jupyter Notebooks.
+Get Data
+Visualize
+Supported software languages:
+Python
+Related Help Resources
+https://github.com/nsidc/NSIDC-Data-Tutorials/tree/main/notebooks/SMAP
+Type:
+Downloadable Software
+January 2026
+View Metadata
+Documentation
+User Guide
+SPL3SMP User Guide Version 9 [2023]
+ATBDs
+SPL2/3SMP/_E Algorithm Theoretical Basis Document [2021]
+Product Specification Documents
+SPL3SMP Product Specification Document [2021]
+Help Articles
+General Questions & FAQs
+FAQs About NSIDC DAAC's Earthdata Cloud Migration
+This article covers frequently asked questions about the NASA NSIDC DAAC's Earthdata cloud migration project and what it means to data users.
+Read More
+How do I interpret the surface and quality flag information in the Level-2 and -3 passive soil moisture products?
+SMAP data files contain rich quality information that can be useful for many data users. The retrieval quality flag and surface flag bit values and interpretations are documented in the respective product Data Fields pages of the user guides for these data products
+Read More
+How to learn more about SMAP ancillary data
+SMAP Ancillary data sets are used to produce SMAP Level-1, -2, -3, and -4 standard data products.
+Read More
+What are the latencies for SMAP radiometer data sets?
+The following table describes both the required and actual latencies for the different SMAP radiometer data sets. Latency is defined as the time (# days, hh:mm:ss) from data acquisition to product generation.
+Read More
+What data subsetting, reformatting, and reprojection services are available for SMAP data?
+This short article describes the customization services available for SMAP data using Earthdata Search.
+Read More
+How to Articles
+Filter and order from a data set web page using the Data Access Tool
+Many NSIDC DAAC data sets can be accessed using NSIDC DAAC's Data Access Tool. This tool provides the ability to search and filter data with spatial and temporal constraints using a map-based interface.Users have the option to:
+Read More
+How do I convert an HDF5/HDF-EOS5 file into binary format?
+To convert HDF5 files into binary format you will need to use the h5dump utility, which is part of the HDF5 distribution available from the HDF Group. How you install HDF5 depends on your operating system.
+Read More
+How to extract point and area data samples using AppEEARS
+This step-by-step tutorial demonstrates how to access MODIS and SMAP data using the Application for Extracting and Exploring Analysis Ready Samples (AppEEARS). AppEEARS allows users to access, explore, and download point and area data with spatial, temporal, and parameter subsets.
+Read More
+How to import and geolocate SMAP Level-3 and Level-4 data in ENVI
+The following are instructions on how to import and geolocate SMAP Level-3 Radiometer Soil Moisture HDF5 data in ENVI.
+Testing notes
+Software: ENVI
+Software version: 5.3
+Platform: Windows 7
+Read More
+How to import NetCDF or HDF data into ArcGIS
+This How to guide outlines the steps for properly importing, projecting and visualizing HDF and NetCDF files in ArcMap. A couple of things to note before you start:
+Read More
+NASA Earthdata Cloud Data Access Guide
+The NASA Earthdata Cloud is the NASA cloud-based archive of Earth observations. It is hosted by Amazon Web Services (AWS). Learn how to find and access NSIDC DAAC data directly in the cloud.
+Read More
+Search, order, and customize NSIDC DAAC data with NASA Earthdata Search
+This article highlights the NSIDC DAAC data sets available with customization options and outlines a workflow for searching, ordering, and customizing data in NASA Earthdata Search. This approach is ideal for users who want to download data to their local machine.
+Read More
+Visualize and download NSIDC DAAC data with NASA Worldview
+NASA Worldview is a map interface that allows users to interactively browse imagery, create visualizations, and download the underlying data.
+Read More
+Visualize NSIDC data as WMS layers with ArcGIS and Google Earth
+NASA's Global Imagery Browse Services (GIBS) provides up to date, full resolution imagery for selected NSIDC DAAC data sets.
+Read More
+News & Analyses
+News & Stories
+Sea Ice Today
+Ice Sheets Today
+Snow Today
+About our Analyses
+Multimedia
+Data
+Explore Data
+Visualize Data
+Submit Data
+User Resources
+Get Started with Data
+Data Announcements
+Help Center
+Data Tools
+Documents
+Levels of Service
+NASA Earthdata Forum
+Data Programs
+About our Programs
+NASA National Snow and Ice Data Center Distributed Active Archive Center (NSIDC DAAC)
+NOAA at NSIDC
+Exchange for Observations and Local Knowledge of the Arctic (ELOKA)
+Data Policies
+Our Research
+Learn
+What is the Cryosphere?
+Parts of the Cryosphere
+Arctic Weather & Climate
+Frozen Ground & Permafrost
+Glaciers
+Ice Sheets
+Ice Shelves
+Sea Ice
+Snow
+Ask a Scientist
+Cryosphere glossary
+About
+About NSIDC
+What We Do
+Our People
+Published Research
+Our History
+Careers
+50th Anniversary
+For the Media
+Contact Us
+Citation Policies
+Protecting Your Privacy
+Land Acknowledgement

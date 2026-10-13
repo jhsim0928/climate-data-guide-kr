@@ -1,0 +1,281 @@
+# https://nsidc.org/data/nsidc-0776/versions/2
+MEaSUREs ITS_LIVE Regional Glacier and Ice Sheet Surface Velocities, Version 2 | National Snow and Ice Data Center
+MEaSUREs ITS_LIVE Regional Glacier and Ice Sheet Surface Velocities, Version 2
+Data set id:
+NSIDC-0776
+DOI: 10.5067/JQ6337239C96
+Data Citation and Acknowledgment
+As a condition of using these data, you must cite the use of this data set. Such a practice gives credit to data set producers and advances principles of transparency and reproducibility.
+Gardner, A. S., Fahnestock, M., Greene, C. A., Kennedy, J. H., Liukis, M., López, L. A. & Scambos, T. (2025).
+MEaSUREs ITS_LIVE Regional Glacier and Ice Sheet Surface Velocities
+. (NSIDC-0776, Version 2). [Data Set]. Boulder, Colorado USA. NASA National Snow and Ice Data Center Distributed Active Archive Center.
+https://doi.org/10.5067/JQ6337239C96
+describe subset used if applicable
+]. Date Accessed 10-13-2026.
+Copied
+Other standard citation formats may be found on the
+DOI Citation Formatter website
+(paste
+10.5067/JQ6337239C96
+into the top form field).
+Describing subset: When applicable, include the information a reader would need to extract the same subset at the end of your citation. If multiple or complex steps were incolved, it may be more appropriate to include this information in the paper itself.
+See our
+Citation Policies
+for more details about how to structure your data citation.
+Subscribe here to receive email updates of the data set NSIDC-0776
+COMPREHENSIVE Level of Service
+Data:
+Data integrity and usability verified; data customization services available for select data
+Documentation:
+Key metadata and comprehensive user guide available
+User Support:
+Assistance with data access and usage; guidance on use of data in tools and data customization services
+See All Level of Service Details
+This is the most recent version of these data.
+Version Summary
+Version 2 extends the temporal coverage through 2022, increases the spatial resolution to 120 m, and utilizes an improved feature tracking algorithm with updated error quantification.
+In this section
+Rendering Links ...
+Overview
+This data set from the Inter-Mission Time Series of Land Ice Velocity and Elevation (ITS_LIVE) project, part of NASA's Making Earth System Data Records for Use in Research Environments (MEaSUREs) Program, consists of regionally compiled, mean annual surface velocities, plus climatological means, for major glacier-covered regions. Velocities are derived from imagery acquired by the Sentinel-1 and Sentinel-2 and Landsat 4, 5, 7, 8, and 9 satellites. Data are available from 1985 to 2022, with nearly complete annual coverage provided after 2013.
+Parameter(s):
+ICE VELOCITY
+Platform(s):
+LANDSAT-4
+LANDSAT-5
+LANDSAT-7
+LANDSAT-8
+LANDSAT-9
+Sentinel-1A
+Sentinel-1B
+Sentinel-2A
+Sentinel-2B
+Sensor(s):
+C-SAR
+ETM+
+OLI-2
+Sentinel-2 MSI
+Data Format(s):
+netCDF-4
+Temporal Coverage:
+1 January 1984 to 31 December 2022
+Temporal Resolution:
+1 year
+Spatial Resolution:
+120 m
+Spatial Reference System(s):
+WGS 84 / Antarctic Polar Stereographic
+EPSG:3031
+WGS 84 / NSIDC Sea Ice Polar Stereographic North
+EPSG:3413
+WGS 84 / UTM zone 10N
+EPSG:32610
+WGS 84 / UTM zone 32N
+EPSG:32632
+WGS 84 / UTM zone 38N
+EPSG:32638
+WGS 84 / UTM zone 45N
+EPSG:32645
+WGS 84 / UTM zone 18S
+EPSG:32718
+WGS 84 / UTM zone 59S
+EPSG:32759
+Spatial Coverage:
+Northern latitude
+Southern latitude
+Eastern longitude
+Western longitude
+Northern latitude
+Southern latitude
+Eastern longitude
+Western longitude
+Northern latitude
+Southern latitude
+Eastern longitude
+Western longitude
+Northern latitude
+Southern latitude
+Eastern longitude
+Western longitude
+Northern latitude
+Southern latitude
+Eastern longitude
+Western longitude
+Northern latitude
+Southern latitude
+Eastern longitude
+Western longitude
+Northern latitude
+Southern latitude
+Eastern longitude
+Western longitude
+Northern latitude
+Southern latitude
+Eastern longitude
+Western longitude
+Northern latitude
+Southern latitude
+Eastern longitude
+Western longitude
+Northern latitude
+Southern latitude
+Eastern longitude
+Western longitude
+Northern latitude
+Southern latitude
+Eastern longitude
+Western longitude
+Northern latitude
+Southern latitude
+Eastern longitude
+Western longitude
+Northern latitude
+Southern latitude
+Eastern longitude
+Western longitude
+Northern latitude
+Southern latitude
+Eastern longitude
+Western longitude
+Northern latitude
+Southern latitude
+Eastern longitude
+Western longitude
+Northern latitude
+Southern latitude
+Eastern longitude
+Western longitude
+Blue outlined yellow areas on the map below indicate the spatial coverage for this data set.
+View Metadata Record
+Data Access & Tools
+A free NASA Earthdata Login account is required to access these data.
+Learn More
+Data Access Tool
+Filter files before downloading based on date, spatial area, or file name. Choose from various download options, such as Python script. Export bounding boxes as a GeoJSON.
+Search & Discover
+Get Data
+Related Help Resources
+How to filter and order from a data set web page
+How to use Earthdata Download
+Type:
+Web Application
+April 2025
+View Metadata
+NASA Earthdata Search
+Search and order data from all NASA DAACs using spatial and temporal filters in a map interface. Reformatting, reprojecting, and subsetting options are available for some data sets.
+Visualize
+Search & Discover
+Get Data
+Related Help Resources
+How to search, order, and customize data with NASA Earthdata Search
+Type:
+Web Application
+HTTPS File System
+Get Data
+Quickly download a few files using a web browser, or access data through a command-line utility such as WGET.
+Related Help Resources
+NASA Earthdata Cloud Data Access Guide
+Type:
+service
+earthaccess
+earthaccess is a python library to search and access NASA Earth science data with just a few lines of code.
+Get Data
+Search & Discover
+Supported software languages:
+Python
+Related Help Resources
+GitHub Repository
+Type:
+Downloadable Software
+May 2026
+View Metadata
+NASA Earthdata Cloud (AWS S3)
+Get Data
+Access data directly from the NASA Earthdata Cloud via Amazon Web Services Simple Storage Service (AWS S3). This access option is only available when working within the us-west-2 region and requires additional AWS S3 credentials.
+Related Help Resources
+NASA Earthdata Cloud Data Access Guide
+AWS S3 Credentials
+Type:
+service
+View Metadata
+Panoply Data Viewer
+Visualize georeferenced arrays in NetCDF, HDF and GRIB formats. Plot data on global or regional maps, choosing from multiple map projections. Overlay continent outlines or masks.
+Visualize
+Analyze
+Type:
+Downloadable Software
+Documentation
+User Guide
+MEaSUREs ITS_LIVE Regional Glacier and Ice Sheet Surface Velocities, Version 2 User Guide
+Help Articles
+How to Articles
+Downloading Data from Earthdata Cloud to Your Local Computer Using the Command Line
+This article shows how to download NSIDC DAAC data from NASA Earthdata Cloud to your computer using three tools: wget and curl—popular command-line utilities for downloading files—and Data Downloader, a Python-based command-line tool developed by the Physical Oceanography Distributed Active Archi
+Read More
+Filter and order from a data set web page using the Data Access Tool
+Many NSIDC DAAC data sets can be accessed using NSIDC DAAC's Data Access Tool. This tool provides the ability to search and filter data with spatial and temporal constraints using a map-based interface.Users have the option to:
+Read More
+How to convert NetCDF variables to GeoTIFF
+This article illustrates the how to convert NetCDF variables to single-band GeoTIFFs. You will need to have the Geospatial Data Abstraction Library (GDAL, http://gdal.org/) installed on your system before continuing.
+Read More
+NASA Earthdata Cloud Data Access Guide
+The NASA Earthdata Cloud is the NASA cloud-based archive of Earth observations. It is hosted by Amazon Web Services (AWS). Learn how to find and access NSIDC DAAC data directly in the cloud.
+Read More
+Search, order, and customize NSIDC DAAC data with NASA Earthdata Search
+This article highlights the NSIDC DAAC data sets available with customization options and outlines a workflow for searching, ordering, and customizing data in NASA Earthdata Search. This approach is ideal for users who want to download data to their local machine.
+Read More
+General Questions & FAQs
+FAQs About NSIDC DAAC's Earthdata Cloud Migration
+This article covers frequently asked questions about the NASA NSIDC DAAC's Earthdata cloud migration project and what it means to data users.
+Read More
+News & Analyses
+News & Stories
+Sea Ice Today
+Ice Sheets Today
+Snow Today
+About our Analyses
+Multimedia
+Data
+Explore Data
+Visualize Data
+Submit Data
+User Resources
+Get Started with Data
+Data Announcements
+Help Center
+Data Tools
+Documents
+Levels of Service
+NASA Earthdata Forum
+Data Programs
+About our Programs
+NASA National Snow and Ice Data Center Distributed Active Archive Center (NSIDC DAAC)
+NOAA at NSIDC
+Exchange for Observations and Local Knowledge of the Arctic (ELOKA)
+Data Policies
+Our Research
+Learn
+What is the Cryosphere?
+Parts of the Cryosphere
+Arctic Weather & Climate
+Frozen Ground & Permafrost
+Glaciers
+Ice Sheets
+Ice Shelves
+Sea Ice
+Snow
+Ask a Scientist
+Cryosphere glossary
+About
+About NSIDC
+What We Do
+Our People
+Published Research
+Our History
+Careers
+50th Anniversary
+For the Media
+Contact Us
+Citation Policies
+Protecting Your Privacy
+Land Acknowledgement
