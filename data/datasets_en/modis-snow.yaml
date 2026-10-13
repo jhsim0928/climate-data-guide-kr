@@ -86,7 +86,8 @@ variables:
         - text: "Consecutive cloudy days — `Cloud_Persistence` (days)"
           kind: accum
           note: 0 = clear today; n = cloudy for n consecutive days (the value is n days old)
-        - "Copy of the same-day MOD10A1 value — `MOD10A1_NDSI_Snow_Cover` (Aqua: `MYD10A1_NDSI_Snow_Cover`)"
+        - text: "Copy of the same-day MOD10A1 value — `MOD10A1_NDSI_Snow_Cover`, `MYD10A1_NDSI_Snow_Cover`"
+          note: "The first name is used in Terra files, the second in Aqua files"
         - "Quality — `Basic_QA`, `Algorithm_Flags_QA`"
     - name: 8-day snow cover, 500 m (MOD10A2 / MYD10A2)
       kind: max

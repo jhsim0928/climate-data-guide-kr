@@ -106,7 +106,7 @@ variables:
       kind: accum
       period: 월
       items:
-        - text: "연소 비율 — `burned_area/MM/burned_fraction` (격자 칸 대비 비율)"
+        - text: "연소 비율 — `burned_area/MM/burned_fraction` (비율, 격자 칸 면적 대비)"
           note: 소규모 화재 연소 면적(시험적 추정) 포함
           std: [burned_area]
         - text: "탄소 배출 — `emissions/MM/C` (g C m-2 month-1)"

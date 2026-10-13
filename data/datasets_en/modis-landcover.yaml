@@ -101,10 +101,10 @@ variables:
     - name: MCD12C1 0.05° aggregate (IGBP, UMD and LAI, classification for the year)
       kind: instant
       items:
-        - text: "Majority class — `Majority_Land_Cover_Type_1` (IGBP), `Majority_Land_Cover_Type_2` (UMD), `Majority_Land_Cover_Type_3` (LAI) (class code)"
+        - text: "Majority class — `Majority_Land_Cover_Type_1`, `Majority_Land_Cover_Type_2`, `Majority_Land_Cover_Type_3` (class code)"
           std: []
-          note: The MCD12C1 IGBP legend runs 0–16 with water bodies coded 0 (MCD12Q1 codes water as 17)
-        - text: "Confidence in the majority class — `Majority_Land_Cover_Type_1_Assessment` etc. (%)"
+          note: Suffix 1 is IGBP, 2 is UMD and 3 is LAI. The MCD12C1 IGBP legend runs 0–16 with water bodies coded 0 (MCD12Q1 codes water as 17)
+        - text: "Confidence in the majority class — `Majority_Land_Cover_Type_1_Assessment`~`Majority_Land_Cover_Type_3_Assessment` (%)"
           std: []
         - text: "Per-class percent cover — `Land_Cover_Type_1_Percent`, `Land_Cover_Type_2_Percent`, `Land_Cover_Type_3_Percent` (%)"
           std: []

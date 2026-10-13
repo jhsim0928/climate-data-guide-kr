@@ -484,3 +484,5 @@ details.hint summary { cursor: pointer; }
 /* 자료 페이지 — 받는 방법: 로그인 없이 받을 수 있는 곳 */
 .md-typeset .login-free { display: inline-block; margin-left: 0.4em; padding: 0 0.5em; border-radius: 999px; font-size: 0.68rem; font-weight: 600; line-height: 1.6; vertical-align: 0.08em; white-space: nowrap; color: #1b5e20; background: #e8f5e9; border: 1px solid #a5d6a7; }
 [data-md-color-scheme="slate"] .md-typeset .login-free { color: #a5d6a7; background: rgba(76,175,80,0.15); border-color: rgba(165,214,167,0.4); }
+/* 변수 표 안의 시간 특성 표시는 칸 너비 안에서 줄바꿈 (예: "순간값 (통과 시각)") */
+.md-typeset .var-tbl td .kind { white-space: normal; display: inline-block; max-width: 100%; line-height: 1.35; }

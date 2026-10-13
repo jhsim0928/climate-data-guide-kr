@@ -572,15 +572,24 @@ _HANGUL = re.compile("[가-힣]")
 def split_var(text: str) -> tuple[str, str, str, str]:
     """변수 설명 한 줄 → (이름, 변수명, 단위, 참고). 예) "총강수량 — `tp` (m)" → ("총강수량", "`tp`", "m", "")"""
     t = oneline(text)
+    # 변수명 범위 "`A`~`B`" → 한 덩어리 "`A~B`"
+    t = re.sub(r"`([^`]+)`\s*[~～]\s*`([^`]+)`", r"`\1~\2`", t)
     name, rest = (t.split(" — ", 1) + [""])[:2] if " — " in t else (t, "")
+    # 한 줄에 여러 변수: "구름 비율 — `a` (%), 맑음 지수 — `b` (%)" → 이름 "구름 비율·맑음 지수"
+    if rest:
+        extra = re.findall(r"[,;]\s*([^,;`—()]+?)\s+—\s+(?=`)", rest)
+        if extra:
+            rest = re.sub(r"([,;])\s*[^,;`—()]+?\s+—\s+(?=`)", r"\1 ", rest)
+            name = "·".join([name] + [x.strip() for x in extra])
     units, note = "", ""
-    unit_like = re.compile(r"[/%°^0-9]|^[A-Za-z][A-Za-z .\-²³⁻¹]*$|^(무차원|비율|개|일|분|초|도|코드|코드값|비트값|비트 플래그|연중 일수|백만 km²)$")
+    _KO_UNIT = r"(무차원|비율|개|회|일|시|분|초|도|시간|코드|코드값|정수 코드|등급 번호|부호화 정수|\d*비트|비트값|\d*비트 필드|\d*비트 플래그|연중 일수|백만 km²|[^,()]*단위|(?:비율\s*)?-?\d[\d.]*\s*[~–]\s*\d[\d.]*(?:\s*비율)?|dimensionless|unitless|fraction|count|percent)"
+    unit_like = re.compile(r"[/%°^0-9]|^[A-Za-z][A-Za-z .\-²³⁻¹]*$|^" + _KO_UNIT + "$")
     # 변수명마다 단위가 붙은 경우: "`10si` (m s-1), `10wdir` (degrees)" → 단위 "m s-1, degrees"
     # 단위 뒤에 다른 설명이 이어지는 경우: "`sst` (°C), 파일명…" → 단위 "°C", 나머지는 참고
     def _unit_ok(inner):
         inner = inner.strip()
         return bool(inner) and "=" not in inner and "," not in inner and unit_like.search(inner) \
-            and not (_HANGUL.search(inner) and not re.fullmatch(r"(무차원|비율|개|일|분|초|도|코드|코드값|비트값|비트 플래그|연중 일수|백만 km²)", inner))
+            and not (_HANGUL.search(inner) and not re.fullmatch(_KO_UNIT, inner))
     if rest:
         pairs = list(re.finditer(r"(`[^`]+`)\s*\(([^()]*)\)", rest))
         good = [m for m in pairs if _unit_ok(m.group(2))]
@@ -597,13 +606,26 @@ def split_var(text: str) -> tuple[str, str, str, str]:
     if m:
         inner = m.group(1).strip()
         head = inner.split(",")[0].strip()
-        if (rest and unit_like.search(head)) or (rest and not unit_like.search(head) and not _HANGUL.search(head)) or re.search(r"[/%°^0-9]", head):
+        parts = [x.strip() for x in re.split(r"[,;]", inner) if x.strip()] or [""]
+        # 한국어가 섞인 머리말은 한국어 단위(무차원·비율·비트 필드 …)이거나 단위 기호가 있을 때만 단위로 봄
+        # 예) "(0 전체 역산, 1 크기 역산)", "(비트값: 0 …)", "(등급 코드 10–220)"은 단위가 아니라 참고
+        head = parts[0]
+        head_ok = not (_HANGUL.search(head) and not re.fullmatch(_KO_UNIT, head) and not re.search(r"km²|°|/|%", head)) \
+            and not re.fullmatch(r"−?-?\d+\s+[A-Za-z][A-Za-z ]*", head) \
+            and not re.search(r":\s|scale|^(?:bits?|classes?)\s+\d", head, re.I)  # "0 invalid", "bits 0–7: …" 같은 코드 설명
+        tail = parts[-1] if len(parts) > 1 else ""
+        tail_ok = bool(tail) and not _HANGUL.search(tail) and len(tail) <= 20 and bool(re.fullmatch(
+            r"[A-Za-zµ°%²³⁻¹]+(?:-?\d+)?(?:[\s/]+[A-Za-zµ°%²³⁻¹]+(?:-?\d+)?)*", tail))
+        if rest and not head_ok and tail_ok:  # "(3시간 최댓값, K)" → 단위 K, 참고 "3시간 최댓값"
+            rest = rest[:m.start()].rstrip()
+            units, note = tail, ", ".join(parts[:-1])
+        elif head_ok and ((rest and unit_like.search(head)) or (rest and not unit_like.search(head) and not _HANGUL.search(head))
+                          or re.search(r"[/%°^0-9]", head) or re.fullmatch(_KO_UNIT, head)):
             if rest:
                 rest = rest[:m.start()].rstrip()
             else:
                 name = name[:m.start()].rstrip()
-            parts = [x.strip() for x in inner.split(",")]
-            if len(parts) > 1 and re.search("[가-힣]|파일", ", ".join(parts[1:])):
+            if len(parts) > 1 and re.search(r"[가-힣]|파일|\bfiles?\b|scale|offset|valid|stored|×|÷|[A-Za-z]{3,}\s+[A-Za-z]{3,}", ", ".join(parts[1:])):
                 units, note = parts[0], ", ".join(parts[1:])
             else:
                 units = inner
@@ -613,7 +635,8 @@ def split_var(text: str) -> tuple[str, str, str, str]:
     leftover = rest
     for c in codes:
         leftover = leftover.replace(c, "")
-    leftover = re.sub(r"^[\s,/·]+|[\s,/·]+$", "", re.sub(r"\s*,\s*,", ",", leftover)).strip()
+    leftover = re.sub(r"\s*[,;]\s*[,;]", ",", leftover)
+    leftover = re.sub(r"^[\s,;/·]+|[\s,;/·]+$", "", leftover).strip()
     if re.fullmatch(r"\([^()]*\)", leftover):
         leftover = leftover[1:-1].strip()
     if leftover:

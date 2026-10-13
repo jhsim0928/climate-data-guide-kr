@@ -86,7 +86,8 @@ variables:
         - text: "연속 구름 일수 — `Cloud_Persistence` (일)"
           kind: accum
           note: 0 = 오늘 맑음, n = n일 연속 구름(값이 n일 전 관측이라는 뜻)
-        - "당일 MOD10A1 값 사본 — `MOD10A1_NDSI_Snow_Cover` (Aqua는 `MYD10A1_NDSI_Snow_Cover`)"
+        - text: "당일 MOD10A1 값 사본 — `MOD10A1_NDSI_Snow_Cover`, `MYD10A1_NDSI_Snow_Cover`"
+          note: "앞은 Terra, 뒤는 Aqua 파일의 이름"
         - "품질 — `Basic_QA`, `Algorithm_Flags_QA`"
     - name: 8일 적설 500 m (MOD10A2 / MYD10A2)
       kind: max

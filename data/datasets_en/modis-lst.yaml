@@ -97,7 +97,7 @@ variables:
           std: [tskin]
           period: Monthly
           note: Monthly average of the MOD11C1 daily values
-        - text: "Clear-sky day and night bitmaps — `Clear_sky_days`, `Clear_sky_nights`"
+        - text: "Clear-sky day and night bitmaps — `Clear_sky_days`, `Clear_sky_nights` (bit field)"
           kind: accum
           note: Bits mark the days in the period with a clear observation; use them to check how many days entered the average
     - name: MOD21 TES — daily 1 km (MOD21A1D day / MOD21A1N night; same for MYD21)

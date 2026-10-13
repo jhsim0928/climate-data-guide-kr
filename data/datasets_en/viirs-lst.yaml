@@ -98,7 +98,7 @@ variables:
           std: [tskin]
           note: C1 averages the qualifying L2 pixels of the day; C2 and C3 average the C1 daily values over 8 days or a month
         - "Day and night LST uncertainty — `LST_Day_err`, `LST_Night_err` (K, scale 0.04)"
-        - text: "Day and night observation counts — `Count_Day`, `Count_Night`"
+        - text: "Day and night observation counts — `Count_Day`, `Count_Night` (count)"
           kind: accum
           note: Number of observations that entered the average
     - name: Static information

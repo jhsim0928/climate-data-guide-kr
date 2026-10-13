@@ -100,10 +100,10 @@ variables:
     - name: MCD12C1 0.05° 집계 (IGBP·UMD·LAI 세 체계, 해당 연도 분류 결과)
       kind: instant
       items:
-        - text: "주(최빈) 등급 — `Majority_Land_Cover_Type_1`(IGBP), `Majority_Land_Cover_Type_2`(UMD), `Majority_Land_Cover_Type_3`(LAI) (등급 번호)"
+        - text: "주(최빈) 등급 — `Majority_Land_Cover_Type_1`, `Majority_Land_Cover_Type_2`, `Majority_Land_Cover_Type_3` (등급 번호)"
           std: [land_cover]
-          note: MCD12C1의 IGBP 범례는 수체가 0이고 0–16 범위입니다(MCD12Q1은 17이 수체)
-        - text: "주 등급 신뢰도 — `Majority_Land_Cover_Type_1_Assessment` 등 (%)"
+          note: 끝 번호 1은 IGBP, 2는 UMD, 3은 LAI 분류. MCD12C1의 IGBP 범례는 수체가 0이고 0–16 범위입니다(MCD12Q1은 17이 수체)
+        - text: "주 등급 신뢰도 — `Majority_Land_Cover_Type_1_Assessment`~`Majority_Land_Cover_Type_3_Assessment` (%)"
           std: []
         - text: "등급별 피복률 — `Land_Cover_Type_1_Percent`, `Land_Cover_Type_2_Percent`, `Land_Cover_Type_3_Percent` (%)"
           std: [land_cover]
