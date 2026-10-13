@@ -14,7 +14,7 @@ A one-stop guide for atmospheric, ocean, sea-ice, polar and remote-sensing resea
 
 This site does not host any data. Every entry links to the official source. <!-- DATASET_COUNT --> datasets are documented so far (<!-- DOMAIN_COUNTS -->; some appear under two domains).
 
-**Forecast and projection data** — subseasonal-to-seasonal (S2S) and seasonal forecasts, CMIP climate model simulations and more — will be added over time.
+**Forecast and projection data** — subseasonal-to-seasonal (S2S) and seasonal forecasts, CMIP climate model simulations and more — will be added over time. To hear when they arrive, leave your email address via [Feedback](feedback.md?topic=forecast) and we will let you know.
 
 !!! warning "Please read before use"
     <!-- DISCLAIMER -->

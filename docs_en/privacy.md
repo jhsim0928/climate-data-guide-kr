@@ -18,7 +18,7 @@ The Korean Climate Data Navigator (the "site") collects only the minimum informa
 | Type of affiliation, position and research area (optional) | Aggregate statistics on who uses the Navigator, to choose datasets and improve the site; never published individually or used for anything else |
 | Dataset suggestion; name, affiliation, contact (optional) | Reviewing the suggestion, replying, crediting contributors if you wish |
 | Error report, page address, reply email (optional) | Correcting the site, replying |
-| Feedback about the site, reply email (optional) | Improving the site, replying |
+| Feedback about the site, reply email (optional) | Improving the site, replying (including news you asked for, such as new data being added) |
 
 There is no account or login, and nothing else is collected.
 

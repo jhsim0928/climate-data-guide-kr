@@ -130,6 +130,14 @@
   }
 
   function setupFeedback(form) {
+    // 홈의 "예측·전망 자료 추가 소식" 링크(?topic=forecast)로 들어오면 내용을 미리 채움
+    var topic = new URLSearchParams(location.search).get("topic");
+    if (topic === "forecast" && form.elements.message && !form.elements.message.value) {
+      form.elements.message.value = L("예측·전망 자료(S2S·계절예측·CMIP 등)가 추가되면 알려 주세요.",
+        "Please let me know when forecast and projection data (S2S, seasonal forecasts, CMIP …) are added.");
+      if (form.elements.kind) form.elements.kind.value = "other";
+      if (form.elements.contact) setTimeout(function () { form.elements.contact.focus(); }, 300);
+    }
     form.addEventListener("submit", function (e) {
       e.preventDefault();
       var get = function (n) { var el = form.elements[n]; return el ? el.value.trim() : ""; };
