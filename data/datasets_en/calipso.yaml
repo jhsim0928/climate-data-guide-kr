@@ -201,11 +201,12 @@ variables:
       items:
         - text: "Monthly mean tropospheric aerosol optical depth at 532 nm — `AOD_Mean` (dimensionless)"
           std: [aerosol]
-        - text: "Monthly mean aerosol extinction profile at 532 nm — `Extinction_Coefficient_532_Mean` (check units in the file attributes)"
+        - text: "Monthly mean aerosol extinction profile at 532 nm — `Extinction_Coefficient_532_Mean`"
           std: [aerosol]
-        - text: "AOD and extinction by subtype — `AOD_Mean_[subtype]`, `Extinction_Coefficient_532_Mean_[subtype]` (seven subtypes such as dust, marine, polluted continental/smoke)"
+          note: "Check units in the file attributes"
+        - text: "AOD and extinction by subtype — `AOD_Mean_[subtype]`, `Extinction_Coefficient_532_Mean_[subtype]`"
           std: [aerosol]
-          note: Check exact names in your files (the documentation gives only the naming pattern)
+          note: "Seven subtypes such as dust, marine, polluted continental/smoke. Check exact names in your files (the documentation gives only the naming pattern)"
 
 access:
   - name: NASA ASDC — CALIPSO data holdings

@@ -75,9 +75,9 @@ variables:
     - name: Land cover map (10 m, classification for the year)
       kind: instant
       items:
-        - text: "Land cover class — `Map` layer (class codes 10–100, 8-bit)"
+        - text: "Land cover class — `Map` layer"
           std: []
-          note: 10 tree cover, 20 shrubland, 30 grassland, 40 cropland, 50 built-up, 60 bare/sparse vegetation, 70 snow and ice, 80 permanent water bodies, 90 herbaceous wetland, 95 mangroves, 100 moss and lichen
+          note: "Class codes 10–100, 8-bit. 10 tree cover, 20 shrubland, 30 grassland, 40 cropland, 50 built-up, 60 bare/sparse vegetation, 70 snow and ice, 80 permanent water bodies, 90 herbaceous wetland, 95 mangroves, 100 moss and lichen"
     - name: Input quality (60 m, 3 bands)
       kind: accum
       period: the map year

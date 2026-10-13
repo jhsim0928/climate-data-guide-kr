@@ -99,7 +99,7 @@ variables:
           note: 마이크로파·육지·해빙·호수·강 구분. 제품 페이지에 따르면 v5.3에서 39.8°C를 넘는 주간 SST를 표시하는 비트 6이 추가됨
     - name: 보조 자료
       items:
-        - text: "해빙 비율 — `sea_ice_fraction` (파일 속성 units: percent, scale_factor 0.01)"
+        - text: "해빙 비율 — `sea_ice_fraction` (percent, scale_factor 0.01)"
           kind: mean
           period: 일
           note: OSI SAF 해빙 자료(없으면 NOAA OISST)를 4 km로 재격자화. 내부 시간 정의는 확인하지 못함
@@ -107,7 +107,7 @@ variables:
           kind: instant
           note: NCEP/DOE 재분석 바람. 관측 시각에 맞춘 방법은 확인하지 못함
           std: []
-        - text: "에어로졸 동적 지표 — `aerosol_dynamic_indicator` (파일 속성 units: percent)"
+        - text: "에어로졸 동적 지표 — `aerosol_dynamic_indicator` (percent)"
           kind: instant
           note: 구름·태양 반사가 없는 바다에서 산출한 0.63 µm 에어로졸 광학 두께. 두 출처를 섞어 최적이 아니라고 NCEI가 밝힘
           std: []

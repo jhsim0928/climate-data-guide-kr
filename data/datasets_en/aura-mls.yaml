@@ -123,15 +123,18 @@ variables:
       kind: instant
       period: overpass time
       items:
-        - "1σ precision — `L2gpPrecision` (same units as the value; discard if zero or negative)"
+        - text: "1σ precision — `L2gpPrecision`"
+          note: "Same units as the value; discard if zero or negative"
         - "Status bits — `Status` (discard if odd; use non-zero even values with caution)"
-        - "Quality — `Quality` (must exceed the threshold)"
-        - "Convergence — `Convergence` (must be below the threshold)"
+        - text: "Quality — `Quality`"
+          note: "Must exceed the threshold"
+        - text: "Convergence — `Convergence`"
+          note: "Must be below the threshold"
     - name: L3 (netCDF4, averages after screening)
       kind: mean
       period: Daily / monthly
       items:
-        - "Monthly binned mean, minimum, maximum and standard deviation per species (for example ML3MBT temperature, ML3MBO3 ozone, ML3MBH2O water vapour)"
+        - "Monthly binned mean, minimum, maximum and standard deviation per species — for example ML3MBT temperature, ML3MBO3 ozone, ML3MBH2O water vapour"
         - "Daily binned (ML3DB*) and daily zonal means (ML3DZ*)"
 
 access:

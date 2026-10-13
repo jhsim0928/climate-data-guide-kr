@@ -93,7 +93,8 @@ variables:
           std: [aerosol]
         - text: "Backscatter coefficient at 355 nm — `particle_backscatter_coefficient_355nm` at the same three resolutions (m-1 sr-1)"
           std: [aerosol]
-        - "Simple classification — `simple_classification` (−3 missing to 5 stratospheric aerosol)"
+        - text: "Simple classification — `simple_classification`"
+          note: "−3 missing to 5 stratospheric aerosol"
     - name: MSI aerosol optical thickness (MSI_AOT_2A, 500 m swath)
       kind: instant
       period: observation time

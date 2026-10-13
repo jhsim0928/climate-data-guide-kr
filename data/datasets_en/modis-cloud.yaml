@@ -89,7 +89,8 @@ variables:
         - "Cloud top temperature (5 km) — `Cloud_Top_Temperature` (K, scale 0.01, add_offset −15000)"
         - text: "Cloud fraction (5×5 1 km pixels, from the cloud mask) — `Cloud_Fraction` (dimensionless, scale 0.01)"
           std: [cloud]
-        - "Infrared cloud phase (1 km) — `Cloud_Phase_Infrared_1km` (0 = clear, 1 = water, 2 = ice, 3 = mixed, 6 = undetermined)"
+        - text: "Infrared cloud phase (1 km) — `Cloud_Phase_Infrared_1km`"
+          note: "0 = clear, 1 = water, 2 = ice, 3 = mixed, 6 = undetermined"
     - name: L2 cloud optical properties 1 km, daytime (MOD06_L2, MYD06_L2)
       kind: instant
       period: overpass time (daytime)
@@ -98,7 +99,8 @@ variables:
         - "Cloud effective particle radius (2.1 µm) — `Cloud_Effective_Radius` (µm, scale 0.01)"
         - text: "Cloud water path (liquid or ice column, 2.1 µm) — `Cloud_Water_Path` (g m-2)"
           std: [cloud_water]
-        - "Cloud phase used in the optical retrieval — `Cloud_Phase_Optical_Properties` (0 = mask undetermined, 1 = clear, 2 = liquid, 3 = ice, 4 = undetermined, retrieved as liquid)"
+        - text: "Cloud phase used in the optical retrieval — `Cloud_Phase_Optical_Properties`"
+          note: "0 = mask undetermined, 1 = clear, 2 = liquid, 3 = ice, 4 = undetermined, retrieved as liquid"
         - "Optical thickness from the 1.6 µm and 1.6/2.1 µm pairs — `Cloud_Optical_Thickness_16`, `Cloud_Optical_Thickness_1621` (dimensionless)"
         - "Partly cloudy (cloud edge) pixel retrieval (PCL) — `Cloud_Optical_Thickness_1621_PCL` (dimensionless)"
     - name: L3 daily 1° (MOD08_D3, MYD08_D3)

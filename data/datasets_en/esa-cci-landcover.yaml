@@ -71,9 +71,9 @@ variables:
     - name: Land cover classification (classification for the year)
       kind: instant
       items:
-        - text: "LCCS land cover class — `lccs_class` (class codes 10–220, 0 = no data)"
+        - text: "LCCS land cover class — `lccs_class`"
           std: []
-          note: 22 level-1 classes plus regional sub-classes (61/62, 71/72, etc.). Sub-classes are separate codes that do not overlap their parent class
+          note: "Class codes 10–220, 0 = no data. 22 level-1 classes plus regional sub-classes (61/62, 71/72, etc.). Sub-classes are separate codes that do not overlap their parent class"
     - name: Quality flags
       kind: instant
       items:

@@ -81,22 +81,22 @@ variables:
       kind: instant
       items:
         - text: "원격반사도·대기분자산란 보정 반사도 — `AC` (RRS·RhoC, 밴드별)"
-          std: []
+          std: [rrs]
         - text: "고유 광특성 — `IOP` (흡광계수 a·후방산란계수 bb)"
-          std: []
+          std: [iop]
         - text: "하향 확산 감쇠 계수 — `Kd`"
-          std: []
+          std: [kd]
         - text: "세키 깊이(투명도) — `Zsd`"
-          std: []
+          std: [kd]
     - name: 기본 해색 (L2, 회차별)
       kind: instant
       items:
         - text: "엽록소 농도 — `Chl`"
-          std: []
+          std: [chl]
         - text: "총 부유물 농도 — `TSS`"
-          std: []
+          std: [particles]
         - text: "용존 유기물 — `CDOM`"
-          std: []
+          std: [iop]
     - name: 해양 산출물 (L2, 회차별)
       kind: instant
       items:

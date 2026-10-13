@@ -82,7 +82,8 @@ variables:
           std: [aerosol]
         - "DB land AOD expected uncertainty — `Aerosol_Optical_Thickness_550_Expected_Uncertainty_Land` (dimensionless)"
         - "DB/SOAR Ångström exponent (quality filtered) — `Angstrom_Exponent_Land_Ocean_Best_Estimate` (dimensionless)"
-        - "Land and ocean quality flags — `Aerosol_Optical_Thickness_QA_Flag_Land`, `Aerosol_Optical_Thickness_QA_Flag_Ocean` (0 = no retrieval, 1 = poor, 2 = moderate (land), 3 = good)"
+        - text: "Land and ocean quality flags — `Aerosol_Optical_Thickness_QA_Flag_Land`, `Aerosol_Optical_Thickness_QA_Flag_Ocean`"
+          note: "0 = no retrieval, 1 = poor, 2 = moderate (land), 3 = good"
     - name: Dark Target L2 swath 6 km (AERDT_L2_VIIRS_NOAA20, NOAA21, SNPP)
       kind: instant
       period: overpass time

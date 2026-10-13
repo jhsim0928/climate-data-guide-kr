@@ -89,8 +89,9 @@ variables:
           note: OCI algorithm (CI blended with OCx), the same as MODIS
         - text: "Remote sensing reflectance (Suomi NPP) — `Rrs_410`, `Rrs_443`, `Rrs_486`, `Rrs_551`, `Rrs_671` (sr-1)"
         - text: "Remote sensing reflectance (NOAA-20 and NOAA-21) — `Rrs_411`, `Rrs_445`, `Rrs_489`, `Rrs_556`, `Rrs_667` (sr-1)"
-        - text: "Aerosol optical thickness (atmospheric-correction by-product) — `aot_862` (Suomi NPP), `aot_868` (NOAA-20/21) (dimensionless)"
+        - text: "Aerosol optical thickness (atmospheric-correction by-product) — `aot_862`, `aot_868` (dimensionless)"
           std: []
+          note: "aot_862 for Suomi NPP, aot_868 for NOAA-20/21"
         - text: "Angstrom exponent (atmospheric-correction by-product) — `angstrom` (dimensionless)"
           std: []
         - text: "Diffuse attenuation coefficient of downwelling irradiance at 490 nm — `Kd_490` (m-1)"

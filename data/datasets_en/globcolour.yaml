@@ -83,8 +83,8 @@ variables:
           note: CI (Hu et al.) in oligotrophic waters, OC5 in mesotrophic and coastal waters, blended between 0.15 and 0.2 mg m-3
         - text: "Chlorophyll uncertainty — `CHL_uncertainty` (%)"
           std: []
-        - text: "Phytoplankton functional type chlorophyll — `DIATO` (diatoms), `DINO` (dinophytes), `GREEN` (green algae), `HAPTO` (haptophytes), `PROCHLO` (Prochlorococcus), `PROKAR` (prokaryotes) (mg m-3)"
-          note: Each has a *_uncertainty variable (%). Not available before 2002
+        - text: "Phytoplankton functional type chlorophyll — `DIATO`, `DINO`, `GREEN`, `HAPTO`, `PROCHLO`, `PROKAR` (mg m-3)"
+          note: "Diatoms, dinophytes, green algae, haptophytes, Prochlorococcus and prokaryotes, in that order. Each has a *_uncertainty variable (%). Not available before 2002"
         - text: "Phytoplankton size class chlorophyll — `MICRO`, `NANO`, `PICO` (mg m-3)"
         - text: "Chlorophyll horizontal gradient — `CHL_gradient` (mg m-3 km-1)"
           note: In the OLCI datasets; to be extended to the multi-sensor L3 daily data from November 2026
