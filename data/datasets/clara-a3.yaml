@@ -1,0 +1,260 @@
+# ─────────────────────────────────────────────────────────────
+# CLARA-A3 — 데이터셋 정보 파일
+# 위성 탭 '구름·복사'에 싣습니다. CDR 1979–2020 + ICDR(2021~, 2025-06부터 Metop만 사용).
+# 수정 후에는 공식 페이지에서 확인한 날짜로 last_verified 를 갱신하세요.
+# ─────────────────────────────────────────────────────────────
+id: clara-a3
+name: "CLARA-A3"
+full_name: CM SAF cLoud, Albedo and surface RAdiation dataset from AVHRR data – Edition 3 (EUMETSAT CM SAF의 AVHRR 기반 구름·지표 알베도·복사 기후자료 3판)
+category: satellite
+domain: satellite
+group: 구름·복사
+order: 20
+domains: [대기, 육지, 원격탐사]
+provider: EUMETSAT 기후감시 위성응용센터(CM SAF) — SMHI·DWD·FMI·KNMI·RMIB
+
+status: active
+status_note: >-
+  1979~2020년 기후자료(CDR)를 같은 알고리즘의 임시 기후자료(ICDR)로 약 10일 지연으로 이어 가고 있습니다.
+  NOAA-18·19가 2025년 6월 임무를 마치면서 ICDR은 2025년 6월 1일부터 Metop-B·C 두 위성만으로 만들어지고, 이때 구름 수액·빙정 경로(LWP·IWP·CWP)와 결합 히스토그램(JCH)은 ICDR 생산이 끝났습니다.
+  다음 판(CLARA-A4 등)의 공개 일정은 2026-10-13 현재 CM SAF 누리집에서 찾지 못했습니다.
+
+transitions:
+  - from: CLARA-A2 (A2.1)
+    to: CLARA-A3
+    status: completed
+    date: "2023-04"
+    summary: AVHRR/1 자료까지 넣어 시작 시점을 1979년으로 당기고, 구름·알베도·복사 산출물을 대폭 늘린 3판입니다. 같은 페이지 안 판 교체입니다.
+    changes:
+      - aspect: 기간
+        before: 1982년부터 (A2.1)
+        after: 1979-01–2020-12 CDR + 2021-01부터 ICDR
+      - aspect: 입력 센서
+        before: AVHRR/2·AVHRR/3
+        after: TIROS-N·NOAA-6 이후 AVHRR/1까지 포함
+      - aspect: 새 구름 산출물
+        before: 구름량·구름 상단·운상·수분 경로 등
+        after: 액체 구름 입자 수농도(CDNC)·구름 기하 두께(CGT) 추가, 구름 산출물 전반 갱신
+      - aspect: 새 알베도 산출물
+        before: 흑공 알베도(SAL)
+        after: 백공(WAL)·청공(BAL) 알베도 추가
+      - aspect: 새 복사 산출물
+        before: 지표 하향 단파·장파 등
+        after: 지표 순단파·순장파·복사수지(SNS·SNL·SRB), 대기 상단 반사 단파(RSF)·방출 장파(OLR) 추가
+    impacts:
+      - CLARA-A2와 A3를 한 시계열로 이어 붙이지 마세요. 보정과 알고리즘이 달라 같은 달의 값도 다릅니다.
+      - 2021년 이후 ICDR은 가시 채널 보정이 CDR만큼 정밀하지 않다고 개발진이 밝히고 있습니다. 2020년/2021년 경계를 넘는 추세는 조심해서 해석하세요.
+    sources:
+      - name: Karlsson et al. (2023), ESSD — CLARA-A3
+        url: https://doi.org/10.5194/essd-15-4901-2023
+      - name: CM SAF — CLARA-A3 DOI 안내 페이지
+        url: https://wui.cmsaf.eu/safira/action/viewDoiDetails?acronym=CLARA_AVHRR_V003
+
+period:
+  start: "1979-01"
+  end: present
+  note: >-
+    CDR은 1979-01-01~2020-12-31, ICDR은 2021-01-01부터 현재까지 약 10일 지연으로 이어집니다(CM SAF 운영 산출물 목록 'since 01 Jan 2021').
+    구름 수액·빙정 경로와 JCH 등 일부 ICDR 산출물은 2025년 5월분이 마지막입니다.
+
+resolution:
+  spatial_short: "28 km (0.25°)"
+  temporal_short: "1일"
+  spatial: >-
+    구름·복사 평균 산출물은 0.25°×0.25° 전지구 격자, 지표 알베도와 일부 구름 산출물은 극지역 25 km 등면적 격자(알베도는 EASE-2),
+    결합 구름 히스토그램(JCH)은 1°×1°, 위성별 일별 재배열 구름 산출물(Level-2b)은 0.05°×0.05°입니다.
+  vertical: 구름 상단 높이·기압·온도(단일 층), 지표와 대기 상단 복사
+  temporal: 일평균·월평균(알베도는 5일 평균·월평균), 월·일 히스토그램. Level-2b는 위성별 하루 단위
+
+update: ICDR 연장 — 관측 후 약 10일 지연
+license: CC BY 4.0 (지식재산권 EUMETSAT) — 무료, 출처 표기와 판 번호 명시 요청
+account_required: true
+
+summary: >-
+  CLARA-A3는 NOAA·Metop 극궤도 위성의 AVHRR 영상을 40년 넘게 이어 붙여 만든 전지구 구름·지표 알베도·복사 기후자료입니다.
+  구름량, 구름 상단 높이·기압·온도, 운상, 광학두께, 수액·빙정 경로 같은 구름 특성과 지표 단파·장파 복사, 지표 알베도, 대기 상단 반사 단파·방출 장파를
+  0.25° 격자의 일·월 평균으로 제공합니다. 1979~2020년은 기후자료(CDR), 2021년부터는 같은 방법의 임시 기후자료(ICDR)로 계속 늘어납니다.
+
+time_convention:
+  summary: >-
+    일평균은 그날 지나간 모든 AVHRR 위성 관측을 0.25° 격자에 모아 평균한 값, 월평균은 그달 일평균의 평균입니다. 하루 몇 번 지나가는 극궤도 관측이므로
+    일평균이라도 실제로는 위성 통과 시각(지방시)의 표본에 크게 좌우됩니다.
+  points:
+    - "파일 이름은 CM SAF 규칙 'PRO+t+s+yyyymmddhhmm+판+격자+자료원+처리단계+영역'을 따릅니다. 예를 들어 `CFCmm`은 구름량 월평균, `dm`은 일평균, `pm`은 5일 평균, `mh`는 월 히스토그램이고, 날짜는 구간의 시작입니다. 처리단계 `I1` 등은 ICDR을 뜻합니다."
+    - "초기(1979~1987년)에는 오전이나 오후 궤도 하나만 있어 품질이 떨어지고(일평균 OLR 평균절대오차 약 40% 증가), 2002년 이전 중간 오전 궤도 부재와 2016년 이후 오후 궤도 소실로 RSF 오차가 두 배 가까이 늘었다고 개발진이 밝혔습니다. 월평균이 일평균보다 훨씬 안정적입니다."
+    - "2025년 6월 1일부터 ICDR은 Metop-B·C(오전 궤도)만 쓰므로 주간 관측 시각 분포가 바뀌었습니다. CM SAF는 특히 일평균 품질에 영향이 있다고 공지했습니다."
+    - "광학두께·수액·빙정 경로처럼 태양광 반사 채널을 쓰는 구름 광학 특성은 주간 관측에서만 산출됩니다."
+  source: https://doi.org/10.5194/essd-15-4901-2023
+  source_name: Karlsson et al. (2023) ESSD + CM SAF Service Message 164 + CM SAF Naming Convention
+
+variables:
+  note: >-
+    파일 속 변수명은 공식 문서에서 확인하지 못해 CM SAF 산출물 약어(파일 이름 앞 세 글자)로 적었습니다. 변수명과 단위는 받은 파일이나
+    산출물 사용자 설명서(PUM)에서 확인하세요.
+  full_list: https://wui.cmsaf.eu/safira/action/viewDoiDetails?acronym=CLARA_AVHRR_V003
+  groups:
+    - name: 구름 특성 (일·월평균, 0.25°)
+      kind: mean
+      period: 일·월
+      items:
+        - text: "구름량 — CFC 산출물 (구름 마스크 CMA 기반)"
+          std: [cloud]
+        - "구름 상단 기압·높이·온도 — CTO 산출물"
+        - "운상(액체·얼음) — CPH 산출물"
+        - text: "구름 수액 경로 — LWP 산출물"
+          std: [cloud_water]
+          note: 주간만. ICDR은 2025년 5월분까지
+        - text: "구름 빙정 경로 — IWP 산출물"
+          std: [cloud_water]
+          note: 주간만. ICDR은 2025년 5월분까지
+    - name: 구름 히스토그램 (월)
+      kind: accum
+      period: 월
+      items:
+        - text: "구름 상단·광학두께 결합 히스토그램 — JCH 산출물 (1°)"
+          note: 월간 빈도 분포. ICDR은 2025년 5월분까지
+        - text: "구름 수분 경로 히스토그램 — CWP 산출물"
+          note: 월간 빈도 분포. ICDR은 2025년 5월분까지
+    - name: 지표 알베도
+      kind: mean
+      period: 5일·월
+      items:
+        - "지표 알베도(흑공·백공·청공) — SAL 산출물"
+    - name: 지표·대기 상단 복사
+      kind: mean
+      period: 일·월
+      items:
+        - "지표 하향 단파복사 — SIS 산출물 (W m-2)"
+        - text: "지표 하향 장파복사 — SDL 산출물 (W m-2)"
+          period: 월
+        - text: "지표 순단파·순장파·복사수지 — SNS·SNL·SRB 산출물 (W m-2)"
+          period: 월
+        - "대기 상단 반사 단파 — RSF 산출물 (W m-2)"
+        - "대기 상단 방출 장파(OLR) — OLR 산출물 (W m-2)"
+
+access:
+  - name: CM SAF 웹 사용자 인터페이스(WUI)
+    url: https://wui.cmsaf.eu/
+    method: 웹 주문 (무료 회원가입 후 산출물·기간·영역 선택 → 이메일로 내려받기 주소 안내)
+    note: 모든 산출물·위성별 자료·극지역 격자를 받을 수 있는 기본 경로입니다. 주문 자료는 https/sftp 서버에서 7일간 내려받을 수 있습니다.
+  - name: EUMETSAT Data Store — CLARA-A3 CDR·ICDR (EO:EUM:DAT:0874)
+    url: https://data.eumetsat.int/product/EO:EUM:DAT:0874
+    method: 웹 / Data Store API (eumdac)
+    note: >-
+      모든 AVHRR를 합친 전지구 산출물 일부(CFC·CPH·CTO·IWP·LWP·OLR·RSF·SIS 일·월평균, SAL 5일·월평균, CTO·CWP·JCH 월 히스토그램,
+      SDL·SNL·SNS·SRB 월평균)만 있고, 영역 잘라내기는 아직 안 됩니다. EUMETSAT 계정이 필요합니다.
+  - name: Copernicus CDS — Cloud properties (CLARA 포함)
+    url: https://cds.climate.copernicus.eu/datasets/satellite-cloud-properties
+    method: 웹 / CDS API
+    note: C3S가 재배포하는 사본으로, 판·기간이 CM SAF 원본과 다를 수 있습니다. ECMWF 계정이 필요합니다.
+
+example:
+  lang: python
+  note: >-
+    EUMETSAT 계정의 API 키(consumer key·secret)로 Data Store에서 받습니다. 검색 조건 이름은 컬렉션마다 다르니 `coll.search_options`로 먼저 확인하세요.
+    Data Store의 '제품'은 압축 묶음일 수 있습니다.
+  code: |
+    # pip install eumdac
+    import datetime as dt
+    import shutil
+    import eumdac
+
+    token = eumdac.AccessToken(("CONSUMER_KEY", "CONSUMER_SECRET"))
+    store = eumdac.DataStore(token)
+    coll = store.get_collection("EO:EUM:DAT:0874")   # CLARA-A3 CDR + ICDR
+    print(coll.title)
+    print(coll.search_options)                        # 쓸 수 있는 검색 조건
+
+    products = coll.search(dtstart=dt.datetime(2024, 1, 1), dtend=dt.datetime(2024, 2, 1))
+    for p in products:
+        print(p)
+        with p.open() as src, open(src.name, "wb") as dst:
+            shutil.copyfileobj(src, dst)
+        break                                         # 예시로 하나만
+
+tips:
+  - 2025년 6월부터 ICDR이 Metop만으로 바뀌어 관측 시각 구성이 달라졌습니다. 2025년 전후 일평균·일변화가 섞인 분석은 이 시점을 끊어 보세요.
+  - 2021년 이후 ICDR은 ERA5T 같은 예비 보조자료와 덜 정밀한 가시 채널 보정을 씁니다. 2025년 8월부터는 해빙 입력도 SSMIS 기반(OSI-401-d)에서 AMSR2 기반(OSI-408-a)으로 바뀌었습니다.
+  - Metop-C는 가시 채널 보정 문제로 ICDR 기준선에서 처음엔 빠져 있었습니다(논문 기준). 위성별 Level-2b 자료를 쓸 때 어떤 위성이 들어갔는지 파일 속성으로 확인하세요.
+  - 2026년 3월 이전에 만든 대기 상단 복사(RSF·OLR) 파일은 전역 속성 'platforms'에 Metop-B·C 이름이 빠져 있습니다(자료 값은 정상). 속성으로 위성을 고르는 코드라면 주의하세요.
+  - 극궤도 하루 몇 번의 관측을 평균한 값이라 일변화가 큰 대류운·해양 층적운 지역은 일평균 편향이 생길 수 있습니다. 일변화가 필요하면 정지궤도 기반 CLAAS-3(유럽·아프리카)나 ISCCP를 함께 보세요.
+
+citations:
+  dataset:
+    - label: CLARA-A3 (CDR·ICDR)
+      text: >-
+        Karlsson, K.-G., Riihelä, A., Trentmann, J., Stengel, M., Solodovnik, I., Meirink, J. F., Devasthale, A., Jääskeläinen, E., Kallio-Myers, V.,
+        Eliasson, S., Benas, N., Johansson, E., Stein, D., Finkensieper, S., Håkansson, N., Akkermans, T., Clerbaux, N., Selbach, N., Schröder, M., Hollmann, R. (2023):
+        CLARA-A3: CM SAF cLoud, Albedo and surface RAdiation dataset from AVHRR data - Edition 3. Satellite Application Facility on Climate Monitoring.
+        https://doi.org/10.5676/EUM_SAF_CM/CLARA_AVHRR/V003
+      doi: 10.5676/EUM_SAF_CM/CLARA_AVHRR/V003
+      bibtex: |
+        @misc{clara_a3,
+          author    = {Karlsson, Karl-G{\"o}ran and Riihel{\"a}, Aku and Trentmann, J{\"o}rg and Stengel, Martin and Solodovnik, Irina and Meirink, Jan Fokke and Devasthale, Abhay and J{\"a}{\"a}skel{\"a}inen, Emmihenna and Kallio-Myers, Viivi and Eliasson, Salomon and Benas, Nikos and Johansson, Erik and Stein, Diana and Finkensieper, Stephan and H{\aa}kansson, Nina and Akkermans, Tom and Clerbaux, Nicolas and Selbach, Nathalie and Schr{\"o}der, Marc and Hollmann, Rainer},
+          title     = {{CLARA-A3}: {CM SAF} cLoud, Albedo and surface RAdiation dataset from {AVHRR} data - Edition 3},
+          year      = {2023},
+          publisher = {Satellite Application Facility on Climate Monitoring (CM SAF)},
+          doi       = {10.5676/EUM_SAF_CM/CLARA_AVHRR/V003}
+        }
+  papers:
+    - label: CLARA-A3 소개 논문
+      text: >-
+        Karlsson, K.-G., Stengel, M., Meirink, J. F., Riihelä, A., Trentmann, J., Akkermans, T., Stein, D., Devasthale, A., Eliasson, S., Johansson, E.,
+        Håkansson, N., Solodovnik, I., Benas, N., Clerbaux, N., Selbach, N., Schröder, M., and Hollmann, R. (2023): CLARA-A3: The third edition of the
+        AVHRR-based CM SAF climate data record on clouds, radiation and surface albedo covering the period 1979 to 2023. Earth System Science Data, 15, 4901–4926.
+      doi: 10.5194/essd-15-4901-2023
+      bibtex: |
+        @article{karlsson2023claraa3,
+          author  = {Karlsson, Karl-G{\"o}ran and Stengel, Martin and Meirink, Jan Fokke and Riihel{\"a}, Aku and Trentmann, J{\"o}rg and Akkermans, Tom and Stein, Diana and Devasthale, Abhay and Eliasson, Salomon and Johansson, Erik and H{\aa}kansson, Nina and Solodovnik, Irina and Benas, Nikos and Clerbaux, Nicolas and Selbach, Nathalie and Schr{\"o}der, Marc and Hollmann, Rainer},
+          title   = {{CLARA-A3}: The third edition of the {AVHRR}-based {CM SAF} climate data record on clouds, radiation and surface albedo covering the period 1979 to 2023},
+          journal = {Earth System Science Data},
+          volume  = {15},
+          pages   = {4901--4926},
+          year    = {2023},
+          doi     = {10.5194/essd-15-4901-2023}
+        }
+  acknowledgement: >-
+    CM SAF는 EUMETSAT의 저작권 표기와 함께 "The work performed was done (i.a.) by using data from EUMETSAT's Satellite Application Facility on Climate Monitoring (CM SAF)."
+    같은 문구로 출처를 밝히고, 쓴 산출물의 판(Edition 3, CDR/ICDR)을 적어 달라고 요청합니다.
+
+notices:
+  - date: "2026-03-10"
+    level: info
+    title: 대기 상단 복사(RSF·OLR) 파일의 위성 이름 속성 오류 수정 (Service Message 167)
+    body: >-
+      CLARA-A3 CDR·ICDR의 대기 상단 반사 단파·방출 장파 일·월평균 파일에서 전역 속성 'platforms'에 Metop-B(2013년 1월~)·Metop-C(2019년 7월~)가 빠져 있었습니다.
+      2026년 3월 1일부터 바르게 채워지며, 자료 값과 다른 속성은 정상입니다.
+    source: https://www.cmsaf.eu/EN/Products/Service_Messages/_serviceMessages/sm_167.html
+  - date: "2025-08-01"
+    level: info
+    title: ICDR 해빙 보조자료를 AMSR2 기반으로 교체 (Service Message 165)
+    body: >-
+      미 DMSP 위성의 SSMIS 자료 제공이 '최선 노력' 수준으로 바뀌면서, CLARA-A3·CLAAS-3 ICDR이 쓰는 해빙 농도 입력을 SSMIS 기반 OSI-401-d에서
+      AMSR2 기반 OSI-408-a로 바꿨습니다. CM SAF 평가로는 해빙 가장자리 격자에서만 작은 차이가 있습니다.
+    source: https://www.cmsaf.eu/EN/Products/Service_Messages/_serviceMessages/sm_165.html
+  - date: "2025-06-06"
+    level: warning
+    title: ICDR이 Metop만으로 전환, 수액·빙정 경로와 JCH 생산 종료 (Service Message 164)
+    body: >-
+      NOAA-18은 2025년 5월 31일, NOAA-19는 6월 1일부터 처리에서 빠졌고(두 위성 자료 제공은 6월 16일 종료), ICDR은 Metop-B·C만으로 만듭니다.
+      NOAA 위성 채널 조합이 필요한 CWP 월 히스토그램, IWP·LWP 일·월평균, JCH 월 히스토그램은 더 이상 생산하지 않으며 NOAA 단일 위성 산출물도 끊겼습니다.
+      위성 수와 주간 관측 시각이 바뀌어 특히 일평균 품질에 영향이 있습니다.
+    source: https://www.cmsaf.eu/EN/Products/Service_Messages/_serviceMessages/sm_164.html
+
+links:
+  - name: CM SAF — CLARA-A3 DOI·문서 페이지 (PUM·ATBD·검증 보고서)
+    url: https://wui.cmsaf.eu/safira/action/viewDoiDetails?acronym=CLARA_AVHRR_V003
+  - name: CM SAF — 운영 산출물(ICDR) 목록
+    url: https://www.cmsaf.eu/EN/Products/AvailableProducts/OperationalProducts/Operational_Products_node.html
+  - name: CM SAF — 파일 이름 규칙
+    url: https://www.cmsaf.eu/EN/Products/NamingConvention/Naming_Convention_node.html
+  - name: CM SAF — Data Store로 받을 수 있는 자료 안내 (2025-09)
+    url: https://www.cmsaf.eu/SharedDocs/Kurzmeldungen/EN/2025/news8.html
+  - name: Karlsson et al. (2023), ESSD
+    url: https://doi.org/10.5194/essd-15-4901-2023
+
+watch_urls:
+  - https://www.cmsaf.eu/EN/News/news_node.html
+  - https://www.cmsaf.eu/EN/Products/AvailableProducts/OperationalProducts/Operational_Products_node.html
+
+last_verified: "2026-10-13"

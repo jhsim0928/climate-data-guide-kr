@@ -1,0 +1,305 @@
+# ─────────────────────────────────────────────────────────────
+# NOAA OLR (PSL Interpolated OLR, NCEI HIRS OLR CDR) — dataset information file (English edition)
+# Satellite tab (Clouds and radiation), cross-listed under the atmosphere tab 'Radiation'.
+# PSL Interpolated OLR (2.5°) stops at 2022-12-31; the continuing record is the NCEI OLR CDR (daily v2.0, monthly v3.0, released 2025-08).
+# After editing, update last_verified to the date you checked the official pages.
+# ─────────────────────────────────────────────────────────────
+id: noaa-olr
+name: "NOAA OLR"
+full_name: NOAA Interpolated Outgoing Longwave Radiation (PSL) and NOAA Climate Data Record of Daily/Monthly Outgoing Longwave Radiation (NCEI)
+category: satellite
+domain: satellite
+group: 구름·복사
+order: 50
+also_in:
+  - domain: atmosphere
+    group: 복사 자료
+domains: [대기, 원격탐사]
+provider: NOAA NCEI CDR Program (OLR CDR, Hai-Tien Lee, University of Maryland ESSIC) / NOAA PSL (Interpolated OLR)
+
+status: active
+status_note: >-
+  The continuing record is NCEI's OLR CDR. On 26 August 2025 NCEI released the daily Version 2.0 (1°) and monthly Version 3.0 (2.5°), which combine HIRS, IASI and CrIS;
+  the daily product is updated every day with about a two-day lag and the monthly product every month (the PSL copy olr.day.mean.v2.nc was updated on 2026-10-12). Daily v1.2 stops at 2025-08-22 and is flagged as superseded.
+  The PSL Interpolated OLR (2.5°), long used for MJO work, ends with 31 December 2022 and is not being extended.
+
+transitions:
+  - from: OLR Daily CDR v1.2 (HIRS)
+    to: OLR Daily CDR v2.0 (HIRS+IASI+CrIS)
+    status: completed
+    date: "2025-08"
+    summary: >-
+      A new version that ties the IASI and CrIS hyperspectral sounders consistently to HIRS and rebuilds the HIRS regression coefficients. The monthly product moved to v3.0 on the same day, and daily v1.2 stopped at 2025-08-22.
+    changes:
+      - aspect: Release date
+        before: v1.2 (2011 citation)
+        after: 2025-08-26 (daily v2.0, monthly v3.0)
+      - aspect: Period
+        before: 1979-01-01 to 2025-08-22 (no longer updated, superseded)
+        after: 1979-01-01 to present (about 2-day lag)
+      - aspect: Input observations
+        before: Mainly HIRS radiances
+        after: HIRS (1979–) + IASI (2007–) + CrIS (2012–), inter-satellite calibrated with Metop-A IASI OLR as the absolute reference
+      - aspect: HIRS OLR retrieval
+        before: Earlier multispectral regression
+        after: New regression coefficients derived from IASI-simulated HIRS radiances and IASI OLR, improving consistency between HIRS-based and IASI/CrIS-based values
+      - aspect: Interim and final (daily)
+        before: "-"
+        after: Preliminary (about 36-hour lag, NESDIS GSIP geostationary input) → final (annual, about 6-month lag, GridSat-B1 geostationary input)
+      - aspect: File names (daily)
+        before: "-"
+        after: "OLR-Daily_v02r00_sYYYY0101_eYYYY1231.nc (one file per year); preliminary files are OLR-Daily_v02r00-preliminary_s..._e....nc"
+      - aspect: Monthly product
+        before: "v2.x (e.g. v2.2-1, DOI 10.7289/V5222RQP — superseded)"
+        after: "v3.0 (2.5°, about 5-day lag, OLR-Monthly_v03r00_s197901_eYYYYMM.nc)"
+      - aspect: DOI (daily)
+        before: 10.7289/V5SJ1HH2
+        after: 10.25921/9pt5-by77
+    impacts:
+      - Do not mix v1.2 and v2.0 in one time series; re-download the full record as v2.0.
+      - The most recent days to months are preliminary, and the final release changes the geostationary input, so values can change. Re-check results against the final data.
+      - NCEI advises using v1.2 only for cases such as reproducing earlier studies.
+    sources:
+      - name: NCEI — NOAA CDR of Daily OLR, Version 2.0 (metadata)
+        url: https://www.ncei.noaa.gov/access/metadata/landing-page/bin/iso?id=gov.noaa.ncdc:C01732
+      - name: NCEI — Daily OLR CDR v1.2 (Version Superseded)
+        url: https://www.ncei.noaa.gov/access/metadata/landing-page/bin/iso?id=gov.noaa.ncdc:C00875
+      - name: OLR Daily CDR User Guide (Rev 0, 2025-10-23)
+        url: https://www.ncei.noaa.gov/pub/data/sds/cdr/CDRs/Outgoing%20Longwave%20Radiation%20-%20Daily/UserGuide_01B-21.pdf
+      - name: OLR Monthly CDR User Guide (Rev 0, 2025-10-23)
+        url: https://www.ncei.noaa.gov/pub/data/sds/cdr/CDRs/Outgoing%20Longwave%20Radiation%20-%20Monthly/UserGuide_01B-06.pdf
+  - from: PSL Interpolated OLR (2.5°)
+    to: NCEI OLR CDR (daily 1° / monthly 2.5°)
+    status: completed
+    summary: >-
+      The PSL Interpolated OLR ends with 31 December 2022. For a NOAA OLR record that continues past that date, move to the OLR CDR (or the CPC Blended OLR that PSL also distributes).
+    changes:
+      - aspect: Period
+        before: 1974-06-01 to 2022-12-31 (daily)
+        after: 1979-01-01 to present
+      - aspect: Grid
+        before: 2.5° × 2.5° (144 × 73)
+        after: Daily 1° × 1° (360 × 180), monthly 2.5° × 2.5° (144 × 72)
+      - aspect: Method
+        before: Twice-daily NOAA polar-orbiter OLR interpolated in time and space to fill gaps, then averaged to daily
+        after: Field-of-view OLR from HIRS, IASI and CrIS inter-calibrated, with geostationary OLR used for the diurnal cycle in the time integration
+      - aspect: Distributor
+        before: NOAA PSL (THREDDS and downloads server)
+        after: NOAA NCEI (CDR archive, AWS) — copy also at PSL (olr_cdr_day)
+    impacts:
+      - The sensors, algorithms and grids differ, so climatologies and anomaly amplitudes differ. Do not splice them; compare them over the 1979–2022 overlap first.
+      - Indices defined on Interpolated OLR (for example the OMI) need care when continued with another dataset because the baseline changes. PSL itself switched the OMI input to blended OLR.
+    sources:
+      - name: PSL THREDDS — interp_OLR/olr.day.mean.nc metadata (time range 1974-06-01 to 2022-12-31)
+        url: https://psl.noaa.gov/thredds/dodsC/Datasets/interp_OLR/olr.day.mean.nc.das
+      - name: PSL Data Notices (2026-05-07 OMI update)
+        url: https://psl.noaa.gov/data/notices/
+
+period:
+  start: "1974-06"
+  end: present
+  note: >-
+    The PSL Interpolated OLR daily file covers 1974-06-01 to 2022-12-31 (17,746 days). The NCEI OLR CDR starts in January 1979 for both daily and monthly products, and the daily product continues every day with about a two-day lag
+    (the final version is replaced once a year with about a six-month lag). Daily v2.0 has 30 missing days, mostly in single-satellite periods (NOAA-6 and NOAA-9) caused by HIRS failures.
+
+resolution:
+  spatial_short: "111 km (1°)"
+  temporal_short: "1일"
+  spatial: >-
+    OLR Daily CDR v2.0 — global 1° × 1° equal-angle grid (360 × 180, values represent the box centre). OLR Monthly CDR v3.0 — 2.5° × 2.5° (144 × 72).
+    PSL Interpolated OLR — 2.5° × 2.5° (144 × 73).
+  vertical: Top of atmosphere (TOA), single level
+  temporal: Daily means (OLR Daily CDR, Interpolated OLR) / monthly means (OLR Monthly CDR, Interpolated OLR monthly) / daily and monthly climatologies (PSL, 1991–2020 and others)
+
+update: "OLR Daily CDR v2.0: daily (preliminary about 36 hours to 2 days behind), final version replaced once a year (about 6 months behind) / OLR Monthly CDR v3.0: monthly (about 5 days behind) / PSL Interpolated OLR: no longer updated (ends 2022-12-31)"
+license: NOAA open data — free and unrestricted. NCEI asks for DOI citation and runs an optional user registration form; PSL asks for acknowledgement
+account_required: false
+
+summary: >-
+  Gridded top-of-atmosphere outgoing longwave radiation (OLR) estimated from infrared observations on NOAA and partner polar-orbiting satellites. Low OLR in the tropics marks deep convective cloud,
+  and because the record reaches back to the late 1970s, before CERES, it is the standard input for MJO, ENSO and monsoon convection indices.
+  The current NCEI OLR CDR inter-calibrates HIRS, IASI and CrIS into daily (1°) and monthly (2.5°) fields, while the PSL Interpolated OLR (2.5°, 1974–2022) remains for reproducing earlier work.
+
+time_convention:
+  summary: >-
+    All values are daily or monthly mean OLR (W m-2). Polar orbiters pass only a few times a day, so the OLR CDR uses geostationary OLR to account for the diurnal cycle when forming daily means,
+    and the PSL Interpolated OLR averages interpolated twice-daily (day and night overpass) values.
+  points:
+    - "OLR Daily CDR v2.0 grids polar-orbiter field-of-view OLR into hourly maps and geostationary OLR into 3-hourly maps, then blends them per grid box with a 7-day boxcar calibration and integrates to daily values. The user guide does not state the day boundary (UTC or otherwise)."
+    - "Daily preliminary files (about 36 hours behind) use NESDIS GSIP as the geostationary input; final files (about 6 months behind) use GridSat-B1. Values for the same date can differ between the two."
+    - "OLR Monthly CDR v3.0 corrects for polar-orbiter sampling times with climatological diurnal models; the guide notes this assumption may hold less well when the diurnal cycle itself changes, as in El Niño years."
+    - "The PSL Interpolated OLR fills gaps by interpolating NOAA twice-daily OLR in time and space and then averaging to daily values (per the file description). There are no missing values, but some days are interpolated."
+    - "PSL files use 'hours since 1800-01-01' as the time unit."
+  source: https://www.ncei.noaa.gov/pub/data/sds/cdr/CDRs/Outgoing%20Longwave%20Radiation%20-%20Daily/UserGuide_01B-21.pdf
+  source_name: OLR Daily and Monthly CDR User Guides (Rev 0) + PSL interp_OLR file metadata
+
+variables:
+  note: >-
+    PSL variable names were checked in the THREDDS metadata. The NCEI CDR user guides do not give the variable names inside the files, so only descriptions are listed (check your files).
+    All OLR values are in W m-2 (written W/m^2 in PSL files).
+  full_list: https://www.ncei.noaa.gov/products/climate-data-records/outgoing-longwave-radiation-daily
+  groups:
+    - name: Daily mean OLR
+      kind: mean
+      period: Daily
+      items:
+        - "Outgoing longwave radiation — OLR Daily CDR v2.0, 1° (W m-2)"
+        - "Outgoing longwave radiation — PSL Interpolated OLR daily `olr` (W/m^2)"
+        - text: "Daily climatology — PSL `olr.day.ltm.1991-2020.nc` and others (W/m^2)"
+          note: Mean of each calendar day over the base period
+    - name: Monthly mean OLR
+      kind: mean
+      period: Monthly
+      items:
+        - "Outgoing longwave radiation — OLR Monthly CDR v3.0, 2.5° (W m-2)"
+        - "Outgoing longwave radiation — PSL Interpolated OLR monthly (W/m^2)"
+
+access:
+  - name: NCEI — OLR Daily CDR product page (documents and download link)
+    url: https://www.ncei.noaa.gov/products/climate-data-records/outgoing-longwave-radiation-daily
+    method: Web / AWS S3 explorer (netCDF-4, one file per year)
+    note: The download link leads to the NOAA CDR archive (https://archive.data.noaa.gov/climatedatarecords#UMD_ESSIC/OLR_CDR/Daily/OLR-D-CDR_01B-21/).
+  - name: NCEI — OLR Monthly CDR product page
+    url: https://www.ncei.noaa.gov/products/climate-data-records/outgoing-longwave-radiation-monthly
+    method: Web / AWS S3 explorer (netCDF-4, whole record in one file)
+  - name: NOAA PSL download server — OLR CDR copy (olr_cdr_day) and Interpolated OLR (interp_OLR)
+    url: https://downloads.psl.noaa.gov/Datasets/olr_cdr_day/
+    method: Direct HTTPS download / THREDDS and OPeNDAP
+    note: >-
+      Provides olr.day.mean.v2.nc (daily, about 3.6 GB), olr.mon.mean.v2.nc (monthly) and 1991–2020 climatologies as single files. Interpolated OLR is at
+      https://downloads.psl.noaa.gov/Datasets/interp_OLR/ . No account is needed.
+
+example:
+  lang: python
+  note: "Opens directly through PSL OPeNDAP with no account. Interpolated OLR ends in 2022; for later dates download the OLR CDR copy from the olr_cdr_day folder and open it the same way (check its variable names)."
+  code: |
+    # pip install xarray netCDF4
+    import xarray as xr
+
+    url = "https://psl.noaa.gov/thredds/dodsC/Datasets/interp_OLR/olr.day.mean.nc"
+    ds = xr.open_dataset(url)
+    olr = ds["olr"].sel(time=slice("2015-01-01", "2016-12-31"))
+    trop = olr.where(abs(olr["lat"]) <= 15, drop=True)  # 15°S–15°N regardless of latitude order
+    # tropical-mean OLR time series (W/m^2)
+    print(trop.mean(("lat", "lon")).to_series().head())
+
+tips:
+  - Daily OLR CDR v1.2 and v2.0, and PSL Interpolated OLR and the OLR CDR, are different datasets. Do not splice them into one series; pick one and use it throughout.
+  - "The most recent part of the daily OLR CDR is preliminary (file names contain -preliminary). Download again once the final version appears and re-check your results."
+  - "The OLR CDR has no quality flags. Daily v2.0 has 30 missing days (mostly in the NOAA-6 and NOAA-9 single-satellite periods), and the guide notes an unexpectedly large CrIS inter-satellite adjustment of about 1.4 W m-2."
+  - "Known HIRS issues listed in the guides — a one-step scan offset on NOAA-15 and -16, wrong zenith angles on NOAA-14 after March 1999, and incomplete geostationary coverage before late 1998. Take care with local analyses in those periods."
+  - "The PSL and NCEI files differ in grid (2.5° 144×73, 1° 360×180, 2.5° 144×72) and may differ in latitude ordering. Check the order before slicing with `sel(lat=slice(...))`."
+  - Convective indices (for example the MJO OMI and RMM) change with the OLR dataset used. State the OLR dataset and version in publications.
+  - For the absolute energy budget use broadband radiometer data such as CERES EBAF or SYN1deg. The OLR CDR is estimated from narrowband and hyperspectral radiances, with an accuracy of about 2 W m-2 relative to CERES.
+
+citations:
+  dataset:
+    - label: OLR Daily CDR v2.0
+      text: >-
+        Hai-Tien Lee (2025): NOAA Climate Data Record (CDR) of Daily Outgoing Longwave Radiation (OLR), Version 2.0. [indicate subset used].
+        NOAA National Centers for Environmental Information. https://doi.org/10.25921/9pt5-by77. [access date].
+      doi: 10.25921/9pt5-by77
+      bibtex: |
+        @misc{lee2025olrdaily,
+          author    = {Lee, Hai-Tien},
+          title     = {{NOAA} Climate Data Record ({CDR}) of Daily Outgoing Longwave Radiation ({OLR}), Version 2.0},
+          year      = {2025},
+          publisher = {NOAA National Centers for Environmental Information},
+          doi       = {10.25921/9pt5-by77},
+          note      = {Accessed DD MMM YYYY}
+        }
+    - label: OLR Monthly CDR v3.0
+      text: >-
+        Hai-Tien Lee (2025): NOAA Climate Data Record (CDR) of Monthly Outgoing Longwave Radiation (OLR), Version 3.0. [indicate subset used].
+        NOAA National Centers for Environmental Information. https://doi.org/10.25921/edx3-v958. [access date].
+      doi: 10.25921/edx3-v958
+      bibtex: |
+        @misc{lee2025olrmonthly,
+          author    = {Lee, Hai-Tien},
+          title     = {{NOAA} Climate Data Record ({CDR}) of Monthly Outgoing Longwave Radiation ({OLR}), Version 3.0},
+          year      = {2025},
+          publisher = {NOAA National Centers for Environmental Information},
+          doi       = {10.25921/edx3-v958},
+          note      = {Accessed DD MMM YYYY}
+        }
+    - label: OLR Daily CDR v1.2 (superseded; for reproducing earlier work)
+      text: >-
+        Hai-Tien Lee and NOAA CDR Program (2011): NOAA Climate Data Record (CDR) of Daily Outgoing Longwave Radiation (OLR), Version 1.2. [indicate subset used].
+        NOAA National Climatic Data Center. doi:10.7289/V5SJ1HH2 [access date].
+      doi: 10.7289/V5SJ1HH2
+      bibtex: |
+        @misc{lee2011olrdaily,
+          author    = {Lee, Hai-Tien and {NOAA CDR Program}},
+          title     = {{NOAA} Climate Data Record ({CDR}) of Daily Outgoing Longwave Radiation ({OLR}), Version 1.2},
+          year      = {2011},
+          publisher = {NOAA National Climatic Data Center},
+          doi       = {10.7289/V5SJ1HH2},
+          note      = {Accessed DD MMM YYYY}
+        }
+  papers:
+    - label: Application of the daily HIRS OLR CDR to tropical subseasonal variability
+      text: >-
+        Schreck, C. J., III, Lee, H.-T., Knapp, K. R. (2018): HIRS Outgoing Longwave Radiation—Daily Climate Data Record: Application toward Identifying
+        Tropical Subseasonal Variability. Remote Sensing, 10(9), 1325.
+      doi: 10.3390/rs10091325
+      bibtex: |
+        @article{schreck2018hirsolr,
+          author  = {Schreck, Carl J., III and Lee, Hai-Tien and Knapp, Kenneth R.},
+          title   = {{HIRS} Outgoing Longwave Radiation---Daily Climate Data Record: Application toward Identifying Tropical Subseasonal Variability},
+          journal = {Remote Sensing},
+          volume  = {10},
+          number  = {9},
+          pages   = {1325},
+          year    = {2018},
+          doi     = {10.3390/rs10091325}
+        }
+    - label: PSL Interpolated OLR description (citation given in the file metadata) — DOI not verified
+      text: >-
+        Liebmann, B., Smith, C. A. (1996): Description of a Complete (Interpolated) Outgoing Longwave Radiation Dataset.
+        Bulletin of the American Meteorological Society, 77, 1275–1277.
+      bibtex: |
+        @article{liebmann1996olr,
+          author  = {Liebmann, Brant and Smith, Catherine A.},
+          title   = {Description of a Complete (Interpolated) Outgoing Longwave Radiation Dataset},
+          journal = {Bulletin of the American Meteorological Society},
+          volume  = {77},
+          pages   = {1275--1277},
+          year    = {1996}
+        }
+  acknowledgement: >-
+    NCEI asks users to cite the version and DOI used (fill in [indicate subset used] and [access date] in the citation provided).
+    For data obtained from PSL, acknowledge with wording such as "data provided by the NOAA PSL, Boulder, Colorado, USA, from their website at https://psl.noaa.gov".
+
+notices:
+  - date: "2026-05-07"
+    level: info
+    title: PSL OMI (MJO index) updated — now uses NOAA daily blended OLR
+    body: >-
+      PSL announced that its OLR-based MJO index (OMI) has been updated to near present and now uses the NOAA daily blended OLR as input.
+      Interpolated OLR has no data after 2022, so take the change of input into account when continuing OMI from earlier values.
+    source: https://psl.noaa.gov/data/notices/
+  - date: "2025-08-26"
+    level: warning
+    title: Daily OLR CDR v2.0 and monthly v3.0 released; daily v1.2 superseded
+    body: >-
+      NCEI released Version 2.0 of the daily OLR CDR and Version 3.0 of the monthly OLR CDR, both combining HIRS, IASI and CrIS. Daily v1.2 stops at 2025-08-22 and is now flagged as superseded;
+      NCEI recommends the new version except for purposes such as reproducing earlier studies.
+    source: https://www.ncei.noaa.gov/access/metadata/landing-page/bin/iso?id=gov.noaa.ncdc:C00875
+
+links:
+  - name: NCEI — OLR Daily CDR product page
+    url: https://www.ncei.noaa.gov/products/climate-data-records/outgoing-longwave-radiation-daily
+  - name: NCEI — OLR Monthly CDR product page
+    url: https://www.ncei.noaa.gov/products/climate-data-records/outgoing-longwave-radiation-monthly
+  - name: OLR Daily CDR User Guide (v2.0)
+    url: https://www.ncei.noaa.gov/pub/data/sds/cdr/CDRs/Outgoing%20Longwave%20Radiation%20-%20Daily/UserGuide_01B-21.pdf
+  - name: NOAA PSL — Interpolated OLR dataset page
+    url: https://psl.noaa.gov/data/gridded/data.interp_OLR.html
+  - name: NOAA PSL — CPC Blended OLR (2.5°) files
+    url: https://downloads.psl.noaa.gov/Datasets/cpc_blended_olr-2.5deg/
+
+watch_urls:
+  - https://www.ncei.noaa.gov/products/climate-data-records/outgoing-longwave-radiation-daily
+  - https://psl.noaa.gov/data/notices/
+
+last_verified: "2026-10-13"

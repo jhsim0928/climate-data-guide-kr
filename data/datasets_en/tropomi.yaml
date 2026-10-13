@@ -1,0 +1,333 @@
+# ─────────────────────────────────────────────────────────────
+# Sentinel-5P TROPOMI — dataset information file
+# Satellite tab (Aerosols and atmospheric composition). L2 swath products for NO2, CO, CH4, SO2, HCHO, O3 and the aerosol index.
+# Processor versions change often by product (NL-L2 2.9.1 and UPAS 2.8.0 from OFFL 2025-11-22), so watch reprocessing (RPRO) and version mixing in long-term work.
+# The earlier-generation OMI → TROPOMI comparison is in omi.yaml's transitions.
+# After editing, update last_verified to the date you checked the official pages.
+# ─────────────────────────────────────────────────────────────
+id: tropomi
+name: "TROPOMI"
+full_name: Copernicus Sentinel-5 Precursor TROPOspheric Monitoring Instrument (TROPOMI) Level 2 products (NO2, CO, CH4, SO2, HCHO, O3, aerosols and other atmospheric composition swath data)
+category: satellite
+domain: satellite
+group: 에어로졸·대기 성분
+order: 60
+domains: [대기, 에어로졸, 원격탐사]
+provider: ESA / Copernicus (L2 algorithms by the S5P Mission Performance Centre partners KNMI, SRON, DLR, BIRA-IASB and others) / distributed by the Copernicus Data Space Ecosystem and NASA GES DISC
+
+status: active
+status_note: >-
+  Sentinel-5P, launched in October 2017, is operating normally beyond its seven-year design life, and L2 products are issued daily in near-real-time (NRTI) and offline (OFFL) streams.
+  From the 22 November 2025 OFFL data onward, processing moved to L1B 3.0.0, with NO2, CO, CH4, aerosol and other products at 2.9.1 and HCHO, SO2, O3 and cloud at 2.8.0.
+  The record will be continued by Copernicus Sentinel-5, launched on 13 August 2025 aboard a MetOp Second Generation A-type satellite, and by CO2M, which measures CO2, CH4 and NO2 (first satellite due at the launch site by the end of 2026).
+
+transitions:
+  - from: TROPOMI processor V1 (01.xx)
+    to: TROPOMI processor V2 (02.xx) + full-mission reprocessing (RPRO 02.04.00)
+    status: completed
+    date: "2021-07"
+    summary: >-
+      In July 2021 the processors moved to 02.xx and the dataset version became V2 (with new DOIs); version 02.04.00, operational from July 2022, was used to reprocess (RPRO)
+      the record from mission start to July 2022. Each NO2 switch, 1.4.0 (2020-12) and 2.2.0 (2021-07), substantially raised tropospheric columns over polluted areas, so time series that mix processor versions show steps.
+    changes:
+      - aspect: Period and DOI (NO2 example)
+        before: "V1: 2018-04-30 to 2021-07-01, DOI 10.5270/S5P-s4ljg54"
+        after: "V2: 2021-07-01 to present, DOI 10.5270/S5P-9bnp8q8 (RPRO covers 2018-04-30 to 2022-07-25)"
+      - aspect: NO2 cloud treatment
+        before: "FRESCO-S cloud pressure (updated in 1.4.0, raising NO2 over polluted areas)"
+        after: "2.2.0 added an O2-O2 cloud retrieval and adjusted surface albedo to avoid negative cloud fractions, raising tropospheric NO2 in clear pixels"
+      - aspect: Surface reflectivity
+        before: "Reflectivity climatologies from OMI and GOME-2"
+        after: "TROPOMI's own DLER climatology from 02.04.00, updated with five years of reprocessed data in 02.07.01"
+      - aspect: Reprocessing
+        before: "OFFL record mixing the versions in use at processing time"
+        after: "Single-version 02.04.00 RPRO (file class RPRO, collection 03); six orbits missing for lack of L0 input"
+      - aspect: CH4
+        before: "No retrieval when VIIRS cloud input was missing (02.02.00)"
+        after: "Ocean sun-glint retrievals added in 02.03.01; TROPOMI's own cloud mask from 02.06.00 lets retrievals proceed without VIIRS"
+    impacts:
+      - "For long-term analysis the official advice is to use RPRO (2018-04-30 to 2022-07-25) and continue with the latest OFFL. Use RPRO orbits 24655–24779 for the overlap."
+      - "Versions kept changing after RPRO: 02.06.00 (lower mid-latitude winter NO2), 02.07.01 (DLER update causing a discontinuity), then 2.8.0 and 2.9.1. Check the processor version in the file name (for example 020901) before trend analysis and wait for the next reprocessing if needed."
+      - OFFL and NRTI files from the V1 period (2018–2021) differ from the V2 RPRO; do not mix them.
+    sources:
+      - name: S5P NO2 Product Readme File (issue 2.8, 2025-03-19)
+        url: https://docserver.gesdisc.eosdis.nasa.gov/public/project/S5P/S5P-MPC-KNMI-PRF-NO2-Sentinel-5P-Nitrogen-Dioxide-Level-2-Product-Readme-File-2025-2.8.pdf
+      - name: S5P CH4 Product Readme File (2025, 2.8)
+        url: https://docserver.gesdisc.eosdis.nasa.gov/public/project/S5P/S5P-MPC-SRON-PRF-CH4-Sentinel-5P-Methane-Product-Readme-File-2025-2.8.pdf
+      - name: TROPOMI data products — nitrogen dioxide (version and DOI table)
+        url: https://www.tropomi.eu/data-products/nitrogen-dioxide
+
+period:
+  start: "2018-04"
+  end: present
+  note: >-
+    Operational L2 starts on 2018-04-30 (the RPRO 02.04.00 covers 2018-04-30 to 2022-07-25). From 2019-08-06 (orbit 9388) the along-track pixel size shrank from 7 km to 5.5 km.
+    As checked on 2026-10-13, the latest NO2 OFFL file at GES DISC is for 2026-10-02, and CDSE keeps NRTI data for the last month only.
+
+resolution:
+  spatial_short: "5.5 km (0.05°)"
+  temporal_short: "1일"
+  spatial: >-
+    L2 swath about 2,600 km wide (108°). Nadir pixel 5.5 × 3.5 km (along × across track) for NO2, SO2, HCHO, O3, aerosol index and others — 7 × 3.5 km before 2019-08-06.
+    CO and CH4 at 5.5 × 7 km; ozone profile about 30 × 30 km (per the GES DISC collection title)
+  vertical: Mainly total and tropospheric columns (separate ozone profile and aerosol layer height products)
+  temporal: >-
+    One swath file per orbit (14 orbits a day, period about 101 minutes); sun-synchronous orbit at about 824 km, ascending node 13:30 local time, 16-day (227-orbit) repeat; near-global daily coverage
+
+update: "Daily — NRTI within 3 hours of observation (L2); OFFL has no fixed deadline and favours quality, typically a few days later. Processor versions are updated per product as needed"
+license: Free and open under the Copernicus Sentinel data legal notice (attribute as 'Copernicus Sentinel data'). Both CDSE and GES DISC require a free account
+account_required: true
+
+summary: >-
+  TROPOMI is a UV–visible–near-infrared–shortwave-infrared imaging spectrometer on the Copernicus Sentinel-5 Precursor satellite. Since 2018 it has observed nitrogen dioxide (NO2),
+  carbon monoxide (CO), methane (CH4), sulphur dioxide (SO2), formaldehyde (HCHO), ozone, aerosol index and layer height, and clouds with near-global daily coverage.
+  Its 5.5 × 3.5 km pixels, far smaller than OMI's, make it a workhorse for air quality and greenhouse gas analyses down to individual cities, power plants and other sources,
+  and it is the central record of afternoon-orbit atmospheric composition following OMI.
+
+time_convention:
+  summary: >-
+    L2 values are observations at the moment of overpass; a given location is usually seen once a day in the early afternoon (equator crossing near 13:30 local time). Each pixel carries
+    its observation time, and the official Copernicus L2 includes no composite or averaged products.
+  points:
+    - "`time` is UTC midnight of the day the orbit starts (seconds since 2010-01-01 00:00:00) and `delta_time` gives milliseconds from that reference for each scanline. Add them to get the actual observation time; a `time_utc` string is also provided."
+    - "NRTI (near real time, within 3 hours) and OFFL (offline) use the same algorithm but different auxiliary inputs, so values differ slightly. NRTI can miss orbits, so OFFL and RPRO are recommended for research."
+    - "File names follow `S5P_<OFFL|NRTI|RPRO>_L2__<product>_<start>_<end>_<orbit>_<collection>_<processor version>_<production time>.nc`, so the processor version (for example 020901 = 2.9.1) can be read from them."
+    - "Overpasses over Korea are mostly around 13–14 KST; at swath edges, observations from adjacent orbits about 100 minutes apart can overlap."
+  source: https://docserver.gesdisc.eosdis.nasa.gov/public/project/S5P/SRON-S5P-LEV2-MA-002-Sentinel-5P-Level-2-Product-User-Manual-Carbon-Monoxide-2024-2.8.0.pdf
+  source_name: S5P CO Product User Manual 2.8.0 + SentiWiki S5P Mission and Processing + NO2 Product Readme
+
+variables:
+  note: >-
+    Names as given in each product's Product Readme File (PRF) and Product User Manual (PUM); all sit in the `PRODUCT` group of the netCDF-4 files. Columns are in SI units (mol m-2);
+    multiply by `multiplication_factor_to_convert_to_molecules_percm2` (6.02214×10^19) for molecules cm-2. Every product has a `qa_value` quality indicator (0–1).
+  full_list: https://sentiwiki.copernicus.eu/web/s5p-products
+  groups:
+    - name: Trace gas columns (L2 swath)
+      kind: instant
+      period: observation time
+      items:
+        - text: "Tropospheric NO2 column — `nitrogendioxide_tropospheric_column` (mol m-2)"
+          std: []
+          note: qa_value > 0.75 recommended
+        - text: "Total and stratospheric NO2 column — `nitrogendioxide_total_column`, `nitrogendioxide_stratospheric_column` (mol m-2)"
+          std: []
+        - text: "CO total column — `carbonmonoxide_total_column` (mol m-2)"
+          std: []
+          note: qa_value > 0.5 recommended; destriped version `carbonmonoxide_total_column_corrected`
+        - text: "Methane column-averaged dry-air mixing ratio, bias corrected — `methane_mixing_ratio_bias_corrected` (1e-9, i.e. ppb)"
+          std: []
+          note: qa_value > 0.5 recommended; destriped version `methane_mixing_ratio_bias_corrected_destriped`
+        - text: "SO2 total vertical column — `sulfurdioxide_total_vertical_column` (mol m-2), with 1, 7 and 15 km box-profile columns `_1km`, `_7km`, `_15km`"
+          std: []
+          note: qa_value > 0.5 recommended
+        - text: "Tropospheric HCHO vertical column — `formaldehyde_tropospheric_vertical_column` (mol m-2)"
+          std: []
+          note: qa_value > 0.5 recommended
+    - name: Ozone, aerosol and cloud products
+      kind: instant
+      period: observation time
+      items:
+        - text: "Total ozone (L2__O3____), tropospheric ozone (L2__O3_TCL) and ozone profile (L2__O3__PR) — see each PUM for variable names"
+          std: [ozone]
+        - text: "UV aerosol index (L2__AER_AI) and aerosol layer height (L2__AER_LH) — see each PUM for variable names"
+          std: [aerosol]
+        - text: "Cloud fraction, albedo and cloud-top pressure (L2__CLOUD_) — see the PUM for variable names"
+          std: []
+    - name: Quality and time
+      kind: instant
+      items:
+        - "Quality indicator — `qa_value` (0 error to 1 good)"
+        - "Observation time — `time` (s since 2010-01-01), `delta_time` (ms), `time_utc` (ISO 8601 string)"
+
+access:
+  - name: Copernicus Data Space Ecosystem (CDSE)
+    url: https://dataspace.copernicus.eu/
+    method: Web browser, OData, STAC, S3, openEO (collection SENTINEL-5P)
+    note: >-
+      A free CDSE account is required. Product type codes include L2__NO2___, L2__CO____, L2__CH4___, L2__SO2___, L2__HCHO__, L2__O3____, L2__AER_AI and L2__CLOUD_.
+      Offline data are available from April 2018; NRTI is kept for the last month only.
+  - name: CDSE Sentinel-5P documentation (product list, OData examples)
+    url: https://documentation.dataspace.copernicus.eu/Data/SentinelMissions/Sentinel5P.html
+    method: Web documentation
+  - name: NASA GES DISC (Earthdata redistribution)
+    url: https://disc.gsfc.nasa.gov/datacollection/S5P_L2__NO2____HiR_2.html
+    method: HTTPS, earthaccess, OPeNDAP (NASA Earthdata Login)
+    note: >-
+      Collections include S5P_L2__NO2____HiR, S5P_L2__CO_____HiR, S5P_L2__CH4____HiR, S5P_L2__SO2____HiR, S5P_L2__HCHO___HiR, S5P_L2__AER_AI_HiR and S5P_L2__O3_TOT_HiR (version 2).
+      Convenient alongside NASA tools such as earthaccess and Giovanni.
+
+example:
+  lang: python
+  note: >-
+    Downloads the GES DISC copy with earthaccess and opens the `PRODUCT` group with xarray. Files from CDSE have the same structure.
+  code: |
+    # pip install earthaccess xarray netCDF4
+    import earthaccess
+    import xarray as xr
+
+    earthaccess.login()
+    results = earthaccess.search_data(
+        short_name="S5P_L2__NO2____HiR", version="2",
+        temporal=("2025-03-01", "2025-03-01"),
+        bounding_box=(124, 33, 132, 39),          # (west, south, east, north) — Korean Peninsula
+    )
+    files = earthaccess.download(results[:1], "./s5p")
+
+    ds = xr.open_dataset(files[0], group="PRODUCT")
+    no2 = ds["nitrogendioxide_tropospheric_column"].where(ds["qa_value"] > 0.75)   # mol m-2
+    no2_molec = no2 * 6.02214e19                                                    # molecules cm-2
+    print(float(no2_molec.mean()), ds["time_utc"].values[0, :2])
+
+tips:
+  - "`qa_value` thresholds differ by product. The default advice is above 0.75 for tropospheric and total NO2 (0.5 to include scenes over clouds and snow), and above 0.5 for stratospheric NO2, CO, CH4, SO2 and HCHO."
+  - "Do not mix processor versions. The official advice for long-term work is RPRO (2018-04-30 to 2022-07-25) plus later OFFL, and small discontinuities have appeared at each switch since (2.6.0, 2.7.1, 2.8.0, 2.9.1)."
+  - "Pixel size changed on 6 August 2019 (along track 7 → 5.5 km). Take care with analyses that count samples by pixel."
+  - "Do not delete negative columns over clean regions when averaging. They come from noise, and removing them biases the mean high (common advice in the SO2, HCHO and NO2 READMEs)."
+  - "Single HCHO and SO2 pixels are noisy, so they are usually gridded over days to a month. HCHO and SO2 2.8.0 data for 2025-11-22 to 12-02 (OFFL) had a striping problem and are to be reprocessed."
+  - "The CH4 product has used Suomi NPP VIIRS cloud data as its primary cloud filter. NOAA and NASA have announced that Suomi NPP science data delivery ends in early November 2026, after which CH4 and aerosol layer height will rely on TROPOMI's own cloud masks (machine-learning mask since 2.6.0, the AER_LH fallback mask added in 2.9.1)."
+  - "For NO2 air quality comparisons remember that the satellite looks once, around 13–14 local time, and that a column is not a surface concentration (averaging kernels and a priori profiles differ). Applying the averaging kernels in the files is standard practice when comparing with models."
+  - "When downloading from CDSE via Sentinel Hub or openEO, request only one product (band) at a time."
+
+citations:
+  dataset:
+    - label: TROPOMI L2 NO2 V2 (OFFL and RPRO)
+      text: >-
+        Copernicus Sentinel-5P (processed by ESA), 2021, TROPOMI Level 2 Nitrogen Dioxide total column products. Version 02. European Space Agency.
+        https://doi.org/10.5270/S5P-9bnp8q8
+      doi: 10.5270/S5P-9bnp8q8
+      bibtex: |
+        @misc{s5p_no2_v2,
+          author    = {{Copernicus Sentinel-5P (processed by ESA)}},
+          title     = {{TROPOMI} Level 2 Nitrogen Dioxide total column products. Version 02},
+          year      = {2021},
+          publisher = {European Space Agency},
+          doi       = {10.5270/S5P-9bnp8q8}
+        }
+    - label: TROPOMI L2 CO V2
+      text: >-
+        Copernicus Sentinel-5P (processed by ESA), 2021, TROPOMI Level 2 Carbon Monoxide products. Version 02. European Space Agency.
+        https://doi.org/10.5270/S5P-bj3nry0
+      doi: 10.5270/S5P-bj3nry0
+      bibtex: |
+        @misc{s5p_co_v2,
+          author    = {{Copernicus Sentinel-5P (processed by ESA)}},
+          title     = {{TROPOMI} Level 2 Carbon Monoxide products. Version 02},
+          year      = {2021},
+          publisher = {European Space Agency},
+          doi       = {10.5270/S5P-bj3nry0}
+        }
+    - label: TROPOMI L2 CH4 V2
+      text: >-
+        Copernicus Sentinel-5P (processed by ESA), 2021, TROPOMI Level 2 Methane products. Version 02. European Space Agency.
+        https://doi.org/10.5270/S5P-3lcdqiv
+      doi: 10.5270/S5P-3lcdqiv
+      bibtex: |
+        @misc{s5p_ch4_v2,
+          author    = {{Copernicus Sentinel-5P (processed by ESA)}},
+          title     = {{TROPOMI} Level 2 Methane products. Version 02},
+          year      = {2021},
+          publisher = {European Space Agency},
+          doi       = {10.5270/S5P-3lcdqiv}
+        }
+    - label: TROPOMI L2 HCHO V2
+      text: >-
+        Copernicus Sentinel-5P (processed by ESA), 2020, TROPOMI Level 2 Formaldehyde Total Column products. Version 02. European Space Agency.
+        https://doi.org/10.5270/S5P-vg1i7t0
+      doi: 10.5270/S5P-vg1i7t0
+      bibtex: |
+        @misc{s5p_hcho_v2,
+          author    = {{Copernicus Sentinel-5P (processed by ESA)}},
+          title     = {{TROPOMI} Level 2 Formaldehyde Total Column products. Version 02},
+          year      = {2020},
+          publisher = {European Space Agency},
+          doi       = {10.5270/S5P-vg1i7t0}
+        }
+  papers:
+    - label: TROPOMI mission and instrument overview
+      text: >-
+        Veefkind, J. P., Aben, I., McMullan, K., Förster, H., de Vries, J., Otter, G., Claas, J., Eskes, H. J., de Haan, J. F., Kleipool, Q., van Weele, M.,
+        Hasekamp, O., Hoogeveen, R., Landgraf, J., Snel, R., Tol, P., Ingmann, P., Voors, R., Kruizinga, B., Vink, R., Visser, H., Levelt, P. F. (2012):
+        TROPOMI on the ESA Sentinel-5 Precursor: A GMES mission for global observations of the atmospheric composition for climate, air quality and
+        ozone layer applications. Remote Sensing of Environment, 120, 70–83.
+      doi: 10.1016/j.rse.2011.09.027
+      bibtex: |
+        @article{veefkind2012tropomi,
+          author  = {Veefkind, J. P. and Aben, I. and McMullan, K. and F{\"o}rster, H. and de Vries, J. and Otter, G. and Claas, J. and Eskes, H. J. and de Haan, J. F. and Kleipool, Q. and van Weele, M. and Hasekamp, O. and Hoogeveen, R. and Landgraf, J. and Snel, R. and Tol, P. and Ingmann, P. and Voors, R. and Kruizinga, B. and Vink, R. and Visser, H. and Levelt, P. F.},
+          title   = {{TROPOMI} on the {ESA} Sentinel-5 Precursor: A {GMES} mission for global observations of the atmospheric composition for climate, air quality and ozone layer applications},
+          journal = {Remote Sensing of Environment},
+          volume  = {120},
+          pages   = {70--83},
+          year    = {2012},
+          doi     = {10.1016/j.rse.2011.09.027}
+        }
+  acknowledgement: >-
+    The TROPOMI website recommends citing each product and version as 'Copernicus Sentinel-5P (processed by ESA), year, product name. Version 02. European Space Agency. DOI'.
+    The SO2 V2 DOI is 10.5270/S5P-74eidii (per the GES DISC collection record). If you used data from the V1 period (processors 01.xx, before July 2021), cite the V1 DOI
+    (for NO2, 10.5270/S5P-s4ljg54) and also cite each product's ATBD for the algorithm. If you obtained the data from GES DISC, say so.
+
+notices:
+  - date: "2026-10-13"
+    level: warning
+    title: Processor upgrade on 2026-11-10 — L1B 3.1.0, NL-L2 3.0.0, UPAS 3.0.1
+    body: >-
+      ESA announced that the operational processors will be upgraded on 10 November 2026: NL-L2 (NO2, CO, CH4, AER_AI, AER_LH, O3_PR) to 3.0.0,
+      UPAS (HCHO, SO2, CLOUD, O3, O3_TCL) to 3.0.1 and L1B to 3.1.0. NO2 switches to a new air mass factor look-up table and gains variables
+      (files about 5% larger); the CH4 and AER_LH cloud masks, the AER_AI degradation correction and the O3_PR, CLOUD and O3_TCL algorithms also change.
+      The NL-L2 DOI is updated for the new version, and no NRT products will be generated for data acquired during the switchover.
+      No reprocessing is mentioned, so check the processor version before combining data from before and after the change.
+    source: https://dataspace.copernicus.eu/news/2026-10-13-copernicus-sentinel-5-precursor-s5p-products-improvement
+  - date: "2026-10-07"
+    level: info
+    title: Orbit control manoeuvre — possible data degradation on 7 October 2026
+    body: >-
+      A planned Sentinel-5P orbit control manoeuvre on 7 October could leave data missing or degraded for a time. The impact is documented on the SentiBoard event page for October 2026.
+    source: https://dataspace.copernicus.eu/news/2026-10-7-copernicus-sentinel-5p-data-unavailability-07-october-2026
+  - date: "2025-12-22"
+    level: warning
+    title: HCHO and SO2 2.8.0 striping fixed — affected OFFL period to be reprocessed
+    body: >-
+      Right after the processor switch, HCHO 2.8.0 data (and SO2 to a lesser extent) showed marked stripes, which have now been fixed. Affected periods are NRTI 2025-11-26 to 12-06
+      (orbits 42080–42230) and OFFL 2025-11-22 to 12-02 (orbits 42023–42173); the OFFL data will be reprocessed.
+    source: https://dataspace.copernicus.eu/news/2025-12-22-copernicus-sentinel-5-precursor-s5p-issue-hcho-and-so2-v280-products-solved
+  - date: "2025-11-27"
+    level: warning
+    title: Processor switch — L1B 3.0.0, NL-L2 2.9.1, UPAS 2.8.0 (from OFFL 2025-11-22)
+    body: >-
+      The L1B (improved stray-light and background corrections) and L2 processors changed. NO2, CO, CH4, aerosol index, aerosol layer height and ozone profile moved to 2.9.1,
+      and HCHO, SO2, cloud, total ozone and tropospheric ozone to 2.8.0, starting with OFFL orbit 42023 (2025-11-22) and NRTI orbit 42080 (2025-11-26). The NO2 configuration now excludes
+      the Fraunhofer line near 430 nm, and a new CH4 NRTI service started.
+    source: https://dataspace.copernicus.eu/news/2025-11-27-copernicus-sentinel-5-precursor-s5p-products-improvement-operational-switch
+  - date: "2022-07-17"
+    level: info
+    title: Processor 2.4.0 goes operational with the first full-mission reprocessing (RPRO)
+    body: >-
+      Version 2.4.0 became operational from OFFL orbit 24655 (2022-07-17), and RPRO data reprocessed with the same version from mission start (2018-04-30) to July 2022 have been available since early 2023.
+      The official advice is to use RPRO where it exists and the latest OFFL afterwards.
+    source: https://docserver.gesdisc.eosdis.nasa.gov/public/project/S5P/S5P-MPC-KNMI-PRF-NO2-Sentinel-5P-Nitrogen-Dioxide-Level-2-Product-Readme-File-2025-2.8.pdf
+  - date: "2019-08-06"
+    level: info
+    title: Along-track pixel size reduced from 7 km to 5.5 km
+    body: >-
+      From orbit 9388, the along-track resolution of all measurements changed from 7.0 km to 5.5 km. Nadir pixels are now 5.5 × 3.5 km (5.5 × 7 km for CO and CH4).
+    source: https://docserver.gesdisc.eosdis.nasa.gov/public/project/S5P/S5P-MPC-KNMI-PRF-NO2-Sentinel-5P-Nitrogen-Dioxide-Level-2-Product-Readme-File-2025-2.8.pdf
+
+links:
+  - name: TROPOMI official site — L2 products
+    url: https://www.tropomi.eu/data-products/level-2-products
+  - name: SentiWiki — S5P products (per-product Readme, PUM, ATBD)
+    url: https://sentiwiki.copernicus.eu/web/s5p-products
+  - name: SentiWiki — S5P mission
+    url: https://sentiwiki.copernicus.eu/web/s5p-mission
+  - name: CDSE news (S5P processor and data gap notices)
+    url: https://dataspace.copernicus.eu/news
+  - name: ESA — Copernicus Sentinel-5 (MetOp-SG)
+    url: https://www.esa.int/Applications/Observing_the_Earth/Copernicus/Sentinel-5
+  - name: EUMETSAT — CO2M
+    url: https://www.eumetsat.int/co2m
+
+watch_urls:
+  - https://dataspace.copernicus.eu/news
+  - https://www.tropomi.eu/data-products/level-2-products
+  - https://sentiwiki.copernicus.eu/web/s5p-products
+
+last_verified: "2026-10-13"

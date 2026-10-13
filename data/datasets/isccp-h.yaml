@@ -1,0 +1,258 @@
+# ─────────────────────────────────────────────────────────────
+# ISCCP-H — 데이터셋 정보 파일
+# 위성 탭 '구름·복사'에 싣습니다. CDR은 2017년 6월에서 멈춰 있고 후속 ISCCP-NG는 시범 단계입니다.
+# 수정 후에는 공식 페이지에서 확인한 날짜로 last_verified 를 갱신하세요.
+# ─────────────────────────────────────────────────────────────
+id: isccp-h
+name: "ISCCP-H"
+full_name: International Satellite Cloud Climatology Project (ISCCP) H-Series Climate Data Record (정지궤도·극궤도 위성 합성 전지구 구름 기후자료, 3시간·1°)
+category: satellite
+domain: satellite
+group: 구름·복사
+order: 10
+domains: [대기, 원격탐사]
+provider: NOAA NCEI (CDR 프로그램) / CUNY CREST (W. B. Rossow) / NASA GISS
+
+status: ended
+status_note: >-
+  공식 CDR(v01r00)은 1983년 7월~2017년 6월에서 멈춰 있고, NCEI 누리집이 '임시(ICDR)'라고 밝힌 2017년 7월~2018년 12월 자료만 별도 FTP로 나와 있습니다.
+  2026-10-13 확인 시 NCEI·AWS 사본의 파일은 2021년 5월 이후 바뀌지 않았고, 기록을 늘리겠다는 일정 공지도 없습니다.
+  정지궤도 위성 고리(GEO-ring)로 기록을 잇는 후속 ISCCP-NG는 CM SAF가 2026년 9월 2021년 한 해치 시범 자료를 낸 단계입니다.
+successor:
+  name: 없음 (후속 ISCCP-NG는 시범 자료 단계)
+  url: https://www.cmsaf.eu/SharedDocs/Kurzmeldungen/EN/2026/news5.html
+  note: >-
+    CM SAF가 2026-09-21 정지궤도 위성 5기의 1단계 합성 자료로 만든 ISCCP-NG 시범 자료(2021년, 0.05°·30분)를 공개했습니다.
+    아직 장기 기후자료가 아니므로 2017년 이후 구름 기후값이 필요하면 CLARA-A3·PATMOS-x 같은 극궤도 기록을 함께 검토하세요.
+
+transitions:
+  - from: ISCCP-D
+    to: ISCCP-H
+    status: completed
+    date: "2017-06"
+    summary: ISCCP-D(2009년까지 NASA GISS 생산)를 화소 표본·격자·보정을 모두 바꿔 다시 만든 3세대 자료입니다. 같은 사이트 안 세대 교체라 이 페이지에 함께 적습니다.
+    changes:
+      - aspect: 입력 화소 표본
+        before: Stage B3 자료, 약 30 km·3시간
+        after: B1U 자료, 약 10 km·3시간 (극궤도 자료도 약 10 km로 표본)
+      - aspect: 격자 산출물 해상도
+        before: D1·D2 280 km 등면적 격자 (2.5° 상당)
+        after: HGG·HGH·HGM 1° 등면적 격자, HXG 0.1° 등각 격자
+      - aspect: 보정
+        before: ISCCP-D 보정 체계
+        after: 가시 기준을 NOAA-9(2009년까지)·NOAA-18(이후)로 잇고, NOAA-15 이후 AVHRR 적외 이득 오차와 2001년 이후 AVHRR KLM 보정 오류를 수정
+      - aspect: 산출물 구성
+        before: D1(3시간), D2(월) 등
+        after: HXS·HXG·HGS·HGG·HGH·HGM, 그리고 CF 규약을 따른 ISCCP-Basic 묶음
+      - aspect: 파일 형식
+        before: 바이너리 (NCEI가 지금도 바이너리로만 주문 접수)
+        after: HXS를 뺀 모든 산출물 netCDF-4
+      - aspect: 기간
+        before: 1983-07–2009-12
+        after: 1983-07–2017-06 (임시 ICDR 2017-07–2018-12)
+    impacts:
+      - ISCCP-D로 만든 구름 기후값·추세와 H 결과를 섞어 비교하지 마세요. 해상도·보정이 달라 같은 지역의 구름량도 다르게 나옵니다.
+      - H는 구름 산출 알고리즘 골격을 거의 그대로 두었기 때문에, D에서 알려진 위성 시야각·위성 교체 관련 편향이 H에도 남아 있다고 NCEI가 밝히고 있습니다.
+    sources:
+      - name: Young et al. (2018), ESSD — ISCCP H-Series CDR product
+        url: https://doi.org/10.5194/essd-10-583-2018
+      - name: NCEI — International Satellite Cloud Climatology Project
+        url: https://www.ncei.noaa.gov/products/international-satellite-cloud-climatology
+
+period:
+  start: "1983-07"
+  end: "2017-06"
+  note: >-
+    공식 CDR은 1983-07-01~2017-06-30입니다(NCEI 메타데이터, AWS의 Basic HGM 마지막 파일 2017년 6월분).
+    같은 방법으로 만든 임시 ICDR이 2017년 7월~2018년 12월을 채우며, NCEI는 정식 CDR이 나올 때까지만 제공한다고 밝혔습니다.
+
+resolution:
+  spatial_short: "111 km (1°)"
+  temporal_short: "3시간"
+  spatial: >-
+    Full판 HGG·HGH·HGM은 1° 등면적 격자(위도대마다 경도 칸 수가 다름, 극 3칸~적도 360칸), HXG는 0.1° 등각 격자, HXS는 위성 투영 약 0.1°(바이너리).
+    Basic판 HGG·HGH·HGM은 360×180 1° 등각(위경도) 격자로 다시 배치한 것입니다.
+  vertical: 구름 상단 기압·온도로 나눈 구름 유형(18종 VIS/IR 유형, 3종 IR 유형)과 기압 구간 분포
+  temporal: >-
+    HGG·HXG는 3시간 간격 순간값(00·03·…·21 UTC), HGH는 이 8개 시각별 월평균, HGM은 8개 HGH를 같은 가중치로 평균한 월평균입니다.
+
+update: 갱신 없음 (CDR 2017-06까지, 임시 ICDR 2018-12까지)
+license: NOAA CDR — 공개 자료로 이용 제한 없음. NCEI 출처·개발자 표기와 DOI 인용 요청
+account_required: false
+
+summary: >-
+  ISCCP-H는 세계 각국의 정지궤도 기상위성과 NOAA·MetOp 극궤도 위성(AVHRR)의 가시·적외 영상을 합쳐 1983년부터 만든 전지구 구름 기후자료(CDR)입니다.
+  3시간마다 구름량, 구름 상단 기압·온도, 광학두께, 수분 경로, 구름 유형을 1° 격자로 내며, 하루 안 변화(일변화)를 다룰 수 있는 거의 유일한 장기 구름 기록입니다.
+  ISCCP-D를 대체한 3세대 판으로, 연구자용 Full판과 CF 규약을 따른 간편한 Basic판이 있습니다.
+
+time_convention:
+  summary: >-
+    HGG(3시간 격자)는 각 UTC 시각(00·03·…·21)의 순간 관측을 격자에 모은 값이고, HGH는 그 시각별로 한 달을 평균한 값,
+    HGM은 8개 시각의 HGH를 같은 비중으로 평균한 월평균입니다. 시각은 모두 UTC이며 지방시가 아닙니다.
+  points:
+    - "광학두께(TAU)와 수분 경로(WP)는 주간(태양천정각 코사인 0.2 이상) 가시·적외 관측으로만 산출합니다. HGG의 야간 값은 앞뒤 주간 값으로 채운 것이며, 채운 방식은 `fill_type`에 표시됩니다."
+    - "Full판 값은 0–254의 8비트 '계수(count)'로 저장되고 255가 결측입니다. 물리량으로 바꾸려면 파일 안 변환표(예: `pretab`, `tmptab`, `tautab`, `wpatab`)를 써야 합니다. Basic판은 물리량으로 풀어 CF 속성과 함께 저장합니다."
+    - "Basic HGM 집계 자료의 시간 단위는 'hours since 1983-07-15 00:00:00.000 UTC'이고 `cell_methods`는 'area: mean time: mean within days time: mean over days'입니다(NCEI THREDDS 속성)."
+    - "정지궤도 위성 관측이 비는 곳과 극지는 극궤도 위성이 하루 몇 번만 지나가므로, 3시간 값이라도 실제 관측이 아닌 경우가 많습니다. 위성 구성은 `satcodes`·`satnames`로 확인하세요."
+  source: https://www.ncei.noaa.gov/sites/default/files/2022-11/ISCCP%20User%E2%80%99s%20Guide%20v5_0.pdf
+  source_name: ISCCP Data Users Guide v5.0 (NCEI) + ISCCP-Basic HGM THREDDS 속성
+
+variables:
+  note: >-
+    ISCCP-Basic HGM 파일(NCEI THREDDS 집계)의 변수명·단위입니다. Full판은 같은 이름이라도 8비트 계수로 저장되고, 구름량은
+    Full HGG에서는 화소 수(`n_cloudy`/`n_total`)로 들어 있습니다.
+  full_list: https://www.ncei.noaa.gov/sites/default/files/2021-07/ISCCPBasicvs.Full-Description.pdf
+  groups:
+    - name: 월평균 구름 특성 (Basic HGM)
+      kind: mean
+      period: 월
+      items:
+        - text: "구름량 — `cldamt` (percent)"
+          std: [cloud]
+        - text: "적외만으로 판정한 구름량 — `cldamt_ir` (percent)"
+          std: [cloud]
+        - "구름 유형별(18종) 구름량 — `cldamt_types` (percent)"
+        - "구름 상단 기압 — `pc` (hPa)"
+        - "구름 상단 온도 — `tc` (K)"
+        - text: "구름 광학두께 — `tau` (1)"
+          note: 주간 관측만으로 산출, 액체·얼음 구름을 합친 복사 가중 평균
+        - text: "구름 수분 경로 — `wp`"
+          std: [cloud_water]
+          note: "파일의 units 속성은 'cm'로 적혀 있으나 사용자 안내서는 g m-2로 설명합니다. 사용 전에 단위를 확인하세요."
+        - "눈·얼음 덮인 비율 — `snoice` (percent)"
+    - name: 3시간 격자 (Basic HGG)
+      kind: instant
+      items:
+        - text: "구름량·구름 상단 기압·온도·광학두께·수분 경로 — `cldamt`, `pc`, `tc`, `tau`, `wp`"
+          std: [cloud]
+          note: 00·03·…·21 UTC 각 시각의 관측. 야간 tau·wp는 주간 값으로 채운 값
+        - text: "구름 유형별 구름량 — `cldamt_types`, `cldamt_irtypes`"
+          note: Basic HGG에서는 화소 수를 `n_total`로 나눈 비율
+
+access:
+  - name: NCEI 직접 다운로드 (Full·Basic)
+    url: https://www.ncei.noaa.gov/data/international-satellite-cloud-climate-project-isccp-h-series-data/access/
+    method: HTTPS 디렉터리
+    note: Full HGM·HGH와 Basic HGG·HGH·HGM을 받을 수 있습니다. Full HGG·HXG·HXS는 용량이 커서 ncei.sat.info@noaa.gov로 주문합니다.
+  - name: NCEI THREDDS (ISCCP-H Basic 집계)
+    url: https://www.ncei.noaa.gov/thredds/catalog/satellite/cdr-isccp-h.html
+    method: THREDDS / OPeNDAP / NCSS
+    note: HGG·HGH·HGM Basic을 하나의 시계열로 묶은 집계(Best Time Series)를 원격으로 잘라 읽을 수 있습니다.
+  - name: AWS 공개 버킷 (noaa-cdr-cloud-properties-isccp-pds)
+    url: https://noaa-cdr-cloud-properties-isccp-pds.s3.amazonaws.com/index.html
+    method: S3 (계정 없이 익명 접근)
+    note: "`data/isccp/`(Full)와 `data/isccp-basic/hgg|hgh|hgm/`(Basic) 아래에 있습니다."
+  - name: Google Cloud 공개 버킷 (noaa-cdr-cloud-properties-isccp)
+    url: https://console.cloud.google.com/storage/browser/noaa-cdr-cloud-properties-isccp
+    method: GCS
+  - name: 임시 ICDR (2017-07~2018-12, FTP)
+    url: ftp://filsrv.cicsnc.org/ISCCP_ICDR/
+    method: FTP (`isccp/`=Full, `isccp_basic/`=Basic)
+    note: 정식 CDR이 아닌 임시 자료입니다. 크롬·파이어폭스는 FTP를 지원하지 않으니 FTP 프로그램이나 명령줄 도구를 쓰세요.
+
+example:
+  lang: python
+  note: "계정 없이 AWS 공개 버킷에서 Basic HGM 한 달치를 읽습니다. 파일 이름은 버킷 목록에서 확인한 형식입니다."
+  code: |
+    # pip install s3fs xarray h5netcdf
+    import numpy as np
+    import s3fs
+    import xarray as xr
+
+    fs = s3fs.S3FileSystem(anon=True)
+    key = ("noaa-cdr-cloud-properties-isccp-pds/data/isccp-basic/hgm/"
+           "ISCCP-Basic.HGM.v01r00.GLOBAL.2016.01.99.9999.GPC.10KM.CS00.EA1.00.nc")
+    ds = xr.open_dataset(fs.open(key), engine="h5netcdf")
+
+    ca = ds["cldamt"].squeeze()                 # 월평균 구름량 (percent), 1° 위경도 격자
+    w = np.cos(np.deg2rad(ds["lat"]))
+    print(float(ca.weighted(w).mean(("lat", "lon"))))   # 면적 가중 전지구 평균
+
+tips:
+  - 2017년 7월 이후는 정식 CDR이 아닙니다. 2017~2018년을 이어 붙이려면 임시 ICDR이라는 점을 논문에 밝히고, 그 뒤 기간은 다른 자료를 써야 합니다.
+  - NCEI 주의 문서에 따르면 2000~2002년 NOAA-15→NOAA-17 전환 구간에 극궤도(NOM) 자료 2년 공백이 있고, 1995년 MET-3·1986년 GMS-3 일부 영상에 가시 채널이 빠져 있습니다. 이 시기 추세·일변화 분석은 조심하세요.
+  - 위성 시야각에 따라 구름량이 천정~경사 시야 사이에서 약 0.05 달라집니다. 정지궤도 위성 교체나 위치 변경 전후로 지역 값이 계단처럼 바뀔 수 있습니다.
+  - 얇은 상층운 밑의 낮은 구름은 잘 안 보입니다. 사용자 안내서는 라이다 대비 상층운이 약 0.10 적게, 중층운이 약 0.10 많게 나온다고 적고 있습니다.
+  - Full판을 쓸 때는 값이 계수(count)라는 점을 잊지 마세요. 변환표 없이 평균을 내면 물리적으로 의미가 없는 값이 됩니다. 처음이라면 Basic판을 권합니다.
+  - Basic판은 등면적 격자를 1° 위경도 격자로 다시 배치한 것이라 고위도 격자값은 같은 원자료를 여러 칸이 나눠 가진 것입니다. 면적 가중(cos 위도)을 꼭 하세요.
+
+citations:
+  dataset:
+    - label: ISCCP H-Series CDR
+      text: >-
+        Rossow, W.B., Walker, A., Golea, V., Knapp, K.R., Young, A., Inamdar, A., and Hankins, B., with NOAA's Climate Data Record Program (2016):
+        International Satellite Cloud Climatology Project Climate Data Record, H-Series. NOAA National Centers for Environmental Information.
+        doi:10.7289/V5QZ281S [access date]
+      doi: 10.7289/V5QZ281S
+      bibtex: |
+        @misc{isccp_h_cdr,
+          author    = {Rossow, William B. and Walker, Alison and Golea, Violeta and Knapp, Kenneth R. and Young, Alisa and Inamdar, Anand and Hankins, Bill},
+          title     = {International Satellite Cloud Climatology Project Climate Data Record, H-Series},
+          year      = {2016},
+          publisher = {NOAA National Centers for Environmental Information},
+          doi       = {10.7289/V5QZ281S}
+        }
+  papers:
+    - label: ISCCP-H 산출물 소개 논문
+      text: >-
+        Young, A. H., Knapp, K. R., Inamdar, A., Hankins, W., and Rossow, W. B. (2018): The International Satellite Cloud Climatology Project
+        H-Series climate data record product. Earth System Science Data, 10, 583–593.
+      doi: 10.5194/essd-10-583-2018
+      bibtex: |
+        @article{young2018isccph,
+          author  = {Young, Alisa H. and Knapp, Kenneth R. and Inamdar, Anand and Hankins, William and Rossow, William B.},
+          title   = {The International Satellite Cloud Climatology Project {H}-Series climate data record product},
+          journal = {Earth System Science Data},
+          volume  = {10},
+          pages   = {583--593},
+          year    = {2018},
+          doi     = {10.5194/essd-10-583-2018}
+        }
+    - label: ISCCP 구름 이해의 진전 (NCEI 이용 약정이 권하는 문헌)
+      text: >-
+        Rossow, W. B., and Schiffer, R. A. (1999): Advances in Understanding Clouds from ISCCP. Bulletin of the American Meteorological Society,
+        80(11), 2261–2287.
+      doi: 10.1175/1520-0477(1999)080<2261:AIUCFI>2.0.CO;2
+      bibtex: |
+        @article{rossow1999isccp,
+          author  = {Rossow, William B. and Schiffer, Robert A.},
+          title   = {Advances in Understanding Clouds from {ISCCP}},
+          journal = {Bulletin of the American Meteorological Society},
+          volume  = {80},
+          number  = {11},
+          pages   = {2261--2287},
+          year    = {1999},
+          doi     = {10.1175/1520-0477(1999)080<2261:AIUCFI>2.0.CO;2}
+        }
+  acknowledgement: >-
+    NOAA CDR 이용 약정은 자료를 NCEI에서 받았음을 밝히고, CDR 개발자와 소속, 그리고 "Development of the CDR was supported by NOAA's CDR Program."
+    문구로 NOAA CDR 프로그램의 지원을 적어 달라고 요청합니다. 자료가 연구의 핵심이면 개발자에게 공저를 제안하라고도 권합니다.
+
+notices:
+  - date: "2026-09-21"
+    level: info
+    title: 후속 ISCCP-NG 시범 자료 공개 (CM SAF, 2021년분)
+    body: >-
+      EUMETSAT CM SAF가 정지궤도 위성 5기의 전지구 1단계 합성 자료로 만든 ISCCP-NG 시범 자료를 공개했습니다. 첫 공개분은 2021년 한 해이며
+      0.05°·30분 간격의 구름 특성과 대기 상단 복사를 담았습니다. 장기 기후자료가 아니라 시범 자료이므로 ISCCP-H 기록을 잇는 정식 자료로 보기는 이릅니다.
+    source: https://www.cmsaf.eu/SharedDocs/Kurzmeldungen/EN/2026/news5.html
+
+links:
+  - name: NCEI — ISCCP H-Series 안내 (산출물 표·ICDR·문서)
+    url: https://www.ncei.noaa.gov/products/international-satellite-cloud-climatology
+  - name: NCEI — Cloud Properties ISCCP H-Series CDR (CDR 문서 묶음)
+    url: https://www.ncei.noaa.gov/products/climate-data-records/cloud-properties-isccp
+  - name: ISCCP Data Users Guide v5.0 (PDF)
+    url: https://www.ncei.noaa.gov/sites/default/files/2022-11/ISCCP%20User%E2%80%99s%20Guide%20v5_0.pdf
+  - name: ISCCP-H 주의사항(Caveats) 문서
+    url: https://www.ncei.noaa.gov/sites/default/files/2021-07/ISCCP_Caveats%20%281%29.pdf
+  - name: ISCCP Basic과 Full의 차이 설명
+    url: https://www.ncei.noaa.gov/sites/default/files/2021-07/ISCCPBasicvs.Full-Description.pdf
+  - name: ISCCP 사용자 질의응답 포럼 (Google Groups)
+    url: https://groups.google.com/g/isccp-qa
+
+watch_urls:
+  - https://www.ncei.noaa.gov/products/international-satellite-cloud-climatology
+  - https://www.ncei.noaa.gov/products/climate-data-records/cloud-properties-isccp
+
+last_verified: "2026-10-13"

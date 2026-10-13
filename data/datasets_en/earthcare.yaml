@@ -1,0 +1,263 @@
+# ─────────────────────────────────────────────────────────────
+# EarthCARE (ESA/JAXA) — dataset information file
+# Satellite tab (Aerosols and atmospheric composition). Many products concern clouds, but it is listed here as the spaceborne lidar that follows CALIPSO.
+# L1 is public from 2024-08-11 and ESA L2 from 2025-03-11. Processor baselines change often, so check the processor table
+# on ESA's 'EarthCARE Data' page together with the data quality page.
+# After editing, update last_verified to the date you checked the official pages.
+# ─────────────────────────────────────────────────────────────
+id: earthcare
+name: "EarthCARE"
+full_name: Earth Cloud, Aerosol and Radiation Explorer (EarthCARE) Level 1 and Level 2 products (lidar, radar, imager and radiometer)
+category: satellite
+domain: satellite
+group: 에어로졸·대기 성분
+order: 41
+domains: [대기, 에어로졸, 원격탐사]
+provider: ESA and JAXA (ESA products processed by ESA; CPR L1 and JAXA L2 processed by JAXA) / distributed via ESA MAAP and JAXA G-Portal
+
+status: active
+status_note: >-
+  EarthCARE, launched in May 2024, is operating normally; L1 data are public from 11 August 2024 and ESA L2 data from 11 March 2025, and both are extended continuously.
+  Each processor moves to new baselines on its own schedule; as checked on 2026-10-13, the ATLID L2 profile processor (A-PRO) is at baseline BD (2026-09-08) and the ATLID, MSI and BBR L1 processors at CA (2026-07-15).
+  The design lifetime is three years including six months of commissioning, and ECMWF began assimilating CPR observations operationally on 10 June 2026.
+
+period:
+  start: "2024-08"
+  end: present
+  note: >-
+    In the ESA catalogue the L1 collection runs from 2024-08-11 and the ESA L2 collection from 2025-03-11 to the present. The ESA catalogue lists the JAXA L2 collection from 2024-05-28,
+    but check the actual coverage in JAXA's product listings. No data are acquired during orbit manoeuvres (for example 1–4 and 8–11 September 2026).
+
+resolution:
+  spatial_short: "1 km (0.01°)"
+  temporal_short: "1일"
+  spatial: >-
+    ATLID: receiver footprint 30 m or less, 51 Hz shots accumulated in pairs for 285 m along-track sampling / ATLID L2 (ATL_AER_2A, ATL_EBD_2A): Joint Standard Grid (JSG),
+    about 1 km along track (EBD adds smoothed medium- and low-resolution versions) / MSI: 150 km swath, 500 m pixels / files cover one-eighth of an orbit (frames A–H)
+  vertical: >-
+    ATLID: 103 m below 20.2 km, 500 m from 20.2 to 40 km, range −0.5 to +40 km / ATLID L2: about 100 m on the JSG (100–300 m variable per the product definition)
+  temporal: >-
+    Continuous along-orbit swath data. Sun-synchronous orbit at about 393 km, descending node at 14:00 mean solar time, period about 92.5 minutes, 25-day (389-orbit) repeat.
+    The active sensors (ATLID, CPR) observe only a nadir curtain.
+
+update: "Continuous daily production (file names mark near-real-time N or offline O processing). Processor baselines are updated per product as needed"
+license: Free and open under the Terms and Conditions for the use of ESA Data. Downloads require a free ESA EO Sign In account
+account_required: true
+
+summary: >-
+  EarthCARE is a joint ESA–JAXA mission for clouds, aerosols and radiation that carries a 355 nm high-spectral-resolution lidar (ATLID), a Doppler cloud profiling radar (CPR),
+  a multi-spectral imager (MSI) and a broadband radiometer (BBR) on one platform. The lidar and radar resolve the vertical structure of clouds and aerosols, the imager adds
+  across-track context, and a central goal is to check radiative transfer calculations against the top-of-atmosphere radiation measured by the radiometer.
+  It resumes the spaceborne lidar record interrupted after CALIPSO and provides single-instrument L2A and multi-instrument L2B products.
+
+time_convention:
+  summary: >-
+    L1 and L2 values are observations at the moment of overpass (or quantities retrieved from them); there are no time-averaged or gridded composite products.
+    All times are UTC, and the `time` variable counts seconds since 2000-01-01 00:00:00. Daytime observations cross the equator on the descending pass at about 14:00 local time.
+  points:
+    - "Each file is a frame covering one-eighth of an orbit (A–H). Frame boundaries are at 22.5°N, 67.5°N, 22.5°S and 67.5°S, and frame A crosses the equator on the ascending pass. Frames overlap slightly, so remove the overlap when joining them."
+    - "File names follow `ECA_<agency><latency><baseline>_<product>_<start time>_<processing time>_<orbit+frame>`: agency E (ESA) or J (JAXA), latency N (near real time) or O (offline), and a two-letter baseline (AA, AB, … BD, CA and so on)."
+    - "Files with different baselines can coexist for the same date, because some periods have been reprocessed with recent baselines and others have not. Check the baseline letters before any time-series analysis."
+    - "ATLID daytime data have a lower signal-to-noise ratio than night-time data because of solar background light."
+  source: https://earthcarehandbook.earth.esa.int/article/product
+  source_name: EarthCARE Product Data Handbook (Product Definition and Format) + ATL_AER_2A product definition document + ESA EarthCARE mission description
+
+variables:
+  note: >-
+    Variable names from the ESA product definition documents (PDDs); all sit in the `ScienceData` group of the data file (.h5). Each quantity has a matching 1-sigma `_error` variable.
+    `quality_status` runs from 0 (good) to 4 (missing or bad L1). For cloud products (CPR_CLD_2A, ATL_ICE_2A, MSI_COP_2A and others) and JAXA products, see each product definition document.
+  full_list: https://earth.esa.int/eogateway/catalog/earthcare-esa-l2-products
+  groups:
+    - name: ATLID aerosol profile (ATL_AER_2A, JSG about 1 km × 100 m)
+      kind: instant
+      period: observation time
+      items:
+        - text: "Particle extinction coefficient at 355 nm — `particle_extinction_coefficient_355nm` (m-1)"
+          std: [aerosol]
+        - text: "Particle backscatter coefficient at 355 nm — `particle_backscatter_coefficient_355nm` (m-1 sr-1)"
+          std: [aerosol]
+        - text: "Lidar ratio at 355 nm — `lidar_ratio_355nm` (sr)"
+          std: [aerosol]
+        - text: "Particle linear depolarisation ratio at 355 nm — `particle_linear_depol_ratio_355nm` (dimensionless)"
+          std: [aerosol]
+        - "Target classification (cloud, aerosol type, stratospheric particles) — `classification` (codes: 10 dust, 11 sea salt, 12 continental pollution, 13 smoke and others)"
+        - "Quality status — `quality_status` (0–4)"
+    - name: ATLID extinction, backscatter and depolarisation (ATL_EBD_2A)
+      kind: instant
+      period: observation time
+      items:
+        - text: "Extinction coefficient at 355 nm (full, medium and low resolution) — `particle_extinction_coefficient_355nm`, `..._medium_resolution`, `..._low_resolution` (m-1)"
+          std: [aerosol]
+        - text: "Backscatter coefficient at 355 nm — `particle_backscatter_coefficient_355nm` at the same three resolutions (m-1 sr-1)"
+          std: [aerosol]
+        - "Simple classification — `simple_classification` (−3 missing to 5 stratospheric aerosol)"
+    - name: MSI aerosol optical thickness (MSI_AOT_2A, 500 m swath)
+      kind: instant
+      period: observation time
+      items:
+        - text: "Aerosol optical thickness at 670 nm (land and ocean) — `aerosol_optical_thickness_670nm` (dimensionless)"
+          std: [aerosol]
+        - text: "Aerosol optical thickness at 865 nm (ocean only) — `aerosol_optical_thickness_865nm` (dimensionless)"
+          std: [aerosol]
+        - text: "Ångström exponent 670/865 nm and 355/670 nm (ocean only) — `angstrom_parameter_670nm_865nm`, `angstrom_parameter_355nm_670nm` (dimensionless)"
+          std: [aerosol]
+        - "Quality status — `quality_status` (0–4)"
+
+access:
+  - name: ESA MAAP Explorer — EarthCARE ESA L2 (public collection)
+    url: https://explorer.maap.eo.esa.int/?q=EarthCAREL2Validated_MAAP
+    method: Web search and HTTPS download (zip containing the .h5 data file and .HDR header)
+    note: A free ESA EO Sign In login is required. L1 (ATL_NOM_1B, MSI_RGR_1C, BBR_NOM_1B, CPR_NOM_1B and others) is downloaded the same way.
+  - name: ESA MAAP Catalogue (STAC API)
+    url: https://catalog.maap.eo.esa.int/catalogue/
+    method: STAC / OpenSearch API (pystac-client etc.; downloads need an access token)
+    note: "See https://catalog.maap.eo.esa.int/doc/stac.html for usage."
+  - name: ESA Earth Online — EarthCARE data overview (collections and processor baseline table)
+    url: https://earth.esa.int/eogateway/missions/earthcare/data
+    method: Web
+    note: The public collections are L1, ESA L2, JAXA L2, orbit data and X-MET (auxiliary meteorology) L1D. Separate collections are restricted to commissioning and validation teams.
+  - name: JAXA G-Portal (CPR L1 and JAXA L2)
+    url: https://www.gportal.jaxa.jp/?lang=en
+    method: Web / SFTP (G-Portal user registration)
+    note: As checked in 2026-10, JAXA EORC's EarthCARE product list page is still marked 'TBC'.
+
+example:
+  lang: python
+  note: >-
+    The STAC collection search adapts the example in the MAAP STAC guide to EarthCARE; confirm the collection IDs from the output.
+    Download files through MAAP Explorer (EO Sign In) or the token-based API, then open the .h5 file with xarray, selecting the `ScienceData` group.
+  code: |
+    # pip install pystac-client xarray h5netcdf
+    from pystac_client import Client
+    import xarray as xr
+
+    api = Client.open("https://catalog.maap.eo.esa.int/catalogue/")
+    for c in api.collection_search(filter="platform='EarthCARE'").collections():
+        print(c.id, "-", c.title)          # find the L1 and L2 collection IDs
+
+    # Open an ATL_AER_2A file unzipped from a MAAP Explorer download (example file name)
+    f = "ECA_EXBD_ATL_AER_2A_20260801T010203Z_20260802T000000Z_12345A.h5"
+    ds = xr.open_dataset(f, group="ScienceData")
+    ext = ds["particle_extinction_coefficient_355nm"]          # m-1, (along_track, height)
+    good = ext.where(ds["quality_status"] <= 1)                  # 0 good, 1 likely good
+    print(good.mean("along_track").values[:10])
+
+tips:
+  - "ATLID values are at 355 nm. When comparing AOD or extinction with CALIOP (532 nm) or MODIS (550 nm), correct for or at least state the wavelength difference."
+  - "Using only `quality_status` 0 and 1 is the usual starting point. Values below fully attenuating clouds are 3, and missing or bad L1 is 4."
+  - "ESA notes that the L2 header flag `degradedProductQualityFlag` is often set to 1 because it is triggered by the processor exit code. Do not discard files on this flag alone; use the per-variable quality values."
+  - "From 23 April 2026, BD-baseline ATLID data show negative cross-polar values in the stratosphere; a fix is planned for the CA baseline with reprocessing. Treat stratospheric depolarisation with caution."
+  - "From 21 April to 19 May 2026 (BD), a laser-energy normalisation bug produced bands of low backscatter. Check whether data for that period have been reprocessed (baseline letters)."
+  - "To extend its life, the BBR is in standby for about 15 of every 20 days and in nominal mode for about 5. BBR-based flux products (BM__RAD_2B, BMA_FLX_2B) have large day-to-day gaps."
+  - "Processor baselines differ by product and change often. State both product name and baseline (for example ATL_AER_2A BD) in publications."
+  - "For cloud studies, the L2B synergy products that combine CPR (94 GHz Doppler radar), ATLID and MSI (AC__TC__2B, ACM_CAP_2B and others) give more robust target classification than single-instrument L2A."
+
+citations:
+  dataset:
+    - label: ATLID AER L2A, baseline BD
+      text: >-
+        European Space Agency (2026). EarthCARE ATLID AER Level 2A, version BD. European Space Agency. https://doi.org/10.57780/esa-1cdaa09
+      doi: 10.57780/esa-1cdaa09
+      bibtex: |
+        @misc{earthcare_atl_aer_2a_bd,
+          author    = {{European Space Agency}},
+          title     = {{EarthCARE} {ATLID} {AER} Level {2A}, version {BD}},
+          year      = {2026},
+          publisher = {European Space Agency},
+          doi       = {10.57780/esa-1cdaa09}
+        }
+    - label: ATLID NOM L1B, baseline CA
+      text: >-
+        European Space Agency (2026). EarthCARE ATLID NOM Level 1B, version CA. European Space Agency. https://doi.org/10.57780/eca-7a0fa3d
+      doi: 10.57780/eca-7a0fa3d
+      bibtex: |
+        @misc{earthcare_atl_nom_1b_ca,
+          author    = {{European Space Agency}},
+          title     = {{EarthCARE} {ATLID} {NOM} Level {1B}, version {CA}},
+          year      = {2026},
+          publisher = {European Space Agency},
+          doi       = {10.57780/eca-7a0fa3d}
+        }
+  papers:
+    - label: EarthCARE mission and system overview
+      text: >-
+        Wehr, T., Kubota, T., Tzeremes, G., Wallace, K., Nakatsuka, H., Ohno, Y., Koopman, R., Rusli, S., Kikuchi, M., Eisinger, M., Tanaka, T.,
+        Taga, M., Deghaye, P., Tomita, E., Bernaerts, D. (2023): The EarthCARE mission – science and system overview.
+        Atmospheric Measurement Techniques, 16, 3581–3608.
+      doi: 10.5194/amt-16-3581-2023
+      bibtex: |
+        @article{wehr2023earthcare,
+          author  = {Wehr, Tobias and Kubota, Takuji and Tzeremes, Georgios and Wallace, Kotska and Nakatsuka, Hirotaka and Ohno, Yuichi and Koopman, Rob and Rusli, Stephanie and Kikuchi, Maki and Eisinger, Michael and Tanaka, Toshiyuki and Taga, Masatoshi and Deghaye, Patrick and Tomita, Eichi and Bernaerts, Dirk},
+          title   = {The {EarthCARE} mission -- science and system overview},
+          journal = {Atmospheric Measurement Techniques},
+          volume  = {16},
+          number  = {15},
+          pages   = {3581--3608},
+          year    = {2023},
+          doi     = {10.5194/amt-16-3581-2023}
+        }
+  acknowledgement: >-
+    ESA issues a separate DOI for each product and baseline (ATL_AER_2A, for example, has separate DOIs for baselines AE and BD). Look up the DOI for the product and baseline
+    you used on the ESA catalogue page and cite it. The citations above are built from the DataCite metadata (creator ESA, year, title, version). Use of the data is governed by the ESA terms and conditions.
+
+notices:
+  - date: "2026-09-08"
+    level: info
+    title: ATLID L2 profile processor (A-PRO) released at baseline BD
+    body: >-
+      A-PRO 11.70 (baseline BD), which produces ATL_AER_2A, ATL_EBD_2A, ATL_ICE_2A and ATL_TC__2A, was released together with BMA_FLX_2B (BMA-FLX 11.60, BD).
+      ESA's data quality page says a CA baseline fixing the BD stratospheric ATLID issue will follow.
+    source: https://earth.esa.int/eogateway/missions/earthcare/data
+  - date: "2026-09-08"
+    level: info
+    title: No data during parts of 1–4 and 8–11 September 2026 because of orbit manoeuvres
+    body: >-
+      Two series of four maintenance manoeuvres were carried out, and no data are available during each window (about 50 minutes). The notice gives the 8–11 September windows in UTC.
+    source: https://earth.esa.int/eogateway/news/earthcare-data-unavailability-due-to-planned-orbit-manoeuvres-8-11-september-2026
+  - date: "2026-07-15"
+    level: info
+    title: ATLID, MSI and BBR L1 released at baseline CA
+    body: >-
+      ATL_NOM_1B (ATLID L1 5.50), MSI_NOM_1B and MSI_RGR_1C (MSI L1 5.20), BBR_NOM_1B and BBR_SNG_1B (BBR L1 5.00) and the joint standard grid AUX_JSG_1D moved to baseline CA.
+    source: https://earth.esa.int/eogateway/missions/earthcare/data
+  - date: "2026-06-25"
+    level: info
+    title: ECMWF assimilating EarthCARE CPR operationally since 10 June 2026
+    body: >-
+      ESA reported that ECMWF began assimilating EarthCARE cloud profiling radar (CPR) data in its Integrated Forecasting System (IFS) on 10 June, a first for spaceborne cloud radar data in operations.
+    source: https://www.esa.int/Applications/Observing_the_Earth/FutureEO/EarthCARE/A_first_EarthCARE_cloud_data_sharpen_weather_forecasts
+  - date: "2026-04-23"
+    level: warning
+    title: ATLID BD baseline — negative stratospheric cross-polar values and laser-energy normalisation bug
+    body: >-
+      Since 23 April 2026 an L1C processor issue has produced negative cross-polar signals in the stratosphere; it is to be fixed in the CA baseline with reprocessing.
+      Separately, from 21 April to 19 May, normalisation went wrong when laser energy fell below 30 mJ, producing low-backscatter bands; this has been fixed.
+    source: https://earth.esa.int/eogateway/missions/earthcare/data/data-quality
+  - date: "2025-01-16"
+    level: info
+    title: EarthCARE L1 data opened to all users
+    body: >-
+      After commissioning ended in late 2024, L1 data from ATLID, MSI and BBR (ESA) and CPR (JAXA) became freely available to everyone.
+      ESA said single-instrument L2 would follow in March 2025 and multi-instrument L2 in phases over the following months.
+    source: https://www.esa.int/Applications/Observing_the_Earth/FutureEO/EarthCARE/EarthCARE_goes_live_with_data_now_available_to_all
+
+links:
+  - name: ESA Earth Online — EarthCARE mission
+    url: https://earth.esa.int/eogateway/missions/earthcare
+  - name: EarthCARE Product Data Handbook
+    url: https://earthcarehandbook.earth.esa.int/
+  - name: ESA — EarthCARE data quality (known issues)
+    url: https://earth.esa.int/eogateway/missions/earthcare/data/data-quality
+  - name: ESA catalogue — EarthCARE L1 products
+    url: https://earth.esa.int/eogateway/catalog/earthcare-l1-products
+  - name: ESA catalogue — EarthCARE JAXA L2 products
+    url: https://earth.esa.int/eogateway/catalog/earthcare-jaxa-l2-products
+  - name: JAXA EORC — EarthCARE
+    url: https://www.eorc.jaxa.jp/EARTHCARE/index.html
+
+watch_urls:
+  - https://earth.esa.int/eogateway/missions/earthcare/data
+  - https://earth.esa.int/eogateway/missions/earthcare/data/data-quality
+  - https://www.eorc.jaxa.jp/EARTHCARE/index.html
+
+last_verified: "2026-10-13"

@@ -1,0 +1,264 @@
+# ─────────────────────────────────────────────────────────────
+# CMORPH CDR — dataset information file (English edition)
+# Satellite tab (precipitation). 30-minute, 8-km multi-satellite precipitation produced by NOAA CPC and distributed by NCEI as Climate Data Record v1.0.
+# After editing, update last_verified to the date you checked the official pages.
+# ─────────────────────────────────────────────────────────────
+id: cmorph
+name: "CMORPH CDR"
+full_name: NOAA Climate Data Record (CDR) of CPC Morphing Technique (CMORPH) High Resolution Global Precipitation Estimates, Version 1
+category: satellite
+domain: satellite
+group: 강수
+order: 20
+also_in:
+  - domain: atmosphere
+    group: 강수 자료
+domains: [대기, 육지, 해양, 원격탐사]
+provider: NOAA CPC (Climate Prediction Center; PI Pingping Xie) / NOAA NCEI CDR Program (distributed by NCEI, AWS and Google Cloud, and NCAR GDEX)
+
+status: active
+status_note: >-
+  CMORPH CDR v1.0 continues as the formal version, produced once a month with a latency of 3–4 months.
+  When checked on 2026-10-13, the public AWS bucket held data through May 2026 (posted on 2026-10-09). From January 2021 the input microwave precipitation comes from NASA GPROF instead of the retired NESDIS MSPPS.
+
+period:
+  start: "1998-01"
+  end: present
+  note: >-
+    1 January 1998 to the present (about 3–4 months behind). When checked on 2026-10-13, the daily, hourly and 30-minute data in the AWS bucket ran through 2026-05-31, and the NCAR GDEX copy through 2026-01-31.
+    The older real-time version produced since December 2002 (V0.x, with an evolving algorithm) has been superseded by V1.0 (the NCAR archive of it ends on 2017-10-02).
+
+resolution:
+  spatial_short: "8 km (0.073°)"
+  temporal_short: "30분"
+  spatial: >-
+    Full resolution on a 0.07277° latitude–longitude grid (about 8 km at the equator), 60°S–60°N. Hourly and daily data are on a 0.25° latitude–longitude grid.
+    Individual satellite estimates are coarser (about 12×15 km); the 8-km grid is produced by interpolation.
+  vertical: Surface precipitation (single level)
+  temporal: >-
+    30-minute (8 km; each hourly file holds two 30-minute fields) / hourly (0.25°) / daily (0.25°, file name DLY_00Z)
+
+update: Monthly, with a latency of about 3–4 months (NCEI metadata). CPC separately publishes preliminary (real-time) data on its FTP site
+license: NOAA CDR open data — free to download without an account. Cite the dataset DOI in line with the NCEI Use Agreement
+account_required: false
+
+summary: >-
+  CMORPH is NOAA CPC's method for producing global (60°S–60°N) precipitation at 30-minute, 8-km resolution: passive microwave (PMW) precipitation estimates from low-Earth-orbit satellites
+  are transported with cloud motion vectors derived from geostationary IR imagery, and the features are "morphed" between overpasses by time-weighted interpolation.
+  CDR v1.0 is a reprocessing from 1998 with a fixed algorithm and fixed inputs, bias-corrected against the CPC daily gauge analysis over land and the GPCP pentad analysis over ocean.
+  The morphing technique in GPM IMERG also descends from CMORPH.
+
+time_convention:
+  summary: >-
+    Values in the 30-minute data are precipitation rates in mm/hr, and each 30-minute slot is labelled by its start time (e.g. the 00:00Z slot = 00:00–00:30 UTC). Each hourly file (HH at the end of the name)
+    holds the HH:00 and HH:30 slots. The 0.25° hourly data are rates in mm/hour, the daily data are totals in mm/day, and DLY_00Z in the NCEI file names means a day bounded at 00 UTC.
+  points:
+    - "Adding two 30-minute values as they are doubles the hourly amount. The 30-minute amount (mm) is rate × 0.5."
+    - "The daily data day is 00–24 UTC (09:00 to 09:00 next day in Korea Standard Time). For local-time daily totals, sum the hourly or 30-minute data yourself."
+    - "The CDR is a final record with a 3–4 month delay. CPC's preliminary (real-time) data differ in bias-correction steps and inputs and can disagree with the CDR."
+    - "The algorithm document also describes daily totals matched to each country's gauge end-of-day (EOD) time, but the daily files distributed by NCEI are named 00Z. Check the time attributes in the files you download."
+  source: https://www.ncei.noaa.gov/pub/data/sds/cdr/CDRs/Precipitation-CMORPH/AlgorithmDescription_01B-23.pdf
+  source_name: "CMORPH CDR v1.0 Climate Algorithm Theoretical Basis Document (C-ATBD, 2018) + NCEI metadata (C00948)"
+
+variables:
+  note: >-
+    The NCEI metadata and the algorithm document list a single variable, surface precipitation. The variable names inside the netCDF4 files could not be confirmed from official documents, so open a file to check (see the example code).
+  full_list: https://www.ncei.noaa.gov/access/metadata/landing-page/bin/iso?id=gov.noaa.ncdc%3AC00948
+  groups:
+    - name: 30-minute (8 km, CMORPH_V1.0_ADJ_8km-30min)
+      kind: instant
+      period: "value representing the 30-minute slot"
+      items:
+        - text: "Bias-corrected precipitation rate (mm/hr)"
+          note: "Rate at 30-minute intervals produced by morphing. The official documents do not say whether it is a 30-minute mean or an instantaneous value"
+    - name: Hourly (0.25°, CMORPH_V1.0_ADJ_0.25deg-HLY)
+      kind: mean
+      period: Hourly
+      items:
+        - "Bias-corrected precipitation rate (mm/hour)"
+    - name: Daily (0.25°, CMORPH_V1.0_ADJ_0.25deg-DLY_00Z)
+      kind: accum
+      period: Daily (00–24 UTC)
+      items:
+        - "Daily precipitation (mm/day)"
+
+access:
+  - name: NOAA NCEI (direct HTTPS download)
+    url: https://www.ncei.noaa.gov/data/cmorph-high-resolution-global-precipitation-estimates/access/
+    method: HTTPS download (no account)
+    note: Organized into 30min/8km, hourly/0.25deg and daily/0.25deg with year/month(/day) folders. NCEI warns of possible access delays during its October 2026 cloud migration.
+  - name: AWS S3 public bucket (NOAA Open Data Dissemination)
+    url: https://noaa-cdr-precip-cmorph-pds.s3.amazonaws.com/index.html
+    method: S3 (us-east-1, anonymous access) / HTTPS
+    note: >-
+      Laid out as s3://noaa-cdr-precip-cmorph-pds/data/30min/8km/YYYY/MM/DD/, data/hourly/0.25deg/YYYY/MM/DD/ and data/daily/0.25deg/YYYY/MM/,
+      with the algorithm document and technical note in the documentation/ folder.
+  - name: Google Cloud Storage
+    url: https://console.cloud.google.com/storage/browser/noaa-cdr-precip-cmorph
+    method: Public GCS bucket
+  - name: NCAR GDEX (d502002)
+    url: https://gdex.ucar.edu/datasets/d502002/
+    method: HTTPS / THREDDS (NCAR copy, DOI 10.5065/0EFN-KZ90)
+    note: When checked on 2026-10-13 it ran through 2026-01-31, behind NCEI and AWS.
+  - name: NOAA CPC preliminary data (CMORPH_RT)
+    url: https://ftp.cpc.ncep.noaa.gov/precip/CMORPH_RT/GLOBE/data/
+    method: HTTPS/FTP
+    note: The CPC folder that the NCEI product page links as "Preliminary Data". It is not the formal CDR, so do not use it for long-term analysis.
+
+example:
+  lang: python
+  note: >-
+    Downloads 0.25° daily data for July 2023 from the public AWS bucket without an account and computes the Korean Peninsula area mean (requires s3fs, xarray and netCDF4/h5netcdf).
+    Because the variable name inside the files could not be confirmed from documentation, the code picks the three-dimensional (time, lat, lon) variable. Run print(ds) first to check the structure.
+  code: |
+    import s3fs
+    import xarray as xr
+
+    fs = s3fs.S3FileSystem(anon=True)
+    paths = sorted(fs.glob("noaa-cdr-precip-cmorph-pds/data/daily/0.25deg/2023/07/*.nc"))
+    files = [fs.open(p) for p in paths]
+    ds = xr.open_mfdataset(files, engine="h5netcdf", combine="by_coords")
+    print(ds)                                    # check variable names, units and coordinate ranges
+
+    name = [v for v in ds.data_vars if ds[v].ndim == 3][0]   # daily precipitation (mm/day)
+    la = [c for c in ds[name].dims if c.lower().startswith("lat")][0]
+    lo = [c for c in ds[name].dims if c.lower().startswith("lon")][0]
+    pr = ds[name]
+    box = pr.where((ds[la] >= 33) & (ds[la] <= 39) & (ds[lo] >= 124) & (ds[lo] <= 132), drop=True)
+    print(box.mean([la, lo]).values)             # 00–24 UTC days
+
+tips:
+  - "The 30-minute data are rates in mm/hr. Adding two 30-minute slots as they are doubles the hourly amount."
+  - "Coverage is 60°S–60°N only, and there are no retrievals over snow- or ice-covered surfaces. The product is not suited to winter snowfall or high-latitude precipitation."
+  - "The algorithm document notes that heavy rain tends to be underestimated and light rain can be missed, and that annual totals in the tropics are still too low."
+  - "After TRMM TMI ended in April 2015, inter-calibration across sensors relies on historical tables, and from January 2021 the input microwave precipitation switched from NESDIS MSPPS to NASA GPROF. Watch for small discontinuities around these dates."
+  - "Bias correction relies on the CPC daily gauge analysis (land) and the GPCP pentad analysis (ocean), so magnitudes are uncertain where gauges are sparse."
+  - "The old CPC 'global_CMORPH' real-time data (V0.x, from 2002-12) were built with an evolving algorithm and inputs and are notably inhomogeneous in 2003–2006. Use CDR v1.0 for research."
+  - "IMERG (30-minute, 0.1°) inherits CMORPH's morphing approach but has different inputs and calibration. Do not splice the two into one time series."
+
+citations:
+  dataset:
+    - label: CMORPH CDR Version 1 (NOAA NCEI)
+      text: >-
+        Xie, Pingping; Joyce, Robert; Wu, Shaorong; Yoo, S.-H.; Yarosh, Yelena; Sun, Fengying; Lin, Roger; NOAA CDR Program (2019):
+        NOAA Climate Data Record (CDR) of CPC Morphing Technique (CMORPH) High Resolution Global Precipitation Estimates, Version 1 [indicate subset].
+        NOAA National Centers for Environmental Information. https://doi.org/10.25921/w9va-q159 [access date]
+      doi: 10.25921/w9va-q159
+      bibtex: |
+        @misc{cmorph_cdr_v1,
+          author    = {Xie, Pingping and Joyce, Robert and Wu, Shaorong and Yoo, S.-H. and Yarosh, Yelena and Sun, Fengying and Lin, Roger and {NOAA CDR Program}},
+          title     = {{NOAA} Climate Data Record ({CDR}) of {CPC} Morphing Technique ({CMORPH}) High Resolution Global Precipitation Estimates, Version 1},
+          year      = {2019},
+          publisher = {NOAA National Centers for Environmental Information},
+          doi       = {10.25921/w9va-q159}
+        }
+  papers:
+    - label: CMORPH reprocessing and bias correction (Xie et al., 2017)
+      text: >-
+        Xie, P., Joyce, R., Wu, S., Yoo, S.-H., Yarosh, Y., Sun, F., Lin, R. (2017): Reprocessed, Bias-Corrected CMORPH Global High-Resolution
+        Precipitation Estimates from 1998. Journal of Hydrometeorology, 18(6), 1617–1641.
+      doi: 10.1175/JHM-D-16-0168.1
+      bibtex: |
+        @article{xie2017cmorph,
+          author  = {Xie, Pingping and Joyce, Robert and Wu, Shaorong and Yoo, Soo-Hyun and Yarosh, Yelena and Sun, Fengying and Lin, Roger},
+          title   = {Reprocessed, Bias-Corrected {CMORPH} Global High-Resolution Precipitation Estimates from 1998},
+          journal = {Journal of Hydrometeorology},
+          volume  = {18},
+          number  = {6},
+          pages   = {1617--1641},
+          year    = {2017},
+          doi     = {10.1175/JHM-D-16-0168.1}
+        }
+    - label: The CMORPH method (Joyce et al., 2004)
+      text: >-
+        Joyce, R. J., Janowiak, J. E., Arkin, P. A., Xie, P. (2004): CMORPH: A Method that Produces Global Precipitation Estimates from Passive Microwave
+        and Infrared Data at High Spatial and Temporal Resolution. Journal of Hydrometeorology, 5(3), 487–503.
+      doi: 10.1175/1525-7541(2004)005<0487:CAMTPG>2.0.CO;2
+      bibtex: |
+        @article{joyce2004cmorph,
+          author  = {Joyce, Robert J. and Janowiak, John E. and Arkin, Phillip A. and Xie, Pingping},
+          title   = {{CMORPH}: A Method that Produces Global Precipitation Estimates from Passive Microwave and Infrared Data at High Spatial and Temporal Resolution},
+          journal = {Journal of Hydrometeorology},
+          volume  = {5},
+          number  = {3},
+          pages   = {487--503},
+          year    = {2004},
+          doi     = {10.1175/1525-7541(2004)005<0487:CAMTPG>2.0.CO;2}
+        }
+  acknowledgement: >-
+    NCEI asks users to cite the dataset (DOI 10.25921/w9va-q159), indicating the subset used (30-minute, hourly or daily) and the access date.
+    For the algorithm, cite Xie et al. (2017) together with Joyce et al. (2004). If you obtained the data from NCAR GDEX, its DOI (10.5065/0EFN-KZ90) can also be cited.
+
+transitions:
+  - from: CMORPH V0.x (CPC real-time version)
+    to: CMORPH CDR V1.0
+    status: completed
+    date: "2015-10"
+    summary: >-
+      V0.x, produced since 2002 with an evolving algorithm and inputs, was superseded by V1.0, reprocessed from 1998 with a fixed algorithm and fixed inputs.
+      Unlike the satellite-only V0.x, V1.0 provides versions bias-corrected against gauges and GPCP, and was first released as an NCEI CDR in October 2015.
+    changes:
+      - aspect: Period
+        before: "2002-12 onward (NCAR archive through 2017-10-02)"
+        after: "1998-01 to present"
+      - aspect: Homogeneity
+        before: "Algorithm and input versions kept changing — notably inhomogeneous in 2003–2006"
+        after: "Reprocessed with a fixed algorithm and the same input versions"
+      - aspect: Products
+        before: "Satellite-only (uncorrected) estimates only"
+        after: "Satellite-only (RAW), bias-corrected (ADJ) and gauge–satellite blended versions. NCEI distributes the bias-corrected (ADJ) version"
+      - aspect: Bias correction
+        before: "None"
+        after: "PDF matching to the CPC daily gauge analysis over land; scaling to the GPCP pentad analysis over ocean"
+      - aspect: Format and distribution
+        before: "CPC FTP binary files (global_CMORPH)"
+        after: "netCDF4 at NCEI, AWS and Google Cloud (30-minute 8 km; hourly and daily 0.25°)"
+    impacts:
+      - Do not splice V0.x and V1.0 into one time series. Download the whole period again as V1.0 for long-term analysis.
+      - Scripts that use the old FTP path (global_CMORPH) should switch to the V1.0 paths at NCEI or AWS.
+    sources:
+      - name: CMORPH V1.0 README (NCAR GDEX d502002)
+        url: https://osdata.gdex.ucar.edu/web/datasets/d502002/docs/CMORPH_V1.0_README.txt
+      - name: CMORPH CDR Climate Algorithm Theoretical Basis Document (C-ATBD, 2018)
+        url: https://www.ncei.noaa.gov/pub/data/sds/cdr/CDRs/Precipitation-CMORPH/AlgorithmDescription_01B-23.pdf
+      - name: Xie et al. (2017)
+        url: https://doi.org/10.1175/JHM-D-16-0168.1
+
+notices:
+  - date: "2026-10-02"
+    level: info
+    title: "Data Access Delays — NCEI cloud migration (through 2026-10-30)"
+    body: >-
+      NCEI is moving its data and applications to the cloud, which may temporarily delay access; the stated current impact is intermittent degraded order fulfillment (2026-10-02 to 10-30).
+      The CMORPH CDR product page carries the same notice. Downloading from the AWS or Google Cloud buckets is less affected.
+    source: https://www.ncei.noaa.gov/alerts
+  - date: "2022-03-04"
+    level: info
+    title: "Input microwave precipitation switched to NASA GPROF from January 2021 (technical note)"
+    body: >-
+      With the NESDIS MSPPS system retired, CMORPH CDR v1.0 uses NASA GPROF microwave precipitation from data of 2021-01-01. Comparisons of the uncorrected (RAW) fields showed hourly differences
+      of roughly ±0.7 mm/h and December 2020 monthly-mean differences within ±7 mm/day, largest over convective ocean areas. Because the bias-correction procedure is unchanged, the impact on the final CDR was expected to be limited.
+    source: https://www.ncei.noaa.gov/pub/data/sds/cdr/CDRs/Precipitation-CMORPH/TechnicalNote_01B-23.pdf
+
+links:
+  - name: NCEI CMORPH CDR product page
+    url: https://www.ncei.noaa.gov/products/climate-data-records/precipitation-cmorph
+  - name: NCEI metadata and citation (DOI 10.25921/w9va-q159)
+    url: https://doi.org/10.25921/w9va-q159
+  - name: CMORPH CDR algorithm document (C-ATBD)
+    url: https://www.ncei.noaa.gov/pub/data/sds/cdr/CDRs/Precipitation-CMORPH/AlgorithmDescription_01B-23.pdf
+  - name: Technical note — switch to GPROF input (2022)
+    url: https://www.ncei.noaa.gov/pub/data/sds/cdr/CDRs/Precipitation-CMORPH/TechnicalNote_01B-23.pdf
+  - name: CPC CMORPH description page (old real-time version and QMORPH)
+    url: https://www.cpc.ncep.noaa.gov/products/janowiak/cmorph_description.html
+  - name: AWS Open Data — NOAA atmospheric CDRs
+    url: https://registry.opendata.aws/noaa-cdr-atmospheric/
+  - name: NCAR GDEX d502002
+    url: https://gdex.ucar.edu/datasets/d502002/
+
+watch_urls:
+  - https://www.ncei.noaa.gov/products/climate-data-records/precipitation-cmorph
+  - https://www.ncei.noaa.gov/alerts
+  - https://www.cpc.ncep.noaa.gov/products/janowiak/cmorph_description.html
+
+last_verified: "2026-10-13"

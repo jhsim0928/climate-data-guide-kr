@@ -1,0 +1,425 @@
+# ─────────────────────────────────────────────────────────────
+# MODIS 에어로졸 MOD04_L2·MYD04_L2(10 km)·MOD04_3K(3 km)·MOD08 L3 에어로졸 C6.1 — 데이터셋 정보 파일
+# 위성 탭(에어로졸·대기 성분). Dark Target·Deep Blue 두 알고리즘과 결합 AOD를 한 페이지에서 다룹니다.
+# Terra·Aqua 궤도 표류(통과 시각 변화)와 위성 종료가 핵심 주의사항입니다. 후속 VIIRS 에어로졸은 viirs-aerosol.yaml.
+# 수정 후에는 공식 페이지에서 확인한 날짜로 last_verified 를 갱신하세요.
+# ─────────────────────────────────────────────────────────────
+id: modis-aerosol
+name: "MODIS Aerosol (MOD04·MOD08)"
+full_name: MODIS/Terra·Aqua Aerosol 5-Min L2 Swath 10km·3km (MOD04_L2·MYD04_L2·MOD04_3K·MYD04_3K) 및 MOD08/MYD08 L3 1° 에어로졸 Collection 6.1 (MODIS Dark Target·Deep Blue 에어로졸 광학두께)
+category: satellite
+domain: satellite
+group: 에어로졸·대기 성분
+order: 10
+domains: [대기, 에어로졸, 원격탐사]
+provider: NASA GSFC MODIS 대기팀(Dark Target·Deep Blue 알고리즘 팀) / NASA LAADS DAAC (MODAPS)
+
+status: deprecated
+status_note: >-
+  Collection 6.1이 지금도 매일 생산되고 있지만(2026-10-13 확인 시 MOD08_D3는 10월 9일 자료까지), Terra·Aqua가 연료 한계로 궤도를 벗어나 통과 시각이 바뀌고 있고
+  NASA는 Terra 과학 운용이 2027년 2월, Aqua가 2027년 9월에 끝날 것으로 내다봅니다. LAADS DAAC는 VIIRS 유사 제품(Deep Blue AERDB·Dark Target AERDT)으로 옮기라고 권고하며,
+  운용이 끝난 뒤 최종 보정(v8.0)으로 마지막 재처리를 하겠다고 밝혔습니다. 2026-10-13 기준 MODIS 대기 산출물은 CMR에 Version 6.1만 있습니다.
+
+period:
+  start: "2000-02"
+  end: present
+  note: >-
+    Terra(MOD04·MOD08)는 2000-02-24부터, Aqua(MYD04·MYD08)는 2002-07-04부터입니다. 2026-10-13 확인 시 LAADS에는 2026년 10월 초 자료(MOD08_D3 A2026282)까지 있습니다.
+    C6.1은 Terra가 2017년 9~12월, Aqua가 2018년 1~3월에 전 기간 재처리되었고, 2018년 4월 30일 이후로는 C6.1만 생산됩니다. Terra·Aqua 운용이 끝나면 새 자료는 나오지 않습니다.
+
+resolution:
+  spatial_short: "10 km (0.09°)"
+  temporal_short: "1일"
+  spatial: >-
+    L2 스와스: 직하점 10 km(10×10 화소 묶음, MOD04_L2·MYD04_L2), 직하점 3 km(Dark Target 전용, MOD04_3K·MYD04_3K) — 직하에서 멀어질수록 커짐 /
+    L3: 전지구 1°×1° 등위경도 격자(360×180, MOD08_D3·E3·M3)
+  vertical: 기주(column) 전체 적분값(에어로졸 광학두께) — 연직 분포 정보 없음
+  temporal: >-
+    L2는 5분 단위 그래뉼(궤도 스와스), 위성마다 하루 1회 주간 관측(고위도는 여러 번) / L3 일(D3)·8일(E3)·월(M3).
+    설계상 적도 통과 시각은 Terra 10:30(하강), Aqua 13:30(상승) 지방시이지만 궤도 표류로 바뀌었습니다.
+
+update: 매일 (L3 일자료는 관측 다음 날 무렵), 8일·월 자료는 구간 종료 후. 준실시간(NRT)판은 LANCE에서 별도 제공
+license: NASA EOSDIS 자료 이용 정책에 따라 제한 없이 공개된 무료 자료입니다. 내려받기(HTTPS·OPeNDAP 포함)에는 무료 NASA Earthdata 로그인이 필요하며, 데이터셋 DOI 인용을 요청합니다.
+account_required: true
+
+summary: >-
+  MODIS 가시·근적외 반사도로 구한 맑은 하늘 에어로졸 광학두께(AOD) 자료로, 알고리즘이 다른 두 계열을 한 파일에 함께 담습니다.
+  Dark Target(DT)은 해양과 식생으로 어두운 육지에서, Deep Blue(DB)는 사막처럼 밝은 지면을 포함한 모든 육지에서 산출하며, 두 결과를 합친 결합 AOD(`AOD_550_Dark_Target_Deep_Blue_Combined`)도 제공합니다.
+  Collection 6.1에서는 DT의 도시 지역 지표 반사도 처리와 DB의 화소별 불확실성 추정이 개선되었습니다. 10 km 표준 L2, 대기질 연구용 3 km DT L2, 1° 격자 L3(일·8일·월)가 있으며,
+  Terra(오전)·Aqua(오후) 판이 따로 있습니다.
+
+time_convention:
+  summary: >-
+    L2(MOD04)는 위성이 지나간 순간의 맑은 하늘 관측값이며, 반사광을 쓰므로 주간에만 값이 있습니다. 파일 이름의 시각(AYYYYDDD.HHMM)은 5분 그래뉼의 시작 시각(UTC)입니다.
+    L3 일자료(MOD08_D3)는 그날 L2 화소를 1° 칸마다 모은 통계(평균·표준편차·QA 가중 평균 등)이고, 8일(E3)·월(M3)은 일자료 평균값들의 평균(`_Mean_Mean`)입니다.
+  points:
+    - "설계상 Terra는 지방시 10:30에 하강, Aqua는 13:30에 상승하며 적도를 지나는 주간 관측입니다. 같은 위성이라도 스와스 안 위치와 위도에 따라 화소별 관측 시각이 다르며, `Scan_Start_Time` 변수로 확인할 수 있습니다."
+    - "궤도 표류: Terra는 2020년 2월 27일 마지막 경사각 조정 뒤 점점 이른 시각으로 옮겨 2022년 가을 10:15에 이르렀고, Aqua는 2021년 3월 8일 마지막 조정 뒤 늦어져 2026년 8월 무렵 약 15:50으로 예상되었습니다. 에어로졸은 하루 중 변화와 태양 고도(반사 기하)의 영향을 받으므로 장기 추세에 주의하세요."
+    - "L3 일자료는 UTC 날짜 기준이지만, C6부터 날짜변경선 부근의 빈틈·중복을 줄이려고 앞뒤 최대 3시간까지 그래뉼을 넓혀 넣습니다(L3 ATBD)."
+    - "8일(E3)은 1월 1일부터 시작하는 연속 8일 일자료로 만들며 연말 마지막 구간은 다음 해 1월 초로 넘어갈 수 있습니다. 월(M3)은 그달 일자료 전체로 만들고, C6.1 에어로졸 월값은 유효한 날이 3일 이상인 칸만 남깁니다."
+    - "`_Mean`은 모든 L2 화소를 같은 가중치로 평균한 값이고, `_QA_Mean`은 L2 신뢰도 플래그(3=3배, 2=2배, 1=1배, 0=제외)로 가중한 평균입니다. L3 ATBD 표에 따르면 에어로졸의 8일·월 값(`_Mean_Mean`)은 각 일평균에 같은 가중치를 줍니다(구름·수증기는 화소 수 가중)."
+    - "준실시간(NRT, LANCE)판은 확정판보다 빨리 나오는 대신 확정판(LAADS) 처리와 별도로 만들어지므로 값이 다를 수 있습니다. 연구용 시계열에는 확정판을 쓰세요."
+  source: https://atmosphere-imager.gsfc.nasa.gov/sites/default/files/ModAtmo/L3_ATBD_C6_C61_2019_02_20.pdf
+  source_name: "MODIS Atmosphere L3 Global Gridded Product User's Guide & ATBD (C6·C6.1) + MOD04_L2 컬렉션 설명(CMR) + NASA Terra 기사·LP DAAC Aqua 궤도 계획"
+
+variables:
+  note: >-
+    CMR 변수 목록(UMM-Var)과 C6.1 문서 기준 SDS 이름입니다. 파일은 HDF-EOS2(HDF4)이고 정수로 저장되므로 실제 값 = scale_factor × (저장값 − add_offset)입니다(MODIS 대기 L3 ATBD 정의, add_offset을 '뺍니다').
+    AOD는 무차원이며 550 nm(0.55 µm) 기준입니다. MYD(Aqua) 파일도 변수 이름이 같습니다.
+  full_list: https://atmosphere-imager.gsfc.nasa.gov/products/aerosol
+  groups:
+    - name: L2 스와스 10 km (MOD04_L2·MYD04_L2) · 3 km (MOD04_3K, DT만)
+      kind: instant
+      period: 통과 시각
+      items:
+        - text: "DT 해양·육지 에어로졸 광학두께 550 nm(권장 품질만) — `Optical_Depth_Land_And_Ocean` (무차원)"
+          std: [aerosol]
+          note: 해양은 QA 1~3, 육지는 QA 3인 값만 담은 과학 분석용 필드. 3 km 파일에도 같은 이름으로 있음
+        - text: "DT 해양·육지 에어로졸 광학두께 550 nm(모든 품질) — `Image_Optical_Depth_Land_And_Ocean` (무차원)"
+          std: [aerosol]
+          note: QA 0~3을 모두 담은 영상 표출용 필드. 정량 분석에는 쓰지 않음
+        - text: "DT·DB 결합 에어로졸 광학두께 550 nm — `AOD_550_Dark_Target_Deep_Blue_Combined` (무차원)"
+          std: [aerosol]
+          note: 해양은 DT, 육지는 DT·DB·둘의 혼합 중 하나를 고른 값(알고리즘 표시 변수로 확인). 10 km 파일에만 있음
+        - "결합 AOD 알고리즘 표시 — `AOD_550_Dark_Target_Deep_Blue_Combined_Algorithm_Flag` (0=DT, 1=DB, 2=혼합)"
+        - "결합 AOD 신뢰도 플래그 — `AOD_550_Dark_Target_Deep_Blue_Combined_QA_Flag` (0=신뢰 없음·채움, 1=보통, 2=좋음, 3=매우 좋음)"
+        - text: "DB 육지 에어로졸 광학두께 550 nm(QA 2·3) — `Deep_Blue_Aerosol_Optical_Depth_550_Land_Best_Estimate` (무차원)"
+          std: [aerosol]
+        - "DB 육지 AOD 추정 불확실성(1σ) — `Deep_Blue_Aerosol_Optical_Depth_550_Land_Estimated_Uncertainty` (무차원)"
+        - "DB 신뢰도 플래그 — `Deep_Blue_Aerosol_Optical_Depth_550_Land_QA_Flag` (0~3)"
+        - "DB 육지 옹스트롬 지수 — `Deep_Blue_Angstrom_Exponent_Land` (무차원)"
+        - "DT 해양 옹스트롬 지수 550/860 nm — `Angstrom_Exponent_1_Ocean` (무차원)"
+        - "DT 해양·육지 품질 플래그 — `Land_Ocean_Quality_Flag` (0=나쁨, 1=보통, 2=좋음, 3=매우 좋음)"
+        - text: "주사 시작 시각 — `Scan_Start_Time` (초, TAI 시간 기준)"
+          note: 화소별 관측 시각. 3 km 파일은 그래뉼 안에서 값이 최대 약 12분까지 어긋나는 알려진 오류가 있음
+    - name: L3 일자료 1° (MOD08_D3·MYD08_D3)
+      kind: mean
+      period: 일 (UTC 날짜, 앞뒤 최대 3시간 확장)
+      items:
+        - text: "DT·DB 결합 에어로졸 광학두께 550 nm 일평균 — `AOD_550_Dark_Target_Deep_Blue_Combined_Mean` (무차원)"
+          std: [aerosol]
+        - text: "DT 해양·육지 에어로졸 광학두께 550 nm 일평균 — `Aerosol_Optical_Depth_Land_Ocean_Mean` (무차원)"
+          std: [aerosol]
+        - text: "DB 육지 에어로졸 광학두께 550 nm 일평균 — `Deep_Blue_Aerosol_Optical_Depth_550_Land_Mean` (무차원)"
+          std: [aerosol]
+        - text: "DT 육지 에어로졸 광학두께 QA 가중 일평균(470·550·660 nm) — `Aerosol_Optical_Depth_Land_QA_Mean` (무차원)"
+          std: [aerosol]
+          note: L2 신뢰도 플래그로 가중한 평균
+        - text: "결합 AOD 일최댓값 — `AOD_550_Dark_Target_Deep_Blue_Combined_Maximum` (무차원)"
+          kind: max
+        - text: "DT 해양·육지 AOD 화소 수 — `Aerosol_Optical_Depth_Land_Ocean_Pixel_Counts` (개)"
+          kind: accum
+    - name: L3 8일·월 자료 1° (MOD08_E3 8일 / MOD08_M3 월)
+      kind: mean
+      period: 8일 또는 월 (일평균의 평균)
+      items:
+        - text: "DT·DB 결합 에어로졸 광학두께 550 nm — `AOD_550_Dark_Target_Deep_Blue_Combined_Mean_Mean` (무차원)"
+          std: [aerosol]
+          note: 일자료 평균값들을 다시 평균한 값
+        - text: "DT 해양·육지 에어로졸 광학두께 550 nm — `Aerosol_Optical_Depth_Land_Ocean_Mean_Mean` (무차원)"
+          std: [aerosol]
+        - text: "DB 육지 에어로졸 광학두께 550 nm — `Deep_Blue_Aerosol_Optical_Depth_550_Land_Mean_Mean` (무차원)"
+          std: [aerosol]
+        - text: "결합 AOD 일평균의 기간 최댓값 — `AOD_550_Dark_Target_Deep_Blue_Combined_Mean_Max` (무차원)"
+          kind: max
+
+access:
+  - name: LAADS DAAC (검색·주문·직접 받기)
+    url: https://ladsweb.modaps.eosdis.nasa.gov/search/order/1/MOD08_D3--61
+    method: 웹 검색·HTTPS 직접 받기(archive/allData/61/<short name>/) / LAADS API-V2 / OPeNDAP
+    note: >-
+      short name 예: MOD04_L2·MYD04_L2·MOD04_3K·MYD04_3K·MOD08_D3·MOD08_E3·MOD08_M3(Aqua는 MYD). 모두 C6.1(아카이브 61, CMR version "6.1")입니다.
+      2026-04-30부터 OPeNDAP도 Earthdata 로그인이 필요하고, 옛 LAADS Classic API는 2026-08-31 폐지되어 API-V2로 바꿔야 합니다.
+  - name: NASA Earthdata Search
+    url: https://search.earthdata.nasa.gov/search/granules?p=C1443727145-LAADS
+    method: 웹 검색 / earthaccess(파이썬)
+    note: 링크는 MOD08_D3 C6.1입니다. 다른 제품은 short name으로 검색하세요. 파일은 Earthdata Cloud(s3://prod-lads)에서도 제공됩니다.
+  - name: LANCE 준실시간(NRT) MOD04_L2
+    url: https://search.earthdata.nasa.gov/search/granules?p=C1426436561-LANCEMODIS
+    method: 웹 검색 / HTTPS
+    note: 준실시간판(version 6.1NRT, DOI 10.5067/MODIS/MOD04_L2.NRT.061, 2017-10-11부터)입니다. 재해 감시처럼 빠른 자료가 필요할 때 쓰고, 연구용 시계열에는 확정판을 쓰세요.
+
+example:
+  lang: python
+  note: >-
+    earthaccess로 Terra MOD08_D3 일자료를 받아 pyhdf로 결합 AOD 일평균을 읽는 예입니다. MODIS 대기 산출물은 '저장값에서 add_offset을 뺀 뒤 scale_factor를 곱하는' 방식이라 직접 변환해야 합니다.
+  code: |
+    # pip install earthaccess pyhdf numpy
+    import earthaccess
+    import numpy as np
+    from pyhdf.SD import SD, SDC
+
+    earthaccess.login()  # 무료 NASA Earthdata 계정
+    results = earthaccess.search_data(
+        short_name="MOD08_D3", version="6.1",
+        temporal=("2024-04-01", "2024-04-03"),
+    )
+    files = earthaccess.download(results, "mod08")
+
+    hdf = SD(files[0], SDC.READ)
+    sds = hdf.select("AOD_550_Dark_Target_Deep_Blue_Combined_Mean")
+    raw = sds.get().astype("float64")
+    att = sds.attributes()
+    aod = np.where(raw == att["_FillValue"], np.nan,
+                   att["scale_factor"] * (raw - att["add_offset"]))  # 1° 격자 180×360
+    # 행 0 = 89~90°N, 열 0 = 180~179°W
+    lat = 89.5 - np.arange(180); lon = -179.5 + np.arange(360)
+    j = np.argmin(abs(lat - 37.5)); i = np.argmin(abs(lon - 127.0))
+    print("서울 부근 1° 칸 AOD:", aod[j, i])
+
+tips:
+  - "결합 AOD(`AOD_550_Dark_Target_Deep_Blue_Combined`)는 지역·계절마다 DT와 DB 중 어느 쪽을 썼는지가 바뀝니다(`_Algorithm_Flag`). 한 지역의 장기 분석에서는 알고리즘 전환이 값의 불연속으로 보일 수 있으니, 필요하면 DT나 DB 한쪽만 쓰세요."
+  - "정량 분석에는 `Optical_Depth_Land_And_Ocean`(해양 QA≥1, 육지 QA=3)이나 DB `_Best_Estimate`(QA 2·3)를 쓰고, `Image_Optical_Depth_Land_And_Ocean`처럼 모든 품질을 담은 필드는 쓰지 마세요."
+  - "HDF4 파일의 실제 값은 scale_factor × (저장값 − add_offset)입니다. 일반적인 '저장값 × scale + offset'과 부호가 반대이므로 pyhdf 등으로 직접 읽을 때 조심하세요. 유효 범위(valid_range) 밖 값도 걸러지지 않은 채 들어 있습니다."
+  - "Terra와 Aqua는 관측 시각과 보정이 달라 AOD 수준이 조금 다릅니다(Sawyer et al., 2025는 DT에서 Terra가 Aqua보다 약 0.015 높다고 보고). 두 위성을 섞어 평균하기보다 한 위성을 기준으로 쓰고, 2020년(Terra)·2021년(Aqua) 이후 궤도 표류 구간은 통과 시각 변화를 함께 확인하세요."
+  - "3 km 제품(MOD04_3K)은 DT 알고리즘·조견표를 그대로 쓰되 화소 선택·최소 유효 화소 수·품질 처리를 바꾼 대기질용 자료입니다. 결합 AOD·DB 필드는 없고 DT 값만 들어 있습니다."
+  - "MODIS 대기팀 문제 목록에 따르면 C6.1 DB의 하층운(층운) 오염을 줄인 구름 선별 개선은 2019년 가을 이후 생산분에만 들어가 있고, 그 이전 기간은 다음 재처리 때 반영될 예정입니다. 해양 층운 지역의 DB 시계열에서 이 시점 전후를 비교할 때 주의하세요."
+  - "L3 일평균(`_Mean`)은 맑은 화소만 모은 값이라 구름이 많은 날·지역은 표본이 적습니다. `_Pixel_Counts`를 함께 보고, 월평균은 유효 일수가 적은 칸을 해석할 때 조심하세요."
+  - "AOD는 지상 PM2.5와 같은 양이 아닙니다. 기주 전체 소광량이므로 경계층 높이·습도에 따라 지상 농도와의 관계가 달라집니다."
+
+citations:
+  dataset:
+    - label: MOD04_L2 C6.1 (Terra 10 km L2 에어로졸)
+      text: >-
+        Levy, R., Hsu, C., et al. (2015). MODIS Atmosphere L2 Aerosol Product. NASA MODIS Adaptive Processing System, Goddard Space Flight Center, USA.
+        https://doi.org/10.5067/MODIS/MOD04_L2.061
+      doi: 10.5067/MODIS/MOD04_L2.061
+      bibtex: |
+        @misc{mod04_l2_c61,
+          author    = {Levy, R. and Hsu, C. and others},
+          title     = {{MODIS} Atmosphere {L2} Aerosol Product},
+          year      = {2015},
+          publisher = {NASA MODIS Adaptive Processing System, Goddard Space Flight Center, USA},
+          doi       = {10.5067/MODIS/MOD04_L2.061}
+        }
+    - label: MYD04_L2 C6.1 (Aqua 10 km L2 에어로졸)
+      text: >-
+        Levy, R., Hsu, C., et al. (2015). MODIS Atmosphere L2 Aerosol Product. NASA MODIS Adaptive Processing System, Goddard Space Flight Center, USA.
+        https://doi.org/10.5067/MODIS/MYD04_L2.061
+      doi: 10.5067/MODIS/MYD04_L2.061
+      bibtex: |
+        @misc{myd04_l2_c61,
+          author    = {Levy, R. and Hsu, C. and others},
+          title     = {{MODIS} Atmosphere {L2} Aerosol Product},
+          year      = {2015},
+          publisher = {NASA MODIS Adaptive Processing System, Goddard Space Flight Center, USA},
+          doi       = {10.5067/MODIS/MYD04_L2.061}
+        }
+    - label: MOD08_D3 C6.1 (Terra L3 일자료)
+      text: >-
+        Platnick, S., et al. (2015). MODIS Atmosphere L3 Daily Product. NASA MODIS Adaptive Processing System, Goddard Space Flight Center, USA.
+        https://doi.org/10.5067/MODIS/MOD08_D3.061
+      doi: 10.5067/MODIS/MOD08_D3.061
+      bibtex: |
+        @misc{mod08_d3_c61,
+          author    = {Platnick, S. and others},
+          title     = {{MODIS} Atmosphere {L3} Daily Product},
+          year      = {2015},
+          publisher = {NASA MODIS Adaptive Processing System, Goddard Space Flight Center, USA},
+          doi       = {10.5067/MODIS/MOD08_D3.061}
+        }
+    - label: MOD08_M3 C6.1 (Terra L3 월자료)
+      text: >-
+        Platnick, S., et al. (2015). MODIS Atmosphere L3 Monthly Product. NASA MODIS Adaptive Processing System, Goddard Space Flight Center, USA.
+        https://doi.org/10.5067/MODIS/MOD08_M3.061
+      doi: 10.5067/MODIS/MOD08_M3.061
+      bibtex: |
+        @misc{mod08_m3_c61,
+          author    = {Platnick, S. and others},
+          title     = {{MODIS} Atmosphere {L3} Monthly Product},
+          year      = {2015},
+          publisher = {NASA MODIS Adaptive Processing System, Goddard Space Flight Center, USA},
+          doi       = {10.5067/MODIS/MOD08_M3.061}
+        }
+  papers:
+    - label: MODIS Collection 6 에어로졸 (Levy et al., 2013)
+      text: >-
+        Levy, R. C., Mattoo, S., Munchak, L. A., Remer, L. A., Sayer, A. M., Patadia, F., Hsu, N. C. (2013). The Collection 6 MODIS aerosol products over land and ocean.
+        Atmospheric Measurement Techniques, 6, 2989–3034.
+      doi: 10.5194/amt-6-2989-2013
+      bibtex: |
+        @article{levy2013c6,
+          author  = {Levy, R. C. and Mattoo, S. and Munchak, L. A. and Remer, L. A. and Sayer, A. M. and Patadia, F. and Hsu, N. C.},
+          title   = {The Collection 6 {MODIS} aerosol products over land and ocean},
+          journal = {Atmospheric Measurement Techniques},
+          volume  = {6},
+          number  = {11},
+          pages   = {2989--3034},
+          year    = {2013},
+          doi     = {10.5194/amt-6-2989-2013}
+        }
+    - label: DT·DB·결합 AOD 비교와 사용 권고 (Sayer et al., 2014)
+      text: >-
+        Sayer, A. M., Munchak, L. A., Hsu, N. C., Levy, R. C., Bettenhausen, C., Jeong, M.-J. (2014). MODIS Collection 6 aerosol products: Comparison between Aqua's e-Deep Blue,
+        Dark Target, and "merged" data sets, and usage recommendations. Journal of Geophysical Research: Atmospheres, 119, 13965–13989.
+      doi: 10.1002/2014JD022453
+      bibtex: |
+        @article{sayer2014merged,
+          author  = {Sayer, A. M. and Munchak, L. A. and Hsu, N. C. and Levy, R. C. and Bettenhausen, C. and Jeong, M.-J.},
+          title   = {{MODIS} {Collection 6} aerosol products: Comparison between {Aqua}'s e-{Deep Blue}, {Dark Target}, and ``merged'' data sets, and usage recommendations},
+          journal = {Journal of Geophysical Research: Atmospheres},
+          volume  = {119},
+          pages   = {13965--13989},
+          year    = {2014},
+          doi     = {10.1002/2014JD022453}
+        }
+    - label: MODIS C6.1·VIIRS Deep Blue 검증·일관성 (Sayer et al., 2019)
+      text: >-
+        Sayer, A. M., Hsu, N. C., Lee, J., Kim, W. V., Dutcher, S. T. (2019). Validation, stability, and consistency of MODIS Collection 6.1 and VIIRS Version 1 Deep Blue aerosol data over land.
+        Journal of Geophysical Research: Atmospheres, 124, 4658–4688.
+      doi: 10.1029/2018JD029598
+      bibtex: |
+        @article{sayer2019dbval,
+          author  = {Sayer, A. M. and Hsu, N. C. and Lee, J. and Kim, W. V. and Dutcher, S. T.},
+          title   = {Validation, stability, and consistency of {MODIS} {Collection 6.1} and {VIIRS} {Version 1} {Deep Blue} aerosol data over land},
+          journal = {Journal of Geophysical Research: Atmospheres},
+          volume  = {124},
+          pages   = {4658--4688},
+          year    = {2019},
+          doi     = {10.1029/2018JD029598}
+        }
+  acknowledgement: >-
+    쓴 제품마다 LAADS 데이터셋 DOI(10.5067/MODIS/<short name>.061 형식, 예: 3 km 자료 10.5067/MODIS/MOD04_3K.061, 8일 자료 10.5067/MODIS/MOD08_E3.061)를 인용하세요.
+    DT는 Levy et al. (2013), DB와 결합 AOD는 Sayer et al. (2014)·Sayer et al. (2019)를 알고리즘 근거로 함께 인용합니다.
+
+transitions:
+  - from: MODIS 에어로졸 C6 (MOD04·MOD08)
+    to: MODIS 에어로졸 C6.1
+    status: completed
+    date: "2018-03"
+    summary: >-
+      입력 L1B 보정 문제를 고치고 L2·L3 일부를 개선한 판입니다. Terra는 2017년 9~12월(10월 15일 공개), Aqua는 2018년 1~3월에 전 기간 재처리되었고,
+      2018년 4월 30일 이후로는 C6.1만 생산됩니다. DT는 도시 지역 지표 반사도 처리가, DB는 화소별 불확실성 추정이 새로 들어갔습니다.
+    changes:
+      - aspect: 입력 L1B 보정
+        before: C6 L1B
+        after: 입력 L1B의 문제를 고친 C6.1 L1B
+      - aspect: Dark Target
+        before: C6 DT
+        after: 도시 지역 산출 개선
+      - aspect: Deep Blue
+        before: C6 DB (불확실성 없음)
+        after: 화소별 추정 불확실성(`Deep_Blue_Aerosol_Optical_Depth_550_Land_Estimated_Uncertainty`) 추가
+      - aspect: 생산
+        before: C6 (2018-04-30까지 병행 생산)
+        after: C6.1 단독 생산
+    impacts:
+      - C6과 C6.1을 한 시계열에 섞지 말고 전 기간을 C6.1로 다시 받으세요.
+    sources:
+      - name: MODIS Atmosphere — Data Versions (컬렉션 개요)
+        url: https://atmosphere-imager.gsfc.nasa.gov/collections/overview
+      - name: C6.1 Dark Target 변경 문서
+        url: https://modis-atmos.gsfc.nasa.gov/sites/default/files/ModAtmo/C061_Aerosol_Dark_Target_v2.pdf
+      - name: C6.1 Deep Blue 변경 문서
+        url: https://modis-atmos.gsfc.nasa.gov/sites/default/files/ModAtmo/modis_deep_blue_c61_changes2.pdf
+  - from: MODIS 에어로졸 MOD04·MOD08 C6.1
+    to: VIIRS Deep Blue AERDB·Dark Target AERDT
+    to_id: viirs-aerosol
+    status: planned
+    summary: >-
+      같은 Deep Blue·Dark Target 알고리즘을 VIIRS(Suomi NPP·NOAA-20·NOAA-21)에 적용한 연속성 제품이 후속입니다. 두 알고리즘이 별도 제품(AERDB·AERDT)으로 나뉘고,
+      DB에는 해양 알고리즘(SOAR)이 붙어 육지·해양을 함께 산출하며, 결합 AOD와 8일 L3는 없습니다. 같은 오후 궤도인 Aqua를 주로 잇고, Terra 오전 관측을 잇는 VIIRS는 없습니다.
+      Terra·Aqua가 2027년 운용을 마치면 전환이 완료됩니다.
+    changes:
+      - aspect: 제품 구성
+        before: "한 파일(MOD04_L2)에 DT·DB·결합 AOD / L3 MOD08 D3·E3·M3"
+        after: "AERDB_L2·D3·M3(DB 육지 + SOAR 해양), AERDT_L2(DT 육지·해양, 2026-10 기준 LAADS에 L3 없음). 결합 AOD 없음"
+      - aspect: 화소 크기
+        before: "직하 10 km(10×10 화소) / 3 km(DT)"
+        after: "직하 6 km(VIIRS M밴드 750 m 화소 8×8)"
+      - aspect: 그래뉼·스와스
+        before: 5분 그래뉼
+        after: 6분 그래뉼, 스와스가 MODIS보다 넓음
+      - aspect: 통과 시각
+        before: "Terra 10:30 하강, Aqua 13:30 상승 (2020~2021년 이후 표류)"
+        after: "13:30 상승 (Suomi NPP·NOAA-20·NOAA-21 모두 오후 궤도)"
+      - aspect: 단파적외 밴드
+        before: MODIS 2.13 µm
+        after: VIIRS 2.25 µm (파장 차이로 지표 반사도 관계가 달라짐)
+      - aspect: 변수 이름·형식
+        before: "`Optical_Depth_Land_And_Ocean`, `AOD_550_Dark_Target_Deep_Blue_Combined` 등, HDF-EOS2(HDF4)"
+        after: "`Aerosol_Optical_Thickness_550_Land_Ocean_Best_Estimate`(DB), `geophysical_data/Optical_Depth_Land_And_Ocean`(DT), NetCDF-4"
+      - aspect: 기간
+        before: "Terra 2000-02~ / Aqua 2002-07~"
+        after: "Suomi NPP 2012-03~(2026-11-02 전달 종료) / NOAA-20 2018~ / NOAA-21 2023-02~"
+    impacts:
+      - "MODIS와 VIIRS AOD 사이에는 대체로 일정한 차이(오프셋)가 있습니다. Sawyer et al. (2025)에 따르면 DT에서 NOAA-20은 Aqua와 거의 같고, Terra는 약 0.015 높으며, Suomi NPP가 가장 높습니다. 이어 붙일 때는 겹치는 기간에 차이를 확인하세요."
+      - Sawyer et al. (2020)은 DT 차이의 상당 부분이 보정보다 표본(화소 크기·구름 마스크·스와스 폭) 차이에서 온다고 보고했습니다. 같은 날 두 센서가 모두 산출한 칸만 비교하는 것이 안전합니다.
+      - "MODIS 결합 AOD를 쓰던 분석은 VIIRS에서 DB(AERDB)나 DT(AERDT) 중 하나를 골라야 합니다. 일·월 L3가 필요하면 현재 AERDB D3·M3만 있습니다."
+      - Terra 오전 관측의 후속은 없으므로, Terra 기반 시계열은 Aqua·VIIRS 오후 관측과 하루 중 시각이 다르다는 점을 고려하세요.
+    sources:
+      - name: Sawyer et al. (2020), Remote Sensing — Continuing the MODIS Dark Target Aerosol Time Series with VIIRS
+        url: https://doi.org/10.3390/rs12020308
+      - name: Sawyer et al. (2025), Frontiers in Environmental Science — 갱신된 VIIRS DT와 MODIS 연속성
+        url: https://doi.org/10.3389/fenvs.2025.1602145
+      - name: Sayer et al. (2019), JGR — MODIS C6.1·VIIRS Deep Blue 일관성
+        url: https://doi.org/10.1029/2018JD029598
+      - name: LAADS DAAC — MODIS to VIIRS Transition
+        url: https://ladsweb.modaps.eosdis.nasa.gov/learn/modis-to-viirs-transition
+
+notices:
+  - date: "2026-08-03"
+    level: info
+    title: LAADS Classic API 2026-08-31 폐지 — API-V2로 전환
+    body: >-
+      LAADS DAAC는 예전 웹 서비스 Classic API를 2026년 8월 31일에 폐지한다고 공지했습니다. 자동 내려받기 스크립트·프로그램은 JSON/REST 방식의 LAADS API-V2로 옮겨야 합니다.
+    source: https://ladsweb.modaps.eosdis.nasa.gov/alerts-and-issues/199517
+  - date: "2026-04-30"
+    level: info
+    title: LAADS OPeNDAP 접속에 Earthdata 로그인 필요
+    body: >-
+      2026년 4월 30일부터 LAADS OPeNDAP 서비스도 NASA Earthdata 로그인 인증을 거쳐야 쓸 수 있습니다. 인증 없이 OPeNDAP 주소로 읽던 스크립트는 자격 증명을 추가해야 합니다.
+    source: https://ladsweb.modaps.eosdis.nasa.gov/alerts-and-issues/199527
+  - date: "2026-03-31"
+    level: info
+    title: Terra 이상으로 MODIS 대기(standby) 모드 전환 — 2026-03-26~27 자료 의심·불량
+    body: >-
+      2026년 3월 26일 20:00 UTC께 Terra 위성 이상으로 MODIS가 대기 모드로 바뀌었다가 27일 오후 과학 모드로 돌아왔습니다. 보정팀은 3월 26일 20:00 UTC부터
+      27일 19:30 UTC까지의 자료를 의심 또는 불량으로 표시했고, 그 이후 자료는 써도 된다고 밝혔습니다.
+    source: https://ladsweb.modaps.eosdis.nasa.gov/alerts-and-issues/199533
+  - date: "2026-03-20"
+    level: warning
+    title: NASA, Terra 과학 운용 종료를 2027년 2월·Aqua를 2027년 9월로 전망
+    body: >-
+      NASA Science 기사 'Terra: The End of An Era'(2025-12-29 게재, 2026-03-20 갱신)의 편집자 주는 연료·전력 한계로 Terra는 2027년 2월, Aqua는 2027년 9월에
+      과학 운용이 끝날 것으로 전망하며, 그때까지는 운용을 계속한다고 밝혔습니다. 그 뒤에는 MOD04·MYD04·MOD08·MYD08 새 자료가 나오지 않습니다.
+    source: https://science.nasa.gov/science-research/earth-science/terra-the-end-of-an-era/
+  - date: "2026-03-18"
+    level: info
+    title: MODIS L1B·지오로케이션 Version 7.0 공개 — 대기 산출물은 아직 C6.1
+    body: >-
+      LAADS DAAC가 MODIS 보정 복사량(L1B)·지오로케이션 V7.0을 공개하고, V6.1 L1 자료는 2026-09-30에 내린다고 공지했습니다. 2026-10-13 확인 시
+      MOD04·MOD08 대기 산출물은 CMR에 Version 6.1만 있으며, V7 L1B로 만든 에어로졸 산출물의 공개 일정은 공식 공지로 확인되지 않았습니다.
+    source: https://www.earthdata.nasa.gov/data/alerts-outages/version-7.0-modis-calibrated-radiances-geolocation-data-products-now-available
+  - date: "2025-05-02"
+    level: warning
+    title: MODIS에서 VIIRS로 전환 안내 — Terra·Aqua 2026년 말~2027년 초 종료 시작
+    body: >-
+      NASA LAADS DAAC는 Terra·Aqua가 2026년 말~2027년 초부터 운용 종료에 들어가며, 두 위성이 설계 궤도를 벗어나 통과 시각이 바뀌고 있어 자료에 영향을 줄 수 있다고 공지했습니다.
+      MODIS 자료 수집이 멈추면 마지막 재처리를 하며, 사용자는 VIIRS 유사 산출물을 쓰라고 권고했습니다.
+    source: https://www.earthdata.nasa.gov/data/alerts-outages/transition-from-modis-viirs
+
+links:
+  - name: MOD04_L2 제품 페이지 (LAADS DAAC)
+    url: https://ladsweb.modaps.eosdis.nasa.gov/missions-and-measurements/products/MOD04_L2
+  - name: MOD08_D3 제품 페이지 (LAADS DAAC)
+    url: https://ladsweb.modaps.eosdis.nasa.gov/missions-and-measurements/products/MOD08_D3
+  - name: MODIS 대기팀 — 에어로졸(04_L2) 제품 설명
+    url: https://atmosphere-imager.gsfc.nasa.gov/products/aerosol
+  - name: MODIS 대기팀 — 에어로졸 알려진 문제(C6.1)
+    url: https://atmosphere-imager.gsfc.nasa.gov/issues/aerosol
+  - name: MODIS Atmosphere L3 User's Guide & ATBD (C6·C6.1)
+    url: https://atmosphere-imager.gsfc.nasa.gov/sites/default/files/ModAtmo/L3_ATBD_C6_C61_2019_02_20.pdf
+  - name: MOD04 ATBD
+    url: https://modis-atmos.gsfc.nasa.gov/sites/default/files/ModAtmo/ATBD_MOD04_C005_rev2_0.pdf
+  - name: Dark Target 알고리즘 팀
+    url: https://darktarget.gsfc.nasa.gov/
+  - name: LAADS DAAC — MODIS to VIIRS Transition
+    url: https://ladsweb.modaps.eosdis.nasa.gov/learn/modis-to-viirs-transition
+
+watch_urls:
+  - https://atmosphere-imager.gsfc.nasa.gov/issues/aerosol
+  - https://ladsweb.modaps.eosdis.nasa.gov/learn/modis-to-viirs-transition
+  - https://ladsweb.modaps.eosdis.nasa.gov/missions-and-measurements/products/MOD04_L2
+
+last_verified: "2026-10-13"

@@ -1,0 +1,340 @@
+# ─────────────────────────────────────────────────────────────
+# MODIS-VIIRS 연속 구름 제품 CLDPROP(L2·D3·M3) V1.1·CLDMSK(L2) V2 — 데이터셋 정보 파일
+# 위성 탭(구름·복사). VIIRS(Suomi NPP·NOAA-20·NOAA-21)와 Aqua MODIS에 같은 알고리즘을 적용한 연속 구름 마스크·구름 특성 자료입니다.
+# MODIS 표준 구름(MOD06·MOD35) → 연속 제품 비교는 modis-cloud.yaml의 transitions에 있습니다. Suomi NPP 자료 전달은 2026-11-02에 끝납니다.
+# 수정 후에는 공식 페이지에서 확인한 날짜로 last_verified 를 갱신하세요.
+# ─────────────────────────────────────────────────────────────
+id: viirs-cloud
+name: "VIIRS Cloud (CLDPROP·CLDMSK)"
+full_name: MODIS-VIIRS Continuity Cloud Properties (CLDPROP_L2·D3·M3, V1.1) 및 Cloud Mask (CLDMSK_L2, V2) — Suomi NPP·NOAA-20·NOAA-21 VIIRS와 Aqua MODIS (공통 밴드 기반 연속 구름 자료)
+category: satellite
+domain: satellite
+group: 구름·복사
+order: 61
+domains: [대기, 원격탐사]
+provider: NASA GSFC·위스콘신대 SSEC MODIS-VIIRS 구름 팀(Platnick 등) / NASA VIIRS Atmosphere SIPS / NASA LAADS DAAC
+
+status: active
+status_note: >-
+  NOAA-20 판 CLDPROP(V1.1)과 CLDMSK(V2)가 정상 생산되고 있습니다(2026-10-13 확인 시 CLDPROP_D3_VIIRS_NOAA20은 10월 9일 자료까지). 구름 마스크는 NOAA-21 판도 있지만,
+  구름 특성(CLDPROP)의 NOAA-21 판은 2026-10-13 기준 공개되지 않았습니다. Suomi NPP 판은 NOAA의 자료 전달 종료(2026-11-02 13:00 UTC)로 그 뒤 새 자료가 없고,
+  Aqua MODIS 판은 Aqua 과학 운용 종료(2027년 9월 전망)와 함께 끝납니다. 그 뒤로는 NOAA-20(및 마스크는 NOAA-21) 판만 남습니다.
+
+period:
+  start: "2002-07"
+  end: present
+  note: >-
+    Aqua MODIS 판(CLDPROP_*_MODIS_Aqua·CLDMSK_L2_MODIS_Aqua)은 2002-07-04부터, Suomi NPP 판은 2012-03-01부터(2026-11-02 전달 종료 예정), NOAA-20 판은 2018-02-17부터(L3 일 2018-03-17·월 2018-04),
+    NOAA-21 구름 마스크는 2023-02-10부터입니다. LAADS 전환 안내 표에는 Aqua MODIS 판이 2012년부터로 적혀 있지만, CMR에는 2002년 7월부터의 자료가 있습니다(2026-10-13 확인).
+
+resolution:
+  spatial_short: "0.75 km (0.007°)"
+  temporal_short: "1일"
+  spatial: >-
+    L2 스와스(직하점): VIIRS 750 m(M밴드), MODIS 1 km — CLDPROP_L2·CLDMSK_L2. CLDMSK V2 VIIRS에는 주간 375 m I밴드 구름 마스크 추가 /
+    L3: 전지구 1°×1° 격자 — CLDPROP_D3(일)·CLDPROP_M3(월)
+  vertical: 구름 상단 기압·온도·높이와 기주 적분 구름 특성(광학두께·유효 반경·수액량)
+  temporal: >-
+    L2는 VIIRS 6분·MODIS 5분 단위 그래뉼(궤도 스와스). 구름 마스크·구름 상단은 주간·야간, 광학 특성은 주간만 / L3 일(D3)·월(M3).
+    Suomi NPP·NOAA-20·NOAA-21과 Aqua 모두 지방시 13:30 무렵 상승(주간) 통과하는 오후 궤도입니다(Aqua는 2021년 이후 늦어지는 쪽으로 표류).
+
+update: 매일 (L2·일자료는 관측 후 수일 안), 월자료는 달이 끝난 뒤 약 1개월
+license: NASA EOSDIS 자료 이용 정책에 따라 제한 없이 공개된 무료 자료입니다. 내려받기(HTTPS·OPeNDAP 포함)에는 무료 NASA Earthdata 로그인이 필요하며, 데이터셋 DOI 인용을 요청합니다.
+account_required: true
+
+summary: >-
+  MODIS와 VIIRS 구름 기록을 하나로 잇기 위해 NASA가 만든 연속성 구름 자료입니다. VIIRS에는 MODIS의 CO2 흡수(13 µm대)·수증기(6.7·7.3 µm) 밴드가 없고 단파적외 밴드 파장도 달라(2.13 µm 대 2.25 µm)
+  MODIS 표준 알고리즘을 그대로 옮길 수 없으므로, 두 센서에 공통으로 있는 밴드만 쓰는 같은 알고리즘을 VIIRS와 Aqua MODIS 모두에 적용했습니다.
+  구름 마스크(CLDMSK)는 MOD35를 계승한 MODIS-VIIRS 구름 마스크(MVCM)이고, 구름 특성(CLDPROP)은 NOAA CLAVR-x의 구름 상단·상 알고리즘과 MOD06 계승 광학 특성(광학두께·유효 반경·수액량)을 담으며,
+  1° 일·월 격자 통계도 제공합니다. Aqua MODIS판이 있어 2002년부터 같은 알고리즘으로 이어진 오후 관측 시계열을 만들 수 있다는 점이 핵심입니다.
+
+time_convention:
+  summary: >-
+    L2(CLDPROP_L2·CLDMSK_L2)는 위성이 지나간 순간의 관측값이며, 파일 이름의 시각(AYYYYDDD.HHMM)은 그래뉼 시작 시각(UTC)입니다. 구름 마스크·구름 상단 특성은 주간·야간 모두,
+    광학 특성은 주간에만 있습니다. L3 일자료(CLDPROP_D3)는 그날 L2를 1° 칸마다 모은 통계(평균·표준편차·화소 수·합·제곱합·히스토그램)이고, 월자료(CLDPROP_M3)는 일자료를 모아 만듭니다.
+  points:
+    - "Aqua·Suomi NPP·NOAA-20·NOAA-21 모두 지방시 13:30 무렵 상승 통과하는 주간 관측입니다. 같은 오후 궤도라도 위성마다 통과 시각이 조금씩 다르고, Aqua는 2021년 3월 마지막 궤도 조정 뒤 늦어져 2026년 8월 무렵 약 15:50으로 예상되었으므로 최근 Aqua MODIS 값에는 관측 시각 차이가 섞입니다."
+    - "Terra(오전 10:30)를 잇는 연속 구름 제품은 없습니다. MODIS 표준 제품(MOD06)의 Terra 값과 이 자료를 섞지 마세요."
+    - "L3는 주간(`_Day`)·야간(`_Night`)·전체 통계가 따로 있습니다. 구름 면적비 같은 변수는 주간·야간 표본 시각이 달라 일주기 영향을 받으므로 어느 통계를 썼는지 밝히세요."
+    - "L3 변수는 그룹 구조(`Cloud_Fraction/Mean`, `Cloud_Optical_Thickness_Liquid/Mean`처럼 변수 이름 아래 통계)로 되어 있어, MODIS MOD08(`Cloud_Fraction_Mean`)과 이름 체계가 다릅니다."
+  source: https://atmosphere-imager.gsfc.nasa.gov/sites/default/files/ModAtmo/L3_CLDPROP_User_Guide_v2.0.pdf
+  source_name: "Level-3 Continuity Cloud Properties (CLDPROP_L3) User Guide + CLDPROP·CLDMSK 컬렉션 설명(CMR) + LAADS MODIS to VIIRS Transition"
+
+variables:
+  note: >-
+    CMR 변수 목록(UMM-Var) 기준 이름입니다. 파일은 NetCDF-4이며 L2 과학 변수는 `geophysical_data/` 그룹 안에 있습니다. Aqua MODIS·SNPP·NOAA-20 파일의 변수 이름이 같습니다.
+    일부 변수는 정수로 저장되어 scale_factor·add_offset 속성이 붙어 있으므로(예: 구름 상단 온도 scale 약 0.0079, offset 100) xarray처럼 자동 변환하는 도구로 읽으세요.
+  full_list: https://ladsweb.modaps.eosdis.nasa.gov/api/v2/content/archives/Document%20Archive/Science%20Data%20Product%20Documentation/L2_Cloud_Properties_UG_v1.2_March_2021.pdf
+  groups:
+    - name: 구름 마스크 L2 (CLDMSK_L2_VIIRS_NOAA20·NOAA21·SNPP, CLDMSK_L2_MODIS_Aqua)
+      kind: instant
+      period: 통과 시각
+      items:
+        - text: "정수 구름 마스크 — `geophysical_data/Integer_Cloud_Mask` (0=구름, 1=구름 가능, 2=맑음 가능, 3=맑음 확신, -1=결과 없음)"
+          std: [cloud_phase_mask]
+        - "맑은 하늘 신뢰도 — `geophysical_data/Clear_Sky_Confidence` (0~1, 클수록 맑음)"
+        - text: "구름 마스크·분광 검사 비트 — `geophysical_data/Cloud_Mask` (바이트 배열)"
+          std: [cloud_phase_mask]
+    - name: 구름 특성 L2 — 구름 상단·상 (CLDPROP_L2_VIIRS_NOAA20·SNPP, CLDPROP_L2_MODIS_Aqua)
+      kind: instant
+      period: 통과 시각
+      items:
+        - "구름 상단 기압(NOAA CLAVR-x AWG) — `geophysical_data/Cloud_Top_Pressure` (hPa)"
+        - "구름 상단 높이(CLAVR-x AWG) — `geophysical_data/Cloud_Top_Height` (m)"
+        - "구름 상단 온도(CLAVR-x AWG) — `geophysical_data/Cloud_Top_Temperature` (K)"
+        - "구름 상단 상(CLAVR-x) — `geophysical_data/Cloud_Phase_Cloud_Top_Properties`"
+        - "11 µm 구름 유효 방출률 — `geophysical_data/Cloud_Effective_Emissivity` (무차원)"
+    - name: 구름 특성 L2 — 광학 특성, 주간 (CLDPROP_L2_*)
+      kind: instant
+      period: 통과 시각 (주간)
+      items:
+        - "구름 광학두께(2.2 µm 밴드 조합) — `geophysical_data/Cloud_Optical_Thickness` (무차원, scale 0.01)"
+        - "구름 유효 입자 반경(2.2 µm) — `geophysical_data/Cloud_Effective_Radius` (µm, scale 0.01)"
+        - text: "구름 수액량(2.2 µm) — `geophysical_data/Cloud_Water_Path` (g m-2)"
+          std: [cloud_water]
+        - "광학 산출에 쓴 구름 상 — `geophysical_data/Cloud_Phase_Optical_Properties` (0~4)"
+        - text: "1.6 µm·3.7 µm 광학두께 — `geophysical_data/Cloud_Optical_Thickness_16`, `geophysical_data/Cloud_Optical_Thickness_37` (무차원)"
+          std: [cloud_optical]
+        - "광학두께 상대 불확실성 — `geophysical_data/Cloud_Optical_Thickness_Uncertainty` (상대값)"
+    - name: 구름 특성 L3 일·월 1° (CLDPROP_D3·CLDPROP_M3 _VIIRS_NOAA20·SNPP, _MODIS_Aqua)
+      kind: mean
+      period: 일 또는 월
+      items:
+        - text: "구름 면적비 평균 — `Cloud_Fraction/Mean` (무차원)"
+          std: [cloud]
+        - text: "주간·야간 구름 면적비 평균 — `Cloud_Fraction_Day/Mean`, `Cloud_Fraction_Night/Mean` (무차원)"
+          std: [cloud]
+        - "구름 상단 기압 평균 — `Cloud_Top_Pressure/Mean` (hPa)"
+        - "구름 상단 온도 평균 — `Cloud_Top_Temperature/Mean` (K)"
+        - "물·얼음 구름 광학두께 평균(1.6/2.2 µm) — `Cloud_Optical_Thickness_1621_Liquid/Mean`, `Cloud_Optical_Thickness_1621_Ice/Mean` (무차원)"
+        - "물 구름 광학두께 평균 — `Cloud_Optical_Thickness_Liquid/Mean` (무차원)"
+        - "물 구름 유효 반경 평균 — `Cloud_Effective_Radius_Liquid/Mean` (µm)"
+        - text: "물 구름 수액량 평균 — `Cloud_Water_Path_Liquid/Mean` (g m-2)"
+          std: [cloud_water]
+        - text: "구름 면적비 화소 수 — `Cloud_Fraction/Pixel_Counts` (개)"
+          kind: accum
+
+access:
+  - name: LAADS DAAC (검색·주문·직접 받기)
+    url: https://ladsweb.modaps.eosdis.nasa.gov/search/order/2/CLDPROP_L2_VIIRS_SNPP--5111
+    method: 웹 검색·HTTPS 직접 받기(CLDPROP V1.1은 archive/allData/5111/, CLDMSK V2는 5200/) / LAADS API-V2 / OPeNDAP
+    note: >-
+      short name 예: CLDPROP_L2_VIIRS_NOAA20·CLDPROP_D3_VIIRS_NOAA20·CLDPROP_M3_VIIRS_NOAA20·CLDPROP_*_MODIS_Aqua·CLDMSK_L2_VIIRS_NOAA20·CLDMSK_L2_VIIRS_NOAA21·CLDMSK_L2_MODIS_Aqua
+      (Suomi NPP는 SNPP). CMR version은 CLDPROP "1.1", CLDMSK V2 "2"(NOAA-21 마스크는 "1")입니다. 2026-04-30부터 OPeNDAP도 Earthdata 로그인이 필요합니다.
+  - name: NASA Earthdata Search
+    url: https://search.earthdata.nasa.gov/search?q=CLDPROP
+    method: 웹 검색 / earthaccess(파이썬)
+    note: CLDPROP·CLDMSK로 검색하면 센서·위성·버전별 컬렉션이 나옵니다. COSP 시뮬레이터 비교용 L3(CLDPROPCOSP_D3·M3)도 따로 있습니다.
+
+example:
+  lang: python
+  note: >-
+    earthaccess로 NOAA-20 CLDPROP 월자료를 받아 xarray로 구름 면적비 월평균을 읽는 예입니다. L3 변수는 NetCDF 그룹 안에 있으므로 group 인자를 씁니다. 그룹·좌표 이름은 파일에서 다시 확인하세요.
+  code: |
+    # pip install earthaccess xarray netCDF4
+    import earthaccess
+    import xarray as xr
+
+    earthaccess.login()  # 무료 NASA Earthdata 계정
+    results = earthaccess.search_data(
+        short_name="CLDPROP_M3_VIIRS_NOAA20", version="1.1",
+        temporal=("2024-07-01", "2024-07-31"),
+    )
+    files = earthaccess.download(results[:1], "cldprop")
+
+    import netCDF4
+    with netCDF4.Dataset(files[0]) as nc:
+        print(list(nc.groups))                   # 변수 그룹 목록 확인
+    cf = xr.open_dataset(files[0], group="Cloud_Fraction")["Mean"]
+    print(float(cf.mean()))
+
+tips:
+  - "MODIS 표준 구름(MOD06·MOD08)과 이 연속 제품은 같은 Aqua 관측이어도 값이 다릅니다(구름 상단 알고리즘, 액체 굴절률, QA, 다층운 검출 여부가 다름). MODIS-VIIRS 장기 분석에는 MOD06 대신 Aqua MODIS CLDPROP을 쓰세요."
+  - "Platnick et al. (2021)에 따르면 VIIRS 2.25 µm와 MODIS 2.13 µm 밴드 차이로 2.x µm 유효 반경이 센서마다 체계적으로 다르고, 이 차이가 센서 간 보정 차이와 완전히 분리되지는 않았습니다. 1.6 µm(`_16`) 산출은 두 센서 차이가 상대적으로 작은지 함께 확인하세요."
+  - "VIIRS는 MODIS의 CO2·수증기 흡수 밴드가 없어 극야 지역 구름 검출이 약합니다. MVCM 사용자 가이드는 13.3 µm 검사가 빠졌고 6.7·7.3 µm 손실을 새 검사로 일부만 보완했다고 밝힙니다. 극지 겨울 구름 마스크는 조심해서 쓰세요."
+  - "Suomi NPP 판은 2026-11-02 이후 끊기고, NOAA-21의 CLDPROP은 아직 없습니다(마스크만 있음). VIIRS 시계열을 이어 가려면 NOAA-20 판으로 옮기세요."
+  - "Aqua MODIS 판은 Aqua 궤도 표류(2021년 이후 통과 시각이 늦어짐)의 영향을 받습니다. 2021년 이후 Aqua와 VIIRS 차이에는 관측 시각 차이가 들어 있습니다."
+  - "2023년 10월 연속 구름 마스크 알고리즘이 버그 수정과 함께 OISST 입력으로 바뀌었고(버전 번호는 그대로, product_version 1.0.5), 2023-01-01 이후 자료가 재처리되었습니다. 2026년 4월에는 375 m 마스크를 더한 CLDMSK V2가 나왔으니 마스크 버전을 확인하세요."
+  - "구름 특성 L3는 NetCDF 그룹 구조라 `xr.open_dataset(path)`만으로는 변수가 보이지 않습니다. `group=` 인자나 netCDF4로 그룹을 열어야 합니다."
+
+citations:
+  dataset:
+    - label: CLDPROP_L2_VIIRS_NOAA20 V1.1 (NOAA-20 L2 구름 특성)
+      text: >-
+        NASA VIIRS Atmosphere SIPS (2021). VIIRS/NOAA20 Cloud Properties L2 6-Min Swath 750 m, Version 1.1. L1 and Atmosphere Archive and Distribution System (LAADS).
+        https://doi.org/10.5067/VIIRS/CLDPROP_L2_VIIRS_NOAA20.011
+      doi: 10.5067/VIIRS/CLDPROP_L2_VIIRS_NOAA20.011
+      bibtex: |
+        @misc{cldprop_l2_noaa20_v11,
+          author    = {{NASA VIIRS Atmosphere SIPS}},
+          title     = {{VIIRS/NOAA20} Cloud Properties {L2} 6-Min Swath 750 m, Version 1.1},
+          year      = {2021},
+          publisher = {L1 and Atmosphere Archive and Distribution System (LAADS)},
+          doi       = {10.5067/VIIRS/CLDPROP_L2_VIIRS_NOAA20.011}
+        }
+    - label: CLDPROP_L2_MODIS_Aqua V1.1 (Aqua MODIS L2 연속 구름 특성)
+      text: >-
+        NASA VIIRS Atmosphere SIPS (2019). MODIS/Aqua Cloud Properties L2 5-Min Swath 1000 m, Version 1.1. L1 and Atmosphere Archive and Distribution System (LAADS).
+        https://doi.org/10.5067/MODIS/CLDPROP_L2_MODIS_Aqua.011
+      doi: 10.5067/MODIS/CLDPROP_L2_MODIS_Aqua.011
+      bibtex: |
+        @misc{cldprop_l2_aqua_v11,
+          author    = {{NASA VIIRS Atmosphere SIPS}},
+          title     = {{MODIS/Aqua} Cloud Properties {L2} 5-Min Swath 1000 m, Version 1.1},
+          year      = {2019},
+          publisher = {L1 and Atmosphere Archive and Distribution System (LAADS)},
+          doi       = {10.5067/MODIS/CLDPROP_L2_MODIS_Aqua.011}
+        }
+    - label: CLDPROP_M3_VIIRS_NOAA20 V1.1 (NOAA-20 L3 월자료)
+      text: >-
+        NASA VIIRS Atmosphere SIPS (2021). VIIRS/NOAA20 Cloud Properties Level 3 monthly, 1x1 degree grid, Version 1.1. L1 and Atmosphere Archive and Distribution System (LAADS).
+        https://doi.org/10.5067/VIIRS/CLDPROP_M3_VIIRS_NOAA20.011
+      doi: 10.5067/VIIRS/CLDPROP_M3_VIIRS_NOAA20.011
+      bibtex: |
+        @misc{cldprop_m3_noaa20_v11,
+          author    = {{NASA VIIRS Atmosphere SIPS}},
+          title     = {{VIIRS/NOAA20} Cloud Properties Level 3 monthly, 1x1 degree grid, Version 1.1},
+          year      = {2021},
+          publisher = {L1 and Atmosphere Archive and Distribution System (LAADS)},
+          doi       = {10.5067/VIIRS/CLDPROP_M3_VIIRS_NOAA20.011}
+        }
+    - label: CLDMSK_L2_VIIRS_NOAA20 V2 (NOAA-20 L2 구름 마스크)
+      text: >-
+        NASA VIIRS Atmosphere SIPS (2025). VIIRS/NOAA20 Cloud Mask and Spectral Test Results 6-Min L2 Swath 750m, Version 2. L1 and Atmosphere Archive and Distribution System (LAADS).
+        https://doi.org/10.5067/VIIRS/CLDMSK_L2_VIIRS_NOAA20.002
+      doi: 10.5067/VIIRS/CLDMSK_L2_VIIRS_NOAA20.002
+      bibtex: |
+        @misc{cldmsk_l2_noaa20_v2,
+          author    = {{NASA VIIRS Atmosphere SIPS}},
+          title     = {{VIIRS/NOAA20} Cloud Mask and Spectral Test Results 6-Min {L2} Swath 750m, Version 2},
+          year      = {2025},
+          publisher = {L1 and Atmosphere Archive and Distribution System (LAADS)},
+          doi       = {10.5067/VIIRS/CLDMSK_L2_VIIRS_NOAA20.002}
+        }
+  papers:
+    - label: NASA MODIS-VIIRS 연속 구름 광학 특성 산출물 (Platnick et al., 2021)
+      text: >-
+        Platnick, S., Meyer, K., Wind, G., Holz, R. E., Amarasinghe, N., Hubanks, P. A., Marchant, B., Dutcher, S., Veglio, P. (2021). The NASA MODIS-VIIRS Continuity Cloud Optical Properties Products.
+        Remote Sensing, 13(1), 2.
+      doi: 10.3390/rs13010002
+      bibtex: |
+        @article{platnick2021continuity,
+          author  = {Platnick, S. and Meyer, K. and Wind, G. and Holz, R. E. and Amarasinghe, N. and Hubanks, P. A. and Marchant, B. and Dutcher, S. and Veglio, P.},
+          title   = {The {NASA} {MODIS-VIIRS} Continuity Cloud Optical Properties Products},
+          journal = {Remote Sensing},
+          volume  = {13},
+          number  = {1},
+          pages   = {2},
+          year    = {2021},
+          doi     = {10.3390/rs13010002}
+        }
+  acknowledgement: >-
+    쓴 제품·위성마다 LAADS 데이터셋 DOI를 인용하세요(CLDPROP은 10.5067/VIIRS/<short name>.011, Aqua MODIS판은 10.5067/MODIS/<short name>.011, CLDMSK V2는 10.5067/VIIRS/<short name>.002 형식).
+    구름 광학 특성은 Platnick et al. (2021), 구름 마스크는 MOD35 ATBD(Ackerman et al.)와 MVCM 사용자 가이드를 알고리즘 근거로 함께 인용합니다.
+
+transitions:
+  - from: CLDMSK V1 (MVCM 연속 구름 마스크)
+    to: CLDMSK V2
+    status: completed
+    date: "2026-04"
+    summary: >-
+      2026년 4월 28일 연속 구름 마스크 V2(Suomi NPP·NOAA-20 VIIRS, Aqua MODIS)가 공개되었고, 영상기와 사운더(AIRS·CrIS)를 결합한 마스크 2종이 새로 나왔습니다.
+      V2는 보정 조정된 VIIRS L1B를 입력으로 쓰고 주간 375 m I밴드 마스크를 더했습니다. NOAA-21 마스크는 2026-10-13 기준 V1만 있고, V1 컬렉션의 배포 종료 일정은 공지되지 않았습니다.
+    changes:
+      - aspect: 입력
+        before: 기존 VIIRS L1B
+        after: 보정 조정된 VIIRS L1B
+      - aspect: 해상도
+        before: VIIRS 750 m·MODIS 1 km
+        after: 같음 + VIIRS 주간 375 m I밴드 구름 마스크 추가
+      - aspect: 제품 구성
+        before: "CLDMSK_L2_VIIRS_SNPP·NOAA20·NOAA21, CLDMSK_L2_MODIS_Aqua"
+        after: "V2: SNPP·NOAA20·MODIS_Aqua + 사운더 결합 CLDMSK_L2_MODIS-AIRS_Aqua·CLDMSK_L2_VIIRS-CRIS_SNPP (NOAA-21은 V1 유지)"
+      - aspect: 버전 표기
+        before: "CMR version 1, DOI .001"
+        after: "CMR version 2, DOI .002"
+    impacts:
+      - 한 분석 안에서 V1과 V2 마스크를 섞지 마세요. CLDPROP V1.1이 어느 마스크 버전을 입력으로 쓰는지는 파일 속성으로 확인하세요.
+    sources:
+      - name: Release of MODIS-VIIRS Cloud Mask Version 2.0 Collection Products (LAADS, 2026-04-28)
+        url: https://ladsweb.modaps.eosdis.nasa.gov/alerts-and-issues/199528
+      - name: CLDMSK_L2_VIIRS_SNPP V2 컬렉션 설명 (CMR 메타데이터)
+        url: https://cmr.earthdata.nasa.gov/search/collections.umm_json?concept_id=C3860045339-LAADS
+
+notices:
+  - date: "2026-10-06"
+    level: critical
+    title: Suomi NPP 자료 전달 2026년 11월 2일 종료 — CLDPROP·CLDMSK SNPP 판 대신 NOAA-20으로
+    body: >-
+      LAADS DAAC는 NOAA NESDIS 결정(2026-08-03 발표)에 따라 Suomi NPP 과학 자료 전달이 2026년 11월 2일 13:00 UTC에 끝난다고 공지했습니다(일정은 바뀔 수 있음).
+      CLDPROP_L2·D3·M3_VIIRS_SNPP, CLDPROPCOSP_D3·M3_VIIRS_SNPP, CLDMSK_L2_VIIRS_SNPP·CLDMSK_L2_VIIRS-CRIS_SNPP가 대상이며 NOAA-20 판으로 옮기라고 안내합니다(구름 마스크는 NOAA-21 판도 있음). 과거 SNPP 자료는 계속 받을 수 있습니다.
+    source: https://ladsweb.modaps.eosdis.nasa.gov/alerts-and-issues/199516
+  - date: "2026-08-11"
+    level: warning
+    title: Suomi NPP 이상(2026-08-02) — 8월 3~6일 자료 처리 제외
+    body: >-
+      8월 2일 02:05 UTC Suomi NPP 위성 이상으로 과학 자료가 끊겼다가 8월 4일 준실시간 처리가, 10일 확정판 처리가 재개되었습니다. 8월 3일 02:00 UTC~6일 16:24 UTC 자료는 처리하지 않습니다.
+    source: https://ladsweb.modaps.eosdis.nasa.gov/alerts-and-issues/199518
+  - date: "2026-07-27"
+    level: warning
+    title: Suomi NPP 이상(2026-07-10~17) — 5월 1일 이후 자료를 새 보정표로 재생산
+    body: >-
+      7월 10일 Suomi NPP가 비정상 상태에 들어가 7월 17일까지 과학 자료가 생산되지 않았고, 이 기간 자료는 복구되지 않을 수 있다고 밝혔습니다. 확정판 처리는 VIIRS 보정팀의 새 보정표를 기다려 재개되었고,
+      2026년 5월 1일 04:00 UTC 이후 자료를 새 보정표로 다시 만든다고 공지했습니다.
+    source: https://ladsweb.modaps.eosdis.nasa.gov/alerts-and-issues/199520
+  - date: "2026-04-28"
+    level: info
+    title: MODIS-VIIRS 구름 마스크 V2 공개 — 사운더 결합 마스크 추가
+    body: >-
+      LAADS DAAC가 MOD35를 계승한 MODIS-VIIRS 구름 마스크(MVCM) V2를 Suomi NPP·NOAA-20 VIIRS와 Aqua MODIS용으로 공개했습니다. 영상기의 해상도와 사운더(AIRS·CrIS)의 흡수 밴드를 결합해
+      야간·극지 검출을 높인 CLDMSK_L2_MODIS-AIRS_Aqua와 CLDMSK_L2_VIIRS-CRIS_SNPP도 새로 나왔습니다.
+    source: https://ladsweb.modaps.eosdis.nasa.gov/alerts-and-issues/199528
+  - date: "2026-03-20"
+    level: warning
+    title: Aqua 과학 운용 2027년 9월 종료 전망 — Aqua MODIS 연속 구름 제품도 함께 종료
+    body: >-
+      NASA Science 기사 'Terra: The End of An Era'(2026-03-20 갱신)의 편집자 주는 연료·전력 한계로 Aqua의 과학 운용이 2027년 9월에 끝날 것으로 전망했습니다.
+      그 뒤에는 CLDPROP·CLDMSK의 Aqua MODIS 판도 새 자료가 나오지 않으므로, MODIS-VIIRS 겹침 기간은 그때까지입니다.
+    source: https://science.nasa.gov/science-research/earth-science/terra-the-end-of-an-era/
+  - date: "2024-10-09"
+    level: info
+    title: NOAA-21 VIIRS 구름 마스크 공개
+    body: >-
+      LAADS DAAC가 NOAA-21 VIIRS 연속 구름 마스크(CLDMSK_L2_VIIRS_NOAA21, V1.0)를 공개했습니다. 기록은 2023년 2월 10일부터입니다. NOAA-21 구름 특성(CLDPROP)은 2026-10-13 기준 아직 없습니다.
+    source: https://ladsweb.modaps.eosdis.nasa.gov/alerts-and-issues/199558
+  - date: "2023-10-10"
+    level: info
+    title: 연속 구름 마스크 알고리즘 갱신 — 2023-01-01 이후 재처리
+    body: >-
+      Atmosphere SIPS가 버그를 고치고 최신 VIIRS L1B와 OISST(기존 Reynolds 주간 SST 대신)를 쓰도록 연속 구름 마스크를 갱신했습니다. 컬렉션 번호는 그대로이고 product_version 속성이 1.0.5로 바뀌었으며,
+      SNPP·NOAA-20·Aqua MODIS 구름 마스크와 구름 특성(L2와 일·월 L3)을 2023-01-01부터 재처리했습니다. 맑은 하늘 신뢰도 차이는 대부분 매우 작습니다.
+    source: https://ladsweb.modaps.eosdis.nasa.gov/alerts-and-issues/199591
+  - date: "2023-02-07"
+    level: info
+    title: Aqua MODIS 연속 구름 제품 재처리(2022-04-17~07-26, 혼선 보정)
+    body: >-
+      Aqua 안전 모드(2022-03-31~04-14) 뒤 밴드 27~30 L1B 혼선 보정이 표류한 문제를 고치기 위해 CLDMSK_L2_MODIS_Aqua와 CLDPROP_L2·D3·M3_MODIS_Aqua의 2022-04-17~07-26 자료를 재처리했습니다.
+    source: https://ladsweb.modaps.eosdis.nasa.gov/alerts-and-issues/199620
+
+links:
+  - name: LAADS DAAC — MODIS to VIIRS Transition (연속 제품 표)
+    url: https://ladsweb.modaps.eosdis.nasa.gov/learn/modis-to-viirs-transition
+  - name: L2 Cloud Properties User Guide (MODIS·VIIRS CLDPROP, v1.2)
+    url: https://ladsweb.modaps.eosdis.nasa.gov/api/v2/content/archives/Document%20Archive/Science%20Data%20Product%20Documentation/L2_Cloud_Properties_UG_v1.2_March_2021.pdf
+  - name: L3 Continuity Cloud Properties (CLDPROP_L3) User Guide v2.0
+    url: https://atmosphere-imager.gsfc.nasa.gov/sites/default/files/ModAtmo/L3_CLDPROP_User_Guide_v2.0.pdf
+  - name: MODIS-VIIRS Cloud Mask (MVCM) User Guide
+    url: https://ladsweb.modaps.eosdis.nasa.gov/api/v2/content/archives/Document%20Archive/Science%20Data%20Product%20Documentation/MVCM_User_Guide_Oct_2020.pdf
+  - name: CLDPROP_L2_VIIRS_NOAA20 제품 페이지 (LAADS DAAC)
+    url: https://ladsweb.modaps.eosdis.nasa.gov/missions-and-measurements/products/CLDPROP_L2_VIIRS_NOAA20
+  - name: CLDMSK_L2_VIIRS_NOAA20 제품 페이지 (LAADS DAAC)
+    url: https://ladsweb.modaps.eosdis.nasa.gov/missions-and-measurements/products/CLDMSK_L2_VIIRS_NOAA20
+  - name: Suomi NPP Data Product Delivery to Cease (Earthdata)
+    url: https://www.earthdata.nasa.gov/data/alerts-outages/suomi-npp-data-product-delivery-cease-november-1-2026
+
+watch_urls:
+  - https://ladsweb.modaps.eosdis.nasa.gov/learn/modis-to-viirs-transition
+  - https://ladsweb.modaps.eosdis.nasa.gov/missions-and-measurements/products/CLDPROP_L2_VIIRS_NOAA20
+  - https://ladsweb.modaps.eosdis.nasa.gov/missions-and-measurements/products/CLDMSK_L2_VIIRS_NOAA20
+
+last_verified: "2026-10-13"

@@ -1,0 +1,319 @@
+# ─────────────────────────────────────────────────────────────
+# CERES SYN1deg Edition4B — dataset information file (English edition)
+# Satellite tab (Clouds and radiation), cross-listed under the atmosphere tab 'Radiation'. For the monthly energy budget record see the ceres-ebaf page.
+# From April 2022 the record uses NOAA-20 only with MERRA-2 inputs (Ed4B, released 2025-05); Edition 5 is in development with no release date.
+# After editing, update last_verified to the date you checked the official pages.
+# ─────────────────────────────────────────────────────────────
+id: ceres-syn1deg
+name: "CERES SYN1deg"
+full_name: CERES and GEO-Enhanced TOA, Within-Atmosphere and Surface Fluxes, Clouds and Aerosols (SYN1deg) Edition4B
+category: satellite
+domain: satellite
+group: 구름·복사
+order: 40
+also_in:
+  - domain: atmosphere
+    group: 복사 자료
+domains: [대기, 원격탐사]
+provider: NASA Langley Research Center (LaRC) CERES Science Team / Atmospheric Science Data Center (ASDC)
+
+status: active
+status_note: >-
+  Edition4B (called Edition4.2 in the ordering tool) is the current edition and is extended monthly; as checked on 2026-10-13, the hourly, daily and monthly products all run through July 2026 (posted 2026-10-10).
+  Since April 2022 it drops the drifting Terra and Aqua and uses only CERES FM6 on NOAA-20, so the projected end of Terra (February 2027) and Aqua (September 2027) science operations does not directly affect current production.
+  Algorithms for the next edition, Edition 5, are being developed, but no release date has been announced.
+
+transitions:
+  - from: SYN1deg Edition4A (Terra+Aqua)
+    to: SYN1deg Edition4B (Terra+Aqua+NOAA-20)
+    status: completed
+    date: "2025-05"
+    summary: >-
+      A revised edition that switches April 2022 onward to NOAA-20 alone with MERRA-2 inputs, and fixes early geostationary cloud retrievals and twilight handling.
+      The DQS states that Ed4A will not be reprocessed until Edition 5 is available, so Ed4B is the record that continues today.
+    changes:
+      - aspect: Release date
+        before: 2017-09-13 (Terra+Aqua Ed4A)
+        after: 2025-05-07
+      - aspect: CERES observations from April 2022
+        before: Terra (FM1) + Aqua (FM3), both drifting
+        after: NOAA-20 (FM6) only
+      - aspect: Atmospheric input for cloud retrievals and flux calculations
+        before: GEOS-5.4.1 (discontinued July 2024)
+        after: MERRA-2 from April 2022
+      - aspect: Geostationary (GEO) cloud retrievals
+        before: Inconsistent retrievals from early two-channel imagers (GMS-5, Meteosat-5 and -7) and Meteosat-8/9; suspect twilight GEO clouds fed into flux calculations
+        after: Two-channel imagers reprocessed, Meteosat-8 to -11 retrievals made consistent, twilight GEO clouds removed and missing hours interpolated
+      - aspect: Time steps offered (CMR collections)
+        before: 1Hour, 3Hour, Day, MHour, M3Hour, Month
+        after: 1Hour, Day, MHour, Month (Edition4B collections)
+      - aspect: DOI
+        before: "e.g. 10.5067/Terra+Aqua/CERES/SYN1degDAY_L3.004"
+        after: "e.g. 10.5067/TERRA-AQUA-NOAA20/CERES/SYN1DEGDAY_L3.004B"
+    impacts:
+      - The satellites and atmospheric inputs differ before and after March 2022; check for discontinuities in any cloud or surface-flux analysis that spans that boundary.
+      - When re-checking Ed4A results with Ed4B, confirm the edition string in the file name (Edition4B) and that the variable names match.
+      - Edition 5 is expected to reprocess the whole record, so always state the edition in publications.
+    sources:
+      - name: CERES SYN1deg Ed4A/Ed4B Data Quality Summary (V1, 2025-05-08)
+        url: https://ceres.larc.nasa.gov/documents/DQ_summaries/CERES_SYN1deg_Ed4A_DQS_V1.pdf
+      - name: NASA CMR — CER_SYN1deg-1Hour_Terra-Aqua-NOAA20 Edition4B
+        url: https://cmr.earthdata.nasa.gov/search/concepts/C3181056140-LARC_CLOUD.html
+
+period:
+  start: "2000-03"
+  end: present
+  note: >-
+    As checked on 2026-10-13, ASDC (CMR) holds hourly, daily and monthly files through July 2026. March 2000–June 2002 is Terra only,
+    July 2002–March 2022 Terra plus Aqua, and April 2022 onward NOAA-20 only. The Aqua gap of 16–31 August 2020 was filled with NOAA-20 data; 1–3 September 2020 could not be filled.
+
+resolution:
+  spatial_short: "111 km (1°)"
+  temporal_short: "1시간"
+  spatial: >-
+    1° × 1° equal-angle latitude-longitude grid (180 × 360, regional). Processing uses a nested grid whose regions grow from 1° to 2°, 4°, 8° and 360° with latitude (44,012 regions),
+    then replicates the results onto the full 1° grid. Zonal and global means are provided only in the monthly product (SYN1deg-Month).
+  vertical: Top of atmosphere (TOA) and surface, plus computed flux profiles at levels within the atmosphere (five levels including the surface)
+  temporal: Hourly (SYN1deg-1Hour, one file per day) / daily (SYN1deg-Day) / monthly mean diurnal cycle by hour (SYN1deg-MHour) / monthly (SYN1deg-Month)
+
+update: Monthly (posted about 2–3 months after the data month; July 2026 was posted on 2026-10-10)
+license: NASA Earth science open data — free and unrestricted. File downloads require a free NASA Earthdata login; citation of the edition and DOI is requested
+account_required: true
+
+summary: >-
+  CERES broadband radiometer observations combined with hourly information from geostationary (GEO) imagers to fill top-of-atmosphere (TOA) fluxes on an hourly, 1° grid.
+  Coincident MODIS, VIIRS and GEO cloud properties, MATCH aerosols and reanalysis temperature and humidity are fed into the Langley Fu-Liou radiative transfer model to compute shortwave and longwave fluxes at the surface and at levels within the atmosphere, which are included alongside.
+  EBAF is the standard for the monthly energy budget; SYN1deg is the choice when time resolution matters — diurnal cycles, day-to-day variability, extreme events — and for validating surface fluxes.
+
+time_convention:
+  summary: >-
+    All values are averages over their time interval. The hourly product has 24 UTC "hour boxes" per day, the first covering 00–01 UTC (midpoint 0.5 UTC).
+    Daily and monthly values are averages of the hourly values, and MHour averages each hour box over the days of the month to give a monthly mean diurnal cycle.
+  points:
+    - "Hourly values are not instantaneous observations but a time-interpolated series built from CERES and GEO data. GEO data are gridded at their observation instant and assigned to the matching hour box."
+    - "For shortwave fluxes the representative time of an hour box is set by the integral of the cosine of the solar zenith angle within the box, not by the 0.5-hour midpoint (DQS)."
+    - "The CERES polar-orbit sampling times are about 10:30 (Terra) and 13:30 (Aqua, NOAA-20) local equator-crossing time. Terra and Aqua have drifted away from these times, which is why they are not used from April 2022."
+    - "GEO imagers cover only 60°S–60°N, so beyond that the temporal variation relies more on polar-orbit sampling and interpolation."
+    - "In the variable names, `obs_` marks observed TOA quantities, `init_` the initial computed fluxes and `adj_` computed fluxes adjusted to match the observed TOA. The Ed4A DQS advises against using the adjusted shortwave and longwave fluxes because of code bugs."
+    - "Only the monthly standard production exists; there is no near-real-time (NRT) version."
+  source: https://ceres.larc.nasa.gov/documents/DQ_summaries/CERES_SYN1deg_Ed4A_DQS_V1.pdf
+  source_name: CERES SYN1deg Ed4A/Ed4B Data Quality Summary (V1) + SYN1deg-1Hour Data Products Catalog (R6V1)
+
+variables:
+  note: >-
+    Names are the HDF SDS names in the Ed4A Data Products Catalog (SYN1deg-1Hour R6V1). Names in Ed4B files and in netCDF orders from the CERES ordering tool
+    may differ, so check them in your files. Cloud variables carry a five-layer dimension (high, upper-mid, lower-mid, low, total).
+  full_list: https://ceres.larc.nasa.gov/documents/DPC/DPC_current/pdfs/DPC_SYN1deg-1Hour_R6V1.pdf
+  groups:
+    - name: Observed TOA fluxes (CERES + GEO)
+      kind: mean
+      period: 1-hour
+      items:
+        - "TOA reflected shortwave (all-sky) — `obs_all_toa_sw` (W m-2)"
+        - "TOA emitted longwave (all-sky) — `obs_all_toa_lw` (W m-2)"
+        - "TOA net flux (all-sky) — `obs_all_toa_net` (W m-2)"
+        - "TOA shortwave and longwave (clear-sky) — `obs_clr_toa_sw`, `obs_clr_toa_lw` (W m-2)"
+        - "TOA albedo (all-sky and clear-sky) — `obs_all_toa_alb`, `obs_clr_toa_alb` (dimensionless)"
+        - "TOA incoming solar — `toa_sw_insol` (W m-2)"
+    - name: Computed surface fluxes (Fu-Liou, initial)
+      kind: mean
+      period: 1-hour
+      items:
+        - "Surface downward and upward shortwave (all-sky) — `init_all_sfc_sw_dn`, `init_all_sfc_sw_up` (W m-2)"
+        - "Surface downward and upward longwave (all-sky) — `init_all_sfc_lw_dn`, `init_all_sfc_lw_up` (W m-2)"
+        - "Surface shortwave and longwave (clear-sky) — `init_clr_sfc_sw_dn`, `init_clr_sfc_lw_dn` etc. (W m-2)"
+        - "Surface downward shortwave (no aerosol, no cloud: pristine) — `init_pristine_sfc_sw_dn` (W m-2)"
+    - name: Cloud properties (MODIS, VIIRS, GEO)
+      kind: mean
+      period: 1-hour
+      items:
+        - "Cloud amount (by layer) — `obs_cld_amount` (%)"
+        - "Cloud optical depth — `obs_cld_od` (dimensionless)"
+        - "Cloud liquid water path — `obs_cld_lwp` (g m-2)"
+        - "Cloud ice water path — `obs_cld_iwp` (g m-2)"
+        - "Cloud top pressure — `obs_cld_top_press` (hPa)"
+        - "Cloud top temperature — `obs_cld_top_temp` (K)"
+    - name: Aerosol
+      kind: mean
+      period: 1-hour
+      items:
+        - "Aerosol optical depth at 0.55 µm (MATCH) — `init_match_aod55` (dimensionless)"
+
+access:
+  - name: CERES ordering and subsetting tool (SYN1deg Ed4.2 = Edition4B)
+    url: https://ceres-tool.larc.nasa.gov/ord-tool/jsp/SYN1degEd42Selection.jsp
+    method: Web order (choose variables, period and region → NetCDF3, up to 2 GB)
+    note: Choose monthly, monthly-hourly, daily or hourly, and regional (1°), zonal or global means. Selecting only the variables you need makes this the easiest route for hourly data.
+  - name: NASA Earthdata Search — CER_SYN1deg-1Hour_Terra-Aqua-NOAA20 Edition4B
+    url: https://search.earthdata.nasa.gov/search/granules?p=C3181056140-LARC_CLOUD
+    method: Earthdata Search / earthaccess (HDF4, one file per day)
+    note: The daily product is CER_SYN1deg-Day, monthly CER_SYN1deg-Month and monthly-hourly CER_SYN1deg-MHour (all _Terra-Aqua-NOAA20, Edition4B). A free NASA Earthdata login is required.
+  - name: CERES data page (SYN1deg product table and availability)
+    url: https://ceres.larc.nasa.gov/data/#syn1deg-level-3
+    method: Web
+
+example:
+  lang: python
+  note: "Run earthaccess.login() once with a NASA Earthdata account. ASDC files are HDF4, so read them with pyhdf and list the variable names with f.datasets() first."
+  code: |
+    # pip install earthaccess pyhdf numpy
+    import earthaccess
+    from pyhdf.SD import SD, SDC
+
+    earthaccess.login()
+    results = earthaccess.search_data(
+        short_name="CER_SYN1deg-1Hour_Terra-Aqua-NOAA20",
+        version="Edition4B",
+        temporal=("2025-07-01", "2025-07-01"),
+    )
+    files = earthaccess.download(results[:1], "./syn1deg")   # one day of hourly data
+
+    f = SD(files[0], SDC.READ)
+    print(sorted(f.datasets().keys())[:20])                 # list variable (SDS) names
+    olr = f.select("obs_all_toa_lw")[:]                     # expected (24 hours, 180 lat, 360 lon)
+    print(olr.shape)
+
+tips:
+  - "For long-term changes in monthly TOA and surface fluxes use EBAF, not SYN1deg. The SYN1deg Ed4A DQS states that the product is not of climate quality and should not be used to infer long-term trends in clouds or fluxes."
+  - "The DQS advises against the adjusted (`adj_`) shortwave and longwave fluxes because of code bugs. Use the initial (`init_`) surface fluxes, or EBAF-Surface if monthly means are all you need."
+  - Step changes in fluxes and clouds can appear when geostationary satellites are replaced (for example GOES, Meteosat or Himawari generation changes). Check for them in regional analyses inside the GEO domain (60°S–60°N).
+  - "In Ed4A the global net TOA imbalance is about +4.5 W m-2, far above the ocean-heating estimate of about 0.7 W m-2. Use EBAF for the absolute energy budget."
+  - "The DQS reports a total solar irradiance scaling error that makes the August 2019 and May–July 2020 monthly values about 0.2 W m-2 too large."
+  - One day of hourly data is a single file of several hundred MB. Ordering only the variables and region you need through the CERES tool is much lighter.
+  - Clear-sky values are filled with defaults where no clear-sky footprint exists, so clear-sky zonal means in very cloudy latitude bands may be unrepresentative.
+
+citations:
+  dataset:
+    - label: SYN1deg-1Hour Edition4B
+      text: >-
+        Doelling, D. (2026): CERES and GEO-Enhanced TOA, Within-Atmosphere and Surface Fluxes, Clouds and Aerosols 1-Hourly Terra-Aqua-NOAA20 Edition4B.
+        NASA Langley Atmospheric Science Data Center DAAC. https://doi.org/10.5067/TERRA-AQUA-NOAA20/CERES/SYN1DEG-1HOUR_L3.004B (Accessed DD MMM YYYY)
+      doi: 10.5067/TERRA-AQUA-NOAA20/CERES/SYN1DEG-1HOUR_L3.004B
+      bibtex: |
+        @misc{ceres_syn1deg_1hour_ed4b,
+          author    = {Doelling, David},
+          title     = {{CERES} and {GEO}-Enhanced {TOA}, Within-Atmosphere and Surface Fluxes, Clouds and Aerosols 1-Hourly {Terra-Aqua-NOAA20} {Edition4B}},
+          year      = {2026},
+          publisher = {NASA Langley Atmospheric Science Data Center Distributed Active Archive Center},
+          doi       = {10.5067/TERRA-AQUA-NOAA20/CERES/SYN1DEG-1HOUR_L3.004B},
+          note      = {Accessed DD MMM YYYY}
+        }
+    - label: SYN1deg-Day Edition4B
+      text: >-
+        Doelling, D. (2026): CERES and GEO-Enhanced TOA, Within-Atmosphere and Surface Fluxes, Clouds and Aerosols Daily Terra-Aqua-NOAA20 Edition4B.
+        NASA Langley Atmospheric Science Data Center DAAC. https://doi.org/10.5067/TERRA-AQUA-NOAA20/CERES/SYN1DEGDAY_L3.004B (Accessed DD MMM YYYY)
+      doi: 10.5067/TERRA-AQUA-NOAA20/CERES/SYN1DEGDAY_L3.004B
+      bibtex: |
+        @misc{ceres_syn1deg_day_ed4b,
+          author    = {Doelling, David},
+          title     = {{CERES} and {GEO}-Enhanced {TOA}, Within-Atmosphere and Surface Fluxes, Clouds and Aerosols Daily {Terra-Aqua-NOAA20} {Edition4B}},
+          year      = {2026},
+          publisher = {NASA Langley Atmospheric Science Data Center Distributed Active Archive Center},
+          doi       = {10.5067/TERRA-AQUA-NOAA20/CERES/SYN1DEGDAY_L3.004B},
+          note      = {Accessed DD MMM YYYY}
+        }
+    - label: SYN1deg-Month Edition4B
+      text: >-
+        Doelling, D. (2026): CERES and GEO-Enhanced TOA, Within-Atmosphere and Surface Fluxes, Clouds and Aerosols Monthly Terra-Aqua-NOAA20 Edition4B.
+        NASA Langley Atmospheric Science Data Center DAAC. https://doi.org/10.5067/TERRA-AQUA-NOAA20/CERES/SYN1DEGMONTH_L3.004B (Accessed DD MMM YYYY)
+      doi: 10.5067/TERRA-AQUA-NOAA20/CERES/SYN1DEGMONTH_L3.004B
+      bibtex: |
+        @misc{ceres_syn1deg_month_ed4b,
+          author    = {Doelling, David},
+          title     = {{CERES} and {GEO}-Enhanced {TOA}, Within-Atmosphere and Surface Fluxes, Clouds and Aerosols Monthly {Terra-Aqua-NOAA20} {Edition4B}},
+          year      = {2026},
+          publisher = {NASA Langley Atmospheric Science Data Center Distributed Active Archive Center},
+          doi       = {10.5067/TERRA-AQUA-NOAA20/CERES/SYN1DEGMONTH_L3.004B},
+          note      = {Accessed DD MMM YYYY}
+        }
+  papers:
+    - label: GEO-enhanced temporal interpolation (TOA)
+      text: >-
+        Doelling, D. R., Loeb, N. G., Keyes, D. F., Nordeen, M. L., Morstad, D., Nguyen, C., Wielicki, B. A., Young, D. F., Sun, M. (2013):
+        Geostationary Enhanced Temporal Interpolation for CERES Flux Products. Journal of Atmospheric and Oceanic Technology, 30(6), 1072–1090.
+      doi: 10.1175/JTECH-D-12-00136.1
+      bibtex: |
+        @article{doelling2013geo,
+          author  = {Doelling, David R. and Loeb, Norman G. and Keyes, Dennis F. and Nordeen, Michele L. and Morstad, Daniel and Nguyen, Cathy and Wielicki, Bruce A. and Young, David F. and Sun, Moguo},
+          title   = {Geostationary Enhanced Temporal Interpolation for {CERES} Flux Products},
+          journal = {Journal of Atmospheric and Oceanic Technology},
+          volume  = {30},
+          number  = {6},
+          pages   = {1072--1090},
+          year    = {2013},
+          doi     = {10.1175/JTECH-D-12-00136.1}
+        }
+    - label: Surface flux methodology and validation
+      text: >-
+        Rutan, D. A., Kato, S., Doelling, D. R., Rose, F. G., Nguyen, L. T., Caldwell, T. E., Loeb, N. G. (2015):
+        CERES Synoptic Product: Methodology and Validation of Surface Radiant Flux. Journal of Atmospheric and Oceanic Technology, 32(6), 1121–1143.
+      doi: 10.1175/JTECH-D-14-00165.1
+      bibtex: |
+        @article{rutan2015syn,
+          author  = {Rutan, David A. and Kato, Seiji and Doelling, David R. and Rose, Fred G. and Nguyen, Le Trang and Caldwell, Thomas E. and Loeb, Norman G.},
+          title   = {{CERES} Synoptic Product: Methodology and Validation of Surface Radiant Flux},
+          journal = {Journal of Atmospheric and Oceanic Technology},
+          volume  = {32},
+          number  = {6},
+          pages   = {1121--1143},
+          year    = {2015},
+          doi     = {10.1175/JTECH-D-14-00165.1}
+        }
+    - label: CERES mission (reference requested in the DQS)
+      text: >-
+        Wielicki, B. A., Barkstrom, B. R., Harrison, E. F., Lee, R. B., Smith, G. L., Cooper, J. E. (1996):
+        Clouds and the Earth's Radiant Energy System (CERES): An Earth Observing System Experiment. Bulletin of the American Meteorological Society, 77(5), 853–868.
+      doi: 10.1175/1520-0477(1996)077<0853:CATERE>2.0.CO;2
+      bibtex: |
+        @article{wielicki1996ceres,
+          author  = {Wielicki, Bruce A. and Barkstrom, Bruce R. and Harrison, Edwin F. and Lee, Robert B. and Smith, G. Louis and Cooper, John E.},
+          title   = {Clouds and the Earth's Radiant Energy System ({CERES}): An Earth Observing System Experiment},
+          journal = {Bulletin of the American Meteorological Society},
+          volume  = {77},
+          number  = {5},
+          pages   = {853--868},
+          year    = {1996},
+          doi     = {10.1175/1520-0477(1996)077<0853:CATERE>2.0.CO;2}
+        }
+  acknowledgement: >-
+    The CERES team asks that publications name the product and edition (for example 'CERES SYN1deg-1Hour Edition4B') and cite Wielicki et al. (1996).
+    For data obtained from ASDC, the suggested wording is "These data were obtained from the NASA Langley Research Center Atmospheric Science Data Center."
+
+notices:
+  - date: "2026-03-20"
+    level: info
+    title: Terra (February 2027) and Aqua (September 2027) science operations projected to end — SYN1deg already relies on NOAA-20
+    body: >-
+      NASA projects that fuel and power limits will end Terra science operations in February 2027 and Aqua in September 2027.
+      SYN1deg Ed4B has used only NOAA-20 CERES since April 2022, so current production is not directly affected, but the record before April 2022 comes from those two satellites.
+    source: https://science.nasa.gov/science-research/earth-science/terra-the-end-of-an-era
+  - date: "2025-12-29"
+    level: info
+    title: Edition 5 development update — no release date yet
+    body: >-
+      A summary of recent CERES Science Team meetings reports that the Edition 5 Fu-Liou model increases the number of bands from 18 to 29 and cuts the TOA longwave bias from about 2 W m-2 to under 0.5 W m-2,
+      and that nighttime cloud retrievals are being improved. The DQS lists better GEO scan synchronization, more consistent GEO clouds and improved surface fluxes for Edition 5, but gives no release date.
+    source: https://science.nasa.gov/science-research/earth-science/the-state-of-ceres-updates-and-highlights
+  - date: "2025-05-08"
+    level: warning
+    title: SYN1deg Edition4B released on 2025-05-07 — NOAA-20 only with MERRA-2 inputs from April 2022
+    body: >-
+      Edition4B (Edition4.2 in the ordering tool), built from Terra, Aqua, NOAA-20 and GEO data, was released. From April 2022 it drops Terra and Aqua and uses NOAA-20 only,
+      switches cloud retrievals and flux calculations to MERRA-2 inputs, and improves GEO cloud retrievals and twilight handling.
+    source: https://ceres.larc.nasa.gov/documents/DQ_summaries/CERES_SYN1deg_Ed4A_DQS_V1.pdf
+
+links:
+  - name: CERES data page (SYN1deg product table)
+    url: https://ceres.larc.nasa.gov/data/#syn1deg-level-3
+  - name: CERES SYN1deg Data Quality Summary (DQS, Ed4A/Ed4B V1)
+    url: https://ceres.larc.nasa.gov/documents/DQ_summaries/CERES_SYN1deg_Ed4A_DQS_V1.pdf
+  - name: SYN1deg-1Hour Data Products Catalog (variable tables)
+    url: https://ceres.larc.nasa.gov/documents/DPC/DPC_current/pdfs/DPC_SYN1deg-1Hour_R6V1.pdf
+  - name: CERES documentation index (DQS, DPC)
+    url: https://ceres.larc.nasa.gov/data/documentation/
+
+watch_urls:
+  - https://ceres.larc.nasa.gov/data/
+  - https://ceres.larc.nasa.gov/data/documentation/
+
+last_verified: "2026-10-13"

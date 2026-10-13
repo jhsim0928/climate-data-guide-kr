@@ -1,0 +1,258 @@
+# ─────────────────────────────────────────────────────────────
+# CLARA-A3 — dataset information file
+# Listed under the satellite tab, 'Clouds and radiation'. CDR 1979–2020 + ICDR (2021 onward, Metop only since June 2025).
+# After editing, update last_verified to the date you checked the official pages.
+# ─────────────────────────────────────────────────────────────
+id: clara-a3
+name: "CLARA-A3"
+full_name: CM SAF cLoud, Albedo and surface RAdiation dataset from AVHRR data – Edition 3
+category: satellite
+domain: satellite
+group: 구름·복사
+order: 20
+domains: [대기, 육지, 원격탐사]
+provider: EUMETSAT Satellite Application Facility on Climate Monitoring (CM SAF) — SMHI, DWD, FMI, KNMI, RMIB
+
+status: active
+status_note: >-
+  The 1979–2020 climate data record (CDR) is extended with an interim climate data record (ICDR) using the same algorithms, about 10 days behind real time.
+  With the end of the NOAA-18 and NOAA-19 missions in June 2025, the ICDR has been produced from Metop-B and Metop-C only since 1 June 2025, and ICDR production of
+  liquid and ice water path (LWP, IWP, CWP) and the joint cloud histogram (JCH) stopped at that point. No release date for the next edition (CLARA-A4 or similar) was found on the CM SAF website as of 2026-10-13.
+
+transitions:
+  - from: CLARA-A2 (A2.1)
+    to: CLARA-A3
+    status: completed
+    date: "2023-04"
+    summary: The third edition, which adds AVHRR/1 data to start the record in 1979 and greatly expands the cloud, albedo and radiation products. A version change within this page.
+    changes:
+      - aspect: Period
+        before: From 1982 (A2.1)
+        after: 1979-01 to 2020-12 CDR + ICDR from 2021-01
+      - aspect: Input sensors
+        before: AVHRR/2 and AVHRR/3
+        after: Includes AVHRR/1 from TIROS-N and NOAA-6 onward
+      - aspect: New cloud products
+        before: Cloud fraction, cloud top, phase, water path and others
+        after: Cloud droplet number concentration (CDNC) and geometrical thickness (CGT) for liquid clouds added; all cloud products updated
+      - aspect: New albedo products
+        before: Black-sky albedo (SAL)
+        after: White-sky (WAL) and blue-sky (BAL) albedo added
+      - aspect: New radiation products
+        before: Surface downwelling shortwave and longwave and others
+        after: Surface net shortwave, net longwave and radiation budget (SNS, SNL, SRB); TOA reflected solar flux (RSF) and outgoing longwave radiation (OLR) added
+    impacts:
+      - Do not splice CLARA-A2 and A3 into one time series. Calibration and algorithms differ, so values for the same month differ.
+      - The developers note that the visible-channel calibration in the ICDR (2021 onward) is not of CDR quality. Interpret trends across the 2020/2021 boundary with care.
+    sources:
+      - name: Karlsson et al. (2023), ESSD — CLARA-A3
+        url: https://doi.org/10.5194/essd-15-4901-2023
+      - name: CM SAF — CLARA-A3 DOI landing page
+        url: https://wui.cmsaf.eu/safira/action/viewDoiDetails?acronym=CLARA_AVHRR_V003
+
+period:
+  start: "1979-01"
+  end: present
+  note: >-
+    The CDR covers 1979-01-01 to 2020-12-31 and the ICDR continues from 2021-01-01 to the present with about 10 days' latency (CM SAF operational products list, 'since 01 Jan 2021').
+    Some ICDR products, including liquid and ice water path and JCH, end with May 2025.
+
+resolution:
+  spatial_short: "28 km (0.25°)"
+  temporal_short: "1일"
+  spatial: >-
+    Cloud and radiation averages on a 0.25° × 0.25° global grid; surface albedo and some cloud products also on 25 km equal-area polar grids (EASE-2 for albedo);
+    the joint cloud histogram (JCH) on 1° × 1°; daily resampled per-satellite cloud products (Level-2b) on 0.05° × 0.05°.
+  vertical: Cloud-top height, pressure and temperature (single layer); surface and top-of-atmosphere fluxes
+  temporal: Daily and monthly means (albedo as pentad and monthly means), monthly and daily histograms; Level-2b daily per satellite
+
+update: ICDR extension — about 10 days after observation
+license: CC BY 4.0 (intellectual property of EUMETSAT) — free; credit and product edition requested
+account_required: true
+
+summary: >-
+  CLARA-A3 is a global climate data record of clouds, surface albedo and radiation built from more than 40 years of AVHRR imagery on the NOAA and Metop polar orbiters.
+  It provides cloud fraction, cloud-top height, pressure and temperature, phase, optical thickness and liquid and ice water path, together with surface shortwave and longwave fluxes,
+  surface albedo and top-of-atmosphere reflected shortwave and outgoing longwave flux, as daily and monthly means on a 0.25° grid.
+  1979–2020 is the climate data record (CDR), and from 2021 the record keeps growing as an interim CDR (ICDR) produced the same way.
+
+time_convention:
+  summary: >-
+    A daily mean gathers all AVHRR overpasses of the day onto the 0.25° grid and averages them; a monthly mean averages the daily means. Because polar orbiters pass
+    only a few times a day, even a daily mean depends strongly on the satellites' local overpass times.
+  points:
+    - "File names follow the CM SAF convention 'PRO + t + s + yyyymmddhhmm + version + grid + source + level + area'. For example `CFCmm` is the monthly mean cloud fraction, `dm` a daily mean, `pm` a pentad mean and `mh` a monthly histogram; the date is the start of the interval. A level code such as `I1` marks the ICDR."
+    - "In the early years (1979–1987) only a morning or an afternoon orbit was available, which degraded quality (daily OLR mean absolute bias up about 40%). The lack of a mid-morning orbit before 2002 and the loss of the early-afternoon orbit after 2016 roughly doubled the RSF error. Monthly means are much more robust than daily means."
+    - "From 1 June 2025 the ICDR uses only Metop-B and Metop-C (morning orbits), changing the distribution of daytime observation times. CM SAF warned that daily means in particular are affected."
+    - "Cloud optical properties that need solar reflectance channels (optical thickness, liquid and ice water path) are retrieved only in daytime."
+  source: https://doi.org/10.5194/essd-15-4901-2023
+  source_name: Karlsson et al. (2023) ESSD + CM SAF Service Message 164 + CM SAF Naming Convention
+
+variables:
+  note: >-
+    In-file variable names could not be confirmed in the official documentation, so products are listed by their CM SAF product codes (the first three letters of the file name).
+    Check variable names and units in your downloaded files or the Product User Manuals (PUM).
+  full_list: https://wui.cmsaf.eu/safira/action/viewDoiDetails?acronym=CLARA_AVHRR_V003
+  groups:
+    - name: Cloud properties (daily and monthly means, 0.25°)
+      kind: mean
+      period: day and month
+      items:
+        - "Fractional cloud cover — CFC product (from the CMA cloud mask)"
+        - "Cloud-top pressure, height and temperature — CTO product"
+        - "Cloud phase (liquid, ice) — CPH product"
+        - text: "Liquid water path — LWP product"
+          note: Daytime only. ICDR ends with May 2025
+        - text: "Ice water path — IWP product"
+          note: Daytime only. ICDR ends with May 2025
+    - name: Cloud histograms (monthly)
+      kind: accum
+      period: month
+      items:
+        - text: "Joint cloud-top and optical-thickness histogram — JCH product (1°)"
+          note: Monthly frequency distribution. ICDR ends with May 2025
+        - text: "Cloud water path histogram — CWP product"
+          note: Monthly frequency distribution. ICDR ends with May 2025
+    - name: Surface albedo
+      kind: mean
+      period: pentad and month
+      items:
+        - "Surface albedo (black-sky, white-sky, blue-sky) — SAL product"
+    - name: Surface and top-of-atmosphere radiation
+      kind: mean
+      period: day and month
+      items:
+        - "Surface incoming shortwave radiation — SIS product (W m-2)"
+        - text: "Surface downwelling longwave radiation — SDL product (W m-2)"
+          period: month
+        - text: "Surface net shortwave, net longwave and radiation budget — SNS, SNL and SRB products (W m-2)"
+          period: month
+        - "TOA reflected solar flux — RSF product (W m-2)"
+        - "TOA outgoing longwave radiation — OLR product (W m-2)"
+
+access:
+  - name: CM SAF Web User Interface (WUI)
+    url: https://wui.cmsaf.eu/
+    method: Web order (free registration; choose product, period and area → download link by e-mail)
+    note: The main route, covering every product, per-satellite data and polar grids. Orders stay on the https/sftp servers for 7 days.
+  - name: EUMETSAT Data Store — CLARA-A3 CDR and ICDR (EO:EUM:DAT:0874)
+    url: https://data.eumetsat.int/product/EO:EUM:DAT:0874
+    method: Web / Data Store API (eumdac)
+    note: >-
+      Holds only a subset of global products from all AVHRRs combined (CFC, CPH, CTO, IWP, LWP, OLR, RSF and SIS daily and monthly means; SAL pentad and monthly means;
+      CTO, CWP and JCH monthly histograms; SDL, SNL, SNS and SRB monthly means). Spatial subsetting is not yet possible. Requires an EUMETSAT account.
+  - name: Copernicus CDS — Cloud properties (includes CLARA)
+    url: https://cds.climate.copernicus.eu/datasets/satellite-cloud-properties
+    method: Web / CDS API
+    note: A copy redistributed by C3S; edition and period may differ from the CM SAF original. Requires an ECMWF account.
+
+example:
+  lang: python
+  note: >-
+    Downloads from the Data Store with the API key (consumer key and secret) of an EUMETSAT account. Search parameters differ by collection, so check `coll.search_options` first.
+    A Data Store 'product' can be a zip archive.
+  code: |
+    # pip install eumdac
+    import datetime as dt
+    import shutil
+    import eumdac
+
+    token = eumdac.AccessToken(("CONSUMER_KEY", "CONSUMER_SECRET"))
+    store = eumdac.DataStore(token)
+    coll = store.get_collection("EO:EUM:DAT:0874")   # CLARA-A3 CDR + ICDR
+    print(coll.title)
+    print(coll.search_options)                        # available search parameters
+
+    products = coll.search(dtstart=dt.datetime(2024, 1, 1), dtend=dt.datetime(2024, 2, 1))
+    for p in products:
+        print(p)
+        with p.open() as src, open(src.name, "wb") as dst:
+            shutil.copyfileobj(src, dst)
+        break                                         # just one, as an example
+
+tips:
+  - Since June 2025 the ICDR uses Metop only, so the mix of observation times changed. Split analyses of daily means or diurnal effects at this date.
+  - The ICDR (2021 onward) uses preliminary ancillary data such as ERA5T and a less accurate visible-channel calibration. From August 2025 its sea-ice input also switched from SSMIS-based OSI-401-d to AMSR2-based OSI-408-a.
+  - According to the paper, Metop-C was initially left out of the ICDR baseline because of a visible-calibration issue. When using per-satellite Level-2b data, check the file attributes for which satellites are included.
+  - TOA radiation files (RSF, OLR) produced before March 2026 omit Metop-B and Metop-C from the global attribute 'platforms' (the data values are correct). Watch out if your code selects satellites by that attribute.
+  - Because the means come from a few polar-orbiter overpasses a day, regions with a strong diurnal cycle (deep convection, marine stratocumulus) can have biased daily means. For diurnal behaviour, look at the geostationary CLAAS-3 (Europe and Africa) or ISCCP as well.
+
+citations:
+  dataset:
+    - label: CLARA-A3 (CDR and ICDR)
+      text: >-
+        Karlsson, K.-G., Riihelä, A., Trentmann, J., Stengel, M., Solodovnik, I., Meirink, J. F., Devasthale, A., Jääskeläinen, E., Kallio-Myers, V.,
+        Eliasson, S., Benas, N., Johansson, E., Stein, D., Finkensieper, S., Håkansson, N., Akkermans, T., Clerbaux, N., Selbach, N., Schröder, M., Hollmann, R. (2023):
+        CLARA-A3: CM SAF cLoud, Albedo and surface RAdiation dataset from AVHRR data - Edition 3. Satellite Application Facility on Climate Monitoring.
+        https://doi.org/10.5676/EUM_SAF_CM/CLARA_AVHRR/V003
+      doi: 10.5676/EUM_SAF_CM/CLARA_AVHRR/V003
+      bibtex: |
+        @misc{clara_a3,
+          author    = {Karlsson, Karl-G{\"o}ran and Riihel{\"a}, Aku and Trentmann, J{\"o}rg and Stengel, Martin and Solodovnik, Irina and Meirink, Jan Fokke and Devasthale, Abhay and J{\"a}{\"a}skel{\"a}inen, Emmihenna and Kallio-Myers, Viivi and Eliasson, Salomon and Benas, Nikos and Johansson, Erik and Stein, Diana and Finkensieper, Stephan and H{\aa}kansson, Nina and Akkermans, Tom and Clerbaux, Nicolas and Selbach, Nathalie and Schr{\"o}der, Marc and Hollmann, Rainer},
+          title     = {{CLARA-A3}: {CM SAF} cLoud, Albedo and surface RAdiation dataset from {AVHRR} data - Edition 3},
+          year      = {2023},
+          publisher = {Satellite Application Facility on Climate Monitoring (CM SAF)},
+          doi       = {10.5676/EUM_SAF_CM/CLARA_AVHRR/V003}
+        }
+  papers:
+    - label: CLARA-A3 description paper
+      text: >-
+        Karlsson, K.-G., Stengel, M., Meirink, J. F., Riihelä, A., Trentmann, J., Akkermans, T., Stein, D., Devasthale, A., Eliasson, S., Johansson, E.,
+        Håkansson, N., Solodovnik, I., Benas, N., Clerbaux, N., Selbach, N., Schröder, M., and Hollmann, R. (2023): CLARA-A3: The third edition of the
+        AVHRR-based CM SAF climate data record on clouds, radiation and surface albedo covering the period 1979 to 2023. Earth System Science Data, 15, 4901–4926.
+      doi: 10.5194/essd-15-4901-2023
+      bibtex: |
+        @article{karlsson2023claraa3,
+          author  = {Karlsson, Karl-G{\"o}ran and Stengel, Martin and Meirink, Jan Fokke and Riihel{\"a}, Aku and Trentmann, J{\"o}rg and Akkermans, Tom and Stein, Diana and Devasthale, Abhay and Eliasson, Salomon and Johansson, Erik and H{\aa}kansson, Nina and Solodovnik, Irina and Benas, Nikos and Clerbaux, Nicolas and Selbach, Nathalie and Schr{\"o}der, Marc and Hollmann, Rainer},
+          title   = {{CLARA-A3}: The third edition of the {AVHRR}-based {CM SAF} climate data record on clouds, radiation and surface albedo covering the period 1979 to 2023},
+          journal = {Earth System Science Data},
+          volume  = {15},
+          pages   = {4901--4926},
+          year    = {2023},
+          doi     = {10.5194/essd-15-4901-2023}
+        }
+  acknowledgement: >-
+    CM SAF asks users to show EUMETSAT's copyright and to acknowledge the source with wording such as "The work performed was done (i.a.) by using data from EUMETSAT's
+    Satellite Application Facility on Climate Monitoring (CM SAF).", stating the product edition used (Edition 3, CDR/ICDR).
+
+notices:
+  - date: "2026-03-10"
+    level: info
+    title: Satellite-name attribute fixed in TOA radiation (RSF, OLR) files (Service Message 167)
+    body: >-
+      In the CLARA-A3 CDR and ICDR daily and monthly TOA reflected solar and outgoing longwave files, the global attribute 'platforms' omitted Metop-B (from January 2013) and Metop-C (from July 2019).
+      The attribute is filled correctly from 1 March 2026; the data values and all other attributes are correct.
+    source: https://www.cmsaf.eu/EN/Products/Service_Messages/_serviceMessages/sm_167.html
+  - date: "2025-08-01"
+    level: info
+    title: ICDR sea-ice input switched to AMSR2-based product (Service Message 165)
+    body: >-
+      Because access to SSMIS data from the US DMSP satellites has moved to a best-effort basis, the sea-ice concentration input to the CLARA-A3 and CLAAS-3 ICDRs changed from
+      SSMIS-based OSI-401-d to AMSR2-based OSI-408-a. CM SAF found only minor differences, limited to grid cells at the ice edge.
+    source: https://www.cmsaf.eu/EN/Products/Service_Messages/_serviceMessages/sm_165.html
+  - date: "2025-06-06"
+    level: warning
+    title: ICDR now Metop only; water path and JCH production ended (Service Message 164)
+    body: >-
+      NOAA-18 was removed from processing on 31 May 2025 and NOAA-19 from 1 June 2025 (NOAA ended data provision for both on 16 June), so the ICDR is now made from Metop-B and Metop-C.
+      The CWP monthly histogram, IWP and LWP daily and monthly means and the JCH monthly histogram, which need the NOAA channel combination, are no longer produced, and single-NOAA-satellite products have stopped.
+      Fewer satellites and a change in daytime coverage affect product quality, especially daily means.
+    source: https://www.cmsaf.eu/EN/Products/Service_Messages/_serviceMessages/sm_164.html
+
+links:
+  - name: CM SAF — CLARA-A3 DOI and documentation page (PUM, ATBD, validation reports)
+    url: https://wui.cmsaf.eu/safira/action/viewDoiDetails?acronym=CLARA_AVHRR_V003
+  - name: CM SAF — Operational products (ICDR) list
+    url: https://www.cmsaf.eu/EN/Products/AvailableProducts/OperationalProducts/Operational_Products_node.html
+  - name: CM SAF — File naming convention
+    url: https://www.cmsaf.eu/EN/Products/NamingConvention/Naming_Convention_node.html
+  - name: CM SAF — Data records available via the EUMETSAT Data Store (2025-09)
+    url: https://www.cmsaf.eu/SharedDocs/Kurzmeldungen/EN/2025/news8.html
+  - name: Karlsson et al. (2023), ESSD
+    url: https://doi.org/10.5194/essd-15-4901-2023
+
+watch_urls:
+  - https://www.cmsaf.eu/EN/News/news_node.html
+  - https://www.cmsaf.eu/EN/Products/AvailableProducts/OperationalProducts/Operational_Products_node.html
+
+last_verified: "2026-10-13"

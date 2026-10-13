@@ -1,0 +1,324 @@
+# ─────────────────────────────────────────────────────────────
+# Sentinel-5P TROPOMI — 데이터셋 정보 파일
+# 위성 탭(에어로졸·대기 성분). NO2·CO·CH4·SO2·HCHO·O3·에어로졸 지수 L2 스와스 자료입니다.
+# 처리기 버전이 제품별로 자주 바뀌므로(2025-11-22 OFFL부터 NL-L2 2.9.1·UPAS 2.8.0), 장기 분석은 재처리(RPRO)와 버전 혼합에 주의하세요.
+# 이전 세대 OMI → TROPOMI 비교는 omi.yaml의 transitions에 있습니다.
+# 수정 후에는 공식 페이지에서 확인한 날짜로 last_verified 를 갱신하세요.
+# ─────────────────────────────────────────────────────────────
+id: tropomi
+name: "TROPOMI"
+full_name: Copernicus Sentinel-5 Precursor TROPOspheric Monitoring Instrument (TROPOMI) Level 2 products (NO2, CO, CH4, SO2, HCHO, O3, 에어로졸 등 대기 성분 스와스 자료)
+category: satellite
+domain: satellite
+group: 에어로졸·대기 성분
+order: 60
+domains: [대기, 에어로졸, 원격탐사]
+provider: ESA·Copernicus (L2 알고리즘 KNMI·SRON·DLR·BIRA-IASB 등 S5P 임무성능센터) / 배포 Copernicus Data Space Ecosystem, NASA GES DISC
+
+status: active
+status_note: >-
+  2017년 10월 발사된 Sentinel-5P는 설계 수명(7년)을 넘겨 정상 운용 중이며, L2 제품이 준실시간(NRTI)과 오프라인(OFFL)으로 매일 나옵니다.
+  2025년 11월 22일(OFFL) 관측분부터 L1B 3.0.0, NO2·CO·CH4·에어로졸 등은 2.9.1, HCHO·SO2·O3·구름은 2.8.0 처리기로 바뀌었습니다.
+  후속 관측은 2025년 8월 13일 MetOp-SG A형 위성에 실려 발사된 Copernicus Sentinel-5와, CO2·CH4·NO2를 재는 CO2M(첫 위성 2026년 말 발사장 인도 예정)이 잇습니다.
+
+transitions:
+  - from: TROPOMI 처리기 V1 (01.xx)
+    to: TROPOMI 처리기 V2 (02.xx) + 전체 임무 재처리(RPRO 02.04.00)
+    status: completed
+    date: "2021-07"
+    summary: >-
+      2021년 7월 처리기가 02.xx로 바뀌며 데이터셋 버전이 V2가 되었고(DOI도 바뀜), 2022년 7월 운영에 들어간 02.04.00으로 임무 시작부터 2022년 7월까지를 다시 처리(RPRO)했습니다.
+      NO2는 1.4.0(2020-12)·2.2.0(2021-07) 전환 때마다 오염 지역 대류권 컬럼이 크게 늘어, 처리기 버전을 섞은 시계열에는 계단이 생깁니다.
+    changes:
+      - aspect: 기간·DOI (NO2 예)
+        before: "V1: 2018-04-30 ~ 2021-07-01, DOI 10.5270/S5P-s4ljg54"
+        after: "V2: 2021-07-01 ~ 현재, DOI 10.5270/S5P-9bnp8q8 (RPRO는 2018-04-30 ~ 2022-07-25)"
+      - aspect: NO2 구름 처리
+        before: "FRESCO-S 구름 압력 (1.4.0에서 갱신 — 오염 지역 NO2 증가)"
+        after: "2.2.0에서 O2-O2 구름 산출 추가, 음의 구름 비율을 막도록 지표 반사도 조정 — 맑은 화소 대류권 NO2 증가"
+      - aspect: 지표 반사도
+        before: "OMI·GOME-2 기반 반사도 기후값"
+        after: "02.04.00부터 TROPOMI 자체 DLER 기후값, 02.07.01에서 5년치 재처리 자료로 갱신"
+      - aspect: 재처리
+        before: "처리 당시 버전이 섞인 OFFL 기록"
+        after: "02.04.00 단일 버전 RPRO (파일 클래스 RPRO, 컬렉션 번호 03), 6개 궤도는 L0 부재로 빠짐"
+      - aspect: CH4
+        before: "VIIRS 구름 입력이 없으면 산출 실패(02.02.00)"
+        after: "02.03.01 해양 태양반사(glint) 산출 추가, 02.06.00 이후 TROPOMI 자체 구름 마스크로 VIIRS 없이도 산출"
+    impacts:
+      - "장기 분석은 RPRO(2018-04-30 ~ 2022-07-25)를 쓰고 그 뒤를 최신 OFFL로 잇는 것이 공식 권고입니다. 겹치는 구간은 RPRO 궤도 24655~24779를 쓰세요."
+      - "RPRO 이후에도 02.06.00(중위도 겨울 NO2 감소), 02.07.01(DLER 갱신으로 불연속), 2.8.0·2.9.1 등 버전이 바뀌었습니다. 추세 분석 전에 파일 이름의 처리기 버전(예: 020901)을 확인하고, 필요하면 다음 재처리를 기다리세요."
+      - V1 기간(2018~2021)의 OFFL·NRTI 파일은 V2 RPRO와 값이 다르니 섞지 마세요.
+    sources:
+      - name: S5P NO2 Product Readme File (issue 2.8, 2025-03-19)
+        url: https://docserver.gesdisc.eosdis.nasa.gov/public/project/S5P/S5P-MPC-KNMI-PRF-NO2-Sentinel-5P-Nitrogen-Dioxide-Level-2-Product-Readme-File-2025-2.8.pdf
+      - name: S5P CH4 Product Readme File (2025, 2.8)
+        url: https://docserver.gesdisc.eosdis.nasa.gov/public/project/S5P/S5P-MPC-SRON-PRF-CH4-Sentinel-5P-Methane-Product-Readme-File-2025-2.8.pdf
+      - name: TROPOMI 자료 — 이산화질소 (버전·DOI 표)
+        url: https://www.tropomi.eu/data-products/nitrogen-dioxide
+
+period:
+  start: "2018-04"
+  end: present
+  note: >-
+    운영 L2는 2018-04-30부터입니다(RPRO 02.04.00이 2018-04-30 ~ 2022-07-25를 덮음). 2019-08-06(궤도 9388)부터 진행 방향 화소가 7 km에서 5.5 km로 줄었습니다.
+    2026-10-13 확인 시 GES DISC의 NO2 OFFL 최신 파일은 2026-10-02 관측분이고, CDSE는 NRTI를 최근 한 달만 보관합니다.
+
+resolution:
+  spatial_short: "5.5 km (0.05°)"
+  temporal_short: "1일"
+  spatial: >-
+    L2 스와스 폭 약 2,600 km(108°). 직하점 화소 5.5 × 3.5 km(진행 × 횡단, NO2·SO2·HCHO·O3·에어로졸 지수 등) — 2019-08-06 이전은 7 × 3.5 km.
+    CO·CH4는 5.5 × 7 km, 오존 연직 분포는 약 30 × 30 km(GES DISC 컬렉션 표기)
+  vertical: 기둥 총량·대류권 컬럼 중심(오존 연직 분포·에어로졸층 높이 제품 별도)
+  temporal: >-
+    궤도 단위 스와스 파일(하루 14궤도, 궤도 주기 약 101분), 태양동기궤도 고도 약 824 km, 상승 노드 13:30 지방시, 16일(227궤도) 반복. 하루에 거의 전지구를 덮음
+
+update: "매일 — NRTI는 관측 후 3시간 안(L2), OFFL은 정해진 기한 없이 품질을 우선해 보통 며칠 뒤. 처리기 버전은 제품별로 수시 갱신"
+license: Copernicus Sentinel 자료 법적 고지에 따른 무료·공개 이용(출처 표기 'Copernicus Sentinel data'). CDSE·GES DISC 모두 무료 계정이 필요합니다
+account_required: true
+
+summary: >-
+  TROPOMI는 유럽 Copernicus 계획의 Sentinel-5 Precursor 위성에 실린 자외·가시·근적외·단파적외 분광 영상기로, 2018년부터 이산화질소(NO2), 일산화탄소(CO), 메탄(CH4),
+  이산화황(SO2), 포름알데히드(HCHO), 오존, 에어로졸 지수·층 높이, 구름을 매일 거의 전지구로 관측합니다. 화소가 5.5 × 3.5 km로 OMI보다 훨씬 작아 도시·발전소·
+  배출원 단위의 대기질·온실가스 분석에 널리 쓰이며, OMI를 잇는 오후 궤도 대기 성분 관측의 중심 자료입니다.
+
+time_convention:
+  summary: >-
+    L2 값은 위성이 지나간 순간의 관측이며, 같은 지점은 대개 하루 한 번 이른 오후(적도 통과 13:30 지방시 부근)에 관측됩니다. 화소마다 관측 시각이 들어 있고,
+    합성·평균 제품은 Copernicus 공식 L2에 없습니다.
+  points:
+    - "`time`은 궤도가 시작된 날의 UTC 자정(2010-01-01 00:00:00부터의 초), `delta_time`은 주사선마다 그 기준 시각에서 지난 밀리초입니다. 둘을 더해야 실제 관측 시각이 되며 `time_utc` 문자열도 함께 있습니다."
+    - "NRTI(준실시간, 관측 후 3시간 안)와 OFFL(오프라인)은 같은 알고리즘이라도 보조 입력이 달라 값이 조금 다릅니다. NRTI는 빠진 궤도가 있을 수 있어 연구에는 OFFL·RPRO를 권장합니다."
+    - "파일 이름 `S5P_<OFFL|NRTI|RPRO>_L2__<제품>_<시작>_<끝>_<궤도>_<컬렉션>_<처리기 버전>_<생산 시각>.nc`에서 처리기 버전(예: 020901 = 2.9.1)을 읽을 수 있습니다."
+    - "한국 상공 관측은 대체로 13~14시 KST이며, 궤도 가장자리에서는 인접 궤도와 약 100분 차이 나는 관측이 겹칠 수 있습니다."
+  source: https://docserver.gesdisc.eosdis.nasa.gov/public/project/S5P/SRON-S5P-LEV2-MA-002-Sentinel-5P-Level-2-Product-User-Manual-Carbon-Monoxide-2024-2.8.0.pdf
+  source_name: S5P CO Product User Manual 2.8.0 + SentiWiki S5P Mission·Processing + NO2 Product Readme
+
+variables:
+  note: >-
+    제품별 Product Readme(PRF)·Product User Manual(PUM)에서 확인한 이름이며, 모두 netCDF-4 파일의 `PRODUCT` 그룹 안에 있습니다. 컬럼 단위는 SI인 mol m-2이고
+    `multiplication_factor_to_convert_to_molecules_percm2`(6.02214×10^19)를 곱하면 molecules cm-2가 됩니다. 모든 제품에 품질 지표 `qa_value`(0~1)가 있습니다.
+  full_list: https://sentiwiki.copernicus.eu/web/s5p-products
+  groups:
+    - name: 미량기체 컬럼 (L2 스와스)
+      kind: instant
+      period: 관측 시각
+      items:
+        - text: "대류권 NO2 컬럼 — `nitrogendioxide_tropospheric_column` (mol m-2)"
+          note: qa_value > 0.75 권장
+        - text: "NO2 총·성층권 컬럼 — `nitrogendioxide_total_column`, `nitrogendioxide_stratospheric_column` (mol m-2)"
+        - text: "CO 총 컬럼 — `carbonmonoxide_total_column` (mol m-2)"
+          note: qa_value > 0.5 권장, 줄무늬 보정판 `carbonmonoxide_total_column_corrected`
+        - text: "메탄 건조 공기 평균 혼합비(편향 보정) — `methane_mixing_ratio_bias_corrected` (1e-9, 즉 ppb)"
+          note: qa_value > 0.5 권장, 줄무늬 보정판 `methane_mixing_ratio_bias_corrected_destriped`
+        - text: "SO2 총 연직 컬럼 — `sulfurdioxide_total_vertical_column` (mol m-2), 1·7·15 km 가정 컬럼 `_1km`·`_7km`·`_15km`"
+          note: qa_value > 0.5 권장
+        - text: "대류권 HCHO 연직 컬럼 — `formaldehyde_tropospheric_vertical_column` (mol m-2)"
+          note: qa_value > 0.5 권장
+    - name: 오존·에어로졸·구름 제품
+      kind: instant
+      period: 관측 시각
+      items:
+        - text: "오존 전량(L2__O3____)·대류권 오존(L2__O3_TCL)·오존 연직 분포(L2__O3__PR) — 변수명은 각 PUM 참고"
+          std: [ozone]
+        - text: "자외 에어로졸 지수(L2__AER_AI)·에어로졸층 높이(L2__AER_LH) — 변수명은 각 PUM 참고"
+          std: [aerosol]
+        - text: "구름 비율·알베도·운정 기압(L2__CLOUD_) — 변수명은 PUM 참고"
+          std: [cloud, cloud_top]
+    - name: 품질·시각
+      kind: instant
+      items:
+        - "품질 지표 — `qa_value` (0 오류 ~ 1 양호)"
+        - "관측 시각 — `time` (s, 2010-01-01 기준), `delta_time` (ms), `time_utc` (ISO 8601 문자열)"
+
+access:
+  - name: Copernicus Data Space Ecosystem (CDSE)
+    url: https://dataspace.copernicus.eu/
+    method: 웹 브라우저·OData·STAC·S3·openEO (컬렉션 SENTINEL-5P)
+    note: >-
+      무료 CDSE 계정이 필요합니다. 제품 유형 코드는 L2__NO2___, L2__CO____, L2__CH4___, L2__SO2___, L2__HCHO__, L2__O3____, L2__AER_AI, L2__CLOUD_ 등이며,
+      오프라인 자료는 2018년 4월부터, NRTI는 최근 한 달만 보관합니다.
+  - name: CDSE Sentinel-5P 문서 (제품 목록·OData 예)
+    url: https://documentation.dataspace.copernicus.eu/Data/SentinelMissions/Sentinel5P.html
+    method: 웹 문서
+  - name: NASA GES DISC (Earthdata 재배포)
+    url: https://disc.gsfc.nasa.gov/datacollection/S5P_L2__NO2____HiR_2.html
+    method: HTTPS·earthaccess·OPeNDAP (NASA Earthdata 로그인)
+    note: >-
+      컬렉션 이름은 S5P_L2__NO2____HiR, S5P_L2__CO_____HiR, S5P_L2__CH4____HiR, S5P_L2__SO2____HiR, S5P_L2__HCHO___HiR, S5P_L2__AER_AI_HiR, S5P_L2__O3_TOT_HiR 등(버전 2)입니다.
+      NASA 도구(earthaccess·Giovanni)와 함께 쓰기 편합니다.
+
+example:
+  lang: python
+  note: >-
+    GES DISC 재배포본을 earthaccess로 받아 `PRODUCT` 그룹을 xarray로 여는 예입니다. CDSE에서 받은 파일도 구조가 같습니다.
+  code: |
+    # pip install earthaccess xarray netCDF4
+    import earthaccess
+    import xarray as xr
+
+    earthaccess.login()
+    results = earthaccess.search_data(
+        short_name="S5P_L2__NO2____HiR", version="2",
+        temporal=("2025-03-01", "2025-03-01"),
+        bounding_box=(124, 33, 132, 39),          # (서, 남, 동, 북) — 한반도
+    )
+    files = earthaccess.download(results[:1], "./s5p")
+
+    ds = xr.open_dataset(files[0], group="PRODUCT")
+    no2 = ds["nitrogendioxide_tropospheric_column"].where(ds["qa_value"] > 0.75)   # mol m-2
+    no2_molec = no2 * 6.02214e19                                                    # molecules cm-2
+    print(float(no2_molec.mean()), ds["time_utc"].values[0, :2])
+
+tips:
+  - "`qa_value` 문턱은 제품마다 다릅니다. NO2 대류권·총 컬럼은 0.75 초과(구름·눈 위 포함하려면 0.5), 성층권 NO2·CO·CH4·SO2·HCHO는 0.5 초과가 기본 권고입니다."
+  - "처리기 버전을 섞지 마세요. 장기 분석은 RPRO(2018-04-30 ~ 2022-07-25) + 이후 OFFL이 공식 권고이며, 그 뒤로도 2.6.0·2.7.1·2.8.0·2.9.1 전환마다 작은 불연속이 생겼습니다."
+  - "2019년 8월 6일 화소 크기가 바뀌었습니다(진행 방향 7 → 5.5 km). 화소 수로 표본을 세는 분석은 이 시점을 조심하세요."
+  - "평균을 낼 때 깨끗한 지역의 음수 컬럼을 지우지 마세요. 잡음이 만든 값이라 지우면 평균이 위로 치우칩니다(SO2·HCHO·NO2 README 공통 안내)."
+  - "HCHO·SO2 단일 화소는 잡음이 커서 보통 며칠~한 달을 격자에 모아 씁니다. HCHO·SO2 2.8.0의 2025-11-22 ~ 12-02(OFFL) 자료에는 줄무늬 문제가 있었고 재처리 대상입니다."
+  - "CH4 제품은 Suomi NPP VIIRS 구름 자료를 1차 구름 걸러내기에 써 왔습니다. NOAA·NASA는 Suomi NPP 과학 자료 전달이 2026년 11월 초 끝난다고 공지했으므로, 그 뒤 CH4·에어로졸층 높이는 TROPOMI 자체 구름 마스크(2.6.0 이후 기계학습 마스크, 2.9.1의 AER_LH 대체 마스크)에 의존하게 됩니다."
+  - "NO2 대기질 비교는 위성이 오후 1~2시 한 번만 본다는 점과, 컬럼이 지표 농도가 아니라는 점(평균 커널·사전 연직 분포 차이)을 고려하세요. 모델과 비교할 때는 파일에 든 평균 커널을 적용하는 것이 정석입니다."
+  - "CDSE에서 Sentinel Hub·openEO로 받을 때는 한 번에 한 제품(밴드)만 요청할 수 있습니다."
+
+citations:
+  dataset:
+    - label: TROPOMI L2 NO2 V2 (OFFL·RPRO)
+      text: >-
+        Copernicus Sentinel-5P (processed by ESA), 2021, TROPOMI Level 2 Nitrogen Dioxide total column products. Version 02. European Space Agency.
+        https://doi.org/10.5270/S5P-9bnp8q8
+      doi: 10.5270/S5P-9bnp8q8
+      bibtex: |
+        @misc{s5p_no2_v2,
+          author    = {{Copernicus Sentinel-5P (processed by ESA)}},
+          title     = {{TROPOMI} Level 2 Nitrogen Dioxide total column products. Version 02},
+          year      = {2021},
+          publisher = {European Space Agency},
+          doi       = {10.5270/S5P-9bnp8q8}
+        }
+    - label: TROPOMI L2 CO V2
+      text: >-
+        Copernicus Sentinel-5P (processed by ESA), 2021, TROPOMI Level 2 Carbon Monoxide products. Version 02. European Space Agency.
+        https://doi.org/10.5270/S5P-bj3nry0
+      doi: 10.5270/S5P-bj3nry0
+      bibtex: |
+        @misc{s5p_co_v2,
+          author    = {{Copernicus Sentinel-5P (processed by ESA)}},
+          title     = {{TROPOMI} Level 2 Carbon Monoxide products. Version 02},
+          year      = {2021},
+          publisher = {European Space Agency},
+          doi       = {10.5270/S5P-bj3nry0}
+        }
+    - label: TROPOMI L2 CH4 V2
+      text: >-
+        Copernicus Sentinel-5P (processed by ESA), 2021, TROPOMI Level 2 Methane products. Version 02. European Space Agency.
+        https://doi.org/10.5270/S5P-3lcdqiv
+      doi: 10.5270/S5P-3lcdqiv
+      bibtex: |
+        @misc{s5p_ch4_v2,
+          author    = {{Copernicus Sentinel-5P (processed by ESA)}},
+          title     = {{TROPOMI} Level 2 Methane products. Version 02},
+          year      = {2021},
+          publisher = {European Space Agency},
+          doi       = {10.5270/S5P-3lcdqiv}
+        }
+    - label: TROPOMI L2 HCHO V2
+      text: >-
+        Copernicus Sentinel-5P (processed by ESA), 2020, TROPOMI Level 2 Formaldehyde Total Column products. Version 02. European Space Agency.
+        https://doi.org/10.5270/S5P-vg1i7t0
+      doi: 10.5270/S5P-vg1i7t0
+      bibtex: |
+        @misc{s5p_hcho_v2,
+          author    = {{Copernicus Sentinel-5P (processed by ESA)}},
+          title     = {{TROPOMI} Level 2 Formaldehyde Total Column products. Version 02},
+          year      = {2020},
+          publisher = {European Space Agency},
+          doi       = {10.5270/S5P-vg1i7t0}
+        }
+  papers:
+    - label: TROPOMI 임무·측기 개관
+      text: >-
+        Veefkind, J. P., Aben, I., McMullan, K., Förster, H., de Vries, J., Otter, G., Claas, J., Eskes, H. J., de Haan, J. F., Kleipool, Q., van Weele, M.,
+        Hasekamp, O., Hoogeveen, R., Landgraf, J., Snel, R., Tol, P., Ingmann, P., Voors, R., Kruizinga, B., Vink, R., Visser, H., Levelt, P. F. (2012):
+        TROPOMI on the ESA Sentinel-5 Precursor: A GMES mission for global observations of the atmospheric composition for climate, air quality and
+        ozone layer applications. Remote Sensing of Environment, 120, 70–83.
+      doi: 10.1016/j.rse.2011.09.027
+      bibtex: |
+        @article{veefkind2012tropomi,
+          author  = {Veefkind, J. P. and Aben, I. and McMullan, K. and F{\"o}rster, H. and de Vries, J. and Otter, G. and Claas, J. and Eskes, H. J. and de Haan, J. F. and Kleipool, Q. and van Weele, M. and Hasekamp, O. and Hoogeveen, R. and Landgraf, J. and Snel, R. and Tol, P. and Ingmann, P. and Voors, R. and Kruizinga, B. and Vink, R. and Visser, H. and Levelt, P. F.},
+          title   = {{TROPOMI} on the {ESA} Sentinel-5 Precursor: A {GMES} mission for global observations of the atmospheric composition for climate, air quality and ozone layer applications},
+          journal = {Remote Sensing of Environment},
+          volume  = {120},
+          pages   = {70--83},
+          year    = {2012},
+          doi     = {10.1016/j.rse.2011.09.027}
+        }
+  acknowledgement: >-
+    TROPOMI 웹사이트는 제품·버전마다 'Copernicus Sentinel-5P (processed by ESA), 연도, 제품 이름. Version 02. European Space Agency. DOI' 형식의 인용을 권합니다.
+    SO2 V2 자료의 DOI는 10.5270/S5P-74eidii(GES DISC 컬렉션 정보)입니다. V1 기간(2021년 7월 이전 처리기 01.xx) 자료를 썼다면 V1 DOI(예: NO2 10.5270/S5P-s4ljg54)를 인용하고,
+    알고리즘은 각 제품의 ATBD를 함께 밝히세요. GES DISC에서 받았다면 GES DISC 컬렉션을 경유했다고 적는 것이 좋습니다.
+
+notices:
+  - date: "2026-10-13"
+    level: warning
+    title: 2026-11-10 처리기 업그레이드 — L1B 3.1.0, NL-L2 3.0.0, UPAS 3.0.1
+    body: >-
+      ESA가 2026년 11월 10일 운영 처리기를 바꾼다고 공지했습니다. NL-L2(NO2·CO·CH4·AER_AI·AER_LH·O3_PR)는 3.0.0, UPAS(HCHO·SO2·CLOUD·O3·O3_TCL)는 3.0.1,
+      L1B는 3.1.0이 됩니다. NO2는 새 대기질량인자(AMF) 조견표를 쓰고 변수가 늘어 파일이 약 5% 커지며, CH4·AER_LH의 구름 마스크, AER_AI 성능 저하 보정,
+      O3_PR·CLOUD·O3_TCL 알고리즘도 바뀝니다. NL-L2의 DOI가 새 버전으로 갱신되고, 교체 작업 중 관측분의 NRT 자료는 만들어지지 않습니다.
+      재처리 계획은 공지에 없으므로 전환 전후 값을 한 시계열로 쓸 때는 처리기 버전을 확인하세요.
+    source: https://dataspace.copernicus.eu/news/2026-10-13-copernicus-sentinel-5-precursor-s5p-products-improvement
+  - date: "2026-10-07"
+    level: info
+    title: 궤도 제어 기동 — 2026년 10월 7일 자료 품질 저하 가능
+    body: >-
+      10월 7일 계획된 Sentinel-5P 궤도 제어 기동으로 자료가 일시적으로 없거나 품질이 떨어질 수 있다고 공지했습니다. 영향 범위는 SentiBoard 2026년 10월 이벤트 페이지에 정리됩니다.
+    source: https://dataspace.copernicus.eu/news/2026-10-7-copernicus-sentinel-5p-data-unavailability-07-october-2026
+  - date: "2025-12-22"
+    level: warning
+    title: HCHO·SO2 2.8.0 줄무늬 문제 해결 — 영향 기간 OFFL 재처리 예정
+    body: >-
+      처리기 전환 직후 HCHO(정도는 덜하지만 SO2도) 2.8.0 자료에 뚜렷한 줄무늬가 생겼다가 고쳐졌습니다. 영향 기간은 NRTI 2025-11-26 ~ 12-06(궤도 42080–42230),
+      OFFL 2025-11-22 ~ 12-02(궤도 42023–42173)이며 OFFL은 다시 처리할 예정입니다.
+    source: https://dataspace.copernicus.eu/news/2025-12-22-copernicus-sentinel-5-precursor-s5p-issue-hcho-and-so2-v280-products-solved
+  - date: "2025-11-27"
+    level: warning
+    title: 처리기 전환 — L1B 3.0.0, NL-L2 2.9.1, UPAS 2.8.0 (OFFL 2025-11-22부터)
+    body: >-
+      L1B(미광·배경 보정 개선)와 L2 처리기가 바뀌었습니다. NO2·CO·CH4·에어로졸 지수·에어로졸층 높이·오존 연직 분포는 2.9.1, HCHO·SO2·구름·오존 전량·대류권 오존은 2.8.0이며,
+      새 버전 자료는 OFFL 궤도 42023(2025-11-22), NRTI 궤도 42080(2025-11-26)부터입니다. NO2는 430 nm 부근 프라운호퍼선을 빼도록 설정이 바뀌었고 CH4 NRTI가 새로 생겼습니다.
+    source: https://dataspace.copernicus.eu/news/2025-11-27-copernicus-sentinel-5-precursor-s5p-products-improvement-operational-switch
+  - date: "2022-07-17"
+    level: info
+    title: 처리기 2.4.0 운영 전환과 첫 전체 임무 재처리(RPRO)
+    body: >-
+      2.4.0이 OFFL 궤도 24655(2022-07-17)부터 운영에 들어갔고, 같은 버전으로 임무 시작(2018-04-30)부터 2022년 7월까지를 다시 처리한 RPRO 자료가 2023년 초부터 제공됩니다.
+      공식 권고는 RPRO가 있는 기간은 RPRO, 그 뒤는 최신 OFFL을 쓰는 것입니다.
+    source: https://docserver.gesdisc.eosdis.nasa.gov/public/project/S5P/S5P-MPC-KNMI-PRF-NO2-Sentinel-5P-Nitrogen-Dioxide-Level-2-Product-Readme-File-2025-2.8.pdf
+  - date: "2019-08-06"
+    level: info
+    title: 진행 방향 화소 크기 7 km → 5.5 km
+    body: >-
+      궤도 9388부터 모든 관측의 진행 방향 분해능이 7.0 km에서 5.5 km로 바뀌었습니다. 직하점 화소는 5.5 × 3.5 km(CO·CH4는 5.5 × 7 km)입니다.
+    source: https://docserver.gesdisc.eosdis.nasa.gov/public/project/S5P/S5P-MPC-KNMI-PRF-NO2-Sentinel-5P-Nitrogen-Dioxide-Level-2-Product-Readme-File-2025-2.8.pdf
+
+links:
+  - name: TROPOMI 공식 사이트 — L2 제품
+    url: https://www.tropomi.eu/data-products/level-2-products
+  - name: SentiWiki — S5P 제품 (제품별 Readme·PUM·ATBD)
+    url: https://sentiwiki.copernicus.eu/web/s5p-products
+  - name: SentiWiki — S5P 임무
+    url: https://sentiwiki.copernicus.eu/web/s5p-mission
+  - name: CDSE 뉴스 (S5P 처리기·자료 공백 공지)
+    url: https://dataspace.copernicus.eu/news
+  - name: ESA — Copernicus Sentinel-5 (MetOp-SG)
+    url: https://www.esa.int/Applications/Observing_the_Earth/Copernicus/Sentinel-5
+  - name: EUMETSAT — CO2M
+    url: https://www.eumetsat.int/co2m
+
+watch_urls:
+  - https://dataspace.copernicus.eu/news
+  - https://www.tropomi.eu/data-products/level-2-products
+  - https://sentiwiki.copernicus.eu/web/s5p-products
+
+last_verified: "2026-10-13"

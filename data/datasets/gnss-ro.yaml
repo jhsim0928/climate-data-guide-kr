@@ -1,0 +1,285 @@
+# ─────────────────────────────────────────────────────────────
+# GNSS 전파 엄폐(RO) 자료 — UCAR CDAAC(COSMIC-2 등)·EUMETSAT ROM SAF — 데이터셋 정보 파일
+# 위성 탭(기온·수증기). 처리 센터·제품 레벨(bending angle·굴절률·건조/습윤 기온·수증기·월 격자)을 한 페이지에 정리했습니다.
+# COSMIC-2는 2026-10 현재 준실시간 정상 운영, ROM SAF 기후자료는 CDR v1.0(2001-09~2016-12) + Metop ICDR(2017-01~)입니다.
+# 수정 후에는 공식 페이지에서 확인한 날짜로 last_verified 를 갱신하세요.
+# ─────────────────────────────────────────────────────────────
+id: gnss-ro
+name: "GNSS-RO (COSMIC-2·ROM SAF)"
+full_name: GNSS Radio Occultation — UCAR CDAAC (COSMIC-2, Metop, 상용 RO 등) 및 EUMETSAT ROM SAF 기후자료 (GNSS 전파 엄폐 굴절각·굴절률·기온·수증기 연직 분포)
+category: satellite
+domain: satellite
+group: 기온·수증기
+order: 40
+domains: [대기, 원격탐사]
+provider: UCAR COSMIC Program 자료처리센터(CDAAC) / EUMETSAT ROM SAF (DMI·Met Office·ECMWF·IEEC·WEGC 컨소시엄)
+
+status: active
+status_note: >-
+  COSMIC-2(FORMOSAT-7) 준실시간 자료는 매일 생산되고 있습니다(2026-10-13 확인 시 Level 2는 2026년 284일, 즉 10월 11일분이 10월 12일 올라옴). 후처리(postProc) Level 2는 2022년 5월에서 멈춰 있습니다.
+  ROM SAF는 다중 위성 기후자료(CDR v1.0, 2001-09~2016-12)와 이를 잇는 Metop 연장판(ICDR, 2017-01~)을 제공하며, 다음 재처리는 2026년으로 예고되어 있습니다.
+  Metop-A는 2021년 11월 수명을 마쳤고, 후속 Metop-SG A1(Metop-D, 2025-08-13 발사)의 굴절각 자료가 2025년 11월부터 배포되고 있습니다.
+
+transitions:
+  - from: ROM SAF CDR v1.0 (GRM-28/29/30/32/33-R1) + Metop ICDR (GRM-29-I1)
+    to: ROM SAF 차기 재처리 기후자료 (CDR v2.0 계열)
+    status: planned
+    summary: >-
+      ROM SAF 제품 현황표에 'CDR v2.0 (+ICDR v2)' 열이 생겼고, 운영 보고서는 다음 재처리를 2026년으로 예고했습니다. 공개 날짜·DOI는 아직 확인되지 않았습니다.
+    changes:
+      - aspect: 기간
+        before: CDR 2001-09~2016-12, ICDR(Metop) 2017-01~현재
+        after: 미정 (재처리로 확장 예정)
+      - aspect: 입력 위성 (현황표 기준)
+        before: Metop·COSMIC·CHAMP·GRACE (+Metop ICDR)
+        after: Metop·COSMIC·CHAMP·GRACE (+Metop ICDR) — 행성계층 고도(PBLH)는 v2.0 목록에 없음
+      - aspect: CDS 배포
+        before: 월평균 격자 습도만 C3S CDS로 배포
+        after: 재처리 뒤 월평균 격자 건조 기온도 CDS에 추가 예정
+    impacts:
+      - 새 판이 나오면 CDR과 ICDR을 같은 판끼리 이어 쓰세요. v1 CDR에 v2 ICDR을 붙이는 식으로 섞지 마세요.
+      - 논문에는 제품 ID(예 GRM-29-R1, GRM-29-I1)와 판을 함께 적으세요.
+    sources:
+      - name: ROM SAF Product Status overview (2026-06-22)
+        url: https://rom-saf.eumetsat.int/product_documents/Product_status_overview_2026-06-22.pdf
+      - name: ROM SAF News Archive (운영 보고서 공지)
+        url: https://rom-saf.eumetsat.int/previous_news.php
+
+period:
+  start: "2001-09"
+  end: present
+  note: >-
+    ROM SAF CDR v1.0은 2001년 9월~2016년 12월(CHAMP·GRACE·COSMIC·Metop), Metop ICDR은 2017년 1월부터입니다. COSMIC-2 준실시간 자료는 2019년 10월 1일부터 현재까지,
+    후처리 Level 2는 2019~2022년 5월(2022년 151일)까지 있습니다. UCAR CDAAC에는 1995년 GPS/MET, CHAMP, COSMIC-1(재처리 repro2013·repro2021) 같은 이전 임무 자료도 있습니다.
+
+resolution:
+  spatial_short: "555 km (5°)"
+  temporal_short: "1일"
+  spatial: >-
+    Level 1b·2는 엄폐마다 하나씩 나오는 연직 프로파일(접선점 위경도, 수평 위치는 고도에 따라 이동)입니다. COSMIC-2는 궤도 경사 24°의 6기 위성으로 저위도에 집중되고, 하루 4,000개 이상 프로파일을 만듭니다.
+    ROM SAF Level 3는 위도 5° 띠 × 고도 200 m 월평균 격자(경도 차원 1), UCAR RO CDR 기온은 5° × 10° 위경도 격자입니다.
+  vertical: >-
+    atmPrf(COSMIC-2)은 원래 해상도 프로파일, wetPf2는 100 m 간격 평균해수면 고도. ROM SAF Level 3는 굴절각은 충돌 고도(impact altitude), 굴절률·기온·비습은 평균해수면 고도 기준 200 m 간격, 최고 40 km 또는 50 km
+  temporal: >-
+    프로파일은 엄폐 시각의 관측값(하루 묶음 파일). COSMIC-2 준실시간은 다음 날 02 UTC까지, 후처리는 약 6주 지연. ROM SAF Level 3·UCAR CDR은 월평균
+
+update: "COSMIC-2 준실시간: 매일(다음 날 02 UTC까지) / ROM SAF Metop ICDR·Offline: 관측 후 약 5일~6개월 / UCAR RO CDR 월 격자: 수시 묶음 공개"
+license: "UCAR CDAAC 자료는 로그인 없이 무료로 받을 수 있고 DOI 인용을 요청합니다. ROM SAF 제품은 CC BY 4.0이며, 받으려면 무료 등록·로그인이 필요합니다"
+account_required: false
+
+summary: >-
+  GNSS(GPS·GLONASS·Galileo 등) 위성 신호가 지구 대기를 스치며 휘는 정도(굴절각, bending angle)를 저궤도 위성에서 재어, 굴절률과 기온·기압·수증기 연직 분포를 구하는 자료입니다.
+  원자 시계 기준의 위상 측정이라 기기 보정 편차가 거의 없고 구름의 영향을 받지 않아, 상부 대류권·성층권 기온의 기후 기준 관측이자 재분석이 편향 보정 없이 동화하는 '앵커' 관측으로 쓰입니다.
+  미국 UCAR CDAAC는 COSMIC-2를 비롯한 여러 임무의 Level 0~2 자료를, 유럽 EUMETSAT ROM SAF는 Metop 중심의 준실시간·오프라인 자료와 다중 임무 기후자료(CDR·ICDR)를 만듭니다.
+
+time_convention:
+  summary: >-
+    Level 1b·2 프로파일은 엄폐가 일어난 시각의 관측이고(파일에 시작·끝 시각 기록), 하루치 프로파일을 한 묶음(tar)으로 배포합니다. ROM SAF Level 3와 UCAR RO CDR은 한 달 동안의 프로파일을 격자별로 평균한 월평균입니다.
+  points:
+    - "COSMIC-2 atmPrf의 시작·끝 시각(`start_time`·`stop_time`)은 GPS 초 단위입니다. 날짜·시각은 파일 속성(year·month·day·hour·minute·second)으로도 주어집니다."
+    - "atmPrf의 기온(`Temp`)·기압(`Pres`)은 수증기를 무시하고 구한 '건조(dry)' 값입니다. 수증기가 많은 하부 대류권에서는 실제 기온보다 낮게 나오므로, 그 고도에서는 배경장을 함께 쓴 1D-Var 산출(wetPf2, ROM SAF 1D-Var)을 쓰세요."
+    - "wetPf2는 예보·분석장을 배경으로 굴절률을 기온·기압·수증기로 나눈 값이라 배경 모델 정보가 섞여 있습니다. 순수 관측 정보는 굴절각·굴절률입니다."
+    - "준실시간판(COSMIC-2 nrt, ROM SAF NRT)은 예보 동화를 위해 빠르게 만든 자료이고, 후처리·재처리판은 정밀 궤도·보정을 다시 적용해 기후 연구에 더 적합합니다. COSMIC-2 후처리 Level 2는 2022년 5월 이후 없습니다."
+    - "COSMIC-2는 궤도 경사가 24°라 엄폐가 저위도에 몰려 있습니다. 극지방 표본은 Metop·상용 위성(Spire·PlanetiQ) 자료에서 옵니다."
+    - "월평균 격자는 엄폐가 불규칙하게 일어나 생기는 표본 오차가 있습니다. ROM SAF는 표본 오차 추정값(`_samperr`)을 함께 주고, UCAR RO CDR은 표본 오차 보정을 하지 않습니다(극지 밖 동서 평균에서 대개 0.2 K 미만)."
+  source: https://cdaac-www.cosmic.ucar.edu/cdaac/cgi_bin/fileFormats.cgi?type=atmPrf
+  source_name: CDAAC 파일 형식 문서(atmPrf·wetPf2) + COSMIC-2 Data 페이지 + ROM SAF Level 3 Product User Manual v3.2
+
+variables:
+  note: >-
+    COSMIC-2(CDAAC) 변수 이름은 CDAAC 파일 형식 문서의 이름이고, ROM SAF Level 3 이름은 Product User Manual의 굴절률 예시(`REF`)만 확인했습니다.
+    ROM SAF Level 1b·2와 다른 Level 3 변수 이름은 받은 파일에서 확인하세요.
+  full_list: https://cdaac-www.cosmic.ucar.edu/cdaac/doc/formats.html
+  groups:
+    - name: COSMIC-2 Level 2 atmPrf (건조 산출, 원 해상도)
+      kind: instant
+      period: 엄폐 시각
+      items:
+        - "굴절각(원 값) — `Bend_ang` (rad)"
+        - "최적화 굴절각 — `Opt_bend_ang` (rad)"
+        - "충돌 매개변수 — `Impact_parm` (km)"
+        - "굴절률 — `Ref` (N)"
+        - text: "건조 기온 — `Temp` (°C)"
+          std: [t_air]
+        - "건조 기압 — `Pres` (hPa)"
+        - "평균해수면 고도 — `MSL_alt` (km)"
+    - name: COSMIC-2 Level 2 wetPf2 (1D-Var 습윤 산출, 100 m 간격)
+      kind: instant
+      period: 엄폐 시각
+      items:
+        - "기온 — `Temp` (°C)"
+        - "수증기압 — `Vp` (hPa)"
+        - "기압 — `Pres` (hPa)"
+        - "관측 굴절률(atmPrf에서 보간) — `Ref_obs` (N)"
+    - name: ROM SAF Level 3 월평균 격자 (CDR·ICDR)
+      kind: mean
+      period: 월
+      items:
+        - "굴절률 — `REF` (N-units)"
+        - "굴절각 (mrad)"
+        - text: "건조 기온 (K)"
+          std: [t_air]
+        - text: "1D-Var 기온 (K)"
+          std: [t_air]
+        - "1D-Var 비습 (g/kg)"
+        - "대류권계면 고도 (m)"
+
+access:
+  - name: UCAR CDAAC 자료 저장소 (COSMIC-2·Metop·상용 RO·COSMIC-1 등)
+    url: https://data.cosmic.ucar.edu/gnss-ro/
+    method: HTTPS 직접 다운로드 (로그인 불필요, 날짜·레벨별 tar.gz)
+    note: >-
+      COSMIC-2 준실시간 Level 2는 cosmic2/nrt/level2/<연>/<연중일>/ 아래 atmPrf·wetPf2·bfrPrf(BUFR) 등 하루 묶음 파일로 있습니다.
+      월 격자 기후자료(UCAR RO CDR)는 gridded/cdr/ 에 있습니다.
+  - name: COSMIC-2 자료 안내 (처리 흐름·지연·인용)
+    url: https://www.cosmic.ucar.edu/what-we-do/cosmic-2/data
+    method: 웹
+  - name: EUMETSAT ROM SAF 제품 아카이브 (NRT·Offline·CDR·ICDR)
+    url: https://rom-saf.eumetsat.int/product_archive.php
+    method: 웹 다운로드 (무료 등록 후 로그인, netCDF)
+    note: 월평균 습도 격자는 C3S Climate Data Store로도 배포됩니다. 제품은 CC BY 4.0입니다.
+
+example:
+  lang: python
+  note: "로그인 없이 받는 COSMIC-2 준실시간 wetPf2 하루 묶음(약 200 MB)을 풀어 첫 프로파일을 엽니다. 묶음 속 파일 이름은 .nc로 끝나지 않을 수 있어 확장자로 거르지 않습니다."
+  code: |
+    # pip install requests xarray netCDF4
+    import tarfile, requests, xarray as xr
+
+    url = ("https://data.cosmic.ucar.edu/gnss-ro/cosmic2/nrt/level2/"
+           "2026/284/wetPf2_nrt_2026_284.tar.gz")          # 2026년 284일(10월 11일)
+    with open("wetPf2.tar.gz", "wb") as f:
+        f.write(requests.get(url, timeout=600).content)
+
+    with tarfile.open("wetPf2.tar.gz") as tar:
+        members = [m for m in tar.getmembers() if m.isfile()]
+        tar.extractall("wetPf2", members=members[:1])     # 한 프로파일만 풀기
+
+    ds = xr.open_dataset("wetPf2/" + members[0].name, engine="netcdf4")
+    print(ds[["MSL_alt", "Temp", "Vp", "Pres"]])           # 고도(km)·기온(°C)·수증기압(hPa)·기압(hPa)
+
+tips:
+  - "COSMIC-2 atmPrf의 `Temp`는 섭씨, `Pres`는 hPa(파일 표기 mb)입니다. 재분석(K, Pa)과 비교할 때 단위를 바꾸세요."
+  - "atmPrf에는 품질 플래그 `bad`(1이면 품질검사 실패)가 전역 속성처럼 들어 있습니다. 통계에 넣기 전에 걸러 내세요."
+  - "atmPrf 속성에는 GPS–저궤도 위성 직선 경로의 최저 높이(`hslbot`)와 신호 품질 지표(`snr1avg`·`s4` 등)가 들어 있습니다. 하부 대류권을 분석할 때는 이 값으로 프로파일을 골라 쓰세요."
+  - "COSMIC-2 초기 운영 공지(2020-03)는 GPS L2P 엄폐의 19~29 km 편차·표준편차가 다른 엄폐보다 크다고 밝혔습니다. 성층권 하부 정밀 분석에서는 신호 종류별로 나눠 보세요."
+  - "건조 기온은 수증기가 무시할 만한 상부 대류권~성층권에서만 실제 기온과 같습니다. ROM SAF·UCAR 기후자료도 건조 기온 격자를 주로 그 고도 범위(UCAR CDR 기온 10~40 km)에서 제공합니다."
+  - "ROM SAF CDR(2001~2016)과 ICDR(2017~)은 처리 시스템이 달라 이음매가 있을 수 있습니다. 같은 판의 CDR·ICDR 쌍(예 GRM-29-R1 + GRM-29-I1)을 쓰고 이음 시점을 표시하세요."
+  - "Metop-A는 2021년 11월 수명을 마쳐 그 뒤 Metop 자료는 Metop-B·C(2025-11부터 Metop-SG A1도 배포)입니다. 위성 구성이 바뀌는 시점의 표본 변화를 확인하세요."
+  - "UCAR RO CDR 월 격자는 COSMIC-2를 30°N–30°S에서만 쓰고, Spire의 60°S 이남 자료는 뺍니다. 위도별로 입력 위성 구성이 다릅니다."
+
+citations:
+  dataset:
+    - label: COSMIC-2 Data Products (UCAR)
+      text: >-
+        UCAR COSMIC Program, 2019: COSMIC-2 Data Products [Data set]. UCAR/NCAR - COSMIC, Access date [insert date], https://doi.org/10.5065/T353-C093
+      doi: 10.5065/T353-C093
+      bibtex: |
+        @misc{ucar2019cosmic2,
+          author    = {{UCAR COSMIC Program}},
+          title     = {{COSMIC-2} Data Products},
+          year      = {2019},
+          publisher = {UCAR/NCAR - COSMIC},
+          doi       = {10.5065/T353-C093},
+          note      = {Accessed DD MMM YYYY}
+        }
+    - label: ROM SAF 다중 임무 재처리 기후자료 GRM-28-R1 (월 격자)
+      text: >-
+        EUMETSAT ROM SAF (2021): Radio Occultation Reprocessed Climate Data Record - Multimission (GRM-28-R1). EUMETSAT.
+        https://doi.org/10.15770/EUM_SAF_GRM_0001
+      doi: 10.15770/EUM_SAF_GRM_0001
+      bibtex: |
+        @misc{romsaf2021grm28,
+          author    = {{EUMETSAT ROM SAF}},
+          title     = {Radio Occultation Reprocessed Climate Data Record - Multimission ({GRM-28-R1})},
+          year      = {2021},
+          publisher = {EUMETSAT},
+          doi       = {10.15770/EUM_SAF_GRM_0001}
+        }
+    - label: ROM SAF Metop 기후자료 GRM-29-R1 (ROM SAF 인용 예시)
+      text: >-
+        EUMETSAT ROM SAF Radio Occultation Climate Data Record (v1.0, 2019), GRM-29-R1, DOI:10.15770/EUM_SAF_GRM_0002, https://doi.org/10.15770/EUM_SAF_GRM_0002
+      doi: 10.15770/EUM_SAF_GRM_0002
+      bibtex: |
+        @misc{romsaf2019grm29r1,
+          author    = {{EUMETSAT ROM SAF}},
+          title     = {{ROM SAF} Radio Occultation Climate Data Record - Metop ({GRM-29-R1}), v1.0},
+          year      = {2019},
+          publisher = {EUMETSAT},
+          doi       = {10.15770/EUM_SAF_GRM_0002}
+        }
+    - label: ROM SAF Metop 연장 기후자료 GRM-29-I1 (2017~)
+      text: >-
+        EUMETSAT ROM SAF (2019): ROM SAF Radio Occultation Interim Climate Data Record - Metop (GRM-29-I1). EUMETSAT. https://doi.org/10.15770/EUM_SAF_GRM_0006
+      doi: 10.15770/EUM_SAF_GRM_0006
+      bibtex: |
+        @misc{romsaf2019grm29i1,
+          author    = {{EUMETSAT ROM SAF}},
+          title     = {{ROM SAF} Radio Occultation Interim Climate Data Record - Metop ({GRM-29-I1})},
+          year      = {2019},
+          publisher = {EUMETSAT},
+          doi       = {10.15770/EUM_SAF_GRM_0006}
+        }
+  papers:
+    - label: COSMIC-2 첫 결과
+      text: >-
+        Schreiner, W. S., Weiss, J. P., Anthes, R. A., Braun, J., Chu, V., Fong, J., Hunt, D., Kuo, Y.-H., Meehan, T., Serafino, W., Sjoberg, J., Sokolovskiy, S., Talaat, E., Wee, T. K., Zeng, Z. (2020):
+        COSMIC-2 Radio Occultation Constellation: First Results. Geophysical Research Letters, 47(4), e2019GL086841.
+      doi: 10.1029/2019GL086841
+      bibtex: |
+        @article{schreiner2020cosmic2,
+          author  = {Schreiner, W. S. and Weiss, J. P. and Anthes, R. A. and Braun, J. and Chu, V. and Fong, J. and Hunt, D. and Kuo, Y.-H. and Meehan, T. and Serafino, W. and Sjoberg, J. and Sokolovskiy, S. and Talaat, E. and Wee, T. K. and Zeng, Z.},
+          title   = {{COSMIC-2} Radio Occultation Constellation: First Results},
+          journal = {Geophysical Research Letters},
+          volume  = {47},
+          number  = {4},
+          pages   = {e2019GL086841},
+          year    = {2020},
+          doi     = {10.1029/2019GL086841}
+        }
+  acknowledgement: >-
+    UCAR는 DOI가 URL보다 오래 유지되므로 인용에 DOI를 쓰라고 권합니다. ROM SAF 제품은 CC BY 4.0이며, 그림에는 'EUMETSAT ROM SAF [제품 ID]'(예 EUMETSAT ROM SAF GRM-29-R1),
+    본문에는 제품 이름·판·제품 ID·DOI를 밝히고, 동료 심사 논문은 제목과 DOI를 romsafom@dmi.dk로 알려 달라고 요청합니다.
+
+notices:
+  - date: "2026-04-28"
+    level: info
+    title: Metop-SG A1(Metop-D) 전파 엄폐 자료 평가 보고서 공개
+    body: >-
+      ROM SAF Report 49에 따르면 2025년 8월 13일 발사된 EPS-SG A1(Metop-D)의 Level 1 굴절각 자료가 2025년 11월 6일부터 EUMETCast로 배포되고 있으며, 하루 약 1,200개 엄폐를 냅니다.
+      배경장과의 차이 표준편차가 Metop-B·C, PlanetiQ, Spire보다 작았고, 영국 기상청은 2026년 6월 무렵 현업 동화를 예상했습니다.
+    source: https://rom-saf.eumetsat.int/previous_news.php#April28-26_205
+  - date: "2026-03-20"
+    level: info
+    title: ROM SAF 시범 자료 — 대기 10년 기온 추세 (CDR GRM-28-R1 + ICDR GRM-29-I1)
+    body: >-
+      2002~2016년은 다중 임무 CDR(GRM-28-R1), 그 뒤는 Metop ICDR(GRM-29-I1)로 이은 월 격자 시계열로 표본 오차를 보정한 10년 추세를 계산해 공개했습니다.
+      CDR과 ICDR을 이어 쓰는 공식 예시로 참고할 수 있습니다.
+    source: https://rom-saf.eumetsat.int/previous_news.php
+  - date: "2024-03-08"
+    level: info
+    title: ROM SAF Metop 준실시간 처리 변경 (GPAC 3.4) — 파일 이름·속성 변경
+    body: >-
+      Metop 준실시간 처리기가 GPAC 0.4.3에서 3.4.0으로 바뀌면서 netCDF 파일 이름과 전역 속성이 다른 ROM SAF 제품과 같은 형식으로 바뀌었고, bgr 파일이 bgo 파일로 대체되었습니다.
+      고고도 반구 편향이 줄고 품질검사 변경으로 정상 엄폐가 늘었습니다. 자동 처리 스크립트를 쓴다면 파일 이름 규칙을 확인하세요.
+    source: https://rom-saf.eumetsat.int/previous_news.php
+
+links:
+  - name: UCAR COSMIC — COSMIC-2 임무 소개
+    url: https://www.cosmic.ucar.edu/global-navigation-satellite-system-gnss-background/cosmic-2
+  - name: UCAR COSMIC — 기타 RO 임무 자료 표
+    url: https://www.cosmic.ucar.edu/what-we-do/data-processing-center/data
+  - name: UCAR RO Climate Data Record (월 격자)
+    url: https://www.cosmic.ucar.edu/RO_Climate_Data_Record
+  - name: CDAAC 파일 형식 문서 (atmPrf)
+    url: https://cdaac-www.cosmic.ucar.edu/cdaac/cgi_bin/fileFormats.cgi?type=atmPrf
+  - name: ROM SAF 제품 문서 (사용자 매뉴얼·검증 보고서)
+    url: https://rom-saf.eumetsat.int/product_documents.php
+  - name: ROM SAF 이용 정책·인용 방법
+    url: https://rom-saf.eumetsat.int/rom-saf-usage-policy
+
+watch_urls:
+  - https://rom-saf.eumetsat.int/previous_news.php
+  - https://www.cosmic.ucar.edu/what-we-do/cosmic-2/data
+
+last_verified: "2026-10-13"

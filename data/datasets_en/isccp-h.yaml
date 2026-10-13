@@ -1,0 +1,256 @@
+# ─────────────────────────────────────────────────────────────
+# ISCCP-H — dataset information file
+# Listed under the satellite tab, 'Clouds and radiation'. The CDR stops at June 2017; the follow-on ISCCP-NG is at demonstrator stage.
+# After editing, update last_verified to the date you checked the official pages.
+# ─────────────────────────────────────────────────────────────
+id: isccp-h
+name: "ISCCP-H"
+full_name: International Satellite Cloud Climatology Project (ISCCP) H-Series Climate Data Record
+category: satellite
+domain: satellite
+group: 구름·복사
+order: 10
+domains: [대기, 원격탐사]
+provider: NOAA NCEI (CDR Program) / CUNY CREST (W. B. Rossow) / NASA GISS
+
+status: ended
+status_note: >-
+  The official CDR (v01r00) ends in June 2017. NCEI also offers a separate Interim CDR (ICDR) for July 2017 to December 2018 by FTP and calls it temporary.
+  When checked on 2026-10-13, the files in the NCEI and AWS copies had not changed since May 2021, and no schedule for extending the record has been announced.
+  ISCCP-NG, which is meant to continue the record from the ring of geostationary satellites, is at demonstrator stage: CM SAF released one year (2021) in September 2026.
+successor:
+  name: None (the follow-on ISCCP-NG is still a demonstrator)
+  url: https://www.cmsaf.eu/SharedDocs/Kurzmeldungen/EN/2026/news5.html
+  note: >-
+    On 2026-09-21 CM SAF released a GEO-ring-based ISCCP-NG demonstrator (year 2021, 0.05°, half-hourly) built from level-1 composites of five geostationary satellites.
+    It is not yet a long-term record, so for cloud climatologies after 2017 consider polar-orbiter records such as CLARA-A3 or PATMOS-x as well.
+
+transitions:
+  - from: ISCCP-D
+    to: ISCCP-H
+    status: completed
+    date: "2017-06"
+    summary: The third ISCCP generation, rebuilding ISCCP-D (produced at NASA GISS through 2009) with new pixel sampling, grids and calibration. It is a generation change within this page, so it is described here.
+    changes:
+      - aspect: Input pixel sampling
+        before: Stage B3 data, about 30 km and 3-hourly
+        after: B1U data, about 10 km and 3-hourly (polar-orbiter data also sampled to about 10 km)
+      - aspect: Gridded product resolution
+        before: D1 and D2 on a 280 km equal-area grid (2.5° equivalent)
+        after: HGG, HGH and HGM on a 1° equal-area grid; HXG on a 0.1° equal-angle grid
+      - aspect: Calibration
+        before: ISCCP-D calibration
+        after: VIS anchor chained from NOAA-9 (through 2009) to NOAA-18 (after); IR gain error for NOAA-15 and later AVHRRs and the post-2001 AVHRR KLM calibration error corrected
+      - aspect: Products
+        before: D1 (3-hourly), D2 (monthly) and others
+        after: HXS, HXG, HGS, HGG, HGH and HGM, plus the CF-compliant ISCCP-Basic subset
+      - aspect: File format
+        before: Binary (NCEI still takes orders for D in binary only)
+        after: netCDF-4 for every product except HXS
+      - aspect: Period
+        before: 1983-07 to 2009-12
+        after: 1983-07 to 2017-06 (interim ICDR 2017-07 to 2018-12)
+    impacts:
+      - Do not mix ISCCP-D climatologies or trends with H results. The resolution and calibration differ, so cloud amount differs even over the same region.
+      - H keeps the cloud retrieval algorithm largely unchanged, so NCEI notes that the biases known from D (viewing-angle and satellite-change effects) carry over to H.
+    sources:
+      - name: Young et al. (2018), ESSD — ISCCP H-Series CDR product
+        url: https://doi.org/10.5194/essd-10-583-2018
+      - name: NCEI — International Satellite Cloud Climatology Project
+        url: https://www.ncei.noaa.gov/products/international-satellite-cloud-climatology
+
+period:
+  start: "1983-07"
+  end: "2017-06"
+  note: >-
+    The official CDR covers 1983-07-01 to 2017-06-30 (NCEI metadata; the last Basic HGM file on AWS is June 2017).
+    An interim ICDR made the same way fills July 2017 to December 2018, and NCEI says it will stay available only until the final CDR for that period is released.
+
+resolution:
+  spatial_short: "111 km (1°)"
+  temporal_short: "3시간"
+  spatial: >-
+    Full HGG, HGH and HGM use a 1° equal-area grid (the number of longitude cells varies with latitude, from 3 at the poles to 360 at the equator); HXG uses a 0.1° equal-angle grid;
+    HXS is about 0.1° in satellite projection (binary). Basic HGG, HGH and HGM are remapped to a 360 × 180 1° equal-angle (latitude-longitude) grid.
+  vertical: Cloud types defined by cloud-top pressure and optical thickness (18 VIS/IR types, 3 IR-only types) and distributions over pressure bins
+  temporal: >-
+    HGG and HXG are 3-hourly instantaneous values (00, 03, …, 21 UTC); HGH is a monthly mean for each of these eight times; HGM is the equally weighted mean of the eight HGH fields.
+
+update: No longer updated (CDR through 2017-06, interim ICDR through 2018-12)
+license: NOAA CDR — publicly available with no restrictions on use; credit to NCEI and the developers and citation of the DOI requested
+account_required: false
+
+summary: >-
+  ISCCP-H is a global cloud climate data record from 1983 onward, built by combining visible and infrared imagery from the world's geostationary weather satellites
+  with NOAA and MetOp polar orbiters (AVHRR). Every three hours it provides cloud amount, cloud-top pressure and temperature, optical thickness, water path and cloud type on a 1° grid,
+  making it nearly the only long record that resolves the diurnal cycle of clouds. It is the third generation, replacing ISCCP-D, and comes as a Full version for specialists
+  and a simpler CF-compliant Basic version.
+
+time_convention:
+  summary: >-
+    HGG (3-hourly grid) collects instantaneous observations at each UTC time (00, 03, …, 21). HGH averages each of those times over the month,
+    and HGM averages the eight HGH times with equal weight to give the monthly mean. All times are UTC, not local time.
+  points:
+    - "Optical thickness (TAU) and water path (WP) come only from daytime VIS/IR retrievals (cosine of solar zenith angle at least 0.2). Night-time values in HGG are filled from adjacent daytime values, and the fill is recorded in `fill_type`."
+    - "Full-version values are stored as 8-bit counts from 0 to 254, with 255 as missing. Convert them with the lookup tables in each file (for example `pretab`, `tmptab`, `tautab`, `wpatab`). The Basic version stores decoded physical values with CF attributes."
+    - "In the Basic HGM aggregation the time units are 'hours since 1983-07-15 00:00:00.000 UTC' and `cell_methods` is 'area: mean time: mean within days time: mean over days' (NCEI THREDDS attributes)."
+    - "Where geostationary coverage is missing and over the poles, polar orbiters pass only a few times a day, so many 3-hourly values are not direct observations. Check `satcodes` and `satnames` for the satellites that contributed."
+  source: https://www.ncei.noaa.gov/sites/default/files/2022-11/ISCCP%20User%E2%80%99s%20Guide%20v5_0.pdf
+  source_name: ISCCP Data Users Guide v5.0 (NCEI) + ISCCP-Basic HGM THREDDS attributes
+
+variables:
+  note: >-
+    Names and units are from the ISCCP-Basic HGM files (NCEI THREDDS aggregation). In the Full version the same names hold 8-bit counts, and in Full HGG
+    cloud amount is stored as pixel counts (`n_cloudy`/`n_total`).
+  full_list: https://www.ncei.noaa.gov/sites/default/files/2021-07/ISCCPBasicvs.Full-Description.pdf
+  groups:
+    - name: Monthly mean cloud properties (Basic HGM)
+      kind: mean
+      period: month
+      items:
+        - "Cloud amount — `cldamt` (percent)"
+        - "IR-only cloud amount — `cldamt_ir` (percent)"
+        - "Cloud amount by cloud type (18 types) — `cldamt_types` (percent)"
+        - "Cloud-top pressure — `pc` (hPa)"
+        - "Cloud-top temperature — `tc` (K)"
+        - text: "Cloud optical thickness — `tau` (1)"
+          note: From daytime retrievals only; radiatively weighted average of liquid and ice clouds combined
+        - text: "Cloud water path — `wp`"
+          note: "The file's units attribute says 'cm', while the users guide describes water path in g m-2. Check the units before use."
+        - "Snow/ice cover fraction — `snoice` (percent)"
+    - name: 3-hourly grid (Basic HGG)
+      kind: instant
+      items:
+        - text: "Cloud amount, cloud-top pressure and temperature, optical thickness, water path — `cldamt`, `pc`, `tc`, `tau`, `wp`"
+          note: Observations at each of 00, 03, …, 21 UTC; night-time tau and wp are filled from daytime values
+        - text: "Cloud amount by cloud type — `cldamt_types`, `cldamt_irtypes`"
+          note: In Basic HGG these are pixel counts divided by `n_total`
+
+access:
+  - name: NCEI direct download (Full and Basic)
+    url: https://www.ncei.noaa.gov/data/international-satellite-cloud-climate-project-isccp-h-series-data/access/
+    method: HTTPS directory
+    note: Full HGM and HGH and Basic HGG, HGH and HGM are downloadable. Full HGG, HXG and HXS are large and are ordered through ncei.sat.info@noaa.gov.
+  - name: NCEI THREDDS (ISCCP-H Basic aggregations)
+    url: https://www.ncei.noaa.gov/thredds/catalog/satellite/cdr-isccp-h.html
+    method: THREDDS / OPeNDAP / NCSS
+    note: Basic HGG, HGH and HGM are aggregated into single time series (Best Time Series) that can be subset remotely.
+  - name: AWS open bucket (noaa-cdr-cloud-properties-isccp-pds)
+    url: https://noaa-cdr-cloud-properties-isccp-pds.s3.amazonaws.com/index.html
+    method: S3 (anonymous access)
+    note: "Files are under `data/isccp/` (Full) and `data/isccp-basic/hgg|hgh|hgm/` (Basic)."
+  - name: Google Cloud open bucket (noaa-cdr-cloud-properties-isccp)
+    url: https://console.cloud.google.com/storage/browser/noaa-cdr-cloud-properties-isccp
+    method: GCS
+  - name: Interim ICDR (2017-07 to 2018-12, FTP)
+    url: ftp://filsrv.cicsnc.org/ISCCP_ICDR/
+    method: FTP (`isccp/` = Full, `isccp_basic/` = Basic)
+    note: Temporary data, not the official CDR. Chrome and Firefox no longer support FTP, so use an FTP client or command-line tool.
+
+example:
+  lang: python
+  note: "Reads one month of Basic HGM from the AWS open bucket without an account. The file name follows the pattern seen in the bucket listing."
+  code: |
+    # pip install s3fs xarray h5netcdf
+    import numpy as np
+    import s3fs
+    import xarray as xr
+
+    fs = s3fs.S3FileSystem(anon=True)
+    key = ("noaa-cdr-cloud-properties-isccp-pds/data/isccp-basic/hgm/"
+           "ISCCP-Basic.HGM.v01r00.GLOBAL.2016.01.99.9999.GPC.10KM.CS00.EA1.00.nc")
+    ds = xr.open_dataset(fs.open(key), engine="h5netcdf")
+
+    ca = ds["cldamt"].squeeze()                 # monthly mean cloud amount (percent), 1° lat-lon grid
+    w = np.cos(np.deg2rad(ds["lat"]))
+    print(float(ca.weighted(w).mean(("lat", "lon"))))   # area-weighted global mean
+
+tips:
+  - July 2017 onward is not the official CDR. If you extend through 2017–2018, state in your paper that you used the interim ICDR, and use other records after that.
+  - NCEI's caveats note a two-year gap in polar-orbiter (NOM) data during the NOAA-15 to NOAA-17 transition (2000–2002), and missing visible channels in many MET-3 images in 1995 and GMS-3 images in February–April 1986. Be careful with trends and diurnal analyses in these periods.
+  - Cloud amount changes by about 0.05 between nadir and slant views. Regional values can step up or down when a geostationary satellite is replaced or relocated.
+  - Low clouds under thin high cloud are hard to see. The users guide says high cloud is about 0.10 too low and middle cloud about 0.10 too high compared with lidar.
+  - In the Full version, values are counts. Averaging them without the lookup tables gives numbers with no physical meaning. If you are new to ISCCP, start with the Basic version.
+  - The Basic version remaps the equal-area grid onto 1° latitude-longitude cells, so at high latitudes several cells share the same original value. Always apply area weighting (cosine of latitude).
+
+citations:
+  dataset:
+    - label: ISCCP H-Series CDR
+      text: >-
+        Rossow, W.B., Walker, A., Golea, V., Knapp, K.R., Young, A., Inamdar, A., and Hankins, B., with NOAA's Climate Data Record Program (2016):
+        International Satellite Cloud Climatology Project Climate Data Record, H-Series. NOAA National Centers for Environmental Information.
+        doi:10.7289/V5QZ281S [access date]
+      doi: 10.7289/V5QZ281S
+      bibtex: |
+        @misc{isccp_h_cdr,
+          author    = {Rossow, William B. and Walker, Alison and Golea, Violeta and Knapp, Kenneth R. and Young, Alisa and Inamdar, Anand and Hankins, Bill},
+          title     = {International Satellite Cloud Climatology Project Climate Data Record, H-Series},
+          year      = {2016},
+          publisher = {NOAA National Centers for Environmental Information},
+          doi       = {10.7289/V5QZ281S}
+        }
+  papers:
+    - label: ISCCP-H product description paper
+      text: >-
+        Young, A. H., Knapp, K. R., Inamdar, A., Hankins, W., and Rossow, W. B. (2018): The International Satellite Cloud Climatology Project
+        H-Series climate data record product. Earth System Science Data, 10, 583–593.
+      doi: 10.5194/essd-10-583-2018
+      bibtex: |
+        @article{young2018isccph,
+          author  = {Young, Alisa H. and Knapp, Kenneth R. and Inamdar, Anand and Hankins, William and Rossow, William B.},
+          title   = {The International Satellite Cloud Climatology Project {H}-Series climate data record product},
+          journal = {Earth System Science Data},
+          volume  = {10},
+          pages   = {583--593},
+          year    = {2018},
+          doi     = {10.5194/essd-10-583-2018}
+        }
+    - label: Advances in understanding clouds from ISCCP (cited in the NCEI use agreement)
+      text: >-
+        Rossow, W. B., and Schiffer, R. A. (1999): Advances in Understanding Clouds from ISCCP. Bulletin of the American Meteorological Society,
+        80(11), 2261–2287.
+      doi: 10.1175/1520-0477(1999)080<2261:AIUCFI>2.0.CO;2
+      bibtex: |
+        @article{rossow1999isccp,
+          author  = {Rossow, William B. and Schiffer, Robert A.},
+          title   = {Advances in Understanding Clouds from {ISCCP}},
+          journal = {Bulletin of the American Meteorological Society},
+          volume  = {80},
+          number  = {11},
+          pages   = {2261--2287},
+          year    = {1999},
+          doi     = {10.1175/1520-0477(1999)080<2261:AIUCFI>2.0.CO;2}
+        }
+  acknowledgement: >-
+    The NOAA CDR use agreement asks users to state that the data were obtained from NCEI, to credit the CDR developers and their affiliations,
+    and to note NOAA CDR Program support with "Development of the CDR was supported by NOAA's CDR Program." When a CDR is central to the work,
+    it also encourages offering co-authorship to the developers.
+
+notices:
+  - date: "2026-09-21"
+    level: info
+    title: Follow-on ISCCP-NG demonstrator released (CM SAF, year 2021)
+    body: >-
+      EUMETSAT CM SAF released an ISCCP-NG demonstrator dataset built from global level-1 composites of five geostationary satellites. The first release covers 2021
+      and provides cloud properties and top-of-atmosphere radiative fluxes at 0.05° and half-hourly resolution. It is a demonstrator, not a long-term record, so it does not yet continue ISCCP-H.
+    source: https://www.cmsaf.eu/SharedDocs/Kurzmeldungen/EN/2026/news5.html
+
+links:
+  - name: NCEI — ISCCP H-Series overview (product table, ICDR, documents)
+    url: https://www.ncei.noaa.gov/products/international-satellite-cloud-climatology
+  - name: NCEI — Cloud Properties ISCCP H-Series CDR (CDR document package)
+    url: https://www.ncei.noaa.gov/products/climate-data-records/cloud-properties-isccp
+  - name: ISCCP Data Users Guide v5.0 (PDF)
+    url: https://www.ncei.noaa.gov/sites/default/files/2022-11/ISCCP%20User%E2%80%99s%20Guide%20v5_0.pdf
+  - name: ISCCP-H caveats document
+    url: https://www.ncei.noaa.gov/sites/default/files/2021-07/ISCCP_Caveats%20%281%29.pdf
+  - name: ISCCP Basic versus Full description
+    url: https://www.ncei.noaa.gov/sites/default/files/2021-07/ISCCPBasicvs.Full-Description.pdf
+  - name: ISCCP user Q&A forum (Google Groups)
+    url: https://groups.google.com/g/isccp-qa
+
+watch_urls:
+  - https://www.ncei.noaa.gov/products/international-satellite-cloud-climatology
+  - https://www.ncei.noaa.gov/products/climate-data-records/cloud-properties-isccp
+
+last_verified: "2026-10-13"

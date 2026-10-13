@@ -1,0 +1,382 @@
+# ─────────────────────────────────────────────────────────────
+# OCO-2 XCO2·SIF — 데이터셋 정보 파일
+# 위성 탭(에어로졸·대기 성분). Lite XCO2는 2014~2023년 V11.2r, 2024년 이후 V11.3r(검출기 결빙 보정)로 나뉩니다.
+# 2026년 8월부터 Caltech이 NASA와의 무상 우주법 협정(최대 5년)으로 OCO-2·OCO-3를 운영합니다.
+# 수정 후에는 공식 페이지에서 확인한 날짜로 last_verified 를 갱신하세요.
+# ─────────────────────────────────────────────────────────────
+id: oco2
+name: "OCO-2"
+full_name: Orbiting Carbon Observatory-2 (OCO-2) Level 2 XCO2 (Lite FP·Standard) and Solar-Induced Fluorescence (Lite SIF), Build 11 (NASA 궤도 탄소 관측위성 2호 이산화탄소 기둥 평균 농도·엽록소 형광)
+category: satellite
+domain: satellite
+group: 에어로졸·대기 성분
+order: 80
+domains: [대기, 육지, 원격탐사]
+provider: NASA JPL OCO-2/OCO-3 과학팀 (2026-08부터 Caltech 운영) / NASA GES DISC
+
+status: active
+status_note: >-
+  2014년 7월 발사된 OCO-2는 2년 주임무를 훨씬 넘겨 계속 관측 중입니다. NASA는 2025년 두 임무를 맡을 협력 기관을 공모한 끝에 2026년 8월 14일 Caltech과 OCO-2·OCO-3 운영에 관한 무상 우주법 협정(Space Act Agreement)을 맺었습니다.
+  협정 기간은 최대 5년이고 임무 소유권은 NASA에 남으며, Caltech이 위성·과학자료 체계를 운영합니다. 2026-10-13 확인 시 GES DISC의 Lite XCO2 V11.3r은 2026-07-28, Lite SIF V11.2r은 2026-07-27,
+  준실시간 Forward V11.3은 2026-10-10 자료까지 올라와 있습니다. 2026-06-01부터 2024년 이후 XCO2는 검출기 결빙 편향을 보정한 V11.3r로 바뀌었습니다.
+
+transitions:
+  - from: OCO-2 Lite XCO2 V11.2r
+    to: OCO-2 Lite XCO2 V11.3r
+    status: completed
+    date: "2026-06"
+    summary: >-
+      2024년 이후 검출기(초점면 배열)에 얼음이 쌓이면서 생긴 음(−)의 XCO2 편향을 보정 항으로 바로잡은 판입니다. 2014~2023년은 다시 처리하지 않았으므로
+      전 기간 분석은 2023년까지 V11.2r, 2024년부터 V11.3r을 이어 씁니다.
+    changes:
+      - aspect: 공개 시점
+        before: "V11.2r 2024-04-01 (인용 정보 공개일)"
+        after: "V11.3r 2026-06-01 (Forward V11.3은 2026-06-03 생산분부터)"
+      - aspect: 적용 기간
+        before: "2014-09~2026-03 (CMR 파일 기준)"
+        after: "2024-01-01~현재. 2014~2023년은 V11.2r을 그대로 사용"
+      - aspect: 편향 보정
+        before: "특징(FEAT)·footprint(FOOT)·TCCON 전역 보정 세 항"
+        after: "위 세 항 + 결빙 항(zero-level offset, 미광 지표로 결빙에 따른 투과율 손실 추정)"
+      - aspect: 보정 크기(2024년 평균)
+        before: "2025년 2월 해빙(decontamination) 직전 V11.2 편향 약 0.5 ppm(footprint마다 다름)"
+        after: "결빙 보정량 평균 0.20 ppm(육지 0.25, 바다 0.17 ppm)"
+      - aspect: 되돌리기
+        before: "-"
+        after: "Lite 파일에 결빙 항 정보가 들어 있어 V11.3r 값에서 빼면 V11.2r 값을 복원할 수 있음"
+    impacts:
+      - "2024년 이후 V11.2r 값은 결빙 편향(최대 약 0.5 ppm)이 남아 있으니 V11.3r로 바꾸세요. 성장률·계절 진폭 분석에서 0.2~0.5 ppm은 무시할 수 없는 크기입니다."
+      - "2014~2023년은 V11.3r 파일이 없습니다. 장기 시계열은 두 판을 이어 붙이되, 이음 지점(2024-01)을 논문에 밝히세요."
+      - "SIF Lite와 L2 Standard는 이번 개정 대상이 아닙니다(공개 문서 기준)."
+    sources:
+      - name: OCO-2 Level 2 Data Release Statement v11.3 (Rev A, 2026-06)
+        url: https://docserver.gesdisc.eosdis.nasa.gov/public/project/OCO/OCO2_L2_Data_Release_Statement_v11.3_RevA_V01.pdf
+      - name: OCO-2 V11.2 / OCO-3 V11 L2 Data User's Guide (v04 Rev B, 2026-06-10)
+        url: https://docserver.gesdisc.eosdis.nasa.gov/public/project/OCO/OCO2_V11.2_OCO3_V11_L2_Data_Users_Guide_v04_RevB_260610.pdf
+
+period:
+  start: "2014-09"
+  end: present
+  note: >-
+    OCO-2는 2014-07-02 발사되었고 2014-08-03 A-Train 대열에 들어갔습니다. Lite XCO2 V11.2r 파일은 2014-09-06부터, Lite SIF V11.2r은 2014-09-01부터 있습니다.
+    2026-10-13 확인 시 확정판(Retrospective) Lite XCO2 V11.3r은 2026-07-28, Lite SIF는 2026-07-27, L2 Standard V11.2r은 2026-07-28 자료까지이고,
+    준실시간 Forward XCO2(OCO2_L2_Fwd_FP V11.3, 2025-02-02부터)는 2026-10-10까지 올라와 있습니다. 해빙 작업·궤도 조정 기간에는 자료가 빕니다.
+
+resolution:
+  spatial_short: "2 km (0.02°)"
+  temporal_short: "1일"
+  spatial: >-
+    궤도를 따라 한 번에 8개 footprint를 나란히 관측(0.333초마다)하는 스와스 자료. footprint는 진행 방향 2.25 km 미만, 직교 방향 0.1~1.3 km(천저 기준)이고,
+    스와스는 시야각 0.8°, 폭 10 km 미만입니다. 격자 자료가 아니라 관측점(sounding)마다 위경도가 있는 점 자료입니다.
+  vertical: "기둥 평균 건조공기 몰분율 XCO2 (단일 값) + 사전 CO2 분포·평균화 커널은 관측점별 산출 기압면(`pressure_levels`) 위에 제공"
+  temporal: >-
+    태양동기 극궤도, 상승 교점 지방시 약 13:30, 16일(233궤도) 반복 주기. 낮 쪽 반구만 관측하며 천저(nadir)·태양 반사광(glint)·표적(target) 모드를 씁니다.
+    Lite 파일은 UTC 하루 단위로 묶이고, Standard 파일은 궤도·모드 구간 단위입니다.
+
+update: "준실시간 Forward: 보통 관측 후 2일 안(일별 편향 보정 Forward는 일주일 안) / 확정판 Retrospective: 월 단위 (2026-10 기준 약 2~3개월 지연)"
+license: NASA 지구과학 공개 자료 — 무료, 이용 제한 없음. 내려받기에는 무료 NASA Earthdata 로그인이 필요하며 데이터셋 DOI 인용을 요청합니다
+account_required: true
+
+summary: >-
+  OCO-2는 이산화탄소(CO2) 1.61·2.06 µm 띠와 산소 A띠(0.76 µm)의 태양 반사광을 고분광 분해능으로 측정해, 지표부터 대기 꼭대기까지 평균한
+  건조공기 CO2 몰분율(XCO2)을 천저 기준 1.3 km × 2.25 km 이하 크기의 관측점으로 하루 최대 약 100만 개 얻는 NASA 탄소 관측위성입니다. 같은 O2 A띠에서 식물의 광합성 활동을 나타내는
+  태양 유도 엽록소 형광(SIF)도 산출합니다. 연구에는 품질 선별과 편향 보정을 마친 일별 Lite 파일(XCO2: OCO2_L2_Lite_FP, SIF: OCO2_L2_Lite_SIF)을 쓰도록 권장되며,
+  탄소 흡수원·도시·발전소 배출, 가뭄의 식생 영향 연구에 널리 쓰입니다.
+
+time_convention:
+  summary: >-
+    모든 값은 위성이 지나간 순간의 관측값(약 13:30 지방시 통과)입니다. Lite 파일 하나에는 UTC 하루 동안의 관측점이 들어 있고, `time`은 관측점별 시각입니다.
+    SIF에는 순간값과 함께, 맑은 하늘 일사량 변화를 가정해 하루 평균으로 환산한 `Daily_SIF_*`가 따로 들어 있습니다.
+  points:
+    - "XCO2 Lite의 `time`은 1970-01-01 00:00:00 UTC부터의 초, SIF Lite의 `Delta_Time`은 1990-01-01 00:00:00 UTC부터의 초입니다. 두 파일의 시간 기준이 다릅니다."
+    - "Lite 파일 날짜는 UTC 하루입니다. 동아시아(한국 시간 오후 1시 반 무렵 통과)는 같은 UTC 날짜 안에 들어가지만, 날짜변경선 근처 궤도는 경계를 넘을 수 있습니다."
+    - "준실시간 Forward(OCO2_L2_Fwd_FP)는 관측 후 며칠 안에 나오지만 보정·선별이 덜 된 판입니다. 확정판 Retrospective(이름 끝 'r', 예 11.3r)는 한 달 단위로 나오며 연구에 권장됩니다."
+    - "`Daily_SIF_*`는 측정한 하루 평균이 아니라 순간 SIF에 `Science/daily_correction_factor`(맑은 하늘 cos(태양천정각) 적분 가정)를 곱한 추정값입니다."
+    - "Aqua·Aura 등이 빠지면서 2025년 1월 기준 A-Train에는 OCO-2와 GCOM-W1만 남았습니다. 함께 쓰던 Aqua MODIS 등과는 이제 통과 시각이 다릅니다."
+  source: https://docserver.gesdisc.eosdis.nasa.gov/public/project/OCO/OCO2_V11.2_OCO3_V11_L2_Data_Users_Guide_v04_RevB_260610.pdf
+  source_name: OCO-2 V11.2 / OCO-3 V11 L2 Data User's Guide + OCO-2 SIF v11.2 User's Guide + OCO-2 Lite 파일 설명서(V8r)
+
+variables:
+  note: >-
+    XCO2 Lite 변수는 OCO-2 L2 사용자 안내서(V11.2/V11.3)와 Lite 파일 설명서(V8r, 2017)에, SIF Lite 변수는 SIF V11.2 사용자 안내서 표 4-1에 근거합니다.
+    `Sounding/`·`Retrieval/`·`Science/`·`Metadata/`는 netCDF4 그룹입니다. 일부 읽기 도구는 그룹을 보여 주지 않으니 HDF5 도구나 xarray의 group 인자를 쓰세요.
+  full_list: https://docserver.gesdisc.eosdis.nasa.gov/public/project/OCO/OCO2_V11.2_OCO3_V11_L2_Data_Users_Guide_v04_RevB_260610.pdf
+  groups:
+    - name: XCO2 Lite (OCO2_L2_Lite_FP, 일별 netCDF4)
+      kind: instant
+      period: 관측 시각
+      items:
+        - text: "편향 보정·품질 선별 XCO2 — `xco2` (ppm)"
+          std: [co2]
+          note: 과학 분석용 기본 변수
+        - "XCO2 사후 불확실성 — `xco2_uncertainty` (ppm)"
+        - text: "단순 품질 플래그 — `xco2_quality_flag`"
+          note: 0 좋음(모든 시험 통과), 1 나쁨
+        - "품질 시험별 비트 플래그 — `xco2_qf_bitflag`, `xco2_qf_simple_bitflag`"
+        - "보정 전 XCO2 — `Retrieval/xco2_raw` (ppm)"
+        - text: "사전 XCO2 — `xco2_apriori` (ppm)"
+          std: []
+        - text: "기둥 평균화 커널 — `xco2_averaging_kernel` (무차원)"
+          std: []
+        - text: "사전 CO2 연직 분포 — `co2_profile_apriori` (ppm)"
+          std: []
+        - "산출 기압면 — `pressure_levels` (hPa)"
+        - "기압 가중 함수 — `pressure_weight`"
+        - text: "산출된 지표 기압 — `Retrieval/psurf`"
+        - text: "관측점 중심 위도·경도 — `latitude`, `longitude` (°)"
+        - text: "관측 시각 — `time` (seconds since 1970-01-01 00:00:00 UTC)"
+        - text: "관측점 식별자 — `sounding_id`"
+          note: YYYYMMDDhhmmssmf 형식 16자리 숫자
+        - text: "관측 모드 — `Sounding/operation_mode`"
+          note: 0 천저, 1 반사광, 2 표적, 3 전환
+        - text: "육지 비율 — `Sounding/land_fraction`"
+        - text: "태양천정각 — `solar_zenith_angle` (°)"
+    - name: SIF Lite (OCO2_L2_Lite_SIF, 일별 netCDF4)
+      kind: instant
+      period: 관측 시각
+      items:
+        - text: "740 nm 환산 SIF — `SIF_740nm` (W/m2/sr/µm)"
+          note: 757·771 nm 산출값에서 환산
+        - "740 nm SIF 1σ 불확실성 — `SIF_Uncertainty_740nm` (W/m2/sr/µm)"
+        - "757·771 nm SIF — `Science/SIF_757nm`, `Science/SIF_771nm` (W/m2/sr/µm)"
+        - text: "하루 평균 환산 SIF — `Daily_SIF_740nm`, `Daily_SIF_757nm`, `Daily_SIF_771nm` (W/m2/sr/µm)"
+          kind: mean
+          period: 일
+          note: 순간값 × 일평균 보정 계수(맑은 하늘 가정)
+        - "일평균 보정 계수 — `Science/daily_correction_factor`"
+        - text: "품질 플래그 — `Quality_Flag`"
+          note: 0 최상, 1 양호, 2 실패, −1 미검토. 보통 0·1만 사용
+        - text: "위도·경도 — `Latitude` (°N), `Longitude` (°E)"
+        - text: "관측 시각 — `Delta_Time` (seconds since 1990-01-01 00:00:00 UTC)"
+        - text: "관측 모드 — `Metadata/MeasurementMode`"
+          note: 0 천저, 1 반사광, 2 표적, 3 영역 지도(OCO-3 전용), 4 전환
+
+access:
+  - name: NASA GES DISC — OCO2_L2_Lite_FP V11.3r (2024년~)
+    url: https://disc.gsfc.nasa.gov/datasets/OCO2_L2_Lite_FP_11.3r/summary
+    method: HTTPS 다운로드 / earthaccess / Earthdata Search / OPeNDAP(Earthdata Cloud)
+    note: >-
+      2014~2023년은 OCO2_L2_Lite_FP V11.2r(https://disc.gsfc.nasa.gov/datasets/OCO2_L2_Lite_FP_11.2r/summary)에서 받습니다.
+      파일 이름은 oco2_LtCO2_YYMMDD_B11300Ar_<생산시각>.nc4 형식(V11.2r은 B112xxAr)입니다. 무료 Earthdata 로그인이 필요합니다.
+  - name: NASA GES DISC — OCO2_L2_Lite_SIF V11.2r
+    url: https://disc.gsfc.nasa.gov/datasets/OCO2_L2_Lite_SIF_11.2r/summary
+    method: HTTPS 다운로드 / earthaccess / Earthdata Search
+    note: 파일 이름은 oco2_LtSIF_YYMMDD_B112xxAr_<생산시각>.nc4 형식입니다.
+  - name: NASA GES DISC — OCO2_L2_Standard V11.2r
+    url: https://disc.gsfc.nasa.gov/datasets/OCO2_L2_Standard_11.2r/summary
+    method: HTTPS 다운로드 / earthaccess (HDF5, 궤도·모드 구간별 파일)
+    note: 모든 산출 진단값이 들어 있는 전문가용 파일입니다. 편향 보정 전 값이라 프로젝트는 일반 분석에 Lite를 쓰라고 권장합니다. V11.2r은 2019-11-30부터이고, 그 이전을 포함한 V11r(2014-09~2024-04-01)도 CMR에 남아 있습니다.
+  - name: NASA GES DISC — 준실시간 OCO2_L2_Fwd_FP V11.3
+    url: https://disc.gsfc.nasa.gov/datacollection/OCO2_L2_Fwd_FP_11.3.html
+    method: HTTPS 다운로드 / earthaccess
+    note: 2025년 6월부터 편향 보정한 일별 Forward 파일이 관측 후 일주일 안에 나옵니다. 확정판이 나오면 그것으로 바꾸세요. DOI는 없습니다.
+  - name: NASA Earthdata Search
+    url: https://search.earthdata.nasa.gov/search?q=OCO2_L2_Lite_FP
+    method: 웹 검색·영역/기간 선택·일괄 다운로드
+  - name: OCO-2 프로젝트 누리집 (NASA JPL)
+    url: https://ocov2.jpl.nasa.gov/
+    method: 임무 소식·문서·과학 결과
+    note: 2026년 8월 이후 운영 소식은 Caltech OCO 누리집(https://oco.caltech.edu/)에도 올라옵니다.
+
+example:
+  lang: python
+  note: >-
+    earthaccess로 2024년 7월 한반도 주변 Lite XCO2(V11.3r)를 받아 품질 0인 관측점만 고르는 예입니다. 처음 실행 때 Earthdata 아이디·비밀번호를 묻습니다.
+    2023년 이전 기간은 version="11.2r"로 바꾸세요.
+  code: |
+    import earthaccess
+    import xarray as xr
+    import numpy as np
+
+    earthaccess.login()  # 무료 NASA Earthdata 계정
+    results = earthaccess.search_data(
+        short_name="OCO2_L2_Lite_FP", version="11.3r",
+        temporal=("2024-07-01", "2024-07-31"),
+        bounding_box=(120, 30, 135, 45),   # (서, 남, 동, 북)
+    )
+    files = earthaccess.download(results, "oco2_lite")
+
+    out = []
+    for f in files:
+        ds = xr.open_dataset(f)                         # 최상위 변수 (xco2, latitude, ...)
+        good = (ds["xco2_quality_flag"] == 0) \
+            & ds["latitude"].between(30, 45) & ds["longitude"].between(120, 135)
+        out.append(ds[["xco2", "xco2_uncertainty", "latitude", "longitude", "time"]].where(good, drop=True))
+        # 관측 모드·육지 비율은 그룹 안에 있습니다:
+        # snd = xr.open_dataset(f, group="Sounding"); snd["operation_mode"]
+
+    sel = xr.concat(out, dim=out[0]["xco2"].dims[0])   # 관측점 차원으로 이어 붙이기
+    print(sel.sizes, float(sel["xco2"].mean()))
+
+tips:
+  - "연구에는 Lite 파일의 `xco2`(편향 보정·선별 완료)를 쓰세요. `Retrieval/xco2_raw`나 L2 Standard의 XCO2는 편향 보정 전 값이라 그대로 쓰면 안 됩니다."
+  - "`xco2_quality_flag` = 0만 쓰는 것이 기본입니다. 육지·바다(glint) 관측은 편향 특성이 달라, 둘을 섞어 평균할 때는 모드(`Sounding/operation_mode`)별로 먼저 비교해 보세요."
+  - "2024년 이후 기간은 V11.3r을 쓰세요. 2023년 2월~2025년 2월 해빙 작업이 없었던 탓에 검출기 결빙으로 V11.2 XCO2가 최대 약 0.5 ppm 낮게 치우쳤습니다. 해빙은 매년 하기로 했습니다."
+  - "사용자 안내서에 따르면 Lite 파일에는 WMO X2019 CO2 척도로 바꾼 XCO2(X2007 척도보다 약 0.08 ppm 높음)가 따로 들어 있습니다. `xco2`의 척도는 변수의 comment 속성에 적혀 있으니, 지상 관측(NOAA·TCCON)과 비교할 때 척도를 맞추세요."
+  - "`xco2_uncertainty`는 산출 알고리즘의 사후 오차로, 설명서는 실제 오차보다 30~50% 작다고 밝힙니다. 오차 전파나 역산 가중치에 그대로 쓰지 마세요."
+  - "구름·에어로졸이 많은 지역(동아시아 여름 장마, 열대)은 유효 관측점이 크게 줄어듭니다. 지역 평균은 표본 수를 함께 보고하세요."
+  - "OCO-3(국제우주정거장 일본 실험 모듈 외부, 2019년~)는 OCO-2와 같은 방식의 자매 관측기로, 북위·남위 약 52° 안에서 하루 중 여러 시각을 관측하고 도시 지역을 훑는 SAM 모드가 있습니다. 2023년 11월~2024년 7월(7월 16일 과학 관측 재개) 보관 기간에는 자료가 없습니다. 자료는 GES DISC에서 OCO-3 컬렉션으로 따로 받습니다."
+  - "SIF는 740 nm 환산값(`SIF_740nm`)이 다른 위성(TROPOMI 등)과 비교하기 쉽습니다. 광합성량(GPP)과 비교할 때는 순간값 대신 `Daily_SIF_*`를 쓰고, 맑은 하늘 가정임을 밝히세요."
+
+citations:
+  dataset:
+    - label: OCO-2 Lite XCO2 V11.3r (2024년~)
+      text: >-
+        OCO-2/OCO-3 Science Team, Vivienne Payne, Abhishek Chatterjee (2026), OCO-2 Level 2 bias-corrected XCO2 and other select fields from the
+        full-physics retrieval aggregated as daily files, Retrospective processing V11.3r, Greenbelt, MD, USA, Goddard Earth Sciences Data and
+        Information Services Center (GES DISC), Accessed: [Data Access Date], 10.5067/C4OENLFCYVSA
+      doi: 10.5067/C4OENLFCYVSA
+      bibtex: |
+        @misc{oco2_lite_fp_v113r,
+          author    = {{OCO-2/OCO-3 Science Team} and Payne, Vivienne and Chatterjee, Abhishek},
+          title     = {{OCO-2} Level 2 bias-corrected {XCO2} and other select fields from the full-physics retrieval aggregated as daily files, Retrospective processing {V11.3r}},
+          year      = {2026},
+          publisher = {Goddard Earth Sciences Data and Information Services Center (GES DISC)},
+          address   = {Greenbelt, MD, USA},
+          doi       = {10.5067/C4OENLFCYVSA}
+        }
+    - label: OCO-2 Lite XCO2 V11.2r (2014~2023년)
+      text: >-
+        OCO-2/OCO-3 Science Team, Vivienne Payne, Abhishek Chatterjee (2024), OCO-2 Level 2 bias-corrected XCO2 and other select fields from the
+        full-physics retrieval aggregated as daily files, Retrospective processing V11.2r, Greenbelt, MD, USA, Goddard Earth Sciences Data and
+        Information Services Center (GES DISC), Accessed: [Data Access Date], 10.5067/70K2B2W8MNGY
+      doi: 10.5067/70K2B2W8MNGY
+      bibtex: |
+        @misc{oco2_lite_fp_v112r,
+          author    = {{OCO-2/OCO-3 Science Team} and Payne, Vivienne and Chatterjee, Abhishek},
+          title     = {{OCO-2} Level 2 bias-corrected {XCO2} and other select fields from the full-physics retrieval aggregated as daily files, Retrospective processing {V11.2r}},
+          year      = {2024},
+          publisher = {Goddard Earth Sciences Data and Information Services Center (GES DISC)},
+          address   = {Greenbelt, MD, USA},
+          doi       = {10.5067/70K2B2W8MNGY}
+        }
+    - label: OCO-2 Lite SIF V11.2r
+      text: >-
+        OCO-2/OCO-3 Science Team, Vivienne Payne, Abhishek Chatterjee (2024), OCO-2 Level 2 bias-corrected solar-induced fluorescence and other select fields
+        from the IMAP-DOAS algorithm aggregated as daily files, Retrospective processing V11.2r, Greenbelt, MD, USA, Goddard Earth Sciences Data and
+        Information Services Center (GES DISC), Accessed: [Data Access Date], 10.5067/8XXUQU7HBGBL
+      doi: 10.5067/8XXUQU7HBGBL
+      bibtex: |
+        @misc{oco2_lite_sif_v112r,
+          author    = {{OCO-2/OCO-3 Science Team} and Payne, Vivienne and Chatterjee, Abhishek},
+          title     = {{OCO-2} Level 2 bias-corrected solar-induced fluorescence and other select fields from the {IMAP-DOAS} algorithm aggregated as daily files, Retrospective processing {V11.2r}},
+          year      = {2024},
+          publisher = {Goddard Earth Sciences Data and Information Services Center (GES DISC)},
+          address   = {Greenbelt, MD, USA},
+          doi       = {10.5067/8XXUQU7HBGBL}
+        }
+    - label: OCO-2 L2 Standard V11.2r
+      text: >-
+        OCO-2/OCO-3 Science Team, Vivienne Payne, Abhishek Chatterjee (2024), OCO-2 Level 2 geolocated XCO2 retrievals results, physical model
+        Retrospective Processing V11.2r, Greenbelt, MD, USA, Goddard Earth Sciences Data and Information Services Center (GES DISC),
+        Accessed: [Data Access Date], 10.5067/WVNRFIYMRJE1
+      doi: 10.5067/WVNRFIYMRJE1
+      bibtex: |
+        @misc{oco2_l2std_v112r,
+          author    = {{OCO-2/OCO-3 Science Team} and Payne, Vivienne and Chatterjee, Abhishek},
+          title     = {{OCO-2} Level 2 geolocated {XCO2} retrievals results, physical model Retrospective Processing {V11.2r}},
+          year      = {2024},
+          publisher = {Goddard Earth Sciences Data and Information Services Center (GES DISC)},
+          address   = {Greenbelt, MD, USA},
+          doi       = {10.5067/WVNRFIYMRJE1}
+        }
+  papers:
+    - label: ACOS 산출 알고리즘 (V8, AMT)
+      text: >-
+        O'Dell, C. W., Eldering, A., Wennberg, P. O., Crisp, D., Gunson, M. R., Fisher, B., et al. (2018): Improved retrievals of carbon dioxide from
+        Orbiting Carbon Observatory-2 with the version 8 ACOS algorithm. Atmospheric Measurement Techniques, 11, 6539–6576.
+      doi: 10.5194/amt-11-6539-2018
+      bibtex: |
+        @article{odell2018acos,
+          author  = {O'Dell, Christopher W. and Eldering, Annmarie and Wennberg, Paul O. and Crisp, David and Gunson, Michael R. and Fisher, Brendan and others},
+          title   = {Improved retrievals of carbon dioxide from Orbiting Carbon Observatory-2 with the version 8 {ACOS} algorithm},
+          journal = {Atmospheric Measurement Techniques},
+          volume  = {11},
+          number  = {12},
+          pages   = {6539--6576},
+          year    = {2018},
+          doi     = {10.5194/amt-11-6539-2018}
+        }
+    - label: OCO-2 관측기 궤도상 성능 (AMT)
+      text: >-
+        Crisp, D., Pollock, H. R., Rosenberg, R., Chapsky, L., Lee, R. A. M., Oyafuso, F. A., et al. (2017): The on-orbit performance of the
+        Orbiting Carbon Observatory-2 (OCO-2) instrument and its radiometrically calibrated products. Atmospheric Measurement Techniques, 10, 59–81.
+      doi: 10.5194/amt-10-59-2017
+      bibtex: |
+        @article{crisp2017oco2,
+          author  = {Crisp, David and Pollock, Harold R. and Rosenberg, Robert and Chapsky, Lars and Lee, Richard A. M. and Oyafuso, Fabiano A. and others},
+          title   = {The on-orbit performance of the Orbiting Carbon Observatory-2 ({OCO-2}) instrument and its radiometrically calibrated products},
+          journal = {Atmospheric Measurement Techniques},
+          volume  = {10},
+          number  = {1},
+          pages   = {59--81},
+          year    = {2017},
+          doi     = {10.5194/amt-10-59-2017}
+        }
+  acknowledgement: >-
+    쓴 제품·판에 맞는 GES DISC 데이터셋 DOI를 인용하세요(2014~2023년 V11.2r과 2024년 이후 V11.3r을 함께 쓰면 두 DOI 모두). 알고리즘 설명에는 O'Dell et al. (2018)과
+    GES DISC의 ATBD, 관측기·보정에는 Crisp et al. (2017)을 함께 인용하는 것이 일반적입니다.
+
+notices:
+  - date: "2026-09-18"
+    level: warning
+    title: GES DISC 기존 데이터 서버 접근 종료 예정 — Earthdata Cloud로 전환
+    body: >-
+      GES DISC는 온프레미스 서버의 HTTPS 접근을 빨라야 2026년 9월 30일 이후 끊는다고 긴급 공지했습니다. 자료는 Earthdata Cloud에서 계속 무료로 받을 수 있지만,
+      wget·curl로 디렉터리를 통째로 받는 방식은 더 이상 안 되므로 CMR(또는 earthaccess)로 파일 목록을 만들어야 합니다. OCO2_L2_Lite_FP V11.3r·Fwd_FP V11.3의 OPeNDAP도 2026년 8월 말 클라우드로 옮겨졌습니다.
+    source: https://disc.gsfc.nasa.gov/information/alerts
+  - date: "2026-08-24"
+    level: info
+    title: NASA, Caltech과 OCO-2·OCO-3 운영 협정 체결 (최대 5년)
+    body: >-
+      NASA는 2026년 8월 14일 Caltech과 OCO-2·OCO-3에 관한 무상 우주법 협정을 맺었다고 밝혔습니다. Caltech이 두 임무와 과학자료 체계를 운영하고 새 산출물도 만들며,
+      임무 소유권은 NASA가 유지합니다. 협력 기간은 최대 5년입니다.
+    source: https://science.nasa.gov/blogs/oco-2/2026/08/24/nasa-caltech-partner-on-two-earth-science-missions/
+  - date: "2026-06-01"
+    level: warning
+    title: Lite XCO2 V11.3r 공개 — 2024년 이후 검출기 결빙 편향 보정
+    body: >-
+      2023년 2월부터 2025년 2월까지 해빙 작업이 없어 검출기에 얼음이 쌓이면서 V11.2 XCO2가 음의 방향으로 치우쳤습니다(2025년 2월 무렵 약 0.5 ppm).
+      V11.3은 편향 보정에 결빙 항을 더해 2024-01-01 이후 자료를 고쳤습니다. 2024년 이후 분석은 V11.3r로 바꾸세요.
+    source: https://docserver.gesdisc.eosdis.nasa.gov/public/project/OCO/OCO2_L2_Data_Release_Statement_v11.3_RevA_V01.pdf
+  - date: "2025-06-10"
+    level: info
+    title: 편향 보정 일별 Forward XCO2·SIF 제공 시작 (관측 후 일주일 안)
+    body: >-
+      OCO-2·OCO-3의 편향 보정 일별 Forward 산출물(V11.2)이 관측 후 일주일 안에 나오기 시작했습니다. 기준 기록은 여전히 한 달 단위로 나오는 확정판 Lite 파일입니다.
+    source: https://ocov2.jpl.nasa.gov/whats-new-oco-2/
+  - date: "2025-02-20"
+    level: info
+    title: 21번째 해빙(decontamination) 완료 — 역대 가장 긴 2년 공백 후
+    body: >-
+      OCO-2가 초점면 배열에 쌓인 얼음을 없애는 21번째 해빙 작업(2025년 2월 10~17일)을 마쳤습니다. 이전 해빙과 2년 간격으로 가장 길었으며, 이 기간 결빙 영향은 V11.3에서 보정되었습니다.
+    source: https://ocov2.jpl.nasa.gov/whats-new-oco-2/
+
+links:
+  - name: OCO-2 프로젝트 누리집 (JPL)
+    url: https://ocov2.jpl.nasa.gov/
+  - name: Caltech OCO 누리집
+    url: https://oco.caltech.edu/
+  - name: NASA Science — OCO-2 임무 페이지
+    url: https://science.nasa.gov/mission/oco-2/
+  - name: OCO-2 V11.2 / OCO-3 V11 L2 Data User's Guide (2026-06-10)
+    url: https://docserver.gesdisc.eosdis.nasa.gov/public/project/OCO/OCO2_V11.2_OCO3_V11_L2_Data_Users_Guide_v04_RevB_260610.pdf
+  - name: OCO-2 L2 Data Release Statement v11.3
+    url: https://docserver.gesdisc.eosdis.nasa.gov/public/project/OCO/OCO2_L2_Data_Release_Statement_v11.3_RevA_V01.pdf
+  - name: OCO-2 SIF v11.2 / OCO-3 v11 User's Guide
+    url: https://docserver.gesdisc.eosdis.nasa.gov/public/project/OCO/OCO2_SIF_v11.2_OCO3_v11_Data_Users_Guide_20250707.pdf
+  - name: OCO L2 ATBD
+    url: https://docserver.gesdisc.eosdis.nasa.gov/public/project/OCO/OCO_L2_ATBD.pdf
+  - name: OCO Known Data Issues
+    url: https://docserver.gesdisc.eosdis.nasa.gov/public/project/OCO/OCO_Known_Data_Issues.pdf
+  - name: OCO-3 (NASA Science 임무 페이지)
+    url: https://science.nasa.gov/mission/oco-3/
+  - name: OCO-3 프로젝트 누리집 (JPL)
+    url: https://ocov3.jpl.nasa.gov/
+
+watch_urls:
+  - https://ocov2.jpl.nasa.gov/whats-new-oco-2/
+  - https://disc.gsfc.nasa.gov/information/alerts
+  - https://science.nasa.gov/mission/oco-2/
+
+last_verified: "2026-10-13"

@@ -1,0 +1,392 @@
+# ─────────────────────────────────────────────────────────────
+# VIIRS aerosol Deep Blue AERDB (L2, D3, M3) and Dark Target AERDT (L2) V2.1 — dataset information file
+# Satellite tab (Aerosols & atmospheric composition). Continuity products that carry the two MODIS MOD04 algorithms over to VIIRS (Suomi NPP, NOAA-20, NOAA-21).
+# The MODIS → VIIRS comparison is in the transitions of modis-aerosol.yaml. Suomi NPP data delivery ends on 2026-11-02.
+# After editing, update last_verified to the date you checked the official pages.
+# ─────────────────────────────────────────────────────────────
+id: viirs-aerosol
+name: "VIIRS Aerosol (AERDB·AERDT)"
+full_name: VIIRS Deep Blue Aerosol (AERDB_L2, AERDB_D3, AERDB_M3) and Dark Target Aerosol (AERDT_L2) Version 2.1 — Suomi NPP, NOAA-20, NOAA-21 (VIIRS aerosol optical depth continuing the MODIS record)
+category: satellite
+domain: satellite
+group: 에어로졸·대기 성분
+order: 11
+domains: [대기, 에어로졸, 원격탐사]
+provider: NASA GSFC Deep Blue and Dark Target teams / NASA VIIRS Atmosphere SIPS / NASA LAADS DAAC
+
+status: active
+status_note: >-
+  Deep Blue V2.1 (released 2026-09-14) and Dark Target V2.1 (released 2025-12-18) are produced routinely from NOAA-20 and NOAA-21 (on 2026-10-13 AERDB_M3 for NOAA-20 reached September 2026).
+  However, NOAA will stop delivering Suomi NPP science data at 13:00 UTC on 2 November 2026, so the SNPP versions (AERDB_*_VIIRS_SNPP, AERDT_L2_VIIRS_SNPP) will get no new data after that, and LAADS advises moving to the NOAA-20 and NOAA-21 versions.
+  Deep Blue V2.0 remains available alongside until 2027-03-31; Dark Target V2.0 was decommissioned on 2026-08-31.
+
+period:
+  start: "2012-03"
+  end: present
+  note: >-
+    Suomi NPP from 2012-03-01 (delivery due to end 2026-11-02), NOAA-20 from early 2018 (DB V2.1 2018-01-05, DT 2018-02-17), NOAA-21 from 2023-02-10.
+    Deep Blue has L2 plus 1° daily and monthly L3; Dark Target has L2 only at LAADS (checked 2026-10-13).
+
+resolution:
+  spatial_short: "6 km (0.05°)"
+  temporal_short: "1일"
+  spatial: >-
+    L2 swath: 6 km × 6 km at nadir (8×8 boxes of VIIRS M-band pixels of about 750 m), growing larger away from nadir — AERDB_L2, AERDT_L2 /
+    L3: global 1°×1° grid — AERDB_D3 (daily), AERDB_M3 (monthly)
+  vertical: Total column (aerosol optical depth); no vertical profile information
+  temporal: >-
+    L2 in 6-minute granules (orbital swaths), one daytime overpass per satellite per day (several at high latitudes) / L3 daily (D3) and monthly (M3, DB only). Suomi NPP, NOAA-20 and NOAA-21 all fly afternoon orbits crossing the equator ascending around 13:30 local time.
+
+update: Daily (L2 and daily files within a few days of observation); monthly files about a month after the month ends. A near-real-time Dark Target product (AERDT_L2_*_NRT) is provided separately by the Atmosphere SIPS
+license: Freely available without restriction under the NASA EOSDIS data use policy. Downloading (including HTTPS and OPeNDAP) needs a free NASA Earthdata Login; citation of the dataset DOI is requested.
+account_required: true
+
+summary: >-
+  NASA continuity aerosol products that apply the two MODIS aerosol algorithms to VIIRS so the MODIS record can continue.
+  Deep Blue (AERDB) retrieves 550 nm aerosol optical depth (AOD) with Deep Blue over land and the SOAR algorithm over ocean, holding land and ocean together, and also comes as 1° daily and monthly grids.
+  Dark Target (AERDT) is an L2 product that follows the MODIS DT approach over ocean and dark vegetated land. There are Suomi NPP, NOAA-20 and NOAA-21 versions, all in orbits passing around 1:30 pm,
+  so they mainly continue MODIS Aqua. Unlike MODIS, there is no combined DT+DB AOD.
+
+time_convention:
+  summary: >-
+    L2 values are clear-sky observations at the moment of the overpass; because they rely on reflected sunlight, they exist only in daytime. The time in the file name (AYYYYDDD.HHMM) is the start of the 6-minute granule (UTC).
+    The Deep Blue daily L3 (D3) is the simple mean of the day's L2 `_Best_Estimate` values in each 1° cell (at least 3 retrievals per cell), and the monthly L3 (M3) is the simple mean of the daily values (at least 3 valid days).
+  points:
+    - "All three satellites cross the equator ascending around 13:30 local time in daylight; there is no morning observation like MODIS Terra (10:30). Even for one satellite the observation time of each pixel varies with swath position and latitude."
+    - "Even in the same afternoon orbit, the satellites differ slightly in overpass time and calibration, so AOD levels differ by satellite. Sawyer et al. (2025) find that for DT V2.0, NOAA-20 is close to Aqua MODIS while Suomi NPP reads higher."
+    - "Deep Blue daily files contain L2 data from a single date (00:00:00 to 23:59:59). The user guide does not name the time zone, but granule times are UTC, so treat it as a UTC date, which can differ from the local day."
+    - "Only quality 2 and 3 retrievals go into L3. Monthly values average clear days only, so in rainy seasons check the number of valid days (`_Count`)."
+    - "The near-real-time DT (AERDT_L2_VIIRS_*_NRT, v2.2 from 2026-07) is made separately from the standard product; use the standard product from LAADS for research time series."
+  source: https://ladsweb.modaps.eosdis.nasa.gov/api/v2/content/archives/Document%20Archive/Science%20Data%20Product%20Documentation/VIIRS_Deep_Blue_Aerosol_UG_Aug_2026.pdf
+  source_name: "VIIRS Deep Blue Aerosol User's Guide (2026-08) + AERDB and AERDT V2.1 collection descriptions (CMR) + Sawyer et al. (2020, 2025)"
+
+variables:
+  note: >-
+    Names from the CMR variable records (UMM-Var) and collection descriptions. Files are NetCDF-4 (CF 1.6) and open directly in xarray or netCDF4. Deep Blue variables sit at the top level of the file; Dark Target variables are inside the `geophysical_data/` group.
+    AOD is dimensionless and referenced to 550 nm. Variable names are the same in NOAA-20, NOAA-21 and SNPP files. The DB fill value is -999.
+  full_list: https://ladsweb.modaps.eosdis.nasa.gov/api/v2/content/archives/Document%20Archive/Science%20Data%20Product%20Documentation/VIIRS_Deep_Blue_Aerosol_UG_Aug_2026.pdf
+  groups:
+    - name: Deep Blue L2 swath 6 km (AERDB_L2_VIIRS_NOAA20, NOAA21, SNPP)
+      kind: instant
+      period: overpass time
+      items:
+        - text: "DB/SOAR land and ocean aerosol optical depth at 550 nm (quality 2 and 3) — `Aerosol_Optical_Thickness_550_Land_Ocean_Best_Estimate` (dimensionless)"
+          std: [aerosol]
+          note: The field recommended for most users (quality 1 replaced with fill)
+        - text: "DB land aerosol optical depth at 550 nm (quality 2 and 3) — `Aerosol_Optical_Thickness_550_Land_Best_Estimate` (dimensionless)"
+          std: [aerosol]
+        - text: "SOAR ocean aerosol optical depth at 550 nm (quality filtered) — `Aerosol_Optical_Thickness_550_Ocean_Best_Estimate` (dimensionless)"
+          std: [aerosol]
+        - "DB land AOD expected uncertainty — `Aerosol_Optical_Thickness_550_Expected_Uncertainty_Land` (dimensionless)"
+        - "DB/SOAR Ångström exponent (quality filtered) — `Angstrom_Exponent_Land_Ocean_Best_Estimate` (dimensionless)"
+        - "Land and ocean quality flags — `Aerosol_Optical_Thickness_QA_Flag_Land`, `Aerosol_Optical_Thickness_QA_Flag_Ocean` (0 = no retrieval, 1 = poor, 2 = moderate (land), 3 = good)"
+    - name: Dark Target L2 swath 6 km (AERDT_L2_VIIRS_NOAA20, NOAA21, SNPP)
+      kind: instant
+      period: overpass time
+      items:
+        - text: "DT ocean and land aerosol optical depth at 550 nm (recommended quality) — `geophysical_data/Optical_Depth_Land_And_Ocean` (dimensionless, scale 0.001)"
+          std: [aerosol]
+          note: Field for science use, holding ocean values with quality 1–3 and land values with quality 3. V2.1 fixed a bug that let some land values in wrongly
+        - text: "DT ocean and land aerosol optical depth at 550 nm (all quality) — `geophysical_data/Image_Optical_Depth_Land_And_Ocean` (dimensionless)"
+          std: [aerosol]
+          note: For imagery; not for quantitative analysis
+        - "DT ocean and land quality flag — `geophysical_data/Land_Ocean_Quality_Flag` (0 = bad, 1 = marginal, 2 = good, 3 = very good)"
+    - name: Deep Blue L3 daily 1° (AERDB_D3_VIIRS_NOAA20, NOAA21, SNPP)
+      kind: mean
+      period: daily (single date)
+      items:
+        - text: "DB/SOAR land and ocean aerosol optical depth at 550 nm, daily mean — `Aerosol_Optical_Thickness_550_Land_Ocean_Mean` (dimensionless)"
+          std: [aerosol]
+          note: Simple mean of the day's L2 `_Best_Estimate` retrievals (at least 3 per cell)
+        - text: "DB land aerosol optical depth at 550 nm, daily mean — `Aerosol_Optical_Thickness_550_Land_Mean` (dimensionless)"
+          std: [aerosol]
+        - "Land and ocean Ångström exponent, daily mean — `Angstrom_Exponent_Land_Ocean_Mean` (dimensionless)"
+        - text: "Land and ocean AOD daily maximum — `Aerosol_Optical_Thickness_550_Land_Ocean_Maximum` (dimensionless)"
+          kind: max
+          std: []
+    - name: Deep Blue L3 monthly 1° (AERDB_M3_VIIRS_NOAA20, NOAA21, SNPP)
+      kind: mean
+      period: monthly (mean of daily means)
+      items:
+        - text: "DB/SOAR land and ocean aerosol optical depth at 550 nm, monthly mean — `Aerosol_Optical_Thickness_550_Land_Ocean_Mean` (dimensionless)"
+          std: [aerosol]
+          note: Simple mean of the month's daily means (cells with at least 3 valid days only)
+        - text: "Number of days used in the monthly mean (land and ocean) — `Aerosol_Optical_Thickness_550_Land_Ocean_Count` (days)"
+          kind: accum
+          std: []
+        - text: "Land and ocean AOD standard deviation — `Aerosol_Optical_Thickness_550_Land_Ocean_Standard_Deviation` (dimensionless)"
+          std: []
+
+access:
+  - name: LAADS DAAC (search, order and direct download)
+    url: https://ladsweb.modaps.eosdis.nasa.gov/missions-and-measurements/products/AERDB_L2_VIIRS_NOAA20
+    method: Web search, direct HTTPS download (archive/allData/5201/<short name>/ for V2.1) / LAADS API-V2 / OPeNDAP
+    note: >-
+      Example short names: AERDB_L2_VIIRS_NOAA20, AERDB_D3_VIIRS_NOAA20, AERDB_M3_VIIRS_NOAA20, AERDT_L2_VIIRS_NOAA20 (NOAA21 for NOAA-21, SNPP for Suomi NPP). The CMR version is "2.1" for V2.1 and "2" for DB V2.0.
+      Since 2026-04-30 OPeNDAP also requires Earthdata Login, and the old LAADS Classic API was retired on 2026-08-31, so scripts must move to API-V2.
+  - name: NASA Earthdata Search
+    url: https://search.earthdata.nasa.gov/search?q=AERDB
+    method: Web search / earthaccess (Python)
+    note: Searching AERDB or AERDT lists collections by satellite and version. Choose V2.1.
+  - name: Near-real-time Dark Target (Atmosphere SIPS)
+    url: https://search.earthdata.nasa.gov/search?q=AERDT_L2_VIIRS_NOAA20_NRT
+    method: Web search / HTTPS
+    note: AERDT_L2_VIIRS_NOAA20_NRT and AERDT_L2_VIIRS_SNPP_NRT (v2.2 from 2026-07-01). For rapid monitoring; use the standard product for research time series.
+
+example:
+  lang: python
+  note: >-
+    Downloads a NOAA-20 Deep Blue monthly file (V2.1) with earthaccess and reads the monthly land and ocean AOD with xarray. Check coordinate names with `print(ds)`.
+  code: |
+    # pip install earthaccess xarray netCDF4
+    import earthaccess
+    import xarray as xr
+
+    earthaccess.login()  # free NASA Earthdata account
+    results = earthaccess.search_data(
+        short_name="AERDB_M3_VIIRS_NOAA20", version="2.1",
+        temporal=("2024-04-01", "2024-04-30"),
+    )
+    files = earthaccess.download(results[:1], "aerdb")
+
+    ds = xr.open_dataset(files[0])          # NetCDF-4; fill values (-999) become NaN
+    print(ds)                               # check variable and coordinate names
+    aod = ds["Aerosol_Optical_Thickness_550_Land_Ocean_Mean"]
+    ndays = ds["Aerosol_Optical_Thickness_550_Land_Ocean_Count"]
+    print(float(aod.where(ndays >= 10).mean()))   # only cells with at least 10 valid days
+
+tips:
+  - "The Suomi NPP versions stop after 2026-11-02. To continue an SNPP-based record, check the differences between satellites over an overlap period (NOAA-20 from 2018, NOAA-21 from 2023) before switching. For DT V2.0, SNPP AOD is higher than NOAA-20 and has a larger positive bias against AERONET (Sawyer et al., 2025)."
+  - "AERDB holds land (Deep Blue) and ocean (SOAR) together, but the ocean quality flag uses only 0, 1 and 3 while land uses 0–3. For quantitative work use the `_Best_Estimate` fields, which keep only quality 2 and 3."
+  - "There is no VIIRS variable equivalent to the MODIS combined (DT+DB) AOD. For long-term work, pick DB (AERDB) or DT (AERDT) and compare with the same-algorithm MODIS record."
+  - "DT is available only as L2 at LAADS (checked 2026-10). If you need gridded data, aggregate it yourself (to 1° or similar) and keep the quality 3 filter over land."
+  - "DB V2.1 screens sun glint over water more strictly, reducing ocean coverage, and its cloud screening now keeps more heavy dust. Do not mix V2.0 and V2.1 (V2.0 stays available until 2027-03-31)."
+  - "Suomi NPP had several anomalies in 2026 (9–13 March, 10–17 July, 2–6 August) that left gaps, and in July data from 1 May onward were regenerated with new calibration tables. When using SNPP data from 2026, check the production date."
+  - "AOD is not the same thing as surface PM2.5. It is column-integrated extinction, so its relationship with surface concentration depends on boundary layer height and humidity."
+
+citations:
+  dataset:
+    - label: AERDB_L2_VIIRS_NOAA20 V2.1 (NOAA-20 Deep Blue L2)
+      text: >-
+        NASA VIIRS Atmosphere SIPS (2026). NOAA20 VIIRS Deep Blue Aerosol Level 2 6-Min Swath 6 km, Version 2.1. L1 and Atmosphere Archive and Distribution System (LAADS).
+        https://doi.org/10.5067/VIIRS/AERDB_L2_VIIRS_NOAA20.021
+      doi: 10.5067/VIIRS/AERDB_L2_VIIRS_NOAA20.021
+      bibtex: |
+        @misc{aerdb_l2_noaa20_v21,
+          author    = {{NASA VIIRS Atmosphere SIPS}},
+          title     = {{NOAA20 VIIRS} {Deep Blue} Aerosol Level 2 6-Min Swath 6 km, Version 2.1},
+          year      = {2026},
+          publisher = {L1 and Atmosphere Archive and Distribution System (LAADS)},
+          doi       = {10.5067/VIIRS/AERDB_L2_VIIRS_NOAA20.021}
+        }
+    - label: AERDB_M3_VIIRS_NOAA20 V2.1 (NOAA-20 Deep Blue monthly)
+      text: >-
+        NASA VIIRS Atmosphere SIPS (2026). NOAA20 VIIRS Deep Blue Level 3 Monthly Aerosol Data, 1x1 Degree Grid, Version 2.1. L1 and Atmosphere Archive and Distribution System (LAADS).
+        https://doi.org/10.5067/VIIRS/AERDB_M3_VIIRS_NOAA20.021
+      doi: 10.5067/VIIRS/AERDB_M3_VIIRS_NOAA20.021
+      bibtex: |
+        @misc{aerdb_m3_noaa20_v21,
+          author    = {{NASA VIIRS Atmosphere SIPS}},
+          title     = {{NOAA20 VIIRS} {Deep Blue} Level 3 Monthly Aerosol Data, 1x1 Degree Grid, Version 2.1},
+          year      = {2026},
+          publisher = {L1 and Atmosphere Archive and Distribution System (LAADS)},
+          doi       = {10.5067/VIIRS/AERDB_M3_VIIRS_NOAA20.021}
+        }
+    - label: AERDT_L2_VIIRS_NOAA20 V2.1 (NOAA-20 Dark Target L2)
+      text: >-
+        NASA VIIRS Atmosphere SIPS (2025). NOAA20 VIIRS Dark Target Aerosol Level-2 6-Minute Swath 6 km, Version 2.1. L1 and Atmosphere Archive and Distribution System (LAADS).
+        https://doi.org/10.5067/VIIRS/AERDT_L2_VIIRS_NOAA20.021
+      doi: 10.5067/VIIRS/AERDT_L2_VIIRS_NOAA20.021
+      bibtex: |
+        @misc{aerdt_l2_noaa20_v21,
+          author    = {{NASA VIIRS Atmosphere SIPS}},
+          title     = {{NOAA20 VIIRS} {Dark Target} Aerosol Level-2 6-Minute Swath 6 km, Version 2.1},
+          year      = {2025},
+          publisher = {L1 and Atmosphere Archive and Distribution System (LAADS)},
+          doi       = {10.5067/VIIRS/AERDT_L2_VIIRS_NOAA20.021}
+        }
+  papers:
+    - label: VIIRS Version 2 Deep Blue products (Lee et al., 2024)
+      text: >-
+        Lee, J., Hsu, N. C., Kim, W. V., Sayer, A. M., Tsay, S.-C. (2024). VIIRS Version 2 Deep Blue aerosol products. Journal of Geophysical Research: Atmospheres, 129, e2023JD040082.
+      doi: 10.1029/2023JD040082
+      bibtex: |
+        @article{lee2024viirsdb,
+          author  = {Lee, J. and Hsu, N. C. and Kim, W. V. and Sayer, A. M. and Tsay, S.-C.},
+          title   = {{VIIRS} {Version 2} {Deep Blue} aerosol products},
+          journal = {Journal of Geophysical Research: Atmospheres},
+          volume  = {129},
+          pages   = {e2023JD040082},
+          year    = {2024},
+          doi     = {10.1029/2023JD040082}
+        }
+    - label: VIIRS Deep Blue products over land (Hsu et al., 2019)
+      text: >-
+        Hsu, N. C., Lee, J., Sayer, A. M., Kim, W., Bettenhausen, C., Tsay, S.-C. (2019). VIIRS Deep Blue aerosol products over land: Extending the EOS long-term aerosol data records.
+        Journal of Geophysical Research: Atmospheres, 124, 4026–4053.
+      doi: 10.1029/2018JD029688
+      bibtex: |
+        @article{hsu2019viirsdb,
+          author  = {Hsu, N. C. and Lee, J. and Sayer, A. M. and Kim, W. and Bettenhausen, C. and Tsay, S.-C.},
+          title   = {{VIIRS} {Deep Blue} aerosol products over land: Extending the {EOS} long-term aerosol data records},
+          journal = {Journal of Geophysical Research: Atmospheres},
+          volume  = {124},
+          pages   = {4026--4053},
+          year    = {2019},
+          doi     = {10.1029/2018JD029688}
+        }
+    - label: Continuing the MODIS Dark Target time series with VIIRS (Sawyer et al., 2020)
+      text: >-
+        Sawyer, V., Levy, R. C., Mattoo, S., Cureton, G., Shi, Y., Remer, L. A. (2020). Continuing the MODIS Dark Target aerosol time series with VIIRS. Remote Sensing, 12(2), 308.
+      doi: 10.3390/rs12020308
+      bibtex: |
+        @article{sawyer2020viirsdt,
+          author  = {Sawyer, V. and Levy, R. C. and Mattoo, S. and Cureton, G. and Shi, Y. and Remer, L. A.},
+          title   = {Continuing the {MODIS} {Dark Target} Aerosol Time Series with {VIIRS}},
+          journal = {Remote Sensing},
+          volume  = {12},
+          number  = {2},
+          pages   = {308},
+          year    = {2020},
+          doi     = {10.3390/rs12020308}
+        }
+    - label: Updated VIIRS Dark Target, MODIS continuity and regional trends (Sawyer et al., 2025)
+      text: >-
+        Sawyer, V., Levy, R. C., Mattoo, S., Shi, Y. R., Kim, M., Remer, L. A., Cureton, G. (2025). An updated VIIRS dark target aerosol product for continuity with MODIS: assessing regional aerosol trends.
+        Frontiers in Environmental Science, 13, 1602145.
+      doi: 10.3389/fenvs.2025.1602145
+      bibtex: |
+        @article{sawyer2025viirsdt,
+          author  = {Sawyer, V. and Levy, R. C. and Mattoo, S. and Shi, Y. R. and Kim, M. and Remer, L. A. and Cureton, G.},
+          title   = {An updated {VIIRS} dark target aerosol product for continuity with {MODIS}: assessing regional aerosol trends},
+          journal = {Frontiers in Environmental Science},
+          volume  = {13},
+          pages   = {1602145},
+          year    = {2025},
+          doi     = {10.3389/fenvs.2025.1602145}
+        }
+  acknowledgement: >-
+    Cite the LAADS dataset DOI of each product and satellite you use (pattern 10.5067/VIIRS/<short name>.021, e.g. 10.5067/VIIRS/AERDB_D3_VIIRS_NOAA21.021 for NOAA-21 DB daily).
+    The Deep Blue user guide suggests the acknowledgement "We thank the Deep Blue science team (https://deepblue.gsfc.nasa.gov) for the VIIRS Deep Blue aerosol data record."
+    The Dark Target product page asks users to cite Sawyer et al. (2025), Sawyer et al. (2020) and Levy et al. (2015, AMT, doi:10.5194/amt-8-4083-2015).
+
+transitions:
+  - from: VIIRS Deep Blue V2.0 / Dark Target V2.0
+    to: VIIRS Deep Blue V2.1 / Dark Target V2.1
+    status: completed
+    date: "2026-09"
+    summary: >-
+      Dark Target V2.1 was released in December 2025 and Deep Blue V2.1 in September 2026, adding NOAA-21 versions. Both add cross-calibration between satellites to reduce AOD differences between them.
+      DT V2.0 was decommissioned on 2026-08-31; DB V2.0 remains available alongside until 2027-03-31.
+    changes:
+      - aspect: Satellites
+        before: Suomi NPP, NOAA-20
+        after: Suomi NPP, NOAA-20, NOAA-21
+      - aspect: Calibration
+        before: No cross-calibration between satellites
+        after: "DB: Dome C (Antarctica) cross-calibration of SNPP and NOAA-21 / DT: cross-calibration coefficients for SNPP, NOAA-20 and NOAA-21"
+      - aspect: Deep Blue algorithm
+        before: V2.0
+        after: "Improved AOD distribution over North Africa and South Asia, adjusted aerosol models (single-scattering albedo) over North America, the Sahel, southern Africa and India, stricter sun-glint screening over water, cloud screening revised to keep heavy dust and remove thin cloud and sea fog"
+      - aspect: Dark Target algorithm
+        before: "V2.0 (GEOS-FPIT ancillary meteorology)"
+        after: "Improved ocean cloud mask, dust detection (`Dust_Flag_Ocean`) added, revised surface reflectance and urban correction, ancillary meteorology switched to GEOS-IT, fixed a bug that put land values into `Optical_Depth_Land_And_Ocean`"
+      - aspect: Version labels
+        before: "CMR version 2, file name .002, archive 5200"
+        after: "CMR version 2.1, file name .021, archive 5201"
+    impacts:
+      - Do not mix V2.0 and V2.1 in one time series; download the whole record again as V2.1.
+      - DB V2.1 has less ocean coverage than V2.0 in some places (stricter sun-glint screening).
+    sources:
+      - name: Version 2.1 VIIRS Deep Blue Aerosol Data Products Released (LAADS, 2026-09-14)
+        url: https://ladsweb.modaps.eosdis.nasa.gov/alerts-and-issues/199512
+      - name: AERDT_L2_VIIRS_SNPP V2.1 collection description (CMR metadata)
+        url: https://cmr.earthdata.nasa.gov/search/collections.umm_json?concept_id=C3702902851-LAADS
+      - name: V2.1 Level-2 Dark Target Aerosol Data Products Released (LAADS, 2025-12-18)
+        url: https://ladsweb.modaps.eosdis.nasa.gov/alerts-and-issues/199536
+
+notices:
+  - date: "2026-10-06"
+    level: critical
+    title: Suomi NPP data delivery ends 2 November 2026 — switch from the SNPP versions of AERDB and AERDT to NOAA-20 and NOAA-21
+    body: >-
+      LAADS DAAC announced that, following the NOAA NESDIS decision (announced 2026-08-03), delivery of Suomi NPP science data ends at 13:00 UTC on 2 November 2026 (day 2026/306), with the date subject to change.
+      AERDB_L2, D3 and M3_VIIRS_SNPP and AERDT_L2_VIIRS_SNPP are included, and users are directed to the NOAA-20 (…_NOAA20) and NOAA-21 (…_NOAA21) versions. Historical SNPP data remain available.
+    source: https://ladsweb.modaps.eosdis.nasa.gov/alerts-and-issues/199516
+  - date: "2026-09-14"
+    level: info
+    title: VIIRS Deep Blue aerosol V2.1 released — NOAA-21 added, V2.0 kept until 2027-03-31
+    body: >-
+      LAADS DAAC released Deep Blue V2.1 (L2, D3, M3) for Suomi NPP, NOAA-20 and NOAA-21. It adds Dome C cross-calibration, improved AOD over North Africa and South Asia, adjusted aerosol models,
+      stricter sun-glint screening over water and revised cloud screening; V2.0 remains available until 31 March 2027.
+    source: https://ladsweb.modaps.eosdis.nasa.gov/alerts-and-issues/199512
+  - date: "2026-09-01"
+    level: info
+    title: VIIRS Dark Target V2.0 decommissioned — use V2.1
+    body: >-
+      LAADS DAAC decommissioned the Suomi NPP and NOAA-20 Dark Target V2.0 collections (2026-08-31). Users should now use the SNPP, NOAA-20 and NOAA-21 V2.1 products (AERDT_L2_VIIRS_*).
+    source: https://ladsweb.modaps.eosdis.nasa.gov/alerts-and-issues/199514
+  - date: "2026-08-11"
+    level: warning
+    title: Suomi NPP anomaly (2026-08-02) — data from 3 to 6 August excluded from processing
+    body: >-
+      A Suomi NPP spacecraft anomaly at 02:05 UTC on 2 August cut off science data; near-real-time processing resumed on 4 August and standard processing on 10 August. Data from 02:00 UTC on 3 August to 16:24 UTC on 6 August
+      will not be processed because of the day/night flag setting and other concerns.
+    source: https://ladsweb.modaps.eosdis.nasa.gov/alerts-and-issues/199518
+  - date: "2026-07-27"
+    level: warning
+    title: Suomi NPP anomaly (2026-07-10 to 17) — data from 1 May onward regenerated with new calibration tables
+    body: >-
+      Suomi NPP entered a non-nominal state on 10 July and no science data were produced until 17 July; data from this period may not be recoverable. Standard processing waited for new calibration tables from the VIIRS calibration team,
+      and data from 04:00 UTC on 1 May 2026 onward are being regenerated with them.
+    source: https://ladsweb.modaps.eosdis.nasa.gov/alerts-and-issues/199520
+  - date: "2026-03-23"
+    level: info
+    title: Suomi NPP data delay — data from 2026-03-09 to 13 missing
+    body: >-
+      Suomi NPP science data stopped around 17:45 UTC on 9 March; the satellite was restored on 12 March and data were declared safe to use from 16 March. VIIRS data from 18:00 UTC on 9 March through 13 March
+      will not be processed because of unrecoverable geolocation errors.
+    source: https://ladsweb.modaps.eosdis.nasa.gov/alerts-and-issues/199535
+  - date: "2025-12-18"
+    level: info
+    title: VIIRS Dark Target V2.1 L2 released — NOAA-21 added
+    body: >-
+      LAADS DAAC released Suomi NPP, NOAA-20 and NOAA-21 Dark Target V2.1 L2 (6-minute swath, 6 km) and said V2.0 would be decommissioned on 30 June 2026 (the actual decommissioning was announced on 2026-08-31).
+    source: https://ladsweb.modaps.eosdis.nasa.gov/alerts-and-issues/199536
+  - date: "2025-05-02"
+    level: info
+    title: Transition from MODIS to VIIRS — use similar VIIRS products
+    body: >-
+      NASA LAADS DAAC said Terra and Aqua will begin shutting down in late 2026 or early 2027 and encouraged MODIS users to move to similar VIIRS products. AERDB and AERDT are the products that continue MODIS MOD04 aerosol.
+    source: https://www.earthdata.nasa.gov/data/alerts-outages/transition-from-modis-viirs
+  - date: "2025-02-27"
+    level: info
+    title: Suomi NPP Deep Blue V1.1 decommissioned (2025-02-28)
+    body: >-
+      LAADS DAAC announced that the Suomi NPP VIIRS Deep Blue V1.1 collections (L2, daily and monthly) would be removed on 28 February 2025. If you have V1.1 data, download it again as V2.1.
+    source: https://ladsweb.modaps.eosdis.nasa.gov/alerts-and-issues/199546
+
+links:
+  - name: AERDB_L2_VIIRS_NOAA20 product page (LAADS DAAC)
+    url: https://ladsweb.modaps.eosdis.nasa.gov/missions-and-measurements/products/AERDB_L2_VIIRS_NOAA20
+  - name: AERDT_L2_VIIRS_NOAA20 product page (LAADS DAAC)
+    url: https://ladsweb.modaps.eosdis.nasa.gov/missions-and-measurements/products/AERDT_L2_VIIRS_NOAA20
+  - name: VIIRS Deep Blue Aerosol User's Guide (2026-08)
+    url: https://ladsweb.modaps.eosdis.nasa.gov/api/v2/content/archives/Document%20Archive/Science%20Data%20Product%20Documentation/VIIRS_Deep_Blue_Aerosol_UG_Aug_2026.pdf
+  - name: VIIRS Deep Blue Aerosol ATBD (2025-03)
+    url: https://ladsweb.modaps.eosdis.nasa.gov/api/v2/content/archives/Document%20Archive/Science%20Data%20Product%20Documentation/Product%20Generation%20Algorithms/VIIRS_Deep_Blue_Aerosol_ATBD_March_2025.pdf
+  - name: VIIRS Dark Target User's Guide (2025-04)
+    url: https://ladsweb.modaps.eosdis.nasa.gov/api/v2/content/archives/Document%20Archive/Science%20Data%20Product%20Documentation/DT_Aerosol_VIIRS_UG_April_2025.pdf
+  - name: Dark Target ATBD (MODIS and VIIRS)
+    url: https://darktarget.gsfc.nasa.gov/atbd/overview
+  - name: LAADS DAAC — MODIS to VIIRS Transition
+    url: https://ladsweb.modaps.eosdis.nasa.gov/learn/modis-to-viirs-transition
+  - name: Suomi NPP Data Product Delivery to Cease (Earthdata)
+    url: https://www.earthdata.nasa.gov/data/alerts-outages/suomi-npp-data-product-delivery-cease-november-1-2026
+
+watch_urls:
+  - https://ladsweb.modaps.eosdis.nasa.gov/missions-and-measurements/products/AERDB_L2_VIIRS_NOAA20
+  - https://ladsweb.modaps.eosdis.nasa.gov/missions-and-measurements/products/AERDT_L2_VIIRS_NOAA20
+  - https://ladsweb.modaps.eosdis.nasa.gov/learn/modis-to-viirs-transition
+
+last_verified: "2026-10-13"

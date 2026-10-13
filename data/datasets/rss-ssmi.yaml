@@ -1,0 +1,241 @@
+# ─────────────────────────────────────────────────────────────
+# RSS SSM/I·SSMIS 해양 산출물 (Version 7) — 데이터셋 정보 파일
+# 위성 탭(기온·수증기). DMSP 위성 마이크로파 복사계로 만든 해상풍속·가강수량·구름 수액량·강수율 0.25° 격자.
+# DMSP SSMIS 자료 전달은 'DMSP 임무 종료(2026년 9월 예상)'까지만 약속되었고, RSS 파일은 2026-09-30 자료에서 멈춰 있습니다.
+# 수정 후에는 공식 페이지에서 확인한 날짜로 last_verified 를 갱신하세요.
+# ─────────────────────────────────────────────────────────────
+id: rss-ssmi
+name: "RSS SSM/I·SSMIS"
+full_name: Remote Sensing Systems (RSS) DMSP SSM/I and SSMIS Ocean Products, Version 7 (DMSP 위성 마이크로파 복사계 해양 산출물 — 해상풍속·가강수량·구름 수액량·강수율)
+category: satellite
+domain: satellite
+group: 기온·수증기
+order: 30
+domains: [대기, 해양, 원격탐사]
+provider: Remote Sensing Systems (RSS) / NASA GHRC DAAC (netCDF 재배포, NASA MEaSUREs)
+
+status: ended
+status_note: >-
+  미 국방부는 DMSP SSMIS 자료 처리·전달을 'DMSP 임무 종료(2026년 9월 예상)'까지만 이어 가겠다고 밝혔고(2025-08), RSS의 F16·F17·F18 일자료는 2026년 9월 30일분이 마지막입니다
+  (2026-10-13 확인 시 10월 폴더가 비어 있고, GHRC netCDF도 9월 30일까지). RSS가 별도의 종료 공지를 올리지는 않았으므로, 자료가 다시 들어오는지는 RSS 공지를 지켜봐야 합니다.
+  RSS는 후속으로 미 우주군 WSF-M1 위성의 MWI 자료(V6.1)를 2026년 10월 1일 공개했습니다.
+
+successor:
+  name: RSS MWI (WSF-M1) V6.1
+  url: https://www.remss.com/announcement/RSS-MWI-V6.1-released/
+  note: >-
+    RSS가 기존 마이크로파 기후자료(MCDC)와 상호 보정해 공개한 0.25° 일·다일 격자 자료입니다. 같은 RSS 해양 산출물 계열로 AMSR2·GMI 자료도 있으나,
+    DMSP 기록과 이어 쓰려면 센서 간 차이를 확인해야 합니다.
+
+period:
+  start: "1987-07"
+  end: "2026-09"
+  note: >-
+    F08(1987-07~1991-12), F10(1990-12~1997-11), F11(1991-12~2000-05), F13(1995-05~2009-11), F14(1997-05~2008-08), F15(1999-12~, 2006년 8월 이후는 기후 연구에 쓰지 말 것),
+    F16(2003-10~), F17(2006-12~), F18(2009-10~) SSM/I·SSMIS입니다. F19(2014-04~2016-02)는 RSS에 없습니다. 2026-10-13 확인 시 F16·F17·F18 마지막 일자료는 2026-09-30입니다.
+
+resolution:
+  spatial_short: "28 km (0.25°)"
+  temporal_short: "1일"
+  spatial: 0.25° × 0.25° 전지구 위경도 격자(1440 × 720, 첫 격자 중심 0.125°E, 89.875°S). 해양에서만 값이 있고 육지·해빙은 코드값입니다
+  vertical: 해면 10 m 바람, 대기 기둥 적분량(수증기·구름 수액), 지표 강수율
+  temporal: >-
+    일자료(위성별 오전·오후 통과 궤도를 따로 격자화한 2장, 격자별 관측 시각 포함) / 3일 평균(파일 날짜로 끝나는 3일) / 주 평균(토요일로 끝나는 7일) / 월 평균
+
+update: "갱신 종료(2026-09-30 자료까지). 운용 중에는 임시(rt) 파일이 관측 후 몇 시간 안에, 확정(v7) 파일이 며칠 안에 올라왔습니다"
+license: RSS 자료는 연구·출판에 쓸 수 있으며 출처 표기를 요구합니다(RSS 이용 조건). FTP 접속은 무료 등록, GHRC netCDF는 무료 NASA Earthdata 로그인이 필요합니다
+account_required: false
+
+summary: >-
+  DMSP 위성의 SSM/I·SSMIS 마이크로파 복사계 밝기온도를 RSS가 하나의 물리 기반 알고리즘으로 처리해, 바다 위 10 m 풍속·가강수량(수증기 기둥량)·구름 수액량·강수율을 함께 산출한 0.25° 격자 자료입니다.
+  SSMIS 밝기온도를 이전 SSM/I 수준으로 상호 보정해 1987년부터 거의 40년의 기록을 이었고, 해양 수증기 추세·해상풍·강수 연구와 재분석 검증에 오래 쓰였습니다.
+  같은 Version 7 처리로 F08~F18 위성별 파일이 따로 나오며, 2026년 9월 DMSP 자료 공급 종료와 함께 갱신이 멈췄습니다.
+
+time_convention:
+  summary: >-
+    일자료는 평균이 아니라 위성이 그 격자를 지나간 순간의 관측값이며, 오전 통과(하강, F08만 예외)와 오후 통과(상승)를 나눠 담고 각 격자의 관측 시각(UTC)을 함께 줍니다.
+    3일·주·월 자료는 이 관측값들을 평균한 값이고 시각 정보는 없습니다.
+  points:
+    - "일자료 한 장은 그날 여러 궤도를 0.25° 격자에 겹쳐 그린 것이라, 궤도가 겹치는 고위도와 하루 경계에서는 나중 궤도 값이 앞 궤도 값을 덮어씁니다."
+    - "시간 변수는 자정 이후 분(또는 0~24 소수 시간, UTC)입니다. 지방시가 아니므로 관측 지방시는 경도로 따로 계산하세요."
+    - "DMSP 위성은 해 질 녘·새벽 근처 궤도를 돌고 위성마다 적도 통과 지방시가 다르며, 궤도 고도가 낮아지면서 통과 시각이 천천히 바뀝니다. 위성별 통과 시각은 RSS Crossing Times 페이지에서 확인하세요."
+    - "임시(rt) 파일은 관측 후 몇 시간 안에 나오지만 결측·위치 오류·잘못된 밝기온도가 섞일 수 있고, 며칠 뒤 확정(v7) 파일이 같은 날짜를 대신합니다(파일 이름의 rt → v7)."
+    - "3일 자료는 파일 날짜로 끝나는 3일, 주 자료는 파일 날짜(토요일)로 끝나는 7일, 월 자료는 그달 전체를 평균합니다."
+  source: https://www.remss.com/missions/ssmi/
+  source_name: RSS SSM/I·SSMIS 자료 설명 페이지 + RSS Python 읽기 코드(ssmis_daily_v7.py)
+
+variables:
+  note: >-
+    변수 이름은 RSS 바이트맵 읽기 코드(ssmis_daily_v7.py)의 이름입니다. RSS 원본은 0~250 정수로 저장되어 척도(scale)·오프셋을 적용해야 하고,
+    251~255는 특수 코드입니다. GHRC netCDF 파일 속 변수 이름은 확인하지 못했으니 받은 파일에서 확인하세요.
+  full_list: https://www.remss.com/missions/ssmi/
+  groups:
+    - name: 일자료 (오전·오후 통과별)
+      kind: instant
+      period: 위성 통과 시각
+      items:
+        - text: "관측 시각 — `time` (UTC 소수 시간)"
+          note: 각 격자를 위성이 지나간 시각
+        - "10 m 해상풍속 — `wspd_mf` (m s-1)"
+        - "가강수량(대기 수증기 기둥량) — `vapor` (mm)"
+        - text: "구름 수액량(기둥량) — `cloud` (mm)"
+          std: [cloud_water]
+        - "강수율 — `rain` (mm h-1)"
+    - name: 3일·주·월 평균
+      kind: mean
+      period: 3일·7일·월
+      items:
+        - "10 m 해상풍속 — `wspd_mf` (m s-1)"
+        - "가강수량 — `vapor` (mm)"
+        - text: "구름 수액량 — `cloud` (mm)"
+          std: [cloud_water]
+        - "강수율 — `rain` (mm h-1)"
+
+access:
+  - name: RSS 자료 서버 (위성별 바이트맵, 일·3일·주·월)
+    url: https://data.remss.com/ssmi/
+    method: HTTPS 직접 다운로드 (gzip 바이너리, 예 f17/bmaps_v07/y2026/m09/f17_20260930v7.gz)
+    note: F18은 bmaps_v08 폴더(파일 이름 v8)에 있습니다. 읽기 코드(Python·IDL·Matlab·Fortran·C++)는 ssmi_support 폴더에 있습니다. FTP 접속은 무료 등록이 필요합니다.
+  - name: NASA GHRC DAAC — RSS SSM/I·SSMIS Ocean Product Grids netCDF V7
+    url: https://search.earthdata.nasa.gov/search/granules?p=C1996546695-GHRC_DAAC
+    method: Earthdata Search / earthaccess / OPeNDAP (netCDF-4)
+    note: >-
+      위성·시간 단위별 컬렉션(예 F17 일 rssmif17d, 3일 rssmif17d3d, 주 rssmif17w, 월 rssmif17m, F16은 rssmif16*, F13·F15 등 SSM/I도 있음)이 있습니다.
+      2026-10 확인 시 F18 컬렉션은 찾지 못했습니다. NASA Earthdata 로그인(무료)이 필요합니다.
+  - name: RSS SSM/I·SSMIS 설명 페이지
+    url: https://www.remss.com/missions/ssmi/
+    method: 웹 (자료 형식·척도·코드값·인용 문구)
+
+example:
+  lang: python
+  note: "GHRC netCDF를 earthaccess로 받는 예입니다. NASA Earthdata 계정으로 earthaccess.login()을 한 번 거친 뒤 실행하고, 변수 이름은 print(ds)로 먼저 확인하세요."
+  code: |
+    # pip install earthaccess xarray netCDF4
+    import earthaccess
+    import xarray as xr
+
+    earthaccess.login()
+    results = earthaccess.search_data(
+        short_name="rssmif17m",          # F17 SSMIS 월평균 (일자료는 rssmif17d)
+        version="7",
+        temporal=("2025-01-01", "2025-12-31"),
+    )
+    files = earthaccess.download(results[:1], "./rss_ssmis")
+
+    ds = xr.open_dataset(files[0])
+    print(ds)                            # 변수 이름·척도·결측값 속성 확인
+
+tips:
+  - "RSS 바이트맵 원본은 척도를 곱해야 합니다 — 풍속 0.2, 수증기 0.3, 강수 0.1, 구름은 0.01을 곱한 뒤 -0.05를 더합니다. 251(강수로 풍속·수증기 결측), 252(해빙), 253(나쁜 관측), 254(관측 없음), 255(육지)는 값이 아닙니다."
+  - 해상풍속은 강수·태양 반사광(sun glint)·전파 간섭(RFI)·해안과 해빙 가장자리(약 50 km) 근처에서 비거나 믿기 어렵습니다. 강수 지역 풍속은 대부분 빠져 있어 표본이 맑은 날 쪽으로 치우칩니다.
+  - 구름 수액량은 작은 음수(최소 -0.05 mm)까지 허용합니다. 잡음을 평균에서 상쇄시키려는 것이므로 0으로 자르지 마세요.
+  - F15는 2006년 8월 이후 기후 연구에 쓰지 말라고 RSS가 안내합니다. 장기 추세는 위성별 통과 시각 차이와 궤도 변화를 고려해 여러 위성을 비교하세요.
+  - 2025년부터 DMSP SSMIS 자료 전달이 '가능한 범위(best effort)'로만 이어져 결측일이 생겼습니다. 2025~2026년 값은 일별 결측 여부를 먼저 확인하세요.
+  - "F18 파일은 bmaps_v08 폴더에 v8 이름으로 올라와 있지만, RSS 설명 페이지와 인용 문구는 Version 7만 다룹니다. F18을 쓸 때는 파일 이름의 판을 논문에 그대로 적으세요."
+  - 일자료의 time 변수는 UTC입니다. 오전·오후 통과를 섞어 평균하면 일주기가 큰 강수·구름에서 표본 편향이 생길 수 있습니다.
+
+citations:
+  dataset:
+    - label: RSS SSM/I·SSMIS 0.25° 산출물 (RSS 권장 인용)
+      text: >-
+        Wentz, F.J., K.A. Hilburn, D.K. Smith, 2012: Remote Sensing Systems DMSP [SSM/I or SSMIS] [Daily, 3-Day, Weekly, Monthly] Environmental Suite on 0.25 deg grid,
+        Version 7, [indicate subset if used]. Remote Sensing Systems, Santa Rosa, CA. Available online at www.remss.com/missions/ssmi. [Accessed dd mmm yyyy].
+      bibtex: |
+        @misc{wentz2012rssssmi,
+          author       = {Wentz, Frank J. and Hilburn, Kyle A. and Smith, Deborah K.},
+          title        = {Remote Sensing Systems {DMSP} {SSM/I} and {SSMIS} Environmental Suite on 0.25 deg grid, Version 7},
+          year         = {2012},
+          publisher    = {Remote Sensing Systems},
+          address      = {Santa Rosa, CA},
+          howpublished = {\url{https://www.remss.com/missions/ssmi}},
+          note         = {Accessed DD MMM YYYY}
+        }
+    - label: GHRC netCDF 컬렉션 (V7)
+      text: >-
+        Wentz, F. J., Hilburn, K., Smith, D. K. (2012): RSS SSM/I and SSMIS Ocean Product Grids netCDF Data Collection Version 7.
+        NASA Global Hydrometeorology Resource Center DAAC, Huntsville, Alabama, U.S.A. https://doi.org/10.5067/MEASURES/SSMI-SSMIS/DATA301
+      doi: 10.5067/MEASURES/SSMI-SSMIS/DATA301
+      bibtex: |
+        @misc{wentz2012ghrcssmi,
+          author    = {Wentz, Frank J. and Hilburn, Kyle and Smith, Deborah K.},
+          title     = {{RSS} {SSM/I} and {SSMIS} Ocean Product Grids {netCDF} Data Collection Version 7},
+          year      = {2012},
+          publisher = {NASA Global Hydrometeorology Resource Center Distributed Active Archive Center},
+          doi       = {10.5067/MEASURES/SSMI-SSMIS/DATA301}
+        }
+  papers:
+    - label: SSM/I 해양 산출 알고리즘
+      text: >-
+        Wentz, F. J. (1997): A well-calibrated ocean algorithm for special sensor microwave/imager. Journal of Geophysical Research: Oceans, 102(C4), 8703–8718.
+      doi: 10.1029/96JC01751
+      bibtex: |
+        @article{wentz1997ssmi,
+          author  = {Wentz, Frank J.},
+          title   = {A well-calibrated ocean algorithm for special sensor microwave / imager},
+          journal = {Journal of Geophysical Research: Oceans},
+          volume  = {102},
+          number  = {C4},
+          pages   = {8703--8718},
+          year    = {1997},
+          doi     = {10.1029/96JC01751}
+        }
+    - label: 마이크로파 강수 산출 (UMORA)
+      text: >-
+        Hilburn, K. A., Wentz, F. J. (2008): Intercalibrated Passive Microwave Rain Products from the Unified Microwave Ocean Retrieval Algorithm (UMORA).
+        Journal of Applied Meteorology and Climatology, 47(3), 778–794.
+      doi: 10.1175/2007JAMC1635.1
+      bibtex: |
+        @article{hilburn2008umora,
+          author  = {Hilburn, Kyle A. and Wentz, Frank J.},
+          title   = {Intercalibrated Passive Microwave Rain Products from the Unified Microwave Ocean Retrieval Algorithm ({UMORA})},
+          journal = {Journal of Applied Meteorology and Climatology},
+          volume  = {47},
+          number  = {3},
+          pages   = {778--794},
+          year    = {2008},
+          doi     = {10.1175/2007JAMC1635.1}
+        }
+  acknowledgement: >-
+    RSS는 "SSM/I and SSMIS data are produced by Remote Sensing Systems. Data are available at www.remss.com/missions/ssmi." 같은 감사 문구를 요청하고,
+    자료를 쓴 논문의 학술지·출판 예정일을 RSS 사용자 지원에 알려 달라고 부탁합니다(자료 생산 예산 유지에 쓰임).
+
+notices:
+  - date: "2026-10-01"
+    level: info
+    title: 후속 마이크로파 자료 RSS MWI(WSF-M1) V6.1 공개
+    body: >-
+      RSS가 미 우주군 WSF-M1 위성 MWI 센서 자료의 첫 공개판(V6.1)을 내놓았습니다. 0.25° 일·다일 격자 netCDF이며 기존 RSS 마이크로파 기후자료와 상호 보정했다고 밝혔습니다.
+      DMSP SSMIS 공백 이후를 메울 자료이지만, SSMIS 기록과의 연속성은 따로 확인해야 합니다.
+    source: https://www.remss.com/announcement/RSS-MWI-V6.1-released/
+  - date: "2025-08-06"
+    level: warning
+    title: DMSP SSMIS 자료 전달은 DMSP 임무 종료(2026년 9월 예상)까지
+    body: >-
+      미 국방부가 SSMIS 자료 처리·전달을 DMSP 임무 종료 때까지 이어 가기로 했고, 임무 종료 시점은 2026년 9월로 예상된다고 NSIDC가 전했습니다.
+      NOAA·EUMETSAT OSI SAF도 이후 자료를 '가능한 범위(best effort)' 제공으로 안내했습니다.
+    source: https://nsidc.org/data/user-resources/data-announcements/user-notice-noaansidc-sea-ice-concentration-near-real-time-cdr-version-3-will-continue-ssmis-data
+  - date: "2025-06-26"
+    level: critical
+    title: DMSP SSMIS 자료 중단 예고 (이후 연기)
+    body: >-
+      DMSP와 미 해군 FNMOC가 2025년 6월 30일까지 DMSP 자료 수신·처리·배포를 영구 중단한다는 통보를 RSS가 전했습니다. 6월 30일 NASA 요청으로 7월 31일까지 연기되었고,
+      이후 DMSP 임무 종료(2026년 9월 예상)까지 계속 제공하는 것으로 바뀌었습니다. RSS는 MWI 자료 공개를 준비하겠다고 밝혔습니다.
+    source: https://www.remss.com/announcement/DMSP-SSMIS-discontinued/
+
+links:
+  - name: RSS — SSM/I·SSMIS 자료 설명
+    url: https://www.remss.com/missions/ssmi/
+  - name: RSS — 위성별 적도 통과 시각
+    url: https://www.remss.com/support/crossing-times
+  - name: RSS — 자료 이용 조건
+    url: https://www.remss.com/support/terms-of-use
+  - name: RSS 공지 목록
+    url: https://www.remss.com/announcement/
+  - name: EUMETSAT OSI SAF — SSMIS 자료 종료가 산출물에 미치는 영향
+    url: https://osi-saf.eumetsat.int/community/stories/implications-end-ssmis-data-osi-saf-products
+
+watch_urls:
+  - https://www.remss.com/announcement/
+  - https://www.remss.com/missions/ssmi/
+
+last_verified: "2026-10-13"

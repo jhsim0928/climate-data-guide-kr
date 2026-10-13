@@ -1,0 +1,214 @@
+# ─────────────────────────────────────────────────────────────
+# PATMOS-x — 데이터셋 정보 파일
+# 위성 탭 '구름·복사'에 싣습니다. v6.0(v06r00), 확정판은 2022년까지·이후 예비판, v7.0 예고.
+# 수정 후에는 공식 페이지에서 확인한 날짜로 last_verified 를 갱신하세요.
+# ─────────────────────────────────────────────────────────────
+id: patmos-x
+name: "PATMOS-x"
+full_name: Pathfinder Atmospheres – Extended (PATMOS-x) Version 6.0 — NOAA Climate Data Record of AVHRR and HIRS Reflectance, Brightness Temperature, and Cloud Products (AVHRR·HIRS 기반 구름 기후자료)
+category: satellite
+domain: satellite
+group: 구름·복사
+order: 30
+domains: [대기, 원격탐사]
+provider: NOAA NCEI (CDR 프로그램) / 위스콘신대 매디슨 SSEC·CIMSS (M. Foster, A. Heidinger)
+
+status: active
+status_note: >-
+  Version 6.0(파일 이름 v06r00)이 현재 판이며, 예비판(preliminary) 파일이 매일 이어지고 1~2년마다 확정판으로 바뀝니다.
+  2026-10-13 확인 시 AWS 공개 사본은 2026년 7월 초 관측분까지 있고, 확정판 파일은 2022년까지, 2023년부터는 예비판입니다.
+  NCEI는 NOAA-20 자료 상당 부분에서 구름 광학 특성이 높게 나오는 문제를 알리고 Version 7.0에서 고치겠다고 밝혔습니다.
+
+transitions:
+  - from: PATMOS-x v5.3 (AVHRR만)
+    to: PATMOS-x v6.0 (AVHRR+HIRS)
+    status: completed
+    date: "2021"
+    summary: AVHRR 영상만 쓰던 v5.3에 HIRS 적외 분광 자료를 더해 구름 상단 높이 산출을 개선한 판입니다. 같은 페이지 안 판 교체입니다.
+    changes:
+      - aspect: 입력 센서
+        before: AVHRR (GAC)
+        after: AVHRR + HIRS (HIRS가 없는 Metop-C와 Metop-B 후반부는 다른 방식으로 보완, 이후 VIIRS 계열로 연장)
+      - aspect: 기간
+        before: NCEI THREDDS에 남은 v05r03 파일은 2022년까지
+        after: 1981-08–현재 (NCEI 메타데이터 기준)
+      - aspect: 위성
+        before: NOAA·Metop AVHRR
+        after: TIROS-N·NOAA-6~19·Metop-A·B (+ Metop-C, S-NPP·NOAA-20 예비판 파일)
+      - aspect: 파일 이름
+        before: "`patmosx_v05r03[-preliminary]_<위성>_<asc|des>_d<날짜>_c<생성일>.nc`"
+        after: "`patmosx_v06r00[-preliminary]_<위성>_<asc|des>_d<날짜>_c<생성일>.nc`"
+    impacts:
+      - NCEI THREDDS 'PATMOS-X Cloud Properties' 파일 목록에는 아직 v05r03 파일(2022년까지)이 남아 있습니다. 파일 이름의 판 번호를 꼭 확인하고 v5.3과 v6.0을 섞지 마세요.
+      - 구름 상단 높이·온도·기압이 가장 크게 바뀐 변수이므로, v5.3으로 낸 구름 높이 결과는 v6.0으로 다시 확인하는 것이 좋습니다.
+    sources:
+      - name: Foster et al. (2023), J. Climate — PATMOS-x Version 6.0
+        url: https://doi.org/10.1175/JCLI-D-22-0147.1
+      - name: NCEI 메타데이터 — PATMOS-x v6.0 (C00926)
+        url: https://www.ncei.noaa.gov/access/metadata/landing-page/bin/iso?id=gov.noaa.ncdc:C00926
+
+period:
+  start: "1981-08"
+  end: present
+  note: >-
+    NCEI 메타데이터의 시작일은 1981-08-25입니다(CDR 소개 페이지는 '1979–present'로 표기). 2026-10-13 확인 시 AWS 사본의 마지막 파일은
+    NOAA-20 2026-07-04, Metop-B·C 2026-06-30 관측분입니다. NOAA-15·18·19 파일은 2025년 6월 하순에서 끝납니다.
+
+resolution:
+  spatial_short: "11 km (0.1°)"
+  temporal_short: "1일"
+  spatial: 0.1°×0.1° 전지구 등각(위경도) 격자 — AVHRR GAC(천정 약 4 km) 화소를 격자에 표본(겹치면 천정에 가장 가까운 화소 선택), HIRS는 AVHRR 화소 위치로 보간
+  vertical: 구름 상단 높이·온도·기압(단일 층)
+  temporal: 위성별·궤도 방향(상승 asc/하강 des)별 하루 1파일. 위성 수에 따라 하루 2~10회 관측
+
+update: 예비판 매일(실시간 대비 7일 이내 지연), 확정판은 1~2년마다 교체
+license: NOAA CDR — 공개 자료로 이용 제한 없음. NCEI 출처·개발자 표기와 DOI 인용 요청
+account_required: false
+
+summary: >-
+  PATMOS-x는 NOAA·Metop 극궤도 위성의 AVHRR 영상과 HIRS 적외 분광 자료를 합쳐 1980년대 초부터 만든 전지구 구름 기후자료입니다.
+  위성마다 하루 상승·하강 궤도 파일을 0.1° 격자로 내며, 구름량·구름 유형, 구름 상단 온도·기압·높이, 방출률, 광학두께·입자 크기와
+  보정된 반사도·밝기온도를 함께 담습니다. 위성별 통과 시각이 그대로 남아 있어 궤도 표류와 관측 시각을 직접 다룰 수 있는 것이 특징입니다.
+
+time_convention:
+  summary: >-
+    한 파일은 한 위성의 하루치 상승(asc) 또는 하강(des) 궤도 관측을 0.1° 격자에 놓은 것으로, 각 격자값은 평균이 아니라 그날 그 위성이 지나간 순간의 관측입니다.
+    시각은 위성 통과 시각(지방시)에 묶여 있습니다.
+  points:
+    - "오후 궤도 위성(NOAA-7·9·11·14·16·18·19)은 북향(상승) 통과가 지방시 13:30, 오전 궤도 위성(NOAA-6·8·10·12·15)은 남향(하강) 통과가 07:30, NOAA-17은 10:00, Metop은 09:30으로 맞춰져 있습니다."
+    - "NOAA 위성은 오래 운용될수록 궤도가 표류해 통과 시각이 늦어집니다. 구름량 추세를 볼 때는 이 표류로 인한 일변화 표본 변화를 보정해야 한다고 개발진이 밝혔습니다(Metop은 궤도를 유지해 표류가 작음)."
+    - "궤도가 겹치는 고위도에서는 천정에 가장 가까운 관측을 고르므로, 같은 격자라도 날마다 관측 시각이 다를 수 있습니다."
+    - "구름 광학두께·입자 크기는 태양광 반사 채널을 쓰는 주간 산출물입니다."
+    - "파일 이름의 `-preliminary`는 최신 보정 계수가 나오기 전 외삽 보정으로 만든 예비판이며, 확정판이 나오면 값이 조금 바뀔 수 있습니다. 파일 이름의 `d`는 관측일, `c`는 생성일입니다."
+  source: https://doi.org/10.1175/JCLI-D-22-0147.1
+  source_name: Foster et al. (2023) J. Climate + NCEI PATMOS-x CDR 안내
+
+variables:
+  note: >-
+    NCEI CDR 안내에 실린 변수 목록입니다. 파일 속 변수명은 공식 문서에서 확인하지 못해 적지 않았으니 받은 파일(`ds.data_vars`)에서 확인하세요.
+    단위는 알고리즘 문서(ATBD)에 적힌 것만 넣었습니다.
+  full_list: https://www.ncei.noaa.gov/products/climate-data-records/avhrr-hirs-cloud-properties-patmos
+  groups:
+    - name: 구름 특성 (위성 통과 시각의 관측)
+      kind: instant
+      items:
+        - text: "구름량(구름 비율)"
+          std: [cloud]
+        - "구름 유형"
+        - "구름 상단 온도 (K)"
+        - "구름 상단 기압 (hPa)"
+        - "구름 상단 높이 (km)"
+        - "구름 방출률 (11 µm)"
+        - text: "구름 광학두께 (무차원)"
+          note: 주간 관측에서만 산출
+        - text: "구름 입자 유효 반경 (µm)"
+          note: 주간 관측에서만 산출
+    - name: 대기·복사
+      kind: instant
+      items:
+        - "총가강수량"
+        - "보정된 반사도(0.63·0.86·1.6 µm)와 밝기온도(3.75·11·12 µm, HIRS 6.7 µm·CO2 채널)"
+
+access:
+  - name: NCEI 직접 다운로드 (2000년~현재)
+    url: https://www.ncei.noaa.gov/data/avhrr-hirs-reflectance-and-cloud-properties-patmosx/access/
+    method: HTTPS 디렉터리 (연도별)
+    note: NCEI 안내에 따르면 이 경로에는 2000년 이후만 있습니다. 1981~1999년은 AWS나 Google Cloud에서 받으세요.
+  - name: AWS 공개 버킷 (noaa-cdr-patmosx-radiances-and-clouds-pds)
+    url: https://noaa-cdr-patmosx-radiances-and-clouds-pds.s3.amazonaws.com/index.html
+    method: S3 (계정 없이 익명 접근)
+    note: "`data/<연도>/` 아래 전체 기간이 있습니다. 파일 하나가 400~500 MB 정도로 큽니다."
+  - name: Google Cloud 공개 버킷 (noaa-cdr-patmosx-radiances-and-clouds)
+    url: https://console.cloud.google.com/storage/browser/noaa-cdr-patmosx-radiances-and-clouds
+    method: GCS
+  - name: CIMSS PATMOS-x 페이지 (기후자료 포털·부분 추출)
+    url: https://cimss.ssec.wisc.edu/patmosx/
+    method: 웹
+    note: 작은 영역·변수만 필요할 때 CIMSS 기후자료 포털에서 잘라 받을 수 있습니다.
+
+example:
+  lang: python
+  note: "계정 없이 AWS에서 하루치 파일 하나를 엽니다. 변수명은 열어 본 뒤 `ds.data_vars`로 확인하세요."
+  code: |
+    # pip install s3fs xarray h5netcdf
+    import s3fs
+    import xarray as xr
+
+    fs = s3fs.S3FileSystem(anon=True)
+    # NOAA-19 상승(asc, 오후) 궤도, 2020-12-01 관측. c<생성일> 부분은 판마다 달라 glob으로 찾습니다.
+    keys = fs.glob("noaa-cdr-patmosx-radiances-and-clouds-pds/data/2020/"
+                   "patmosx_v06r00_NOAA-19_asc_d20201201_*.nc")
+    ds = xr.open_dataset(fs.open(keys[0]), engine="h5netcdf")
+    print(ds.attrs.get("title"))
+    for name, v in ds.data_vars.items():
+        print(name, v.attrs.get("long_name"), v.attrs.get("units"))
+
+tips:
+  - 파일 하나는 '한 위성·한 궤도 방향·하루'입니다. 여러 위성을 섞어 일·월평균을 낼 때 위성마다 통과 시각이 달라 일변화가 섞인다는 점을 기억하세요. 추세 분석은 같은 궤도 계열끼리 나눠 보는 것이 안전합니다.
+  - NCEI에 따르면 NOAA-20 자료 상당 부분이 비스듬한 태양 각도에서 반사도가 높게 처리되어 일부 지역 구름 광학 특성이 높게 나옵니다. 2018년 7월, 2019년 1월, 2026년 1월 13일 이후 자료는 영향이 없고, Version 7.0에서 고칠 예정입니다.
+  - NOAA-18 HIRS 13.3 µm 채널이 2023년 1월~4월 29일 손상된 자료를 내, 이 기간 NOAA-18의 구름 탐지·높이가 일관되지 않을 수 있습니다.
+  - Metop-C에는 HIRS가 없고 Metop-B는 후반부에 HIRS가 고장 났습니다. 이 위성들의 구름 높이는 HIRS 없이 다른 방법으로 보완된 값입니다.
+  - NOAA-15·18·19 파일은 2025년 6월 하순에서 끝나며, 이후는 Metop-B·C와 NOAA-20만 남습니다. 2025년 전후로 오후 궤도의 출처가 AVHRR(NOAA-19)에서 VIIRS(NOAA-20)로 바뀌는 셈이니 시계열을 이을 때 주의하세요.
+  - NCEI THREDDS의 PATMOS-x 파일 목록은 옛 v05r03 판입니다. v6.0은 NCEI 직접 다운로드·AWS·Google Cloud에서 받으세요.
+
+citations:
+  dataset:
+    - label: PATMOS-x Version 6.0 CDR
+      text: >-
+        Foster, Michael J.; Phillips, Coda; Heidinger, Andrew K.; and NOAA CDR Program (2021): NOAA Climate Data Record (CDR) of Advanced Very High Resolution Radiometer (AVHRR)
+        and High-resolution Infra-Red Sounder (HIRS) Reflectance, Brightness Temperature, and Cloud Products from Pathfinder Atmospheres - Extended (PATMOS-x), Version 6.0.
+        NOAA National Centers for Environmental Information. https://doi.org/10.7289/V5X9287S [access date]
+      doi: 10.7289/V5X9287S
+      bibtex: |
+        @misc{patmosx_v6_cdr,
+          author    = {Foster, Michael J. and Phillips, Coda and Heidinger, Andrew K. and {NOAA CDR Program}},
+          title     = {{NOAA} Climate Data Record ({CDR}) of Advanced Very High Resolution Radiometer ({AVHRR}) and High-resolution Infra-Red Sounder ({HIRS}) Reflectance, Brightness Temperature, and Cloud Products from Pathfinder Atmospheres - Extended ({PATMOS-x}), Version 6.0},
+          year      = {2021},
+          publisher = {NOAA National Centers for Environmental Information},
+          doi       = {10.7289/V5X9287S}
+        }
+  papers:
+    - label: PATMOS-x v6.0 소개 논문
+      text: >-
+        Foster, M. J., Phillips, C., Heidinger, A. K., Borbas, E. E., Li, Y., Menzel, W. P., Walther, A., and Weisz, E. (2023):
+        PATMOS-x Version 6.0: 40 Years of Merged AVHRR and HIRS Global Cloud Data. Journal of Climate, 36, 1143–1160.
+      doi: 10.1175/JCLI-D-22-0147.1
+      bibtex: |
+        @article{foster2023patmosx,
+          author  = {Foster, Michael J. and Phillips, Coda and Heidinger, Andrew K. and Borbas, Eva E. and Li, Yue and Menzel, W. Paul and Walther, Andi and Weisz, Elisabeth},
+          title   = {{PATMOS-x} Version 6.0: 40 Years of Merged {AVHRR} and {HIRS} Global Cloud Data},
+          journal = {Journal of Climate},
+          volume  = {36},
+          pages   = {1143--1160},
+          year    = {2023},
+          doi     = {10.1175/JCLI-D-22-0147.1}
+        }
+  acknowledgement: >-
+    NOAA CDR 이용 약정은 자료를 NOAA NCEI에서 받았음을 밝히고 개발자(Andy Heidinger, Mike Foster)와 NOAA CDR 프로그램을 적어 달라고 요청합니다.
+    이용 약정에는 'Heidinger, A.; Foster, M. and NOAA CDR Program (2020): NOAA Climate Data Record (CDR) PATMOS-x Cloud Properties, Version 6.0' 형식의 인용도 실려 있습니다.
+
+notices:
+  - date: "2026-08-14"
+    level: warning
+    title: NOAA-20 자료의 구름 광학 특성 과대 문제 — Version 7.0에서 수정 예정
+    body: >-
+      NCEI PATMOS-x 안내 페이지(2026-08-14 개정)에 따르면 NOAA-20 자료 상당 부분이 비스듬한 태양 각도에서 반사도가 높게 처리되어 일부 지역 구름 광학 특성이 높게 나옵니다.
+      2018년 7월, 2019년 1월, 2026년 1월 13일 이후 자료는 영향이 없으며, 수정은 Version 7.0에 반영될 예정입니다.
+    source: https://www.ncei.noaa.gov/products/climate-data-records/avhrr-hirs-cloud-properties-patmos
+
+links:
+  - name: NCEI — PATMOS-x Cloud Properties CDR (공지·문서)
+    url: https://www.ncei.noaa.gov/products/climate-data-records/avhrr-hirs-cloud-properties-patmos
+  - name: NCEI 메타데이터 — PATMOS-x v6.0
+    url: https://www.ncei.noaa.gov/access/metadata/landing-page/bin/iso?id=gov.noaa.ncdc:C00926
+  - name: 알고리즘 문서(ACHA·DCOMP, Rev 2)
+    url: https://www.ncei.noaa.gov/pub/data/sds/cdr/CDRs/AVHRR-HIRS_Cloud_Properties_PATMOS-x/AlgorithmDescription/
+  - name: CIMSS — PATMOS-x
+    url: https://cimss.ssec.wisc.edu/patmosx/
+  - name: Foster et al. (2023), J. Climate
+    url: https://doi.org/10.1175/JCLI-D-22-0147.1
+
+watch_urls:
+  - https://www.ncei.noaa.gov/products/climate-data-records/avhrr-hirs-cloud-properties-patmos
+
+last_verified: "2026-10-13"

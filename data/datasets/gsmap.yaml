@@ -1,0 +1,396 @@
+# ─────────────────────────────────────────────────────────────
+# GSMaP — 데이터셋 정보 파일
+# 위성 탭(강수). 현재 주력은 알고리즘 v8(G-Portal 제품 버전 V05)이고, G-Portal에는 2026-10-19 V06 공개가 예고되어 있습니다.
+# 수정 후에는 공식 페이지에서 확인한 날짜로 last_verified 를 갱신하세요.
+# ─────────────────────────────────────────────────────────────
+id: gsmap
+name: "GSMaP"
+full_name: Global Satellite Mapping of Precipitation (GSMaP) 알고리즘 버전 8 (JAXA 전지구 다중위성 강수 지도, 1시간·0.1°)
+category: satellite
+domain: satellite
+group: 강수
+order: 10
+also_in:
+  - domain: atmosphere
+    group: 강수 자료
+domains: [대기, 육지, 해양, 원격탐사]
+provider: JAXA 지구관측연구센터(EORC) (배포 JAXA Global Rainfall Watch FTP, JAXA G-Portal)
+
+status: active
+status_note: >-
+  알고리즘 버전 8(G-Portal 제품 버전 V05)이 2021년 12월부터 주력 판으로 실시간(NOW)·준실시간(NRT)·표준(MVK) 모두 매일 생산되고 있습니다.
+  2026년에 v7 갱신이 끝났고(표준 5월 31일, 준실시간 6월 29일), G-Portal은 2026년 10월 1일 새 시스템으로 바뀌면서 2026년 10월 19일 새 제품 버전 V06(NetCDF4)을 공개할 예정입니다.
+  2026-10-13 확인 시 Google Earth Engine의 v8 준실시간·표준 모음은 2026-10-12까지 들어와 있습니다.
+
+period:
+  start: "1998-01"
+  end: present
+  note: >-
+    v8 표준(MVK·Gauge)과 준실시간(NRT·Gauge_NRT)은 2023년 7월 재처리로 1998-01-01부터 이어집니다(1998-01~2000-01은 GridSat-B1 적외 자료만, 2000-02는 GridSat-B1과 CPC 4 km 적외 혼용).
+    운영 생산은 2021-12-01부터, 실시간 GSMaP_NOW v8은 2021-12-06부터입니다. 옛 재분석판 GSMaP_RNL(v6)은 2000-03~2014-02입니다.
+
+resolution:
+  spatial_short: "11 km (0.1°)"
+  temporal_short: "1시간"
+  spatial: >-
+    0.1° 위경도 격자. FTP 이진·텍스트 파일은 60°N–60°S 3600×1200(첫 격자 중심 59.95°N·0.05°E, 마지막 59.95°S·0.05°W),
+    NetCDF·G-Portal HDF 파일은 90°N–90°S 3600×1800입니다. v8부터 60° 바깥도 수동 마이크로파 복사계가 지나간 시각에만 값이 있으며, 해빙·그린란드 위는 결측입니다.
+  vertical: 지표 강수 단일층
+  temporal: >-
+    1시간(기본 산출, HH:00~HH:59 UTC) / 일(00Z~23Z 또는 전날 12Z~당일 11Z, 0.1°·0.25°) / 월. GSMaP_NOW는 30분마다 갱신됩니다.
+    JAXA는 GSMaP_CLM으로 일·3일·반순·주·순·월 통계도 제공합니다.
+
+update: "GSMaP_NOW 실시간(지연 0시간, 30분마다 갱신) / GSMaP_NRT 관측 후 약 4시간 / 표준 GSMaP_MVK·Gauge 약 3일 지연, 모두 1시간 단위 연속 생산"
+license: >-
+  연구·교육·개인 용도뿐 아니라 상업적 이용도 무료이며 저작권은 JAXA에 있습니다. JAXA Global Rainfall Watch FTP와 G-Portal 모두 무료 사용자 등록이 필요합니다.
+  출처 표기 예는 'GSMaP data by Japan Aerospace Exploration Agency (JAXA)'이고, 논문에는 주요 GSMaP 논문 인용을 요청합니다
+account_required: true
+
+summary: >-
+  GSMaP는 JAXA가 GPM 주위성과 여러 저궤도 위성의 수동 마이크로파(PMW) 복사계 강수 추정을, 정지궤도 적외 영상에서 구한 구름 이동 벡터와 칼만 필터로 이어 붙여
+  1시간·0.1° 전지구 강수를 만드는 다중위성 강수 지도입니다. 관측 직후 나오는 실시간판(NOW), 약 4시간 뒤의 준실시간판(NRT), 약 3일 뒤의 표준판(MVK)이 있고,
+  각각 NOAA CPC 일 우량계 분석으로 보정한 Gauge 판이 함께 나옵니다. 아시아·태평양 지역에서 히마와리 자료를 써 빠르게 갱신되므로 홍수·재해 감시에 많이 쓰입니다.
+
+time_convention:
+  summary: >-
+    1시간 값은 단위가 mm/hr인 강수 '강도'이며, 파일 이름의 HH는 구간 시작 시각입니다. JAXA는 '01:00Z'가 01:00~01:59 UTC를 뜻한다고 설명하고,
+    형식 문서는 시간 값이 해당 시각 00분~59분을 대표하는 값이라고 적습니다. 일·월 이진 파일도 합계가 아니라 평균 강도(mm/hr)로 저장되므로
+    일강수량(mm)은 일 평균 × 24, 월강수량은 월 평균 강도 × 유효 격자 수(둘째 층)로 구합니다. 텍스트(CSV) 월자료만 누적량(mm/mo)입니다.
+  points:
+    - "1시간 강수량(mm)은 mm/hr 값 그대로입니다. 일 파일(mm/hr)을 그대로 일강수로 쓰면 24배 작게 나옵니다."
+    - "일 파일은 00Z~23Z(한국 시간 09시~다음날 09시)와 전날 12Z~당일 11Z 두 가지 경계로 나옵니다. 한국 시간 하루가 필요하면 1시간 자료를 15Z~다음날 14Z로 직접 더하세요."
+    - "실제 마이크로파 관측 시각은 관측 시각 플래그(observationTimeFlag)에 파일 시작 시각 기준 시간으로 들어 있습니다(예: 01시 파일에서 0.2 → 01:12 UTC, 음수는 직전 통과)."
+    - "NOW(0시간)·NRT(4시간)·MVK(3일)는 쓸 수 있는 위성 수와 모핑 방식이 달라 같은 시각이라도 값이 다릅니다. JAXA는 지연이 짧을수록 정확도가 낮다고 안내합니다."
+    - "Gauge 판의 우량계 보정은 NOAA CPC 전지구 일 우량계 분석으로 하므로 관측소가 드문 곳에서는 보정 효과가 약합니다."
+  source: https://sharaku.eorc.jaxa.jp/GSMaP/document/new/DataFormatDescription_MVK_RNL_v8.0000.pdf
+  source_name: "GSMaP_MVK·Gauge v8 Data Format Description + GSMaP FAQ Q4·Q5 (JAXA)"
+
+variables:
+  note: >-
+    G-Portal HDF 파일(제품 형식 설명서 V5)의 변수명입니다. FTP 이진 파일은 변수명 없이 4바이트 little-endian 실수 배열(gzip 압축)이며, 위성 정보·관측 시각·신뢰도 플래그는 별도 파일로 나옵니다.
+    음수는 결측 또는 산출 불가를 뜻합니다(-4 해빙, -8 저온, -99 적외·마이크로파 관측 없음, 일·월 이진 -999.9).
+  full_list: https://www.eorc.jaxa.jp/GPM/doc/product/format/en/07.GPM_GSMaP_Product_Format_V5_E.pdf
+  groups:
+    - name: 1시간 자료 (GSMaP_MVK·Gauge, NRT·Gauge_NRT, NOW)
+      kind: mean
+      period: 1시간
+      items:
+        - text: "위성 강수 강도 — `hourlyPrecipRate` (mm/hr)"
+          note: "해당 시각 00~59분을 대표하는 값. FTP 이진 파일 gsmap_mvk·gsmap_nrt"
+        - text: "우량계 보정 강수 강도 — `hourlyPrecipRateGC` (mm/hr)"
+          note: "NOAA CPC 일 우량계 분석으로 보정. FTP 이진 파일 gsmap_gauge"
+        - text: "마이크로파 관측 시각 플래그 — `observationTimeFlag` (시간)"
+          kind: instant
+          note: 파일 시작 시각 기준 가장 최근 마이크로파 관측 시각
+        - text: "위성·센서 정보 플래그 — `satelliteInfoFlag` (비트)"
+          kind: instant
+        - text: "우량계 보정 정보 — `gaugeQualityInfo` (개/일)"
+          note: "준실시간판은 보정 여부(1/0), 표준판은 사용한 하루 평균 우량계 수"
+        - text: "강설 확률 — `snowProbability` (%)"
+          std: [precip_components]
+        - text: "신뢰도 플래그 — `reliabilityFlag` (1~10)"
+          kind: instant
+          note: 10이 가장 좋고 4 미만은 주의
+        - text: "지표 유형 — `surfaceType` (0 해양, 1 해안, 2 육지, -4 해빙, -8 저온)"
+          kind: instant
+        - text: "지형성 강우 화소 수 — `orographicRainFlag` (비트 코드)"
+          kind: accum
+    - name: 월자료 (G-Portal HDF)
+      kind: mean
+      period: 월
+      items:
+        - "월평균 위성 강수 강도 — `monthlyPrecipRate` (mm/hr)"
+        - "월평균 우량계 보정 강수 강도 — `monthlyPrecipRateGC` (mm/hr)"
+        - text: "강수 강도 표준편차 — `standardDeviation` (mm/hr)"
+          std: []
+        - text: "관측 일수 — `observationNumber` (일/월)"
+          kind: accum
+        - text: "강설 빈도 — `snowProbability` (%)"
+          std: [precip_components]
+        - "지형성 강우 빈도 — `orographicRainRatio` (%)"
+    - name: 일자료 (FTP 이진, 0.1°·0.25°)
+      kind: mean
+      period: 일 (00Z~23Z 또는 12Z~11Z)
+      items:
+        - text: "일평균 강수 강도 (mm/hr)"
+          note: "파일 이름 gsmap_mvk.YYYYMMDD.0.1d.daily.00Z-23Z…. 일강수량 = 값 × 24"
+
+access:
+  - name: JAXA Global Rainfall Watch (FTP, 이진·텍스트·NetCDF)
+    url: https://sharaku.eorc.jaxa.jp/GSMaP/index.htm
+    method: FTP (등록 후 받은 아이디·비밀번호), 웹 지도·CSV 부분 추출
+    note: >-
+      등록하면 FTP 접속 정보가 이메일로 옵니다. 표준판은 /standard/v8/(hourly·hourly_G·daily·monthly·netcdf),
+      준실시간판은 /realtime_ver/v8/(최근 24시간은 latest/)에 있습니다. 2024년 1월 이후분은 /HDF/ 아래 HDF 파일도 있습니다.
+      웹 브라우저로는 FTP에 접속되지 않으므로 FileZilla·WinSCP 같은 FTP 프로그램을 쓰라고 안내합니다. 웹 화면에서는 6개월까지 1시간 CSV를 지점·영역별로 받을 수 있습니다.
+  - name: JAXA G-Portal (HDF5 → V06부터 NetCDF4)
+    url: https://www.gportal.jaxa.jp/
+    method: 웹 검색·다운로드, SFTP(sftp.gportal.jaxa.jp, 공개키 인증), CSW
+    note: >-
+      2026년 10월 1일 새 시스템이 열렸고 옛 시스템(gportal.jaxa.jp/gpr)은 10월 말 종료 예정입니다. 계정을 새로 만들어야 하며 SFTP는 공개키 인증만 됩니다.
+      GSMaP Hourly·Monthly V05가 있고, V06은 새 시스템에서만 제공됩니다.
+  - name: Google Earth Engine
+    url: https://developers.google.com/earth-engine/datasets/catalog/JAXA_GPM_L3_GSMaP_v8_operational
+    method: 클라우드 분석 (JAXA/GPM_L3/GSMaP/v8/operational)
+    note: 준실시간판이 들어온 뒤 표준판으로 바뀌며 이미지 속성 status(provisional/permanent)로 구분합니다.
+  - name: JAXA Climate Rainfall Watch (GSMaP_CLM)
+    url: https://sharaku.eorc.jaxa.jp/GSMaP_CLM/index.htm
+    method: 웹 지도·통계
+    note: Gauge_NRT 기반 일·3일·반순·주·순·월 평균, 평년값, 가뭄지수(SPI)를 봅니다.
+
+example:
+  lang: python
+  note: >-
+    FTP에서 받은 표준판 1시간 이진 파일(gzip)을 numpy로 읽어 한반도 영역을 자르는 예입니다. 형식 문서대로 3600×1200, 4바이트 little-endian 실수이며
+    북쪽(59.95°N)부터 남쪽으로, 경도 0.05°E부터 동쪽으로 저장되어 있습니다. 파일 이름의 버전 문자열(vP.RSKI.J)은 받은 파일에 맞게 바꾸세요.
+  code: |
+    import gzip
+    import numpy as np
+
+    fname = "gsmap_mvk.20230715.0300.v8.0000.1.dat.gz"   # 받은 파일 이름으로 바꾸세요
+    with gzip.open(fname, "rb") as f:
+        rain = np.frombuffer(f.read(), dtype="<f4").reshape(1200, 3600)   # (위도, 경도), mm/hr
+
+    lat = 59.95 - 0.1 * np.arange(1200)
+    lon = 0.05 + 0.1 * np.arange(3600)
+    rain = np.where(rain < 0, np.nan, rain)   # -4 해빙, -8 저온, -99 관측 없음
+
+    jj = (lat >= 33) & (lat <= 39)
+    ii = (lon >= 124) & (lon <= 132)
+    korea = rain[np.ix_(jj, ii)]
+    print("03~04 UTC 영역 평균 강수 강도(mm/hr):", np.nanmean(korea))
+
+    # 일 파일(…daily.00Z-23Z…)도 같은 격자의 평균 강도(mm/hr)이므로 일강수량은 × 24
+
+tips:
+  - "일·월 이진 파일은 mm/hr 평균 강도입니다. 일강수량은 × 24, 월강수량은 월 파일 첫째 층(평균 강도) × 둘째 층(유효 격자 수)으로 구하세요."
+  - "NOW·NRT·MVK와 각 Gauge 판은 서로 다른 자료입니다. 장기 연구에는 표준판(MVK·Gauge)을 쓰고, 최근 며칠을 NRT로 이었다면 논문에 밝히세요."
+  - "버전이 섞이지 않게 하세요. v7은 2026년에 갱신이 끝났고, v8은 1998년부터 다시 만든 기록입니다. G-Portal의 '제품 버전 V05'가 알고리즘 v8이고, V06이 나오면 전 기간 값이 달라질 수 있습니다."
+  - "1998-01~2000-02는 GridSat-B1 적외 자료로 만든 구간이라 JAXA도 충분히 평가되지 않았다며 주의를 당부합니다. TRMM PR·TMI 차이가 컸던 1997/98 엘니뇨 시기도 조심하세요."
+  - "JAXA 이용 가이드는 지형성 호우 지역에서 정확도가 낮고, 강설 추정은 아직 연구 단계라 겨울철 동해 연안 같은 곳에서 성능이 떨어진다고 설명합니다. 한반도 산지·겨울 강수에 특히 주의하세요."
+  - "신뢰도 플래그(reliabilityFlag)가 4 미만이면 주의하라는 것이 공식 안내입니다. 마이크로파 관측 간격이 길수록 실시간판은 강수를 과소 추정할 수 있습니다."
+  - "입력 위성이 바뀌면 값의 특성도 달라집니다. 예를 들어 NOAA-19 AMSU-A/MHS는 2025-06-17부터 쓰지 않습니다. 위성 정보 플래그와 공식 입력 위성 변경 목록을 함께 보세요."
+  - "FTP 이진 파일은 위도 59.95°N부터 남쪽으로 저장되어 있어 그대로 그리면 지도가 뒤집힙니다. NetCDF·HDF 파일은 90°N–90°S 격자라 배열 크기가 다릅니다."
+
+citations:
+  dataset:
+    - label: GSMaP(Hourly) — JAXA 데이터셋 DOI
+      text: >-
+        Japan Aerospace Exploration Agency. 1998. GSMaP(Hourly). https://doi.org/10.57746/EO.01gs73bkt358gfpy92y2qns5e9
+      doi: 10.57746/EO.01gs73bkt358gfpy92y2qns5e9
+      bibtex: |
+        @misc{jaxa_gsmap_hourly,
+          author    = {{Japan Aerospace Exploration Agency}},
+          title     = {{GSMaP(Hourly)}},
+          year      = {1998},
+          publisher = {Japan Aerospace Exploration Agency (JAXA)},
+          doi       = {10.57746/EO.01gs73bkt358gfpy92y2qns5e9}
+        }
+  papers:
+    - label: GPM 시대의 GSMaP 제품 (Satellite Precipitation Measurement 단행본 장)
+      text: >-
+        Kubota, T., Aonashi, K., Ushio, T., Shige, S., Takayabu, Y. N., Kachi, M., Arai, Y., Tashima, T., Masaki, T., Kawamoto, N., Mega, T.,
+        Yamamoto, M. K., Hamada, A., Yamaji, M., Liu, G., Oki, R. (2020): Global Satellite Mapping of Precipitation (GSMaP) Products in the GPM Era.
+        In: Satellite Precipitation Measurement, Advances in Global Change Research, vol. 67, Springer, Cham, 355–373.
+      doi: 10.1007/978-3-030-24568-9_20
+      bibtex: |
+        @incollection{kubota2020gsmap,
+          author    = {Kubota, Takuji and Aonashi, Kazumasa and Ushio, Tomoo and Shige, Shoichi and Takayabu, Yukari N. and Kachi, Misako and Arai, Yoriko and Tashima, Tomoko and Masaki, Takeshi and Kawamoto, Nozomi and Mega, Tomoaki and Yamamoto, Munehisa K. and Hamada, Atsushi and Yamaji, Moeka and Liu, Guosheng and Oki, Riko},
+          title     = {Global Satellite Mapping of Precipitation ({GSMaP}) Products in the {GPM} Era},
+          booktitle = {Satellite Precipitation Measurement},
+          series    = {Advances in Global Change Research},
+          volume    = {67},
+          publisher = {Springer International Publishing},
+          address   = {Cham},
+          pages     = {355--373},
+          year      = {2020},
+          doi       = {10.1007/978-3-030-24568-9_20}
+        }
+    - label: GSMaP 생산·검증 (Kubota et al., 2007)
+      text: >-
+        Kubota, T., Shige, S., Hashizume, H., Aonashi, K., Takahashi, N., Seto, S., Hirose, M., Takayabu, Y. N., Ushio, T., Nakagawa, K., Iwanami, K.,
+        Kachi, M., Okamoto, K. (2007): Global Precipitation Map Using Satellite-Borne Microwave Radiometers by the GSMaP Project: Production and Validation.
+        IEEE Transactions on Geoscience and Remote Sensing, 45(7), 2259–2275.
+      doi: 10.1109/TGRS.2007.895337
+      bibtex: |
+        @article{kubota2007gsmap,
+          author  = {Kubota, Takuji and Shige, Shoichi and Hashizume, Hiroshi and Aonashi, Kazumasa and Takahashi, Nobuhiro and Seto, Shinta and Hirose, Masafumi and Takayabu, Yukari N. and Ushio, Tomoo and Nakagawa, Katsuhiro and Iwanami, Koyuru and Kachi, Misako and Okamoto, Ken'ichi},
+          title   = {Global Precipitation Map Using Satellite-Borne Microwave Radiometers by the {GSMaP} Project: Production and Validation},
+          journal = {IEEE Transactions on Geoscience and Remote Sensing},
+          volume  = {45},
+          number  = {7},
+          pages   = {2259--2275},
+          year    = {2007},
+          doi     = {10.1109/TGRS.2007.895337}
+        }
+    - label: 우량계 보정 GSMaP (Mega et al., 2019)
+      text: >-
+        Mega, T., Ushio, T., Takahiro, M., Kubota, T., Kachi, M., Oki, R. (2019): Gauge-Adjusted Global Satellite Mapping of Precipitation.
+        IEEE Transactions on Geoscience and Remote Sensing, 57(4), 1928–1935.
+      doi: 10.1109/TGRS.2018.2870199
+      bibtex: |
+        @article{mega2019gauge,
+          author  = {Mega, Tomoaki and Ushio, Tomoo and Takahiro, Matsuda and Kubota, Takuji and Kachi, Misako and Oki, Riko},
+          title   = {Gauge-Adjusted Global Satellite Mapping of Precipitation},
+          journal = {IEEE Transactions on Geoscience and Remote Sensing},
+          volume  = {57},
+          number  = {4},
+          pages   = {1928--1935},
+          year    = {2019},
+          doi     = {10.1109/TGRS.2018.2870199}
+        }
+  acknowledgement: >-
+    JAXA는 'GSMaP data by Japan Aerospace Exploration Agency (JAXA)'처럼 자료 출처를 밝히고 주요 GSMaP 논문을 인용하라고 요청합니다.
+    우량계 보정판(Gauge)을 썼다면 Mega et al. (2019)을 함께 인용하고, 쓴 제품(NOW·NRT·MVK, Gauge 여부)과 알고리즘 버전(v8)을 본문에 적으세요.
+    JAXA 이용 가이드는 GSMaP를 쓴 논문을 JAXA에 알려 달라고도 안내합니다.
+
+transitions:
+  - from: GSMaP v7 (제품 버전 V04)
+    to: GSMaP v8 (제품 버전 V05)
+    status: completed
+    date: "2021-12"
+    summary: >-
+      2021년 12월 1일 알고리즘 v8 배포가 시작되었고, 2023년 7월 재처리로 1998년부터의 기록이 만들어졌습니다. 마이크로파 강수 추정이 극지까지 넓어지고
+      입력 센서·데이터베이스·지형성 강우 판정·우량계 보정이 바뀌었습니다. v7 갱신은 2026년에 끝났습니다.
+    changes:
+      - aspect: 기간
+        before: "v7 표준 2014-03~2026-05-31, 준실시간 2017-04~2026-06-29 (갱신 종료)"
+        after: "v8 1998-01~현재 (운영 2021-12-01부터, 1998~2021-11은 재처리)"
+      - aspect: 공간 범위
+        before: "60°S–60°N"
+        after: "마이크로파만 쓰는 값으로 극지까지 확장(해빙·그린란드는 결측). NetCDF는 90°S–90°N 격자"
+      - aspect: 마이크로파 알고리즘
+        before: "KuPR V04A 2년 자료로 만든 강수 연직구조 데이터베이스"
+        after: "DPR V06A 5년 자료 데이터베이스, 언 강수 깊이 추가, 강설·해빙 판별 개선, 센서 간 강수 분포 정규화 모듈 추가"
+      - aspect: 입력 센서
+        before: "GMI, AMSR2, SSMIS, AMSU/MHS 등"
+        after: "Metop-C MHS, Suomi NPP·NOAA-20 ATMS 추가"
+      - aspect: 지형성 강우
+        before: "번개가 강한 지역에서는 지형성 강우 판정을 꺼서 따뜻한 지형성 강우를 과소 추정"
+        after: "하층 정적 안정도로 따뜻한 지형성 강우를 판정"
+      - aspect: 우량계 보정
+        before: "v7 보정 방식(인위적인 무늬가 나타나는 문제)"
+        after: "NOAA CPC 전지구 일 우량계 분석 기반 보정으로 인위적 무늬 감소"
+      - aspect: 파일 형식
+        before: "이진·텍스트(FTP), HDF(G-Portal)"
+        after: "같은 이진·텍스트 형식 유지 + 실시간·준실시간판 NetCDF 추가"
+    impacts:
+      - v7과 v8을 한 시계열로 이어 붙이지 말고 전 기간을 v8로 다시 받으세요. v7 기간(2014년 이후)도 v8 값과 다릅니다.
+      - FTP 경로의 v7을 v8로 바꾸세요(/standard/v8/, /realtime_ver/v8/). G-Portal에서는 제품 버전 V05가 v8입니다.
+      - 2023년 7월 처음 공개된 재처리 표준판(V8.0000.0)은 2023년 9월 V8.0000.1로 다시 만들어졌으므로 그 사이 받은 파일은 다시 받아야 합니다.
+    sources:
+      - name: GSMaP version05 / Algorithm version8 요약 (JAXA)
+        url: https://www.eorc.jaxa.jp/GPM/doc/product_info/release_note_gsmapv05-v8_en.pdf
+      - name: GSMaP V05/v8 Release Note (2023-11-10)
+        url: https://www.eorc.jaxa.jp/GPM/doc/product/ReleaseNote/08_note_GPM-GSMaP_20231110.pdf
+      - name: GSMaP 재처리 노트 (2023-07)
+        url: https://www.eorc.jaxa.jp/GPM/doc/reprocessing_note/GSMaP_reprocessing_note202307A.pdf
+      - name: JAXA EORC GPM 소식 (v7 갱신 종료, 2026-06-16·07-29)
+        url: https://www.eorc.jaxa.jp/GPM/en/news.html
+  - from: GSMaP 제품 버전 V05 (알고리즘 v8)
+    to: GSMaP 제품 버전 V06
+    status: planned
+    date: "2026-10"
+    summary: >-
+      JAXA는 G-Portal에서 GSMaP 시간·월 제품의 새 버전 V06을 2026년 10월 19일 공개한다고 예고했습니다. 형식이 HDF5에서 NetCDF4로 바뀌고
+      새 G-Portal 시스템에서만 제공되며, V05도 계속 제공됩니다. 2026-10-13 확인 시 알고리즘 개선 내용과 FTP(Global Rainfall Watch) 쪽 변화는 아직 공개되지 않았습니다.
+    changes:
+      - aspect: 파일 형식
+        before: "HDF5 (.h5)"
+        after: "NetCDF4 (.nc)"
+      - aspect: 제공처
+        before: "옛 G-Portal(gportal.jaxa.jp/gpr)과 새 G-Portal"
+        after: "2026년 10월 문을 연 새 G-Portal에서만 (새 계정 필요)"
+      - aspect: 대상 제품
+        before: "GSMaP L3 Hourly·Monthly V05"
+        after: "GSMaP Precipitation (Hourly)·(Monthly) V06, V05도 계속 제공"
+    impacts:
+      - V06이 나오면 알고리즘 문서와 형식 설명서를 확인하고, V05와 V06을 섞어 쓰지 마세요.
+      - HDF5용 읽기 코드는 NetCDF4용으로 바꿔야 합니다. 파일 이름 규칙도 새 설명서를 확인하세요.
+    sources:
+      - name: Plan for the GSMaP product version up (V06) (G-Portal, 2026-10-09)
+        url: https://gportal.jaxa.jp/gpr/notice/notice/view/1510
+      - name: Notice Regarding G-Portal System Renewal
+        url: https://gportal.jaxa.jp/gpr/notice/case/view/1502
+
+notices:
+  - date: "2026-10-09"
+    level: warning
+    title: G-Portal에서 GSMaP 새 제품 버전 V06을 2026-10-19 공개 예정 (NetCDF4)
+    body: >-
+      JAXA는 GSMaP 시간·월 강수 제품의 새 버전 V06을 2026년 10월 19일 G-Portal에 공개할 계획이라고 알렸습니다. 형식은 HDF5 대신 NetCDF4이고,
+      2026년 10월 문을 연 새 G-Portal에서만(계정 필요) 받을 수 있으며 V05도 계속 제공됩니다. 알고리즘 개선 내용은 JAXA EORC GPM 누리집에서 안내한다고 했습니다.
+    source: https://gportal.jaxa.jp/gpr/notice/notice/view/1510
+  - date: "2026-09-15"
+    level: warning
+    title: G-Portal 새 시스템 공개(2026-10-01) — 계정 재등록, SFTP 주소·인증 방식 변경, 옛 시스템 10월 말 종료 예정
+    body: >-
+      G-Portal이 2026년 10월 1일 새 시스템(www.gportal.jaxa.jp)으로 바뀌었고, 약 한 달 병행 운영 뒤 10월 말 옛 시스템을 닫을 예정입니다.
+      계속 쓰려면 새 계정을 만들어야 하며(설정·공개키는 옮겨지지 않음), SFTP는 sftp.gportal.jaxa.jp(22번 포트)로 바뀌고 공개키 인증만 됩니다. 자동 내려받기 스크립트를 고치세요.
+    source: https://gportal.jaxa.jp/gpr/notice/case/view/1502
+  - date: "2026-06-16"
+    level: info
+    title: GSMaP 알고리즘 v7 갱신 종료 (표준 2026-05-31, 준실시간 2026-06-29)
+    body: >-
+      FTP의 v7 표준판(MVK·Gauge, /standard/v7)은 2026년 5월 31일, 준실시간판(NRT·Gauge_NRT, /realtime_ver/v7)은 6월 29일 자료로 갱신이 끝났습니다(7월 29일 공지 갱신).
+      지난 v7 자료와 v6·v8은 계속 받을 수 있습니다. G-Portal도 V04(v7) 표준 제품 배포를 5월 31일로 마쳤습니다.
+    source: https://www.eorc.jaxa.jp/GPM/en/news.html
+  - date: "2025-06-17"
+    level: info
+    title: NOAA-19 AMSU-A/MHS 입력 사용 중단
+    body: >-
+      JAXA Global Rainfall Watch 안내서의 입력 위성 변경 목록에 따르면 GSMaP는 2025년 6월 17일부터 NOAA-19 AMSU-A/MHS 자료를 쓰지 않습니다.
+      마이크로파 관측 빈도가 바뀌므로 이 날짜 앞뒤로 품질 특성이 달라질 수 있습니다.
+    source: https://sharaku.eorc.jaxa.jp/GSMaP/guide.html
+  - date: "2024-11-29"
+    level: info
+    title: GSMaP_NOW 알고리즘 개정 (2024-12-01부터)
+    body: >-
+      2024년 12월 1일부터 GSMaP_NOW와 GSMaP_Gauge_NOW가 개정된 v8 알고리즘으로 생산됩니다. NOW는 처리 알고리즘이 개선되었고 Gauge_NOW는 오류가 고쳐졌습니다.
+    source: https://www.eorc.jaxa.jp/GPM/en/news.html
+  - date: "2023-09-15"
+    level: warning
+    title: v8 재처리 표준판 다시 생산 (V8.0000.0 → V8.0000.1) — 다시 받아야 함
+    body: >-
+      2023년 7월 공개한 재처리 GSMaP_MVK·Gauge v8 자료에 문제가 있어 다시 처리했고, 제품 버전이 V8.0000.0에서 V8.0000.1로 바뀌었습니다.
+      이전 파일을 받은 사용자는 다시 받으라고 안내했습니다.
+    source: https://sharaku.eorc.jaxa.jp/GSMaP/document/20230915_GSMaP_STD_v8_repro_list.pdf
+  - date: "2023-07-10"
+    level: info
+    title: v8 재처리 자료 공개 — 1998년 1월부터
+    body: >-
+      TRMM 시대를 포함한 v8 재처리 자료가 공개되어 v8을 1998년 1월부터 받을 수 있게 되었습니다. 2000년 3월 이전은 GridSat-B1 적외 자료로 빈칸을 메웠습니다.
+    source: https://www.eorc.jaxa.jp/GPM/doc/reprocessing_note/GSMaP_reprocessing_note202307A.pdf
+  - date: "2021-12-01"
+    level: info
+    title: GSMaP 알고리즘 v8 배포 시작
+    body: >-
+      알고리즘 버전 8 GSMaP 배포가 시작되었습니다. 이진·텍스트 형식은 그대로이고 실시간·준실시간 v8에 NetCDF가 추가되었습니다. 당시 v6·v7도 계속 제공되었습니다.
+    source: https://www.eorc.jaxa.jp/GPM/en/news.html
+
+links:
+  - name: JAXA Global Rainfall Watch 이용 안내 (제품·입력 위성 변경 목록)
+    url: https://sharaku.eorc.jaxa.jp/GSMaP/guide.html
+  - name: GSMaP FAQ 목록 (제품 차이 Q6, 형식 문서 Q18)
+    url: https://sharaku.eorc.jaxa.jp/GSMaP/faq/GSMaP_faq_list.html
+  - name: GSMaP_MVK·Gauge v8 Data Format Description
+    url: https://sharaku.eorc.jaxa.jp/GSMaP/document/new/DataFormatDescription_MVK_RNL_v8.0000.pdf
+  - name: GSMaP_NRT·Gauge_NRT v8 Data Format Description
+    url: https://sharaku.eorc.jaxa.jp/GSMaP/document/new/DataFormatDescription_NRT8.pdf
+  - name: G-Portal GSMaP 제품 형식 설명서 V5 (HDF)
+    url: https://www.eorc.jaxa.jp/GPM/doc/product/format/en/07.GPM_GSMaP_Product_Format_V5_E.pdf
+  - name: GSMaP 이용 가이드라인 제2판 (2026-02)
+    url: https://www.eorc.jaxa.jp/GPM/doc/data_utilization/GSMaP_Guidelines_E.pdf
+  - name: JAXA EORC GSMaP 문서 페이지
+    url: https://www.eorc.jaxa.jp/GPM/en/gsmap.html
+  - name: 사용자 등록 (Global Rainfall Watch)
+    url: https://sharaku.eorc.jaxa.jp/GSMaP/registration.html
+  - name: 같은 위성 강수 탭의 NASA IMERG (비교용)
+    url: https://gpm.nasa.gov/data/imerg
+
+watch_urls:
+  - https://www.eorc.jaxa.jp/GPM/en/news.html
+  - https://gportal.jaxa.jp/gpr/notice/notice/list
+  - https://sharaku.eorc.jaxa.jp/GSMaP/guide.html
+
+last_verified: "2026-10-13"

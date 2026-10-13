@@ -1,0 +1,193 @@
+# ─────────────────────────────────────────────────────────────
+# PERSIANN-CDR — dataset information file (English edition)
+# Satellite tab (precipitation). IR-based daily precipitation (1983–) produced by UC Irvine CHRS and distributed by NOAA NCEI as Climate Data Record v01r01.
+# After editing, update last_verified to the date you checked the official pages.
+# ─────────────────────────────────────────────────────────────
+id: persiann-cdr
+name: "PERSIANN-CDR"
+full_name: Precipitation Estimation from Remotely Sensed Information using Artificial Neural Networks – Climate Data Record (PERSIANN-CDR)
+category: satellite
+domain: satellite
+group: 강수
+order: 30
+also_in:
+  - domain: atmosphere
+    group: 강수 자료
+domains: [대기, 육지, 해양, 원격탐사]
+provider: UC Irvine Center for Hydrometeorology and Remote Sensing (CHRS; PI Soroosh Sorooshian) / NOAA NCEI CDR Program (distributed by NCEI, AWS and Google Cloud, and the CHRS Data Portal)
+
+status: active
+status_note: >-
+  Updated quarterly as a NOAA CDR. When checked on 2026-10-13, the latest file on NCEI THREDDS and in the AWS bucket was for 2026-03-31 (created 2026-07-09);
+  the record extends about 3–4 months behind real time as input data become available. The current version is v01r01 (Version 1 Revision 1).
+
+period:
+  start: "1983-01"
+  end: present
+  note: >-
+    The NCEI metadata give a start of 1983-01-01 (the product page says "1982–present"), and the user guide explains that 1980–1982 is incomplete while GridSat-B1 quality work continues.
+    February 1992 is unusable because of bad input data (11–25 February). When checked on 2026-10-13, the last data date was 2026-03-31.
+
+resolution:
+  spatial_short: "28 km (0.25°)"
+  temporal_short: "1일"
+  spatial: >-
+    0.25° latitude–longitude grid, 60°S–60°N, 0°–360°E (1440×480 cells per daily file).
+  vertical: Surface precipitation (single level)
+  temporal: >-
+    Daily (00–24 UTC accumulation). Internally, precipitation estimated from 3-hourly IR data is summed to daily totals.
+
+update: Quarterly (about 3–4 months behind, once the GridSat-B1 and GPCP monthly inputs are available)
+license: NOAA CDR open data — no constraints on access or use (file license attribute), free without an account. Users are asked to cite the dataset DOI and Ashouri et al. (2015)
+account_required: false
+
+summary: >-
+  PERSIANN-CDR is a 0.25° daily precipitation climate data record: geostationary IR (about 11 µm) brightness temperatures are converted to rain rates by an artificial neural network (PERSIANN),
+  then bias-adjusted to monthly GPCP precipitation. Because it runs consistently from the 1980s, when microwave observations were scarce, it offers more than 30 years of high-resolution satellite precipitation
+  and is widely used for studies of long-term changes in extremes, droughts and floods. CHRS also runs the real-time PERSIANN, PERSIANN-CCS and PDIR-Now products and the 4-km, 3-hourly PERSIANN-CCS-CDR record.
+
+time_convention:
+  summary: >-
+    The variable `precipitation` is the precipitation amount accumulated over one day (00:00–23:59 UTC), in mm with cell_methods "sum". Each file holds one day;
+    the first date in the file name is the data date and the second, prefixed with c, is the creation date. `time` is in 'days since 1979-01-01 00:00:00'.
+  points:
+    - "Days are UTC, i.e. 09:00 to 09:00 the next day in Korea Standard Time. The user guide warns that UTC daily totals can mismatch gauge totals reported for local-time days, especially in heavy rain."
+    - "3-hourly IR estimates are scaled by ratio to monthly GPCP totals, so monthly sums track GPCP while the day-to-day distribution follows the IR signal."
+    - "Updates are quarterly and only the final record is published. For real-time needs, use CHRS PERSIANN or PDIR-Now, and state that they are different datasets."
+  source: https://www.ncei.noaa.gov/pub/data/sds/cdr/CDRs/PERSIANN/UserGuide_01B-16.pdf
+  source_name: "PERSIANN-CDR User Guide (01B-16, 2025) + NCEI THREDDS file attributes (v01r01)"
+
+variables:
+  note: >-
+    Variables in the NCEI files (netCDF4, CF-1.6). Missing data are marked with `missing_value` -9999.0 and `_FillValue` -1.0; there is no scale_factor.
+    The chunk sizes in the file attributes (1, 1440, 480) suggest the array is stored as (time, lon, lat), so check the axis order before plotting maps.
+  full_list: https://www.ncei.noaa.gov/pub/data/sds/cdr/CDRs/PERSIANN/UserGuide_01B-16.pdf
+  groups:
+    - name: Daily (PERSIANN-CDR_v01r01_YYYYMMDD_cYYYYMMDD.nc)
+      kind: accum
+      period: Daily (00–24 UTC)
+      items:
+        - text: "Daily precipitation — `precipitation` (mm)"
+          note: "Total for 00:00–23:59 UTC"
+    - name: Coordinates
+      kind: static
+      items:
+        - "Latitude and longitude bounds — `lat_bnds`, `lon_bnds` (degrees)"
+
+access:
+  - name: NOAA NCEI (direct HTTPS download)
+    url: https://www.ncei.noaa.gov/data/precipitation-persiann/access/
+    method: HTTPS download (no account)
+    note: One file per day in yearly folders. NCEI warns of possible access delays during its October 2026 cloud migration.
+  - name: NCEI THREDDS (OPeNDAP and aggregation)
+    url: https://www.ncei.noaa.gov/thredds/catalog/satellite/persiann.html
+    method: THREDDS / OPeNDAP — spatial and temporal subsetting, full-period aggregation (Best Time Series)
+  - name: AWS S3 public bucket (NOAA Open Data Dissemination)
+    url: https://noaa-cdr-precip-persiann-pds.s3.amazonaws.com/index.html
+    method: S3 (us-east-1, anonymous access) / HTTPS
+    note: Laid out as s3://noaa-cdr-precip-persiann-pds/data/YYYY/PERSIANN-CDR_v01r01_YYYYMMDD_cYYYYMMDD.nc.
+  - name: Google Cloud Storage
+    url: https://console.cloud.google.com/storage/browser/noaa-cdr-precip-persiann
+    method: Public GCS bucket
+  - name: CHRS Data Portal (UC Irvine)
+    url: https://chrsdata.eng.uci.edu/
+    method: Pick an area and period on a web map and download (hourly to yearly totals)
+    note: PERSIANN, PERSIANN-CCS, PERSIANN-CDR, PDIR-Now and PERSIANN-CCS-CDR can be chosen from the same interface.
+
+example:
+  lang: python
+  note: >-
+    Downloads daily data for July 2023 from the public AWS bucket without an account and computes the monthly total over the Korean Peninsula (requires s3fs, xarray and h5netcdf). Longitudes are 0–360°.
+  code: |
+    import s3fs
+    import xarray as xr
+
+    fs = s3fs.S3FileSystem(anon=True)
+    paths = sorted(fs.glob("noaa-cdr-precip-persiann-pds/data/2023/PERSIANN-CDR_v01r01_202307*.nc"))
+    ds = xr.open_mfdataset([fs.open(p) for p in paths], engine="h5netcdf", combine="by_coords")
+
+    pr = ds["precipitation"].transpose("time", "lat", "lon")     # mm/day (00–24 UTC)
+    pr = pr.where(pr >= 0)                                        # drop -1 and -9999 missing values
+    box = pr.sel(lat=slice(33, 39), lon=slice(124, 132))          # use slice(39, 33) if latitude is descending
+    print(box.sum("time").mean(["lat", "lon"]).values, "mm (July 2023)")
+
+tips:
+  - "Being IR-based (cloud-top temperature), it misses warm rain from clouds with warm tops and can report rain under non-raining cirrus. The user guide states these limitations explicitly."
+  - "Microwave data enter only indirectly, through the monthly GPCP adjustment. Day-to-day patterns follow the IR signal, so timing and location errors can be large for short heavy-rain events."
+  - "According to the file attributes, the monthly GPCP input for bias adjustment is GPCP v2.3. NOAA released GPCP V3.3 as a new CDR in 2025 and marked V2.3 as superseded, so the status of GPCP updates may affect PERSIANN-CDR latency."
+  - "February 1992 is unusable, and before 1997 there is an Indian Ocean gap in the underlying ISCCP B1 data. The early 1980s are also under GridSat-B1 quality work, so check these periods separately when looking at long-term trends."
+  - "Each file has two missing-value codes (-9999 missing_value and -1 _FillValue). xarray masks only one automatically, so treat all negative values as missing."
+  - "Do not confuse it with its sibling products. PERSIANN (0.25°, real time), PERSIANN-CCS (4 km), PDIR-Now (near real time, dynamic IR–rain rate) and PERSIANN-CCS-CDR (0.04°, 3-hourly climate record) are separate datasets available from the CHRS Data Portal."
+  - "Days are bounded in UTC, nine hours off from Korean station daily totals (KST). For daily validation, align the dates or compare at monthly scale."
+
+citations:
+  dataset:
+    - label: PERSIANN-CDR Version 1 Revision 1 (NOAA NCEI)
+      text: >-
+        Sorooshian, Soroosh; Hsu, Kuolin; Braithwaite, Dan; Ashouri, Hamed; and NOAA CDR Program (2014): NOAA Climate Data Record (CDR) of Precipitation Estimation
+        from Remotely Sensed Information using Artificial Neural Networks (PERSIANN-CDR), Version 1 Revision 1. [indicate subset used].
+        NOAA National Centers for Environmental Information. doi:10.7289/V51V5BWQ [access date].
+      doi: 10.7289/V51V5BWQ
+      bibtex: |
+        @misc{persiann_cdr_v01r01,
+          author    = {Sorooshian, Soroosh and Hsu, Kuolin and Braithwaite, Dan and Ashouri, Hamed and {NOAA CDR Program}},
+          title     = {{NOAA} Climate Data Record ({CDR}) of Precipitation Estimation from Remotely Sensed Information using Artificial Neural Networks ({PERSIANN-CDR}), Version 1 Revision 1},
+          year      = {2014},
+          publisher = {NOAA National Centers for Environmental Information},
+          doi       = {10.7289/V51V5BWQ}
+        }
+  papers:
+    - label: PERSIANN-CDR reference paper (Ashouri et al., 2015)
+      text: >-
+        Ashouri, H., Hsu, K.-L., Sorooshian, S., Braithwaite, D. K., Knapp, K. R., Cecil, L. D., Nelson, B. R., Prat, O. P. (2015):
+        PERSIANN-CDR: Daily Precipitation Climate Data Record from Multisatellite Observations for Hydrological and Climate Studies.
+        Bulletin of the American Meteorological Society, 96(1), 69–83.
+      doi: 10.1175/BAMS-D-13-00068.1
+      bibtex: |
+        @article{ashouri2015persiann,
+          author  = {Ashouri, Hamed and Hsu, Kuo-Lin and Sorooshian, Soroosh and Braithwaite, Dan K. and Knapp, Kenneth R. and Cecil, L. Dewayne and Nelson, Brian R. and Prat, Olivier P.},
+          title   = {{PERSIANN-CDR}: Daily Precipitation Climate Data Record from Multisatellite Observations for Hydrological and Climate Studies},
+          journal = {Bulletin of the American Meteorological Society},
+          volume  = {96},
+          number  = {1},
+          pages   = {69--83},
+          year    = {2015},
+          doi     = {10.1175/BAMS-D-13-00068.1}
+        }
+  acknowledgement: >-
+    NCEI asks users to cite the dataset DOI (10.7289/V51V5BWQ) with the subset used and the access date, and to cite Ashouri et al. (2015) in publications using the data.
+    If you also used PDIR-Now or PERSIANN-CCS-CDR, cite each product's reference paper (linked below) separately.
+
+notices:
+  - date: "2026-10-02"
+    level: info
+    title: "Data Access Delays — NCEI cloud migration (through 2026-10-30)"
+    body: >-
+      NCEI is moving its data and applications to the cloud, which may temporarily delay access (2026-10-02 to 10-30). The PERSIANN-CDR product page carries a cloud-migration notice as well.
+      Downloading from the AWS or Google Cloud buckets is less affected.
+    source: https://www.ncei.noaa.gov/alerts
+
+links:
+  - name: NCEI PERSIANN-CDR product page
+    url: https://www.ncei.noaa.gov/products/climate-data-records/precipitation-persiann
+  - name: NCEI metadata and citation (DOI 10.7289/V51V5BWQ)
+    url: https://doi.org/10.7289/V51V5BWQ
+  - name: PERSIANN-CDR User Guide (01B-16)
+    url: https://www.ncei.noaa.gov/pub/data/sds/cdr/CDRs/PERSIANN/UserGuide_01B-16.pdf
+  - name: PERSIANN-CDR algorithm document (C-ATBD)
+    url: https://www.ncei.noaa.gov/pub/data/sds/cdr/CDRs/PERSIANN/AlgorithmDescription_01B-16.pdf
+  - name: CHRS Data Portal (PERSIANN family products)
+    url: https://chrsdata.eng.uci.edu/
+  - name: PDIR-Now paper (Nguyen et al., 2020, J. Hydrometeorology)
+    url: https://doi.org/10.1175/JHM-D-20-0177.1
+  - name: PERSIANN-CCS-CDR paper (Sadeghi et al., 2021, Scientific Data)
+    url: https://doi.org/10.1038/s41597-021-00940-9
+  - name: AWS Open Data — NOAA atmospheric CDRs
+    url: https://registry.opendata.aws/noaa-cdr-atmospheric/
+
+watch_urls:
+  - https://www.ncei.noaa.gov/products/climate-data-records/precipitation-persiann
+  - https://www.ncei.noaa.gov/alerts
+  - https://www.ncei.noaa.gov/thredds/catalog/cdr/persiann/catalog.html
+
+last_verified: "2026-10-13"

@@ -1,0 +1,323 @@
+# ─────────────────────────────────────────────────────────────
+# CERES SYN1deg Edition4B — 데이터셋 정보 파일
+# 위성 탭(구름·복사), 대기 탭 '복사 자료'에 교차 수록. 월평균 에너지 수지 기록은 ceres-ebaf 페이지를 보세요.
+# 2022년 4월부터 NOAA-20 단독 + MERRA-2 입력(Ed4B, 2025-05 공개)이고, Edition 5는 개발 중(공개 일정 미정)입니다.
+# 수정 후에는 공식 페이지에서 확인한 날짜로 last_verified 를 갱신하세요.
+# ─────────────────────────────────────────────────────────────
+id: ceres-syn1deg
+name: "CERES SYN1deg"
+full_name: CERES and GEO-Enhanced TOA, Within-Atmosphere and Surface Fluxes, Clouds and Aerosols (SYN1deg) Edition4B (CERES와 정지궤도 위성을 결합한 1시간·1° 복사 플럭스·구름·에어로졸 자료)
+category: satellite
+domain: satellite
+group: 구름·복사
+order: 40
+also_in:
+  - domain: atmosphere
+    group: 복사 자료
+domains: [대기, 원격탐사]
+provider: NASA Langley Research Center (LaRC) CERES 팀 / Atmospheric Science Data Center (ASDC)
+
+status: active
+status_note: >-
+  Edition4B(주문 도구 이름 Edition4.2)가 현재 판으로 매달 이어지며, 2026-10-13 확인 시 1시간·일·월 자료 모두 2026년 7월분까지 있습니다(2026-10-10 게시).
+  2022년 4월부터는 궤도가 표류하는 Terra·Aqua를 빼고 NOAA-20의 CERES FM6만 쓰므로, Terra(2027년 2월)·Aqua(2027년 9월) 과학 운영 종료는 현재 생산에 직접 영향을 주지 않습니다.
+  다음 판인 Edition 5는 알고리즘을 개발하고 있지만 공개 일정은 발표되지 않았습니다.
+
+transitions:
+  - from: SYN1deg Edition4A (Terra+Aqua)
+    to: SYN1deg Edition4B (Terra+Aqua+NOAA-20)
+    status: completed
+    date: "2025-05"
+    summary: >-
+      2022년 4월 이후를 NOAA-20 단독·MERRA-2 입력으로 바꾸고, 초기 정지궤도 위성 구름 산출과 박명(twilight) 시간 처리를 고친 개정판입니다.
+      Ed4A는 Edition 5가 나올 때까지 재처리하지 않는다고 DQS가 밝히고 있어, 지금 이어지는 기록은 Ed4B입니다.
+    changes:
+      - aspect: 공개 시점
+        before: 2017-09-13 (Terra+Aqua Ed4A)
+        after: 2025-05-07
+      - aspect: 2022년 4월 이후 CERES 관측
+        before: Terra(FM1)+Aqua(FM3) — 두 위성 모두 궤도 표류 중
+        after: NOAA-20(FM6) 단독
+      - aspect: 구름 산출·플럭스 계산용 대기 입력
+        before: GEOS-5.4.1 (2024년 7월 운영 종료)
+        after: 2022년 4월부터 MERRA-2
+      - aspect: 정지궤도(GEO) 구름 산출
+        before: 초기 2채널 위성(GMS-5, Meteosat-5·7)과 Meteosat-8·9의 산출 불일치, 박명 시간대 의심 구름값이 플럭스 계산에 그대로 들어감
+        after: 2채널 위성 재처리, Meteosat-8~11 구름 산출 일관화, 박명 시간대 GEO 구름을 빼고 빈 시간은 보간
+      - aspect: 제공 시간 단위 (CMR 컬렉션)
+        before: 1Hour·3Hour·Day·MHour·M3Hour·Month
+        after: 1Hour·Day·MHour·Month (Edition4B 컬렉션 기준)
+      - aspect: DOI
+        before: "예: 10.5067/Terra+Aqua/CERES/SYN1degDAY_L3.004"
+        after: "예: 10.5067/TERRA-AQUA-NOAA20/CERES/SYN1DEGDAY_L3.004B"
+    impacts:
+      - 2022년 3월 이전과 이후는 관측 위성·대기 입력이 다르므로, 이 경계를 넘는 구름·지표 복사 분석에서는 불연속 가능성을 확인하세요.
+      - Ed4A로 낸 결과를 Ed4B로 다시 확인할 때는 같은 Edition 문자열(파일 이름의 Edition4B)인지, 변수 이름이 같은지 파일에서 확인하세요.
+      - Edition 5가 나오면 전 기간이 다시 처리될 예정이므로 판 이름을 논문에 꼭 적으세요.
+    sources:
+      - name: CERES SYN1deg Ed4A/Ed4B Data Quality Summary (V1, 2025-05-08)
+        url: https://ceres.larc.nasa.gov/documents/DQ_summaries/CERES_SYN1deg_Ed4A_DQS_V1.pdf
+      - name: NASA CMR — CER_SYN1deg-1Hour_Terra-Aqua-NOAA20 Edition4B
+        url: https://cmr.earthdata.nasa.gov/search/concepts/C3181056140-LARC_CLOUD.html
+
+period:
+  start: "2000-03"
+  end: present
+  note: >-
+    2026-10-13 확인 시 ASDC(CMR) 기준 1시간·일·월 자료가 2026년 7월까지 있습니다. 2000년 3월~2002년 6월은 Terra 단독,
+    2002년 7월~2022년 3월은 Terra+Aqua, 2022년 4월부터는 NOAA-20 단독입니다. 2020년 8월 16~31일 Aqua 공백은 NOAA-20 자료로 채웠고 9월 1~3일은 채우지 못했습니다.
+
+resolution:
+  spatial_short: "111 km (1°)"
+  temporal_short: "1시간"
+  spatial: >-
+    1°×1° 등각 위경도 격자(180×360, 지역 자료). 내부 처리는 위도대별로 1°·2°·4°·8°·360° 크기를 바꾸는 중첩 격자(44,012개 지역)로 하고,
+    결과를 1° 격자로 복제해 채웁니다. 동서 평균·전지구 평균은 월자료(SYN1deg-Month)에만 있습니다.
+  vertical: 대기 상단(TOA)과 지표, 그리고 대기 중간 기압면(계산 플럭스 연직 분포, 지표 포함 5개 층)
+  temporal: 1시간(SYN1deg-1Hour, 하루 파일) / 일(SYN1deg-Day) / 월별 시간대 평균(SYN1deg-MHour) / 월(SYN1deg-Month)
+
+update: 매월 (관측 월 이후 약 2~3개월 뒤 게시 — 2026년 7월분이 2026-10-10 게시)
+license: NASA 지구과학 공개 자료 — 제한 없이 무료 이용. 파일 내려받기에는 무료 NASA Earthdata 로그인이 필요하며, 판 이름과 DOI 인용을 요청합니다
+account_required: true
+
+summary: >-
+  CERES 광대역 복사계 관측에 정지궤도(GEO) 위성 영상의 시간별 정보를 결합해, 대기 상단(TOA) 복사를 1시간·1° 단위로 채운 자료입니다.
+  같은 시각의 MODIS·VIIRS·GEO 구름 특성, MATCH 에어로졸, 재분석 기온·습도를 Langley Fu-Liou 복사전달 모델에 넣어 지표와 대기 중간 기압면의 단파·장파 플럭스도 계산해 함께 담습니다.
+  월평균 에너지 수지에는 EBAF가 표준이고, SYN1deg는 일주기·일변동·극한 사례처럼 시간 해상도가 필요한 연구와 지표 플럭스 검증에 씁니다.
+
+time_convention:
+  summary: >-
+    모든 값은 해당 시간 구간의 평균입니다. 1시간 자료의 '시간 상자'는 UTC 기준 하루 24개이고, 첫 상자가 00~01 UTC(중앙 0.5 UTC)입니다.
+    일·월 자료는 시간 값을 평균한 것이고, MHour는 한 달 동안 같은 시간 상자끼리 평균한 월별 일주기입니다.
+  points:
+    - "시간 값은 순간 관측이 아니라 CERES 관측과 GEO 영상으로 시간 보간해 만든 시계열입니다. GEO 자료는 관측 순간값을 격자에 넣은 뒤 해당 시간 상자에 배정합니다."
+    - "단파 플럭스 시간 상자의 대표 시각은 0.5시간이 아니라 상자 안 태양천정각 코사인 적분으로 정한 시각입니다(DQS)."
+    - "CERES 극궤도 관측 시각은 Terra 약 10:30, Aqua·NOAA-20 약 13:30(적도 통과 지방시)입니다. Terra·Aqua는 궤도 표류로 이 시각이 바뀌어 2022년 4월부터 쓰지 않습니다."
+    - "GEO 영상은 60°S–60°N만 덮으므로, 그 바깥 고위도의 시간 변화는 극궤도 관측과 보간에 더 의존합니다."
+    - "변수 이름의 `obs_`는 관측 TOA, `init_`은 처음 계산값(initial), `adj_`는 TOA 관측에 맞춰 조정한 계산값(adjusted)입니다. Ed4A DQS는 조정 단파·장파 플럭스에 코드 오류가 있어 쓰지 말라고 권고합니다."
+    - "월 1회 갱신되는 정규 생산만 있고, 준실시간(NRT)판은 없습니다."
+  source: https://ceres.larc.nasa.gov/documents/DQ_summaries/CERES_SYN1deg_Ed4A_DQS_V1.pdf
+  source_name: CERES SYN1deg Ed4A/Ed4B Data Quality Summary (V1) + SYN1deg-1Hour Data Products Catalog (R6V1)
+
+variables:
+  note: >-
+    변수 이름은 Ed4A Data Products Catalog(SYN1deg-1Hour R6V1)의 HDF SDS 이름입니다. Ed4B 파일과 CERES 주문 도구에서 받는 netCDF에서는
+    이름이 다를 수 있으니 받은 파일에서 확인하세요. 구름 변수는 5개 층(상층·중상층·중하층·하층·전체) 차원을 가집니다.
+  full_list: https://ceres.larc.nasa.gov/documents/DPC/DPC_current/pdfs/DPC_SYN1deg-1Hour_R6V1.pdf
+  groups:
+    - name: 관측 TOA 복사 (CERES+GEO)
+      kind: mean
+      period: 1시간
+      items:
+        - "TOA 반사 단파(전천) — `obs_all_toa_sw` (W m-2)"
+        - "TOA 방출 장파(전천) — `obs_all_toa_lw` (W m-2)"
+        - "TOA 순복사(전천) — `obs_all_toa_net` (W m-2)"
+        - "TOA 단파·장파(청천) — `obs_clr_toa_sw`, `obs_clr_toa_lw` (W m-2)"
+        - text: "TOA 알베도(전천·청천) — `obs_all_toa_alb`, `obs_clr_toa_alb` (무차원)"
+          std: [toa_rad]
+        - "TOA 입사 태양복사 — `toa_sw_insol` (W m-2)"
+    - name: 계산 지표 복사 (Fu-Liou, initial)
+      kind: mean
+      period: 1시간
+      items:
+        - "지표 하향·상향 단파(전천) — `init_all_sfc_sw_dn`, `init_all_sfc_sw_up` (W m-2)"
+        - "지표 하향·상향 장파(전천) — `init_all_sfc_lw_dn`, `init_all_sfc_lw_up` (W m-2)"
+        - "지표 하향·상향 단파·장파(청천) — `init_clr_sfc_sw_dn`, `init_clr_sfc_lw_dn` 등 (W m-2)"
+        - text: "지표 하향 단파(에어로졸·구름 없는 대기, pristine) — `init_pristine_sfc_sw_dn` (W m-2)"
+          std: [sw_sfc]
+    - name: 구름 특성 (MODIS·VIIRS·GEO)
+      kind: mean
+      period: 1시간
+      items:
+        - text: "구름량(층별) — `obs_cld_amount` (%)"
+          std: [cloud]
+        - "구름 광학두께 — `obs_cld_od` (무차원)"
+        - "구름 액체수량 경로 — `obs_cld_lwp` (g m-2)"
+        - text: "구름 얼음수량 경로 — `obs_cld_iwp` (g m-2)"
+          std: [cloud_water]
+        - "구름 상단 기압 — `obs_cld_top_press` (hPa)"
+        - "구름 상단 온도 — `obs_cld_top_temp` (K)"
+    - name: 에어로졸
+      kind: mean
+      period: 1시간
+      items:
+        - "0.55 µm 에어로졸 광학두께(MATCH) — `init_match_aod55` (무차원)"
+
+access:
+  - name: CERES 주문·부분추출 도구 (SYN1deg Ed4.2 = Edition4B)
+    url: https://ceres-tool.larc.nasa.gov/ord-tool/jsp/SYN1degEd42Selection.jsp
+    method: 웹 주문 (변수·기간·영역 선택 → NetCDF3, 최대 2 GB)
+    note: 월·월별 시간대·일·1시간, 지역(1°)·동서 평균·전지구 평균을 골라 받습니다. 필요한 변수만 고를 수 있어 1시간 자료에 특히 편합니다.
+  - name: NASA Earthdata Search — CER_SYN1deg-1Hour_Terra-Aqua-NOAA20 Edition4B
+    url: https://search.earthdata.nasa.gov/search/granules?p=C3181056140-LARC_CLOUD
+    method: Earthdata Search / earthaccess (HDF4, 하루 1파일)
+    note: 일자료는 CER_SYN1deg-Day, 월자료는 CER_SYN1deg-Month, 월별 시간대 자료는 CER_SYN1deg-MHour(모두 _Terra-Aqua-NOAA20, Edition4B)입니다. NASA Earthdata 로그인(무료)이 필요합니다.
+  - name: CERES 자료 페이지 (SYN1deg 제품 목록·가용 기간)
+    url: https://ceres.larc.nasa.gov/data/#syn1deg-level-3
+    method: 웹
+
+example:
+  lang: python
+  note: "NASA Earthdata 계정으로 earthaccess.login()을 한 번 거친 뒤 실행합니다. ASDC 원본은 HDF4라 pyhdf로 읽으며, 변수 이름은 먼저 f.datasets()로 확인하세요."
+  code: |
+    # pip install earthaccess pyhdf numpy
+    import earthaccess
+    from pyhdf.SD import SD, SDC
+
+    earthaccess.login()
+    results = earthaccess.search_data(
+        short_name="CER_SYN1deg-1Hour_Terra-Aqua-NOAA20",
+        version="Edition4B",
+        temporal=("2025-07-01", "2025-07-01"),
+    )
+    files = earthaccess.download(results[:1], "./syn1deg")   # 하루치 1시간 자료
+
+    f = SD(files[0], SDC.READ)
+    print(sorted(f.datasets().keys())[:20])                 # 변수(SDS) 이름 확인
+    olr = f.select("obs_all_toa_lw")[:]                     # (24 시간, 180 위도, 360 경도) 예상
+    print(olr.shape)
+
+tips:
+  - "월평균 TOA·지표 복사의 장기 변화에는 SYN1deg가 아니라 EBAF를 쓰세요. SYN1deg Ed4A DQS는 이 자료가 기후 품질이 아니어서 구름·플럭스 장기 추세를 끌어내는 데 쓰지 말라고 밝힙니다."
+  - "DQS는 조정(adjusted, `adj_`) 단파·장파 플럭스에 코드 오류가 있어 쓰지 말라고 권고합니다. 지표 플럭스는 initial(`init_`) 값을 쓰고, 월평균만 필요하면 EBAF-Surface를 쓰세요."
+  - 정지궤도 위성 교체 시점(예 GOES·Meteosat·Himawari 세대 교체)에 플럭스·구름에 계단형 변화가 생길 수 있습니다. GEO 영역(60°S–60°N) 안 지역 분석에서 특히 확인하세요.
+  - "Ed4A 기준 전지구 순복사 불균형이 약 +4.5 W m-2로 해양 열 저장량 추정(약 0.7 W m-2)보다 훨씬 큽니다. 절대 에너지 수지에는 EBAF를 쓰세요."
+  - "태양복사(TSI) 정규화 오류로 2019년 8월, 2020년 5~7월 월값이 약 0.2 W m-2 크게 나왔다고 DQS가 밝혔습니다."
+  - 1시간 자료 하루 파일 하나가 수백 MB입니다. 필요한 변수·영역만 CERES 주문 도구로 받는 것이 훨씬 가볍습니다.
+  - 청천(clear-sky) 관측이 없는 격자에는 기본값을 쓰므로, 구름이 많은 위도대의 청천 동서 평균은 대표성이 낮을 수 있습니다.
+
+citations:
+  dataset:
+    - label: SYN1deg-1Hour Edition4B
+      text: >-
+        Doelling, D. (2026): CERES and GEO-Enhanced TOA, Within-Atmosphere and Surface Fluxes, Clouds and Aerosols 1-Hourly Terra-Aqua-NOAA20 Edition4B.
+        NASA Langley Atmospheric Science Data Center DAAC. https://doi.org/10.5067/TERRA-AQUA-NOAA20/CERES/SYN1DEG-1HOUR_L3.004B (Accessed DD MMM YYYY)
+      doi: 10.5067/TERRA-AQUA-NOAA20/CERES/SYN1DEG-1HOUR_L3.004B
+      bibtex: |
+        @misc{ceres_syn1deg_1hour_ed4b,
+          author    = {Doelling, David},
+          title     = {{CERES} and {GEO}-Enhanced {TOA}, Within-Atmosphere and Surface Fluxes, Clouds and Aerosols 1-Hourly {Terra-Aqua-NOAA20} {Edition4B}},
+          year      = {2026},
+          publisher = {NASA Langley Atmospheric Science Data Center Distributed Active Archive Center},
+          doi       = {10.5067/TERRA-AQUA-NOAA20/CERES/SYN1DEG-1HOUR_L3.004B},
+          note      = {Accessed DD MMM YYYY}
+        }
+    - label: SYN1deg-Day Edition4B
+      text: >-
+        Doelling, D. (2026): CERES and GEO-Enhanced TOA, Within-Atmosphere and Surface Fluxes, Clouds and Aerosols Daily Terra-Aqua-NOAA20 Edition4B.
+        NASA Langley Atmospheric Science Data Center DAAC. https://doi.org/10.5067/TERRA-AQUA-NOAA20/CERES/SYN1DEGDAY_L3.004B (Accessed DD MMM YYYY)
+      doi: 10.5067/TERRA-AQUA-NOAA20/CERES/SYN1DEGDAY_L3.004B
+      bibtex: |
+        @misc{ceres_syn1deg_day_ed4b,
+          author    = {Doelling, David},
+          title     = {{CERES} and {GEO}-Enhanced {TOA}, Within-Atmosphere and Surface Fluxes, Clouds and Aerosols Daily {Terra-Aqua-NOAA20} {Edition4B}},
+          year      = {2026},
+          publisher = {NASA Langley Atmospheric Science Data Center Distributed Active Archive Center},
+          doi       = {10.5067/TERRA-AQUA-NOAA20/CERES/SYN1DEGDAY_L3.004B},
+          note      = {Accessed DD MMM YYYY}
+        }
+    - label: SYN1deg-Month Edition4B
+      text: >-
+        Doelling, D. (2026): CERES and GEO-Enhanced TOA, Within-Atmosphere and Surface Fluxes, Clouds and Aerosols Monthly Terra-Aqua-NOAA20 Edition4B.
+        NASA Langley Atmospheric Science Data Center DAAC. https://doi.org/10.5067/TERRA-AQUA-NOAA20/CERES/SYN1DEGMONTH_L3.004B (Accessed DD MMM YYYY)
+      doi: 10.5067/TERRA-AQUA-NOAA20/CERES/SYN1DEGMONTH_L3.004B
+      bibtex: |
+        @misc{ceres_syn1deg_month_ed4b,
+          author    = {Doelling, David},
+          title     = {{CERES} and {GEO}-Enhanced {TOA}, Within-Atmosphere and Surface Fluxes, Clouds and Aerosols Monthly {Terra-Aqua-NOAA20} {Edition4B}},
+          year      = {2026},
+          publisher = {NASA Langley Atmospheric Science Data Center Distributed Active Archive Center},
+          doi       = {10.5067/TERRA-AQUA-NOAA20/CERES/SYN1DEGMONTH_L3.004B},
+          note      = {Accessed DD MMM YYYY}
+        }
+  papers:
+    - label: GEO 결합 시간 보간 방법 (TOA)
+      text: >-
+        Doelling, D. R., Loeb, N. G., Keyes, D. F., Nordeen, M. L., Morstad, D., Nguyen, C., Wielicki, B. A., Young, D. F., Sun, M. (2013):
+        Geostationary Enhanced Temporal Interpolation for CERES Flux Products. Journal of Atmospheric and Oceanic Technology, 30(6), 1072–1090.
+      doi: 10.1175/JTECH-D-12-00136.1
+      bibtex: |
+        @article{doelling2013geo,
+          author  = {Doelling, David R. and Loeb, Norman G. and Keyes, Dennis F. and Nordeen, Michele L. and Morstad, Daniel and Nguyen, Cathy and Wielicki, Bruce A. and Young, David F. and Sun, Moguo},
+          title   = {Geostationary Enhanced Temporal Interpolation for {CERES} Flux Products},
+          journal = {Journal of Atmospheric and Oceanic Technology},
+          volume  = {30},
+          number  = {6},
+          pages   = {1072--1090},
+          year    = {2013},
+          doi     = {10.1175/JTECH-D-12-00136.1}
+        }
+    - label: 지표 복사 계산·검증
+      text: >-
+        Rutan, D. A., Kato, S., Doelling, D. R., Rose, F. G., Nguyen, L. T., Caldwell, T. E., Loeb, N. G. (2015):
+        CERES Synoptic Product: Methodology and Validation of Surface Radiant Flux. Journal of Atmospheric and Oceanic Technology, 32(6), 1121–1143.
+      doi: 10.1175/JTECH-D-14-00165.1
+      bibtex: |
+        @article{rutan2015syn,
+          author  = {Rutan, David A. and Kato, Seiji and Doelling, David R. and Rose, Fred G. and Nguyen, Le Trang and Caldwell, Thomas E. and Loeb, Norman G.},
+          title   = {{CERES} Synoptic Product: Methodology and Validation of Surface Radiant Flux},
+          journal = {Journal of Atmospheric and Oceanic Technology},
+          volume  = {32},
+          number  = {6},
+          pages   = {1121--1143},
+          year    = {2015},
+          doi     = {10.1175/JTECH-D-14-00165.1}
+        }
+    - label: CERES 임무 (DQS 권장 참고문헌)
+      text: >-
+        Wielicki, B. A., Barkstrom, B. R., Harrison, E. F., Lee, R. B., Smith, G. L., Cooper, J. E. (1996):
+        Clouds and the Earth's Radiant Energy System (CERES): An Earth Observing System Experiment. Bulletin of the American Meteorological Society, 77(5), 853–868.
+      doi: 10.1175/1520-0477(1996)077<0853:CATERE>2.0.CO;2
+      bibtex: |
+        @article{wielicki1996ceres,
+          author  = {Wielicki, Bruce A. and Barkstrom, Bruce R. and Harrison, Edwin F. and Lee, Robert B. and Smith, G. Louis and Cooper, John E.},
+          title   = {Clouds and the Earth's Radiant Energy System ({CERES}): An Earth Observing System Experiment},
+          journal = {Bulletin of the American Meteorological Society},
+          volume  = {77},
+          number  = {5},
+          pages   = {853--868},
+          year    = {1996},
+          doi     = {10.1175/1520-0477(1996)077<0853:CATERE>2.0.CO;2}
+        }
+  acknowledgement: >-
+    CERES 팀은 제품 이름과 판(예 'CERES SYN1deg-1Hour Edition4B')을 논문에 밝히고 Wielicki et al. (1996)을 인용해 달라고 요청합니다.
+    ASDC에서 받았다면 "These data were obtained from the NASA Langley Research Center Atmospheric Science Data Center." 문구를 권장합니다.
+
+notices:
+  - date: "2026-03-20"
+    level: info
+    title: Terra 2027년 2월·Aqua 2027년 9월 과학 운영 종료 전망 — SYN1deg는 이미 NOAA-20 기반
+    body: >-
+      NASA는 연료·전력 한계로 Terra는 2027년 2월, Aqua는 2027년 9월에 과학 운영이 끝날 것으로 내다봤습니다.
+      SYN1deg Ed4B는 2022년 4월부터 NOAA-20 CERES만 쓰므로 현재 생산에는 직접 영향이 없지만, 2022년 3월 이전 기록은 두 위성 관측입니다.
+    source: https://science.nasa.gov/science-research/earth-science/terra-the-end-of-an-era
+  - date: "2025-12-29"
+    level: info
+    title: Edition 5 개발 현황 공개 — 공개 일정은 미정
+    body: >-
+      CERES 과학팀 회의 정리 글에 따르면 Edition 5용 Fu-Liou 복사 모델은 대역 수를 18개에서 29개로 늘려 TOA 장파 편차를 약 2 W m-2에서 0.5 W m-2 미만으로 줄였고,
+      야간 구름 산출 개선이 진행 중입니다. DQS는 GEO 주사 동기화·GEO 구름 일관성·지표 플럭스 개선을 Edition 5에서 하겠다고 밝혔으나 공개 날짜는 없습니다.
+    source: https://science.nasa.gov/science-research/earth-science/the-state-of-ceres-updates-and-highlights
+  - date: "2025-05-08"
+    level: warning
+    title: SYN1deg Edition4B 공개(2025-05-07) — 2022년 4월부터 NOAA-20 단독·MERRA-2 입력
+    body: >-
+      Terra+Aqua+NOAA-20+GEO를 쓰는 Edition4B(주문 도구 이름 Edition4.2)가 공개되었습니다. 2022년 4월부터 Terra·Aqua 관측을 빼고 NOAA-20만 쓰며,
+      구름 산출·플럭스 계산 입력을 MERRA-2로 바꾸고 GEO 구름 산출과 박명 시간 처리를 개선했습니다.
+    source: https://ceres.larc.nasa.gov/documents/DQ_summaries/CERES_SYN1deg_Ed4A_DQS_V1.pdf
+
+links:
+  - name: CERES 자료 페이지 (SYN1deg 제품 표)
+    url: https://ceres.larc.nasa.gov/data/#syn1deg-level-3
+  - name: CERES SYN1deg 데이터 품질 요약(DQS, Ed4A/Ed4B V1)
+    url: https://ceres.larc.nasa.gov/documents/DQ_summaries/CERES_SYN1deg_Ed4A_DQS_V1.pdf
+  - name: SYN1deg-1Hour Data Products Catalog (변수표)
+    url: https://ceres.larc.nasa.gov/documents/DPC/DPC_current/pdfs/DPC_SYN1deg-1Hour_R6V1.pdf
+  - name: CERES 문서 목록 (DQS·DPC)
+    url: https://ceres.larc.nasa.gov/data/documentation/
+
+watch_urls:
+  - https://ceres.larc.nasa.gov/data/
+  - https://ceres.larc.nasa.gov/data/documentation/
+
+last_verified: "2026-10-13"

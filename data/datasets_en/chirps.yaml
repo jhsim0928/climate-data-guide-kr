@@ -1,0 +1,285 @@
+# ─────────────────────────────────────────────────────────────
+# CHIRPS — dataset information file (English edition)
+# Satellite tab (precipitation). UCSB Climate Hazards Center's blend of IR satellite estimates and station data. v3.0 is current; v2.0 production ends after December 2026.
+# After editing, update last_verified to the date you checked the official pages.
+# ─────────────────────────────────────────────────────────────
+id: chirps
+name: "CHIRPS"
+full_name: Climate Hazards Center Infrared Precipitation with Stations, Version 3
+category: analysis
+domain: satellite
+group: 강수
+order: 40
+also_in:
+  - domain: atmosphere
+    group: 강수 자료
+domains: [대기, 육지, 수문]
+provider: UC Santa Barbara Climate Hazards Center (CHC), in partnership with USGS and USAID FEWS NET (distributed via the CHC data repository, Google Earth Engine and USGS EWX)
+
+status: active
+status_note: >-
+  CHIRPS v3.0 is the current version, with the preliminary product (Prelim) updated every pentad and the final product (Final) every month. CHC states that v3.0 replaces v2.0,
+  and that v2.0, kept running through 2026 to support the transition, will end production after December 2026. When checked on 2026-10-13, the v3 daily collections in Google Earth Engine ran through 2026-08-31.
+
+period:
+  start: "1981-01"
+  end: present
+  note: >-
+    v3 Final runs from 1981-01 to the present and v3 Prelim from 2025-01. Among the daily products, the IMERG-based (sat) archive starts in 2001 and the ERA5-based (rnl) archive in 1981, according to the Sci Data paper.
+    v2.0 also starts in 1981; when checked on 2026-10-13 the v2 daily collection in Earth Engine ran through 2026-08-31.
+
+resolution:
+  spatial_short: "6 km (0.05°)"
+  temporal_short: "1일"
+  spatial: >-
+    0.05° latitude–longitude grid. The v3 global domain covers 60°N–60°S at all longitudes (7200×2400), with separate Africa (1500×1600) and Latin America (1720×1900) domains.
+    Station data are blended over land only. v2.0 covers 50°S–50°N.
+  vertical: Surface precipitation (single level)
+  temporal: >-
+    Pentads (5-day) and months are the base products; dekads (10-day), 2–6-month and annual totals and daily data are derived from them. Daily values split pentad totals using daily ratios from ERA5 (rnl) or IMERG Late V07 (sat).
+
+update: "Prelim 2 days after each pentad ends (the 2nd, 7th, 12th, 17th, 22nd and 27th of each month) / Final monthly (typically in the third week of the following month)"
+license: CC BY 4.0 (CHC states that it has waived copyright to the extent possible under law). Free, no account needed
+account_required: false
+
+summary: >-
+  CHIRPS is a 0.05° quasi-global precipitation dataset that calibrates satellite precipitation estimated from geostationary IR cold cloud duration (CHIRP) to a high-resolution climatology (CHPclim)
+  and blends in station precipitation from many sources. Developed with USGS and FEWS NET for drought monitoring and seasonal rainfall trend analysis in data-sparse developing regions, it runs from 1981.
+  v3.0 uses nearly four times as many gauge sources as v2, introduces gauge-undercatch correction, a new climatology (CHPclim v2) and a new IR algorithm (CHIRP3), and extends coverage to 60°.
+
+time_convention:
+  summary: >-
+    All values are accumulations over their period (daily mm/day, pentad mm/pentad, monthly mm/month). CHIRPS is fundamentally a pentad and monthly product: each month has six pentads,
+    covering days 1–5, 6–10, 11–15, 16–20, 21–25 and the 26th to the end of the month (so the last pentad varies in length). Daily values are pentad totals split by another product's daily ratios,
+    and CHC explains that the date of a daily value "should be interpreted as a consistent date label assigned during the disaggregation process", not a uniform observation window (such as 00–24 UTC).
+  points:
+    - "A pentad is not always five days (the 26th to month end spans 3–6 days). Divide by the actual number of days when converting pentad totals to daily means."
+    - "Daily rnl (split with ERA5) and sat (split with IMERG Late V07) divide the same pentad totals with different daily distributions. Use only one of them within a study."
+    - "Daily values are regenerated in batches at each pentad update and are not independent daily observations. Be careful with analyses that depend on daily extremes or exact dates."
+    - "Prelim uses only the stations that arrive quickly, 2 days after the pentad ends; Final is rebuilt with more stations around the third week of the following month. The two give different values for the same period."
+    - "ERA5 arrives about 5 days late, so Prelim daily data exist only in the IMERG-based (sat) version."
+  source: https://www.chc.ucsb.edu/data/chirps3
+  source_name: "CHC CHIRPS v3 page + Funk et al. (2026) Scientific Data + CHIRPS FAQ (pentad definition)"
+
+variables:
+  note: >-
+    Precipitation is the only published variable, distributed as GeoTIFF, NetCDF, BIL and COG. The names below are Google Earth Engine band names; the variable name inside CHC NetCDF files could not be confirmed from official documents.
+    Missing or erroneous values are -9999 (including missing IR data from 2023 onward).
+  full_list: https://www.chc.ucsb.edu/data/chirps3
+  groups:
+    - name: Pentad and monthly (base products)
+      kind: accum
+      period: Pentad (5-day) and monthly
+      items:
+        - text: "Precipitation — `precipitation` (mm/pentad, mm/month)"
+          note: "Earth Engine UCSB-CHC/CHIRPS/V3/PENTAD. Dekad, 2–6-month and annual totals follow the same convention"
+    - name: Daily (rnl and sat)
+      kind: accum
+      period: Daily
+      items:
+        - text: "Daily precipitation — `precipitation` (mm/d)"
+          note: "Earth Engine UCSB-CHC/CHIRPS/V3/DAILY_RNL (split with ERA5) and DAILY_SAT (split with IMERG Late V07). Dates are labels assigned during disaggregation"
+    - name: Diagnostics
+      kind: static
+      items:
+        - text: "Legates-Willmott gauge-undercatch correction factor grids"
+          note: CHC diagnostics/legates-willmott_corrections folder
+        - text: "Locations where missing IR data were filled with ERA5 (fill maps)"
+          kind: instant
+          note: "Marks where 1981–2022 IR gaps were filled with ERA5. diagnostics/fillmaps folder"
+
+access:
+  - name: CHC data repository (CHIRPS v3.0)
+    url: https://data.chc.ucsb.edu/products/CHIRPS/v3.0/
+    method: HTTPS download (no account)
+    note: >-
+      Folders for pentads, dekads, daily, monthly and multi-month aggregates, split into Africa, Latin America and global domains. The daily product is described in daily/readme.txt and station sources are listed in README-CHIRPSv3.0.txt.
+  - name: Google Earth Engine
+    url: https://developers.google.com/earth-engine/datasets/catalog/UCSB-CHC_CHIRPS_V3_PENTAD
+    method: Cloud analysis (UCSB-CHC/CHIRPS/V3/PENTAD, DAILY_RNL, DAILY_SAT)
+    note: v2 is UCSB-CHG/CHIRPS/DAILY and PENTAD. When checked on 2026-10-13, v3 pentads ran through 2026-08-26 and v3 daily data through 2026-08-31.
+  - name: USGS and CHC Early Warning Explorer (EWX)
+    url: https://ewx3.chc.ucsb.edu/ewx/index.html
+    method: Web maps and time series
+  - name: CHC data repository (CHIRPS v2.0, through 2026)
+    url: https://data.chc.ucsb.edu/products/CHIRPS-2.0/
+    method: HTTPS download
+    note: The 50°S–50°N version. Production ends after December 2026, so start new work with v3.
+
+example:
+  lang: python
+  note: >-
+    Uses the Google Earth Engine Python API to compute the July 2023 precipitation total over the Korean Peninsula from CHIRPS v3 daily data (IMERG-split version). An Earth Engine account and
+    a cloud project are required; run ee.Authenticate() the first time. Replace the project name with your own.
+  code: |
+    import ee
+
+    ee.Initialize(project="my-gee-project")   # your cloud project name
+
+    col = (ee.ImageCollection("UCSB-CHC/CHIRPS/V3/DAILY_SAT")   # ERA5-split version: DAILY_RNL
+           .filterDate("2023-07-01", "2023-08-01")
+           .select("precipitation"))                            # mm/d
+    total = col.sum()                                           # July total (mm)
+
+    korea = ee.Geometry.Rectangle([124, 33, 132, 39])
+    stat = total.reduceRegion(ee.Reducer.mean(), korea, scale=5566)
+    print(stat.getInfo())   # values over the sea are satellite-only estimates without stations
+
+tips:
+  - "Because of the gauge-undercatch correction (Legates-Willmott), v3 is modestly wetter than v2 in most areas. Do not splice v2 and v3 into one series, and when comparing with stations, use gauge-corrected station data as CHC recommends."
+  - "CHIRPS is fundamentally a pentad and monthly product. Daily values borrow ERA5 or IMERG daily distributions to split pentads, which limits daily extremes and wet-day statistics."
+  - "IR gaps in 1981–2022 were filled with ERA5 precipitation (about 20% of land in the 1980s), while missing IR from 2023 onward is left as -9999. Check the fill maps to see where filling occurred."
+  - "The paper reports ERA5-related biases of up to about 30% in Central Africa and Central Asia, making decadal variations and trends there uncertain. Station networks are also declining over time in all archives."
+  - "Station data are blended over land only. Ocean values are satellite-only estimates and are not suitable for ocean precipitation studies."
+  - "Being based on IR cold cloud duration, it may handle orographic rain, warm-cloud rain and winter snowfall poorly. Where networks are dense, as in Korea, compare first with KMA gridded analyses."
+  - "Mixing Prelim and Final means recent months will change later. Use Final in papers, and say so if you used Prelim."
+
+citations:
+  dataset:
+    - label: CHIRPS v3.0 dataset (CHC, DataCite)
+      text: >-
+        Climate Hazards Center (2025): CHIRPS: Rainfall Estimates from Rain Gauge and Satellite Observations, Version 3.0. UCSB.
+        https://doi.org/10.15780/G2JQ0P (accessed [DATE])
+      doi: 10.15780/G2JQ0P
+      bibtex: |
+        @misc{chirps_v3,
+          author    = {{Climate Hazards Center}},
+          title     = {{CHIRPS}: Rainfall Estimates from Rain Gauge and Satellite Observations, Version 3.0},
+          year      = {2025},
+          publisher = {UCSB},
+          doi       = {10.15780/G2JQ0P}
+        }
+    - label: CHIRPS v2.0 dataset (if you used v2)
+      text: >-
+        Climate Hazards Center (2015): Climate Hazards Center InfraRed Precipitation with Station (CHIRPSv2.0). Climate Hazards Group.
+        https://doi.org/10.15780/G2RP4Q
+      doi: 10.15780/G2RP4Q
+      bibtex: |
+        @misc{chirps_v2,
+          author    = {{Climate Hazards Center}},
+          title     = {Climate Hazards Center InfraRed Precipitation with Station ({CHIRPSv2.0})},
+          year      = {2015},
+          publisher = {Climate Hazards Group},
+          doi       = {10.15780/G2RP4Q}
+        }
+  papers:
+    - label: CHIRPS v3 data descriptor (Funk et al., 2026)
+      text: >-
+        Funk, C., Peterson, P., Harrison, L., Saldivar, R., Landsfeld, M., Pedreros, D., Shukla, S., Fink, A. H., et al., Husak, G. (2026):
+        The Climate Hazards Center Infrared Precipitation with Stations, Version 3. Scientific Data, 13, 718.
+      doi: 10.1038/s41597-026-07096-4
+      bibtex: |
+        @article{funk2026chirps3,
+          author  = {Funk, Chris and Peterson, Pete and Harrison, Laura and Saldivar, Robert and Landsfeld, Martin and Pedreros, Diego and Shukla, Shraddhanand and Fink, Andreas H. and others},
+          title   = {The Climate Hazards Center Infrared Precipitation with Stations, Version 3},
+          journal = {Scientific Data},
+          volume  = {13},
+          pages   = {718},
+          year    = {2026},
+          doi     = {10.1038/s41597-026-07096-4}
+        }
+    - label: CHIRPS v2 reference paper (Funk et al., 2015)
+      text: >-
+        Funk, C., Peterson, P., Landsfeld, M., Pedreros, D., Verdin, J., Shukla, S., Husak, G., Rowland, J., Harrison, L., Hoell, A., Michaelsen, J. (2015):
+        The climate hazards infrared precipitation with stations—a new environmental record for monitoring extremes. Scientific Data, 2, 150066.
+      doi: 10.1038/sdata.2015.66
+      bibtex: |
+        @article{funk2015chirps,
+          author  = {Funk, Chris and Peterson, Pete and Landsfeld, Martin and Pedreros, Diego and Verdin, James and Shukla, Shraddhanand and Husak, Gregory and Rowland, James and Harrison, Laura and Hoell, Andrew and Michaelsen, Joel},
+          title   = {The climate hazards infrared precipitation with stations---a new environmental record for monitoring extremes},
+          journal = {Scientific Data},
+          volume  = {2},
+          pages   = {150066},
+          year    = {2015},
+          doi     = {10.1038/sdata.2015.66}
+        }
+  acknowledgement: >-
+    CHC asks users to cite the v3 data repository DOI (10.15780/G2JQ0P) with the access date; for the method, cite Funk et al. (2026) (check the full author list in the Scientific Data article).
+    If you used v2.0, cite Funk et al. (2015) and the v2 DOI (10.15780/G2RP4Q), and state which version (Prelim/Final) and which daily product (rnl/sat) you used.
+
+transitions:
+  - from: CHIRPS v2.0
+    to: CHIRPS v3.0
+    status: completed
+    date: "2025-01"
+    summary: >-
+      v3.0 was released in January 2025 and replaces v2.0. The IR algorithm, climatology, station count, gauge correction and spatial coverage all changed; v2.0 continues in parallel only through the end of 2026.
+    changes:
+      - aspect: Spatial coverage
+        before: "50°S–50°N"
+        after: "60°S–60°N (plus separate Africa and Latin America domains)"
+      - aspect: Satellite estimation algorithm
+        before: "CHIRP2 — IR regression with an intercept term that absorbed variance"
+        after: "CHIRP3 — variance-preserving: cold cloud duration (hours below 235 K) times a climatology-based slope; GridSat-B1 for 1981–2000; IR gaps filled with ERA5"
+      - aspect: Climatology
+        before: "CHPclim v1"
+        after: "CHPclim v2 (1991–2020, using IMERG v6 Final and undercatch-corrected station normals)"
+      - aspect: Stations
+        before: "About 11,500 stations from 12 sources (2019); about 7,000 for Prelim (GTS and Mexico)"
+        after: "About 21,500 stations from 29 sources (Final, late 2024); about 12,000 for Prelim"
+      - aspect: Gauge-undercatch correction
+        before: "None"
+        after: "Legates-Willmott correction applied — modestly wetter in most areas"
+      - aspect: Daily data
+        before: "Daily product (global, and 0.25° for Africa)"
+        after: "Two versions splitting pentad totals by daily ratios from ERA5 (rnl, from 1981) or IMERG Late V07 (sat, including Prelim)"
+      - aspect: Production status
+        before: "Produced in parallel through 2026; ends after December 2026"
+        after: "Current version — Prelim every pentad, Final every month"
+    impacts:
+      - Do not splice v2 and v3 into one series; download the whole period again as v3. Because v3 is generally wetter, recompute climatologies and trends.
+      - The 50°–60° latitude bands are new in v3, so results there cannot be compared with v2.
+      - Earth Engine collection IDs change (UCSB-CHG/CHIRPS/DAILY → UCSB-CHC/CHIRPS/V3/DAILY_RNL or DAILY_SAT).
+    sources:
+      - name: CHC CHIRPS v3 page
+        url: https://www.chc.ucsb.edu/data/chirps3
+      - name: Funk et al. (2026), Scientific Data
+        url: https://doi.org/10.1038/s41597-026-07096-4
+      - name: CHC CHIRPS v2 page (end of v2 production)
+        url: https://www.chc.ucsb.edu/data/chirps
+
+notices:
+  - date: "2026-09-20"
+    level: warning
+    title: "Production of CHIRPS v2.0 will end after December 2026 — move to v3"
+    body: >-
+      CHC states that "production of CHIRPS v2 will end after December 2026" and encourages users to transition to CHIRPS v3 to ensure continuity of operations. If monitoring or forecasting systems run on v2,
+      switch to the v3 paths and Earth Engine IDs before 2027. The banner on the CHIRPS v2 page carries no posting date, so the date used here is when CHC added its v2 production-change note (parallel production through 2026) to the CHIRPS FAQ (2026-09-20, per the wiki revision history).
+    source: https://www.chc.ucsb.edu/data/chirps
+  - date: "2026-06-10"
+    level: info
+    title: "CHC's CHIRPS3 dataset now available for all — Scientific Data paper published"
+    body: >-
+      CHC announced that the CHIRPS3 dataset is "now available for all". The improvements are described in the data descriptor published in Scientific Data on 11 April 2026 (Funk et al., 2026).
+    source: https://www.chc.ucsb.edu/news/announcement/534
+  - date: "2025-01"
+    level: info
+    title: "CHIRPS v3 publicly available — v2 produced in parallel through 2026"
+    body: >-
+      According to the CHIRPS FAQ, CHIRPS v3 has been publicly available since January 2025, and v2 production continues in parallel through 2026 to support the transition. The v3 data DOI (10.15780/G2JQ0P) was also registered in January 2025.
+    source: https://wiki.chc.ucsb.edu/CHIRPS_FAQ
+
+links:
+  - name: CHC CHIRPS v3 page
+    url: https://www.chc.ucsb.edu/data/chirps3
+  - name: CHC CHIRPS v2 page
+    url: https://www.chc.ucsb.edu/data/chirps
+  - name: CHIRPS FAQ (pentad definition, Prelim and Final)
+    url: https://wiki.chc.ucsb.edu/CHIRPS_FAQ
+  - name: Funk et al. (2026) — CHIRPS v3 data descriptor
+    url: https://doi.org/10.1038/s41597-026-07096-4
+  - name: CHIRPS v3 daily README
+    url: https://data.chc.ucsb.edu/products/CHIRPS/v3.0/daily/readme.txt
+  - name: CHIRPS v3 diagnostics (fill maps, correction factors)
+    url: https://data.chc.ucsb.edu/products/CHIRPS/v3.0/diagnostics/
+  - name: Earth Engine — CHIRPS v3 daily (IMERG split)
+    url: https://developers.google.com/earth-engine/datasets/catalog/UCSB-CHC_CHIRPS_V3_DAILY_SAT
+  - name: Earth Engine — CHIRPS v3 daily (ERA5 split)
+    url: https://developers.google.com/earth-engine/datasets/catalog/UCSB-CHC_CHIRPS_V3_DAILY_RNL
+
+watch_urls:
+  - https://www.chc.ucsb.edu/data/chirps3
+  - https://www.chc.ucsb.edu/data/chirps
+  - https://www.chc.ucsb.edu/news/announcement/archive
+
+last_verified: "2026-10-13"

@@ -1,0 +1,285 @@
+# ─────────────────────────────────────────────────────────────
+# CHIRPS — 데이터셋 정보 파일
+# 위성 탭(강수). UCSB Climate Hazards Center의 적외 위성+관측소 결합 강수입니다. v3.0이 현재판이고 v2.0은 2026년 12월 이후 생산이 끝납니다.
+# 수정 후에는 공식 페이지에서 확인한 날짜로 last_verified 를 갱신하세요.
+# ─────────────────────────────────────────────────────────────
+id: chirps
+name: "CHIRPS"
+full_name: Climate Hazards Center Infrared Precipitation with Stations, Version 3 (적외 위성 추정과 관측소 자료를 결합한 준전지구 육상 강수, 0.05°·1981~)
+category: analysis
+domain: satellite
+group: 강수
+order: 40
+also_in:
+  - domain: atmosphere
+    group: 강수 자료
+domains: [대기, 육지, 수문]
+provider: UC Santa Barbara Climate Hazards Center(CHC) (USGS·USAID FEWS NET 협력, 배포 CHC 자료 저장소·Google Earth Engine·USGS EWX)
+
+status: active
+status_note: >-
+  CHIRPS v3.0이 현재판이며 예비판(Prelim)은 반순(5일)마다, 확정판(Final)은 매달 갱신됩니다. CHC는 v3.0이 v2.0을 대체한다고 밝혔고,
+  v2.0은 전환을 돕기 위해 2026년까지 함께 만들다가 2026년 12월 이후 생산을 끝낸다고 안내합니다. 2026-10-13 확인 시 Google Earth Engine의 v3 일자료는 2026-08-31까지입니다.
+
+period:
+  start: "1981-01"
+  end: present
+  note: >-
+    v3 확정판은 1981-01부터 현재까지, v3 예비판은 2025-01부터입니다. 일자료 중 IMERG 기반(sat)은 Sci Data 논문 기준 2001년부터, ERA5 기반(rnl)은 1981년부터입니다.
+    v2.0도 1981년부터이며 2026-10-13 확인 시 Earth Engine의 v2 일자료는 2026-08-31까지 들어와 있습니다.
+
+resolution:
+  spatial_short: "6 km (0.05°)"
+  temporal_short: "1일"
+  spatial: >-
+    0.05° 위경도 격자. v3 전지구 영역은 60°N–60°S 전 경도(7200×2400), 아프리카(1500×1600)·라틴아메리카(1720×1900) 영역 파일도 있습니다.
+    관측소 자료는 육지에만 들어갑니다. v2.0은 50°S–50°N입니다.
+  vertical: 지표 강수 단일층
+  temporal: >-
+    반순(5일)·월이 기본 산출물이고, 순(10일)·2~6개월·연 합계와 일자료는 여기서 파생합니다. 일자료는 반순 합계를 ERA5(rnl) 또는 IMERG Late V07(sat)의 일 비율로 나눈 값입니다.
+
+update: "예비판 반순 종료 2일 뒤(매달 2·7·12·17·22·27일) / 확정판 매달(보통 다음 달 셋째 주)"
+license: CC BY 4.0 (CHC는 법이 허용하는 한도에서 저작권을 포기했다고 밝힘). 계정 없이 무료
+account_required: false
+
+summary: >-
+  CHIRPS는 정지궤도 위성의 적외 '찬 구름 지속시간'으로 추정한 강수(CHIRP)를 고해상도 기후값(CHPclim)에 맞추고, 여러 기관의 관측소 강수를 섞어 만든
+  0.05° 준전지구 강수입니다. 관측이 드문 개발도상국의 가뭄 감시와 계절 강수 추세 분석을 위해 USGS·FEWS NET과 함께 개발되었고, 1981년부터 이어집니다.
+  v3.0은 관측소 출처가 v2의 약 4배로 늘고, 우량계 포착 손실 보정과 새 기후값(CHPclim v2)·새 적외 알고리즘(CHIRP3)을 도입했으며 범위를 60°까지 넓혔습니다.
+
+time_convention:
+  summary: >-
+    모든 값은 그 기간의 누적 강수량입니다(일자료 mm/day, 반순 mm/pentad, 월 mm/month). CHIRPS는 기본적으로 반순·월 자료이고, 한 달은 반순 6개로 나뉘어
+    1~5·6~10·11~15·16~20·21~25일과 26일~말일로 묶입니다(마지막 반순 길이는 달마다 다름). 일자료는 반순 합계를 다른 자료의 일별 비율로 나눈 것이라
+    날짜는 '분해 과정에서 붙인 일관된 이름표'일 뿐, 균일한 관측 시간 창(예: 00~24 UTC)을 뜻하지 않는다고 CHC는 설명합니다.
+  points:
+    - "반순 하나가 5일이 아닐 수 있습니다(26일~말일은 3~6일). 반순 값을 일평균으로 바꿀 때 실제 일수로 나누세요."
+    - "일자료 rnl(ERA5로 분해)과 sat(IMERG Late V07로 분해)은 같은 반순 합계를 서로 다른 일 분포로 나눈 것입니다. 한 연구 안에서는 하나만 쓰세요."
+    - "일자료는 반순이 갱신될 때 묶음으로 다시 만들어지며 독립적인 일 관측이 아닙니다. 일 단위 극한값이나 정확한 날짜가 중요한 분석에는 주의하세요."
+    - "예비판(Prelim)은 반순 종료 2일 뒤 빠르게 들어오는 관측소만 쓰고, 확정판(Final)은 다음 달 셋째 주쯤 더 많은 관측소로 다시 만듭니다. 같은 기간이라도 두 판의 값이 다릅니다."
+    - "ERA5는 약 5일 늦게 나오므로 예비판 일자료는 IMERG 기반(sat)만 있습니다."
+  source: https://www.chc.ucsb.edu/data/chirps3
+  source_name: "CHC CHIRPS v3 페이지 + Funk et al. (2026) Scientific Data + CHIRPS FAQ(반순 정의)"
+
+variables:
+  note: >-
+    공개 자료는 강수 하나이며 GeoTIFF·NetCDF·BIL·COG로 배포됩니다. 아래 이름은 Google Earth Engine 밴드 이름이고, CHC NetCDF 파일 속 변수 이름은 공식 문서에서 확인하지 못했습니다.
+    결측·오류 값은 -9999입니다(2023년 이후 적외 자료 결측 포함).
+  full_list: https://www.chc.ucsb.edu/data/chirps3
+  groups:
+    - name: 반순·월 (기본 산출물)
+      kind: accum
+      period: 반순(5일)·월
+      items:
+        - text: "강수량 — `precipitation` (mm/pentad, mm/month)"
+          note: "Earth Engine UCSB-CHC/CHIRPS/V3/PENTAD. 순(10일)·2~6개월·연 합계도 같은 방식"
+    - name: 일자료 (rnl·sat)
+      kind: accum
+      period: 일
+      items:
+        - text: "일강수량 — `precipitation` (mm/d)"
+          note: "Earth Engine UCSB-CHC/CHIRPS/V3/DAILY_RNL(ERA5 분해)·DAILY_SAT(IMERG Late V07 분해). 날짜는 분해 과정에서 붙인 이름표"
+    - name: 진단 자료
+      kind: static
+      items:
+        - text: "Legates-Willmott 우량계 포착 손실 보정 계수 격자"
+          note: CHC diagnostics/legates-willmott_corrections 폴더
+        - text: "적외 결측을 ERA5로 메운 위치(fill map)"
+          kind: instant
+          note: "1981~2022년 적외 공백을 ERA5로 채운 곳 표시. diagnostics/fillmaps 폴더"
+
+access:
+  - name: CHC 자료 저장소 (CHIRPS v3.0)
+    url: https://data.chc.ucsb.edu/products/CHIRPS/v3.0/
+    method: HTTPS 다운로드 (계정 없음)
+    note: >-
+      반순·순·일·월·다개월 폴더와 아프리카·라틴아메리카·전지구 영역으로 나뉩니다. 일자료 설명은 daily/readme.txt, 관측소 출처 목록은 README-CHIRPSv3.0.txt에 있습니다.
+  - name: Google Earth Engine
+    url: https://developers.google.com/earth-engine/datasets/catalog/UCSB-CHC_CHIRPS_V3_PENTAD
+    method: 클라우드 분석 (UCSB-CHC/CHIRPS/V3/PENTAD, DAILY_RNL, DAILY_SAT)
+    note: v2는 UCSB-CHG/CHIRPS/DAILY·PENTAD입니다. 2026-10-13 확인 시 v3 반순은 2026-08-26, 일자료는 2026-08-31까지입니다.
+  - name: USGS·CHC Early Warning Explorer (EWX)
+    url: https://ewx3.chc.ucsb.edu/ewx/index.html
+    method: 웹 지도·시계열 보기
+  - name: CHC 자료 저장소 (CHIRPS v2.0, 2026년까지)
+    url: https://data.chc.ucsb.edu/products/CHIRPS-2.0/
+    method: HTTPS 다운로드
+    note: 50°S–50°N 판입니다. 2026년 12월 이후 생산이 끝나므로 새 작업은 v3로 시작하세요.
+
+example:
+  lang: python
+  note: >-
+    Google Earth Engine 파이썬 API로 CHIRPS v3 일자료(IMERG 분해판)에서 2023년 7월 한반도 영역 월강수량을 계산하는 예입니다. Earth Engine 계정과
+    클라우드 프로젝트가 필요하며 처음에는 ee.Authenticate()를 실행합니다. 프로젝트 이름은 자신의 것으로 바꾸세요.
+  code: |
+    import ee
+
+    ee.Initialize(project="my-gee-project")   # 자신의 클라우드 프로젝트 이름
+
+    col = (ee.ImageCollection("UCSB-CHC/CHIRPS/V3/DAILY_SAT")   # ERA5 분해판은 DAILY_RNL
+           .filterDate("2023-07-01", "2023-08-01")
+           .select("precipitation"))                            # mm/d
+    total = col.sum()                                           # 7월 합계 (mm)
+
+    korea = ee.Geometry.Rectangle([124, 33, 132, 39])
+    stat = total.reduceRegion(ee.Reducer.mean(), korea, scale=5566)
+    print(stat.getInfo())   # 바다 쪽은 관측소 없이 위성 추정만 들어간 값입니다
+
+tips:
+  - "v3는 우량계 포착 손실 보정(Legates-Willmott) 때문에 대부분 지역에서 v2보다 조금 더 습합니다. v2와 v3를 한 시계열로 이어 붙이지 말고, 관측소와 비교할 때는 CHC 권고대로 같은 보정을 한 관측값을 쓰세요."
+  - "CHIRPS는 반순·월 자료가 기본입니다. 일자료는 ERA5나 IMERG의 일 분포를 빌려 나눈 값이라 일 단위 극한·강수일수 분석에는 한계가 큽니다."
+  - "1981~2022년 적외 공백은 ERA5 강수로 메웠고(1980년대 육지의 약 20%), 2023년 이후 적외 결측은 -9999로 남깁니다. fill map으로 메운 위치를 확인하세요."
+  - "중앙아프리카·중앙아시아는 ERA5 관련 편향이 최대 약 30%까지 있어 그 지역의 10년 변동·추세는 불확실하다고 논문이 밝힙니다. 관측소망도 모든 자료원에서 해마다 줄고 있습니다."
+  - "관측소 자료가 섞이는 것은 육지뿐입니다. 해양 값은 위성 추정만으로 만든 것이니 해양 강수 연구에는 적합하지 않습니다."
+  - "적외(찬 구름 지속시간) 기반이라 지형성 강수나 따뜻한 구름 강수, 겨울 강설은 잘 잡지 못할 수 있습니다. 한반도처럼 관측망이 조밀한 곳은 기상청 격자 자료와 먼저 비교해 보세요."
+  - "예비판과 확정판을 섞어 쓰면 최근 몇 달의 값이 나중에 바뀝니다. 논문에는 확정판을 쓰고, 예비판을 썼다면 밝히세요."
+
+citations:
+  dataset:
+    - label: CHIRPS v3.0 데이터셋 (CHC, DataCite)
+      text: >-
+        Climate Hazards Center (2025): CHIRPS: Rainfall Estimates from Rain Gauge and Satellite Observations, Version 3.0. UCSB.
+        https://doi.org/10.15780/G2JQ0P (accessed [DATE])
+      doi: 10.15780/G2JQ0P
+      bibtex: |
+        @misc{chirps_v3,
+          author    = {{Climate Hazards Center}},
+          title     = {{CHIRPS}: Rainfall Estimates from Rain Gauge and Satellite Observations, Version 3.0},
+          year      = {2025},
+          publisher = {UCSB},
+          doi       = {10.15780/G2JQ0P}
+        }
+    - label: CHIRPS v2.0 데이터셋 (v2를 썼다면)
+      text: >-
+        Climate Hazards Center (2015): Climate Hazards Center InfraRed Precipitation with Station (CHIRPSv2.0). Climate Hazards Group.
+        https://doi.org/10.15780/G2RP4Q
+      doi: 10.15780/G2RP4Q
+      bibtex: |
+        @misc{chirps_v2,
+          author    = {{Climate Hazards Center}},
+          title     = {Climate Hazards Center InfraRed Precipitation with Station ({CHIRPSv2.0})},
+          year      = {2015},
+          publisher = {Climate Hazards Group},
+          doi       = {10.15780/G2RP4Q}
+        }
+  papers:
+    - label: CHIRPS v3 자료 기술 논문 (Funk et al., 2026)
+      text: >-
+        Funk, C., Peterson, P., Harrison, L., Saldivar, R., Landsfeld, M., Pedreros, D., Shukla, S., Fink, A. H., et al., Husak, G. (2026):
+        The Climate Hazards Center Infrared Precipitation with Stations, Version 3. Scientific Data, 13, 718.
+      doi: 10.1038/s41597-026-07096-4
+      bibtex: |
+        @article{funk2026chirps3,
+          author  = {Funk, Chris and Peterson, Pete and Harrison, Laura and Saldivar, Robert and Landsfeld, Martin and Pedreros, Diego and Shukla, Shraddhanand and Fink, Andreas H. and others},
+          title   = {The Climate Hazards Center Infrared Precipitation with Stations, Version 3},
+          journal = {Scientific Data},
+          volume  = {13},
+          pages   = {718},
+          year    = {2026},
+          doi     = {10.1038/s41597-026-07096-4}
+        }
+    - label: CHIRPS v2 대표 논문 (Funk et al., 2015)
+      text: >-
+        Funk, C., Peterson, P., Landsfeld, M., Pedreros, D., Verdin, J., Shukla, S., Husak, G., Rowland, J., Harrison, L., Hoell, A., Michaelsen, J. (2015):
+        The climate hazards infrared precipitation with stations—a new environmental record for monitoring extremes. Scientific Data, 2, 150066.
+      doi: 10.1038/sdata.2015.66
+      bibtex: |
+        @article{funk2015chirps,
+          author  = {Funk, Chris and Peterson, Pete and Landsfeld, Martin and Pedreros, Diego and Verdin, James and Shukla, Shraddhanand and Husak, Gregory and Rowland, James and Harrison, Laura and Hoell, Andrew and Michaelsen, Joel},
+          title   = {The climate hazards infrared precipitation with stations---a new environmental record for monitoring extremes},
+          journal = {Scientific Data},
+          volume  = {2},
+          pages   = {150066},
+          year    = {2015},
+          doi     = {10.1038/sdata.2015.66}
+        }
+  acknowledgement: >-
+    CHC는 v3 자료 저장소 DOI(10.15780/G2JQ0P)를 접속 날짜와 함께 인용하라고 안내하고, 방법 설명에는 Funk et al. (2026)을 인용합니다(v3 논문 저자 전체 목록은 Scientific Data 원문에서 확인하세요).
+    v2.0을 썼다면 Funk et al. (2015)과 v2 DOI(10.15780/G2RP4Q)를 인용하고, 쓴 판(Prelim/Final)과 일자료 종류(rnl/sat)를 밝히세요.
+
+transitions:
+  - from: CHIRPS v2.0
+    to: CHIRPS v3.0
+    status: completed
+    date: "2025-01"
+    summary: >-
+      2025년 1월 v3.0이 공개되어 v2.0을 대체했습니다. 적외 알고리즘·기후값·관측소 수·우량계 보정·공간 범위가 모두 바뀌었고, v2.0은 2026년 말까지만 함께 만듭니다.
+    changes:
+      - aspect: 공간 범위
+        before: "50°S–50°N"
+        after: "60°S–60°N (아프리카·라틴아메리카 영역 파일 별도)"
+      - aspect: 위성 추정 알고리즘
+        before: "CHIRP2 — 절편 항이 분산을 흡수하는 적외 회귀"
+        after: "CHIRP3 — 찬 구름 지속시간(235 K 미만 시간)에 기후값 기반 기울기를 곱하는 분산 보존 방식, 1981~2000년은 GridSat-B1, 적외 공백은 ERA5로 채움"
+      - aspect: 기후값
+        before: "CHPclim v1"
+        after: "CHPclim v2 (1991–2020, IMERG v6 Final과 포착 손실 보정 관측소 평년값 사용)"
+      - aspect: 관측소
+        before: "약 11,500개·12개 출처(2019년 기준), 예비판 약 7,000개(GTS·멕시코)"
+        after: "약 21,500개·29개 출처(2024년 말 확정판), 예비판 약 12,000개"
+      - aspect: 우량계 포착 손실 보정
+        before: "없음"
+        after: "Legates-Willmott 보정 적용 — 대부분 지역에서 조금 더 습함"
+      - aspect: 일자료
+        before: "일자료 제공(전지구, 아프리카 0.25°)"
+        after: "반순 합계를 ERA5(rnl, 1981~) 또는 IMERG Late V07(sat, 예비판 포함) 일 비율로 분해한 두 가지"
+      - aspect: 생산 상태
+        before: "2026년까지 병행 생산, 2026년 12월 이후 종료"
+        after: "현재판 — 예비판 반순마다, 확정판 매월"
+    impacts:
+      - v2와 v3를 한 시계열로 이어 붙이지 말고 전 기간을 v3로 다시 받으세요. v3가 대체로 더 습하므로 기후값·추세도 다시 계산해야 합니다.
+      - 50°~60° 위도대는 v3에서 새로 생긴 영역입니다. 이 지역 결과는 v2와 비교할 수 없습니다.
+      - Earth Engine 컬렉션 ID가 바뀝니다(UCSB-CHG/CHIRPS/DAILY → UCSB-CHC/CHIRPS/V3/DAILY_RNL 또는 DAILY_SAT).
+    sources:
+      - name: CHC CHIRPS v3 페이지
+        url: https://www.chc.ucsb.edu/data/chirps3
+      - name: Funk et al. (2026), Scientific Data
+        url: https://doi.org/10.1038/s41597-026-07096-4
+      - name: CHC CHIRPS v2 페이지 (v2 생산 종료 안내)
+        url: https://www.chc.ucsb.edu/data/chirps
+
+notices:
+  - date: "2026-09-20"
+    level: warning
+    title: CHIRPS v2.0 생산 2026년 12월 이후 종료 예정 — v3로 전환 권고
+    body: >-
+      CHC는 CHIRPS v2 생산이 2026년 12월 이후 끝난다고 밝히고, 업무 연속성을 위해 v3로 옮기라고 권합니다. v2 자료로 감시·예측 체계를 돌리고 있다면
+      2027년 전에 v3 경로·Earth Engine ID로 바꾸세요. CHIRPS v2 페이지의 안내문에는 게시일이 없어, CHC가 CHIRPS FAQ에 v2 생산 변경 안내(2026년까지 병행 생산)를 추가한 날(2026-09-20, 위키 수정 기록)을 날짜로 적었습니다.
+    source: https://www.chc.ucsb.edu/data/chirps
+  - date: "2026-06-10"
+    level: info
+    title: CHIRPS3 공개 발표 — Scientific Data 논문 게재
+    body: >-
+      CHC가 'CHIRPS3 자료를 모두가 쓸 수 있게 되었다'고 발표했습니다. 개선 내용은 2026년 4월 11일 Scientific Data에 실린 자료 기술 논문(Funk et al., 2026)에 정리되어 있습니다.
+    source: https://www.chc.ucsb.edu/news/announcement/534
+  - date: "2025-01"
+    level: info
+    title: CHIRPS v3 공개 — v2는 2026년까지 병행 생산
+    body: >-
+      CHIRPS FAQ에 따르면 2025년 1월부터 CHIRPS v3를 공개적으로 쓸 수 있고, 전환 기간 동안 v2 생산을 2026년까지 함께 이어 갑니다. v3 자료 DOI(10.15780/G2JQ0P)도 2025년 1월 등록되었습니다.
+    source: https://wiki.chc.ucsb.edu/CHIRPS_FAQ
+
+links:
+  - name: CHC CHIRPS v3 페이지
+    url: https://www.chc.ucsb.edu/data/chirps3
+  - name: CHC CHIRPS v2 페이지
+    url: https://www.chc.ucsb.edu/data/chirps
+  - name: CHIRPS FAQ (반순 정의, 예비·확정판)
+    url: https://wiki.chc.ucsb.edu/CHIRPS_FAQ
+  - name: Funk et al. (2026) — CHIRPS v3 자료 기술 논문
+    url: https://doi.org/10.1038/s41597-026-07096-4
+  - name: CHIRPS v3 일자료 README
+    url: https://data.chc.ucsb.edu/products/CHIRPS/v3.0/daily/readme.txt
+  - name: CHIRPS v3 진단 자료 (fill map, 보정 계수)
+    url: https://data.chc.ucsb.edu/products/CHIRPS/v3.0/diagnostics/
+  - name: Earth Engine — CHIRPS v3 일자료 (IMERG 분해)
+    url: https://developers.google.com/earth-engine/datasets/catalog/UCSB-CHC_CHIRPS_V3_DAILY_SAT
+  - name: Earth Engine — CHIRPS v3 일자료 (ERA5 분해)
+    url: https://developers.google.com/earth-engine/datasets/catalog/UCSB-CHC_CHIRPS_V3_DAILY_RNL
+
+watch_urls:
+  - https://www.chc.ucsb.edu/data/chirps3
+  - https://www.chc.ucsb.edu/data/chirps
+  - https://www.chc.ucsb.edu/news/announcement/archive
+
+last_verified: "2026-10-13"

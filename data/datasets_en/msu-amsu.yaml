@@ -1,0 +1,327 @@
+# ─────────────────────────────────────────────────────────────
+# MSU/AMSU mean layer temperatures (RSS V4.0 · UAH v6.1 · NOAA STAR v5.0) — dataset information file
+# Satellite tab (Temperature and water vapour). Three products that merge the same microwave sounder record in different ways, compared on one page.
+# The status is a page-level representative value (active); per-product status and versions are in status_note and tips.
+# After editing, update last_verified to the date you checked the official pages.
+# ─────────────────────────────────────────────────────────────
+id: msu-amsu
+name: "MSU/AMSU (RSS·UAH·STAR)"
+full_name: MSU/AMSU(/ATMS) Mean Layer Atmospheric Temperatures — RSS V4.0, UAH v6.1, NOAA STAR v5.0
+category: satellite
+domain: satellite
+group: 기온·수증기
+order: 20
+domains: [대기, 원격탐사]
+provider: Remote Sensing Systems (RSS) / University of Alabama in Huntsville (UAH) / NOAA NESDIS STAR (distributed as an NOAA NCEI CDR)
+
+status: active
+status_note: >-
+  All three products are updated monthly (as checked on 2026-10-13, RSS V4.0, UAH v6.1 and NOAA STAR v5.0 all run through September 2026).
+  In November 2024 UAH switched to v6.1, dropping the drifting NOAA-19 from 2021 onward and relying on Metop-B alone; STAR has used v5.0, which merges MSU, AMSU-A and ATMS, since 2023.
+  RSS does not yet use ATMS and depends on ageing AMSU satellites, and the copy of the RSS CDR archived at NCEI stops at February 2025.
+
+transitions:
+  - from: UAH v6.0
+    to: UAH v6.1
+    status: completed
+    date: "2024-11"
+    summary: >-
+      NOAA-19, whose orbit had drifted too far through the diurnal cycle, is excluded from 2021 onward, leaving Metop-B as the only satellite since then.
+      Recent warm values came down slightly and the 1979–2024 trend fell by 0.01 °C per decade.
+    changes:
+      - aspect: Satellites used after 2021
+        before: NOAA-19 + Metop-B
+        after: Metop-B only
+      - aspect: Lower troposphere (LT) global trend
+        before: "+0.16 °C per decade (through September 2024, v6.0)"
+        after: "+0.15 °C per decade (through October 2024, v6.1)"
+      - aspect: October 2024 LT anomaly
+        before: "+0.94 °C (with NOAA-19)"
+        after: "+0.73 °C"
+    impacts:
+      - Do not mix v6.0 and v6.1 values. They differ after 2021, so v6.0 numbers in earlier papers cannot be compared directly with v6.1.
+      - Since 2021 UAH relies on a single satellite, so it is more sensitive to that satellite's drift or failure.
+    sources:
+      - name: Roy Spencer blog — UAH v6.1 Global Temperature Update for October 2024 (2024-11-02)
+        url: https://www.drroyspencer.com/2024/11/uah-global-temperature-update-for-october-2024-truncation-of-the-noaa-19-satellite-record/
+  - from: NOAA STAR v4.1
+    to: NOAA STAR v5.0
+    status: completed
+    date: "2023-01"
+    summary: >-
+      STAR v5.0 merges three generations of sounders (MSU, AMSU-A, ATMS on 16 polar orbiters) by "backward merging" from stable-orbit reference satellites (Aqua, Metop-A, Suomi NPP, NOAA-20),
+      with a new diurnal drift adjustment and recalibration of NOAA-11, 12, 14 and 15; it replaced V3.0, V4.0 and V4.1 from January 2023.
+    changes:
+      - aspect: Merging of satellites
+        before: "Intercalibration using simultaneous nadir overpass (SNO) matchups (MSCAT methodology page)"
+        after: Backward merging, working back in time from stable-orbit reference satellites
+      - aspect: Diurnal drift adjustment
+        before: "Earlier method described on the MSCAT methodology page — RSS diurnal anomaly fields scaled by factors (0.875 for MSU channel 2, 0.917 for AMSU-A channel 5)"
+        after: Observation-based, semi-physical diurnal drift adjustment algorithm
+      - aspect: Calibration drift
+        before: Calibration drift left in some satellites
+        after: Spurious calibration drift in NOAA-11, 12, 14 and 15 removed by recalibration
+    impacts:
+      - Recompute trends obtained with v4.x using v5.0; both intercalibration and diurnal adjustment changed.
+      - Files released from January to May 2023 were missing February 1985 in TUT and some TMT grid points after 2018 (also affecting TLT); this was fixed after June 2023. Re-download files obtained in that window.
+    sources:
+      - name: Readme — STAR V5.0 Mean Layer Temperature CDR
+        url: https://www.star.nesdis.noaa.gov/data/mscat/MSU_AMSU_v5.0/Monthly_Atmospheric_Layer_Mean_Temperature/Readme_STAR_V5.0_Mean_Layer_Temperature_CDR.pdf
+      - name: Zou et al. (2023), JGR Atmospheres
+        url: https://doi.org/10.1029/2022JD037472
+
+period:
+  start: "1978-11"
+  end: present
+  note: >-
+    Start dates differ by product and layer. NOAA STAR v5.0 starts in November 1978 (TMT), December 1978 (TLS) and January 1981 (TUT, TLT); RSS starts in late 1978 for TLT, TMT and TLS and 1987 for TTS;
+    the UAH v6.1 lower-troposphere chart starts in 1979. As checked on 2026-10-13, all three run through September 2026 (STAR via the NCEI copy; files on the STAR server stop at July 2025).
+
+resolution:
+  spatial_short: "278 km (2.5°)"
+  temporal_short: "1개월"
+  spatial: >-
+    RSS: 2.5° × 2.5° latitude-longitude grid (144 × 72), monthly means only to 82.5°S–82.5°N (70°S–82.5°N for TLT) / NOAA STAR: 2.5° × 2.5° global grid /
+    UAH: one text file per layer (uahncdc_*_6.1.txt) — see the file header for the regions provided
+  vertical: >-
+    Bulk brightness temperature of a deep layer defined by each channel's weighting function (one value per layer). Per the STAR v5.0 Readme the weighting functions peak near 3 km (TLT), 5 km (TMT),
+    10 km (TUT) and 17 km (TLS). RSS also provides TTS (troposphere-stratosphere) and UAH provides TP (tropopause)
+  temporal: Monthly means
+
+update: "Monthly (UAH usually in the first week of the following month; RSS files refreshed with September data on 2026-10-06; NOAA STAR NCEI copy on 2026-10-05)"
+license: >-
+  RSS is free to use (free registration for the FTP server); UAH is open text files; the NOAA STAR CDR is open NOAA data without restriction — citation requested for all
+account_required: false
+
+summary: >-
+  Monthly deep-layer mean temperatures of the atmosphere (lower and middle troposphere, lower stratosphere and others) since late 1978, derived from oxygen thermal emission measured by
+  microwave sounders (MSU → AMSU-A → ATMS) on polar-orbiting NOAA, Metop, Aqua and other satellites.
+  RSS, UAH and NOAA STAR merge the same observations with different intersatellite calibration and orbital drift (diurnal) adjustments, so the size of tropospheric warming since 1979 differs among them.
+  As a four-decade upper-air record with even coverage where radiosondes are sparse, it is a standard reference for climate change detection and for evaluating reanalyses and climate models (including the tropospheric amplification debate).
+
+time_convention:
+  summary: >-
+    All values are monthly mean brightness temperatures (K) or their anomalies. The effect of drifting overpass times is removed by a diurnal adjustment to a fixed local time,
+    so values are not snapshots at any particular time.
+  points:
+    - "Anomaly baselines differ by product: RSS uses 1979–1998 (1978–1998 in parts of its page) and NOAA STAR v5.0 uses 2000–2019. Re-baseline to a common period before comparing products."
+    - "Polar orbiters drift in local overpass time, which would otherwise alias the diurnal cycle into trends. Differences in how this is corrected are a main reason RSS, UAH and STAR trends differ."
+    - "UAH v6.1 uses only Metop-B (an orbit-maintained satellite) after 2021, while STAR v5.0 anchors its merge on stable-orbit satellites such as Aqua, Metop-A, Suomi NPP and NOAA-20."
+    - "TLT is not a single channel but a combination of observations. For example, STAR v5.0 computes TLT = 1.430×TMT − 0.462×TUT + 0.032×TLS."
+  source: https://www.star.nesdis.noaa.gov/data/mscat/MSU_AMSU_v5.0/Monthly_Atmospheric_Layer_Mean_Temperature/Readme_STAR_V5.0_Mean_Layer_Temperature_CDR.pdf
+  source_name: STAR V5.0 Readme + RSS Upper Air Temperature page + UAH v6.1 announcement
+
+variables:
+  note: >-
+    The three products use different variable names and formats (RSS netCDF, STAR netCDF4 and binary, UAH text), and the official pages do not give in-file variable names, so only layer names are listed.
+    Check the variable names in the files you download. All units are K (anomalies in K).
+  full_list: https://www.remss.com/measurements/upper-air-temperature/
+  groups:
+    - name: Tropospheric layer temperatures
+      kind: mean
+      period: Monthly
+      items:
+        - "Lower troposphere TLT (K) — RSS, UAH (LT), STAR"
+        - "Middle troposphere TMT (K) — RSS, UAH (MT), STAR"
+        - "Upper troposphere TUT (K) — STAR"
+        - "Total troposphere TTT (K) — RSS (TMT and TLS combination after Fu & Johanson 2005)"
+    - name: Tropopause and stratospheric layer temperatures
+      kind: mean
+      period: Monthly
+      items:
+        - "Troposphere-stratosphere TTS (K) — RSS (from 1987)"
+        - "Tropopause layer TP (K) — UAH"
+        - "Lower stratosphere TLS (K) — RSS, UAH (LS), STAR"
+    - name: Anomalies and auxiliary files
+      kind: mean
+      period: Monthly
+      items:
+        - "Monthly anomaly maps (K) — RSS `RSS_Tb_Anom_Maps_ch_*_V4_0.nc`, STAR `*_Anomaly.dat`"
+        - "Regional mean anomaly time series (K) — RSS monthly_time_series, STAR Global_Mean_Anomaly_Time_Series, UAH `uahncdc_*_6.1.txt`"
+
+access:
+  - name: RSS — Upper Air Temperature (description and downloads)
+    url: https://www.remss.com/measurements/upper-air-temperature/
+    method: Web / HTTPS (netCDF maps, text time series)
+  - name: RSS netCDF map files (V4.0)
+    url: https://data.remss.com/msu/data/netcdf/
+    method: HTTPS direct download
+    note: "One monthly mean file (RSS_Tb_Maps_ch_*_V4_0.nc) and one anomaly file (RSS_Tb_Anom_Maps_ch_*_V4_0.nc) per layer."
+  - name: UAH v6.1 lower-troposphere time series (text)
+    url: https://vortex.nsstc.uah.edu/data/msu/v6.1/tlt/uahncdc_lt_6.1.txt
+    method: HTTP direct download
+    note: Middle troposphere is tmt/uahncdc_mt_6.1.txt, tropopause ttp/uahncdc_tp_6.1.txt and lower stratosphere tls/uahncdc_ls_6.1.txt.
+  - name: NOAA NCEI — Mean Layer Temperature-NOAA CDR (STAR v5.0)
+    url: https://www.ncei.noaa.gov/products/climate-data-records/mean-layer-temperature-noaa
+    method: HTTPS, THREDDS, AWS S3, Google Cloud (netCDF4)
+    note: As checked in October 2026, NCEI THREDDS has data through September 2026. The v5.0 files on STAR's own server stop at July 2025, so get current data from NCEI.
+  - name: NOAA NCEI — Mean Layer Temperature-RSS CDR (copy of V4.0)
+    url: https://www.ncei.noaa.gov/products/climate-data-records/mean-layer-temperature-rss
+    method: HTTPS, THREDDS, cloud (netCDF4)
+    note: NCEI metadata show it ending in February 2025 with "no updates planned". Get current RSS data from the RSS server.
+
+example:
+  lang: python
+  note: "RSS netCDF files download over HTTPS without login. The official page does not give variable names, so open the file to check. For NOAA STAR v5.0, look up the latest file name (…_E<last month>_C<creation date>.nc) in the NCEI THREDDS catalogue and fetch it the same way."
+  code: |
+    # pip install xarray netCDF4 requests
+    import requests
+    import xarray as xr
+
+    url = "https://data.remss.com/msu/data/netcdf/RSS_Tb_Anom_Maps_ch_TLT_V4_0.nc"   # RSS V4.0 TLT monthly anomaly maps
+    with open("rss_tlt_anom.nc", "wb") as f:
+        f.write(requests.get(url, timeout=120).content)
+
+    ds = xr.open_dataset("rss_tlt_anom.nc")
+    print(ds)                       # check variable names, dimensions (time, lat, lon) and baseline attributes
+
+tips:
+  - "TLT and TMT trends since 1979 differ among the three products even though they share the same observations. Check that conclusions do not hinge on one product, and report the range across all three."
+  - "The RSS page mixes statements that TTS and TLS 'remain Version 3.3' with V4.0 labels, while the distributed file names are V4_0 for every layer. In papers, give the version from the file name and the layer-specific references (TLT Mears & Wentz 2017, TMT and TTT 2016, TTS and TLS 2009)."
+  - "RSS marks its text files (UAH-compatible format) as deprecated and asks that new code use netCDF."
+  - "RSS states that ATMS is not yet used (AMSU is to be phased out in favour of ATMS). As ageing AMSU satellites drift or fail, the continuity of the RSS record may be affected."
+  - "NOAA STAR v5.0 uses ATMS (Suomi NPP, NOAA-20). NOAA and NASA have announced that Suomi NPP science data delivery ends in early November 2026, so watch for subsequent version or reprocessing notices."
+  - "Stratospheric layers such as TLS and TTS spike after major volcanic eruptions (El Chichón, Pinatubo); state how those periods are handled when fitting linear trends."
+  - "Use cosine-latitude weights for area means of gridded data, and remember that RSS has no values poleward of 82.5° (south of 70°S for TLT)."
+
+citations:
+  dataset:
+    - label: NOAA STAR v5.0 (NOAA CDR of Mean Layer Temperature-NOAA, Version 5)
+      text: >-
+        Zou, Cheng-Zhi; Hao, Xianjun. 2023. NOAA Climate Data Record (CDR) of Mean Layer Temperature-NOAA. Version 5.[indicate subset used].
+        NOAA National Centers for Environmental Information. https://doi.org/10.25921/tn91-wv50. Accessed [date].
+      doi: 10.25921/tn91-wv50
+      bibtex: |
+        @misc{noaa_star_mlt_v5,
+          author    = {Zou, Cheng-Zhi and Hao, Xianjun},
+          title     = {{NOAA} Climate Data Record ({CDR}) of Mean Layer Temperature-{NOAA}, Version 5},
+          year      = {2023},
+          publisher = {NOAA National Centers for Environmental Information},
+          doi       = {10.25921/tn91-wv50}
+        }
+    - label: RSS V4.0 (NOAA CDR of Atmospheric Layer Temperatures, Version 4 — NCEI copy)
+      text: >-
+        Mears, Carl A., F. J. Wentz, and NOAA CDR Program (2015): NOAA Climate Date Record (CDR) of Atmospheric Layer Temperature, Version 4.
+        [indicate subset used]. NOAA National Centers for Environmental Information (NCEI). doi:10.25921/EGRF-Q723 [access date].
+      doi: 10.25921/EGRF-Q723
+      bibtex: |
+        @misc{rss_mlt_v4_cdr,
+          author    = {Mears, Carl A. and Wentz, Frank J. and {NOAA CDR Program}},
+          title     = {{NOAA} Climate Data Record ({CDR}) of Atmospheric Layer Temperatures, Version 4},
+          year      = {2015},
+          publisher = {NOAA National Centers for Environmental Information},
+          doi       = {10.25921/EGRF-Q723}
+        }
+  papers:
+    - label: RSS TLT V4.0
+      text: >-
+        Mears, C. A., and F. J. Wentz (2017): A Satellite-Derived Lower-Tropospheric Atmospheric Temperature Dataset Using an Optimized Adjustment
+        for Diurnal Effects. Journal of Climate, 30(19), 7695–7718.
+      doi: 10.1175/JCLI-D-16-0768.1
+      bibtex: |
+        @article{mears2017tlt,
+          author  = {Mears, Carl A. and Wentz, Frank J.},
+          title   = {A Satellite-Derived Lower-Tropospheric Atmospheric Temperature Dataset Using an Optimized Adjustment for Diurnal Effects},
+          journal = {Journal of Climate},
+          volume  = {30},
+          number  = {19},
+          pages   = {7695--7718},
+          year    = {2017},
+          doi     = {10.1175/JCLI-D-16-0768.1}
+        }
+    - label: RSS TMT and TTT V4.0
+      text: >-
+        Mears, C. A., and F. J. Wentz (2016): Sensitivity of Satellite-Derived Tropospheric Temperature Trends to the Diurnal Cycle Adjustment.
+        Journal of Climate, 29(10), 3629–3646.
+      doi: 10.1175/JCLI-D-15-0744.1
+      bibtex: |
+        @article{mears2016tmt,
+          author  = {Mears, Carl A. and Wentz, Frank J.},
+          title   = {Sensitivity of Satellite-Derived Tropospheric Temperature Trends to the Diurnal Cycle Adjustment},
+          journal = {Journal of Climate},
+          volume  = {29},
+          number  = {10},
+          pages   = {3629--3646},
+          year    = {2016},
+          doi     = {10.1175/JCLI-D-15-0744.1}
+        }
+    - label: UAH Version 6 methodology
+      text: >-
+        Spencer, R. W., J. R. Christy, and W. D. Braswell (2017): UAH Version 6 global satellite temperature products: Methodology and results.
+        Asia-Pacific Journal of Atmospheric Sciences, 53(1), 121–130.
+      doi: 10.1007/s13143-017-0010-y
+      bibtex: |
+        @article{spencer2017uah6,
+          author  = {Spencer, Roy W. and Christy, John R. and Braswell, William D.},
+          title   = {{UAH} Version 6 global satellite temperature products: Methodology and results},
+          journal = {Asia-Pacific Journal of Atmospheric Sciences},
+          volume  = {53},
+          number  = {1},
+          pages   = {121--130},
+          year    = {2017},
+          doi     = {10.1007/s13143-017-0010-y}
+        }
+    - label: NOAA STAR v5.0 (backward merging)
+      text: >-
+        Zou, C.-Z., H. Xu, X. Hao, and Q. Liu (2023): Mid-Tropospheric Layer Temperature Record Derived From Satellite Microwave Sounder Observations
+        With Backward Merging Approach. Journal of Geophysical Research: Atmospheres, 128(6), e2022JD037472.
+      doi: 10.1029/2022JD037472
+      bibtex: |
+        @article{zou2023star,
+          author  = {Zou, Cheng-Zhi and Xu, Hui and Hao, Xianjun and Liu, Qian},
+          title   = {Mid-Tropospheric Layer Temperature Record Derived From Satellite Microwave Sounder Observations With Backward Merging Approach},
+          journal = {Journal of Geophysical Research: Atmospheres},
+          volume  = {128},
+          number  = {6},
+          pages   = {e2022JD037472},
+          year    = {2023},
+          doi     = {10.1029/2022JD037472}
+        }
+  acknowledgement: >-
+    RSS asks users to cite the paper for each layer (TLT Mears & Wentz 2017, TMT and TTT 2016, TTS and TLS Mears & Wentz 2009 in JTECH).
+    UAH gives no dataset DOI or citation text on its official pages, so cite Spencer et al. (2017) together with the version (v6.1), file name and download date.
+    For NOAA STAR v5.0, cite both the NCEI CDR DOI and Zou et al. (2023).
+
+notices:
+  - date: "2024-11-02"
+    level: warning
+    title: UAH changes to v6.1 — NOAA-19 dropped from 2021, Metop-B only
+    body: >-
+      UAH said NOAA-19 had drifted too far through the diurnal cycle to be corrected, dropped its data from 2021 onward and renamed the dataset v6.1.
+      The October 2024 lower-troposphere anomaly fell from +0.94 °C to +0.73 °C and the global trend by 0.01 °C per decade. Since 2021 UAH is based on Metop-B alone.
+    source: https://www.drroyspencer.com/2024/11/uah-global-temperature-update-for-october-2024-truncation-of-the-noaa-19-satellite-record/
+  - date: "2023-12-07"
+    level: warning
+    title: NOAA STAR v5.0 replaces V3.0, V4.0 and V4.1 (backward merging, new diurnal adjustment)
+    body: >-
+      From January 2023 STAR directs climate users to v5.0, which merges MSU, AMSU-A and ATMS by backward merging from stable-orbit satellites, applies a new diurnal drift adjustment
+      and removes calibration drift in NOAA-11, 12, 14 and 15; the anomaly baseline is 2000–2019. Missing data in the January–May 2023 release were fixed after June 2023.
+    source: https://www.star.nesdis.noaa.gov/data/mscat/MSU_AMSU_v5.0/Monthly_Atmospheric_Layer_Mean_Temperature/Readme_STAR_V5.0_Mean_Layer_Temperature_CDR.pdf
+  - date: "2016-06-28"
+    level: info
+    title: RSS TLT V4.0 released (TMT and TTT V4.0 on 2016-03-02)
+    body: >-
+      RSS released lower-troposphere TLT V4.0 with an optimised diurnal adjustment and separate land and ocean intersatellite offsets. TMT and TTT V4.0 had appeared on 2 March, adding NOAA-19 and Metop-B.
+      RSS notes that the uncertainty analysis has not yet been completed for V4.0.
+    source: https://www.remss.com/measurements/upper-air-temperature/
+
+links:
+  - name: RSS Upper Air Temperature (MSU/AMSU)
+    url: https://www.remss.com/measurements/upper-air-temperature/
+  - name: RSS monthly time series file listing
+    url: https://data.remss.com/msu/monthly_time_series/
+  - name: UAH latest global temperatures (Roy Spencer)
+    url: https://www.drroyspencer.com/latest-global-temperatures/
+  - name: NOAA STAR Microwave Sounding Temperature Assessment System (MSCAT)
+    url: https://www.star.nesdis.noaa.gov/smcd/emb/mscat/
+  - name: NOAA STAR data products (including the v5.0 Readme)
+    url: https://www.star.nesdis.noaa.gov/smcd/emb/mscat/products.php
+  - name: NCEI THREDDS — Mean Layer Temperature-NOAA
+    url: https://www.ncei.noaa.gov/thredds/catalog/satellite/mean-layer-temperature-noaa/catalog.html
+
+watch_urls:
+  - https://www.remss.com/measurements/upper-air-temperature/
+  - https://www.drroyspencer.com/latest-global-temperatures/
+  - https://www.star.nesdis.noaa.gov/smcd/emb/mscat/products.php
+
+last_verified: "2026-10-13"

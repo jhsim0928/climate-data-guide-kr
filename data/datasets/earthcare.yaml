@@ -1,0 +1,262 @@
+# ─────────────────────────────────────────────────────────────
+# EarthCARE (ESA·JAXA) — 데이터셋 정보 파일
+# 위성 탭(에어로졸·대기 성분). 구름 제품이 많지만 CALIPSO를 잇는 위성 라이다 자료라 이 소분류에 둡니다.
+# L1은 2024-08-11, ESA L2는 2025-03-11 관측부터 공개되어 있고, 처리기 기준선(baseline)이 자주 바뀌므로
+# ESA 'EarthCARE Data' 페이지의 처리기 표와 데이터 품질 페이지를 함께 확인하세요.
+# 수정 후에는 공식 페이지에서 확인한 날짜로 last_verified 를 갱신하세요.
+# ─────────────────────────────────────────────────────────────
+id: earthcare
+name: "EarthCARE"
+full_name: Earth Cloud, Aerosol and Radiation Explorer (EarthCARE) Level 1·Level 2 products (ESA·JAXA 구름·에어로졸·복사 위성, 라이다·레이더·영상기·복사계)
+category: satellite
+domain: satellite
+group: 에어로졸·대기 성분
+order: 41
+domains: [대기, 에어로졸, 원격탐사]
+provider: ESA·JAXA (ESA 제품은 ESA, CPR L1·JAXA L2는 JAXA 처리) / 배포 ESA MAAP·JAXA G-Portal
+
+status: active
+status_note: >-
+  2024년 5월 발사된 EarthCARE는 정상 운용 중이며, L1은 2024년 8월 11일, ESA L2는 2025년 3월 11일 관측부터 공개되어 계속 갱신됩니다.
+  처리기는 제품마다 기준선(baseline)이 따로 올라가며, 2026-10-13 확인 시 ATLID L2 프로파일(A-PRO)은 BD(2026-09-08), ATLID·MSI·BBR L1은 CA(2026-07-15)입니다.
+  설계 수명은 3년(시운전 6개월 포함)이고, ECMWF는 2026년 6월 10일부터 CPR 관측을 현업 예보에 동화하기 시작했습니다.
+
+period:
+  start: "2024-08"
+  end: present
+  note: >-
+    ESA 카탈로그 기준 L1 컬렉션은 2024-08-11, ESA L2 컬렉션은 2025-03-11부터 현재까지입니다. JAXA L2 컬렉션은 ESA 카탈로그에 2024-05-28부터로 적혀 있으나
+    실제 제공 기간은 JAXA 자료 목록에서 확인하세요. 궤도 조정 기동 중에는 자료가 없습니다(예: 2026년 9월 1~4일·8~11일).
+
+resolution:
+  spatial_short: "1 km (0.01°)"
+  temporal_short: "1일"
+  spatial: >-
+    ATLID: 수신 발자국 30 m 이하, 51 Hz 펄스 2개를 누적해 진행 방향 285 m 간격 / ATLID L2(ATL_AER_2A·ATL_EBD_2A): 공통 표준 격자(Joint Standard Grid, JSG)
+    진행 방향 약 1 km(EBD는 중간·저해상도 평활판 별도) / MSI: 폭 150 km 스와스, 500 m 화소 / 파일은 궤도의 1/8(프레임 A~H) 단위
+  vertical: >-
+    ATLID: 103 m(20.2 km 아래), 500 m(20.2~40 km), −0.5~+40 km / ATLID L2: JSG 연직 약 100 m(제품 정의서상 100~300 m 가변)
+  temporal: >-
+    궤도를 따라 이어지는 스와스 자료. 태양동기궤도 고도 약 393 km, 하강 노드 14:00 평균 태양시, 궤도 주기 약 92.5분, 25일(389궤도) 반복.
+    능동 센서(ATLID·CPR)는 직하점 단면만 관측합니다.
+
+update: "매일 연속 생산 (파일 이름에 준실시간 N·오프라인 O 처리 구분). 처리기 기준선은 제품별로 수시 갱신"
+license: ESA 지구관측 자료 이용 약관(Terms and Conditions for the use of ESA Data)에 따라 무료 공개. 내려받기에는 무료 ESA EO Sign In 계정이 필요합니다
+account_required: true
+
+summary: >-
+  EarthCARE는 ESA와 JAXA가 함께 만든 구름·에어로졸·복사 관측 위성으로, 355 nm 고분광분해 라이다(ATLID), 도플러 구름 레이더(CPR), 다중분광 영상기(MSI),
+  광대역 복사계(BBR)를 한 위성에 실었습니다. 라이다·레이더로 구름과 에어로졸의 연직 구조를 보고, 영상기로 옆 방향 정보를 더해, 복사계로 잰 대기 상단 복사와
+  복사전달 계산이 맞는지 따지는 것이 핵심 목표입니다. CALIPSO 이후 끊겼던 위성 라이다 관측을 잇는 자료이며, 단일 측기 L2A와 여러 측기를 결합한 L2B 제품이 있습니다.
+
+time_convention:
+  summary: >-
+    L1·L2 값은 위성이 지나간 순간의 관측(또는 그 관측으로 구한 값)이며, 기간 평균이나 격자 합성 제품은 없습니다. 모든 시각은 UTC이고
+    `time` 변수는 2000-01-01 00:00:00부터의 초입니다. 주간 관측은 하강 궤도에서 적도를 지방시 약 14:00에 지납니다.
+  points:
+    - "한 파일은 궤도의 1/8인 프레임(A~H)입니다. 프레임 경계는 위도 22.5°N·67.5°N·22.5°S·67.5°S이고 A 프레임이 상승 궤도에서 적도를 지납니다. 프레임끼리 일부 겹치므로 이어 붙일 때 겹친 구간을 빼야 합니다."
+    - "파일 이름 `ECA_<기관><지연><기준선>_<제품>_<시작 시각>_<처리 시각>_<궤도+프레임>`에서 기관 E(ESA)·J(JAXA), 지연 N(준실시간)·O(오프라인), 두 글자 기준선(AA, AB, … BD, CA 등)을 읽을 수 있습니다."
+    - "같은 날짜라도 기준선이 다른 파일이 섞여 있을 수 있습니다. 최근 기준선으로 재처리된 구간과 그렇지 않은 구간이 있어, 시계열 분석 전에 기준선 문자를 확인하세요."
+    - "ATLID 주간 자료는 태양 배경광 때문에 야간보다 신호 대 잡음비가 낮습니다."
+  source: https://earthcarehandbook.earth.esa.int/article/product
+  source_name: EarthCARE Product Data Handbook (Product Definition and Format) + ATL_AER_2A 제품 정의서 + ESA EarthCARE 임무 설명
+
+variables:
+  note: >-
+    ESA 제품 정의서(PDD)에서 확인한 변수 이름이며, 모두 데이터 파일(.h5)의 `ScienceData` 그룹 안에 있습니다. 각 물리량에는 1σ 불확실성 `_error` 변수가 짝으로 있습니다.
+    품질 `quality_status`는 0(양호)~4(L1 결측·불량)입니다. 구름 제품(CPR_CLD_2A, ATL_ICE_2A, MSI_COP_2A 등)과 JAXA 제품의 변수는 각 제품 정의서를 보세요.
+  full_list: https://earth.esa.int/eogateway/catalog/earthcare-esa-l2-products
+  groups:
+    - name: ATLID 에어로졸 프로파일 (ATL_AER_2A, JSG 약 1 km × 100 m)
+      kind: instant
+      period: 관측 시각
+      items:
+        - text: "입자 소광계수 355 nm — `particle_extinction_coefficient_355nm` (m-1)"
+          std: [aerosol]
+        - text: "입자 후방산란계수 355 nm — `particle_backscatter_coefficient_355nm` (m-1 sr-1)"
+          std: [aerosol]
+        - text: "라이다비 355 nm — `lidar_ratio_355nm` (sr)"
+          std: [aerosol]
+        - text: "입자 선형 편광해소비 355 nm — `particle_linear_depol_ratio_355nm` (무차원)"
+          std: [aerosol]
+        - "대상 분류(구름·에어로졸 종류·성층권 입자) — `classification` (코드: 10 먼지, 11 해염, 12 대륙 오염, 13 연기 등)"
+        - "품질 상태 — `quality_status` (0~4)"
+    - name: ATLID 소광·후방산란·편광해소 (ATL_EBD_2A)
+      kind: instant
+      period: 관측 시각
+      items:
+        - text: "소광계수 355 nm(원해상도·중간·저해상도) — `particle_extinction_coefficient_355nm`, `..._medium_resolution`, `..._low_resolution` (m-1)"
+          std: [aerosol]
+        - text: "후방산란계수 355 nm — `particle_backscatter_coefficient_355nm` 등 3개 해상도 (m-1 sr-1)"
+          std: [aerosol]
+        - "단순 분류 — `simple_classification` (−3 결측 ~ 5 성층권 에어로졸)"
+    - name: MSI 에어로졸 광학두께 (MSI_AOT_2A, 500 m 스와스)
+      kind: instant
+      period: 관측 시각
+      items:
+        - text: "에어로졸 광학두께 670 nm(육지·해양) — `aerosol_optical_thickness_670nm` (무차원)"
+          std: [aerosol]
+        - text: "에어로졸 광학두께 865 nm(해양만) — `aerosol_optical_thickness_865nm` (무차원)"
+          std: [aerosol]
+        - text: "옹스트롬 지수 670/865 nm·355/670 nm(해양만) — `angstrom_parameter_670nm_865nm`, `angstrom_parameter_355nm_670nm` (무차원)"
+          std: [aerosol]
+        - "품질 상태 — `quality_status` (0~4)"
+
+access:
+  - name: ESA MAAP Explorer — EarthCARE ESA L2 (공개 컬렉션)
+    url: https://explorer.maap.eo.esa.int/?q=EarthCAREL2Validated_MAAP
+    method: 웹 검색·HTTPS 다운로드 (zip 안에 .h5 데이터 + .HDR 헤더)
+    note: 무료 ESA EO Sign In 로그인이 필요합니다. L1(ATL_NOM_1B, MSI_RGR_1C, BBR_NOM_1B, CPR_NOM_1B 등)도 같은 방식으로 받습니다.
+  - name: ESA MAAP Catalogue (STAC API)
+    url: https://catalog.maap.eo.esa.int/catalogue/
+    method: STAC / OpenSearch API (pystac-client 등, 다운로드에는 접근 토큰 필요)
+    note: "사용법은 https://catalog.maap.eo.esa.int/doc/stac.html 을 보세요."
+  - name: ESA Earth Online — EarthCARE 자료 안내 (컬렉션·처리기 기준선 표)
+    url: https://earth.esa.int/eogateway/missions/earthcare/data
+    method: 웹
+    note: 공개 컬렉션은 L1, ESA L2, JAXA L2, 궤도 자료, X-MET(기상 보조) L1D입니다. 시운전·검증팀 전용 컬렉션은 따로 있습니다.
+  - name: JAXA G-Portal (CPR L1·JAXA L2)
+    url: https://www.gportal.jaxa.jp/?lang=en
+    method: 웹·SFTP (G-Portal 사용자 등록)
+    note: JAXA EORC EarthCARE 제품 목록 페이지는 2026-10 확인 시 아직 '확정 전(TBC)'으로 표시되어 있습니다.
+
+example:
+  lang: python
+  note: >-
+    MAAP STAC 카탈로그에서 EarthCARE 컬렉션을 찾는 부분은 MAAP STAC 안내서의 예를 EarthCARE에 맞춘 것입니다. 컬렉션 ID는 결과에서 확인하세요.
+    파일 내려받기는 MAAP Explorer(EO Sign In) 또는 토큰을 쓴 API로 하고, 받은 .h5 파일은 xarray로 `ScienceData` 그룹을 지정해 엽니다.
+  code: |
+    # pip install pystac-client xarray h5netcdf
+    from pystac_client import Client
+    import xarray as xr
+
+    api = Client.open("https://catalog.maap.eo.esa.int/catalogue/")
+    for c in api.collection_search(filter="platform='EarthCARE'").collections():
+        print(c.id, "-", c.title)          # L1·L2 컬렉션 ID 확인
+
+    # MAAP Explorer에서 받은 ATL_AER_2A zip을 풀어 연 예 (파일 이름은 예시)
+    f = "ECA_EXBD_ATL_AER_2A_20260801T010203Z_20260802T000000Z_12345A.h5"
+    ds = xr.open_dataset(f, group="ScienceData")
+    ext = ds["particle_extinction_coefficient_355nm"]          # m-1, (along_track, height)
+    good = ext.where(ds["quality_status"] <= 1)                  # 0 양호, 1 대체로 양호
+    print(good.mean("along_track").values[:10])
+
+tips:
+  - "ATLID 값은 355 nm입니다. CALIOP(532 nm)이나 MODIS(550 nm)와 AOD·소광계수를 비교할 때는 파장 차이를 반드시 보정하거나 밝히세요."
+  - "`quality_status` 0·1만 쓰는 것이 기본입니다. 완전히 가려진(빛이 닿지 않는) 구름 아래는 3, L1이 없거나 나쁜 곳은 4입니다."
+  - "ESA는 L2 헤더의 `degradedProductQualityFlag`가 처리기 종료 코드 때문에 자주 1로 켜진다고 밝혔습니다. 이 플래그만으로 파일을 버리지 말고 변수별 품질 값을 보세요."
+  - "2026년 4월 23일 이후 BD 기준선 ATLID 자료에는 성층권에서 교차 편광 값이 음수로 나오는 문제가 있고, CA 기준선과 재처리로 고칠 예정입니다. 성층권 편광해소비는 주의하세요."
+  - "2026년 4월 21일~5월 19일(BD)에는 레이저 에너지 정규화 오류로 후방산란이 낮게 나온 띠가 있었습니다. 이 기간 자료는 재처리 여부(기준선 문자)를 확인하세요."
+  - "BBR은 수명 연장을 위해 약 20일 중 15일은 대기, 5일만 정상 관측 모드로 돌립니다. BBR 기반 복사 플럭스(BM__RAD_2B, BMA_FLX_2B)는 날짜별 공백이 큽니다."
+  - "처리기 기준선이 제품마다 다르고 자주 바뀝니다. 논문에는 쓴 제품 이름과 기준선(예: ATL_AER_2A BD)을 함께 적으세요."
+  - "구름 관련 분석은 CPR(94 GHz 도플러 레이더)·ATLID·MSI를 결합한 L2B(AC__TC__2B, ACM_CAP_2B 등)를 보는 것이 좋습니다. 단일 측기 L2A보다 판별이 안정적입니다."
+
+citations:
+  dataset:
+    - label: ATLID AER L2A, 기준선 BD
+      text: >-
+        European Space Agency (2026). EarthCARE ATLID AER Level 2A, version BD. European Space Agency. https://doi.org/10.57780/esa-1cdaa09
+      doi: 10.57780/esa-1cdaa09
+      bibtex: |
+        @misc{earthcare_atl_aer_2a_bd,
+          author    = {{European Space Agency}},
+          title     = {{EarthCARE} {ATLID} {AER} Level {2A}, version {BD}},
+          year      = {2026},
+          publisher = {European Space Agency},
+          doi       = {10.57780/esa-1cdaa09}
+        }
+    - label: ATLID NOM L1B, 기준선 CA
+      text: >-
+        European Space Agency (2026). EarthCARE ATLID NOM Level 1B, version CA. European Space Agency. https://doi.org/10.57780/eca-7a0fa3d
+      doi: 10.57780/eca-7a0fa3d
+      bibtex: |
+        @misc{earthcare_atl_nom_1b_ca,
+          author    = {{European Space Agency}},
+          title     = {{EarthCARE} {ATLID} {NOM} Level {1B}, version {CA}},
+          year      = {2026},
+          publisher = {European Space Agency},
+          doi       = {10.57780/eca-7a0fa3d}
+        }
+  papers:
+    - label: EarthCARE 임무·체계 개관
+      text: >-
+        Wehr, T., Kubota, T., Tzeremes, G., Wallace, K., Nakatsuka, H., Ohno, Y., Koopman, R., Rusli, S., Kikuchi, M., Eisinger, M., Tanaka, T.,
+        Taga, M., Deghaye, P., Tomita, E., Bernaerts, D. (2023): The EarthCARE mission – science and system overview.
+        Atmospheric Measurement Techniques, 16, 3581–3608.
+      doi: 10.5194/amt-16-3581-2023
+      bibtex: |
+        @article{wehr2023earthcare,
+          author  = {Wehr, Tobias and Kubota, Takuji and Tzeremes, Georgios and Wallace, Kotska and Nakatsuka, Hirotaka and Ohno, Yuichi and Koopman, Rob and Rusli, Stephanie and Kikuchi, Maki and Eisinger, Michael and Tanaka, Toshiyuki and Taga, Masatoshi and Deghaye, Patrick and Tomita, Eichi and Bernaerts, Dirk},
+          title   = {The {EarthCARE} mission -- science and system overview},
+          journal = {Atmospheric Measurement Techniques},
+          volume  = {16},
+          number  = {15},
+          pages   = {3581--3608},
+          year    = {2023},
+          doi     = {10.5194/amt-16-3581-2023}
+        }
+  acknowledgement: >-
+    ESA는 제품·기준선마다 DOI를 따로 발급합니다(예: ATL_AER_2A는 기준선 AE·BD 각각 DOI). 쓴 제품과 기준선의 DOI를 ESA 카탈로그 페이지에서 찾아 인용하세요.
+    위 인용문은 DataCite 메타데이터(작성자 ESA, 연도, 제목, 판)로 만든 것입니다. 자료 이용은 ESA 지구관측 자료 이용 약관을 따릅니다.
+
+notices:
+  - date: "2026-09-08"
+    level: info
+    title: ATLID L2 프로파일(A-PRO) 기준선 BD 처리기 공개
+    body: >-
+      ATL_AER_2A·ATL_EBD_2A·ATL_ICE_2A·ATL_TC__2A를 만드는 A-PRO 11.70(기준선 BD)과 BMA_FLX_2B(BMA-FLX 11.60, BD)가 공개되었습니다.
+      ESA 품질 페이지는 BD의 ATLID 성층권 문제를 고친 CA 기준선이 뒤따를 예정이라고 밝히고 있습니다.
+    source: https://earth.esa.int/eogateway/missions/earthcare/data
+  - date: "2026-09-08"
+    level: info
+    title: 궤도 조정 기동으로 2026년 9월 1~4일·8~11일 일부 시간대 자료 없음
+    body: >-
+      정비용 궤도 기동이 두 차례(각 4회) 있었고, 기동 시간대(1회 약 50분)에는 자료가 없습니다. 9월 8~11일 기동 시각은 공지에 UTC로 나와 있습니다.
+    source: https://earth.esa.int/eogateway/news/earthcare-data-unavailability-due-to-planned-orbit-manoeuvres-8-11-september-2026
+  - date: "2026-07-15"
+    level: info
+    title: ATLID·MSI·BBR L1 기준선 CA 공개
+    body: >-
+      ATL_NOM_1B(ATLID L1 5.50), MSI_NOM_1B·MSI_RGR_1C(MSI L1 5.20), BBR_NOM_1B·BBR_SNG_1B(BBR L1 5.00)와 공통 격자 AUX_JSG_1D가 기준선 CA로 올라갔습니다.
+    source: https://earth.esa.int/eogateway/missions/earthcare/data
+  - date: "2026-06-25"
+    level: info
+    title: ECMWF, 2026년 6월 10일부터 EarthCARE CPR 관측을 현업 예보에 동화
+    body: >-
+      ESA는 ECMWF가 6월 10일부터 EarthCARE 구름 레이더(CPR) 자료를 통합예보시스템(IFS)에 동화하기 시작했다고 밝혔습니다. 우주 구름 레이더 자료의 첫 현업 동화 사례입니다.
+    source: https://www.esa.int/Applications/Observing_the_Earth/FutureEO/EarthCARE/A_first_EarthCARE_cloud_data_sharpen_weather_forecasts
+  - date: "2026-04-23"
+    level: warning
+    title: ATLID BD 기준선 — 성층권 교차 편광 음수 값, 레이저 에너지 정규화 오류
+    body: >-
+      2026년 4월 23일부터 L1C 처리 문제로 성층권 교차 편광 신호가 음수로 나오는 현상이 이어지고 있으며 CA 기준선과 재처리로 고칠 예정입니다.
+      또 4월 21일~5월 19일에는 레이저 에너지가 30 mJ 아래일 때 정규화가 잘못되어 후방산란이 낮은 띠가 생겼다가 수정되었습니다.
+    source: https://earth.esa.int/eogateway/missions/earthcare/data/data-quality
+  - date: "2025-01-16"
+    level: info
+    title: EarthCARE L1 자료 일반 공개
+    body: >-
+      2024년 말 시운전을 마친 뒤 ATLID·MSI·BBR(ESA)과 CPR(JAXA) L1 자료가 누구나 무료로 받을 수 있게 공개되었습니다.
+      ESA는 단일 측기 L2를 2025년 3월, 여러 측기 결합 L2를 그 뒤 몇 달에 걸쳐 단계적으로 공개한다고 밝혔습니다.
+    source: https://www.esa.int/Applications/Observing_the_Earth/FutureEO/EarthCARE/EarthCARE_goes_live_with_data_now_available_to_all
+
+links:
+  - name: ESA Earth Online — EarthCARE 임무
+    url: https://earth.esa.int/eogateway/missions/earthcare
+  - name: EarthCARE Product Data Handbook
+    url: https://earthcarehandbook.earth.esa.int/
+  - name: ESA — EarthCARE 데이터 품질 (알려진 문제 목록)
+    url: https://earth.esa.int/eogateway/missions/earthcare/data/data-quality
+  - name: ESA 카탈로그 — EarthCARE L1 제품
+    url: https://earth.esa.int/eogateway/catalog/earthcare-l1-products
+  - name: ESA 카탈로그 — EarthCARE JAXA L2 제품
+    url: https://earth.esa.int/eogateway/catalog/earthcare-jaxa-l2-products
+  - name: JAXA EORC — EarthCARE
+    url: https://www.eorc.jaxa.jp/EARTHCARE/index.html
+
+watch_urls:
+  - https://earth.esa.int/eogateway/missions/earthcare/data
+  - https://earth.esa.int/eogateway/missions/earthcare/data/data-quality
+  - https://www.eorc.jaxa.jp/EARTHCARE/index.html
+
+last_verified: "2026-10-13"

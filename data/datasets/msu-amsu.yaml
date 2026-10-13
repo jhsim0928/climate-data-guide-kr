@@ -1,0 +1,333 @@
+# ─────────────────────────────────────────────────────────────
+# MSU/AMSU 층 평균 기온 (RSS V4.0 · UAH v6.1 · NOAA STAR v5.0) — 데이터셋 정보 파일
+# 위성 탭(기온·수증기). 같은 마이크로파 탐측기 관측을 세 기관이 서로 다른 방식으로 이어 붙인 세 제품을 한 페이지에서 비교합니다.
+# 상태는 페이지 대표값(active)이고 제품별 상태·버전은 status_note·tips에 적었습니다.
+# 수정 후에는 공식 페이지에서 확인한 날짜로 last_verified 를 갱신하세요.
+# ─────────────────────────────────────────────────────────────
+id: msu-amsu
+name: "MSU/AMSU (RSS·UAH·STAR)"
+full_name: MSU/AMSU(/ATMS) Mean Layer Atmospheric Temperatures — RSS V4.0, UAH v6.1, NOAA STAR v5.0 (위성 마이크로파 탐측기로 만든 대류권·성층권 두꺼운 층 평균 기온)
+category: satellite
+domain: satellite
+group: 기온·수증기
+order: 20
+domains: [대기, 원격탐사]
+provider: Remote Sensing Systems(RSS) / 앨라배마대 헌츠빌(UAH) / NOAA NESDIS STAR (NOAA NCEI CDR 배포)
+
+status: active
+status_note: >-
+  세 제품 모두 매달 갱신되고 있습니다(2026-10-13 확인 시 RSS V4.0·UAH v6.1·NOAA STAR v5.0 모두 2026년 9월분까지).
+  UAH는 2024년 11월 NOAA-19의 궤도 표류 때문에 2021년 이후 NOAA-19를 빼고 Metop-B 한 위성만 쓰는 v6.1로 바꿨고, STAR는 2023년부터 MSU·AMSU-A·ATMS를 이어 붙인 v5.0을 씁니다.
+  RSS는 아직 ATMS를 쓰지 않아 노후 AMSU 위성에 의존하며, NCEI에 보관된 RSS CDR 사본은 2025년 2월에서 멈춰 있습니다.
+
+transitions:
+  - from: UAH v6.0
+    to: UAH v6.1
+    status: completed
+    date: "2024-11"
+    summary: >-
+      궤도가 일주기를 따라 너무 멀리 표류한 NOAA-19를 2021년부터 처리에서 빼고, 그 뒤로는 Metop-B 한 위성만 쓰도록 바꾼 판입니다.
+      최근 몇 년의 따뜻한 값이 조금 낮아졌고 1979~2024년 추세는 10년당 0.01 °C 줄었습니다.
+    changes:
+      - aspect: 2021년 이후 사용 위성
+        before: NOAA-19 + Metop-B
+        after: Metop-B 단독
+      - aspect: 하부 대류권(LT) 전지구 추세
+        before: "10년당 +0.16 °C (2024년 9월까지, v6.0)"
+        after: "10년당 +0.15 °C (2024년 10월까지, v6.1)"
+      - aspect: 2024년 10월 LT 편차
+        before: "+0.94 °C (NOAA-19 포함 시)"
+        after: "+0.73 °C"
+    impacts:
+      - v6.0과 v6.1 값을 섞지 마세요. 2021년 이후 값이 다르며, 이전 논문의 v6.0 수치를 v6.1로 바로 비교하면 안 됩니다.
+      - 2021년 이후 UAH는 위성 하나에 기대므로 그 위성의 표류·고장에 더 민감합니다.
+    sources:
+      - name: Roy Spencer 블로그 — UAH v6.1 Global Temperature Update for October 2024 (2024-11-02)
+        url: https://www.drroyspencer.com/2024/11/uah-global-temperature-update-for-october-2024-truncation-of-the-noaa-19-satellite-record/
+  - from: NOAA STAR v4.1
+    to: NOAA STAR v5.0
+    status: completed
+    date: "2023-01"
+    summary: >-
+      STAR v5.0은 MSU·AMSU-A·ATMS 세 세대 측기(16개 극궤도 위성)를 안정 궤도 위성(Aqua·Metop-A·Suomi NPP·NOAA-20) 기준으로 거꾸로 이어 붙이는 'backward merging',
+      새 일주기 표류 보정, NOAA-11·12·14·15 보정 표류 제거를 도입한 판으로, 2023년 1월부터 V3.0·V4.0·V4.1을 대체했습니다.
+    changes:
+      - aspect: 위성 이어 붙이기
+        before: "위성 간 동시 직하 관측(SNO) 짝으로 상호 보정 (MSCAT 방법론 페이지)"
+        after: 안정 궤도 기준 위성에서 과거로 거슬러 맞추는 backward merging
+      - aspect: 일주기 표류 보정
+        before: "MSCAT 방법론 페이지에 설명된 이전 방식 — RSS 일주기 편차 자료에 척도 인수(MSU 2채널 0.875, AMSU-A 5채널 0.917)를 곱해 보정"
+        after: 관측 기반·준물리적 일주기 표류 보정 알고리즘
+      - aspect: 보정 표류 제거
+        before: 일부 위성의 보정 표류가 남음
+        after: NOAA-11·12·14·15의 가짜 보정 표류를 재보정으로 제거
+    impacts:
+      - v4.x로 낸 추세는 v5.0으로 다시 계산하세요. 위성 보정·일주기 보정이 모두 바뀌었습니다.
+      - 2023년 1~5월 배포본에는 1985년 2월 TUT와 2018년 이후 TMT 일부 격자 결측이 있었고 6월 이후 고쳐졌습니다. 그 사이 받은 파일은 다시 받으세요.
+    sources:
+      - name: Readme — STAR V5.0 Mean Layer Temperature CDR
+        url: https://www.star.nesdis.noaa.gov/data/mscat/MSU_AMSU_v5.0/Monthly_Atmospheric_Layer_Mean_Temperature/Readme_STAR_V5.0_Mean_Layer_Temperature_CDR.pdf
+      - name: Zou et al. (2023), JGR Atmospheres
+        url: https://doi.org/10.1029/2022JD037472
+
+period:
+  start: "1978-11"
+  end: present
+  note: >-
+    제품·층마다 시작이 다릅니다. NOAA STAR v5.0은 TMT 1978-11, TLS 1978-12, TUT·TLT 1981-01부터, RSS는 TLT·TMT·TLS 1978년 말, TTS 1987년부터,
+    UAH v6.1 하부 대류권 그림은 1979년부터입니다. 2026-10-13 확인 시 세 제품 모두 2026년 9월분까지 있습니다(STAR는 NCEI판 기준, STAR 서버 파일은 2025년 7월분에 멈춰 있음).
+
+resolution:
+  spatial_short: "278 km (2.5°)"
+  temporal_short: "1개월"
+  spatial: >-
+    RSS: 2.5°×2.5° 위경도 격자(144×72), 월평균은 82.5°S–82.5°N(TLT는 70°S–82.5°N)까지만 / NOAA STAR: 2.5°×2.5° 전지구 격자 /
+    UAH: 층별 텍스트 파일(uahncdc_*_6.1.txt) 제공 — 지역 구성은 파일 머리글에서 확인
+  vertical: >-
+    채널별 가중함수로 정의되는 두꺼운 층의 평균 밝기온도(층 하나당 값 하나). STAR v5.0 Readme 기준 가중함수 정점은 TLT 약 3 km, TMT 약 5 km,
+    TUT 약 10 km, TLS 약 17 km. RSS는 TTS(대류권-성층권), UAH는 TP(대류권계면) 층을 따로 제공
+  temporal: 월평균
+
+update: "매월 (UAH는 보통 다음 달 첫 주, RSS 파일은 2026-10-06에 9월분 갱신, NOAA STAR NCEI판은 2026-10-05에 9월분 갱신)"
+license: >-
+  RSS는 무료 이용(FTP 서버는 무료 등록 필요), UAH는 공개 텍스트 파일, NOAA STAR CDR은 NOAA 공개 자료로 제한 없이 이용 가능 — 모두 인용 요청
+account_required: false
+
+summary: >-
+  1978년 말부터 NOAA·Metop·Aqua 등 극궤도 위성의 마이크로파 탐측기(MSU → AMSU-A → ATMS)가 잰 산소 열복사로 대기의 두꺼운 층(하부·중층 대류권, 하부 성층권 등) 평균 기온을 구한 월별 자료입니다.
+  같은 관측을 RSS, UAH, NOAA STAR가 위성 간 보정·궤도 표류(일주기) 보정 방식을 달리해 이어 붙였기 때문에, 1979년 이후 대류권 온난화 추세의 크기가 제품마다 다릅니다.
+  라디오존데가 드문 곳까지 고르게 덮는 40여 년 상층 기온 기록이라 기후변화 탐지, 재분석·기후모델 검증(대류권 증폭 논쟁)에 표준처럼 쓰입니다.
+
+time_convention:
+  summary: >-
+    모든 값은 달마다의 평균 밝기온도(K) 또는 그 편차입니다. 위성 통과 시각이 바뀌는 효과를 '일주기 보정'으로 없애 일정한 지방 시각에 맞춘 값이며,
+    특정 시각의 순간값이 아닙니다.
+  points:
+    - "편차(anomaly)의 기준 기간이 제품마다 다릅니다. RSS는 1979~1998년(페이지 일부에는 1978~1998년), NOAA STAR v5.0은 2000~2019년입니다. 제품끼리 비교할 때는 같은 기준 기간으로 다시 맞추세요."
+    - "극궤도 위성은 시간이 지나며 통과 지방 시각이 표류하므로, 그대로 두면 하루 중 기온 변화가 추세로 섞입니다. 이 보정 방법의 차이가 RSS·UAH·STAR 추세 차이의 주된 원인입니다."
+    - "UAH v6.1은 2021년 이후 Metop-B(궤도 유지 위성) 하나만 쓰고, STAR v5.0은 Aqua·Metop-A·Suomi NPP·NOAA-20 같은 안정 궤도 위성을 기준으로 이어 붙입니다."
+    - "TLT는 한 채널을 그대로 쓴 값이 아니라 관측을 조합해 만든 값입니다. 예를 들어 STAR v5.0은 TLT = 1.430×TMT − 0.462×TUT + 0.032×TLS 로 계산합니다."
+  source: https://www.star.nesdis.noaa.gov/data/mscat/MSU_AMSU_v5.0/Monthly_Atmospheric_Layer_Mean_Temperature/Readme_STAR_V5.0_Mean_Layer_Temperature_CDR.pdf
+  source_name: STAR V5.0 Readme + RSS Upper Air Temperature 페이지 + UAH v6.1 공지
+
+variables:
+  note: >-
+    세 제품은 변수 이름·파일 형식이 서로 다르고(RSS netCDF, STAR netCDF4·바이너리, UAH 텍스트), 공식 페이지에 파일 속 변수명이 나와 있지 않아 층 이름만 적었습니다.
+    받은 파일에서 변수명을 확인하세요. 단위는 모두 K(편차는 K 차이)입니다.
+  full_list: https://www.remss.com/measurements/upper-air-temperature/
+  groups:
+    - name: 대류권 층 평균 기온
+      kind: mean
+      period: 월
+      items:
+        - text: "하부 대류권 기온 TLT (K) — RSS·UAH(LT)·STAR"
+          std: [t_air]
+        - text: "중층 대류권 기온 TMT (K) — RSS·UAH(MT)·STAR"
+          std: [t_air]
+        - text: "상부 대류권 기온 TUT (K) — STAR"
+          std: [t_air]
+        - text: "대류권 기온 TTT (K) — RSS (TMT·TLS 조합, Fu & Johanson 2005 방식)"
+          std: [t_air]
+    - name: 대류권계면·성층권 층 평균 기온
+      kind: mean
+      period: 월
+      items:
+        - text: "대류권계면~하부 성층권 기온 TTS (K) — RSS (1987년부터)"
+          std: [t_air]
+        - text: "대류권계면 층 기온 TP (K) — UAH"
+          std: [t_air]
+        - text: "하부 성층권 기온 TLS (K) — RSS·UAH(LS)·STAR"
+          std: [t_air]
+    - name: 편차·보조 자료
+      kind: mean
+      period: 월
+      items:
+        - "월 편차 지도 (K) — RSS `RSS_Tb_Anom_Maps_ch_*_V4_0.nc`, STAR `*_Anomaly.dat`"
+        - "지역 평균 편차 시계열 (K) — RSS monthly_time_series, STAR Global_Mean_Anomaly_Time_Series, UAH `uahncdc_*_6.1.txt`"
+
+access:
+  - name: RSS — Upper Air Temperature (자료 설명·다운로드)
+    url: https://www.remss.com/measurements/upper-air-temperature/
+    method: 웹 / HTTPS (netCDF 지도, 텍스트 시계열)
+  - name: RSS netCDF 지도 파일 (V4.0)
+    url: https://data.remss.com/msu/data/netcdf/
+    method: HTTPS 직접 다운로드
+    note: "월평균(RSS_Tb_Maps_ch_*_V4_0.nc)과 편차(RSS_Tb_Anom_Maps_ch_*_V4_0.nc) 파일이 층마다 하나씩 있습니다."
+  - name: UAH v6.1 하부 대류권 시계열 (텍스트)
+    url: https://vortex.nsstc.uah.edu/data/msu/v6.1/tlt/uahncdc_lt_6.1.txt
+    method: HTTP 직접 다운로드
+    note: 중층 대류권은 tmt/uahncdc_mt_6.1.txt, 대류권계면은 ttp/uahncdc_tp_6.1.txt, 하부 성층권은 tls/uahncdc_ls_6.1.txt 입니다.
+  - name: NOAA NCEI — Mean Layer Temperature-NOAA CDR (STAR v5.0)
+    url: https://www.ncei.noaa.gov/products/climate-data-records/mean-layer-temperature-noaa
+    method: HTTPS·THREDDS·AWS S3·Google Cloud (netCDF4)
+    note: 2026-10 확인 시 NCEI THREDDS에 2026년 9월분까지 있습니다. STAR 자체 서버의 v5.0 파일은 2025년 7월분에서 멈춰 있어 최신 자료는 NCEI에서 받으세요.
+  - name: NOAA NCEI — Mean Layer Temperature-RSS CDR (V4.0 사본)
+    url: https://www.ncei.noaa.gov/products/climate-data-records/mean-layer-temperature-rss
+    method: HTTPS·THREDDS·클라우드 (netCDF4)
+    note: NCEI 메타데이터상 2025년 2월에서 끝나고 '갱신 계획 없음'입니다. 최신 RSS 자료는 RSS 서버에서 받으세요.
+
+example:
+  lang: python
+  note: "RSS netCDF는 로그인 없이 HTTPS로 받습니다. 공식 페이지에 변수 이름이 없으므로 먼저 열어서 확인하세요. NOAA STAR v5.0은 NCEI THREDDS 카탈로그에서 최신 파일 이름(…_E<마지막 달>_C<생성일>.nc)을 확인해 같은 방식으로 받습니다."
+  code: |
+    # pip install xarray netCDF4 requests
+    import requests
+    import xarray as xr
+
+    url = "https://data.remss.com/msu/data/netcdf/RSS_Tb_Anom_Maps_ch_TLT_V4_0.nc"   # RSS V4.0 TLT 월 편차 지도
+    with open("rss_tlt_anom.nc", "wb") as f:
+        f.write(requests.get(url, timeout=120).content)
+
+    ds = xr.open_dataset("rss_tlt_anom.nc")
+    print(ds)                       # 변수 이름·차원(시간, 위도, 경도)·기준 기간 속성 확인
+
+tips:
+  - "세 제품의 1979년 이후 TLT·TMT 추세는 같은 관측에서 나왔어도 서로 다릅니다. 결론이 특정 제품에 달려 있지 않은지 세 제품을 모두 보고 범위로 보고하세요."
+  - "RSS 페이지는 TTS·TLS가 '아직 V3.3'이라는 설명과 V4.0이라는 표기가 섞여 있습니다. 실제 배포 파일 이름은 모든 층이 V4_0이므로, 논문에는 받은 파일 이름의 버전과 층별 참고문헌(TLT Mears & Wentz 2017, TMT·TTT 2016, TTS·TLS 2009)을 함께 적으세요."
+  - "RSS 텍스트(UAH 호환 형식) 파일은 '구식(deprecated)'으로 표시되어 있어 새 코드에는 netCDF를 쓰라고 안내합니다."
+  - "RSS는 ATMS를 아직 쓰지 않는다고 밝히고 있습니다(AMSU는 앞으로 ATMS로 대체 예정). 노후 AMSU 위성이 표류·고장으로 빠지면 RSS 기록의 연속성이 흔들릴 수 있습니다."
+  - "NOAA STAR v5.0은 ATMS(Suomi NPP·NOAA-20)를 씁니다. Suomi NPP 과학 자료 전달이 2026년 11월 초 끝난다는 NOAA·NASA 공지가 있으니, 그 이후 판 갱신·재처리 공지를 확인하세요."
+  - "TLS·TTS 등 성층권 층은 큰 화산 분출(엘치촌, 피나투보) 뒤 크게 튀므로 선형 추세를 구할 때 해당 기간 처리를 명시하세요."
+  - "격자 자료의 면적 평균에는 위도의 cos 가중을 주고, RSS는 고위도(82.5° 바깥, TLT는 70°S 남쪽) 값이 없다는 점을 반영하세요."
+
+citations:
+  dataset:
+    - label: NOAA STAR v5.0 (NOAA CDR of Mean Layer Temperature-NOAA, Version 5)
+      text: >-
+        Zou, Cheng-Zhi; Hao, Xianjun. 2023. NOAA Climate Data Record (CDR) of Mean Layer Temperature-NOAA. Version 5.[indicate subset used].
+        NOAA National Centers for Environmental Information. https://doi.org/10.25921/tn91-wv50. Accessed [date].
+      doi: 10.25921/tn91-wv50
+      bibtex: |
+        @misc{noaa_star_mlt_v5,
+          author    = {Zou, Cheng-Zhi and Hao, Xianjun},
+          title     = {{NOAA} Climate Data Record ({CDR}) of Mean Layer Temperature-{NOAA}, Version 5},
+          year      = {2023},
+          publisher = {NOAA National Centers for Environmental Information},
+          doi       = {10.25921/tn91-wv50}
+        }
+    - label: RSS V4.0 (NOAA CDR of Atmospheric Layer Temperatures, Version 4 — NCEI 사본)
+      text: >-
+        Mears, Carl A., F. J. Wentz, and NOAA CDR Program (2015): NOAA Climate Date Record (CDR) of Atmospheric Layer Temperature, Version 4.
+        [indicate subset used]. NOAA National Centers for Environmental Information (NCEI). doi:10.25921/EGRF-Q723 [access date].
+      doi: 10.25921/EGRF-Q723
+      bibtex: |
+        @misc{rss_mlt_v4_cdr,
+          author    = {Mears, Carl A. and Wentz, Frank J. and {NOAA CDR Program}},
+          title     = {{NOAA} Climate Data Record ({CDR}) of Atmospheric Layer Temperatures, Version 4},
+          year      = {2015},
+          publisher = {NOAA National Centers for Environmental Information},
+          doi       = {10.25921/EGRF-Q723}
+        }
+  papers:
+    - label: RSS TLT V4.0
+      text: >-
+        Mears, C. A., and F. J. Wentz (2017): A Satellite-Derived Lower-Tropospheric Atmospheric Temperature Dataset Using an Optimized Adjustment
+        for Diurnal Effects. Journal of Climate, 30(19), 7695–7718.
+      doi: 10.1175/JCLI-D-16-0768.1
+      bibtex: |
+        @article{mears2017tlt,
+          author  = {Mears, Carl A. and Wentz, Frank J.},
+          title   = {A Satellite-Derived Lower-Tropospheric Atmospheric Temperature Dataset Using an Optimized Adjustment for Diurnal Effects},
+          journal = {Journal of Climate},
+          volume  = {30},
+          number  = {19},
+          pages   = {7695--7718},
+          year    = {2017},
+          doi     = {10.1175/JCLI-D-16-0768.1}
+        }
+    - label: RSS TMT·TTT V4.0
+      text: >-
+        Mears, C. A., and F. J. Wentz (2016): Sensitivity of Satellite-Derived Tropospheric Temperature Trends to the Diurnal Cycle Adjustment.
+        Journal of Climate, 29(10), 3629–3646.
+      doi: 10.1175/JCLI-D-15-0744.1
+      bibtex: |
+        @article{mears2016tmt,
+          author  = {Mears, Carl A. and Wentz, Frank J.},
+          title   = {Sensitivity of Satellite-Derived Tropospheric Temperature Trends to the Diurnal Cycle Adjustment},
+          journal = {Journal of Climate},
+          volume  = {29},
+          number  = {10},
+          pages   = {3629--3646},
+          year    = {2016},
+          doi     = {10.1175/JCLI-D-15-0744.1}
+        }
+    - label: UAH Version 6 방법론
+      text: >-
+        Spencer, R. W., J. R. Christy, and W. D. Braswell (2017): UAH Version 6 global satellite temperature products: Methodology and results.
+        Asia-Pacific Journal of Atmospheric Sciences, 53(1), 121–130.
+      doi: 10.1007/s13143-017-0010-y
+      bibtex: |
+        @article{spencer2017uah6,
+          author  = {Spencer, Roy W. and Christy, John R. and Braswell, William D.},
+          title   = {{UAH} Version 6 global satellite temperature products: Methodology and results},
+          journal = {Asia-Pacific Journal of Atmospheric Sciences},
+          volume  = {53},
+          number  = {1},
+          pages   = {121--130},
+          year    = {2017},
+          doi     = {10.1007/s13143-017-0010-y}
+        }
+    - label: NOAA STAR v5.0 (backward merging)
+      text: >-
+        Zou, C.-Z., H. Xu, X. Hao, and Q. Liu (2023): Mid-Tropospheric Layer Temperature Record Derived From Satellite Microwave Sounder Observations
+        With Backward Merging Approach. Journal of Geophysical Research: Atmospheres, 128(6), e2022JD037472.
+      doi: 10.1029/2022JD037472
+      bibtex: |
+        @article{zou2023star,
+          author  = {Zou, Cheng-Zhi and Xu, Hui and Hao, Xianjun and Liu, Qian},
+          title   = {Mid-Tropospheric Layer Temperature Record Derived From Satellite Microwave Sounder Observations With Backward Merging Approach},
+          journal = {Journal of Geophysical Research: Atmospheres},
+          volume  = {128},
+          number  = {6},
+          pages   = {e2022JD037472},
+          year    = {2023},
+          doi     = {10.1029/2022JD037472}
+        }
+  acknowledgement: >-
+    RSS는 층마다 해당 논문(TLT Mears & Wentz 2017, TMT·TTT 2016, TTS·TLS Mears & Wentz 2009 JTECH)을 인용해 달라고 요청합니다.
+    UAH는 공식 페이지에 데이터셋 DOI·인용 문구가 없으므로 Spencer et al. (2017)과 사용한 버전(v6.1)·파일 이름·받은 날짜를 함께 적기를 권합니다.
+    NOAA STAR v5.0은 NCEI CDR DOI와 Zou et al. (2023)을 함께 인용하세요.
+
+notices:
+  - date: "2024-11-02"
+    level: warning
+    title: UAH v6.1로 변경 — 2021년 이후 NOAA-19 제외, Metop-B 단독
+    body: >-
+      UAH는 NOAA-19가 일주기를 따라 너무 멀리 표류해 보정이 어렵다며 2021년부터 NOAA-19 자료를 빼고, 이름을 v6.1로 바꿨습니다.
+      2024년 10월 하부 대류권 편차는 +0.94 °C에서 +0.73 °C로 낮아졌고, 전지구 추세는 10년당 0.01 °C 줄었습니다. 2021년 이후 UAH는 Metop-B 한 위성 자료입니다.
+    source: https://www.drroyspencer.com/2024/11/uah-global-temperature-update-for-october-2024-truncation-of-the-noaa-19-satellite-record/
+  - date: "2023-12-07"
+    level: warning
+    title: NOAA STAR v5.0이 V3.0·V4.0·V4.1 대체 (backward merging·새 일주기 보정)
+    body: >-
+      STAR는 2023년 1월부터 기후변화 연구용으로 v5.0을 쓰라고 안내했습니다. MSU·AMSU-A·ATMS를 안정 궤도 위성 기준으로 잇는 backward merging, 새 일주기 표류 보정,
+      NOAA-11·12·14·15 보정 표류 제거가 들어갔고, 편차 기준 기간은 2000~2019년입니다. 2023년 1~5월 배포본의 일부 결측은 6월 이후 수정되었습니다.
+    source: https://www.star.nesdis.noaa.gov/data/mscat/MSU_AMSU_v5.0/Monthly_Atmospheric_Layer_Mean_Temperature/Readme_STAR_V5.0_Mean_Layer_Temperature_CDR.pdf
+  - date: "2016-06-28"
+    level: info
+    title: RSS TLT V4.0 공개 (TMT·TTT V4.0은 2016-03-02)
+    body: >-
+      RSS가 일주기 보정을 새로 최적화하고 육지·바다의 위성 간 보정을 따로 계산한 하부 대류권 TLT V4.0을 내놓았습니다. 앞서 3월 2일에는 TMT·TTT V4.0이 나왔고 NOAA-19·Metop-B가 추가되었습니다.
+      V4.0에 대한 불확실성 분석은 아직 완료되지 않았다고 밝히고 있습니다.
+    source: https://www.remss.com/measurements/upper-air-temperature/
+
+links:
+  - name: RSS Upper Air Temperature (MSU/AMSU)
+    url: https://www.remss.com/measurements/upper-air-temperature/
+  - name: RSS 월별 시계열 파일 목록
+    url: https://data.remss.com/msu/monthly_time_series/
+  - name: UAH 최신 전지구 기온 (Roy Spencer)
+    url: https://www.drroyspencer.com/latest-global-temperatures/
+  - name: NOAA STAR MSU/AMSU/ATMS 기온 평가 시스템 (MSCAT)
+    url: https://www.star.nesdis.noaa.gov/smcd/emb/mscat/
+  - name: NOAA STAR 자료 목록 (v5.0 Readme 포함)
+    url: https://www.star.nesdis.noaa.gov/smcd/emb/mscat/products.php
+  - name: NCEI THREDDS — Mean Layer Temperature-NOAA
+    url: https://www.ncei.noaa.gov/thredds/catalog/satellite/mean-layer-temperature-noaa/catalog.html
+
+watch_urls:
+  - https://www.remss.com/measurements/upper-air-temperature/
+  - https://www.drroyspencer.com/latest-global-temperatures/
+  - https://www.star.nesdis.noaa.gov/smcd/emb/mscat/products.php
+
+last_verified: "2026-10-13"

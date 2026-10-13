@@ -1,0 +1,302 @@
+# ─────────────────────────────────────────────────────────────
+# Aura MLS (Microwave Limb Sounder) Version 6 / Version 5 — dataset information file
+# Satellite tab (Temperature and water vapour). Version 6, released in March 2026, is recommended for new work; v5 is still produced for now.
+# Key caveats: intermittent 190 GHz radiometer operation since May 2024 (gaps in H2O, N2O) and the projected end of Aura science operations (August 2028).
+# After editing, update last_verified to the date you checked the official pages.
+# ─────────────────────────────────────────────────────────────
+id: aura-mls
+name: "Aura MLS"
+full_name: EOS Aura Microwave Limb Sounder (MLS) Level 2 and Level 3 Version 6
+category: satellite
+domain: satellite
+group: 기온·수증기
+order: 50
+domains: [대기, 원격탐사]
+provider: NASA JPL Aura MLS Team / NASA GES DISC
+
+status: active
+status_note: >-
+  Version 6, a reprocessing of the full record since August 2004, was released in March 2026, and the MLS team recommends it for all new studies. Version 5 forward processing continues for now
+  so that ongoing work is not disrupted (as checked on 2026-10-13, both L2 v6 and v5 run through 11 October). Because the ageing 190 GHz radiometer has been switched on only a few days a month since May 2024,
+  water vapour, N2O and related products are missing for most of each month, and NASA projects the end of Aura science operations in August 2028 because of power limits.
+
+transitions:
+  - from: MLS v5.0x
+    to: MLS v6.0x
+    status: completed
+    date: "2026-03"
+    summary: >-
+      v6 corrects the calibration drift of the 190 GHz radiometer and revises the 118 GHz temperature channel shapes, and reprocesses the whole record. N2O and temperature change the most;
+      v5 forward processing continues for the time being.
+    changes:
+      - aspect: Release date
+        before: "v5 (L2 temperature V005 citation release date 2020-06-11)"
+        after: "v6 (L2 temperature, ozone and water vapour V006 citation release date 2026-03-30; quality document v6.0-1.0 dated 2026-03-26)"
+      - aspect: Processing software
+        before: v5.0x (current file names v05-04)
+        after: "v6.0x — most of the record processed with v6.01, recent data with v6.03 (file names v06-01, v06-03)"
+      - aspect: N2O
+        before: "190 GHz radiometer calibration drift (about 1.3% per decade from around 2010) left in place"
+        after: Drift corrected — values up to 20% larger in the lower stratosphere (100–10 hPa), especially in the tropics
+      - aspect: Temperature
+        before: Only part of the 118 GHz channels used
+        after: "Revised 118 GHz channel shapes allow all Band 1 radiances to be used — up to 20% better precision and up to 30% better vertical resolution at 10–0.1 hPa"
+      - aspect: Water vapour
+        before: "190 GHz drift correction already applied in v5.0x — drift against ACE-FTS removed"
+        after: "Same family of correction in v6; a drift relative to frost-point sondes remains"
+      - aspect: Meaning of Status cloud flags
+        before: Indicate that clouds were present
+        after: Indicate that specific radiances were avoided in the retrieval because of clouds
+    impacts:
+      - Do not mix v5 and v6 in one time series. N2O, temperature (upper stratosphere to mesosphere), water vapour, HCN and upper-stratospheric HNO3 in particular differ between versions.
+      - Screening rules (Quality and Convergence thresholds, useful pressure ranges) differ by version. Re-check the tables in the v6 quality document when switching.
+      - The team only says v5 forward processing continues "for the foreseeable future", so starting new analyses with v6 is the safer choice.
+    sources:
+      - name: Aura MLS v6.0x Level 2 and 3 data quality and description document (v6.0-1.0, 2026-03-26)
+        url: https://mls.jpl.nasa.gov/data/v6-0_data_quality_document.pdf
+      - name: Aura MLS home page (v6 release and 190 GHz operations)
+        url: https://mls.jpl.nasa.gov/
+
+period:
+  start: "2004-08"
+  end: present
+  note: >-
+    Standard L2 products start on 2004-08-02, one file per day. As checked on 2026-10-13, both L2 v6 (ML2T 006) and v5 (ML2T 005) run through 2026-10-11.
+    L3 v6 (netCDF4) is still being populated at GES DISC (as of September 2026 only the 2005 file was present for the monthly binned temperature), while L3 v5 remains available.
+    Since May 2024, water vapour, N2O, HCN and upper-stratospheric HNO3 exist only on the days the 190 GHz radiometer is on (a few days a month).
+
+resolution:
+  spatial_short: "165 km (1.5°)"
+  temporal_short: "1일"
+  spatial: >-
+    L2: profiles every 1.5° (about 165 km) along the orbit track, about 15 orbits per day, 82°S–82°N /
+    L3: daily and monthly binned grids (4° latitude × 5° longitude for the V005 monthly binned temperature, ML3MBT) and zonal means
+  vertical: >-
+    Fixed pressure grid: temperature, water vapour, ozone and relative humidity use 12 surfaces per decade of pressure from 1000 to 1 hPa; most products use 6 per decade (about 2.5 km), thinning to 3 per decade above 0.1 hPa.
+    Useful range: temperature 261–0.00046 hPa (vertical resolution 3–6 km), ozone 261–0.001 hPa (2.5–6 km), water vapour 316–0.001 hPa (about 1.5 km at 316 hPa, 15 km above 0.1 hPa)
+  temporal: >-
+    L2: profiles at their observation times along the orbit within a daily file (one UTC day) / L3: daily and monthly. Near-real-time L2 (NRT, V005) within about 3 hours, in roughly 15-minute files kept online for 7 days
+
+update: "Daily (standard L2 usually reaches GES DISC within 1–3 days of observation; NRT within about 3 hours)"
+license: Open NASA Earth science data, free and unrestricted. File downloads need a free NASA Earthdata Login; citation of the dataset DOI is requested
+account_required: true
+
+summary: >-
+  Vertical profiles of temperature, geopotential height, water vapour, ozone and some 20 other species (ClO, HCl, HNO3, N2O, CO and more) from the upper troposphere to the mesosphere,
+  retrieved since 2004 from thermal emission measured by the Microwave Limb Sounder on NASA's Aura satellite as it views the edge of the atmosphere.
+  Because it is little affected by clouds and aerosols and observes day and night, it is a core record for stratospheric ozone chemistry, the polar vortex,
+  stratospheric water vapour change and the effects of volcanic eruptions.
+
+time_convention:
+  summary: >-
+    L2 values are instantaneous profiles at the time the satellite passed each measurement location, and each file holds one UTC day. L3 values are averages of quality-screened L2 data
+    collected into grids or latitude bands over a day or a month.
+  points:
+    - "The L2 time variable is seconds since 00:00 UT on 1 January 1993 (including leap seconds). About 15 orbits a day of ascending (day) and descending (night) profiles share one file, so split species with a diurnal cycle (such as ClO or mesospheric temperature) by local time."
+    - "Daily L2 files break at UTC midnight. For regional daily means, local calendar days may not match, so split by the time variable yourself."
+    - "Since May 2024 the 190 GHz radiometer is switched on only a few days each month (the MLS team describes about six days around mid-month; the v6 quality document says about four days). On other days H2O, N2O, HCN and HNO3 below 20 hPa are not measured, and CH3Cl, CH3CN, ClO, HCl and cloud ice assume climatological water vapour, making quantitative comparison difficult."
+    - "Near-real-time (NRT) L2 uses a simplified forward model, is less accurate than the standard product and is kept for only 7 days. Use the standard products for research."
+  source: https://mls.jpl.nasa.gov/data/v6-0_data_quality_document.pdf
+  source_name: Aura MLS v6.0x data quality and description document + MLS home page + ML2T_NRT V005 CMR description
+
+variables:
+  note: >-
+    L2 comes as one file per product (species), for example ML2T temperature, ML2H2O water vapour and ML2O3 ozone; the value, precision and quality field names are the same in every file.
+    Units and useful ranges below follow the GES DISC V006 collection descriptions. Always apply the v6 quality document screening (precision > 0, even Status, Quality and Convergence thresholds, useful pressure range).
+  full_list: https://mls.jpl.nasa.gov/data/v6-0_data_quality_document.pdf
+  groups:
+    - name: L2 profiles (HDF-EOS5 per collection, values in `L2gpValue`)
+      kind: instant
+      period: overpass time
+      items:
+        - "Temperature (ML2T, 118 and 240 GHz, 261–0.00046 hPa) — `L2gpValue` (K)"
+        - "Water vapour mixing ratio (ML2H2O, 190 GHz, 316–0.001 hPa) — `L2gpValue` (volume mixing ratio)"
+        - "Ozone mixing ratio (ML2O3, 240 GHz, 261–0.001 hPa) — `L2gpValue` (volume mixing ratio)"
+        - "Geopotential height (ML2GPH) — `L2gpValue` (m)"
+        - "Relative humidity with respect to ice (ML2RHI) — `L2gpValue` (%)"
+        - text: "Other species — ML2CLO, ML2HCL, ML2HNO3, ML2N2O, ML2CO, ML2HCN, ML2SO2, ML2OH, ML2HO2, ML2BRO and more"
+          note: Useful range and screening differ by species
+    - name: L2 quality fields (common to all species)
+      kind: instant
+      period: overpass time
+      items:
+        - "1σ precision — `L2gpPrecision` (same units as the value; discard if zero or negative)"
+        - "Status bits — `Status` (discard if odd; use non-zero even values with caution)"
+        - "Quality — `Quality` (must exceed the threshold)"
+        - "Convergence — `Convergence` (must be below the threshold)"
+    - name: L3 (netCDF4, averages after screening)
+      kind: mean
+      period: Daily / monthly
+      items:
+        - "Monthly binned mean, minimum, maximum and standard deviation per species (for example ML3MBT temperature, ML3MBO3 ozone, ML3MBH2O water vapour)"
+        - "Daily binned (ML3DB*) and daily zonal means (ML3DZ*)"
+
+access:
+  - name: NASA GES DISC — ML2T V006 (L2 temperature)
+    url: https://disc.gsfc.nasa.gov/datacollection/ML2T_006.html
+    method: Web, HTTPS, OPeNDAP (HDF-EOS5)
+    note: Each species has its own collection, such as ML2H2O_006 for water vapour and ML2O3_006 for ozone. A free NASA Earthdata Login is required.
+  - name: GES DISC HTTPS data directory (Aura MLS L2)
+    url: https://acdisc.gesdisc.eosdis.nasa.gov/data/Aura_MLS_Level2/
+    method: HTTPS (wget, curl with Earthdata Login)
+  - name: NASA Earthdata Search — ML2T V006
+    url: https://search.earthdata.nasa.gov/search/granules?p=C3127198472-GES_DISC
+    method: Earthdata Search / earthaccess
+  - name: Zenodo Aura MLS community (selected products)
+    url: https://zenodo.org/communities/aura-mls
+    method: Web download
+    note: Secondary distribution point named in the v6 quality document.
+
+example:
+  lang: python
+  note: "Run earthaccess.login() once with a NASA Earthdata account first. The screening thresholds are examples; take the actual values for each species and pressure range from the v6 quality document tables."
+  code: |
+    # pip install earthaccess h5py numpy
+    import earthaccess
+    import h5py
+    import numpy as np
+
+    earthaccess.login()
+    results = earthaccess.search_data(
+        short_name="ML2T", version="006",               # MLS L2 temperature v6
+        temporal=("2025-01-15", "2025-01-15"),
+    )
+    files = earthaccess.download(results[:1], "./mls")
+
+    with h5py.File(files[0], "r") as f:
+        print(list(f["HDFEOS/SWATHS"]))                  # 'Temperature', 'Temperature-APriori', ...
+        g = f["HDFEOS/SWATHS/Temperature"]
+        val = g["Data Fields/L2gpValue"][:]              # (profiles, levels), K
+        prec = g["Data Fields/L2gpPrecision"][:]
+        status = g["Data Fields/Status"][:]
+        quality = g["Data Fields/Quality"][:]
+        conv = g["Data Fields/Convergence"][:]
+
+    good = (status % 2 == 0) & (quality > 0.9) & (conv < 1.03)   # example thresholds — check the quality document
+    val = np.where(good[:, None] & (prec > 0), val, np.nan)
+    print(val.shape, np.nanmean(val, axis=0)[:5])
+
+tips:
+  - "Do not remove negative values. The quality document warns that masking negatives biases averages of low-abundance species high (v6 water vapour is interpolated in log space and has no negatives)."
+  - "Screening has four steps: use only the useful pressure range, discard points with `L2gpPrecision` ≤ 0, discard profiles with odd `Status`, and apply the `Quality` and `Convergence` thresholds. Thresholds differ by species and pressure range."
+  - "Since May 2024, monthly water vapour and N2O means are built from only a few days of observations. Do not treat them as the same sampling as earlier years, and report the number of observing days per month."
+  - "The team says cloud ice (IWC, IWP) should not be used on days when the 190 GHz radiometer is off, but L2 files do not yet flag those days. Filter them by date yourself."
+  - "A limb profile averages over a long stretch along the line of sight. When comparing with models or reanalyses, apply the averaging kernels that the MLS team archives separately."
+  - "v4 data are no longer available from GES DISC (per the MLS team). Re-check older v4-based results with v5 or v6."
+
+citations:
+  dataset:
+    - label: L2 temperature V006
+      text: >-
+        Schwartz, M., Livesey, N. and Read, W. (2026), MLS/Aura Level 2 Temperature V006, Greenbelt, MD, USA,
+        Goddard Earth Sciences Data and Information Services Center (GES DISC), Accessed: [Data Access Date], 10.5067/Aura/MLS/DATA2620
+      doi: 10.5067/Aura/MLS/DATA2620
+      bibtex: |
+        @misc{ml2t_v006,
+          author    = {Schwartz, M. and Livesey, N. and Read, W.},
+          title     = {{MLS/Aura} Level 2 Temperature {V006}},
+          year      = {2026},
+          publisher = {Goddard Earth Sciences Data and Information Services Center (GES DISC)},
+          address   = {Greenbelt, MD, USA},
+          doi       = {10.5067/Aura/MLS/DATA2620}
+        }
+    - label: L2 water vapour V006
+      text: >-
+        Lambert, A., Read, W. and Livesey, N. (2026), MLS/Aura Level 2 Water Vapor (H2O) Mixing Ratio V006, Greenbelt, MD, USA,
+        Goddard Earth Sciences Data and Information Services Center (GES DISC), Accessed: [Data Access Date], 10.5067/Aura/MLS/DATA2608
+      doi: 10.5067/Aura/MLS/DATA2608
+      bibtex: |
+        @misc{ml2h2o_v006,
+          author    = {Lambert, A. and Read, W. and Livesey, N.},
+          title     = {{MLS/Aura} Level 2 Water Vapor ({H2O}) Mixing Ratio {V006}},
+          year      = {2026},
+          publisher = {Goddard Earth Sciences Data and Information Services Center (GES DISC)},
+          address   = {Greenbelt, MD, USA},
+          doi       = {10.5067/Aura/MLS/DATA2608}
+        }
+    - label: L2 ozone V006
+      text: >-
+        Schwartz, M., Froidevaux, L., Livesey, N. and Read, W. (2026), MLS/Aura Level 2 Ozone (O3) Mixing Ratio V006, Greenbelt, MD, USA,
+        Goddard Earth Sciences Data and Information Services Center (GES DISC), Accessed: [Data Access Date], 10.5067/Aura/MLS/DATA2616
+      doi: 10.5067/Aura/MLS/DATA2616
+      bibtex: |
+        @misc{ml2o3_v006,
+          author    = {Schwartz, M. and Froidevaux, L. and Livesey, N. and Read, W.},
+          title     = {{MLS/Aura} Level 2 Ozone ({O3}) Mixing Ratio {V006}},
+          year      = {2026},
+          publisher = {Goddard Earth Sciences Data and Information Services Center (GES DISC)},
+          address   = {Greenbelt, MD, USA},
+          doi       = {10.5067/Aura/MLS/DATA2616}
+        }
+    - label: L2 temperature V005 (if you stay on v5)
+      text: >-
+        Schwartz, M., Livesey, N. and Read, W. (2020), MLS/Aura Level 2 Temperature V005, Greenbelt, MD, USA,
+        Goddard Earth Sciences Data and Information Services Center (GES DISC), Accessed: [Data Access Date], 10.5067/Aura/MLS/DATA2520
+      doi: 10.5067/Aura/MLS/DATA2520
+      bibtex: |
+        @misc{ml2t_v005,
+          author    = {Schwartz, M. and Livesey, N. and Read, W.},
+          title     = {{MLS/Aura} Level 2 Temperature {V005}},
+          year      = {2020},
+          publisher = {Goddard Earth Sciences Data and Information Services Center (GES DISC)},
+          address   = {Greenbelt, MD, USA},
+          doi       = {10.5067/Aura/MLS/DATA2520}
+        }
+  papers:
+    - label: v6 data quality and description document (recommended alongside the data)
+      text: >-
+        Livesey, N. J., et al. (2026): Aura Microwave Limb Sounder (MLS) Version 6.0x Level 2 and 3 data quality and description document,
+        Version 6.0-1.0. Jet Propulsion Laboratory.
+      doi: 10.5067/AURA/MLS/DOC/v6_dataqualitydocument
+      bibtex: |
+        @techreport{mls_v6_dqd,
+          author      = {Livesey, N. J. and others},
+          title       = {Aura Microwave Limb Sounder ({MLS}) Version 6.0x Level 2 and 3 data quality and description document, Version 6.0-1.0},
+          institution = {Jet Propulsion Laboratory},
+          year        = {2026},
+          doi         = {10.5067/AURA/MLS/DOC/v6_dataqualitydocument}
+        }
+  acknowledgement: >-
+    GES DISC asks that each species collection used be cited in the form above (author, year, title, version, distributor, access date, DOI).
+    The MLS team asks users to read the quality document and follow its screening rules; questions go to mls-data@jpl.nasa.gov.
+
+notices:
+  - date: "2026-03-30"
+    level: warning
+    title: MLS Version 6 released — v6 recommended for new studies, v5 forward processing continues for now
+    body: >-
+      Version 6, a reprocessing of the whole record from the start of the mission with v6 software, was released at GES DISC (L2 citation release date 2026-03-30; quality document 2026-03-26).
+      N2O (up to 20% larger in the lower stratosphere) and temperature (better precision and vertical resolution at 10–0.1 hPa) change the most. The MLS team recommends v6 for new work and keeps producing v5 for ongoing studies.
+    source: https://mls.jpl.nasa.gov/
+  - date: "2026-03-20"
+    level: warning
+    title: NASA projects the end of Aura science operations in August 2028
+    body: >-
+      The editor's note in the NASA Science article 'Terra: The End of An Era' (published 2025-12-29, updated 2026-03-20) projects the end of science operations, because of fuel and power limits,
+      in February 2027 for Terra, September 2027 for Aqua and August 2028 for Aura. The MLS v6 quality document likewise notes that Aura operations may continue to August 2028 but other factors could bring that date forward.
+    source: https://science.nasa.gov/science-research/earth-science/terra-the-end-of-an-era
+  - date: "2024-05-13"
+    level: critical
+    title: 190 GHz radiometer duty cycling begins — H2O, N2O and HCN missing most of each month
+    body: >-
+      Since May 2024 the 190 GHz radiometer, which has limited remaining life, is switched on only a few days a month (first period 13–20 May). On off days, H2O, N2O, HCN and HNO3 below 20 hPa are not measured,
+      cloud ice (IWC, IWP) should not be used, and CH3Cl, CH3CN, ClO and HCl assume climatological water vapour and are only qualitatively useful. Ozone, CO and others are unaffected.
+    source: https://mls.jpl.nasa.gov/
+
+links:
+  - name: Aura MLS home page (NASA JPL)
+    url: https://mls.jpl.nasa.gov/
+  - name: Aura MLS v6.0x data quality and description document (2026-03-26)
+    url: https://mls.jpl.nasa.gov/data/v6-0_data_quality_document.pdf
+  - name: Aura MLS v5.0x data quality and description document
+    url: https://mls.jpl.nasa.gov/data/v5-0_data_quality_document.pdf
+  - name: Aura MLS NRT user guide (v5)
+    url: https://mls.jpl.nasa.gov/data/NRT-user-guide-v5.pdf
+  - name: NASA Aura mission page
+    url: https://science.nasa.gov/mission/aura/
+
+watch_urls:
+  - https://mls.jpl.nasa.gov/
+  - https://science.nasa.gov/mission/aura/
+
+last_verified: "2026-10-13"

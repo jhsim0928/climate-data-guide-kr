@@ -1,0 +1,395 @@
+# ─────────────────────────────────────────────────────────────
+# Aura OMI — 데이터셋 정보 파일
+# 위성 탭(에어로졸·대기 성분). 오존 전량·NO2·SO2·HCHO·자외 에어로졸 지수의 대표 장기 기록입니다.
+# Collection 4(V004)가 현행판이며, 2007년부터의 행 이상(row anomaly)과 Aura 궤도 표류·임무 종료 전망(2028년)이 핵심 주의사항입니다.
+# 후속 비교(OMI → Sentinel-5P TROPOMI)는 이 파일의 transitions에 있습니다.
+# 수정 후에는 공식 페이지에서 확인한 날짜로 last_verified 를 갱신하세요.
+# ─────────────────────────────────────────────────────────────
+id: omi
+name: "Aura OMI"
+full_name: Ozone Monitoring Instrument (OMI) on Aura — Level 2·Level 3 Collection 4 (V004) 미량기체·에어로졸 산출물 (오존 전량, NO2, SO2, HCHO 등)
+category: satellite
+domain: satellite
+group: 에어로졸·대기 성분
+order: 50
+domains: [대기, 에어로졸, 원격탐사]
+provider: NASA GSFC·KNMI(네덜란드)·FMI(핀란드) OMI 과학팀 / NASA GES DISC
+
+status: active
+status_note: >-
+  Aura와 OMI는 2026-10-13 현재 정상 관측 중이며, GES DISC는 V004 L2·L3를 매일 갱신합니다(확인 시 OMNO2d·OMTO3d는 10월 10~11일분까지).
+  다만 Aura는 연료를 아끼려 2023년부터 궤도 유지 기동을 멈춰 적도 통과 시각이 2026년 중반까지 약 1시간 표류했고, NASA는 전력 한계로 Aura의 과학 운용이
+  2028년 8월께 끝날 것으로 내다봅니다. 2007년부터 이어진 행 이상(row anomaly) 때문에 궤도 폭의 상당 부분은 쓸 수 없습니다.
+
+transitions:
+  - from: OMI Collection 3 (V003)
+    to: OMI Collection 4 (V004)
+    status: completed
+    date: "2024-12"
+    summary: >-
+      다시 보정한 Collection 4 L1B 복사량을 입력으로 전 기간(2004년 10월~)을 다시 처리한 판입니다. 제품마다 공개 시점이 달라 NO2가 2024년 12월로 가장 먼저 나왔고,
+      오존·SO2·HCHO가 2025년에 뒤따랐습니다. 판이 바뀌면 값이 달라지므로 V003과 섞지 마세요.
+    changes:
+      - aspect: 공개 시점 (CMR 인용 정보)
+        before: V003 (Collection 3)
+        after: "OMNO2·OMNO2d 2024-12-17, OMTO3·OMTO3d 2025-02-06, OMSO2 2025-06-10, OMHCHO 2025-11-21, OMSO2e 2025-12-02"
+      - aspect: 입력 L1B
+        before: Collection 3 L1B
+        after: Collection 4 L1B 복사량·태양 조도
+      - aspect: NO2 알고리즘 (OMNO2 v5.0)
+        before: "이전 NO2 표준 산출(v4)"
+        after: "고해상도(약 25 km) GMI 모의 사전 연직 분포, 새 줄무늬 제거·플래그 방식, 기하 의존 지표 반사도(GLER), 새 O2-O2 구름 산출, 눈·얼음 처리 개선"
+      - aspect: 행 이상 처리 (NO2)
+        before: "`XTrackQualityFlags`로 표시만 함"
+        after: "영향 받은 화소는 연직 컬럼 산출을 포기하고 결측값을 넣음, `XTrackQualityFlagsModified` 추가"
+      - aspect: SO2 (OMSO2 v2.1)
+        before: "PCA v2 알고리즘 + Collection 3 L1B"
+        after: "같은 PCA v2 알고리즘 + Collection 4 L1B, 적합 잔차 `RootMeanSquareFittingResiduals` 추가"
+      - aspect: V003 생산
+        before: 계속 생산
+        after: "OMNO2d V003은 2026-03-15 자료가 CMR의 마지막 파일 (OMTO3d V003은 2026-10 현재도 생산)"
+    impacts:
+      - "추세·기후값은 전 기간을 V004로 다시 받으세요. NO2 README는 v02.06·02.07처럼 판이 바뀔 때 생긴 불연속을 경고하며 판을 섞은 추세 연구에 주의하라고 합니다(OMI도 같은 원칙)."
+      - V004 NO2·오존·SO2 컬렉션 메타데이터는 '아직 완전히 검증되지 않음'이라고 밝히고, 추세 분석 전에는 알고리즘 책임자에게 알려진 문제를 확인하라고 권합니다.
+      - "V003 코드에서 HCHO를 읽던 경로는 바꿔야 합니다. V004 OMHCHO는 netCDF4 파일이고 변수는 `key_science_data` 그룹 아래에 있습니다."
+    sources:
+      - name: OMNO2 Collection 4 v5.0 README (2024-12)
+        url: https://acdisc.gesdisc.eosdis.nasa.gov/data/Aura_OMI_Level3/OMNO2d.004/doc/README.OMNO2.c4v5.pdf
+      - name: OMSO2 V004 README (v2.1.0, 2025-06-17)
+        url: https://aura.gesdisc.eosdis.nasa.gov/data/Aura_OMI_Level2/OMSO2.004/doc/README.OMSO2_004.pdf
+      - name: OMHCHO V004 README (2026-02-28)
+        url: https://aura.gesdisc.eosdis.nasa.gov/data/Aura_OMI_Level2/OMHCHO.004/doc/README.OMHCHO_004.pdf
+      - name: CMR — OMTO3d V004 컬렉션 정보
+        url: https://cmr.earthdata.nasa.gov/search/concepts/C3377057241-GES_DISC.html
+  - from: Aura OMI
+    to: Sentinel-5P TROPOMI
+    to_id: tropomi
+    status: planned
+    date: "2028-08"
+    summary: >-
+      TROPOMI는 2018년 4월부터 같은 오후 궤도(적도 13:30 통과)에서 OMI보다 화소가 십수 배 작은 관측을 내고 있어, 사실상 OMI의 후속 기록입니다.
+      두 자료가 2018년 이후 겹치므로 그 기간으로 차이를 보정한 뒤 이어 쓰는 것이 일반적이며, Aura 과학 운용은 2028년 8월께 끝날 전망입니다.
+    changes:
+      - aspect: 기간
+        before: "2004-10 ~ 현재 (Aura 과학 운용 2028-08 종료 전망)"
+        after: "2018-04-30 ~ 현재"
+      - aspect: 직하점 화소
+        before: "13 × 24 km (UV2·VIS, 진행 × 횡단)"
+        after: "NO2·SO2·HCHO 등 5.5 × 3.5 km (2019-08-06 이전 7 × 3.5 km), CO·CH4 5.5 × 7 km"
+      - aspect: 관측 폭·궤도
+        before: "약 2,600 km, Aura 705 km 궤도 상승 노드 13:45 (2023년 이후 표류)"
+        after: "2,600 km, 고도 약 824 km 상승 노드 13:30 (궤도 유지)"
+      - aspect: 분광 범위
+        before: "자외·가시 270~500 nm"
+        after: "자외·가시에 근적외·단파적외(SWIR) 추가 — CO·CH4 산출 가능"
+      - aspect: 행 이상
+        before: "2007년부터 궤도 폭 일부가 막혀(행 이상) 해당 화소 사용 불가"
+        after: 해당 문제 없음
+      - aspect: 컬럼 단위·파일 형식
+        before: "molecules cm-2 또는 DU, HDF-EOS5(.he5, HCHO는 netCDF4)"
+        after: "mol m-2(SI), netCDF-4 (`PRODUCT` 그룹)"
+      - aspect: 제공처
+        before: NASA GES DISC
+        after: "Copernicus Data Space Ecosystem(ESA), NASA GES DISC 재배포"
+    impacts:
+      - "단위가 다릅니다. TROPOMI mol m-2 값에 6.02214×10^19를 곱하면 molecules cm-2가 됩니다(파일 속성 `multiplication_factor_to_convert_to_molecules_percm2`)."
+      - 알고리즘·사전 연직 분포·구름 처리가 달라 같은 날 같은 곳이라도 NO2·HCHO 값에 계통 차이가 있습니다. 2018년 이후 겹치는 기간으로 편차를 확인한 뒤 이어 붙이세요.
+      - 일관된 다중위성 NO2 기록이 필요하면 OMI 알고리즘을 TROPOMI 등에 똑같이 적용한 NASA MEaSUREs MINDS NO2(OMI_MINDS_NO2, TROPOMI_MINDS_NO2)도 검토하세요.
+    sources:
+      - name: Levelt et al. (2018) The Ozone Monitoring Instrument — overview of 14 years in space, ACP
+        url: https://doi.org/10.5194/acp-18-5699-2018
+      - name: Veefkind et al. (2012) TROPOMI on the ESA Sentinel-5 Precursor, RSE
+        url: https://doi.org/10.1016/j.rse.2011.09.027
+      - name: NASA — Potential Evolution of the Aura Mission (2026-09-08 갱신)
+        url: https://science.nasa.gov/missions/potential-evolution-of-the-aura-mission/
+      - name: CMR — OMI_MINDS_NO2 V2 (MEaSUREs 다중위성 NO2)
+        url: https://cmr.earthdata.nasa.gov/search/concepts/C4128585682-GES_DISC.html
+
+period:
+  start: "2004-10"
+  end: present
+  note: >-
+    과학 관측은 2004년 10월 1일부터입니다(Aura 발사 2004-07-15). 2026-10-13 확인 시 V004 OMNO2d·OMTO3d·OMSO2e는 2026년 10월 10~11일분까지 있습니다.
+    OMHCHO V004는 CMR 최신 파일이 2025년 4월 30일 자료라 HCHO의 최근 기간은 아직 비어 있습니다. OMNO2d V003은 2026-03-15에서 멈췄습니다.
+
+resolution:
+  spatial_short: "24 km (0.22°)"
+  temporal_short: "1일"
+  spatial: >-
+    L2: 궤도 폭 약 2,600 km, 횡단 방향 60개 화소(행). 직하점 화소 13 × 24 km(UV2·VIS, 진행 × 횡단), UV1은 13 × 48 km, 가장자리로 갈수록 커짐 /
+    L3: OMNO2d 0.25° × 0.25°, OMSO2e 0.25° × 0.25°(최적 화소 1개), OMTO3d 1° × 1° 위경도 격자
+  vertical: 기둥 총량(대류권·성층권 컬럼 구분 포함). 연직 분포 산출물은 이 페이지에서 다루지 않습니다
+  temporal: >-
+    L2: 궤도마다 주간 부분(약 53분) 한 파일, 하루 약 14~15궤도, 하루에 거의 전지구를 덮음. Aura 궤도 16일 반복 /
+    L3: 일 (UTC 하루에 걸친 L2 화소를 격자화)
+
+update: "매일 (L3는 관측 후 약 2일 — CMR 파일 생성 시각 기준)"
+license: NASA 지구과학 공개 자료 — 제한 없이 무료. 파일 내려받기에는 무료 NASA Earthdata 로그인이 필요하며 데이터셋 DOI 인용을 요청합니다
+account_required: true
+
+summary: >-
+  OMI는 네덜란드·핀란드가 만들어 NASA Aura 위성에 실은 자외·가시 분광 영상기로, 2004년부터 오존 전량, 이산화질소(NO2), 이산화황(SO2), 포름알데히드(HCHO),
+  자외 에어로졸 지수 등을 매일 거의 전지구로 관측해 왔습니다. 궤도를 따라 나오는 L2 스와스 자료와 이를 0.25°·1° 격자에 모은 L3 일자료가 GES DISC에서 배포되며,
+  20년이 넘는 기록 덕분에 대기질 추세, 배출량 추정, 오존층 감시의 기준 자료로 쓰입니다. 2024~2025년 다시 처리한 Collection 4(V004)가 현행판입니다.
+
+time_convention:
+  summary: >-
+    L2 값은 위성이 지나간 순간의 관측으로, Aura는 상승 궤도에서 적도를 지방시 약 13:45에 지나며 같은 지점은 하루 한 번 이른 오후에 봅니다.
+    L3 일자료는 그 UTC 하루 동안의 품질 좋은 화소를 격자마다 평균(OMNO2d·OMTO3d)하거나 가장 좋은 화소 하나를 골라(OMSO2e) 만든 값입니다.
+  points:
+    - "13:45 통과 시각은 설계값입니다. Aura는 2023년 1월(고도)·4월(경사각) 마지막 궤도 기동 이후 표류해 평균 통과 시각이 2024년 말 15분 미만, 2025년 중반 약 30분, 2026년 중반 약 1시간 달라졌고, 2027년 9월 약 105분, 2028년 8월 약 150분까지 커질 전망입니다."
+    - "NASA는 표류가 자료 품질에 주는 영향은 작고 산출 알고리즘이 태양 각도 변화를 반영한다고 밝혔지만, 일변화가 큰 NO2·HCHO의 장기 추세에는 관측 시각 변화가 섞일 수 있습니다."
+    - "궤도가 틀어져 OMI 태양 관측 창이 해를 향하지 않게 되어, 2026년 7월부터 2027년 8월까지 매일 자세(yaw) 기동으로 태양 조도 보정을 하고 있습니다."
+    - "OMSO2e는 평균이 아니라 격자에 걸친 '좋은' L2 화소 중 하나를 고른 값(best pixel)입니다. 0~24 UTC 사이 관측에서 골라지므로 날짜변경선 부근은 인접 격자의 관측일이 다를 수 있습니다."
+    - "L3 일자료의 하루는 UTC 기준입니다. 한국은 이른 오후(KST 약 13~14시) 관측이 같은 UTC 날짜 파일에 들어갑니다."
+  source: https://science.nasa.gov/missions/potential-evolution-of-the-aura-mission/
+  source_name: NASA Potential Evolution of the Aura Mission (2026-09-08) + OMI Data User's Guide + OMSO2e V004 CMR 설명
+
+variables:
+  note: >-
+    GES DISC README·파일 명세(.fs)에서 확인한 이름입니다. L2·L3 대부분은 HDF-EOS5(.he5)라 변수가 `HDFEOS/SWATHS/…/Data Fields` 또는 `HDFEOS/GRIDS/…/Data Fields`
+    아래에 있고, OMHCHO V004는 netCDF4입니다. OMNO2d의 결측값은 −1.26765×10^30입니다.
+  full_list: https://disc.gsfc.nasa.gov/datasets?keywords=OMI&project=Aura
+  groups:
+    - name: L3 NO2 (OMNO2d, 0.25° 일자료)
+      kind: mean
+      period: 일 (UTC)
+      items:
+        - text: "대류권 NO2 컬럼(구름 선별, 구름 비율 30% 미만) — `ColumnAmountNO2TropCloudScreened` (molecules cm-2)"
+        - text: "NO2 총 컬럼(구름 선별) — `ColumnAmountNO2CloudScreened` (molecules cm-2)"
+        - text: "대류권·총 NO2 컬럼(전 조건) — `ColumnAmountNO2Trop`, `ColumnAmountNO2` (molecules cm-2)"
+    - name: L3 오존·에어로졸 지수 (OMTO3d, 1° 일자료)
+      kind: mean
+      period: 일 (UTC)
+      items:
+        - "오존 전량 — `ColumnAmountO3` (DU)"
+        - text: "자외 에어로졸 지수 — `UVAerosolIndex` (무차원)"
+          std: [aerosol]
+        - text: "복사 구름 비율 — `RadiativeCloudFraction` (0~1)"
+    - name: L2 NO2·SO2·HCHO 스와스 (OMNO2·OMSO2·OMHCHO)
+      kind: instant
+      period: 관측 시각
+      items:
+        - text: "대류권 NO2 컬럼 — `ColumnAmountNO2Trop` (molecules cm-2), 품질 `VcdQualityFlags`, 행 이상 `XTrackQualityFlagsModified`"
+          std: [no2]
+        - text: "SO2 컬럼(대기질용 / 경계층 1 km 가정) — `ColumnAmountSO2`, `ColumnAmountSO2_PBL` (DU)"
+        - text: "화산 SO2 컬럼(하층 3 km·중층 8 km·상층 13 km·성층권 18 km 가정) — `ColumnAmountSO2_TRL`, `_TRM`, `_TRU`, `_STL` (DU)"
+        - text: "HCHO 컬럼 — `key_science_data/column_amount` (molecules cm-2), 품질 `key_science_data/main_data_quality_flag`"
+          std: [hcho]
+
+access:
+  - name: NASA GES DISC — OMI 자료 목록
+    url: https://disc.gsfc.nasa.gov/datasets?keywords=OMI&project=Aura
+    method: 웹·HTTPS·OPeNDAP·부분 추출
+    note: >-
+      제품 페이지 예: OMNO2d_004, OMTO3d_004, OMSO2e_004, OMNO2_004, OMSO2_004, OMHCHO_004. 무료 Earthdata 로그인이 필요합니다.
+  - name: Earthdata Cloud HTTPS 디렉터리 (data.gesdisc.earthdata.nasa.gov)
+    url: https://data.gesdisc.earthdata.nasa.gov/data/Aura_OMI_Level3/
+    method: HTTPS (wget·curl, Earthdata 로그인)
+    note: 파일 주소는 …/Aura_OMI_Level3/OMNO2d.004/YYYY/ 형식입니다. 예전 서버(acdisc·aura.gesdisc.eosdis.nasa.gov)는 2026년 9월 30일 이후 언제든 닫힐 수 있습니다.
+  - name: NASA Earthdata Search — OMNO2d V004
+    url: https://search.earthdata.nasa.gov/search/granules?p=C3333493715-GES_DISC
+    method: Earthdata Search / earthaccess
+  - name: NASA Giovanni
+    url: https://giovanni.gsfc.nasa.gov/
+    method: 웹 지도·시계열 분석
+    note: 받기 전에 영역 평균 시계열이나 지도로 값의 크기와 결측 분포를 점검하기 좋습니다.
+
+example:
+  lang: python
+  note: >-
+    earthaccess로 OMNO2d V004 일자료를 받아 h5py로 읽는 예입니다. HDF-EOS5 내부 경로는 파일에서 이름으로 찾아 쓰도록 했습니다.
+  code: |
+    # pip install earthaccess h5py numpy
+    import earthaccess
+    import h5py
+    import numpy as np
+
+    earthaccess.login()
+    results = earthaccess.search_data(
+        short_name="OMNO2d", version="004",
+        temporal=("2024-01-01", "2024-01-31"),
+    )
+    files = earthaccess.download(results[:1], "./omi")
+
+    with h5py.File(files[0], "r") as h:
+        paths = []
+        h.visit(lambda n: paths.append(n) if n.endswith("ColumnAmountNO2TropCloudScreened") else None)
+        no2 = h[paths[0]][:].astype(float)          # (720 위도, 1440 경도), molecules cm-2
+    no2[no2 < -1e29] = np.nan                       # 결측값 -1.26765e30
+    print(paths[0], no2.shape, np.nanmean(no2))
+
+tips:
+  - "행 이상(row anomaly)은 2007년 6월 25일 시작해 2008년 5월, 2009년 1월 등 단계적으로 넓어졌고, 지금도 궤도 폭의 상당 부분(시기에 따라 최대 약 50%)이 영향을 받습니다. L2는 반드시 행 이상 플래그로 거르세요(NO2는 `XTrackQualityFlagsModified`가 0 또는 결측값인 화소만, SO2는 `Flag_RowAnomaly` = 0)."
+  - "행 이상 때문에 2009년 이후 하루 전지구 덮임에 빈틈이 생겼습니다. 일자료 격자 결측은 구름이 아니라 행 이상 때문일 수 있으니, 월평균을 만들 때 표본 수 변화를 확인하세요."
+  - "NO2 L2는 `VcdQualityFlags`의 최하위 비트가 0인 화소만 쓰라고 README가 권장합니다. 평균을 낼 때 음수 값도 빼지 말아야 계통 편향이 생기지 않습니다."
+  - "SO2 PBL 컬럼은 구름 복사 비율 0.3 미만, 태양 천정각 65° 미만, 가장자리 행(0·59) 제외, 남대서양 이상대(`Flag_SAA`) 제외가 권장 조건입니다. 화산이 아니면 `ColumnAmountSO2_PBL`·`ColumnAmountSO2`를, 화산 분출은 높이에 맞는 TRL·TRM·TRU·STL을 고르세요."
+  - "HCHO는 `main_data_quality_flag`가 'bad'인 화소는 쓰지 말고, 태양 천정각 70° 초과·구름 비율 0.4 초과·눈과 얼음 위 화소는 특히 조심하라고 README가 안내합니다. 단일 화소는 잡음이 커서 보통 며칠~한 달 평균으로 씁니다."
+  - "OMTO3(오존)는 오류 플래그 0(양호)·1(태양 반사 보정)만 쓰라고 권고하며, 이렇게 거르면 행 이상 화소도 함께 빠집니다. 2022년 1월 11~28일 훙가 통가 분화 기간은 플래그가 강화되어 있습니다."
+  - "OMI 값은 이른 오후 한 번의 관측입니다. 일변화가 큰 NO2를 지상 측정소 일평균과 비교할 때는 관측 시각을 맞추세요."
+  - "V004 컬렉션 메타데이터는 아직 완전히 검증되지 않은 자료라고 밝히고 있습니다. 추세 연구 전에는 GES DISC 제품 페이지의 알려진 문제와 README를 확인하세요."
+
+citations:
+  dataset:
+    - label: OMNO2d V004 (L3 NO2)
+      text: >-
+        Krotkov, N. A., Lamsal, L. N., Marchenko, S. V., Fisher, B. L., Bucsela, E. J., Fasnacht, Z., Yang, E.-S., Qin, W., Vasilkov, A., Li, C.,
+        Joiner, J., Choi, S., Swartz, W. H. (2024), OMI/Aura NO2 Cloud-Screened Total and Tropospheric Column L3 Global Gridded 0.25 degree x 0.25 degree V004,
+        Greenbelt, MD, USA, Goddard Earth Sciences Data and Information Services Center (GES DISC), Accessed: [Data Access Date], 10.5067/Aura/OMI/DATA3407
+      doi: 10.5067/Aura/OMI/DATA3407
+      bibtex: |
+        @misc{omno2d_v004,
+          author    = {Krotkov, Nickolay A. and Lamsal, Lok N. and Marchenko, Sergey V. and Fisher, Bradford L. and Bucsela, Eric J. and Fasnacht, Zachary and Yang, Eun-Su and Qin, Wenhan and Vasilkov, Alexander and Li, Can and Joiner, Joanna and Choi, Sunny and Swartz, William H.},
+          title     = {{OMI/Aura} {NO2} Cloud-Screened Total and Tropospheric Column {L3} Global Gridded 0.25 degree x 0.25 degree {V004}},
+          year      = {2024},
+          publisher = {Goddard Earth Sciences Data and Information Services Center (GES DISC)},
+          address   = {Greenbelt, MD, USA},
+          doi       = {10.5067/Aura/OMI/DATA3407}
+        }
+    - label: OMTO3d V004 (L3 오존·에어로졸 지수)
+      text: >-
+        Bandel, M., Haffner, D., Fasnacht, Z., Bhartia, P. K., Li, C. (2025), OMI/Aura TOMS-Like Ozone, Aerosol Index, Cloud Radiance Fraction L3 1 day
+        1 degree x 1 degree V004, Greenbelt, MD, USA, Goddard Earth Sciences Data and Information Services Center (GES DISC), Accessed: [Data Access Date],
+        10.5067/Aura/OMI/DATA3401
+      doi: 10.5067/Aura/OMI/DATA3401
+      bibtex: |
+        @misc{omto3d_v004,
+          author    = {Bandel, Matthew and Haffner, David and Fasnacht, Zachary and Bhartia, Pawan K. and Li, Can},
+          title     = {{OMI/Aura} {TOMS}-Like Ozone, Aerosol Index, Cloud Radiance Fraction {L3} 1 day 1 degree x 1 degree {V004}},
+          year      = {2025},
+          publisher = {Goddard Earth Sciences Data and Information Services Center (GES DISC)},
+          address   = {Greenbelt, MD, USA},
+          doi       = {10.5067/Aura/OMI/DATA3401}
+        }
+    - label: OMSO2 V004 (L2 SO2)
+      text: >-
+        Li, C., Krotkov, N. A., Leonard, P., Joiner, J. (2025), OMI/Aura Sulphur Dioxide (SO2) Total Column 1-orbit L2 Swath 13x24 km V004,
+        Greenbelt, MD, USA, Goddard Earth Sciences Data and Information Services Center (GES DISC), Accessed: [Data Access Date], 10.5067/Aura/OMI/DATA2422
+      doi: 10.5067/Aura/OMI/DATA2422
+      bibtex: |
+        @misc{omso2_v004,
+          author    = {Li, Can and Krotkov, Nickolay A. and Leonard, Peter and Joiner, Joanna},
+          title     = {{OMI/Aura} Sulphur Dioxide ({SO2}) Total Column 1-orbit {L2} Swath 13x24 km {V004}},
+          year      = {2025},
+          publisher = {Goddard Earth Sciences Data and Information Services Center (GES DISC)},
+          address   = {Greenbelt, MD, USA},
+          doi       = {10.5067/Aura/OMI/DATA2422}
+        }
+    - label: OMHCHO V004 (L2 HCHO)
+      text: >-
+        Gonzalez Abad, G. (2025), OMI/Aura Formaldehyde (HCHO) Total Column 1-orbit L2 Swath 13x24 km V004, Greenbelt, MD, USA,
+        Goddard Earth Sciences Data and Information Services Center (GES DISC), Accessed: [Data Access Date], 10.5067/AURA/OMI/DATA2415
+      doi: 10.5067/AURA/OMI/DATA2415
+      bibtex: |
+        @misc{omhcho_v004,
+          author    = {Gonzalez Abad, Gonzalo},
+          title     = {{OMI/Aura} Formaldehyde ({HCHO}) Total Column 1-orbit {L2} Swath 13x24 km {V004}},
+          year      = {2025},
+          publisher = {Goddard Earth Sciences Data and Information Services Center (GES DISC)},
+          address   = {Greenbelt, MD, USA},
+          doi       = {10.5067/AURA/OMI/DATA2415}
+        }
+  papers:
+    - label: OMI 측기 논문
+      text: >-
+        Levelt, P. F., van den Oord, G. H. J., Dobber, M. R., Malkki, A., Visser, H., de Vries, J., Stammes, P., Lundell, J. O. V., Saari, H. (2006):
+        The ozone monitoring instrument. IEEE Transactions on Geoscience and Remote Sensing, 44(5), 1093–1101.
+      doi: 10.1109/TGRS.2006.872333
+      bibtex: |
+        @article{levelt2006omi,
+          author  = {Levelt, P. F. and van den Oord, G. H. J. and Dobber, M. R. and Malkki, A. and Visser, Huib and de Vries, Johan and Stammes, P. and Lundell, J. O. V. and Saari, H.},
+          title   = {The ozone monitoring instrument},
+          journal = {IEEE Transactions on Geoscience and Remote Sensing},
+          volume  = {44},
+          number  = {5},
+          pages   = {1093--1101},
+          year    = {2006},
+          doi     = {10.1109/TGRS.2006.872333}
+        }
+    - label: OMI 14년 운용 개관 (행 이상 설명 포함)
+      text: >-
+        Levelt, P. F., Joiner, J., Tamminen, J., Veefkind, J. P., Bhartia, P. K., Stein Zweers, D. C., et al. (2018): The Ozone Monitoring Instrument:
+        overview of 14 years in space. Atmospheric Chemistry and Physics, 18, 5699–5745.
+      doi: 10.5194/acp-18-5699-2018
+      bibtex: |
+        @article{levelt2018omi,
+          author  = {Levelt, Pieternel F. and Joiner, Joanna and Tamminen, Johanna and Veefkind, J. Pepijn and Bhartia, Pawan K. and Stein Zweers, Deborah C. and others},
+          title   = {The Ozone Monitoring Instrument: overview of 14 years in space},
+          journal = {Atmospheric Chemistry and Physics},
+          volume  = {18},
+          number  = {8},
+          pages   = {5699--5745},
+          year    = {2018},
+          doi     = {10.5194/acp-18-5699-2018}
+        }
+  acknowledgement: >-
+    GES DISC는 쓴 컬렉션마다 위 형식(작성자, 연도, 제목, 버전, 배포 기관, 접속 날짜, DOI)으로 인용해 달라고 요청합니다. 작성자·연도는 CMR 인용 정보 기준이며,
+    DataCite에 등록된 작성자 목록은 이와 다를 수 있으니 GES DISC 제품 페이지의 인용 문구를 최종 확인하세요. 측기 설명에는 Levelt et al. (2006, 2018)을 함께 인용합니다.
+
+notices:
+  - date: "2026-09-18"
+    level: warning
+    title: GES DISC 기존 데이터 서버 접근 종료 예정(빨라야 2026-09-30) — Earthdata Cloud로 전환
+    body: >-
+      aura.gesdisc.eosdis.nasa.gov 서버 안내문은 이 서버와 다른 모든 GES DISC 데이터 서버의 접근이 '빨라야 2026년 9월 30일' 이후 끝나며, 계속 쓰려면 Earthdata Cloud로
+      옮겨야 한다고 밝히고 있습니다(익명 FTP는 이미 중단). GES DISC는 같은 내용을 2026년 9월 18일 긴급 공지로 게시했습니다. 스크립트 주소를 data.gesdisc.earthdata.nasa.gov나 earthaccess로 바꾸세요.
+    source: https://aura.gesdisc.eosdis.nasa.gov/data/
+  - date: "2026-09-08"
+    level: warning
+    title: Aura 궤도 표류 — 통과 시각 약 1시간 변화, OMI 태양 보정용 매일 자세 기동
+    body: >-
+      NASA는 Aura의 평균 통과 시각 변화가 2026년 중반 약 1시간이며 2028년 8월 약 150분까지 커질 것으로 내다봤습니다. OMI의 태양 관측 창이 해를 향하지 않게 되어
+      2026년 7월부터 2027년 8월까지 매일 자세(yaw) 기동으로 태양 조도 보정을 합니다. 전력 한계 시점은 보수적으로 2028년 중반으로 봅니다.
+    source: https://science.nasa.gov/missions/potential-evolution-of-the-aura-mission/
+  - date: "2026-03-20"
+    level: info
+    title: Aura 과학 운용 2028년 8월 종료 전망
+    body: >-
+      NASA Science 기사 'Terra: The End of An Era'의 편집자 주는 연료·전력 한계로 Terra는 2027년 2월, Aqua는 2027년 9월, Aura는 2028년 8월에 과학 운용이 끝날 것으로
+      전망하며, 그때까지는 운용을 계속한다고 밝혔습니다.
+    source: https://science.nasa.gov/science-research/earth-science/terra-the-end-of-an-era
+  - date: "2025-11-21"
+    level: info
+    title: OMHCHO V004(Collection 4) 공개 — netCDF4 형식
+    body: >-
+      HCHO L2가 Collection 4로 다시 처리되어 V004로 공개되었습니다. 파일은 netCDF4이고 주요 변수는 `key_science_data` 그룹에 있습니다.
+      2026-10 확인 시 CMR의 최신 파일은 2025년 4월 30일 자료입니다.
+    source: https://cmr.earthdata.nasa.gov/search/concepts/C3828870481-GES_DISC.html
+  - date: "2025-02-06"
+    level: info
+    title: 오존 OMTO3·OMTO3d V004 공개
+    body: >-
+      TOMS 방식 오존 전량 L2(OMTO3)와 1° 일자료(OMTO3d)가 Collection 4 입력으로 다시 처리되어 V004로 공개되었습니다. SO2는 2025년 6월(OMSO2), 12월(OMSO2e)에 뒤따랐습니다.
+    source: https://cmr.earthdata.nasa.gov/search/concepts/C3377057241-GES_DISC.html
+  - date: "2024-12-17"
+    level: warning
+    title: NO2 표준 산출 Collection 4(v5.0, V004) 공개
+    body: >-
+      OMNO2·OMNO2d가 새 L1B, 고해상도 사전 연직 분포, 줄무늬 제거, 행 이상 화소 결측 처리 등을 반영한 v5.0으로 전 기간 다시 처리되었습니다.
+      값이 V003과 달라지므로 추세 분석은 V004로 통일하세요.
+    source: https://acdisc.gesdisc.eosdis.nasa.gov/data/Aura_OMI_Level3/OMNO2d.004/doc/README.OMNO2.c4v5.pdf
+  - date: "2007-06-25"
+    level: critical
+    title: OMI 행 이상(row anomaly) 시작
+    body: >-
+      OMI 직하 관측 창을 무언가가 일부 가려 특정 횡단 위치(행)의 복사량이 줄거나 늘어나는 현상이 2007년 6월 25일 시작되었고, 2008년 5월·12월, 2009년 1월, 2011년 7월에
+      영향 범위가 넓어졌습니다. 영향 받은 화소는 산출에 쓸 수 없어 L2 플래그로 걸러야 합니다.
+    source: https://projects.knmi.nl/omi/research/product/rowanomaly-background.php
+
+links:
+  - name: NASA Science — Aura 임무
+    url: https://science.nasa.gov/mission/aura/
+  - name: NASA — Potential Evolution of the Aura Mission
+    url: https://science.nasa.gov/missions/potential-evolution-of-the-aura-mission/
+  - name: KNMI — OMI 행 이상 배경 설명
+    url: https://projects.knmi.nl/omi/research/product/rowanomaly-background.php
+  - name: OMI Data User's Guide (GES DISC)
+    url: https://docserver.gesdisc.eosdis.nasa.gov/repository/Mission/OMI/3.3_ScienceDataProductDocumentation/3.3.2_ProductRequirements_Designs/README.OMI_DUG.pdf
+  - name: KNMI — Ozone Monitoring Instrument
+    url: https://www.knmiprojects.nl/projects/ozone-monitoring-instrument
+
+watch_urls:
+  - https://science.nasa.gov/missions/potential-evolution-of-the-aura-mission/
+  - https://science.nasa.gov/mission/aura/
+
+last_verified: "2026-10-13"

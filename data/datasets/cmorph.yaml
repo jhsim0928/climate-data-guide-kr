@@ -1,0 +1,263 @@
+# ─────────────────────────────────────────────────────────────
+# CMORPH CDR — 데이터셋 정보 파일
+# 위성 탭(강수). NOAA CPC가 만들고 NCEI가 기후자료기록(CDR) v1.0으로 배포하는 30분·8 km 다중위성 강수입니다.
+# 수정 후에는 공식 페이지에서 확인한 날짜로 last_verified 를 갱신하세요.
+# ─────────────────────────────────────────────────────────────
+id: cmorph
+name: "CMORPH CDR"
+full_name: NOAA Climate Data Record of CPC Morphing Technique (CMORPH) High Resolution Global Precipitation Estimates, Version 1 (NOAA CPC 위성 모핑 전지구 강수, 30분·8 km)
+category: satellite
+domain: satellite
+group: 강수
+order: 20
+also_in:
+  - domain: atmosphere
+    group: 강수 자료
+domains: [대기, 육지, 해양, 원격탐사]
+provider: NOAA CPC(기후예측센터, 책임연구자 Pingping Xie) / NOAA NCEI CDR 프로그램 (배포 NCEI, AWS·Google Cloud, NCAR GDEX)
+
+status: active
+status_note: >-
+  CMORPH CDR v1.0은 한 달에 한 번, 관측 후 3~4개월 늦게 갱신되는 정식판으로 계속 생산되고 있습니다.
+  2026-10-13 확인 시 AWS 공개 버킷에는 2026년 5월분까지(2026-10-09 등록) 올라와 있습니다. 2021년 1월부터는 은퇴한 NESDIS MSPPS 대신 NASA GPROF 마이크로파 강수를 입력으로 씁니다.
+
+period:
+  start: "1998-01"
+  end: present
+  note: >-
+    1998-01-01부터 현재까지(약 3~4개월 지연). 2026-10-13 확인 시 AWS 버킷의 일·시간·30분 자료는 2026-05-31까지이고, NCAR GDEX 사본은 2026-01-31까지입니다.
+    2002년 12월부터 만들던 옛 실시간 판(V0.x, 바뀌는 알고리즘)은 V1.0으로 대체되었습니다(NCAR 보관본은 2017-10-02에서 끝남).
+
+resolution:
+  spatial_short: "8 km (0.073°)"
+  temporal_short: "30분"
+  spatial: >-
+    원 해상도 0.07277° 위경도 격자(적도에서 약 8 km), 60°S–60°N. 시간·일 자료는 0.25° 위경도 격자로 제공합니다.
+    개별 위성 추정은 약 12×15 km로 더 거칠고, 8 km 격자는 보간으로 만든 것입니다.
+  vertical: 지표 강수 단일층
+  temporal: >-
+    30분(8 km, 한 시간 파일 안에 30분 자료 2개) / 1시간(0.25°) / 일(0.25°, 파일 이름 DLY_00Z)
+
+update: 매월, 관측 후 약 3~4개월 지연 (NCEI 메타데이터). CPC는 별도로 예비(실시간) 자료를 FTP로 내놓습니다
+license: NOAA CDR 공개 자료 — 계정 없이 무료로 받을 수 있습니다. NCEI 이용 약관(Use Agreement)에 따라 데이터셋 DOI를 인용합니다
+account_required: false
+
+summary: >-
+  CMORPH는 저궤도 위성의 수동 마이크로파(PMW) 강수 추정을, 정지궤도 적외 영상에서 구한 구름 이동 벡터로 옮기고 앞뒤 관측 사이를 시간 가중으로 '모핑'해
+  30분·8 km 전지구(60°S–60°N) 강수를 만드는 NOAA CPC의 방법입니다. CDR v1.0은 고정된 알고리즘과 입력으로 1998년부터 다시 만든 기록이며,
+  육지는 CPC 일 우량계 분석, 해양은 GPCP 반순(5일) 분석에 맞춰 편향을 보정했습니다. GPM IMERG의 모핑 기법도 CMORPH에서 이어받았습니다.
+
+time_convention:
+  summary: >-
+    30분 자료의 값은 단위가 mm/hr인 강수 강도이고, 각 30분 칸은 시작 시각으로 표시합니다(예: 00:00Z 칸 = 00:00~00:30 UTC). 한 시간 파일(파일 이름 끝 HH)에
+    HH:00과 HH:30 두 칸이 들어 있습니다. 0.25° 시간 자료는 mm/hour 강도, 일자료는 mm/day 일강수량이며 NCEI 파일 이름의 DLY_00Z는 00 UTC를 경계로 한 하루입니다.
+  points:
+    - "30분 값 두 개를 그냥 더하면 1시간 강수량이 2배가 됩니다. 30분 강수량(mm)은 강도 × 0.5입니다."
+    - "일자료 하루는 00~24 UTC(한국 시간 09시~다음날 09시)입니다. 한국 시간 기준 일강수가 필요하면 시간·30분 자료로 직접 합산하세요."
+    - "CDR은 관측 후 3~4개월 지연되는 확정판입니다. CPC 예비(실시간) 자료는 편향 보정 단계와 입력이 달라 CDR과 값이 다를 수 있습니다."
+    - "알고리즘 문서는 국가별 관측소 하루 마감 시각(EOD)에 맞춘 일 합계도 설명하지만, NCEI 배포 일 파일 이름은 00Z입니다. 받은 파일의 시간 속성을 확인하세요."
+  source: https://www.ncei.noaa.gov/pub/data/sds/cdr/CDRs/Precipitation-CMORPH/AlgorithmDescription_01B-23.pdf
+  source_name: "CMORPH CDR v1.0 알고리즘 설명서(C-ATBD, 2018) + NCEI 메타데이터(C00948)"
+
+variables:
+  note: >-
+    NCEI 메타데이터와 알고리즘 설명서가 밝힌 변수는 지표 강수 하나입니다. netCDF4 파일 안의 변수 이름은 공식 문서에서 확인하지 못했으므로 파일을 열어 확인하세요(예제 코드 참고).
+  full_list: https://www.ncei.noaa.gov/access/metadata/landing-page/bin/iso?id=gov.noaa.ncdc%3AC00948
+  groups:
+    - name: 30분 자료 (8 km, CMORPH_V1.0_ADJ_8km-30min)
+      kind: instant
+      period: "30분 칸 대표값"
+      items:
+        - text: "편향 보정 강수 강도 (mm/hr)"
+          note: "모핑으로 만든 30분 간격 강도. 공식 문서는 30분 구간 평균인지 순간값인지 따로 밝히지 않음"
+    - name: 시간 자료 (0.25°, CMORPH_V1.0_ADJ_0.25deg-HLY)
+      kind: mean
+      period: 1시간
+      items:
+        - "편향 보정 강수 강도 (mm/hour)"
+    - name: 일자료 (0.25°, CMORPH_V1.0_ADJ_0.25deg-DLY_00Z)
+      kind: accum
+      period: 일 (00~24 UTC)
+      items:
+        - "일강수량 (mm/day)"
+
+access:
+  - name: NOAA NCEI (HTTPS 직접 다운로드)
+    url: https://www.ncei.noaa.gov/data/cmorph-high-resolution-global-precipitation-estimates/access/
+    method: HTTPS 다운로드 (계정 없음)
+    note: 30min/8km, hourly/0.25deg, daily/0.25deg 아래 연·월(·일) 폴더로 나뉘어 있습니다. NCEI는 2026년 10월 클라우드 이전으로 접속 지연이 있을 수 있다고 안내합니다.
+  - name: AWS S3 공개 버킷 (NOAA Open Data Dissemination)
+    url: https://noaa-cdr-precip-cmorph-pds.s3.amazonaws.com/index.html
+    method: S3 (us-east-1, 익명 접근) / HTTPS
+    note: >-
+      s3://noaa-cdr-precip-cmorph-pds/data/30min/8km/YYYY/MM/DD/, data/hourly/0.25deg/YYYY/MM/DD/, data/daily/0.25deg/YYYY/MM/ 구조이고,
+      documentation/ 폴더에 알고리즘 설명서·기술 노트가 있습니다.
+  - name: Google Cloud Storage
+    url: https://console.cloud.google.com/storage/browser/noaa-cdr-precip-cmorph
+    method: GCS 공개 버킷
+  - name: NCAR GDEX (d502002)
+    url: https://gdex.ucar.edu/datasets/d502002/
+    method: HTTPS / THREDDS (NCAR 사본, DOI 10.5065/0EFN-KZ90)
+    note: 2026-10-13 확인 시 2026-01-31까지 들어와 있어 NCEI·AWS보다 늦습니다.
+  - name: NOAA CPC 예비 자료 (CMORPH_RT)
+    url: https://ftp.cpc.ncep.noaa.gov/precip/CMORPH_RT/GLOBE/data/
+    method: HTTPS/FTP
+    note: NCEI 제품 페이지가 'Preliminary Data'로 연결하는 CPC 폴더입니다. CDR 정식판이 아니므로 장기 분석에는 쓰지 마세요.
+
+example:
+  lang: python
+  note: >-
+    AWS 공개 버킷에서 계정 없이 2023년 7월 0.25° 일자료를 받아 한반도 영역 평균을 구하는 예입니다(s3fs·xarray·netCDF4 필요).
+    파일 안 변수 이름을 문서에서 확인하지 못했으므로, (time, lat, lon) 3차원 변수를 골라 쓰도록 했습니다. 처음에는 print(ds)로 구조를 확인하세요.
+  code: |
+    import s3fs
+    import xarray as xr
+
+    fs = s3fs.S3FileSystem(anon=True)
+    paths = sorted(fs.glob("noaa-cdr-precip-cmorph-pds/data/daily/0.25deg/2023/07/*.nc"))
+    files = [fs.open(p) for p in paths]
+    ds = xr.open_mfdataset(files, engine="h5netcdf", combine="by_coords")
+    print(ds)                                    # 변수 이름·단위·좌표 범위 확인
+
+    name = [v for v in ds.data_vars if ds[v].ndim == 3][0]   # 일강수 변수 (mm/day)
+    la = [c for c in ds[name].dims if c.lower().startswith("lat")][0]
+    lo = [c for c in ds[name].dims if c.lower().startswith("lon")][0]
+    pr = ds[name]
+    box = pr.where((ds[la] >= 33) & (ds[la] <= 39) & (ds[lo] >= 124) & (ds[lo] <= 132), drop=True)
+    print(box.mean([la, lo]).values)             # 00~24 UTC 하루 기준
+
+tips:
+  - "30분 자료는 mm/hr 강도입니다. 30분 칸 두 개를 그냥 더하면 1시간 강수량이 2배가 됩니다."
+  - "60°S–60°N만 있고 눈·얼음 덮인 지표 위에서는 추정하지 않습니다. 겨울철 강설과 고위도 강수에는 적합하지 않습니다."
+  - "알고리즘 설명서는 강한 비를 과소 추정하고 약한 비를 놓치는 경향이 있다고 적습니다. 열대의 연강수량도 여전히 적게 나옵니다."
+  - "2015년 4월 TRMM TMI 관측이 끝난 뒤 센서 간 상호 보정은 과거 보정표에 기대고, 2021년 1월부터는 입력 마이크로파 강수가 NESDIS MSPPS에서 NASA GPROF로 바뀌었습니다. 이 시점 앞뒤의 미세한 불연속에 주의하세요."
+  - "편향 보정은 CPC 일 우량계 분석(육지)과 GPCP 반순 분석(해양)에 기대므로, 우량계가 드문 지역에서는 크기의 불확실성이 큽니다."
+  - "옛 CPC 'global_CMORPH' 실시간 자료(V0.x, 2002-12~)는 알고리즘·입력이 계속 바뀐 판이라 2003~2006년에 불균질이 큽니다. 연구에는 CDR v1.0을 쓰세요."
+  - "IMERG(30분·0.1°)도 CMORPH의 모핑 방식을 이어받았지만 입력·보정이 다른 별개 자료입니다. 두 자료를 섞어 시계열을 만들지 마세요."
+
+citations:
+  dataset:
+    - label: CMORPH CDR Version 1 (NOAA NCEI)
+      text: >-
+        Xie, Pingping; Joyce, Robert; Wu, Shaorong; Yoo, S.-H.; Yarosh, Yelena; Sun, Fengying; Lin, Roger; NOAA CDR Program (2019):
+        NOAA Climate Data Record (CDR) of CPC Morphing Technique (CMORPH) High Resolution Global Precipitation Estimates, Version 1 [indicate subset].
+        NOAA National Centers for Environmental Information. https://doi.org/10.25921/w9va-q159 [access date]
+      doi: 10.25921/w9va-q159
+      bibtex: |
+        @misc{cmorph_cdr_v1,
+          author    = {Xie, Pingping and Joyce, Robert and Wu, Shaorong and Yoo, S.-H. and Yarosh, Yelena and Sun, Fengying and Lin, Roger and {NOAA CDR Program}},
+          title     = {{NOAA} Climate Data Record ({CDR}) of {CPC} Morphing Technique ({CMORPH}) High Resolution Global Precipitation Estimates, Version 1},
+          year      = {2019},
+          publisher = {NOAA National Centers for Environmental Information},
+          doi       = {10.25921/w9va-q159}
+        }
+  papers:
+    - label: CMORPH 재처리·편향 보정 (Xie et al., 2017)
+      text: >-
+        Xie, P., Joyce, R., Wu, S., Yoo, S.-H., Yarosh, Y., Sun, F., Lin, R. (2017): Reprocessed, Bias-Corrected CMORPH Global High-Resolution
+        Precipitation Estimates from 1998. Journal of Hydrometeorology, 18(6), 1617–1641.
+      doi: 10.1175/JHM-D-16-0168.1
+      bibtex: |
+        @article{xie2017cmorph,
+          author  = {Xie, Pingping and Joyce, Robert and Wu, Shaorong and Yoo, Soo-Hyun and Yarosh, Yelena and Sun, Fengying and Lin, Roger},
+          title   = {Reprocessed, Bias-Corrected {CMORPH} Global High-Resolution Precipitation Estimates from 1998},
+          journal = {Journal of Hydrometeorology},
+          volume  = {18},
+          number  = {6},
+          pages   = {1617--1641},
+          year    = {2017},
+          doi     = {10.1175/JHM-D-16-0168.1}
+        }
+    - label: CMORPH 방법 (Joyce et al., 2004)
+      text: >-
+        Joyce, R. J., Janowiak, J. E., Arkin, P. A., Xie, P. (2004): CMORPH: A Method that Produces Global Precipitation Estimates from Passive Microwave
+        and Infrared Data at High Spatial and Temporal Resolution. Journal of Hydrometeorology, 5(3), 487–503.
+      doi: 10.1175/1525-7541(2004)005<0487:CAMTPG>2.0.CO;2
+      bibtex: |
+        @article{joyce2004cmorph,
+          author  = {Joyce, Robert J. and Janowiak, John E. and Arkin, Phillip A. and Xie, Pingping},
+          title   = {{CMORPH}: A Method that Produces Global Precipitation Estimates from Passive Microwave and Infrared Data at High Spatial and Temporal Resolution},
+          journal = {Journal of Hydrometeorology},
+          volume  = {5},
+          number  = {3},
+          pages   = {487--503},
+          year    = {2004},
+          doi     = {10.1175/1525-7541(2004)005<0487:CAMTPG>2.0.CO;2}
+        }
+  acknowledgement: >-
+    NCEI는 자료를 쓸 때 데이터셋(DOI 10.25921/w9va-q159)을 인용하고 사용한 부분(30분·시간·일)과 접속 날짜를 적으라고 요청합니다.
+    알고리즘 설명에는 Xie et al. (2017)과 Joyce et al. (2004)을 함께 인용합니다. NCAR GDEX에서 받았다면 GDEX DOI(10.5065/0EFN-KZ90)도 쓸 수 있습니다.
+
+transitions:
+  - from: CMORPH V0.x (CPC 실시간판)
+    to: CMORPH CDR V1.0
+    status: completed
+    date: "2015-10"
+    summary: >-
+      2002년부터 알고리즘·입력을 바꿔 가며 만들던 V0.x를 고정된 알고리즘·입력으로 1998년부터 다시 만든 V1.0이 대체했습니다.
+      위성 단독 추정만 있던 V0.x와 달리 V1.0은 우량계·GPCP로 편향을 보정한 판을 제공하며, NCEI CDR로 2015년 10월 처음 공개되었습니다.
+    changes:
+      - aspect: 기간
+        before: "2002-12~ (NCAR 보관본 2017-10-02까지)"
+        after: "1998-01~현재"
+      - aspect: 균질성
+        before: "알고리즘·입력 버전이 계속 바뀜 — 특히 2003~2006년 불균질"
+        after: "고정된 알고리즘과 같은 입력 버전으로 재처리"
+      - aspect: 제품
+        before: "위성 단독(보정 없음) 추정만"
+        after: "위성 단독(RAW), 편향 보정(ADJ), 우량계-위성 결합 판. NCEI 배포본은 편향 보정판(ADJ)"
+      - aspect: 편향 보정
+        before: "없음"
+        after: "육지는 CPC 일 우량계 분석에 확률분포 맞춤, 해양은 GPCP 반순 분석에 비율 맞춤"
+      - aspect: 형식·제공처
+        before: "CPC FTP 이진 파일(global_CMORPH)"
+        after: "NCEI·AWS·Google Cloud의 netCDF4 (30분 8 km, 시간·일 0.25°)"
+    impacts:
+      - V0.x와 V1.0을 한 시계열로 이어 붙이지 마세요. 장기 분석은 V1.0 전 기간으로 다시 받으세요.
+      - 옛 FTP 경로(global_CMORPH)를 쓰는 스크립트는 NCEI·AWS의 V1.0 경로로 바꾸세요.
+    sources:
+      - name: CMORPH V1.0 README (NCAR GDEX d502002)
+        url: https://osdata.gdex.ucar.edu/web/datasets/d502002/docs/CMORPH_V1.0_README.txt
+      - name: CMORPH CDR 알고리즘 설명서 (C-ATBD, 2018)
+        url: https://www.ncei.noaa.gov/pub/data/sds/cdr/CDRs/Precipitation-CMORPH/AlgorithmDescription_01B-23.pdf
+      - name: Xie et al. (2017)
+        url: https://doi.org/10.1175/JHM-D-16-0168.1
+
+notices:
+  - date: "2026-10-02"
+    level: info
+    title: NCEI 클라우드 이전에 따른 자료 접속 지연 (2026-10-30까지)
+    body: >-
+      NCEI가 자료와 서비스를 클라우드로 옮기는 중이라 접속이 일시적으로 늦어질 수 있고, 현재 영향은 간헐적인 주문 처리 지연이라고 공지했습니다(2026-10-02~10-30).
+      CMORPH CDR 제품 페이지에도 같은 안내가 붙어 있습니다. AWS·Google Cloud 버킷으로 받으면 영향을 덜 받습니다.
+    source: https://www.ncei.noaa.gov/alerts
+  - date: "2022-03-04"
+    level: info
+    title: 2021년 1월분부터 입력 마이크로파 강수를 NASA GPROF로 교체 (기술 노트)
+    body: >-
+      NESDIS MSPPS 시스템이 은퇴해 CMORPH CDR v1.0은 2021-01-01 자료부터 NASA GPROF 마이크로파 강수를 씁니다. 보정 전(RAW) 자료 비교에서 시간값 차이는
+      대략 ±0.7 mm/h, 2020년 12월 월평균 차이는 ±7 mm/day 이내였고 해양 대류 지역에서 차이가 컸습니다. 편향 보정 절차는 그대로라 최종 CDR에 미치는 영향은 작을 것으로 보았습니다.
+    source: https://www.ncei.noaa.gov/pub/data/sds/cdr/CDRs/Precipitation-CMORPH/TechnicalNote_01B-23.pdf
+
+links:
+  - name: NCEI CMORPH CDR 제품 페이지
+    url: https://www.ncei.noaa.gov/products/climate-data-records/precipitation-cmorph
+  - name: NCEI 메타데이터·인용 (DOI 10.25921/w9va-q159)
+    url: https://doi.org/10.25921/w9va-q159
+  - name: CMORPH CDR 알고리즘 설명서 (C-ATBD)
+    url: https://www.ncei.noaa.gov/pub/data/sds/cdr/CDRs/Precipitation-CMORPH/AlgorithmDescription_01B-23.pdf
+  - name: 기술 노트 — GPROF 입력 전환 (2022)
+    url: https://www.ncei.noaa.gov/pub/data/sds/cdr/CDRs/Precipitation-CMORPH/TechnicalNote_01B-23.pdf
+  - name: CPC CMORPH 설명 페이지 (옛 실시간판·QMORPH)
+    url: https://www.cpc.ncep.noaa.gov/products/janowiak/cmorph_description.html
+  - name: AWS Open Data — NOAA CDR 대기 자료
+    url: https://registry.opendata.aws/noaa-cdr-atmospheric/
+  - name: NCAR GDEX d502002
+    url: https://gdex.ucar.edu/datasets/d502002/
+
+watch_urls:
+  - https://www.ncei.noaa.gov/products/climate-data-records/precipitation-cmorph
+  - https://www.ncei.noaa.gov/alerts
+  - https://www.cpc.ncep.noaa.gov/products/janowiak/cmorph_description.html
+
+last_verified: "2026-10-13"

@@ -1,0 +1,343 @@
+# ─────────────────────────────────────────────────────────────
+# AIRS (Aqua) Version 7 L2·L3 — 데이터셋 정보 파일
+# 위성 탭(기온·수증기). AIRS-only(AIRS2RET·AIRS3STD·AIRS3STM)가 현행 기본 흐름이고,
+# AIRS+AMSU(AIRX*)는 AMSU-A2 고장(2016-09-24)으로 끝났습니다. CLIMCAPS-Aqua는 같은 관측으로 만든 별도 산출 체계입니다.
+# Aqua 과학 운용 종료 전망(2027년 9월)과 궤도 표류가 핵심 주의사항입니다.
+# 수정 후에는 공식 페이지에서 확인한 날짜로 last_verified 를 갱신하세요.
+# ─────────────────────────────────────────────────────────────
+id: airs
+name: "AIRS V7"
+full_name: Aqua Atmospheric Infrared Sounder (AIRS) Version 7 Level 2·Level 3 Standard Physical Retrieval (Aqua 위성 초분광 적외 탐측기 기온·수증기 연직 분포)
+category: satellite
+domain: satellite
+group: 기온·수증기
+order: 10
+domains: [대기, 원격탐사]
+provider: NASA JPL AIRS 프로젝트 / NASA GES DISC
+
+status: active
+status_note: >-
+  AIRS-only Version 7(L2 AIRS2RET, L3 AIRS3STD·AIRS3STM)은 지금도 매일 생산됩니다(2026-10-13 확인 시 L2는 10월 9일, 일자료는 10월 6일, 월자료는 2026년 9월분까지).
+  다만 Aqua는 2021년 12월 마지막 고도 유지 기동 이후 궤도가 표류하고 있고, NASA는 연료·전력 한계로 Aqua의 과학 운용이 2027년 9월 끝날 것으로 내다봅니다.
+  AIRS+AMSU 산출물(AIRX2RET·AIRX3STD·AIRX3STM)은 AMSU-A2 전원 상실로 2016년 9월에 끝났습니다.
+
+transitions:
+  - from: AIRS+AMSU (AIRX2RET·AIRX3STD·AIRX3STM)
+    to: AIRS-only (AIRS2RET·AIRS3STD·AIRS3STM)
+    status: completed
+    date: "2016-09"
+    summary: >-
+      AMSU-A2가 2016년 9월 24일 전원을 잃으면서 적외+마이크로파 결합 산출이 끝났고, 이후 연속 기록은 적외만 쓰는 AIRS-only 흐름뿐입니다.
+      AIRS-only 흐름은 2002년부터 전 기간을 같은 방식으로 처리해 두었습니다.
+    changes:
+      - aspect: 기간
+        before: "2002-08-30 ~ 2016-09-25 (AIRX2RET V7.0, COMPLETE)"
+        after: "2002-08-30 ~ 현재 (AIRS2RET V7.0, ACTIVE)"
+      - aspect: 입력 측기
+        before: AIRS 적외 + AMSU-A 마이크로파
+        after: AIRS 적외만 (AMSU 미사용, 지표 분류는 landFrac·예보 적설·해빙 정보 사용)
+      - aspect: 마이크로파 단독 산출물
+        before: "MW-only 기온·가강수량 등(`TAirMWOnlyStd`, `totH2OMWOnlyStd`) 제공"
+        after: MW-only 산출물 없음
+      - aspect: 품질 판정 (해양 지표 기온 QC 문턱)
+        before: 1.1 K
+        after: 1.2 K
+      - aspect: 만든 이유
+        before: 기본 산출(마이크로파로 구름 영향 보완)
+        after: "2007년 6월부터 일부 AMSU 채널 잡음이 크게 늘어 적외 단독판을 따로 만들었고, AMSU-A2 고장 뒤 유일한 연속 흐름이 됨"
+    impacts:
+      - 장기 시계열은 처음부터 AIRS-only(AIRS2RET·AIRS3STM)로 통일하세요. 2016년 9월에서 AIRX와 AIRS를 이어 붙이면 처리 방식 차이가 기후 신호처럼 섞입니다.
+      - V7 L2 가이드에 따르면 AIRS+AMSU 쪽이 품질 0·1(최상·양호) 판정 비율이 더 높습니다. 같은 기간이라도 AIRS-only는 평균에 들어간 표본이 다를 수 있으니 개수(`_ct`) 변수로 표본 수를 확인하세요.
+    sources:
+      - name: AIRS/AMSU/HSB Version 7 Level 2 Product User Guide (V1.1, 2021-07-14)
+        url: https://docserver.gesdisc.eosdis.nasa.gov/public/project/AIRS/V7_L2_Product_User_Guide.pdf
+      - name: CMR — AIRX2RET V7.0 (AMSU-A2 전원 상실로 종료)
+        url: https://cmr.earthdata.nasa.gov/search/concepts/C1701805641-GES_DISC.html
+      - name: AIRS 관측 중단·이상 기록 (AIRS 프로젝트)
+        url: https://airs.jpl.nasa.gov/data/outages/
+  - from: AIRS Version 6
+    to: AIRS Version 7
+    status: completed
+    date: "2019-12"
+    summary: >-
+      2019년 말 공개된 Version 7은 전 기간을 다시 처리한 현행판입니다. L3에서는 월평균 계산 방식이 바뀌고 8일 산출물과 일부 미량기체 전체 컬럼 변수가 빠졌습니다.
+    changes:
+      - aspect: 공개 시점
+        before: Version 6
+        after: "L2 AIRS2RET V7.0 2019-11-27, L3 AIRS3STD·AIRS3STM V7.0 2019-12-15 (CMR 인용 정보 기준)"
+      - aspect: L3 월평균 계산
+        before: "관측 수 가중 평균(Averaged By Observation)"
+        after: "일자료의 단순 산술 평균(Averaged By Day) — 관측 수로 가중하지 않음"
+      - aspect: L3 8일 산출물
+        before: "AIRS3ST8 등 8일 산출물 제공"
+        after: 제공 안 함 — 일자료와 개수(`_ct`) 변수로 직접 계산
+      - aspect: 미량기체
+        before: CO·CH4 전체 컬럼 변수 제공
+        after: "전체 컬럼 CO·CH4 삭제, CO는 `CO_VMR`(연직 분포)만 남음"
+    impacts:
+      - V6와 V7 월평균은 계산 방식이 달라 같은 달이라도 값이 다를 수 있습니다. 두 판을 섞지 마세요.
+      - 예전 8일 자료(AIRS3ST8 V006)를 쓰던 코드는 V7 일자료(AIRS3STD)를 개수 가중으로 직접 묶도록 바꿔야 합니다.
+    sources:
+      - name: AIRS Version 7 Level 3 Product User Guide
+        url: https://docserver.gesdisc.eosdis.nasa.gov/public/project/AIRS/V7_L3_User_Guide.pdf
+      - name: AIRS 문서 목록 (V7 Changes from V6 포함)
+        url: https://docserver.gesdisc.eosdis.nasa.gov/public/project/AIRS/AIRS_Documentation.pdf
+
+period:
+  start: "2002-08"
+  end: present
+  note: >-
+    AIRS-only L2(AIRS2RET)는 2002-08-30, L3 일자료(AIRS3STD)는 2002-08-31, 월자료(AIRS3STM)는 2002-09부터입니다. 2026-10-13 확인 시
+    L2는 2026-10-09, 일자료는 2026-10-06, 월자료는 2026년 9월분까지 있습니다. AIRS+AMSU(AIRX*)는 2016-09-25에서, AIRS+AMSU+HSB는 2003-02-05에서 끝났습니다.
+    2026-01-19~28은 AIRS 검출기 이상으로 L2·L3가 만들어지지 않았습니다.
+
+resolution:
+  spatial_short: "50 km (0.45°)"
+  temporal_short: "1일"
+  spatial: >-
+    L2: 스와스 자료. AIRS 적외 시야 3×3개(직하점 약 15 km)를 묶은 관측 영역(Field of Regard, 직하점 약 50 km)마다 하나의 retrieval,
+    한 그래뉼은 궤도 횡단 30개 × 진행 방향 45줄 / L3: 1°×1° 전지구 위경도 격자(180°W–180°E, 90°S–90°N, 격자 경계가 날짜변경선)
+  vertical: >-
+    L2 표준 산출: 기온 28개 기압면(1100~0.1 hPa), 수증기 15개 면(표준 기압면의 아래쪽 15개) / L3: 기온·지오퍼텐셜 고도 24개 기압면
+    (1000~1 hPa, `StdPressureLev`), 수증기 12개 면(1000~100 hPa, `H2OPressureLev`)과 12개 층(`H2OPressureLay`)
+  temporal: >-
+    L2: 6분 그래뉼(하루 240개), 궤도 주기 98.8분, 16일(233궤도) 반복 / L3: 일(상승·하강 궤도 별도 격자) · 월(일자료 평균).
+    V7에는 8일 산출물이 없습니다. 준실시간(NRT) L2는 관측 후 약 3시간 안에 나옵니다.
+
+update: "매일 (표준 산출은 관측 후 72시간 안, NRT는 약 3시간 안). 월자료는 다음 달 초~중순"
+license: NASA 지구과학 공개 자료 — 제한 없이 무료 이용. 파일 내려받기에는 무료 NASA Earthdata 로그인이 필요하며, 데이터셋 DOI 인용을 요청합니다
+account_required: true
+
+summary: >-
+  NASA Aqua 위성의 초분광 적외 탐측기 AIRS(2,378개 채널)로 구름 낀 하늘까지 보정해 구한 기온·수증기 연직 분포, 지표 기온, 구름, 오존·일산화탄소·메탄 등을
+  2002년부터 제공하는 자료입니다. 궤도를 따라 6분 단위로 나오는 L2 스와스 자료와, 이를 1° 격자에 낮(상승)·밤(하강) 궤도별로 모은 L3 일·월자료가 있습니다.
+  AMSU 마이크로파 측기 일부가 고장 난 뒤로는 적외만 쓰는 AIRS-only 흐름이 기본이며, 20년 넘는 기록 덕분에 대류권 기온·수증기 변화, 재분석·모델 검증에 널리 쓰입니다.
+
+time_convention:
+  summary: >-
+    L2는 각 관측 영역을 위성이 지나간 시각의 순간값입니다. L3 일자료는 그날의 상승(낮, 적도 통과 지방시 약 13:30) 궤도와 하강(밤, 약 01:30) 궤도를
+    따로 격자에 모은 평균이고(`_A`·`_D`), 월자료는 일자료를 평균한 값입니다.
+  points:
+    - "L3 일자료의 하루는 자정~자정 UTC가 아니라 날짜변경선에서 시작해 서쪽으로 진행하는 24시간이며, 이웃 격자 사이 관측 시각 차이는 약 90분 이하입니다. 날짜변경선을 지나는 주사선은 두 날짜 파일로 나뉩니다."
+    - "변수 이름 끝의 `_A`는 상승(주간) 궤도, `_D`는 하강(야간) 궤도, `_ct`는 평균에 들어간 관측 수, `_sdev`는 표준편차입니다. 기온·수증기의 상관을 볼 때는 같은 관측 표본·같은 품질 기준을 쓰는 `_TqJ_A`·`_TqJ_D` 격자를 쓰라고 권고합니다."
+    - "V7 월자료는 일자료의 단순 평균(관측 수 가중 없음)입니다. 일자료에는 궤도 사이 빈틈(gore)이 있습니다."
+    - "적도 통과 시각 13:30·01:30은 설계값입니다. Aqua는 2021년 12월 이후 고도 유지를 멈추고 표류하면서 적도 통과가 점점 늦은 지방시로 옮겨 가고 있어, 같은 '주간' 값이라도 최근 연도는 관측 시각이 다릅니다."
+    - "준실시간(NRT) L2(AIRS2RET_NRT)는 약 3시간 안에 나오지만 7일만 보관되는 임시 자료입니다. 연구에는 표준 산출(약 72시간 안)을 쓰세요."
+  source: https://docserver.gesdisc.eosdis.nasa.gov/public/project/AIRS/V7_L3_User_Guide.pdf
+  source_name: AIRS Version 7 Level 3 Product User Guide + AIRS3STD V7.0 CMR 설명 + Aqua 임무 홈페이지
+
+variables:
+  note: >-
+    L3 변수명은 AIRS V7 L3 사용자 가이드의 필드 이름이며, 각 변수에 `_A`(상승)·`_D`(하강) 접미어가 붙고 `_ct`·`_sdev` 보조 변수가 함께 있습니다(예: `Temperature_A`).
+    L2 필드 이름은 V7 L2 사용자 가이드 표를 확인하세요. 결측값은 -9999입니다.
+  full_list: https://docserver.gesdisc.eosdis.nasa.gov/public/project/AIRS/V7_L3_User_Guide.pdf
+  groups:
+    - name: L3 기온·수증기 (AIRS3STD 일자료 / AIRS3STM 월자료)
+      kind: mean
+      period: 일/월
+      items:
+        - "기온 연직 분포(24개 기압면) — `Temperature_A`, `Temperature_D` (K)"
+        - "지표 기온 — `SurfAirTemp_A`, `SurfAirTemp_D` (K)"
+        - "지표면(skin) 온도 — `SurfSkinTemp_A`, `SurfSkinTemp_D` (K)"
+        - text: "수증기 질량 혼합비(12개 기압면) — `H2O_MMR_A`, `H2O_MMR_D` (g/kg)"
+          std: [q]
+        - "상대습도 — `RelHum_A`, `RelHum_D` (%)"
+        - "총 가강수량(수증기 총량) — `TotH2OVap_A`, `TotH2OVap_D` (kg/m2)"
+        - text: "지오퍼텐셜 고도(24개 기압면) — `GPHeight_A`, `GPHeight_D` (m)"
+          std: [z]
+    - name: L3 구름·복사·미량기체
+      kind: mean
+      period: 일/월
+      items:
+        - text: "구름량 — `CloudFrc_A`, `CloudFrc_D` (0~1)"
+          std: [cloud]
+        - text: "외향 장파복사(전천·청천) — `OLR_A`, `ClrOLR_A` 등 (W/m2)"
+          std: [toa_rad]
+        - "오존 전량 — `TotO3_A`, `TotO3_D` (DU)"
+        - "일산화탄소 부피 혼합비 — `CO_VMR_A`, `CO_VMR_D` (무차원)"
+    - name: L2 스와스 (AIRS2RET)
+      kind: instant
+      period: 관측 시각
+      items:
+        - text: "지표면(skin) 온도 — `TSurfStd` (K), 품질 플래그 `TSurfStd_QC`"
+          std: [tskin]
+          note: QC 0 최상, 1 양호, 2 사용 금지
+        - text: "기온(28개 면)·수증기(15개 면) 연직 분포, 오존·CO·메탄 연직 분포와 오차 추정치"
+          std: [t_air, q, ozone]
+          note: 필드 이름은 V7 L2 사용자 가이드 참고
+
+access:
+  - name: NASA GES DISC — AIRS3STM V7.0 (월자료)
+    url: https://disc.gsfc.nasa.gov/datacollection/AIRS3STM_7.0.html
+    method: 웹·HTTPS·OPeNDAP·부분 추출 (HDF-EOS2)
+    note: 일자료는 AIRS3STD_7.0, L2는 AIRS2RET_7.0 페이지에서 받습니다. NASA Earthdata 로그인(무료)이 필요합니다.
+  - name: GES DISC HTTPS 자료 디렉터리 (L3 월자료)
+    url: https://acdisc.gesdisc.eosdis.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/
+    method: HTTPS (wget·curl, Earthdata 로그인)
+  - name: NASA Earthdata Search — AIRS2RET V7.0 (L2)
+    url: https://search.earthdata.nasa.gov/search/granules?p=C1701805619-GES_DISC
+    method: Earthdata Search / earthaccess
+  - name: CLIMCAPS-Aqua V2 (같은 AIRS 관측을 다른 알고리즘으로 처리한 netCDF 자료)
+    url: https://search.earthdata.nasa.gov/search/granules?p=C1693440795-GES_DISC
+    method: Earthdata Search / earthaccess (SNDRAQIL2CCPRET 등)
+    note: MERRA-2를 초기 추정값으로 쓰므로 NRT가 없고, CrIS(Suomi NPP·NOAA-20)에도 같은 알고리즘을 적용해 AIRS 이후 기록을 잇도록 설계되었습니다.
+
+example:
+  lang: python
+  note: "NASA Earthdata 계정으로 earthaccess.login()을 한 번 거친 뒤 실행합니다. AIRS L2·L3 파일은 HDF-EOS2(HDF4)라 pyhdf로 읽습니다."
+  code: |
+    # pip install earthaccess pyhdf numpy
+    import earthaccess
+    import numpy as np
+    from pyhdf.SD import SD, SDC
+
+    earthaccess.login()
+    results = earthaccess.search_data(
+        short_name="AIRS3STM", version="7.0",          # AIRS-only L3 월자료
+        temporal=("2025-01-01", "2025-12-31"),
+    )
+    files = earthaccess.download(results[:1], "./airs")
+
+    f = SD(files[0], SDC.READ)
+    t = f.select("Temperature_A")[:].astype(float)   # (24 기압면, 180 위도, 360 경도), 상승(주간) 궤도
+    t[t == -9999] = np.nan                            # 결측값
+    print(t.shape, np.nanmean(t[0]))                  # 1000 hPa 기온 평균(면적 가중 아님)
+
+tips:
+  - "장기 추세에는 AIRS-only(AIRS2RET·AIRS3STD·AIRS3STM)만 쓰세요. AIRX(AIRS+AMSU)는 2016-09-25에서 끝났고, 두 흐름은 retrieval 표본과 품질 기준이 다릅니다."
+  - "L3 상대습도에 200%를 넘는(최대 500%) 비현실적 값이 섞여 있으니 걸러 내라고 사용자 가이드가 안내합니다."
+  - "L3 격자값은 품질(QC 0·1)을 통과한 retrieval만 평균한 것이라 짙은 구름·강수 지역에서는 맑은 쪽 표본으로 치우칩니다. 개수(`_ct`)가 적은 격자는 대표성이 낮다고 보고, 격자의 구름량으로 추가 QC를 하지는 마세요(가이드 권고)."
+  - "L3 격자 경계가 날짜변경선(180°)에 있어 경도가 -180~180 순서입니다. 0° 중심 지도를 그리려면 경도 순서를 바꿔야 합니다."
+  - "Aqua는 2021년 12월 이후 표류하며 적도 통과 시각이 늦어지고 고도가 낮아지고 있습니다. 일주기가 큰 지표 기온·지표면 온도·하층 수증기의 최근 추세는 관측 시각 변화 영향을 받을 수 있습니다."
+  - "2026년 1월 19~28일은 L2·L3가 만들어지지 않았고, 2026년 1월 월자료는 이 기간이 빠진 평균입니다."
+  - "V7에는 8일 자료가 없습니다. 여러 날을 묶을 때는 일자료를 `_ct`로 가중 평균하세요."
+
+citations:
+  dataset:
+    - label: L3 월자료 (AIRS-only) V7.0
+      text: >-
+        AIRS project (2019), Aqua/AIRS L3 Monthly Standard Physical Retrieval (AIRS-only) 1 degree x 1 degree V7.0, Greenbelt, MD, USA,
+        Goddard Earth Sciences Data and Information Services Center (GES DISC), Accessed: [Data Access Date], 10.5067/UBENJB9D3T2H
+      doi: 10.5067/UBENJB9D3T2H
+      bibtex: |
+        @misc{airs3stm_v7,
+          author    = {{AIRS project}},
+          title     = {Aqua/{AIRS} {L3} Monthly Standard Physical Retrieval ({AIRS}-only) 1 degree x 1 degree {V7.0}},
+          year      = {2019},
+          publisher = {Goddard Earth Sciences Data and Information Services Center (GES DISC)},
+          address   = {Greenbelt, MD, USA},
+          doi       = {10.5067/UBENJB9D3T2H}
+        }
+    - label: L3 일자료 (AIRS-only) V7.0
+      text: >-
+        AIRS project (2019), Aqua/AIRS L3 Daily Standard Physical Retrieval (AIRS-only) 1 degree x 1 degree V7.0, Greenbelt, MD, USA,
+        Goddard Earth Sciences Data and Information Services Center (GES DISC), Accessed: [Data Access Date], 10.5067/UO3Q64CTTS1U
+      doi: 10.5067/UO3Q64CTTS1U
+      bibtex: |
+        @misc{airs3std_v7,
+          author    = {{AIRS project}},
+          title     = {Aqua/{AIRS} {L3} Daily Standard Physical Retrieval ({AIRS}-only) 1 degree x 1 degree {V7.0}},
+          year      = {2019},
+          publisher = {Goddard Earth Sciences Data and Information Services Center (GES DISC)},
+          address   = {Greenbelt, MD, USA},
+          doi       = {10.5067/UO3Q64CTTS1U}
+        }
+    - label: L2 스와스 (AIRS-only) V7.0
+      text: >-
+        AIRS project (2019), Aqua/AIRS L2 Standard Physical Retrieval (AIRS-only) V7.0, Greenbelt, MD, USA,
+        Goddard Earth Sciences Data and Information Services Center (GES DISC), Accessed: [Data Access Date], 10.5067/VP1M6OG1X7M1
+      doi: 10.5067/VP1M6OG1X7M1
+      bibtex: |
+        @misc{airs2ret_v7,
+          author    = {{AIRS project}},
+          title     = {Aqua/{AIRS} {L2} Standard Physical Retrieval ({AIRS}-only) {V7.0}},
+          year      = {2019},
+          publisher = {Goddard Earth Sciences Data and Information Services Center (GES DISC)},
+          address   = {Greenbelt, MD, USA},
+          doi       = {10.5067/VP1M6OG1X7M1}
+        }
+    - label: L2 스와스 (AIRS+AMSU) V7.0, 2002-08~2016-09
+      text: >-
+        AIRS project (2019), Aqua/AIRS L2 Standard Physical Retrieval (AIRS+AMSU) V7.0, Greenbelt, MD, USA,
+        Goddard Earth Sciences Data and Information Services Center (GES DISC), Accessed: [Data Access Date], 10.5067/URTYDAGTM548
+      doi: 10.5067/URTYDAGTM548
+      bibtex: |
+        @misc{airx2ret_v7,
+          author    = {{AIRS project}},
+          title     = {Aqua/{AIRS} {L2} Standard Physical Retrieval ({AIRS}+{AMSU}) {V7.0}},
+          year      = {2019},
+          publisher = {Goddard Earth Sciences Data and Information Services Center (GES DISC)},
+          address   = {Greenbelt, MD, USA},
+          doi       = {10.5067/URTYDAGTM548}
+        }
+  papers:
+    - label: AIRS 임무 개관
+      text: >-
+        Chahine, M. T., Pagano, T. S., Aumann, H. H., Atlas, R., Barnet, C., Blaisdell, J., et al. (2006): AIRS: Improving Weather Forecasting
+        and Providing New Data on Greenhouse Gases. Bulletin of the American Meteorological Society, 87(7), 911–926.
+      doi: 10.1175/BAMS-87-7-911
+      bibtex: |
+        @article{chahine2006airs,
+          author  = {Chahine, Moustafa T. and Pagano, Thomas S. and Aumann, Hartmut H. and Atlas, Robert and Barnet, Christopher and Blaisdell, John and others},
+          title   = {{AIRS}: Improving Weather Forecasting and Providing New Data on Greenhouse Gases},
+          journal = {Bulletin of the American Meteorological Society},
+          volume  = {87},
+          number  = {7},
+          pages   = {911--926},
+          year    = {2006},
+          doi     = {10.1175/BAMS-87-7-911}
+        }
+  acknowledgement: >-
+    GES DISC는 사용한 컬렉션마다 위 형식(작성자, 연도, 제목, 버전, 배포 기관, 접속 날짜, DOI)으로 인용해 달라고 요청합니다.
+    알고리즘·품질 설명은 V7 L2·L3 사용자 가이드(AIRS 문서 목록)를 함께 밝히는 것이 좋습니다.
+
+notices:
+  - date: "2026-03-20"
+    level: warning
+    title: NASA, Aqua 과학 운용 종료를 2027년 9월로 전망
+    body: >-
+      NASA Science 기사 'Terra: The End of An Era'(2025-12-29 게재, 2026-03-20 갱신)의 편집자 주는 연료·전력 한계로 Terra는 2027년 2월, Aqua는 2027년 9월,
+      Aura는 2028년 8월에 과학 운용이 끝날 것으로 전망하며 그때까지 운용을 계속한다고 밝혔습니다. AIRS 기록의 끝도 이 일정에 묶여 있습니다.
+    source: https://science.nasa.gov/science-research/earth-science/terra-the-end-of-an-era
+  - date: "2026-03-02"
+    level: warning
+    title: AIRS 검출기 DC Restore 이상 — 2026-01-19~28 L2·L3 생산 안 됨
+    body: >-
+      2026년 1월 19일 약 03:14 UTC부터 AIRS의 DC Restore 회로가 멈춰 모듈 M3~M10 채널 신호가 범위를 벗어났고, 1월 28일 점검 명령으로 정상화되었습니다.
+      이 기간 L2·L3는 만들어지지 않았고, 1월 19일·28일 일자료와 2026년 1월 월자료는 일부 그래뉼이 빠진 채 남아 있으니 주의해서 쓰라고 안내했습니다.
+    source: https://docserver.gesdisc.eosdis.nasa.gov/public/project/AIRS/DC-Restore_Anomaly_Note_Final_260302_ADF1122.pdf
+  - date: "2019-12-15"
+    level: info
+    title: AIRS Version 7 L3 공개 (L2는 2019-11-27)
+    body: >-
+      전 기간을 다시 처리한 Version 7이 공개되었습니다. L3 월평균 계산이 일자료의 단순 평균으로 바뀌고 8일 산출물이 없어졌습니다.
+      CMR에는 Version 6 컬렉션도 남아 있지만 새 연구는 V7을 쓰는 것이 기본입니다.
+    source: https://cmr.earthdata.nasa.gov/search/concepts/C1701805662-GES_DISC.html
+  - date: "2016-09-24"
+    level: critical
+    title: AMSU-A2 전원 상실 — AIRS+AMSU(AIRX) 산출 종료
+    body: >-
+      Aqua의 AMSU-A2가 전원을 잃어 AIRS+AMSU 결합 산출물(AIRX2RET·AIRX3STD·AIRX3STM)이 2016년 9월 24일 자료로 끝났습니다.
+      이후 자료는 AIRS-only(AIRS2RET 등)를 쓰라고 안내합니다. AMSU-A1은 계속 운용되지만 일부 채널(5·7·14)에 문제가 있습니다.
+    source: https://airs.jpl.nasa.gov/data/outages/
+
+links:
+  - name: AIRS 프로젝트 (NASA JPL)
+    url: https://airs.jpl.nasa.gov/
+  - name: AIRS Version 7 L2·L3 산출물 소개
+    url: https://airs.jpl.nasa.gov/data/products/v7-L2-L3/
+  - name: AIRS V7 L3 Product User Guide
+    url: https://docserver.gesdisc.eosdis.nasa.gov/public/project/AIRS/V7_L3_User_Guide.pdf
+  - name: AIRS V7 L2 Product User Guide
+    url: https://docserver.gesdisc.eosdis.nasa.gov/public/project/AIRS/V7_L2_Product_User_Guide.pdf
+  - name: Overview of the AIRS Mission (2nd Ed., 2021, CLIMCAPS 포함)
+    url: https://docserver.gesdisc.eosdis.nasa.gov/public/project/AIRS/Overview_of_the_AIRS_Mission.pdf
+  - name: Aqua 임무 홈페이지 (궤도 표류·측기 상태)
+    url: https://aqua.nasa.gov/
+
+watch_urls:
+  - https://airs.jpl.nasa.gov/data/outages/
+  - https://docserver.gesdisc.eosdis.nasa.gov/public/project/AIRS/AIRS_Documentation.pdf
+  - https://aqua.nasa.gov/
+
+last_verified: "2026-10-13"

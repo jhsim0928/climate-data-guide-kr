@@ -1,0 +1,239 @@
+# ─────────────────────────────────────────────────────────────
+# RSS SSM/I and SSMIS Ocean Products (Version 7) — dataset information file (English edition)
+# Satellite tab (Temperature and water vapour). 0.25° grids of ocean wind speed, water vapour, cloud liquid water and rain rate from DMSP microwave radiometers.
+# DMSP SSMIS delivery was promised only "through the retirement of the DMSP mission, expected in September 2026", and the RSS files stop at 2026-09-30.
+# After editing, update last_verified to the date you checked the official pages.
+# ─────────────────────────────────────────────────────────────
+id: rss-ssmi
+name: "RSS SSM/I·SSMIS"
+full_name: Remote Sensing Systems (RSS) DMSP SSM/I and SSMIS Ocean Products, Version 7
+category: satellite
+domain: satellite
+group: 기온·수증기
+order: 30
+domains: [대기, 해양, 원격탐사]
+provider: Remote Sensing Systems (RSS) / NASA GHRC DAAC (netCDF redistribution, NASA MEaSUREs)
+
+status: ended
+status_note: >-
+  The US Department of Defense said it would keep processing and delivering DMSP SSMIS data "through the retirement of the DMSP mission, expected in September 2026" (August 2025), and the RSS daily files for F16, F17 and F18 end with 30 September 2026
+  (as checked on 2026-10-13 the October folders are empty, and the GHRC netCDF collections also end on 30 September). RSS has not posted a separate end-of-record notice, so watch the RSS announcements in case data resume.
+  As a follow-on, RSS released MWI data (V6.1) from the US Space Force WSF-M1 satellite on 1 October 2026.
+
+successor:
+  name: RSS MWI (WSF-M1) V6.1
+  url: https://www.remss.com/announcement/RSS-MWI-V6.1-released/
+  note: >-
+    A 0.25° daily and multi-day gridded product that RSS says is intercalibrated with its existing microwave climate data record (MCDC). RSS also produces ocean products from AMSR2 and GMI in the same family,
+    but sensor differences need checking before splicing any of them onto the DMSP record.
+
+period:
+  start: "1987-07"
+  end: "2026-09"
+  note: >-
+    SSM/I and SSMIS on F08 (1987-07 to 1991-12), F10 (1990-12 to 1997-11), F11 (1991-12 to 2000-05), F13 (1995-05 to 2009-11), F14 (1997-05 to 2008-08), F15 (1999-12 onward; not for climate studies after August 2006),
+    F16 (2003-10 onward), F17 (2006-12 onward) and F18 (2009-10 onward). F19 (2014-04 to 2016-02) is not held by RSS. As checked on 2026-10-13 the last daily files for F16, F17 and F18 are for 2026-09-30.
+
+resolution:
+  spatial_short: "28 km (0.25°)"
+  temporal_short: "1일"
+  spatial: 0.25° × 0.25° global latitude-longitude grid (1440 × 720, first cell centre at 0.125°E, 89.875°S). Values over ocean only; land and sea ice are flagged with codes
+  vertical: 10 m surface wind, column-integrated quantities (water vapour, cloud liquid water), surface rain rate
+  temporal: >-
+    Daily (two maps per satellite, morning and evening passes gridded separately, with the observation time per cell) / 3-day mean (three days ending on the file date) / weekly mean (seven days ending on Saturday) / monthly mean
+
+update: "No longer updated (data through 2026-09-30). While operating, interim (rt) files appeared within hours of observation and final (v7) files within a few days"
+license: RSS data may be used in research and publications with attribution (RSS terms of data use). FTP access needs free registration; GHRC netCDF downloads need a free NASA Earthdata login
+account_required: false
+
+summary: >-
+  A 0.25° gridded product in which RSS processes DMSP SSM/I and SSMIS microwave brightness temperatures with a single physically based algorithm to retrieve, over the ocean, 10 m wind speed, total precipitable water (columnar water vapour), cloud liquid water and rain rate together.
+  SSMIS brightness temperatures are intercalibrated to the earlier SSM/I level, giving a nearly 40-year record from 1987 that has long been used for ocean water-vapour trends, surface winds, precipitation and reanalysis validation.
+  Version 7 files are produced separately for each satellite from F08 to F18, and updates stopped with the end of DMSP data supply in September 2026.
+
+time_convention:
+  summary: >-
+    Daily files are not averages but the values observed when the satellite passed each cell, stored separately for the morning (descending, except F08) and evening (ascending) passes together with each cell's observation time (UTC).
+    The 3-day, weekly and monthly files average these observations and carry no time information.
+  points:
+    - "Each daily map overlays all orbits of the day on the 0.25° grid, so where orbits overlap at high latitudes and at the day boundary, later orbits overwrite earlier ones."
+    - "The time variable is minutes after midnight (or fractional hours 0–24) UTC, not local time; compute local observation time from longitude yourself."
+    - "DMSP satellites fly near dawn–dusk orbits with different equator-crossing local times, and those times drift slowly as orbits decay. See the RSS Crossing Times page for each satellite."
+    - "Interim (rt) files appear within hours but can be incomplete or contain geolocation errors and bad brightness temperatures; a final (v7) file replaces the same date a few days later (rt → v7 in the file name)."
+    - "3-day files average the three days ending on the file date, weekly files the seven days ending on the file date (a Saturday), and monthly files the whole month."
+  source: https://www.remss.com/missions/ssmi/
+  source_name: RSS SSM/I and SSMIS data description page + RSS Python reader (ssmis_daily_v7.py)
+
+variables:
+  note: >-
+    Names are those used by the RSS bytemap reader (ssmis_daily_v7.py). RSS originals are stored as integers 0–250 that must be scaled (and offset),
+    and 251–255 are special codes. Variable names inside the GHRC netCDF files were not verified; check them in your files.
+  full_list: https://www.remss.com/missions/ssmi/
+  groups:
+    - name: Daily (by morning/evening pass)
+      kind: instant
+      period: overpass time
+      items:
+        - text: "Observation time — `time` (fractional hour UTC)"
+          note: Time the satellite passed each cell
+        - "10 m ocean wind speed — `wspd_mf` (m s-1)"
+        - "Total precipitable water (columnar water vapour) — `vapor` (mm)"
+        - "Columnar cloud liquid water — `cloud` (mm)"
+        - "Rain rate — `rain` (mm h-1)"
+    - name: 3-day, weekly and monthly means
+      kind: mean
+      period: 3-day / 7-day / monthly
+      items:
+        - "10 m ocean wind speed — `wspd_mf` (m s-1)"
+        - "Total precipitable water — `vapor` (mm)"
+        - "Columnar cloud liquid water — `cloud` (mm)"
+        - "Rain rate — `rain` (mm h-1)"
+
+access:
+  - name: RSS data server (bytemaps per satellite; daily, 3-day, weekly, monthly)
+    url: https://data.remss.com/ssmi/
+    method: Direct HTTPS download (gzipped binary, e.g. f17/bmaps_v07/y2026/m09/f17_20260930v7.gz)
+    note: F18 is in the bmaps_v08 folder (file names with v8). Readers (Python, IDL, Matlab, Fortran, C++) are in the ssmi_support folder. FTP access needs free registration.
+  - name: NASA GHRC DAAC — RSS SSM/I and SSMIS Ocean Product Grids netCDF V7
+    url: https://search.earthdata.nasa.gov/search/granules?p=C1996546695-GHRC_DAAC
+    method: Earthdata Search / earthaccess / OPeNDAP (netCDF-4)
+    note: >-
+      One collection per satellite and time step (e.g. F17 daily rssmif17d, 3-day rssmif17d3d, weekly rssmif17w, monthly rssmif17m; F16 is rssmif16*; SSM/I satellites such as F13 and F15 are also available).
+      No F18 collection was found when checked in October 2026. A free NASA Earthdata login is required.
+  - name: RSS SSM/I and SSMIS description page
+    url: https://www.remss.com/missions/ssmi/
+    method: Web (format, scaling, codes and citation)
+
+example:
+  lang: python
+  note: "Downloads GHRC netCDF with earthaccess. Run earthaccess.login() once with a NASA Earthdata account, and check the variable names with print(ds) first."
+  code: |
+    # pip install earthaccess xarray netCDF4
+    import earthaccess
+    import xarray as xr
+
+    earthaccess.login()
+    results = earthaccess.search_data(
+        short_name="rssmif17m",          # F17 SSMIS monthly means (daily is rssmif17d)
+        version="7",
+        temporal=("2025-01-01", "2025-12-31"),
+    )
+    files = earthaccess.download(results[:1], "./rss_ssmis")
+
+    ds = xr.open_dataset(files[0])
+    print(ds)                            # check variable names, scaling and fill attributes
+
+tips:
+  - "RSS bytemaps must be scaled — multiply wind by 0.2, vapour by 0.3, rain by 0.1, and cloud by 0.01 then add -0.05. Codes 251 (wind or vapour missing due to rain), 252 (sea ice), 253 (bad data), 254 (no observation) and 255 (land) are not values."
+  - Wind speed is missing or unreliable in rain, sun glint, radio-frequency interference and within about 50 km of coasts and sea ice. Most winds under rain are dropped, so samples are biased toward clear conditions.
+  - Cloud liquid water allows small negative values (down to -0.05 mm) so that noise averages out; do not clip them to zero.
+  - RSS advises against using F15 for climate studies after August 2006. For long-term trends, compare satellites while allowing for their different crossing times and orbit changes.
+  - From 2025 DMSP SSMIS data were delivered only on a best-effort basis, causing missing days. Check daily gaps before using 2025–2026 values.
+  - "F18 files are posted in the bmaps_v08 folder with v8 in the name, while the RSS description page and citation cover Version 7 only. When using F18, report the version in the file names exactly."
+  - The daily time variable is UTC. Mixing morning and evening passes in an average can bias quantities with a strong diurnal cycle, such as rain and cloud.
+
+citations:
+  dataset:
+    - label: RSS SSM/I and SSMIS 0.25° products (RSS recommended citation)
+      text: >-
+        Wentz, F.J., K.A. Hilburn, D.K. Smith, 2012: Remote Sensing Systems DMSP [SSM/I or SSMIS] [Daily, 3-Day, Weekly, Monthly] Environmental Suite on 0.25 deg grid,
+        Version 7, [indicate subset if used]. Remote Sensing Systems, Santa Rosa, CA. Available online at www.remss.com/missions/ssmi. [Accessed dd mmm yyyy].
+      bibtex: |
+        @misc{wentz2012rssssmi,
+          author       = {Wentz, Frank J. and Hilburn, Kyle A. and Smith, Deborah K.},
+          title        = {Remote Sensing Systems {DMSP} {SSM/I} and {SSMIS} Environmental Suite on 0.25 deg grid, Version 7},
+          year         = {2012},
+          publisher    = {Remote Sensing Systems},
+          address      = {Santa Rosa, CA},
+          howpublished = {\url{https://www.remss.com/missions/ssmi}},
+          note         = {Accessed DD MMM YYYY}
+        }
+    - label: GHRC netCDF collection (V7)
+      text: >-
+        Wentz, F. J., Hilburn, K., Smith, D. K. (2012): RSS SSM/I and SSMIS Ocean Product Grids netCDF Data Collection Version 7.
+        NASA Global Hydrometeorology Resource Center DAAC, Huntsville, Alabama, U.S.A. https://doi.org/10.5067/MEASURES/SSMI-SSMIS/DATA301
+      doi: 10.5067/MEASURES/SSMI-SSMIS/DATA301
+      bibtex: |
+        @misc{wentz2012ghrcssmi,
+          author    = {Wentz, Frank J. and Hilburn, Kyle and Smith, Deborah K.},
+          title     = {{RSS} {SSM/I} and {SSMIS} Ocean Product Grids {netCDF} Data Collection Version 7},
+          year      = {2012},
+          publisher = {NASA Global Hydrometeorology Resource Center Distributed Active Archive Center},
+          doi       = {10.5067/MEASURES/SSMI-SSMIS/DATA301}
+        }
+  papers:
+    - label: SSM/I ocean retrieval algorithm
+      text: >-
+        Wentz, F. J. (1997): A well-calibrated ocean algorithm for special sensor microwave/imager. Journal of Geophysical Research: Oceans, 102(C4), 8703–8718.
+      doi: 10.1029/96JC01751
+      bibtex: |
+        @article{wentz1997ssmi,
+          author  = {Wentz, Frank J.},
+          title   = {A well-calibrated ocean algorithm for special sensor microwave / imager},
+          journal = {Journal of Geophysical Research: Oceans},
+          volume  = {102},
+          number  = {C4},
+          pages   = {8703--8718},
+          year    = {1997},
+          doi     = {10.1029/96JC01751}
+        }
+    - label: Microwave rain retrieval (UMORA)
+      text: >-
+        Hilburn, K. A., Wentz, F. J. (2008): Intercalibrated Passive Microwave Rain Products from the Unified Microwave Ocean Retrieval Algorithm (UMORA).
+        Journal of Applied Meteorology and Climatology, 47(3), 778–794.
+      doi: 10.1175/2007JAMC1635.1
+      bibtex: |
+        @article{hilburn2008umora,
+          author  = {Hilburn, Kyle A. and Wentz, Frank J.},
+          title   = {Intercalibrated Passive Microwave Rain Products from the Unified Microwave Ocean Retrieval Algorithm ({UMORA})},
+          journal = {Journal of Applied Meteorology and Climatology},
+          volume  = {47},
+          number  = {3},
+          pages   = {778--794},
+          year    = {2008},
+          doi     = {10.1175/2007JAMC1635.1}
+        }
+  acknowledgement: >-
+    RSS asks for an acknowledgement such as "SSM/I and SSMIS data are produced by Remote Sensing Systems. Data are available at www.remss.com/missions/ssmi.",
+    and asks users to tell RSS User Support the journal and expected publication date of papers using the data (this helps sustain funding for the products).
+
+notices:
+  - date: "2026-10-01"
+    level: info
+    title: Follow-on microwave data released — RSS MWI (WSF-M1) V6.1
+    body: >-
+      RSS released the first public version (V6.1) of data from the MWI sensor on the US Space Force WSF-M1 satellite: 0.25° daily and multi-day gridded netCDF, intercalibrated with the existing RSS microwave climate record.
+      It is meant to fill the gap after DMSP SSMIS, but continuity with the SSMIS record has to be checked separately.
+    source: https://www.remss.com/announcement/RSS-MWI-V6.1-released/
+  - date: "2025-08-06"
+    level: warning
+    title: DMSP SSMIS delivery to continue only until DMSP retirement (expected September 2026)
+    body: >-
+      NSIDC reported that the US Department of Defense would continue SSMIS processing and delivery through the retirement of the DMSP mission, expected in September 2026.
+      NOAA and EUMETSAT OSI SAF likewise described the data as available on a best-effort basis.
+    source: https://nsidc.org/data/user-resources/data-announcements/user-notice-noaansidc-sea-ice-concentration-near-real-time-cdr-version-3-will-continue-ssmis-data
+  - date: "2025-06-26"
+    level: critical
+    title: DMSP SSMIS discontinuation announced (later postponed)
+    body: >-
+      RSS relayed notice that DMSP and the US Navy's FNMOC would permanently stop ingesting, processing and distributing DMSP data by 30 June 2025. On 30 June, at NASA's request, this was postponed to 31 July,
+      and it was later extended until the end of the DMSP mission (expected September 2026). RSS said it would prepare MWI data for release.
+    source: https://www.remss.com/announcement/DMSP-SSMIS-discontinued/
+
+links:
+  - name: RSS — SSM/I and SSMIS data description
+    url: https://www.remss.com/missions/ssmi/
+  - name: RSS — equator crossing times by satellite
+    url: https://www.remss.com/support/crossing-times
+  - name: RSS — terms of data use
+    url: https://www.remss.com/support/terms-of-use
+  - name: RSS announcements
+    url: https://www.remss.com/announcement/
+  - name: EUMETSAT OSI SAF — implications of the end of SSMIS data for its products
+    url: https://osi-saf.eumetsat.int/community/stories/implications-end-ssmis-data-osi-saf-products
+
+watch_urls:
+  - https://www.remss.com/announcement/
+  - https://www.remss.com/missions/ssmi/
+
+last_verified: "2026-10-13"

@@ -7,7 +7,7 @@
 #   aliases  : 검색어로 받아줄 말 (한국어·영어·약어). 각 자료의 변수명(`tp`, `PRECTOT` 등)은 자동으로 더해짐
 #   include  : 한국어 변수 설명이 이 정규식 중 하나에 맞으면 이 변수로 봄
 #   exclude  : 맞아도 이 정규식에 걸리면 제외
-#   domains  : (선택) 이 분야 자료에서만 (atmosphere / ocean / seaice / land)
+#   domains  : (선택) 이 분야 자료에서만 (atmosphere / ocean / seaice / land / satellite)
 #   dataset_groups : (선택) 이 분류(group) 자료에서만
 #   related  : (선택) 함께 보여줄 관련 변수 id
 #
@@ -494,7 +494,7 @@ groups:
         en: Land cover classification
         cf: area_type
         aliases: [토지피복, 토지이용, 피복 분류, land cover, land use, IGBP, LCCS, PFT, plant functional type]
-        include: ['토지\s?피복', '토지\s?이용', '분류\(', '\s분류 —', '최빈\) 등급', '등급별 피복률', 'LCCS\d']
+        include: ['토지\s?피복', '토지\s?이용', '최빈\) 등급', '등급별 피복률', 'LCCS\d']
         exclude: ['신뢰도|화소 상태|관측 수|변화 횟수']
         related: [lai]
       - id: tws
@@ -541,4 +541,97 @@ groups:
         exclude: ['비율']
         dataset_groups: [산불]
         related: [burned_area]
+
+  - name: {ko: 대기 — 구름 특성·대기 성분, en: Atmosphere — cloud properties and composition}
+    items:
+      - id: cloud_top
+        ko: 구름 상단 기압·온도·높이
+        en: Cloud-top pressure / temperature / height
+        cf: air_pressure_at_cloud_top
+        aliases: [운정, 운정고도, 운정기압, 운정온도, 구름 상단, cloud top, cloud top pressure, cloud top height, cloud top temperature, CTP, CTH, CTT, pc, tc]
+        include: ['구름 상단 (기압|온도|높이)', '운정\s?(온도|기압|고도)', '층 꼭대기']
+        related: [cloud, cloud_optical]
+      - id: cloud_optical
+        ko: 구름 광학두께·유효 반경
+        en: Cloud optical thickness / effective radius
+        cf: atmosphere_optical_thickness_due_to_cloud
+        aliases: [구름 광학두께, 유효 반경, cloud optical thickness, cloud optical depth, COT, tau, effective radius, CER, cloud emissivity]
+        include: ['구름.*광학두께', '유효 (입자 )?반경', '구름 (유효 )?방출률', '유효 방출률']
+        exclude: ['불확실성']
+        related: [cloud_top, cloud_water]
+      - id: cloud_phase_mask
+        ko: 구름 마스크·운상
+        en: Cloud mask / cloud phase
+        cf: cloud_binary_mask
+        aliases: [구름 마스크, 구름탐지, 운상, 구름 상, cloud mask, cloud phase, clear sky confidence, CLDMSK, MOD35]
+        include: ['구름 마스크', '구름탐지', '맑은 하늘 신뢰도', '운상', '구름 상(\s|\(|$)', '구름 상단 상', '적외 구름 상']
+        exclude: ['SPI']
+        related: [cloud]
+      - id: no2
+        ko: 이산화질소 (NO₂)
+        en: Nitrogen dioxide (NO₂)
+        cf: atmosphere_mole_content_of_nitrogen_dioxide
+        aliases: [이산화질소, NO2, nitrogen dioxide, tropospheric NO2]
+        include: ['NO2', '이산화질소']
+        related: [so2, hcho]
+      - id: so2
+        ko: 이산화황 (SO₂)
+        en: Sulfur dioxide (SO₂)
+        cf: atmosphere_mole_content_of_sulfur_dioxide
+        aliases: [이산화황, 아황산가스, SO2, sulfur dioxide, sulphur dioxide, volcanic SO2]
+        include: ['SO2', '이산화황']
+        exclude: ['배출']
+        related: [no2]
+      - id: hcho
+        ko: 포름알데히드 (HCHO)·글리옥살
+        en: Formaldehyde (HCHO) / glyoxal
+        cf: atmosphere_mole_content_of_formaldehyde
+        aliases: [포름알데히드, HCHO, formaldehyde, CH2O, 글리옥살, glyoxal, CHOCHO]
+        include: ['HCHO', '포름알데히드', '글리옥살']
+        related: [no2]
+      - id: co
+        ko: 일산화탄소 (CO)
+        en: Carbon monoxide (CO)
+        cf: atmosphere_mole_content_of_carbon_monoxide
+        aliases: [일산화탄소, CO, carbon monoxide, XCO]
+        include: ['일산화탄소', '\bCO 총', '\bXCO\b']
+        exclude: ['배출']
+        related: [ch4, co2]
+      - id: ch4
+        ko: 메탄 (CH₄)
+        en: Methane (CH₄)
+        cf: mole_fraction_of_methane_in_air
+        aliases: [메탄, CH4, XCH4, methane]
+        include: ['메탄', 'CH4']
+        exclude: ['배출']
+        related: [co2]
+      - id: co2
+        ko: 이산화탄소 (CO₂·XCO₂)
+        en: Carbon dioxide (CO₂, XCO₂)
+        cf: mole_fraction_of_carbon_dioxide_in_air
+        aliases: [이산화탄소, CO2, XCO2, carbon dioxide, column CO2]
+        include: ['XCO2', '이산화탄소', '\bCO2\b']
+        exclude: ['배출', 'NEE', '교환']
+        related: [ch4, sif]
+      - id: sif
+        ko: 태양 유도 엽록소 형광 (SIF)
+        en: Solar-induced chlorophyll fluorescence (SIF)
+        aliases: [SIF, 엽록소 형광, solar-induced fluorescence, chlorophyll fluorescence]
+        include: ['\bSIF\b', '엽록소 형광']
+        exclude: ['불확실성']
+        related: [carbon_flux, co2]
+      - id: pm
+        ko: 지상 미세먼지 (PM2.5·PM10)
+        en: Surface particulate matter (PM2.5, PM10)
+        cf: mass_concentration_of_pm2p5_ambient_aerosol_particles_in_air
+        aliases: [미세먼지, 초미세먼지, PM2.5, PM10, particulate matter]
+        include: ['미세먼지', 'PM2\.5', 'PM10']
+        exclude: ['배출']
+        related: [aerosol]
+      - id: gnss_ro
+        ko: GNSS 전파 엄폐 굴절률·굴절각
+        en: GNSS radio occultation refractivity / bending angle
+        aliases: [굴절률, 굴절각, refractivity, bending angle, radio occultation, GNSS-RO, COSMIC]
+        include: ['굴절률', '굴절각', '충돌 매개변수']
+        related: [t_air, q]
 

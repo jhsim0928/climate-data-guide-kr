@@ -1,0 +1,395 @@
+# ─────────────────────────────────────────────────────────────
+# GOSAT, GOSAT-2 and GOSAT-GW (IBUKI series) — dataset information file
+# Satellite tab (Aerosols and atmospheric composition). Covers three generations of Japan's greenhouse-gas satellites (MOE, NIES, JAXA) on one page.
+# The generational changes (GOSAT → GOSAT-2 → GOSAT-GW) are recorded as in-page transitions (no to_id).
+# After editing, update last_verified to the date you checked the official pages.
+# ─────────────────────────────────────────────────────────────
+id: gosat
+name: "GOSAT (GOSAT-2·GOSAT-GW)"
+full_name: Greenhouse gases Observing SATellite series (GOSAT 'IBUKI', GOSAT-2 'IBUKI-2', GOSAT-GW 'IBUKI GW') — column-averaged XCO2 and XCH4 from TANSO-FTS, FTS-2 and TANSO-3
+category: satellite
+domain: satellite
+group: 에어로졸·대기 성분
+order: 81
+domains: [대기, 원격탐사]
+provider: Ministry of the Environment of Japan (MOE), National Institute for Environmental Studies (NIES) and JAXA (distributed via NIES GDAS, the GOSAT-2 Product Archive, the TANSO-3 Product Archive and NASA GES DISC for ACOS)
+
+status: active
+status_note: >-
+  All three satellites are operating. GOSAT (launched 2009) stopped delivering FTS data from 18 December 2025 to 4 February 2026 after an unidentified event, then resumed.
+  GOSAT-2 (launched 2018, five-year design life) continues to observe, but Band 1 sensitivity, which had degraded since launch, recovered by about 10% in 2024–2026, leaving a time-varying positive bias in XCO2 and XCH4 after 2024, and it has frequent short observation gaps.
+  GOSAT-GW (launched June 2025) has released TANSO-3 L1B since 23 July 2026, but new L1B delivery stops from 19 October 2026 for Band 3 maintenance (resuming around February 2027), and general release of L2 is planned for spring 2027.
+  On 2026-10-13 the GOSAT distribution site (GDAS) showed only an 'under maintenance' page.
+
+transitions:
+  - from: GOSAT (TANSO-FTS)
+    to: GOSAT-2 (TANSO-FTS-2)
+    status: completed
+    date: "2018-10"
+    summary: >-
+      GOSAT-2 keeps GOSAT's measurement approach (Fourier-transform spectroscopy of reflected sunlight) and adds carbon monoxide (CO) retrievals and Intelligent Pointing to steer around clouds.
+      Both satellites still observe together, so their overlap can be used to check continuity (NIES published a consistency study in September 2023).
+    changes:
+      - aspect: Launch
+        before: "2009-01-23 (H-IIA F15)"
+        after: "2018-10-29 (H-IIA F40)"
+      - aspect: Orbit and revisit
+        before: "About 666 km altitude, 3-day repeat (44 revolutions)"
+        after: "613 km altitude, descending node 13:00 ± 0:15, 6-day repeat"
+      - aspect: Footprint
+        before: "About 10.5 km × 10.5 km (per NASA ACOS GOSAT description)"
+        after: "Instantaneous field of view 9.7 km"
+      - aspect: Spectral bands
+        before: "Three SWIR bands (P and S polarisation) plus one TIR band"
+        after: "Five bands — Band 1 O2 A-band; Bands 2–3 CO2, CH4, CO and H2O (near/shortwave IR); Bands 4–5 thermal IR"
+      - aspect: L2 gases
+        before: "XCO2, XCH4"
+        after: "XCO2, XCH4, XCO, XH2O (SWFP product)"
+      - aspect: Sounding selection
+        before: "Grid and target points; about 56,000 measurements per 3 days, of which only 2–5% are clear-sky usable"
+        after: "Intelligent Pointing avoids clouds; over 100,000 measurements per 6 days, aiming at more than 600 GHG retrievals per day"
+      - aspect: Distribution
+        before: "GOSAT Data Archive Service (GDAS)"
+        after: "GOSAT-2 Product Archive (web ordering and SFTP after general-user registration)"
+    impacts:
+      - "XCO2 and XCH4 from the two satellites differ in instrument, algorithm and version and must not be joined directly. Check each against TCCON or other ground data over the overlap (2019 onward)."
+      - "GOSAT-2 L2 (SWFP) has a time-varying positive bias after 2024 from Band 1 sensitivity changes (not corrected in V02.30), so trend analyses after 2024 need particular care."
+    sources:
+      - name: GOSAT-2 Spacecraft & Instruments (NIES)
+        url: https://www.gosat-2.nies.go.jp/about/spacecraft_and_instruments/
+      - name: Imasu et al. (2023) GOSAT-2 mission overview
+        url: https://doi.org/10.1186/s40645-023-00562-2
+      - name: GOSAT-2 FTS-2 SWIR L2 SWFP V02.30 Release Note
+        url: https://prdct.gosat-2.nies.go.jp/documents/pdf/ReleaseNote_FTS-2_L2_SWFP_ver0230_en_01.pdf
+  - from: GOSAT-2 (TANSO-FTS-2)
+    to: GOSAT-GW (TANSO-3)
+    status: planned
+    date: "2027"
+    summary: >-
+      GOSAT-GW replaces the point-sampling Fourier-transform spectrometer with TANSO-3, an imaging spectrometer that maps CO2, CH4 and NO2 together across a wide swath.
+      It launched on 29 June 2025 and L1B has been public since July 2026, but general release of XCO2, XCH4 and NO2 L2 is planned for spring 2027, so this transition is marked as planned.
+    changes:
+      - aspect: Launch and release
+        before: "Launched 2018-10-29; L1 public from 2019-08, L2 from 2020-11"
+        after: "Launched 2025-06-29 (H-IIA F50, the final flight); L1B V101.101 public from 2026-07-23; general L2 release planned for spring 2027"
+      - aspect: Observing approach
+        before: "Point-sampling Fourier-transform spectrometer (sounding spacing typically under 200 km at the equator)"
+        after: "Imaging spectrometer — Wide mode swath ≥ 900 km at about 10 km resolution; Focus mode swath ≥ 90 km at 1–3 km"
+      - aspect: Species
+        before: "XCO2, XCH4, XCO, XH2O"
+        after: "XCO2, XCH4, NO2 (L2 GHG and NO2 products for Wide and Focus modes)"
+      - aspect: Companion sensor
+        before: "TANSO-CAI-2 (cloud and aerosol imager)"
+        after: "AMSR3 (microwave radiometer developed by MEXT and JAXA)"
+      - aspect: Data policy and credit
+        before: "Credit 'JAXA/NIES/MOE' (GOSAT/GOSAT-2 policy)"
+        after: "Credit 'NIES/MOE' (TANSO-3 policy, issued 2025-03, revised 2026-06)"
+      - aspect: Distribution
+        before: "GOSAT-2 Product Archive"
+        after: "GOSAT-GW TANSO-3 Product Archive (registration required, HDF5)"
+    impacts:
+      - "As of October 2026, TANSO-3 L2 is not yet publicly released. Use GOSAT and GOSAT-2 L2 until the 2027 release, and check validation results before relying on early TANSO-3 versions."
+      - "Imaging gives very different sample numbers and spatial patterns from the earlier point-sampling satellites. Account for sampling differences when comparing site or regional averages."
+    sources:
+      - name: GOSAT-GW News (NIES)
+        url: https://gosat-gw.nies.go.jp/en/news/
+      - name: NIES press release — initial analysis of TANSO-3 focus-mode data (2026-01-08)
+        url: https://www.nies.go.jp/en/pr/news-and-updates/2026/20260122/20260122.html
+      - name: GOSAT-GW (TANSO-3) Data Policy (revised 2026-06-22)
+        url: https://www.nies.go.jp/soc/doc/TANSO-3_DataPolicy_en_20260622b.pdf
+
+period:
+  start: "2009-04"
+  end: present
+  note: >-
+    GOSAT (launched 2009-01-23) L2 data begin with April 2009 observations (both JAXA EORC and NASA ACOS start on 2009-04-18). GOSAT-2 (launched 2018-10-29) FTS-2 SWIR L2 starts with 2019-03-01 observations;
+    by version, V02.20 covers 2019-03-01 to 2024-02-29, V02.21 covers 2024-03-01 onward, and V02.30 (general release 2026-08) covers 2019-03-01 onward. NASA ACOS GOSAT Lite v11.0 starts on 2009-04-18; the collection abstract says it runs to 2025-03-26, but on 2026-10-13 CMR held files through 2026-07-31.
+    GOSAT-GW TANSO-3 made its first observations in August 2025; L1B has been public since 2026-07-23, and L2 is planned for spring 2027. Instrument anomalies and manoeuvres cause gaps of days to weeks (see notices).
+
+resolution:
+  spatial_short: "10 km (0.09°)"
+  temporal_short: "1일"
+  spatial: >-
+    Sounding (point) data — GOSAT TANSO-FTS about 10.5 km × 10.5 km (per NASA ACOS description); GOSAT-2 FTS-2 instantaneous field of view 9.7 km (sounding spacing typically under 200 km at the equator).
+    GOSAT-GW TANSO-3 images a swath: Wide mode ≥ 900 km at about 10 km, Focus mode ≥ 90 km at 1–3 km. GOSAT FTS SWIR L3 monthly maps are on a 2.5° grid.
+  vertical: "Column-averaged dry-air mole fractions (XCO2, XCH4, XCO, XH2O) as single values, with prior profiles and column averaging kernels (15 layers in GOSAT-2 SWFP)"
+  temporal: >-
+    GOSAT revisits the same point every 3 days (44 revolutions) and GOSAT-2 every 6 days (about 15 orbits per day); both measure reflected sunlight in daytime (GOSAT-2 descending node 13:00 ± 0:15).
+    GOSAT-2 L2 files cover one UTC day (00:00–23:59). L3 products are monthly maps.
+
+update: Daily L2 files are produced continuously (latency not confirmed on the official pages); delivery pauses and resumes around instrument anomalies
+license: >-
+  Free of charge. Under the GOSAT/GOSAT-2 data policy, data are distributed online on a non-discriminatory basis, and publications must credit "JAXA/NIES/MOE"; GOSAT-GW (TANSO-3) data must credit "NIES/MOE".
+  Only publicly released standard products may be redistributed, and use contrary to peaceful purposes is prohibited. Each archive requires user registration
+account_required: true
+
+summary: >-
+  The GOSAT series comprises Japan's dedicated greenhouse-gas satellites, run by the Ministry of the Environment, NIES and JAXA. GOSAT (IBUKI), launched in 2009, was the first spacecraft to measure
+  column-averaged CO2 and methane (CH4) from space; GOSAT-2 (IBUKI-2), launched in 2018, continued the record and added CO; and GOSAT-GW, launched in 2025, carries the imaging spectrometer TANSO-3, which also observes NO2.
+  NIES distributes L2 XCO2 and XCH4 (shortwave-infrared retrievals from reflected sunlight) as well as L3 monthly maps and L4 fluxes and 3-D concentrations, and NASA separately provides ACOS XCO2 retrieved from the same GOSAT spectra.
+  The record, running since 2009, is widely used for global greenhouse-gas growth rates and methane emission inversions.
+
+time_convention:
+  summary: >-
+    L2 values are instantaneous measurements at the time each sounding was observed (around 13:00 ± 0:15 local time at GOSAT-2's descending node). GOSAT-2 L2 files cover one UTC day,
+    with an observation time for each sounding. L3 monthly maps average the L2 data over a month.
+  points:
+    - "In GOSAT-2 SWFP, `SoundingAttribute/observationTime` is a UTC string of the form 'YYYY-MM-DDThh:mm:ss.ffffffZ'; convert it before use."
+    - "Retrievals rely on reflected sunlight, so only daytime, cloud-free soundings are produced. Of about 56,000 GOSAT measurements in three days, only 2–5% are clear-sky usable."
+    - "GOSAT revisits a location every 3 days and GOSAT-2 every 6 days, so daily time series at a single site are impossible; aggregate by region and month."
+    - "GOSAT-GW L1B and L2 are split into Wide (W) and Focus (F) mode products (e.g. GWT3W_L2_GHG, GWT3F_L2_NO2). Focus mode targets small areas such as cities, and authorized users can submit observation requests."
+    - "The official documents do not distinguish near-real-time and final products. Instead there are version numbers (e.g. V02.30) and a release sequence: Research Announcement (RA) users first, then general users."
+  source: https://www.gosat-2.nies.go.jp/about/spacecraft_and_instruments/
+  source_name: GOSAT-2 Spacecraft & Instruments and Observation pages (NIES) + GOSAT-2 FTS-2 SWIR L2 SWFP product format description (V02.30)
+
+variables:
+  note: >-
+    GOSAT-2 names and units follow the product format description of the 'GOSAT-2 TANSO-FTS-2 SWIR L2 Column-averaged Dry-air Mole Fraction Product' (V02.30, March 2026; HDF5, daily files).
+    Variable names in GOSAT (NIES V03.05) and GOSAT-GW L2 files could not be confirmed on 2026-10-13 (archive under maintenance, product not yet public) and are not listed.
+  full_list: https://prdct.gosat-2.nies.go.jp/documents/pdf/Vol.5_FTS-2_L2_SWFP_ver0230_en_07.pdf
+  groups:
+    - name: GOSAT-2 FTS-2 SWIR L2 column-averaged mole fractions (SWFP V02.30, daily HDF5)
+      kind: instant
+      period: observation time
+      items:
+        - "XCO2 — `RetrievalResult/xco2` (ppm)"
+        - text: "XCH4 — `RetrievalResult/xch4` (ppm)"
+          note: in ppm, not ppb
+        - "XCO — `RetrievalResult/xco` (ppm)"
+        - "XH2O — `RetrievalResult/xh2o` (ppm)"
+        - "Retrieval uncertainties — `RetrievalResult/xco2_uncert`, `xch4_uncert`, `xco_uncert`, `xh2o_uncert` (ppm)"
+        - "Prior column averages — `RetrievalResult/xco2_apriori`, `xch4_apriori`, etc. (ppm)"
+        - text: "Per-gas quality flags — `RetrievalResult/xco2_quality_flag`, `xch4_quality_flag`, `xco_quality_flag`, `xh2o_quality_flag`"
+          note: 0 Good, 1 Fair, 2 Poor, 3 NG, −1 invalid; use 'Good' only
+        - "Column averaging kernels — `RetrievalResult/xco2_column_averaging_kernel`, etc. (dimensionless, 15 layers)"
+        - "Prior profiles — `RetrievalResult/co2_profile_apriori`, `ch4_profile_apriori`, etc. (ppm)"
+        - text: "Sounding latitude and longitude — `SoundingGeometry/latitude`, `SoundingGeometry/longitude` (deg)"
+          std: []
+        - text: "Observation time — `SoundingAttribute/observationTime`"
+          note: UTC string
+          std: []
+    - name: GOSAT TANSO-FTS SWIR L2 (NIES, V03.05 etc.)
+      kind: instant
+      period: observation time
+      items:
+        - text: "Column-averaged XCO2"
+          note: from GDAS; check variable names in the product description
+        - text: "Column-averaged XCH4"
+          note: from GDAS
+        - text: "NASA ACOS GOSAT Lite v11.0 bias-corrected XCO2 (ppm)"
+          note: daily netCDF4 at NASA GES DISC, 2009-04-18 onward (through 2026-07-31 as of 2026-10-13)
+    - name: GOSAT L3 monthly maps
+      kind: mean
+      period: Monthly
+      items:
+        - text: "FTS SWIR L3 monthly mean CO2 and CH4 column concentrations (2.5° grid)"
+          note: per NIES product description
+    - name: GOSAT-GW TANSO-3 L2 (general release planned for spring 2027)
+      kind: instant
+      period: observation time
+      items:
+        - text: "Greenhouse gases (XCO2, XCH4) — products GWT3W_L2_GHG (Wide), GWT3F_L2_GHG (Focus)"
+          note: product codes, not variable names in the files
+        - text: "Nitrogen dioxide (NO2) — products GWT3W_L2_NO2 (Wide), GWT3F_L2_NO2 (Focus)"
+          note: product codes, not variable names in the files
+
+access:
+  - name: GOSAT Data Archive Service (GDAS, NIES) — GOSAT
+    url: https://data2.gosat.nies.go.jp/index_en.html
+    method: Web search and ordering (user registration required)
+    note: >-
+      The source for GOSAT L1B–L4 standard products. Register first through user authentication on the 'product & service' page.
+      On 2026-10-13 the site showed only an 'under maintenance' page, so current versions and the registration flow could not be confirmed.
+  - name: GOSAT-2 Product Archive (NIES)
+    url: https://prdct.gosat-2.nies.go.jp/
+    method: Web ordering (cart → zip download) / SFTP batch acquisition
+    note: >-
+      General User registration: agree to the terms of use and personal-data policy, enter a profile, and click the confirmation link in the e-mail within seven days. When an order is ready you get an e-mail and download a zip
+      from the order page; order history is kept for 90 days. Authorized Users (e.g. Research Announcement investigators) e-mail an application form to gosat-2_desk@nies.go.jp. Format descriptions and release notes for each version are on the Documents page.
+  - name: GOSAT-GW TANSO-3 Product Archive (NIES)
+    url: https://product.gosat-gw.nies.go.jp/en/home/
+    method: Browser or command-line search; download after user registration (HDF5)
+    note: L1B (V101.101) has been public since 2026-07-23. New L1B delivery pauses from 2026-10-19 until around 2027-02; general L2 release is planned for spring 2027.
+  - name: NASA GES DISC — ACOS_L2_Lite_FP v11.0 (GOSAT XCO2)
+    url: https://disc.gsfc.nasa.gov/datasets/ACOS_L2_Lite_FP_11.0/summary
+    method: HTTPS / earthaccess / Earthdata Search (Earthdata Login)
+    note: Daily bias-corrected XCO2 produced at Colorado State University from GOSAT spectra (JAXA L1B v300300 and v300301) with the same ACOS algorithm used for OCO-2. Starts 2009-04-18 (files through 2026-07-31 as of 2026-10-13).
+  - name: JAXA EORC GOSAT site
+    url: https://www.eorc.jaxa.jp/GOSAT/index.html
+    method: Operation status and notices; daily partial-column GHGs, monthly GHG maps, GHG trend viewer
+    note: Observation suspensions and resumptions for GOSAT and GOSAT-2 are posted here first.
+
+example:
+  lang: python
+  note: >-
+    (1) Downloads NASA ACOS GOSAT Lite v11.0 with earthaccess and lists its variables; (2) selects 'Good'-quality XCO2 from a GOSAT-2 SWFP daily file (HDF5) obtained from the GOSAT-2 Product Archive.
+    GOSAT-2 files are named GOSAT2TFTS2YYYYMMDD_02SWFPV0230...h5; the name below is a placeholder.
+  code: |
+    import earthaccess, xarray as xr, h5py, numpy as np
+
+    # (1) NASA ACOS GOSAT XCO2 (2009-04-18 onward)
+    earthaccess.login()  # free NASA Earthdata account
+    res = earthaccess.search_data(short_name="ACOS_L2_Lite_FP", version="11.0",
+                                  temporal=("2020-07-01", "2020-07-31"),
+                                  bounding_box=(120, 30, 135, 45))
+    files = earthaccess.download(res, "acos_gosat")
+    print(xr.open_dataset(files[0]).data_vars)   # check variable names and units
+
+    # (2) GOSAT-2 FTS-2 SWIR L2 SWFP (file from the Product Archive)
+    with h5py.File("GOSAT2TFTS2_example_02SWFPV0230.h5", "r") as f:
+        xco2 = f["RetrievalResult/xco2"][:]               # ppm, missing = -999
+        qf   = f["RetrievalResult/xco2_quality_flag"][:]   # 0 Good, 1 Fair, 2 Poor, 3 NG
+        lat  = f["SoundingGeometry/latitude"][:]
+        lon  = f["SoundingGeometry/longitude"][:]
+    good = (qf == 0) & (xco2 > 0)
+    print(good.sum(), np.mean(xco2[good]))
+
+tips:
+  - "For GOSAT-2 SWFP, use only 'Good' (0) quality soundings. The fill value is -999.0."
+  - "GOSAT-2 XCH4 is stored in ppm, not ppb. Multiply by 1000 when comparing with products in ppb (e.g. TROPOMI)."
+  - "GOSAT-2 Band 1 sensitivity degraded exponentially after launch and then recovered by about 10% in 2024–2026; V02.30 does not correct this, so Xgas after 2024 carries a time-varying positive bias. State this in any trend or growth-rate analysis after 2024."
+  - "The GOSAT-2 V02.21 release note (revised July 2026) gives empirical bias-correction formulas and coefficients for XCO2, XCH4 and XCO derived against TCCON (GGG2020). The format description lists no bias-corrected variable, so apply the formulas from the release note of your version yourself if needed."
+  - "NIES GOSAT L2 and NASA ACOS GOSAT are separate products from the same spectra with different algorithms. Do not mix them in one time series, and state which one you used."
+  - "GOSAT and GOSAT-2 have gaps of days to weeks from anomalies and manoeuvres (e.g. GOSAT FTS 2025-12-18 to 2026-02-04). Check the number of observing days when building monthly means."
+  - "Do not omit the credit line: 'JAXA/NIES/MOE' for GOSAT and GOSAT-2, 'NIES/MOE' for GOSAT-GW (TANSO-3)."
+
+citations:
+  dataset:
+    - label: NASA ACOS GOSAT Lite XCO2 v11.0 (GES DISC)
+      text: >-
+        Chris O'Dell and Tommy Taylor (2026), ACOS GOSAT/TANSO-FTS Level 2 bias-corrected XCO2 and other select fields from the full-physics retrieval
+        aggregated as daily files v11.0, Greenbelt, MD, USA, Goddard Earth Sciences Data and Information Services Center (GES DISC),
+        Accessed: [Data Access Date], 10.5067/UAY6VJYTS8OD
+      doi: 10.5067/UAY6VJYTS8OD
+      bibtex: |
+        @misc{acos_gosat_lite_v110,
+          author    = {O'Dell, Chris and Taylor, Tommy},
+          title     = {{ACOS} {GOSAT/TANSO-FTS} Level 2 bias-corrected {XCO2} and other select fields from the full-physics retrieval aggregated as daily files v11.0},
+          year      = {2026},
+          publisher = {Goddard Earth Sciences Data and Information Services Center (GES DISC)},
+          address   = {Greenbelt, MD, USA},
+          doi       = {10.5067/UAY6VJYTS8OD}
+        }
+  papers:
+    - label: First GOSAT XCO2 and XCH4 retrievals (SOLA)
+      text: >-
+        Yokota, T., Yoshida, Y., Eguchi, N., Ota, Y., Tanaka, T., Watanabe, H., and Maksyutov, S. (2009): Global Concentrations of CO2 and CH4 Retrieved from GOSAT:
+        First Preliminary Results. SOLA, 5, 160–163.
+      doi: 10.2151/sola.2009-041
+      bibtex: |
+        @article{yokota2009gosat,
+          author  = {Yokota, T. and Yoshida, Y. and Eguchi, N. and Ota, Y. and Tanaka, T. and Watanabe, H. and Maksyutov, S.},
+          title   = {Global Concentrations of {CO2} and {CH4} Retrieved from {GOSAT}: First Preliminary Results},
+          journal = {SOLA},
+          volume  = {5},
+          pages   = {160--163},
+          year    = {2009},
+          doi     = {10.2151/sola.2009-041}
+        }
+    - label: GOSAT-2 mission overview (PEPS)
+      text: >-
+        Imasu, R., Matsunaga, T., Nakajima, M., Yoshida, Y., Shiomi, K., Morino, I., et al. (2023): Greenhouse gases Observing SATellite 2 (GOSAT-2): mission overview.
+        Progress in Earth and Planetary Science, 10, 33.
+      doi: 10.1186/s40645-023-00562-2
+      bibtex: |
+        @article{imasu2023gosat2,
+          author  = {Imasu, Ryoichi and Matsunaga, Tsuneo and Nakajima, Masakatsu and Yoshida, Yukio and Shiomi, Kei and Morino, Isamu and others},
+          title   = {Greenhouse gases Observing {SATellite} 2 ({GOSAT-2}): mission overview},
+          journal = {Progress in Earth and Planetary Science},
+          volume  = {10},
+          pages   = {33},
+          year    = {2023},
+          doi     = {10.1186/s40645-023-00562-2}
+        }
+  acknowledgement: >-
+    NIES GOSAT and GOSAT-2 products have no dataset DOIs (checked 2026-10-13). As the data policy requires, credit "JAXA/NIES/MOE" (or Japan Aerospace Exploration Agency / National Institute for Environmental Studies /
+    Ministry of the Environment) in publications, and "NIES/MOE" for GOSAT-GW TANSO-3 data, and state the product name and version (e.g. FTS-2 SWIR L2 SWFP V02.30).
+    If you use NASA ACOS GOSAT, cite the GES DISC DOI above.
+
+notices:
+  - date: "2026-10-13"
+    level: warning
+    title: GOSAT-GW TANSO-3 Band 3 maintenance — new L1B paused from 2026-10-19, resuming around February 2027
+    body: >-
+      Because of TANSO-3 Band 3 maintenance (about 19 October to 19 November 2026), delivery of new L1B products stops from about 00:40 UTC on 19 October 2026 and is scheduled to resume around February 2027.
+      A service-downtime notice for the TANSO-3 Product Archive (22–29 October) was posted the same day.
+    source: https://product.gosat-gw.nies.go.jp/en/news/detail/?newsid=19
+  - date: "2026-09-29"
+    level: info
+    title: GOSAT-2 FTS-2 observations suspended (2026-09-22 to 09-27)
+    body: >-
+      GOSAT-2 FTS-2 stopped observing during the 15:00 UT hour on 22 September 2026 and resumed at 00:37 UT on 27 September. No products are provided for 2026-09-22 15:32:30 to 09-27 00:37:12 UT.
+    source: https://www.eorc.jaxa.jp/GOSAT/index.html
+  - date: "2026-08"
+    level: warning
+    title: GOSAT-2 FTS-2 SWIR L2 V02.30 released to general users — Band 1 bias after 2024 not corrected
+    body: >-
+      V02.30 keeps the algorithm and file format and updates the input TANSO-CAI-2 L2 cloud-discrimination product to V01.30/V01.31 (released to RA users in March 2026 and to general users in August 2026).
+      Band 1 sensitivity, which had degraded exponentially since launch, recovered by about 10% in 2024–2026; this version does not correct it, so Xgas after 2024 has a time-varying positive bias.
+    source: https://prdct.gosat-2.nies.go.jp/documents/pdf/ReleaseNote_FTS-2_L2_SWFP_ver0230_en_01.pdf
+  - date: "2026-07-09"
+    level: info
+    title: GOSAT-GW TANSO-3 L1B (V101.101) released from 2026-07-23
+    body: >-
+      After one postponement (notice of 2026-06-18), the general-user release of TANSO-3 L1B began on 23 July 2026 with V101.101. L2 (XCO2, XCH4, NO2) is planned for spring 2027.
+    source: https://gosat-gw.nies.go.jp/en/news/
+  - date: "2026-07-03"
+    level: info
+    title: GOSAT-2 FTS-2 observations suspended (2026-06-26 to 07-01)
+    body: >-
+      GOSAT-2 FTS-2 stopped observing at 14:49 UTC on 26 June 2026 and resumed on 1 July. All observations from 2026-06-26 14:49:41 to 07-01 01:07:56 UTC were cancelled.
+    source: https://www.eorc.jaxa.jp/GOSAT/index.html
+  - date: "2026-02-17"
+    level: warning
+    title: GOSAT TANSO-FTS data delivery resumed — gap from 2025-12-18 to 2026-02-04
+    body: >-
+      Data delivery, stopped since 18 December 2025 by an unidentified TANSO-FTS event, resumed with observations from 4 February 2026 after an FTS restart.
+      The confirmed FTS gap is 2025-12-18 06:02:14 to 2026-02-04 02:45:58 UT, and the TANSO-CAI gap is 2026-01-26 23:43:19 to 2026-02-03 02:42:13 UT.
+    source: https://www.eorc.jaxa.jp/GOSAT/index.html
+  - date: "2026-01-08"
+    level: info
+    title: First TANSO-3 focus-mode analysis — L1B planned for spring 2026, L2 for spring 2027
+    body: >-
+      NIES reported XCO2, XCH4 and NO2 slant columns imaged within a single field of view from a 5 September 2025 focus-mode observation of Los Angeles (a simplified retrieval, to be interpreted with caution).
+      It stated plans to release L1B in spring 2026 and L2 (XCO2, XCH4, NO2) in spring 2027.
+    source: https://www.nies.go.jp/en/pr/news-and-updates/2026/20260122/20260122.html
+  - date: "2025-07-01"
+    level: info
+    title: GOSAT-GW launched successfully (2025-06-29, H-IIA F50)
+    body: >-
+      GOSAT-GW (IBUKI GW), the third GOSAT-series satellite, was launched from Tanegashima Space Center on 29 June 2025 on H-IIA F50, the vehicle's final flight. It carries TANSO-3 and AMSR3;
+      after about three months of initial checkout, the first TANSO-3 observations were announced in August 2025.
+    source: https://www.nies.go.jp/en/pr/news-and-updates/2025/20250701/20250701.html
+  - date: "2025-04-30"
+    level: info
+    title: GOSAT products resumed after Light Load Mode (2025-03-29 to 04-25)
+    body: >-
+      GOSAT entered Light Load Mode (LLM) on 29 March 2025 and stopped observing; product delivery resumed on 21 April for CAI and 25 April for FTS.
+    source: https://www.eorc.jaxa.jp/GOSAT/index.html
+
+links:
+  - name: GOSAT Project (NIES)
+    url: https://www.gosat.nies.go.jp/en/
+  - name: GOSAT-2 Project (NIES)
+    url: https://www.gosat-2.nies.go.jp/
+  - name: GOSAT-GW Project (NIES)
+    url: https://gosat-gw.nies.go.jp/en/
+  - name: JAXA EORC GOSAT (operation status and notices)
+    url: https://www.eorc.jaxa.jp/GOSAT/index.html
+  - name: GOSAT-2 Product Archive documents (format descriptions and release notes)
+    url: https://prdct.gosat-2.nies.go.jp/documents/documents.html.en
+  - name: GOSAT-2 Product Archive User's Manual
+    url: https://prdct.gosat-2.nies.go.jp/documents/pdf/User_Manual_en.pdf
+  - name: GOSAT/GOSAT-2 and GOSAT-GW data policies (NIES)
+    url: https://www.nies.go.jp/soc/en/documents/datapolicy/
+  - name: JAXA GOSAT-2 satellite page
+    url: https://global.jaxa.jp/projects/sat/gosat2/
+  - name: GOSAT whole-atmosphere monthly mean CO2 (NIES)
+    url: https://www.gosat.nies.go.jp/en/recent-global-co2.html
+
+watch_urls:
+  - https://www.eorc.jaxa.jp/GOSAT/index.html
+  - https://gosat-gw.nies.go.jp/en/news/
+  - https://product.gosat-gw.nies.go.jp/en/home/
+
+last_verified: "2026-10-13"

@@ -39,7 +39,7 @@ End of production, delays and version changes announced by the agencies that pro
 
 ## How to use this site
 
-- **Choosing a dataset** — browse the Atmosphere · Ocean · Sea ice · Land menus, then put several candidates side by side in [Compare datasets](compare.md).
+- **Choosing a dataset** — browse the Atmosphere · Ocean · Sea ice · Land · Satellite menus, then put several candidates side by side in [Compare datasets](compare.md).
 - **Looking for a variable** — type "precipitation" or "2 m temperature" into [Find by variable](find-variable.md) to list every dataset that has it.
 - **Using a variable** — check the instantaneous · mean · accumulated badge next to each variable and the "time-stamp convention" box. Two "3-hourly" products can mean very different things.
 - **Downloading** — follow "How to get the data" and the example code on each dataset page.
