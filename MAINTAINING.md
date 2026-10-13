@@ -120,7 +120,7 @@ CITATION.cff             ← GitHub "Cite this repository" 버튼
 
 | 시각(한국) | 누가 | 하는 일 |
 |---|---|---|
-| 06시 | GitHub Actions `공지 페이지 점검` (`.github/workflows/watch.yml` → `scripts/watch.py`) | 각 YAML의 `watch_urls`(공지 페이지 약 135곳)를 열어 지난번과 달라진 줄을 `watch/changes.json`에 저장 |
+| 05:40쯤 | Apps Script `startWatch` → GitHub Actions `공지 페이지 점검` (`.github/workflows/watch.yml` → `scripts/watch.py`) | 각 YAML의 `watch_urls`(공지 페이지 약 135곳)를 열어 지난번과 달라진 줄을 `watch/changes.json`에 저장 |
 | 08시 | Claude 예약 작업 (지침: `watch/REVIEW.md`) | 바뀐 부분이 진짜 공지인지 판단 → 공지면 한국어·영어 YAML에 써서 **공지 후보 PR** 생성 → `watch/digest.json` 작성 |
 | 09시 | Apps Script `dailyDigest` | `digest.json`을 읽어 운영자에게 요약 메일 (새 공지 후보, 승인 버튼, 공지가 아니라고 본 변경, 열리지 않는 페이지) |
 | 승인 후 | 운영자 → Apps Script `checkNotices` | PR에서 **Merge pull request → Confirm merge** → 사이트 배포 → 한 시간 안에 구독자 알림 메일 |
@@ -128,7 +128,14 @@ CITATION.cff             ← GitHub "Cite this repository" 버튼
 - **공지 추가·수정은 사람이든 Claude든 항상 PR로** 합니다. main에 직접 올린 공지는 승인 없이 한 시간 안에 구독자에게 발송됩니다.
 - 공지가 아니면 PR에서 **Close pull request**. 고칠 점이 있으면 Claude에게 PR 링크와 함께 말하면 됩니다.
 - 요약 메일 받는 사람: `OWNER_EMAIL` + Apps Script **프로젝트 설정 → 스크립트 속성 `DIGEST_TO`**(쉼표로 여러 주소). 개인 주소는 공개 저장소에 적지 않기 위해 이렇게 둡니다.
-- 9시 메일에 "점검 결과 없음"이 오면 06시 Actions나 08시 Claude 작업이 실패한 것입니다. GitHub **Actions** 탭에서 `공지 페이지 점검`을 열어 **Run workflow**로 다시 돌리거나 Claude에게 알려 주세요.
+- **새벽 점검 시작 설정 (한 번만)** — GitHub 예약 실행(06:07)은 몇 시간씩 늦거나 빠지는 일이 잦아서, Apps Script가 05:40쯤 직접 시작시킵니다. 예약 실행은 예비로 남아 있고, 그날 점검이 이미 있으면 건너뜁니다.
+  1. GitHub → Settings → Developer settings → Personal access tokens → **Fine-grained tokens → Generate new token**
+     - Repository access: **Only select repositories** → `climate-data-guide-kr`
+     - Permissions → Repository permissions → **Actions: Read and write** (다른 권한은 주지 않음)
+     - 만료일은 길게 두고, 만료 전에 새로 만들어 바꿉니다. 만료되면 새벽에 운영자 주소로 "점검을 시작하지 못했습니다" 메일이 옵니다.
+  2. Apps Script **프로젝트 설정 → 스크립트 속성**에 `GITHUB_TOKEN` = 토큰 값을 추가합니다(코드에 적지 않음).
+  3. 바뀐 `mailing/Code.gs`를 붙여넣고 저장한 뒤 `setupTriggers`를 한 번 실행합니다. `startWatch`를 직접 한 번 실행해 Actions 탭에 `공지 페이지 점검`이 새로 도는지 확인합니다.
+- 9시 메일에 "점검 결과 없음"이 오면 새벽 Actions나 08시 Claude 작업이 실패한 것입니다. GitHub **Actions** 탭에서 `공지 페이지 점검`을 열어 **Run workflow**로 다시 돌리거나 Claude에게 알려 주세요.
 - 감시 주소를 바꾸려면 YAML의 `watch_urls`만 고치면 됩니다. 저장된 페이지 사본은 `watch/state/`, 지난 30일 감지 기록은 `watch/history/`에 있습니다.
 - Actions와 Claude가 main에 올리는 점검 기록 커밋에는 `[skip ci]`가 붙어 사이트를 다시 배포하지 않습니다.
 
