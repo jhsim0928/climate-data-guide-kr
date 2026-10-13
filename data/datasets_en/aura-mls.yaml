@@ -104,21 +104,29 @@ time_convention:
 
 variables:
   note: >-
-    L2 comes as one file per product (species), for example ML2T temperature, ML2H2O water vapour and ML2O3 ozone; the value, precision and quality field names are the same in every file.
+    L2 comes as one file per product (species), for example ML2T temperature, ML2H2O water vapour and ML2O3 ozone; the values sit at `HDFEOS/SWATHS/<swath>/Data Fields/L2gpValue`.
+    The standard swath has the same name as the product (Temperature, H2O, O3, GPH, RHI and so on), so the variable column below reads `swath/L2gpValue`. Each file also holds an a priori swath ending in `-APriori`,
+    and the temperature file holds the WMO tropopause pressure swath `WMOTPPressure`, so always name the swath when reading. The precision and quality fields sit under the same swath's `Data Fields`.
     Units and useful ranges below follow the GES DISC V006 collection descriptions. Always apply the v6 quality document screening (precision > 0, even Status, Quality and Convergence thresholds, useful pressure range).
+    L3 (netCDF4) has one group per species and grid (for example `O3 PressureGrid`, `O3 PressureZM`), each holding statistics variables with the same names.
   full_list: https://mls.jpl.nasa.gov/data/v6-0_data_quality_document.pdf
   groups:
-    - name: L2 profiles (HDF-EOS5 per collection, values in `L2gpValue`)
+    - name: L2 profiles (HDF-EOS5 file per species, variables as `swath/L2gpValue`)
       kind: instant
       period: overpass time
       items:
-        - "Temperature (ML2T, 118 and 240 GHz, 261–0.00046 hPa) — `L2gpValue` (K)"
-        - "Water vapour mixing ratio (ML2H2O, 190 GHz, 316–0.001 hPa) — `L2gpValue` (volume mixing ratio)"
-        - "Ozone mixing ratio (ML2O3, 240 GHz, 261–0.001 hPa) — `L2gpValue` (volume mixing ratio)"
-        - "Geopotential height (ML2GPH) — `L2gpValue` (m)"
-        - "Relative humidity with respect to ice (ML2RHI) — `L2gpValue` (%)"
-        - text: "Other species — ML2CLO, ML2HCL, ML2HNO3, ML2N2O, ML2CO, ML2HCN, ML2SO2, ML2OH, ML2HO2, ML2BRO and more"
-          note: Useful range and screening differ by species
+        - text: "Temperature — `Temperature/L2gpValue` (K)"
+          note: "ML2T collection, 118 and 240 GHz, 261–0.00046 hPa. `WMOTPPressure/L2gpValue` in the same file is the WMO tropopause pressure (hPa)"
+        - text: "Water vapour mixing ratio — `H2O/L2gpValue` (volume mixing ratio)"
+          note: "ML2H2O collection, 190 GHz, 316–0.001 hPa"
+        - text: "Ozone mixing ratio — `O3/L2gpValue` (volume mixing ratio)"
+          note: "ML2O3 collection, 240 GHz, 261–0.001 hPa. The same file also has an `O3 column` swath with the ozone column above the tropopause"
+        - text: "Geopotential height — `GPH/L2gpValue` (m)"
+          note: "ML2GPH collection"
+        - text: "Relative humidity with respect to ice — `RHI/L2gpValue` (%)"
+          note: "ML2RHI collection"
+        - text: "Other species — `ClO/L2gpValue`, `HCl/L2gpValue`, `HNO3/L2gpValue`, `N2O/L2gpValue`, `CO/L2gpValue`, `HCN/L2gpValue`, `SO2/L2gpValue`, `OH/L2gpValue`, `HO2/L2gpValue`, `BrO/L2gpValue` (volume mixing ratio)"
+          note: "Collections ML2CLO, ML2HCL, ML2HNO3, ML2N2O, ML2CO, ML2HCN, ML2SO2, ML2OH, ML2HO2, ML2BRO and more. Useful range and screening differ by species"
     - name: L2 quality fields (common to all species)
       kind: instant
       period: overpass time
@@ -134,8 +142,10 @@ variables:
       kind: mean
       period: Daily / monthly
       items:
-        - "Monthly binned mean, minimum, maximum and standard deviation per species — for example ML3MBT temperature, ML3MBO3 ozone, ML3MBH2O water vapour"
-        - "Daily binned (ML3DB*) and daily zonal means (ML3DZ*)"
+        - text: "Monthly binned mean, minimum, maximum and standard deviation per species — `value`, `minimum`, `maximum`, `std_dev` (units of the species)"
+          note: "ML3MBT temperature, ML3MBO3 ozone, ML3MBH2O water vapour and more. Found in the groups `<species> PressureGrid` and `ThetaGrid` (lat-lon grids) and `PressureZM`, `ThetaZM`, `EqLZM` (zonal means) and `VortexAvg`, together with the measurement uncertainty `rms_uncertainty` and sample count `nvalues`"
+        - text: "Daily binned and daily zonal means — `value`, `minimum`, `maximum`, `std_dev` (units of the species)"
+          note: "Daily binned is ML3DB* (including lat-lon grids); daily zonal means are ML3DZ* (groups `<species> PressureZM`, `ThetaZM`, `EqLZM`, `VortexAvg`, with separate ascending, descending, day and night groups). `rms_uncertainty` and `nvalues` are included too"
 
 access:
   - name: NASA GES DISC — ML2T V006 (L2 temperature)

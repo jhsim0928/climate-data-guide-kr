@@ -90,7 +90,7 @@ variables:
       period: 반월
       items:
         - text: "Landsat 기준으로 재보정한 NDVI (무차원, 저장값 × 0.001)"
-          note: "GeoTIFF uint16, 유효 0–1000, 채움 65535. 결합판의 2003년 이후는 MODIS MOD13C1 기반"
+          note: "GeoTIFF uint16, 유효 0–1000, 채움 65535. 결합판의 2003년 이후는 MODIS MOD13C1 기반. 변수 이름이 없는 GeoTIFF 밴드라 변수명 칸은 비움. NDVI·QC가 몇 번째 밴드(또는 별도 파일)인지는 Zenodo 동봉 Readme PDF에만 있고 Zenodo 설명·ESSD 논문에는 없어 확인하지 못함"
         - text: "품질 관리(QC) 층"
           kind: instant
           note: Zenodo 설명은 QC 층을 함께 쓰라고 권하지만 값의 의미는 동봉 Readme에만 있어 여기서는 확인하지 못했습니다

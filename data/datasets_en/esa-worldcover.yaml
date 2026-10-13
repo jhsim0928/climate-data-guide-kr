@@ -69,7 +69,7 @@ time_convention:
 variables:
   note: >-
     Based on the WorldCover Product User Manual (PUM v2.0). Files are Cloud Optimized GeoTIFFs named ESA_WorldCover_10m_<year>_<version>_<tile>_<layer>.tif
-    (e.g. ESA_WorldCover_10m_2021_v200_N36E126_Map.tif). `Map` and `InputQuality` below are the layer names at the end of the file name.
+    (e.g. ESA_WorldCover_10m_2021_v200_N36E126_Map.tif). `Map` and `InputQuality` below are the layer names at the end of the file name; `InputQuality` is a three-band GeoTIFF, so each row's band number is given in its note.
   full_list: https://esa-worldcover.s3.eu-central-1.amazonaws.com/v200/2021/docs/WorldCover_PUM_V2.0.pdf
   groups:
     - name: Land cover map (10 m, classification for the year)
@@ -82,11 +82,13 @@ variables:
       kind: accum
       period: the map year
       items:
-        - text: "Number of Sentinel-1 GAMMA0 observations used — `InputQuality` band 1 (count)"
-        - text: "Number of Sentinel-2 L2A observations used — `InputQuality` band 2 (count)"
-        - text: "Share of Sentinel-2 observations discarded as cloud or cloud shadow — `InputQuality` band 3 (%)"
+        - text: "Number of Sentinel-1 GAMMA0 observations used — `InputQuality` (count)"
+          note: "Band 1 of the `InputQuality` GeoTIFF. All three bands are UINT16 with no scaling or offset, about 60 m (1/2000°)"
+        - text: "Number of Sentinel-2 L2A observations used — `InputQuality` (count)"
+          note: "Band 2 of the `InputQuality` GeoTIFF"
+        - text: "Share of Sentinel-2 observations discarded as cloud or cloud shadow — `InputQuality` (%)"
           kind: mean
-          note: 0–100. Combine with band 2 to get the number of valid Sentinel-2 observations
+          note: "Band 3 of the `InputQuality` GeoTIFF. 0–100. Combine with band 2 to get the number of valid Sentinel-2 observations"
 
 access:
   - name: Public AWS S3 bucket (esa-worldcover)

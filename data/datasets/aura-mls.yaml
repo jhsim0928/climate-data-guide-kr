@@ -102,23 +102,31 @@ time_convention:
 
 variables:
   note: >-
-    L2는 산출물(성분)마다 파일이 따로 있으며(예: ML2T 기온, ML2H2O 수증기, ML2O3 오존), 파일 안 값·정밀도·품질 필드 이름은 공통입니다.
+    L2는 산출물(성분)마다 파일이 따로 있으며(예: ML2T 기온, ML2H2O 수증기, ML2O3 오존), 값은 파일 안 `HDFEOS/SWATHS/<스와스>/Data Fields/L2gpValue`에 있습니다.
+    표준 스와스 이름은 산출물 이름과 같고(Temperature, H2O, O3, GPH, RHI 등), 그래서 아래 변수명 칸은 `스와스/L2gpValue`로 적었습니다. 같은 파일에 `-APriori`로 끝나는 사전값 스와스가 함께 있고,
+    기온 파일에는 WMO 대류권계면 기압 스와스 `WMOTPPressure`가 있어 스와스 이름을 꼭 지정해 읽어야 합니다. 정밀도·품질 필드도 같은 스와스의 `Data Fields` 아래에 있습니다.
     아래 단위·유효 범위는 GES DISC V006 컬렉션 설명 기준입니다. 반드시 v6 품질 문서의 선별 규칙(정밀도 > 0, Status 짝수, Quality·Convergence 문턱, 유효 기압 범위)을 적용하세요.
+    L3(netCDF4)는 성분·격자마다 그룹(예: `O3 PressureGrid`, `O3 PressureZM`)이 있고 그 안에 같은 이름의 통계 변수가 들어 있습니다.
   full_list: https://mls.jpl.nasa.gov/data/v6-0_data_quality_document.pdf
   groups:
-    - name: L2 연직 분포 (컬렉션별 HDF-EOS5, 값은 `L2gpValue`)
+    - name: L2 연직 분포 (성분별 HDF-EOS5 파일, 변수명은 `스와스/L2gpValue`)
       kind: instant
       period: 관측 시각
       items:
-        - "기온 (ML2T, 118·240 GHz, 261~0.00046 hPa) — `L2gpValue` (K)"
-        - text: "수증기 혼합비 (ML2H2O, 190 GHz, 316~0.001 hPa) — `L2gpValue` (부피 혼합비)"
+        - text: "기온 — `Temperature/L2gpValue` (K)"
+          note: "ML2T 컬렉션, 118·240 GHz, 261~0.00046 hPa. 같은 파일의 `WMOTPPressure/L2gpValue`는 WMO 대류권계면 기압(hPa)"
+        - text: "수증기 혼합비 — `H2O/L2gpValue` (부피 혼합비)"
           std: [q]
-        - "오존 혼합비 (ML2O3, 240 GHz, 261~0.001 hPa) — `L2gpValue` (부피 혼합비)"
-        - text: "지오퍼텐셜 고도 (ML2GPH) — `L2gpValue` (m)"
+          note: "ML2H2O 컬렉션, 190 GHz, 316~0.001 hPa"
+        - text: "오존 혼합비 — `O3/L2gpValue` (부피 혼합비)"
+          note: "ML2O3 컬렉션, 240 GHz, 261~0.001 hPa. 같은 파일에 대류권계면 위 오존 기둥량 스와스 `O3 column`도 있음"
+        - text: "지오퍼텐셜 고도 — `GPH/L2gpValue` (m)"
           std: [z]
-        - "얼음 기준 상대습도 (ML2RHI) — `L2gpValue` (%)"
-        - text: "기타 성분 — ML2CLO·ML2HCL·ML2HNO3·ML2N2O·ML2CO·ML2HCN·ML2SO2·ML2OH·ML2HO2·ML2BRO 등"
-          note: 성분마다 유효 범위·선별 기준이 다름
+          note: "ML2GPH 컬렉션"
+        - text: "얼음 기준 상대습도 — `RHI/L2gpValue` (%)"
+          note: "ML2RHI 컬렉션"
+        - text: "기타 성분 — `ClO/L2gpValue`, `HCl/L2gpValue`, `HNO3/L2gpValue`, `N2O/L2gpValue`, `CO/L2gpValue`, `HCN/L2gpValue`, `SO2/L2gpValue`, `OH/L2gpValue`, `HO2/L2gpValue`, `BrO/L2gpValue` (부피 혼합비)"
+          note: "컬렉션 ML2CLO·ML2HCL·ML2HNO3·ML2N2O·ML2CO·ML2HCN·ML2SO2·ML2OH·ML2HO2·ML2BRO 등. 성분마다 유효 범위·선별 기준이 다름"
     - name: L2 품질 필드 (모든 성분 공통)
       kind: instant
       period: 관측 시각
@@ -131,9 +139,11 @@ variables:
       kind: mean
       period: 일/월
       items:
-        - text: "월 binned 성분별 평균·최소·최대·표준편차 (예: ML3MBT 기온, ML3MBO3 오존, ML3MBH2O 수증기)"
+        - text: "월 binned 성분별 평균·최소·최대·표준편차 — `value`, `minimum`, `maximum`, `std_dev` (성분별 단위)"
           std: [t_air, ozone, q]
-        - "일 binned (ML3DB*)·일 동서 평균 (ML3DZ*)"
+          note: "ML3MBT 기온, ML3MBO3 오존, ML3MBH2O 수증기 등. 그룹 `<성분> PressureGrid`·`ThetaGrid`(경위도 격자)와 `PressureZM`·`ThetaZM`·`EqLZM`(동서 평균)·`VortexAvg` 안에 있고, 측정 불확도 `rms_uncertainty`와 표본 수 `nvalues`도 함께 있음"
+        - text: "일 binned·일 동서 평균 — `value`, `minimum`, `maximum`, `std_dev` (성분별 단위)"
+          note: "일 binned는 ML3DB*(경위도 격자 포함), 일 동서 평균은 ML3DZ*(`<성분> PressureZM`·`ThetaZM`·`EqLZM`·`VortexAvg` 그룹, 상승·하강·주간·야간 그룹 따로). `rms_uncertainty`·`nvalues`도 함께 있음"
 
 access:
   - name: NASA GES DISC — ML2T V006 (L2 기온)

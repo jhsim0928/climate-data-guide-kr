@@ -127,8 +127,8 @@ variables:
           note: Cloudy cells filled by space–time interpolation; flags=2 marks interpolated cells
         - text: "Interpolated chlorophyll uncertainty — `CHL_uncertainty` (%)"
           std: []
-        - text: "Interpolated transparency data — transp gap-free dataset (KD490, ZSD, etc.)"
-          note: Gap-free KD and ZSD provided since 2019 and 2020 (QUID)
+        - text: "Interpolated diffuse attenuation and transparency — `KD490` (m-1), `ZSD` (m)"
+          note: "Dataset cmems_obs-oc_glo_bgc-transp_my_l4-gapfree-multi-4km_P1D (202603 version). Also contains uncertainties `KD490_uncertainty` and `ZSD_uncertainty` (%) and `flags`. Gap-free KD and ZSD provided since 2019 and 2020 (QUID)"
 
 access:
   - name: Copernicus Marine — MY L3 daily (OCEANCOLOUR_GLO_BGC_L3_MY_009_103)

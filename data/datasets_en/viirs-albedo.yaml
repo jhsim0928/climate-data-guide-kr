@@ -64,7 +64,7 @@ time_convention:
 
 variables:
   note: >-
-    Variable names come from the LAADS file specifications for VNP43IA3 and VNP43MA3 (Collection 1) and match the layer counts in the Collection 2 descriptions (9 for IA3, 36 for MA3).
+    Variable names come from the LAADS file specifications for VNP43IA3, VNP43MA3, VNP43C3, VNP43IA4, VNP43MA4 and VNP43MA1 and the LP DAAC product pages (Collection 1; the V002 catalog layer lists for VNP43IA1, MA1, IA4 and MA4 are the same) and match the layer counts in the Collection 2 descriptions (9 for IA3, 36 for MA3, 31 for C3).
     Albedo is INT16 with scale_factor 0.001 (valid range 0–1000) and fill value 32767. Files are HDF-EOS5 (HDF5); check the group path in your downloaded files.
   full_list: https://ladsweb.modaps.eosdis.nasa.gov/filespec/VIIRS/1/VNP43MA3
   groups:
@@ -72,32 +72,36 @@ variables:
       kind: mean
       period: 16-day window (9th day weighted)
       items:
-        - text: "Black-sky albedo (local solar noon) — `Albedo_BSA_M1`–`M5`, `Albedo_BSA_M7`, `M8`, `M10`, `M11`, `Albedo_BSA_vis`, `Albedo_BSA_nir`, `Albedo_BSA_shortwave` (dimensionless)"
+        - text: "Black-sky albedo (local solar noon) — `Albedo_BSA_M1`~`M5`, `Albedo_BSA_M7`, `M8`, `M10`, `M11`, `Albedo_BSA_vis`, `Albedo_BSA_nir`, `Albedo_BSA_shortwave` (dimensionless)"
           note: The BRDF fitted to 16 days of data, integrated at the local-noon solar zenith angle
-        - text: "White-sky albedo — `Albedo_WSA_M1`–`M11` (no M6, M9), `Albedo_WSA_vis`, `Albedo_WSA_nir`, `Albedo_WSA_shortwave` (dimensionless)"
+        - text: "White-sky albedo — `Albedo_WSA_M1`~`M11` (no M6, M9), `Albedo_WSA_vis`, `Albedo_WSA_nir`, `Albedo_WSA_shortwave` (dimensionless)"
           note: Fully diffuse illumination, independent of sun position
-        - "Per-band mandatory quality — `BRDF_Albedo_Band_Mandatory_Quality_M1`–`_shortwave` (0 full inversion, 1 magnitude inversion, 255 fill)"
+        - "Per-band mandatory quality — `BRDF_Albedo_Band_Mandatory_Quality_M1`~`_shortwave` (0 full inversion, 1 magnitude inversion, 255 fill)"
     - name: Albedo 500 m (VNP43IA3 / VJ143IA3 / VJ243IA3)
       kind: mean
       period: 16-day window (9th day weighted)
       items:
         - "Black-sky albedo — `Albedo_BSA_I1`, `Albedo_BSA_I2`, `Albedo_BSA_I3` (dimensionless)"
         - "White-sky albedo — `Albedo_WSA_I1`, `Albedo_WSA_I2`, `Albedo_WSA_I3` (dimensionless)"
-        - "Per-band mandatory quality — `BRDF_Albedo_Band_Mandatory_Quality_I1`–`I3`"
+        - "Per-band mandatory quality — `BRDF_Albedo_Band_Mandatory_Quality_I1`~`I3`"
     - name: Albedo 0.05° CMG (VNP43C3 / VJ143C3 / VJ243C3)
       kind: mean
       period: 16-day window (9th day weighted)
       items:
-        - "Black-sky and white-sky albedo (M bands and broadbands) (dimensionless)"
-        - text: "Fraction of snow-covered inputs in the CMG cell (%)"
-          note: The collection description lists a snow cover ancillary layer; check the variable name in your files
-        - "Ancillary layers for uncertainty, quality, local solar noon and percent of finer-resolution inputs"
+        - text: "Black-sky and white-sky albedo (M bands, DNB and broadbands) — `Albedo_BSA_*`, `Albedo_WSA_*` (dimensionless)"
+          note: "`*` is M1–M5, M7, M8, M10, M11, DNB, vis, nir or shortwave (e.g. `Albedo_WSA_shortwave`). 3600×7200 grid, INT16 × 0.001 (valid 0–1000, fill 32767)"
+        - text: "Fraction of snow-covered inputs in the CMG cell — `Percent_Snow` (%)"
+          note: 0–100, fill 255
+        - text: "Ancillary layers for uncertainty, quality, local solar noon and percent of finer-resolution inputs — `BRDF_Albedo_Uncertainty`, `BRDF_Quality`, `Local_Solar_Noon`, `Percent_Inputs`"
+          note: "`BRDF_Albedo_Uncertainty` × 0.001 (fill 32767), `BRDF_Quality` 0 best to 5 (50% or more fill) (fill 255), `Local_Solar_Noon` solar zenith at local noon (degrees), `Percent_Inputs` percent of finer-resolution inputs (%)"
     - name: NBAR and BRDF parameters (IA4, MA4 / IA1, MA1)
       kind: mean
       period: 16-day window (9th day weighted)
       items:
-        - "Nadir BRDF-adjusted reflectance, NBAR (local-noon sun, nadir view) — VNP43IA4, MA4 (dimensionless)"
-        - "BRDF kernel weights (isotropic, volumetric, geometric) — VNP43IA1, MA1 (dimensionless)"
+        - text: "Nadir BRDF-adjusted reflectance, NBAR (local-noon sun, nadir view) — `Nadir_Reflectance_I1`~`I3`, `Nadir_Reflectance_M1`~`M11` (dimensionless)"
+          note: "I bands in VNP43IA4 (500 m), M bands in VNP43MA4 (1 km; no M6, M9). INT16 × 0.0001 (valid 0–10000, fill 32767). Both files also carry the per-band mandatory quality layers `BRDF_Albedo_Band_Mandatory_Quality_I1`–`I3` and `_M1`–`_M11`"
+        - text: "BRDF kernel weights (isotropic, volumetric, geometric) — `BRDF_Albedo_Parameters_I1`~`I3`, `BRDF_Albedo_Parameters_M1`~`M11`, `BRDF_Albedo_Parameters_vis`, `BRDF_Albedo_Parameters_nir`, `BRDF_Albedo_Parameters_shortwave` (dimensionless)"
+          note: "I bands in VNP43IA1, M bands and broadbands in VNP43MA1 (no M6, M9). 3-D arrays (third dimension Num_Parameters = 3: fiso, fvol, fgeo), INT16 × 0.001 (fill 32767). The mandatory quality layers are included as well"
 
 access:
   - name: NASA Earthdata Search (LP DAAC, Earthdata Cloud)

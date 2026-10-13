@@ -67,7 +67,7 @@ time_convention:
 variables:
   note: >-
     From the layer tables of VNP13A1 and VNP13C1 V002 in the Earthdata catalog (VJ113 and VJ213 have the same structure). Layer names are prefixed with resolution and period (`500 m 16 days …` for 500 m 16-day, `CMG 0.05 Deg 16 days …` for 0.05°),
-    and unlike MODIS (`250m 16 days …`) there is a space between the number and m. Index and reflectance int16 values are divided by 10000. The monthly (A3, C2) layer names were not verified; check them in your files.
+    and unlike MODIS (`250m 16 days …`) there is a space between the number and m. Index and reflectance int16 values are divided by 10000. Monthly layer names follow the LP DAAC VNP13A3 and VNP13C2 V002 product pages and are prefixed `1 km monthly …` and `CMG 0.05 Deg monthly …`.
   full_list: https://www.earthdata.nasa.gov/data/catalog/lpcloud-vnp13a1-002
   groups:
     - name: 16-day composites (VNP13A1 500 m; A2 1 km has the same structure)
@@ -108,9 +108,10 @@ variables:
       kind: mean
       period: Monthly
       items:
-        - text: "Monthly NDVI, EVI and EVI2 (dimensionless, ÷ 10000)"
-          note: "The User Guide shows a flow chart that, as for MODIS, estimates the monthly value from the 16-day composites overlapping the month, while the LP DAAC description says 'best available pixel over a monthly period'. Check chapter 9 of the guide for the exact method."
-        - "Monthly reflectances (red, NIR, blue, green, three SWIR), angles, pixel reliability and quality layers"
+        - text: "Monthly NDVI, EVI and EVI2 — `1 km monthly NDVI`, `1 km monthly EVI`, `1 km monthly EVI2` (dimensionless, ÷ 10000)"
+          note: "VNP13A3 names. VNP13C2 uses `CMG 0.05 Deg monthly NDVI`, `CMG 0.05 Deg monthly EVI`, `CMG 0.05 Deg monthly EVI2` and adds standard deviation (`… std dev`), pixel count (`CMG 0.05 Deg monthly #1km pix used`, `CMG 0.05 Deg monthly #1km pix +-30deg VZ`) and mean sun zenith (`CMG 0.05 Deg monthly Avg sun zen angle`) layers. Fill −15000 (water), −13000 (land). The User Guide shows a flow chart that, as for MODIS, estimates the monthly value from the 16-day composites overlapping the month, while the LP DAAC description says 'best available pixel over a monthly period'. Check chapter 9 of the guide for the exact method."
+        - text: "Monthly reflectances (red, NIR, blue, green, three SWIR), angles, pixel reliability and quality layers — `1 km monthly red reflectance`, `1 km monthly NIR reflectance`, `1 km monthly blue reflectance`, `1 km monthly green reflectance`, `1 km monthly SWIR1 reflectance`, `1 km monthly SWIR2 reflectance`, `1 km monthly SWIR3 reflectance`, `1 km monthly view zenith angle`, `1 km monthly sun zenith angle`, `1 km monthly relative azimuth angle`, `1 km monthly pixel reliability`, `1 km monthly VI Quality`"
+          note: "VNP13A3 names (VNP13C2 uses the prefix `CMG 0.05 Deg monthly` and has no view zenith or relative azimuth layers). Reflectance ÷ 10000 (fill −1000), angles ÷ 100 degrees (fill −20000), pixel reliability rank 0–11 (fill −4, −1), VI Quality bit field (fill 65535)"
 
 access:
   - name: NASA Earthdata Search — VJ213A1 (NOAA-21, recommended)

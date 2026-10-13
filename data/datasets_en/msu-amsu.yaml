@@ -116,33 +116,41 @@ time_convention:
 
 variables:
   note: >-
-    The three products use different variable names and formats (RSS netCDF, STAR netCDF4 and binary, UAH text), and the official pages do not give in-file variable names, so only layer names are listed.
-    Check the variable names in the files you download. All units are K (anomalies in K).
-  full_list: https://www.remss.com/measurements/upper-air-temperature/
+    The three products differ in file format and variable names. The variable-name column gives the NOAA STAR v5.0 netCDF names (distributed by NCEI, Mean-Layer-Temperature-NOAA_v05r00_<layer>_*.nc), checked against the NCEI OPeNDAP metadata (.das, .dds) on 2026-10-14.
+    For RSS V4.0, `brightness_temperature_anomaly` was confirmed in the NCEI copy's anomaly files (uat4_tb_v04r00_anom_ch<layer>_*.nc); names inside the RSS server files (RSS_Tb_*Maps_ch_*_V4_0.nc) are not documented officially and could not be confirmed.
+    UAH provides text tables only, no netCDF. All units are K (anomalies in K).
+  full_list: https://www.ncei.noaa.gov/thredds/catalog/satellite/mean-layer-temperature-noaa/catalog.html
   groups:
     - name: Tropospheric layer temperatures
       kind: mean
       period: Monthly
       items:
-        - "Lower troposphere TLT — RSS, UAH (LT), STAR (K)"
-        - "Middle troposphere TMT — RSS, UAH (MT), STAR (K)"
-        - "Upper troposphere TUT — STAR (K)"
-        - "Total troposphere TTT — RSS, TMT and TLS combination after Fu & Johanson 2005 (K)"
+        - text: "Lower troposphere TLT — `tcdr_MSU_AMSUA_ATMS_TLT` (K)"
+          note: "Providers RSS, UAH (LT), STAR. Name is STAR's (anomaly `tcdr_MSU_AMSUA_ATMS_TLT_anomaly`, climatology `_climatology`). RSS has one file per layer (NCEI copy anomaly `brightness_temperature_anomaly`); UAH is the text table uahncdc_lt_6.1.txt"
+        - text: "Middle troposphere TMT — `tcdr_MSU_AMSUA_ATMS_TMT` (K)"
+          note: "Providers RSS, UAH (MT), STAR. Name is STAR's (anomaly `_anomaly`, climatology `_climatology`). RSS NCEI copy anomaly `brightness_temperature_anomaly`; UAH is the text table uahncdc_mt_6.1.txt"
+        - text: "Upper troposphere TUT — `tcdr_MSU_AMSUA_ATMS_TUT` (K)"
+          note: "STAR only. Anomaly `_anomaly`, climatology `_climatology`"
+        - text: "Total troposphere TTT — RSS (K)"
+          note: "RSS only, a TMT and TLS combination after Fu & Johanson 2005. Variable names inside the RSS server file RSS_Tb_Maps_ch_TTT_V4_0.nc (no NCEI copy) are not documented officially"
     - name: Tropopause and stratospheric layer temperatures
       kind: mean
       period: Monthly
       items:
-        - "Troposphere-stratosphere TTS — RSS, from 1987 (K)"
-        - "Tropopause layer TP — UAH (K)"
-        - "Lower stratosphere TLS — RSS, UAH (LS), STAR (K)"
+        - text: "Troposphere-stratosphere TTS — RSS (K)"
+          note: "RSS only, from 1987. With one file per layer, the NCEI copy (uat4_tb_v04r00_*_chtts_*.nc) likely uses the same names as TLT and TMT (anomaly `brightness_temperature_anomaly`), but this layer was not checked directly"
+        - text: "Tropopause layer TP — UAH (K)"
+          note: "UAH only. Text table uahncdc_tp_6.1.txt, so no variable names"
+        - text: "Lower stratosphere TLS — `tcdr_MSU_AMSUA_ATMS_TLS` (K)"
+          note: "Providers RSS, UAH (LS), STAR. Name is STAR's (anomaly `_anomaly`, climatology `_climatology`). RSS via the NCEI copy anomaly files; UAH is the text table uahncdc_ls_6.1.txt"
     - name: Anomalies and auxiliary files
       kind: mean
       period: Monthly
       items:
-        - text: "Monthly anomaly maps — `RSS_Tb_Anom_Maps_ch_*_V4_0.nc`, `*_Anomaly.dat` (K)"
-          note: "RSS file first, then STAR"
-        - text: "Regional mean anomaly time series — `uahncdc_*_6.1.txt` (K)"
-          note: "UAH file. RSS provides monthly_time_series and STAR Global_Mean_Anomaly_Time_Series"
+        - text: "Monthly anomaly maps — `tcdr_MSU_AMSUA_ATMS_*_anomaly`, `brightness_temperature_anomaly` (K)"
+          note: "First is NOAA STAR v5.0 netCDF (* is TLT, TMT, TUT or TLS; climatology `tcdr_MSU_AMSUA_ATMS_*_climatology`), second is the NCEI copy of RSS V4.0, uat4_tb_v04r00_anom_ch*.nc (climatology `brightness_temperature_climatology`). Names inside the RSS server files RSS_Tb_Anom_Maps_ch_*_V4_0.nc are not documented officially; STAR's server files *_Anomaly.dat are binary, so they have no variable names"
+        - text: "Regional mean anomaly time series — text tables (K)"
+          note: "All text tables. UAH uahncdc_*_6.1.txt (column names in the file header; not checked because the server blocked automated access on 2026-10-14). STAR …_Regional_Means_Anomaly.txt (columns: Year, Month, Ftime, Global_Mean_Anomaly, NH_Anomaly, SH_Anomaly, Global_Land_Anomaly, Global_Ocean_Anomaly). RSS RSS_Monthly_MSU_AMSU_Channel_*_Anomalies_Land_and_Ocean_v04_0.txt (columns: year, mon, latitude bands -70.0/82.5, -20.0/20.0, 20.0/82.5, -70.0/-20.0, 60.0/82.5, -70.0/-60.0, Cont. USA, 0.0/82.5, -70.0/0.0)"
 
 access:
   - name: RSS — Upper Air Temperature (description and downloads)

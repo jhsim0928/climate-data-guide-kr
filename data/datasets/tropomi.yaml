@@ -123,12 +123,27 @@ variables:
       kind: instant
       period: 관측 시각
       items:
-        - text: "오존 전량(L2__O3____)·대류권 오존(L2__O3_TCL)·오존 연직 분포(L2__O3__PR) — 변수명은 각 PUM 참고"
+        - text: "오존 전량 — `ozone_total_vertical_column` (mol m-2)"
           std: [ozone]
-        - text: "자외 에어로졸 지수(L2__AER_AI)·에어로졸층 높이(L2__AER_LH) — 변수명은 각 PUM 참고"
+          note: "L2__O3____ 제품. 오차 `ozone_total_vertical_column_precision`, qa_value > 0.5 권장"
+        - text: "열대 대류권 오존 컬럼 — `ozone_tropospheric_vertical_column` (mol m-2)"
+          std: [ozone]
+          note: "L2__O3_TCL 제품. 스와스가 아니라 20°S~20°N 격자(`latitude_ccd` 80 × `longitude_ccd` 360), 지표~270 hPa. qa_value > 0.7 권장. 상부 대류권 혼합비 `ozone_upper_tropospheric_mixing_ratio`는 아직 채움값"
+        - text: "오존 연직 분포 — `ozone_profile` (mol m-3)"
+          std: [ozone]
+          note: "L2__O3__PR 제품, 33개 층. 총·대류권 컬럼 `ozone_total_column`, `ozone_tropospheric_column` (mol m-2). qa_value > 0.5 사용(0.8 이하는 주의)"
+        - text: "자외 에어로졸 지수 — `aerosol_index_354_388`, `aerosol_index_340_380` (무차원)"
           std: [aerosol]
-        - text: "구름 비율·알베도·운정 기압(L2__CLOUD_) — 변수명은 PUM 참고"
-          std: [cloud, cloud_top]
+          note: "L2__AER_AI 제품. 파장 쌍 335/367 nm는 `aerosol_index_335_367`, 오차는 각 이름 뒤 `_precision`"
+        - text: "에어로졸층 높이 — `aerosol_mid_height` (m), `aerosol_mid_pressure` (Pa)"
+          std: [aerosol]
+          note: "L2__AER_LH 제품. 오차는 각 이름 뒤 `_precision`"
+        - text: "구름 비율 — `cloud_fraction` (무차원)"
+          std: [cloud]
+          note: "L2__CLOUD_ 제품(CAL 모델). 구름 광학두께 `cloud_optical_thickness`(무차원). CRB 모델 구름 알베도 `cloud_albedo_crb`·구름 비율 `cloud_fraction_crb`는 PRODUCT/SUPPORT_DATA/DETAILED_RESULTS에 있음. qa_value ≥ 0.5 권장"
+        - text: "운정 기압·높이 — `cloud_top_pressure` (Pa), `cloud_top_height` (m)"
+          std: [cloud_top]
+          note: "L2__CLOUD_ 제품. 운저는 `cloud_base_pressure` (Pa), `cloud_base_height` (m)"
     - name: 품질·시각
       kind: instant
       items:

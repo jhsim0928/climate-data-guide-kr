@@ -148,7 +148,7 @@ time_convention:
 variables:
   note: >-
     GOSAT-2 변수 이름·단위는 'GOSAT-2 TANSO-FTS-2 SWIR L2 Column-averaged Dry-air Mole Fraction Product' 파일 형식 설명서(V02.30, 2026-03) 기준입니다(HDF5, 일별 파일).
-    GOSAT(NIES V03.05)과 GOSAT-GW L2 파일의 변수 이름은 2026-10-13 배포처 점검·미공개로 확인하지 못해 적지 않았습니다.
+    GOSAT(NIES V03.05)·L3 파일의 변수 이름은 배포처(data2.gosat.nies.go.jp) 점검으로 확인하지 못해 적지 않았습니다(2026-10-14). ACOS Lite는 GES DISC 'ACOS B11 L2 Lite Data User's Guide', GOSAT-GW는 공개 전 L2 형식 설명서(Version C, 2025) 기준입니다.
   full_list: https://prdct.gosat-2.nies.go.jp/documents/pdf/Vol.5_FTS-2_L2_SWFP_ver0230_en_07.pdf
   groups:
     - name: GOSAT-2 FTS-2 SWIR L2 기둥 평균 몰분율 (SWFP V02.30, 일별 HDF5)
@@ -177,25 +177,25 @@ variables:
       period: 관측 시각
       items:
         - text: "XCO2 기둥 평균 몰분율"
-          note: GDAS에서 받음. 파일 속 변수 이름은 제품 설명서로 확인
+          note: GDAS에서 받음. NIES 제품 설명서가 있는 data2.gosat.nies.go.jp가 2026-10-14 점검 중이라 파일 속 변수 이름은 확인하지 못함(HDF5)
         - text: "XCH4 기둥 평균 몰분율"
-          note: GDAS에서 받음
-        - text: "NASA ACOS GOSAT Lite v11.0 편향 보정 XCO2 (ppm)"
-          note: NASA GES DISC 일별 netCDF4, 2009-04-18~(2026-10-13 확인 시 2026-07-31까지)
+          note: GDAS에서 받음. 변수 이름은 위와 같은 이유로 미확인
+        - text: "ACOS Lite v11.0 편향 보정 XCO2 — `xco2` (ppm)"
+          note: "NASA GES DISC ACOS_L2_Lite_FP 일별 netCDF4(acos_LtCO2_*.nc4), 2009-04-18~(2026-10-13 확인 시 2026-07-31까지). 불확실성 `xco2_uncertainty`(ppm), 품질 `xco2_quality_flag`(0 높은 품질, 1 낮은 품질), 시각 `time`(1970-01-01 기준 초). XCH4는 없음"
     - name: GOSAT L3 월별 지도
       kind: mean
       period: 월
       items:
         - text: "FTS SWIR L3 월평균 CO2·CH4 기둥 농도 (2.5° 격자)"
-          note: NIES 제품 설명 기준
+          note: NIES 제품 설명 기준. 파일 속 변수 이름은 제품 설명서 사이트(data2.gosat.nies.go.jp) 점검으로 2026-10-14 확인하지 못함
     - name: GOSAT-GW TANSO-3 L2 (일반 공개 2027년 봄 예정)
       kind: instant
       period: 관측 시각
       items:
-        - text: "온실가스(XCO2·XCH4) — 산출물 GWT3W_L2_GHG(광역), GWT3F_L2_GHG(정밀)"
-          note: 산출물 코드이며 파일 속 변수 이름이 아님
-        - text: "이산화질소(NO2) — 산출물 GWT3W_L2_NO2(광역), GWT3F_L2_NO2(정밀)"
-          note: 산출물 코드이며 파일 속 변수 이름이 아님
+        - text: "온실가스 XCO2·XCH4 — `RetrievalResult_FP/xco2_fp`, `RetrievalResult_FP/xch4_fp` (ppm)"
+          note: "산출물 GWT3W_L2_GHG(광역)·GWT3F_L2_GHG(정밀), HDF5. 공개 전 형식 설명서(L2(GHG) Product Format Descriptions Version C, 2025-09) 기준이라 공개 판에서 바뀔 수 있음. 설명서는 XCH4도 ppm으로 적음. 불확실성 `xco2_uncert_fp`·`xch4_uncert_fp`, 품질 `xco2_qualityFlag_fp`·`xch4_qualityFlag_fp`(0 Good~3 NG), 프록시법 `RetrievalResult_PR/xch4_proxy`, 위치·시각 `PixelInfo/latitude`·`longitude`·`obsTime`"
+        - text: "이산화질소(NO2) 대류권·전체 연직 컬럼 — `RetrievalResult_NO2/no2VcdTroposphere`, `RetrievalResult_NO2/no2VcdTotal` (molec. cm-2)"
+          note: "산출물 GWT3W_L2_NO2(광역)·GWT3F_L2_NO2(정밀), HDF5. 공개 전 형식 설명서(L2(NO2) Product Format Descriptions Version C, 2025-06) 기준이라 공개 판에서 바뀔 수 있음. 품질 `RetrievalResult_NO2/pixelQualityValue`(0~1, 'Good' 기준은 미정)"
 
 access:
   - name: GOSAT Data Archive Service (GDAS, NIES) — GOSAT

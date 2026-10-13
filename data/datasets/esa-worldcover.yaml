@@ -69,7 +69,7 @@ time_convention:
 variables:
   note: >-
     WorldCover 제품 사용자 설명서(PUM v2.0) 기준입니다. 파일은 Cloud Optimized GeoTIFF이며 이름은 ESA_WorldCover_10m_<연도>_<버전>_<타일>_<층>.tif
-    (예: ESA_WorldCover_10m_2021_v200_N36E126_Map.tif)입니다. 아래 `Map`, `InputQuality`는 파일 이름 끝의 층 이름입니다.
+    (예: ESA_WorldCover_10m_2021_v200_N36E126_Map.tif)입니다. 아래 `Map`, `InputQuality`는 파일 이름 끝의 층 이름이며, `InputQuality`는 밴드 3개짜리 GeoTIFF라 행마다 밴드 번호를 참고에 적었습니다.
   full_list: https://esa-worldcover.s3.eu-central-1.amazonaws.com/v200/2021/docs/WorldCover_PUM_V2.0.pdf
   groups:
     - name: 토지피복 지도 (10 m, 해당 연도 분류 결과)
@@ -82,11 +82,13 @@ variables:
       kind: accum
       period: 해당 연도
       items:
-        - text: "분류에 쓴 Sentinel-1 GAMMA0 관측 수 — `InputQuality` 밴드 1 (개)"
-        - text: "분류에 쓴 Sentinel-2 L2A 관측 수 — `InputQuality` 밴드 2 (개)"
-        - text: "구름·그림자로 버린 Sentinel-2 관측 비율 — `InputQuality` 밴드 3 (%)"
+        - text: "분류에 쓴 Sentinel-1 GAMMA0 관측 수 — `InputQuality` (개)"
+          note: "`InputQuality` GeoTIFF의 밴드 1. 세 밴드 모두 UINT16, 척도·오프셋 없음, 약 60 m(1/2000°)"
+        - text: "분류에 쓴 Sentinel-2 L2A 관측 수 — `InputQuality` (개)"
+          note: "`InputQuality` GeoTIFF의 밴드 2"
+        - text: "구름·그림자로 버린 Sentinel-2 관측 비율 — `InputQuality` (%)"
           kind: mean
-          note: 0–100. 밴드 2와 함께 쓰면 유효 Sentinel-2 관측 수를 구할 수 있습니다
+          note: "`InputQuality` GeoTIFF의 밴드 3. 0–100. 밴드 2와 함께 쓰면 유효 Sentinel-2 관측 수를 구할 수 있습니다"
 
 access:
   - name: AWS S3 공개 버킷 (esa-worldcover)

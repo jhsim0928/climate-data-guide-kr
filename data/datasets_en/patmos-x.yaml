@@ -88,28 +88,33 @@ time_convention:
 
 variables:
   note: >-
-    This is the variable list from the NCEI CDR overview. In-file variable names could not be confirmed in the official documentation, so they are not given;
-    check them in a downloaded file (`ds.data_vars`). Units are given only where the algorithm documents (ATBD) state them.
-  full_list: https://www.ncei.noaa.gov/products/climate-data-records/avhrr-hirs-cloud-properties-patmos
+    In-file variable names were added to the NCEI CDR variable list. Names and units come from the Level-2b file specification example on the CIMSS PATMOS-x
+    documentation page (header of a v05r03 file) and the table of fields new in v6.0 (Foster et al. 2023, J. Climate, Appendix Table C1). Confirm the names in a v6.0 file with `ds.data_vars`.
+  full_list: https://cimss.ssec.wisc.edu/patmosx/images/level2b_filespec.txt
   groups:
     - name: Cloud properties (observations at overpass time)
       kind: instant
       items:
-        - "Cloud fraction"
-        - "Cloud type"
-        - "Cloud-top temperature — (K)"
-        - "Cloud-top pressure (hPa)"
-        - "Cloud-top height (km)"
-        - "Cloud emissivity (11 µm)"
-        - text: "Cloud optical depth (dimensionless)"
-          note: Retrieved from daytime observations only
-        - text: "Cloud particle effective radius (µm)"
+        - text: "Cloud fraction — `cloud_fraction`"
+          note: Cloud fraction over a 3×3 pixel array at native resolution (no units attribute in the file)
+        - text: "Cloud type — `cloud_type`"
+          note: Integer classification including clear and aerosol types (codes in the long_name attribute)
+        - "Cloud-top temperature — `cld_temp_acha` (K)"
+        - "Cloud-top pressure — `cld_press_acha` (hPa)"
+        - "Cloud-top height — `cld_height_acha` (km)"
+        - text: "Cloud emissivity — `cld_emiss_acha`"
+          note: At the nominal 11 µm wavelength (no units attribute in the file)
+        - text: "Cloud optical depth — `cld_opd_dcomp` (dimensionless)"
+          note: At 0.65 µm. Retrieved from daytime observations only
+        - text: "Cloud particle effective radius — `cld_reff_dcomp` (µm)"
           note: Retrieved from daytime observations only
     - name: Atmosphere and radiances
       kind: instant
       items:
-        - "Total precipitable water"
-        - "Calibrated reflectances and brightness temperatures — reflectance 0.63, 0.86, 1.6 µm; brightness temperature 3.75, 11, 12 µm; HIRS 6.7 µm and CO2 channels"
+        - text: "Total precipitable water — `hirsavhrr_total_precipitable_water`"
+          note: New in v6.0, retrieved from HIRS and AVHRR. Layer water vapour is in `hirsavhrr_water_vapor_content_layerlow`, `_layermid` and `_layerhigh`
+        - text: "Calibrated reflectances and brightness temperatures (including HIRS 6.7 µm and CO2 channels) — `refl_0_65um_nom`, `refl_0_86um_nom`, `refl_1_60um_nom` (%), `temp_3_75um_nom`, `temp_11_0um_nom`, `temp_12_0um_nom` (K)"
+          note: AVHRR reflectance 0.63, 0.86 and 1.6 µm; brightness temperature 3.75, 11 and 12 µm. HIRS channels include `temp_6_7um_nom` (6.7 µm) and `temp_13_3um_nom`, `temp_13_6um_nom`, `temp_13_9um_nom`, `temp_14_2um_nom` (CO2 channels)
 
 access:
   - name: NCEI direct download (2000 to present)

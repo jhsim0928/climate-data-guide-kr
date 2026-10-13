@@ -97,6 +97,7 @@ variables:
           note: ESA는 130 초과만 쓰라고 권장
         - text: "품질·해상 상태 플래그 — `Fg_ctrl_*`, `Fg_sc_*`"
           std: []
+          note: "플래그 변수 이름 패턴. Fg_ctrl_*는 처리·역산 점검(예 Fg_ctrl_ecmwf, Fg_ctrl_num_meas_low, Fg_ctrl_suspect_rfi), Fg_sc_*는 해상·지구물리 조건(예 Fg_sc_low_wind, Fg_sc_ice, Fg_sc_sea_state_1~6). L2OS v700 릴리스 노트 필터 표 기준"
     - name: CATDS 운영 L3OS 3Q (EASE-Grid 2.0 25·50 km, 10일 이동평균·월, 상승·하강 합침)
       kind: mean
       period: 10일 이동 또는 월
@@ -118,7 +119,7 @@ variables:
       period: 9일 또는 18일 (가우스 가중)
       items:
         - text: "편향 보정 해면 염분 — (pss)"
-          note: 설명서에 파일 속 변수 이름은 적혀 있지 않습니다
+          note: "v11 설명서(Doc_L3_DEBIAS_LOCEAN_v11.pdf)·CATDS 제품 페이지·SEANOE 기록 모두 오차 필드(eSSS)만 이름을 밝히고 염분 필드의 변수 이름은 적지 않음"
         - text: "염분 오차 대략값 — `eSSS` (pss)"
           std: []
           note: 50 km 안 공간 표준편차로 만든 정성적 지표, 연안에서 지나치게 작게 나옴

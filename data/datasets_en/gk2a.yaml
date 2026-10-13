@@ -68,14 +68,15 @@ time_convention:
 
 variables:
   note: >-
-    Only variable names given in the product tables of the NMSC ATBDs (2019 editions) are listed. Confirm names, units and scale factors in the operational files you download.
-    Products whose variable names could not be confirmed are listed by name and product code. The full list of 52 products is on the ATBD page.
+    Only names given in the 'variable' or 'Name' column of the product tables in the NMSC ATBDs are listed as variable names. Confirm names, units and scale factors in the operational files you download.
+    Where the in-file variable name could not be confirmed, the notes give only the product abbreviation and the file-name code (the <code> in gk2a_ami_le2_<code>_<area>_<time>.nc, from the NMSC product service list). The full list of 52 products is on the ATBD page.
   full_list: https://nmsc.kma.go.kr/homepage/html/base/cmm/selectPage.do?page=static.edu.atbdGk2a
   groups:
     - name: Clouds (instantaneous at observation time, 2 km)
       kind: instant
       items:
-        - "Cloud detection (cloud, probably cloud, clear) — CLD product"
+        - text: "Cloud detection (cloud, probably cloud, clear) — `CLD`"
+          note: "Values 0 = cloud, 1 = probably cloud, 2 = clear (ATBD Table 7). Per-test result bits in `TTF1`~`TTF3`. File-name code cld"
         - text: "Satellite cloud fraction — `CF` (%)"
           note: "scale_factor 0.01 according to the ATBD table; quality variable `CF_DQF`"
         - text: "Ground-equivalent cloud amount — `CA` (dimensionless)"
@@ -84,36 +85,50 @@ variables:
         - "Cloud-top temperature — `CTT` (K)"
         - "Cloud-top pressure — `CTP` (hPa)"
         - "Cloud-top height — `CTH` (km)"
-        - "Cloud type and cloud layer/height — CT product"
-        - text: "Cloud optical thickness, effective radius, liquid water path, ice water path — COT, CER, LWP and IWP products"
-          note: Daytime only
+        - text: "Cloud type and cloud layer/height — `CT`·`CLL`"
+          note: "`CT` is the ISCCP cloud type 1–9 and `CLL` is 1 = high, 2 = mid, 3 = low (ATBD Tables 4 and 5); quality variable `CT_DQF`. East Asia cloud types are `NCCT1`~`NCCT3` (type) and `PCCT1`~`PCCT3` (probability, %). File-name codes cla-ct and cla-cll"
+        - text: "Cloud optical thickness, effective radius, liquid water path, ice water path"
+          note: "Daytime only. Product abbreviations: COT, CER, LWP and IWP; file-name codes dcoew-cot etc. (in-file variable names not confirmed in official documents)"
     - name: Precipitation (instantaneous at observation time)
       kind: instant
       items:
-        - "Rain rate — RR product (mm/h)"
-        - "Quantitative precipitation forecast — POR and PAR products"
+        - text: "Rain rate (mm/h)"
+          note: "Product abbreviation: RR; file-name code rr (in-file variable name not confirmed in official documents)"
+        - text: "Quantitative precipitation forecast"
+          note: "Probability of rain and potential rainfall. Product abbreviations: POR and PAR; file-name codes qpn-por and qpn-par (in-file variable names not confirmed in official documents)"
     - name: Land and ocean (clear pixels, instantaneous at observation time)
       kind: instant
       items:
         - text: "Land surface temperature — `LST` (K)"
           note: "Clear land pixels only, every 10 minutes; scaling 0.01 and quality variable `DQF_LST` according to the ATBD table"
-        - "Sea surface temperature — SST product"
-        - "Surface albedo and land surface emissivity — SAL and LSE products"
-        - "Snow and sea-ice detection, snow depth — SCSI and SD products"
-        - "Vegetation index and fractional vegetation cover — NDVI and FVC products"
+        - text: "Sea surface temperature"
+          note: "Product abbreviation: SST; file-name code sst (in-file variable name not confirmed in official documents)"
+        - text: "Surface albedo and land surface emissivity — `BSA`·`WSA`, `LSE038`·`LSE087`·`LSE105`·`LSE123` (dimensionless)"
+          note: "`BSA` and `WSA` are broadband black-sky and white-sky albedo (scale_factor 10000; per-band `BSA_b01` etc.; quality variables `DQF_BSA` and `DQF_WSA`). `LSE038` etc. are 3.8, 8.7, 10.5 and 12.3 µm emissivity (scale_factor 0.001; quality variable `DQF_LSE`). Product abbreviations SAL and LSE; file-name codes sal-bsa, lse-038 etc."
+        - text: "Snow and sea-ice detection, snow depth — `SCSI`"
+          note: "`SCSI` values 0 = night, 1 = snow, 2 = snow-free land, 3 = cloud, 4 = sea ice, 5 = ice-free water; quality variable `DQF_SCSI`. The in-file variable name for snow depth (product abbreviation SD, cm) was not confirmed in official documents (the ATBD table names the output 'Snow Depth')"
+        - text: "Vegetation index and fractional vegetation cover"
+          note: "Product abbreviations: NDVI and FVC; file-name codes vgt-ndvi and vgt-fvc (in-file variable names not confirmed in official documents)"
     - name: Radiation (instantaneous at observation time)
       kind: instant
       items:
-        - "Radiation and shortwave radiation — RAD and SWRAD products"
-        - "Top-of-atmosphere outgoing longwave radiation — OLR product"
-        - "Surface upward and downward longwave radiation — ULR and DLR products"
+        - text: "Radiation and shortwave radiation — `RAD`, `RSR`·`DSR`·`ASR`"
+          note: "`RAD` is the 16×16-pixel mean radiance (reflectance for channels 1–6, brightness temperature for 7–16). `RSR` (TOA reflected), `DSR` (surface downward) and `ASR` (surface absorbed) shortwave are in W m-2, with quality variables `Quality_flag1` and `Quality_flag2`. Product abbreviations RAD and SWRAD"
+        - text: "Top-of-atmosphere outgoing longwave radiation — `OLR` (W m-2)"
+          note: "Quality variables `Quality_flag1` and `Quality_flag2`. File-name code lwrad-olr"
+        - text: "Surface upward and downward longwave radiation — `ULR`·`DLR` (W m-2)"
+          note: "Quality variables `Quality_flag1` and `Quality_flag2`. File-name codes lwrad-ulr and lwrad-dlr"
     - name: Aerosol and atmosphere
       kind: instant
       items:
-        - "Aerosol optical depth — AOD product"
-        - "Asian dust and aerosol detection, dust optical depth — ADPS and DAOD products"
-        - "Atmospheric motion vectors — AMV product"
-        - "Atmospheric vertical profiles — AAP product"
+        - text: "Aerosol optical depth"
+          note: "At 0.55 µm. Product abbreviation: AOD; file-name code apps-aod (in-file variable name not confirmed in official documents)"
+        - text: "Asian dust and aerosol detection, dust optical depth"
+          note: "Product abbreviations: ADPS and DAOD; file-name codes adps and apps-daod055 (in-file variable names not confirmed in official documents)"
+        - text: "Atmospheric motion vectors"
+          note: "Product abbreviation: AMV; file-name codes such as amv-ir105-cd (in-file variable names not confirmed in official documents)"
+        - text: "Atmospheric vertical profiles"
+          note: "Temperature and humidity profiles, stability indices, precipitable water, total ozone. Product abbreviation: AAP; file-name codes in the tqprof, aii, tpw and toz series (in-file variable names not confirmed in official documents)"
 
 access:
   - name: KMA Open MET Data Portal (satellite data downloads)

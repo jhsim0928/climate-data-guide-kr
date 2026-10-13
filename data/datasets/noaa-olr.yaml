@@ -137,7 +137,8 @@ time_convention:
 
 variables:
   note: >-
-    PSL 파일의 변수 이름은 THREDDS 메타데이터에서 확인한 이름입니다. NCEI CDR 파일 속 변수 이름은 사용자 가이드에 적혀 있지 않아 설명만 적었습니다(받은 파일에서 확인하세요).
+    PSL 파일의 변수 이름은 THREDDS(OPeNDAP) 구조에서 확인한 이름입니다. NCEI CDR 사용자 가이드에는 파일 속 변수 이름이 없어, 일자료 CDR은 PSL이 함께 내는
+    사본(olr_cdr_day/olr.day.mean.v2.nc, 1° 360×180)의 구조로 `olr`을 확인했습니다. 월자료 CDR v3.0(2.5°) 파일의 변수 이름은 공식 문서·공개 사본에서 확인하지 못했습니다(받은 파일에서 확인하세요).
     모든 OLR 단위는 W m-2(PSL 표기 W/m^2)입니다.
   full_list: https://www.ncei.noaa.gov/products/climate-data-records/outgoing-longwave-radiation-daily
   groups:
@@ -145,21 +146,25 @@ variables:
       kind: mean
       period: 일
       items:
-        - text: "외향 장파복사 — OLR Daily CDR v2.0, 1° (W m-2)"
+        - text: "외향 장파복사 — `olr` (W m-2)"
           std: [toa_rad]
-        - text: "외향 장파복사 — PSL Interpolated OLR 일자료 `olr` (W/m^2)"
+          note: OLR Daily CDR v2.0, 1°. 변수 이름은 PSL 사본 olr.day.mean.v2.nc 기준
+        - text: "외향 장파복사 — `olr` (W/m^2)"
           std: [toa_rad]
-        - text: "일별 기후값 — PSL `olr.day.ltm.1991-2020.nc` 등 (W/m^2)"
+          note: PSL Interpolated OLR 일자료(olr.day.mean.nc)
+        - text: "일별 기후값 — `olr` (W/m^2)"
           std: [toa_rad]
-          note: 기준 기간의 같은 날짜끼리 평균한 값
+          note: 기준 기간의 같은 날짜끼리 평균한 값. PSL 파일 olr.day.ltm.1991-2020.nc 등
     - name: 월평균 OLR
       kind: mean
       period: 월
       items:
         - text: "외향 장파복사 — OLR Monthly CDR v3.0, 2.5° (W m-2)"
           std: [toa_rad]
-        - text: "외향 장파복사 — PSL Interpolated OLR 월자료 (W/m^2)"
+          note: 파일 속 변수 이름은 사용자 가이드에 없고(변수 설명은 'OLR'만), 공개 사본에서도 확인하지 못함
+        - text: "외향 장파복사 — `olr` (W/m^2)"
           std: [toa_rad]
+          note: PSL Interpolated OLR 월자료(olr.mon.mean.nc)
 
 access:
   - name: NCEI — OLR Daily CDR 제품 페이지 (문서·다운로드 링크)

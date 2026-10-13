@@ -90,7 +90,7 @@ variables:
       period: Half-month
       items:
         - text: "NDVI recalibrated to Landsat (dimensionless, stored value × 0.001)"
-          note: "GeoTIFF uint16, valid 0–1000, fill 65535. In the consolidated version, values from 2003 are based on MODIS MOD13C1"
+          note: "GeoTIFF uint16, valid 0–1000, fill 65535. In the consolidated version, values from 2003 are based on MODIS MOD13C1. Unnamed GeoTIFF bands, so the variable-name column is empty. Which band (or separate file) holds NDVI and QC is stated only in the bundled Readme PDF on Zenodo, not in the Zenodo description or the ESSD paper, and could not be confirmed"
         - text: "Quality control (QC) layer"
           kind: instant
           note: The Zenodo description recommends using the QC layer, but its value definitions are only in the bundled Readme and could not be confirmed here

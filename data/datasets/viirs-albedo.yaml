@@ -64,7 +64,7 @@ time_convention:
 
 variables:
   note: >-
-    변수 이름은 LAADS의 VNP43IA3·VNP43MA3 파일 명세(Collection 1)에서 확인한 것으로, Collection 2 컬렉션 설명의 변수 구성(IA3 9개, MA3 36개)과 일치합니다.
+    변수 이름은 LAADS의 VNP43IA3·VNP43MA3·VNP43C3·VNP43IA4·VNP43MA4·VNP43MA1 파일 명세와 LP DAAC 제품 페이지(Collection 1; VNP43IA1·MA1·IA4·MA4는 V002 카탈로그 층 목록도 같음)에서 확인한 것으로, Collection 2 컬렉션 설명의 변수 구성(IA3 9개, MA3 36개, C3 31개)과 일치합니다.
     알베도는 INT16에 scale_factor 0.001(유효 범위 0~1000), 채움값 32767입니다. 파일 형식은 HDF-EOS5(HDF5)이며 받은 파일에서 그룹 경로를 확인하세요.
   full_list: https://ladsweb.modaps.eosdis.nasa.gov/filespec/VIIRS/1/VNP43MA3
   groups:
@@ -88,16 +88,20 @@ variables:
       kind: mean
       period: 16일 창(9번째 날 가중)
       items:
-        - "흑색·백색 하늘 알베도(M 밴드·광대역) (무차원)"
-        - text: "CMG 칸 안 적설 화소 비율 (%)"
-          note: 컬렉션 설명에 '눈 덮임' 보조층이 있다고 되어 있음. 변수 이름은 받은 파일에서 확인
-        - "불확도·품질·현지 정오·유효 입력 비율 보조층"
+        - text: "흑색·백색 하늘 알베도(M 밴드·DNB·광대역) — `Albedo_BSA_*`, `Albedo_WSA_*` (무차원)"
+          note: "`*` 자리에 M1~M5·M7·M8·M10·M11, DNB, vis, nir, shortwave(예: `Albedo_WSA_shortwave`). 3600×7200 격자, INT16 × 0.001(유효 0~1000, 채움 32767)"
+        - text: "CMG 칸 안 적설 화소 비율 — `Percent_Snow` (%)"
+          note: 0~100, 채움 255
+        - text: "불확도·품질·현지 정오·유효 입력 비율 보조층 — `BRDF_Albedo_Uncertainty`, `BRDF_Quality`, `Local_Solar_Noon`, `Percent_Inputs`"
+          note: "`BRDF_Albedo_Uncertainty` × 0.001(채움 32767), `BRDF_Quality` 0 최상~5 채움 50% 이상(채움 255), `Local_Solar_Noon` 현지 정오 태양 천정각(도), `Percent_Inputs` 더 세밀한 해상도 입력 비율(%)"
     - name: 천정 보정 반사도·BRDF 매개변수 (IA4·MA4 / IA1·MA1)
       kind: mean
       period: 16일 창(9번째 날 가중)
       items:
-        - "천정 보정 반사도 NBAR(현지 정오 태양각, 연직 시선) — VNP43IA4·MA4 (무차원)"
-        - "BRDF 커널 가중치(등방·체적·기하광학) — VNP43IA1·MA1 (무차원)"
+        - text: "천정 보정 반사도 NBAR(현지 정오 태양각, 연직 시선) — `Nadir_Reflectance_I1`~`I3`, `Nadir_Reflectance_M1`~`M11` (무차원)"
+          note: "I 밴드는 VNP43IA4(500 m), M 밴드는 VNP43MA4(1 km; M6·M9 제외). INT16 × 0.0001(유효 0~10000, 채움 32767). 두 파일 모두 밴드별 필수 품질 `BRDF_Albedo_Band_Mandatory_Quality_I1`~`I3`·`_M1`~`_M11`이 함께 들어 있음"
+        - text: "BRDF 커널 가중치(등방·체적·기하광학) — `BRDF_Albedo_Parameters_I1`~`I3`, `BRDF_Albedo_Parameters_M1`~`M11`, `BRDF_Albedo_Parameters_vis`, `BRDF_Albedo_Parameters_nir`, `BRDF_Albedo_Parameters_shortwave` (무차원)"
+          note: "I 밴드는 VNP43IA1, M 밴드·광대역은 VNP43MA1(M6·M9 제외). 3차원 배열(세 번째 차원 Num_Parameters = 3: fiso·fvol·fgeo), INT16 × 0.001(채움 32767). 필수 품질 층도 함께 들어 있음"
 
 access:
   - name: NASA Earthdata Search (LP DAAC, Earthdata Cloud)

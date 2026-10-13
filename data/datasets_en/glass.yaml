@@ -65,9 +65,9 @@ time_convention:
 
 variables:
   note: >-
-    Each product comes in separate files (HDF-EOS4). Because the official pages mostly do not publish scientific dataset (SDS) names, no layer names are given here.
+    Each product comes in separate files (HDF-EOS4), one variable (product) per file. For LAI, FAPAR, FVC, net radiation, shortwave radiation, ET and GPP, neither the BNU product pages, the HKU file naming document nor the archive metadata (hdf.xml) give scientific dataset (SDS) names, so the variable-name column is left empty (the pages describe only the content, e.g. 'leaf area index dataset' and 'quality flag'). Check them in your files with gdalinfo or similar.
+    Albedo layer names follow the GLASS02B05 table on the BNU albedo page (which states that GLASS02B06 and A06 are the same); whether the current combined MODIS–AVHRR version (GLASS02B03 V50 etc.) uses the same names could not be confirmed in official documentation.
     Scale factors and valid ranges follow the BNU product pages and may differ between versions (V4, V5, V6), so always check the HDF attributes (scale_factor, _FillValue, valid_range).
-    The BNU albedo page lists layer names such as `ABD_BSA_shortwave`, `ABD_WSA_shortwave` and `ABD_BSA_VIS` for the earlier albedo products (GLASS02B05, B06, A06).
   full_list: https://glass.hku.hk/download.html
   groups:
     - name: Leaf area index LAI (MODIS V6 250 m, 500 m, 0.05° from 2000 / AVHRR V4 0.05° 1981–2018, 8-day)
@@ -92,13 +92,14 @@ variables:
       kind: instant
       period: Representative of the 8-day period
       items:
-        - text: "Black-sky albedo — shortwave, visible, near-infrared (dimensionless)"
+        - text: "Black-sky albedo (shortwave, visible, near-infrared) — `ABD_BSA_shortwave`, `ABD_BSA_VIS`, `ABD_BSA_NIR` (dimensionless)"
           std: []
-          note: "Stored value × 0.0001 (valid 0–10000, fill −1)"
-        - text: "White-sky albedo — shortwave, visible, near-infrared (dimensionless)"
+          note: "Stored value × 0.0001 (valid 0–10000, fill −1). Layer names from the BNU page for GLASS02B05, B06 and A06. Quality layers are `QC_shortwave`, `QC_VIS` and `QC_NIR` (UINT16, fill 65535)"
+        - text: "White-sky albedo (shortwave, visible, near-infrared) — `ABD_WSA_shortwave`, `ABD_WSA_VIS`, `ABD_WSA_NIR` (dimensionless)"
           std: []
+          note: "Layer names from the BNU page for GLASS02B05, B06 and A06"
         - text: "Blue-sky albedo (actual atmospheric conditions) (dimensionless)"
-          note: Only in the post-2000 0.05° product according to the BNU page
+          note: "Only in the post-2000 0.05° product according to the BNU page (described there as three 'clear-sky' albedo datasets for shortwave, visible and near-infrared). Layer names not given in official documentation"
     - name: Radiation (daily)
       kind: mean
       period: Daily

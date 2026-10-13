@@ -93,19 +93,24 @@ time_convention:
 
 variables:
   note: >-
-    In-file variable names could not be confirmed in the official documentation, so products are listed by their CM SAF product codes (the first three letters of the file name).
-    Check variable names and units in your downloaded files or the Product User Manuals (PUM).
+    Variable names were checked in the CM SAF Product User Manuals (PUM): clouds (SAF/CM/DWD/PUM/CLARA/CLD 3.1, Section 8.3.1), surface albedo (SAF/CM/FMI/PUM/GAC/SAL 3.1, Section 4.1),
+    surface radiation (SAF/CM/DWD/PUM/CLARA/RAD 3.1, Section 4.1) and TOA radiation (SAF/CM/RMIB/PUM/GAC/TOA 1.2, Tables 4-5 to 4-8). Each product comes in its own files
+    (the first three letters of the file name are the product code), and each file also carries observation counts (`nobs`…), standard deviations and uncertainties.
+    In-file names for IWP and the histogram products (JCH, CWP) could not be confirmed in the PUM text available, so they are left blank.
   full_list: https://wui.cmsaf.eu/safira/action/viewDoiDetails?acronym=CLARA_AVHRR_V003
   groups:
     - name: Cloud properties (daily and monthly means, 0.25°)
       kind: mean
       period: day and month
       items:
-        - "Fractional cloud cover — CFC product, from the CMA cloud mask"
-        - "Cloud-top pressure, height and temperature — CTO product"
-        - "Cloud phase (liquid, ice) — CPH product"
-        - text: "Liquid water path — LWP product"
-          note: Daytime only. ICDR ends with May 2025
+        - text: "Fractional cloud cover — `cfc` (%)"
+          note: CFC product, from the CMA cloud mask. Day and night are `cfc_day` and `cfc_night`; low, middle and high clouds are `cfc_low`, `cfc_middle` and `cfc_high`
+        - text: "Cloud-top pressure, height and temperature — `ctp` (hPa), `cth` (m), `ctt` (K)"
+          note: CTO product. Liquid/ice and day/night values use suffixes such as `ctp_liq_day`
+        - text: "Cloud phase (liquid cloud fraction) — `cph` (%)"
+          note: CPH product. Fraction of clouds that are liquid; day and night are `cph_day` and `cph_night`
+        - text: "Liquid water path — `lwp`"
+          note: LWP product. Daytime only. Mean over cloudy pixels; the grid-box mean weighted by cloud fraction is `lwp_allsky`. ICDR ends with May 2025
         - text: "Ice water path — IWP product"
           note: Daytime only. ICDR ends with May 2025
     - name: Cloud histograms (monthly)
@@ -113,25 +118,31 @@ variables:
       period: month
       items:
         - text: "Joint cloud-top and optical-thickness histogram — JCH product (1°)"
-          note: Monthly frequency distribution. ICDR ends with May 2025
+          note: Monthly frequency distribution (two extra dimensions for optical-thickness and cloud-top-pressure bins). ICDR ends with May 2025
         - text: "Cloud water path histogram — CWP product"
           note: Monthly frequency distribution. ICDR ends with May 2025
     - name: Surface albedo
       kind: mean
       period: pentad and month
       items:
-        - "Surface albedo (black-sky, white-sky, blue-sky) — SAL product"
+        - text: "Surface albedo (black-sky, white-sky, blue-sky) — `black_sky_albedo_all_mean`, `white_sky_albedo_all_mean`, `blue_sky_albedo_all_mean`"
+          note: SAL product. Names are 'parameter family + statistic' (`_mean`, `_median`, `_std` and others); names without `_all` (`black_sky_albedo_mean` etc.) exclude snow and ice
     - name: Surface and top-of-atmosphere radiation
       kind: mean
       period: day and month
       items:
-        - "Surface incoming shortwave radiation — SIS product (W m-2)"
-        - text: "Surface downwelling longwave radiation — SDL product (W m-2)"
+        - text: "Surface incoming shortwave radiation — `SIS` (W m-2)"
+          note: SIS product
+        - text: "Surface downwelling longwave radiation — `SDL` (W m-2)"
           period: month
-        - text: "Surface net shortwave, net longwave and radiation budget — SNS, SNL and SRB products (W m-2)"
+          note: SDL product
+        - text: "Surface net shortwave, net longwave and radiation budget — `SNS`, `SNL`, `SRB` (W m-2)"
           period: month
-        - "TOA reflected solar flux — RSF product (W m-2)"
-        - "TOA outgoing longwave radiation — OLR product (W m-2)"
+          note: SNS, SNL and SRB products (each in its own files)
+        - text: "TOA reflected solar flux — `SW_flux` (W m-2)"
+          note: RSF product
+        - text: "TOA outgoing longwave radiation — `LW_flux` (W m-2)"
+          note: OLR product
 
 access:
   - name: CM SAF Web User Interface (WUI)

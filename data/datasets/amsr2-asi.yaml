@@ -76,12 +76,12 @@ variables:
       period: 일
       items:
         - text: "해빙 농도 (%)"
-          note: UTC 하루 동안의 모든 궤도로 만든 하루 대표값. 0~100, 육지·결측 120
+          note: "UTC 하루 동안의 모든 궤도로 만든 하루 대표값. 0~100, 육지·결측 120. 변수 이름 미기재: 사용자 안내서는 netCDF가 GDAL로 만든 '해빙 농도 2차원 장'이라고만 적고, 서버 readme·PANGAEA 기록에도 이름이 없음"
     - name: 궤도별 스와스 (swath, netCDF)
       kind: instant
       items:
         - text: "해빙 농도 — A·B 주사 배열 (%)"
-          note: 89 GHz A·B 두 주사선(약 5 km 간격) 각각의 관측 지점 값. 위경도 배열이 함께 들어 있음
+          note: "89 GHz A·B 두 주사선(약 5 km 간격) 각각의 관측 지점 값. 위경도 배열 4개가 함께 들어 있음. 스와스 readme(Readme_AMSR_ASI_swath.txt)는 시각 배열 이름(Scan_Time)만 밝히고 농도·위경도 배열 이름은 적지 않음"
         - text: "주사선 관측 시각 — `Scan_Time` (s, 1992-01-01 00:00 UTC 기준)"
           std: []
 

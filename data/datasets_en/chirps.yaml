@@ -86,10 +86,10 @@ variables:
       kind: static
       items:
         - text: "Legates-Willmott gauge-undercatch correction factor grids"
-          note: CHC diagnostics/legates-willmott_corrections folder
+          note: "Monthly correction-factor maps, in the CHC diagnostics/legates-willmott_corrections folder and in EWX. The CHC diagnostics page does not give the file format or variable name"
         - text: "Locations where missing IR data were filled with ERA5 (fill maps)"
           kind: instant
-          note: "Marks where 1981–2022 IR gaps were filled with ERA5. diagnostics/fillmaps folder"
+          note: "Marks where 1981–2022 IR gaps were filled with ERA5. GeoTIFF masks (no variable name) for several periodicities, also viewable in EWX as the 'Fill Map' layer under 'CHIRP v3.0'. diagnostics/fillmaps folder"
 
 access:
   - name: CHC data repository (CHIRPS v3.0)

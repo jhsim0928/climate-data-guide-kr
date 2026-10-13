@@ -70,59 +70,60 @@ time_convention:
 
 variables:
   note: >-
-    환경위성센터 SFTP 안내와 웹다운로드 목록 기준 산출물입니다. 괄호 속 영문 약어는 '파일 속 변수 이름'이 아니라 환경위성센터의 산출물 코드입니다.
-    파일 안 변수 이름·단위·품질 플래그는 누리집에서 확인하지 못했으므로, 받은 파일의 속성과 알고리즘 문서(ATBD)를 직접 확인하세요.
+    산출물 목록과 판(버전)은 환경위성센터 SFTP 안내·웹다운로드 목록 기준입니다. 변수명 칸은 환경위성센터의 '환경위성 활용도구(GEMSAT) 간단 사용 설명서'(2025년 4월) 참고 2 표에 적힌 파일 안 변수 이름이고,
+    단위는 같은 설명서 참고 1 표 기준입니다. 설명서에 변수가 들어 있는 그룹 경로·척도 인수·품질 플래그는 없으므로 받은 파일의 속성에서 직접 확인하세요.
+    HCHO·CHOCHO는 같은 이름(`ColumnAmount`), O3T·O3P는 같은 이름(`ColumnAmountO3`)을 쓰므로 산출물 파일(파일명의 산출물 코드)로 구분합니다.
   full_list: https://nesc.nier.go.kr/ko/html/cntnts/104/static/page.do
   groups:
     - name: L2 기체 (시간별 관측)
       kind: instant
       period: 관측 시각
       items:
-        - text: "이산화질소 연직 칼럼(전층·성층권·대류권) — 산출물 NO2"
-          note: SFTP 안내 기준 v4.0.1
-        - text: "이산화황 연직 칼럼 — 산출물 SO2"
-          note: v3.0.1
-        - text: "포름알데히드 연직 칼럼 — 산출물 HCHO"
-          note: v3.0.0
-        - text: "글리옥살 연직 칼럼 — 산출물 CHOCHO"
-          note: v3.0.1
-        - text: "오존 전량 — 산출물 O3T"
-          note: v2.1.2
-        - text: "오존 연직 분포(성층권·대류권 오존 포함) — 산출물 O3P"
-          note: v3.0.0
+        - text: "이산화질소 연직 칼럼(전층·대류권) — `ColumnAmountNO2`·`ColumnAmountNO2Trop` (molec/cm²)"
+          note: "`ColumnAmountNO2`는 전층, `ColumnAmountNO2Trop`은 대류권. 산출물 NO2, SFTP 안내 기준 v4.0.1"
+        - text: "이산화황 연직 칼럼 — `ColumnAmountSO2` (molec/cm²)"
+          note: "산출물 SO2, v3.0.1. GEMSAT 설명서 산출물 표에는 재난 발생 때만 제공으로 적혀 있음"
+        - text: "포름알데히드 연직 칼럼 — `ColumnAmount` (molec/cm²)"
+          note: "산출물 HCHO, v3.0.0"
+        - text: "글리옥살 연직 칼럼 — `ColumnAmount` (molec/cm²)"
+          note: "산출물 CHOCHO, v3.0.1"
+        - text: "오존 전량 — `ColumnAmountO3` (DU)"
+          note: "산출물 O3T, v2.1.2"
+        - text: "오존 연직 분포(성층권·대류권 오존 포함) — `ColumnAmountO3` (DU)"
+          note: "층(level) 0 = 전층, 1 = 성층권, 2 = 대류권 오존. 산출물 O3P, v3.0.0"
     - name: L2 에어로졸·구름·지표·자외선 (시간별 관측)
       kind: instant
       period: 관측 시각
       items:
-        - text: "에어로졸 광학두께(443 nm)·단일산란알베도·자외선/가시광 에어로졸 지수 — 산출물 AERAOD"
-          note: v2.1.0
+        - text: "에어로졸 광학두께·단일산란알베도·자외선/가시광 에어로졸 지수 — `FinalAerosolOpticalDepth`·`FinalAerosolSingleScattAlb`·`UVAerosolIndex`·`VISAerosolIndex` (무차원)"
+          note: "광학두께 층(level) 0 = 354 nm, 1 = 443 nm, 2 = 550 nm. 산출물 AERAOD, v2.1.0"
           std: [aerosol]
-        - text: "에어로졸 유효 고도 — 산출물 AEH"
-          note: v2.1.0
-        - text: "구름 유효운량·구름 중심 기압·구름 복사 비율 — 산출물 CLOUD"
-          note: v3.0.0
-        - text: "지표면 반사도(배경 반사도) — 산출물 BSR"
-          note: v3.0.0
-        - text: "자외선 지수·식물 반응 지수·DNA 영향 지수·비타민D 합성 지수 — 산출물 UVI"
-          note: v2.1.0
+        - text: "에어로졸 유효 고도 — `AerosolEffectiveHeight` (km)"
+          note: "산출물 AEH, v2.1.0"
+        - text: "구름 유효운량·구름 복사 비율·구름 중심 기압 — `EffectiveCloudFraction`·`CloudRadianceFraction` (무차원), `CloudCentroidPressure` (hPa)"
+          note: "산출물 CLOUD, v3.0.0"
+        - text: "지표면 반사도(배경 반사도) — `SurfaceReflectance` (무차원)"
+          note: "산출물 BSR, v3.0.0(GEMSAT 설명서는 이 산출물을 SFC로 표기)"
+        - text: "자외선 지수·식물 반응 지수·DNA 영향 지수·비타민D 합성 지수 — `UVIndex`·`PlantresponseIndex`·`DNAdamageIndex`·`VitaminDIndex` (무차원)"
+          note: "산출물 UVI, v2.1.0"
     - name: L3 이산화질소 평균
       kind: mean
       period: 일/월
       items:
-        - text: "전층 이산화질소 일·월평균 — NO2-TOTAL-daily, NO2-TOTAL_monthly"
-          note: 웹다운로드 목록 이름
-        - text: "대류권 이산화질소 일·월평균 — NO2-TROP-daily, NO2-TROP_monthly"
-          note: 웹다운로드 목록 이름
-        - text: "이산화질소 격자 일·월평균 — NO2-GRID-daily, NO2-GRID_monthly"
-          note: 웹다운로드 목록 이름
+        - text: "전층 이산화질소 일·월평균 — `ColumnAmountNO2` (molec/cm²)"
+          note: "웹다운로드 목록 이름 NO2-TOTAL-daily, NO2-TOTAL_monthly. 변수 이름은 GEMSAT 설명서의 NO2_GRID_daily·NO2_GRID_monthly 파일 기준"
+        - text: "대류권 이산화질소 일·월평균 — `ColumnAmountNO2Trop` (molec/cm²)"
+          note: "웹다운로드 목록 이름 NO2-TROP-daily, NO2-TROP_monthly. 변수 이름은 GEMSAT 설명서의 NO2_GRID_daily·NO2_GRID_monthly 파일 기준"
+        - text: "이산화질소 격자 일·월평균 — `ColumnAmountNO2`·`ColumnAmountNO2Trop` (molec/cm²)"
+          note: "웹다운로드 목록 이름 NO2-GRID-daily, NO2-GRID_monthly. 한 파일에 전층·대류권 변수가 함께 있으며 동아시아·한반도 영역 파일이 따로 있음"
     - name: L4 지상 농도 추정
       kind: instant
       period: 관측 시각
       items:
-        - text: "지상 미세먼지(PM10) 추정 농도"
-          note: 시간 간격·단위는 공식 페이지에서 확인하지 못함
-        - text: "지상 초미세먼지(PM2.5) 추정 농도"
-          note: 시간 간격·단위는 공식 페이지에서 확인하지 못함
+        - text: "지상 미세먼지(PM10) 추정 농도 — `PM10` (µg/m³)"
+          note: "파일명 예 GK2_GEMS_L4_…_PM10-SURFACE_ORI.nc. 시간 간격은 공식 페이지에서 확인하지 못함"
+        - text: "지상 초미세먼지(PM2.5) 추정 농도 — `PM25` (µg/m³)"
+          note: "파일명 예 GK2_GEMS_L4_…_PM25-SURFACE_ORI.nc. 시간 간격은 공식 페이지에서 확인하지 못함"
 
 access:
   - name: 환경위성센터 웹다운로드 (자료서비스 장바구니)

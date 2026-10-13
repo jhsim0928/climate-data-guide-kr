@@ -94,7 +94,7 @@ time_convention:
 variables:
   note: >-
     L2 변수명은 V23 L2 에어로졸 Data Product Specification의 이름이며, 주요 변수는 NetCDF 그룹 `4.4_KM_PRODUCTS` 안에 있습니다(원시 값은 `4.4_KM_PRODUCTS/AUXILIARY`, 각도는 `GEOMETRY`).
-    광학두께 필드는 550 nm 기준이고 결측값은 -9999.0입니다. L3 파일 속 변수명은 확인하지 못해 설명만 적었습니다.
+    광학두께 필드는 550 nm 기준이고 결측값은 -9999.0입니다. L3 변수명은 CGAS Data Product Specification(F15_0032)의 이름이며, NetCDF 그룹 `Aerosol_Parameter_Average` 안에 있습니다.
   full_list: https://asdc.larc.nasa.gov/documents/misr/DPS_AEROSOL_V023.20180125.pdf
   groups:
     - name: L2 에어로졸 (MIL2ASAE·MIL2ASAF, 4.4 km)
@@ -116,9 +116,11 @@ variables:
       kind: mean
       period: 일/월
       items:
-        - "555 nm 기주 에어로졸 광학두께 통계 (무차원)"
-        - text: "에어로졸 성분 유형 빈도 히스토그램"
-          note: L2 산출에서 선택된 혼합물 유형의 빈도
+        - text: "기주 에어로졸 광학두께(550 nm) 평균·표준편차·표본 수 — `Aerosol_Optical_Depth`, `Aerosol_Optical_Depth_Standard_Deviation`, `Aerosol_Optical_Depth_Count` (무차원)"
+          std: [aerosol]
+          note: "차원 Latitude·Longitude·Optical_Depth_Range(0번 = 전체, 1~8번 = 광학두께 구간별). 표본 수는 개수. 흡수 광학두께 `Absorbing_Optical_Depth`, 옹스트롬 지수 `Angstrom_Exponent_550_860`, 밴드별 광학두께 `Aerosol_Optical_Depth_Per_Band`도 있음"
+        - text: "크기·형태별 에어로졸 광학두께 평균 — `Small_Mode_Aerosol_Optical_Depth`, `Medium_Mode_Aerosol_Optical_Depth`, `Large_Mode_Aerosol_Optical_Depth`, `Nonspherical_Aerosol_Optical_Depth` (무차원)"
+          note: "L2에서 고른 에어로졸 혼합물 유형을 크기(반경 0.35 µm 미만·0.35~0.7 µm·0.7 µm 초과)·비구형으로 요약한 값. 각 변수에 `_Count`·`_Standard_Deviation`이 함께 있음. 컬렉션 설명의 '성분 유형 빈도 히스토그램'은 현재 파일 형식(F15_0032) 명세에 따로 된 변수가 없음"
 
 access:
   - name: NASA Earthdata Search — MIL2ASAE V003 (FINAL L2, 2000-03~2022-10)

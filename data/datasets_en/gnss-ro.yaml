@@ -90,7 +90,8 @@ time_convention:
 
 variables:
   note: >-
-    COSMIC-2 (CDAAC) names are from the CDAAC file format documents; for ROM SAF Level 3 only the refractivity example (`REF`) in the Product User Manual was verified.
+    COSMIC-2 (CDAAC) names are from the CDAAC file format documents. ROM SAF Level 3 grids come in one file per variable (six-letter product code in the file name, e.g. RRGMET, RTGMET),
+    and the Level 3 Product User Manual (v3.2, Section 5.3) shows only the refractivity file header (`REF`), so in-file names of the other variables are left blank.
     Check ROM SAF Level 1b/2 and other Level 3 variable names in your files.
   full_list: https://cdaac-www.cosmic.ucar.edu/cdaac/doc/formats.html
   groups:
@@ -117,11 +118,12 @@ variables:
       kind: mean
       period: Monthly
       items:
-        - "Refractivity — `REF` (N-units)"
-        - "Bending angle (mrad)"
+        - text: "Refractivity — `REF` (N-units)"
+          note: Standard deviation, measurement uncertainty, sampling error and data count are `REF_stdev`, `REF_obssig`, `REF_samperr` and `REF_num`; the a priori fraction is `Wref`
+        - "Bending angle — (mrad)"
         - "Dry temperature — (K)"
         - "1D-Var temperature — (K)"
-        - "1D-Var specific humidity (g/kg)"
+        - "1D-Var specific humidity — (g/kg)"
         - "Tropopause height — (m)"
 
 access:

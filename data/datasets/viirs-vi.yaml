@@ -66,7 +66,7 @@ time_convention:
 variables:
   note: >-
     Earthdata 카탈로그의 VNP13A1·VNP13C1 V002 층 표 기준입니다(VJ113·VJ213도 같은 구성). 층 이름 앞에 해상도·주기가 붙으며(500 m 16일은 `500 m 16 days …`, 0.05°는 `CMG 0.05 Deg 16 days …`),
-    MODIS(`250m 16 days …`)와 달리 숫자와 m 사이에 띄어쓰기가 있습니다. 지수·반사도는 int16 저장값을 10000으로 나눕니다. 월 제품(A3·C2)의 층 이름은 확인하지 못했으니 받은 파일에서 보세요.
+    MODIS(`250m 16 days …`)와 달리 숫자와 m 사이에 띄어쓰기가 있습니다. 지수·반사도는 int16 저장값을 10000으로 나눕니다. 월 제품 층 이름은 LP DAAC의 VNP13A3·VNP13C2 V002 제품 페이지 기준이며 앞머리가 `1 km monthly …`, `CMG 0.05 Deg monthly …`입니다.
   full_list: https://www.earthdata.nasa.gov/data/catalog/lpcloud-vnp13a1-002
   groups:
     - name: 16일 합성 (VNP13A1 500 m 기준, A2 1 km 같은 구성)
@@ -107,9 +107,10 @@ variables:
       kind: mean
       period: 월
       items:
-        - text: "월 NDVI·EVI·EVI2 (무차원, ÷ 10000)"
-          note: "사용자 안내서는 MODIS처럼 그달과 겹치는 16일 합성들로 월 값을 추정하는 흐름도를 제시합니다. LP DAAC 설명은 '월 기간 중 최적 화소 선택'이라 적고 있어, 정확한 계산법은 안내서 9장을 확인하세요."
-        - "월 반사도(적색·근적외·청색·녹색·SWIR 3개)·각도·화소 신뢰도·품질 층"
+        - text: "월 NDVI·EVI·EVI2 — `1 km monthly NDVI`, `1 km monthly EVI`, `1 km monthly EVI2` (무차원, ÷ 10000)"
+          note: "VNP13A3 이름. VNP13C2는 `CMG 0.05 Deg monthly NDVI`, `CMG 0.05 Deg monthly EVI`, `CMG 0.05 Deg monthly EVI2`이고 표준편차(`… std dev`)·사용 화소 수(`CMG 0.05 Deg monthly #1km pix used`, `CMG 0.05 Deg monthly #1km pix +-30deg VZ`)·평균 태양 천정각(`CMG 0.05 Deg monthly Avg sun zen angle`) 층이 더 있습니다. 채움값 −15000(물)·−13000(육지). 사용자 안내서는 MODIS처럼 그달과 겹치는 16일 합성들로 월 값을 추정하는 흐름도를 제시합니다. LP DAAC 설명은 '월 기간 중 최적 화소 선택'이라 적고 있어, 정확한 계산법은 안내서 9장을 확인하세요."
+        - text: "월 반사도(적색·근적외·청색·녹색·SWIR 3개)·각도·화소 신뢰도·품질 층 — `1 km monthly red reflectance`, `1 km monthly NIR reflectance`, `1 km monthly blue reflectance`, `1 km monthly green reflectance`, `1 km monthly SWIR1 reflectance`, `1 km monthly SWIR2 reflectance`, `1 km monthly SWIR3 reflectance`, `1 km monthly view zenith angle`, `1 km monthly sun zenith angle`, `1 km monthly relative azimuth angle`, `1 km monthly pixel reliability`, `1 km monthly VI Quality`"
+          note: "VNP13A3 이름(VNP13C2는 앞머리 `CMG 0.05 Deg monthly`, 시야각·상대 방위각 층 없음). 반사도 ÷ 10000(채움 −1000), 각도 ÷ 100 도(채움 −20000), 화소 신뢰도 0~11 등급(채움 −4·−1), VI Quality 비트 필드(채움 65535)"
 
 access:
   - name: NASA Earthdata Search — VJ213A1 (NOAA-21, 권장)

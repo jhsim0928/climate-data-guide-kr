@@ -115,40 +115,48 @@ time_convention:
 
 variables:
   note: >-
-    세 제품은 변수 이름·파일 형식이 서로 다르고(RSS netCDF, STAR netCDF4·바이너리, UAH 텍스트), 공식 페이지에 파일 속 변수명이 나와 있지 않아 층 이름만 적었습니다.
-    받은 파일에서 변수명을 확인하세요. 단위는 모두 K(편차는 K 차이)입니다.
-  full_list: https://www.remss.com/measurements/upper-air-temperature/
+    세 제품은 파일 형식과 변수 이름이 서로 다릅니다. 변수명 칸은 NOAA STAR v5.0 netCDF(NCEI 배포, Mean-Layer-Temperature-NOAA_v05r00_<층>_*.nc)의 이름이며, NCEI OPeNDAP 메타데이터(.das·.dds)로 확인했습니다(2026-10-14).
+    RSS V4.0은 NCEI 사본(uat4_tb_v04r00_anom_ch<층>_*.nc)의 편차 파일에서 `brightness_temperature_anomaly`를 확인했고, RSS 서버 파일(RSS_Tb_*Maps_ch_*_V4_0.nc) 속 이름은 공식 문서에 없어 확인하지 못했습니다.
+    UAH는 netCDF 없이 텍스트 표만 제공합니다. 단위는 모두 K(편차는 K 차이)입니다.
+  full_list: https://www.ncei.noaa.gov/thredds/catalog/satellite/mean-layer-temperature-noaa/catalog.html
   groups:
     - name: 대류권 층 평균 기온
       kind: mean
       period: 월
       items:
-        - text: "하부 대류권 기온 TLT — RSS·UAH(LT)·STAR (K)"
+        - text: "하부 대류권 기온 TLT — `tcdr_MSU_AMSUA_ATMS_TLT` (K)"
           std: [t_air]
-        - text: "중층 대류권 기온 TMT — RSS·UAH(MT)·STAR (K)"
+          note: "제공처 RSS·UAH(LT)·STAR. 이름은 STAR(편차 `tcdr_MSU_AMSUA_ATMS_TLT_anomaly`, 기후값 `_climatology`). RSS는 층마다 파일 하나(NCEI 사본 편차 `brightness_temperature_anomaly`), UAH는 텍스트 표 uahncdc_lt_6.1.txt"
+        - text: "중층 대류권 기온 TMT — `tcdr_MSU_AMSUA_ATMS_TMT` (K)"
           std: [t_air]
-        - text: "상부 대류권 기온 TUT — STAR (K)"
+          note: "제공처 RSS·UAH(MT)·STAR. 이름은 STAR(편차 `_anomaly`, 기후값 `_climatology`). RSS NCEI 사본 편차 `brightness_temperature_anomaly`, UAH는 텍스트 표 uahncdc_mt_6.1.txt"
+        - text: "상부 대류권 기온 TUT — `tcdr_MSU_AMSUA_ATMS_TUT` (K)"
           std: [t_air]
-        - text: "대류권 기온 TTT — RSS, TMT·TLS 조합(Fu & Johanson 2005 방식) (K)"
+          note: "STAR만 제공. 편차 `_anomaly`, 기후값 `_climatology`"
+        - text: "대류권 기온 TTT — RSS (K)"
           std: [t_air]
+          note: "RSS만 제공, TMT·TLS 조합(Fu & Johanson 2005 방식). RSS 서버 파일 RSS_Tb_Maps_ch_TTT_V4_0.nc(NCEI 사본 없음) 속 변수 이름은 공식 문서 미기재"
     - name: 대류권계면·성층권 층 평균 기온
       kind: mean
       period: 월
       items:
-        - text: "대류권계면~하부 성층권 기온 TTS — RSS, 1987년부터 (K)"
+        - text: "대류권계면~하부 성층권 기온 TTS — RSS (K)"
           std: [t_air]
+          note: "RSS만 제공, 1987년부터. 층마다 파일 하나라 NCEI 사본(uat4_tb_v04r00_*_chtts_*.nc)도 TLT·TMT와 같은 이름 구조(편차 `brightness_temperature_anomaly`)로 보이나 이 층은 직접 확인하지 못함"
         - text: "대류권계면 층 기온 TP — UAH (K)"
           std: [t_air]
-        - text: "하부 성층권 기온 TLS — RSS·UAH(LS)·STAR (K)"
+          note: "UAH만 제공. 텍스트 표 uahncdc_tp_6.1.txt라 변수 이름 없음"
+        - text: "하부 성층권 기온 TLS — `tcdr_MSU_AMSUA_ATMS_TLS` (K)"
           std: [t_air]
+          note: "제공처 RSS·UAH(LS)·STAR. 이름은 STAR(편차 `_anomaly`, 기후값 `_climatology`). RSS는 NCEI 사본 편차 파일, UAH는 텍스트 표 uahncdc_ls_6.1.txt"
     - name: 편차·보조 자료
       kind: mean
       period: 월
       items:
-        - text: "월 편차 지도 — `RSS_Tb_Anom_Maps_ch_*_V4_0.nc`, `*_Anomaly.dat` (K)"
-          note: "앞은 RSS, 뒤는 STAR 파일"
-        - text: "지역 평균 편차 시계열 — `uahncdc_*_6.1.txt` (K)"
-          note: "UAH 파일. RSS는 monthly_time_series, STAR는 Global_Mean_Anomaly_Time_Series에 있음"
+        - text: "월 편차 지도 — `tcdr_MSU_AMSUA_ATMS_*_anomaly`, `brightness_temperature_anomaly` (K)"
+          note: "앞은 NOAA STAR v5.0 netCDF(* 자리에 TLT·TMT·TUT·TLS, 기후값 `tcdr_MSU_AMSUA_ATMS_*_climatology`), 뒤는 RSS V4.0의 NCEI 사본 uat4_tb_v04r00_anom_ch*.nc(기후값 `brightness_temperature_climatology`). RSS 서버 파일 RSS_Tb_Anom_Maps_ch_*_V4_0.nc 속 이름은 공식 문서 미기재, STAR 서버의 *_Anomaly.dat는 이진 파일이라 변수 이름 없음"
+        - text: "지역 평균 편차 시계열 — 텍스트 표 (K)"
+          note: "모두 텍스트 표. UAH uahncdc_*_6.1.txt(열 이름은 파일 머리글, 2026-10-14 서버가 자동 접근을 막아 미확인). STAR …_Regional_Means_Anomaly.txt(열 이름: Year, Month, Ftime, Global_Mean_Anomaly, NH_Anomaly, SH_Anomaly, Global_Land_Anomaly, Global_Ocean_Anomaly). RSS RSS_Monthly_MSU_AMSU_Channel_*_Anomalies_Land_and_Ocean_v04_0.txt(열: year, mon, 위도대 -70.0/82.5, -20.0/20.0, 20.0/82.5, -70.0/-20.0, 60.0/82.5, -70.0/-60.0, Cont. USA, 0.0/82.5, -70.0/0.0)"
 
 access:
   - name: RSS — Upper Air Temperature (자료 설명·다운로드)

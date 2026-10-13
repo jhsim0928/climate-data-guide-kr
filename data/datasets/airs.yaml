@@ -131,7 +131,7 @@ time_convention:
 variables:
   note: >-
     L3 변수명은 AIRS V7 L3 사용자 가이드의 필드 이름이며, 각 변수에 `_A`(상승)·`_D`(하강) 접미어가 붙고 `_ct`·`_sdev` 보조 변수가 함께 있습니다(예: `Temperature_A`).
-    L2 필드 이름은 V7 L2 사용자 가이드 표를 확인하세요. 결측값은 -9999입니다.
+    L2 필드 이름은 V7 L2 표준 기압면 문서와 QC·오차 추정 문서 기준이며, 오차 추정치는 이름 뒤에 `Err`, 품질 플래그는 `_QC`가 붙습니다(QC 0 최상, 1 양호, 2 사용 금지). 결측값은 -9999입니다.
   full_list: https://docserver.gesdisc.eosdis.nasa.gov/public/project/AIRS/V7_L3_User_Guide.pdf
   groups:
     - name: L3 기온·수증기 (AIRS3STD 일자료 / AIRS3STM 월자료)
@@ -164,9 +164,21 @@ variables:
         - text: "지표면(skin) 온도 — `TSurfStd` (K), 품질 플래그 `TSurfStd_QC`"
           std: [tskin]
           note: QC 0 최상, 1 양호, 2 사용 금지
-        - text: "기온(28개 면)·수증기(15개 면) 연직 분포, 오존·CO·메탄 연직 분포와 오차 추정치"
-          std: [t_air, q, ozone]
-          note: 필드 이름은 V7 L2 사용자 가이드 참고
+        - text: "기온 연직 분포(28개 기압면) — `TAirStd` (K)"
+          std: [t_air]
+          note: "기압면은 `pressStd`(1100~0.1 hPa). 오차 추정치 `TAirStdErr`, 품질 플래그 `TAirStd_QC`"
+        - text: "수증기 질량 혼합비 연직 분포(15개 기압면) — `H2OMMRLevStd`"
+          std: [q]
+          note: "기압면은 `pressH2O`(1100~50 hPa). 층 값은 `H2OMMRStd`. 품질 플래그 `H2OMMRLevStd_QC`"
+        - text: "오존 부피 혼합비 연직 분포 — `O3VMRLevStd`"
+          std: [ozone]
+          note: "`pressStd` 기압면 값(층 값은 `O3VMRStd`). 품질 플래그 `O3VMRLevStd_QC`"
+        - text: "일산화탄소 부피 혼합비 연직 분포 — `COVMRLevStd`"
+          std: []
+          note: "품질 플래그 `COVMRLevStd_QC`"
+        - text: "메탄 부피 혼합비 연직 분포 — `CH4VMRLevStd`"
+          std: []
+          note: "품질 플래그 `CH4VMRLevStd_QC`"
 
 access:
   - name: NASA GES DISC — AIRS3STM V7.0 (월자료)

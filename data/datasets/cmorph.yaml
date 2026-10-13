@@ -64,25 +64,26 @@ time_convention:
 
 variables:
   note: >-
-    NCEI 메타데이터와 알고리즘 설명서가 밝힌 변수는 지표 강수 하나입니다. netCDF4 파일 안의 변수 이름은 공식 문서에서 확인하지 못했으므로 파일을 열어 확인하세요(예제 코드 참고).
+    NCEI 메타데이터와 알고리즘 설명서가 밝힌 변수는 지표 강수 하나입니다. NCEI ISO 메타데이터(C00948)에 따르면 netCDF4 파일 세 종류 모두 강수 변수 이름이 `cmorph`(short 정수 저장, lwe_precipitation_rate)이고,
+    좌표는 time·lat·lon과 각각의 _bounds 변수입니다.
   full_list: https://www.ncei.noaa.gov/access/metadata/landing-page/bin/iso?id=gov.noaa.ncdc%3AC00948
   groups:
     - name: 30분 자료 (8 km, CMORPH_V1.0_ADJ_8km-30min)
       kind: instant
       period: "30분 칸 대표값"
       items:
-        - text: "편향 보정 강수 강도 (mm/hr)"
+        - text: "편향 보정 강수 강도 — `cmorph` (mm/hr)"
           note: "모핑으로 만든 30분 간격 강도. 공식 문서는 30분 구간 평균인지 순간값인지 따로 밝히지 않음"
     - name: 시간 자료 (0.25°, CMORPH_V1.0_ADJ_0.25deg-HLY)
       kind: mean
       period: 1시간
       items:
-        - "편향 보정 강수 강도 (mm/hour)"
+        - "편향 보정 강수 강도 — `cmorph` (mm/hour)"
     - name: 일자료 (0.25°, CMORPH_V1.0_ADJ_0.25deg-DLY_00Z)
       kind: accum
       period: 일 (00~24 UTC)
       items:
-        - "일강수량 (mm/day)"
+        - "일강수량 — `cmorph` (mm/day)"
 
 access:
   - name: NOAA NCEI (HTTPS 직접 다운로드)
@@ -111,7 +112,7 @@ example:
   lang: python
   note: >-
     AWS 공개 버킷에서 계정 없이 2023년 7월 0.25° 일자료를 받아 한반도 영역 평균을 구하는 예입니다(s3fs·xarray·netCDF4 필요).
-    파일 안 변수 이름을 문서에서 확인하지 못했으므로, (time, lat, lon) 3차원 변수를 골라 쓰도록 했습니다. 처음에는 print(ds)로 구조를 확인하세요.
+    강수 변수 이름은 NCEI 메타데이터 기준 `cmorph`이지만, 이름이 달라도 동작하도록 (time, lat, lon) 3차원 변수를 골라 쓰게 했습니다. 처음에는 print(ds)로 구조를 확인하세요.
   code: |
     import s3fs
     import xarray as xr

@@ -126,8 +126,8 @@ variables:
           note: 시공간 보간으로 구름 칸을 채움. flags=2가 보간된 칸
         - text: "보간 엽록소 불확도 — `CHL_uncertainty` (%)"
           std: []
-        - text: "보간 투명도 자료 — transp gap-free 데이터셋 (KD490·ZSD 등)"
-          note: 2019·2020년부터 KD·ZSD gap-free 제공(QUID)
+        - text: "보간 확산 감쇠 계수·투명도 — `KD490` (m-1), `ZSD` (m)"
+          note: "데이터셋 cmems_obs-oc_glo_bgc-transp_my_l4-gapfree-multi-4km_P1D(202603판). 불확도 `KD490_uncertainty`·`ZSD_uncertainty`(%)와 `flags`가 함께 있음. 2019·2020년부터 KD·ZSD gap-free 제공(QUID)"
 
 access:
   - name: Copernicus Marine — MY L3 일 (OCEANCOLOUR_GLO_BGC_L3_MY_009_103)

@@ -76,12 +76,12 @@ variables:
       period: Daily
       items:
         - text: "Sea ice concentration (%)"
-          note: Daily value from all swaths in one UTC day. 0–100, land and missing 120
+          note: "Daily value from all swaths in one UTC day. 0–100, land and missing 120. Variable name not documented: the user guide says only that the netCDF files are made with GDAL and hold a two-dimensional sea ice concentration field, and neither the server readme nor the PANGAEA records give the name"
     - name: Per-orbit swaths (swath, netCDF)
       kind: instant
       items:
         - text: "Sea ice concentration — A and B scan arrays (%)"
-          note: Footprint values for the two 89 GHz scan lines A and B (about 5 km apart), with matching latitude and longitude arrays
+          note: "Footprint values for the two 89 GHz scan lines A and B (about 5 km apart), with four matching latitude and longitude arrays. The swath readme (Readme_AMSR_ASI_swath.txt) names only the time array (Scan_Time), not the concentration or coordinate arrays"
         - text: "Scan line acquisition time — `Scan_Time` (s since 1992-01-01 00:00 UTC)"
           std: []
 

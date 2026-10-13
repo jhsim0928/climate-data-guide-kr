@@ -117,7 +117,7 @@ variables:
       period: "Daily (00Z–23Z or 12Z–11Z)"
       items:
         - text: "Daily mean precipitation rate (mm/hr)"
-          note: "File names gsmap_mvk.YYYYMMDD.0.1d.daily.00Z-23Z…. Daily amount = value × 24"
+          note: "Binary file (no variable names); format: 4-byte little-endian float, 3600×1200 (60°N–60°S, 0.1°), gzip-compressed, missing -999.9. File names gsmap_mvk.YYYYMMDD.0.1d.daily.00Z-23Z… (gauge-calibrated: gsmap_gauge, daily_G). Daily amount = value × 24. There is no daily NetCDF; HDF daily files (GPMMRG_MAP_YYMMDD_D_L3S_MCD_VVV.h5) exist from January 2024, but the format documents do not give their variable names"
 
 access:
   - name: JAXA Global Rainfall Watch (FTP; binary, text and NetCDF)

@@ -65,25 +65,26 @@ time_convention:
 
 variables:
   note: >-
-    The NCEI metadata and the algorithm document list a single variable, surface precipitation. The variable names inside the netCDF4 files could not be confirmed from official documents, so open a file to check (see the example code).
+    The NCEI metadata and the algorithm document list a single variable, surface precipitation. According to the NCEI ISO metadata (C00948), the precipitation variable in all three netCDF4 file types is `cmorph` (stored as short, lwe_precipitation_rate),
+    with time, lat and lon coordinates and their _bounds variables.
   full_list: https://www.ncei.noaa.gov/access/metadata/landing-page/bin/iso?id=gov.noaa.ncdc%3AC00948
   groups:
     - name: 30-minute (8 km, CMORPH_V1.0_ADJ_8km-30min)
       kind: instant
       period: "value representing the 30-minute slot"
       items:
-        - text: "Bias-corrected precipitation rate (mm/hr)"
+        - text: "Bias-corrected precipitation rate — `cmorph` (mm/hr)"
           note: "Rate at 30-minute intervals produced by morphing. The official documents do not say whether it is a 30-minute mean or an instantaneous value"
     - name: Hourly (0.25°, CMORPH_V1.0_ADJ_0.25deg-HLY)
       kind: mean
       period: Hourly
       items:
-        - "Bias-corrected precipitation rate (mm/hour)"
+        - "Bias-corrected precipitation rate — `cmorph` (mm/hour)"
     - name: Daily (0.25°, CMORPH_V1.0_ADJ_0.25deg-DLY_00Z)
       kind: accum
       period: Daily (00–24 UTC)
       items:
-        - "Daily precipitation (mm/day)"
+        - "Daily precipitation — `cmorph` (mm/day)"
 
 access:
   - name: NOAA NCEI (direct HTTPS download)

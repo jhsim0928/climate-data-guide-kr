@@ -130,12 +130,27 @@ variables:
       kind: instant
       period: observation time
       items:
-        - text: "Total ozone (L2__O3____), tropospheric ozone (L2__O3_TCL) and ozone profile (L2__O3__PR) — see each PUM for variable names"
+        - text: "Total ozone column — `ozone_total_vertical_column` (mol m-2)"
           std: [ozone]
-        - text: "UV aerosol index (L2__AER_AI) and aerosol layer height (L2__AER_LH) — see each PUM for variable names"
+          note: "L2__O3____ product. Uncertainty `ozone_total_vertical_column_precision`; qa_value > 0.5 recommended"
+        - text: "Tropical tropospheric ozone column — `ozone_tropospheric_vertical_column` (mol m-2)"
+          std: [ozone]
+          note: "L2__O3_TCL product. A 20°S–20°N grid rather than a swath (`latitude_ccd` 80 × `longitude_ccd` 360), surface to 270 hPa. qa_value > 0.7 recommended. The upper-tropospheric mixing ratio `ozone_upper_tropospheric_mixing_ratio` is still fill values"
+        - text: "Ozone profile — `ozone_profile` (mol m-3)"
+          std: [ozone]
+          note: "L2__O3__PR product, 33 levels. Total and tropospheric columns `ozone_total_column`, `ozone_tropospheric_column` (mol m-2). Use qa_value > 0.5 (take care at 0.8 or below)"
+        - text: "UV aerosol index — `aerosol_index_354_388`, `aerosol_index_340_380` (dimensionless)"
           std: [aerosol]
-        - text: "Cloud fraction, albedo and cloud-top pressure (L2__CLOUD_) — see the PUM for variable names"
-          std: []
+          note: "L2__AER_AI product. The 335/367 nm pair is `aerosol_index_335_367`; uncertainties add `_precision` to each name"
+        - text: "Aerosol layer height — `aerosol_mid_height` (m), `aerosol_mid_pressure` (Pa)"
+          std: [aerosol]
+          note: "L2__AER_LH product. Uncertainties add `_precision` to each name"
+        - text: "Cloud fraction — `cloud_fraction` (dimensionless)"
+          std: [cloud]
+          note: "L2__CLOUD_ product (CAL model). Cloud optical thickness `cloud_optical_thickness` (dimensionless). The CRB-model cloud albedo `cloud_albedo_crb` and cloud fraction `cloud_fraction_crb` are in PRODUCT/SUPPORT_DATA/DETAILED_RESULTS. qa_value ≥ 0.5 recommended"
+        - text: "Cloud-top pressure and height — `cloud_top_pressure` (Pa), `cloud_top_height` (m)"
+          std: [cloud_top]
+          note: "L2__CLOUD_ product. Cloud base is `cloud_base_pressure` (Pa), `cloud_base_height` (m)"
     - name: Quality and time
       kind: instant
       items:

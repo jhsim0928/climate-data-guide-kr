@@ -148,7 +148,7 @@ time_convention:
 variables:
   note: >-
     GOSAT-2 names and units follow the product format description of the 'GOSAT-2 TANSO-FTS-2 SWIR L2 Column-averaged Dry-air Mole Fraction Product' (V02.30, March 2026; HDF5, daily files).
-    Variable names in GOSAT (NIES V03.05) and GOSAT-GW L2 files could not be confirmed on 2026-10-13 (archive under maintenance, product not yet public) and are not listed.
+    Variable names in GOSAT (NIES V03.05) L2 and L3 files could not be confirmed (archive data2.gosat.nies.go.jp under maintenance on 2026-10-14) and are not listed. ACOS Lite names follow the GES DISC 'ACOS B11 L2 Lite Data User's Guide'; GOSAT-GW names follow the pre-release L2 format descriptions (Version C, 2025).
   full_list: https://prdct.gosat-2.nies.go.jp/documents/pdf/Vol.5_FTS-2_L2_SWFP_ver0230_en_07.pdf
   groups:
     - name: GOSAT-2 FTS-2 SWIR L2 column-averaged mole fractions (SWFP V02.30, daily HDF5)
@@ -176,25 +176,25 @@ variables:
       period: observation time
       items:
         - text: "Column-averaged XCO2"
-          note: from GDAS; check variable names in the product description
+          note: from GDAS. The NIES product descriptions on data2.gosat.nies.go.jp were under maintenance on 2026-10-14, so the in-file variable names could not be confirmed (HDF5)
         - text: "Column-averaged XCH4"
-          note: from GDAS
-        - text: "NASA ACOS GOSAT Lite v11.0 bias-corrected XCO2 (ppm)"
-          note: daily netCDF4 at NASA GES DISC, 2009-04-18 onward (through 2026-07-31 as of 2026-10-13)
+          note: from GDAS. Variable names not confirmed for the same reason
+        - text: "ACOS Lite v11.0 bias-corrected XCO2 — `xco2` (ppm)"
+          note: "NASA GES DISC ACOS_L2_Lite_FP daily netCDF4 (acos_LtCO2_*.nc4), 2009-04-18 onward (through 2026-07-31 as of 2026-10-13). Uncertainty `xco2_uncertainty` (ppm), quality `xco2_quality_flag` (0 higher quality, 1 lower quality), time `time` (s since 1970-01-01). No XCH4"
     - name: GOSAT L3 monthly maps
       kind: mean
       period: Monthly
       items:
         - text: "FTS SWIR L3 monthly mean CO2 and CH4 column concentrations (2.5° grid)"
-          note: per NIES product description
+          note: per NIES product description. In-file variable names could not be confirmed on 2026-10-14 because the product-description site (data2.gosat.nies.go.jp) was under maintenance
     - name: GOSAT-GW TANSO-3 L2 (general release planned for spring 2027)
       kind: instant
       period: observation time
       items:
-        - text: "Greenhouse gases (XCO2, XCH4) — products GWT3W_L2_GHG (Wide), GWT3F_L2_GHG (Focus)"
-          note: product codes, not variable names in the files
-        - text: "Nitrogen dioxide (NO2) — products GWT3W_L2_NO2 (Wide), GWT3F_L2_NO2 (Focus)"
-          note: product codes, not variable names in the files
+        - text: "Greenhouse gases XCO2 and XCH4 — `RetrievalResult_FP/xco2_fp`, `RetrievalResult_FP/xch4_fp` (ppm)"
+          note: "Products GWT3W_L2_GHG (Wide) and GWT3F_L2_GHG (Focus), HDF5. Based on the pre-release format description (L2(GHG) Product Format Descriptions Version C, Sept 2025), so names may change in the released version. The document gives XCH4 in ppm as well. Uncertainties `xco2_uncert_fp`, `xch4_uncert_fp`; quality `xco2_qualityFlag_fp`, `xch4_qualityFlag_fp` (0 Good to 3 NG); proxy method `RetrievalResult_PR/xch4_proxy`; location and time `PixelInfo/latitude`, `longitude`, `obsTime`"
+        - text: "Nitrogen dioxide (NO2) tropospheric and total vertical columns — `RetrievalResult_NO2/no2VcdTroposphere`, `RetrievalResult_NO2/no2VcdTotal` (molec. cm-2)"
+          note: "Products GWT3W_L2_NO2 (Wide) and GWT3F_L2_NO2 (Focus), HDF5. Based on the pre-release format description (L2(NO2) Product Format Descriptions Version C, June 2025), so names may change in the released version. Quality `RetrievalResult_NO2/pixelQualityValue` (0–1; 'Good' criteria TBD)"
 
 access:
   - name: GOSAT Data Archive Service (GDAS, NIES) — GOSAT

@@ -92,21 +92,26 @@ time_convention:
 
 variables:
   note: >-
-    파일 속 변수명은 공식 문서에서 확인하지 못해 CM SAF 산출물 약어(파일 이름 앞 세 글자)로 적었습니다. 변수명과 단위는 받은 파일이나
-    산출물 사용자 설명서(PUM)에서 확인하세요.
+    변수 이름은 CM SAF 산출물 사용자 설명서(PUM) — 구름(SAF/CM/DWD/PUM/CLARA/CLD 3.1, 8.3.1절), 지표 알베도(SAF/CM/FMI/PUM/GAC/SAL 3.1, 4.1절),
+    지표 복사(SAF/CM/DWD/PUM/CLARA/RAD 3.1, 4.1절), 대기 상단 복사(SAF/CM/RMIB/PUM/GAC/TOA 1.2, 표 4-5~4-8) — 에서 확인했습니다. 산출물마다 파일이 따로 있고
+    (파일 이름 앞 세 글자가 산출물 약어), 각 파일에는 관측 수(`nobs`…)·표준편차·불확실성 변수가 함께 들어 있습니다. IWP와 히스토그램(JCH·CWP) 파일 속 변수 이름은
+    구할 수 있었던 PUM 본문에서 확인하지 못해 비워 두었습니다.
   full_list: https://wui.cmsaf.eu/safira/action/viewDoiDetails?acronym=CLARA_AVHRR_V003
   groups:
     - name: 구름 특성 (일·월평균, 0.25°)
       kind: mean
       period: 일·월
       items:
-        - text: "구름량 — CFC 산출물 (구름 마스크 CMA 기반)"
+        - text: "구름량 — `cfc` (%)"
           std: [cloud]
-        - "구름 상단 기압·높이·온도 — CTO 산출물"
-        - "운상(액체·얼음) — CPH 산출물"
-        - text: "구름 수액 경로 — LWP 산출물"
+          note: CFC 산출물(구름 마스크 CMA 기반). 주간·야간은 `cfc_day`·`cfc_night`, 하층·중층·상층은 `cfc_low`·`cfc_middle`·`cfc_high`
+        - text: "구름 상단 기압·높이·온도 — `ctp` (hPa), `cth` (m), `ctt` (K)"
+          note: CTO 산출물. 액체·얼음, 주간·야간별 값은 `ctp_liq_day`처럼 뒤에 붙여 구분
+        - text: "운상(액체 구름 비율) — `cph` (%)"
+          note: CPH 산출물. 전체 구름 중 액체 구름의 비율이며, 주간·야간은 `cph_day`·`cph_night`
+        - text: "구름 수액 경로 — `lwp`"
           std: [cloud_water]
-          note: 주간만. ICDR은 2025년 5월분까지
+          note: LWP 산출물. 주간만. 구름 낀 곳 평균이며, 격자 전체(구름량 가중) 평균은 `lwp_allsky`. ICDR은 2025년 5월분까지
         - text: "구름 빙정 경로 — IWP 산출물"
           std: [cloud_water]
           note: 주간만. ICDR은 2025년 5월분까지
@@ -115,25 +120,31 @@ variables:
       period: 월
       items:
         - text: "구름 상단·광학두께 결합 히스토그램 — JCH 산출물 (1°)"
-          note: 월간 빈도 분포. ICDR은 2025년 5월분까지
+          note: 월간 빈도 분포(광학두께·구름 상단 기압 구간 두 차원이 더해짐). ICDR은 2025년 5월분까지
         - text: "구름 수분 경로 히스토그램 — CWP 산출물"
           note: 월간 빈도 분포. ICDR은 2025년 5월분까지
     - name: 지표 알베도
       kind: mean
       period: 5일·월
       items:
-        - "지표 알베도(흑공·백공·청공) — SAL 산출물"
+        - text: "지표 알베도(흑공·백공·청공) — `black_sky_albedo_all_mean`·`white_sky_albedo_all_mean`·`blue_sky_albedo_all_mean`"
+          note: SAL 산출물. 이름은 '변수 묶음 + 통계' 형식(`_mean`·`_median`·`_std` 등)이며, `_all`이 없는 이름(`black_sky_albedo_mean` 등)은 눈·얼음을 뺀 값
     - name: 지표·대기 상단 복사
       kind: mean
       period: 일·월
       items:
-        - "지표 하향 단파복사 — SIS 산출물 (W m-2)"
-        - text: "지표 하향 장파복사 — SDL 산출물 (W m-2)"
+        - text: "지표 하향 단파복사 — `SIS` (W m-2)"
+          note: SIS 산출물
+        - text: "지표 하향 장파복사 — `SDL` (W m-2)"
           period: 월
-        - text: "지표 순단파·순장파·복사수지 — SNS·SNL·SRB 산출물 (W m-2)"
+          note: SDL 산출물
+        - text: "지표 순단파·순장파·복사수지 — `SNS`·`SNL`·`SRB` (W m-2)"
           period: 월
-        - "대기 상단 반사 단파 — RSF 산출물 (W m-2)"
-        - "대기 상단 방출 장파(OLR) — OLR 산출물 (W m-2)"
+          note: SNS·SNL·SRB 산출물(산출물마다 파일이 따로 있음)
+        - text: "대기 상단 반사 단파 — `SW_flux` (W m-2)"
+          note: RSF 산출물
+        - text: "대기 상단 방출 장파(OLR) — `LW_flux` (W m-2)"
+          note: OLR 산출물
 
 access:
   - name: CM SAF 웹 사용자 인터페이스(WUI)

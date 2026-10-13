@@ -132,7 +132,7 @@ time_convention:
 variables:
   note: >-
     L3 names are the field names in the AIRS V7 L3 user guide; each carries an `_A` (ascending) or `_D` (descending) suffix and comes with `_ct` and `_sdev` companions (for example `Temperature_A`).
-    For L2 field names see the tables in the V7 L2 user guide. The fill value is -9999.
+    L2 field names follow the V7 L2 standard pressure levels and QC and error estimation documents; error estimates append `Err` and quality flags append `_QC` to the name (QC 0 best, 1 good, 2 do not use). The fill value is -9999.
   full_list: https://docserver.gesdisc.eosdis.nasa.gov/public/project/AIRS/V7_L3_User_Guide.pdf
   groups:
     - name: L3 temperature and water vapour (AIRS3STD daily / AIRS3STM monthly)
@@ -160,8 +160,16 @@ variables:
       items:
         - text: "Surface skin temperature — `TSurfStd` (K), quality flag `TSurfStd_QC`"
           note: QC 0 best, 1 good, 2 do not use
-        - text: "Temperature (28 levels) and water vapour (15 levels) profiles, ozone, CO and methane profiles, with error estimates"
-          note: See the V7 L2 user guide for field names
+        - text: "Air temperature profile (28 levels) — `TAirStd` (K)"
+          note: "Levels are `pressStd` (1100–0.1 hPa). Error estimate `TAirStdErr`, quality flag `TAirStd_QC`"
+        - text: "Water vapour mass mixing ratio profile (15 levels) — `H2OMMRLevStd`"
+          note: "Levels are `pressH2O` (1100–50 hPa). Layer values are in `H2OMMRStd`. Quality flag `H2OMMRLevStd_QC`"
+        - text: "Ozone volume mixing ratio profile — `O3VMRLevStd`"
+          note: "Values on the `pressStd` levels (layer values in `O3VMRStd`). Quality flag `O3VMRLevStd_QC`"
+        - text: "Carbon monoxide volume mixing ratio profile — `COVMRLevStd`"
+          note: "Quality flag `COVMRLevStd_QC`"
+        - text: "Methane volume mixing ratio profile — `CH4VMRLevStd`"
+          note: "Quality flag `CH4VMRLevStd_QC`"
 
 access:
   - name: NASA GES DISC — AIRS3STM V7.0 (monthly)

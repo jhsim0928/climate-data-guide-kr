@@ -72,59 +72,60 @@ time_convention:
 
 variables:
   note: >-
-    Products as listed on the center's SFTP page and web-download menu. The abbreviations in parentheses are the center's product codes, not variable names inside the files.
-    File variable names, units and quality flags could not be confirmed on the website, so check the attributes of the files you receive and the algorithm documents (ATBDs).
+    The product list and versions follow the center's SFTP page and web-download menu. Variable names are the in-file names given in Annex Table 2 of the center's GEMSAT quick user guide (April 2025),
+    and units follow Annex Table 1 of the same guide. The guide gives no group paths, scale factors or quality flags, so check the attributes of the files you receive.
+    HCHO and CHOCHO share one name (`ColumnAmount`), as do O3T and O3P (`ColumnAmountO3`); tell them apart by the product file (the product code in the file name).
   full_list: https://nesc.nier.go.kr/en/html/cntnts/105/static/page.do
   groups:
     - name: L2 trace gases (hourly scans)
       kind: instant
       period: observation time
       items:
-        - text: "Nitrogen dioxide vertical columns (total, stratospheric, tropospheric) — product NO2"
-          note: v4.0.1 per the SFTP page
-        - text: "Sulfur dioxide vertical column — product SO2"
-          note: v3.0.1
-        - text: "Formaldehyde vertical column — product HCHO"
-          note: v3.0.0
-        - text: "Glyoxal vertical column — product CHOCHO"
-          note: v3.0.1
-        - text: "Total column ozone — product O3T"
-          note: v2.1.2
-        - text: "Ozone profile (including stratospheric and tropospheric ozone) — product O3P"
-          note: v3.0.0
+        - text: "Nitrogen dioxide vertical columns (total, tropospheric) — `ColumnAmountNO2`·`ColumnAmountNO2Trop` (molec/cm²)"
+          note: "`ColumnAmountNO2` is the total column and `ColumnAmountNO2Trop` the tropospheric column. Product NO2, v4.0.1 per the SFTP page"
+        - text: "Sulfur dioxide vertical column — `ColumnAmountSO2` (molec/cm²)"
+          note: "Product SO2, v3.0.1. The GEMSAT guide product table lists it as provided only during disasters"
+        - text: "Formaldehyde vertical column — `ColumnAmount` (molec/cm²)"
+          note: "Product HCHO, v3.0.0"
+        - text: "Glyoxal vertical column — `ColumnAmount` (molec/cm²)"
+          note: "Product CHOCHO, v3.0.1"
+        - text: "Total column ozone — `ColumnAmountO3` (DU)"
+          note: "Product O3T, v2.1.2"
+        - text: "Ozone profile (including stratospheric and tropospheric ozone) — `ColumnAmountO3` (DU)"
+          note: "Level 0 = total, 1 = stratospheric, 2 = tropospheric ozone. Product O3P, v3.0.0"
     - name: L2 aerosol, cloud, surface and UV (hourly scans)
       kind: instant
       period: observation time
       items:
-        - text: "Aerosol optical depth (443 nm), single-scattering albedo, UV and visible aerosol indices — product AERAOD"
-          note: v2.1.0
+        - text: "Aerosol optical depth, single-scattering albedo, UV and visible aerosol indices — `FinalAerosolOpticalDepth`·`FinalAerosolSingleScattAlb`·`UVAerosolIndex`·`VISAerosolIndex` (dimensionless)"
+          note: "Optical depth levels 0 = 354 nm, 1 = 443 nm, 2 = 550 nm. Product AERAOD, v2.1.0"
           std: [aerosol]
-        - text: "Aerosol effective height — product AEH"
-          note: v2.1.0
-        - text: "Effective cloud fraction, cloud centroid pressure, cloud radiance fraction — product CLOUD"
-          note: v3.0.0
-        - text: "Surface (background) reflectance — product BSR"
-          note: v3.0.0
-        - text: "UV index, plant response index, DNA damage index, vitamin D index — product UVI"
-          note: v2.1.0
+        - text: "Aerosol effective height — `AerosolEffectiveHeight` (km)"
+          note: "Product AEH, v2.1.0"
+        - text: "Effective cloud fraction, cloud radiance fraction, cloud centroid pressure — `EffectiveCloudFraction`·`CloudRadianceFraction` (dimensionless), `CloudCentroidPressure` (hPa)"
+          note: "Product CLOUD, v3.0.0"
+        - text: "Surface (background) reflectance — `SurfaceReflectance` (dimensionless)"
+          note: "Product BSR, v3.0.0 (the GEMSAT guide labels this product SFC)"
+        - text: "UV index, plant response index, DNA damage index, vitamin D index — `UVIndex`·`PlantresponseIndex`·`DNAdamageIndex`·`VitaminDIndex` (dimensionless)"
+          note: "Product UVI, v2.1.0"
     - name: L3 NO2 means
       kind: mean
       period: Daily / monthly
       items:
-        - text: "Total NO2 daily and monthly means — NO2-TOTAL-daily, NO2-TOTAL_monthly"
-          note: names as in the web-download menu
-        - text: "Tropospheric NO2 daily and monthly means — NO2-TROP-daily, NO2-TROP_monthly"
-          note: names as in the web-download menu
-        - text: "Gridded NO2 daily and monthly means — NO2-GRID-daily, NO2-GRID_monthly"
-          note: names as in the web-download menu
+        - text: "Total NO2 daily and monthly means — `ColumnAmountNO2` (molec/cm²)"
+          note: "Web-download menu names NO2-TOTAL-daily, NO2-TOTAL_monthly. Variable name as given for the NO2_GRID_daily and NO2_GRID_monthly files in the GEMSAT guide"
+        - text: "Tropospheric NO2 daily and monthly means — `ColumnAmountNO2Trop` (molec/cm²)"
+          note: "Web-download menu names NO2-TROP-daily, NO2-TROP_monthly. Variable name as given for the NO2_GRID_daily and NO2_GRID_monthly files in the GEMSAT guide"
+        - text: "Gridded NO2 daily and monthly means — `ColumnAmountNO2`·`ColumnAmountNO2Trop` (molec/cm²)"
+          note: "Web-download menu names NO2-GRID-daily, NO2-GRID_monthly. Each file holds both the total and tropospheric variables; East Asia and Korean Peninsula files are separate"
     - name: L4 surface concentration estimates
       kind: instant
       period: observation time
       items:
-        - text: "Estimated surface PM10 concentration"
-          note: time step and units not confirmed on the official pages
-        - text: "Estimated surface PM2.5 concentration"
-          note: time step and units not confirmed on the official pages
+        - text: "Estimated surface PM10 concentration — `PM10` (µg/m³)"
+          note: "Example file name GK2_GEMS_L4_…_PM10-SURFACE_ORI.nc. Time step not confirmed on the official pages"
+        - text: "Estimated surface PM2.5 concentration — `PM25` (µg/m³)"
+          note: "Example file name GK2_GEMS_L4_…_PM25-SURFACE_ORI.nc. Time step not confirmed on the official pages"
 
 access:
   - name: NIER ESC Web Download (data service cart)

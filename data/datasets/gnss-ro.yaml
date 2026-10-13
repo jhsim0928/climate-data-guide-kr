@@ -90,7 +90,8 @@ time_convention:
 
 variables:
   note: >-
-    COSMIC-2(CDAAC) 변수 이름은 CDAAC 파일 형식 문서의 이름이고, ROM SAF Level 3 이름은 Product User Manual의 굴절률 예시(`REF`)만 확인했습니다.
+    COSMIC-2(CDAAC) 변수 이름은 CDAAC 파일 형식 문서의 이름입니다. ROM SAF Level 3 격자 자료는 변수마다 파일이 따로 있고(파일 이름의 여섯 글자 산출물 약어, 예: RRGMET·RTGMET),
+    Level 3 Product User Manual(v3.2, 5.3절)에는 굴절률 파일의 헤더 예시(`REF`)만 실려 있어 다른 변수의 파일 속 이름은 비워 두었습니다.
     ROM SAF Level 1b·2와 다른 Level 3 변수 이름은 받은 파일에서 확인하세요.
   full_list: https://cdaac-www.cosmic.ucar.edu/cdaac/doc/formats.html
   groups:
@@ -118,13 +119,14 @@ variables:
       kind: mean
       period: 월
       items:
-        - "굴절률 — `REF` (N-units)"
-        - "굴절각 (mrad)"
+        - text: "굴절률 — `REF` (N-units)"
+          note: 표준편차·측정 불확실성·표본 오차·자료 수는 `REF_stdev`·`REF_obssig`·`REF_samperr`·`REF_num`, 사전정보 비율은 `Wref`
+        - "굴절각 — (mrad)"
         - text: "건조 기온 — (K)"
           std: [t_air]
         - text: "1D-Var 기온 — (K)"
           std: [t_air]
-        - "1D-Var 비습 (g/kg)"
+        - "1D-Var 비습 — (g/kg)"
         - "대류권계면 고도 — (m)"
 
 access:

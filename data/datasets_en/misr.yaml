@@ -94,7 +94,7 @@ time_convention:
 variables:
   note: >-
     L2 field names follow the V23 L2 aerosol Data Product Specification; the main fields sit in the NetCDF group `4.4_KM_PRODUCTS` (raw values in `4.4_KM_PRODUCTS/AUXILIARY`, angles in `GEOMETRY`).
-    Optical depth fields refer to 550 nm and the fill value is -9999.0. L3 in-file variable names could not be confirmed, so only descriptions are given.
+    Optical depth fields refer to 550 nm and the fill value is -9999.0. L3 variable names follow the CGAS Data Product Specification (F15_0032) and sit in the NetCDF group `Aerosol_Parameter_Average`.
   full_list: https://asdc.larc.nasa.gov/documents/misr/DPS_AEROSOL_V023.20180125.pdf
   groups:
     - name: L2 aerosol (MIL2ASAE, MIL2ASAF, 4.4 km)
@@ -113,9 +113,10 @@ variables:
       kind: mean
       period: Daily / monthly
       items:
-        - "Statistics of 555 nm column aerosol optical depth (unitless)"
-        - text: "Aerosol compositional type frequency histogram"
-          note: Frequency of the mixture types selected in the L2 retrievals
+        - text: "Column aerosol optical depth (550 nm) mean, standard deviation and sample count — `Aerosol_Optical_Depth`, `Aerosol_Optical_Depth_Standard_Deviation`, `Aerosol_Optical_Depth_Count` (unitless)"
+          note: "Dimensions Latitude, Longitude, Optical_Depth_Range (index 0 = all, 1–8 = optical depth bins). The count is a number of samples. Absorbing optical depth `Absorbing_Optical_Depth`, Ångström exponent `Angstrom_Exponent_550_860` and per-band optical depth `Aerosol_Optical_Depth_Per_Band` are also present"
+        - text: "Aerosol optical depth by size and shape (mean) — `Small_Mode_Aerosol_Optical_Depth`, `Medium_Mode_Aerosol_Optical_Depth`, `Large_Mode_Aerosol_Optical_Depth`, `Nonspherical_Aerosol_Optical_Depth` (unitless)"
+          note: "Summarises the aerosol mixtures chosen in L2 by size (radius < 0.35 µm, 0.35–0.7 µm, > 0.7 µm) and non-sphericity. Each comes with `_Count` and `_Standard_Deviation`. The 'compositional type frequency histogram' in the collection description has no separate variable in the current file format (F15_0032) specification"
 
 access:
   - name: NASA Earthdata Search — MIL2ASAE V003 (FINAL L2, 2000-03 to 2022-10)

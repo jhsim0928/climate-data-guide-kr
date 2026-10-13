@@ -65,9 +65,9 @@ time_convention:
 
 variables:
   note: >-
-    제품마다 파일이 따로 있으며(HDF-EOS4), 공식 소개 페이지는 과학자료층(SDS) 이름을 대부분 공개하지 않아 여기에는 변수 이름을 적지 않았습니다.
+    제품마다 파일이 따로 있으며(HDF-EOS4), 변수(제품) 하나에 파일 하나입니다. LAI·FAPAR·FVC·순복사·단파복사·ET·GPP는 BNU 제품 소개 페이지, HKU 파일 이름 규칙 문서, 아카이브 메타데이터(hdf.xml) 어디에도 과학자료층(SDS) 이름이 없어 변수 이름 칸을 비워 두었습니다(소개 페이지는 '엽면적지수 데이터셋'·'품질 표지'처럼 내용만 적음). 받은 파일에서 gdalinfo 등으로 확인하세요.
+    알베도 층 이름은 BNU 알베도 소개 페이지의 GLASS02B05 표(GLASS02B06·A06도 같다고 명시) 기준이며, 현행 MODIS·AVHRR 결합판(GLASS02B03 V50 등)도 같은지는 공식 문서로 확인하지 못했습니다.
     척도 인수·유효 범위는 BNU 제품 소개 페이지 기준이며 판(V4·V5·V6)에 따라 다를 수 있으니 HDF 속성(scale_factor, _FillValue, valid_range)을 꼭 확인하세요.
-    BNU 알베도 소개 페이지는 이전 알베도 제품(GLASS02B05·B06·A06)의 층 이름으로 `ABD_BSA_shortwave`, `ABD_WSA_shortwave`, `ABD_BSA_VIS` 등을 들고 있습니다.
   full_list: https://glass.hku.hk/download.html
   groups:
     - name: 엽면적지수 LAI (MODIS V6 250 m·500 m·0.05° 2000~ / AVHRR V4 0.05° 1981~2018, 8일)
@@ -92,13 +92,14 @@ variables:
       kind: instant
       period: 8일 구간 대표값
       items:
-        - text: "흑공(black-sky) 알베도 — 단파·가시·근적외 (무차원)"
+        - text: "흑공(black-sky) 알베도(단파·가시·근적외) — `ABD_BSA_shortwave`, `ABD_BSA_VIS`, `ABD_BSA_NIR` (무차원)"
           std: [albedo]
-          note: "저장값 × 0.0001(유효 0–10000, 채움 −1)"
-        - text: "백공(white-sky) 알베도 — 단파·가시·근적외 (무차원)"
+          note: "저장값 × 0.0001(유효 0–10000, 채움 −1). 층 이름은 BNU 소개 페이지의 GLASS02B05·B06·A06 기준. 품질 층은 `QC_shortwave`, `QC_VIS`, `QC_NIR`(UINT16, 채움 65535)"
+        - text: "백공(white-sky) 알베도(단파·가시·근적외) — `ABD_WSA_shortwave`, `ABD_WSA_VIS`, `ABD_WSA_NIR` (무차원)"
           std: [albedo]
+          note: "층 이름은 BNU 소개 페이지의 GLASS02B05·B06·A06 기준"
         - text: "청공(blue-sky, 실제 대기 조건) 알베도 (무차원)"
-          note: BNU 소개 페이지 기준 2000년 이후 0.05° 제품에만 있음
+          note: "BNU 소개 페이지 기준 2000년 이후 0.05° 제품에만 있음(페이지는 '맑은 하늘(晴空) 알베도' 단파·가시·근적외 3개 데이터셋으로 소개). 층 이름은 공식 문서 미기재"
     - name: 복사 (일자료)
       kind: mean
       period: 일

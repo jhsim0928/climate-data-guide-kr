@@ -87,29 +87,34 @@ time_convention:
 
 variables:
   note: >-
-    NCEI CDR 안내에 실린 변수 목록입니다. 파일 속 변수명은 공식 문서에서 확인하지 못해 적지 않았으니 받은 파일(`ds.data_vars`)에서 확인하세요.
-    단위는 알고리즘 문서(ATBD)에 적힌 것만 넣었습니다.
-  full_list: https://www.ncei.noaa.gov/products/climate-data-records/avhrr-hirs-cloud-properties-patmos
+    NCEI CDR 안내에 실린 변수 목록에 파일 속 변수 이름을 붙였습니다. 이름과 단위는 CIMSS PATMOS-x 문서 페이지의 Level-2b 파일 명세 예시(v05r03 파일의 헤더)와
+    v6.0에서 새로 생긴 변수 표(Foster et al. 2023, J. Climate 부록 표 C1)에서 확인했습니다. v6.0 파일에서 이름이 같은지는 `ds.data_vars`로 한 번 확인하세요.
+  full_list: https://cimss.ssec.wisc.edu/patmosx/images/level2b_filespec.txt
   groups:
     - name: 구름 특성 (위성 통과 시각의 관측)
       kind: instant
       items:
-        - text: "구름량(구름 비율)"
+        - text: "구름량(구름 비율) — `cloud_fraction`"
           std: [cloud]
-        - "구름 유형"
-        - "구름 상단 온도 — (K)"
-        - "구름 상단 기압 (hPa)"
-        - "구름 상단 높이 (km)"
-        - "구름 방출률 (11 µm)"
-        - text: "구름 광학두께 (무차원)"
-          note: 주간 관측에서만 산출
-        - text: "구름 입자 유효 반경 (µm)"
+          note: 원 해상도 3×3 화소에서 계산한 구름 비율(파일에 단위 속성 없음)
+        - text: "구름 유형 — `cloud_type`"
+          note: 맑음·에어로졸 유형을 포함한 정수 분류 코드(코드 설명은 long_name 속성)
+        - "구름 상단 온도 — `cld_temp_acha` (K)"
+        - "구름 상단 기압 — `cld_press_acha` (hPa)"
+        - "구름 상단 높이 — `cld_height_acha` (km)"
+        - text: "구름 방출률 — `cld_emiss_acha`"
+          note: 11 µm 파장 기준(파일에 단위 속성 없음)
+        - text: "구름 광학두께 — `cld_opd_dcomp` (무차원)"
+          note: 0.65 µm 기준. 주간 관측에서만 산출
+        - text: "구름 입자 유효 반경 — `cld_reff_dcomp` (µm)"
           note: 주간 관측에서만 산출
     - name: 대기·복사
       kind: instant
       items:
-        - "총가강수량"
-        - "보정된 반사도(0.63·0.86·1.6 µm)와 밝기온도(3.75·11·12 µm, HIRS 6.7 µm·CO2 채널)"
+        - text: "총가강수량 — `hirsavhrr_total_precipitable_water`"
+          note: v6.0에서 HIRS·AVHRR로 새로 산출. 층별 수증기량은 `hirsavhrr_water_vapor_content_layerlow`·`_layermid`·`_layerhigh`
+        - text: "보정된 반사도·밝기온도(HIRS 6.7 µm·CO2 채널 포함) — `refl_0_65um_nom`·`refl_0_86um_nom`·`refl_1_60um_nom` (%), `temp_3_75um_nom`·`temp_11_0um_nom`·`temp_12_0um_nom` (K)"
+          note: AVHRR 반사도 0.63·0.86·1.6 µm, 밝기온도 3.75·11·12 µm. HIRS 채널은 `temp_6_7um_nom`(6.7 µm), `temp_13_3um_nom`·`temp_13_6um_nom`·`temp_13_9um_nom`·`temp_14_2um_nom`(CO2 채널) 등
 
 access:
   - name: NCEI 직접 다운로드 (2000년~현재)

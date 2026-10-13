@@ -137,7 +137,8 @@ time_convention:
 
 variables:
   note: >-
-    PSL variable names were checked in the THREDDS metadata. The NCEI CDR user guides do not give the variable names inside the files, so only descriptions are listed (check your files).
+    PSL variable names were checked in the THREDDS (OPeNDAP) structure. The NCEI CDR user guides do not give in-file variable names, so for the daily CDR `olr` was
+    checked in the copy PSL distributes (olr_cdr_day/olr.day.mean.v2.nc, 1° 360×180). The variable name in the monthly CDR v3.0 (2.5°) files could not be confirmed in official documents or public copies (check your files).
     All OLR values are in W m-2 (written W/m^2 in PSL files).
   full_list: https://www.ncei.noaa.gov/products/climate-data-records/outgoing-longwave-radiation-daily
   groups:
@@ -145,16 +146,20 @@ variables:
       kind: mean
       period: Daily
       items:
-        - "Outgoing longwave radiation — OLR Daily CDR v2.0, 1° (W m-2)"
-        - "Outgoing longwave radiation — PSL Interpolated OLR daily `olr` (W/m^2)"
-        - text: "Daily climatology — PSL `olr.day.ltm.1991-2020.nc` and others (W/m^2)"
-          note: Mean of each calendar day over the base period
+        - text: "Outgoing longwave radiation — `olr` (W m-2)"
+          note: OLR Daily CDR v2.0, 1°. Variable name from the PSL copy olr.day.mean.v2.nc
+        - text: "Outgoing longwave radiation — `olr` (W/m^2)"
+          note: PSL Interpolated OLR daily (olr.day.mean.nc)
+        - text: "Daily climatology — `olr` (W/m^2)"
+          note: Mean of each calendar day over the base period. PSL file olr.day.ltm.1991-2020.nc and others
     - name: Monthly mean OLR
       kind: mean
       period: Monthly
       items:
-        - "Outgoing longwave radiation — OLR Monthly CDR v3.0, 2.5° (W m-2)"
-        - "Outgoing longwave radiation — PSL Interpolated OLR monthly (W/m^2)"
+        - text: "Outgoing longwave radiation — OLR Monthly CDR v3.0, 2.5° (W m-2)"
+          note: The user guide gives no in-file variable name (the variable is described only as 'OLR'), and no public copy could be checked
+        - text: "Outgoing longwave radiation — `olr` (W/m^2)"
+          note: PSL Interpolated OLR monthly (olr.mon.mean.nc)
 
 access:
   - name: NCEI — OLR Daily CDR product page (documents and download link)

@@ -68,14 +68,15 @@ time_convention:
 
 variables:
   note: >-
-    국가기상위성센터 ATBD(2019년판)의 산출물 표에 적힌 변수명만 적었습니다. 운영 파일의 이름·단위·척도 인수는 받은 파일에서 다시 확인하세요.
-    변수명을 확인하지 못한 산출물은 이름과 약어만 적었습니다. 산출물 52종 전체는 ATBD 목록 페이지에 있습니다.
+    국가기상위성센터 ATBD의 산출물 표에서 '변수'·'Name' 칸으로 적힌 이름만 변수명 칸에 적었습니다. 운영 파일의 이름·단위·척도 인수는 받은 파일에서 다시 확인하세요.
+    파일 안 변수 이름을 확인하지 못한 산출물은 참고 칸에 산출물 약어와 파일명 코드(gk2a_ami_le2_<코드>_<영역>_<시각>.nc의 <코드>, 국가기상위성센터 산출물 서비스 목록 기준)만 적었습니다. 산출물 52종 전체는 ATBD 목록 페이지에 있습니다.
   full_list: https://nmsc.kma.go.kr/homepage/html/base/cmm/selectPage.do?page=static.edu.atbdGk2a
   groups:
     - name: 구름 (관측 시각 순간값, 2 km)
       kind: instant
       items:
-        - "구름탐지(구름·구름 가능·맑음) — CLD 산출물"
+        - text: "구름탐지(구름·구름 가능·맑음) — `CLD`"
+          note: "값 0 = 구름, 1 = 구름 가능, 2 = 맑음(ATBD 표 7). 시험별 판정 비트 `TTF1`~`TTF3`. 파일명 코드 cld"
         - text: "위성운량 — `CF` (%)"
           note: "ATBD 표 기준 scale_factor 0.01. 품질 변수 `CF_DQF`"
         - text: "지상운량 — `CA` (무차원)"
@@ -84,39 +85,53 @@ variables:
         - "운정온도 — `CTT` (K)"
         - "운정기압 — `CTP` (hPa)"
         - "운정고도 — `CTH` (km)"
-        - "운형·구름 층/고도 — CT 산출물"
-        - text: "구름 광학두께·유효입자반경·수액경로·빙정경로 — COT·CER·LWP·IWP 산출물"
+        - text: "운형·구름 층/고도 — `CT`·`CLL`"
+          note: "`CT`는 ISCCP 운형 1~9, `CLL`은 1 = 상층, 2 = 중층, 3 = 하층(ATBD 표 4·5). 품질 변수 `CT_DQF`. 동아시아 운형은 `NCCT1`~`NCCT3`(운형)·`PCCT1`~`PCCT3`(확률, %). 파일명 코드 cla-ct·cla-cll"
+        - text: "구름 광학두께·유효입자반경·수액경로·빙정경로"
           std: [cloud_water]
-          note: 주간만 산출
+          note: "주간만 산출. 산출물 약어: COT·CER·LWP·IWP, 파일명 코드 dcoew-cot 등(파일 안 변수 이름은 공식 문서에서 확인 못 함)"
     - name: 강수 (관측 시각 순간값)
       kind: instant
       items:
-        - text: "강우강도 — RR 산출물 (mm/h)"
+        - text: "강우강도 (mm/h)"
           std: [precip]
-        - "정량적 강수예측 — POR·PAR 산출물"
+          note: "산출물 약어: RR, 파일명 코드 rr(파일 안 변수 이름은 공식 문서에서 확인 못 함)"
+        - text: "정량적 강수예측"
+          note: "강우확률·잠재강우량. 산출물 약어: POR·PAR, 파일명 코드 qpn-por·qpn-par(파일 안 변수 이름은 공식 문서에서 확인 못 함)"
     - name: 지표·해양 (맑은 화소, 관측 시각 순간값)
       kind: instant
       items:
         - text: "지표면온도 — `LST` (K)"
           std: [tskin]
           note: "맑은 육지 화소만, 10분 주기. ATBD 표 기준 scaling 0.01, 품질 변수 `DQF_LST`"
-        - "해수면온도 — SST 산출물"
-        - "지표면반사도·지표면방출률 — SAL·LSE 산출물"
-        - "적설·해빙 탐지, 적설깊이 — SCSI·SD 산출물"
-        - "식생지수·식생률 — NDVI·FVC 산출물"
+        - text: "해수면온도"
+          note: "산출물 약어: SST, 파일명 코드 sst(파일 안 변수 이름은 공식 문서에서 확인 못 함)"
+        - text: "지표면반사도·지표면방출률 — `BSA`·`WSA`, `LSE038`·`LSE087`·`LSE105`·`LSE123` (무차원)"
+          note: "`BSA`·`WSA`는 광대역 흑천·백천 알베도(scale_factor 10000, 밴드별 `BSA_b01` 등, 품질 변수 `DQF_BSA`·`DQF_WSA`), `LSE038` 등은 3.8·8.7·10.5·12.3 µm 방출률(scale_factor 0.001, 품질 변수 `DQF_LSE`). 산출물 약어 SAL·LSE, 파일명 코드 sal-bsa·lse-038 등"
+        - text: "적설·해빙 탐지, 적설깊이 — `SCSI`"
+          note: "`SCSI` 값 0 = 야간, 1 = 눈, 2 = 눈 없는 육지, 3 = 구름, 4 = 해빙, 5 = 얼지 않은 물. 품질 변수 `DQF_SCSI`. 적설깊이(산출물 약어 SD, cm)의 파일 안 변수 이름은 공식 문서에서 확인 못 함(ATBD 표의 출력 자료 이름은 'Snow Depth')"
+        - text: "식생지수·식생률"
+          note: "산출물 약어: NDVI·FVC, 파일명 코드 vgt-ndvi·vgt-fvc(파일 안 변수 이름은 공식 문서에서 확인 못 함)"
     - name: 복사 (관측 시각 순간값)
       kind: instant
       items:
-        - "복사량·단파복사 — RAD·SWRAD 산출물"
-        - "대기 상단 상향장파복사 — OLR 산출물"
-        - "지표면 상향·하향 장파복사 — ULR·DLR 산출물"
+        - text: "복사량·단파복사 — `RAD`, `RSR`·`DSR`·`ASR`"
+          note: "`RAD`는 16×16 화소 평균 복사량(채널 1~6 반사도, 7~16 밝기온도). `RSR`(대기 상단 상향)·`DSR`(지표 하향)·`ASR`(지표 흡수) 단파복사는 W m-2, 품질 변수 `Quality_flag1`·`Quality_flag2`. 산출물 약어 RAD·SWRAD"
+        - text: "대기 상단 상향장파복사 — `OLR` (W m-2)"
+          note: "품질 변수 `Quality_flag1`·`Quality_flag2`. 파일명 코드 lwrad-olr"
+        - text: "지표면 상향·하향 장파복사 — `ULR`·`DLR` (W m-2)"
+          note: "품질 변수 `Quality_flag1`·`Quality_flag2`. 파일명 코드 lwrad-ulr·lwrad-dlr"
     - name: 에어로졸·대기
       kind: instant
       items:
-        - "에어로졸 광학두께 — AOD 산출물"
-        - "황사·에어로졸 탐지, 황사 광학두께 — ADPS·DAOD 산출물"
-        - "대기운동벡터 — AMV 산출물"
-        - "대기 연직 정보 — AAP 산출물"
+        - text: "에어로졸 광학두께"
+          note: "0.55 µm. 산출물 약어: AOD, 파일명 코드 apps-aod(파일 안 변수 이름은 공식 문서에서 확인 못 함)"
+        - text: "황사·에어로졸 탐지, 황사 광학두께"
+          note: "산출물 약어: ADPS·DAOD, 파일명 코드 adps·apps-daod055(파일 안 변수 이름은 공식 문서에서 확인 못 함)"
+        - text: "대기운동벡터"
+          note: "산출물 약어: AMV, 파일명 코드 amv-ir105-cd 등(파일 안 변수 이름은 공식 문서에서 확인 못 함)"
+        - text: "대기 연직 정보"
+          note: "온·습도 연직분포, 대기안정도지수, 가강수량, 오존전량. 산출물 약어: AAP, 파일명 코드 tqprof·aii·tpw·toz 계열(파일 안 변수 이름은 공식 문서에서 확인 못 함)"
 
 access:
   - name: 기상청 기상자료개방포털 (위성자료 내려받기)
