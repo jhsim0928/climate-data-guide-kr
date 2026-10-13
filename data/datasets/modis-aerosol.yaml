@@ -38,6 +38,9 @@ resolution:
     L2는 5분 단위 그래뉼(궤도 스와스), 위성마다 하루 1회 주간 관측(고위도는 여러 번) / L3 일(D3)·8일(E3)·월(M3).
     설계상 적도 통과 시각은 Terra 10:30(하강), Aqua 13:30(상승) 지방시이지만 궤도 표류로 바뀌었습니다.
 
+coverage:
+  short: 전지구
+  note: "주간 맑은 하늘만, 눈·얼음 위 제외"
 update: 매일 (L3 일자료는 관측 다음 날 무렵), 8일·월 자료는 구간 종료 후. 준실시간(NRT)판은 LANCE에서 별도 제공
 license: NASA EOSDIS 자료 이용 정책에 따라 제한 없이 공개된 무료 자료입니다. 내려받기(HTTPS·OPeNDAP 포함)에는 무료 NASA Earthdata 로그인이 필요하며, 데이터셋 DOI 인용을 요청합니다.
 account_required: true

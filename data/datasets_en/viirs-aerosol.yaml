@@ -37,6 +37,9 @@ resolution:
   temporal: >-
     L2 in 6-minute granules (orbital swaths), one daytime overpass per satellite per day (several at high latitudes) / L3 daily (D3) and monthly (M3, DB only). Suomi NPP, NOAA-20 and NOAA-21 all fly afternoon orbits crossing the equator ascending around 13:30 local time.
 
+coverage:
+  short: 전지구
+  note: "Daytime clear sky only; not over snow or ice"
 update: Daily (L2 and daily files within a few days of observation); monthly files about a month after the month ends. A near-real-time Dark Target product (AERDT_L2_*_NRT) is provided separately by the Atmosphere SIPS
 license: Freely available without restriction under the NASA EOSDIS data use policy. Downloading (including HTTPS and OPeNDAP) needs a free NASA Earthdata Login; citation of the dataset DOI is requested.
 account_required: true

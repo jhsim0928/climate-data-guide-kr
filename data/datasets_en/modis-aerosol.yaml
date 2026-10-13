@@ -38,6 +38,9 @@ resolution:
     L2 in 5-minute granules (orbital swaths), one daytime overpass per satellite per day (several at high latitudes) / L3 daily (D3), 8-day (E3) and monthly (M3).
     Nominal equator crossing times are 10:30 descending (Terra) and 13:30 ascending (Aqua) local time, but orbit drift has changed them.
 
+coverage:
+  short: 전지구
+  note: "Daytime clear sky only; not over snow or ice"
 update: Daily (L3 daily files around the day after observation); 8-day and monthly products after each period ends. A near-real-time (NRT) version is served separately by LANCE
 license: Freely available without restriction under the NASA EOSDIS data use policy. Downloading (including HTTPS and OPeNDAP) needs a free NASA Earthdata Login; citation of the dataset DOI is requested.
 account_required: true

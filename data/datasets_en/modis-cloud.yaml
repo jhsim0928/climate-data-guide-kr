@@ -38,6 +38,8 @@ resolution:
     L2 in 5-minute granules (orbital swaths). Cloud mask and cloud top are produced day and night; optical properties in daytime only / L3 daily (D3), 8-day (E3) and monthly (M3).
     Nominal equator crossing times are 10:30 descending (Terra, day) and 13:30 ascending (Aqua, day) local time, with night observations on the opposite orbit leg, but orbit drift has changed them.
 
+coverage:
+  short: 전지구
 update: Daily (L3 daily files around the day after observation); 8-day and monthly products after each period ends. A near-real-time (NRT) version is served separately by LANCE
 license: Freely available without restriction under the NASA EOSDIS data use policy. Downloading (including HTTPS and OPeNDAP) needs a free NASA Earthdata Login; citation of the dataset DOI is requested.
 account_required: true

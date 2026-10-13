@@ -40,6 +40,9 @@ resolution:
     Hourly (the base product, HH:00–HH:59 UTC) / daily (00Z–23Z, or 12Z of the previous day to 11Z, at 0.1° and 0.25°) / monthly. GSMaP_NOW is refreshed every 30 minutes.
     JAXA also provides daily, 3-day, pentad, weekly, 10-day and monthly statistics through GSMaP_CLM.
 
+coverage:
+  short: 준전지구
+  note: "Mainly 60°N–60°S; poleward values only at passive-microwave overpass times, missing over sea ice and Greenland"
 update: "GSMaP_NOW real time (0-hour latency, refreshed every 30 minutes) / GSMaP_NRT about 4 hours after observation / standard GSMaP_MVK and Gauge about 3 days later; all produced continuously at hourly resolution"
 license: >-
   Free of charge for research, education and personal use as well as commercial use; copyright belongs to JAXA. Both the JAXA Global Rainfall Watch FTP site and G-Portal require free user registration.

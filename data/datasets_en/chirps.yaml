@@ -38,6 +38,9 @@ resolution:
   temporal: >-
     Pentads (5-day) and months are the base products; dekads (10-day), 2–6-month and annual totals and daily data are derived from them. Daily values split pentad totals using daily ratios from ERA5 (rnl) or IMERG Late V07 (sat).
 
+coverage:
+  short: 준전지구
+  note: "v3 60°N–60°S, v2.0 50°S–50°N; land only"
 update: "Prelim 2 days after each pentad ends (the 2nd, 7th, 12th, 17th, 22nd and 27th of each month) / Final monthly (typically in the third week of the following month)"
 license: CC BY 4.0 (CHC states that it has waived copyright to the extent possible under law). Free, no account needed
 account_required: false

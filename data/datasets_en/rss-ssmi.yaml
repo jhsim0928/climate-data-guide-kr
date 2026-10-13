@@ -42,6 +42,9 @@ resolution:
   temporal: >-
     Daily (two maps per satellite, morning and evening passes gridded separately, with the observation time per cell) / 3-day mean (three days ending on the file date) / weekly mean (seven days ending on Saturday) / monthly mean
 
+coverage:
+  short: 전지구
+  note: "Ocean only (land and sea ice are flagged)"
 update: "No longer updated (data through 2026-09-30). While operating, interim (rt) files appeared within hours of observation and final (v7) files within a few days"
 license: RSS data may be used in research and publications with attribution (RSS terms of data use). FTP access needs free registration; GHRC netCDF downloads need a free NASA Earthdata login
 account_required: false

@@ -42,6 +42,9 @@ resolution:
   temporal: >-
     일자료(위성별 오전·오후 통과 궤도를 따로 격자화한 2장, 격자별 관측 시각 포함) / 3일 평균(파일 날짜로 끝나는 3일) / 주 평균(토요일로 끝나는 7일) / 월 평균
 
+coverage:
+  short: 전지구
+  note: "해양만 (육지·해빙은 코드값)"
 update: "갱신 종료(2026-09-30 자료까지). 운용 중에는 임시(rt) 파일이 관측 후 몇 시간 안에, 확정(v7) 파일이 며칠 안에 올라왔습니다"
 license: RSS 자료는 연구·출판에 쓸 수 있으며 출처 표기를 요구합니다(RSS 이용 조건). FTP 접속은 무료 등록, GHRC netCDF는 무료 NASA Earthdata 로그인이 필요합니다
 account_required: false

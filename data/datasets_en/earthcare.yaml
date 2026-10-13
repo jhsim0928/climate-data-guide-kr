@@ -40,6 +40,9 @@ resolution:
     Continuous along-orbit swath data. Sun-synchronous orbit at about 393 km, descending node at 14:00 mean solar time, period about 92.5 minutes, 25-day (389-orbit) repeat.
     The active sensors (ATLID, CPR) observe only a nadir curtain.
 
+coverage:
+  short: 전지구
+  note: "Curtain directly beneath the orbit; MSI swath 150 km wide"
 update: "Continuous daily production (file names mark near-real-time N or offline O processing). Processor baselines are updated per product as needed"
 license: Free and open under the Terms and Conditions for the use of ESA Data. Downloads require a free ESA EO Sign In account
 account_required: true

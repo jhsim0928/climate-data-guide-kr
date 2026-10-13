@@ -117,6 +117,9 @@ resolution:
     GOSAT revisits the same point every 3 days (44 revolutions) and GOSAT-2 every 6 days (about 15 orbits per day); both measure reflected sunlight in daytime (GOSAT-2 descending node 13:00 ± 0:15).
     GOSAT-2 L2 files cover one UTC day (00:00–23:59). L3 products are monthly maps.
 
+coverage:
+  short: 전지구
+  note: "Sparse point soundings; daytime"
 update: Daily L2 files are produced continuously (latency not confirmed on the official pages); delivery pauses and resumes around instrument anomalies
 license: >-
   Free of charge. Under the GOSAT/GOSAT-2 data policy, data are distributed online on a non-discriminatory basis, and publications must credit "JAXA/NIES/MOE"; GOSAT-GW (TANSO-3) data must credit "NIES/MOE".

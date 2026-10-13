@@ -40,6 +40,9 @@ resolution:
     1시간(기본 산출, HH:00~HH:59 UTC) / 일(00Z~23Z 또는 전날 12Z~당일 11Z, 0.1°·0.25°) / 월. GSMaP_NOW는 30분마다 갱신됩니다.
     JAXA는 GSMaP_CLM으로 일·3일·반순·주·순·월 통계도 제공합니다.
 
+coverage:
+  short: 준전지구
+  note: "60°N–60°S 중심. 그 바깥은 수동 마이크로파 위성이 지난 시각에만 값이 있고 해빙·그린란드 위는 결측"
 update: "GSMaP_NOW 실시간(지연 0시간, 30분마다 갱신) / GSMaP_NRT 관측 후 약 4시간 / 표준 GSMaP_MVK·Gauge 약 3일 지연, 모두 1시간 단위 연속 생산"
 license: >-
   연구·교육·개인 용도뿐 아니라 상업적 이용도 무료이며 저작권은 JAXA에 있습니다. JAXA Global Rainfall Watch FTP와 G-Portal 모두 무료 사용자 등록이 필요합니다.
