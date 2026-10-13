@@ -6,7 +6,7 @@
 
 대기·해양·해빙·극지·원격탐사 연구자를 위해 **원자료의 출처, 받는 방법, 제공 기간, 논문용 레퍼런스, 제공 중단·변경 공지**를 한곳에 정리하는 한국어 사이트입니다. 자료 자체는 보관하지 않고 공식 출처로 연결합니다.
 
-현재 수록: 63개 자료 — 대기 29, 해양 21, 해빙 16 (교차 수록 포함). 한국어판(https://data4researchers.kr/)과 영어판(https://data4researchers.kr/en/)이 있습니다.
+현재 수록: 92개 자료 — 대기 29, 해양 21, 해빙 16, 지면 30 (교차 수록 포함). 한국어판(https://data4researchers.kr/)과 영어판(https://data4researchers.kr/en/)이 있습니다.
 
 ---
 
@@ -90,7 +90,7 @@ CITATION.cff             ← GitHub "Cite this repository" 버튼
 ## 데이터셋 추가하기
 
 1. 비슷한 자료의 YAML(예: `data/datasets/jra3q.yaml`)을 복사해 `data/datasets/<id>.yaml`로 저장합니다. 파일명과 `id`가 같아야 합니다.
-2. `data/SCHEMA.md`의 규칙대로 내용을 채웁니다. 메뉴 위치는 `domain`(대기·해양·해빙), `group`(소분류), `order`(순서)로 정해지므로 `mkdocs.yml`은 고칠 필요가 없습니다.
+2. `data/SCHEMA.md`의 규칙대로 내용을 채웁니다. 메뉴 위치는 `domain`(대기·해양·해빙·지면), `group`(소분류), `order`(순서)로 정해지므로 `mkdocs.yml`은 고칠 필요가 없습니다.
 3. 후속 자료가 있으면 이전 자료 파일에 `transitions:`를 적습니다. 후속 자료 페이지와 세대별 비교 페이지에 자동으로 연결됩니다.
 4. `python scripts/validate.py data/datasets/<id>.yaml`로 검사합니다. 필수 항목이 빠지거나 형식이 틀리면 무엇이 잘못됐는지 알려줍니다.
 

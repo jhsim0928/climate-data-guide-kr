@@ -1,0 +1,418 @@
+# ─────────────────────────────────────────────────────────────
+# NLDAS-2 — 데이터셋 정보 파일
+# 지면 탭 '육상 재분석·자료동화'에 싣습니다. NLDAS-2 netCDF(V2.0) 강제력(FORA·FORB)과 Noah·Mosaic·VIC 출력을 다룹니다.
+# NLDAS-3는 2026-10-13 현재 베타 강제력만 공개되어 별도 페이지 없이 transitions(planned)로만 적었습니다.
+# 수정 후에는 공식 페이지에서 확인한 날짜로 last_verified 를 갱신하세요.
+# ─────────────────────────────────────────────────────────────
+id: nldas
+name: "NLDAS-2"
+full_name: North American Land Data Assimilation System Phase 2 (NLDAS-2, 북미 육상 자료동화 시스템 2단계 — 0.125° 시간별 강제력과 Noah·Mosaic·VIC 지면 모델 출력)
+category: reanalysis
+domain: land
+group: 육상 재분석·자료동화
+order: 22
+domains: [육지, 수문]
+provider: NASA GSFC 수문과학연구실(HSL)·NOAA NCEP EMC 등 NLDAS 프로젝트 / GES DISC
+
+status: active
+status_note: >-
+  netCDF판(V2.0)이 약 4일 지연으로 매일 갱신되고 있습니다(2026-10-13 확인 시 시간별 Noah 출력은 2026-10-08 23Z, 월자료는 2026-09까지).
+  예전 GRIB-1판(V002)은 2024년 8월 1일 23Z 자료를 끝으로 갱신이 멈췄고, 2022-08~2024-03 구간은 강제력 오류 때문에 2024년 6월 재처리되었습니다.
+  후속 NLDAS-3(1 km)는 개발 중으로 베타 강제력만 공개되어 있으며, 자료를 받는 GES DISC 온프레미스 서버(hydro1)는 2026년 9월 30일 이후 닫힐 수 있습니다.
+
+period:
+  start: "1979-01"
+  end: present
+  note: >-
+    시간별 강제력(FORA·FORB)은 1979-01-01 13Z, 모델 출력(Noah·Mosaic·VIC)은 1979-01-02 00Z 무렵부터입니다(CMR 기준 Noah 01Z, Mosaic·VIC 00Z).
+    월자료는 1979-01부터, 월 기후값(MC)은 1981~2020년 40년 평균입니다. 2026-10-13 확인 시 시간별 Noah는 2026-10-08 23Z, FORA는 2026-10-09 12Z, 월자료는 2026-09까지 있습니다.
+
+resolution:
+  spatial_short: "14 km (0.125°)"
+  temporal_short: "1시간"
+  spatial: >-
+    1/8°(0.125°) 위경도 격자 464×224, 25–53°N·125–67°W(미국 본토 중심, 캐나다 남부·멕시코 북부 일부 포함).
+    격자 중심 범위 (124.9375°W, 25.0625°N) ~ (67.0625°W, 52.9375°N). 강제력의 원본은 NARR 32 km·3시간 자료를 보간·시간 분해한 것입니다.
+  vertical: >-
+    지표 단일층 + 토양. Noah 토양 4층(0–10, 10–40, 40–100, 100–200 cm) 및 0–100·0–200 cm 합계, VIC 토양 3층(layer1–3), Mosaic도 층별 출력이 있습니다.
+    FORB 강제력의 바람·기온·습도는 NARR 하이브리드면 값입니다.
+  temporal: "1시간(FORA·FORB·Noah·Mosaic·VIC) / 월(같은 다섯 제품) / 월 기후값 1981–2020"
+
+update: "매일, 약 4일 지연(하루치 강제력은 보통 12Z~12Z 단위로 갱신) / 월자료는 다음 달 시작 후 약 10~15일"
+license: NASA 지구과학 공개 자료 — 무료. GES DISC에서 받으려면 무료 NASA Earthdata 로그인이 필요하며, 제품별 DOI 인용을 요청합니다
+account_required: true
+
+summary: >-
+  NLDAS-2는 NASA·NOAA 등이 함께 운영하는 미국 본토 중심의 육상 자료로, 관측 기반 강수(CPC 일 우량계 분석 + 레이더 시간 분해)와 NARR 기상장으로 만든 0.125° 시간별 강제력과,
+  이를 넣어 돌린 Noah·Mosaic·VIC 지면 모델의 토양수분·증발산·유출·적설·에너지 플럭스를 1979년부터 제공합니다. 이름과 달리 관측을 동화하지 않는 오픈루프 모의이며,
+  강제력만 따로 받아 다른 수문 모델의 입력으로도 널리 씁니다. 가뭄 감시와 수문 연구에 널리 쓰이며, 후속 NLDAS-3(1 km, 북·중미)이 개발되고 있습니다.
+
+time_convention:
+  summary: >-
+    시간별 파일은 GMT 시각으로 표시되고, 변수마다 순간값(point)·직전 1시간 평균(mean)·직전 1시간 누적(sum) 중 하나입니다. 예를 들어 03Z 파일의 평균·누적값은 02~03Z 구간입니다.
+    월 파일에서는 강수·강설·증발산·유출·융설(과 FORA의 대류성 강수·잠재증발)이 그달 합계(kg m-2)이고, 나머지는 월평균입니다.
+  points:
+    - "강제력 FORA의 기온·습도·기압·바람·하향 장파·하향 단파·CAPE는 정시(00분) 순간값이고, 강수 `Rainf`와 잠재증발 `PotEvap`은 직전 1시간 누적(kg m-2 = mm)입니다. 파일 속성(cell_methods)도 같은 구분을 적어 둡니다."
+    - "같은 하향 단파·장파복사라도 FORA 강제력 파일은 순간값, Noah 출력 파일의 `SWdown`·`LWdown`은 직전 1시간 평균입니다. 두 파일 값을 섞어 쓸 때 주의하세요."
+    - "모델 출력의 에너지 플럭스(`SWnet`·`LWnet`·`Qle`·`Qh`·`Qg`)와 증발 성분은 직전 1시간 평균(W m-2), 물 플럭스(`Rainf`·`Snowf`·`Evap`·`Qs`·`Qsb`·`Qsm`)는 직전 1시간 누적(kg m-2), 상태변수(토양수분·토양온도·적설·LAI·알베도·지표면 온도)는 정시 순간값입니다."
+    - "일자료는 제공되지 않습니다. 시간별 파일로 직접 만들어야 하며, 03Z 파일이 02~03Z 구간이므로 00~24Z 하루 합계는 당일 01Z~다음 날 00Z 파일 24개를 더합니다. 시간 강수는 CPC 일 우량계 분석의 하루 합계가 보존되도록 분해되어 있으므로, CPC 일 구간과 다른 00~24Z 합계는 CPC 값과 다를 수 있습니다."
+    - "월 파일의 기간은 1일 00Z~말일 23:59Z입니다. 1979년 1월만 예외로 1월 2일 00Z(FORA 강수·대류성 강수·PotEvap과 FORB 강수는 1월 1일 12Z)부터 계산합니다."
+    - "`time` 단위는 'hours since 1979-01-01 00:00:00'이고 `time_bnds`에 평균·누적 구간이 들어 있습니다."
+  source: https://docserver.gesdisc.eosdis.nasa.gov/public/project/hydrology/NLDAS2_README.pdf
+  source_name: "NLDAS-2 README (README Document for NLDAS Phase 2 netCDF, 최종 수정 2023-07-07) + GES DISC netCDF 파일 속성 + NLDAS FAQ"
+
+variables:
+  note: >-
+    NLDAS-2 netCDF(V2.0) README 변수표(Table 3·6)와 GES DISC 파일(NLDAS_FORA0125_H, NLDAS_NOAH0125_M) 기준 주요 변수입니다. 변수명은 ALMA 규약을 따른 netCDF 이름이며,
+    GRIB-1판의 PDS 번호 이름과 다릅니다. Mosaic·VIC 출력도 같은 이름 규칙을 쓰고 토양 변수만 다릅니다(VIC는 `SoilM_layer1`~`3` 등).
+    보조 강제력 FORB는 NARR 강수, NARR 하이브리드면의 기온·습도·기압·바람과 그 고도, 공기역학 전도도 등을 담은 선택용 파일입니다(변수 목록은 README 참고).
+  full_list: https://docserver.gesdisc.eosdis.nasa.gov/public/project/hydrology/NLDAS2_README.pdf
+  groups:
+    - name: 주 강제력 FORA (시간별, 정시 순간값)
+      kind: instant
+      items:
+        - "2m 기온 — `Tair` (K)"
+        - "2m 비습 — `Qair` (kg kg-1)"
+        - "지표 기압 — `PSurf` (Pa)"
+        - "10m 동서·남북 바람 — `Wind_E`, `Wind_N` (m s-1)"
+        - text: "지표 하향 단파복사 — `SWdown` (W m-2)"
+          note: GOES 기반 단파 자료로 편향 보정. 강제력 파일에서는 순간값
+        - "지표 하향 장파복사 — `LWdown` (W m-2)"
+        - "대류가용잠재에너지 — `CAPE` (J kg-1)"
+    - name: 주 강제력 FORA (시간별, 직전 1시간 누적)
+      kind: accum
+      period: 1시간
+      items:
+        - text: "총강수량 — `Rainf` (kg m-2)"
+          note: CPC 일 우량계 분석(PRISM 지형 보정)을 레이더·CMORPH·NARR 순으로 시간 분해
+        - text: "잠재증발량 — `PotEvap` (kg m-2)"
+          note: NARR의 수정 Penman 방식
+        - text: "대류성 강수 비율 — `CRainf_frac` (비율)"
+          std: [precip_components]
+          note: 파일 cell_methods는 sum이지만 값은 직전 1시간 강수 중 대류성 비율. 월 파일에서는 대류성 강수량 `CRainf`(kg m-2)
+    - name: Noah 출력 — 에너지 플럭스 (시간별, 직전 1시간 평균)
+      kind: mean
+      period: 1시간
+      items:
+        - "순 단파·장파복사 — `SWnet`, `LWnet` (W m-2)"
+        - "잠열 플럭스 — `Qle` (W m-2)"
+        - "현열 플럭스 — `Qh` (W m-2)"
+        - "지중 열플럭스 — `Qg` (W m-2)"
+        - "적설 상변화 열플럭스 — `Qf` (W m-2)"
+        - "지표 하향 단파·장파복사 — `SWdown`, `LWdown` (W m-2)"
+        - "잠재증발 — `PotEvap` (W m-2)"
+        - "수관 차단 증발·증산·나지 증발·적설 승화 — `ECanop`, `TVeg`, `ESoil`, `SubSnow` (W m-2)"
+    - name: Noah 출력 — 물 플럭스 (시간별, 직전 1시간 누적)
+      kind: accum
+      period: 1시간
+      items:
+        - text: "비(액체 강수) — `Rainf` (kg m-2)"
+          std: [precip_components]
+        - "강설 — `Snowf` (kg m-2)"
+        - "총증발산 — `Evap` (kg m-2)"
+        - "지표 유출 — `Qs` (kg m-2)"
+        - "지하 유출(기저유출) — `Qsb` (kg m-2)"
+        - text: "융설량 — `Qsm` (kg m-2)"
+          std: [snow]
+        - text: "하천 유량 — `Streamflow` (m3 s-1)"
+          kind: mean
+          note: NWS 하천예보센터(RFC) 영역 밖은 값 없음
+    - name: Noah 출력 — 상태변수 (시간별, 정시 순간값)
+      kind: instant
+      items:
+        - "지표면(skin) 온도 — `AvgSurfT` (K)"
+        - "알베도 — `Albedo` (%)"
+        - text: "적설 수당량 — `SWE` (kg m-2)"
+          std: [snow]
+        - text: "적설 깊이 — `SnowDepth` (m)"
+          std: [snow]
+        - text: "적설 피복률 — `SnowFrac` (비율)"
+          std: [snow]
+        - "토양수분 — `SoilM_0_10cm`, `SoilM_10_40cm`, `SoilM_40_100cm`, `SoilM_100_200cm`, `SoilM_0_100cm`, `SoilM_0_200cm`, `RootMoist` (kg m-2)"
+        - "액체 토양수분 — `SMLiq_0_10cm` 등 (kg m-2)"
+        - "토양수분 가용도 — `SMAvail_0_100cm`, `SMAvail_0_200cm` (%)"
+        - "토양온도 — `SoilT_0_10cm`, `SoilT_10_40cm`, `SoilT_40_100cm`, `SoilT_100_200cm` (K)"
+        - "수관 차단 저류수 — `CanopInt` (kg m-2)"
+        - "엽면적지수 — `LAI` (무차원)"
+    - name: 월자료 (NLDAS_*0125_M)
+      kind: mean
+      period: 월
+      items:
+        - text: "월강수량 — `Rainf` (kg m-2)"
+          kind: accum
+          note: 그달 합계 (FORA는 총강수, Noah는 비)
+        - text: "월 증발산·지표·지하 유출·융설 — `Evap`, `Qs`, `Qsb`, `Qsm` (kg m-2)"
+          kind: accum
+          note: 그달 합계
+        - "월평균 토양수분 — `SoilM_0_10cm` 등 (kg m-2)"
+        - "월평균 잠열·현열 플럭스 — `Qle`, `Qh` (W m-2)"
+        - "월평균 2m 기온 (FORA) — `Tair` (K)"
+
+access:
+  - name: NASA GES DISC — NLDAS 데이터셋 목록
+    url: https://disc.gsfc.nasa.gov/datasets?keywords=NLDAS
+    method: HTTPS 다운로드 / earthaccess / Earthdata Search / OPeNDAP / 부분 추출
+    note: >-
+      short name은 NLDAS_<FORA|FORB|NOAH|MOS|VIC>0125_<H|M|MC>, 버전 2.0입니다(파일 이름 끝 .020.nc). GRIB-1판(V002)은 2024-08-01 이후 갱신되지 않습니다.
+      SAC 모델 출력은 GES DISC에 없고 NOAA NCEP/EMC NLDAS 웹사이트에만 있습니다. 무료 Earthdata 로그인이 필요하며,
+      예전 서버(hydro1.gesdisc.eosdis.nasa.gov)는 2026년 9월 30일 이후 닫힐 수 있으니 data.gesdisc.earthdata.nasa.gov 또는 earthaccess로 바꾸세요.
+  - name: AWS us-west-2 직접 접근 (S3)
+    url: https://data.gesdisc.earthdata.nasa.gov/s3credentials
+    method: 클라우드 저장소(S3, us-west-2 안에서만)
+    note: "예: s3://gesdisc-cumulus-prod-protected/NLDAS/NLDAS_FORA0125_H.2.0/ — 임시 자격증명이 필요합니다."
+  - name: NASA Giovanni
+    url: https://giovanni.gsfc.nasa.gov/
+    method: 웹 지도·시계열 분석, NetCDF·GeoTIFF·KMZ 내려받기
+    note: 영역 평균 시계열을 빠르게 볼 수 있습니다.
+  - name: NASA LDAS — NLDAS
+    url: https://ldas.gsfc.nasa.gov/nldas
+    method: 문서·FAQ·소식
+    note: 강제력 구성, 알려진 문제, 재처리 공지와 NLDAS-3 개발 소식이 올라옵니다.
+
+example:
+  lang: python
+  note: >-
+    earthaccess로 2023년 7월 1일 하루의 FORA 시간별 파일을 받아 00~24Z 일강수량(mm)을 만드는 예입니다. 03Z 파일이 02~03Z 누적이므로
+    당일 01Z부터 다음 날 00Z까지 24개 파일을 씁니다. 처음 실행 때 Earthdata 아이디·비밀번호를 묻습니다.
+  code: |
+    import earthaccess
+    import xarray as xr
+
+    earthaccess.login()  # 무료 NASA Earthdata 계정
+    results = earthaccess.search_data(
+        short_name="NLDAS_FORA0125_H", version="2.0",
+        temporal=("2023-07-01T01:00:00", "2023-07-02T00:00:00"),   # 01Z~다음 날 00Z 파일 = 00~24Z 누적
+        bounding_box=(-125, 25, -67, 53),
+    )
+    files = earthaccess.download(results, "nldas_fora_h")
+
+    ds = xr.open_mfdataset(files, combine="by_coords")
+    print(ds.time.values)                     # 24개 시각인지 확인
+    daily_precip = ds["Rainf"].sum("time")    # kg m-2 = mm, 2023-07-01 00~24Z
+    tmax = ds["Tair"].max("time") - 273.15    # 정시 순간값 중 최고 (°C)
+    print(float(daily_precip.mean()), float(tmax.mean()))
+
+tips:
+  - "FORA 강제력의 `SWdown`·`LWdown`은 정시 순간값인데, Noah 출력 파일의 같은 이름 변수는 직전 1시간 평균입니다. 일평균 복사를 구할 때 어떤 파일을 쓰는지 확인하세요."
+  - "시간별 `Rainf`는 강도가 아니라 직전 1시간 누적(kg m-2 = mm)입니다. 하루 합계는 01Z~다음 날 00Z 파일을 더하고, 월 파일 `Rainf`는 이미 그달 합계이니 다시 일수를 곱하지 마세요."
+  - "2022년 8월~2024년 3월 1일 구간은 NCEP R-CDAS 적설 깊이 입력 오류로 기온이 너무 높게 들어가 적설·유출·토양수분(특히 2022~23년 겨울)이 틀렸고, 2024년 6월 7일에 재처리되었습니다. 그 전에 받은 이 구간 자료는 다시 받으세요."
+  - "알려진 문제: 여러 해에 걸쳐 미국-캐나다 국경 캐나다 쪽 강수가 비현실적이고, 우량계 품질관리 문제로 고립된 지점이 매우 건조하며, 2012년 1월 1일부터 강수 보간 방식이 바뀌어 미국-멕시코 국경·서부 산악·해안에서 강수 특성이 달라졌습니다. README는 이 문제들을 재생산으로 고칠 수 없다고 밝힙니다."
+  - "Mosaic 출력: GRIB판의 증발 플럭스 4개 부호가 반대였고(netCDF에서 수정), 2008-03-09 01Z 이후 수관 전도도 정의가 잘못되어 netCDF에도 그대로 남아 있습니다."
+  - "Noah 0–100 cm 토양수분 `SoilM_0_100cm` 등은 kg m-2(mm)입니다. 체적함수율로 바꾸려면 층 두께(mm)로 나누세요."
+  - "예전 GRIB-1판(V002)과 netCDF판(V2.0)은 변수 이름 체계가 다르고, V002는 2024-08-01 23Z 이후 갱신되지 않습니다. 2026-10-13 확인 시 NASA CMR에서는 V002 컬렉션이 검색되지 않으니 스크립트를 V2.0으로 옮기세요."
+  - "월 기후값(MC)은 netCDF판에서 1981~2020년 40년 평균입니다(옛 GRIB판은 1980~2009년). 편차를 계산할 때 기준 기간을 밝히세요."
+
+citations:
+  dataset:
+    - label: NLDAS-2 Noah 시간별 V2.0 (GES DISC)
+      text: >-
+        NLDAS project (2020), NLDAS Noah Land Surface Model L4 Hourly 0.125 x 0.125 degree V2.0, Edited by David Mocko, NASA/GSFC/HSL, Greenbelt, Maryland, USA,
+        Goddard Earth Sciences Data and Information Services Center (GES DISC), Accessed: [Data Access Date], 10.5067/T4OW83T8EXDO
+      doi: 10.5067/T4OW83T8EXDO
+      bibtex: |
+        @misc{nldas2_noah0125_h,
+          author    = {{NLDAS project}},
+          editor    = {Mocko, David},
+          title     = {{NLDAS} Noah Land Surface Model {L4} Hourly 0.125 x 0.125 degree {V2.0}},
+          year      = {2020},
+          publisher = {Goddard Earth Sciences Data and Information Services Center (GES DISC)},
+          address   = {Greenbelt, MD, USA},
+          doi       = {10.5067/T4OW83T8EXDO}
+        }
+    - label: NLDAS-2 주 강제력(FORA) 시간별 V2.0 (GES DISC)
+      text: >-
+        NLDAS project (2020), NLDAS Primary Forcing Data L4 Hourly 0.125 x 0.125 degree V2.0, Edited by David Mocko, NASA/GSFC/HSL, Greenbelt, Maryland, USA,
+        Goddard Earth Sciences Data and Information Services Center (GES DISC), Accessed: [Data Access Date], 10.5067/THUF4J1RLSYG
+      doi: 10.5067/THUF4J1RLSYG
+      bibtex: |
+        @misc{nldas2_fora0125_h,
+          author    = {{NLDAS project}},
+          editor    = {Mocko, David},
+          title     = {{NLDAS} Primary Forcing Data {L4} Hourly 0.125 x 0.125 degree {V2.0}},
+          year      = {2020},
+          publisher = {Goddard Earth Sciences Data and Information Services Center (GES DISC)},
+          address   = {Greenbelt, MD, USA},
+          doi       = {10.5067/THUF4J1RLSYG}
+        }
+    - label: NLDAS-2 Noah 월 V2.0 (GES DISC)
+      text: >-
+        NLDAS project (2020), NLDAS Noah Land Surface Model L4 Monthly 0.125 x 0.125 degree V2.0, Edited by David Mocko, NASA/GSFC/HSL, Greenbelt, Maryland, USA,
+        Goddard Earth Sciences Data and Information Services Center (GES DISC), Accessed: [Data Access Date], 10.5067/WB224IA3PVOJ
+      doi: 10.5067/WB224IA3PVOJ
+      bibtex: |
+        @misc{nldas2_noah0125_m,
+          author    = {{NLDAS project}},
+          editor    = {Mocko, David},
+          title     = {{NLDAS} Noah Land Surface Model {L4} Monthly 0.125 x 0.125 degree {V2.0}},
+          year      = {2020},
+          publisher = {Goddard Earth Sciences Data and Information Services Center (GES DISC)},
+          address   = {Greenbelt, MD, USA},
+          doi       = {10.5067/WB224IA3PVOJ}
+        }
+  papers:
+    - label: NLDAS-2 구성·모델 비교 (Xia et al. 2012a)
+      text: >-
+        Xia, Y., Mitchell, K., Ek, M., Sheffield, J., Cosgrove, B., Wood, E., Luo, L., Alonge, C., Wei, H., Meng, J., Livneh, B., Lettenmaier, D.,
+        Koren, V., Duan, Q., Mo, K., Fan, Y., Mocko, D. (2012): Continental-scale water and energy flux analysis and validation for the North American
+        Land Data Assimilation System project phase 2 (NLDAS-2): 1. Intercomparison and application of model products. Journal of Geophysical Research, 117, D03109.
+      doi: 10.1029/2011JD016048
+      bibtex: |
+        @article{xia2012nldas2,
+          author  = {Xia, Youlong and Mitchell, Kenneth and Ek, Michael and Sheffield, Justin and Cosgrove, Brian and Wood, Eric F. and Luo, Lifeng and Alonge, Charles and Wei, Helin and Meng, Jesse and Livneh, Ben and Lettenmaier, Dennis and Koren, Victor and Duan, Qingyun and Mo, Kingtse and Fan, Yun and Mocko, David},
+          title   = {Continental-scale water and energy flux analysis and validation for the {North American Land Data Assimilation System} project phase 2 ({NLDAS-2}): 1. Intercomparison and application of model products},
+          journal = {Journal of Geophysical Research},
+          volume  = {117},
+          number  = {D3},
+          pages   = {D03109},
+          year    = {2012},
+          doi     = {10.1029/2011JD016048}
+        }
+    - label: NLDAS 프로젝트 배경 (Mitchell et al. 2004)
+      text: >-
+        Mitchell, K. E., Lohmann, D., Houser, P. R., Wood, E. F., Schaake, J. C., Robock, A., Cosgrove, B. A., Sheffield, J., Duan, Q., Luo, L., Higgins, R. W.,
+        Pinker, R. T., Tarpley, J. D., Lettenmaier, D. P., Marshall, C. H., Entin, J. K., Pan, M., Shi, W., Koren, V., Meng, J., Ramsay, B. H., Bailey, A. A. (2004):
+        The multi-institution North American Land Data Assimilation System (NLDAS): Utilizing multiple GCIP products and partners in a continental distributed
+        hydrological modeling system. Journal of Geophysical Research: Atmospheres, 109(D7).
+      doi: 10.1029/2003JD003823
+      bibtex: |
+        @article{mitchell2004nldas,
+          author  = {Mitchell, Kenneth E. and Lohmann, Dag and Houser, Paul R. and Wood, Eric F. and Schaake, John C. and Robock, Alan and Cosgrove, Brian A. and Sheffield, Justin and Duan, Qingyun and Luo, Lifeng and Higgins, R. Wayne and Pinker, Rachel T. and Tarpley, J. Dan and Lettenmaier, Dennis P. and Marshall, Curtis H. and Entin, Jared K. and Pan, Ming and Shi, Wei and Koren, Victor and Meng, Jesse and Ramsay, Bruce H. and Bailey, Andrew A.},
+          title   = {The multi-institution {North American Land Data Assimilation System} ({NLDAS}): Utilizing multiple {GCIP} products and partners in a continental distributed hydrological modeling system},
+          journal = {Journal of Geophysical Research: Atmospheres},
+          volume  = {109},
+          number  = {D7},
+          year    = {2004},
+          doi     = {10.1029/2003JD003823}
+        }
+  acknowledgement: >-
+    쓴 제품마다 DOI를 인용하세요. 나머지 DOI는 README 표에 있습니다(예: FORA 월 10.5067/2DPKB5B5N14O, FORB 시간별 10.5067/96S0R3LFOBTU, Mosaic 시간별 10.5067/TS58ZCJZIWT5,
+    VIC 시간별 10.5067/45T7K120BJ2S). NASA는 감사의 글에 "The data used in this study were acquired as part of the mission of NASA's Earth Science Division and archived
+    and distributed by the Goddard Earth Sciences (GES) Data and Information Services Center (DISC)."를 넣어 달라고 요청합니다. README는 프로젝트 배경에 Mitchell et al. (2004),
+    NLDAS-2 구성에 Xia et al. (2012a, 2012b)를 인용하라고 안내합니다.
+
+transitions:
+  - from: NLDAS-2 GRIB-1 (V002)
+    to: NLDAS-2 netCDF (V2.0)
+    status: completed
+    date: "2024-08"
+    summary: >-
+      같은 NLDAS-2 자료를 CF·ALMA 규약 netCDF로 다시 만든 V2.0이 2020~2021년 공개되었고, GRIB-1판(V002)은 2024년 8월 1일 23Z 자료를 끝으로 갱신이 멈췄습니다.
+    changes:
+      - aspect: 형식·버전
+        before: "GRIB-1, 버전 002"
+        after: "netCDF, 버전 2.0 (파일 끝 .020.nc)"
+      - aspect: 변수 이름
+        before: "GRIB PDS 번호·약어"
+        after: "ALMA 이름(`Tair`, `Rainf`, `SoilM_0_10cm` 등)과 cell_methods(point·mean·sum) 속성"
+      - aspect: Mosaic 증발 플럭스 부호
+        before: "4개 증발 플럭스 부호 반대"
+        after: "수정"
+      - aspect: 월 기후값 기간
+        before: "1980–2009 (30년)"
+        after: "1981–2020 (40년)"
+      - aspect: 갱신
+        before: "2024-08-01 23Z에서 중단"
+        after: "매일 약 4일 지연"
+    impacts:
+      - "GRIB용 스크립트는 변수 이름과 파일 경로를 모두 고쳐야 합니다."
+      - "기후값 기준 기간이 바뀌어 편차 값이 달라집니다."
+    sources:
+      - name: NLDAS-2 GRIB-1 files no longer updated as of 1 August 2024 (NASA LDAS)
+        url: https://ldas.gsfc.nasa.gov/nldas/news/nldas-2-grib-1-files-no-longer-updated-1-august-2024
+      - name: NLDAS-2 README (netCDF V2.0)
+        url: https://docserver.gesdisc.eosdis.nasa.gov/public/project/hydrology/NLDAS2_README.pdf
+  - from: NLDAS-2
+    to: NLDAS-3
+    status: planned
+    summary: >-
+      NASA가 개발 중인 3단계 NLDAS로, 해상도를 1 km로 높이고 영역을 북·중미 전체로 넓히며 Noah-MP 모델과 위성 자료동화를 도입합니다.
+      2026-10-13 확인 시 2001~2023년 베타 강제력만 AWS에 공개되어 있고, 모델 출력은 '2026년 중반 공개 예정'으로 안내된 뒤 아직 나오지 않았습니다. GES DISC·CMR에는 등록되어 있지 않습니다.
+    changes:
+      - aspect: 공간 해상도·격자
+        before: "0.125°(약 12.5 km), 464×224"
+        after: "1 km, 11,700×6,500 격자"
+      - aspect: 영역
+        before: "25–53°N, 125–67°W (미국 본토 중심)"
+        after: "7–72°N, 169–52°W (알래스카·하와이·푸에르토리코를 포함한 북미와 중미)"
+      - aspect: 지면 모델
+        before: "Noah, Mosaic, VIC, SAC"
+        after: "Noah-MP + HyMAP 하천 추적"
+      - aspect: 강제력
+        before: "NARR + CPC 일 우량계 분석(레이더 시간 분해)"
+        after: "MERRA-2·GEOS-IT 배경장 + 우량계·IMERG·캐나다 CaPA 강수"
+      - aspect: 자료동화
+        before: "없음 (오픈루프)"
+        after: "토양수분(SMAP 등), 적설, MODIS·VIIRS LAI, GRACE·GRACE-FO 육수저장량 동화 계획"
+      - aspect: 기간·지연
+        before: "1979-01~현재, 약 4일 지연"
+        after: "베타 강제력 2001~2023. 계획상 준실시간 Early Look 약 7시간 지연"
+      - aspect: 공개 상태
+        before: "GES DISC 정식 제공"
+        after: "베타 강제력만 AWS(s3://nasa-waterinsight/NLDAS3/forcing/)에 공개, 정식 공개 전 크게 바뀔 수 있다고 안내"
+    impacts:
+      - "베타 자료는 정식 공개 전 크게 바뀔 수 있으니 논문용 장기 분석에는 아직 NLDAS-2를 쓰세요."
+      - "NLDAS-3가 나오면 해상도·모델·강제력이 모두 달라지므로 NLDAS-2와 한 시계열로 잇지 마세요."
+      - "2025년 4월 워크숍 자료의 일정(오픈루프 2025년 늦여름, 자료동화 2025년 늦가을)은 지켜지지 않았습니다. 공개 여부는 NASA LDAS NLDAS-3 페이지와 GitHub를 확인하세요."
+    sources:
+      - name: NASA LDAS — NLDAS-3
+        url: https://ldas.gsfc.nasa.gov/nldas/v3
+      - name: NLDAS-3 GitHub (NASAWaterInsight)
+        url: https://github.com/NASAWaterInsight/NLDAS-3
+      - name: NLDAS-3 Drought Workshop 3 Slides (2025-04-10)
+        url: https://ldas.gsfc.nasa.gov/sites/default/files/ldas/nldas/NLDAS-3_Drought-Workshop-3_Slides.pdf
+
+notices:
+  - date: "2026-05-11"
+    level: warning
+    title: GES DISC 온프레미스 서버 종료 — NLDAS도 Earthdata Cloud로 전환 필요
+    body: >-
+      GES DISC는 온프레미스 서버의 HTTPS 접근을 2026년 9월 30일까지 닫고 온프레미스 OPeNDAP도 8월 20일~9월 30일 사이에 끈다고 안내했습니다.
+      NLDAS가 있는 hydro1.gesdisc.eosdis.nasa.gov 서버도 '빨라야 2026년 9월 30일 이후' 접근이 끝난다고 표시하고 있습니다(2026-10-13 확인 시 아직 응답).
+      스크립트 주소를 data.gesdisc.earthdata.nasa.gov나 earthaccess로 바꾸세요.
+    source: https://github.com/nasa/gesdisc-tutorials/blob/main/user-guidance/GES_DISC_Migration_to_Earthdata_Website_and_Earthdata_Cloud.md
+  - date: "2026-04-16"
+    level: info
+    title: GrADS Data Server(GDS) 서비스 종료 — NLDAS 포함
+    body: >-
+      NLDAS 강제력·Noah·Mosaic·VIC 시간별·월·기후값 컬렉션을 제공하던 GES DISC의 GDS가 2026년 4월 6일 종료되었습니다(1월 15일 예고).
+      같은 자료는 Earthdata Cloud에서 HTTPS와 부분 추출 서비스로 받을 수 있습니다.
+    source: https://www.earthdata.nasa.gov/data/alerts-outages/grads-data-server-gds-service-has-been-discontinued
+  - date: "2024-08-01"
+    level: warning
+    title: NLDAS-2 GRIB-1판(V002) 갱신 중단 — netCDF판(V2.0)으로 전환
+    body: >-
+      GES DISC의 NLDAS 버전 002(GRIB-1) 파일은 2024년 8월 1일 23Z 자료를 끝으로 매일 갱신이 멈췄습니다. 매일 갱신되는 NLDAS V2.0 netCDF 자료로 바꾸라고 안내합니다.
+    source: https://ldas.gsfc.nasa.gov/nldas/news/nldas-2-grib-1-files-no-longer-updated-1-august-2024
+  - date: "2024-06-07"
+    level: critical
+    title: 2022-08-01~2024-03-01 전 컬렉션 재처리 — 이전 다운로드분은 다시 받기
+    body: >-
+      2022년 8월 NCEP R-CDAS(NARR 실시간 연장판)의 적설 깊이 입력 오류로 기온이 너무 높게 들어가 2022~23년 겨울 적설이 적고 북부 토양이 지나치게 건조해졌습니다.
+      FORA·FORB·Mosaic·Noah·VIC의 시간별·월자료(netCDF·GRIB 모두)를 이 구간에 대해 재처리해 2024년 6월 7일 공개했습니다. 그 전에 받은 이 구간 자료는 다시 받으세요.
+    source: https://ldas.gsfc.nasa.gov/nldas/news/nldas-2-data-re-processed-2022-08-01-2024-03-01
+  - date: "2020-04-01"
+    level: info
+    title: NLDAS-1 자료 폐기
+    body: NLDAS 1단계(버전 001) 자료가 2020년 4월 1일 GES DISC에서 내려갔습니다. NLDAS-2를 쓰세요.
+    source: https://ldas.gsfc.nasa.gov/nldas/news/nldas-1-data-will-be-decommissioned-412020
+
+links:
+  - name: NASA LDAS — NLDAS
+    url: https://ldas.gsfc.nasa.gov/nldas
+  - name: NLDAS-2 README (netCDF V2.0 변수표·시간 규칙·DOI 표)
+    url: https://docserver.gesdisc.eosdis.nasa.gov/public/project/hydrology/NLDAS2_README.pdf
+  - name: NLDAS FAQ
+    url: https://ldas.gsfc.nasa.gov/faq/NLDAS
+  - name: NLDAS-2 재처리 요약 (2022-08~2024-03)
+    url: https://ldas.gsfc.nasa.gov/sites/default/files/ldas/nldas/issues/NLDAS-2_rerun_Aug2022-Mar2024_summary.pdf
+  - name: GES DISC NLDAS_NOAH0125_H 2.0
+    url: https://disc.gsfc.nasa.gov/datasets/NLDAS_NOAH0125_H_2.0/summary
+  - name: NASA LDAS — NLDAS-3
+    url: https://ldas.gsfc.nasa.gov/nldas/v3
+
+watch_urls:
+  - https://ldas.gsfc.nasa.gov/news
+  - https://ldas.gsfc.nasa.gov/nldas/v3
+  - https://github.com/NASAWaterInsight/NLDAS-3
+
+last_verified: "2026-10-13"

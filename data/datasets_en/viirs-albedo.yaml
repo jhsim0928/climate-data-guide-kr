@@ -1,0 +1,318 @@
+# ─────────────────────────────────────────────────────────────
+# VIIRS BRDF/Albedo (VNP43, VJ143) C2 — dataset information file (English edition)
+# Land tab (land surface temperature & albedo). Successor to MODIS MCD43 (modis-albedo.yaml); the MODIS → VIIRS transition is described in modis-albedo.yaml.
+# After editing, update last_verified to the date you checked the official pages.
+# ─────────────────────────────────────────────────────────────
+id: viirs-albedo
+name: "VIIRS BRDF/Albedo (VNP43)"
+full_name: VIIRS BRDF/Albedo Collection 2 (VNP43 Suomi NPP, VJ143 NOAA-20, VJ243 NOAA-21) — the VIIRS continuation of MODIS MCD43, produced daily from a 16-day window
+category: satellite
+domain: land
+group: 지표면온도·알베도
+order: 21
+domains: [육지, 원격탐사]
+provider: NASA VIIRS Land Science Team (Schaaf lab, UMass Boston) / NASA LP DAAC
+
+status: active
+status_note: >-
+  Collection 2 (V002) is the current version and is updated daily (on 2026-10-13 the latest VJ143MA3 file was dated 4 October 2026 and VNP43MA3 1 October 2026).
+  However, NOAA will stop delivering Suomi NPP data (VNP43) at 13:00 UTC on 2 November 2026, so from then on users need the NOAA-21 (VJ243, primary) or NOAA-20 (VJ143, secondary) products.
+  Collection 1 (V001) stopped production in early 2025 and has been superseded.
+
+period:
+  start: "2012-01"
+  end: present
+  note: >-
+    In CMR, VNP43 (Suomi NPP) starts 2012-01-17, VJ143 (NOAA-20) 2018-01-01 and VJ243 (NOAA-21) 2023-02-10 (the CMG products start two to four days later).
+    No new VNP43 data are expected after 2 November 2026, and some gaps from the Suomi NPP anomaly of 10–21 July 2026 may not have been recovered.
+
+resolution:
+  spatial_short: "0.5 km (0.005°)"
+  temporal_short: "1일"
+  spatial: >-
+    MODIS/VIIRS Sinusoidal tile grid — 500 m (IA products, imagery bands I1–I3) and 1 km (MA products, moderate bands M1–M5, M7, M8, M10, M11 and broadbands) /
+    0.05° Climate Modeling Grid (CMG, C1–C4) / 30 arc-second CMG (D products) / separate 1 km Day/Night Band (DNB) products
+  vertical: Land surface (single level)
+  temporal: Produced daily (each retrieval uses 16 days of VIIRS observations weighted to the 9th day; the file-name date is that 9th day)
+
+update: Daily (the 16-day window must fill, so files appear roughly one to two weeks after their nominal date)
+license: NASA Earth science open data — free and unrestricted under the EOSDIS Data Use and Citation Guidance. Downloads require a free NASA Earthdata Login
+account_required: true
+
+summary: >-
+  NASA's standard VIIRS BRDF/albedo suite applies the same kernel-driven BRDF model (RossThick/LiSparse-Reciprocal) and 16-day, 9th-day-weighted approach as MODIS MCD43
+  to VIIRS observations so that the MODIS BRDF/albedo record can continue. It provides black-sky and white-sky albedo (A3), nadir BRDF-adjusted reflectance (A4),
+  BRDF model parameters (A1) and quality (A2) at 500 m (I bands), 1 km (M bands), 0.05° and 30 arc-second, as separate products per satellite: VNP43 (Suomi NPP), VJ143 (NOAA-20) and VJ243 (NOAA-21).
+  Collection 2 is a reprocessing with improved calibration over the whole Suomi NPP mission, better geolocation, and improved cloud and land/water masks.
+
+time_convention:
+  summary: >-
+    As with MODIS MCD43, each value comes from a BRDF model fitted to 16 days of observations, weighted towards the 9th day of the window (the date in the file name).
+    Black-sky albedo and NBAR refer to the solar zenith angle at local solar noon on that date; white-sky albedo is the fully diffuse case and does not depend on sun position.
+  points:
+    - "The AYYYYDDD date in the file name is the 9th day of the 16-day input window, not a single day's observation."
+    - "Unlike MODIS MCD43, which pools Terra (morning) and Aqua (afternoon), each VIIRS product uses one satellite in an afternoon orbit. VNP43, VJ143 and VJ243 are separate retrievals from different satellites."
+    - "Pixels with enough observations get a full inversion; otherwise a magnitude inversion is used. The quality flag (0/1) tells them apart."
+    - "Actual (blue-sky) albedo is not provided; compute it by interpolating between black-sky and white-sky albedo using the diffuse skylight fraction."
+  source: https://www.umb.edu/spectralmass/viirs-user-guides-c1-and-c2/vnp43ia3-and-vnp43ma3-albedo-products/
+  source_name: "VIIRS BRDF/Albedo User Guide (UMass Boston) + LP DAAC VNP43MA3 and VJ143MA3 V002 collection descriptions (CMR)"
+
+variables:
+  note: >-
+    Variable names come from the LAADS file specifications for VNP43IA3 and VNP43MA3 (Collection 1) and match the layer counts in the Collection 2 descriptions (9 for IA3, 36 for MA3).
+    Albedo is INT16 with scale_factor 0.001 (valid range 0–1000) and fill value 32767. Files are HDF-EOS5 (HDF5); check the group path in your downloaded files.
+  full_list: https://ladsweb.modaps.eosdis.nasa.gov/filespec/VIIRS/1/VNP43MA3
+  groups:
+    - name: Albedo 1 km (VNP43MA3 / VJ143MA3 / VJ243MA3)
+      kind: mean
+      period: 16-day window (9th day weighted)
+      items:
+        - text: "Black-sky albedo (local solar noon) — `Albedo_BSA_M1`–`M5`, `Albedo_BSA_M7`, `M8`, `M10`, `M11`, `Albedo_BSA_vis`, `Albedo_BSA_nir`, `Albedo_BSA_shortwave` (dimensionless)"
+          note: The BRDF fitted to 16 days of data, integrated at the local-noon solar zenith angle
+        - text: "White-sky albedo — `Albedo_WSA_M1`–`M11` (no M6, M9), `Albedo_WSA_vis`, `Albedo_WSA_nir`, `Albedo_WSA_shortwave` (dimensionless)"
+          note: Fully diffuse illumination, independent of sun position
+        - "Per-band mandatory quality — `BRDF_Albedo_Band_Mandatory_Quality_M1`–`_shortwave` (0 full inversion, 1 magnitude inversion, 255 fill)"
+    - name: Albedo 500 m (VNP43IA3 / VJ143IA3 / VJ243IA3)
+      kind: mean
+      period: 16-day window (9th day weighted)
+      items:
+        - "Black-sky albedo — `Albedo_BSA_I1`, `Albedo_BSA_I2`, `Albedo_BSA_I3` (dimensionless)"
+        - "White-sky albedo — `Albedo_WSA_I1`, `Albedo_WSA_I2`, `Albedo_WSA_I3` (dimensionless)"
+        - "Per-band mandatory quality — `BRDF_Albedo_Band_Mandatory_Quality_I1`–`I3`"
+    - name: Albedo 0.05° CMG (VNP43C3 / VJ143C3 / VJ243C3)
+      kind: mean
+      period: 16-day window (9th day weighted)
+      items:
+        - "Black-sky and white-sky albedo (M bands and broadbands) (dimensionless)"
+        - text: "Fraction of snow-covered inputs in the CMG cell (%)"
+          note: The collection description lists a snow cover ancillary layer; check the variable name in your files
+        - "Ancillary layers for uncertainty, quality, local solar noon and percent of finer-resolution inputs"
+    - name: NBAR and BRDF parameters (IA4, MA4 / IA1, MA1)
+      kind: mean
+      period: 16-day window (9th day weighted)
+      items:
+        - "Nadir BRDF-adjusted reflectance, NBAR (local-noon sun, nadir view) — VNP43IA4, MA4 (dimensionless)"
+        - "BRDF kernel weights (isotropic, volumetric, geometric) — VNP43IA1, MA1 (dimensionless)"
+
+access:
+  - name: NASA Earthdata Search (LP DAAC, Earthdata Cloud)
+    url: https://search.earthdata.nasa.gov/search/granules?p=C2545314605-LPCLOUD
+    method: Web search and download / earthaccess (HDF-EOS5)
+    note: >-
+      Short names combine the satellite prefix (VNP43, VJ143, VJ243) with the product (IA1–IA4, MA1–MA4, C1–C4, D, DNBA1–4); the version is 002. A free Earthdata Login is required.
+      Suomi NPP (VNP43) will have no new data after 2 November 2026, so for long records download VJ143 and VJ243 as well.
+  - name: NASA AppEEARS
+    url: https://appeears.earthdatacloud.nasa.gov/
+    method: Point and area extraction with reprojection (GeoTIFF, NetCDF4)
+    note: Since March 2025 (AppEEARS 3.76) it supports 16 Suomi NPP and NOAA-20 VIIRS BRDF/Albedo V2 products at 500 m and 1 km.
+  - name: LP DAAC product page (VNP43MA3 V002)
+    url: https://doi.org/10.5067/VIIRS/VNP43MA3.002
+    method: Documentation, layer tables, DOI
+
+example:
+  lang: python
+  note: >-
+    Downloads one day of NOAA-20 (VJ143MA3) 1 km albedo with earthaccess and reads white-sky shortwave albedo (pip install earthaccess h5py numpy).
+    Variables are located by name, so you do not need to know the HDF-EOS5 group path.
+  code: |
+    import earthaccess
+    import h5py
+    import numpy as np
+
+    earthaccess.login()  # free NASA Earthdata account
+    results = earthaccess.search_data(
+        short_name="VJ143MA3", version="002",
+        temporal=("2024-04-15", "2024-04-15"),
+        bounding_box=(124, 33, 132, 39),   # (west, south, east, north)
+    )
+    files = earthaccess.download(results, "vj143ma3")
+
+    def find(h5, name):
+        hits = []
+        h5.visititems(lambda k, v: hits.append(k) if k.endswith("/" + name) else None)
+        return h5[hits[0]]
+
+    for f in files:
+        with h5py.File(f, "r") as h5:
+            wsa = find(h5, "Albedo_WSA_shortwave")[:].astype("float32")
+            qa = find(h5, "BRDF_Albedo_Band_Mandatory_Quality_shortwave")[:]
+        wsa[wsa == 32767] = np.nan        # fill value
+        wsa *= 0.001                      # scale_factor
+        wsa[qa != 0] = np.nan             # keep full inversions only
+        print(f, np.nanmean(wsa))
+
+tips:
+  - "Delivery of Suomi NPP data (VNP43) ends on 2 November 2026. Switch the short names in your scripts to VJ243 (NOAA-21) or VJ143 (NOAA-20), and check for offsets where the satellite changes."
+  - "VNP43, VJ143 and VJ243 share the algorithm but come from different sensors. Before joining them into one series, compare them over their overlap, and state in papers which satellite product you used for which period."
+  - "Multiply albedo by 0.001 and treat 32767 as fill. Using only quality flag 0 (full inversions) is recommended."
+  - "Variable names differ from MODIS MCD43 (M and I bands instead of Band1–7). The broadband names (vis, nir, shortwave) are the same, but the sensors' spectral response differs, so values are not identical."
+  - "The 500 m products (IA) contain only imagery bands I1–I3 and no broadband albedo. For broadband shortwave albedo use the 1 km products (MA) or the 0.05° CMG (C3)."
+  - "Files are HDF-EOS5 (HDF5), so MODIS HDF4 code (pyhdf) will not work. The Sinusoidal projection uses the same sphere as MODIS (radius 6371007.181 m)."
+  - "Production of VNP43 stopped during the Suomi NPP anomaly of 10–21 July 2026. VNP43 retrievals whose 16-day window includes this period have fewer observations, so check their quality."
+
+citations:
+  dataset:
+    - label: VJ143MA3 V002 (NOAA-20 albedo, 1 km)
+      text: >-
+        Schaaf, C., Wang, Z., Erb, A., Paynter, I. (2024). VIIRS/JPSS1 BRDF/Albedo Albedo Daily L3 Global 1km SIN Grid V002 [Data set].
+        NASA Land Processes Distributed Active Archive Center. https://doi.org/10.5067/VIIRS/VJ143MA3.002 (Accessed YYYY-MM-DD)
+      doi: 10.5067/VIIRS/VJ143MA3.002
+      bibtex: |
+        @misc{vj143ma3_v002,
+          author    = {Schaaf, Crystal and Wang, Zhuosen and Erb, Angela and Paynter, Ian},
+          title     = {{VIIRS/JPSS1 BRDF/Albedo Albedo Daily L3 Global 1km SIN Grid V002}},
+          year      = {2024},
+          publisher = {NASA Land Processes Distributed Active Archive Center},
+          doi       = {10.5067/VIIRS/VJ143MA3.002}
+        }
+    - label: VNP43MA3 V002 (Suomi NPP albedo, 1 km)
+      text: >-
+        Schaaf, C., Wang, Z., Erb, A., Paynter, I. (2024). VIIRS/NPP BRDF/Albedo Albedo Daily L3 Global 1km SIN Grid V002 [Data set].
+        NASA Land Processes Distributed Active Archive Center. https://doi.org/10.5067/VIIRS/VNP43MA3.002 (Accessed YYYY-MM-DD)
+      doi: 10.5067/VIIRS/VNP43MA3.002
+      bibtex: |
+        @misc{vnp43ma3_v002,
+          author    = {Schaaf, Crystal and Wang, Zhuosen and Erb, Angela and Paynter, Ian},
+          title     = {{VIIRS/NPP BRDF/Albedo Albedo Daily L3 Global 1km SIN Grid V002}},
+          year      = {2024},
+          publisher = {NASA Land Processes Distributed Active Archive Center},
+          doi       = {10.5067/VIIRS/VNP43MA3.002}
+        }
+    - label: VJ243MA3 V002 (NOAA-21 albedo, 1 km)
+      text: >-
+        Schaaf, C., Wang, Z., Erb, A., Paynter, I. (2026). VIIRS/JPSS2 BRDF/Albedo Albedo Daily L3 Global 1km SIN Grid V002 [Data set].
+        NASA Land Processes Distributed Active Archive Center. https://doi.org/10.5067/VIIRS/VJ243MA3.002 (Accessed YYYY-MM-DD)
+      doi: 10.5067/VIIRS/VJ243MA3.002
+      bibtex: |
+        @misc{vj243ma3_v002,
+          author    = {Schaaf, Crystal and Wang, Zhuosen and Erb, Angela and Paynter, Ian},
+          title     = {{VIIRS/JPSS2 BRDF/Albedo Albedo Daily L3 Global 1km SIN Grid V002}},
+          year      = {2026},
+          publisher = {NASA Land Processes Distributed Active Archive Center},
+          doi       = {10.5067/VIIRS/VJ243MA3.002}
+        }
+  papers:
+    - label: Evaluation of VIIRS BRDF/Albedo/NBAR and continuity with MODIS
+      text: >-
+        Liu, Y., Wang, Z., Sun, Q., Erb, A. M., Li, Z., Schaaf, C. B., Zhang, X., Román, M. O., Scott, R. L., Zhang, Q., Novick, K. A.,
+        Bret-Harte, M. S., Petroy, S., SanClements, M. (2017): Evaluation of the VIIRS BRDF, Albedo and NBAR products suite and an assessment
+        of continuity with the long term MODIS record. Remote Sensing of Environment, 201, 256–274.
+      doi: 10.1016/j.rse.2017.09.020
+      bibtex: |
+        @article{liu2017viirsbrdf,
+          author  = {Liu, Yan and Wang, Zhuosen and Sun, Qingsong and Erb, Angela M. and Li, Zhan and Schaaf, Crystal B. and Zhang, Xiaoyang and Rom{\'a}n, Miguel O. and Scott, Russell L. and Zhang, Quan and Novick, Kimberly A. and Bret-Harte, M. Syndonia and Petroy, Shelley and SanClements, Mike},
+          title   = {Evaluation of the {VIIRS} {BRDF}, Albedo and {NBAR} products suite and an assessment of continuity with the long term {MODIS} record},
+          journal = {Remote Sensing of Environment},
+          volume  = {201},
+          pages   = {256--274},
+          year    = {2017},
+          doi     = {10.1016/j.rse.2017.09.020}
+        }
+    - label: Continuity between MODIS C6.1 and VIIRS C2 land products (review)
+      text: >-
+        Román, M. O., Justice, C., Paynter, I., Boucher, P. B., Devadiga, S., Endsley, A., Erb, A., Friedl, M., Gao, H., Giglio, L., Gray, J. M., Hall, D.,
+        Hulley, G., Kimball, J., Knyazikhin, Y., Lyapustin, A., Myneni, R. B., Noojipady, P., Pu, J., Riggs, G., Sarkar, S., Schaaf, C., Shah, D., Tran, K. H.,
+        Vermote, E., Wang, D., Wang, Z., Wu, A., Ye, Y., Shen, Y., Zhang, S., Zhang, X., Zhao, M., Davidson, C., Wolfe, R. (2024): Continuity between NASA MODIS
+        Collection 6.1 and VIIRS Collection 2 land products. Remote Sensing of Environment, 302, 113963.
+      doi: 10.1016/j.rse.2023.113963
+      bibtex: |
+        @article{roman2024continuity,
+          author  = {Rom{\'a}n, Miguel O. and Justice, Chris and Paynter, Ian and Boucher, Peter B. and Devadiga, Sadashiva and Endsley, Arthur and Erb, Angela and Friedl, Mark and Gao, Huilin and Giglio, Louis and Gray, Josh M. and Hall, Dorothy and Hulley, Glynn and Kimball, John and Knyazikhin, Yuri and Lyapustin, Alexei and Myneni, Ranga B. and Noojipady, Praveen and Pu, Jiabin and Riggs, George and Sarkar, Sudipta and Schaaf, Crystal and Shah, Deep and Tran, Khuong H. and Vermote, Eric and Wang, Dongdong and Wang, Zhuosen and Wu, Aisheng and Ye, Yongchang and Shen, Yu and Zhang, Shuai and Zhang, Xiaoyang and Zhao, Maosheng and Davidson, Carol and Wolfe, Robert},
+          title   = {Continuity between {NASA} {MODIS} Collection 6.1 and {VIIRS} Collection 2 land products},
+          journal = {Remote Sensing of Environment},
+          volume  = {302},
+          pages   = {113963},
+          year    = {2024},
+          doi     = {10.1016/j.rse.2023.113963}
+        }
+  acknowledgement: >-
+    LP DAAC asks users to cite each product with the citation on its DOI landing page. Cite the DOI of each satellite product you used (e.g. VJ143IA3 10.5067/VIIRS/VJ143IA3.002, VNP43IA3 10.5067/VIIRS/VNP43IA3.002, VNP43C3 10.5067/VIIRS/VNP43C3.002).
+    Because the algorithm is the same as MODIS MCD43, Schaaf et al. (2002) is commonly cited as well.
+
+transitions:
+  - from: VIIRS BRDF/Albedo Collection 1 (V001)
+    to: VIIRS BRDF/Albedo Collection 2 (V002)
+    status: completed
+    date: "2024-10"
+    summary: >-
+      A reprocessing with improved calibration over the whole Suomi NPP mission, better geolocation, and improved cloud and land/water masks. NOAA-20 (VJ143) products first appeared in C2,
+      and NOAA-21 (VJ243) products have since been added. C1 (VNP43 V001) stopped production in early 2025.
+    changes:
+      - aspect: Release
+        before: "V001 (Suomi NPP only)"
+        after: "Tiled products 2024-10-31, CMG 2025-01-31 / NOAA-21 (VJ243) DOIs registered in 2026"
+      - aspect: Satellites
+        before: "Suomi NPP (VNP43)"
+        after: "Suomi NPP (VNP43) + NOAA-20 (VJ143) + NOAA-21 (VJ243)"
+      - aspect: Calibration and geolocation
+        before: "C1 calibration coefficients"
+        after: "Improved calibration algorithm and coefficients for the whole Suomi NPP mission; better geolocation with outliers around manoeuvres fixed"
+      - aspect: Input masks
+        before: "C1 cloud mask and land/water mask"
+        after: "Improved cloud mask input (fewer coastline errors and coarse-climatology artefacts), corrected aerosol quantity flag (bright mid/high-latitude surfaces), eight-class land/water mask from VNP03 (closer to MODIS)"
+      - aspect: Period
+        before: "2012-01 to 2025-02 (end of V001)"
+        after: "2012-01 to present"
+    impacts:
+      - Do not mix C1 and C2; download the whole period again as C2.
+      - Values near coastlines and over bright high-latitude surfaces may differ from C1.
+    sources:
+      - name: LP DAAC VNP43MA4 V002 collection description (version changes, CMR)
+        url: https://doi.org/10.5067/VIIRS/VNP43MA4.002
+      - name: VIIRS Version 2 Albedo, BRDF, and NBAR Tiled Data Products Released (Earthdata)
+        url: https://www.earthdata.nasa.gov/data/alerts-outages/viirs-version-2-albedo-brdf-nbar-tiled-data-products-released
+      - name: VIIRS Version 2 Albedo, BRDF, and NBAR CMG Data Products Released (Earthdata)
+        url: https://www.earthdata.nasa.gov/data/alerts-outages/viirs-version-2-albedo-brdf-nbar-cmg-data-products-released
+
+notices:
+  - date: "2026-08-03"
+    level: critical
+    title: Suomi NPP data delivery ends on 2 November 2026 — no new VNP43 data
+    body: >-
+      NOAA announced that it will permanently end delivery of the remaining Suomi NPP science products, including VIIRS, at 13:00 UTC on 2 November 2026, and recommended moving to NOAA-21 (primary) and NOAA-20 (secondary).
+      LP DAAC's VNP43 collection descriptions now carry the same date and point users to the VJ243 (primary) and VJ143 (secondary) products. Already published historical data remain available.
+    source: https://www.nesdis.noaa.gov/news/cessation-of-suomi-national-polar-orbiting-partnership-s-npp-data-users-onafter-november-2-2026
+  - date: "2026-07-13"
+    level: warning
+    title: Suomi NPP anomaly — VIIRS product generation halted from 10 July 2026
+    body: >-
+      Suomi NPP entered a non-nominal state at about 14:50 UTC on 10 July, and all science product generation (including VNP43) was disabled from 01:30 UTC on 11 July.
+      According to NSIDC, the spacecraft was back to nominal on 21 July and processing resumed afterwards, but observations from this period may not be recoverable.
+    source: https://www.earthdata.nasa.gov/data/alerts-outages/suomi-npp-viirs-data-outage-anomaly-july-10-2026
+  - date: "2025-03-28"
+    level: info
+    title: VIIRS BRDF/Albedo V2 products available in AppEEARS
+    body: >-
+      AppEEARS 3.76 added 16 Suomi NPP and NOAA-20 VIIRS BRDF/Albedo V2 products on the 500 m and 1 km Sinusoidal grids.
+    source: https://www.earthdata.nasa.gov/data/alerts-outages/viirs-brdf-albedo-version-2-products-available-appeears
+  - date: "2025-01-31"
+    level: info
+    title: VIIRS V2 BRDF/Albedo/NBAR 0.05° CMG products released
+    body: >-
+      Eight 0.05° Climate Modeling Grid products (VNP43C1–C4, VJ143C1–C4) with BRDF parameters, snow-free parameters, albedo and NBAR were released.
+      Forward processing of the V1 BRDF/albedo products continued through 31 January 2025.
+    source: https://www.earthdata.nasa.gov/data/alerts-outages/viirs-version-2-albedo-brdf-nbar-cmg-data-products-released
+  - date: "2024-10-31"
+    level: info
+    title: VIIRS V2 BRDF/Albedo/NBAR tiled products released (Suomi NPP, NOAA-20)
+    body: >-
+      V2 products VNP43IA1–4 and VJ143IA1–4 (500 m) and VNP43MA1–4 and VJ143MA1–4 (1 km) were released. Suomi NPP V1 remained available during the transition.
+    source: https://www.earthdata.nasa.gov/data/alerts-outages/viirs-version-2-albedo-brdf-nbar-tiled-data-products-released
+
+links:
+  - name: VIIRS BRDF/Albedo User Guides (C1 and C2, UMass Boston)
+    url: https://www.umb.edu/spectralmass/viirs-user-guides-c1-and-c2/
+  - name: VNP43 Algorithm Theoretical Basis Document (ATBD)
+    url: https://lpdaac.usgs.gov/documents/194/VNP43_ATBD_V1.pdf
+  - name: VIIRS land surface albedo validation
+    url: https://viirsland.gsfc.nasa.gov/Val/Albedo_Val.html
+  - name: LAADS file specification — VNP43MA3
+    url: https://ladsweb.modaps.eosdis.nasa.gov/filespec/VIIRS/1/VNP43MA3
+  - name: NOAA — cessation of S-NPP data delivery (2026-08-03)
+    url: https://www.nesdis.noaa.gov/news/cessation-of-suomi-national-polar-orbiting-partnership-s-npp-data-users-onafter-november-2-2026
+
+watch_urls:
+  - https://www.earthdata.nasa.gov/data/alerts-outages
+  - https://doi.org/10.5067/VIIRS/VJ143MA3.002
+
+last_verified: "2026-10-13"

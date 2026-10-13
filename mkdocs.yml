@@ -4,7 +4,7 @@
 # 방문자가 GitHub 저장소로 가지 않도록 repo_url·edit_uri는 일부러 넣지 않았습니다.
 # ─────────────────────────────────────────────────────────────
 site_name: 기후데이터 길잡이
-site_description: 대기·해양·해빙 재분석·위성·관측 자료의 제공 상태와 중단·변경 공지, 받는 방법, 변수(순간값·평균·누적), 해상도, 인용(DOI)을 한곳에 정리한 연구자용 기후데이터 안내 사이트입니다.
+site_description: 대기·해양·해빙·지면 재분석·위성·관측 자료의 제공 상태와 중단·변경 공지, 받는 방법, 변수(순간값·평균·누적), 해상도, 인용(DOI)을 한곳에 정리한 연구자용 기후데이터 안내 사이트입니다.
 site_url: https://data4researchers.kr/
 copyright: 콘텐츠 CC BY 4.0 · 코드 MIT
 
@@ -56,7 +56,7 @@ nav:
       - 변수로 찾기: find-variable.md
       - 자료 비교: compare.md
       - 표준 변수 목록: variables.md
-  # 대기·해양·해빙 메뉴는 data/datasets/*.yaml 의 domain·group·order 값으로 자동 생성됩니다
+  # 대기·해양·해빙·지면 메뉴는 data/datasets/*.yaml 의 domain·group·order 값으로 자동 생성됩니다
   - __DATA_SECTIONS__: auto
   - 세대별 비교: transitions.md
   - 중요 공지: notices.md

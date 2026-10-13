@@ -1,0 +1,356 @@
+# ─────────────────────────────────────────────────────────────
+# MODIS evapotranspiration MOD16/MYD16 C6.1 — dataset information file
+# Land tab (Evapotranspiration). Deprecated ahead of the end of Terra and Aqua. The VIIRS successor (VNP16/VJ116) V2 was withdrawn on 2026-08-17,
+# so it has no page on this site (when V2.1 is released, create a viirs-et page and add to_id to the transitions).
+# After editing, update last_verified to the date you checked the official pages.
+# ─────────────────────────────────────────────────────────────
+id: modis-et
+name: "MODIS ET (MOD16)"
+full_name: MODIS/Terra and Aqua Net Evapotranspiration MOD16A2(GF), MYD16A2(GF), MOD16A3GF, MYD16A3GF Version 6.1 (global 500 m actual and potential evapotranspiration from MODIS)
+category: satellite
+domain: land
+group: 증발산
+order: 20
+domains: [육지, 수문, 원격탐사]
+provider: NASA MODIS Land Team (MOD16 developers Running, Mu, Zhao, Moreno) / NASA LP DAAC
+
+status: deprecated
+status_note: >-
+  Collection 6.1 is still produced every 8 days (on 2026-10-13 the latest composite was 22–29 September 2026), but Terra and Aqua are drifting out of their orbits because of fuel and power limits
+  and are expected to begin shutting down in late 2026 to early 2027, and NASA advises users to move to similar VIIRS products. However, the VIIRS evapotranspiration successor (VNP16/VJ116) V2
+  was withdrawn on 17 August 2026 because of data issues, with no date announced for the V2.1 reprocessing, so for now there is no NASA satellite ET product that replaces MODIS.
+
+period:
+  start: "2000-02"
+  end: present
+  note: >-
+    The year-end gap-filled (GF) products are the long-term record. MOD16A2GF starts in 2000 (CMR lists 2000-01-01; Terra data begin in late February 2000) and MYD16A2GF in 2002 (Aqua data from 2002-07-04),
+    both running to December 2025 (the 2025 files were produced on 2026-02-05). The non-gap-filled forward products (MOD16A2, MYD16A2) only start on 2021-01-01 in V6.1 and, on 2026-10-13, extended to the 2026-09-22–29 composite.
+    Yearly data exist in CMR only as GF products (MOD16A3GF, MYD16A3GF), up to 2025.
+
+resolution:
+  spatial_short: "0.5 km (0.005°)"
+  temporal_short: "8일"
+  spatial: "MODIS Sinusoidal (SIN) tile grid, 500 m (tiles hXXvYY, global vegetated land). Meteorological input (GMAO reanalysis, 0.5°×0.6° or 1°×1.25°) is interpolated to the 500 m grid"
+  vertical: Single surface layer (total ET = soil evaporation + wet canopy evaporation + plant transpiration)
+  temporal: >-
+    8-day composites (starting 1 January each year; the last period of the year is 5 days, or 6 in leap years) / yearly (A3GF). The algorithm runs daily and the values are then summed or averaged.
+
+update: "Forward 8-day products (MOD16A2, MYD16A2) appear one to two weeks after the period ends (the 2026-09-22–29 composite was produced on 7–8 October) / GF 8-day and yearly products are produced once, early in the following year, after a full year of LAI/FPAR is available (2025 data on 2026-02-05)"
+license: Openly shared without restriction under the NASA EOSDIS Data Use and Citation Guidance. Downloading requires a free NASA Earthdata Login; citation of the dataset DOI is requested.
+account_required: true
+
+summary: >-
+  MOD16 is a Level 4 product that feeds MODIS leaf area index and fraction of absorbed PAR (LAI/FPAR), albedo and land cover, together with daily GMAO meteorological reanalysis,
+  into a Penman-Monteith-based algorithm (Mu et al., 2011) to estimate actual evapotranspiration (ET), latent heat flux (LE), potential ET (PET) and potential LE (PLE) over global vegetated land at 500 m every 8 days.
+  There are Terra (MOD16) and Aqua (MYD16) versions; the year-end gap-filled (GF) products, rebuilt after poor-quality LAI/FPAR values in the full year are replaced by temporal interpolation, are the research standard.
+  It is widely used for water balance, drought and agricultural water use studies, but has no values over urban, barren, water and permanent snow/ice pixels.
+
+time_convention:
+  summary: >-
+    ET and PET are totals over the 8-day period (one year for the yearly product) in kg m-2 (= mm), while LE and PLE are daily averages over the same period (J m-2 day-1).
+    The file date (AYYYYDDD) is the first day of the composite; periods start on 1 January (DOY 001) and run in 8-day steps, and only the last period of the year is 5 days (6 in leap years).
+  points:
+    - "Do not simply average ET_500m. The last period of the year (file date DOY 361, 27–31 December) is a 5- or 6-day total and looks smaller than the others. For monthly or annual totals, weight by days or convert to a daily mean by dividing by the period length first."
+    - "To convert LE and PLE (J m-2 day-1) to W m-2, divide by 86400. The 8-day ET total (mm) and the daily mean LE are different temporal statistics."
+    - "The 8-day periods do not line up with calendar months (e.g. A2023001 = 1–8 January, A2023025 = 25 January–1 February). For monthly totals, apportion each period by the fraction of days in each month."
+    - "The algorithm computes daily values from daily meteorological inputs and then sums or averages them over 8 days (or a year). Values are not instantaneous at the satellite overpass."
+    - "The Terra (MOD16, nominal 10:30 descending node) and Aqua (MYD16, 13:30 ascending node) versions are built from each satellite's own MODIS input products and differ slightly. Terra stopped orbit maintenance in 2020 and Aqua in 2021, so their crossing times have shifted (Terra earlier, Aqua later); this reaches ET indirectly through the reflectance-based inputs (LAI/FPAR, albedo). No official quantitative assessment for ET has been published yet."
+    - "GF products are recomputed for the whole year at year end, so for the same date the forward (MOD16A2) and gap-filled (MOD16A2GF) values differ."
+  source: https://lpdaac.usgs.gov/documents/931/MOD16_User_Guide_V61.pdf
+  source_name: "MOD16 C6.1 User's Guide (LP DAAC) + MOD16A2GF and MOD16A2 V061 collection descriptions (CMR)"
+
+variables:
+  note: >-
+    Science datasets (SDS) from the LP DAAC data catalog and the C6.1 User's Guide. In the HDF-EOS2 (HDF4) files, physical value = stored value × scale_factor;
+    in the 8-day files, stored values 32761–32767 are fill values marking non-vegetated land cover classes and must be removed first. MYD16 (Aqua) files use the same names.
+  full_list: https://www.earthdata.nasa.gov/data/catalog/lpcloud-mod16a2gf-061
+  groups:
+    - name: 8-day data (MOD16A2GF, MYD16A2GF year-end gap-filled / MOD16A2, MYD16A2 forward)
+      kind: accum
+      period: "8 days (5–6 days in the last period of the year)"
+      items:
+        - text: "Actual evapotranspiration, 8-day total — `ET_500m` (kg m-2 8day-1 = mm, scale 0.1)"
+          note: Sum of daily ET over 8 days (5–6 days at year end). 32761–32767 are fill values
+        - text: "Potential evapotranspiration, 8-day total — `PET_500m` (kg m-2 8day-1, scale 0.1)"
+          note: 8-day total. 32761–32767 are fill values
+        - text: "Latent heat flux, 8-day mean — `LE_500m` (J m-2 day-1, scale 10000)"
+          kind: mean
+          note: Average daily energy over the 8 days. W m-2 = value ÷ 86400
+        - text: "Potential latent heat flux, 8-day mean — `PLE_500m` (J m-2 day-1, scale 10000)"
+          kind: mean
+          note: Average daily energy over the 8 days
+        - text: "Quality bits — `ET_QC_500m` (bit field: 0 MODLAND_QC, 1 sensor Terra/Aqua, 2 dead detector, 3–4 cloud state, 5–7 LAI/FPAR retrieval method)"
+          kind: instant
+          note: Quality information on the LAI/FPAR input. The User's Guide notes that in the gap-filled products it mainly indicates whether interpolated LAI/FPAR was used
+    - name: Yearly data (MOD16A3GF, MYD16A3GF, gap-filled only)
+      kind: accum
+      period: Yearly
+      items:
+        - text: "Actual evapotranspiration, annual total — `ET_500m` (kg m-2 yr-1, scale 0.1)"
+          note: Sum of daily values over the year. 65529–65535 are fill values
+        - text: "Potential evapotranspiration, annual total — `PET_500m` (kg m-2 yr-1, scale 0.1)"
+        - text: "Latent heat flux, annual mean — `LE_500m` (J m-2 day-1, scale 10000)"
+          kind: mean
+          note: Average daily energy over the year
+        - text: "Potential latent heat flux, annual mean — `PLE_500m` (J m-2 day-1, scale 10000)"
+          kind: mean
+        - text: "Share of interpolated input — `ET_QC_500m` (%, percentage of growing-season days that used gap-filled LAI/FPAR)"
+          kind: mean
+          note: A percentage, not a bit field as in the 8-day files. 249–255 are fill values
+
+access:
+  - name: NASA Earthdata Search (LP DAAC, Earthdata Cloud)
+    url: https://search.earthdata.nasa.gov/search/granules?p=C2565791021-LPCLOUD
+    method: HTTPS download / earthaccess / Earthdata Search
+    note: >-
+      Short names are MOD16A2GF and MYD16A2GF (8-day gap-filled), MOD16A3GF and MYD16A3GF (yearly gap-filled), and MOD16A2 and MYD16A2 (8-day forward), all version 061.
+      Files are served over HTTPS from data.lpdaac.earthdatacloud.nasa.gov and need a free Earthdata Login. Distribution through the old LP DAAC Data Pool ended on 2025-06-30.
+  - name: AppEEARS (area and point subsetting)
+    url: https://appeears.earthdatacloud.nasa.gov/
+    method: Web / API — point time series and area extracts as GeoTIFF or NetCDF4
+    note: Lets you request only the area, period and layers you need and reproject to geographic coordinates, which is convenient for small regions.
+  - name: Direct access in AWS us-west-2 (S3)
+    url: https://data.lpdaac.earthdatacloud.nasa.gov/s3credentials
+    method: Cloud storage (S3, from within us-west-2 only)
+    note: Stored under paths such as s3://lp-prod-protected/MOD16A2GF.061/ and accessed with temporary credentials.
+
+example:
+  lang: python
+  note: >-
+    Downloads the Terra 8-day gap-filled tiles around the Korean Peninsula for July 2023 with earthaccess and reads them with pyhdf (the files are HDF4, which xarray's default engines may not open).
+    Remove the fill values (32761 and above) first.
+  code: |
+    # pip install earthaccess pyhdf numpy
+    import earthaccess
+    import numpy as np
+    from pyhdf.SD import SD, SDC
+
+    earthaccess.login()  # free NASA Earthdata account
+    results = earthaccess.search_data(
+        short_name="MOD16A2GF", version="061",
+        temporal=("2023-07-01", "2023-07-31"),
+        bounding_box=(124, 33, 132, 39),   # (west, south, east, north)
+    )
+    files = earthaccess.download(results, "mod16")
+
+    hdf = SD(files[0], SDC.READ)
+    raw = hdf.select("ET_500m").get().astype("float64")
+    raw[raw > 32700] = np.nan          # 32761–32767: water, barren, urban, snow/ice and other fill
+    et = raw * 0.1                      # mm per 8 days (5–6 days in the last period of the year)
+    qc = hdf.select("ET_QC_500m").get()
+    print(files[0], np.nanmean(et))
+
+tips:
+  - "Use the year-end gap-filled products (MOD16A2GF, MYD16A2GF, MxD16A3GF) for research. The forward MOD16A2 is a near-real-time product that substitutes a recent 5-year LAI/FPAR climatology for cloudy inputs, and in V6.1 it only starts in 2021."
+  - "Stored ET_500m values of 32761–32767 (65529–65535 in yearly files) are not missing data but non-vegetated land cover flags (32766 water, 32765 barren or sparsely vegetated, 32764 permanent snow/ice, 32763 wetland, 32762 urban, 32761 unclassified). Remove them before applying the scale factor or absurd values will creep in."
+  - "Units differ. ET and PET are 8-day totals (mm); LE and PLE are daily averages (J m-2 day-1, scale 10000). The last period of each year is a 5- or 6-day total."
+  - "Biome parameters are fixed per MODIS land cover class (IGBP 17 classes, 3-year smoothed), so land cover misclassification passes straight into ET error and regional variation within a biome is not captured. Pixels with no valid albedo during a year are computed with an albedo of 0.4."
+  - "The meteorological input is GMAO reanalysis (0.5°×0.6° or 1°×1.25°) interpolated to 500 m, so in mountains and along coasts, where weather changes sharply, the product does not carry 500 m-scale meteorological detail."
+  - "The first GF year (2000 for Terra, 2002 for Aqua) is less reliable because the start of the year has no observations to interpolate from."
+  - "Data come in MODIS Sinusoidal tiles (the Korean Peninsula is mostly h27v05 and h28v05). Reproject with GDAL or rioxarray, or use AppEEARS, to get a latitude-longitude grid."
+  - "Terra and Aqua are expected to shut down from late 2026 onward, and the VIIRS ET successor was withdrawn on 2026-08-17. If you need to extend a long time series, watch both the MODIS end-of-mission and the VIIRS V2.1 release notices."
+
+citations:
+  dataset:
+    - label: MOD16A2GF V6.1 (Terra 8-day gap-filled)
+      text: >-
+        Running, S., Mu, Q., Zhao, M., Moreno, A. (2021). MODIS/Terra Net Evapotranspiration Gap-Filled 8-Day L4 Global 500m SIN Grid V061 [Data set].
+        NASA Land Processes Distributed Active Archive Center. https://doi.org/10.5067/MODIS/MOD16A2GF.061
+      doi: 10.5067/MODIS/MOD16A2GF.061
+      bibtex: |
+        @misc{mod16a2gf_v061,
+          author    = {Running, Steve and Mu, Qiaozhen and Zhao, Maosheng and Moreno, Alvaro},
+          title     = {{MODIS/Terra} Net Evapotranspiration Gap-Filled 8-Day {L4} Global 500m {SIN} Grid {V061}},
+          year      = {2021},
+          publisher = {NASA Land Processes Distributed Active Archive Center},
+          doi       = {10.5067/MODIS/MOD16A2GF.061}
+        }
+    - label: MOD16A3GF V6.1 (Terra yearly gap-filled)
+      text: >-
+        Running, S., Mu, Q., Zhao, M., Moreno, A. (2021). MODIS/Terra Net Evapotranspiration Gap-Filled Yearly L4 Global 500m SIN Grid V061 [Data set].
+        NASA Land Processes Distributed Active Archive Center. https://doi.org/10.5067/MODIS/MOD16A3GF.061
+      doi: 10.5067/MODIS/MOD16A3GF.061
+      bibtex: |
+        @misc{mod16a3gf_v061,
+          author    = {Running, Steve and Mu, Qiaozhen and Zhao, Maosheng and Moreno, Alvaro},
+          title     = {{MODIS/Terra} Net Evapotranspiration Gap-Filled Yearly {L4} Global 500m {SIN} Grid {V061}},
+          year      = {2021},
+          publisher = {NASA Land Processes Distributed Active Archive Center},
+          doi       = {10.5067/MODIS/MOD16A3GF.061}
+        }
+    - label: MOD16A2 V6.1 (Terra 8-day forward)
+      text: >-
+        Running, S., Mu, Q., Zhao, M. (2021). MODIS/Terra Net Evapotranspiration 8-Day L4 Global 500m SIN Grid V061 [Data set].
+        NASA Land Processes Distributed Active Archive Center. https://doi.org/10.5067/MODIS/MOD16A2.061
+      doi: 10.5067/MODIS/MOD16A2.061
+      bibtex: |
+        @misc{mod16a2_v061,
+          author    = {Running, Steve and Mu, Qiaozhen and Zhao, Maosheng},
+          title     = {{MODIS/Terra} Net Evapotranspiration 8-Day {L4} Global 500m {SIN} Grid {V061}},
+          year      = {2021},
+          publisher = {NASA Land Processes Distributed Active Archive Center},
+          doi       = {10.5067/MODIS/MOD16A2.061}
+        }
+  papers:
+    - label: MOD16 algorithm (Mu et al., 2011)
+      text: >-
+        Mu, Q., Zhao, M., Running, S. W. (2011). Improvements to a MODIS global terrestrial evapotranspiration algorithm.
+        Remote Sensing of Environment, 115(8), 1781–1800.
+      doi: 10.1016/j.rse.2011.02.019
+      bibtex: |
+        @article{mu2011mod16,
+          author  = {Mu, Qiaozhen and Zhao, Maosheng and Running, Steven W.},
+          title   = {Improvements to a {MODIS} global terrestrial evapotranspiration algorithm},
+          journal = {Remote Sensing of Environment},
+          volume  = {115},
+          number  = {8},
+          pages   = {1781--1800},
+          year    = {2011},
+          doi     = {10.1016/j.rse.2011.02.019}
+        }
+  acknowledgement: >-
+    Cite the LP DAAC dataset DOI for the product you used (Terra or Aqua, 8-day or yearly, gap-filled or forward). The Aqua DOIs are 10.5067/MODIS/MYD16A2GF.061,
+    10.5067/MODIS/MYD16A3GF.061 and 10.5067/MODIS/MYD16A2.061. Cite Mu et al. (2011) for the algorithm.
+
+transitions:
+  - from: MOD16 C6
+    to: MOD16 C6.1
+    status: completed
+    date: "2021-03"
+    summary: >-
+      The science algorithm is unchanged; the input MODIS L1B calibration improved and gap handling changed. C6 left pixels with contaminated LAI/FPAR as fill values, leaving many gaps,
+      whereas C6.1 fills them with climatological LAI/FPAR and gap-filled albedo as backup inputs. Distribution of C6 ended on 2023-07-31.
+    changes:
+      - aspect: Science algorithm
+        before: Penman-Monteith-based MOD16 (Mu et al., 2011)
+        after: Unchanged
+      - aspect: Input L1B calibration
+        before: C6 calibration
+        after: "Revised response-versus-scan-angle approach for reflective bands, optical crosstalk correction for Terra IR bands, corrected Terra forward look-up table for 2012–2017, polarization correction"
+      - aspect: LAI/FPAR gaps (forward product)
+        before: Contaminated LAI/FPAR pixels left as fill values
+        after: Backup input from the mean of the best LAI/FPAR for each 8-day period over the past 5 years (MCD15A2HCL climatology)
+      - aspect: Albedo
+        before: No gap filling
+        after: Gap-filled albedo (Sun et al., 2017) used for GF and backup processing
+      - aspect: Coverage (8-day forward product)
+        before: "2000 onward (MOD16A2 V006)"
+        after: "V061 MOD16A2 and MYD16A2 start on 2021-01-01; use the GF products for earlier years"
+      - aspect: File format
+        before: HDF-EOS2
+        after: Same (variable names and format unchanged)
+    impacts:
+      - Do not mix C6 and C6.1; download the full period again from the C6.1 GF products (C6 has not been distributed since 2023-07-31).
+      - The C6.1 forward product has fewer gaps thanks to the backup inputs, but pixels filled with climatological LAI/FPAR do not reflect the actual vegetation state of that year.
+    sources:
+      - name: MOD16 C6.1 User's Guide
+        url: https://lpdaac.usgs.gov/documents/931/MOD16_User_Guide_V61.pdf
+      - name: "Final Notice: MODIS Version 6.0 Land Data Products Decommissioned July 31, 2023"
+        url: https://www.earthdata.nasa.gov/data/alerts-outages/final-notice-modis-version-6-0-land-data-products-decommissioned-july-31-2023
+  - from: MODIS evapotranspiration MOD16/MYD16 C6.1
+    to: VIIRS evapotranspiration VNP16/VJ116 V2.1 (not yet released)
+    status: planned
+    summary: >-
+      To prepare for the end of MODIS, NASA released VNP16, VJ116 and VJ216 V2 — the same MOD16 algorithm applied to VIIRS on Suomi NPP, NOAA-20 and NOAA-21 — in 2025–2026,
+      but withdrew all of them on 2026-08-17 after data issues were found, stating that they are not of science quality and should not be used. They will be reprocessed as V2.1 once the issues are fixed; no date has been set.
+    changes:
+      - aspect: Availability
+        before: "MOD16 and MYD16 C6.1 in production (to stop when Terra and Aqua end)"
+        after: "VIIRS V2 withdrawn and removed on 2026-08-17; V2.1 reprocessing planned (no date). On 2026-10-13 CMR had no public VIIRS ET collection"
+      - aspect: Algorithm
+        before: Penman-Monteith-based MOD16
+        after: Same algorithm family (designed to continue the MODIS ET series), with VIIRS LAI/FPAR and albedo as inputs
+      - aspect: Satellites and overpass time
+        before: "Terra (10:30 descending, drifting) and Aqua (13:30 ascending, drifting)"
+        after: "Suomi NPP, NOAA-20 and NOAA-21 (13:30 ascending). Suomi NPP data delivery is scheduled to end in early November 2026"
+      - aspect: Resolution and product set
+        before: "500 m SIN, 8-day (MOD16A2, A2GF), yearly (A3GF)"
+        after: "500 m SIN, 8-day (VNP16A2, A2GF), yearly (A3GF only) — as in V2"
+      - aspect: File format
+        before: HDF-EOS2 (HDF4)
+        after: HDF-EOS5 (HDF5)
+    impacts:
+      - If you already downloaded the withdrawn VIIRS ET V2 files, do not use them for research. NASA has stated V2 is not of science quality.
+      - Even after V2.1 is released, check the differences between the two records over their overlap before joining them. In particular, no VIIRS satellite continues Terra's morning observations.
+    sources:
+      - name: VIIRS Actual and Potential Evapotranspiration Data Products Unavailable (LP DAAC, 2026-08-17)
+        url: https://www.earthdata.nasa.gov/data/alerts-outages/viirs-actual-potential-evapotranspiration-data-products-unavailable
+      - name: VIIRS Version 2 Actual and Potential Evapotranspiration Data Products Released (LP DAAC, 2025-07-10)
+        url: https://www.earthdata.nasa.gov/data/alerts-outages/viirs-version-2-actual-potential-evapotranspiration-data-products-released
+      - name: VIIRS Land — NASA Evapotranspiration and Potential Evapotranspiration
+        url: https://viirsland.gsfc.nasa.gov/Products/NASA/ET_ESDR.html
+
+notices:
+  - date: "2026-08-17"
+    level: warning
+    title: Successor VIIRS evapotranspiration V2 fully withdrawn — V2.1 reprocessing planned, no date set
+    body: >-
+      Citing newly discovered issues in the data, LP DAAC removed all VIIRS evapotranspiration (VNP16, VJ116, VJ216) V2 products from Suomi NPP, NOAA-20 and NOAA-21 from the archive
+      and disabled them in AppEEARS. It states that the data are not of science quality and should not be used in any research or application, and that they will be reprocessed as V2.1 once the issues are resolved.
+      Until then there is no NASA VIIRS product continuing MODIS ET.
+    source: https://www.earthdata.nasa.gov/data/alerts-outages/viirs-actual-potential-evapotranspiration-data-products-unavailable
+  - date: "2026-03-20"
+    level: warning
+    title: NASA projects end of science for Terra in February 2027 and Aqua in September 2027
+    body: >-
+      The editor's note in the NASA Science article 'Terra: The End of An Era' (published 2025-12-29, updated 2026-03-20) projects that, because of fuel and power limits, science operations will end
+      in February 2027 for Terra, September 2027 for Aqua and August 2028 for Aura, with the missions operating until then. This is later than the earlier plans (Terra in December 2025, Aqua in August 2026).
+    source: https://science.nasa.gov/science-research/earth-science/terra-the-end-of-an-era
+  - date: "2026-03-18"
+    level: info
+    title: MODIS L1B and geolocation Version 7.0 released — land products still C6.1
+    body: >-
+      LAADS DAAC released MODIS calibrated radiances and geolocation V7.0 and announced that the V6.1 Level-1 collection would be decommissioned after 2026-09-30.
+      On 2026-10-13, CMR listed only V061 for MOD16 and other land products, and no release schedule for C7 land products had been confirmed in an official notice.
+    source: https://www.earthdata.nasa.gov/data/alerts-outages/version-7.0-modis-calibrated-radiances-geolocation-data-products-now-available
+  - date: "2026-01-08"
+    level: warning
+    title: Impact of Terra and Aqua orbit drift on MODIS data under investigation (LDOPE)
+    body: >-
+      The MODIS Land Data Operational Product Evaluation team (LDOPE) reported that, as Terra and Aqua drift after ending orbit maintenance, pixel size and spacing, scan gaps,
+      bow-tie overlap and diurnal sampling have changed, with significant impacts seen from late 2024, and that the effects on MODIS products are under investigation.
+    source: https://landweb.modaps.eosdis.nasa.gov/displayissue?id=1254
+  - date: "2025-06-03"
+    level: info
+    title: LP DAAC Data Pool distribution of MODIS ends (2025-06-30) — move to Earthdata Cloud
+    body: >-
+      LP DAAC ended Data Pool distribution of all MODIS datasets, including C6.1, on 30 June 2025. Scripts using Data Pool URLs must switch to Earthdata Cloud (HTTPS or earthaccess);
+      Earthdata Search and AppEEARS continue to work.
+    source: https://www.earthdata.nasa.gov/data/alerts-outages/lp-daac-discontinue-data-pool-distribution-modis-datasets
+  - date: "2025-05-02"
+    level: warning
+    title: Transition from MODIS to VIIRS — Terra and Aqua to begin shutting down in late 2026 to early 2027
+    body: >-
+      NASA announced that Terra and Aqua will begin shutting down in late 2026 or early 2027, and that both platforms are drifting from their designed orbits, changing crossing times and possibly affecting the data.
+      A final reprocessing of MODIS data will follow the end of data collection, and users are encouraged to explore similar VIIRS products.
+    source: https://www.earthdata.nasa.gov/data/alerts-outages/transition-from-modis-viirs
+  - date: "2023-07-25"
+    level: info
+    title: MODIS V6.0 land products decommissioned (2023-07-31) — move to V6.1
+    body: >-
+      LP DAAC stopped distributing MODIS V6.0 land products, including MOD16, on 31 July 2023. User guides and ATBDs remain on the DOI landing pages; use V6.1 for data.
+    source: https://www.earthdata.nasa.gov/data/alerts-outages/final-notice-modis-version-6-0-land-data-products-decommissioned-july-31-2023
+
+links:
+  - name: MOD16A2GF V061 data catalog (LP DAAC)
+    url: https://www.earthdata.nasa.gov/data/catalog/lpcloud-mod16a2gf-061
+  - name: MOD16 C6.1 User's Guide
+    url: https://lpdaac.usgs.gov/documents/931/MOD16_User_Guide_V61.pdf
+  - name: MOD16 ATBD
+    url: https://lpdaac.usgs.gov/documents/93/MOD16_ATBD.pdf
+  - name: MOD16 validation status (MODIS Land)
+    url: https://modis-land.gsfc.nasa.gov/ValStatus.php?ProductID=MOD16
+  - name: MODIS/VIIRS Land Quality Assessment (LDOPE) known issues
+    url: https://landweb.modaps.eosdis.nasa.gov/knownissue?sensor=MODIS
+  - name: MODIS Land News (Terra and Aqua orbit drift)
+    url: https://modis-land.gsfc.nasa.gov/news.html
+  - name: VIIRS evapotranspiration products (VIIRS Land)
+    url: https://viirsland.gsfc.nasa.gov/Products/NASA/ET_ESDR.html
+
+watch_urls:
+  - https://www.earthdata.nasa.gov/data/catalog/lpcloud-mod16a2gf-061
+  - https://landweb.modaps.eosdis.nasa.gov/knownissue?sensor=MODIS
+  - https://modis-land.gsfc.nasa.gov/news.html
+
+last_verified: "2026-10-13"

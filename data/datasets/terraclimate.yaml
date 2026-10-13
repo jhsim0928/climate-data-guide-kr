@@ -1,0 +1,245 @@
+# ─────────────────────────────────────────────────────────────
+# TerraClimate — 데이터셋 정보 파일
+# 지면 탭 '육상 재분석·자료동화'에 싣습니다. v1.0(CRU·JRA-55 기반) → v1.1(ERA5·WorldClim 기반) 전환은 아래 transitions에 적었습니다.
+# 수정 후에는 공식 페이지에서 확인한 날짜로 last_verified 를 갱신하세요.
+# ─────────────────────────────────────────────────────────────
+id: terraclimate
+name: "TerraClimate"
+full_name: TerraClimate (전지구 육지 약 4 km 월별 기후·물수지 자료, Climatology Lab)
+category: analysis
+domain: land
+group: 육상 재분석·자료동화
+order: 40
+domains: [육지, 대기, 수문]
+provider: Climatology Lab (UC Merced, John Abatzoglou) / University of Idaho Northwest Knowledge Network (THREDDS 배포)
+
+status: active
+status_note: >-
+  현재 판은 ERA5 월 편차와 WorldClim 기후값을 결합한 TerraClimate v1.1이며, 해마다 한 해씩 덧붙여 갱신합니다.
+  2026-10-13 확인 시 THREDDS 서버에 2025년(1~12월) 파일이 올라와 있습니다. 다만 Google Earth Engine 카탈로그는 2024년 12월까지이고
+  설명도 여전히 v1.0 입력(CRU TS4.0·JRA-55)을 적고 있어, 받는 곳에 따라 버전이 다를 수 있습니다.
+
+period:
+  start: "1950-01"
+  end: "2025-12"
+  note: >-
+    v1.1은 1950년부터 제공되지만 물수지 모델의 초기 적응(spin-up) 때문에 1950년은 빼고 쓰는 편이 좋다고 안내합니다.
+    THREDDS의 연도별 파일은 1950년부터 있고(2026-10-13 확인), 여러 해를 묶은 aggregated 파일과 공식 소개는 1958년부터로 적혀 있습니다.
+    1981–2010·1991–2020 월별 기후값과 +2°C·+4°C·counterfactual 시나리오(가상 연도 1950–2025)도 따로 있습니다.
+
+resolution:
+  spatial_short: "4.6 km (0.042°)"
+  temporal_short: "1개월"
+  spatial: >-
+    1/24°(약 4 km) 정규 위경도 격자, 위도 4320 × 경도 8640 격자(격자 중심 89.979°N~89.979°S, 179.979°W~179.979°E, WGS84 EPSG:4326).
+    육지만 값이 있습니다.
+  vertical: 지표 단일값 (토양수분은 토양층 전체 저장량 1개)
+  temporal: 월 (연도별 파일에 12개월) / 30년 월별 기후값
+
+update: 매년 (전년도 자료를 한 번에 추가, 공식 일정은 없음)
+license: 제작처 페이지에는 명시가 없고, Google Earth Engine 카탈로그는 CC0(퍼블릭 도메인)로 표기합니다. 논문 인용 요청
+account_required: false
+
+summary: >-
+  TerraClimate는 고해상도 월 기후값(WorldClim)에 시간 변동이 있는 거친 격자 자료의 월 편차를 얹어(기후 보조 내삽)
+  전지구 육지의 월별 기온·강수·수증기압·일사·풍속을 약 4 km로 만들고, 이를 단순 물수지 모델에 넣어 실제·기준 증발산, 기후적 물부족,
+  유출, 토양수분, 적설 수당량, PDSI까지 계산한 자료입니다. v1.0은 CRU TS4.0과 JRA-55를 썼고, 현재의 v1.1은 ERA5 월 편차를 씁니다.
+  생태·수문·농업 연구에서 지형을 반영한 촘촘한 월 기후·가뭄 지표가 필요할 때 많이 쓰입니다.
+
+time_convention:
+  summary: >-
+    한 달에 값 하나이며, 파일의 time 좌표는 그달 1일(days since 1900-01-01)로 표시됩니다. 강수·증발산·물부족·유출은 월 합계,
+    기온·수증기압·VPD·풍속·일사는 월 평균이고, 토양수분·적설 수당량·PDSI는 '월말' 값입니다.
+  points:
+    - "time 값이 그달 1일이지만 순간값이 아니라 그달 전체를 대표하는 값입니다. 월말 값(soil·swe·PDSI)도 같은 날짜 표기를 씁니다."
+    - "`tmax`·`tmin`은 그달 일최고·일최저 기온의 평균이며, 월 극값이 아닙니다."
+    - "`ppt`·`aet`·`pet`·`def`·`q`는 mm/월 합계이므로 연 합계는 12개월을 더하면 됩니다(평균하지 말 것)."
+    - "자료는 정수로 저장되고 scale_factor·add_offset 속성으로 실제 값이 됩니다(2019년 NetCDF4 전환 이후). 변수마다 계수가 다르니 파일 속성을 확인하세요."
+  source: https://www.climatologylab.org/terraclimate-variables.html
+  source_name: TerraClimate Variables (Climatology Lab) + THREDDS 파일 속성
+
+variables:
+  note: >-
+    Climatology Lab 변수표와 THREDDS 파일 속성 기준입니다. 변수 하나가 연도별 파일 하나(TerraClimate_<변수>_<연도>.nc)로 나뉘어 있습니다.
+    Google Earth Engine에서는 일부 밴드 이름이 다릅니다(`ppt`→`pr`, `q`→`ro`, `tmax`→`tmmx`, `tmin`→`tmmn`, `ws`→`vs`, `PDSI`→`pdsi`).
+  full_list: https://www.climatologylab.org/terraclimate-variables.html
+  groups:
+    - name: 기후 변수 (월 평균)
+      kind: mean
+      period: 월
+      items:
+        - text: "최고기온 — `tmax` (°C)"
+          note: 일최고기온의 월평균
+        - text: "최저기온 — `tmin` (°C)"
+          note: 일최저기온의 월평균
+        - "수증기압 — `vap` (kPa)"
+        - "수증기압 부족(VPD) — `vpd` (kPa)"
+        - "풍속 — `ws` (m/s)"
+        - "지표 하향 단파복사 — `srad` (W/m2)"
+    - name: 물수지 플럭스 (월 합계)
+      kind: accum
+      period: 월
+      items:
+        - "강수량 — `ppt` (mm)"
+        - "기준(잠재) 증발산 — `pet` (mm)"
+        - "실제 증발산 — `aet` (mm)"
+        - "기후적 물부족(pet − aet) — `def` (mm)"
+        - "유출량 — `q` (mm)"
+    - name: 저장량·가뭄지수 (월말 값)
+      kind: instant
+      items:
+        - text: "토양수분(토양층 전체) — `soil` (mm)"
+          note: 월말 값
+        - text: "적설 수당량 — `swe` (mm)"
+          note: 월말 값
+          std: [snow]
+        - text: "파머 가뭄지수 — `PDSI` (무차원)"
+          note: 월말 값
+
+access:
+  - name: Climatology Lab — TerraClimate 소개·내려받기 안내
+    url: https://www.climatologylab.org/terraclimate.html
+    method: 안내 페이지 (THREDDS·직접 다운로드·wget 스크립트 링크)
+    note: 버전 설명, 변경 내역, 시나리오·기후값 자료 링크가 모두 이 페이지에 있습니다.
+  - name: NKN THREDDS 서버 (연도별 파일)
+    url: http://thredds.northwestknowledge.net:8080/thredds/catalog/TERRACLIMATE_ALL/data/catalog.html
+    method: HTTP 다운로드 / OPeNDAP / NetCDF Subset Service(NCSS)
+    note: >-
+      파일 이름은 TerraClimate_<변수>_<연도>.nc 입니다. 여러 해를 묶은 aggregated 자료(1958년~)는
+      http://thredds.northwestknowledge.net:8080/thredds/terraclimate_aggregated.html 에 있으며, OPeNDAP으로 필요한 영역·지점만 잘라 받을 수 있습니다.
+  - name: Google Earth Engine (IDAHO_EPSCOR/TERRACLIMATE)
+    url: https://developers.google.com/earth-engine/datasets/catalog/IDAHO_EPSCOR_TERRACLIMATE
+    method: Earth Engine API (클라우드 분석)
+    note: 2026-10-13 확인 시 2024년 12월까지이며 설명이 v1.0 기준입니다. 밴드 이름·scale 값이 THREDDS 파일과 다릅니다.
+  - name: v1.0(이전 판) 자료
+    url: https://www.climatologylab.org/terraclimate.html
+    method: FTP (담당자 문의)
+    note: v1.0은 FTP 서버로 옮겨졌으며, 필요하면 John Abatzoglou 또는 Katherine Hegewisch에게 문의하라고 안내합니다.
+
+example:
+  lang: python
+  note: >-
+    THREDDS의 OPeNDAP 주소로 2025년 강수 파일을 열어 한반도 영역만 잘라 내는 예입니다. 계정은 필요 없습니다.
+    netCDF 라이브러리 버전에 따라 _FillValue 형식 오류가 나면 주소 끝에 '#fillmismatch'를 붙이라고 공식 페이지가 안내합니다.
+  code: |
+    import xarray as xr
+
+    url = ("http://thredds.northwestknowledge.net:8080/thredds/dodsC/"
+           "TERRACLIMATE_ALL/data/TerraClimate_ppt_2025.nc#fillmismatch")
+    ds = xr.open_dataset(url)          # scale_factor는 xarray가 자동 적용
+    # 위도는 북→남 순서로 저장되어 있어 slice도 북에서 남으로 줍니다
+    ppt = ds["ppt"].sel(lat=slice(39, 33), lon=slice(124, 132))
+    print(ppt.sum("time").mean().values)   # 2025년 연강수량(mm)의 영역 평균
+
+tips:
+  - "v1.0과 v1.1을 한 시계열로 섞지 마세요. 입력 자료(CRU·JRA-55 → ERA5)와 PET·유출 계산식이 바뀌어 과거 값도 모두 달라졌습니다. 논문에는 버전을 꼭 적으세요."
+  - 장기 추세는 입력 자료(ERA5 등)의 추세를 그대로 물려받습니다. 제작진은 TerraClimate를 독립적인 추세 평가(예를 들어 기온 추세)에 바로 쓰지 말라고 안내합니다.
+  - 기후값(WorldClim)과 편차를 합치는 방식이라 산악·해안처럼 편차가 급하게 바뀌는 곳의 세밀한 변동은 잡히지 않습니다. 남극처럼 관측이 드문 곳은 검증이 부족합니다.
+  - 물수지 모델은 고정된 식생, 지점별 토양 저류 용량 하나, 기온 기반 눈 모델을 쓰는 단순한 구조입니다. soil·aet·q는 관측이 아니라 이 모델의 계산값입니다.
+  - "`soil`·`swe`·`PDSI`는 월말 값, `ppt`·`aet`·`pet`·`def`·`q`는 월 합계입니다. 월 합계 변수를 평균해 연값을 만들지 않도록 주의하세요."
+  - 알래스카 같은 북방 지역에서는 겨울 기온 역전을 비현실적으로 외삽할 수 있다고 공식 페이지가 밝힙니다.
+  - "Google Earth Engine 자료는 2026-10-13 확인 시 2024년까지이고 버전 표기가 없습니다. 최신 연도나 v1.1이 꼭 필요하면 THREDDS 파일을 쓰세요."
+
+citations:
+  dataset: []
+  papers:
+    - label: TerraClimate 기술 논문 (v1.0)
+      text: >-
+        Abatzoglou, J. T., Dobrowski, S. Z., Parks, S. A., Hegewisch, K. C. (2018): TerraClimate, a high-resolution global dataset
+        of monthly climate and climatic water balance from 1958–2015. Scientific Data, 5, 170191.
+      doi: 10.1038/sdata.2017.191
+      bibtex: |
+        @article{abatzoglou2018terraclimate,
+          author  = {Abatzoglou, John T. and Dobrowski, Solomon Z. and Parks, Sean A. and Hegewisch, Katherine C.},
+          title   = {{TerraClimate}, a high-resolution global dataset of monthly climate and climatic water balance from 1958--2015},
+          journal = {Scientific Data},
+          volume  = {5},
+          pages   = {170191},
+          year    = {2018},
+          doi     = {10.1038/sdata.2017.191}
+        }
+  acknowledgement: >-
+    데이터셋 DOI는 없으며, Climatology Lab은 Abatzoglou et al. (2018)을 인용하라고 안내합니다. v1.1을 쓰면 버전(v1.1)과 받은 날짜,
+    받은 곳(THREDDS 또는 Earth Engine)을 함께 적으세요. +2°C·+4°C 시나리오를 쓰면 Qin et al. (2020, Nature Climate Change)도 인용하라고 안내합니다.
+
+transitions:
+  - from: TerraClimate v1.0
+    to: TerraClimate v1.1
+    status: completed
+    summary: >-
+      단종된 JRA-55와 늦어지는 CRU 갱신 문제를 피하려고 시간 변동 입력을 ERA5 월 편차로 바꾸고, 기준 증발산·유출 계산식도 고친 판입니다.
+      과거 값까지 모두 다시 계산되었으므로 v1.0 자료와 섞으면 안 됩니다. 공식 페이지는 v1.1 공개 공지를 2025-02-15로, 변경 내용 설명을 2026-02-15 갱신으로 적고 있습니다.
+    changes:
+      - aspect: 기온·강수·수증기압 입력
+        before: "CRU TS4.0 월 편차 (관측소가 없는 곳은 JRA-55) + WorldClim 기후값"
+        after: "ERA5 월 편차 + WorldClim v1.4·v2 기후값, VPD는 표준식으로 계산"
+      - aspect: 일사·풍속 입력
+        before: "JRA-55 (2018년 개정 때 JRA-55·JRA-55C·ERA-Interim 결합으로 편향 보정)"
+        after: "ERA5 월 편차"
+      - aspect: 기간
+        before: "1958년~"
+        after: "1950년~ (1950년은 spin-up 영향으로 제외 권장)"
+      - aspect: 기준 증발산(pet)
+        before: "ASCE Penman-Monteith"
+        after: "CO2 증가에 따른 기공 저항 변화를 반영한 수정 Penman-Monteith (Yang et al., 2018)"
+      - aspect: 유출(q)
+        before: "그달 잉여수만 유출"
+        after: "잉여수의 일부를 다음 달로 넘김(r-factor 0.5) — 관측 유량과 계절 변동이 더 잘 맞음"
+      - aspect: 기후변화 시나리오
+        before: "+2°C·+4°C, 가상 연도 1985–2015 (Qin et al., 2020)"
+        after: "+2°C·+4°C를 CMIP6 다중모델 패턴 스케일링으로 갱신(가상 연도 1950–2025), 인위적 기후변화 신호를 뺀 counterfactual 추가"
+      - aspect: 제공처
+        before: "THREDDS·Earth Engine"
+        after: "THREDDS는 v1.1로 교체, v1.0은 FTP(담당자 문의)로 이동. Earth Engine 카탈로그 설명은 v1.0 기준 그대로"
+    impacts:
+      - v1.0으로 만든 기후값·추세와 v1.1 결과를 섞지 말고 전 기간을 v1.1로 다시 받으세요.
+      - 입력이 ERA5로 바뀌었으므로 ERA5와 비교·검증하는 연구는 두 자료가 독립적이지 않다는 점을 고려하세요.
+      - Earth Engine 자료와 THREDDS 자료의 버전·기간이 다를 수 있으니 받은 곳을 논문에 밝히세요.
+    sources:
+      - name: TerraClimate (Climatology Lab) — v1.1 공지·변경 내용
+        url: https://www.climatologylab.org/terraclimate.html
+      - name: Abatzoglou et al. (2018), Scientific Data
+        url: https://doi.org/10.1038/sdata.2017.191
+      - name: Google Earth Engine IDAHO_EPSCOR/TERRACLIMATE
+        url: https://developers.google.com/earth-engine/datasets/catalog/IDAHO_EPSCOR_TERRACLIMATE
+
+notices:
+  - date: "2026-02-15"
+    level: warning
+    title: TerraClimate v1.1 공개 — ERA5·WorldClim 기반으로 전면 재계산
+    body: >-
+      v1.1은 ERA5 월 편차와 WorldClim 기후값을 결합해 1950년부터 다시 만든 판으로, 해마다 갱신하기 쉽게 하려는 목적입니다.
+      기준 증발산에 CO2 효과를, 유출에 월간 이월을 넣었고 시나리오 자료도 CMIP6 기반으로 바뀌었습니다. v1.0은 FTP로 옮겨졌으며 두 판을 섞지 말라고 안내합니다.
+      공식 페이지는 공개 공지를 2025-02-15로, 변경 내용 설명을 '2026-02-15 갱신'으로 적고 있어 정확한 공개일은 분명하지 않습니다.
+    source: https://www.climatologylab.org/terraclimate.html
+  - date: "2021-02-01"
+    level: info
+    title: netCDF 라이브러리 갱신으로 원격 접근 오류 — '#fillmismatch'로 해결
+    body: >-
+      netCDF 소프트웨어 갱신 뒤 OPeNDAP 등 원격 접근에서 _FillValue 형식 불일치 오류가 날 수 있습니다.
+      파일 주소 끝에 '#fillmismatch'를 붙이면 피할 수 있다고 안내합니다.
+    source: https://www.climatologylab.org/terraclimate.html
+  - date: "2019-08-01"
+    level: info
+    title: 파일 형식을 NetCDF4로 전환 — scale_factor·offset 적용 필요
+    body: >-
+      파일이 NetCDF4 형식으로 바뀌면서 값이 정수로 저장되고 scale_factor·add_offset 속성이 붙었습니다.
+      직접 읽는 프로그램에서는 이 계수를 적용해야 실제 값이 됩니다.
+    source: https://www.climatologylab.org/terraclimate.html
+
+links:
+  - name: TerraClimate 소개 (Climatology Lab)
+    url: https://www.climatologylab.org/terraclimate.html
+  - name: TerraClimate 변수표
+    url: https://www.climatologylab.org/terraclimate-variables.html
+  - name: THREDDS 카탈로그 (TerraClimate)
+    url: http://thredds.northwestknowledge.net:8080/thredds/terraclimate_catalog.html
+  - name: Google Earth Engine 카탈로그
+    url: https://developers.google.com/earth-engine/datasets/catalog/IDAHO_EPSCOR_TERRACLIMATE
+  - name: Abatzoglou et al. (2018) 논문
+    url: https://doi.org/10.1038/sdata.2017.191
+
+watch_urls:
+  - https://www.climatologylab.org/terraclimate.html
+
+last_verified: "2026-10-13"

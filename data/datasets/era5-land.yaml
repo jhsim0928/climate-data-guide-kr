@@ -1,6 +1,6 @@
 # ─────────────────────────────────────────────────────────────
 # ERA5-Land — 데이터셋 정보 파일
-# 대기 탭 '육상 재분석'에 싣습니다. ERA5(era5.yaml)와 CDS·라이선스 공지를 공유합니다.
+# 대기 탭 '육상 재분석'과 지면 탭 '육상 재분석·자료동화'에 싣습니다. ERA5(era5.yaml)와 CDS·라이선스 공지를 공유합니다.
 # 수정 후에는 공식 페이지에서 확인한 날짜로 last_verified 를 갱신하세요.
 # ─────────────────────────────────────────────────────────────
 id: era5-land
@@ -10,6 +10,9 @@ category: reanalysis
 domain: atmosphere
 group: 육상 재분석
 order: 10
+also_in:
+  - domain: land
+    group: 육상 재분석·자료동화
 domains: [육지, 대기]
 provider: ECMWF / Copernicus Climate Change Service (C3S)
 

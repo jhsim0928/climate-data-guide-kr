@@ -1,0 +1,284 @@
+# ─────────────────────────────────────────────────────────────
+# ESA WorldCover 10 m (2020 v100, 2021 v200) — 데이터셋 정보 파일
+# 지면 탭 '토지피복'에 싣습니다. ESA 사업이 끝나 2020·2021년 두 장으로 마감되었고, 후속은 Copernicus LCFM(10 m)입니다.
+# 수정 후에는 공식 페이지에서 확인한 날짜로 last_verified 를 갱신하세요.
+# ─────────────────────────────────────────────────────────────
+id: esa-worldcover
+name: "ESA WorldCover"
+full_name: ESA WorldCover 10 m 2020 v100 / 2021 v200 (Sentinel-1·2로 만든 10 m 전지구 토지피복 지도, 11등급)
+category: satellite
+domain: land
+group: 토지피복
+order: 30
+domains: [육지, 원격탐사]
+provider: ESA / WorldCover 컨소시엄(VITO 주관) — 배포 VITO Terrascope·AWS·Zenodo
+
+status: ended
+status_note: >-
+  ESA의 시범 사업으로 2020년(v100)과 2021년(v200) 지도 두 장만 만들고 사업이 끝났습니다. 2022년 이후 WorldCover 지도는 나오지 않으며,
+  WorldCover 누리집은 2026년 2월 Copernicus 육상 모니터링 서비스(CLMS)의 LCFM 10 m 토지피복 제품군을 운영 후속으로 안내했습니다.
+  두 지도는 계속 무료로 받을 수 있습니다.
+successor:
+  name: Copernicus LCFM 10 m 전지구 토지피복 지도(LCM-10)
+  url: https://land.copernicus.eu/en/products/global-dynamic-land-cover
+  note: >-
+    Copernicus CLMS가 2025년 6월 Sentinel-2 기반 10 m 전지구 토지피복 지도(2020년)를 공개했고, 2020~2026년을 해마다 제공할 계획입니다.
+    2026-10-13 확인 시 제품 페이지에는 2020년만 올라와 있고, 2021년 이후분은 2026년 공개 예정으로 안내되었습니다. WorldCover와 범례·알고리즘이 같다는 공식 설명은 찾지 못했습니다.
+
+period:
+  start: "2020-01"
+  end: "2021-12"
+  note: >-
+    2020년 지도(v100, 2021년 10월 공개)와 2021년 지도(v200, 2022년 10월 28일 공개) 두 장입니다. 두 지도는 알고리즘 판이 달라
+    그 차이가 실제 변화와 알고리즘 차이가 섞인 값이므로 변화 탐지용 시계열로 보지 않습니다.
+
+resolution:
+  spatial_short: "0.01 km (0.00008°)"
+  temporal_short: "1년"
+  spatial: >-
+    EPSG:4326(WGS84 위경도) 3°×3° 타일 2,651개, 지도(Map) 층 화소 간격 1/12000°(적도에서 약 10 m) / 입력 품질(InputQuality) 층 1/2000°(약 60 m)
+  vertical: 지표 단일면
+  temporal: 1년 (2020년, 2021년 각 1장)
+
+update: 갱신 종료 (2020·2021년 두 판으로 마감)
+license: CC BY 4.0 — 무료, 이용 제한 없음. 지도에 쓸 때 "© ESA WorldCover project [연도] / Contains modified Copernicus Sentinel data ([연도]) processed by ESA WorldCover consortium" 표기
+account_required: false
+
+summary: >-
+  ESA가 지원하고 VITO가 이끈 컨소시엄이 Sentinel-1 레이더와 Sentinel-2 광학 영상으로 만든 최초의 10 m 전지구 토지피복 지도입니다.
+  수목·관목·초지·농경지·건물·나지·눈과 얼음·영구 수체·초본 습지·맹그로브·이끼와 지의류의 11개 등급을 2020년과 2021년 두 해에 대해 제공하며,
+  독립 검증 전체 정확도는 2020년 74.4%, 2021년 76.7%입니다. 300 m·500 m 자료로는 보이지 않는 도시·농경지·하천 경계를 다룰 수 있어
+  지역 규모 지면 모델 입력, 생태·수문 연구, 다른 지도의 검증 기준으로 많이 쓰입니다.
+
+time_convention:
+  summary: >-
+    지도(Map) 층은 '해당 연도 분류 결과'로, 그해 1월 1일~12월 31일의 Sentinel-1·2 관측으로 만든 연간 분류 지도입니다. 특정 날짜의 상태가 아닙니다.
+    입력 품질(InputQuality) 층은 같은 해 분류에 쓰인 관측 수와 구름으로 버려진 비율입니다.
+  points:
+    - "2020년 지도는 v100, 2021년 지도는 v200 알고리즘으로 만들었습니다. 학습 지점 수(259,734 → 319,415)와 특징 수(131 → 115)도 달라, 공식 문서는 두 지도 차이의 대부분이 알고리즘 때문이라고 설명합니다."
+    - "연간 분류이므로 계절에 따라 물에 잠기는 땅이나 휴경 농지는 그해 관측 전체를 반영한 하나의 등급으로만 표시됩니다."
+    - "구름이 잦은 지역은 유효 Sentinel-2 관측이 적어 품질이 떨어질 수 있으니 InputQuality 층의 관측 수를 함께 보세요."
+  source: https://esa-worldcover.s3.eu-central-1.amazonaws.com/v200/2021/docs/WorldCover_PUM_V2.0.pdf
+  source_name: ESA WorldCover Product User Manual v2.0 (2022-10-24)
+
+variables:
+  note: >-
+    WorldCover 제품 사용자 설명서(PUM v2.0) 기준입니다. 파일은 Cloud Optimized GeoTIFF이며 이름은 ESA_WorldCover_10m_<연도>_<버전>_<타일>_<층>.tif
+    (예: ESA_WorldCover_10m_2021_v200_N36E126_Map.tif)입니다. 아래 `Map`, `InputQuality`는 파일 이름 끝의 층 이름입니다.
+  full_list: https://esa-worldcover.s3.eu-central-1.amazonaws.com/v200/2021/docs/WorldCover_PUM_V2.0.pdf
+  groups:
+    - name: 토지피복 지도 (10 m, 해당 연도 분류 결과)
+      kind: instant
+      items:
+        - text: "토지피복 등급 — `Map` 층 (등급 코드 10–100, 8비트)"
+          std: [land_cover]
+          note: 10 수목, 20 관목, 30 초지, 40 농경지, 50 건물, 60 나지·희소식생, 70 눈·얼음, 80 영구 수체, 90 초본 습지, 95 맹그로브, 100 이끼·지의류
+    - name: 입력 품질 (60 m, 3밴드)
+      kind: accum
+      period: 해당 연도
+      items:
+        - text: "분류에 쓴 Sentinel-1 GAMMA0 관측 수 — `InputQuality` 밴드 1 (개)"
+        - text: "분류에 쓴 Sentinel-2 L2A 관측 수 — `InputQuality` 밴드 2 (개)"
+        - text: "구름·그림자로 버린 Sentinel-2 관측 비율 — `InputQuality` 밴드 3 (%)"
+          kind: mean
+          note: 0–100. 밴드 2와 함께 쓰면 유효 Sentinel-2 관측 수를 구할 수 있습니다
+
+access:
+  - name: AWS S3 공개 버킷 (esa-worldcover)
+    url: https://esa-worldcover.s3.eu-central-1.amazonaws.com/esa_worldcover_grid.geojson
+    method: S3 / HTTPS (로그인 불필요)
+    note: >-
+      s3://esa-worldcover/v100/2020/map/, s3://esa-worldcover/v200/2021/map/ 에 타일이 있고(eu-central-1), --no-sign-request로 받습니다.
+      HTTPS 주소는 https://esa-worldcover.s3.eu-central-1.amazonaws.com/... 이며 타일 목록은 esa_worldcover_grid.geojson에 있습니다. 이 경로는 Map 층만 제공합니다.
+  - name: WorldCover 뷰어 / Terrascope (VITO)
+    url: https://viewer.esa-worldcover.org/worldcover
+    method: 웹 뷰어 다운로드 / terracatalogueclient (Python)
+    note: Terrascope 무료 가입이 필요합니다. InputQuality 층은 이 경로(뷰어·Terrascope)에서만 받을 수 있습니다.
+  - name: Zenodo (2020 v100, 2021 v200)
+    url: https://zenodo.org/record/7254221
+    method: HTTPS 다운로드 (60°×60° 묶음 압축 파일)
+    note: 2020년 v100은 https://zenodo.org/record/5571936 입니다.
+  - name: Google Earth Engine
+    url: https://developers.google.com/earth-engine/datasets/catalog/ESA_WorldCover_v200
+    method: Earth Engine 자산 ESA/WorldCover/v100, ESA/WorldCover/v200
+    note: 넓은 영역의 집계·시각화에 편리합니다.
+
+example:
+  lang: python
+  note: >-
+    로그인 없이 AWS의 Cloud Optimized GeoTIFF를 rasterio로 바로 읽어 서울 주변 등급 비율을 세는 예입니다.
+    타일 이름은 왼쪽 아래 모서리 좌표이며, N36E126 타일은 북위 36~39°, 동경 126~129°를 덮습니다.
+  code: |
+    # pip install rasterio numpy
+    import numpy as np
+    import rasterio
+    from rasterio.windows import from_bounds
+
+    year, version, tile = 2021, "v200", "N36E126"   # 2020년은 "v100"
+    url = (
+        "https://esa-worldcover.s3.eu-central-1.amazonaws.com/"
+        f"{version}/{year}/map/ESA_WorldCover_10m_{year}_{version}_{tile}_Map.tif"
+    )
+    with rasterio.open(url) as src:
+        win = from_bounds(126.8, 37.4, 127.2, 37.7, src.transform)   # 서울 주변 (서, 남, 동, 북)
+        lc = src.read(1, window=win)
+
+    names = {10: "Tree cover", 20: "Shrubland", 30: "Grassland", 40: "Cropland", 50: "Built-up",
+             60: "Bare/sparse", 70: "Snow and ice", 80: "Water", 90: "Herbaceous wetland",
+             95: "Mangroves", 100: "Moss and lichen"}
+    vals, counts = np.unique(lc, return_counts=True)
+    for v, c in zip(vals, counts):
+        print(names.get(int(v), v), f"{100 * c / lc.size:.1f}%")
+
+tips:
+  - "2020(v100)과 2021(v200) 지도를 빼서 토지피복 변화를 구하지 마세요. 공식 설명서는 두 지도 차이의 대부분이 알고리즘 변경 때문이라고 밝힙니다. 두 해 중 하나를 고르거나, 변화 연구에는 다른 자료를 쓰세요."
+  - "10 m 등급 자료를 거친 격자로 옮길 때는 최빈값 집계나 등급별 비율 계산을 쓰세요. 평균·쌍선형 보간은 의미 없는 코드를 만듭니다."
+  - "위경도 격자라 고위도로 갈수록 화소의 동서 폭이 줄어듭니다. 면적을 셀 때는 화소 수가 아니라 위도에 따른 화소 면적을 곱해야 합니다."
+  - "알려진 문제: 구름이 잦은 지역의 구름 흔적, Sentinel-2 궤도·처리 단위 경계의 직선 경계, 빙하 소모대·산그늘이 물로 분류되는 사례, 관개 농경지와 초본 습지의 혼동이 있습니다."
+  - "AWS·Zenodo·ESA 다운로드는 Map 층만 있고, 관측 수를 담은 InputQuality 층은 WorldCover 뷰어나 Terrascope에서만 받을 수 있습니다."
+  - "후속인 Copernicus LCFM 10 m 지도는 별도 제품입니다. WorldCover와 같은 범례·알고리즘이라는 공식 설명이 없으니 두 자료를 이어 붙이기 전에 범례와 정의를 확인하세요."
+
+citations:
+  dataset:
+    - label: WorldCover 2021 v200
+      text: >-
+        Zanaga, D., Van De Kerchove, R., Daems, D., De Keersmaecker, W., Brockmann, C., Kirches, G., Wevers, J., Cartus, O., Santoro, M., Fritz, S.,
+        Lesiv, M., Herold, M., Tsendbazar, N.E., Xu, P., Ramoino, F., Arino, O. (2022). ESA WorldCover 10 m 2021 v200. Zenodo. https://doi.org/10.5281/zenodo.7254221
+      doi: 10.5281/zenodo.7254221
+      bibtex: |
+        @misc{zanaga2022worldcover,
+          author    = {Zanaga, Daniele and Van De Kerchove, Ruben and Daems, Dirk and De Keersmaecker, Wanda and Brockmann, Carsten and Kirches, Grit and Wevers, Jan and Cartus, Oliver and Santoro, Maurizio and Fritz, Steffen and Lesiv, Myroslava and Herold, Martin and Tsendbazar, Nandin-Erdene and Xu, Panpan and Ramoino, Fabrizio and Arino, Olivier},
+          title     = {{ESA WorldCover} 10 m 2021 v200},
+          year      = {2022},
+          publisher = {Zenodo},
+          doi       = {10.5281/zenodo.7254221}
+        }
+    - label: WorldCover 2020 v100
+      text: >-
+        Zanaga, D., Van De Kerchove, R., De Keersmaecker, W., Souverijns, N., Brockmann, C., Quast, R., Wevers, J., Grosu, A., Paccini, A., Vergnaud, S.,
+        Cartus, O., Santoro, M., Fritz, S., Georgieva, I., Lesiv, M., Carter, S., Herold, M., Li, L., Tsendbazar, N.E., Ramoino, F., Arino, O. (2021).
+        ESA WorldCover 10 m 2020 v100. Zenodo. https://doi.org/10.5281/zenodo.5571936
+      doi: 10.5281/zenodo.5571936
+      bibtex: |
+        @misc{zanaga2021worldcover,
+          author    = {Zanaga, Daniele and Van De Kerchove, Ruben and De Keersmaecker, Wanda and Souverijns, Niels and Brockmann, Carsten and Quast, Ralf and Wevers, Jan and Grosu, Alex and Paccini, Audrey and Vergnaud, Sylvain and Cartus, Oliver and Santoro, Maurizio and Fritz, Steffen and Georgieva, Ivelina and Lesiv, Myroslava and Carter, Sarah and Herold, Martin and Li, Linlin and Tsendbazar, Nandin-Erdene and Ramoino, Fabrizio and Arino, Olivier},
+          title     = {{ESA WorldCover} 10 m 2020 v100},
+          year      = {2021},
+          publisher = {Zenodo},
+          doi       = {10.5281/zenodo.5571936}
+        }
+  papers:
+    - label: WorldCover 제품 사용자 설명서 v2.0 — DOI 없음
+      text: >-
+        ESA WorldCover consortium (2022): ESA WorldCover Product User Manual, Version 2.0 (WorldCover_PUM_v2.0), 24 October 2022. VITO.
+        https://esa-worldcover.s3.eu-central-1.amazonaws.com/v200/2021/docs/WorldCover_PUM_V2.0.pdf
+      bibtex: |
+        @techreport{worldcover2022pum,
+          author      = {{ESA WorldCover consortium}},
+          title       = {{ESA WorldCover} Product User Manual, Version 2.0},
+          institution = {VITO},
+          number      = {WorldCover\_PUM\_v2.0},
+          year        = {2022},
+          url         = {https://esa-worldcover.s3.eu-central-1.amazonaws.com/v200/2021/docs/WorldCover_PUM_V2.0.pdf}
+        }
+  acknowledgement: >-
+    쓴 해의 Zenodo DOI를 인용합니다(공식 누리집은 참고 논문이 준비 중이라고 안내). 지도·그림에는 "© ESA WorldCover project 2021 / Contains modified
+    Copernicus Sentinel data (2021) processed by ESA WorldCover consortium"처럼 연도를 맞춰 출처를 적습니다.
+
+transitions:
+  - from: WorldCover 2020 v100
+    to: WorldCover 2021 v200
+    status: completed
+    date: "2022-10"
+    summary: >-
+      2021년 지도는 개선된 알고리즘(v200)으로 새로 만든 것으로, 2020년 지도를 v200으로 다시 만들지는 않았습니다. 형식·범례는 같지만 두 지도는 서로 다른 판입니다.
+    changes:
+      - aspect: 학습 자료·특징
+        before: "학습 지점 259,734개, 특징 131개"
+        after: "학습 지점 319,415개, 특징 115개"
+      - aspect: 전체 정확도(독립 검증)
+        before: "74.4%"
+        after: "76.7% (±0.5%)"
+      - aspect: 파일 형식·범례
+        before: "COG, 3°×3° 타일, 11등급"
+        after: "변경 없음"
+      - aspect: 배포 경로
+        before: "s3://esa-worldcover/v100/2020/, Zenodo 단일 tar.gz"
+        after: "s3://esa-worldcover/v200/2021/, Zenodo 60°×60° 묶음"
+    impacts:
+      - 두 지도의 차이를 실제 토지피복 변화로 해석하지 마세요(대부분 알고리즘 차이).
+      - 한 해만 필요하면 정확도가 더 높은 2021년 v200을 쓰는 것이 일반적입니다.
+    sources:
+      - name: ESA WorldCover Product User Manual v2.0
+        url: https://esa-worldcover.s3.eu-central-1.amazonaws.com/v200/2021/docs/WorldCover_PUM_V2.0.pdf
+      - name: ESA WorldCover — Data access (버전 안내)
+        url: https://esa-worldcover.org/en/data-access
+  - from: ESA WorldCover (2020–2021)
+    to: Copernicus LCFM 10 m Global Land Cover (2020–2026)
+    status: completed
+    date: "2026-02"
+    summary: >-
+      ESA 시범 사업이 끝나고, EU Copernicus 육상 모니터링 서비스(CLMS)의 LCFM 사업이 10 m 전지구 토지피복 지도를 2020~2026년 해마다 운영 제품으로 내는 체제로 바뀌었습니다.
+      2026-10-13 기준 LCFM 10 m 지도는 2020년만 공개되어 있습니다.
+    changes:
+      - aspect: 운영 주체
+        before: "ESA 시범 사업(VITO 주관 컨소시엄)"
+        after: "EU Copernicus 육상 모니터링 서비스(CLMS) — LCFM 사업"
+      - aspect: 기간
+        before: "2020, 2021 두 해"
+        after: "2020~2026 연간 계획 (2026-10 기준 2020년만 공개, 2021년 이후는 2026년 공개 예정으로 안내)"
+      - aspect: 입력 위성
+        before: "Sentinel-1 + Sentinel-2"
+        after: "Sentinel-2 MSI (CLMS 제품 설명 기준)"
+      - aspect: 배포처
+        before: "AWS, Zenodo, Terrascope, GEE"
+        after: "Copernicus Data Space Ecosystem(브라우저·OData API·S3), CLMS 제품 페이지"
+    impacts:
+      - LCFM은 별도 제품이므로 WorldCover와 한 시계열로 잇기 전에 범례·정의·정확도를 확인하세요.
+      - 2022년 이후 10 m 전지구 지도가 필요하면 LCFM 공개 일정을 확인해야 합니다.
+    sources:
+      - name: ESA WorldCover 소식 (2026-02-25, Copernicus LCFM operational successor)
+        url: https://esa-worldcover.org/en/news
+      - name: "CLMS — LCFM: a new chapter in global land cover monitoring (2025-06-26)"
+        url: https://land.copernicus.eu/en/news/lcfm-a-new-chapter-in-global-land-cover-monitoring
+      - name: CDSE 포럼 — LCM 10 m 2021년 이후 공개 일정 답변(2025-10)
+        url: https://forum.dataspace.copernicus.eu/t/timeline-of-availability-for-lcm-global-10m-2021-onwards/4051
+
+notices:
+  - date: "2026-02-25"
+    level: warning
+    title: WorldCover 사업 종료 — 운영 후속은 Copernicus LCFM
+    body: >-
+      WorldCover 누리집은 ESA WorldCover 사업이 끝났으며, 10 m 전지구 토지피복 지도는 이제 Copernicus LCFM 제품군으로 이용할 수 있다고 안내했습니다.
+      WorldCover는 2020·2021년 두 지도로 마감됩니다.
+    source: https://esa-worldcover.org/en/news
+  - date: "2025-06-26"
+    level: info
+    title: Copernicus LCFM 10 m 전지구 토지피복 지도(2020년) 공개
+    body: >-
+      CLMS가 LCFM 제품군의 첫 결과로 10 m 전지구 토지피복 지도와 범열대 수관 밀도 지도(모두 2020년)를 공개했고, 2020~2026년을 해마다 제공할 계획이라고 밝혔습니다.
+    source: https://land.copernicus.eu/en/news/lcfm-a-new-chapter-in-global-land-cover-monitoring
+  - date: "2022-10-28"
+    level: info
+    title: WorldCover 2021(v200) 공개
+    body: >-
+      개선된 알고리즘으로 만든 2021년 지도가 공개되었습니다. 전체 정확도는 76.7%이며, 2020년(v100) 지도와의 차이는 대부분 알고리즘 차이라고 안내되었습니다.
+    source: https://esa-worldcover.org/en/about/about
+
+links:
+  - name: ESA WorldCover 누리집
+    url: https://esa-worldcover.org/en
+  - name: WorldCover 자료 받기·인용 안내
+    url: https://esa-worldcover.org/en/data-access
+  - name: Product User Manual v2.0 (2021 v200)
+    url: https://esa-worldcover.s3.eu-central-1.amazonaws.com/v200/2021/docs/WorldCover_PUM_V2.0.pdf
+  - name: WorldCover 뷰어
+    url: https://viewer.esa-worldcover.org/worldcover
+  - name: Copernicus CLMS — Global Dynamic Land Cover (LCFM 포함)
+    url: https://land.copernicus.eu/en/products/global-dynamic-land-cover
+
+watch_urls:
+  - https://esa-worldcover.org/en/news
+  - https://land.copernicus.eu/en/products/global-dynamic-land-cover
+
+last_verified: "2026-10-13"

@@ -6,7 +6,7 @@ hooks/datasets.py 가 만드는 페이지·폼·메뉴의 한국어 화면 문�
 (영어판 빌드 뒤 scripts/check_en.py 로 남은 한국어를 찾을 수 있습니다)
 """
 
-DOMAIN_LABEL = {"atmosphere": "Atmosphere", "ocean": "Ocean", "seaice": "Sea ice"}
+DOMAIN_LABEL = {"atmosphere": "Atmosphere", "ocean": "Ocean", "seaice": "Sea ice", "land": "Land"}
 
 GROUP = {
     "재분석": "Reanalyses",
@@ -23,12 +23,22 @@ GROUP = {
     "관측 기반 분석장": "Observation-based analyses",
     "해빙 이동": "Sea-ice drift",
     "해빙 지수": "Sea-ice indices",
+    "육상 재분석·자료동화": "Land reanalyses & data assimilation",
+    "토양수분": "Soil moisture",
+    "증발산": "Evapotranspiration",
+    "식생": "Vegetation",
+    "토지피복": "Land cover",
+    "지표면온도·알베도": "Land surface temperature & albedo",
+    "적설": "Snow",
+    "육수저장량": "Terrestrial water storage",
+    "산불": "Fire",
 }
 
 DOMAIN_INTRO = {
     "atmosphere": "Atmospheric reanalyses (global, regional and land) and observation-based precipitation, surface temperature and radiation datasets. Older generations needed to reproduce published work or for comparison studies are included alongside current products.",
     "ocean": "Ocean reanalyses and state estimates, sea surface temperature analyses, 3-D temperature and salinity analyses, satellite sea level, and atmospheric forcing for ocean–sea-ice models.",
     "seaice": "Sea-ice concentration, thickness, volume and drift: model-based reanalyses, observation-based analyses, satellite products, drift vectors and extent/area indices.",
+    "land": "Land data assimilation systems and land reanalyses, plus satellite-based soil moisture, evapotranspiration, vegetation (LAI, NDVI), land cover, land surface temperature, albedo, snow, terrestrial water storage and fire products for hydrology, agriculture, ecology and land-surface studies.",
 }
 
 GROUP_INTRO = {
@@ -38,13 +48,23 @@ GROUP_INTRO = {
     "수온·염분 분석장": "Gridded 3-D temperature and salinity fields and climatologies built from in-situ profiles (Argo, CTD, XBT, …).",
     "해빙 이동": "Sea-ice motion (drift) vectors tracked from satellite imagery.",
     "해빙 지수": "Summary indices such as sea-ice extent and area computed from satellite sea-ice concentration.",
+    "육상 재분석·자료동화": "Land-surface models driven by observation-based forcing (precipitation, radiation, temperature, …) to estimate soil moisture, evapotranspiration, runoff and snow. Land-only reruns of atmospheric reanalyses are listed here too.",
+    "토양수분": "Soil moisture retrieved from satellite microwave observations, and root-zone soil moisture from assimilating them into land-surface models.",
+    "증발산": "Actual evapotranspiration and its components, estimated by combining satellite observations with models.",
+    "식생": "Satellite vegetation products such as leaf area index (LAI), fraction of absorbed photosynthetically active radiation (FAPAR) and vegetation indices (NDVI, EVI).",
+    "토지피복": "Land cover maps classified from satellite imagery. Classification systems (IGBP, LCCS, …) and the number of classes differ between products.",
+    "지표면온도·알베도": "Land surface temperature (LST) from satellite thermal-infrared observations, and surface reflectance and albedo products.",
+    "적설": "Satellite snow cover extent and snow water equivalent (SWE) products.",
+    "육수저장량": "Changes in terrestrial water storage (the sum of groundwater, soil moisture, snow and surface water) from satellite gravimetry.",
+    "산불": "Satellite-detected burned area and fire emissions estimated from it.",
 }
 
 DOMAIN_TAG = {"대기": "Atmosphere", "해양": "Ocean", "해빙": "Sea ice", "육지": "Land", "극지": "Polar",
               "해양파랑": "Ocean waves", "원격탐사": "Remote sensing", "빙상": "Ice sheets", "수문": "Hydrology", "에어로졸": "Aerosols"}
 
 TEMPORAL = {"30분": "30 min", "1시간": "1 h", "3시간": "3 h", "6시간": "6 h", "1일": "1 day",
-            "5일": "5 days", "7일": "7 days", "1개월": "1 month", "1년": "1 year"}
+            "5일": "5 days", "7일": "7 days", "8일": "8 days", "10일": "10 days", "15일": "15 days",
+            "16일": "16 days", "1개월": "1 month", "1년": "1 year"}
 
 STATUS = {"active": "Available", "delayed": "Update delayed", "deprecated": "Being replaced",
           "ended": "Discontinued", "upcoming": "Upcoming"}

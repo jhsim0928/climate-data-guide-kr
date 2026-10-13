@@ -1,0 +1,244 @@
+# ─────────────────────────────────────────────────────────────
+# TerraClimate — dataset information file
+# Listed under the Land tab, 'Land reanalyses & data assimilation'. The v1.0 (CRU/JRA-55) → v1.1 (ERA5/WorldClim) change is described under transitions.
+# After editing, update last_verified to the date you checked the official pages.
+# ─────────────────────────────────────────────────────────────
+id: terraclimate
+name: "TerraClimate"
+full_name: TerraClimate (global ~4 km monthly climate and climatic water balance for land, Climatology Lab)
+category: analysis
+domain: land
+group: 육상 재분석·자료동화
+order: 40
+domains: [육지, 대기, 수문]
+provider: Climatology Lab (UC Merced, John Abatzoglou) / University of Idaho Northwest Knowledge Network (THREDDS distribution)
+
+status: active
+status_note: >-
+  The current release is TerraClimate v1.1, which combines ERA5 monthly anomalies with WorldClim climatologies and is extended by one year at a time.
+  On 2026-10-13 the THREDDS server held files for 2025 (January–December). The Google Earth Engine catalogue, however, ends in December 2024
+  and still describes the v1.0 inputs (CRU TS4.0 and JRA-55), so the version you get may depend on where you download it.
+
+period:
+  start: "1950-01"
+  end: "2025-12"
+  note: >-
+    v1.1 starts in 1950, but the producers suggest skipping 1950 because of water-balance model spin-up.
+    Yearly files on THREDDS begin in 1950 (checked 2026-10-13), while the multi-year aggregated files and the official description still say 1958 onward.
+    Monthly climatologies for 1981–2010 and 1991–2020 and +2°C, +4°C and counterfactual scenarios (pseudo-years 1950–2025) are provided separately.
+
+resolution:
+  spatial_short: "4.6 km (0.042°)"
+  temporal_short: "1개월"
+  spatial: >-
+    1/24° (~4 km) regular latitude-longitude grid, 4320 latitudes × 8640 longitudes (cell centres 89.979°N–89.979°S, 179.979°W–179.979°E, WGS84 EPSG:4326).
+    Land only.
+  vertical: Single surface value (soil moisture is one total-column storage value)
+  temporal: Monthly (12 months per yearly file) / 30-year monthly climatologies
+
+update: Annually (the previous year is added in one batch; no fixed schedule is published)
+license: Not stated on the producer's page; the Google Earth Engine catalogue lists it as CC0 (public domain). Citation of the paper is requested
+account_required: false
+
+summary: >-
+  TerraClimate uses climatically aided interpolation — high-resolution monthly normals from WorldClim plus monthly anomalies from coarser time-varying datasets —
+  to produce monthly temperature, precipitation, vapour pressure, solar radiation and wind speed for global land at about 4 km. These drive a simple water-balance model
+  that yields actual and reference evapotranspiration, climatic water deficit, runoff, soil moisture, snow water equivalent and the PDSI.
+  Version 1.0 used CRU TS4.0 and JRA-55; the current v1.1 uses ERA5 anomalies. It is popular in ecology, hydrology and agriculture when terrain-resolving monthly climate and drought indicators are needed.
+
+time_convention:
+  summary: >-
+    There is one value per month, and the time coordinate in the files is the first day of the month (days since 1900-01-01). Precipitation, evapotranspiration, deficit and runoff
+    are monthly totals; temperature, vapour pressure, VPD, wind and radiation are monthly means; soil moisture, snow water equivalent and PDSI are end-of-month values.
+  points:
+    - "The time stamp is the first day of the month, but each value represents the whole month, not an instant. End-of-month variables (soil, swe, PDSI) use the same time stamp."
+    - "`tmax` and `tmin` are monthly averages of daily maximum and minimum temperature, not monthly extremes."
+    - "`ppt`, `aet`, `pet`, `def` and `q` are monthly totals in mm, so annual values are the sum of 12 months (do not average them)."
+    - "Values are stored as integers and converted with the scale_factor and add_offset attributes (since the 2019 switch to NetCDF4). The factors differ by variable, so read them from the file."
+  source: https://www.climatologylab.org/terraclimate-variables.html
+  source_name: TerraClimate Variables (Climatology Lab) + THREDDS file attributes
+
+variables:
+  note: >-
+    Based on the Climatology Lab variable table and the THREDDS file attributes. Each variable is stored in one file per year (TerraClimate_<variable>_<year>.nc).
+    Some band names differ in Google Earth Engine (`ppt`→`pr`, `q`→`ro`, `tmax`→`tmmx`, `tmin`→`tmmn`, `ws`→`vs`, `PDSI`→`pdsi`).
+  full_list: https://www.climatologylab.org/terraclimate-variables.html
+  groups:
+    - name: Climate variables (monthly means)
+      kind: mean
+      period: Monthly
+      items:
+        - text: "Maximum temperature — `tmax` (°C)"
+          note: Monthly mean of daily maximum temperature
+        - text: "Minimum temperature — `tmin` (°C)"
+          note: Monthly mean of daily minimum temperature
+        - "Vapour pressure — `vap` (kPa)"
+        - "Vapour pressure deficit (VPD) — `vpd` (kPa)"
+        - "Wind speed — `ws` (m/s)"
+        - "Downward surface shortwave radiation — `srad` (W/m2)"
+    - name: Water-balance fluxes (monthly totals)
+      kind: accum
+      period: Monthly
+      items:
+        - "Precipitation — `ppt` (mm)"
+        - "Reference (potential) evapotranspiration — `pet` (mm)"
+        - "Actual evapotranspiration — `aet` (mm)"
+        - "Climatic water deficit (pet − aet) — `def` (mm)"
+        - "Runoff — `q` (mm)"
+    - name: Storage and drought index (end of month)
+      kind: instant
+      items:
+        - text: "Soil moisture, total column — `soil` (mm)"
+          note: End-of-month value
+        - text: "Snow water equivalent — `swe` (mm)"
+          note: End-of-month value
+        - text: "Palmer Drought Severity Index — `PDSI` (unitless)"
+          note: End-of-month value
+
+access:
+  - name: Climatology Lab — TerraClimate overview and download guide
+    url: https://www.climatologylab.org/terraclimate.html
+    method: Information page (links to THREDDS, direct downloads and wget scripts)
+    note: Version notes, change history, and links to scenario and climatology data are all on this page.
+  - name: NKN THREDDS server (yearly files)
+    url: http://thredds.northwestknowledge.net:8080/thredds/catalog/TERRACLIMATE_ALL/data/catalog.html
+    method: HTTP download / OPeNDAP / NetCDF Subset Service (NCSS)
+    note: >-
+      Files are named TerraClimate_<variable>_<year>.nc. Multi-year aggregated datasets (from 1958) are at
+      http://thredds.northwestknowledge.net:8080/thredds/terraclimate_aggregated.html, and OPeNDAP lets you subset a region or point.
+  - name: Google Earth Engine (IDAHO_EPSCOR/TERRACLIMATE)
+    url: https://developers.google.com/earth-engine/datasets/catalog/IDAHO_EPSCOR_TERRACLIMATE
+    method: Earth Engine API (cloud analysis)
+    note: On 2026-10-13 it ran to December 2024 and its description was still v1.0-based. Band names and scale values differ from the THREDDS files.
+  - name: v1.0 (previous release) data
+    url: https://www.climatologylab.org/terraclimate.html
+    method: FTP (on request)
+    note: v1.0 has been moved to an FTP server; contact John Abatzoglou or Katherine Hegewisch if you need it.
+
+example:
+  lang: python
+  note: >-
+    Opens the 2025 precipitation file through the THREDDS OPeNDAP endpoint and subsets the Korean Peninsula. No account is needed.
+    If your netCDF library raises a _FillValue type error, the official page recommends appending '#fillmismatch' to the URL.
+  code: |
+    import xarray as xr
+
+    url = ("http://thredds.northwestknowledge.net:8080/thredds/dodsC/"
+           "TERRACLIMATE_ALL/data/TerraClimate_ppt_2025.nc#fillmismatch")
+    ds = xr.open_dataset(url)          # xarray applies scale_factor automatically
+    # Latitude is stored north to south, so slice from north to south
+    ppt = ds["ppt"].sel(lat=slice(39, 33), lon=slice(124, 132))
+    print(ppt.sum("time").mean().values)   # area-mean 2025 annual precipitation (mm)
+
+tips:
+  - "Do not join v1.0 and v1.1 into one time series. The inputs (CRU/JRA-55 → ERA5) and the PET and runoff formulations changed, so historical values all differ. State the version in your paper."
+  - Long-term trends are inherited from the parent datasets (such as ERA5). The producers advise against using TerraClimate directly for independent trend assessments, such as temperature trends.
+  - Because it combines WorldClim normals with interpolated anomalies, it cannot capture sharp anomaly gradients in mountainous or coastal areas. Validation is limited in data-sparse regions such as Antarctica.
+  - The water-balance model is simple — static vegetation, a single soil water holding capacity per location and a temperature-based snow model. soil, aet and q are model outputs, not observations.
+  - "`soil`, `swe` and `PDSI` are end-of-month values; `ppt`, `aet`, `pet`, `def` and `q` are monthly totals. Do not average the monthly-total variables to get annual values."
+  - The official page notes that winter temperature inversions may be extrapolated unrealistically in boreal regions such as Alaska.
+  - "The Google Earth Engine copy ran to 2024 on 2026-10-13 and carries no version label. If you need the latest year or v1.1 specifically, use the THREDDS files."
+
+citations:
+  dataset: []
+  papers:
+    - label: TerraClimate description paper (v1.0)
+      text: >-
+        Abatzoglou, J. T., Dobrowski, S. Z., Parks, S. A., Hegewisch, K. C. (2018): TerraClimate, a high-resolution global dataset
+        of monthly climate and climatic water balance from 1958–2015. Scientific Data, 5, 170191.
+      doi: 10.1038/sdata.2017.191
+      bibtex: |
+        @article{abatzoglou2018terraclimate,
+          author  = {Abatzoglou, John T. and Dobrowski, Solomon Z. and Parks, Sean A. and Hegewisch, Katherine C.},
+          title   = {{TerraClimate}, a high-resolution global dataset of monthly climate and climatic water balance from 1958--2015},
+          journal = {Scientific Data},
+          volume  = {5},
+          pages   = {170191},
+          year    = {2018},
+          doi     = {10.1038/sdata.2017.191}
+        }
+  acknowledgement: >-
+    There is no dataset DOI; the Climatology Lab asks users to cite Abatzoglou et al. (2018). When using v1.1, also give the version (v1.1), the access date
+    and where you obtained the data (THREDDS or Earth Engine). For the +2°C/+4°C scenarios, Qin et al. (2020, Nature Climate Change) should also be cited.
+
+transitions:
+  - from: TerraClimate v1.0
+    to: TerraClimate v1.1
+    status: completed
+    summary: >-
+      To get around the discontinued JRA-55 and delayed CRU updates, the time-varying inputs were switched to ERA5 monthly anomalies, and the reference ET and runoff formulations were revised.
+      The whole record was recomputed, so v1.0 and v1.1 must not be mixed. The official page dates the v1.1 release announcement 15 February 2025 and the description of changes 'Updated 15 February 2026'.
+    changes:
+      - aspect: Temperature, precipitation and vapour pressure inputs
+        before: "CRU TS4.0 monthly anomalies (JRA-55 where CRU had no stations) + WorldClim normals"
+        after: "ERA5 monthly anomalies + WorldClim v1.4 and v2 normals; VPD derived with standard formulas"
+      - aspect: Solar radiation and wind inputs
+        before: "JRA-55 (bias-corrected blend of JRA-55, JRA-55C and ERA-Interim after the 2018 revision)"
+        after: "ERA5 monthly anomalies"
+      - aspect: Period
+        before: "1958 onward"
+        after: "1950 onward (skipping 1950 recommended because of spin-up)"
+      - aspect: Reference evapotranspiration (pet)
+        before: "ASCE Penman-Monteith"
+        after: "Modified Penman-Monteith accounting for CO2 effects on stomatal resistance (Yang et al., 2018)"
+      - aspect: Runoff (q)
+        before: "Only the month's surplus becomes runoff"
+        after: "Part of the surplus carries over to the next month (r-factor 0.5) — better runoff seasonality against observed streamflow"
+      - aspect: Climate-change scenarios
+        before: "+2°C and +4°C for pseudo-years 1985–2015 (Qin et al., 2020)"
+        after: "+2°C and +4°C updated with CMIP6 multimodel pattern scaling (pseudo-years 1950–2025); a counterfactual without the anthropogenic signal added"
+      - aspect: Distribution
+        before: "THREDDS and Earth Engine"
+        after: "THREDDS now serves v1.1; v1.0 moved to FTP (on request). The Earth Engine catalogue description is still v1.0-based"
+    impacts:
+      - Do not mix climatologies or trends computed from v1.0 with v1.1 results; download the full record again as v1.1.
+      - Because the inputs are now ERA5, studies comparing or validating against ERA5 should keep in mind that the two are not independent.
+      - Earth Engine and THREDDS copies may differ in version and period, so state the data source in your paper.
+    sources:
+      - name: TerraClimate (Climatology Lab) — v1.1 announcement and changes
+        url: https://www.climatologylab.org/terraclimate.html
+      - name: Abatzoglou et al. (2018), Scientific Data
+        url: https://doi.org/10.1038/sdata.2017.191
+      - name: Google Earth Engine IDAHO_EPSCOR/TERRACLIMATE
+        url: https://developers.google.com/earth-engine/datasets/catalog/IDAHO_EPSCOR_TERRACLIMATE
+
+notices:
+  - date: "2026-02-15"
+    level: warning
+    title: TerraClimate v1.1 released — fully recomputed from ERA5 and WorldClim
+    body: >-
+      v1.1 combines ERA5 monthly anomalies with WorldClim normals, rebuilt from 1950, with the aim of simplifying annual updates.
+      Reference ET now accounts for CO2, runoff carries over between months, and the scenario datasets are CMIP6-based. v1.0 has moved to FTP, and users are told not to mix the two versions.
+      The official page dates the release announcement 2025-02-15 but labels the description of changes 'Updated 15 February 2026', so the exact release date is unclear.
+    source: https://www.climatologylab.org/terraclimate.html
+  - date: "2021-02-01"
+    level: info
+    title: netCDF library update breaks remote access — use '#fillmismatch'
+    body: >-
+      After a netCDF software update, remote access (e.g. OPeNDAP) may fail with a _FillValue type mismatch.
+      Appending '#fillmismatch' to the file URL is the recommended workaround.
+    source: https://www.climatologylab.org/terraclimate.html
+  - date: "2019-08-01"
+    level: info
+    title: Files converted to NetCDF4 — scale_factor and offset must be applied
+    body: >-
+      With the switch to NetCDF4, values are stored as integers with scale_factor and add_offset attributes.
+      Software that reads the files directly must apply these to get physical values.
+    source: https://www.climatologylab.org/terraclimate.html
+
+links:
+  - name: TerraClimate (Climatology Lab)
+    url: https://www.climatologylab.org/terraclimate.html
+  - name: TerraClimate variables
+    url: https://www.climatologylab.org/terraclimate-variables.html
+  - name: THREDDS catalogue (TerraClimate)
+    url: http://thredds.northwestknowledge.net:8080/thredds/terraclimate_catalog.html
+  - name: Google Earth Engine catalogue
+    url: https://developers.google.com/earth-engine/datasets/catalog/IDAHO_EPSCOR_TERRACLIMATE
+  - name: Abatzoglou et al. (2018)
+    url: https://doi.org/10.1038/sdata.2017.191
+
+watch_urls:
+  - https://www.climatologylab.org/terraclimate.html
+
+last_verified: "2026-10-13"

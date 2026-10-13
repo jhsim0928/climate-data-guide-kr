@@ -1,0 +1,327 @@
+# ─────────────────────────────────────────────────────────────
+# GIMMS NDVI (NDVI3g → GIMMS-3G+ V1.2, PKU GIMMS NDVI) — dataset information file (English edition)
+# Land tab, 'Vegetation'. Classed as 'ended': the official NDVI3g v1 successor GIMMS-3G+ and the Peking University recalibration PKU GIMMS NDVI both stop in December 2022.
+# After editing, update last_verified to the date you checked the official pages.
+# ─────────────────────────────────────────────────────────────
+id: gimms-ndvi
+name: "GIMMS NDVI"
+full_name: Global Inventory Modeling and Mapping Studies (GIMMS) AVHRR NDVI — NDVI3g v1 (1981–2015), its successor GIMMS-3G+ V1.2 (1982–2022) and the Peking University recalibration PKU GIMMS NDVI (1982–2022) (1/12°, half-monthly maximum value composites)
+category: satellite
+domain: land
+group: 식생
+order: 40
+domains: [육지, 원격탐사]
+provider: NASA GSFC GIMMS group (Pinzon, Tucker) / distributed by NASA ORNL DAAC (PKU GIMMS NDVI by the Piao and Zhu group, Peking University, via Zenodo)
+
+status: ended
+status_note: >-
+  NDVI3g v1 ended in December 2015, and both the GIMMS team's successor GIMMS-3G+ V1.2 (ORNL DAAC, released 2023-08-24) and Peking University's recalibrated PKU GIMMS NDVI V1.2 (Zenodo, 2023) end with December 2022.
+  On 2026-10-13 the NASA CMR record for GIMMS-3G+ still ended on 2022-12-31 with no newer year or version registered, and neither dataset has announced an extension, so the page is classed as 'ended'.
+  It remains a standard long-term NDVI record from the 1980s, but 2023 onwards must come from other data.
+successor:
+  name: None (no official successor announced)
+  url: https://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=2187
+  note: >-
+    The GIMMS team has not released a version extending beyond 2022. For NDVI from 2023 onwards use an operational satellite NDVI such as the VIIRS vegetation indices (viirs-vi),
+    but because sensor, compositing and resolution differ, do not splice it directly onto the GIMMS record; calibrate and check over an overlap period first.
+
+period:
+  start: "1982-01"
+  end: "2022-12"
+  note: >-
+    GIMMS-3G+ V1.2 covers 1982-01-01 to 2022-12-31 according to NASA CMR (the ORNL dataset title says '1981-2022', but files start in 1982).
+    PKU GIMMS NDVI has an AVHRR-only version for 1982-01 to 2015-12 and a MODIS-consolidated version for 1982-01 to 2022-12.
+    The discontinued NDVI3g v1 covered 1981-07 to 2015-12 (per the NCAR Climate Data Guide), and the earlier NDVI3g (v0) ran to 2013-12.
+
+resolution:
+  spatial_short: "9 km (0.083°)"
+  temporal_short: "15일"
+  spatial: "1/12° (0.0833°) global latitude–longitude grid (WGS84, pixel-centre coordinates, 4320 × 2160) — common to GIMMS-3G+, NDVI3g and PKU GIMMS NDVI"
+  vertical: Land surface (single level)
+  temporal: "Half-monthly (two per month) maximum value composites — days 1–15 and 16 to month end for GIMMS-3G+. GIMMS-3G+ files bundle six months (12 composites) each (file names _0106, _0712)"
+
+update: Ended (both GIMMS-3G+ and PKU end with 2022-12; no extension announced)
+license: "GIMMS-3G+: openly shared without restriction under the NASA EOSDIS data use and citation guidance (download needs a free NASA Earthdata Login) / PKU GIMMS NDVI: CC BY 4.0"
+account_required: true
+
+summary: >-
+  GIMMS NDVI is a global 1/12°, half-monthly NDVI record built since 1981 by joining AVHRR observations from NOAA and MetOp satellites and correcting for sensor differences,
+  orbital drift and volcanic aerosols; it has been a reference dataset for more than four decades of vegetation greenness trends and phenology. The third-generation NDVI3g stopped at v1 (through 2015),
+  and in 2023 NASA's GIMMS team released GIMMS-3G+ V1.2 at the ORNL DAAC, extended to 2022 with corrections. Separately, a Peking University group recalibrated NDVI3g against Landsat
+  and continued it with MODIS from 2003 as PKU GIMMS NDVI (1982–2022). None of these has been extended beyond 2022.
+
+time_convention:
+  summary: >-
+    Each value is a maximum value composite (MVC): the largest daily NDVI within the half-month (days 1–15 or day 16 to month end). The method suppresses cloud and atmospheric effects,
+    so values are higher than the mean for the period. In GIMMS-3G+, `time` is the middle day of the compositing period (days since 1982-01-01) and `time_bnds` holds its start and end days.
+  points:
+    - "Each GIMMS-3G+ file holds six months, i.e. 12 composites (e.g. ndvi3g_geo_v1_2_2021_0712.nc4 = July–December 2021). In CMR, file names read v1_1 through 2014 and v1_2 from 2015."
+    - "The record chains AVHRR instruments on several NOAA satellites and MetOp, so observation times and solar zenith angles differ between platforms and shift with orbital drift. The official user guide says sensor calibration, orbital drift and solar zenith biases were reduced but not eliminated."
+    - "Missing or cloudy pixels are filled by spline interpolation or an average seasonal profile; the `percentile` variable carries a flag (integer quotient of the value by 2000) telling which."
+    - "PKU GIMMS NDVI also follows the half-monthly maximum-composite scheme; from 2003 the consolidated version uses MODIS 16-day composites (MOD13C1) distributed to half-months by time weighting and resampled to 1/12°."
+  source: https://daac.ornl.gov/VEGETATION/guides/Global_Veg_Greenness_GIMMS_3G.html
+  source_name: "ORNL DAAC — Global Vegetation Greenness (NDVI) from AVHRR GIMMS-3G+, 1981-2022 (user guide) + Li et al. (2023) ESSD"
+
+variables:
+  note: >-
+    GIMMS-3G+ follows the netCDF4 variable table in the ORNL DAAC user guide; the integer variables use −32768 as fill. PKU GIMMS NDVI is distributed as unnamed GeoTIFF (uint16) bands,
+    so only their content is listed (from the Zenodo description). The variable layout of NDVI3g v1 could not be confirmed in official documentation and is not listed.
+  full_list: https://daac.ornl.gov/VEGETATION/guides/Global_Veg_Greenness_GIMMS_3G.html
+  groups:
+    - name: GIMMS-3G+ V1.2 (NASA, 1982–2022)
+      kind: max
+      period: Half-month (days 1–15, 16 to month end)
+      items:
+        - text: "Normalized difference vegetation index NDVI — `ndvi` (dimensionless, stored value ÷ 10000)"
+          note: "Valid range −0.03 to 1.0. −5000 marks pixels where NDVI could not be computed"
+        - text: "Percentile and quality flag — `percentile` (encoded integer)"
+          kind: instant
+          note: "Value = percentile×10 + flag×2000. Flag 0 good, 1 spline interpolation, 2 average seasonal profile (possible snow or cloud), 3 missing. Percentile baseline 1982–2021"
+        - text: "Number of contributing satellites — `satellites` (count)"
+          kind: instant
+          note: Number of platforms used in the compositing period
+    - name: PKU GIMMS NDVI V1.2 (Peking University; AVHRR-only 1982–2015 / MODIS-consolidated 1982–2022)
+      kind: max
+      period: Half-month
+      items:
+        - text: "NDVI recalibrated to Landsat (dimensionless, stored value × 0.001)"
+          note: "GeoTIFF uint16, valid 0–1000, fill 65535. In the consolidated version, values from 2003 are based on MODIS MOD13C1"
+        - text: "Quality control (QC) layer"
+          kind: instant
+          note: The Zenodo description recommends using the QC layer, but its value definitions are only in the bundled Readme and could not be confirmed here
+
+access:
+  - name: NASA ORNL DAAC — GIMMS-3G+ (DOI 10.3334/ORNLDAAC/2187)
+    url: https://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=2187
+    method: HTTPS download / earthaccess / Earthdata Search (free Earthdata Login)
+    note: >-
+      The CMR short name is Global_Veg_Greenness_GIMMS_3G_2187, version 1. Files sit under https://data.ornldaac.earthdata.nasa.gov/protected/global_vegetation/Global_Veg_Greenness_GIMMS_3G/data/
+      as ndvi3g_geo_v1_2_YYYY_0106.nc4 (v1_1 for 1982–2014).
+  - name: Earthdata Cloud OPeNDAP
+    url: https://opendap.earthdata.nasa.gov/collections/C2759076389-ORNL_CLOUD/granules/Global_Veg_Greenness_GIMMS_3G.ndvi3g_geo_v1_2_2021_0712.nc4
+    method: OPeNDAP — variable and spatial subsetting
+    note: Each granule has its own address; replace the file name part of the URL above. Requires an Earthdata Login.
+  - name: Zenodo — PKU GIMMS NDVI V1.2
+    url: https://doi.org/10.5281/zenodo.8253971
+    method: HTTPS download (no login; zip files per decade)
+    note: Includes the MODIS-consolidated version (PKU_GIMMS_NDVI_AVHRR_MODIS_consolidated_*.zip, 1982–2022) and the AVHRR-only version (PKU_GIMMS_NDVI_AVHRR_solely_*.zip, 1982–2015). About 5 GB in total.
+  - name: Google Earth Engine — old NDVI3g (v0)
+    url: https://developers.google.com/earth-engine/datasets/catalog/NASA_GIMMS_3GV0
+    method: Earth Engine catalog (NASA/GIMMS/3GV0)
+    note: The older NDVI3g (v0) for 1981-07 to 2013-12. It is neither v1 nor GIMMS-3G+ and should not be used for new analyses.
+
+example:
+  lang: python
+  note: >-
+    Downloads the GIMMS-3G+ file for the second half of 2021 with earthaccess and decodes NDVI and the quality flag over Korea. On first run you will be asked for your Earthdata username and password.
+    The file is opened without automatic scaling so the storage rules (÷10000, −32768 fill, −5000 not computable) can be applied explicitly.
+  code: |
+    import earthaccess
+    import xarray as xr
+
+    earthaccess.login()  # free NASA Earthdata account
+    results = earthaccess.search_data(
+        short_name="Global_Veg_Greenness_GIMMS_3G_2187", version="1",
+        temporal=("2021-07-01", "2021-12-31"),
+    )
+    files = earthaccess.download(results, "gimms3g_plus")
+
+    ds = xr.open_dataset(files[0], mask_and_scale=False)
+    sub = ds.sel(lon=slice(124, 132))
+    sub = sub.sel(lat=slice(33, 39)) if sub.lat[0] < sub.lat[-1] else sub.sel(lat=slice(39, 33))
+
+    raw = sub["ndvi"]
+    ndvi = (raw.where((raw != -32768) & (raw != -5000)) / 10000.0)
+    pct = sub["percentile"]
+    flag = pct // 2000                      # 0 good, 1 spline, 2 seasonal profile, 3 missing
+    ndvi_good = ndvi.where(flag == 0)
+    print(ndvi_good.mean(dim=("lat", "lon")).values)   # area mean of the 12 half-month composites
+
+tips:
+  - "Half-monthly maximum value composites are higher than the mean NDVI for the same period. When building monthly values, state in the paper whether you took the maximum or the mean of the two composites."
+  - "NDVI3g v1 (to 2015), GIMMS-3G+ (to 2022) and PKU GIMMS NDVI come from the same AVHRR raw data but are calibrated differently, so their values differ. Do not mix versions, and cite the exact version name and DOI."
+  - "The official user guide states that atmospheric effects such as Mt. Pinatubo (1991) and sensor calibration, orbital drift and solar zenith biases were not completely removed. Check long-term trends against satellite changeover dates."
+  - "The PKU authors report that orbital drift and sensor degradation artefacts in NDVI3g were largest over tropical evergreen broadleaf forest. For tropical forest trends, compare the PKU version with GIMMS-3G+."
+  - "The PKU consolidated version uses MODIS values from 2003, so its source differs before and after. If AVHRR-only consistency matters for 1982–2015, use the AVHRR-only (solely) version. The Zenodo description recommends removing sparse vegetation (NDVI below 0.1) in trend analyses."
+  - "There are no GIMMS-family data from 2023 onwards. If you continue with VIIRS or MODIS NDVI, first check their differences over an overlap period (e.g. 2012–2022)."
+
+citations:
+  dataset:
+    - label: GIMMS-3G+ (ORNL DAAC)
+      text: >-
+        Pinzon, J.E., E.W. Pak, C.J. Tucker, U.S. Bhatt, G.V. Frost, and M.J. Macander. 2023. Global Vegetation Greenness (NDVI) from AVHRR GIMMS-3G+, 1981-2022.
+        ORNL DAAC, Oak Ridge, Tennessee, USA. https://doi.org/10.3334/ORNLDAAC/2187
+      doi: 10.3334/ORNLDAAC/2187
+      bibtex: |
+        @misc{pinzon2023gimms3gplus,
+          author    = {Pinzon, J. E. and Pak, E. W. and Tucker, C. J. and Bhatt, U. S. and Frost, G. V. and Macander, M. J.},
+          title     = {Global Vegetation Greenness ({NDVI}) from {AVHRR} {GIMMS-3G+}, 1981-2022},
+          year      = {2023},
+          publisher = {ORNL Distributed Active Archive Center},
+          address   = {Oak Ridge, Tennessee, USA},
+          doi       = {10.3334/ORNLDAAC/2187}
+        }
+    - label: PKU GIMMS NDVI V1.2 (Zenodo)
+      text: >-
+        Li, M., Cao, S., Zhu, Z., Wang, Z., Myneni, R. B., Piao, S. (2023): Spatiotemporally consistent global dataset of the GIMMS Normalized Difference Vegetation Index
+        (PKU GIMMS NDVI) from 1982 to 2022 (V1.2). Zenodo. https://doi.org/10.5281/zenodo.8253971
+      doi: 10.5281/zenodo.8253971
+      bibtex: |
+        @misc{li2023pkugimms_data,
+          author    = {Li, Muyi and Cao, Sen and Zhu, Zaichun and Wang, Zhe and Myneni, Ranga B. and Piao, Shilong},
+          title     = {Spatiotemporally consistent global dataset of the {GIMMS} Normalized Difference Vegetation Index ({PKU GIMMS NDVI}) from 1982 to 2022 ({V1.2})},
+          year      = {2023},
+          publisher = {Zenodo},
+          version   = {V1.2},
+          doi       = {10.5281/zenodo.8253971}
+        }
+  papers:
+    - label: NDVI3g data paper
+      text: >-
+        Pinzon, J. E., Tucker, C. J. (2014): A Non-Stationary 1981–2012 AVHRR NDVI3g Time Series. Remote Sensing, 6(8), 6929–6960.
+      doi: 10.3390/rs6086929
+      bibtex: |
+        @article{pinzon2014ndvi3g,
+          author  = {Pinzon, Jorge E. and Tucker, Compton J.},
+          title   = {A Non-Stationary 1981--2012 {AVHRR} {NDVI3g} Time Series},
+          journal = {Remote Sensing},
+          volume  = {6},
+          number  = {8},
+          pages   = {6929--6960},
+          year    = {2014},
+          doi     = {10.3390/rs6086929}
+        }
+    - label: GIMMS 8 km NDVI (previous generation)
+      text: >-
+        Tucker, C. J., Pinzon, J. E., Brown, M. E., Slayback, D. A., Pak, E. W., Mahoney, R., Vermote, E. F., El Saleous, N. (2005):
+        An extended AVHRR 8-km NDVI dataset compatible with MODIS and SPOT vegetation NDVI data. International Journal of Remote Sensing, 26(20), 4485–4498.
+      doi: 10.1080/01431160500168686
+      bibtex: |
+        @article{tucker2005gimms,
+          author  = {Tucker, Compton J. and Pinzon, Jorge E. and Brown, Molly E. and Slayback, Daniel A. and Pak, Edwin W. and Mahoney, Robert and Vermote, Eric F. and El Saleous, Nazmi},
+          title   = {An extended {AVHRR} 8-km {NDVI} dataset compatible with {MODIS} and {SPOT} vegetation {NDVI} data},
+          journal = {International Journal of Remote Sensing},
+          volume  = {26},
+          number  = {20},
+          pages   = {4485--4498},
+          year    = {2005},
+          doi     = {10.1080/01431160500168686}
+        }
+    - label: PKU GIMMS NDVI data paper
+      text: >-
+        Li, M., Cao, S., Zhu, Z., Wang, Z., Myneni, R. B., Piao, S. (2023): Spatiotemporally consistent global dataset of the GIMMS Normalized Difference Vegetation Index
+        (PKU GIMMS NDVI) from 1982 to 2022. Earth System Science Data, 15(9), 4181–4203.
+      doi: 10.5194/essd-15-4181-2023
+      bibtex: |
+        @article{li2023pkugimms,
+          author  = {Li, Muyi and Cao, Sen and Zhu, Zaichun and Wang, Zhe and Myneni, Ranga B. and Piao, Shilong},
+          title   = {Spatiotemporally consistent global dataset of the {GIMMS} Normalized Difference Vegetation Index ({PKU GIMMS NDVI}) from 1982 to 2022},
+          journal = {Earth System Science Data},
+          volume  = {15},
+          number  = {9},
+          pages   = {4181--4203},
+          year    = {2023},
+          doi     = {10.5194/essd-15-4181-2023}
+        }
+  acknowledgement: >-
+    For GIMMS-3G+, cite the ORNL DAAC dataset DOI (10.3334/ORNLDAAC/2187) following the EOSDIS data citation guidance, and add Pinzon & Tucker (2014) for the method.
+    For PKU GIMMS NDVI, cite the Zenodo DOI and Li et al. (2023) in ESSD. State in the text which version you used (NDVI3g v1, GIMMS-3G+ V1.2 or PKU V1.2).
+
+transitions:
+  - from: GIMMS NDVI3g v1
+    to: GIMMS-3G+ V1.2
+    status: completed
+    date: "2023-08"
+    summary: >-
+      The successor released at the ORNL DAAC by the same NASA GIMMS team, extending the NDVI3g record to 2022 with corrections. The grid (1/12°) and half-monthly maximum-composite scheme are unchanged,
+      but distribution moved to the ORNL DAAC with a DOI, MetOp AVHRR data were added, and some corrections were revised. This version also stops in December 2022.
+    changes:
+      - aspect: Period
+        before: "1981-07 to 2015-12"
+        after: "1982-01 to 2022-12 (per CMR)"
+      - aspect: Input satellites
+        before: "AVHRR on NOAA satellites (NOAA-7, 9, 11, 14, 16, 17, 18, etc.)"
+        after: "AVHRR on NOAA satellites plus EUMETSAT MetOp satellites"
+      - aspect: Corrections (the three fixes listed in the ORNL user guide)
+        before: "The earlier version (called 'Version 0' in the guide) masked negative NDVI over snow-covered northern winter regions to zero, creating phenology artefacts / NDVI drops after 2006 from calibration issues / missing coastline pixels"
+        after: "Negative NDVI restored / whole-mission SeaWiFS land products reprocessed to reduce post-2006 drops / coastline pixel time series adjusted"
+      - aspect: Distribution and identifiers
+        before: "Distributed from NASA NEX project servers, no dataset DOI"
+        after: "NASA ORNL DAAC (Earthdata Cloud) — DOI 10.3334/ORNLDAAC/2187, CMR short name Global_Veg_Greenness_GIMMS_3G_2187"
+      - aspect: File layout
+        before: "Half-yearly netCDF4 not following CF conventions (NCAR Climate Data Guide)"
+        after: "Half-yearly netCDF4 ndvi3g_geo_v1_2_YYYY_0106/0712.nc4 (file names v1_1 for 1982–2014), variables ndvi, percentile, satellites, time_bnds"
+    impacts:
+      - Do not mix NDVI3g v1 and GIMMS-3G+ in one time series; re-download from 1982 as GIMMS-3G+. Winter high-latitude NDVI and post-2006 values differ most.
+      - File names say v1_1 up to 2014 and v1_2 from 2015, but ORNL distributes them as one dataset (V1.2). Do not split the record by this label.
+      - GIMMS-3G+ cannot extend the record beyond 2022 either.
+    sources:
+      - name: ORNL DAAC user guide — Global Vegetation Greenness (NDVI) from AVHRR GIMMS-3G+, 1981-2022
+        url: https://daac.ornl.gov/VEGETATION/guides/Global_Veg_Greenness_GIMMS_3G.html
+      - name: Pinzon & Tucker (2014), NDVI3g
+        url: https://doi.org/10.3390/rs6086929
+      - name: NCAR Climate Data Guide — NDVI3g
+        url: https://climatedataguide.ucar.edu/climate-data/ndvi-normalized-difference-vegetation-index-3rd-generation-nasagfsc-gimms
+  - from: GIMMS NDVI3g v1
+    to: PKU GIMMS NDVI V1.2 (Peking University)
+    status: completed
+    date: "2023-08"
+    summary: >-
+      Not an official NASA release but a recalibration by a Peking University group. NDVI3g v1 was recalibrated with biome-specific neural networks (BPNN) trained on about 3.6 million Landsat NDVI samples,
+      reducing orbital drift and sensor degradation artefacts, and extended to 2022 with MODIS NDVI from 2003. It appeared as an alternative after NDVI3g updates stopped in 2015, and it too stops in 2022.
+    changes:
+      - aspect: Period and composition
+        before: "1981-07 to 2015-12, AVHRR only"
+        after: "AVHRR-only version 1982-01 to 2015-12 / MODIS-consolidated version 1982-01 to 2022-12 (1982–2002 AVHRR-based, 2003–2022 MODIS MOD13C1 V6.1-based, linked with pixel-wise random forests over the 2003–2015 overlap)"
+      - aspect: Calibration reference
+        before: "AVHRR inter-sensor calibration (Pinzon & Tucker 2014 approach)"
+        after: "Biome-specific neural-network recalibration to Landsat 5, 7 and 8 NDVI (cross-calibrated to the Landsat 7 level)"
+      - aspect: Accuracy against Landsat (1984–2015)
+        before: "R² 0.94, RMSE 0.09, MAPE 20%"
+        after: "R² 0.97, RMSE 0.05, MAPE 9% — tropical evergreen broadleaf forest R² 0.16 → 0.47"
+      - aspect: File format and licence
+        before: "netCDF4, NASA open data"
+        after: "GeoTIFF (uint16, ×0.001, fill 65535), CC BY 4.0, Zenodo DOI 10.5281/zenodo.8253971"
+    impacts:
+      - The PKU version is a derived product separate from NASA's GIMMS-3G+. Trends can differ between the two, so compare them rather than resting conclusions on one.
+      - The consolidated version uses MODIS values from 2003, carrying Terra MODIS characteristics (including orbital drift). Use the AVHRR-only version (to 2015) if AVHRR-only consistency is needed.
+      - No extension beyond 2022 has been announced (V1.2 was the latest Zenodo version on 2026-10-13).
+    sources:
+      - name: Li et al. (2023), ESSD — PKU GIMMS NDVI
+        url: https://doi.org/10.5194/essd-15-4181-2023
+      - name: Zenodo — PKU GIMMS NDVI V1.2
+        url: https://doi.org/10.5281/zenodo.8253971
+
+notices:
+  - date: "2023-08-24"
+    level: info
+    title: NASA ORNL DAAC releases GIMMS-3G+ V1.2 (1982–2022) — successor to NDVI3g v1
+    body: >-
+      The GIMMS team's AVHRR NDVI was released at the ORNL DAAC as GIMMS-3G+ V1.2, extended to 2022 with corrections (DOI 10.3334/ORNLDAAC/2187).
+      On 2026-10-13 the dataset had not been updated beyond 2022-12-31 and no newer version was registered.
+    source: https://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=2187
+  - date: "2023-08-17"
+    level: info
+    title: PKU GIMMS NDVI V1.2 (1982–2022) published on Zenodo
+    body: >-
+      The Peking University group published V1.2 of PKU GIMMS NDVI, which recalibrates NDVI3g against Landsat and continues it with MODIS from 2003 (AVHRR-only 1982–2015, MODIS-consolidated 1982–2022).
+      No later version had appeared by 2026-10-13.
+    source: https://doi.org/10.5281/zenodo.8253971
+
+links:
+  - name: ORNL DAAC — GIMMS-3G+ dataset page
+    url: https://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=2187
+  - name: ORNL DAAC — GIMMS-3G+ user guide (variables, flags)
+    url: https://daac.ornl.gov/VEGETATION/guides/Global_Veg_Greenness_GIMMS_3G.html
+  - name: NASA Earthdata — GIMMS-3G+ catalog entry
+    url: https://www.earthdata.nasa.gov/data/catalog/ornl-cloud-global-veg-greenness-gimms-3g-2187-1
+  - name: Li et al. (2023) ESSD — PKU GIMMS NDVI
+    url: https://essd.copernicus.org/articles/15/4181/2023/
+  - name: NCAR Climate Data Guide — NDVI3g
+    url: https://climatedataguide.ucar.edu/climate-data/ndvi-normalized-difference-vegetation-index-3rd-generation-nasagfsc-gimms
+
+watch_urls:
+  - https://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=2187
+  - https://zenodo.org/records/8253971
+
+last_verified: "2026-10-13"

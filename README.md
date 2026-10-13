@@ -7,14 +7,14 @@
 <h1 align="center">기후데이터 길잡이</h1>
 
 <p align="center">
-  <b>대기·해양·해빙 연구자를 위한 기후자료 안내서</b><br>
+  <b>대기·해양·해빙·지면 연구자를 위한 기후자료 안내서</b><br>
   <a href="https://data4researchers.kr/">한국어</a> · <a href="https://data4researchers.kr/en/">English</a>
 </p>
 
 <p align="center">
   <a href="https://doi.org/10.5281/zenodo.23300923"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.23300923.svg" alt="DOI 10.5281/zenodo.23300923"></a>
   <a href="https://creativecommons.org/licenses/by/4.0/"><img src="https://img.shields.io/badge/content-CC%20BY%204.0-lightgrey.svg" alt="CC BY 4.0"></a>
-  <img src="https://img.shields.io/badge/datasets-63-1f6f8b.svg" alt="63 datasets">
+  <img src="https://img.shields.io/badge/datasets-92-1f6f8b.svg" alt="92 datasets">
 </p>
 
 ---
@@ -51,7 +51,7 @@
 - **정보 오류 신고** — 페이지마다 버튼 하나로 운영자에게 전달
 - **영어판** — [data4researchers.kr/en](https://data4researchers.kr/en/) (공식 영어 출처를 바탕으로 따로 작성)
 
-### 수록 자료 (63개)
+### 수록 자료 (92개)
 
 | 분야 | 분류 | 자료 |
 |---|---|---|
@@ -71,6 +71,15 @@
 | | 위성 | OSI SAF (해빙 농도), NOAA/NSIDC CDR, CryoSat-2, CS3SMOS, CS2SMOS, ESA CCI, ICESat-2 |
 | | 해빙 이동 | Polar Pathfinder, OSI SAF (해빙 이동) |
 | | 해빙 지수 | Sea Ice Index |
+| 지면 | 육상 재분석·자료동화 | GLDAS-2, FLDAS, NLDAS-2, TerraClimate, ERA5-Land |
+| | 토양수분 | ESA CCI Soil Moisture, SMAP (L3·L4) |
+| | 증발산 | GLEAM4, MODIS ET (MOD16) |
+| | 식생 | MODIS LAI/FPAR, VIIRS LAI/FPAR, MODIS NDVI/EVI, VIIRS NDVI/EVI, CLMS LAI/FAPAR/FCOVER, GLASS, GIMMS NDVI |
+| | 토지피복 | MODIS Land Cover, ESA CCI / C3S Land Cover, ESA WorldCover |
+| | 지표면온도·알베도 | MODIS LST, VIIRS LST, MODIS BRDF/Albedo, VIIRS BRDF/Albedo |
+| | 적설 | MODIS Snow, VIIRS Snow, ESA CCI Snow |
+| | 육수저장량 | GRACE / GRACE-FO |
+| | 산불 | MODIS Burned Area, VIIRS Burned Area, GFED |
 
 필요한 자료가 없다면 사이트의 **[데이터셋 제안](https://data4researchers.kr/suggest/)** 으로 알려주세요.
 
@@ -110,7 +119,7 @@ Information on the datasets used in this study was compiled with the help of the
 
 **👉 [data4researchers.kr/en](https://data4researchers.kr/en/)**
 
-A guide to climate, ocean and sea-ice datasets for researchers. For each of **63 datasets** — ERA5, JRA-3Q, MERRA-2, CARRA2, GPCP, IMERG, HadCRUT5, OISST, ERSST, GLORYS12, ECCO, EN4, WOA23, DUACS, OSI SAF, NSIDC CDR, CryoSat-2, ICESat-2 and more — it brings together, from the official sources:
+A guide to climate, ocean, sea-ice and land datasets for researchers. For each of **92 datasets** — ERA5, JRA-3Q, MERRA-2, CARRA2, GPCP, IMERG, HadCRUT5, OISST, ERSST, GLORYS12, ECCO, EN4, WOA23, DUACS, OSI SAF, NSIDC CDR, CryoSat-2, ICESat-2, GLDAS, SMAP, MODIS, VIIRS, GRACE and more — it brings together, from the official sources:
 
 - **How to get the data** — providers, account requirements, example Python code
 - **Variables and their time convention** — names, units, and whether each is **instantaneous, mean or accumulated**

@@ -1,0 +1,357 @@
+# ─────────────────────────────────────────────────────────────
+# MODIS LAI/FPAR (MCD15A2H, MCD15A3H, MOD15A2H, MYD15A2H) — dataset information file
+# Land tab, 'Vegetation'. Deprecated because Terra and Aqua are nearing end of mission; the successor is VIIRS LAI/FPAR (viirs-lai.yaml).
+# After editing, update last_verified to the date you checked the official pages.
+# ─────────────────────────────────────────────────────────────
+id: modis-lai
+name: "MODIS LAI/FPAR (MCD15)"
+full_name: MODIS Leaf Area Index / FPAR (MCD15A2H, MCD15A3H, MOD15A2H, MYD15A2H) Version 6.1 (500 m, 8-day and 4-day composites)
+category: satellite
+domain: land
+group: 식생
+order: 10
+domains: [육지, 원격탐사]
+provider: NASA MODIS Land Team (Myneni group, Boston University) / LP DAAC
+
+status: deprecated
+status_note: >-
+  Collection 6.1 (061) is still produced every 8 and 4 days (on 2026-10-13 the latest MCD15A2H composite began on 2026-09-22), but the satellites behind it are at the end of their lives.
+  NASA has said MODIS data collection will stop when Terra and Aqua end operations in late 2026 or early 2027, followed by a final reprocessing, and advises users to move to comparable VIIRS products;
+  NASA's Earth Observer projects the end of science operations in February 2027 for Terra and September 2027 for Aqua. Both platforms stopped orbit maintenance to save fuel and their
+  overpass times are drifting, so plan new work around VIIRS LAI/FPAR (VNP15, VJ115, VJ215) as well.
+
+period:
+  start: "2000-02"
+  end: present
+  note: >-
+    Terra-only MOD15A2H starts on 2000-02-18; Aqua-only MYD15A2H and the combined Terra+Aqua MCD15A2H (8-day) and MCD15A3H (4-day) start on 2002-07-04.
+    A CMR check of the Korean tile (h28v05) on 2026-10-13 found the latest MCD15A2H and MOD15A2H composite was 2026-09-22 to 29, and the latest MCD15A3H composite 2026-09-30 to 10-03.
+    MODIS data collection is expected to end when Terra and Aqua end operations.
+
+resolution:
+  spatial_short: "0.5 km (0.005°)"
+  temporal_short: "8일"
+  spatial: "MODIS Sinusoidal tile grid (tiles about 10°×10° at the equator, 2400×2400 pixels per tile), 500 m"
+  vertical: Single layer (vegetation canopy at the surface)
+  temporal: >-
+    8-day composites (MCD15A2H, MOD15A2H, MYD15A2H) / 4-day composites (MCD15A3H, combined Terra+Aqua only). The file date is the first day of the compositing period
+    (day of year, e.g. A2026265), and the compositing periods restart on 1 January (day 001) each year.
+
+update: New 8-day (or 4-day) composites roughly 1–2 weeks after the period ends (to stop when Terra and Aqua end operations)
+license: NASA Earth science open data — free and unrestricted under the EOSDIS Data Use and Citation Guidance; file downloads need a free NASA Earthdata Login; please cite the dataset DOI
+account_required: true
+
+summary: >-
+  Global leaf area index (LAI) and fraction of photosynthetically active radiation (400–700 nm) absorbed by vegetation (FPAR) derived from MODIS on NASA's Terra and Aqua satellites.
+  The main algorithm inverts red and near-infrared surface reflectance against look-up tables built from a 3D radiative transfer model; when that fails, an empirical NDVI-based backup is used.
+  Data come as 500 m sinusoidal tiles in 8-day (combined and single-sensor) and 4-day (combined) composites, and the record back to 2000 makes it a standard reference for ecology,
+  carbon-cycle studies and land-model evaluation. The successor products apply the same algorithm to VIIRS (VNP15, VJ115, VJ215).
+
+time_convention:
+  summary: >-
+    Within each 8-day (or 4-day) period the daily retrievals are composited by picking the day with the highest FPAR, and that day's FPAR, LAI and quality flags are written out
+    (maximum-FPAR compositing in the ATBD). FPAR is therefore the period maximum, while LAI is the value on the selected day rather than a period mean. The file date is the start of the period.
+  points:
+    - "A2026265 in a file name means an 8-day composite starting on day 265 of 2026 (22 September). The file does not record which day within the period supplied the value; it can be any of them."
+    - "Combined products (MCD15) pick either a Terra or an Aqua observation, so the sensor varies from pixel to pixel. Bit 1 of `FparLai_QC` (0 = Terra, 1 = Aqua) tells you which."
+    - "Terra originally crossed the equator at 10:30 descending and Aqua at 13:30 ascending, but since orbit maintenance ended Terra has drifted to earlier mornings and Aqua to later afternoons (Aqua was expected near 15:50 around August 2026). Solar elevation and shadowing at overpass therefore change from year to year."
+    - "Compositing restarts on 1 January each year, so the last composite of a year (e.g. starting 27 December) runs into early January and overlaps the first composite of the next year."
+    - "The 4-day product (MCD15A3H) follows the same rule and picks one day out of four. It has finer time resolution than the 8-day product but can contain more cloud-affected pixels (a higher share of backup retrievals)."
+  source: https://lpdaac.usgs.gov/documents/90/MOD15_ATBD.pdf
+  source_name: "MOD15 ATBD (1999) + MOD15 C6.1 User Guide (2020) + LP DAAC/CMR collection descriptions"
+
+variables:
+  note: >-
+    From the MOD15 C6.1 User Guide and LP DAAC collection information. The 8-day and 4-day, Terra, Aqua and combined products all use the same SDS names.
+    Values are stored as unsigned 8-bit integers that must be multiplied by the scale factor, and 249–255 are non-vegetation and fill codes (see tips).
+  full_list: https://lpdaac.usgs.gov/documents/926/MOD15_User_Guide_V61.pdf
+  groups:
+    - name: LAI and FPAR (500 m, 8-day and 4-day composites)
+      kind: instant
+      period: Selected day within the compositing period
+      items:
+        - text: "Fraction of absorbed photosynthetically active radiation (FPAR) — `Fpar_500m` (fraction 0–1, stored value × 0.01)"
+          kind: max
+          period: 8-day (4-day for MCD15A3H)
+          note: Value on the day with the highest FPAR in the compositing period
+        - text: "Leaf area index (LAI) — `Lai_500m` (m² m-2, stored value × 0.1)"
+          note: Value on the selected observation day (the day of maximum FPAR)
+        - "FPAR standard deviation — `FparStdDev_500m` (fraction, stored value × 0.01; 248 = not available because the backup algorithm was used)"
+        - "LAI standard deviation — `LaiStdDev_500m` (m² m-2, stored value × 0.1; 248 = not available because the backup algorithm was used)"
+        - text: "LAI/FPAR quality flags — `FparLai_QC` (bit field)"
+          note: "Bit 0 MODLAND (0 = main algorithm), bit 1 sensor (0 = Terra, 1 = Aqua), bit 2 dead detector, bits 3–4 cloud state, bits 5–7 SCF_QC (algorithm path)"
+        - "Extra quality flags — `FparExtra_QC` (bit field)"
+
+access:
+  - name: NASA Earthdata Search (LP DAAC, Earthdata Cloud)
+    url: https://search.earthdata.nasa.gov/search/granules?p=C2222147000-LPCLOUD
+    method: Web search and HTTPS download / earthaccess
+    note: >-
+      The link opens MCD15A2H V061. Short names are MCD15A2H, MCD15A3H, MOD15A2H and MYD15A2H, version 061; files are HDF-EOS2 (.hdf) tiles.
+      LP DAAC Data Pool distribution of MODIS data ended on 30 June 2025, so scripts that used Data Pool URLs should switch to Earthdata Cloud (for example via earthaccess).
+  - name: AppEEARS (area and point extraction)
+    url: https://appeears.earthdatacloud.nasa.gov/
+    method: Web and API — area (GeoTIFF, NetCDF4) or point (CSV) extraction with optional reprojection
+    note: Lets you receive just your region on a geographic grid without handling tiles or the sinusoidal projection, which is convenient for new users. Quality-bit lookup tables are included.
+  - name: Earthdata catalog (MCD15A2H V061)
+    url: https://www.earthdata.nasa.gov/data/catalog/lpcloud-mcd15a2h-061
+    method: Web (documents, citation, layer information)
+
+example:
+  lang: python
+  note: >-
+    Downloads MCD15A2H for July 2024 with earthaccess and reads LAI from the central Korean tile (h28v05). The files are HDF4, so pyhdf is used.
+    Stored values of 249 and above are non-vegetation or fill codes and are removed first, and only main-algorithm retrievals (SCF_QC bits 5–7 equal to 0 or 1) are kept.
+  code: |
+    # pip install earthaccess pyhdf numpy
+    import earthaccess
+    import numpy as np
+    from pyhdf.SD import SD, SDC
+
+    earthaccess.login()  # free NASA Earthdata account
+    results = earthaccess.search_data(
+        short_name="MCD15A2H", version="061",
+        temporal=("2024-07-01", "2024-07-31"),
+        bounding_box=(126.5, 35.5, 128.5, 37.5),   # (west, south, east, north)
+    )
+    files = earthaccess.download(results, "./mcd15a2h")
+
+    for f in sorted(map(str, files)):
+        if ".h28v05." not in f:          # central Korea tile only
+            continue
+        sd = SD(f, SDC.READ)
+        raw = sd.select("Lai_500m")[:].astype("float32")
+        qc = sd.select("FparLai_QC")[:]
+        lai = np.where(raw <= 100, raw * 0.1, np.nan)   # 249-255 = non-vegetation / fill
+        scf = (qc >> 5) & 0b111                          # 0 or 1 = main (RT) algorithm
+        lai[scf > 1] = np.nan
+        print(f.split("/")[-1], "mean LAI:", np.nanmean(lai))
+
+tips:
+  - "LAI and FPAR are stored as uint8. Multiply LAI by 0.1 and FPAR by 0.01, and always remove 249–255 first (255 fill, 254 inland water, 253 barren or sparse vegetation, 252 permanent snow and ice, 251 wetland, 250 urban, 249 unclassified). Averaging them as they are produces absurd LAI values near 25."
+  - "Bits 5–7 of `FparLai_QC` (SCF_QC) give the algorithm path. 0 (main algorithm) and 1 (main algorithm, saturated) are reliable; 2 and 3 are the empirical NDVI backup; 4 means not produced. Backup retrievals are common during the cloudy monsoon season over Korea, so analyse by quality class."
+  - Reflectance saturates over dense forest, so LAI is underestimated and highly uncertain there (QC 1, saturation). Take care when comparing peak LAI in tropical or temperate broadleaf forest.
+  - Bits are read from the right (bit 0). As in the User Guide example, 64 is binary 1000000, so bits 5–7 equal 2 (backup algorithm).
+  - The tiles use a sinusoidal projection, so pixel edges do not line up with a latitude–longitude grid. Use AppEEARS or GDAL for point extraction or reprojection. Korea spans several tiles, including h28v05 and h29v05.
+  - "According to the MODIS quality team (LDOPE), Terra and Aqua orbit drift has noticeably changed MODIS pixel size, scan gaps and diurnal sampling since late 2024. When interpreting trends over recent years, compare against VIIRS LAI for the same period."
+  - For long-term analysis use the combined MCD15A2H (from 2002-07). If you need 2000–2002 you have to use Terra-only MOD15A2H, so state that the sampling changes at that point.
+
+citations:
+  dataset:
+    - label: MCD15A2H V061 (Terra+Aqua, 8-day)
+      text: >-
+        Myneni, R., Knyazikhin, Y., Park, T. (2021). MODIS/Terra+Aqua Leaf Area Index/FPAR 8-Day L4 Global 500m SIN Grid V061 [Data set].
+        NASA Land Processes Distributed Active Archive Center. https://doi.org/10.5067/MODIS/MCD15A2H.061 (Accessed YYYY-MM-DD)
+      doi: 10.5067/MODIS/MCD15A2H.061
+      bibtex: |
+        @misc{mcd15a2h_v061,
+          author    = {Myneni, Ranga and Knyazikhin, Yuri and Park, Taejin},
+          title     = {{MODIS/Terra+Aqua} Leaf Area Index/{FPAR} 8-Day {L4} Global 500m {SIN} Grid {V061}},
+          year      = {2021},
+          publisher = {NASA Land Processes Distributed Active Archive Center},
+          doi       = {10.5067/MODIS/MCD15A2H.061}
+        }
+    - label: MCD15A3H V061 (Terra+Aqua, 4-day)
+      text: >-
+        Myneni, R., Knyazikhin, Y., Park, T. (2021). MODIS/Terra+Aqua Leaf Area Index/FPAR 4-Day L4 Global 500m SIN Grid V061 [Data set].
+        NASA Land Processes Distributed Active Archive Center. https://doi.org/10.5067/MODIS/MCD15A3H.061 (Accessed YYYY-MM-DD)
+      doi: 10.5067/MODIS/MCD15A3H.061
+      bibtex: |
+        @misc{mcd15a3h_v061,
+          author    = {Myneni, Ranga and Knyazikhin, Yuri and Park, Taejin},
+          title     = {{MODIS/Terra+Aqua} Leaf Area Index/{FPAR} 4-Day {L4} Global 500m {SIN} Grid {V061}},
+          year      = {2021},
+          publisher = {NASA Land Processes Distributed Active Archive Center},
+          doi       = {10.5067/MODIS/MCD15A3H.061}
+        }
+    - label: MOD15A2H V061 (Terra, 8-day)
+      text: >-
+        Myneni, R., Knyazikhin, Y., Park, T. (2021). MODIS/Terra Leaf Area Index/FPAR 8-Day L4 Global 500m SIN Grid V061 [Data set].
+        NASA Land Processes Distributed Active Archive Center. https://doi.org/10.5067/MODIS/MOD15A2H.061 (Accessed YYYY-MM-DD)
+      doi: 10.5067/MODIS/MOD15A2H.061
+      bibtex: |
+        @misc{mod15a2h_v061,
+          author    = {Myneni, Ranga and Knyazikhin, Yuri and Park, Taejin},
+          title     = {{MODIS/Terra} Leaf Area Index/{FPAR} 8-Day {L4} Global 500m {SIN} Grid {V061}},
+          year      = {2021},
+          publisher = {NASA Land Processes Distributed Active Archive Center},
+          doi       = {10.5067/MODIS/MOD15A2H.061}
+        }
+  papers:
+    - label: First year of global MODIS LAI/FPAR (algorithm and early evaluation)
+      text: >-
+        Myneni, R. B., Hoffman, S., Knyazikhin, Y., Privette, J. L., Glassy, J., Tian, Y., Wang, Y., Song, X., Zhang, Y., Smith, G. R., Lotsch, A.,
+        Friedl, M., Morisette, J. T., Votava, P., Nemani, R. R., Running, S. W. (2002): Global products of vegetation leaf area and fraction absorbed PAR
+        from year one of MODIS data. Remote Sensing of Environment, 83(1-2), 214–231.
+      doi: 10.1016/S0034-4257(02)00074-3
+      bibtex: |
+        @article{myneni2002modislai,
+          author  = {Myneni, R. B. and Hoffman, S. and Knyazikhin, Y. and Privette, J. L. and Glassy, J. and Tian, Y. and Wang, Y. and Song, X. and Zhang, Y. and Smith, G. R. and Lotsch, A. and Friedl, M. and Morisette, J. T. and Votava, P. and Nemani, R. R. and Running, S. W.},
+          title   = {Global products of vegetation leaf area and fraction absorbed {PAR} from year one of {MODIS} data},
+          journal = {Remote Sensing of Environment},
+          volume  = {83},
+          number  = {1-2},
+          pages   = {214--231},
+          year    = {2002},
+          doi     = {10.1016/S0034-4257(02)00074-3}
+        }
+    - label: Collection 6 evaluation, Part 1 (consistency and improvements)
+      text: >-
+        Yan, K., Park, T., Yan, G., Chen, C., Yang, B., Liu, Z., Nemani, R. R., Knyazikhin, Y., Myneni, R. B. (2016): Evaluation of MODIS LAI/FPAR
+        Product Collection 6. Part 1: Consistency and Improvements. Remote Sensing, 8(5), 359.
+      doi: 10.3390/rs8050359
+      bibtex: |
+        @article{yan2016modisc6,
+          author  = {Yan, Kai and Park, Taejin and Yan, Guangjian and Chen, Chi and Yang, Bin and Liu, Zhao and Nemani, Ramakrishna R. and Knyazikhin, Yuri and Myneni, Ranga B.},
+          title   = {Evaluation of {MODIS} {LAI/FPAR} Product Collection 6. Part 1: Consistency and Improvements},
+          journal = {Remote Sensing},
+          volume  = {8},
+          number  = {5},
+          pages   = {359},
+          year    = {2016},
+          doi     = {10.3390/rs8050359}
+        }
+  acknowledgement: >-
+    Following the EOSDIS Data Use and Citation Guidance, LP DAAC asks you to cite the DOI of each product you actually used (8-day or 4-day; Terra, Aqua or combined).
+    The DOI of Aqua-only MYD15A2H V061 is 10.5067/MODIS/MYD15A2H.061. For the algorithm, cite Myneni et al. (2002) together with the C6 evaluation paper.
+
+transitions:
+  - from: MODIS LAI/FPAR C6.1 (MCD15A2H etc.)
+    to: VIIRS LAI/FPAR V2 (VNP15A2H, VJ115A2H, VJ215A2H)
+    to_id: viirs-lai
+    status: planned
+    date: "2027"
+    summary: >-
+      The successor ports the same Boston University algorithm (3D radiative-transfer look-up tables plus an NDVI backup) to the VIIRS red and near-infrared channels. In a 2012–2016 comparison the global
+      mean differences were small (LAI −0.006, FPAR −0.002), but variable names, quality-bit layout and file format differ, so code must be updated. MODIS collection ends with Terra and Aqua (late 2026 to 2027).
+    changes:
+      - aspect: Satellites and overpass time
+        before: "Terra (originally 10:30 descending) and Aqua (originally 13:30 ascending), drifting since 2020 and 2021"
+        after: "Suomi NPP (2012–, distribution to end November 2026), NOAA-20 (2018–) and NOAA-21 (2023–), all in 13:30 ascending orbits"
+      - aspect: Products and time step
+        before: "8-day (MOD15A2H, MYD15A2H, MCD15A2H) + 4-day (MCD15A3H)"
+        after: "8-day only (VNP15A2H, VJ115A2H, VJ215A2H) — one product per satellite, no combined product"
+      - aspect: Input channels
+        before: "MODIS red (648 nm) and NIR (858 nm) reflectance from 500 m MOD09GA"
+        after: "VIIRS I1 (640 nm) and I2 (865 nm) from VNP09GA, with sensor-specific look-up tables"
+      - aspect: Compositing
+        before: "Day of maximum FPAR within the 8-day (4-day) period"
+        after: "Same — the day of maximum FPAR in 8 days, with that day's LAI and QA"
+      - aspect: Variable names
+        before: "`Lai_500m`, `Fpar_500m`, `LaiStdDev_500m`, `FparStdDev_500m`, `FparLai_QC`, `FparExtra_QC`"
+        after: "`Lai`, `Fpar`, `LaiStdDev`, `FparStdDev`, `FparLai_QC`, `FparExtra_QC` (same scale factors and 249–255 codes)"
+      - aspect: Quality bits (FparLai_QC)
+        before: "Bit 0 MODLAND, bit 1 sensor, bit 2 dead detector, bits 3–4 cloud, bits 5–7 SCF_QC"
+        after: "Bits 0–2 SCF_QC, bit 3 dead detector, bits 4–7 biome type — reusing the MODIS bit operations selects the wrong pixels"
+      - aspect: File format
+        before: "HDF-EOS2 (HDF4, .hdf)"
+        after: "HDF-EOS5 (HDF5, .h5)"
+      - aspect: Consistency (2012–2016, VIIRS − MODIS)
+        before: "Reference"
+        after: "Mean difference LAI −0.006 ± 0.013, FPAR −0.002 ± 0.002. Larger differences over tropical forest (reflectance saturation), and VIIRS showed larger year-to-year variation in main-algorithm success (Xu et al. 2018, VIIRS V1)"
+    impacts:
+      - When joining the two records, check pixel- and season-level differences over the overlap (2012 onward, 2018 onward for NOAA-20) and state in the paper that there is a seam.
+      - The QC bit layout differs, so do not reuse MODIS quality-filter code on VIIRS. The `_500m` suffix has also gone from the variable names.
+      - Analyses built on the MODIS 4-day product (MCD15A3H) can only be continued at 8 days with VIIRS.
+      - Suomi NPP products (VNP15A2H) stop being distributed in November 2026, so the reference satellites going forward are NOAA-21 (VJ215A2H, primary) and NOAA-20 (VJ115A2H, secondary).
+    sources:
+      - name: Transition from MODIS to VIIRS (NASA Earthdata notice, 2025-05-02)
+        url: https://www.earthdata.nasa.gov/data/alerts-outages/transition-from-modis-viirs
+      - name: VNP15 User Guide V1.2 (2018)
+        url: https://lpdaac.usgs.gov/documents/126/VNP15_User_Guide.pdf
+      - name: Xu et al. (2018) — consistency of VIIRS and MODIS LAI/FPAR (Forests)
+        url: https://doi.org/10.3390/f9020073
+      - name: Román et al. (2024) — continuity between MODIS C6.1 and VIIRS C2 land products (RSE)
+        url: https://doi.org/10.1016/j.rse.2023.113963
+  - from: MODIS LAI/FPAR C6
+    to: MODIS LAI/FPAR C6.1
+    status: completed
+    date: "2023-07"
+    summary: >-
+      A full-record reprocessing that kept the science algorithm and changed only the Terra and Aqua L1B calibration approach and the polarization correction. Format and variable names are the same as C6.
+      Distribution of C6 (006) land products ended on 31 July 2023.
+    changes:
+      - aspect: Algorithm
+        before: "C6 (500 m MOD09GA input, daily intermediate MOD15IP, improved multi-year land cover)"
+        after: "Unchanged"
+      - aspect: Input calibration
+        before: "C6 L1B calibration"
+        after: "Revised Terra and Aqua L1B calibration approach and polarization correction"
+      - aspect: Availability
+        before: "006 — distribution ended 2023-07-31"
+        after: "061 — the only version available"
+    impacts:
+      - Re-check results made with 006 using 061. The 006 files can no longer be downloaded.
+    sources:
+      - name: MOD15 C6.1 User Guide (2020)
+        url: https://lpdaac.usgs.gov/documents/926/MOD15_User_Guide_V61.pdf
+      - name: Final notice — MODIS Version 6.0 land products decommissioned (2023-07-25)
+        url: https://www.earthdata.nasa.gov/data/alerts-outages/final-notice-modis-version-6-0-land-data-products-decommissioned-july-31-2023
+
+notices:
+  - date: "2026-03-26"
+    level: info
+    title: Terra MODIS placed in standby — part of 2026 days 085–086 flagged questionable/bad
+    body: >-
+      A Terra anomaly at about 20:00 UTC on 26 March 2026 put MODIS into standby; it returned to science mode on 27 March.
+      The calibration team flagged data from 2026-085 20:00 UTC to 2026-086 19:23 UTC as questionable or bad and said later data are safe to use.
+      Check the quality flags of the 8-day and 4-day composites (Terra-based MOD15 and MCD15) that include this window.
+    source: https://www.earthdata.nasa.gov/data/alerts-outages/terra-modis-placed-standby-mode
+  - date: "2026-03-20"
+    level: warning
+    title: End of science operations projected for February 2027 (Terra) and September 2027 (Aqua)
+    body: >-
+      An editor's note on NASA Earth Observer's Terra feature (published 2025-12-29, updated 2026-03-20) gives the projected end of science activities as February 2027 for Terra and September 2027 for Aqua.
+      Operations continue until then; because its ageing battery limits power, Terra switched off MOPITT on 9 April 2025 to save energy for the remaining four instruments, and the ASTER shortwave infrared subsystem no longer works.
+    source: https://science.nasa.gov/science-research/earth-science/terra-the-end-of-an-era
+  - date: "2026-01-08"
+    level: warning
+    title: MODIS quality team note — Terra and Aqua orbit drift affects pixel size, scan gaps and diurnal sampling
+    body: >-
+      LDOPE reported that drift since the last orbit adjustments (Terra 2022, Aqua 2021) has changed pixel size and spacing, scan gaps, bowtie overlap and diurnal sampling,
+      with impacts growing sharply from late 2024. Effects on individual products, starting with fire, are under investigation.
+    source: https://landweb.modaps.eosdis.nasa.gov/displayissue?id=1254
+  - date: "2025-06-03"
+    level: warning
+    title: LP DAAC Data Pool distribution of MODIS ends (2025-06-30) — move to Earthdata Cloud
+    body: >-
+      LP DAAC announced that Data Pool access to all MODIS data, including C6.1, would be retired on 30 June 2025, with NASA Earthdata Cloud as the primary archive.
+      Earthdata Search and AppEEARS users see no change, but scripts that call Data Pool URLs directly need updating.
+    source: https://www.earthdata.nasa.gov/data/alerts-outages/lp-daac-discontinue-data-pool-distribution-modis-datasets
+  - date: "2025-05-02"
+    level: warning
+    title: Transition from MODIS to VIIRS — Terra and Aqua expected to shut down late 2026 to early 2027
+    body: >-
+      NASA expects Terra and Aqua to stop operating in late 2026 or early 2027; MODIS data collection will end then and a final reprocessing will follow.
+      Because orbit drift may affect crossing times and data quality, users are encouraged to move to comparable VIIRS products.
+    source: https://www.earthdata.nasa.gov/data/alerts-outages/transition-from-modis-viirs
+  - date: "2023-07-25"
+    level: info
+    title: MODIS Version 6.0 land products decommissioned (2023-07-31) — only V6.1 available
+    body: >-
+      LP DAAC stopped distributing Terra, Aqua and combined MODIS V6.0 land products (except MOD44W and MCD43GF) on 31 July 2023.
+      User Guides and ATBDs remain on the DOI landing pages, and users were advised to move to V6.1.
+    source: https://www.earthdata.nasa.gov/data/alerts-outages/final-notice-modis-version-6-0-land-data-products-decommissioned-july-31-2023
+
+links:
+  - name: MOD15 C6.1 User Guide (PDF)
+    url: https://lpdaac.usgs.gov/documents/926/MOD15_User_Guide_V61.pdf
+  - name: MOD15 Algorithm Theoretical Basis Document (ATBD, PDF)
+    url: https://lpdaac.usgs.gov/documents/90/MOD15_ATBD.pdf
+  - name: Earthdata catalog — MCD15A2H V061
+    url: https://www.earthdata.nasa.gov/data/catalog/lpcloud-mcd15a2h-061
+  - name: Earthdata catalog — MCD15A3H V061
+    url: https://www.earthdata.nasa.gov/data/catalog/lpcloud-mcd15a3h-061
+  - name: MODIS/VIIRS land quality known issues (LDOPE)
+    url: https://landweb.modaps.eosdis.nasa.gov/knownissue
+  - name: MODIS Land Team news (orbit drift, C7 plans)
+    url: https://modis-land.gsfc.nasa.gov/news.html
+  - name: LAADS DAAC — MODIS to VIIRS Transition
+    url: https://ladsweb.modaps.eosdis.nasa.gov/learn/modis-to-viirs-transition
+
+watch_urls:
+  - https://www.earthdata.nasa.gov/data/alerts-outages/transition-from-modis-viirs
+  - https://landweb.modaps.eosdis.nasa.gov/knownissue
+  - https://modis-land.gsfc.nasa.gov/news.html
+
+last_verified: "2026-10-13"

@@ -1,0 +1,494 @@
+# ─────────────────────────────────────────────────────────────
+# GRACE / GRACE-FO — 데이터셋 정보 파일
+# 지면 탭 '육수저장량'. GRACE(2002–2017)와 GRACE-FO(2018–) 월별 질량 변화 격자 자료:
+# JPL·CSR·GSFC mascon과 JPL Tellus Level-3(구면조화 기반 1° 육상 격자). GRACE → GRACE-FO 전환은 이 파일 안 transitions(to_id 없음).
+# 수정 후에는 공식 페이지에서 확인한 날짜로 last_verified 를 갱신하세요.
+# ─────────────────────────────────────────────────────────────
+id: grace
+name: "GRACE / GRACE-FO"
+full_name: GRACE·GRACE Follow-On 월별 육수저장량(TWS) 변화 격자 — JPL·CSR·GSFC mascon, JPL Tellus Level-3
+category: satellite
+domain: land
+group: 육수저장량
+order: 10
+domains: [육지, 수문, 빙상, 원격탐사]
+provider: NASA JPL / PO.DAAC (위성 임무 NASA·독일 DLR·GFZ, 해석 센터 JPL·텍사스대 CSR·GFZ·NASA GSFC)
+
+status: active
+status_note: >-
+  GRACE-FO가 2023년 5월 5년 기본 임무를 마치고 연장 임무로 운영 중이며, 월별 자료가 약 40~60일 지연으로 계속 나옵니다(2026-10-13 확인 시 JPL mascon 2026-07,
+  JPL Tellus 육상 격자와 CSR mascon 2026-08까지). 현재 판은 GF2 가속도계 대체 자료(ACX2)를 쓴 RL06.3입니다. GRACE Level-2 RL07이 2026-05 공개되어
+  Level-3·mascon도 RL07로 바뀔 예정이고, 후속 위성 GRACE-C는 2028년 12월 발사 목표입니다.
+
+transitions:
+  - from: GRACE
+    to: GRACE-FO
+    status: completed
+    date: "2018-06"
+    summary: >-
+      GRACE의 과학 임무가 2017년 10월 끝나고, 같은 설계를 이은 GRACE-FO가 2018년 5월 22일 발사되어 2018년 6월부터 기록을 이었습니다. 두 임무 사이에 약 11개월(2017-07 ~ 2018-05)의
+      공백이 있지만, GRACE-FO 팀은 공백 전후로 편향이 생기지 않았고 정밀도도 GRACE와 같은 수준이라고 보고했습니다.
+    changes:
+      - aspect: 운영 기간
+        before: "월자료 2002-04 ~ 2017-06. 2017-09 GRACE-2 배터리 고장으로 2017-10 과학 임무 종료"
+        after: "2018-05-22 발사, 월자료 2018-06 ~ 현재 (2023-05 기본 임무 완료 후 연장 임무)"
+      - aspect: 위성 간 거리 측정
+        before: "K/Ka 대역 마이크로파 거리 측정(KBR)"
+        after: "KBR + 레이저 거리 간섭계(LRI, 기술 시연)"
+      - aspect: 가속도계
+        before: "2016-11 이후 한 위성 가속도계만 쓴 '가속도계 이식' 달이 있어 잡음이 큼(2016-11·12, 2017-01·03·04·06)"
+        after: "발사 직후(2018-06)부터 GF2 가속도계에 예상 밖 잡음 → GF1 자료로 대체(ACT → RL06.1 ACX 혼합 → RL06.3 ACX2 혼합)"
+      - aspect: 결측 달
+        before: "2011년부터 배터리 관리로 약 5~6개월마다 4~5주씩 관측 중단 — 2002-06·07, 2003-06, 2011-01·06, 2012-05·10, 2013-03·08·09, 2014-02·07·12, 2015-06·10·11, 2016-04·09·10, 2017-02 없음"
+        after: "2018-07-19 마이크로파 처리 장치(IPU) 고장 → 예비 장치로 전환해 2018-10 재개, 2018-08·09 없음"
+      - aspect: 현재 Level-2/3 판
+        before: "RL06 (Tellus 육상 격자 RL06 v04, 2021-06 공개)"
+        after: "RL06.3 (Tellus 육상 격자 RL06.3 v04, mascon RL06.3Mv04 — GRACE와 GRACE-FO를 한 파일로 연결)"
+    impacts:
+      - "2017-07 ~ 2018-05 공백은 관측이 없는 기간입니다. 보간·재구성 값은 GRACE 자료가 아니므로 쓴다면 방법과 함께 밝히세요."
+      - Tellus Level-3 육상 격자는 GRACE(RL06)와 GRACE-FO(RL06.3) 컬렉션이 나뉘어 있어 직접 이어 붙여야 합니다. mascon은 한 파일에 2002년부터 들어 있습니다.
+      - "공백 전후 편향은 없다고 보고되었지만, 추세를 구할 때는 공백과 결측 달을 고려한 방법(예를 들어 결측을 건너뛰는 회귀)을 쓰세요."
+    sources:
+      - name: Landerer et al. (2020) GRACE-FO 기기·과학 자료 성능, GRL
+        url: https://doi.org/10.1029/2020GL088306
+      - name: JPL 뉴스 — Prolific Earth Gravity Satellites End Science Mission (2017-10-27)
+        url: https://www.jpl.nasa.gov/news/prolific-earth-gravity-satellites-end-science-mission/
+      - name: GRACE-FO Level-3 자료 사용자 안내서 (JPL)
+        url: https://archive.podaac.earthdata.nasa.gov/podaac-ops-cumulus-docs/gracefo/open/docs/GRACE-FO_L3_Handbook_JPL.pdf
+      - name: NASA — GRACE-FO Satellite Switching to Backup Instrument Processing Unit (2018-09-17)
+        url: https://sealevel.nasa.gov/news/142/grace-fo-satellite-switching-to-backup-instrument-processing-unit
+  - from: GRACE / GRACE-FO RL06.x
+    to: RL07
+    status: planned
+    date: "2026"
+    summary: >-
+      GRACE·GRACE-FO 전 기록을 새 처리 기준(Release 07)으로 다시 만들고 있습니다. GRACE Level-2 RL07(CSR·JPL)은 2026-05-01 PO.DAAC에 공개되었지만,
+      2026-10-13 확인 시 GRACE-FO RL07과 Tellus Level-3·mascon RL07은 아직 공개 컬렉션이 없습니다. 다만 CMR에는 JPL mascon RL07(TELLUS_GRAC-GRFO_MASCON_CRI_GRID_RL07_v01)의
+      변수 정보가 2026-07-17자로 등록되어 있어 공개 준비 중인 것으로 보입니다.
+    changes:
+      - aspect: 입력 Level-1 자료
+        before: "GRACE-FO Level-1B v04"
+        after: "Level-1 v05"
+      - aspect: 배경 모델
+        before: "RL06 기준 (해양 조석 FES2014 등)"
+        after: "정적 중력장·대기해양 단주기 보정(AOD)·해양 조석(GOT5.6 시험)·대기 조석·해양 극조석 갱신 (JPL 2025-10 발표)"
+      - aspect: 관측 가중
+        before: "대각 백색 잡음 가정"
+        after: "KBR·LRI·GPS 확률적 잡음 모델, 분산 성분 추정 — 형식 오차가 더 현실적"
+      - aspect: 공개 상태
+        before: "RL06.3 (GRACE-FO), RL06 (GRACE)"
+        after: "GRACE L2 RL07 2026-05-01 공개 / GRACE-FO RL07은 2026년 봄 목표였으나 2026-10-13 현재 미공개"
+    impacts:
+      - RL07 mascon·Level-3가 나오면 2002년부터 값이 모두 바뀌므로 RL06.x로 만든 추세·기후값과 섞지 말고 전 기간을 다시 받으세요.
+      - "GRACE L2 RL07만 먼저 나온 상태라 GRACE(RL07)와 GRACE-FO(RL06.3)를 직접 이어 쓰면 판이 섞입니다. Level-2를 직접 다루는 경우 주의하세요."
+    sources:
+      - name: NASA CMR — GRACE Level-2 JPL RL07 (GRACE_L2_JPL_MONTHLY_0070)
+        url: https://cmr.earthdata.nasa.gov/search/collections.umm_json?short_name=GRACE_L2_JPL_MONTHLY_0070
+      - name: JPL Level-2 현황 발표 (GRACE-FO 과학팀 회의, 2025-10-07)
+        url: https://cpaess.ucar.edu/sites/default/files/grace-fo-2025-presentation/wiese-david.pdf
+      - name: GRACE-FO 프로젝트 현황 발표 (2025-10)
+        url: https://cpaess.ucar.edu/sites/default/files/grace-fo-2025-presentation/landerer-felix.pdf
+  - from: GRACE-FO
+    to: GRACE-C
+    status: planned
+    date: "2028-12"
+    summary: >-
+      NASA·DLR의 후속 임무 GRACE-C(GRACE-Continuity)가 2028년 12월 Falcon 9 발사를 목표로 제작 중입니다(2025-10 시스템 통합 검토 통과).
+      GRACE-FO 운영을 2029년까지 늘려 약 1년 겹쳐 관측하며 교차 보정하는 것이 목표입니다.
+    changes:
+      - aspect: 위성 간 거리 측정
+        before: "KBR(주) + LRI(시연)"
+        after: "레이저 거리 간섭계(LRI)만 사용, KBR 없음"
+      - aspect: 발사·수명
+        before: "2018-05-22 발사, 연장 임무 중 (GSOC 운영은 2029-12까지 확보)"
+        after: "2028-12 발사 목표, 기본 수명 5년, 고도 약 500 km 극궤도"
+      - aspect: 겹침 관측
+        before: "GRACE와 GRACE-FO 사이 약 11개월 공백"
+        after: "GRACE-FO와 최소 6개월~1년 겹침 계획(2029)"
+    impacts:
+      - GRACE-FO가 GRACE-C 발사 전에 멈추면 다시 공백이 생길 수 있습니다. 장기 추세 연구는 임무 경계를 명시하세요.
+    sources:
+      - name: GFZ — GRACE-C 소개
+        url: https://www.gfz.de/en/grace-c
+      - name: GRACE-C 현황 발표 (Landerer, 2025-10)
+        url: https://cpaess.ucar.edu/sites/default/files/grace-fo-2025-presentation/landerer-felix-GRACE-C.pdf
+      - name: EGU26-16387 — GRACE-FO 연장 임무와 GRACE-C 개발
+        url: https://meetingorganizer.copernicus.org/EGU26/EGU26-16387.html
+
+period:
+  start: "2002-04"
+  end: present
+  note: >-
+    GRACE 2002-04 ~ 2017-06(마지막 월자료 구간 2017-05-23 ~ 06-29), GRACE-FO 2018-06 ~ 현재이며 2017-07 ~ 2018-05는 비어 있습니다.
+    GRACE 결측 달은 2002-06·07, 2003-06, 2011-01·06, 2012-05·10, 2013-03·08·09, 2014-02·07·12, 2015-06·10·11, 2016-04·09·10, 2017-02이고, GRACE-FO 결측 달은 2018-08·09입니다(JPL Tellus 육상 격자 기준).
+    2026-10-13 확인 시 마지막 달은 JPL mascon 2026-07, JPL Tellus 육상 격자 2026-08, CSR mascon 2026-08(2026-10-07 갱신), GSFC mascon 2026-03입니다.
+
+resolution:
+  spatial_short: "56 km (0.5°)"
+  temporal_short: "1개월"
+  spatial: >-
+    JPL mascon: 3° 등면적 구면 캡 mascon 4,551개로 푼 해를 0.5° × 0.5° 위경도 격자(720 × 360)에 표시 / CSR mascon: 적도에서 약 1° × 1°(약 120 km) 측지 등면적 격자 해를
+    0.25° 위경도 격자로 재표집 / GSFC mascon: 1 arc-degree 등면적 mascon(0.5° 등각 NetCDF 별도) / JPL Tellus Level-3 육상 격자: 1° × 1°(360 × 180),
+    60차까지의 구면조화 계수에 줄무늬 제거 필터와 300 km 가우시안 필터 적용. 격자 간격보다 실제 분해능(수백 km)이 훨씬 거칩니다.
+  vertical: 연직 적분량 (지표수·토양수분·지하수·눈·얼음을 합한 전체 질량)
+  temporal: 월 (실제 사용한 날짜 구간은 달마다 다르며 `time_bounds`에 기록)
+
+update: "매월 (약 40~60일 지연, RL06.3)"
+license: NASA 지구과학 공개 자료 — 제한 없이 무료. 데이터셋 DOI 인용 요청, CSR mascon은 CSR GRACE 누리집에서 받았음을 밝혀 달라고 요청
+account_required: true
+
+summary: >-
+  GRACE(2002–2017)와 후속 GRACE-FO(2018–) 쌍둥이 위성 사이 거리 변화로 지구 중력장의 달별 변화를 재고, 이를 지표 질량 변화(물 두께 환산, 등가수심)로 바꾼 격자 자료입니다.
+  육지에서는 지표수·토양수분·지하수·눈을 모두 합한 육수저장량(TWS) 변화를 보여 주어 가뭄·지하수 고갈·빙상 질량 감소 연구에 널리 쓰입니다.
+  JPL·CSR·GSFC가 각각 만드는 mascon 해(지역 질량 덩어리로 직접 푼 해)와, 구면조화 계수에 필터를 적용한 JPL Tellus 1° 육상 격자가 있으며, 모든 값은 2004.0~2009.999 평균에 대한 편차입니다.
+
+time_convention:
+  summary: >-
+    각 값은 한 달 남짓한 관측(약 30일)으로 푼 중력장에서 구한 평균적인 질량 상태이며, 기준 기간(2004.0~2009.999) 평균에 대한 편차(cm 또는 m 등가수심)입니다.
+    '월'은 달력 월과 정확히 맞지 않을 수 있고, 실제 사용한 날짜는 `time_bounds`에 있습니다.
+  points:
+    - "모든 값은 2004.0~2009.999 기준 기간 평균에 대한 편차입니다(JPL·CSR, GSFC는 2004.0~2010.0). 지하수 관측·모델과 비교할 때는 같은 기준 기간으로 맞추세요."
+    - "월 구간이 달력과 어긋나는 달이 있습니다. 예를 들어 GRACE-FO 2018-10 해는 2018-10-22 ~ 11-09, 2019-02 해는 2019-01-26 ~ 03-04 관측으로 만들었습니다. 모델 값과 비교할 때는 GRACE가 쓴 날짜만 평균하라고 JPL이 권장합니다."
+    - "배터리 관리(2011년 이후)·장비 문제로 일부 달은 관측일이 적거나 아예 없습니다. 2004년 7~12월과 2015년 1~2월은 정확 반복 궤도에 가까워 오차가 큽니다."
+    - "GRACE-FO는 2024년 9~11월 4/61 반복 궤도로 지상 궤적 표본이 부족해 품질이 떨어졌고, 2026년 7월 ~ 2027년 2월에도 3/46 반복 궤도에 들어갈 것으로 예상되었습니다(2025-10 과학팀 발표)."
+  source: https://archive.podaac.earthdata.nasa.gov/podaac-ops-cumulus-docs/gracefo/open/docs/GRACE-FO_L3_Handbook_JPL.pdf
+  source_name: GRACE-FO Level-3 Data Product User Handbook (JPL) + JPL Tellus mascon·육상 격자 안내 + PO.DAAC 컬렉션 메타데이터
+
+variables:
+  note: >-
+    JPL mascon(RL06.3Mv04)과 JPL Tellus Level-3(RL06 v04, RL06.3 v04) 파일의 변수 이름으로, PO.DAAC 컬렉션 정보에서 확인했습니다.
+    CSR·GSFC mascon은 파일 구성이 달라(CSR NetCDF, GSFC HDF5·ASCII·NetCDF) 각 누리집 안내를 보세요.
+  full_list: https://podaac.jpl.nasa.gov/dataset/TELLUS_GRAC-GRFO_MASCON_CRI_GRID_RL06.3_V4
+  groups:
+    - name: JPL mascon (RL06.3Mv04, CRI 필터·필터 없음 두 판)
+      kind: mean
+      period: 월 (time_bounds 구간)
+      items:
+        - text: "등가수심 질량 편차(육수저장량·해양·빙상) — `lwe_thickness` (cm)"
+          note: 2004.0~2009.999 평균 대비 편차. CRI 판은 해안선 mascon에서 육지·바다 신호를 나눈 것으로 대부분의 수문·해양·빙상 연구에 권장
+          std: [tws]
+        - "불확실성 — `uncertainty` (cm)"
+        - text: "해양-대기 단주기 보정 모델(GAD) — `GAD` (cm)"
+          note: 해저압 연구용. 육수저장량 분석에는 쓰지 않음
+          std: []
+    - name: JPL Tellus Level-3 육상 격자 (1°, GRACE RL06 v04 / GRACE-FO RL06.3 v04)
+      kind: mean
+      period: 월 (time_bounds 구간)
+      items:
+        - text: "육상 등가수심 질량 편차 — `lwe_thickness` (m, PO.DAAC 메타데이터 기준)"
+          note: "Tellus 누리집은 cm로 안내하므로 받은 파일의 units 속성을 확인하세요. 필터로 줄어든 신호를 되살리려면 CLM4 기반 이득 계수 격자를 곱해야 함"
+          std: [tws]
+        - "불확실성 — `uncertainty` (m)"
+    - name: 고정 자료
+      kind: static
+      items:
+        - text: "이득 계수(scale factor, CRI) — `scale_factor` (무차원)"
+          note: mascon보다 작은 규모의 육지 수문 신호 복원용. 시간 불변이며 육지 수문에만 적용
+          std: []
+        - text: "육지 마스크 — `land_mask` (0/1)"
+        - text: "mascon 번호 — `mascon_ID` (무차원)"
+          std: []
+
+access:
+  - name: PO.DAAC (NASA Earthdata Cloud) — JPL mascon CRI RL06.3Mv04
+    url: https://podaac.jpl.nasa.gov/dataset/TELLUS_GRAC-GRFO_MASCON_CRI_GRID_RL06.3_V4
+    method: HTTPS / earthaccess / OPeNDAP / AWS S3(us-west-2) — Earthdata 로그인 필요
+    note: >-
+      2002년부터 최신 달까지 한 NetCDF 파일입니다(예: GRCTellus.JPL.200204_202607.GLO.RL06.3M.MSCNv04CRI.nc). 매달 새 파일로 바뀌므로 최신 달이 필요하면 다시 받으세요.
+      필터 없는 판은 TELLUS_GRAC-GRFO_MASCON_GRID_RL06.3_V4입니다. 대량 다운로드에는 podaac-data-subscriber 도구도 권장됩니다.
+  - name: PO.DAAC — JPL·CSR·GFZ Tellus Level-3 육상 격자
+    url: https://podaac.jpl.nasa.gov/dataset/TELLUS_GRFO_L3_JPL_RL06.3_LND_v04
+    method: HTTPS / earthaccess — Earthdata 로그인 필요
+    note: >-
+      GRACE는 TELLUS_GRAC_L3_{JPL,CSR,GFZ}_RL06_LND_v04, GRACE-FO는 TELLUS_GRFO_L3_{JPL,CSR,GFZ}_RL06.3_LND_v04로 컬렉션이 나뉘며 한 달 한 파일입니다.
+      해저압 격자(_OCN_)는 따로 있습니다.
+  - name: CSR GRACE/GRACE-FO RL06.3 mascon (텍사스대)
+    url: https://www2.csr.utexas.edu/grace/RL06_mascons.html
+    method: HTTPS 직접 다운로드 (계정 불필요)
+    note: >-
+      CSR_GRACE_GRACE-FO_RL0603_Mascons_all-corrections.nc 한 파일(0.25°)과 육지·해양 마스크, 각 보정 성분 격자를 제공합니다. 2026-10-07 갱신으로 2026-08까지.
+  - name: NASA GSFC mascon (RL06v2.0)
+    url: https://earth.gsfc.nasa.gov/geo/data/grace-mascons
+    method: HTTPS 직접 다운로드 (HDF5·ASCII·NetCDF)
+    note: 2026-09-30 갱신 기준 2002-04 ~ 2026-03. 0.5° NetCDF 판도 있습니다.
+  - name: JPL GRACE Tellus 누리집 (자료 안내·소식)
+    url: https://grace.jpl.nasa.gov/data/get-data/jpl_global_mascons/
+    method: 웹 안내 / 시각화
+    note: 자료 갱신 소식은 https://grace.jpl.nasa.gov/data/data-updates/ 에 올라옵니다.
+
+example:
+  lang: python
+  note: >-
+    earthaccess로 JPL mascon CRI RL06.3Mv04 파일을 받아 북중국 평원(113~120°E, 34~40°N) 육수저장량 편차 시계열을 만드는 예입니다. 처음 실행 때 Earthdata 계정을 묻습니다.
+    경도는 0~360° 체계이고, 육지 수문에는 이득 계수(`scale_factor`)를 곱한 뒤 면적(cos 위도) 가중 평균을 냅니다.
+  code: |
+    import earthaccess
+    import numpy as np
+    import xarray as xr
+
+    earthaccess.login()  # 무료 NASA Earthdata 계정
+    results = earthaccess.search_data(
+        short_name="TELLUS_GRAC-GRFO_MASCON_CRI_GRID_RL06.3_V4",
+        version="RL06.3Mv04",
+    )
+    files = earthaccess.download(results, "grace_mascon")   # 2002년부터 전체가 한 파일
+
+    ds = xr.open_dataset(files[0])
+    tws = ds["lwe_thickness"] * ds["scale_factor"]           # cm, 2004.0~2009.999 평균 대비
+    tws = tws.where(ds["land_mask"] == 1)
+    box = tws.sel(lat=slice(34, 40), lon=slice(113, 120))
+    w = np.cos(np.deg2rad(box.lat))
+    series = box.weighted(w).mean(["lat", "lon"])
+    print(series.to_series().tail())                         # 결측 달은 아예 시각이 없음
+
+tips:
+  - "모든 값은 2004.0~2009.999 평균 대비 편차입니다. 절대 저수량이 아니며, 다른 자료와 비교할 때는 같은 기준 기간으로 다시 빼세요."
+  - "결측 달(GRACE 20개 달, GRACE-FO 2018-08·09)과 2017-07 ~ 2018-05 공백은 파일에 시각 자체가 없습니다. 월 순서를 가정한 코드(예: 12개씩 묶어 연평균)는 틀린 결과를 냅니다."
+  - "JPL mascon의 실제 분해능은 3° mascon(약 300 km)입니다. 0.5° 격자 하나의 값을 그 지점의 값으로 해석하지 말고, 충분히 큰 유역 평균으로 쓰세요."
+  - "이득 계수(`scale_factor`)는 육지 수문용입니다. 빙상·해양에 곱하면 안 됩니다. Tellus 1° 육상 격자의 CLM4 이득 계수는 연주기 위주로 만들어져 추세 분석에는 맞지 않을 수 있다고 JPL이 밝힙니다."
+  - "Tellus 1° 육상 격자(구면조화 기반)를 쓸 때 JPL은 JPL·CSR·GFZ 세 센터 해의 평균을 권장하며, 그린란드·남극·빙하 질량 연구에는 mascon을 쓰라고 안내합니다."
+  - "GRACE 말기 '가속도계 이식' 달(2016-11·12, 2017-01·03·04·06)은 잡음이 큽니다. GRACE-FO도 GF2 가속도계를 GF1 자료로 대체하므로, 2023년 1·2월과 7월 이후(넓은 자세 허용 모드) 값이 RL06.1과 RL06.3 사이에 달라졌습니다."
+  - "2024년 9~11월은 반복 궤도로 표본이 부족해 품질이 낮고, 2026년 7월 ~ 2027년 2월에도 비슷한 품질 저하가 예상되었습니다. 이 기간의 급격한 변화는 신호인지 먼저 확인하세요."
+  - "JPL·CSR·GSFC mascon은 정칙화 방식·격자·보정(C30 대체 시점 등)이 달라 같은 달에도 값이 다릅니다. 여러 해를 비교해 불확실성을 가늠하되, 한 시계열 안에서 섞지 마세요."
+
+citations:
+  dataset:
+    - label: JPL mascon CRI RL06.3Mv04 (PO.DAAC)
+      text: >-
+        D. N. Wiese, D.-N. Yuan, C. Boening, F. W. Landerer, M. M. Watkins. 2023. JPL GRACE and GRACE-FO Mascon Ocean, Ice, and Hydrology Equivalent Water Height CRI Filtered RL06.3Mv04.
+        Ver. RL06.3Mv04. PO.DAAC, CA, USA. Dataset accessed [YYYY-MM-DD] at https://doi.org/10.5067/TEMSC-3JC634
+      doi: 10.5067/TEMSC-3JC634
+      bibtex: |
+        @misc{wiese2023jplmascon_cri,
+          author    = {Wiese, D. N. and Yuan, D.-N. and Boening, C. and Landerer, F. W. and Watkins, M. M.},
+          title     = {{JPL} {GRACE} and {GRACE-FO} Mascon Ocean, Ice, and Hydrology Equivalent Water Height {CRI} Filtered {RL06.3Mv04}},
+          version   = {RL06.3Mv04},
+          publisher = {PO.DAAC},
+          address   = {CA, USA},
+          year      = {2023},
+          doi       = {10.5067/TEMSC-3JC634}
+        }
+    - label: JPL mascon (CRI 필터 없음) RL06.3Mv04 (PO.DAAC)
+      text: >-
+        D. N. Wiese, D.-N. Yuan, C. Boening, F. W. Landerer, M. M. Watkins. 2023. JPL GRACE and GRACE-FO Mascon Ocean, Ice, and Hydrology Equivalent Water Height JPL RL06.3Mv04.
+        Ver. RL06.3Mv04. PO.DAAC, CA, USA. Dataset accessed [YYYY-MM-DD] at https://doi.org/10.5067/TEMSC-3MJ634
+      doi: 10.5067/TEMSC-3MJ634
+      bibtex: |
+        @misc{wiese2023jplmascon,
+          author    = {Wiese, D. N. and Yuan, D.-N. and Boening, C. and Landerer, F. W. and Watkins, M. M.},
+          title     = {{JPL} {GRACE} and {GRACE-FO} Mascon Ocean, Ice, and Hydrology Equivalent Water Height {JPL} {RL06.3Mv04}},
+          version   = {RL06.3Mv04},
+          publisher = {PO.DAAC},
+          address   = {CA, USA},
+          year      = {2023},
+          doi       = {10.5067/TEMSC-3MJ634}
+        }
+    - label: JPL Tellus GRACE-FO Level-3 육상 격자 RL06.3 v04 (PO.DAAC)
+      text: >-
+        Felix Landerer. 2023. JPL TELLUS GRACE-FO Level-3 Monthly Land Water-Equivalent-Thickness Surface Mass Anomaly Release 6.3 version 04. Ver. RL06.3v04. PO.DAAC, CA, USA.
+        Dataset accessed [YYYY-MM-DD] at https://doi.org/10.5067/GFLND-3J634
+      doi: 10.5067/GFLND-3J634
+      bibtex: |
+        @misc{landerer2023tellus_grfo_jpl,
+          author    = {Landerer, Felix},
+          title     = {{JPL} {TELLUS} {GRACE-FO} Level-3 Monthly Land Water-Equivalent-Thickness Surface Mass Anomaly Release 6.3 version 04},
+          version   = {RL06.3v04},
+          publisher = {PO.DAAC},
+          address   = {CA, USA},
+          year      = {2023},
+          doi       = {10.5067/GFLND-3J634}
+        }
+    - label: JPL Tellus GRACE Level-3 육상 격자 RL06 v04 (PO.DAAC)
+      text: >-
+        Felix Landerer. 2021. TELLUS_GRAC_L3_JPL_RL06_LND_v04. Ver. RL06 v04. PO.DAAC, CA, USA. Dataset accessed [YYYY-MM-DD] at https://doi.org/10.5067/TELND-3AJ64
+      doi: 10.5067/TELND-3AJ64
+      bibtex: |
+        @misc{landerer2021tellus_grac_jpl,
+          author    = {Landerer, Felix},
+          title     = {{TELLUS\_GRAC\_L3\_JPL\_RL06\_LND\_v04}},
+          version   = {RL06 v04},
+          publisher = {PO.DAAC},
+          address   = {CA, USA},
+          year      = {2021},
+          doi       = {10.5067/TELND-3AJ64}
+        }
+    - label: CSR GRACE/GRACE-FO mascon (텍사스대 CSR)
+      text: >-
+        Save, Himanshu, 2020, "CSR GRACE and GRACE-FO RL06 Mascon Solutions v02", doi:10.15781/cgq9-nh24
+      doi: 10.15781/cgq9-nh24
+      bibtex: |
+        @misc{save2020csrmascon,
+          author = {Save, Himanshu},
+          title  = {{CSR} {GRACE} and {GRACE-FO} {RL06} Mascon Solutions v02},
+          year   = {2020},
+          doi    = {10.15781/cgq9-nh24}
+        }
+  papers:
+    - label: JPL mascon 방법
+      text: >-
+        Watkins, M. M., Wiese, D. N., Yuan, D.-N., Boening, C., Landerer, F. W. (2015): Improved methods for observing Earth's time variable mass distribution with GRACE using spherical cap mascons.
+        Journal of Geophysical Research: Solid Earth, 120(4), 2648–2671.
+      doi: 10.1002/2014JB011547
+      bibtex: |
+        @article{watkins2015mascons,
+          author  = {Watkins, Michael M. and Wiese, David N. and Yuan, Dah-Ning and Boening, Carmen and Landerer, Felix W.},
+          title   = {Improved methods for observing {Earth}'s time variable mass distribution with {GRACE} using spherical cap mascons},
+          journal = {Journal of Geophysical Research: Solid Earth},
+          volume  = {120},
+          number  = {4},
+          pages   = {2648--2671},
+          year    = {2015},
+          doi     = {10.1002/2014JB011547}
+        }
+    - label: CRI 필터·누출 오차 (JPL mascon)
+      text: >-
+        Wiese, D. N., Landerer, F. W., Watkins, M. M. (2016): Quantifying and reducing leakage errors in the JPL RL05M GRACE mascon solution. Water Resources Research, 52(9), 7490–7502.
+      doi: 10.1002/2016WR019344
+      bibtex: |
+        @article{wiese2016leakage,
+          author  = {Wiese, David N. and Landerer, Felix W. and Watkins, Michael M.},
+          title   = {Quantifying and reducing leakage errors in the {JPL} {RL05M} {GRACE} mascon solution},
+          journal = {Water Resources Research},
+          volume  = {52},
+          number  = {9},
+          pages   = {7490--7502},
+          year    = {2016},
+          doi     = {10.1002/2016WR019344}
+        }
+    - label: CSR mascon 방법
+      text: >-
+        Save, H., Bettadpur, S., Tapley, B. D. (2016): High-resolution CSR GRACE RL05 mascons. Journal of Geophysical Research: Solid Earth, 121(10), 7547–7569.
+      doi: 10.1002/2016JB013007
+      bibtex: |
+        @article{save2016csr,
+          author  = {Save, Himanshu and Bettadpur, Srinivas and Tapley, Byron D.},
+          title   = {High-resolution {CSR} {GRACE} {RL05} mascons},
+          journal = {Journal of Geophysical Research: Solid Earth},
+          volume  = {121},
+          number  = {10},
+          pages   = {7547--7569},
+          year    = {2016},
+          doi     = {10.1002/2016JB013007}
+        }
+    - label: GSFC mascon 방법
+      text: >-
+        Loomis, B. D., Luthcke, S. B., Sabaka, T. J. (2019): Regularization and error characterization of GRACE mascons. Journal of Geodesy, 93(9), 1381–1398.
+      doi: 10.1007/s00190-019-01252-y
+      bibtex: |
+        @article{loomis2019gsfc,
+          author  = {Loomis, B. D. and Luthcke, S. B. and Sabaka, T. J.},
+          title   = {Regularization and error characterization of {GRACE} mascons},
+          journal = {Journal of Geodesy},
+          volume  = {93},
+          number  = {9},
+          pages   = {1381--1398},
+          year    = {2019},
+          doi     = {10.1007/s00190-019-01252-y}
+        }
+    - label: Tellus 육상 격자 이득 계수
+      text: >-
+        Landerer, F. W., Swenson, S. C. (2012): Accuracy of scaled GRACE terrestrial water storage estimates. Water Resources Research, 48, W04531.
+      doi: 10.1029/2011WR011453
+      bibtex: |
+        @article{landerer2012scaled,
+          author  = {Landerer, F. W. and Swenson, S. C.},
+          title   = {Accuracy of scaled {GRACE} terrestrial water storage estimates},
+          journal = {Water Resources Research},
+          volume  = {48},
+          number  = {4},
+          pages   = {W04531},
+          year    = {2012},
+          doi     = {10.1029/2011WR011453}
+        }
+    - label: GRACE-FO 성능과 GRACE 기록 연속성
+      text: >-
+        Landerer, F. W., Flechtner, F. M., Save, H., Webb, F. H., Bandikova, T., Bertiger, W. I., et al. (2020): Extending the Global Mass Change Data Record:
+        GRACE Follow-On Instrument and Science Data Performance. Geophysical Research Letters, 47(12), e2020GL088306.
+      doi: 10.1029/2020GL088306
+      bibtex: |
+        @article{landerer2020gracefo,
+          author  = {Landerer, Felix W. and Flechtner, Frank M. and Save, Himanshu and Webb, Frank H. and Bandikova, Tamara and Bertiger, William I. and Bettadpur, Srinivas V. and Byun, Sung Hun and Dahle, Christoph and Dobslaw, Henryk and Fahnestock, Eugene and Harvey, Nate and Kang, Zhigui and Kruizinga, Gerhard L. H. and Loomis, Bryant D. and McCullough, Christopher and Murb{\"o}ck, Michael and Nagel, Peter and Paik, Meegyeong and Pie, Nadege and Poole, Steve and Strekalov, Dmitry and Tamisiea, Mark E. and Wang, Furun and Watkins, Michael M. and Wen, Hui-Ying and Wiese, David N. and Yuan, Dah-Ning},
+          title   = {Extending the Global Mass Change Data Record: {GRACE} Follow-On Instrument and Science Data Performance},
+          journal = {Geophysical Research Letters},
+          volume  = {47},
+          number  = {12},
+          pages   = {e2020GL088306},
+          year    = {2020},
+          doi     = {10.1029/2020GL088306}
+        }
+  acknowledgement: >-
+    쓴 제품의 데이터셋 DOI를 인용하고, JPL mascon은 Watkins et al. (2015)·Wiese et al. (2016), CSR mascon은 Save et al. (2016), GSFC mascon은 Loomis et al. (2019),
+    Tellus 육상 격자는 Landerer and Swenson (2012)을 함께 인용하세요. CSR은 자료를 CSR GRACE 누리집에서 받았음을 밝혀 달라고 요청합니다.
+
+notices:
+  - date: "2026-05-01"
+    level: info
+    title: GRACE Level-2 RL07(CSR·JPL) 공개 — Level-3·mascon과 GRACE-FO RL07은 아직
+    body: >-
+      PO.DAAC에 GRACE(2002-04 ~ 2017-06) 월별 구면조화 계수 RL07(CSR·JPL)이 2026-05-01 공개일로 등록되었습니다. 2026-10-13 확인 시 GRACE-FO RL07과
+      Tellus Level-3·mascon RL07 컬렉션은 공개되지 않았으며, 육수저장량 격자는 여전히 RL06.x가 현재 판입니다.
+    source: https://cmr.earthdata.nasa.gov/search/collections.umm_json?short_name=GRACE_L2_JPL_MONTHLY_0070
+  - date: "2025-10-07"
+    level: warning
+    title: GRACE-FO 반복 궤도로 인한 품질 저하 — 2024년 9~11월, 2026년 7월 ~ 2027년 2월 예상
+    body: >-
+      GRACE-FO 과학 운영 보고에 따르면 2024년 9~11월 4/61 반복 궤도(고도 약 470 km)로 약 60일간 지상 궤적 표본이 부족해 월별 중력장 품질이 떨어졌고,
+      2026년 7월 ~ 2027년 2월에는 3/46 반복 궤도(약 445 km)에 들어갈 것으로 예상되었습니다(태양 활동에 따라 머무는 기간이 2~18개월로 달라질 수 있음).
+    source: https://cpaess.ucar.edu/sites/default/files/grace-fo-2025-presentation/save-himanshu-som.pdf
+  - date: "2024-09-12"
+    level: info
+    title: GRACE-FO JPL RL06.3 공개 — Level-2·3과 mascon 갱신
+    body: >-
+      JPL Level-2, Tellus Level-3(육상·해저압), mascon(CRI·필터 없음)이 RL06.3으로 바뀌었습니다. RL06.1과는 GF2 위성에 쓰는 Level-1B 가속도계 대체 자료만 다르며
+      (GF1·GF2 관측을 함께 쓰는 ACX2), JPL mascon에서는 넓은 자세 허용 모드였던 2023년 1·2월과 7월 이후 달만 값이 바뀝니다.
+    source: https://podaac.jpl.nasa.gov/announcements/2024-09-12-Release-of-GRACE-FO-JPL-RL06.3-for-L2-3-and-MASCON-Data-Sets
+  - date: "2022-05-12"
+    level: info
+    title: GRACE-FO RL06.1 공개 — 혼합 가속도계 대체 자료(ACX) 도입
+    body: >-
+      GF1·GF2 가속도계 관측을 함께 쓰는 새 대체 자료(ACX)로 Level-2·3을 다시 만들었습니다. ACX는 검증에 시간이 더 들어 월별 Level-2·3과 함께 지연 공급되며,
+      당시 지연은 약 40일이었습니다.
+    source: https://grace.jpl.nasa.gov/data/data-updates/
+  - date: "2018-09-17"
+    level: warning
+    title: GRACE-FO 마이크로파 처리 장치 고장으로 관측 중단 — 2018년 8·9월 자료 없음
+    body: >-
+      2018-07-19 GRACE-FO 2호기의 주 마이크로파 처리 장치(IPU)가 꺼져 7월 중순부터 과학 관측이 멈췄고, 9월에 예비 장치로 전환해 관측을 재개하기로 했습니다.
+      그 결과 GRACE-FO 월자료에는 2018-08·09가 없고 2018-07도 7월 1~18일만으로 만들어졌습니다.
+    source: https://sealevel.nasa.gov/news/142/grace-fo-satellite-switching-to-backup-instrument-processing-unit
+  - date: "2017-10-27"
+    level: critical
+    title: GRACE 과학 임무 종료 — GRACE-FO까지 약 11개월 공백
+    body: >-
+      2017년 9월 GRACE-2의 노후 배터리 문제가 생겨 10월 중순 과학 장비를 운용할 수 없게 되면서 GRACE 과학 임무가 끝났습니다. 마지막 월자료는 2017-06이며,
+      GRACE-FO 첫 월자료(2018-06)까지 2017-07 ~ 2018-05가 비어 있습니다.
+    source: https://www.jpl.nasa.gov/news/prolific-earth-gravity-satellites-end-science-mission/
+
+links:
+  - name: JPL GRACE Tellus — mascon 안내
+    url: https://grace.jpl.nasa.gov/data/get-data/jpl_global_mascons/
+  - name: JPL GRACE Tellus — 자료 갱신 소식
+    url: https://grace.jpl.nasa.gov/data/data-updates/
+  - name: JPL GRACE Tellus — 육상 격자(구면조화 기반) 안내
+    url: https://grace.jpl.nasa.gov/data/get-data/monthly-mass-grids-land/
+  - name: GRACE/GRACE-FO 월별 사용 날짜·결측일 안내
+    url: https://grace.jpl.nasa.gov/data/grace-months/
+  - name: GRACE-FO Level-3 자료 사용자 안내서 (JPL)
+    url: https://archive.podaac.earthdata.nasa.gov/podaac-ops-cumulus-docs/gracefo/open/docs/GRACE-FO_L3_Handbook_JPL.pdf
+  - name: JPL mascon 릴리스 노트 (RL06.3Mv04 포함)
+    url: https://archive.podaac.earthdata.nasa.gov/podaac-ops-cumulus-docs/gracefo/open/docs/GRACE_GRACE-FO_ReleaseNotes_JPL_MASCON.txt
+  - name: GRACE 문서·기술 노트 (PO.DAAC)
+    url: https://podaac.jpl.nasa.gov/gravity/grace-documentation
+  - name: CSR RL06.3 mascon
+    url: https://www2.csr.utexas.edu/grace/RL06_mascons.html
+  - name: NASA GSFC mascon
+    url: https://earth.gsfc.nasa.gov/geo/data/grace-mascons
+  - name: GFZ — GRACE-C
+    url: https://www.gfz.de/en/grace-c
+
+watch_urls:
+  - https://grace.jpl.nasa.gov/data/data-updates/
+  - https://podaac.jpl.nasa.gov/announcements
+  - https://www.gfz.de/en/grace-c
+
+last_verified: "2026-10-13"

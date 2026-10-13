@@ -1,0 +1,388 @@
+# ─────────────────────────────────────────────────────────────
+# CLMS (formerly Copernicus Global Land Service) LAI, FAPAR, FCover — dataset information file (English edition)
+# Land tab, 'Vegetation'. The 300 m V2.0 entered near-real-time operations in January 2026 and V1.1 ended in February 2026. The 1 km V2 is a 1999–2020 archive.
+# After editing, update last_verified to the date you checked the official pages.
+# ─────────────────────────────────────────────────────────────
+id: cgls-lai
+name: "CLMS LAI/FAPAR/FCOVER"
+full_name: Copernicus Land Monitoring Service global vegetation biophysical variables LAI, FAPAR and FCover (300 m V2.0 / 1 km V2, 10-daily) — formerly Copernicus Global Land Service (CGLS) products
+category: satellite
+domain: land
+group: 식생
+order: 20
+domains: [육지, 원격탐사]
+provider: EU Copernicus Land Monitoring Service (CLMS; global component managed by the JRC) / produced by VITO / distributed via the Copernicus Data Space Ecosystem (CDSE)
+
+status: active
+status_note: >-
+  The 300 m Version 2.0 (file version V2.0.1) entered near-real-time (NRT) operations in the second dekad of January 2026, and the historical record from 2014 was reprocessed and released with the same version.
+  The previous V1.1 (Sentinel-3) was produced only until the end of February 2026 and has been fully replaced by V2.0 since March (on 2026-10-13 the latest CDSE file was the RT0 for the 2026-10-10 dekad).
+  The former 'Copernicus Global Land Service' brand and the VITO distribution portal have been folded into the CLMS website and CDSE, so update download scripts. The 1 km V2 (SPOT-VGT, PROBA-V) is an archive that ended in June 2020.
+
+period:
+  start: "1999-01"
+  end: present
+  note: >-
+    The 300 m V2.0 runs from January 2014 to the present, using PROBA-V for 2014–2018 and Sentinel-3 OLCI from January 2019 (in CDSE file names the last PROBAV product is 2018-12-31 and the first OLCI product is 2019-01-10).
+    The 1 km V2 (SPOT-VGT, then PROBA-V) is an archive from January 1999 to June 2020; the earlier 300 m V1 series (V1.0 PROBA-V 2014-01 to 2020-06, V1.1 Sentinel-3 2020-07 to 2026-02) also remain on CDSE.
+    On 2026-10-13 the newest V2.0 file on CDSE was the RT0 for the nominal date 2026-10-10.
+
+resolution:
+  spatial_short: "0.3 km (0.003°)"
+  temporal_short: "10일"
+  spatial: >-
+    300 m products: 1/336° regular latitude–longitude grid (WGS84, EPSG:4326, pixel size 0.0029761905°, referenced to pixel centres), 80°N–60°S (only 75°N–60°S is valid in the PROBA-V period) /
+    1 km products: 1/112° regular latitude–longitude grid
+  vertical: Vegetation canopy (single layer)
+  temporal: >-
+    10-daily (dekads) with nominal dates on the 10th, 20th and last day of each month. Each nominal date is issued as RT0 (near real time), then updated as RT1 and RT2 (one and two dekads later) and RT6 (final, six dekads later)
+
+update: "Every dekad — RT0 within about 2 days after the end of the synthesis period; RT1, RT2 and RT6 after 1, 2 and 6 dekads (no updates for the 1 km V2)"
+license: "Full, open and free access under the Copernicus data policy (credit the source, state any modifications, do not imply EU endorsement). Downloading from CDSE requires a free account"
+account_required: true
+
+summary: >-
+  Global vegetation variables from the EU Copernicus Land Monitoring Service (CLMS): leaf area index (LAI), fraction of absorbed photosynthetically active radiation (FAPAR)
+  and fraction of green vegetation cover (FCover), every 10 days. Neural networks trained per vegetation type turn satellite surface reflectances into instantaneous estimates,
+  which are then fitted in time and gap-filled to give dekadal values. The flagship is the 300 m V2.0, which joins PROBA-V (2014–2018) and Sentinel-3 OLCI (2019 onwards) in a single version;
+  the 1999–2020 period is covered by the 1 km V2 (GEOV2) record. These products used to be distributed by VITO under the 'Copernicus Global Land Service (CGLS)' name and are now obtained from the CLMS website and CDSE.
+
+time_convention:
+  summary: >-
+    Each value is an estimate for the dekad's nominal date (the 10th, 20th or last day of the month, as in the file name). For most vegetation a first- or second-degree polynomial
+    is fitted to the instantaneous estimates in a window around the nominal date (60 days before, 0–60 days after) and evaluated on that date; for evergreen broadleaf forest (EBF)
+    the mean of the 10 closest instantaneous estimates is used. The value is therefore neither a dekadal mean nor a maximum value composite.
+  points:
+    - "In c_gls_LAI300-RT6_202407310000_GLOBE_OLCI_V2.0.1 the date (2024-07-31) is the nominal date; the CDSE ContentDate (2024-07-21 to 31) is the dekad it belongs to."
+    - "RT0 uses past observations only (zero-day forward window) and is least stable at the end of the series; RT1 and RT2 add 10 and 20 days of later observations, and RT6 adds up to 60 days and is final. The reprocessed historical period has RT6 only."
+    - "In the V2.0 historical release, RT6 starts in January 2014, while the RT2, RT1 and RT0 series start on 2025-08-20, 2025-08-31 and 2025-09-10."
+    - "LENGTH_BEFORE and LENGTH_AFTER give the actual window lengths (days) and NOBS the number of valid instantaneous observations in that window, which shows how much gap filling was involved."
+    - "FAPAR is defined as black-sky FAPAR for the sun position around 10:15 (between 10:00 and 10:30), taken as an approximation of the daily integrated value. Sentinel-3 crosses the equator at 10:00; PROBA-V had drifted to about 09:30 by the end of its mission."
+  source: https://land.copernicus.eu/en/technical-library/product-user-manual-fraction-of-green-vegetation-cover-300m-version-2/@@download/file
+  source_name: "CLMS Product User Manual — LAI, FAPAR, FCover 300 m Version 2.0 (CGLOPS1_PUM_LAI300m-V2.0, I1.20, 2026-07-16)"
+
+variables:
+  note: >-
+    netCDF4 (CF-1.6) layers from the 300 m V2.0 Product User Manual (PUM). LAI, FAPAR and FCover come in separate files (LAI300, FAPAR300, FCOVER300) carrying the same auxiliary layers.
+    Everything is stored as 8-bit integers: physical value = stored value × scale_factor (LAI 1/30, FAPAR and FCover 1/250, others 1), with 255 as missing. Water pixels are not processed and are set to 255.
+    The CDSE STAC metadata list the same layers in lower case (lai, rmse, ...), so check the names in an actual file.
+  full_list: https://land.copernicus.eu/en/technical-library/product-user-manual-fraction-of-green-vegetation-cover-300m-version-2/@@download/file
+  groups:
+    - name: 300 m V2.0 vegetation variables (estimates for the nominal date)
+      kind: instant
+      items:
+        - text: "Leaf area index (green LAI) — `LAI` (m2 m-2, 0–7)"
+          note: "Half the green leaf area per unit ground area, understorey included. Stored value × 1/30"
+        - text: "Fraction of absorbed photosynthetically active radiation — `FAPAR` (0–0.94)"
+          note: "Black-sky FAPAR at about 10:15. Stored value × 1/250"
+        - text: "Fraction of green vegetation cover — `FCOVER` (0–1)"
+          note: "Fraction of ground covered by green vegetation seen from nadir. Stored value × 1/250"
+    - name: 300 m V2.0 auxiliary layers
+      kind: instant
+      items:
+        - "Estimated uncertainty (RMSE) — `RMSE` (units of the variable)"
+        - text: "Number of valid instantaneous observations — `NOBS` (count, 0–60)"
+          kind: accum
+          note: Counted within the fitting window (LENGTH_BEFORE to LENGTH_AFTER)
+        - "Length of the window before the nominal date — `LENGTH_BEFORE` (days, 0–210)"
+        - "Length of the window after the nominal date — `LENGTH_AFTER` (days, 0–60)"
+        - text: "Quality flag — `QFLAG` (bit field)"
+          note: "Bit 1 land/water, bit 2 non-EBF/EBF, bits 6–7 fitting method (2nd-degree or linear fit, interpolation within 15 days, nearest value within 5 days or missing)"
+    - name: 1 km V2 (1999-01 to 2020-06, archive)
+      kind: instant
+      items:
+        - text: "Leaf area index — `LAI` (m2 m-2, 0–7)"
+          note: "Matching FAPAR and FCOVER files exist separately. Stored value × 1/30"
+        - "LAI uncertainty — `RMSE` (m2 m-2)"
+        - text: "Number of valid observations — `NOBS` (count, 0–120)"
+          kind: accum
+        - "Window length before and after the nominal date — `LENGTH_BEFORE`, `LENGTH_AFTER` (days, 5–60)"
+        - "Quality flag — `QFLAG` (16-bit)"
+
+access:
+  - name: CLMS product page — LAI 300 m V2.0
+    url: https://land.copernicus.eu/en/products/vegetation/leaf-area-index-v2-0-300m
+    method: Product description, DOI and access routes; CLMS Data viewer
+    note: "FAPAR (fraction-of-absorbed-photosynthetically-active-radiation-v2-0-300m) and FCover (fraction-of-green-vegetation-cover-v2-0-300m) have their own pages. CDSE download options are recommended for large volumes."
+  - name: Copernicus Data Space Ecosystem — OData, S3, STAC
+    url: https://documentation.dataspace.copernicus.eu/Data/CopernicusServices/CLMS.html
+    method: OData API / S3 (EODATA) / STAC / Copernicus Browser (free CDSE account)
+    note: >-
+      The OData datasetIdentifier values are lai_global_300m_10daily_v2, fapar_global_300m_10daily_v2 and fcover_global_300m_10daily_v2 (and lai_global_1km_10daily_v2 etc. for 1 km);
+      the S3 path is /eodata/CLMS/bio-geophysical/vegetation_properties/lai_global_300m_10daily_v2/YYYY/MM/DD/. Both netCDF (_nc) and COG (_cog) products are available.
+  - name: CDSE openEO / Sentinel Hub
+    url: https://documentation.dataspace.copernicus.eu/APIs/SentinelHub/Data/clms/bio-geophysical-parameters/vegetation/vegetation-properties/fapar_global_300m_10daily_v2.html
+    method: openEO (CLMS_LAI_GLOBAL_300M_10DAILY_V2 etc.) / Sentinel Hub BYOC collections (separate RT0, RT1, RT2, RT6)
+    note: Each global file is several GB, so these are handy for cutting out an area of interest. CDSE openEO applies scale and offset automatically.
+  - name: WEkEO (unified CLMS dataset)
+    url: https://help.wekeo.eu/en/articles/12397018-new-unified-clms-dataset-available
+    method: HDA API / web viewer
+    note: WEkEO says it serves CLMS data moved to CDSE through a unified dataset (EO:JRC:DAT:CLMS), but the help article checked on 2026-10-13 does not name LAI, FAPAR or FCover. CDSE is the primary distribution point.
+
+example:
+  lang: python
+  note: >-
+    Finds and downloads the final (RT6, netCDF) LAI 300 m V2.0 product for the last dekad of July 2024 through the CDSE OData API. Put a free CDSE account in the CDSE_USERNAME and CDSE_PASSWORD environment variables.
+    One global netCDF is about 2.8 GB, so for a small area the COG (_cog) products or openEO are better choices.
+  code: |
+    import os
+    import requests
+    import xarray as xr
+
+    token = requests.post(
+        "https://identity.dataspace.copernicus.eu/auth/realms/CDSE/protocol/openid-connect/token",
+        data={"client_id": "cdse-public", "grant_type": "password",
+              "username": os.environ["CDSE_USERNAME"], "password": os.environ["CDSE_PASSWORD"]},
+    ).json()["access_token"]
+
+    odata = "https://catalogue.dataspace.copernicus.eu/odata/v1"
+    flt = ("Collection/Name eq 'CLMS' and "
+           "Attributes/OData.CSC.StringAttribute/any(att:att/Name eq 'datasetIdentifier' and "
+           "att/OData.CSC.StringAttribute/Value eq 'lai_global_300m_10daily_v2') and "
+           "contains(Name,'RT6_20240731') and endswith(Name,'_nc')")
+    prod = requests.get(f"{odata}/Products", params={"$filter": flt}).json()["value"][0]
+    name = prod["Name"]                       # c_gls_LAI300-RT6_202407310000_GLOBE_OLCI_V2.0.1_nc
+    ncfile = name[:-3] + ".nc"                # actual file inside the product folder
+
+    s = requests.Session()
+    s.headers["Authorization"] = f"Bearer {token}"
+    url = f"{odata}/Products({prod['Id']})/Nodes({name})/Nodes({ncfile})/$value"
+    r = s.get(url, allow_redirects=False)
+    while r.status_code in (301, 302, 303, 307):   # keep the auth header across the redirect to the download server
+        url = r.headers["Location"]
+        r = s.get(url, allow_redirects=False)
+    with s.get(url, stream=True) as resp, open(ncfile, "wb") as f:
+        for chunk in resp.iter_content(1 << 20):
+            f.write(chunk)
+
+    ds = xr.open_dataset(ncfile)              # xarray applies scale_factor and the 255 fill value
+    lai = ds["LAI"].sel(lat=slice(39, 33), lon=slice(124, 132))   # latitude runs north to south
+    print(float(lai.mean()))
+
+tips:
+  - "RT0, RT1, RT2 and RT6 give different values for the same nominal date. Use RT6 only for research time series and say so if the last few dekads were filled with RT0–RT2. RT0 is known to show spatial noise such as stripes and unrealistically high values."
+  - "Do not mix V1 (V1.0, V1.1) with V2.0 in one time series. The 2014–2018 PROBA-V values in particular changed in V2.0, so re-download the whole record as V2.0."
+  - "V2.0 still shows a moderate level shift (OLCI slightly higher) across the PROBA-V to Sentinel-3 OLCI transition in 2018–2019. Check this boundary when computing trends from 2014."
+  - "Multiply LAI by 1/30 and FAPAR or FCover by 1/250 to get physical values. xarray does this automatically, but reading the COGs with GDAL or rasterio returns the stored values (0–250). 255 means missing or water."
+  - "Nominal dates fall on the 10th, 20th and last day, so the third dekad is 8–11 days long. Consider weighting by dekad length rather than taking a plain mean when building monthly values."
+  - "Unrealistic values can occur over wetlands and near water, and evergreen broadleaf forest (QFLAG bit 2) uses a simplified treatment (mean of 10 instantaneous values, or the previous dekad when too few are available)."
+  - "The C3S Climate Data Store dataset 'satellite-lai-fapar' has a similar name but is a different line (produced for C3S, with effective LAI from V2 onwards). Cite the exact product name and DOI you used."
+
+citations:
+  dataset:
+    - label: LAI 300 m V2.0 (CLMS)
+      text: >-
+        Leaf Area Index 2014-present (raster 300 m), global, 10-daily - version 2. European Union's Copernicus Land Monitoring Service information.
+        Copernicus Data Space Ecosystem, https://dataspace.copernicus.eu/ (accessed DD-MMM-YYYY). https://doi.org/10.2909/a696fab4-c3dc-4dcc-b1d8-6fcd9a2ce1eb
+      doi: 10.2909/a696fab4-c3dc-4dcc-b1d8-6fcd9a2ce1eb
+      bibtex: |
+        @misc{clms_lai300_v2,
+          author    = {{Copernicus Land Monitoring Service}},
+          title     = {Leaf Area Index 2014-present (raster 300 m), global, 10-daily - version 2},
+          year      = {2026},
+          publisher = {Copernicus Land Monitoring Service},
+          doi       = {10.2909/a696fab4-c3dc-4dcc-b1d8-6fcd9a2ce1eb},
+          note      = {European Union's Copernicus Land Monitoring Service information}
+        }
+    - label: FAPAR 300 m V2.0 (CLMS)
+      text: >-
+        Fraction of Absorbed Photosynthetically Active Radiation 2014-present (raster 300 m), global, 10-daily - version 2.
+        European Union's Copernicus Land Monitoring Service information. https://doi.org/10.2909/c828c1b2-6ea8-40f3-897d-c92080ba1daf
+      doi: 10.2909/c828c1b2-6ea8-40f3-897d-c92080ba1daf
+      bibtex: |
+        @misc{clms_fapar300_v2,
+          author    = {{Copernicus Land Monitoring Service}},
+          title     = {Fraction of Absorbed Photosynthetically Active Radiation 2014-present (raster 300 m), global, 10-daily - version 2},
+          year      = {2026},
+          publisher = {Copernicus Land Monitoring Service},
+          doi       = {10.2909/c828c1b2-6ea8-40f3-897d-c92080ba1daf},
+          note      = {European Union's Copernicus Land Monitoring Service information}
+        }
+    - label: FCover 300 m V2.0 (CLMS)
+      text: >-
+        Fraction of Vegetation Cover 2014-present (raster 300 m), global, 10-daily - version 2.
+        European Union's Copernicus Land Monitoring Service information. https://doi.org/10.2909/e7b99351-7a89-42c7-8bba-1d9fc0463946
+      doi: 10.2909/e7b99351-7a89-42c7-8bba-1d9fc0463946
+      bibtex: |
+        @misc{clms_fcover300_v2,
+          author    = {{Copernicus Land Monitoring Service}},
+          title     = {Fraction of Vegetation Cover 2014-present (raster 300 m), global, 10-daily - version 2},
+          year      = {2026},
+          publisher = {Copernicus Land Monitoring Service},
+          doi       = {10.2909/e7b99351-7a89-42c7-8bba-1d9fc0463946},
+          note      = {European Union's Copernicus Land Monitoring Service information}
+        }
+    - label: LAI 1 km V2 (CLMS, 1999–2020)
+      text: >-
+        Leaf Area Index 1999-2020 (raster 1 km), global, 10-daily - version 2. European Union's Copernicus Land Monitoring Service information.
+        https://doi.org/10.2909/d5fdc595-2e03-4cbe-a39e-5f006f9cef07
+      doi: 10.2909/d5fdc595-2e03-4cbe-a39e-5f006f9cef07
+      bibtex: |
+        @misc{clms_lai1km_v2,
+          author    = {{Copernicus Land Monitoring Service}},
+          title     = {Leaf Area Index 1999-2020 (raster 1 km), global, 10-daily - version 2},
+          year      = {2017},
+          publisher = {Copernicus Land Monitoring Service},
+          doi       = {10.2909/d5fdc595-2e03-4cbe-a39e-5f006f9cef07},
+          note      = {European Union's Copernicus Land Monitoring Service information}
+        }
+  papers:
+    - label: Quality assessment of the 300 m PROBA-V products
+      text: >-
+        Fuster, B., Sánchez-Zapero, J., Camacho, F., García-Santos, V., Verger, A., Lacaze, R., Weiss, M., Baret, F., Smets, B. (2020):
+        Quality Assessment of PROBA-V LAI, fAPAR and fCOVER Collection 300 m Products of Copernicus Global Land Service. Remote Sensing, 12(6), 1017.
+      doi: 10.3390/rs12061017
+      bibtex: |
+        @article{fuster2020cgls300,
+          author  = {Fuster, Beatriz and S{\'a}nchez-Zapero, Jorge and Camacho, Fernando and Garc{\'i}a-Santos, Vicente and Verger, Aleixandre and Lacaze, Roselyne and Weiss, Marie and Baret, Fr{\'e}d{\'e}ric and Smets, Bruno},
+          title   = {Quality Assessment of {PROBA-V} {LAI}, {fAPAR} and {fCOVER} Collection 300 m Products of {Copernicus} Global Land Service},
+          journal = {Remote Sensing},
+          volume  = {12},
+          number  = {6},
+          pages   = {1017},
+          year    = {2020},
+          doi     = {10.3390/rs12061017}
+        }
+    - label: 1 km V2 (GEOV2) algorithm and validation
+      text: >-
+        Verger, A., Sánchez-Zapero, J., Weiss, M., Descals, A., Camacho, F., Lacaze, R., Baret, F. (2023): GEOV2: Improved smoothed and gap filled
+        time series of LAI, FAPAR and FCover 1 km Copernicus Global Land products. International Journal of Applied Earth Observation and Geoinformation, 123, 103479.
+      doi: 10.1016/j.jag.2023.103479
+      bibtex: |
+        @article{verger2023geov2,
+          author  = {Verger, Aleixandre and S{\'a}nchez-Zapero, Jorge and Weiss, Marie and Descals, Adri{\`a} and Camacho, Fernando and Lacaze, Roselyne and Baret, Fr{\'e}d{\'e}ric},
+          title   = {{GEOV2}: Improved smoothed and gap filled time series of {LAI}, {FAPAR} and {FCover} 1 km {Copernicus} Global Land products},
+          journal = {International Journal of Applied Earth Observation and Geoinformation},
+          volume  = {123},
+          pages   = {103479},
+          year    = {2023},
+          doi     = {10.1016/j.jag.2023.103479}
+        }
+  acknowledgement: >-
+    The CLMS data policy asks publications to include "European Union's Copernicus Land Monitoring Service information" and the relevant dataset DOIs, and dataset citations to give
+    the product title, that phrase, the name and URL of the access point, the access date and the DOI. Look up the DOIs of the FAPAR and FCover 1 km V2 and the 300 m V1 products on their CLMS product pages.
+
+transitions:
+  - from: CLMS LAI, FAPAR, FCover 300 m V1 (V1.0 PROBA-V / V1.1 Sentinel-3)
+    to: CLMS LAI, FAPAR, FCover 300 m V2.0
+    status: completed
+    date: "2026-03"
+    summary: >-
+      V2.0 rebuilds the separate V1.0 (PROBA-V) and V1.1 (Sentinel-3) records as one version. The Sentinel-3 period uses the same neural networks, so values barely change,
+      but the PROBA-V period (2014–2018) uses new input reflectances and FCover and, to a lesser extent, FAPAR were adjusted. NRT operations began in January 2026 and V1.1 ended at the end of February 2026.
+    changes:
+      - aspect: Period and sensors
+        before: "V1.0 PROBA-V 2014-01 to 2020-06 and V1.1 Sentinel-3 OLCI 2020-07 to 2026-02 (two records of different versions joined)"
+        after: "Single V2.0 — PROBA-V 2014-01 to 2018-12 + Sentinel-3A/3B OLCI 2019-01 to present"
+      - aspect: Input reflectance
+        before: "V1.0 top-of-atmosphere (TOA) reflectance, PROBA-V Collection 1, SMAC atmospheric correction inside the retrieval / V1.1 OLCI top-of-canopy (TOC) v1.0 (to 2022-06-30), then v1.1"
+        after: "Top-of-canopy (TOC) reflectance — PROBA-V Collection 2 and OLCI TOC v2.3; no water vapour, ozone or pressure inputs needed"
+      - aspect: Algorithm
+        before: "V1.0 vegetation classes from GLOBCOVER; V1.1 retrained neural networks"
+        after: "Sentinel-3 period uses the same networks and parameters as V1.1 (marginal differences, better identification of EBF pixels); CCI-LC land cover"
+      - aspect: NRT latency
+        before: "RT0 within 5 days after the end of the synthesis period"
+        after: "RT0 within 2 days (48 hours) after the end of the synthesis period, then RT1, RT2 and RT6 updates"
+      - aspect: Files and identifiers
+        before: "c_gls_LAI300-RT6_..._GLOBE_OLCI_V1.1.x_nc / datasetIdentifier lai_global_300m_10daily_v1 / DOI 10.2909/219fdc9f-616b-444b-a495-198f527b4722"
+        after: "c_gls_LAI300-RT6_..._GLOBE_OLCI_V2.0.1_nc (_PROBAV_ in the PROBA-V period) / lai_global_300m_10daily_v2 / DOI 10.2909/a696fab4-c3dc-4dcc-b1d8-6fcd9a2ce1eb"
+      - aspect: Known limitations
+        before: "Discontinuity between the PROBA-V (V1.0) and Sentinel-3 (V1.1) versions"
+        after: "One version, but the validation report still finds a level shift and lower inter-annual precision across the PROBA-V to OLCI transition (2018–2019)"
+    impacts:
+      - Do not mix climatologies or trends computed from V1 with V2.0 results; re-download the full record from 2014 as V2.0.
+      - Change datasetIdentifier and file-name patterns in scripts from _v1 and V1.1 to _v2 and V2.0. V1 remains on CDSE as an archive.
+      - Cite the V2.0 DOI in papers and state whether only RT6 was used.
+    sources:
+      - name: Version 2.0 of LAI, FAPAR and FCover 300 m in NRT operations (CLMS, 2026-01-16)
+        url: https://land.copernicus.eu/en/production-updates/version-2-0-of-lai-fapar-and-fcover-300-m-in-nrt-operations
+      - name: CLMS PUM LAI, FAPAR, FCover 300 m V2.0 (I1.20, 2026-07-16)
+        url: https://land.copernicus.eu/en/technical-library/product-user-manual-fraction-of-green-vegetation-cover-300m-version-2/@@download/file
+      - name: CLMS Validation Report LAI, FAPAR, FCover 300 m V2.0 (2026-03-09)
+        url: https://land.copernicus.eu/en/technical-library/validation-report-fraction-of-green-vegetation-cover-300m-version-2/@@download/file
+  - from: CLMS LAI, FAPAR, FCover 1 km V2 (GEOV2, SPOT-VGT and PROBA-V)
+    to: CLMS LAI, FAPAR, FCover 300 m series
+    status: completed
+    date: "2020-06"
+    summary: >-
+      The 1 km V2 record, running since 1999, stopped when the PROBA-V mission ended in June 2020 and is now an archive. Only the 300 m series (currently V2.0) is updated since then.
+      The two series differ in resolution, inputs and compositing windows and cannot be joined as one time series.
+    changes:
+      - aspect: Period
+        before: "1999-01 to 2020-06 (no updates)"
+        after: "2014-01 to present"
+      - aspect: Grid
+        before: "1/112° regular latitude–longitude"
+        after: "1/336° regular latitude–longitude, 80°N–60°S"
+      - aspect: Sensors
+        before: "SPOT/VEGETATION (1999–2014), then PROBA-V (to 2020-06)"
+        after: "PROBA-V (2014–2018), then Sentinel-3 OLCI (2019 onwards)"
+      - aspect: Auxiliary layer ranges
+        before: "NOBS 0–120, LENGTH_BEFORE/AFTER 5–60 days, 16-bit QFLAG"
+        after: "NOBS 0–60, LENGTH_BEFORE 0–210 days (EBF), LENGTH_AFTER 0–60 days, 8-bit QFLAG"
+    impacts:
+      - To combine the 1 km V2 and 300 m V2.0 for analyses starting in 1999, first assess their differences over the 2014–2020 overlap.
+      - The 1 km V2 will not be corrected any more, so any known issues remain.
+    sources:
+      - name: CLMS product page — Leaf Area Index 1999-2020 (1 km) V2
+        url: https://land.copernicus.eu/en/products/vegetation/leaf-area-index-v2-0-1km
+      - name: CDSE documentation — lai_global_1km_10daily_v2 bands
+        url: https://documentation.dataspace.copernicus.eu/APIs/SentinelHub/Data/clms/bio-geophysical-parameters/vegetation/vegetation-properties/lai_global_1km_10daily_v2.html
+      - name: Verger et al. (2023), GEOV2
+        url: https://doi.org/10.1016/j.jag.2023.103479
+
+notices:
+  - date: "2026-06-17"
+    level: info
+    title: VITO Terrascope openEO retires its CGLS collections by end of August 2026 — move to CDSE openEO
+    body: >-
+      VITO announced that the 16 Global Land collections on Terrascope openEO, including CGLS_LAI300_V1_GLOBAL, will be phased out by the end of August 2026.
+      Their replacements are CDSE openEO collections such as CLMS_LAI_GLOBAL_300M_10DAILY_V2 (the 300 m products move from V1 to V2); the connection URL and authentication (CDSE account) change, and scale and offset are applied automatically.
+    source: https://terrascope.be/en/news-events/phase-out-copernicus-global-land-service-collections-terrascope-openeo
+  - date: "2026-01-16"
+    level: warning
+    title: LAI, FAPAR, FCover 300 m V2.0 in NRT operations — V1.1 ends at the end of February 2026
+    body: >-
+      V2.0 entered near-real-time operations in the second dekad of January 2026, together with the historical V2.0 record from 2014.
+      V1.1 continued with degraded timeliness only until the end of February 2026, and V2.0 permanently replaces it from March.
+    source: https://land.copernicus.eu/en/production-updates/version-2-0-of-lai-fapar-and-fcover-300-m-in-nrt-operations
+  - date: "2025-05-21"
+    level: warning
+    title: Global CLMS data moved to CDSE — former Global Land access routes change
+    body: >-
+      The global datasets of the former Global Land component have been migrated to the Copernicus Data Space Ecosystem (CDSE), which is now the central access point.
+      On its former Global Land page CLMS said the alternative access modes for global data would be fully migrated to CDSE as of 1 September 2025, so update scripts that used the VITO routes (OpenSearch, manifests).
+    source: https://land.copernicus.eu/en/news/global-data-now-available-on-the-copernicus-data-space-ecosystem
+  - date: "2025-03-31"
+    level: info
+    title: 300 m V1.1 file version rolled back from 1.1.2 to 1.1.1 (from the first dekad of April 2025)
+    body: >-
+      To align with dissemination through CDSE, the V1.1 run number was reset to 1, so files from the first dekad of April 2025 (released on 12 April) are labelled V1.1.1 instead of V1.1.2.
+      The algorithm and processing chain are unchanged and the two labels are fully compatible.
+    source: https://land.copernicus.eu/en/production-updates/lai-fapar-fcover-300-m-version-1-1-roll-back-product-version-number
+
+links:
+  - name: CLMS product page — LAI 300 m V2.0
+    url: https://land.copernicus.eu/en/products/vegetation/leaf-area-index-v2-0-300m
+  - name: CLMS product page — FAPAR 300 m V2.0
+    url: https://land.copernicus.eu/en/products/vegetation/fraction-of-absorbed-photosynthetically-active-radiation-v2-0-300m
+  - name: CLMS product page — FCover 300 m V2.0
+    url: https://land.copernicus.eu/en/products/vegetation/fraction-of-green-vegetation-cover-v2-0-300m
+  - name: CLMS product page — LAI 300 m V1 (2014–2026, superseded)
+    url: https://land.copernicus.eu/en/products/vegetation/leaf-area-index-300m-v1.0
+  - name: 300 m V2.0 Product User Manual (PUM)
+    url: https://land.copernicus.eu/en/technical-library/product-user-manual-fraction-of-green-vegetation-cover-300m-version-2/@@download/file
+  - name: 300 m V2.0 Validation Report
+    url: https://land.copernicus.eu/en/technical-library/validation-report-fraction-of-green-vegetation-cover-300m-version-2/@@download/file
+  - name: CDSE documentation — accessing CLMS data (OData, S3, STAC)
+    url: https://documentation.dataspace.copernicus.eu/Data/CopernicusServices/CLMS.html
+  - name: CLMS data policy (citation wording)
+    url: https://land.copernicus.eu/en/data-policy
+  - name: Old Global Land page address mapping
+    url: https://land.copernicus.eu/global/
+
+watch_urls:
+  - https://land.copernicus.eu/en/production-updates
+  - https://land.copernicus.eu/en/products/vegetation/leaf-area-index-v2-0-300m
+
+last_verified: "2026-10-13"

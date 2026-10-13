@@ -1,0 +1,407 @@
+# ─────────────────────────────────────────────────────────────
+# MODIS Snow Cover (MOD10, MYD10) C6.1 — dataset information file (English edition)
+# Land tab (snow). Deprecated as Terra and Aqua near their end; linked to the VIIRS successor (viirs-snow.yaml).
+# After editing, update last_verified to the date you checked the official pages.
+# ─────────────────────────────────────────────────────────────
+id: modis-snow
+name: "MODIS Snow (MOD10)"
+full_name: MODIS/Terra and Aqua Snow Cover (MOD10, MYD10) Version 61 — NDSI-based snow cover, daily, 8-day and monthly, on 500 m tiles and the 0.05° Climate Modeling Grid, including cloud-gap-filled daily maps
+category: satellite
+domain: land
+group: 적설
+order: 10
+domains: [육지, 수문, 원격탐사]
+provider: NASA GSFC MODIS Snow Team (Hall and Riggs) / NASA NSIDC DAAC
+
+status: deprecated
+status_note: >-
+  Version 61 (Collection 6.1) is current and is still updated daily for both Terra (MOD10) and Aqua (MYD10); on 2026-10-13 the latest MOD10A1 and MYD10A1 files were for 11 October 2026.
+  Both satellites are out of fuel and drifting, however, and NASA has said MODIS collection will stop when they shut down in late 2026 or early 2027, recommending a move to VIIRS snow cover (VNP10, VJ110).
+  Operations have already outlasted the originally planned end dates (Terra December 2025, Aqua August 2026), but no official end date has been announced.
+
+period:
+  start: "2000-02"
+  end: present
+  note: >-
+    Terra starts on 2000-02-24 (MOD10A1, A1F, C1), 2000-02-18 for the 8-day products (MOD10A2, C2) and 2000-03 for the monthly product (MOD10CM); all Aqua (MYD10) products start on 2002-07-04.
+    On 2026-10-13 daily data from both satellites ran through 2026-10-11.
+
+resolution:
+  spatial_short: "0.5 km (0.005°)"
+  temporal_short: "1일"
+  spatial: >-
+    MODIS Sinusoidal tile grid, 500 m (MOD10A1, A1F, A2; each 10°×10° tile is 2400×2400 pixels) / 0.05° Climate Modeling Grid (CMG; MOD10C1, C2, CM; 3600×7200) /
+    500 m swath (MOD10_L2, 5-minute granules)
+  vertical: Land surface (single level)
+  temporal: Daily (A1, A1F, C1) / 8-day (A2, C2; periods restart on 1 January each year) / monthly (CM)
+
+update: Daily (a few days' latency, longer around spacecraft manoeuvres) / 8-day and monthly products after each period closes
+license: NASA Earth science open data — free and unrestricted. Downloads require a free NASA Earthdata Login
+account_required: true
+
+summary: >-
+  Global snow cover from Terra (MOD10) and Aqua (MYD10) MODIS, produced by the NASA MODIS snow team using the Normalized Difference Snow Index (NDSI) and a series of data screens.
+  The daily 500 m tile product (MOD10A1) gives an NDSI snow cover value from 0 to 100 for each pixel; alongside it come a cloud-gap-filled daily product that fills cloudy pixels
+  with the most recent clear view (MOD10A1F), 8-day maximum snow extent (MOD10A2), and daily, 8-day and monthly snow cover percentages on the 0.05° grid (MOD10C1, C2, CM).
+  The record starts in 2000 and is widely used for snow climatology, melt timing and hydrological model evaluation; the VIIRS snow products continue it.
+
+time_convention:
+  summary: >-
+    Daily data (MOD10A1) hold the single "best" observation of the day for each pixel — the one nearest local solar noon, nearest the orbit nadir track and covering the most of the cell — so they are instantaneous values.
+    Terra is a morning satellite and Aqua an afternoon one, so the two products observe at different times on the same day. The 8-day product is a maximum extent ("snow on any day means snow"); the monthly product is a mean of the daily values.
+  points:
+    - "Which swath (and therefore observation time) each pixel came from can be traced with `granule_pnt`, `orbit_pnt` and the file metadata. Other observations of the day are discarded, so observation time varies from pixel to pixel within one date."
+    - "Terra originally crossed the equator at 10:30 and Aqua at 13:30, but after their fuel ran out they drifted: Terra was projected to reach about 09:00 around December 2025 and Aqua about 15:50 around August 2026. Lower sun angles mean more shadow and low-illumination effects."
+    - "MOD10A1F (cloud-gap-filled) puts the most recent clear-sky value into today's cloudy pixels. Where `Cloud_Persistence` is 1 or more, the value is from that many days earlier, not from today (0 = clear today)."
+    - "MOD10A2 (8-day) marks a pixel as snow if snow was seen on any day of the period, and as cloud only if all eight days were cloudy. The 8-day periods restart on 1 January, so the last period of a year can be shorter."
+    - "In MOD10C1 (daily CMG) the snow percentage is the share of snow among all land observations in the cell, with cloud percentage given separately. Antarctica is deliberately set to 100% snow, so the product cannot be used for Antarctic snow cover."
+    - "MOD10CM (monthly) is the monthly mean snow cover extent derived from the daily MOD10C1."
+  source: https://nsidc.org/sites/default/files/c61_modis_snow_user_guide.pdf
+  source_name: "MODIS Snow Products Collection 6.1 User Guide (Riggs, Hall and Román, 2019) + NSIDC data set pages"
+
+variables:
+  note: >-
+    Layer names from the MODIS Snow Products C6.1 User Guide (NSIDC). Files are HDF-EOS2 (HDF4).
+    `NDSI_Snow_Cover` values 0–100 are NDSI × 100 (not fractional snow cover); 200 missing, 201 no decision, 211 night, 237 inland water, 239 ocean, 250 cloud, 254 detector saturated, 255 fill.
+  full_list: https://nsidc.org/sites/default/files/c61_modis_snow_user_guide.pdf
+  groups:
+    - name: Daily snow cover, 500 m (MOD10A1 / MYD10A1)
+      kind: instant
+      period: one selected observation per day
+      items:
+        - text: "NDSI snow cover — `NDSI_Snow_Cover` (0–100, dimensionless)"
+          note: Value from the best observation of the day. Fractional snow cover (FSC) has not been provided since C6
+        - "Raw NDSI — `NDSI` (scale_factor 0.0001)"
+        - "Basic quality — `NDSI_Snow_Cover_Basic_QA` (0 best, 1 good, 2 ok)"
+        - "Algorithm screen bits — `NDSI_Snow_Cover_Algorithm_Flags_QA` (bits 0–7: inland water, low visible / low NDSI / temperature-height / high SWIR screens, probably cloudy/clear, solar zenith above 70°)"
+        - text: "Snow albedo — `Snow_Albedo_Daily_Tile` (0–100, %)"
+          note: Computed for snow pixels only. Within about 10% of field measurements under ideal conditions, but errors can be very large in steep terrain. To be dropped in Collection 7
+        - "Observation source pointers — `orbit_pnt`, `granule_pnt`"
+    - name: Cloud-gap-filled daily snow cover, 500 m (MOD10A1F / MYD10A1F)
+      kind: instant
+      period: most recent clear-sky observation
+      items:
+        - text: "Cloud-gap-filled NDSI snow cover — `CGF_NDSI_Snow_Cover` (0–100)"
+          note: Cloudy pixels are filled with the previous clear value. A nearly cloud-free map usually needs five to seven days
+        - text: "Consecutive cloudy days — `Cloud_Persistence` (days)"
+          kind: accum
+          note: 0 = clear today; n = cloudy for n consecutive days (the value is n days old)
+        - "Copy of the same-day MOD10A1 value — `MOD10A1_NDSI_Snow_Cover` (Aqua: `MYD10A1_NDSI_Snow_Cover`)"
+        - "Quality — `Basic_QA`, `Algorithm_Flags_QA`"
+    - name: 8-day snow cover, 500 m (MOD10A2 / MYD10A2)
+      kind: max
+      period: 8 days
+      items:
+        - text: "8-day maximum snow extent — `Maximum_Snow_Extent` (classes: 25 no snow, 37 lake, 39 ocean, 50 cloud, 100 lake ice, 200 snow, etc.)"
+          note: Snow if snow was seen on any day of the period
+        - text: "Day-by-day snow occurrence bits — `Eight_Day_Snow_Cover`"
+          kind: instant
+          note: Bit 0 = first day of the period. Shows which days snow was seen
+    - name: 0.05° CMG snow cover percentage (MOD10C1 daily / MOD10C2 8-day / MOD10CM monthly)
+      items:
+        - text: "Daily snow cover — `Day_CMG_Snow_Cover` (%)"
+          kind: instant
+          period: one selected observation per day
+          note: MOD10C1. Share of land observations in the cell that are snow
+        - text: "Daily cloud cover — `Day_CMG_Cloud_Obscured` (%); clear index — `Day_CMG_Clear_Index` (%)"
+          kind: instant
+          period: one selected observation per day
+        - text: "8-day snow cover — `Eight_Day_CMG_Snow_Cover` (%)"
+          kind: max
+          period: 8 days
+          note: MOD10C2. Maximum snow cover percentage over eight days (from MOD10A2)
+        - text: "8-day cloud cover — `Eight_Day_CMG_Cloud_Obscured` (%); clear index — `Eight_Day_CMG_Clear_Index` (%)"
+          kind: max
+          period: 8 days
+          note: Persistent cloud over the whole eight days
+        - text: "Monthly snow cover — `Snow_Cover_Monthly_CMG` (%)"
+          kind: mean
+          period: Monthly
+          note: Monthly mean snow cover extent from daily MOD10C1
+        - text: "Per-cell quality — `Snow_Spatial_QA`"
+          kind: instant
+
+access:
+  - name: NSIDC DAAC data set page (MOD10A1 V61)
+    url: https://nsidc.org/data/mod10a1/versions/61
+    method: NSIDC Data Access Tool (date/area selection, Python script) / HTTPS / documentation
+    note: Terra products are MOD10*, Aqua products MYD10*. The list of all 22 MODIS V61 data sets is at https://nsidc.org/data/modis/data.
+  - name: NASA Earthdata Search and earthaccess (Earthdata Cloud)
+    url: https://search.earthdata.nasa.gov/search/granules?p=C2565093311-NSIDC_CPRD
+    method: Web search and download / earthaccess / AWS S3 (in us-west-2 only)
+    note: >-
+      Since 19 August 2025 the legacy NSIDC archive (n5eil01u.ecs.nsidc.org) is closed and Earthdata Cloud is the primary archive.
+      In CMR the short name is MOD10A1 with version 61 (no leading zero, unlike MCD43's "061").
+  - name: NASA AppEEARS
+    url: https://appeears.earthdatacloud.nasa.gov/
+    method: Point and area extraction with reprojection
+  - name: NASA Worldview
+    url: https://worldview.earthdata.nasa.gov/
+    method: Web map visualization
+    note: Handy for checking daily snow and cloud patterns before downloading.
+
+example:
+  lang: python
+  note: >-
+    Downloads Terra cloud-gap-filled daily snow cover (MOD10A1F) over the Korean Peninsula for January 2024 with earthaccess and reads it. The files are HDF4, so pyhdf is used (pip install earthaccess pyhdf numpy).
+  code: |
+    import earthaccess
+    import numpy as np
+    from pyhdf.SD import SD, SDC
+
+    earthaccess.login()  # free NASA Earthdata account
+    results = earthaccess.search_data(
+        short_name="MOD10A1F", version="61",
+        temporal=("2024-01-15", "2024-01-15"),
+        bounding_box=(124, 33, 132, 39),   # (west, south, east, north)
+    )
+    files = earthaccess.download(results, "mod10a1f")
+
+    for f in files:
+        sd = SD(f, SDC.READ)
+        ndsi = sd.select("CGF_NDSI_Snow_Cover")[:].astype("float32")
+        cp = sd.select("Cloud_Persistence")[:]
+        ndsi[ndsi > 100] = np.nan          # 200+ are codes for missing, night, water, cloud, etc.
+        snow = ndsi > 0                     # example: treat NDSI snow cover 1-100 as snow (tune the threshold for your study)
+        fresh = cp == 0                     # pixels clear today, i.e. observed today
+        print(f, np.nanmean(snow), fresh.mean())
+
+tips:
+  - "`NDSI_Snow_Cover` values 0–100 are NDSI (× 100), not fractional snow cover. Since Collection 6 neither FSC nor a binary snow map is provided, so choose an NDSI threshold suited to your region and purpose and report it in your paper."
+  - "Values of 200 and above (200 missing, 201 no decision, 211 night, 237 inland water, 239 ocean, 250 cloud, 254 saturated, 255 fill) must be removed first or averages will be badly wrong."
+  - "About 75% of the Aqua MODIS band 6 (1.6 µm) detectors do not work. Collections 6 and 6.1 restore band 6 with Quantitative Image Restoration (QIR) and run the same algorithm as Terra, whereas Collection 5 Aqua data used band 7 and differ from Terra. Do not mix in old Aqua data."
+  - "Cloud-gap-filled values (MOD10A1F) can be `Cloud_Persistence` days old. During fast-changing periods such as melt, exclude pixels with long cloud persistence."
+  - "Known issues include cloud/snow confusion (cloud edges, thin snow flagged as cloud), Antarctica (frequent errors; not recommended), false lake ice in turbid lakes, and false snow on bright surfaces such as salt flats. Day-to-day geolocation wobble can blur lake and coastline edges."
+  - "Orbit drift has changed Terra and Aqua crossing times, increasing low-sun observations. This can affect high-latitude winter and early-spring data and trends from the 2020s onward."
+  - "Since 7 July 2023 Lights-Out-Operations have made non-recoverable gaps more frequent. Missing tiles are treated like cloud in the gap-filled product, so earlier values carry forward."
+  - "The MODIS snow team has published a Collection 7 User Guide (February 2025). C7 keeps the algorithm but uses HDF-EOS5 and drops the 8-day (A2, C2) and monthly (CM) products and the snow albedo layer. On 2026-10-13 NSIDC still offered only V61."
+
+citations:
+  dataset:
+    - label: MOD10A1 V61 (Terra daily, 500 m)
+      text: >-
+        Hall, D. K. & Riggs, G. A. (2021). MODIS/Terra Snow Cover Daily L3 Global 500m SIN Grid, Version 61 [Data Set].
+        Boulder, Colorado USA. NASA National Snow and Ice Data Center Distributed Active Archive Center. https://doi.org/10.5067/MODIS/MOD10A1.061. Date Accessed MM-DD-YYYY.
+      doi: 10.5067/MODIS/MOD10A1.061
+      bibtex: |
+        @misc{mod10a1_v61,
+          author    = {Hall, Dorothy K. and Riggs, George A.},
+          title     = {{MODIS/Terra Snow Cover Daily L3 Global 500m SIN Grid, Version 61}},
+          year      = {2021},
+          publisher = {NASA National Snow and Ice Data Center Distributed Active Archive Center},
+          address   = {Boulder, Colorado USA},
+          doi       = {10.5067/MODIS/MOD10A1.061}
+        }
+    - label: MYD10A1 V61 (Aqua daily, 500 m)
+      text: >-
+        Hall, D. K. & Riggs, G. A. (2021). MODIS/Aqua Snow Cover Daily L3 Global 500m SIN Grid, Version 61 [Data Set].
+        Boulder, Colorado USA. NASA National Snow and Ice Data Center Distributed Active Archive Center. https://doi.org/10.5067/MODIS/MYD10A1.061. Date Accessed MM-DD-YYYY.
+      doi: 10.5067/MODIS/MYD10A1.061
+      bibtex: |
+        @misc{myd10a1_v61,
+          author    = {Hall, Dorothy K. and Riggs, George A.},
+          title     = {{MODIS/Aqua Snow Cover Daily L3 Global 500m SIN Grid, Version 61}},
+          year      = {2021},
+          publisher = {NASA National Snow and Ice Data Center Distributed Active Archive Center},
+          address   = {Boulder, Colorado USA},
+          doi       = {10.5067/MODIS/MYD10A1.061}
+        }
+    - label: MOD10A1F V61 (Terra cloud-gap-filled daily, 500 m)
+      text: >-
+        Hall, D. K. & Riggs, G. A. (2020). MODIS/Terra CGF Snow Cover Daily L3 Global 500m SIN Grid, Version 61 [Data Set].
+        Boulder, Colorado USA. NASA National Snow and Ice Data Center Distributed Active Archive Center. https://doi.org/10.5067/MODIS/MOD10A1F.061. Date Accessed MM-DD-YYYY.
+      doi: 10.5067/MODIS/MOD10A1F.061
+      bibtex: |
+        @misc{mod10a1f_v61,
+          author    = {Hall, Dorothy K. and Riggs, George A.},
+          title     = {{MODIS/Terra CGF Snow Cover Daily L3 Global 500m SIN Grid, Version 61}},
+          year      = {2020},
+          publisher = {NASA National Snow and Ice Data Center Distributed Active Archive Center},
+          address   = {Boulder, Colorado USA},
+          doi       = {10.5067/MODIS/MOD10A1F.061}
+        }
+    - label: MOD10CM V61 (Terra monthly, 0.05°)
+      text: >-
+        Hall, D. K. & Riggs, G. A. (2021). MODIS/Terra Snow Cover Monthly L3 Global 0.05Deg CMG, Version 61 [Data Set].
+        Boulder, Colorado USA. NASA National Snow and Ice Data Center Distributed Active Archive Center. https://doi.org/10.5067/MODIS/MOD10CM.061. Date Accessed MM-DD-YYYY.
+      doi: 10.5067/MODIS/MOD10CM.061
+      bibtex: |
+        @misc{mod10cm_v61,
+          author    = {Hall, Dorothy K. and Riggs, George A.},
+          title     = {{MODIS/Terra Snow Cover Monthly L3 Global 0.05Deg CMG, Version 61}},
+          year      = {2021},
+          publisher = {NASA National Snow and Ice Data Center Distributed Active Archive Center},
+          address   = {Boulder, Colorado USA},
+          doi       = {10.5067/MODIS/MOD10CM.061}
+        }
+  papers:
+    - label: Overview of the MODIS and VIIRS snow records
+      text: >-
+        Riggs, G. A., Hall, D. K., Román, M. O. (2017): Overview of NASA's MODIS and Visible Infrared Imaging Radiometer Suite (VIIRS)
+        snow-cover Earth System Data Records. Earth System Science Data, 9(2), 765–777.
+      doi: 10.5194/essd-9-765-2017
+      bibtex: |
+        @article{riggs2017snow,
+          author  = {Riggs, George A. and Hall, Dorothy K. and Rom{\'a}n, Miguel O.},
+          title   = {Overview of {NASA}'s {MODIS} and {Visible Infrared Imaging Radiometer Suite} ({VIIRS}) snow-cover {Earth System Data Records}},
+          journal = {Earth System Science Data},
+          volume  = {9},
+          number  = {2},
+          pages   = {765--777},
+          year    = {2017},
+          doi     = {10.5194/essd-9-765-2017}
+        }
+    - label: Evaluation of MODIS and VIIRS cloud-gap-filled snow products
+      text: >-
+        Hall, D. K., Riggs, G. A., DiGirolamo, N. E., Román, M. O. (2019): Evaluation of MODIS and VIIRS cloud-gap-filled snow-cover products
+        for production of an Earth science data record. Hydrology and Earth System Sciences, 23, 5227–5241.
+      doi: 10.5194/hess-23-5227-2019
+      bibtex: |
+        @article{hall2019cgf,
+          author  = {Hall, Dorothy K. and Riggs, George A. and DiGirolamo, Nicolo E. and Rom{\'a}n, Miguel O.},
+          title   = {Evaluation of {MODIS} and {VIIRS} cloud-gap-filled snow-cover products for production of an {Earth} science data record},
+          journal = {Hydrology and Earth System Sciences},
+          volume  = {23},
+          pages   = {5227--5241},
+          year    = {2019},
+          doi     = {10.5194/hess-23-5227-2019}
+        }
+  acknowledgement: >-
+    NSIDC asks users to use the citation on each data set page (authors, year, title, version, DOI, access date and a description of any subset used). Cite the DOI of each satellite (MOD/MYD) and product (A1, A1F, A2, C1, C2, CM) you used.
+    DOIs follow the pattern 10.5067/MODIS/<short name>.061 (e.g. MYD10A1F 10.5067/MODIS/MYD10A1F.061, MOD10C1 10.5067/MODIS/MOD10C1.061).
+
+transitions:
+  - from: MODIS Snow Cover C6.1 (MOD10, MYD10)
+    to: VIIRS Snow Cover C2 (VNP10, VJ110)
+    to_id: viirs-snow
+    status: planned
+    date: "2026"
+    summary: >-
+      The VIIRS snow products were developed alongside the MODIS Collection 6 algorithm and use an almost identical approach (NDSI plus data screens), designed to continue the MODIS record.
+      Resolution (500 m → 375 m), cloud mask, observing time and the set of products differ, so the records should not simply be joined.
+    changes:
+      - aspect: Platform and observing time
+        before: "Terra (morning, from 2000-02) and Aqua (afternoon, from 2002-07) as separate products"
+        after: "Suomi NPP (VNP10, from 2012-01; delivery ends 2026-11-02), NOAA-20 (VJ110, from 2018-01), NOAA-21 (VJ210, from 2023-02), all in afternoon orbits. No follow-on for Terra's morning observations"
+      - aspect: Resolution
+        before: "500 m Sinusoidal tiles (2400×2400) / 0.05° CMG"
+        after: "375 m Sinusoidal tiles (3000×3000) / 0.05° CMG / 375 m global lat-lon cloud-gap-filled (D1F)"
+      - aspect: NDSI bands
+        before: "MODIS visible band and band 6 (1.6 µm; QIR-restored for Aqua)"
+        after: "VIIRS I1 (0.64 µm) and I3 (1.61 µm)"
+      - aspect: Cloud mask
+        before: "MOD35/MYD35"
+        after: "VNP35 and equivalents (750 m cloud confidence applied to the four corresponding 375 m pixels)"
+      - aspect: Products
+        before: "Daily (A1), gap-filled daily (A1F), 8-day (A2, C2), daily CMG (C1), monthly CMG (CM), snow albedo layer"
+        after: "Daily (A1), gap-filled daily (A1F), daily CMG (C1) and 375 m gap-filled CMG (D1F) only — no 8-day or monthly products and no snow albedo"
+      - aspect: Variables and codes
+        before: "`NDSI_Snow_Cover_Basic_QA`, `NDSI_Snow_Cover_Algorithm_Flags_QA`, NDSI scale 0.0001, 200 missing, 254 saturated"
+        after: "`Basic_QA`, `Algorithm_bit_flags_QA`, NDSI scale 0.001, adds 251 missing L1B, 252 failed calibration, 253 bowtie trim"
+      - aspect: File format
+        before: "HDF-EOS2 (HDF4)"
+        after: "HDF-EOS5 (HDF5, CF-1.6)"
+    impacts:
+      - "Hall et al. (2024) found that VIIRS (VNP10A1F) maps slightly more snow than MODIS (MOD10A1F) in the US Great Basin (a less conservative cloud mask and different overpass times). The mean daily difference in snow-covered area in water year 2023 was 0.69%, while VIIRS snow seasons in the Great Salt Lake Basin were about two days longer."
+      - "Analyses that used the MODIS 8-day or monthly products must composite VIIRS daily data themselves. Match the compositing rule (maximum extent, mean) to MODIS."
+      - "Terra (morning) and VIIRS (afternoon) observe at different times, so diurnal melt and morning cloud differences show up in the values. Before joining, compare Aqua with VIIRS over their overlap (2012 onward)."
+      - "Delivery of Suomi NPP data (VNP10) ends on 2 November 2026; from then on use VJ110 (NOAA-20) and VJ210 (NOAA-21)."
+    sources:
+      - name: Riggs, Hall, Román (2017) — overview of the MODIS and VIIRS snow ESDRs
+        url: https://doi.org/10.5194/essd-9-765-2017
+      - name: Hall, Riggs, DiGirolamo (2024) — comparison of MODIS and VIIRS snow products (Great Basin)
+        url: https://doi.org/10.3390/rs16163029
+      - name: Román et al. (2024) — continuity between MODIS C6.1 and VIIRS C2 land products
+        url: https://doi.org/10.1016/j.rse.2023.113963
+      - name: NASA Earthdata — Transition from MODIS to VIIRS (2025-05-02)
+        url: https://www.earthdata.nasa.gov/data/alerts-outages/transition-from-modis-viirs
+  - from: MODIS Snow Cover Collection 6.1 (V61)
+    to: MODIS Snow Cover Collection 7
+    status: planned
+    summary: >-
+      The MODIS snow team has published the Collection 7 User Guide (February 2025, Version 1.0) for the final reprocessing. The snow algorithm is the same as C6.1, with only improved Level 1B calibration;
+      as of 2026-10-13 no C7 data were available at NSIDC or in CMR.
+    changes:
+      - aspect: File format
+        before: "HDF-EOS2 (HDF4)"
+        after: "HDF-EOS5 (HDF5-based)"
+      - aspect: Products
+        before: "L2, A1, A1F, A2 (8-day), C1, C2 (8-day CMG), CM (monthly CMG)"
+        after: "L2, A1, A1F, C1 — 8-day (A2, C2) and monthly (CM) products discontinued"
+      - aspect: Snow albedo
+        before: "`Snow_Albedo_Daily_Tile` in MOD10A1"
+        after: "Removed"
+      - aspect: Algorithm
+        before: "C6.1 snow algorithm"
+        after: "Unchanged (only improved L1B calibration inputs; Aqua band 6 still restored with QIR)"
+    impacts:
+      - When C7 appears the whole record will change, so do not mix it with C6.1.
+      - "Code using the 8-day or monthly products or snow albedo will need an alternative in C7 (for example compositing the daily data yourself)."
+    sources:
+      - name: MODIS Snow Products Collection 7 User Guide (Riggs and Hall, 2025-02)
+        url: https://nsidc.org/sites/default/files/documents/technical-reference/modis_c7_snow_userguide.pdf
+      - name: MODIS Land News (Collection 7 plans)
+        url: https://modis-land.gsfc.nasa.gov/news.html
+
+notices:
+  - date: "2026-03-26"
+    level: warning
+    title: Terra MODIS placed in standby — data for 26–27 March 2026 flagged as bad
+    body: >-
+      After a spacecraft anomaly at about 20:00 UTC on 26 March, Terra MODIS went into standby mode and returned to science mode on 27 March.
+      The calibration team flagged data from day 2026-085 20:00 UTC to day 2026-086 19:23 UTC as questionable or bad; it is safest not to use MOD10 values for those dates.
+    source: https://www.earthdata.nasa.gov/data/alerts-outages/terra-modis-placed-standby-mode
+  - date: "2025-08-19"
+    level: warning
+    title: NSIDC DAAC retires the legacy MODIS archive — move to Earthdata Cloud
+    body: >-
+      In a 22 May 2025 notice NSIDC announced that access to MODIS C6.1 and related data in the legacy on-premises archive (n5eil01u.ecs.nsidc.org HTTPS and Earthdata Search "Stage for Delivery" orders)
+      would end on 19 August. NASA Earthdata Cloud is now the primary archive, so download scripts need new URLs.
+    source: https://nsidc.org/data/user-resources/data-announcements/user-notice-retirement-legacy-data-archive-modis-collection-61-and-modis-related-data-sets
+  - date: "2025-05-02"
+    level: warning
+    title: Move from MODIS to VIIRS — Terra and Aqua expected to shut down in late 2026 or early 2027
+    body: >-
+      NASA said MODIS collection will stop once Terra and Aqua begin shutting down in late 2026 or early 2027, with a final reprocessing beforehand.
+      It noted that orbit drift affects crossing times and may affect the data, and encouraged users to switch to similar VIIRS products.
+    source: https://www.earthdata.nasa.gov/data/alerts-outages/transition-from-modis-viirs
+  - date: "2025-03-18"
+    level: info
+    title: 22 MODIS V6.1 snow and sea ice data sets available from Earthdata Cloud
+    body: >-
+      NSIDC added 22 MODIS V6.1 data sets to NASA Earthdata Cloud (AWS). The new HTTPS location is under the "HTTPS File System" link on each data set page,
+      and the 4 March 2025 notice asked users to update scripts because the legacy URLs would soon be removed.
+    source: https://nsidc.org/data/user-resources/data-announcements/data-set-updates-new-nasa-earthdata-cloud-access-option-modis-version-61-collections-available-18
+  - date: "2023-07-07"
+    level: info
+    title: Terra and Aqua MODIS switch to Lights-Out-Operations — more data loss possible
+    body: >-
+      With no night-shift operator and no more solid-state recorder replays, all MODIS V6.1 data from this date may see more frequent non-recoverable gaps.
+      The NSIDC MODIS data pages carry the same notice.
+    source: https://www.earthdata.nasa.gov/data/alerts-outages/modis-light-out-operations-potential-data-loss
+  - date: "2021-10-28"
+    level: warning
+    title: Changes in Terra and Aqua orbits affect MODIS snow and sea ice products
+    body: >-
+      Terra has drifted since its last orbit maintenance in February 2020 and Aqua since March 2021. Terra's crossing time was projected to move earlier to about 09:00 by December 2025
+      and Aqua's later to about 15:50 by August 2026. Lower sun elevation brings more shadow, and the lower altitude reduces coverage and breaks the 16-day repeat.
+    source: https://nsidc.org/data/user-resources/data-announcements/ongoing-changes-terra-and-aqua-orbits-impacting-modis-snow-and-sea-ice-products
+
+links:
+  - name: MODIS Snow Products Collection 6.1 User Guide (PDF)
+    url: https://nsidc.org/sites/default/files/c61_modis_snow_user_guide.pdf
+  - name: MODIS Snow Products Collection 7 User Guide (PDF, 2025-02)
+    url: https://nsidc.org/sites/default/files/documents/technical-reference/modis_c7_snow_userguide.pdf
+  - name: NSIDC MODIS data set list (22 V61 data sets)
+    url: https://nsidc.org/data/modis/data
+  - name: MODIS Snow & Sea Ice Global Mapping Project (NASA GSFC)
+    url: https://modis-snow-ice.gsfc.nasa.gov/
+  - name: NSIDC Earthdata Cloud data access guide
+    url: https://nsidc.org/data/user-resources/help-center/nasa-earthdata-cloud-data-access-guide
+
+watch_urls:
+  - https://nsidc.org/data/user-resources/data-announcements
+  - https://modis-land.gsfc.nasa.gov/news.html
+  - https://www.earthdata.nasa.gov/data/alerts-outages
+
+last_verified: "2026-10-13"

@@ -1,6 +1,6 @@
 # ─────────────────────────────────────────────────────────────
 # ERA5-Land — dataset information file
-# Listed under the Atmosphere tab, 'Land reanalysis'. Shares the CDS and licence notices with ERA5 (era5.yaml).
+# Listed under the Atmosphere tab, 'Land reanalyses', and the Land tab, 'Land reanalyses & data assimilation'. Shares the CDS and licence notices with ERA5 (era5.yaml).
 # After editing, update last_verified to the date you checked the official pages.
 # ─────────────────────────────────────────────────────────────
 id: era5-land
@@ -10,6 +10,9 @@ category: reanalysis
 domain: atmosphere
 group: 육상 재분석
 order: 10
+also_in:
+  - domain: land
+    group: 육상 재분석·자료동화
 domains: [육지, 대기]
 provider: ECMWF / Copernicus Climate Change Service (C3S)
 

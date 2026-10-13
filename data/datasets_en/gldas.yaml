@@ -1,0 +1,415 @@
+# ─────────────────────────────────────────────────────────────
+# GLDAS — dataset information file
+# Listed under the Land tab, 'Land reanalyses & data assimilation'. Covers the GLDAS-2 family (2.0, 2.1, 2.2) and the Noah, CLSM and VIC products on one page.
+# After editing, update last_verified to the date you checked the official pages.
+# ─────────────────────────────────────────────────────────────
+id: gldas
+name: "GLDAS-2"
+full_name: Global Land Data Assimilation System Version 2 (GLDAS-2.0, 2.1 and 2.2 — NASA global land surface model output from Noah, CLSM and VIC)
+category: reanalysis
+domain: land
+group: 육상 재분석·자료동화
+order: 20
+domains: [육지, 수문]
+provider: NASA GSFC Hydrological Sciences Laboratory (HSL) / GES DISC
+
+status: active
+status_note: >-
+  The main stream, GLDAS-2.1 (2000 onward), and the GRACE-assimilating GLDAS-2.2 (February 2003 onward) are still being extended. On 2026-10-13 the main products
+  reached 30 June 2026 and the Early Products reached 16 September 2026. GLDAS-2.0 (1948–2014) is a closed record.
+  From 9 June 2025 the GLDAS-2.1 radiation forcing switched from WWMCA-based AGRMET to GALWEM, and the GES DISC on-premises server that hosts the files (hydro1) may close at any time after 30 September 2026.
+
+period:
+  start: "1948-01"
+  end: present
+  note: >-
+    GLDAS-2.0 covers 1948-01-01 03Z to 2014-12-31 21Z (Princeton forcing); GLDAS-2.1 runs from 2000-01-01 to the present; GLDAS-2.2 from 2003-02-01 to the present.
+    On 2026-10-13 the GLDAS-2.1 and 2.2 main products extended to 2026-06-30 and the Early Products (_EP) to 2026-09-16.
+    Early Products are a rolling archive of roughly the last 2–3 months and are deleted once the main products appear.
+
+resolution:
+  spatial_short: "28 km (0.25°)"
+  temporal_short: "3시간"
+  spatial: >-
+    Global land on a latitude-longitude grid (60°S–90°N, 180°W–180°E; Antarctica excluded). The 0.25° × 0.25° grid is 1440 × 600 (first cell centre 179.875°W, 59.875°S)
+    and carries Noah (2.0, 2.1) and the CLSM daily products (2.0, 2.2); the 1.0° × 1.0° grid is 360 × 150 (first cell centre 179.5°W, 59.5°S) and carries Noah, CLSM and VIC (2.0, 2.1).
+  vertical: >-
+    Single surface level plus soil. Noah has 4 soil layers (0–10, 10–40, 40–100, 100–200 cm). CLSM has nested surface (0–2 cm), root-zone (0–100 cm) and total-profile
+    (depth varies by grid cell) reservoirs instead of layers, plus 6 soil temperature layers (0–10, 10–29, 29–68, 68–144, 144–295, 295–1295 cm). VIC has 3 soil layers (top layer 0–30 cm).
+  temporal: "3-hourly (2.0, 2.1 Noah, CLSM, VIC) / daily (CLSM 0.25°: 2.0 and 2.2 GRACE-DA1) / monthly (2.0, 2.1 Noah, CLSM, VIC; straight averages of the 3-hourly data)"
+
+update: "GLDAS-2.1 main products about 3–4 months behind (waiting for GPCP precipitation), Early Products about 1.5 months / GLDAS-2.2 main product about 2–6 months (waiting for GRACE), Early Product about 1.5 months (per the README)"
+license: NASA Earth science open data — free of charge. Downloading from GES DISC requires a free NASA Earthdata Login; please cite the product DOI
+account_required: true
+
+summary: >-
+  GLDAS is NASA GSFC's global land product: land surface models are driven by observation-based precipitation and radiation plus atmospheric analyses to produce soil moisture,
+  snow, evapotranspiration, runoff and surface energy fluxes over all land. The current generation, GLDAS-2, has three streams: 2.0, a consistent 1948–2014 rerun forced by the Princeton dataset;
+  2.1, a near-real-time record from 2000 forced by GDAS, GPCP and AGRMET; and 2.2, a daily Catchment-model product forced by ECMWF analyses with GRACE/GRACE-FO terrestrial water storage assimilated.
+  2.0 and 2.1 are open-loop simulations with no data assimilation, and provide Noah 3.6, CLSM-F2.5 and VIC 4.1.2 output on 0.25° and 1° grids.
+
+time_convention:
+  summary: >-
+    The suffix of each variable name tells you its time meaning. In 3-hourly files `_inst` is the instantaneous value at the file time, `_tavg` is the average over the
+    3 hours ending at the file time, and `_acc` is the accumulation over those 3 hours (file attributes: 'past 3-hour average/accumulation'). Monthly files are straight averages
+    of the 3-hourly values, so `_acc` variables stay 'per 3 hours'; in the daily (CLSM 0.25°) files every variable is a 24-hour average (`_tavg`).
+  points:
+    - "The 3-hourly time stamp marks the end of the interval. In GLDAS_NOAH025_3H.A20000101.0300.021.nc4, `Qle_tavg` is the 00–03 UTC mean, `Qs_acc` the 00–03 UTC total and `SoilMoi0_10cm_inst` the 03 UTC value. This is why the GLDAS-2.0 record starts at 1948-01-01 03Z."
+    - "`_tavg` water fluxes such as precipitation and evapotranspiration are rates in kg m-2 s-1 (= mm s-1). Multiply by 10800 for a 3-hour amount (mm) or by 86400 for a daily amount."
+    - "Monthly files are plain averages of the 3-hourly values. For a monthly total, multiply a `_tavg` rate by 86400 × days in the month, and an `_acc` value (labelled kg m-2 but actually per 3 hours) by 8 × days in the month. Do not apply this to instantaneous state variables (`_inst`)."
+    - "In monthly files, mean and accumulated fields are averaged from 03Z on the 1st to 00Z on the 1st of the next month; instantaneous fields from 00Z on the 1st to 21Z on the last day."
+    - "In the GLDAS-2.2 daily files every variable, including states (soil moisture, snow, terrestrial water storage), is a 24-hour average (`_tavg`), and there are no `_acc` variables; runoff is a rate in kg m-2 s-1. The README does not define the day window; granule metadata give 00:00–23:59:59 UTC of the date."
+    - "Soil moisture (`SoilMoi*`, `SoilMoist_*`, `RootMoist`) is the amount of water in the layer (kg m-2 = mm), not volumetric water content."
+  source: https://docserver.gesdisc.eosdis.nasa.gov/public/project/hydrology/README_GLDAS2.pdf
+  source_name: "README for NASA GLDAS Version 2 Data (last revised 2025-08-13) + global attributes of GLDAS netCDF files"
+
+variables:
+  note: >-
+    Main variables from the GLDAS-2 README tables and a GES DISC file (GLDAS_NOAH10_M 2.0). Names are the netCDF variable names and are case-sensitive
+    (Noah uses `Tveg_tavg`, CLSM and VIC use `TVeg_tavg`). Variables with `_f` are forcing, not model output. The 3-hourly groups below use the Noah 0.25°/1° names;
+    CLSM and VIC share the flux and snow names and differ only in the soil variables.
+  full_list: https://docserver.gesdisc.eosdis.nasa.gov/public/project/hydrology/README_GLDAS2.pdf
+  groups:
+    - name: Energy fluxes (3-hourly, mean over the previous 3 hours)
+      kind: mean
+      period: 3-hour
+      items:
+        - "Net shortwave radiation — `Swnet_tavg` (W m-2)"
+        - "Net longwave radiation — `Lwnet_tavg` (W m-2)"
+        - "Latent heat flux — `Qle_tavg` (W m-2)"
+        - "Sensible heat flux — `Qh_tavg` (W m-2)"
+        - "Ground heat flux — `Qg_tavg` (W m-2)"
+        - "Potential evaporation rate — `PotEvap_tavg` (W m-2)"
+        - "Canopy water evaporation, transpiration, bare-soil evaporation — `ECanop_tavg`, `Tveg_tavg`, `ESoil_tavg` (W m-2)"
+    - name: Water fluxes (3-hourly)
+      kind: mean
+      period: 3-hour
+      items:
+        - "Rain (liquid precipitation) rate — `Rainf_tavg` (kg m-2 s-1)"
+        - "Snowfall rate — `Snowf_tavg` (kg m-2 s-1)"
+        - "Evapotranspiration — `Evap_tavg` (kg m-2 s-1)"
+        - text: "Storm surface runoff — `Qs_acc` (kg m-2)"
+          kind: accum
+          note: Accumulated over the previous 3 hours
+        - text: "Baseflow-groundwater runoff — `Qsb_acc` (kg m-2)"
+          kind: accum
+          note: Accumulated over the previous 3 hours
+        - text: "Snowmelt — `Qsm_acc` (kg m-2)"
+          kind: accum
+          note: Accumulated over the previous 3 hours
+    - name: Surface and soil states (Noah 3-hourly, instantaneous)
+      kind: instant
+      items:
+        - "Average surface skin temperature — `AvgSurfT_inst` (K)"
+        - "Albedo — `Albedo_inst` (%)"
+        - "Snow water equivalent — `SWE_inst` (kg m-2)"
+        - "Snow depth — `SnowDepth_inst` (m)"
+        - "Soil moisture, 4 layers — `SoilMoi0_10cm_inst`, `SoilMoi10_40cm_inst`, `SoilMoi40_100cm_inst`, `SoilMoi100_200cm_inst` (kg m-2)"
+        - "Root-zone soil moisture — `RootMoist_inst` (kg m-2)"
+        - "Soil temperature, 4 layers — `SoilTMP0_10cm_inst`, `SoilTMP10_40cm_inst`, `SoilTMP40_100cm_inst`, `SoilTMP100_200cm_inst` (K)"
+        - "Plant canopy surface water — `CanopInt_inst` (kg m-2)"
+    - name: Forcing (`_f`, 3-hourly)
+      kind: instant
+      items:
+        - "Near-surface air temperature (forcing) — `Tair_f_inst` (K)"
+        - "Specific humidity (forcing) — `Qair_f_inst` (kg kg-1)"
+        - "Surface pressure (forcing) — `Psurf_f_inst` (Pa)"
+        - "Near-surface wind speed (forcing) — `Wind_f_inst` (m s-1)"
+        - text: "Total precipitation rate (forcing) — `Rainf_f_tavg` (kg m-2 s-1)"
+          kind: mean
+          period: 3-hour
+        - text: "Downward shortwave and longwave radiation (forcing) — `SWdown_f_tavg`, `LWdown_f_tavg` (W m-2)"
+          kind: mean
+          period: 3-hour
+    - name: CLSM and VIC 1° only (3-hourly)
+      kind: instant
+      items:
+        - "CLSM surface, root-zone and profile soil moisture — `SoilMoist_S_inst`, `SoilMoist_RZ_inst`, `SoilMoist_P_inst` (kg m-2)"
+        - "CLSM terrestrial water storage — `TWS_inst` (mm)"
+        - "CLSM soil temperature, 6 layers — `SoilTMP0_10cm_inst` to `SoilTMP295_1295cm_inst` (K)"
+        - text: "CLSM snow surface temperature — `SnowT_tavg` (K)"
+          kind: mean
+          period: 3-hour
+        - text: "Aerodynamic conductance (CLSM, VIC) — `ACond_tavg` (m s-1)"
+          kind: mean
+          period: 3-hour
+        - "VIC soil moisture, 3 layers — `SoilMoi0_30cm_inst`, `SoilMoi_depth2_inst`, `SoilMoi_depth3_inst` (kg m-2)"
+        - "VIC soil temperature, 3 layers — `SoilTMP0_30cm_inst`, `SoilTMP_depth2_inst`, `SoilTMP_depth3_inst` (K)"
+    - name: Monthly files (GLDAS_*_M — same variable names as 3-hourly)
+      kind: mean
+      period: Monthly
+      items:
+        - text: "Monthly mean total precipitation rate — `Rainf_f_tavg` (kg m-2 s-1)"
+          note: Monthly precipitation (mm) = value × 86400 × days in month
+        - text: "Monthly mean surface and baseflow runoff — `Qs_acc`, `Qsb_acc` (kg m-2 per 3 hours)"
+          note: Monthly mean of 3-hour accumulations, so monthly total (mm) = value × 8 × days in month
+        - text: "Monthly mean soil moisture — `SoilMoi0_10cm_inst` etc. (kg m-2)"
+          note: Named `_inst`, but in monthly files it is the monthly mean of the 3-hourly instantaneous values
+        - "Monthly mean latent and sensible heat flux — `Qle_tavg`, `Qh_tavg` (W m-2)"
+    - name: GLDAS-2.2 CLSM daily (GLDAS_CLSM025_DA1_D, 24-hour means)
+      kind: mean
+      period: Daily
+      items:
+        - "Surface, root-zone and profile soil moisture — `SoilMoist_S_tavg`, `SoilMoist_RZ_tavg`, `SoilMoist_P_tavg` (kg m-2)"
+        - "Terrestrial water storage — `TWS_tavg` (mm)"
+        - text: "Groundwater storage — `GWS_tavg` (mm)"
+          note: GWS = TWS − root-zone soil moisture − SWE − canopy interception
+        - "Snow water equivalent and snow depth — `SWE_tavg` (kg m-2), `SnowDepth_tavg` (m)"
+        - "Evapotranspiration — `Evap_tavg` (kg m-2 s-1)"
+        - "Surface and baseflow runoff — `Qs_tavg`, `Qsb_tavg` (kg m-2 s-1)"
+        - "Latent heat flux — `Qle_tavg` (W m-2)"
+        - "Average surface skin temperature — `AvgSurfT_tavg` (K)"
+
+access:
+  - name: NASA GES DISC — GLDAS dataset list
+    url: https://disc.gsfc.nasa.gov/datasets?keywords=GLDAS
+    method: HTTPS download / earthaccess / Earthdata Search / OPeNDAP / subsetting
+    note: >-
+      Short names follow GLDAS_<model><resolution>_<interval> (e.g. GLDAS_NOAH025_3H, GLDAS_NOAH10_M, GLDAS_CLSM025_DA1_D), and versions are 2.0, 2.1 and 2.2.
+      Early Products carry an _EP suffix (e.g. GLDAS_NOAH025_3H_EP). A free Earthdata Login is required.
+      The old server (hydro1.gesdisc.eosdis.nasa.gov) may close after 30 September 2026, so switch to data.gesdisc.earthdata.nasa.gov or earthaccess.
+  - name: NASA Earthdata Search
+    url: https://search.earthdata.nasa.gov/search?q=GLDAS
+    method: Web search and ordering / subsetting
+    note: Pick a collection, time range and region to get granule lists and download scripts.
+  - name: AWS us-west-2 direct access (S3)
+    url: https://data.gesdisc.earthdata.nasa.gov/s3credentials
+    method: Cloud storage (S3, in-region us-west-2 only)
+    note: "Example: s3://gesdisc-cumulus-prod-protected/GLDAS/GLDAS_NOAH025_3H.2.1/ — temporary credentials are required."
+  - name: NASA Giovanni
+    url: https://giovanni.gsfc.nasa.gov/
+    method: Web maps and time series; NetCDF, GeoTIFF and KMZ downloads
+    note: Handy for checking area-mean time series or maps before downloading.
+
+example:
+  lang: python
+  note: >-
+    Uses earthaccess to download the 2020 Noah 0.25° monthly files (V2.1) and convert them over Korea to monthly precipitation (mm), monthly surface runoff (mm)
+    and volumetric top-layer soil moisture. Each file is a global field, so bounding_box only narrows the search; the actual cropping is done in xarray.
+  code: |
+    import earthaccess
+    import xarray as xr
+
+    earthaccess.login()  # free NASA Earthdata account
+    results = earthaccess.search_data(
+        short_name="GLDAS_NOAH025_M", version="2.1",
+        temporal=("2020-01-01", "2020-12-31"),
+        bounding_box=(124, 33, 132, 39),   # (west, south, east, north)
+    )
+    files = earthaccess.download(results, "gldas_noah025_m")
+
+    ds = xr.open_mfdataset(files, combine="by_coords")
+    sub = ds.sel(lon=slice(124, 132), lat=slice(33, 39))
+    days = sub["time"].dt.days_in_month
+
+    precip_mm = sub["Rainf_f_tavg"] * 86400 * days   # monthly mean rate (kg m-2 s-1) -> monthly total (mm)
+    qs_mm = sub["Qs_acc"] * 8 * days                 # monthly mean of 3-hour totals -> monthly runoff (mm)
+    sm_vol = sub["SoilMoi0_10cm_inst"] / 100.0       # 0-10 cm layer, kg m-2 -> m3 m-3
+    print(precip_mm.mean(["lat", "lon"]).values)
+
+tips:
+  - "GLDAS-2.0 (Princeton forcing) and 2.1 (GDAS, GPCP, AGRMET) use different forcing, so values differ even in their 2000–2014 overlap. The README itself warns that combining 2.0, 2.1 and 2.2 into one series may introduce discontinuities. If you must splice them, check the differences in the overlap and state the join date in your paper."
+  - "Forcing also changes within GLDAS-2.1: January 2000 to February 2001 used only GDAS and GPCP; AGRMET radiation was added from March 2001; AGRMET has an apparent climatology shift after 2011 that scaling could not remove; and from 2025-06-09 the radiation input is GALWEM. Check these dates in trend analyses."
+  - "GLDAS-2.2 is a separate daily CLSM product with ECMWF forcing and GRACE/GRACE-FO assimilation. Its files contain no forcing variables, and its values differ from 2.1 CLSM (1°) even though the model is the same. It is the one to use for terrestrial water storage and groundwater studies."
+  - "Early Products (_EP) are deleted when the main products appear and do not match them (2.1 EP is run without GPCP precipitation, 2.2 EP without GRACE assimilation). If you filled the latest months with EP data, replace them with the main products later."
+  - "Soil moisture is in kg m-2 (water depth in the layer, mm). To compare with volumetric water content (m3 m-3), divide by the layer thickness in mm (÷100 for Noah 0–10 cm, ÷300 for 10–40 cm)."
+  - "`_acc` variables in monthly files are 'kg m-2 per 3 hours'. Do not read the kg m-2 label as a monthly total; multiply by 8 × days in the month."
+  - "There is no glacier or ice-sheet model, so snow water equivalent accumulates indefinitely over Greenland, some other Arctic points and permanently frozen parts of the Himalaya. Mask these cells before computing global totals or means."
+  - "In October 2020, invalid model values over inland water were masked with the MODIS (MOD44W) land mask. Re-download any 2.0 or 2.1 3-hourly or monthly data obtained before 1 November 2020."
+  - "Snow density computed from SWE and snow depth in the GLDAS-2.0 CLSM 0.25° daily product is invalid, because snow depth did not account for snow-cover fraction. The 2.1 3-hourly/monthly and 2.2 daily products are not affected."
+
+citations:
+  dataset:
+    - label: GLDAS-2.1 Noah 0.25° 3-hourly (GES DISC)
+      text: >-
+        Beaudoing, H. and M. Rodell, NASA/GSFC/HSL (2020), GLDAS Noah Land Surface Model L4 3 hourly 0.25 x 0.25 degree V2.1,
+        Greenbelt, Maryland, USA, Goddard Earth Sciences Data and Information Services Center (GES DISC), Accessed: [Data Access Date],
+        10.5067/E7TYRXPJKWOQ
+      doi: 10.5067/E7TYRXPJKWOQ
+      bibtex: |
+        @misc{gldas21_noah025_3h,
+          author    = {Beaudoing, H. and Rodell, M.},
+          title     = {{GLDAS} Noah Land Surface Model {L4} 3 hourly 0.25 x 0.25 degree, Version 2.1},
+          year      = {2020},
+          publisher = {Goddard Earth Sciences Data and Information Services Center (GES DISC)},
+          address   = {Greenbelt, MD, USA},
+          doi       = {10.5067/E7TYRXPJKWOQ}
+        }
+    - label: GLDAS-2.1 Noah 0.25° monthly (GES DISC)
+      text: >-
+        Beaudoing, H. and M. Rodell, NASA/GSFC/HSL (2020), GLDAS Noah Land Surface Model L4 monthly 0.25 x 0.25 degree V2.1,
+        Greenbelt, Maryland, USA, Goddard Earth Sciences Data and Information Services Center (GES DISC), Accessed: [Data Access Date],
+        10.5067/SXAVCZFAQLNO
+      doi: 10.5067/SXAVCZFAQLNO
+      bibtex: |
+        @misc{gldas21_noah025_m,
+          author    = {Beaudoing, H. and Rodell, M.},
+          title     = {{GLDAS} Noah Land Surface Model {L4} monthly 0.25 x 0.25 degree, Version 2.1},
+          year      = {2020},
+          publisher = {Goddard Earth Sciences Data and Information Services Center (GES DISC)},
+          address   = {Greenbelt, MD, USA},
+          doi       = {10.5067/SXAVCZFAQLNO}
+        }
+    - label: GLDAS-2.0 Noah 0.25° 3-hourly (GES DISC)
+      text: >-
+        Beaudoing, H. and M. Rodell, NASA/GSFC/HSL (2019), GLDAS Noah Land Surface Model L4 3 hourly 0.25 x 0.25 degree V2.0,
+        Greenbelt, Maryland, USA, Goddard Earth Sciences Data and Information Services Center (GES DISC), Accessed: [Data Access Date],
+        10.5067/342OHQM9AK6Q
+      doi: 10.5067/342OHQM9AK6Q
+      bibtex: |
+        @misc{gldas20_noah025_3h,
+          author    = {Beaudoing, H. and Rodell, M.},
+          title     = {{GLDAS} Noah Land Surface Model {L4} 3 hourly 0.25 x 0.25 degree, Version 2.0},
+          year      = {2019},
+          publisher = {Goddard Earth Sciences Data and Information Services Center (GES DISC)},
+          address   = {Greenbelt, MD, USA},
+          doi       = {10.5067/342OHQM9AK6Q}
+        }
+    - label: GLDAS-2.2 CLSM 0.25° daily GRACE-DA1 (GES DISC)
+      text: >-
+        Li, B., H. Beaudoing, and M. Rodell, NASA/GSFC/HSL (2020), GLDAS Catchment Land Surface Model L4 daily 0.25 x 0.25 degree GRACE-DA1 V2.2,
+        Greenbelt, Maryland, USA, Goddard Earth Sciences Data and Information Services Center (GES DISC), Accessed: [Data Access Date],
+        10.5067/TXBMLX370XX8
+      doi: 10.5067/TXBMLX370XX8
+      bibtex: |
+        @misc{gldas22_clsm025_da1_d,
+          author    = {Li, B. and Beaudoing, H. and Rodell, M.},
+          title     = {{GLDAS} Catchment Land Surface Model {L4} daily 0.25 x 0.25 degree {GRACE-DA1}, Version 2.2},
+          year      = {2020},
+          publisher = {Goddard Earth Sciences Data and Information Services Center (GES DISC)},
+          address   = {Greenbelt, MD, USA},
+          doi       = {10.5067/TXBMLX370XX8}
+        }
+  papers:
+    - label: GLDAS reference paper
+      text: >-
+        Rodell, M., Houser, P. R., Jambor, U., Gottschalck, J., Mitchell, K., Meng, C.-J., Arsenault, K., Cosgrove, B., Radakovich, J.,
+        Bosilovich, M., Entin, J. K., Walker, J. P., Lohmann, D., Toll, D. (2004): The Global Land Data Assimilation System.
+        Bulletin of the American Meteorological Society, 85(3), 381–394.
+      doi: 10.1175/BAMS-85-3-381
+      bibtex: |
+        @article{rodell2004gldas,
+          author  = {Rodell, M. and Houser, P. R. and Jambor, U. and Gottschalck, J. and Mitchell, K. and Meng, C.-J. and Arsenault, K. and Cosgrove, B. and Radakovich, J. and Bosilovich, M. and Entin, J. K. and Walker, J. P. and Lohmann, D. and Toll, D.},
+          title   = {The Global Land Data Assimilation System},
+          journal = {Bulletin of the American Meteorological Society},
+          volume  = {85},
+          number  = {3},
+          pages   = {381--394},
+          year    = {2004},
+          doi     = {10.1175/BAMS-85-3-381}
+        }
+    - label: GLDAS-2.2 GRACE data assimilation
+      text: >-
+        Li, B., Rodell, M., Kumar, S., Beaudoing, H. K., Getirana, A., Zaitchik, B. F., de Goncalves, L. G., Cossetin, C., Bhanja, S.,
+        Mukherjee, A., Tian, S., Tangdamrongsub, N., Long, D., Nanteza, J., Lee, J., Policelli, F., Goni, I. B., Daira, D., Bila, M.,
+        de Lannoy, G., Mocko, D., Steele-Dunne, S. C., Save, H., Bettadpur, S. (2019): Global GRACE Data Assimilation for Groundwater
+        and Drought Monitoring: Advances and Challenges. Water Resources Research, 55(9), 7564–7586.
+      doi: 10.1029/2018WR024618
+      bibtex: |
+        @article{li2019graceda,
+          author  = {Li, Bailing and Rodell, Matthew and Kumar, Sujay and Beaudoing, Hiroko Kato and Getirana, Augusto and Zaitchik, Benjamin F. and de Goncalves, Luis Gustavo and Cossetin, Camila and Bhanja, Soumendra and Mukherjee, Abhijit and Tian, Siyuan and Tangdamrongsub, Natthachet and Long, Di and Nanteza, Jamiat and Lee, Jejung and Policelli, Frederick and Goni, Ibrahim B. and Daira, Djoret and Bila, Mohammed and de Lannoy, Gabrielle and Mocko, David and Steele-Dunne, Susan C. and Save, Himanshu and Bettadpur, Srinivas},
+          title   = {Global {GRACE} Data Assimilation for Groundwater and Drought Monitoring: Advances and Challenges},
+          journal = {Water Resources Research},
+          volume  = {55},
+          number  = {9},
+          pages   = {7564--7586},
+          year    = {2019},
+          doi     = {10.1029/2018WR024618}
+        }
+  acknowledgement: >-
+    Cite the DOI of each product you actually used (model, resolution, interval, version). DOIs for the other products are tabulated in the README (e.g. GLDAS-2.1 Noah 1° monthly
+    10.5067/LWTYSMP3VM5Z, CLSM 1° 3-hourly 10.5067/VCO8OCV72XO0, VIC 1° 3-hourly 10.5067/ZOG6BCSE26HV, 2.2 Early Product 10.5067/IIU5JWU2AGRP). NASA asks that publications
+    include: "The data used in this study were acquired as part of the mission of NASA's Earth Science Division and archived and distributed by the Goddard Earth Sciences (GES)
+    Data and Information Services Center (DISC)." If you use GLDAS-2.2, also follow the README guidance on acknowledging the ECMWF forcing.
+
+transitions:
+  - from: GLDAS-1
+    to: GLDAS-2.1
+    status: completed
+    date: "2020-06"
+    summary: >-
+      GLDAS-1 production ended with March 2020 data and all GLDAS-1 products were removed from GES DISC on 30 June 2020. GLDAS-2.1, with new forcing and upgraded land surface models, replaces it.
+    changes:
+      - aspect: Production status
+        before: "Production ended with March 2020 data; removed from GES DISC on 2020-06-30"
+        after: "GLDAS-2.1 from 2000-01 to the present, still updated (1948–2014 covered by GLDAS-2.0)"
+      - aspect: Known forcing problems
+        before: "Unnatural shortwave gradient lines in the Northern Hemisphere, precipitation shift from 2009, high radiation bias vs SRB and low precipitation bias vs GPCP"
+        after: "Addressed with bias-corrected AGRMET radiation, GPCP-based precipitation and a GDAS-based temporal disaggregation"
+      - aspect: Land surface models
+        before: "GLDAS-1 model versions"
+        after: "Noah 3.6, CLSM-F2.5, VIC 4.1.2 (upgraded LIS software)"
+      - aspect: Processing history
+        before: "-"
+        after: "Noah 2.1 reprocessed January–February 2020; inland-water mask applied October 2020"
+    impacts:
+      - "GLDAS-1 data can no longer be downloaded. Reproducing older studies requires recomputing with GLDAS-2.0/2.1, and the numbers may differ."
+      - "Do not mix GLDAS-1 and GLDAS-2 values in one time series."
+    sources:
+      - name: GLDAS-1 products will be decommissioned on 6/30/2020 (NASA LDAS)
+        url: https://ldas.gsfc.nasa.gov/gldas/news/gldas-1-products-will-be-decomissioned-6302020
+      - name: README for NASA GLDAS Version 2 Data
+        url: https://docserver.gesdisc.eosdis.nasa.gov/public/project/hydrology/README_GLDAS2.pdf
+
+notices:
+  - date: "2026-05-11"
+    level: warning
+    title: GES DISC on-premises servers closing — GLDAS users must move to Earthdata Cloud
+    body: >-
+      GES DISC announced that HTTPS access to its on-premises servers ends by 30 September 2026 and that on-premises OPeNDAP is switched off between 20 August and 30 September.
+      The hydro1.gesdisc.eosdis.nasa.gov server that hosts GLDAS states that access will end 'no earlier than 30 September 2026' and asks users to move to Earthdata Cloud
+      (still responding on 2026-10-13). Point scripts to data.gesdisc.earthdata.nasa.gov or use earthaccess.
+    source: https://github.com/nasa/gesdisc-tutorials/blob/main/user-guidance/GES_DISC_Migration_to_Earthdata_Website_and_Earthdata_Cloud.md
+  - date: "2026-04-16"
+    level: info
+    title: GrADS Data Server (GDS) discontinued — GLDAS included
+    body: >-
+      The GES DISC GDS, which served GLDAS (Noah, CLSM, VIC 3-hourly, daily and monthly), was discontinued on 6 April 2026 (announced on 15 January).
+      The same data are available from Earthdata Cloud over HTTPS and through subsetting services.
+    source: https://www.earthdata.nasa.gov/data/alerts-outages/grads-data-server-gds-service-has-been-discontinued
+  - date: "2025-08-13"
+    level: info
+    title: GLDAS-2.1 radiation forcing switched to GALWEM from 2025-06-09
+    body: >-
+      As the US Air Force weather service moved from WWMCA to GALWEM, WWMCA became unavailable on 8 June 2025, and GLDAS-2.1 uses GALWEM radiation fields from 9 June onward.
+      This was recorded in the README revision of 2025-08-13, which does not discuss any discontinuity across the switch.
+    source: https://docserver.gesdisc.eosdis.nasa.gov/public/project/hydrology/README_GLDAS2.pdf
+  - date: "2020-10"
+    level: warning
+    title: Inland-water mask post-processing — re-download data obtained before 2020-11-01
+    body: >-
+      Routing added in the reprocessing left invalid values over inland-water cells, so all 2.0 and 2.1 3-hourly and monthly model output was post-processed with the MODIS MOD44W land mask.
+      Forcing variables (_f) were unchanged. Users who downloaded data before 1 November 2020 are asked to download it again.
+    source: https://docserver.gesdisc.eosdis.nasa.gov/public/project/hydrology/README_GLDAS2.pdf
+  - date: "2020-06-30"
+    level: info
+    title: GLDAS-1 products decommissioned
+    body: GLDAS-1 production ended with March 2020 data and the products were removed from GES DISC on 30 June 2020. GLDAS-2.1 is the successor.
+    source: https://ldas.gsfc.nasa.gov/gldas/news/gldas-1-products-will-be-decomissioned-6302020
+  - date: "2020-02"
+    level: info
+    title: Reprocessed GLDAS-2.1 Noah released; new CLSM, VIC and 2.2 products added
+    body: >-
+      The GLDAS-2.1 Noah 3-hourly and monthly data reprocessed in January–February 2020 (GES DISC release 2020-01-30) replaced the previous version, and CLSM and VIC 2.1 products,
+      the GRACE-assimilating GLDAS-2.2 and the Early Products were newly released (README revision 2020-02-27). GLDAS-2.0 Noah had been reprocessed with Princeton forcing V2.2 in late 2019,
+      and 2.0 CLSM and VIC 1° products were added in September 2020.
+    source: https://ldas.gsfc.nasa.gov/gldas/news/new-and-reprocessed-gldas-2-simulations-released
+
+links:
+  - name: NASA LDAS — GLDAS
+    url: https://ldas.gsfc.nasa.gov/gldas
+  - name: README for NASA GLDAS Version 2 Data (variable tables, time conventions, DOI table)
+    url: https://docserver.gesdisc.eosdis.nasa.gov/public/project/hydrology/README_GLDAS2.pdf
+  - name: GES DISC GLDAS_NOAH025_3H 2.1
+    url: https://disc.gsfc.nasa.gov/datasets/GLDAS_NOAH025_3H_2.1/summary
+  - name: GES DISC GLDAS_CLSM025_DA1_D 2.2
+    url: https://disc.gsfc.nasa.gov/datasets/GLDAS_CLSM025_DA1_D_2.2/summary
+  - name: NASA LDAS news (GLDAS, NLDAS, FLDAS)
+    url: https://ldas.gsfc.nasa.gov/news
+
+watch_urls:
+  - https://ldas.gsfc.nasa.gov/news
+  - https://docserver.gesdisc.eosdis.nasa.gov/public/project/hydrology/README_GLDAS2.pdf
+  - https://www.earthdata.nasa.gov/data/alerts-outages
+
+last_verified: "2026-10-13"

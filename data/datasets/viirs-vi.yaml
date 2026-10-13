@@ -1,0 +1,320 @@
+# ─────────────────────────────────────────────────────────────
+# VIIRS 식생지수 V2 (VNP13·VJ113·VJ213: NDVI·EVI·EVI2) — 데이터셋 정보 파일
+# 지면 탭 '식생'. MODIS 식생지수(modis-vi.yaml)의 후속 자료입니다.
+# 수정 후에는 공식 페이지에서 확인한 날짜로 last_verified 를 갱신하세요.
+# ─────────────────────────────────────────────────────────────
+id: viirs-vi
+name: "VIIRS NDVI/EVI (VNP13)"
+full_name: VIIRS Vegetation Indices (VNP13A1/A2/A3/C1/C2, VJ113, VJ213) Version 2 (VIIRS NDVI·EVI·EVI2, 500 m~0.05°·16일/월)
+category: satellite
+domain: land
+group: 식생
+order: 13
+domains: [육지, 원격탐사]
+provider: NASA VIIRS 육상팀(애리조나대 식생지수·생물계절 연구실 설계, E. Vermote 데이터셋 책임) / LP DAAC
+
+status: active
+status_note: >-
+  Version 2(002)가 Suomi NPP(VNP13)·NOAA-20(VJ113)·NOAA-21(VJ213) 위성별로 계속 나오고 있습니다(2026-10-13 확인 시 VJ213A1은 2026-09-14 시작 합성까지).
+  다만 NOAA는 Suomi NPP 자료 전달을 2026년 11월 2일(NASA 공지는 11월 1일) 13:00 UTC에 끝낸다고 밝혔고, LP DAAC는 VNP13 제품 대신
+  VJ213(주)·VJ113(보조)으로 옮기라고 안내하고 있습니다. Version 1은 2025년 배포가 끝났습니다.
+
+period:
+  start: "2012-01"
+  end: present
+  note: >-
+    VNP13(Suomi NPP)은 16일 제품이 2012-01-17, 월 제품이 2012-01-01부터, VJ113(NOAA-20)은 2018-01-01부터, VJ213(NOAA-21)은 16일 제품이 2023-02-10, 월 제품이 2023-02-01부터입니다.
+    2026-10-13에 CMR로 한반도 타일(h28v05)을 확인했을 때 VJ213A1은 2026-09-14~29, VNP13A1은 2026-09-06~21 합성이 최신이었습니다.
+    VNP13은 2026년 11월 Suomi NPP 자료 전달 종료와 함께 멈출 예정입니다.
+
+resolution:
+  spatial_short: "0.5 km (0.005°)"
+  temporal_short: "16일"
+  spatial: >-
+    MODIS와 같은 Sinusoidal 타일 격자: 500 m(A1), 1 km(A2·A3) / 전지구 0.05° 위경도 기후모델격자(CMG, C1·C2)
+  vertical: 지표 단일층
+  temporal: >-
+    16일 합성(A1·A2·C1)을 위성마다 8일 간격으로 생산(앞뒤 합성이 8일씩 겹침, 예: 2024년 1·9·17일 시작) / 달력 월(A3·C2)
+
+update: 16일 합성이 끝나고 대략 2~3주 뒤 8일 간격으로 추가, 월자료는 다음 달 이후 (VNP13은 2026년 11월 종료 예정)
+license: NASA 지구과학 공개 자료 — 제한 없이 무료 이용(EOSDIS 자료 이용·인용 지침), 파일 다운로드에는 무료 NASA Earthdata 로그인 필요, 데이터셋 DOI 인용 요청
+account_required: true
+
+summary: >-
+  MODIS 식생지수(MOD13) 체계를 VIIRS 센서로 이어 만든 NDVI·EVI 자료로, 청색 밴드 없이 적색·근적외만으로 계산하는 EVI2가 더해졌습니다.
+  MODIS와 같은 제약 시야각 최대값 합성(CV-MVC)으로 16일·월 값을 만들며, 500 m·1 km 타일과 0.05° 전지구 격자로 제공됩니다.
+  반사도(적색·근적외·청색·녹색·SWIR 3개), 관측 각도, 합성 일자, 품질 정보가 함께 들어 있어 2012년부터의 VIIRS 기록으로 MODIS 이후의 생물계절·가뭄·작황 연구를 이어갈 수 있습니다.
+
+time_convention:
+  summary: >-
+    16일 제품은 QA로 구름·저품질 관측을 걸러 낸 뒤 NDVI 상위 2/3 관측을 남기고, 그중 시야각이 가장 작은 관측 하나를 골라 그날의 NDVI·EVI·EVI2·반사도·각도를 기록합니다
+    (시야각을 0~30°와 30° 초과 구간으로 나눠 큰 시야각 관측을 피함). 따라서 지수 값은 기간 평균이 아니라 선택된 하루의 관측입니다. 파일 날짜는 합성 기간 첫날(연중일)입니다.
+  points:
+    - "16일 합성이 위성마다 8일 간격으로 나오므로(예: A2024001은 1월 1~16일, A2024009는 1월 9~24일) 연속한 두 파일은 8일을 공유합니다. 독립 표본으로 세지 마세요."
+    - "실제 관측일은 `500 m 16 days composite day of the year` 층에 연중일로 들어 있습니다. 생물계절처럼 날짜가 중요한 분석에서는 파일 날짜 대신 이 값을 쓰세요."
+    - "세 위성 모두 오후 13:30(현지 평균시) 상승 통과 궤도입니다. MODIS Terra의 오전 관측을 잇는 VIIRS 제품은 없습니다."
+    - "합성은 해마다 1월 1일에 다시 시작하므로 연말 합성은 이듬해 첫 합성과 기간이 겹칩니다."
+    - "MODIS와 달리 BRDF 보정은 하지 않고 시야각 제약만 걸며, MODIS와의 일관성을 위해 nBAR가 아닌 방향성 반사도로 지수를 계산합니다."
+  source: https://lpdaac.usgs.gov/documents/1372/VNP13_User_Guide_ATBD_V2.1.2.pdf
+  source_name: "VNP13 사용자 안내서·ATBD V2.1.2 (Didan et al., 2018) + LP DAAC 컬렉션 설명 + CMR 파일 목록"
+
+variables:
+  note: >-
+    Earthdata 카탈로그의 VNP13A1·VNP13C1 V002 층 표 기준입니다(VJ113·VJ213도 같은 구성). 층 이름 앞에 해상도·주기가 붙으며(500 m 16일은 `500 m 16 days …`, 0.05°는 `CMG 0.05 Deg 16 days …`),
+    MODIS(`250m 16 days …`)와 달리 숫자와 m 사이에 띄어쓰기가 있습니다. 지수·반사도는 int16 저장값을 10000으로 나눕니다. 월 제품(A3·C2)의 층 이름은 확인하지 못했으니 받은 파일에서 보세요.
+  full_list: https://www.earthdata.nasa.gov/data/catalog/lpcloud-vnp13a1-002
+  groups:
+    - name: 16일 합성 (VNP13A1 500 m 기준, A2 1 km 같은 구성)
+      kind: instant
+      period: 16일 합성 중 선택일
+      items:
+        - text: "정규식생지수(NDVI) — `500 m 16 days NDVI` (무차원, 저장값 ÷ 10000, 유효 −10000~10000)"
+          kind: max
+          period: 16일
+          note: "CV-MVC — NDVI 상위 2/3 관측 중 시야각이 작은 것을 고르므로 기간 최대값이거나 그에 가까운 값"
+        - text: "향상된 식생지수(EVI) — `500 m 16 days EVI` (무차원, ÷ 10000)"
+          note: 합성 기간 중 선택된 관측일 값
+        - text: "2밴드 향상된 식생지수(EVI2) — `500 m 16 days EVI2` (무차원, ÷ 10000)"
+          note: "적색·근적외만 사용(EVI2 = 2.5(NIR−Red)/(NIR+2.4Red+1)), 합성 기간 중 선택된 관측일 값"
+        - text: "적색·근적외·청색·녹색 반사도 — `500 m 16 days red reflectance`, `500 m 16 days NIR reflectance`, `500 m 16 days blue reflectance`, `500 m 16 days green reflectance` (무차원, ÷ 10000)"
+          note: 합성 기간 중 선택된 관측일 값
+        - text: "단파적외 반사도 — `500 m 16 days SWIR1 reflectance`, `500 m 16 days SWIR2 reflectance`, `500 m 16 days SWIR3 reflectance` (무차원, ÷ 10000)"
+          note: 합성 기간 중 선택된 관측일 값
+          std: []
+        - text: "시야 천정각·태양 천정각·상대 방위각 — `500 m 16 days view zenith angle`, `500 m 16 days sun zenith angle`, `500 m 16 days relative azimuth angle` (도, ÷ 100)"
+          note: 합성 기간 중 선택된 관측일 값
+        - text: "실제 관측일 — `500 m 16 days composite day of the year` (연중일 1~366)"
+          note: 선택된 관측이 이루어진 날
+        - text: "화소 신뢰도 등급 — `500 m 16 days pixel reliability` (0~11, 결측 −4)"
+          std: []
+        - "식생지수 품질 비트 — `500 m 16 days VI Quality` (비트 필드, 결측 65535)"
+    - name: 16일 0.05° 전지구 격자 (VNP13C1)
+      kind: instant
+      period: 16일 합성 중 선택일을 공간 집계
+      items:
+        - text: "NDVI·EVI·EVI2 — `CMG 0.05 Deg 16 days NDVI`, `CMG 0.05 Deg 16 days EVI`, `CMG 0.05 Deg 16 days EVI2` (무차원, ÷ 10000)"
+          note: 1 km 16일 합성 화소들을 0.05° 칸으로 모은 값. 관측이 없는 칸은 장기 자료로 채움
+        - "지수 표준편차 — `CMG 0.05 Deg 16 days NDVI std dev` 등 (무차원, ÷ 10000)"
+        - "사용한 1 km 화소 수 — `CMG 0.05 Deg 16 days number of 1km pix used` (개)"
+        - text: "화소 신뢰도 등급 — `CMG 0.05 Deg 16 days pixel reliability` (결측 −4)"
+          std: []
+    - name: 월자료 (VNP13A3 1 km, VNP13C2 0.05°)
+      kind: mean
+      period: 월
+      items:
+        - text: "월 NDVI·EVI·EVI2 (무차원, ÷ 10000)"
+          note: "사용자 안내서는 MODIS처럼 그달과 겹치는 16일 합성들로 월 값을 추정하는 흐름도를 제시합니다. LP DAAC 설명은 '월 기간 중 최적 화소 선택'이라 적고 있어, 정확한 계산법은 안내서 9장을 확인하세요."
+        - "월 반사도(적색·근적외·청색·녹색·SWIR 3개)·각도·화소 신뢰도·품질 층"
+
+access:
+  - name: NASA Earthdata Search — VJ213A1 (NOAA-21, 권장)
+    url: https://search.earthdata.nasa.gov/search/granules?p=C2817367150-LPCLOUD
+    method: 웹 검색·HTTPS 다운로드 / earthaccess
+    note: >-
+      짧은 이름은 VJ213A1·A2·A3·C1·C2(NOAA-21), VJ113…(NOAA-20), VNP13…(Suomi NPP), 버전은 002입니다. 파일은 HDF-EOS5(.h5)입니다.
+      Suomi NPP 자료 전달이 2026년 11월 끝나므로 LP DAAC는 VJ213을 주, VJ113을 보조로 쓰라고 안내합니다.
+  - name: NASA Earthdata Search — VNP13A1 (Suomi NPP, 2012~)
+    url: https://search.earthdata.nasa.gov/search/granules?p=C2519127224-LPCLOUD
+    method: 웹 검색·HTTPS 다운로드 / earthaccess
+    note: 2012~2017년 구간은 Suomi NPP 제품만 있습니다. 전달 종료 뒤 기존 파일의 배포 정책은 아직 공지되지 않았습니다.
+  - name: AppEEARS (영역·지점 추출)
+    url: https://appeears.earthdatacloud.nasa.gov/
+    method: 웹·API — 영역(GeoTIFF·NetCDF4) 또는 지점(CSV) 추출, 투영 변환 가능
+    note: 타일·HDF5 구조를 다루지 않고 관심 지역만 받을 수 있습니다.
+
+example:
+  lang: python
+  note: >-
+    earthaccess로 2024년 생장기의 NOAA-21 VJ213A1(500 m 16일)을 받아 한반도 중부 타일(h28v05)의 NDVI를 읽는 예입니다. HDF-EOS5 파일 안 경로를 외우지 않도록
+    h5py로 층 이름을 찾아 읽습니다. 저장값은 10000으로 나누고 결측(−15000)을 지웁니다.
+  code: |
+    # pip install earthaccess h5py numpy
+    import earthaccess
+    import h5py
+    import numpy as np
+
+    earthaccess.login()  # 무료 NASA Earthdata 계정
+    results = earthaccess.search_data(
+        short_name="VJ213A1", version="002",
+        temporal=("2024-04-01", "2024-10-31"),
+        bounding_box=(127.0, 36.0, 127.5, 36.5),   # (서, 남, 동, 북)
+    )
+    files = earthaccess.download(results, "./vj213a1")
+
+    def find(h5, name):
+        hits = []
+        h5.visititems(lambda k, v: hits.append(k) if isinstance(v, h5py.Dataset) and k.endswith("/" + name) else None)
+        return h5[hits[0]][()]
+
+    for f in sorted(map(str, files)):
+        if ".h28v05." not in f:
+            continue
+        with h5py.File(f, "r") as h5:
+            ndvi = find(h5, "500 m 16 days NDVI").astype("float32")
+            doy = find(h5, "500 m 16 days composite day of the year")
+        ndvi = np.where((ndvi >= -10000) & (ndvi <= 10000), ndvi / 10000.0, np.nan)
+        print(f.split("/")[-1][:25], "평균 NDVI:", round(float(np.nanmean(ndvi)), 3),
+              "관측일 중앙값:", int(np.median(doy[doy > 0])))
+
+tips:
+  - "척도 표기가 MODIS와 반대 방향입니다. LP DAAC 표는 척도를 10000으로 적으니 저장값을 10000으로 나누세요(MODIS는 0.0001을 곱함, 결과는 같음). 지수 결측은 −15000(MODIS −3000), 반사도 결측 −1000, 각도는 ÷ 100입니다."
+  - "화소 신뢰도는 0~11 등급(결측 −4)으로 MODIS의 0~3 등급과 다릅니다. MODIS용 `rel <= 1` 같은 필터를 그대로 쓰지 말고, 사용자 안내서의 등급표(표 5)를 확인한 뒤 기준을 정하세요."
+  - "연속한 16일 파일은 8일씩 겹칩니다. 8일 간격 시계열로 보이지만 이웃한 값은 독립이 아니므로, 통계 검정에서 표본 수를 부풀리지 마세요."
+  - "청색 밴드가 MODIS(459–479 nm)와 달라(VIIRS M3 478–498 nm) EVI는 센서 간 연속성이 약합니다. MODIS와 이어 쓰는 장기 분석에는 NDVI나 EVI2를 먼저 검토하세요. EVI2는 청색이 없어 에어로졸 잡음에 조금 더 민감합니다."
+  - "VNP13(Suomi NPP)은 2026년 11월에 끝납니다. 2018년 이후는 VJ113, 2023년 이후는 VJ213으로 이어 쓸 수 있으니 기준 위성을 정하고, 위성이 바뀌는 지점을 밝히세요."
+  - 바다 위 타일 h33v07·h18v14는 입력 자료가 없어 비어 있습니다(LP DAAC 알려진 문제).
+  - 250 m 제품은 없습니다. MODIS 250 m(MOD13Q1)과 비교하려면 500 m로 해상도를 맞추세요.
+  - 파일이 HDF5(HDF-EOS5)라 MODIS용 pyhdf 코드로는 열리지 않습니다. 층 이름에 띄어쓰기가 있으니 h5py로 찾아 읽는 편이 안전합니다.
+
+citations:
+  dataset:
+    - label: VJ213A1 V002 (NOAA-21, 500 m 16일)
+      text: >-
+        Vermote, E. (2026). VIIRS/JPSS2 Vegetation Indices 16-Day L3 Global 500m SIN Grid V002 [Data set]. NASA Land Processes Distributed Active Archive Center.
+        https://doi.org/10.5067/VIIRS/VJ213A1.002 (Accessed YYYY-MM-DD)
+      doi: 10.5067/VIIRS/VJ213A1.002
+      bibtex: |
+        @misc{vj213a1_v002,
+          author    = {Vermote, Eric},
+          title     = {{VIIRS/JPSS2} Vegetation Indices 16-Day {L3} Global 500m {SIN} Grid {V002}},
+          year      = {2026},
+          publisher = {NASA Land Processes Distributed Active Archive Center},
+          doi       = {10.5067/VIIRS/VJ213A1.002}
+        }
+    - label: VJ113A1 V002 (NOAA-20, 500 m 16일)
+      text: >-
+        Vermote, E. (2023). VIIRS/JPSS1 Vegetation Indices 16-Day L3 Global 500m SIN Grid V002 [Data set]. NASA Land Processes Distributed Active Archive Center.
+        https://doi.org/10.5067/VIIRS/VJ113A1.002 (Accessed YYYY-MM-DD)
+      doi: 10.5067/VIIRS/VJ113A1.002
+      bibtex: |
+        @misc{vj113a1_v002,
+          author    = {Vermote, Eric},
+          title     = {{VIIRS/JPSS1} Vegetation Indices 16-Day {L3} Global 500m {SIN} Grid {V002}},
+          year      = {2023},
+          publisher = {NASA Land Processes Distributed Active Archive Center},
+          doi       = {10.5067/VIIRS/VJ113A1.002}
+        }
+    - label: VNP13A1 V002 (Suomi NPP, 500 m 16일)
+      text: >-
+        Vermote, E. (2023). VIIRS/NPP Vegetation Indices 16-Day L3 Global 500m SIN Grid V002 [Data set]. NASA Land Processes Distributed Active Archive Center.
+        https://doi.org/10.5067/VIIRS/VNP13A1.002 (Accessed YYYY-MM-DD)
+      doi: 10.5067/VIIRS/VNP13A1.002
+      bibtex: |
+        @misc{vnp13a1_v002,
+          author    = {Vermote, Eric},
+          title     = {{VIIRS/NPP} Vegetation Indices 16-Day {L3} Global 500m {SIN} Grid {V002}},
+          year      = {2023},
+          publisher = {NASA Land Processes Distributed Active Archive Center},
+          doi       = {10.5067/VIIRS/VNP13A1.002}
+        }
+  papers:
+    - label: VIIRS 식생지수 사용자 안내서·간이 ATBD V2.1.2 — DOI 없음
+      text: >-
+        Didan, K., Barreto Munoz, A., Compton, T. J., Pinzon, J. E. (2018): Suomi National Polar-orbiting Partnership Visible Infrared Imaging Radiometer Suite
+        Vegetation Index Product Suite User Guide & Abridged Algorithm Theoretical Basis Document, Version 2.1.2. Vegetation Index and Phenology Lab,
+        The University of Arizona. https://lpdaac.usgs.gov/documents/1372/VNP13_User_Guide_ATBD_V2.1.2.pdf
+      bibtex: |
+        @techreport{didan2018vnp13,
+          author      = {Didan, Kamel and Barreto Munoz, Armando and Compton, Tucker J. and Pinzon, Jorge E.},
+          title       = {Suomi National Polar-orbiting Partnership Visible Infrared Imaging Radiometer Suite Vegetation Index Product Suite User Guide \& Abridged Algorithm Theoretical Basis Document, Version 2.1.2},
+          institution = {Vegetation Index and Phenology Lab, The University of Arizona},
+          year        = {2018},
+          url         = {https://lpdaac.usgs.gov/documents/1372/VNP13_User_Guide_ATBD_V2.1.2.pdf}
+        }
+    - label: MODIS C6.1–VIIRS C2 육상 제품 연속성 평가
+      text: >-
+        Román, M. O., Justice, C., Paynter, I., Boucher, P. B., Devadiga, S., Endsley, A., Erb, A., Friedl, M., Gao, H., Giglio, L., Gray, J. M., Hall, D.,
+        Hulley, G., Kimball, J., Knyazikhin, Y., Lyapustin, A., Myneni, R. B., Noojipady, P., Pu, J., Riggs, G., Sarkar, S., Schaaf, C., Shah, D., Tran, K. H.,
+        Vermote, E., Wang, D., Wang, Z., Wu, A., Ye, Y., Shen, Y., Zhang, S., Zhang, X., Zhao, M., Davidson, C., Wolfe, R. (2024): Continuity between NASA MODIS
+        Collection 6.1 and VIIRS Collection 2 land products. Remote Sensing of Environment, 302, 113963.
+      doi: 10.1016/j.rse.2023.113963
+      bibtex: |
+        @article{roman2024continuity,
+          author  = {Rom{\'a}n, Miguel O. and Justice, Chris and Paynter, Ian and Boucher, Peter B. and Devadiga, Sadashiva and Endsley, Arthur and Erb, Angela and Friedl, Mark and Gao, Huilin and Giglio, Louis and Gray, Josh M. and Hall, Dorothy and Hulley, Glynn and Kimball, John and Knyazikhin, Yuri and Lyapustin, Alexei and Myneni, Ranga B. and Noojipady, Praveen and Pu, Jiabin and Riggs, George and Sarkar, Sudipta and Schaaf, Crystal and Shah, Deep and Tran, Khuong H. and Vermote, Eric and Wang, Dongdong and Wang, Zhuosen and Wu, Aisheng and Ye, Yongchang and Shen, Yu and Zhang, Shuai and Zhang, Xiaoyang and Zhao, Maosheng and Davidson, Carol and Wolfe, Robert},
+          title   = {Continuity between {NASA} {MODIS} Collection 6.1 and {VIIRS} Collection 2 land products},
+          journal = {Remote Sensing of Environment},
+          volume  = {302},
+          pages   = {113963},
+          year    = {2024},
+          doi     = {10.1016/j.rse.2023.113963}
+        }
+  acknowledgement: >-
+    LP DAAC는 EOSDIS 자료 이용·인용 지침에 따라 실제로 쓴 제품(위성·해상도·주기별)의 데이터셋 DOI를 인용해 달라고 요청합니다.
+    DOI는 10.5067/VIIRS/<짧은 이름>.002 형식입니다(예: VNP13A3 1 km 월은 10.5067/VIIRS/VNP13A3.002). 알고리즘 설명에는 VNP13 사용자 안내서·ATBD를 인용하세요.
+
+transitions:
+  - from: VIIRS 식생지수 V1 (VNP13 V001)
+    to: VIIRS 식생지수 V2 (VNP13·VJ113·VJ213 V002)
+    status: completed
+    date: "2023-07"
+    summary: >-
+      2023년 7월 Version 2(Suomi NPP·NOAA-20)가 나왔고, V1은 2024년 6월 17일 생산이 멈춘 뒤 2025년 배포가 끝났습니다(마지막 V1 제품 2025-07-31).
+      V2에는 2026년 3월 NOAA-21 제품(VJ213)이 더해졌습니다.
+    changes:
+      - aspect: 위성
+        before: "Suomi NPP만 (VNP13 V001)"
+        after: "Suomi NPP(VNP13)·NOAA-20(VJ113, 2018~)·NOAA-21(VJ213, 2023-02~) — V002"
+      - aspect: 입력·처리 개선
+        before: "V1 입력"
+        after: "보정 개선, 지리위치 개선, 에어로졸 양 플래그 수정, 구름 마스크 갱신, 새 육지·물 마스크, VI Quality 유용성 비트 개정"
+      - aspect: 제공 상태
+        before: "2024-06-17 생산 종료, 2025년 배포 종료 (사용자 안내서·ATBD는 DOI 페이지에 남음)"
+        after: "현재 유일한 판"
+    impacts:
+      - V1로 만든 결과는 V2로 다시 확인하세요. V1 파일은 Earthdata Search·Data Pool·AppEEARS에서 더 이상 받을 수 없습니다.
+      - VI Quality 유용성 비트의 정의가 바뀌었으니 V1용 품질 필터는 다시 점검하세요.
+    sources:
+      - name: VIIRS Version 2 식생지수 제품 공개 (Earthdata 공지, 2023-07-19)
+        url: https://www.earthdata.nasa.gov/data/alerts-outages/viirs-version-2-vegetation-indices-products-released
+      - name: Earthdata 카탈로그 — VNP13A1 V002 (V2 변경 사항)
+        url: https://www.earthdata.nasa.gov/data/catalog/lpcloud-vnp13a1-002
+      - name: VIIRS Version 1 제품 배포 종료 (Earthdata 공지, 2025-07-08)
+        url: https://www.earthdata.nasa.gov/data/alerts-outages/viirs-version-1-data-products-decommissioned
+
+notices:
+  - date: "2026-08-07"
+    level: warning
+    title: Suomi NPP 자료 전달 2026년 11월 종료 — VNP13 대신 VJ213·VJ113으로 전환
+    body: >-
+      NOAA는 2026년 8월 3일 Suomi NPP의 VIIRS 등 모든 과학 자료 전달을 2026년 11월 2일 13:00 UTC에 영구히 끝낸다고 알렸고, NASA Earthdata는 8월 7일 공지에서
+      종료일을 11월 1일 13:00 UTC(변경 가능)로 안내했습니다. LP DAAC의 VNP13 제품 설명은 같은 종류의 VJ213(주)·VJ113(보조)으로 옮기라고 권합니다.
+    source: https://www.earthdata.nasa.gov/data/alerts-outages/suomi-npp-data-product-delivery-cease-november-1-2026
+  - date: "2026-03-17"
+    level: info
+    title: NOAA-21 VIIRS 식생지수 V2(VJ213) 공개
+    body: >-
+      LP DAAC가 NOAA-21(옛 JPSS-2) VIIRS로 만든 Version 2 식생지수 제품을 추가로 공개했습니다. CMR 기준 16일 제품은 2023-02-10, 월 제품은 2023-02-01부터입니다.
+    source: https://www.earthdata.nasa.gov/data/alerts-outages/additional-viirs-version-2-vegetation-indices-data-products-released
+  - date: "2025-07-08"
+    level: info
+    title: VIIRS Version 1 제품 배포 완전 종료(2025-07-31) — 식생지수 포함
+    body: >-
+      LP DAAC는 남아 있던 VIIRS V1 제품(열 이상·토지피복 변화·식생지수·연소 면적·BRDF/알베도)의 배포를 2025년 7월 31일 끝내 V1 정리를 마친다고 공지했습니다.
+      앞서 4월 8일에는 지표 반사도·LAI/FPAR 등 V1 제품이 먼저 내려갔습니다. 사용자 안내서·ATBD는 DOI 페이지에 남습니다.
+    source: https://www.earthdata.nasa.gov/data/alerts-outages/viirs-version-1-data-products-decommissioned
+  - date: "2023-07-19"
+    level: info
+    title: VIIRS Version 2 식생지수(VNP13·VJ113) 공개
+    body: >-
+      Suomi NPP와 NOAA-20(옛 JPSS-1)의 Version 2 식생지수 10개 제품(500 m·1 km 16일, 1 km 월, 0.05° 16일·월)이 공개되었습니다.
+      공개 당시 Suomi NPP V1도 한동안 함께 생산되었습니다.
+    source: https://www.earthdata.nasa.gov/data/alerts-outages/viirs-version-2-vegetation-indices-products-released
+
+links:
+  - name: VNP13 사용자 안내서·ATBD V2.1.2 (PDF)
+    url: https://lpdaac.usgs.gov/documents/1372/VNP13_User_Guide_ATBD_V2.1.2.pdf
+  - name: Earthdata 카탈로그 — VNP13A1 V002
+    url: https://www.earthdata.nasa.gov/data/catalog/lpcloud-vnp13a1-002
+  - name: Earthdata 카탈로그 — VNP13C1 V002
+    url: https://www.earthdata.nasa.gov/data/catalog/lpcloud-vnp13c1-002
+  - name: VIIRS 식생지수 검증 페이지 (VIIRS Land 팀)
+    url: https://viirsland.gsfc.nasa.gov/Val/VI_Val.html
+  - name: NOAA NESDIS — Suomi NPP 자료 전달 종료 공지
+    url: https://www.nesdis.noaa.gov/news/cessation-of-suomi-national-polar-orbiting-partnership-s-npp-data-users-onafter-november-2-2026
+
+watch_urls:
+  - https://www.earthdata.nasa.gov/data/alerts-outages/suomi-npp-data-product-delivery-cease-november-1-2026
+  - https://www.earthdata.nasa.gov/data/catalog/lpcloud-vnp13a1-002
+  - https://landweb.modaps.eosdis.nasa.gov/knownissue
+
+last_verified: "2026-10-13"

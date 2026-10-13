@@ -1,0 +1,357 @@
+# ─────────────────────────────────────────────────────────────
+# MODIS LAI/FPAR (MCD15A2H·MCD15A3H·MOD15A2H·MYD15A2H) — 데이터셋 정보 파일
+# 지면 탭 '식생'. Terra·Aqua 종료 예정으로 deprecated, 후속은 VIIRS LAI/FPAR(viirs-lai.yaml).
+# 수정 후에는 공식 페이지에서 확인한 날짜로 last_verified 를 갱신하세요.
+# ─────────────────────────────────────────────────────────────
+id: modis-lai
+name: "MODIS LAI/FPAR (MCD15)"
+full_name: MODIS Leaf Area Index / FPAR (MCD15A2H·MCD15A3H·MOD15A2H·MYD15A2H) Version 6.1 (MODIS 엽면적지수·광합성유효복사 흡수율, 500 m·8일/4일)
+category: satellite
+domain: land
+group: 식생
+order: 10
+domains: [육지, 원격탐사]
+provider: NASA MODIS 육상팀(보스턴대 Myneni 연구실) / LP DAAC
+
+status: deprecated
+status_note: >-
+  Collection 6.1(061)이 매 8일·4일 단위로 계속 나오고 있지만(2026-10-13 확인 시 MCD15A2H는 2026-09-22 시작 합성까지), 위성 수명이 끝나 가는 자료입니다.
+  NASA는 Terra·Aqua가 2026년 말~2027년 초 운영을 마치면 MODIS 자료 수집을 멈추고 마지막 재처리를 한 뒤 VIIRS 유사 제품으로 옮기라고 안내했고,
+  NASA Earth Observer는 과학 운영 종료 시점을 Terra 2027년 2월, Aqua 2027년 9월로 내다봤습니다. 두 위성 모두 연료를 아끼려 궤도 유지를 멈춰
+  통과 시각이 크게 바뀌고 있으니, 새 연구는 VIIRS LAI/FPAR(VNP15·VJ115·VJ215)와 함께 쓰는 방안을 준비하세요.
+
+period:
+  start: "2000-02"
+  end: present
+  note: >-
+    Terra 단독 MOD15A2H는 2000-02-18부터, Aqua 단독 MYD15A2H와 Terra+Aqua 결합 MCD15A2H(8일)·MCD15A3H(4일)는 2002-07-04부터입니다.
+    2026-10-13에 CMR로 한반도 타일(h28v05)을 확인했을 때 MCD15A2H·MOD15A2H는 2026-09-22~29 합성, MCD15A3H는 2026-09-30~10-03 합성이 최신이었습니다.
+    MODIS 자료 수집은 Terra·Aqua 운영 종료와 함께 끝날 예정입니다.
+
+resolution:
+  spatial_short: "0.5 km (0.005°)"
+  temporal_short: "8일"
+  spatial: "MODIS Sinusoidal 타일 격자(적도에서 약 10°×10° 타일, 타일당 2400×2400 화소), 500 m"
+  vertical: 식생 캐노피(지표) 단일층
+  temporal: >-
+    8일 합성(MCD15A2H·MOD15A2H·MYD15A2H) / 4일 합성(MCD15A3H, Terra+Aqua 결합만). 파일 날짜는 합성 기간의 첫날(연중일, 예: A2026265)이며,
+    합성 기간은 해마다 1월 1일(001)에 다시 시작합니다.
+
+update: 합성 기간이 끝나고 대략 1~2주 뒤 8일(또는 4일) 단위로 추가 (Terra·Aqua 운영 종료 시 중단 예정)
+license: NASA 지구과학 공개 자료 — 제한 없이 무료 이용(EOSDIS 자료 이용·인용 지침), 파일 다운로드에는 무료 NASA Earthdata 로그인 필요, 데이터셋 DOI 인용 요청
+account_required: true
+
+summary: >-
+  NASA Terra·Aqua 위성의 MODIS 관측으로 만든 전지구 엽면적지수(LAI)와 광합성유효복사(400~700 nm) 흡수율(FPAR) 자료입니다.
+  적색·근적외 지표 반사도를 3차원 복사전달 모델로 만든 조견표(LUT)에 맞춰 LAI·FPAR를 구하고, 실패하면 NDVI 경험식(백업 알고리즘)을 씁니다.
+  500 m Sinusoidal 타일로 8일(두 위성 결합·단독)과 4일(결합) 합성이 제공되며, 2000년부터 이어진 기록이라 생태·탄소순환·지면 모델 검증에 널리 쓰입니다.
+  후속 자료는 같은 알고리즘을 VIIRS에 적용한 VNP15·VJ115·VJ215입니다.
+
+time_convention:
+  summary: >-
+    8일(또는 4일) 합성 기간 동안 매일 계산한 값 가운데 FPAR가 가장 큰 날의 관측을 골라 그 날의 FPAR·LAI·품질 정보를 기록합니다(ATBD의 최대 FPAR 합성).
+    따라서 FPAR는 합성 기간 최대값이고, LAI는 기간 평균이 아니라 '선택된 하루'의 값입니다. 파일 날짜는 합성 기간 시작일입니다.
+  points:
+    - "파일 이름의 A2026265는 2026년 265일(9월 22일)에 시작한 8일 합성입니다. 실제 값이 어느 날 관측인지는 파일에 따로 없으며, 합성 기간 안 어느 날이든 될 수 있습니다."
+    - "결합 제품(MCD15)은 Terra·Aqua 관측 가운데 하나를 고르므로 화소마다 위성이 다릅니다. `FparLai_QC` 1번 비트(0=Terra, 1=Aqua)로 어느 위성 값인지 알 수 있습니다."
+    - "Terra는 원래 오전 10:30(하강), Aqua는 오후 1:30(상승) 적도 통과였으나 궤도 유지를 멈춘 뒤 Terra는 더 이른 오전, Aqua는 더 늦은 오후로 표류하고 있습니다(Aqua는 2026년 8월 무렵 약 15:50 예상). 같은 날이라도 관측 시각의 태양 고도·그림자 조건이 해마다 달라집니다."
+    - "합성은 해마다 1월 1일에 다시 시작하므로 그해 마지막 합성(예: 12월 27일 시작)은 다음 해 1월 초까지 걸쳐 이듬해 첫 합성과 기간이 겹칩니다."
+    - "4일 제품(MCD15A3H)도 같은 규칙으로 4일 중 한 날을 고릅니다. 4일 제품이 8일 제품보다 시간 분해능은 높지만 구름에 가려진 화소(백업 알고리즘 비율)는 더 많을 수 있습니다."
+  source: https://lpdaac.usgs.gov/documents/90/MOD15_ATBD.pdf
+  source_name: "MOD15 ATBD(1999) + MOD15 C6.1 사용자 안내서(2020) + LP DAAC/CMR 컬렉션 설명"
+
+variables:
+  note: >-
+    MOD15 C6.1 사용자 안내서와 LP DAAC 컬렉션 정보 기준입니다. 8일·4일, Terra·Aqua·결합 제품 모두 같은 SDS 이름을 씁니다.
+    값은 부호 없는 8비트 정수로 저장되어 있어 척도 인수를 곱해야 하며, 249~255는 비식생·결측 코드입니다(아래 팁 참고).
+  full_list: https://lpdaac.usgs.gov/documents/926/MOD15_User_Guide_V61.pdf
+  groups:
+    - name: LAI·FPAR (500 m, 8일·4일 합성)
+      kind: instant
+      period: 합성 기간 중 선택일
+      items:
+        - text: "광합성유효복사 흡수율(FPAR) — `Fpar_500m` (비율 0~1, 저장값 × 0.01)"
+          kind: max
+          period: 8일 (MCD15A3H는 4일)
+          note: 합성 기간 중 FPAR가 가장 큰 날의 값
+        - text: "엽면적지수(LAI) — `Lai_500m` (m² m-2, 저장값 × 0.1)"
+          note: 합성 기간 중 선택된 관측일(FPAR 최대인 날)의 값
+        - "FPAR 표준편차 — `FparStdDev_500m` (비율, 저장값 × 0.01, 248=백업 알고리즘이라 없음)"
+        - "LAI 표준편차 — `LaiStdDev_500m` (m² m-2, 저장값 × 0.1, 248=백업 알고리즘이라 없음)"
+        - text: "LAI·FPAR 품질 플래그 — `FparLai_QC` (비트 필드)"
+          note: "0번 MODLAND(0=주 알고리즘), 1번 위성(0=Terra, 1=Aqua), 2번 고장 검출기, 3~4번 구름 상태, 5~7번 SCF_QC(알고리즘 경로)"
+        - "보조 품질 플래그 — `FparExtra_QC` (비트 필드)"
+
+access:
+  - name: NASA Earthdata Search (LP DAAC, Earthdata Cloud)
+    url: https://search.earthdata.nasa.gov/search/granules?p=C2222147000-LPCLOUD
+    method: 웹 검색·HTTPS 다운로드 / earthaccess
+    note: >-
+      링크는 MCD15A2H V061입니다. 짧은 이름(short name)은 MCD15A2H·MCD15A3H·MOD15A2H·MYD15A2H, 버전은 061이며, 파일은 HDF-EOS2(.hdf) 타일 단위입니다.
+      LP DAAC Data Pool의 MODIS 배포는 2025년 6월 30일 끝났으므로 예전 Data Pool 주소를 쓰던 스크립트는 Earthdata Cloud(earthaccess 등)로 바꾸세요.
+  - name: AppEEARS (영역·지점 추출)
+    url: https://appeears.earthdatacloud.nasa.gov/
+    method: 웹·API — 영역(GeoTIFF·NetCDF4) 또는 지점(CSV) 추출, 투영 변환 가능
+    note: 타일·Sinusoidal 투영을 다루지 않고 관심 지역만 위경도 격자로 받을 수 있어 처음 쓰는 사람에게 편합니다. 품질 비트 해석표도 함께 받습니다.
+  - name: Earthdata 자료 카탈로그 (MCD15A2H V061)
+    url: https://www.earthdata.nasa.gov/data/catalog/lpcloud-mcd15a2h-061
+    method: 웹 (문서·인용·레이어 정보)
+
+example:
+  lang: python
+  note: >-
+    earthaccess로 2024년 7월 MCD15A2H를 받아 한반도 중부 타일(h28v05)의 LAI를 읽는 예입니다. HDF4 파일이라 pyhdf로 엽니다.
+    저장값 249 이상은 비식생·결측 코드라 먼저 지우고, SCF_QC(5~7번 비트)가 0·1인 주 알고리즘 값만 남깁니다.
+  code: |
+    # pip install earthaccess pyhdf numpy
+    import earthaccess
+    import numpy as np
+    from pyhdf.SD import SD, SDC
+
+    earthaccess.login()  # 무료 NASA Earthdata 계정
+    results = earthaccess.search_data(
+        short_name="MCD15A2H", version="061",
+        temporal=("2024-07-01", "2024-07-31"),
+        bounding_box=(126.5, 35.5, 128.5, 37.5),   # (서, 남, 동, 북)
+    )
+    files = earthaccess.download(results, "./mcd15a2h")
+
+    for f in sorted(map(str, files)):
+        if ".h28v05." not in f:          # 한반도 중부 타일만
+            continue
+        sd = SD(f, SDC.READ)
+        raw = sd.select("Lai_500m")[:].astype("float32")
+        qc = sd.select("FparLai_QC")[:]
+        lai = np.where(raw <= 100, raw * 0.1, np.nan)   # 249~255 = 비식생·결측
+        scf = (qc >> 5) & 0b111                          # 0·1 = 주(RT) 알고리즘
+        lai[scf > 1] = np.nan
+        print(f.split("/")[-1], "평균 LAI:", np.nanmean(lai))
+
+tips:
+  - "LAI·FPAR는 uint8 저장값입니다. LAI는 × 0.1, FPAR는 × 0.01을 하고, 249~255(255 결측, 254 내륙 물, 253 나지·희소 식생, 252 만년설·빙하, 251 습지, 250 도시, 249 미분류)를 반드시 먼저 지우세요. 그대로 평균하면 LAI가 25에 가까운 터무니없는 값이 나옵니다."
+  - "`FparLai_QC`의 5~7번 비트(SCF_QC)가 알고리즘 경로입니다. 0(주 알고리즘)·1(주 알고리즘, 포화)이 믿을 만하고, 2·3은 NDVI 경험식 백업, 4는 생산 안 됨입니다. 구름이 잦은 여름 장마철 한반도에서는 백업 비율이 높으니 품질별로 나눠 보세요."
+  - 울창한 숲에서는 반사도가 포화되어 LAI가 과소평가되고 불확실성이 큽니다(QC 1, 포화). 열대림·온대 활엽수림의 최대 LAI 비교에 주의하세요.
+  - 비트 순서는 오른쪽(0번)부터 읽습니다. 사용자 안내서 예시처럼 64는 이진수 1000000이라 5~7번 비트 값이 2(백업 알고리즘)입니다.
+  - 타일은 Sinusoidal 투영이라 위경도 격자와 화소 경계가 맞지 않습니다. 지점 추출·재투영이 필요하면 AppEEARS나 GDAL을 쓰세요. 한반도는 h28v05·h29v05 등 여러 타일에 걸칩니다.
+  - "Terra·Aqua 궤도 표류로 2024년 말부터 MODIS 화소 크기·주사 틈(scan gap)·일주기 표집이 눈에 띄게 달라졌다는 것이 MODIS 품질팀(LDOPE) 공지입니다. 최근 몇 년의 추세를 해석할 때는 같은 기간 VIIRS LAI와 비교해 보세요."
+  - 장기 분석에는 두 위성 결합 MCD15A2H(2002-07~)를 권합니다. 2000~2002년이 꼭 필요하면 Terra 단독 MOD15A2H를 써야 하므로 그 시점에서 표본 수가 달라진다는 점을 밝히세요.
+
+citations:
+  dataset:
+    - label: MCD15A2H V061 (Terra+Aqua 8일)
+      text: >-
+        Myneni, R., Knyazikhin, Y., Park, T. (2021). MODIS/Terra+Aqua Leaf Area Index/FPAR 8-Day L4 Global 500m SIN Grid V061 [Data set].
+        NASA Land Processes Distributed Active Archive Center. https://doi.org/10.5067/MODIS/MCD15A2H.061 (Accessed YYYY-MM-DD)
+      doi: 10.5067/MODIS/MCD15A2H.061
+      bibtex: |
+        @misc{mcd15a2h_v061,
+          author    = {Myneni, Ranga and Knyazikhin, Yuri and Park, Taejin},
+          title     = {{MODIS/Terra+Aqua} Leaf Area Index/{FPAR} 8-Day {L4} Global 500m {SIN} Grid {V061}},
+          year      = {2021},
+          publisher = {NASA Land Processes Distributed Active Archive Center},
+          doi       = {10.5067/MODIS/MCD15A2H.061}
+        }
+    - label: MCD15A3H V061 (Terra+Aqua 4일)
+      text: >-
+        Myneni, R., Knyazikhin, Y., Park, T. (2021). MODIS/Terra+Aqua Leaf Area Index/FPAR 4-Day L4 Global 500m SIN Grid V061 [Data set].
+        NASA Land Processes Distributed Active Archive Center. https://doi.org/10.5067/MODIS/MCD15A3H.061 (Accessed YYYY-MM-DD)
+      doi: 10.5067/MODIS/MCD15A3H.061
+      bibtex: |
+        @misc{mcd15a3h_v061,
+          author    = {Myneni, Ranga and Knyazikhin, Yuri and Park, Taejin},
+          title     = {{MODIS/Terra+Aqua} Leaf Area Index/{FPAR} 4-Day {L4} Global 500m {SIN} Grid {V061}},
+          year      = {2021},
+          publisher = {NASA Land Processes Distributed Active Archive Center},
+          doi       = {10.5067/MODIS/MCD15A3H.061}
+        }
+    - label: MOD15A2H V061 (Terra 8일)
+      text: >-
+        Myneni, R., Knyazikhin, Y., Park, T. (2021). MODIS/Terra Leaf Area Index/FPAR 8-Day L4 Global 500m SIN Grid V061 [Data set].
+        NASA Land Processes Distributed Active Archive Center. https://doi.org/10.5067/MODIS/MOD15A2H.061 (Accessed YYYY-MM-DD)
+      doi: 10.5067/MODIS/MOD15A2H.061
+      bibtex: |
+        @misc{mod15a2h_v061,
+          author    = {Myneni, Ranga and Knyazikhin, Yuri and Park, Taejin},
+          title     = {{MODIS/Terra} Leaf Area Index/{FPAR} 8-Day {L4} Global 500m {SIN} Grid {V061}},
+          year      = {2021},
+          publisher = {NASA Land Processes Distributed Active Archive Center},
+          doi       = {10.5067/MODIS/MOD15A2H.061}
+        }
+  papers:
+    - label: MODIS LAI/FPAR 첫해 전지구 산출 (알고리즘·초기 평가)
+      text: >-
+        Myneni, R. B., Hoffman, S., Knyazikhin, Y., Privette, J. L., Glassy, J., Tian, Y., Wang, Y., Song, X., Zhang, Y., Smith, G. R., Lotsch, A.,
+        Friedl, M., Morisette, J. T., Votava, P., Nemani, R. R., Running, S. W. (2002): Global products of vegetation leaf area and fraction absorbed PAR
+        from year one of MODIS data. Remote Sensing of Environment, 83(1-2), 214–231.
+      doi: 10.1016/S0034-4257(02)00074-3
+      bibtex: |
+        @article{myneni2002modislai,
+          author  = {Myneni, R. B. and Hoffman, S. and Knyazikhin, Y. and Privette, J. L. and Glassy, J. and Tian, Y. and Wang, Y. and Song, X. and Zhang, Y. and Smith, G. R. and Lotsch, A. and Friedl, M. and Morisette, J. T. and Votava, P. and Nemani, R. R. and Running, S. W.},
+          title   = {Global products of vegetation leaf area and fraction absorbed {PAR} from year one of {MODIS} data},
+          journal = {Remote Sensing of Environment},
+          volume  = {83},
+          number  = {1-2},
+          pages   = {214--231},
+          year    = {2002},
+          doi     = {10.1016/S0034-4257(02)00074-3}
+        }
+    - label: Collection 6 평가 1부 (일관성·개선점)
+      text: >-
+        Yan, K., Park, T., Yan, G., Chen, C., Yang, B., Liu, Z., Nemani, R. R., Knyazikhin, Y., Myneni, R. B. (2016): Evaluation of MODIS LAI/FPAR
+        Product Collection 6. Part 1: Consistency and Improvements. Remote Sensing, 8(5), 359.
+      doi: 10.3390/rs8050359
+      bibtex: |
+        @article{yan2016modisc6,
+          author  = {Yan, Kai and Park, Taejin and Yan, Guangjian and Chen, Chi and Yang, Bin and Liu, Zhao and Nemani, Ramakrishna R. and Knyazikhin, Yuri and Myneni, Ranga B.},
+          title   = {Evaluation of {MODIS} {LAI/FPAR} Product Collection 6. Part 1: Consistency and Improvements},
+          journal = {Remote Sensing},
+          volume  = {8},
+          number  = {5},
+          pages   = {359},
+          year    = {2016},
+          doi     = {10.3390/rs8050359}
+        }
+  acknowledgement: >-
+    LP DAAC는 EOSDIS 자료 이용·인용 지침에 따라 실제로 쓴 제품(8일·4일, Terra·Aqua·결합)의 데이터셋 DOI를 인용해 달라고 요청합니다.
+    Aqua 단독 MYD15A2H V061의 DOI는 10.5067/MODIS/MYD15A2H.061입니다. 알고리즘 설명에는 Myneni et al. (2002)과 C6 평가 논문을 함께 인용하세요.
+
+transitions:
+  - from: MODIS LAI/FPAR C6.1 (MCD15A2H 등)
+    to: VIIRS LAI/FPAR V2 (VNP15A2H·VJ115A2H·VJ215A2H)
+    to_id: viirs-lai
+    status: planned
+    date: "2027"
+    summary: >-
+      같은 보스턴대 알고리즘(3차원 복사전달 조견표 + NDVI 백업)을 VIIRS 적색·근적외 채널에 맞춰 옮긴 후속 자료입니다. 2012~2016년 비교에서 전지구 평균 차이는
+      LAI −0.006, FPAR −0.002 수준으로 작았지만, 변수 이름·품질 비트 배치·파일 형식이 달라 코드는 고쳐야 합니다. MODIS 수집은 Terra·Aqua 종료(2026년 말~2027년)와 함께 끝납니다.
+    changes:
+      - aspect: 위성·통과 시각
+        before: "Terra(원래 10:30 하강)·Aqua(원래 13:30 상승) — 2020·2021년부터 궤도 표류 중"
+        after: "Suomi NPP(2012~, 2026년 11월 배포 종료 예정)·NOAA-20(2018~)·NOAA-21(2023~), 오후 13:30 상승 통과 궤도"
+      - aspect: 제품과 시간 간격
+        before: "8일(MOD15A2H·MYD15A2H·MCD15A2H) + 4일(MCD15A3H)"
+        after: "8일만(VNP15A2H·VJ115A2H·VJ215A2H) — 위성별 단독 제품, 결합 제품 없음"
+      - aspect: 입력 채널
+        before: "MODIS 적색(648 nm)·근적외(858 nm) 반사도, MOD09GA 500 m 입력"
+        after: "VIIRS I1(640 nm)·I2(865 nm), VNP09GA 입력. 센서에 맞춘 별도 조견표(LUT)"
+      - aspect: 합성 방식
+        before: "8일(4일) 중 FPAR 최대인 날 선택"
+        after: "같음 — 8일 중 FPAR 최대인 날을 고르고 그날의 LAI·QA를 기록"
+      - aspect: 변수 이름
+        before: "`Lai_500m`, `Fpar_500m`, `LaiStdDev_500m`, `FparStdDev_500m`, `FparLai_QC`, `FparExtra_QC`"
+        after: "`Lai`, `Fpar`, `LaiStdDev`, `FparStdDev`, `FparLai_QC`, `FparExtra_QC` (척도 인수·249~255 코드는 같음)"
+      - aspect: 품질 비트(FparLai_QC)
+        before: "0번 MODLAND, 1번 위성, 2번 고장 검출기, 3~4번 구름, 5~7번 SCF_QC"
+        after: "0~2번 SCF_QC, 3번 고장 검출기, 4~7번 생물군계(biome) 유형 — 같은 비트 연산을 쓰면 엉뚱한 값을 고르게 됨"
+      - aspect: 파일 형식
+        before: "HDF-EOS2(HDF4, .hdf)"
+        after: "HDF-EOS5(HDF5, .h5)"
+      - aspect: 일관성 (2012~2016, VIIRS − MODIS)
+        before: "기준"
+        after: "평균 차이 LAI −0.006 ± 0.013, FPAR −0.002 ± 0.002. 열대림(반사도 포화)에서 차이가 크고, VIIRS는 주 알고리즘 성공률의 연변동이 컸음(Xu et al. 2018, VIIRS V1 기준)"
+    impacts:
+      - 두 기록을 이을 때는 겹치는 기간(2012년 이후, NOAA-20은 2018년 이후)에서 화소·계절별 차이를 확인하고, 이음매가 있음을 논문에 밝히세요.
+      - QC 비트 배치가 달라 MODIS용 품질 필터 코드를 VIIRS에 그대로 쓰면 안 됩니다. 변수 이름의 `_500m`도 빠졌습니다.
+      - MODIS 4일 제품(MCD15A3H)에 맞춘 분석은 VIIRS에서 8일로만 이어갈 수 있습니다.
+      - Suomi NPP 제품(VNP15A2H)은 2026년 11월 배포가 끝나므로, 앞으로 이어 쓸 기준 위성은 NOAA-21(VJ215A2H, 주)·NOAA-20(VJ115A2H, 보조)입니다.
+    sources:
+      - name: Transition from MODIS to VIIRS (NASA Earthdata 공지, 2025-05-02)
+        url: https://www.earthdata.nasa.gov/data/alerts-outages/transition-from-modis-viirs
+      - name: VNP15 사용자 안내서 V1.2 (2018)
+        url: https://lpdaac.usgs.gov/documents/126/VNP15_User_Guide.pdf
+      - name: Xu et al. (2018) — VIIRS·MODIS LAI/FPAR 일관성 분석 (Forests)
+        url: https://doi.org/10.3390/f9020073
+      - name: Román et al. (2024) — MODIS C6.1과 VIIRS C2 육상 제품 연속성 (RSE)
+        url: https://doi.org/10.1016/j.rse.2023.113963
+  - from: MODIS LAI/FPAR C6
+    to: MODIS LAI/FPAR C6.1
+    status: completed
+    date: "2023-07"
+    summary: >-
+      과학 알고리즘은 그대로 두고 Terra·Aqua L1B 보정 방식과 편광 보정만 바꿔 전 기간을 다시 만든 판입니다. 형식·변수 이름은 C6과 같습니다.
+      C6(006) 육상 제품은 2023년 7월 31일 배포가 끝났습니다.
+    changes:
+      - aspect: 알고리즘
+        before: "C6 (500 m MOD09GA 입력, 일별 중간 산출물 MOD15IP, 개선된 다년 토지피복)"
+        after: "변경 없음"
+      - aspect: 입력 보정
+        before: "C6 L1B 보정"
+        after: "Terra·Aqua L1B 보정 방식 변경, 편광 보정 변경"
+      - aspect: 제공 상태
+        before: "006 — 2023-07-31 배포 종료"
+        after: "061 — 현재 유일한 판"
+    impacts:
+      - 006으로 만든 결과는 061로 다시 확인하세요. 006 파일은 더 이상 받을 수 없습니다.
+    sources:
+      - name: MOD15 C6.1 사용자 안내서 (2020)
+        url: https://lpdaac.usgs.gov/documents/926/MOD15_User_Guide_V61.pdf
+      - name: MODIS Version 6.0 육상 제품 배포 종료 최종 공지 (2023-07-25)
+        url: https://www.earthdata.nasa.gov/data/alerts-outages/final-notice-modis-version-6-0-land-data-products-decommissioned-july-31-2023
+
+notices:
+  - date: "2026-03-26"
+    level: info
+    title: Terra MODIS 대기 모드 진입 — 2026년 85~86일 일부 자료 '의심/불량' 처리
+    body: >-
+      2026년 3월 26일 약 20시(UTC) Terra 이상으로 MODIS가 대기(standby) 모드에 들어갔다가 3월 27일 과학 모드로 돌아왔습니다.
+      보정팀은 2026년 85일 20:00 UTC부터 86일 19:23 UTC까지의 자료를 의심/불량으로 표시했으며, 그 이후 자료는 써도 된다고 밝혔습니다.
+      이 구간이 포함된 8일·4일 합성(Terra 기반 MOD15·MCD15)은 품질 플래그를 확인하세요.
+    source: https://www.earthdata.nasa.gov/data/alerts-outages/terra-modis-placed-standby-mode
+  - date: "2026-03-20"
+    level: warning
+    title: Terra 2027년 2월, Aqua 2027년 9월 과학 운영 종료 전망
+    body: >-
+      NASA Earth Observer의 Terra 특집(2025-12-29 게재, 2026-03-20 갱신) 편집자 주는 과학 활동 종료 예상 시점을 Terra 2027년 2월, Aqua 2027년 9월로 밝혔습니다.
+      그때까지는 운영을 이어가며, Terra는 배터리 노화로 전력이 부족해 2025년 4월 9일 MOPITT를 꺼 나머지 4개 센서의 전력을 아꼈고, ASTER 단파적외(SWIR)는 이미 동작하지 않습니다.
+    source: https://science.nasa.gov/science-research/earth-science/terra-the-end-of-an-era
+  - date: "2026-01-08"
+    level: warning
+    title: MODIS 품질팀 공지 — Terra·Aqua 궤도 표류가 화소 크기·주사 틈·일주기 표집에 영향
+    body: >-
+      LDOPE는 궤도 유지를 멈춘 Terra(마지막 조정 2022년)·Aqua(2021년)의 표류로 화소 크기와 간격, 주사 틈, 보타이(bowtie) 겹침, 일주기 표집이 바뀌었고
+      2024년 말부터 영향이 크게 늘었다고 알렸습니다. 산불 제품을 비롯한 각 제품에 미치는 영향은 조사 중입니다.
+    source: https://landweb.modaps.eosdis.nasa.gov/displayissue?id=1254
+  - date: "2025-06-03"
+    level: warning
+    title: LP DAAC Data Pool의 MODIS 배포 종료(2025-06-30) — Earthdata Cloud로 전환
+    body: >-
+      LP DAAC는 C6.1을 포함한 모든 MODIS 자료의 Data Pool 접근을 2025년 6월 30일 끝내고 NASA Earthdata Cloud를 주 저장소로 쓴다고 공지했습니다.
+      Earthdata Search와 AppEEARS 사용자는 바뀌는 점이 없지만, Data Pool 주소를 직접 쓰던 스크립트는 고쳐야 합니다.
+    source: https://www.earthdata.nasa.gov/data/alerts-outages/lp-daac-discontinue-data-pool-distribution-modis-datasets
+  - date: "2025-05-02"
+    level: warning
+    title: MODIS에서 VIIRS로 전환 안내 — Terra·Aqua 2026년 말~2027년 초 종료 예정
+    body: >-
+      NASA는 Terra·Aqua가 2026년 말이나 2027년 초에 운영을 멈출 것으로 보고, 그때 MODIS 자료 수집이 끝나며 마지막 재처리가 이어진다고 공지했습니다.
+      두 위성의 궤도 표류가 통과 시각과 자료 품질에 영향을 줄 수 있으니 비슷한 VIIRS 제품으로 옮기라고 권합니다.
+    source: https://www.earthdata.nasa.gov/data/alerts-outages/transition-from-modis-viirs
+  - date: "2023-07-25"
+    level: info
+    title: MODIS Version 6.0 육상 제품 배포 종료(2023-07-31) — V6.1만 제공
+    body: >-
+      LP DAAC가 Terra·Aqua·결합 MODIS V6.0 육상 제품(MOD44W·MCD43GF 제외)의 배포를 2023년 7월 31일 끝냈습니다.
+      사용자 안내서·ATBD는 DOI 페이지에 남아 있으며, V6.1로 옮기라고 안내했습니다.
+    source: https://www.earthdata.nasa.gov/data/alerts-outages/final-notice-modis-version-6-0-land-data-products-decommissioned-july-31-2023
+
+links:
+  - name: MOD15 C6.1 사용자 안내서 (PDF)
+    url: https://lpdaac.usgs.gov/documents/926/MOD15_User_Guide_V61.pdf
+  - name: MOD15 알고리즘 이론 문서(ATBD, PDF)
+    url: https://lpdaac.usgs.gov/documents/90/MOD15_ATBD.pdf
+  - name: Earthdata 카탈로그 — MCD15A2H V061
+    url: https://www.earthdata.nasa.gov/data/catalog/lpcloud-mcd15a2h-061
+  - name: Earthdata 카탈로그 — MCD15A3H V061
+    url: https://www.earthdata.nasa.gov/data/catalog/lpcloud-mcd15a3h-061
+  - name: MODIS/VIIRS 육상 품질 알려진 문제(LDOPE)
+    url: https://landweb.modaps.eosdis.nasa.gov/knownissue
+  - name: MODIS Land 팀 소식 (궤도 표류·C7 계획)
+    url: https://modis-land.gsfc.nasa.gov/news.html
+  - name: LAADS DAAC — MODIS to VIIRS Transition
+    url: https://ladsweb.modaps.eosdis.nasa.gov/learn/modis-to-viirs-transition
+
+watch_urls:
+  - https://www.earthdata.nasa.gov/data/alerts-outages/transition-from-modis-viirs
+  - https://landweb.modaps.eosdis.nasa.gov/knownissue
+  - https://modis-land.gsfc.nasa.gov/news.html
+
+last_verified: "2026-10-13"

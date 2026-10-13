@@ -10,7 +10,7 @@ hide:
 
 # Korean Climate Data Navigator { .visually-hidden }
 
-A one-stop guide for atmospheric, ocean, sea-ice, polar and remote-sensing researchers: **where each dataset comes from, how to download it, the period it covers, which variables it offers, what to cite, and the latest discontinuation and change notices**.
+A one-stop guide for atmospheric, ocean, sea-ice, land, polar and remote-sensing researchers: **where each dataset comes from, how to download it, the period it covers, which variables it offers, what to cite, and the latest discontinuation and change notices**.
 
 This site does not host any data. Every entry links to the official source. <!-- DATASET_COUNT --> datasets are documented so far (<!-- DOMAIN_COUNTS -->; some appear under two domains).
 
@@ -27,7 +27,7 @@ This site does not host any data. Every entry links to the official source. <!--
 - Researchers looking for the right dataset for a specific analysis
 - Anyone checking whether a dataset is still maintained or has been superseded by a newer version
 - Researchers comparing several datasets side by side or cross-checking results
-- Researchers from outside atmospheric, ocean or sea-ice science who need climate data and want to learn what is available and how to use it
+- Researchers from outside atmospheric, ocean, sea-ice or land science who need climate data and want to learn what is available and how to use it
 
 ## Latest notices from data providers
 
@@ -39,7 +39,7 @@ End of production, delays and version changes announced by the agencies that pro
 
 ## How to use this site
 
-- **Choosing a dataset** — browse the Atmosphere · Ocean · Sea ice menus, then put several candidates side by side in [Compare datasets](compare.md).
+- **Choosing a dataset** — browse the Atmosphere · Ocean · Sea ice · Land menus, then put several candidates side by side in [Compare datasets](compare.md).
 - **Looking for a variable** — type "precipitation" or "2 m temperature" into [Find by variable](find-variable.md) to list every dataset that has it.
 - **Using a variable** — check the instantaneous · mean · accumulated badge next to each variable and the "time-stamp convention" box. Two "3-hourly" products can mean very different things.
 - **Downloading** — follow "How to get the data" and the example code on each dataset page.

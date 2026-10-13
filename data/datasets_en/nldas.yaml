@@ -1,0 +1,413 @@
+# ─────────────────────────────────────────────────────────────
+# NLDAS-2 — dataset information file
+# Listed under the Land tab, 'Land reanalyses & data assimilation'. Covers the NLDAS-2 netCDF (V2.0) forcing (FORA, FORB) and the Noah, Mosaic and VIC output.
+# As of 2026-10-13 only beta forcing for NLDAS-3 has been released, so it is described as a planned transition rather than on its own page.
+# After editing, update last_verified to the date you checked the official pages.
+# ─────────────────────────────────────────────────────────────
+id: nldas
+name: "NLDAS-2"
+full_name: North American Land Data Assimilation System Phase 2 (NLDAS-2 — 0.125° hourly forcing and Noah, Mosaic and VIC land surface model output)
+category: reanalysis
+domain: land
+group: 육상 재분석·자료동화
+order: 22
+domains: [육지, 수문]
+provider: NLDAS project (NASA GSFC Hydrological Sciences Laboratory, NOAA NCEP EMC and partners) / GES DISC
+
+status: active
+status_note: >-
+  The netCDF version (V2.0) is updated daily with about a 4-day lag (on 2026-10-13 the hourly Noah output reached 2026-10-08 23Z and the monthly files 2026-09).
+  The older GRIB-1 version (V002) stopped updating with data valid at 23Z on 1 August 2024, and August 2022 to March 2024 was reprocessed in June 2024 after a forcing error.
+  The successor, NLDAS-3 (1 km), is still in development with only beta forcing released, and the GES DISC on-premises server that hosts the files (hydro1) may close after 30 September 2026.
+
+period:
+  start: "1979-01"
+  end: present
+  note: >-
+    Hourly forcing (FORA, FORB) starts at 13Z on 1979-01-01 and model output (Noah, Mosaic, VIC) around 00Z on 1979-01-02 (01Z for Noah and 00Z for Mosaic and VIC in CMR).
+    Monthly files start in 1979-01 and the monthly climatology (MC) is a 40-year 1981–2020 average. On 2026-10-13 hourly Noah reached 2026-10-08 23Z, FORA 2026-10-09 12Z and the monthly files 2026-09.
+
+resolution:
+  spatial_short: "14 km (0.125°)"
+  temporal_short: "1시간"
+  spatial: >-
+    1/8° (0.125°) latitude-longitude grid of 464 × 224, 25–53°N, 125–67°W (centred on the conterminous US, with parts of southern Canada and northern Mexico).
+    Cell centres run from (124.9375°W, 25.0625°N) to (67.0625°W, 52.9375°N). The forcing is interpolated and temporally disaggregated from 32 km, 3-hourly NARR fields.
+  vertical: >-
+    Single surface level plus soil. Noah has 4 soil layers (0–10, 10–40, 40–100, 100–200 cm) plus 0–100 and 0–200 cm totals; VIC has 3 soil layers (layer1–3); Mosaic also has layered output.
+    Wind, temperature and humidity in the FORB forcing are on a NARR hybrid level.
+  temporal: "Hourly (FORA, FORB, Noah, Mosaic, VIC) / monthly (same five products) / 1981–2020 monthly climatology"
+
+update: "Daily, about 4 days behind real time (each day's forcing is typically added as a 12Z–12Z block) / monthly files about 10–15 days after the start of the following month"
+license: NASA Earth science open data — free of charge. Downloading from GES DISC requires a free NASA Earthdata Login; please cite the product DOI
+account_required: true
+
+summary: >-
+  NLDAS-2 is a land dataset for the conterminous US and surroundings run jointly by NASA, NOAA and partners. It provides 0.125° hourly forcing built from observation-based precipitation
+  (CPC daily gauge analysis disaggregated with radar) and NARR meteorology, together with soil moisture, evapotranspiration, runoff, snow and energy fluxes from the Noah, Mosaic and VIC
+  land surface models driven by that forcing, from 1979 onward. Despite the name, it is an open-loop simulation without data assimilation, and the forcing alone is widely used to drive other
+  hydrological models. It is widely used for drought monitoring and hydrological research, and a successor, NLDAS-3 (1 km, North and Central America), is under development.
+
+time_convention:
+  summary: >-
+    Hourly files are labelled by GMT hour, and each variable is either instantaneous (point), averaged over the previous hour (mean) or accumulated over the previous hour (sum); the mean and sum
+    values in a 03Z file cover 02–03Z. In monthly files, rainfall, snowfall, evapotranspiration, runoff and snowmelt (plus FORA convective precipitation and potential evaporation) are monthly totals (kg m-2), and everything else is a monthly mean.
+  points:
+    - "In the FORA forcing, temperature, humidity, pressure, wind, downward longwave, downward shortwave and CAPE are instantaneous values at the top of the hour; precipitation `Rainf` and potential evaporation `PotEvap` are totals over the previous hour (kg m-2 = mm). The files' cell_methods attributes record the same distinction."
+    - "Downward shortwave and longwave are instantaneous in the FORA forcing files but hourly backward averages as `SWdown` and `LWdown` in the Noah output files. Be careful when mixing the two."
+    - "In model output, energy fluxes (`SWnet`, `LWnet`, `Qle`, `Qh`, `Qg`) and evaporation components are previous-hour means (W m-2), water fluxes (`Rainf`, `Snowf`, `Evap`, `Qs`, `Qsb`, `Qsm`) are previous-hour totals (kg m-2), and states (soil moisture, soil temperature, snow, LAI, albedo, skin temperature) are instantaneous at the top of the hour."
+    - "There is no daily product; build daily values from the hourly files. Because the 03Z file covers 02–03Z, a 00–24Z daily total is the sum of the 24 files from 01Z that day to 00Z the next day. Hourly precipitation is disaggregated so that the CPC daily gauge totals are preserved, so a 00–24Z total can differ from the CPC daily value if the CPC day is defined differently."
+    - "Monthly files cover 00Z on the 1st to 23:59Z on the last day. The only exception is January 1979, which starts at 00Z on 2 January (12Z on 1 January for FORA precipitation, convective precipitation and PotEvap, and FORB precipitation)."
+    - "`time` is in 'hours since 1979-01-01 00:00:00' and `time_bnds` holds the averaging or accumulation interval."
+  source: https://docserver.gesdisc.eosdis.nasa.gov/public/project/hydrology/NLDAS2_README.pdf
+  source_name: "NLDAS-2 README (README Document for NLDAS Phase 2 netCDF, last revised 2023-07-07) + GES DISC netCDF file attributes + NLDAS FAQ"
+
+variables:
+  note: >-
+    Main variables from the NLDAS-2 netCDF (V2.0) README tables (Tables 3 and 6) and GES DISC files (NLDAS_FORA0125_H, NLDAS_NOAH0125_M). Names are ALMA-convention netCDF names
+    and differ from the GRIB-1 PDS-number names. Mosaic and VIC output use the same naming pattern and differ only in the soil variables (VIC uses `SoilM_layer1` to `3`, etc.).
+    The optional secondary forcing FORB holds NARR precipitation, NARR hybrid-level temperature, humidity, pressure and wind with their height, aerodynamic conductance and more (see the README for the list).
+  full_list: https://docserver.gesdisc.eosdis.nasa.gov/public/project/hydrology/NLDAS2_README.pdf
+  groups:
+    - name: Primary forcing FORA (hourly, instantaneous at the top of the hour)
+      kind: instant
+      items:
+        - "2 m air temperature — `Tair` (K)"
+        - "2 m specific humidity — `Qair` (kg kg-1)"
+        - "Surface pressure — `PSurf` (Pa)"
+        - "10 m zonal and meridional wind — `Wind_E`, `Wind_N` (m s-1)"
+        - text: "Surface downward shortwave radiation — `SWdown` (W m-2)"
+          note: Bias-corrected with GOES-based shortwave; instantaneous in the forcing files
+        - "Surface downward longwave radiation — `LWdown` (W m-2)"
+        - "Convective available potential energy — `CAPE` (J kg-1)"
+    - name: Primary forcing FORA (hourly, total over the previous hour)
+      kind: accum
+      period: 1-hour
+      items:
+        - text: "Total precipitation — `Rainf` (kg m-2)"
+          note: CPC daily gauge analysis (PRISM orographic adjustment) disaggregated with radar, CMORPH or NARR in that order
+        - text: "Potential evaporation — `PotEvap` (kg m-2)"
+          note: Modified Penman scheme from NARR
+        - text: "Convective fraction of precipitation — `CRainf_frac` (fraction)"
+          note: cell_methods says sum, but the value is the convective share of the previous hour's precipitation; monthly files carry convective precipitation `CRainf` (kg m-2)
+    - name: Noah output — energy fluxes (hourly, previous-hour mean)
+      kind: mean
+      period: 1-hour
+      items:
+        - "Net shortwave and longwave radiation — `SWnet`, `LWnet` (W m-2)"
+        - "Latent heat flux — `Qle` (W m-2)"
+        - "Sensible heat flux — `Qh` (W m-2)"
+        - "Ground heat flux — `Qg` (W m-2)"
+        - "Snow phase-change heat flux — `Qf` (W m-2)"
+        - "Surface downward shortwave and longwave radiation — `SWdown`, `LWdown` (W m-2)"
+        - "Potential evaporation — `PotEvap` (W m-2)"
+        - "Canopy water evaporation, transpiration, bare-soil evaporation, snow sublimation — `ECanop`, `TVeg`, `ESoil`, `SubSnow` (W m-2)"
+    - name: Noah output — water fluxes (hourly, previous-hour total)
+      kind: accum
+      period: 1-hour
+      items:
+        - "Rainfall (liquid precipitation) — `Rainf` (kg m-2)"
+        - "Snowfall — `Snowf` (kg m-2)"
+        - "Total evapotranspiration — `Evap` (kg m-2)"
+        - "Surface runoff — `Qs` (kg m-2)"
+        - "Subsurface runoff (baseflow) — `Qsb` (kg m-2)"
+        - "Snowmelt — `Qsm` (kg m-2)"
+        - text: "Streamflow — `Streamflow` (m3 s-1)"
+          kind: mean
+          note: Undefined outside the NWS River Forecast Center domain
+    - name: Noah output — states (hourly, instantaneous at the top of the hour)
+      kind: instant
+      items:
+        - "Average surface skin temperature — `AvgSurfT` (K)"
+        - "Albedo — `Albedo` (%)"
+        - "Snow water equivalent — `SWE` (kg m-2)"
+        - "Snow depth — `SnowDepth` (m)"
+        - "Snow cover — `SnowFrac` (fraction)"
+        - "Soil moisture — `SoilM_0_10cm`, `SoilM_10_40cm`, `SoilM_40_100cm`, `SoilM_100_200cm`, `SoilM_0_100cm`, `SoilM_0_200cm`, `RootMoist` (kg m-2)"
+        - "Liquid soil moisture — `SMLiq_0_10cm` etc. (kg m-2)"
+        - "Soil moisture availability — `SMAvail_0_100cm`, `SMAvail_0_200cm` (%)"
+        - "Soil temperature — `SoilT_0_10cm`, `SoilT_10_40cm`, `SoilT_40_100cm`, `SoilT_100_200cm` (K)"
+        - "Plant canopy surface water — `CanopInt` (kg m-2)"
+        - "Leaf area index — `LAI` (unitless)"
+    - name: Monthly files (NLDAS_*0125_M)
+      kind: mean
+      period: Monthly
+      items:
+        - text: "Monthly precipitation — `Rainf` (kg m-2)"
+          kind: accum
+          note: Monthly total (total precipitation in FORA, rainfall in Noah)
+        - text: "Monthly evapotranspiration, surface and subsurface runoff, snowmelt — `Evap`, `Qs`, `Qsb`, `Qsm` (kg m-2)"
+          kind: accum
+          note: Monthly totals
+        - "Monthly mean soil moisture — `SoilM_0_10cm` etc. (kg m-2)"
+        - "Monthly mean latent and sensible heat flux — `Qle`, `Qh` (W m-2)"
+        - "Monthly mean 2 m air temperature (FORA) — `Tair` (K)"
+
+access:
+  - name: NASA GES DISC — NLDAS dataset list
+    url: https://disc.gsfc.nasa.gov/datasets?keywords=NLDAS
+    method: HTTPS download / earthaccess / Earthdata Search / OPeNDAP / subsetting
+    note: >-
+      Short names are NLDAS_<FORA|FORB|NOAH|MOS|VIC>0125_<H|M|MC>, version 2.0 (file names end in .020.nc). The GRIB-1 version (V002) has not been updated since 2024-08-01.
+      SAC model output is not at GES DISC; it is only on the NOAA NCEP/EMC NLDAS website. A free Earthdata Login is required, and the old server (hydro1.gesdisc.eosdis.nasa.gov)
+      may close after 30 September 2026, so switch to data.gesdisc.earthdata.nasa.gov or earthaccess.
+  - name: AWS us-west-2 direct access (S3)
+    url: https://data.gesdisc.earthdata.nasa.gov/s3credentials
+    method: Cloud storage (S3, in-region us-west-2 only)
+    note: "Example: s3://gesdisc-cumulus-prod-protected/NLDAS/NLDAS_FORA0125_H.2.0/ — temporary credentials are required."
+  - name: NASA Giovanni
+    url: https://giovanni.gsfc.nasa.gov/
+    method: Web maps and time series; NetCDF, GeoTIFF and KMZ downloads
+    note: Quick area-mean time series.
+  - name: NASA LDAS — NLDAS
+    url: https://ldas.gsfc.nasa.gov/nldas
+    method: Documentation, FAQ and news
+    note: Forcing configuration, known issues, reprocessing notices and NLDAS-3 development news.
+
+example:
+  lang: python
+  note: >-
+    Uses earthaccess to download the FORA hourly files for 1 July 2023 and build the 00–24Z daily precipitation (mm). Because the 03Z file holds the 02–03Z total,
+    the 24 files from 01Z that day to 00Z the next day are used. You will be asked for your Earthdata credentials on the first run.
+  code: |
+    import earthaccess
+    import xarray as xr
+
+    earthaccess.login()  # free NASA Earthdata account
+    results = earthaccess.search_data(
+        short_name="NLDAS_FORA0125_H", version="2.0",
+        temporal=("2023-07-01T01:00:00", "2023-07-02T00:00:00"),   # files 01Z to next-day 00Z = 00-24Z totals
+        bounding_box=(-125, 25, -67, 53),
+    )
+    files = earthaccess.download(results, "nldas_fora_h")
+
+    ds = xr.open_mfdataset(files, combine="by_coords")
+    print(ds.time.values)                     # check there are 24 time steps
+    daily_precip = ds["Rainf"].sum("time")    # kg m-2 = mm, 2023-07-01 00-24Z
+    tmax = ds["Tair"].max("time") - 273.15    # highest of the hourly instantaneous values (deg C)
+    print(float(daily_precip.mean()), float(tmax.mean()))
+
+tips:
+  - "`SWdown` and `LWdown` are instantaneous in the FORA forcing but previous-hour means in the Noah output files. Check which file you use when computing daily mean radiation."
+  - "Hourly `Rainf` is a previous-hour total (kg m-2 = mm), not a rate. Sum the 01Z to next-day 00Z files for a daily total; monthly `Rainf` is already the monthly total, so do not multiply by the number of days again."
+  - "From August 2022 to 1 March 2024, an error in the NCEP R-CDAS snow-depth input made temperatures too warm, so snow, runoff and soil moisture (especially in winter 2022–23) were wrong; the period was reprocessed on 7 June 2024. Re-download any data for this period obtained before then."
+  - "Known issues: unrealistic precipitation on the Canadian side of the US–Canada border in many years; isolated very dry spots from gauge quality-control problems; and a change in precipitation behaviour from 1 January 2012 due to a new interpolation algorithm, notably along the US–Mexico border, in western mountains and along coastlines. The README states these cannot be fixed by regenerating the data at this time."
+  - "Mosaic output: the four evaporation fluxes had reversed signs in the GRIB files (corrected in netCDF), and canopy conductance has been incorrectly defined since 01Z on 2008-03-09, which carries over to netCDF."
+  - "Noah soil moisture such as `SoilM_0_100cm` is in kg m-2 (mm). Divide by the layer thickness in mm to get volumetric water content."
+  - "The old GRIB-1 version (V002) uses different variable names from netCDF V2.0 and has not been updated since 23Z on 2024-08-01. On 2026-10-13 no V002 collections appeared in NASA CMR, so move scripts to V2.0."
+  - "The monthly climatology (MC) in the netCDF version averages 1981–2020 (40 years; the old GRIB version used 1980–2009). State the baseline when computing anomalies."
+
+citations:
+  dataset:
+    - label: NLDAS-2 Noah hourly V2.0 (GES DISC)
+      text: >-
+        NLDAS project (2020), NLDAS Noah Land Surface Model L4 Hourly 0.125 x 0.125 degree V2.0, Edited by David Mocko, NASA/GSFC/HSL, Greenbelt, Maryland, USA,
+        Goddard Earth Sciences Data and Information Services Center (GES DISC), Accessed: [Data Access Date], 10.5067/T4OW83T8EXDO
+      doi: 10.5067/T4OW83T8EXDO
+      bibtex: |
+        @misc{nldas2_noah0125_h,
+          author    = {{NLDAS project}},
+          editor    = {Mocko, David},
+          title     = {{NLDAS} Noah Land Surface Model {L4} Hourly 0.125 x 0.125 degree {V2.0}},
+          year      = {2020},
+          publisher = {Goddard Earth Sciences Data and Information Services Center (GES DISC)},
+          address   = {Greenbelt, MD, USA},
+          doi       = {10.5067/T4OW83T8EXDO}
+        }
+    - label: NLDAS-2 primary forcing (FORA) hourly V2.0 (GES DISC)
+      text: >-
+        NLDAS project (2020), NLDAS Primary Forcing Data L4 Hourly 0.125 x 0.125 degree V2.0, Edited by David Mocko, NASA/GSFC/HSL, Greenbelt, Maryland, USA,
+        Goddard Earth Sciences Data and Information Services Center (GES DISC), Accessed: [Data Access Date], 10.5067/THUF4J1RLSYG
+      doi: 10.5067/THUF4J1RLSYG
+      bibtex: |
+        @misc{nldas2_fora0125_h,
+          author    = {{NLDAS project}},
+          editor    = {Mocko, David},
+          title     = {{NLDAS} Primary Forcing Data {L4} Hourly 0.125 x 0.125 degree {V2.0}},
+          year      = {2020},
+          publisher = {Goddard Earth Sciences Data and Information Services Center (GES DISC)},
+          address   = {Greenbelt, MD, USA},
+          doi       = {10.5067/THUF4J1RLSYG}
+        }
+    - label: NLDAS-2 Noah monthly V2.0 (GES DISC)
+      text: >-
+        NLDAS project (2020), NLDAS Noah Land Surface Model L4 Monthly 0.125 x 0.125 degree V2.0, Edited by David Mocko, NASA/GSFC/HSL, Greenbelt, Maryland, USA,
+        Goddard Earth Sciences Data and Information Services Center (GES DISC), Accessed: [Data Access Date], 10.5067/WB224IA3PVOJ
+      doi: 10.5067/WB224IA3PVOJ
+      bibtex: |
+        @misc{nldas2_noah0125_m,
+          author    = {{NLDAS project}},
+          editor    = {Mocko, David},
+          title     = {{NLDAS} Noah Land Surface Model {L4} Monthly 0.125 x 0.125 degree {V2.0}},
+          year      = {2020},
+          publisher = {Goddard Earth Sciences Data and Information Services Center (GES DISC)},
+          address   = {Greenbelt, MD, USA},
+          doi       = {10.5067/WB224IA3PVOJ}
+        }
+  papers:
+    - label: NLDAS-2 configuration and model intercomparison (Xia et al. 2012a)
+      text: >-
+        Xia, Y., Mitchell, K., Ek, M., Sheffield, J., Cosgrove, B., Wood, E., Luo, L., Alonge, C., Wei, H., Meng, J., Livneh, B., Lettenmaier, D.,
+        Koren, V., Duan, Q., Mo, K., Fan, Y., Mocko, D. (2012): Continental-scale water and energy flux analysis and validation for the North American
+        Land Data Assimilation System project phase 2 (NLDAS-2): 1. Intercomparison and application of model products. Journal of Geophysical Research, 117, D03109.
+      doi: 10.1029/2011JD016048
+      bibtex: |
+        @article{xia2012nldas2,
+          author  = {Xia, Youlong and Mitchell, Kenneth and Ek, Michael and Sheffield, Justin and Cosgrove, Brian and Wood, Eric F. and Luo, Lifeng and Alonge, Charles and Wei, Helin and Meng, Jesse and Livneh, Ben and Lettenmaier, Dennis and Koren, Victor and Duan, Qingyun and Mo, Kingtse and Fan, Yun and Mocko, David},
+          title   = {Continental-scale water and energy flux analysis and validation for the {North American Land Data Assimilation System} project phase 2 ({NLDAS-2}): 1. Intercomparison and application of model products},
+          journal = {Journal of Geophysical Research},
+          volume  = {117},
+          number  = {D3},
+          pages   = {D03109},
+          year    = {2012},
+          doi     = {10.1029/2011JD016048}
+        }
+    - label: NLDAS project background (Mitchell et al. 2004)
+      text: >-
+        Mitchell, K. E., Lohmann, D., Houser, P. R., Wood, E. F., Schaake, J. C., Robock, A., Cosgrove, B. A., Sheffield, J., Duan, Q., Luo, L., Higgins, R. W.,
+        Pinker, R. T., Tarpley, J. D., Lettenmaier, D. P., Marshall, C. H., Entin, J. K., Pan, M., Shi, W., Koren, V., Meng, J., Ramsay, B. H., Bailey, A. A. (2004):
+        The multi-institution North American Land Data Assimilation System (NLDAS): Utilizing multiple GCIP products and partners in a continental distributed
+        hydrological modeling system. Journal of Geophysical Research: Atmospheres, 109(D7).
+      doi: 10.1029/2003JD003823
+      bibtex: |
+        @article{mitchell2004nldas,
+          author  = {Mitchell, Kenneth E. and Lohmann, Dag and Houser, Paul R. and Wood, Eric F. and Schaake, John C. and Robock, Alan and Cosgrove, Brian A. and Sheffield, Justin and Duan, Qingyun and Luo, Lifeng and Higgins, R. Wayne and Pinker, Rachel T. and Tarpley, J. Dan and Lettenmaier, Dennis P. and Marshall, Curtis H. and Entin, Jared K. and Pan, Ming and Shi, Wei and Koren, Victor and Meng, Jesse and Ramsay, Bruce H. and Bailey, Andrew A.},
+          title   = {The multi-institution {North American Land Data Assimilation System} ({NLDAS}): Utilizing multiple {GCIP} products and partners in a continental distributed hydrological modeling system},
+          journal = {Journal of Geophysical Research: Atmospheres},
+          volume  = {109},
+          number  = {D7},
+          year    = {2004},
+          doi     = {10.1029/2003JD003823}
+        }
+  acknowledgement: >-
+    Cite the DOI of each product you use; the others are tabulated in the README (e.g. FORA monthly 10.5067/2DPKB5B5N14O, FORB hourly 10.5067/96S0R3LFOBTU, Mosaic hourly 10.5067/TS58ZCJZIWT5,
+    VIC hourly 10.5067/45T7K120BJ2S). NASA asks that publications include: "The data used in this study were acquired as part of the mission of NASA's Earth Science Division and archived
+    and distributed by the Goddard Earth Sciences (GES) Data and Information Services Center (DISC)." The README recommends Mitchell et al. (2004) for project background and
+    Xia et al. (2012a, 2012b) for the NLDAS-2 configuration.
+
+transitions:
+  - from: NLDAS-2 GRIB-1 (V002)
+    to: NLDAS-2 netCDF (V2.0)
+    status: completed
+    date: "2024-08"
+    summary: >-
+      V2.0, the same NLDAS-2 data rewritten as CF/ALMA-convention netCDF, was released in 2020–2021, and the GRIB-1 version (V002) stopped updating with data valid at 23Z on 1 August 2024.
+    changes:
+      - aspect: Format and version
+        before: "GRIB-1, version 002"
+        after: "netCDF, version 2.0 (file names end in .020.nc)"
+      - aspect: Variable names
+        before: "GRIB PDS numbers and abbreviations"
+        after: "ALMA names (`Tair`, `Rainf`, `SoilM_0_10cm`, etc.) with cell_methods attributes (point, mean, sum)"
+      - aspect: Mosaic evaporation flux signs
+        before: "Signs of four evaporation fluxes reversed"
+        after: "Corrected"
+      - aspect: Monthly climatology period
+        before: "1980–2009 (30 years)"
+        after: "1981–2020 (40 years)"
+      - aspect: Updates
+        before: "Stopped at 23Z on 2024-08-01"
+        after: "Daily, about 4 days behind real time"
+    impacts:
+      - "GRIB scripts need both variable names and file paths changed."
+      - "The climatology baseline changed, so anomaly values change too."
+    sources:
+      - name: NLDAS-2 GRIB-1 files no longer updated as of 1 August 2024 (NASA LDAS)
+        url: https://ldas.gsfc.nasa.gov/nldas/news/nldas-2-grib-1-files-no-longer-updated-1-august-2024
+      - name: NLDAS-2 README (netCDF V2.0)
+        url: https://docserver.gesdisc.eosdis.nasa.gov/public/project/hydrology/NLDAS2_README.pdf
+  - from: NLDAS-2
+    to: NLDAS-3
+    status: planned
+    summary: >-
+      NASA's third-phase NLDAS raises the resolution to 1 km, extends the domain to all of North and Central America, and moves to the Noah-MP model with satellite data assimilation.
+      On 2026-10-13 only beta forcing for 2001–2023 was public on AWS; model output, announced as 'expected mid-2026', had not yet appeared. NLDAS-3 is not registered at GES DISC or in CMR.
+    changes:
+      - aspect: Horizontal resolution and grid
+        before: "0.125° (about 12.5 km), 464 × 224"
+        after: "1 km, 11,700 × 6,500 grid"
+      - aspect: Domain
+        before: "25–53°N, 125–67°W (conterminous US focus)"
+        after: "7–72°N, 169–52°W (North America including Alaska, Hawaii and Puerto Rico, plus Central America)"
+      - aspect: Land surface models
+        before: "Noah, Mosaic, VIC, SAC"
+        after: "Noah-MP with HyMAP river routing"
+      - aspect: Forcing
+        before: "NARR + CPC daily gauge analysis (radar disaggregation)"
+        after: "MERRA-2 and GEOS-IT background + gauges, IMERG and Canada's CaPA precipitation"
+      - aspect: Data assimilation
+        before: "None (open loop)"
+        after: "Planned assimilation of soil moisture (SMAP and others), snow, MODIS/VIIRS LAI and GRACE/GRACE-FO terrestrial water storage"
+      - aspect: Period and latency
+        before: "1979-01 to present, about 4-day lag"
+        after: "Beta forcing 2001–2023; planned near-real-time Early Look with about 7-hour latency"
+      - aspect: Release status
+        before: "Operational distribution at GES DISC"
+        after: "Only beta forcing public on AWS (s3://nasa-waterinsight/NLDAS3/forcing/), with a warning that it may change substantially before the final release"
+    impacts:
+      - "Beta data may change substantially before release, so keep using NLDAS-2 for long-term analyses in publications for now."
+      - "When NLDAS-3 arrives, resolution, model and forcing all change; do not splice it with NLDAS-2 into one series."
+      - "The schedule in the April 2025 workshop slides (open loop in late summer 2025, data assimilation in late fall 2025) was not met. Check the NASA LDAS NLDAS-3 page and GitHub for release news."
+    sources:
+      - name: NASA LDAS — NLDAS-3
+        url: https://ldas.gsfc.nasa.gov/nldas/v3
+      - name: NLDAS-3 GitHub (NASAWaterInsight)
+        url: https://github.com/NASAWaterInsight/NLDAS-3
+      - name: NLDAS-3 Drought Workshop 3 Slides (2025-04-10)
+        url: https://ldas.gsfc.nasa.gov/sites/default/files/ldas/nldas/NLDAS-3_Drought-Workshop-3_Slides.pdf
+
+notices:
+  - date: "2026-05-11"
+    level: warning
+    title: GES DISC on-premises servers closing — NLDAS users must move to Earthdata Cloud
+    body: >-
+      GES DISC announced that HTTPS access to its on-premises servers ends by 30 September 2026 and that on-premises OPeNDAP is switched off between 20 August and 30 September.
+      The hydro1.gesdisc.eosdis.nasa.gov server that hosts NLDAS states that access will end 'no earlier than 30 September 2026' (still responding on 2026-10-13).
+      Point scripts to data.gesdisc.earthdata.nasa.gov or use earthaccess.
+    source: https://github.com/nasa/gesdisc-tutorials/blob/main/user-guidance/GES_DISC_Migration_to_Earthdata_Website_and_Earthdata_Cloud.md
+  - date: "2026-04-16"
+    level: info
+    title: GrADS Data Server (GDS) discontinued — NLDAS included
+    body: >-
+      The GES DISC GDS, which served the NLDAS forcing, Noah, Mosaic and VIC hourly, monthly and climatology collections, was discontinued on 6 April 2026 (announced on 15 January).
+      The same data are available from Earthdata Cloud over HTTPS and through subsetting services.
+    source: https://www.earthdata.nasa.gov/data/alerts-outages/grads-data-server-gds-service-has-been-discontinued
+  - date: "2024-08-01"
+    level: warning
+    title: NLDAS-2 GRIB-1 (V002) no longer updated — switch to netCDF (V2.0)
+    body: >-
+      Daily updates of the NLDAS version 002 (GRIB-1) files at GES DISC stopped with files valid at 23Z on 1 August 2024. Users are directed to the daily-updated NLDAS V2.0 netCDF data.
+    source: https://ldas.gsfc.nasa.gov/nldas/news/nldas-2-grib-1-files-no-longer-updated-1-august-2024
+  - date: "2024-06-07"
+    level: critical
+    title: All collections reprocessed for 2022-08-01 to 2024-03-01 — re-download earlier copies
+    body: >-
+      In August 2022 an error in the snow-depth input to NCEP R-CDAS (the real-time extension of NARR) made temperatures too warm, reducing snow in winter 2022–23 and leaving many northern soils too dry.
+      The FORA, FORB, Mosaic, Noah and VIC hourly and monthly data (both netCDF and GRIB) were reprocessed for this period and released on 7 June 2024. Re-download any data for this period obtained before then.
+    source: https://ldas.gsfc.nasa.gov/nldas/news/nldas-2-data-re-processed-2022-08-01-2024-03-01
+  - date: "2020-04-01"
+    level: info
+    title: NLDAS-1 data decommissioned
+    body: NLDAS phase 1 (version 001) data were removed from GES DISC on 1 April 2020. Use NLDAS-2.
+    source: https://ldas.gsfc.nasa.gov/nldas/news/nldas-1-data-will-be-decommissioned-412020
+
+links:
+  - name: NASA LDAS — NLDAS
+    url: https://ldas.gsfc.nasa.gov/nldas
+  - name: NLDAS-2 README (netCDF V2.0 variable tables, time conventions, DOI table)
+    url: https://docserver.gesdisc.eosdis.nasa.gov/public/project/hydrology/NLDAS2_README.pdf
+  - name: NLDAS FAQ
+    url: https://ldas.gsfc.nasa.gov/faq/NLDAS
+  - name: NLDAS-2 reprocessing summary (2022-08 to 2024-03)
+    url: https://ldas.gsfc.nasa.gov/sites/default/files/ldas/nldas/issues/NLDAS-2_rerun_Aug2022-Mar2024_summary.pdf
+  - name: GES DISC NLDAS_NOAH0125_H 2.0
+    url: https://disc.gsfc.nasa.gov/datasets/NLDAS_NOAH0125_H_2.0/summary
+  - name: NASA LDAS — NLDAS-3
+    url: https://ldas.gsfc.nasa.gov/nldas/v3
+
+watch_urls:
+  - https://ldas.gsfc.nasa.gov/news
+  - https://ldas.gsfc.nasa.gov/nldas/v3
+  - https://github.com/NASAWaterInsight/NLDAS-3
+
+last_verified: "2026-10-13"

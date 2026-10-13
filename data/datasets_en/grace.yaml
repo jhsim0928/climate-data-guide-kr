@@ -1,0 +1,490 @@
+# ─────────────────────────────────────────────────────────────
+# GRACE / GRACE-FO — dataset information file (English edition)
+# Land tab (terrestrial water storage). Monthly mass change grids from GRACE (2002–2017) and GRACE-FO (2018–):
+# JPL, CSR and GSFC mascons and JPL Tellus Level-3 (1° land grids from spherical harmonics). The GRACE → GRACE-FO transition is in this file (no to_id).
+# After editing, update last_verified to the date you checked the official pages.
+# ─────────────────────────────────────────────────────────────
+id: grace
+name: "GRACE / GRACE-FO"
+full_name: GRACE and GRACE Follow-On monthly terrestrial water storage (TWS) anomaly grids — JPL, CSR and GSFC mascons, JPL Tellus Level-3
+category: satellite
+domain: land
+group: 육수저장량
+order: 10
+domains: [육지, 수문, 빙상, 원격탐사]
+provider: NASA JPL / PO.DAAC (missions by NASA, Germany's DLR and GFZ; analysis centres JPL, UT Austin CSR, GFZ and NASA GSFC)
+
+status: active
+status_note: >-
+  GRACE-FO completed its five-year prime mission in May 2023 and is operating in its extended mission, with monthly solutions delivered at a latency of about 40–60 days (when checked on 2026-10-13:
+  JPL mascons through 2026-07, JPL Tellus land grids and CSR mascons through 2026-08). The current release is RL06.3, which uses the ACX2 accelerometer transplant data for GF2.
+  GRACE Level-2 RL07 was published in May 2026, so the Level-3 and mascon products are expected to move to RL07, and the successor mission GRACE-C is targeted for launch in December 2028.
+
+transitions:
+  - from: GRACE
+    to: GRACE-FO
+    status: completed
+    date: "2018-06"
+    summary: >-
+      GRACE ended science operations in October 2017, and GRACE-FO, which continues the same design, launched on 22 May 2018 and resumed the record from June 2018. There is a gap of about
+      11 months (2017-07 to 2018-05) between the missions, but the GRACE-FO team reported no biases across the gap and precision on a par with GRACE.
+    changes:
+      - aspect: Operating period
+        before: "Monthly solutions 2002-04 to 2017-06. A battery failure on GRACE-2 in 2017-09 ended the science mission in 2017-10"
+        after: "Launched 2018-05-22, monthly solutions 2018-06 to present (extended mission since completing the prime mission in 2023-05)"
+      - aspect: Inter-satellite ranging
+        before: "K/Ka-band microwave ranging (KBR)"
+        after: "KBR + Laser Ranging Interferometer (LRI, technology demonstration)"
+      - aspect: Accelerometer
+        before: "From 2016-11, 'accelerometer transplant' months using only one satellite's accelerometer have higher noise (2016-11, 2016-12, 2017-01, 2017-03, 2017-04, 2017-06)"
+        after: "Unexpected noise in the GF2 accelerometer from the start (2018-06), replaced with data derived from GF1 (ACT → RL06.1 hybrid ACX → RL06.3 hybrid ACX2)"
+      - aspect: Missing months
+        before: "From 2011, battery management stopped observations for 4–5 weeks roughly every 5–6 months — no solutions for 2002-06/07, 2003-06, 2011-01/06, 2012-05/10, 2013-03/08/09, 2014-02/07/12, 2015-06/10/11, 2016-04/09/10, 2017-02"
+        after: "Microwave Instrument Processing Unit (IPU) failure on 2018-07-19 → switched to the backup unit and resumed in 2018-10; no solutions for 2018-08/09"
+      - aspect: Current Level-2/3 release
+        before: "RL06 (Tellus land grids RL06 v04, released 2021-06)"
+        after: "RL06.3 (Tellus land grids RL06.3 v04; mascons RL06.3Mv04 joining GRACE and GRACE-FO in one file)"
+    impacts:
+      - "2017-07 to 2018-05 has no observations. Interpolated or reconstructed values are not GRACE data; if you use them, state the method."
+      - The Tellus Level-3 land grids come in separate GRACE (RL06) and GRACE-FO (RL06.3) collections, so you must join them yourself. The mascons contain everything from 2002 in one file.
+      - "No bias across the gap was reported, but when estimating trends use methods that account for the gap and the missing months (for instance, regression that skips missing months)."
+    sources:
+      - name: Landerer et al. (2020) GRACE-FO instrument and science data performance, GRL
+        url: https://doi.org/10.1029/2020GL088306
+      - name: JPL News — Prolific Earth Gravity Satellites End Science Mission (2017-10-27)
+        url: https://www.jpl.nasa.gov/news/prolific-earth-gravity-satellites-end-science-mission/
+      - name: GRACE-FO Level-3 Data Product User Handbook (JPL)
+        url: https://archive.podaac.earthdata.nasa.gov/podaac-ops-cumulus-docs/gracefo/open/docs/GRACE-FO_L3_Handbook_JPL.pdf
+      - name: NASA — GRACE-FO Satellite Switching to Backup Instrument Processing Unit (2018-09-17)
+        url: https://sealevel.nasa.gov/news/142/grace-fo-satellite-switching-to-backup-instrument-processing-unit
+  - from: GRACE / GRACE-FO RL06.x
+    to: RL07
+    status: planned
+    date: "2026"
+    summary: >-
+      The full GRACE and GRACE-FO record is being reprocessed to new standards (Release 07). GRACE Level-2 RL07 (CSR and JPL) was published at PO.DAAC on 2026-05-01, but when checked on
+      2026-10-13 there were no public collections yet for GRACE-FO RL07 or for the Tellus Level-3 and mascon RL07 products. CMR does, however, already hold variable records for the JPL mascon RL07
+      (TELLUS_GRAC-GRFO_MASCON_CRI_GRID_RL07_v01) dated 2026-07-17, which suggests a release is being prepared.
+    changes:
+      - aspect: Level-1 input
+        before: "GRACE-FO Level-1B v04"
+        after: "Level-1 v05"
+      - aspect: Background models
+        before: "RL06 standards (e.g. FES2014 ocean tides)"
+        after: "Updated static field, atmosphere/ocean de-aliasing (AOD), ocean tides (GOT5.6 under test), atmospheric tides and ocean pole tide (JPL, 2025-10)"
+      - aspect: Observation weighting
+        before: "Diagonal white-noise assumption"
+        after: "Stochastic noise models for KBR, LRI and GPS with variance component estimation — more realistic formal errors"
+      - aspect: Release status
+        before: "RL06.3 (GRACE-FO), RL06 (GRACE)"
+        after: "GRACE L2 RL07 published 2026-05-01 / GRACE-FO RL07 was targeted for spring 2026 but was not yet public as of 2026-10-13"
+    impacts:
+      - When RL07 mascons and Level-3 grids appear, every value from 2002 onward will change, so do not mix them with trends or climatologies computed from RL06.x — download the full period again.
+      - "Only GRACE L2 RL07 is out so far, so joining GRACE (RL07) directly with GRACE-FO (RL06.3) would mix releases. Take care if you work with Level-2 coefficients."
+    sources:
+      - name: NASA CMR — GRACE Level-2 JPL RL07 (GRACE_L2_JPL_MONTHLY_0070)
+        url: https://cmr.earthdata.nasa.gov/search/collections.umm_json?short_name=GRACE_L2_JPL_MONTHLY_0070
+      - name: Level-2 Status from JPL (GRACE-FO Science Team Meeting, 2025-10-07)
+        url: https://cpaess.ucar.edu/sites/default/files/grace-fo-2025-presentation/wiese-david.pdf
+      - name: GRACE-FO project status (2025-10)
+        url: https://cpaess.ucar.edu/sites/default/files/grace-fo-2025-presentation/landerer-felix.pdf
+  - from: GRACE-FO
+    to: GRACE-C
+    status: planned
+    date: "2028-12"
+    summary: >-
+      The NASA–DLR follow-on mission GRACE-C (GRACE-Continuity) is in development for a Falcon 9 launch targeted for December 2028 (it passed its System Integration Review in October 2025).
+      The plan is to extend GRACE-FO operations into 2029 to overlap for about a year for cross-calibration.
+    changes:
+      - aspect: Inter-satellite ranging
+        before: "KBR (primary) + LRI (demonstration)"
+        after: "Laser Ranging Interferometer (LRI) only, no KBR"
+      - aspect: Launch and lifetime
+        before: "Launched 2018-05-22, in extended mission (GSOC operations secured through 2029-12)"
+        after: "Launch targeted for 2028-12, nominal lifetime 5 years, polar orbit at about 500 km"
+      - aspect: Overlap
+        before: "About 11-month gap between GRACE and GRACE-FO"
+        after: "Planned overlap with GRACE-FO of at least 6 months to about 1 year (2029)"
+    impacts:
+      - If GRACE-FO stops before GRACE-C launches, another gap could open. Long-term trend studies should state the mission boundaries.
+    sources:
+      - name: GFZ — GRACE-C
+        url: https://www.gfz.de/en/grace-c
+      - name: GRACE-C status (Landerer, 2025-10)
+        url: https://cpaess.ucar.edu/sites/default/files/grace-fo-2025-presentation/landerer-felix-GRACE-C.pdf
+      - name: EGU26-16387 — GRACE-FO extended mission phase and GRACE-C developments
+        url: https://meetingorganizer.copernicus.org/EGU26/EGU26-16387.html
+
+period:
+  start: "2002-04"
+  end: present
+  note: >-
+    GRACE 2002-04 to 2017-06 (the last monthly solution spans 2017-05-23 to 06-29) and GRACE-FO 2018-06 to present, with nothing for 2017-07 to 2018-05.
+    GRACE has no solutions for 2002-06/07, 2003-06, 2011-01/06, 2012-05/10, 2013-03/08/09, 2014-02/07/12, 2015-06/10/11, 2016-04/09/10 and 2017-02; GRACE-FO has none for 2018-08/09 (based on the JPL Tellus land grids).
+    When checked on 2026-10-13, the latest months were 2026-07 for the JPL mascons, 2026-08 for the JPL Tellus land grids, 2026-08 for the CSR mascons (updated 2026-10-07) and 2026-03 for the GSFC mascons.
+
+resolution:
+  spatial_short: "56 km (0.5°)"
+  temporal_short: "1개월"
+  spatial: >-
+    JPL mascons: solution on 4,551 equal-area 3° spherical cap mascons, represented on a 0.5° × 0.5° latitude–longitude grid (720 × 360) / CSR mascons: solution on a geodesic equal-area grid of about 1° × 1° at the equator (about 120 km),
+    resampled to a 0.25° grid / GSFC mascons: 1-arc-degree equal-area mascons (a 0.5° equal-angle NetCDF is also provided) / JPL Tellus Level-3 land grids: 1° × 1° (360 × 180),
+    from spherical harmonics to degree and order 60 with a destriping filter and a 300 km Gaussian filter. The actual resolution (hundreds of km) is much coarser than the grid spacing.
+  vertical: Vertically integrated (total mass of surface water, soil moisture, groundwater, snow and ice)
+  temporal: Monthly (the actual days used differ from month to month and are recorded in `time_bounds`)
+
+update: "Monthly (about 40–60 days latency, RL06.3)"
+license: NASA Earth science open data — free and unrestricted. Users are asked to cite the dataset DOIs; CSR asks users to acknowledge that the mascons were downloaded from the CSR GRACE website
+account_required: true
+
+summary: >-
+  Gridded monthly changes in surface mass, expressed as equivalent water thickness, derived from month-to-month changes in Earth's gravity field measured through the distance between the twin satellites of
+  GRACE (2002–2017) and its successor GRACE-FO (2018–). Over land they show changes in terrestrial water storage (TWS) — surface water, soil moisture, groundwater and snow combined — and are widely used
+  for drought, groundwater depletion and ice sheet mass loss studies. There are mascon solutions (solved directly for regional mass concentrations) from JPL, CSR and GSFC, and JPL Tellus 1° land grids
+  from filtered spherical harmonics; all values are anomalies relative to the 2004.0–2009.999 mean.
+
+time_convention:
+  summary: >-
+    Each value is the mean mass state from a gravity field solved with a little over a month of observations (about 30 days), expressed as an anomaly (cm or m of equivalent water) relative to the
+    2004.0–2009.999 baseline mean. A "month" may not match the calendar month exactly; the days actually used are given in `time_bounds`.
+  points:
+    - "All values are anomalies relative to the 2004.0–2009.999 mean (JPL and CSR; GSFC uses 2004.0–2010.0). When comparing with groundwater observations or models, put them on the same baseline."
+    - "Some solutions do not line up with calendar months. For example, the GRACE-FO 2018-10 solution uses 2018-10-22 to 11-09 and the 2019-02 solution 2019-01-26 to 03-04. JPL recommends averaging model values only over the days GRACE used."
+    - "Because of battery management (from 2011) and instrument problems, some months have few observation days or none at all. July–December 2004 and January–February 2015 have larger errors because the orbit was near an exact repeat."
+    - "GRACE-FO quality was degraded in September–November 2024 by a 4/61 repeat orbit with poor ground-track coverage, and a 3/46 repeat orbit was expected from July 2026 to February 2027 (Science Team Meeting, 2025-10)."
+  source: https://archive.podaac.earthdata.nasa.gov/podaac-ops-cumulus-docs/gracefo/open/docs/GRACE-FO_L3_Handbook_JPL.pdf
+  source_name: GRACE-FO Level-3 Data Product User Handbook (JPL) + JPL Tellus mascon and land grid pages + PO.DAAC collection metadata
+
+variables:
+  note: >-
+    Variable names in the JPL mascon (RL06.3Mv04) and JPL Tellus Level-3 (RL06 v04, RL06.3 v04) files, as listed in the PO.DAAC collection information.
+    The CSR and GSFC mascons are organised differently (CSR NetCDF; GSFC HDF5, ASCII and NetCDF), so see their own pages.
+  full_list: https://podaac.jpl.nasa.gov/dataset/TELLUS_GRAC-GRFO_MASCON_CRI_GRID_RL06.3_V4
+  groups:
+    - name: JPL mascons (RL06.3Mv04, CRI-filtered and unfiltered versions)
+      kind: mean
+      period: Month (time_bounds interval)
+      items:
+        - text: "Equivalent water thickness mass anomaly (land water storage, ocean, ice) — `lwe_thickness` (cm)"
+          note: Anomaly relative to the 2004.0–2009.999 mean. The CRI version separates land and ocean signals in coastal mascons and is recommended for most hydrology, ocean and land ice applications
+        - "Uncertainty — `uncertainty` (cm)"
+        - text: "Ocean–atmosphere de-aliasing model (GAD) — `GAD` (cm)"
+          note: For ocean bottom pressure studies; not used for terrestrial water storage
+    - name: JPL Tellus Level-3 land grids (1°, GRACE RL06 v04 / GRACE-FO RL06.3 v04)
+      kind: mean
+      period: Month (time_bounds interval)
+      items:
+        - text: "Land equivalent water thickness mass anomaly — `lwe_thickness` (m, per PO.DAAC metadata)"
+          note: "The Tellus website describes the grids in cm, so check the units attribute in your files. To restore signal removed by the filters, multiply by the CLM4-based gain factor grid"
+        - "Uncertainty — `uncertainty` (m)"
+    - name: Fixed fields
+      kind: static
+      items:
+        - text: "Gain (scale) factor, CRI — `scale_factor` (dimensionless)"
+          note: Restores land hydrology signals below mascon resolution. Time-invariant; apply to land hydrology only
+        - text: "Land mask — `land_mask` (0/1)"
+        - text: "Mascon identifier — `mascon_ID` (dimensionless)"
+
+access:
+  - name: PO.DAAC (NASA Earthdata Cloud) — JPL mascon CRI RL06.3Mv04
+    url: https://podaac.jpl.nasa.gov/dataset/TELLUS_GRAC-GRFO_MASCON_CRI_GRID_RL06.3_V4
+    method: HTTPS / earthaccess / OPeNDAP / AWS S3 (us-west-2) — Earthdata Login required
+    note: >-
+      A single NetCDF file from 2002 to the latest month (e.g. GRCTellus.JPL.200204_202607.GLO.RL06.3M.MSCNv04CRI.nc). It is replaced by a new file every month, so download again for the newest month.
+      The unfiltered version is TELLUS_GRAC-GRFO_MASCON_GRID_RL06.3_V4. The podaac-data-subscriber tool is also recommended for bulk downloads.
+  - name: PO.DAAC — JPL, CSR and GFZ Tellus Level-3 land grids
+    url: https://podaac.jpl.nasa.gov/dataset/TELLUS_GRFO_L3_JPL_RL06.3_LND_v04
+    method: HTTPS / earthaccess — Earthdata Login required
+    note: >-
+      Split into GRACE collections TELLUS_GRAC_L3_{JPL,CSR,GFZ}_RL06_LND_v04 and GRACE-FO collections TELLUS_GRFO_L3_{JPL,CSR,GFZ}_RL06.3_LND_v04, one file per month.
+      Ocean bottom pressure grids (_OCN_) are separate collections.
+  - name: CSR GRACE/GRACE-FO RL06.3 mascons (UT Austin)
+    url: https://www2.csr.utexas.edu/grace/RL06_mascons.html
+    method: Direct HTTPS download (no account)
+    note: >-
+      One file, CSR_GRACE_GRACE-FO_RL0603_Mascons_all-corrections.nc (0.25°), plus land and ocean masks and grids of each correction component. Updated 2026-10-07, through 2026-08.
+  - name: NASA GSFC mascons (RL06v2.0)
+    url: https://earth.gsfc.nasa.gov/geo/data/grace-mascons
+    method: Direct HTTPS download (HDF5, ASCII, NetCDF)
+    note: 2002-04 to 2026-03 as of the 2026-09-30 page update. A 0.5° NetCDF version is also available.
+  - name: JPL GRACE Tellus website (data guides and news)
+    url: https://grace.jpl.nasa.gov/data/get-data/jpl_global_mascons/
+    method: Web guides / visualisation
+    note: Data release news is posted at https://grace.jpl.nasa.gov/data/data-updates/.
+
+example:
+  lang: python
+  note: >-
+    Downloads the JPL mascon CRI RL06.3Mv04 file with earthaccess and builds a terrestrial water storage anomaly series for the North China Plain (113–120°E, 34–40°N). The first run asks for
+    Earthdata credentials. Longitudes are 0–360°; for land hydrology, multiply by the gain factor (`scale_factor`) and then take an area-weighted (cos latitude) mean.
+  code: |
+    import earthaccess
+    import numpy as np
+    import xarray as xr
+
+    earthaccess.login()  # free NASA Earthdata account
+    results = earthaccess.search_data(
+        short_name="TELLUS_GRAC-GRFO_MASCON_CRI_GRID_RL06.3_V4",
+        version="RL06.3Mv04",
+    )
+    files = earthaccess.download(results, "grace_mascon")   # the whole record since 2002 is one file
+
+    ds = xr.open_dataset(files[0])
+    tws = ds["lwe_thickness"] * ds["scale_factor"]           # cm, relative to 2004.0-2009.999 mean
+    tws = tws.where(ds["land_mask"] == 1)
+    box = tws.sel(lat=slice(34, 40), lon=slice(113, 120))
+    w = np.cos(np.deg2rad(box.lat))
+    series = box.weighted(w).mean(["lat", "lon"])
+    print(series.to_series().tail())                         # missing months have no time step at all
+
+tips:
+  - "All values are anomalies relative to the 2004.0–2009.999 mean. They are not absolute storage; when comparing with other data, subtract a common baseline again."
+  - "Missing months (20 GRACE months, GRACE-FO 2018-08 and 2018-09) and the 2017-07 to 2018-05 gap have no time steps in the files. Code that assumes a regular monthly sequence (e.g. grouping every 12 steps into a year) will give wrong results."
+  - "The real resolution of the JPL mascons is the 3° mascon (about 300 km). Do not read a single 0.5° cell as a point value; use averages over sufficiently large basins."
+  - "The gain factor (`scale_factor`) is for land hydrology. Do not apply it to ice sheets or oceans. JPL notes that the CLM4 gain factors for the Tellus 1° land grids are dominated by annual cycles and may not suit trend analysis."
+  - "For the Tellus 1° land grids (from spherical harmonics), JPL recommends averaging the JPL, CSR and GFZ solutions, and advises using mascons for Greenland, Antarctica and glacier mass studies."
+  - "The late-GRACE 'accelerometer transplant' months (2016-11, 2016-12, 2017-01, 2017-03, 2017-04, 2017-06) are noisier. GRACE-FO also replaces the GF2 accelerometer with data derived from GF1, and values for January–February 2023 and from July 2023 onward (wide-deadband pointing) changed between RL06.1 and RL06.3."
+  - "September–November 2024 has lower quality because of poor repeat-orbit sampling, and similar degradation was expected from July 2026 to February 2027. Check whether abrupt changes in these periods are real signals."
+  - "The JPL, CSR and GSFC mascons differ in regularisation, grid and corrections (e.g. when C30 replacement starts), so the same month gives different values. Compare several solutions to gauge uncertainty, but do not mix them within one time series."
+
+citations:
+  dataset:
+    - label: JPL mascon CRI RL06.3Mv04 (PO.DAAC)
+      text: >-
+        D. N. Wiese, D.-N. Yuan, C. Boening, F. W. Landerer, M. M. Watkins. 2023. JPL GRACE and GRACE-FO Mascon Ocean, Ice, and Hydrology Equivalent Water Height CRI Filtered RL06.3Mv04.
+        Ver. RL06.3Mv04. PO.DAAC, CA, USA. Dataset accessed [YYYY-MM-DD] at https://doi.org/10.5067/TEMSC-3JC634
+      doi: 10.5067/TEMSC-3JC634
+      bibtex: |
+        @misc{wiese2023jplmascon_cri,
+          author    = {Wiese, D. N. and Yuan, D.-N. and Boening, C. and Landerer, F. W. and Watkins, M. M.},
+          title     = {{JPL} {GRACE} and {GRACE-FO} Mascon Ocean, Ice, and Hydrology Equivalent Water Height {CRI} Filtered {RL06.3Mv04}},
+          version   = {RL06.3Mv04},
+          publisher = {PO.DAAC},
+          address   = {CA, USA},
+          year      = {2023},
+          doi       = {10.5067/TEMSC-3JC634}
+        }
+    - label: JPL mascon (no CRI filter) RL06.3Mv04 (PO.DAAC)
+      text: >-
+        D. N. Wiese, D.-N. Yuan, C. Boening, F. W. Landerer, M. M. Watkins. 2023. JPL GRACE and GRACE-FO Mascon Ocean, Ice, and Hydrology Equivalent Water Height JPL RL06.3Mv04.
+        Ver. RL06.3Mv04. PO.DAAC, CA, USA. Dataset accessed [YYYY-MM-DD] at https://doi.org/10.5067/TEMSC-3MJ634
+      doi: 10.5067/TEMSC-3MJ634
+      bibtex: |
+        @misc{wiese2023jplmascon,
+          author    = {Wiese, D. N. and Yuan, D.-N. and Boening, C. and Landerer, F. W. and Watkins, M. M.},
+          title     = {{JPL} {GRACE} and {GRACE-FO} Mascon Ocean, Ice, and Hydrology Equivalent Water Height {JPL} {RL06.3Mv04}},
+          version   = {RL06.3Mv04},
+          publisher = {PO.DAAC},
+          address   = {CA, USA},
+          year      = {2023},
+          doi       = {10.5067/TEMSC-3MJ634}
+        }
+    - label: JPL Tellus GRACE-FO Level-3 land grids RL06.3 v04 (PO.DAAC)
+      text: >-
+        Felix Landerer. 2023. JPL TELLUS GRACE-FO Level-3 Monthly Land Water-Equivalent-Thickness Surface Mass Anomaly Release 6.3 version 04. Ver. RL06.3v04. PO.DAAC, CA, USA.
+        Dataset accessed [YYYY-MM-DD] at https://doi.org/10.5067/GFLND-3J634
+      doi: 10.5067/GFLND-3J634
+      bibtex: |
+        @misc{landerer2023tellus_grfo_jpl,
+          author    = {Landerer, Felix},
+          title     = {{JPL} {TELLUS} {GRACE-FO} Level-3 Monthly Land Water-Equivalent-Thickness Surface Mass Anomaly Release 6.3 version 04},
+          version   = {RL06.3v04},
+          publisher = {PO.DAAC},
+          address   = {CA, USA},
+          year      = {2023},
+          doi       = {10.5067/GFLND-3J634}
+        }
+    - label: JPL Tellus GRACE Level-3 land grids RL06 v04 (PO.DAAC)
+      text: >-
+        Felix Landerer. 2021. TELLUS_GRAC_L3_JPL_RL06_LND_v04. Ver. RL06 v04. PO.DAAC, CA, USA. Dataset accessed [YYYY-MM-DD] at https://doi.org/10.5067/TELND-3AJ64
+      doi: 10.5067/TELND-3AJ64
+      bibtex: |
+        @misc{landerer2021tellus_grac_jpl,
+          author    = {Landerer, Felix},
+          title     = {{TELLUS\_GRAC\_L3\_JPL\_RL06\_LND\_v04}},
+          version   = {RL06 v04},
+          publisher = {PO.DAAC},
+          address   = {CA, USA},
+          year      = {2021},
+          doi       = {10.5067/TELND-3AJ64}
+        }
+    - label: CSR GRACE/GRACE-FO mascons (UT Austin CSR)
+      text: >-
+        Save, Himanshu, 2020, "CSR GRACE and GRACE-FO RL06 Mascon Solutions v02", doi:10.15781/cgq9-nh24
+      doi: 10.15781/cgq9-nh24
+      bibtex: |
+        @misc{save2020csrmascon,
+          author = {Save, Himanshu},
+          title  = {{CSR} {GRACE} and {GRACE-FO} {RL06} Mascon Solutions v02},
+          year   = {2020},
+          doi    = {10.15781/cgq9-nh24}
+        }
+  papers:
+    - label: JPL mascon method
+      text: >-
+        Watkins, M. M., Wiese, D. N., Yuan, D.-N., Boening, C., Landerer, F. W. (2015): Improved methods for observing Earth's time variable mass distribution with GRACE using spherical cap mascons.
+        Journal of Geophysical Research: Solid Earth, 120(4), 2648–2671.
+      doi: 10.1002/2014JB011547
+      bibtex: |
+        @article{watkins2015mascons,
+          author  = {Watkins, Michael M. and Wiese, David N. and Yuan, Dah-Ning and Boening, Carmen and Landerer, Felix W.},
+          title   = {Improved methods for observing {Earth}'s time variable mass distribution with {GRACE} using spherical cap mascons},
+          journal = {Journal of Geophysical Research: Solid Earth},
+          volume  = {120},
+          number  = {4},
+          pages   = {2648--2671},
+          year    = {2015},
+          doi     = {10.1002/2014JB011547}
+        }
+    - label: CRI filter and leakage errors (JPL mascons)
+      text: >-
+        Wiese, D. N., Landerer, F. W., Watkins, M. M. (2016): Quantifying and reducing leakage errors in the JPL RL05M GRACE mascon solution. Water Resources Research, 52(9), 7490–7502.
+      doi: 10.1002/2016WR019344
+      bibtex: |
+        @article{wiese2016leakage,
+          author  = {Wiese, David N. and Landerer, Felix W. and Watkins, Michael M.},
+          title   = {Quantifying and reducing leakage errors in the {JPL} {RL05M} {GRACE} mascon solution},
+          journal = {Water Resources Research},
+          volume  = {52},
+          number  = {9},
+          pages   = {7490--7502},
+          year    = {2016},
+          doi     = {10.1002/2016WR019344}
+        }
+    - label: CSR mascon method
+      text: >-
+        Save, H., Bettadpur, S., Tapley, B. D. (2016): High-resolution CSR GRACE RL05 mascons. Journal of Geophysical Research: Solid Earth, 121(10), 7547–7569.
+      doi: 10.1002/2016JB013007
+      bibtex: |
+        @article{save2016csr,
+          author  = {Save, Himanshu and Bettadpur, Srinivas and Tapley, Byron D.},
+          title   = {High-resolution {CSR} {GRACE} {RL05} mascons},
+          journal = {Journal of Geophysical Research: Solid Earth},
+          volume  = {121},
+          number  = {10},
+          pages   = {7547--7569},
+          year    = {2016},
+          doi     = {10.1002/2016JB013007}
+        }
+    - label: GSFC mascon method
+      text: >-
+        Loomis, B. D., Luthcke, S. B., Sabaka, T. J. (2019): Regularization and error characterization of GRACE mascons. Journal of Geodesy, 93(9), 1381–1398.
+      doi: 10.1007/s00190-019-01252-y
+      bibtex: |
+        @article{loomis2019gsfc,
+          author  = {Loomis, B. D. and Luthcke, S. B. and Sabaka, T. J.},
+          title   = {Regularization and error characterization of {GRACE} mascons},
+          journal = {Journal of Geodesy},
+          volume  = {93},
+          number  = {9},
+          pages   = {1381--1398},
+          year    = {2019},
+          doi     = {10.1007/s00190-019-01252-y}
+        }
+    - label: Gain factors for the Tellus land grids
+      text: >-
+        Landerer, F. W., Swenson, S. C. (2012): Accuracy of scaled GRACE terrestrial water storage estimates. Water Resources Research, 48, W04531.
+      doi: 10.1029/2011WR011453
+      bibtex: |
+        @article{landerer2012scaled,
+          author  = {Landerer, F. W. and Swenson, S. C.},
+          title   = {Accuracy of scaled {GRACE} terrestrial water storage estimates},
+          journal = {Water Resources Research},
+          volume  = {48},
+          number  = {4},
+          pages   = {W04531},
+          year    = {2012},
+          doi     = {10.1029/2011WR011453}
+        }
+    - label: GRACE-FO performance and continuity of the GRACE record
+      text: >-
+        Landerer, F. W., Flechtner, F. M., Save, H., Webb, F. H., Bandikova, T., Bertiger, W. I., et al. (2020): Extending the Global Mass Change Data Record:
+        GRACE Follow-On Instrument and Science Data Performance. Geophysical Research Letters, 47(12), e2020GL088306.
+      doi: 10.1029/2020GL088306
+      bibtex: |
+        @article{landerer2020gracefo,
+          author  = {Landerer, Felix W. and Flechtner, Frank M. and Save, Himanshu and Webb, Frank H. and Bandikova, Tamara and Bertiger, William I. and Bettadpur, Srinivas V. and Byun, Sung Hun and Dahle, Christoph and Dobslaw, Henryk and Fahnestock, Eugene and Harvey, Nate and Kang, Zhigui and Kruizinga, Gerhard L. H. and Loomis, Bryant D. and McCullough, Christopher and Murb{\"o}ck, Michael and Nagel, Peter and Paik, Meegyeong and Pie, Nadege and Poole, Steve and Strekalov, Dmitry and Tamisiea, Mark E. and Wang, Furun and Watkins, Michael M. and Wen, Hui-Ying and Wiese, David N. and Yuan, Dah-Ning},
+          title   = {Extending the Global Mass Change Data Record: {GRACE} Follow-On Instrument and Science Data Performance},
+          journal = {Geophysical Research Letters},
+          volume  = {47},
+          number  = {12},
+          pages   = {e2020GL088306},
+          year    = {2020},
+          doi     = {10.1029/2020GL088306}
+        }
+  acknowledgement: >-
+    Cite the dataset DOI of each product used, together with Watkins et al. (2015) and Wiese et al. (2016) for the JPL mascons, Save et al. (2016) for the CSR mascons, Loomis et al. (2019) for the GSFC mascons
+    and Landerer and Swenson (2012) for the Tellus land grids. CSR asks users to acknowledge that the data were downloaded from the CSR GRACE website.
+
+notices:
+  - date: "2026-05-01"
+    level: info
+    title: GRACE Level-2 RL07 (CSR, JPL) published — Level-3, mascons and GRACE-FO RL07 not yet
+    body: >-
+      GRACE (2002-04 to 2017-06) monthly spherical harmonic coefficients RL07 from CSR and JPL were registered at PO.DAAC with a release date of 2026-05-01. When checked on 2026-10-13,
+      there were no public GRACE-FO RL07 or Tellus Level-3/mascon RL07 collections, so RL06.x remains the current release for water storage grids.
+    source: https://cmr.earthdata.nasa.gov/search/collections.umm_json?short_name=GRACE_L2_JPL_MONTHLY_0070
+  - date: "2025-10-07"
+    level: warning
+    title: GRACE-FO quality degraded by repeat orbits — September–November 2024, and expected July 2026 to February 2027
+    body: >-
+      According to the GRACE-FO science operations report, a 4/61 repeat orbit (about 470 km) left about 60 days of poor monthly ground-track coverage in September–November 2024, degrading the gravity fields,
+      and a 3/46 repeat orbit (about 445 km) was expected from July 2026 to February 2027 (time spent there could range from about 2 to 18 months depending on solar activity).
+    source: https://cpaess.ucar.edu/sites/default/files/grace-fo-2025-presentation/save-himanshu-som.pdf
+  - date: "2024-09-12"
+    level: info
+    title: GRACE-FO JPL RL06.3 released — Level-2, Level-3 and mascons updated
+    body: >-
+      JPL Level-2, Tellus Level-3 (land and ocean bottom pressure) and the mascons (CRI and unfiltered) moved to RL06.3. It differs from RL06.1 only in the Level-1B accelerometer transplant data used
+      for GF2 (ACX2, combining GF1 and GF2 observations); in the JPL mascons only January–February 2023 and the months from July 2023 (wide-deadband pointing) change.
+    source: https://podaac.jpl.nasa.gov/announcements/2024-09-12-Release-of-GRACE-FO-JPL-RL06.3-for-L2-3-and-MASCON-Data-Sets
+  - date: "2022-05-12"
+    level: info
+    title: GRACE-FO RL06.1 released — hybrid accelerometer transplant (ACX) introduced
+    body: >-
+      Level-2 and Level-3 were regenerated with a new transplant product (ACX) that uses observations from both the GF1 and GF2 accelerometers. Because ACX needs more validation, it is delivered in delayed mode
+      together with the monthly Level-2/3 data, with a latency of about 40 days at the time.
+    source: https://grace.jpl.nasa.gov/data/data-updates/
+  - date: "2018-09-17"
+    level: warning
+    title: GRACE-FO instrument processing unit failure halts science data — no solutions for August and September 2018
+    body: >-
+      On 2018-07-19 the primary Microwave Instrument Processing Unit (IPU) on GRACE-FO 2 powered down and science data collection stopped in mid-July; the team planned to switch to the redundant unit in September.
+      As a result there are no GRACE-FO solutions for 2018-08 and 2018-09, and the 2018-07 solution uses only 1–18 July.
+    source: https://sealevel.nasa.gov/news/142/grace-fo-satellite-switching-to-backup-instrument-processing-unit
+  - date: "2017-10-27"
+    level: critical
+    title: GRACE science mission ends — about 11-month gap to GRACE-FO
+    body: >-
+      An age-related battery problem on GRACE-2 in September 2017 left it unable to operate its science instruments by mid-October, ending the GRACE science mission. The last monthly solution is 2017-06,
+      and 2017-07 to 2018-05 is empty until the first GRACE-FO solution (2018-06).
+    source: https://www.jpl.nasa.gov/news/prolific-earth-gravity-satellites-end-science-mission/
+
+links:
+  - name: JPL GRACE Tellus — mascon guide
+    url: https://grace.jpl.nasa.gov/data/get-data/jpl_global_mascons/
+  - name: JPL GRACE Tellus — data updates
+    url: https://grace.jpl.nasa.gov/data/data-updates/
+  - name: JPL GRACE Tellus — land grids (spherical harmonics) guide
+    url: https://grace.jpl.nasa.gov/data/get-data/monthly-mass-grids-land/
+  - name: GRACE/GRACE-FO months and missing days
+    url: https://grace.jpl.nasa.gov/data/grace-months/
+  - name: GRACE-FO Level-3 Data Product User Handbook (JPL)
+    url: https://archive.podaac.earthdata.nasa.gov/podaac-ops-cumulus-docs/gracefo/open/docs/GRACE-FO_L3_Handbook_JPL.pdf
+  - name: JPL mascon release notes (including RL06.3Mv04)
+    url: https://archive.podaac.earthdata.nasa.gov/podaac-ops-cumulus-docs/gracefo/open/docs/GRACE_GRACE-FO_ReleaseNotes_JPL_MASCON.txt
+  - name: GRACE documents and technical notes (PO.DAAC)
+    url: https://podaac.jpl.nasa.gov/gravity/grace-documentation
+  - name: CSR RL06.3 mascons
+    url: https://www2.csr.utexas.edu/grace/RL06_mascons.html
+  - name: NASA GSFC mascons
+    url: https://earth.gsfc.nasa.gov/geo/data/grace-mascons
+  - name: GFZ — GRACE-C
+    url: https://www.gfz.de/en/grace-c
+
+watch_urls:
+  - https://grace.jpl.nasa.gov/data/data-updates/
+  - https://podaac.jpl.nasa.gov/announcements
+  - https://www.gfz.de/en/grace-c
+
+last_verified: "2026-10-13"

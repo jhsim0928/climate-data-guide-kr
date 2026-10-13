@@ -1,0 +1,336 @@
+# ─────────────────────────────────────────────────────────────
+# VIIRS 지표면온도·방출률 VNP21·VJ121·VJ221 V2 — 데이터셋 정보 파일
+# 지면 탭(지표면온도·알베도). MODIS MOD21(TES)의 후속이며, MODIS → VIIRS 비교는 modis-lst.yaml의 transitions에 있습니다.
+# Suomi NPP(VNP21) 자료 전달이 2026-11-02 끝나므로 NOAA-21(VJ221)·NOAA-20(VJ121)로 옮겨야 합니다.
+# 수정 후에는 공식 페이지에서 확인한 날짜로 last_verified 를 갱신하세요.
+# ─────────────────────────────────────────────────────────────
+id: viirs-lst
+name: "VIIRS LST (VNP21)"
+full_name: VIIRS Land Surface Temperature and Emissivity VNP21(Suomi NPP)·VJ121(NOAA-20)·VJ221(NOAA-21) Version 2 (VIIRS TES 1 km 주간·야간 지표면온도와 3밴드 방출률)
+category: satellite
+domain: land
+group: 지표면온도·알베도
+order: 11
+domains: [육지, 원격탐사]
+provider: NASA JPL(Hulley·Hook) / NASA VIIRS 육상팀 / NASA LP DAAC
+
+status: active
+status_note: >-
+  NOAA-20(VJ121)과 NOAA-21(VJ221) 자료는 매일 정상 생산되고 있습니다(2026-10-13 확인 시 VJ221A1D는 10월 11일 자료까지).
+  다만 NOAA가 Suomi NPP의 모든 과학 자료 전달을 2026년 11월 2일 13:00 UTC에 끝낸다고 공지해, VNP21 계열은 그 뒤로 새 자료가 나오지 않습니다.
+  LP DAAC는 NOAA-21(VJ221, 1순위)이나 NOAA-20(VJ121, 2순위) 제품으로 옮기라고 안내합니다. 성숙도는 1단계 검증(Stage 1 Validation)입니다.
+
+period:
+  start: "2012-01"
+  end: present
+  note: >-
+    Suomi NPP(VNP21)는 2012-01-17부터(2026-11-02 전달 종료 예정), NOAA-20(VJ121)은 2018-01-01부터, NOAA-21(VJ221)은 2023-02-10부터(월 CMG는 2023-02 구간부터)입니다.
+    VJ221 LST는 2026년 4월 14일 공개되었습니다. V2 컬렉션은 2023년 6월 29일 공개되었고, 이전 V1은 2025년 4월 8일 배포가 끝났습니다.
+
+resolution:
+  spatial_short: "1 km (0.01°)"
+  temporal_short: "1일"
+  spatial: >-
+    L3 타일: MODIS Sinusoidal(SIN) 격자 1 km(750 m 원자료를 재표본, 1200×1200 화소/타일) — VNP21A1D·A1N·A2 /
+    CMG: 전지구 0.05° 격자 — VNP21C1·C2·C3 / L2 스와스: 직하점 750 m(VNP21, 6분 단위 그래뉼). NOAA-20·21도 같은 격자(VJ121·VJ221)
+  vertical: 지표 피부(skin) 온도 단일층 + VIIRS 열적외 밴드 M14(8.55 µm)·M15(10.76 µm)·M16(12 µm) 방출률
+  temporal: >-
+    위성마다 하루 주간 1회(13:30 상승 궤도)·야간 1회 통과(고위도는 여러 번) / 일(A1D·A1N·C1) / 8일(A2·C2) / 월(C3)
+
+update: 매일 (관측 후 1~2일 지연), 8일·월 자료는 구간 종료 후. Suomi NPP(VNP21)는 2026-11-02 이후 새 자료 없음
+license: NASA EOSDIS 자료 이용·인용 지침에 따라 제한 없이 공개된 무료 자료입니다. 내려받기에는 무료 NASA Earthdata 로그인이 필요하며, 데이터셋 DOI 인용을 요청합니다.
+account_required: true
+
+summary: >-
+  VIIRS 열적외 밴드 M14·M15·M16으로 맑은 날의 지표면(피부) 온도와 방출률을 함께 구하는 NASA의 VIIRS 지표면온도 자료입니다.
+  MODIS MOD21과 같은 온도·방출률 분리(TES) 알고리즘과 같은 대기 입력·수증기 보정 방식을 써서 MODIS 기록을 잇도록 만들었으며, 개발진은 두 센서의 지표면온도가 약 ±0.5 K 안에서 일치한다고 보고했습니다.
+  Suomi NPP(VNP21)·NOAA-20(VJ121)·NOAA-21(VJ221) 세 위성 판이 있고, 모두 오후 1시 30분 무렵 지나는 궤도라 MODIS Aqua 관측을 주로 대신합니다.
+  일·8일 1 km 타일과 일·8일·월 0.05° 전지구 격자로 제공됩니다.
+
+time_convention:
+  summary: >-
+    일자료(A1D 주간·A1N 야간)는 위성 통과 순간의 맑은 하늘 관측값으로, 같은 날 격자 칸과 15% 넘게 겹치는 맑은·양호 관측을 겹침 비율로 가중 평균한 값입니다.
+    8일(A2)·월(C3) 자료는 그 기간 맑은 날 일자료의 평균이며 흐린 날은 빠집니다. 관측 시각은 화소마다 다르므로 `View_Time` 계열 변수로 확인합니다.
+  points:
+    - "Suomi NPP·NOAA-20·NOAA-21은 모두 적도를 지방시 13:30 무렵 상승(주간) 통과하는 오후 궤도입니다. 야간 관측은 반대 방향 궤도에서 이뤄집니다. MODIS Terra(오전 10:30)와 같은 시각대 관측은 없습니다."
+    - "같은 오후 궤도라도 위성끼리 통과 시각이 50분~1시간 다릅니다. VNP21 사용자 가이드는 이 시각 차이 때문에 2018년 8월 VNP21과 VJ121 사이에 약 0.5 K 차이가 났다고 보고합니다(1월에는 편차가 거의 없음)."
+    - "8일 자료(A2)는 일자료 A1D·A1N의 단순 평균이며 LST·QC·관측각·관측 시각은 주간·야간을 따로, 방출률은 주간·야간을 함께 평균합니다."
+    - "CMG(C1·C3)의 관측 시각은 사용자 가이드에 UTC로 적혀 있지만, 1 km 타일(A1·A2) `View_Time`의 시간 기준은 가이드에 명시되어 있지 않습니다. 파일 속성을 확인하세요."
+    - "Suomi NPP 자료는 2026-11-02 이후 끊깁니다. VNP21로 만든 시계열을 이어 가려면 겹치는 기간에 VJ121·VJ221과 비교한 뒤 바꾸세요."
+  source: https://lpdaac.usgs.gov/documents/1662/VNP21_User_Guide_V2.pdf
+  source_name: "VNP21 Collection 2 User's Guide + VNP21A1D·VNP21A2 V002 컬렉션 설명(CMR)"
+
+variables:
+  note: >-
+    LP DAAC 데이터 카탈로그와 VNP21 Collection 2 사용자 가이드 기준 변수입니다. 파일은 HDF-EOS5(HDF5)이며 실제 값 = 저장값 × scale_factor (+ offset)입니다.
+    LST는 scale 0.02(K), 저장값 0은 채움값입니다. VJ121·VJ221 파일도 변수 이름이 같습니다. MOD21과 마찬가지로 오염 화소를 지우지 않으므로 QC로 직접 걸러야 합니다.
+  full_list: https://www.earthdata.nasa.gov/data/catalog/lpcloud-vnp21a1d-002
+  groups:
+    - name: 일자료 1 km (VNP21A1D 주간 / VNP21A1N 야간, VJ121·VJ221 동일)
+      kind: instant
+      period: 통과 시각
+      items:
+        - text: "지표면온도 — `LST_1KM` (K, scale 0.02)"
+          std: [tskin]
+          note: 주간 파일(A1D)과 야간 파일(A1N)이 따로 있음. 격자 칸과 15% 넘게 겹치는 맑은·양호 관측을 겹침 비율로 가중 평균
+        - "밴드 M14·M15·M16 방출률 — `Emis_14`, `Emis_15`, `Emis_16` (무차원, scale 0.002, offset 0.49)"
+        - text: "관측 시각 — `View_Time` (시, scale 0.1)"
+          note: 화소별 관측 시각
+        - "관측 천정각 — `View_Angle` (도, offset -65)"
+        - "품질 비트 — `QC` (16비트: 필수 QA, L1B 자료 품질, 구름, TES 반복, 대기 불투명도, 방출률 대비, 방출률·LST 정확도)"
+    - name: 8일 자료 1 km (VNP21A2·VJ121A2·VJ221A2)
+      kind: mean
+      period: 8일 (맑은 날만)
+      items:
+        - text: "8일 주간·야간 지표면온도 — `LST_Day_1KM`, `LST_Night_1KM` (K, scale 0.02)"
+          std: [tskin]
+          note: 맑은 날 A1D·A1N 값의 단순 평균
+        - text: "8일 방출률 — `Emis_14`, `Emis_15`, `Emis_16` (무차원, scale 0.002, offset 0.49)"
+          note: 주간·야간을 함께 평균
+        - "주간·야간 관측 시각 — `View_Time_Day`, `View_Time_Night` (시, scale 0.1)"
+        - "주간·야간 관측 천정각 — `View_Angle_Day`, `View_Angle_Night` (도)"
+        - "주간·야간 품질 비트 — `QC_Day`, `QC_Night` (8비트 비트값)"
+    - name: 0.05° 전지구 격자 (VNP21C1 일 / C2 8일 / C3 월)
+      kind: mean
+      period: 일·8일·월
+      items:
+        - text: "주간·야간 지표면온도 — `LST_Day`, `LST_Night` (K, scale 0.02)"
+          std: [tskin]
+          note: C1은 그날 조건에 맞는 L2 화소의 평균, C2·C3는 C1 일자료의 8일·월 평균
+        - "주간·야간 LST 불확실성 — `LST_Day_err`, `LST_Night_err` (K, scale 0.04)"
+        - text: "주간·야간 관측 수 — `Count_Day`, `Count_Night`"
+          kind: accum
+          note: 평균에 들어간 관측 수
+    - name: 고정 정보
+      kind: static
+      items:
+        - "격자 내 육지 비율(CMG) — `Percent_land_in_grid` (%)"
+
+access:
+  - name: NASA Earthdata Search (LP DAAC, Earthdata Cloud)
+    url: https://search.earthdata.nasa.gov/search/granules?p=C2545314555-LPCLOUD
+    method: HTTPS 다운로드 / earthaccess / Earthdata Search
+    note: >-
+      short name 예: VNP21A1D·VNP21A1N·VNP21A2·VNP21C1·VNP21C2·VNP21C3·VNP21(L2), NOAA-20은 VNP→VJ1, NOAA-21은 VNP→VJ2이며 version은 모두 002입니다.
+      파일은 data.lpdaac.earthdatacloud.nasa.gov 아래 HTTPS로 받으며 무료 Earthdata 로그인이 필요합니다.
+  - name: AppEEARS (영역·지점 부분 추출)
+    url: https://appeears.earthdatacloud.nasa.gov/
+    method: 웹 / API — 지점 시계열·영역을 GeoTIFF·NetCDF4로 추출
+    note: 필요한 영역·기간·변수만 골라 받을 수 있고 위경도 투영으로 바꿔 받을 수 있습니다.
+  - name: AWS us-west-2 직접 접근 (S3)
+    url: https://data.lpdaac.earthdatacloud.nasa.gov/s3credentials
+    method: 클라우드 저장소(S3, us-west-2 안에서만)
+    note: Earthdata Cloud에 저장되어 있으며 임시 자격증명으로 us-west-2 안에서 직접 읽을 수 있습니다.
+
+example:
+  lang: python
+  note: >-
+    earthaccess로 NOAA-20 VJ121A1D(주간) 일자료를 받아 h5py로 여는 예입니다. HDF-EOS5 안의 경로를 직접 적지 않고 변수 이름으로 찾습니다.
+    필수 QA(비트 0~1)가 00(최상) 또는 01(보통)인 화소만 남깁니다.
+  code: |
+    # pip install earthaccess h5py numpy
+    import earthaccess
+    import h5py
+    import numpy as np
+
+    earthaccess.login()  # 무료 NASA Earthdata 계정
+    results = earthaccess.search_data(
+        short_name="VJ121A1D", version="002",
+        temporal=("2024-08-01", "2024-08-03"),
+        bounding_box=(126.5, 37.0, 127.5, 38.0),   # (서, 남, 동, 북) 서울 주변
+    )
+    files = earthaccess.download(results, "vj121")
+
+    def find(h5, name):
+        hits = []
+        h5.visititems(lambda path, obj: hits.append(path) if path.endswith("/" + name) else None)
+        return h5[hits[0]][()]
+
+    with h5py.File(files[0], "r") as f:
+        lst = find(f, "LST_1KM").astype("float64")
+        qc = find(f, "QC")
+
+    good = (lst > 0) & ((qc & 0b11) <= 1)          # 채움값 제거 + 필수 QA 00·01
+    lst_k = np.where(good, lst * 0.02, np.nan)      # K
+    print(np.nanmean(lst_k) - 273.15)
+
+tips:
+  - "Suomi NPP 자료 전달은 2026년 11월 2일 13:00 UTC에 끝납니다(NOAA 공지, Earthdata 공지 제목은 11월 1일). 새 분석은 NOAA-21(VJ221) 또는 NOAA-20(VJ121)으로 시작하세요."
+  - "VIIRS LST는 MOD21(TES)과 같은 방식이라 MOD21과는 잘 이어지지만, MOD11(분할창)과는 알고리즘이 달라 건조지에서 수 K 차이가 날 수 있습니다."
+  - "MOD21처럼 오염 화소를 채움값으로 지우지 않습니다. 사막의 먼지·감지되지 않은 구름 때문에 이상 고온값이 나올 수 있으니 QC 비트·방출률·오차를 함께 써서 걸러 내세요."
+  - "방출률이 낮다고 무조건 구름은 아닙니다. 사용자 가이드는 고철질 암석(mafic rock)처럼 M15·M16 방출률이 0.9 아래로 내려가는 실제 지표도 있다고 설명합니다."
+  - "필수 QA 비트 01(보통)은 '주의해서 쓸 수 있음'입니다. LST 정확도 비트의 '나쁨' 경계는 L2가 2.5 K, A1·A2가 2 K로 제품마다 다릅니다."
+  - "1 km 타일은 750 m 원자료를 재표본한 것입니다. 750 m 원해상도가 필요하면 L2 스와스(VNP21·VJ121·VJ221)를 쓰세요."
+  - "세 위성의 통과 시각이 조금씩 달라 여름철 0.5 K 안팎 차이가 날 수 있습니다. 여러 위성을 섞을 때는 위성별로 따로 처리한 뒤 비교하세요."
+  - "LST는 2 m 기온이 아니라 지표(피부) 온도입니다. 한낮에는 기온보다 훨씬 높고 맑은 밤에는 더 낮습니다."
+  - "파일은 HDF-EOS5(HDF5)입니다. MODIS(HDF4)용 pyhdf 코드는 그대로 쓸 수 없고 h5py·xarray(h5netcdf)로 읽어야 합니다."
+
+citations:
+  dataset:
+    - label: VNP21A1D V002 (Suomi NPP 주간 일자료)
+      text: >-
+        Hulley, G., Hook, S. (2023). VIIRS/NPP Land Surface Temperature/Emissivity Daily L3 Global 1km SIN Grid Day V002 [Data set].
+        NASA Land Processes Distributed Active Archive Center. https://doi.org/10.5067/VIIRS/VNP21A1D.002
+      doi: 10.5067/VIIRS/VNP21A1D.002
+      bibtex: |
+        @misc{vnp21a1d_v002,
+          author    = {Hulley, Glynn and Hook, Simon},
+          title     = {{VIIRS/NPP} Land Surface Temperature/Emissivity Daily {L3} Global 1km {SIN} Grid Day {V002}},
+          year      = {2023},
+          publisher = {NASA Land Processes Distributed Active Archive Center},
+          doi       = {10.5067/VIIRS/VNP21A1D.002}
+        }
+    - label: VNP21A2 V002 (Suomi NPP 8일 자료)
+      text: >-
+        Hulley, G., Hook, S. (2023). VIIRS/NPP Land Surface Temperature/Emissivity 8-Day L3 Global 1km SIN Grid V002 [Data set].
+        NASA Land Processes Distributed Active Archive Center. https://doi.org/10.5067/VIIRS/VNP21A2.002
+      doi: 10.5067/VIIRS/VNP21A2.002
+      bibtex: |
+        @misc{vnp21a2_v002,
+          author    = {Hulley, Glynn and Hook, Simon},
+          title     = {{VIIRS/NPP} Land Surface Temperature/Emissivity 8-Day {L3} Global 1km {SIN} Grid {V002}},
+          year      = {2023},
+          publisher = {NASA Land Processes Distributed Active Archive Center},
+          doi       = {10.5067/VIIRS/VNP21A2.002}
+        }
+    - label: VJ121A1D V002 (NOAA-20 주간 일자료)
+      text: >-
+        Hulley, G., Hook, S. (2023). VIIRS/JPSS1 Land Surface Temperature/Emissivity Daily L3 Global 1km SIN Grid Day V002 [Data set].
+        NASA Land Processes Distributed Active Archive Center. https://doi.org/10.5067/VIIRS/VJ121A1D.002
+      doi: 10.5067/VIIRS/VJ121A1D.002
+      bibtex: |
+        @misc{vj121a1d_v002,
+          author    = {Hulley, Glynn and Hook, Simon},
+          title     = {{VIIRS/JPSS1} Land Surface Temperature/Emissivity Daily {L3} Global 1km {SIN} Grid Day {V002}},
+          year      = {2023},
+          publisher = {NASA Land Processes Distributed Active Archive Center},
+          doi       = {10.5067/VIIRS/VJ121A1D.002}
+        }
+    - label: VJ221A1D V002 (NOAA-21 주간 일자료)
+      text: >-
+        Hulley, G., Hook, S. (2026). VIIRS/JPSS2 Land Surface Temperature/Emissivity Daily L3 Global 1km SIN Grid Day V002 [Data set].
+        NASA Land Processes Distributed Active Archive Center. https://doi.org/10.5067/VIIRS/VJ221A1D.002
+      doi: 10.5067/VIIRS/VJ221A1D.002
+      bibtex: |
+        @misc{vj221a1d_v002,
+          author    = {Hulley, Glynn and Hook, Simon},
+          title     = {{VIIRS/JPSS2} Land Surface Temperature/Emissivity Daily {L3} Global 1km {SIN} Grid Day {V002}},
+          year      = {2026},
+          publisher = {NASA Land Processes Distributed Active Archive Center},
+          doi       = {10.5067/VIIRS/VJ221A1D.002}
+        }
+  papers:
+    - label: VIIRS TES 알고리즘 (Islam et al., 2017)
+      text: >-
+        Islam, T., Hulley, G. C., Malakar, N. K., Radocinski, R. G., Guillevic, P. C., Hook, S. J. (2017). A physics-based algorithm for the simultaneous retrieval of land surface temperature
+        and emissivity from VIIRS thermal infrared data. IEEE Transactions on Geoscience and Remote Sensing, 55(1), 563–576.
+      doi: 10.1109/TGRS.2016.2611566
+      bibtex: |
+        @article{islam2017viirslst,
+          author  = {Islam, Tanvir and Hulley, Glynn C. and Malakar, Nabin K. and Radocinski, Robert G. and Guillevic, Pierre C. and Hook, Simon J.},
+          title   = {A Physics-Based Algorithm for the Simultaneous Retrieval of Land Surface Temperature and Emissivity From {VIIRS} Thermal Infrared Data},
+          journal = {IEEE Transactions on Geoscience and Remote Sensing},
+          volume  = {55},
+          number  = {1},
+          pages   = {563--576},
+          year    = {2017},
+          doi     = {10.1109/TGRS.2016.2611566}
+        }
+    - label: MODIS·VIIRS TES 지표면온도 연속성 (Hulley et al., 2018)
+      text: >-
+        Hulley, G. C., Malakar, N. K., Islam, T., Freepartner, R. J. (2018). NASA's MODIS and VIIRS land surface temperature and emissivity products:
+        A long-term and consistent Earth system data record. IEEE Journal of Selected Topics in Applied Earth Observations and Remote Sensing, 11(2), 522–535.
+      doi: 10.1109/JSTARS.2017.2779330
+      bibtex: |
+        @article{hulley2018modisviirs,
+          author  = {Hulley, G. C. and Malakar, N. K. and Islam, T. and Freepartner, R. J.},
+          title   = {{NASA}'s {MODIS} and {VIIRS} Land Surface Temperature and Emissivity Products: A Long-Term and Consistent Earth System Data Record},
+          journal = {IEEE Journal of Selected Topics in Applied Earth Observations and Remote Sensing},
+          volume  = {11},
+          number  = {2},
+          pages   = {522--535},
+          year    = {2018},
+          doi     = {10.1109/JSTARS.2017.2779330}
+        }
+  acknowledgement: >-
+    쓴 제품마다 LP DAAC 데이터셋 DOI(10.5067/VIIRS/<short name>.002 형식, 예: NOAA-21 8일 자료 10.5067/VIIRS/VJ221A2.002)를 인용하세요.
+    알고리즘은 Islam et al. (2017), MODIS와의 연속성은 Hulley et al. (2018)을 함께 인용합니다.
+
+transitions:
+  - from: VIIRS LST V1 (VNP21 Collection 1)
+    to: VIIRS LST V2
+    status: completed
+    date: "2023-06"
+    summary: >-
+      Suomi NPP 전 기간의 보정 계수·지오로케이션이 개선되고 NOAA-20(VJ121)·NOAA-21(VJ221) 제품과 0.05° CMG 제품이 추가되었습니다. 대기 입력은 MERRA-2에서 GEOS-5로 바뀌고
+      내륙 수면도 산출 대상에 들어갔습니다. V1은 2025년 4월 8일 배포가 끝났습니다.
+    changes:
+      - aspect: 보정·지오로케이션
+        before: V1 보정
+        after: "Suomi NPP 전 기간 보정 알고리즘·계수 개선, 지오로케이션 정확도 향상과 기동(maneuver) 기간 이상값 수정"
+      - aspect: 입력
+        before: "MERRA-2 대기 입력, 기존 구름 마스크·해륙 마스크"
+        after: "GEOS-5 대기 입력, 개선된 구름 마스크(해안선 수정 포함), VNP03의 8분류 해륙 마스크, 밝은 지표의 에어로솔 양 플래그 수정"
+      - aspect: 산출 범위
+        before: 육지
+        after: 내륙 수면 포함
+      - aspect: 제품 구성
+        before: "Suomi NPP L2·L3 타일"
+        after: "Suomi NPP·NOAA-20(VJ1)·NOAA-21(VJ2) + 일·8일·월 0.05° CMG"
+    impacts:
+      - V1과 V2를 섞지 말고 전 기간을 V2로 다시 받으세요(V1은 2025-04-08 이후 배포되지 않습니다).
+    sources:
+      - name: VNP21A1D V002 컬렉션 설명(버전 설명)
+        url: https://www.earthdata.nasa.gov/data/catalog/lpcloud-vnp21a1d-002
+      - name: VIIRS Version 1 SR, VI, LAI/FPAR, LST, Active Fires Data Products Decommissioned (2025-04-08)
+        url: https://www.earthdata.nasa.gov/data/alerts-outages/viirs-version-1-sr-vi-lai-fpar-lst-active-fires-data-products-decommissioned
+
+notices:
+  - date: "2026-08-03"
+    level: critical
+    title: Suomi NPP 과학 자료 전달 2026년 11월 2일 종료 — VNP21 대신 VJ221·VJ121로 전환
+    body: >-
+      NOAA NESDIS는 VIIRS를 포함한 Suomi NPP의 남은 모든 과학 자료 전달을 2026년 11월 2일 13:00 UTC에 영구 중단한다고 공지했습니다(NASA Earthdata 공지 제목은 11월 1일, 일정은 바뀔 수 있음).
+      LP DAAC의 VNP21 컬렉션 설명도 같은 날 전달이 끝난다며 NOAA-21(VJ221, 1순위)이나 NOAA-20(VJ121, 2순위) 제품으로 옮기라고 안내합니다.
+    source: https://www.nesdis.noaa.gov/news/cessation-of-suomi-national-polar-orbiting-partnership-s-npp-data-users-onafter-november-2-2026
+  - date: "2026-04-14"
+    level: info
+    title: NOAA-21 VIIRS 지표면온도(VJ221) V2 공개
+    body: >-
+      LP DAAC가 VIIRS V2 지표면온도·방출률 제품을 NOAA-21(옛 JPSS-2) 자료로 넓혀 공개했습니다. VJ221 계열은 2023년 2월 10일부터의 자료를 담고 있습니다.
+    source: https://www.earthdata.nasa.gov/data/alerts-outages/additional-viirs-version-2-land-surface-temperature-emissivity-data-products
+  - date: "2025-05-02"
+    level: info
+    title: MODIS에서 VIIRS로 전환 안내 — VIIRS 유사 산출물 사용 권고
+    body: >-
+      NASA는 Terra·Aqua가 2026년 말~2027년 초부터 운용 종료에 들어간다며 MODIS 사용자에게 VIIRS 유사 산출물을 검토하라고 권고했습니다. MODIS MOD21 지표면온도를 잇는 제품이 이 VIIRS LST입니다.
+    source: https://www.earthdata.nasa.gov/data/alerts-outages/transition-from-modis-viirs
+  - date: "2025-04-08"
+    level: info
+    title: VIIRS V1 지표면온도 제품 배포 종료 — V2로 전환
+    body: >-
+      LP DAAC가 VIIRS V1 지표면반사도·LAI/FPAR·지표면온도·산불 제품의 배포를 끝냈습니다. Earthdata Search·Data Pool·AppEEARS에서 더 이상 받을 수 없고, 사용자 가이드·ATBD는 DOI 페이지에 남아 있습니다.
+    source: https://www.earthdata.nasa.gov/data/alerts-outages/viirs-version-1-sr-vi-lai-fpar-lst-active-fires-data-products-decommissioned
+
+links:
+  - name: VNP21A1D V002 데이터 카탈로그 (LP DAAC)
+    url: https://www.earthdata.nasa.gov/data/catalog/lpcloud-vnp21a1d-002
+  - name: VJ221A1D V002 데이터 카탈로그 (LP DAAC)
+    url: https://www.earthdata.nasa.gov/data/catalog/lpcloud-vj221a1d-002
+  - name: VNP21 Collection 2 User's Guide
+    url: https://lpdaac.usgs.gov/documents/1662/VNP21_User_Guide_V2.pdf
+  - name: VNP21 ATBD
+    url: https://lpdaac.usgs.gov/documents/1332/VNP21_ATBD_V1.pdf
+  - name: VIIRS Land — NASA 지표면온도·방출률 제품 소개
+    url: https://viirsland.gsfc.nasa.gov/Products/NASA/LSTESDR.html
+  - name: VIIRS LST 검증 (VIIRS Land)
+    url: https://viirsland.gsfc.nasa.gov/Val/LST_Val.html
+  - name: Suomi NPP Data Product Delivery to Cease (Earthdata)
+    url: https://www.earthdata.nasa.gov/data/alerts-outages/suomi-npp-data-product-delivery-cease-november-1-2026
+
+watch_urls:
+  - https://www.earthdata.nasa.gov/data/catalog/lpcloud-vj221a1d-002
+  - https://www.earthdata.nasa.gov/data/catalog/lpcloud-vnp21a1d-002
+  - https://landweb.modaps.eosdis.nasa.gov/knownissue?sensor=VIIRS
+
+last_verified: "2026-10-13"

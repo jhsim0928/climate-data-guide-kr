@@ -1,0 +1,463 @@
+# ─────────────────────────────────────────────────────────────
+# MODIS 지표면온도·방출률 MOD11/MYD11·MOD21/MYD21 C6.1 — 데이터셋 정보 파일
+# 지면 탭(지표면온도·알베도). 분할창(MOD11)과 TES(MOD21) 두 알고리즘을 한 페이지에서 다룹니다.
+# Terra·Aqua 궤도 표류(통과 시각 변화)와 위성 종료가 핵심 주의사항입니다. 후속 VIIRS LST는 viirs-lst.yaml.
+# 수정 후에는 공식 페이지에서 확인한 날짜로 last_verified 를 갱신하세요.
+# ─────────────────────────────────────────────────────────────
+id: modis-lst
+name: "MODIS LST (MOD11·MOD21)"
+full_name: MODIS/Terra·Aqua Land Surface Temperature and Emissivity MOD11·MYD11(분할창)·MOD21·MYD21(TES) Version 6.1 (MODIS 위성 1 km 주간·야간 지표면온도와 방출률)
+category: satellite
+domain: land
+group: 지표면온도·알베도
+order: 10
+domains: [육지, 원격탐사]
+provider: NASA MODIS 육상팀(MOD11 Wan·Hook·Hulley, MOD21 Hulley·Hook / NASA JPL) / NASA LP DAAC
+
+status: deprecated
+status_note: >-
+  C6.1 자료는 매일 생산되고 있지만(2026-10-13 확인 시 MOD11A1은 10월 6일, MYD21A1D는 10월 11일 자료까지), Terra·Aqua가 연료·전력 한계로 궤도를 벗어나 통과 시각이 크게 바뀌었고
+  2026년 말~2027년 초부터 운용 종료에 들어갈 예정이라 NASA는 VIIRS 유사 산출물(VNP21·VJ121·VJ221)로 옮기라고 안내합니다.
+  지표면온도는 관측 시각에 민감하므로, 2020~2021년 이후 궤도 표류 구간의 값은 그 이전과 같은 시각의 값으로 보면 안 됩니다.
+
+period:
+  start: "2000-02"
+  end: present
+  note: >-
+    Terra(MOD11·MOD21)는 2000-02-24(8일·월 자료는 2000-02-18·2000-02-01 구간 시작), Aqua(MYD11·MYD21)는 2002-07-04부터입니다.
+    2026-10-13 확인 시 LP DAAC에는 2026년 10월 초~중순 자료까지 있습니다. Terra 2026-03-26 20:00 UTC~03-27 19:23 UTC 자료는 보정팀이 의심·불량으로 표시했습니다.
+    MODIS 수집이 끝나면 마지막 재처리가 있을 예정입니다.
+
+resolution:
+  spatial_short: "1 km (0.01°)"
+  temporal_short: "1일"
+  spatial: >-
+    L3 타일: MODIS Sinusoidal(SIN) 격자 1 km(실제 0.928 km, 1200×1200 화소/타일) — MOD11A1·A2, MOD21A1D·A1N·A2 /
+    MOD11B1·B2·B3: SIN 격자 6 km(5.568 km) / CMG: 전지구 0.05° 등위경도 격자 — MOD11C1·C2·C3, MOD21C1·C2·C3 /
+    L2 스와스: 직하점 약 1 km(MOD11_L2, MOD21, 5분 단위 그래뉼)
+  vertical: 지표 피부(skin) 온도 단일층 + 열적외 밴드별 방출률(MOD11 밴드 31·32, MOD21 밴드 29·31·32)
+  temporal: >-
+    위성마다 하루 주간 1회·야간 1회 통과(고위도는 여러 번) / 일(A1·C1) / 8일(A2·C2) / 월(B3·C3). 설계상 적도 통과 시각은 Terra 10:30(하강, 주간),
+    Aqua 13:30(상승, 주간) 지방시이고 야간은 반대편 궤도이지만, 궤도 표류로 바뀌었습니다.
+
+update: 매일 (관측 후 1~2일 지연), 8일·월 자료는 구간 종료 후
+license: NASA EOSDIS 자료 이용·인용 지침에 따라 제한 없이 공개된 무료 자료입니다. 내려받기에는 무료 NASA Earthdata 로그인이 필요하며, 데이터셋 DOI 인용을 요청합니다.
+account_required: true
+
+summary: >-
+  MODIS 열적외 밴드로 구한 맑은 날의 지표면(피부) 온도와 방출률 자료로, 같은 Collection 6.1 안에 알고리즘이 다른 두 계열이 있습니다.
+  MOD11·MYD11은 밴드 31·32 밝기온도 차이를 쓰는 일반화 분할창(split-window) 방식으로, 토지피복 분류에서 정한 방출률을 가정하고 구름 낀 의심 화소를 걸러 냅니다.
+  MOD21·MYD21은 ASTER에서 쓰던 온도·방출률 분리(TES) 방식으로 밴드 29·31·32의 방출률을 온도와 함께 물리적으로 풀어, 사막·건조지에서 MOD11의 3~5 K 저온 편향을 줄였지만 걸러지지 않은 이상 고온값이 남습니다.
+  Terra(오전·밤)와 Aqua(오후·새벽) 판이 따로 있으며, 일·8일·월 자료를 1 km 타일과 0.05° 전지구 격자로 제공합니다.
+
+time_convention:
+  summary: >-
+    일자료(A1·C1)는 위성이 지나간 순간의 맑은 하늘 관측값입니다(같은 날 여러 번 관측되는 고위도는 조건에 맞는 관측들의 평균). 관측 시각은 화소마다 다르므로 함께 들어 있는
+    관측 시각 변수(`Day_view_time`·`View_Time` 등)로 확인해야 합니다. 8일(A2·C2)·월(B3·C3) 자료는 그 기간 맑은 날 일자료의 단순 평균이며, 흐린 날은 빠져 있습니다.
+  points:
+    - "설계상 Terra는 지방시 10:30에 하강(주간), Aqua는 13:30에 상승(주간)하며 적도를 지나고, 야간 관측은 반대 방향 궤도에서 이뤄집니다. 같은 위성이라도 궤도 폭 안 위치와 위도에 따라 화소별 관측 시각이 다르므로 관측 시각 변수로 확인하세요."
+    - "궤도 표류: Terra는 2020년 2월 27일 마지막 경사각 조정 이후 점점 이른 시각으로 옮겨 2022년 가을 10:15에 이르렀고 2025년 12월 무렵 약 9:00이 될 것으로 예측되었습니다. Aqua는 2021년 7월부터 늦어져 2023년 2월 13:45를 넘었고 2026년 8월 무렵 약 15:50으로 예상되었습니다."
+    - "지표면온도는 하루 중 시각에 따라 크게 달라지므로, 통과 시각이 바뀐 구간을 그대로 이어 추세를 구하면 시각 변화가 기온 변화처럼 섞입니다. 2020년 이후 Terra 주간 LST는 더 이른(서늘한) 시각, Aqua 주간 LST는 한낮을 지난 늦은 오후 시각 값이 됩니다."
+    - "MOD11A1·A2의 `Day_view_time`·`Night_view_time`은 지방 태양시(UTC + 경도/15)입니다. CMG(C1·C2·C3) 자료의 관측 시각은 사용자 가이드에 UTC로 적혀 있어 기준이 다를 수 있으니 파일 속성을 확인하세요."
+    - "MOD11A2·MOD21A2의 8일 주간·야간 값은 맑은 날만 평균하므로 8일 중 하루만 맑아도 값이 생깁니다. MOD11A2는 맑은 날 비트맵(`Clear_sky_days`·`Clear_sky_nights`)으로 평균에 들어간 날을 확인할 수 있습니다."
+    - "8일 자료의 파일 날짜(AYYYYDDD)는 합성 구간의 첫날이고, 월 자료(B3·C3)는 그달 1일입니다."
+  source: https://lpdaac.usgs.gov/documents/715/MOD11_User_Guide_V61.pdf
+  source_name: "MOD11 C6.1·MOD21 C6.1 User's Guide + LP DAAC 'Aqua MODIS Acquisition Plan Through August 2026' + Terra 홈페이지 궤도 정보"
+
+variables:
+  note: >-
+    LP DAAC 데이터 카탈로그와 C6.1 사용자 가이드 기준 변수(SDS)입니다. HDF-EOS2(HDF4) 파일의 실제 값 = 저장값 × scale_factor (+ offset)입니다.
+    LST는 scale 0.02(K), 저장값 0은 채움값입니다. MYD(Aqua) 파일도 변수 이름이 같습니다. MOD11은 오염 의심 화소를 채움값으로 지우지만 MOD21은 값을 남겨 두므로 QC로 직접 걸러야 합니다.
+  full_list: https://www.earthdata.nasa.gov/data/catalog/lpcloud-mod11a1-061
+  groups:
+    - name: MOD11 분할창 — 일자료 1 km (MOD11A1·MYD11A1)
+      kind: instant
+      period: 통과 시각
+      items:
+        - text: "주간 지표면온도 — `LST_Day_1km` (K, scale 0.02)"
+          std: [tskin]
+          note: 그날 주간 통과 시각의 맑은 하늘 관측값. 30° 이상 고위도에서 여러 번 관측되면 조건에 맞는 관측의 평균
+        - text: "야간 지표면온도 — `LST_Night_1km` (K, scale 0.02)"
+          std: [tskin]
+          note: 그날 야간 통과 시각의 관측값
+        - "밴드 31·32 방출률(토지피복 기반) — `Emis_31`, `Emis_32` (무차원, scale 0.002, offset 0.49)"
+        - text: "주간·야간 관측 시각 — `Day_view_time`, `Night_view_time` (시, 지방 태양시, scale 0.1)"
+          note: 화소별 실제 관측 시각. 궤도 표류 분석에 꼭 필요
+        - "주간·야간 관측 천정각 — `Day_view_angl`, `Night_view_angl` (도, offset -65)"
+        - "주간·야간 품질 비트 — `QC_Day`, `QC_Night` (비트값: 0~1 필수 QA, 2~3 자료 품질, 4~5 방출률 오차, 6~7 LST 오차)"
+    - name: MOD11 분할창 — 8일·월 자료 (MOD11A2 1 km / MOD11C3 0.05°)
+      kind: mean
+      period: 8일 또는 월 (맑은 날만)
+      items:
+        - text: "8일 주간·야간 지표면온도 — `LST_Day_1km`, `LST_Night_1km` (K, scale 0.02)"
+          std: [tskin]
+          period: 8일
+          note: MOD11A1 맑은 날 값의 단순 평균
+        - text: "월 주간·야간 지표면온도(0.05°) — `LST_Day_CMG`, `LST_Night_CMG` (K, scale 0.02)"
+          std: [tskin]
+          period: 월
+          note: MOD11C1 일자료의 달 평균
+        - text: "맑은 날·밤 비트맵 — `Clear_sky_days`, `Clear_sky_nights`"
+          kind: accum
+          note: 기간 중 맑은 관측이 있었던 날을 비트로 표시. 평균에 들어간 날 수를 확인하는 데 사용
+    - name: MOD21 TES — 일자료 1 km (MOD21A1D 주간 / MOD21A1N 야간, MYD21 동일)
+      kind: instant
+      period: 통과 시각
+      items:
+        - text: "지표면온도 — `LST_1KM` (K, scale 0.02)"
+          std: [tskin]
+          note: 주간 파일(A1D)과 야간 파일(A1N)이 따로 있음. 격자 칸과 15% 넘게 겹치는 맑은·양호 관측을 겹침 비율로 가중 평균
+        - "밴드 29·31·32 방출률(TES로 산출) — `Emis_29`, `Emis_31`, `Emis_32` (무차원, scale 0.002, offset 0.49)"
+        - text: "관측 시각 — `View_Time` (시, scale 0.1)"
+          note: 화소별 관측 시각
+        - "관측 천정각 — `View_Angle` (도, offset -65)"
+        - "품질 비트 — `QC` (16비트: 필수 QA, 자료 품질, 구름, TES 반복, 대기 불투명도, 방출률 대비, 방출률·LST 정확도)"
+    - name: MOD21 TES — 8일·월 자료 (MOD21A2 1 km / MOD21C3 0.05°)
+      kind: mean
+      period: 8일 또는 월 (맑은 날만)
+      items:
+        - text: "8일 주간·야간 지표면온도 — `LST_Day_1KM`, `LST_Night_1KM` (K, scale 0.02)"
+          std: [tskin]
+          period: 8일
+          note: MOD21A1D·A1N 맑은 날 값의 단순 평균. 방출률은 주간·야간 함께 평균
+        - text: "월 주간·야간 지표면온도(0.05°) — `LST_Day`, `LST_Night` (K, scale 0.02)"
+          std: [tskin]
+          period: 월
+          note: MOD21C1 일자료의 달 평균
+        - text: "월 LST 불확실성(0.05°) — `LST_Day_err`, `LST_Night_err` (K, scale 0.04)"
+          period: 월
+    - name: 고정 정보
+      kind: static
+      items:
+        - "격자 내 육지 비율(CMG) — `Percent_land_in_grid` (%)"
+
+access:
+  - name: NASA Earthdata Search (LP DAAC, Earthdata Cloud)
+    url: https://search.earthdata.nasa.gov/search/granules?p=C1748058432-LPCLOUD
+    method: HTTPS 다운로드 / earthaccess / Earthdata Search
+    note: >-
+      short name 예: MOD11A1·MOD11A2·MOD11C1·MOD11C3·MOD11_L2, MOD21A1D·MOD21A1N·MOD21A2·MOD21C1·MOD21C3·MOD21(L2), Aqua는 MOD→MYD. version은 모두 061입니다.
+      파일은 data.lpdaac.earthdatacloud.nasa.gov 아래 HTTPS로 받으며 무료 Earthdata 로그인이 필요합니다. 예전 LP DAAC Data Pool 배포는 2025-06-30에 끝났습니다.
+  - name: AppEEARS (영역·지점 부분 추출)
+    url: https://appeears.earthdatacloud.nasa.gov/
+    method: 웹 / API — 지점 시계열·영역을 GeoTIFF·NetCDF4로 추출
+    note: 필요한 영역·기간·변수만 골라 받을 수 있고 위경도 투영으로 바꿔 받을 수 있습니다. 관측소 지점 비교에 편합니다.
+  - name: AWS us-west-2 직접 접근 (S3)
+    url: https://data.lpdaac.earthdatacloud.nasa.gov/s3credentials
+    method: 클라우드 저장소(S3, us-west-2 안에서만)
+    note: s3://lp-prod-protected/MOD11A1.061/ 처럼 저장되어 있으며 임시 자격증명이 필요합니다.
+
+example:
+  lang: python
+  note: >-
+    earthaccess로 Terra MOD11A1 일자료를 받아 pyhdf로 읽고, 필수 QA(비트 0~1)가 '좋음(00)'인 화소만 남기는 예입니다. 관측 시각도 함께 읽어 궤도 표류를 확인하세요.
+  code: |
+    # pip install earthaccess pyhdf numpy
+    import earthaccess
+    import numpy as np
+    from pyhdf.SD import SD, SDC
+
+    earthaccess.login()  # 무료 NASA Earthdata 계정
+    results = earthaccess.search_data(
+        short_name="MOD11A1", version="061",
+        temporal=("2024-08-01", "2024-08-03"),
+        bounding_box=(126.5, 37.0, 127.5, 38.0),   # (서, 남, 동, 북) 서울 주변
+    )
+    files = earthaccess.download(results, "mod11")
+
+    hdf = SD(files[0], SDC.READ)
+    lst = hdf.select("LST_Day_1km").get().astype("float64")
+    qc = hdf.select("QC_Day").get()
+    vt = hdf.select("Day_view_time").get().astype("float64")
+
+    good = (lst > 0) & ((qc & 0b11) == 0)        # 채움값 제거 + 필수 QA '좋음'
+    lst_k = np.where(good, lst * 0.02, np.nan)    # K
+    view_time = np.where(vt < 255, vt * 0.1, np.nan)  # 지방 태양시(시)
+    print(np.nanmean(lst_k) - 273.15, np.nanmedian(view_time))
+
+tips:
+  - "MOD11과 MOD21은 같은 날 같은 곳이라도 값이 다릅니다. 사막·건조지·나지에서는 MOD11이 3~5 K 낮게(저온 편향) 나올 수 있고, MOD21은 걸러지지 않은 먼지·구름 오염 때문에 이상 고온값이 더 자주 나옵니다. 한 연구 안에서 두 계열을 섞지 마세요."
+  - "MOD21은 오염 화소를 채움값으로 지우지 않습니다. 사용자 가이드는 QC 비트(특히 필수 QA·LST 정확도), 방출률(밴드 31·32가 0.95 미만이면 의심), 오차 추정값을 함께 써서 걸러 내라고 권합니다."
+  - "궤도 표류 때문에 2020년(Terra)·2021년(Aqua) 이후 관측 시각이 해마다 바뀝니다. 장기 추세·이상값 분석에는 `Day_view_time`·`View_Time`을 함께 보고, 시각 보정이나 같은 시각대 표본만 고르는 방법을 검토하세요."
+  - "LP DAAC 공지에 따르면 궤도가 낮아지고 표류하면서 격자 크기가 줄고 엄격한 16일 반복 주기가 깨졌으며, 통과 시각이 늦어지면 태양고도가 낮아 그림자가 늘어납니다. MODIS 품질평가팀은 2024년 말부터 주사 간격(scan gap) 확대 등 영향이 크게 나타났다고 밝혔습니다."
+  - "Aqua MYD21은 밴드 29 밝기온도가 2018년부터 전자 혼선으로 올라가 지표면온도가 예상보다 높게 나온다는 공식 공지(2024-01)가 있습니다. Aqua TES 자료로 2018년 이후 추세를 볼 때 주의하세요."
+  - "Terra MOD21은 2006-08-29부터 밴드 29 고장 검출기 때문에 L2에 줄무늬가 생기며, 해당 화소는 QC 비트에 표시되고 근접 값으로 채운 것이라 과학 분석에 쓰면 안 됩니다."
+  - "8일·월 자료는 맑은 날만 평균한 '맑은 하늘 편향' 값입니다. 흐린 날이 많은 장마철에는 평균에 들어간 날 수가 적어 대표성이 떨어집니다."
+  - "LST는 2 m 기온이 아니라 지표(피부) 온도입니다. 한낮에는 기온보다 훨씬 높고 맑은 밤에는 더 낮습니다. 기상청 관측 기온과 직접 비교하지 마세요."
+  - "값 = 저장값 × 0.02(K)이며 저장값 0이 채움값입니다. 방출률은 저장값 × 0.002 + 0.49입니다."
+
+citations:
+  dataset:
+    - label: MOD11A1 V6.1 (Terra 분할창 일자료)
+      text: >-
+        Wan, Z., Hook, S., Hulley, G. (2021). MODIS/Terra Land Surface Temperature/Emissivity Daily L3 Global 1km SIN Grid V061 [Data set].
+        NASA Land Processes Distributed Active Archive Center. https://doi.org/10.5067/MODIS/MOD11A1.061
+      doi: 10.5067/MODIS/MOD11A1.061
+      bibtex: |
+        @misc{mod11a1_v061,
+          author    = {Wan, Zhengming and Hook, Simon and Hulley, Glynn},
+          title     = {{MODIS/Terra} Land Surface Temperature/Emissivity Daily {L3} Global 1km {SIN} Grid {V061}},
+          year      = {2021},
+          publisher = {NASA Land Processes Distributed Active Archive Center},
+          doi       = {10.5067/MODIS/MOD11A1.061}
+        }
+    - label: MOD11A2 V6.1 (Terra 분할창 8일 자료)
+      text: >-
+        Wan, Z., Hook, S., Hulley, G. (2021). MODIS/Terra Land Surface Temperature/Emissivity 8-Day L3 Global 1km SIN Grid V061 [Data set].
+        NASA Land Processes Distributed Active Archive Center. https://doi.org/10.5067/MODIS/MOD11A2.061
+      doi: 10.5067/MODIS/MOD11A2.061
+      bibtex: |
+        @misc{mod11a2_v061,
+          author    = {Wan, Zhengming and Hook, Simon and Hulley, Glynn},
+          title     = {{MODIS/Terra} Land Surface Temperature/Emissivity 8-Day {L3} Global 1km {SIN} Grid {V061}},
+          year      = {2021},
+          publisher = {NASA Land Processes Distributed Active Archive Center},
+          doi       = {10.5067/MODIS/MOD11A2.061}
+        }
+    - label: MOD21A1D V6.1 (Terra TES 주간 일자료)
+      text: >-
+        Hulley, G., Hook, S. (2021). MODIS/Terra Land Surface Temperature/3-Band Emissivity Daily L3 Global 1km SIN Grid Day V061 [Data set].
+        NASA Land Processes Distributed Active Archive Center. https://doi.org/10.5067/MODIS/MOD21A1D.061
+      doi: 10.5067/MODIS/MOD21A1D.061
+      bibtex: |
+        @misc{mod21a1d_v061,
+          author    = {Hulley, Glynn and Hook, Simon},
+          title     = {{MODIS/Terra} Land Surface Temperature/3-Band Emissivity Daily {L3} Global 1km {SIN} Grid Day {V061}},
+          year      = {2021},
+          publisher = {NASA Land Processes Distributed Active Archive Center},
+          doi       = {10.5067/MODIS/MOD21A1D.061}
+        }
+    - label: MOD21A2 V6.1 (Terra TES 8일 자료)
+      text: >-
+        Hulley, G., Hook, S. (2021). MODIS/Terra Land Surface Temperature/3-Band Emissivity 8-Day L3 Global 1km SIN Grid V061 [Data set].
+        NASA Land Processes Distributed Active Archive Center. https://doi.org/10.5067/MODIS/MOD21A2.061
+      doi: 10.5067/MODIS/MOD21A2.061
+      bibtex: |
+        @misc{mod21a2_v061,
+          author    = {Hulley, Glynn and Hook, Simon},
+          title     = {{MODIS/Terra} Land Surface Temperature/3-Band Emissivity 8-Day {L3} Global 1km {SIN} Grid {V061}},
+          year      = {2021},
+          publisher = {NASA Land Processes Distributed Active Archive Center},
+          doi       = {10.5067/MODIS/MOD21A2.061}
+        }
+  papers:
+    - label: 일반화 분할창 알고리즘 (Wan & Dozier, 1996)
+      text: >-
+        Wan, Z., Dozier, J. (1996). A generalized split-window algorithm for retrieving land-surface temperature from space.
+        IEEE Transactions on Geoscience and Remote Sensing, 34(4), 892–905.
+      doi: 10.1109/36.508406
+      bibtex: |
+        @article{wan1996splitwindow,
+          author  = {Wan, Zhengming and Dozier, J.},
+          title   = {A generalized split-window algorithm for retrieving land-surface temperature from space},
+          journal = {IEEE Transactions on Geoscience and Remote Sensing},
+          volume  = {34},
+          number  = {4},
+          pages   = {892--905},
+          year    = {1996},
+          doi     = {10.1109/36.508406}
+        }
+    - label: MOD11 Collection 6 개선·검증 (Wan, 2014)
+      text: >-
+        Wan, Z. (2014). New refinements and validation of the collection-6 MODIS land-surface temperature/emissivity product.
+        Remote Sensing of Environment, 140, 36–45.
+      doi: 10.1016/j.rse.2013.08.027
+      bibtex: |
+        @article{wan2014c6,
+          author  = {Wan, Zhengming},
+          title   = {New refinements and validation of the collection-6 {MODIS} land-surface temperature/emissivity product},
+          journal = {Remote Sensing of Environment},
+          volume  = {140},
+          pages   = {36--45},
+          year    = {2014},
+          doi     = {10.1016/j.rse.2013.08.027}
+        }
+    - label: ASTER·MODIS 일관 TES 산출 (Hulley & Hook, 2011)
+      text: >-
+        Hulley, G. C., Hook, S. J. (2011). Generating consistent land surface temperature and emissivity products between ASTER and MODIS data for Earth science research.
+        IEEE Transactions on Geoscience and Remote Sensing, 49(4), 1304–1315.
+      doi: 10.1109/TGRS.2010.2063034
+      bibtex: |
+        @article{hulley2011tes,
+          author  = {Hulley, Glynn C. and Hook, Simon J.},
+          title   = {Generating Consistent Land Surface Temperature and Emissivity Products Between {ASTER} and {MODIS} Data for Earth Science Research},
+          journal = {IEEE Transactions on Geoscience and Remote Sensing},
+          volume  = {49},
+          number  = {4},
+          pages   = {1304--1315},
+          year    = {2011},
+          doi     = {10.1109/TGRS.2010.2063034}
+        }
+    - label: MODIS·VIIRS TES 지표면온도 연속성 (Hulley et al., 2018)
+      text: >-
+        Hulley, G. C., Malakar, N. K., Islam, T., Freepartner, R. J. (2018). NASA's MODIS and VIIRS land surface temperature and emissivity products:
+        A long-term and consistent Earth system data record. IEEE Journal of Selected Topics in Applied Earth Observations and Remote Sensing, 11(2), 522–535.
+      doi: 10.1109/JSTARS.2017.2779330
+      bibtex: |
+        @article{hulley2018modisviirs,
+          author  = {Hulley, G. C. and Malakar, N. K. and Islam, T. and Freepartner, R. J.},
+          title   = {{NASA}'s {MODIS} and {VIIRS} Land Surface Temperature and Emissivity Products: A Long-Term and Consistent Earth System Data Record},
+          journal = {IEEE Journal of Selected Topics in Applied Earth Observations and Remote Sensing},
+          volume  = {11},
+          number  = {2},
+          pages   = {522--535},
+          year    = {2018},
+          doi     = {10.1109/JSTARS.2017.2779330}
+        }
+  acknowledgement: >-
+    쓴 제품마다 LP DAAC 데이터셋 DOI(10.5067/MODIS/<short name>.061 형식, 예: Aqua 일자료 10.5067/MODIS/MYD11A1.061)를 인용하세요.
+    MOD11은 Wan & Dozier (1996)·Wan (2014), MOD21은 Hulley & Hook (2011)과 MOD21 ATBD를 알고리즘 근거로 함께 인용합니다.
+
+transitions:
+  - from: MODIS LST C6 (MOD11·MOD21)
+    to: MODIS LST C6.1
+    status: completed
+    date: "2021-02"
+    summary: >-
+      MOD11의 과학 알고리즘·파일 형식은 그대로이고 입력 L1B 보정이 개선되었습니다. MOD21은 대기 보정 입력이 MERRA-2(일부 NCEP)에서 GEOS-5 FP로 바뀌고
+      0.05° 전지구 격자(CMG) 제품 MxD21C1·C2·C3가 새로 생겼습니다. C6 자료는 2023-07-31 배포가 끝났습니다.
+    changes:
+      - aspect: 입력 L1B 보정
+        before: C6 보정
+        after: "반사 밴드 주사각 응답 방식 변경, Terra 적외 밴드 광학 혼선 보정, 2012~2017 Terra 순방향 LUT 수정, 편광 보정"
+      - aspect: MOD11 알고리즘
+        before: 일반화 분할창 (C6)
+        after: 변경 없음 (형식도 동일)
+      - aspect: MOD21 대기 입력
+        before: MERRA-2 / NCEP 운영·준실시간 조합
+        after: GEOS-5 FP (약 1/3°×1/4°, 3시간), 사용자 가이드상 품질 차이는 뚜렷하지 않음
+      - aspect: MOD21 제품 구성
+        before: L2·A1D·A1N·A2
+        after: L2·A1D·A1N·A2 + 0.05° CMG 일·8일·월(MxD21C1·C2·C3) 추가
+    impacts:
+      - C6과 C6.1을 섞지 말고 전 기간을 C6.1로 다시 받으세요(C6은 2023-07-31 이후 배포되지 않습니다).
+    sources:
+      - name: MOD21A1D V061 컬렉션 설명 (버전 설명)
+        url: https://www.earthdata.nasa.gov/data/catalog/lpcloud-mod21a1d-061
+      - name: MOD11 C6.1 User's Guide
+        url: https://lpdaac.usgs.gov/documents/715/MOD11_User_Guide_V61.pdf
+      - name: MOD21 C6.1 User's Guide
+        url: https://lpdaac.usgs.gov/documents/1398/MOD21_User_Guide_V61.pdf
+  - from: MODIS LST MOD11·MOD21 C6.1
+    to: VIIRS LST VNP21·VJ121·VJ221 V2
+    to_id: viirs-lst
+    status: planned
+    summary: >-
+      NASA의 VIIRS 지표면온도는 MOD21과 같은 TES 알고리즘·입력으로 만든 VNP21(Suomi NPP)·VJ121(NOAA-20)·VJ221(NOAA-21) V2이며, 개발진은 MODIS(MxD21)와 VIIRS LST가
+      약 ±0.5 K 안에서 일치한다고 보고했습니다. MOD11 분할창 방식을 잇는 NASA VIIRS 제품은 없으므로, MOD11 사용자는 알고리즘 차이까지 함께 바뀝니다.
+      Terra·Aqua가 2026년 말 이후 종료되면 전환이 완료됩니다.
+    changes:
+      - aspect: 알고리즘
+        before: "MOD11·MYD11 분할창(방출률 가정) / MOD21·MYD21 TES"
+        after: "TES만 (VNP21·VJ121·VJ221, MOD21과 같은 방식·입력)"
+      - aspect: 열적외 밴드
+        before: "MODIS 밴드 29(8.55 µm)·31(11 µm)·32(12 µm)"
+        after: "VIIRS M14(8.55 µm)·M15(10.76 µm)·M16(12 µm)"
+      - aspect: 해상도
+        before: "L2 직하 1 km → L3 1 km SIN / 0.05° CMG"
+        after: "L2 750 m → L3 1 km SIN(750 m에서 재표본) / 0.05° CMG"
+      - aspect: 통과 시각
+        before: "Terra 10:30 하강, Aqua 13:30 상승 (2020~2021년 이후 표류)"
+        after: "13:30 상승 (Suomi NPP·NOAA-20·NOAA-21 모두 오후 궤도). Terra 같은 오전 궤도를 잇는 VIIRS는 없음"
+      - aspect: 기간
+        before: "Terra 2000-02~ / Aqua 2002-07~"
+        after: "Suomi NPP 2012-01-17~(2026-11 초 전달 종료) / NOAA-20 2018-01-01~ / NOAA-21 2023-02-10~"
+      - aspect: 일자료 구성·변수 이름
+        before: "MOD11A1: 주간·야간 한 파일(`LST_Day_1km`·`LST_Night_1km`) / MOD21A1D·A1N: 주야 별도 파일(`LST_1KM`)"
+        after: "VNP21A1D·A1N: 주야 별도 파일(`LST_1KM`), 방출률 `Emis_14`·`Emis_15`·`Emis_16`"
+      - aspect: 파일 형식
+        before: HDF-EOS2 (HDF4)
+        after: HDF-EOS5 (HDF5)
+    impacts:
+      - MOD11(분할창) 시계열을 VIIRS로 이어 붙이면 알고리즘 차이(건조지 3~5 K 편향 등)가 불연속으로 나타납니다. 이어 붙일 때는 MOD21(TES)과 VIIRS를 겹치는 기간에 비교하세요.
+      - Terra(오전) 시계열을 이을 VIIRS 관측은 없습니다. Aqua(오후)를 VIIRS로 잇더라도 Aqua 궤도 표류 구간(2021년 이후)과 VIIRS의 13:30 관측은 시각이 다릅니다.
+      - VIIRS 위성끼리도 통과 시각이 50분~1시간 달라 여름철 약 0.5 K 차이가 보고되었습니다(VNP21 사용자 가이드).
+    sources:
+      - name: Hulley et al. (2018), IEEE JSTARS — MODIS·VIIRS LST 일관성
+        url: https://doi.org/10.1109/JSTARS.2017.2779330
+      - name: VNP21 Collection 2 User's Guide
+        url: https://lpdaac.usgs.gov/documents/1662/VNP21_User_Guide_V2.pdf
+      - name: Transition from MODIS to VIIRS (Earthdata, 2025-05-02)
+        url: https://www.earthdata.nasa.gov/data/alerts-outages/transition-from-modis-viirs
+
+notices:
+  - date: "2026-03-26"
+    level: info
+    title: Terra MODIS 대기 모드 전환 — 2026-03-26~27 일부 자료 의심·불량 표시
+    body: >-
+      Terra 위성 이상으로 2026년 3월 26일 20:00 UTC경 MODIS가 대기(standby) 모드로 바뀌었다가 27일 과학 모드로 돌아왔습니다. 보정팀은 3월 26일(DOY 085) 20:00 UTC부터
+      흑체 온도가 정상으로 돌아온 27일(DOY 086) 19:23 UTC까지의 자료를 의심 또는 불량으로 표시했고, 그 이후 자료는 써도 된다고 밝혔습니다.
+    source: https://www.earthdata.nasa.gov/data/alerts-outages/terra-modis-placed-standby-mode
+  - date: "2026-03-20"
+    level: warning
+    title: NASA, Terra 과학 운용 종료를 2027년 2월·Aqua를 2027년 9월로 전망
+    body: >-
+      NASA Science 기사 'Terra: The End of An Era'(2025-12-29 게재, 2026-03-20 갱신)의 편집자 주는 연료·전력 한계로 Terra는 2027년 2월, Aqua는 2027년 9월,
+      Aura는 2028년 8월에 과학 운용이 끝날 것으로 전망하며, 그때까지는 운용을 계속한다고 밝혔습니다. 이전 계획(Terra 2025년 12월, Aqua 2026년 8월 종료)보다 늦춰진 일정입니다.
+    source: https://science.nasa.gov/science-research/earth-science/terra-the-end-of-an-era
+  - date: "2026-03-18"
+    level: info
+    title: MODIS L1B·지오로케이션 Version 7.0 공개 — 지면 산출물은 아직 C6.1
+    body: >-
+      LAADS DAAC가 MODIS 보정 복사량·지오로케이션 V7.0을 공개하고 V6.1 L1 자료는 2026-09-30 이후 내린다고 공지했습니다. 2026-10-13 확인 시
+      MOD11·MOD21 지면 산출물은 CMR에 V061만 있으며, C7 지면 산출물의 공개 일정은 공식 공지로 확인되지 않았습니다.
+    source: https://www.earthdata.nasa.gov/data/alerts-outages/version-7.0-modis-calibrated-radiances-geolocation-data-products-now-available
+  - date: "2026-01-08"
+    level: warning
+    title: Terra·Aqua 궤도 표류가 MODIS 자료에 미치는 영향 조사 중 (LDOPE)
+    body: >-
+      MODIS 지면 품질평가팀(LDOPE)은 Terra·Aqua가 궤도 유지 기동을 멈춘 뒤 표류하면서 화소 크기·간격, 주사 간격(scan gap), 보타이 중첩, 일주기 표본 시각이 달라졌고,
+      2024년 말부터 영향이 크게 나타났다며 MODIS 산출물 전반에 대한 영향을 조사 중이라고 밝혔습니다. 일주기 표본 시각 변화는 지표면온도에 직접 영향을 줍니다.
+    source: https://landweb.modaps.eosdis.nasa.gov/displayissue?id=1254
+  - date: "2025-06-03"
+    level: info
+    title: LP DAAC Data Pool의 MODIS 배포 종료(2025-06-30) — Earthdata Cloud로 전환
+    body: >-
+      LP DAAC는 C6.1을 포함한 모든 MODIS 자료의 Data Pool 배포를 2025년 6월 30일에 끝냈습니다. Data Pool 주소를 쓰던 스크립트는 Earthdata Cloud(HTTPS·earthaccess)로 바꿔야 하며,
+      Earthdata Search와 AppEEARS는 그대로 쓸 수 있습니다.
+    source: https://www.earthdata.nasa.gov/data/alerts-outages/lp-daac-discontinue-data-pool-distribution-modis-datasets
+  - date: "2025-05-02"
+    level: warning
+    title: MODIS에서 VIIRS로 전환 안내 — Terra·Aqua 2026년 말~2027년 초 종료 시작
+    body: >-
+      NASA는 Terra·Aqua가 2026년 말~2027년 초부터 운용 종료에 들어가며, 두 위성이 설계 궤도를 벗어나 통과 시각이 바뀌고 있어 자료에 영향을 줄 수 있다고 공지했습니다.
+      MODIS 자료 수집이 멈추면 마지막 재처리를 하며, 사용자는 VIIRS 유사 산출물을 검토하라고 권고했습니다.
+    source: https://www.earthdata.nasa.gov/data/alerts-outages/transition-from-modis-viirs
+  - date: "2024-01-16"
+    level: warning
+    title: Aqua MYD21 지표면온도 고온 편향 — 밴드 29 밝기온도 표류(2018년 이후)
+    body: >-
+      LDOPE는 Aqua MODIS 밴드 29 밝기온도가 장파 적외 밴드 간 전자 혼선 증가로 2018년부터 크게 올라가, C6.1 Aqua TES 지표면온도(MYD21)가 예상보다 높게 나온다고 공지했습니다.
+      보정팀의 혼선 보정을 시험 중이며 확인되면 forward 생산에 넣을 예정이고, 2018년 이후 재처리 여부는 정해지지 않았습니다.
+    source: https://landweb.modaps.eosdis.nasa.gov/displayissue?id=220
+  - date: "2023-07-25"
+    level: info
+    title: MODIS V6.0 지면 산출물 배포 종료(2023-07-31) — V6.1로 전환
+    body: >-
+      LP DAAC는 2023년 7월 31일 MOD11·MOD21을 포함한 MODIS V6.0 지면 산출물의 배포를 끝냈습니다. 사용자 가이드·ATBD는 DOI 페이지에 남아 있고, 자료는 V6.1을 쓰면 됩니다.
+    source: https://www.earthdata.nasa.gov/data/alerts-outages/final-notice-modis-version-6-0-land-data-products-decommissioned-july-31-2023
+
+links:
+  - name: MOD11A1 V061 데이터 카탈로그 (LP DAAC)
+    url: https://www.earthdata.nasa.gov/data/catalog/lpcloud-mod11a1-061
+  - name: MOD21A1D V061 데이터 카탈로그 (LP DAAC)
+    url: https://www.earthdata.nasa.gov/data/catalog/lpcloud-mod21a1d-061
+  - name: MOD11 C6.1 User's Guide
+    url: https://lpdaac.usgs.gov/documents/715/MOD11_User_Guide_V61.pdf
+  - name: MOD21 C6.1 User's Guide
+    url: https://lpdaac.usgs.gov/documents/1398/MOD21_User_Guide_V61.pdf
+  - name: MOD21 ATBD
+    url: https://lpdaac.usgs.gov/documents/1399/MOD21_ATBD.pdf
+  - name: Aqua MODIS Acquisition Plan Through August 2026 (LP DAAC, 궤도 표류 일정)
+    url: https://lpdaac.usgs.gov/news/aqua-modis-acquisition-plan-through-august-2026/
+  - name: Terra 홈페이지 (적도 통과 시각·고도)
+    url: https://terra.nasa.gov/
+  - name: MODIS/VIIRS 지면 품질평가(LDOPE) 알려진 문제
+    url: https://landweb.modaps.eosdis.nasa.gov/knownissue?sensor=MODIS
+
+watch_urls:
+  - https://www.earthdata.nasa.gov/data/catalog/lpcloud-mod11a1-061
+  - https://landweb.modaps.eosdis.nasa.gov/knownissue?sensor=MODIS
+  - https://modis-land.gsfc.nasa.gov/news.html
+
+last_verified: "2026-10-13"

@@ -1,9 +1,9 @@
 """MkDocs hook: data/datasets/*.yaml 파일로 사이트의 데이터 관련 페이지를 모두 자동 생성합니다.
 
 - 각 YAML → datasets/<id>.md (가상 파일, 디스크에 쓰지 않음)
-- 분야별 소개 → domains/<atmosphere|ocean|seaice>.md
+- 분야별 소개 → domains/<atmosphere|ocean|seaice|land>.md
 - 전체 목록 → datasets/index.md, 중요 공지 → notices.md
-- 위쪽 메뉴(대기·해양·해빙)도 YAML의 domain/group/order 값으로 자동 구성
+- 위쪽 메뉴(대기·해양·해빙·지면)도 YAML의 domain/group/order 값으로 자동 구성
 - 본문의 <!-- DOMAIN_SUMMARY -->, <!-- RECENT_NOTICES -->, <!-- SUBSCRIBE_FORM -->, <!-- SUGGEST_FORM --> 자리를 채움
 
 YAML에 필수 항목이 빠졌거나 값이 잘못되면 빌드가 실패합니다.
@@ -94,11 +94,13 @@ DOMAINS = {
     "atmosphere": ("대기", ["재분석", "지역 재분석", "위성 관측 미동화 재분석", "육상 재분석", "강수 자료", "기온 자료", "복사 자료"]),
     "ocean": ("해양", ["재분석", "해수면온도 분석장", "수온·염분 분석장", "위성 관측 자료", "모델 강제력"]),
     "seaice": ("해빙", ["재분석", "관측 기반 분석장", "위성 관측 자료", "해빙 이동", "해빙 지수"]),
+    "land": ("지면", ["육상 재분석·자료동화", "토양수분", "증발산", "식생", "토지피복", "지표면온도·알베도", "적설", "육수저장량", "산불"]),
 }
 DOMAIN_INTRO = {
     "atmosphere": "대기 재분석(전지구·지역·육상)과 관측 기반 강수·기온·복사 자료입니다. 현역 자료와 함께, 옛 논문 재현이나 비교 연구에 필요한 이전 세대 자료도 정리했습니다.",
     "ocean": "해양 재분석·상태 추정, 해수면온도(SST) 분석장, 3차원 수온·염분 분석장, 위성 해수면 고도, 해양·해빙 모델 구동용 대기 강제력 자료입니다.",
     "seaice": "해빙 농도·두께·부피·이동 자료입니다. 모델 기반 재분석, 관측 기반 분석장, 위성 관측 자료, 해빙 이동 벡터, 해빙 면적·범위 지수로 나눠 정리했습니다.",
+    "land": "육상 재분석·자료동화 시스템과 위성 기반 토양수분·증발산·식생(LAI·NDVI)·토지피복·지표면온도·알베도·적설·육수저장량·산불 자료입니다. 수문·농업·생태·지면 과정 연구에 쓰는 자료를 모았습니다.",
 }
 # 소분류 아래에 붙는 한 줄 설명 (없으면 생략)
 GROUP_INTRO = {
@@ -109,6 +111,15 @@ GROUP_INTRO = {
     "수온·염분 분석장": "현장 관측(Argo·CTD·XBT 등)으로 만든 3차원 수온·염분 격자 자료와 기후값입니다.",
     "해빙 이동": "위성 영상에서 추적한 해빙 이동 벡터(표류 속도) 자료입니다.",
     "해빙 지수": "위성 해빙 농도에서 계산한 해빙 면적·범위 같은 요약 지수입니다.",
+    "육상 재분석·자료동화": "관측 기반 강제력(강수·복사·기온 등)으로 지면 모델을 돌려 토양수분·증발산·유출·적설을 계산한 자료입니다. 대기 재분석의 지면 모델만 다시 돌린 자료도 함께 실었습니다.",
+    "토양수분": "위성 마이크로파 관측으로 추정한 토양수분과, 이를 지면 모델에 동화한 근권 토양수분 자료입니다.",
+    "증발산": "위성 관측과 모델을 결합해 추정한 실제 증발산과 그 성분 자료입니다.",
+    "식생": "엽면적지수(LAI)·광합성유효복사 흡수율(FAPAR)·식생지수(NDVI·EVI) 같은 위성 식생 자료입니다.",
+    "토지피복": "위성 영상을 분류해 만든 토지피복 지도입니다. 분류체계(IGBP·LCCS 등)와 등급 수가 자료마다 다릅니다.",
+    "지표면온도·알베도": "위성 열적외 관측으로 추정한 지표면온도(LST)와 지표 반사도·알베도 자료입니다.",
+    "적설": "위성으로 관측한 적설 면적과 적설수당량(SWE) 자료입니다.",
+    "육수저장량": "위성 중력 관측으로 추정한 육지 물 저장량(지하수·토양수분·눈·지표수 합) 변화 자료입니다.",
+    "산불": "위성으로 탐지한 연소 면적과, 이를 바탕으로 추정한 화재 배출량 자료입니다.",
 }
 NAV_PLACEHOLDER = "__DATA_SECTIONS__"
 
@@ -141,8 +152,9 @@ DATE_RE = re.compile(r"^\d{4}-\d{2}(-\d{2})?$")
 
 # 자료 간 비교를 쉽게 하기 위한 대표 해상도 표기 (세부 내용은 각 데이터셋 페이지에)
 SPATIAL_SHORT_RE = re.compile(r"^\d+(\.\d+)? km \(\d+(\.\d+)?°(×\d+(\.\d+)?°)?\)$")
-TEMPORAL_SHORT = ["30분", "1시간", "3시간", "6시간", "1일", "5일", "7일", "1개월", "1년"]
-TEMPORAL_HOURS = {"30분": 0.5, "1시간": 1, "3시간": 3, "6시간": 6, "1일": 24, "5일": 120, "7일": 168, "1개월": 720, "1년": 8760}
+TEMPORAL_SHORT = ["30분", "1시간", "3시간", "6시간", "1일", "5일", "7일", "8일", "10일", "15일", "16일", "1개월", "1년"]
+TEMPORAL_HOURS = {"30분": 0.5, "1시간": 1, "3시간": 3, "6시간": 6, "1일": 24, "5일": 120, "7일": 168, "8일": 192,
+                  "10일": 240, "15일": 360, "16일": 384, "1개월": 720, "1년": 8760}
 
 # 해상도 표기 주의 — 목록·비교·데이터셋 페이지에 접힌 상자로 표시
 RES_NOTE = [
@@ -1186,8 +1198,8 @@ def compare_app(datasets: list[dict], mode: str = "compare") -> str:
     )
     chips = "".join(
         f'<button type="button" class="chip" data-q="{q}">{q}</button>'
-        for q in (["precipitation", "2 m temperature", "SST", "sea ice concentration", "sea ice thickness", "wind", "sea level pressure", "humidity", "radiation", "salinity"]
-                  if is_en() else ["강수", "2m 기온", "해수면온도", "해빙 농도", "해빙 두께", "바람", "해면기압", "습도", "복사", "염분"])
+        for q in (["precipitation", "2 m temperature", "SST", "sea ice concentration", "sea ice thickness", "wind", "sea level pressure", "humidity", "radiation", "salinity", "soil moisture", "NDVI"]
+                  if is_en() else ["강수", "2m 기온", "해수면온도", "해빙 농도", "해빙 두께", "바람", "해면기압", "습도", "복사", "염분", "토양수분", "NDVI"])
     )
     std = std_payload(datasets)
     opts_dl = "".join(f'<option value="{html.escape(c["n"])}"></option>' for c in std)
@@ -1519,7 +1531,7 @@ def feedback_form(config) -> str:
 
 
 def domain_counts(datasets: list[dict]) -> str:
-    """홈 소개 문구용 분야별 개수 (메뉴 기준: 교차 수록 포함) — 예) 대기 29 · 해양 21 · 해빙 16"""
+    """홈 소개 문구용 분야별 개수 (메뉴 기준: 교차 수록 포함) — 예) 대기 29 · 해양 21 · 해빙 16 · 지면 25"""
     n = {k: 0 for k in DOMAINS}
     for (dom, _g), entries in placements(datasets).items():
         n[dom] = n.get(dom, 0) + len(entries)
@@ -1588,8 +1600,8 @@ def _ld(obj: dict) -> str:
 # 검색 결과 제목·설명 (데이터셋 외 자동 생성 페이지)
 PAGE_SEO = {
     "datasets/index.md": (("전체 데이터셋 목록 — 재분석·위성·관측 기후자료 한눈에 비교", "All datasets — compare reanalyses, satellite and observational climate data"),
-                          ("대기·해양·해빙 재분석, 위성자료, 관측 기반 분석장을 기간·해상도·시간 간격·제공 상태로 한 표에서 비교하고, 원하는 자료를 골라 나란히 볼 수 있습니다.",
-                           "Compare atmospheric, ocean and sea-ice reanalyses, satellite products and observational analyses by period, resolution, interval and status, and put any of them side by side.")),
+                          ("대기·해양·해빙·지면 재분석, 위성자료, 관측 기반 분석장을 기간·해상도·시간 간격·제공 상태로 한 표에서 비교하고, 원하는 자료를 골라 나란히 볼 수 있습니다.",
+                           "Compare atmospheric, ocean, sea-ice and land reanalyses, satellite products and observational analyses by period, resolution, interval and status, and put any of them side by side.")),
     "notices.md": (("중요 공지 — 기후자료 제공 중단·서비스 이전·품질 문제 모음", "Notices — discontinuations, service migrations and quality issues of climate datasets"),
                    ("ERA5·JRA-3Q·NCEP 재분석, OISST·ERSST, 해빙 위성자료 등의 제공 중단, 버전 교체, 서비스 이전, 품질 문제 공지를 원문 링크와 함께 최신순으로 모았습니다.",
                     "Discontinuations, version changes, service migrations and quality issues for ERA5, JRA-3Q, NCEP reanalyses, OISST, ERSST, sea-ice satellite products and more, newest first with links to the original announcements.")),

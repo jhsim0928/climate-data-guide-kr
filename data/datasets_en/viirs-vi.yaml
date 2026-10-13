@@ -1,0 +1,321 @@
+# ─────────────────────────────────────────────────────────────
+# VIIRS Vegetation Indices V2 (VNP13, VJ113, VJ213: NDVI, EVI, EVI2) — dataset information file
+# Land tab, 'Vegetation'. Successor to the MODIS vegetation indices (modis-vi.yaml).
+# After editing, update last_verified to the date you checked the official pages.
+# ─────────────────────────────────────────────────────────────
+id: viirs-vi
+name: "VIIRS NDVI/EVI (VNP13)"
+full_name: VIIRS Vegetation Indices (VNP13A1/A2/A3/C1/C2, VJ113, VJ213) Version 2 (NDVI, EVI and EVI2, 500 m to 0.05°, 16-day and monthly)
+category: satellite
+domain: land
+group: 식생
+order: 13
+domains: [육지, 원격탐사]
+provider: NASA VIIRS Land Team (designed by the Vegetation Index and Phenology Lab, University of Arizona; dataset lead E. Vermote) / LP DAAC
+
+status: active
+status_note: >-
+  Version 2 (002) continues to be produced separately for Suomi NPP (VNP13), NOAA-20 (VJ113) and NOAA-21 (VJ213); on 2026-10-13 the latest VJ213A1 composite began on 2026-09-14.
+  NOAA has announced that delivery of Suomi NPP data ends at 13:00 UTC on 2 November 2026 (1 November in the NASA notice), and LP DAAC advises users to move from the VNP13 products
+  to VJ213 (primary) or VJ113 (secondary). Version 1 distribution ended in 2025.
+
+period:
+  start: "2012-01"
+  end: present
+  note: >-
+    VNP13 (Suomi NPP) 16-day products start on 2012-01-17 and monthly products on 2012-01-01; VJ113 (NOAA-20) starts on 2018-01-01; VJ213 (NOAA-21) 16-day products start on 2023-02-10 and monthly on 2023-02-01.
+    A CMR check of the Korean tile (h28v05) on 2026-10-13 found the latest composites were 2026-09-14 to 29 for VJ213A1 and 2026-09-06 to 21 for VNP13A1.
+    VNP13 is expected to stop when Suomi NPP data delivery ends in November 2026.
+
+resolution:
+  spatial_short: "0.5 km (0.005°)"
+  temporal_short: "16일"
+  spatial: >-
+    The same sinusoidal tile grid as MODIS: 500 m (A1), 1 km (A2, A3) / global 0.05° latitude–longitude Climate Modeling Grid (CMG; C1, C2)
+  vertical: Single surface layer
+  temporal: >-
+    16-day composites (A1, A2, C1) produced every 8 days for each satellite (consecutive composites overlap by 8 days, e.g. starting on days 1, 9, 17 in 2024) / calendar month (A3, C2)
+
+update: 16-day composites added every 8 days, roughly 2–3 weeks after the period ends; monthly data after the month (VNP13 expected to end in November 2026)
+license: NASA Earth science open data — free and unrestricted under the EOSDIS Data Use and Citation Guidance; file downloads need a free NASA Earthdata Login; please cite the dataset DOI
+account_required: true
+
+summary: >-
+  NDVI and EVI that continue the MODIS vegetation index (MOD13) system on the VIIRS sensor, with the addition of EVI2, which is computed from red and near-infrared only, without the blue band.
+  Sixteen-day and monthly values are built with the same Constrained-View angle Maximum Value Composite (CV-MVC) as MODIS and provided on 500 m and 1 km tiles and a 0.05° global grid.
+  Reflectances (red, NIR, blue, green and three SWIR bands), view geometry, composite day and quality information are included, so the VIIRS record from 2012 can carry phenology, drought and crop studies beyond MODIS.
+
+time_convention:
+  summary: >-
+    For the 16-day products, cloudy and poor-quality observations are removed using QA, the top two-thirds of the remaining observations by NDVI are kept, and the one with the smallest view angle is selected;
+    its NDVI, EVI, EVI2, reflectances and angles are written out (view angles are binned into 0–30° and above 30° to avoid large view angles). Index values are therefore observations from one selected day,
+    not period means. The file date is the first day (day of year) of the compositing period.
+  points:
+    - "Because 16-day composites come out every 8 days for each satellite (e.g. A2024001 covers 1–16 January and A2024009 covers 9–24 January), consecutive files share 8 days. Do not count them as independent samples."
+    - "The actual observation day is stored as a day of year in the `500 m 16 days composite day of the year` layer. Use it instead of the file date when dates matter, as in phenology."
+    - "All three satellites are in 13:30 local-time ascending orbits. No VIIRS product continues Terra MODIS's morning observations."
+    - "Compositing restarts on 1 January each year, so the year-end composite overlaps the first composite of the next year."
+    - "As with MODIS, no BRDF correction is applied — only the view-angle constraint — and for consistency with MODIS the indices are computed from directional reflectance rather than nBAR."
+  source: https://lpdaac.usgs.gov/documents/1372/VNP13_User_Guide_ATBD_V2.1.2.pdf
+  source_name: "VNP13 User Guide and ATBD V2.1.2 (Didan et al., 2018) + LP DAAC collection descriptions + CMR granule listings"
+
+variables:
+  note: >-
+    From the layer tables of VNP13A1 and VNP13C1 V002 in the Earthdata catalog (VJ113 and VJ213 have the same structure). Layer names are prefixed with resolution and period (`500 m 16 days …` for 500 m 16-day, `CMG 0.05 Deg 16 days …` for 0.05°),
+    and unlike MODIS (`250m 16 days …`) there is a space between the number and m. Index and reflectance int16 values are divided by 10000. The monthly (A3, C2) layer names were not verified; check them in your files.
+  full_list: https://www.earthdata.nasa.gov/data/catalog/lpcloud-vnp13a1-002
+  groups:
+    - name: 16-day composites (VNP13A1 500 m; A2 1 km has the same structure)
+      kind: instant
+      period: Selected day within the 16-day composite
+      items:
+        - text: "Normalized Difference Vegetation Index (NDVI) — `500 m 16 days NDVI` (dimensionless, stored value ÷ 10000, valid −10000 to 10000)"
+          kind: max
+          period: 16-day
+          note: "CV-MVC — the smallest view angle among the top two-thirds of observations by NDVI, so the period maximum or close to it"
+        - text: "Enhanced Vegetation Index (EVI) — `500 m 16 days EVI` (dimensionless, ÷ 10000)"
+          note: Value on the selected observation day of the composite
+        - text: "Two-band Enhanced Vegetation Index (EVI2) — `500 m 16 days EVI2` (dimensionless, ÷ 10000)"
+          note: "Red and NIR only (EVI2 = 2.5(NIR−Red)/(NIR+2.4Red+1)), value on the selected observation day"
+        - text: "Red, NIR, blue and green reflectance — `500 m 16 days red reflectance`, `500 m 16 days NIR reflectance`, `500 m 16 days blue reflectance`, `500 m 16 days green reflectance` (dimensionless, ÷ 10000)"
+          note: Value on the selected observation day of the composite
+        - text: "Shortwave infrared reflectance — `500 m 16 days SWIR1 reflectance`, `500 m 16 days SWIR2 reflectance`, `500 m 16 days SWIR3 reflectance` (dimensionless, ÷ 10000)"
+          note: Value on the selected observation day of the composite
+          std: []
+        - text: "View zenith, sun zenith and relative azimuth angles — `500 m 16 days view zenith angle`, `500 m 16 days sun zenith angle`, `500 m 16 days relative azimuth angle` (degrees, ÷ 100)"
+          note: Value on the selected observation day of the composite
+        - text: "Actual observation day — `500 m 16 days composite day of the year` (day of year 1–366)"
+          note: The day on which the selected observation was made
+        - text: "Pixel reliability rank — `500 m 16 days pixel reliability` (0–11, fill −4)"
+          std: []
+        - "Vegetation index quality bits — `500 m 16 days VI Quality` (bit field, fill 65535)"
+    - name: 16-day 0.05° global grid (VNP13C1)
+      kind: instant
+      period: Spatial aggregate of the selected days in the 16-day composite
+      items:
+        - text: "NDVI, EVI and EVI2 — `CMG 0.05 Deg 16 days NDVI`, `CMG 0.05 Deg 16 days EVI`, `CMG 0.05 Deg 16 days EVI2` (dimensionless, ÷ 10000)"
+          note: 1 km 16-day composite pixels aggregated into 0.05° cells; cells without observations are filled from the long-term record
+        - "Index standard deviations — `CMG 0.05 Deg 16 days NDVI std dev` etc. (dimensionless, ÷ 10000)"
+        - "Number of 1 km pixels used — `CMG 0.05 Deg 16 days number of 1km pix used` (count)"
+        - text: "Pixel reliability rank — `CMG 0.05 Deg 16 days pixel reliability` (fill −4)"
+          std: []
+    - name: Monthly (VNP13A3 1 km, VNP13C2 0.05°)
+      kind: mean
+      period: Monthly
+      items:
+        - text: "Monthly NDVI, EVI and EVI2 (dimensionless, ÷ 10000)"
+          note: "The User Guide shows a flow chart that, as for MODIS, estimates the monthly value from the 16-day composites overlapping the month, while the LP DAAC description says 'best available pixel over a monthly period'. Check chapter 9 of the guide for the exact method."
+        - "Monthly reflectances (red, NIR, blue, green, three SWIR), angles, pixel reliability and quality layers"
+
+access:
+  - name: NASA Earthdata Search — VJ213A1 (NOAA-21, recommended)
+    url: https://search.earthdata.nasa.gov/search/granules?p=C2817367150-LPCLOUD
+    method: Web search and HTTPS download / earthaccess
+    note: >-
+      Short names are VJ213A1, A2, A3, C1, C2 (NOAA-21), VJ113… (NOAA-20) and VNP13… (Suomi NPP), version 002. Files are HDF-EOS5 (.h5).
+      Because Suomi NPP data delivery ends in November 2026, LP DAAC recommends VJ213 as primary and VJ113 as secondary.
+  - name: NASA Earthdata Search — VNP13A1 (Suomi NPP, 2012 onward)
+    url: https://search.earthdata.nasa.gov/search/granules?p=C2519127224-LPCLOUD
+    method: Web search and HTTPS download / earthaccess
+    note: Only the Suomi NPP products cover 2012–2017. No distribution policy for existing files after delivery ends has been announced yet.
+  - name: AppEEARS (area and point extraction)
+    url: https://appeears.earthdatacloud.nasa.gov/
+    method: Web and API — area (GeoTIFF, NetCDF4) or point (CSV) extraction with optional reprojection
+    note: Delivers just your region without having to handle tiles or the HDF5 structure.
+
+example:
+  lang: python
+  note: >-
+    Downloads NOAA-21 VJ213A1 (500 m, 16-day) for the 2024 growing season with earthaccess and reads NDVI for the central Korean tile (h28v05). To avoid hard-coding paths inside the HDF-EOS5 file,
+    h5py is used to find the layers by name. Stored values are divided by 10000 and the fill value (−15000) is removed.
+  code: |
+    # pip install earthaccess h5py numpy
+    import earthaccess
+    import h5py
+    import numpy as np
+
+    earthaccess.login()  # free NASA Earthdata account
+    results = earthaccess.search_data(
+        short_name="VJ213A1", version="002",
+        temporal=("2024-04-01", "2024-10-31"),
+        bounding_box=(127.0, 36.0, 127.5, 36.5),   # (west, south, east, north)
+    )
+    files = earthaccess.download(results, "./vj213a1")
+
+    def find(h5, name):
+        hits = []
+        h5.visititems(lambda k, v: hits.append(k) if isinstance(v, h5py.Dataset) and k.endswith("/" + name) else None)
+        return h5[hits[0]][()]
+
+    for f in sorted(map(str, files)):
+        if ".h28v05." not in f:
+            continue
+        with h5py.File(f, "r") as h5:
+            ndvi = find(h5, "500 m 16 days NDVI").astype("float32")
+            doy = find(h5, "500 m 16 days composite day of the year")
+        ndvi = np.where((ndvi >= -10000) & (ndvi <= 10000), ndvi / 10000.0, np.nan)
+        print(f.split("/")[-1][:25], "mean NDVI:", round(float(np.nanmean(ndvi)), 3),
+              "median observation day:", int(np.median(doy[doy > 0])))
+
+tips:
+  - "The scale is expressed the opposite way from MODIS. The LP DAAC table gives the scale as 10000, so divide stored values by 10000 (MODIS multiplies by 0.0001; the result is the same). The index fill is −15000 (MODIS −3000), the reflectance fill −1000, and angles are ÷ 100."
+  - "Pixel reliability uses ranks 0–11 (fill −4), unlike the MODIS 0–3 classes. Do not reuse MODIS filters such as `rel <= 1`; check the rank table (Table 5) in the User Guide before choosing a threshold."
+  - "Consecutive 16-day files overlap by 8 days. The series looks 8-day spaced, but neighbouring values are not independent, so do not inflate sample sizes in statistical tests."
+  - "The blue band differs from MODIS (VIIRS M3 478–498 nm vs MODIS 459–479 nm), so EVI has weaker cross-sensor continuity. For long-term work joined to MODIS, consider NDVI or EVI2 first. Without the blue band, EVI2 is somewhat more sensitive to aerosol noise."
+  - "VNP13 (Suomi NPP) ends in November 2026. VJ113 continues from 2018 and VJ213 from 2023, so choose a reference satellite and state where the satellite changes."
+  - Ocean tiles h33v07 and h18v14 are empty because critical inputs were missing (LP DAAC known issue).
+  - There is no 250 m product. To compare with MODIS 250 m (MOD13Q1), bring both to 500 m.
+  - The files are HDF5 (HDF-EOS5), so MODIS pyhdf code will not open them. Layer names contain spaces, so looking them up with h5py is the safer route.
+
+citations:
+  dataset:
+    - label: VJ213A1 V002 (NOAA-21, 500 m, 16-day)
+      text: >-
+        Vermote, E. (2026). VIIRS/JPSS2 Vegetation Indices 16-Day L3 Global 500m SIN Grid V002 [Data set]. NASA Land Processes Distributed Active Archive Center.
+        https://doi.org/10.5067/VIIRS/VJ213A1.002 (Accessed YYYY-MM-DD)
+      doi: 10.5067/VIIRS/VJ213A1.002
+      bibtex: |
+        @misc{vj213a1_v002,
+          author    = {Vermote, Eric},
+          title     = {{VIIRS/JPSS2} Vegetation Indices 16-Day {L3} Global 500m {SIN} Grid {V002}},
+          year      = {2026},
+          publisher = {NASA Land Processes Distributed Active Archive Center},
+          doi       = {10.5067/VIIRS/VJ213A1.002}
+        }
+    - label: VJ113A1 V002 (NOAA-20, 500 m, 16-day)
+      text: >-
+        Vermote, E. (2023). VIIRS/JPSS1 Vegetation Indices 16-Day L3 Global 500m SIN Grid V002 [Data set]. NASA Land Processes Distributed Active Archive Center.
+        https://doi.org/10.5067/VIIRS/VJ113A1.002 (Accessed YYYY-MM-DD)
+      doi: 10.5067/VIIRS/VJ113A1.002
+      bibtex: |
+        @misc{vj113a1_v002,
+          author    = {Vermote, Eric},
+          title     = {{VIIRS/JPSS1} Vegetation Indices 16-Day {L3} Global 500m {SIN} Grid {V002}},
+          year      = {2023},
+          publisher = {NASA Land Processes Distributed Active Archive Center},
+          doi       = {10.5067/VIIRS/VJ113A1.002}
+        }
+    - label: VNP13A1 V002 (Suomi NPP, 500 m, 16-day)
+      text: >-
+        Vermote, E. (2023). VIIRS/NPP Vegetation Indices 16-Day L3 Global 500m SIN Grid V002 [Data set]. NASA Land Processes Distributed Active Archive Center.
+        https://doi.org/10.5067/VIIRS/VNP13A1.002 (Accessed YYYY-MM-DD)
+      doi: 10.5067/VIIRS/VNP13A1.002
+      bibtex: |
+        @misc{vnp13a1_v002,
+          author    = {Vermote, Eric},
+          title     = {{VIIRS/NPP} Vegetation Indices 16-Day {L3} Global 500m {SIN} Grid {V002}},
+          year      = {2023},
+          publisher = {NASA Land Processes Distributed Active Archive Center},
+          doi       = {10.5067/VIIRS/VNP13A1.002}
+        }
+  papers:
+    - label: VIIRS Vegetation Index User Guide and abridged ATBD V2.1.2 — no DOI
+      text: >-
+        Didan, K., Barreto Munoz, A., Compton, T. J., Pinzon, J. E. (2018): Suomi National Polar-orbiting Partnership Visible Infrared Imaging Radiometer Suite
+        Vegetation Index Product Suite User Guide & Abridged Algorithm Theoretical Basis Document, Version 2.1.2. Vegetation Index and Phenology Lab,
+        The University of Arizona. https://lpdaac.usgs.gov/documents/1372/VNP13_User_Guide_ATBD_V2.1.2.pdf
+      bibtex: |
+        @techreport{didan2018vnp13,
+          author      = {Didan, Kamel and Barreto Munoz, Armando and Compton, Tucker J. and Pinzon, Jorge E.},
+          title       = {Suomi National Polar-orbiting Partnership Visible Infrared Imaging Radiometer Suite Vegetation Index Product Suite User Guide \& Abridged Algorithm Theoretical Basis Document, Version 2.1.2},
+          institution = {Vegetation Index and Phenology Lab, The University of Arizona},
+          year        = {2018},
+          url         = {https://lpdaac.usgs.gov/documents/1372/VNP13_User_Guide_ATBD_V2.1.2.pdf}
+        }
+    - label: Continuity assessment of MODIS C6.1 and VIIRS C2 land products
+      text: >-
+        Román, M. O., Justice, C., Paynter, I., Boucher, P. B., Devadiga, S., Endsley, A., Erb, A., Friedl, M., Gao, H., Giglio, L., Gray, J. M., Hall, D.,
+        Hulley, G., Kimball, J., Knyazikhin, Y., Lyapustin, A., Myneni, R. B., Noojipady, P., Pu, J., Riggs, G., Sarkar, S., Schaaf, C., Shah, D., Tran, K. H.,
+        Vermote, E., Wang, D., Wang, Z., Wu, A., Ye, Y., Shen, Y., Zhang, S., Zhang, X., Zhao, M., Davidson, C., Wolfe, R. (2024): Continuity between NASA MODIS
+        Collection 6.1 and VIIRS Collection 2 land products. Remote Sensing of Environment, 302, 113963.
+      doi: 10.1016/j.rse.2023.113963
+      bibtex: |
+        @article{roman2024continuity,
+          author  = {Rom{\'a}n, Miguel O. and Justice, Chris and Paynter, Ian and Boucher, Peter B. and Devadiga, Sadashiva and Endsley, Arthur and Erb, Angela and Friedl, Mark and Gao, Huilin and Giglio, Louis and Gray, Josh M. and Hall, Dorothy and Hulley, Glynn and Kimball, John and Knyazikhin, Yuri and Lyapustin, Alexei and Myneni, Ranga B. and Noojipady, Praveen and Pu, Jiabin and Riggs, George and Sarkar, Sudipta and Schaaf, Crystal and Shah, Deep and Tran, Khuong H. and Vermote, Eric and Wang, Dongdong and Wang, Zhuosen and Wu, Aisheng and Ye, Yongchang and Shen, Yu and Zhang, Shuai and Zhang, Xiaoyang and Zhao, Maosheng and Davidson, Carol and Wolfe, Robert},
+          title   = {Continuity between {NASA} {MODIS} Collection 6.1 and {VIIRS} Collection 2 land products},
+          journal = {Remote Sensing of Environment},
+          volume  = {302},
+          pages   = {113963},
+          year    = {2024},
+          doi     = {10.1016/j.rse.2023.113963}
+        }
+  acknowledgement: >-
+    Following the EOSDIS Data Use and Citation Guidance, LP DAAC asks you to cite the DOI of each product you used (by satellite, resolution and period).
+    DOIs follow the pattern 10.5067/VIIRS/<short name>.002 (e.g. 10.5067/VIIRS/VNP13A3.002 for 1 km monthly). Cite the VNP13 User Guide and ATBD for the algorithm.
+
+transitions:
+  - from: VIIRS Vegetation Indices V1 (VNP13 V001)
+    to: VIIRS Vegetation Indices V2 (VNP13, VJ113, VJ213 V002)
+    status: completed
+    date: "2023-07"
+    summary: >-
+      Version 2 (Suomi NPP and NOAA-20) was released in July 2023; V1 production stopped on 17 June 2024 and its distribution ended in 2025 (the last V1 products on 2025-07-31).
+      A NOAA-21 product (VJ213) was added to V2 in March 2026.
+    changes:
+      - aspect: Satellites
+        before: "Suomi NPP only (VNP13 V001)"
+        after: "Suomi NPP (VNP13), NOAA-20 (VJ113, 2018–) and NOAA-21 (VJ213, 2023-02–) — V002"
+      - aspect: Input and processing improvements
+        before: "V1 inputs"
+        after: "Improved calibration and geolocation, corrected aerosol quantity flag, updated cloud mask, new land/water mask, revised VI Quality usefulness bits"
+      - aspect: Availability
+        before: "Production ended 2024-06-17, distribution ended in 2025 (User Guide and ATBD remain on DOI pages)"
+        after: "The only version available"
+    impacts:
+      - Re-check results made with V1 using V2. V1 files are no longer available from Earthdata Search, the Data Pool or AppEEARS.
+      - The definition of the VI Quality usefulness bits changed, so review any quality filters written for V1.
+    sources:
+      - name: VIIRS Version 2 vegetation indices products released (Earthdata notice, 2023-07-19)
+        url: https://www.earthdata.nasa.gov/data/alerts-outages/viirs-version-2-vegetation-indices-products-released
+      - name: Earthdata catalog — VNP13A1 V002 (V2 changes)
+        url: https://www.earthdata.nasa.gov/data/catalog/lpcloud-vnp13a1-002
+      - name: VIIRS Version 1 data products decommissioned (Earthdata notice, 2025-07-08)
+        url: https://www.earthdata.nasa.gov/data/alerts-outages/viirs-version-1-data-products-decommissioned
+
+notices:
+  - date: "2026-08-07"
+    level: warning
+    title: Suomi NPP data delivery ends in November 2026 — move from VNP13 to VJ213 or VJ113
+    body: >-
+      On 3 August 2026 NOAA announced it will permanently stop delivering all Suomi NPP science data, including VIIRS, at 13:00 UTC on 2 November 2026; NASA Earthdata's 7 August notice
+      gives 13:00 UTC on 1 November (subject to change). The LP DAAC descriptions of the VNP13 products recommend moving to the equivalent VJ213 (primary) or VJ113 (secondary).
+    source: https://www.earthdata.nasa.gov/data/alerts-outages/suomi-npp-data-product-delivery-cease-november-1-2026
+  - date: "2026-03-17"
+    level: info
+    title: NOAA-21 VIIRS vegetation indices V2 (VJ213) released
+    body: >-
+      LP DAAC released additional Version 2 vegetation index products from NOAA-21 (formerly JPSS-2) VIIRS. According to CMR, the 16-day products start on 2023-02-10 and the monthly products on 2023-02-01.
+    source: https://www.earthdata.nasa.gov/data/alerts-outages/additional-viirs-version-2-vegetation-indices-data-products-released
+  - date: "2025-07-08"
+    level: info
+    title: Remaining VIIRS Version 1 products, including vegetation indices, decommissioned (2025-07-31)
+    body: >-
+      LP DAAC announced that distribution of the remaining VIIRS V1 products (thermal anomalies, land cover dynamics, vegetation indices, burned area, BRDF/albedo) would end on 31 July 2025, completing the V1 retirement.
+      Surface reflectance, LAI/FPAR and other V1 products had already been withdrawn on 8 April. User Guides and ATBDs remain on the DOI pages.
+    source: https://www.earthdata.nasa.gov/data/alerts-outages/viirs-version-1-data-products-decommissioned
+  - date: "2023-07-19"
+    level: info
+    title: VIIRS Version 2 vegetation indices (VNP13, VJ113) released
+    body: >-
+      Ten Version 2 vegetation index products from Suomi NPP and NOAA-20 (formerly JPSS-1) were released (500 m and 1 km 16-day, 1 km monthly, 0.05° 16-day and monthly).
+      Suomi NPP V1 continued to be produced alongside them for a while.
+    source: https://www.earthdata.nasa.gov/data/alerts-outages/viirs-version-2-vegetation-indices-products-released
+
+links:
+  - name: VNP13 User Guide and ATBD V2.1.2 (PDF)
+    url: https://lpdaac.usgs.gov/documents/1372/VNP13_User_Guide_ATBD_V2.1.2.pdf
+  - name: Earthdata catalog — VNP13A1 V002
+    url: https://www.earthdata.nasa.gov/data/catalog/lpcloud-vnp13a1-002
+  - name: Earthdata catalog — VNP13C1 V002
+    url: https://www.earthdata.nasa.gov/data/catalog/lpcloud-vnp13c1-002
+  - name: VIIRS vegetation index validation page (VIIRS Land Team)
+    url: https://viirsland.gsfc.nasa.gov/Val/VI_Val.html
+  - name: NOAA NESDIS — cessation of Suomi NPP data delivery
+    url: https://www.nesdis.noaa.gov/news/cessation-of-suomi-national-polar-orbiting-partnership-s-npp-data-users-onafter-november-2-2026
+
+watch_urls:
+  - https://www.earthdata.nasa.gov/data/alerts-outages/suomi-npp-data-product-delivery-cease-november-1-2026
+  - https://www.earthdata.nasa.gov/data/catalog/lpcloud-vnp13a1-002
+  - https://landweb.modaps.eosdis.nasa.gov/knownissue
+
+last_verified: "2026-10-13"
