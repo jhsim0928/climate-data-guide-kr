@@ -610,11 +610,15 @@ def var_table(g: dict) -> list[str]:
     return out + ["", "</div>"]
 
 
-def variables_block(v: dict, tc: dict | None = None) -> list[str]:
+def variables_block(v: dict, tc: dict | None = None, ds_id: str | None = None) -> list[str]:
     L = ["## 활용 가능한 변수", ""]
     if not v.get("groups"):
         L += [oneline(v.get("note") or "아직 공개 전이라 변수 목록이 확정되지 않았습니다. 공개되면 정리하겠습니다."), ""]
         return L
+    # 한국어판에만: 변수 이름의 원래 영어 표기는 같은 자료의 영어판 페이지로 안내
+    if ds_id and not is_en() and (DATA_DIR_EN / f"{ds_id}.yaml").exists():
+        L += [f'<p class="var-en-hint">변수 이름은 우리말로 옮겨 적었습니다. 원래 영어 이름은 '
+              f'<a href="../../en/datasets/{ds_id}/" hreflang="en">영어판 이 페이지</a>에서 볼 수 있습니다.</p>', ""]
     if v.get("note"):
         L += [oneline(v["note"]), ""]
     if tc:
@@ -718,7 +722,7 @@ def render_dataset(d: dict, site_cite: dict) -> str:
         for t in trs:
             L += transition_block(d, t)
 
-    L += variables_block(d["variables"], d.get("time_convention"))
+    L += variables_block(d["variables"], d.get("time_convention"), d["id"])
 
     # 받는 방법
     L += ["## 받는 방법", ""]
