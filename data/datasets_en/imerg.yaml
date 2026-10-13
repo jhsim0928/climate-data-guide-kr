@@ -37,6 +37,9 @@ resolution:
   temporal: >-
     Half-hourly (the base product) / daily (00–24 UTC, computed from the half-hourly values) / monthly. PPS also provides 3-hour and 7-day accumulation files.
 
+coverage:
+  short: 전지구
+  note: "Infrared-based estimates exist only within 60°N–60°S; outside that only microwave estimates are used"
 update: "Early with ~4 h latency and Late with ~14 h latency (recently closer to 12 h), produced continuously every half hour / Final monthly, about 3.5–4 months after the observation month (V07 Final stopped at 2025-09, awaiting V08)"
 license: NASA Earth science open data — free of charge. GES DISC requires a free NASA Earthdata Login and the PPS servers require free PPS registration. Users are asked to cite the dataset DOI
 account_required: true

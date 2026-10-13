@@ -23,6 +23,7 @@
 | `successor` | `ended`이면 필수: `{name, url, note}` (후속이 없으면 `name: 없음`) |
 | `period` | `{start: "YYYY-MM", end: present 또는 "YYYY-MM", note}` |
 | `resolution` | `{spatial_short, temporal_short, spatial, vertical, temporal}` — `spatial_short`은 목록·비교용 대표 값 `"31 km (0.28°)"` 형식, `temporal_short`는 가장 짧은 제공 간격 `30분`/`1시간`/`3시간`/`6시간`/`1일`/`5일`/`7일`/`8일`/`10일`/`15일`/`16일`/`1개월`/`1년` 중 하나. `spatial`·`vertical`·`temporal`은 데이터셋 상세 페이지 '한눈에 보기'에 그대로 나가므로 **공식 문서의 격자 정보를 정확히**(모델 원본 격자 + 제공 격자, 격자 이름·크기) 적고, 직접 계산한 km·° 환산값은 넣지 않습니다. `spatial_short`·`temporal_short`는 목록·비교표에서만 쓰입니다 |
+| `coverage` | 공간 범위 `{short, note}` — `short`는 목록·비교표 '범위' 열 값으로 `전지구`/`준전지구`/`양극`/`북극`/`북극·북대서양`/`북극 일부`/`남극`/`아시아`/`북미` 중 하나(영어판도 같은 한국어 값, 화면에서 번역). 큰 영역이 빠지면(예: 북극해 없음) `전지구` 대신 `준전지구`. `note`(선택)는 빠진 곳·위경도 범위·육지만 여부 등 — 표 칸에 마우스를 올리면 보이고 상세 페이지 '한눈에 보기'에 나옴. 영어판 `note`는 영어로 |
 | `update` | 갱신 주기 |
 | `license` | 라이선스·이용 조건 요약 |
 | `account_required` | `true` / `false` |

@@ -31,6 +31,8 @@ resolution:
   vertical: "64 model layers (hybrid pressure-sigma) / pgb: 22 pressure levels (1000–1 hPa), vertical velocity `VVEL` on 14 levels (1000–100 hPa) / flx: 4 soil layers (0–2 m)"
   temporal: "3-hourly (analyses valid at 00, 03, …, 21 UTC from a 6-hourly assimilation cycle); daily and monthly means on NODD and GDEX"
 
+coverage:
+  short: 전지구
 update: Daily (operational), about 1 day behind real time (CPC lists "1.x day" for NOMADS and "1.x+ day" for NODD)
 license: NOAA public data, free via NOMADS and NODD (no separate licence statement on CPC or NCEP pages) / the NCAR GDEX copy is under Creative Commons Attribution 4.0 International (CC BY 4.0)
 account_required: false

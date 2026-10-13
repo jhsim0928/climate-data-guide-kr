@@ -80,6 +80,8 @@ resolution:
     One file per day. OSI-405-d gives the 48-hour displacement from 12:00 UTC to 12:00 UTC two days later; OSI-455 and OSI-435 give the displacement
     from (D-1) 12:00 to D 12:00 UTC. The actual start and end times vary from vector to vector, so durations are not exactly 48 h or 24 h
 
+coverage:
+  short: 양극
 update: >-
   OSI-405-d is updated daily: the calculation runs at about 04:00 UTC on day D using day D-3 to D-1 data, and products are distributed around 05:00 UTC
   (timeliness better than 5 h from the last swath per the PUM; 6 h on the product page).

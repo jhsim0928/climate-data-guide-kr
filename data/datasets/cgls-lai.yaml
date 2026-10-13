@@ -37,6 +37,9 @@ resolution:
   temporal: >-
     10일(dekad) — 매달 10일·20일·말일이 명목일. 같은 명목일에 대해 RT0(준실시간) → RT1·RT2(1·2 dekad 뒤 갱신) → RT6(6 dekad 뒤 최종) 순으로 다시 나옵니다
 
+coverage:
+  short: 전지구
+  note: "80°N–60°S (PROBA-V 구간은 75°N–60°S)"
 update: "10일마다 — RT0는 합성 기간 끝 약 2일 안, RT1·RT2·RT6는 1·2·6 dekad 뒤 갱신 (1 km V2는 갱신 없음)"
 license: "Copernicus 자료 정책에 따른 완전·무료·공개 이용(출처 표시, 변형 시 명시, EU 보증 암시 금지). CDSE 내려받기는 무료 계정 필요"
 account_required: true

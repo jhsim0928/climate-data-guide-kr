@@ -66,6 +66,10 @@ TEMPORAL = {"30분": "30 min", "1시간": "1 h", "3시간": "3 h", "6시간": "6
             "5일": "5 days", "7일": "7 days", "8일": "8 days", "10일": "10 days", "15일": "15 days",
             "16일": "16 days", "1개월": "1 month", "1년": "1 year"}
 
+COVERAGE = {"전지구": "Global", "준전지구": "Quasi-global", "양극": "Both poles", "북극": "Arctic",
+            "북극·북대서양": "Arctic & N. Atlantic", "북극 일부": "Part of Arctic", "남극": "Antarctic",
+            "아시아": "Asia", "북미": "North America"}
+
 STATUS = {"active": "Available", "delayed": "Update delayed", "deprecated": "Being replaced",
           "ended": "Discontinued", "upcoming": "Upcoming"}
 STATUS_TITLE = {"active": "Current status", "delayed": "Update delayed", "deprecated": "Being replaced",
@@ -117,6 +121,7 @@ UI = {
     "| 분야 |": "| Domains |",
     "| 제공 기관 |": "| Provider |",
     "| 기간 |": "| Period |",
+    "| 공간 범위 |": "| Coverage |",
     "| 수평 해상도 |": "| Horizontal resolution |",
     "| 연직 해상도 |": "| Vertical resolution |",
     "| 시간 해상도 |": "| Temporal resolution |",
@@ -177,6 +182,8 @@ UI = {
     "<th>자료</th>": "<th>Dataset</th>",
     "<th>종류</th>": "<th>Type</th>",
     "<th>기간</th>": "<th>Period</th>",
+    "자료가 덮는 지역 (빠진 곳·위경도는 칸에 마우스를 올리거나 각 자료 페이지에서)": "Area the dataset covers (hover over a cell or see each dataset page for gaps and latitude/longitude limits)",
+    ">범위</th>": ">Coverage</th>",
     "주 제공처에서 받는 격자 간격 (km는 적도 기준 근사)": "Grid spacing provided by the main provider (km approximate at the equator)",
     ">제공 해상도</th>": ">Provided resolution</th>",
     "가장 짧은 제공 간격 (세부는 각 자료 페이지)": "Shortest interval provided (details on each dataset page)",

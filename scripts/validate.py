@@ -49,6 +49,9 @@ try:
                 for k in ("status", "domain", "group", "category"):
                     if e.get(k) != d.get(k):
                         problems.append(f"{d['id']}: {k} 값이 한국어판과 달라요 ({d.get(k)} / {e.get(k)})")
+                ck, ce = (d.get("coverage") or {}).get("short"), (e.get("coverage") or {}).get("short")
+                if ck != ce:
+                    problems.append(f"{d['id']}: coverage.short 값이 한국어판과 달라요 ({ck} / {ce})")
             if problems:
                 raise PluginError("한국어판·영어판 불일치:\n  - " + "\n  - ".join(problems))
 except PluginError as e:

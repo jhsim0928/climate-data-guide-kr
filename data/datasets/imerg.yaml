@@ -37,6 +37,9 @@ resolution:
   temporal: >-
     30분(반시간, 기본 산출) / 일(00~24 UTC, 30분 값으로 계산) / 월. PPS는 3시간·7일 묶음 파일도 제공합니다.
 
+coverage:
+  short: 전지구
+  note: "적외 기반 추정은 60°N–60°S에만 있고 그 바깥은 마이크로파 추정만 씁니다"
 update: "Early 약 4시간, Late 약 14시간(최근엔 12시간 안팎) 지연으로 30분 단위 연속 생산 / Final은 관측 월 이후 약 3.5~4개월 지연 월 단위 (V07 Final은 2025-09에서 중단, V08 대기)"
 license: NASA 지구과학 공개 자료 — 무료. GES DISC는 무료 NASA Earthdata 로그인, PPS 서버는 무료 PPS 등록이 필요합니다. 데이터셋 DOI 인용 요청
 account_required: true

@@ -79,6 +79,8 @@ resolution:
   vertical: Not applicable (sea ice extent and area indices)
   temporal: Daily and monthly (daily extent CSV, monthly extent and area CSVs, daily and monthly images and GeoTIFFs). Climatology and anomaly reference period 1981–2010
 
+coverage:
+  short: 양극
 update: >-
   Daily CSV and images updated every day (using the previous day's AMSR2 data, about one day behind). Because of gap filling, a day's value can change slightly the next day.
   Monthly files are updated after the month ends (User Guide wording: "Each monthly file is updated once a year as that month concludes")

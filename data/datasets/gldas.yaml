@@ -38,6 +38,9 @@ resolution:
     저수조가 서로 포함 관계이고 토양온도는 6층(0–10, 10–29, 29–68, 68–144, 144–295, 295–1295 cm). VIC는 토양 3층(첫 층 0–30 cm).
   temporal: "3시간(2.0·2.1 Noah·CLSM·VIC) / 일(CLSM 0.25°: 2.0, 2.2 GRACE-DA1) / 월(2.0·2.1 Noah·CLSM·VIC, 3시간 값의 단순 평균)"
 
+coverage:
+  short: 전지구
+  note: "육지만, 60°S–90°N(남극 제외)"
 update: "GLDAS-2.1 본 제품 약 3~4개월 지연(GPCP 강수 대기), 조기 제품 약 1.5개월 지연 / GLDAS-2.2 본 제품 약 2~6개월(GRACE 자료 대기), 조기 제품 약 1.5개월 (README 기준)"
 license: NASA 지구과학 공개 자료 — 무료. GES DISC에서 받으려면 무료 NASA Earthdata 로그인이 필요하며, 제품별 DOI 인용을 요청합니다
 account_required: true

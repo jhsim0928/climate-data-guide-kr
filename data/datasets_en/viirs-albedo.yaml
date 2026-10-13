@@ -35,6 +35,8 @@ resolution:
   vertical: Land surface (single level)
   temporal: Produced daily (each retrieval uses 16 days of VIIRS observations weighted to the 9th day; the file-name date is that 9th day)
 
+coverage:
+  short: 전지구
 update: Daily (the 16-day window must fill, so files appear roughly one to two weeks after their nominal date)
 license: NASA Earth science open data — free and unrestricted under the EOSDIS Data Use and Citation Guidance. Downloads require a free NASA Earthdata Login
 account_required: true
