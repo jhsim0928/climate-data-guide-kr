@@ -436,3 +436,21 @@ details.hint summary { cursor: pointer; }
 .md-typeset .find-tools a:hover { border-color: var(--md-accent-fg-color); box-shadow: 0 2px 8px rgba(0,0,0,.08); }
 .md-typeset .find-tools strong { color: var(--md-typeset-a-color); font-size: 0.95em; }
 .md-typeset .find-tools span { font-size: 0.78em; color: var(--md-default-fg-color--light); }
+
+/* 전체 목록·분야 페이지 표: 모든 표의 가로 길이와 열 너비를 똑같이 */
+.md-typeset .list-table .md-typeset__scrollwrap { display: block; width: 100%; margin-left: 0; margin-right: 0; }
+.md-typeset .list-table .md-typeset__table { display: block; width: 100%; padding: 0; }
+.md-typeset .list-table table:not([class]) { display: table; width: 100%; table-layout: fixed; }
+.md-typeset .list-table th, .md-typeset .list-table td { overflow-wrap: anywhere; }
+.md-typeset .list-table th.pick-col, .md-typeset .list-table td.pick-col { width: 4.2rem; }
+.md-typeset .list-table th:nth-last-child(6) { width: 24%; }   /* 자료 */
+.md-typeset .list-table th:nth-last-child(5) { width: 13%; }   /* 종류 */
+.md-typeset .list-table th:nth-last-child(4) { width: 17%; }   /* 기간 */
+.md-typeset .list-table th:nth-last-child(3) { width: 17%; }   /* 제공 해상도 */
+.md-typeset .list-table th:nth-last-child(2) { width: 10%; }   /* 시간 간격 */
+.md-typeset .list-table th:nth-last-child(1) { width: 13%; }   /* 상태 */
+.md-typeset .list-table td.nowrap { white-space: normal; }
+@media screen and (max-width: 44.9375em) {
+  .md-typeset .list-table .md-typeset__table { overflow-x: auto; }
+  .md-typeset .list-table table:not([class]) { min-width: 44rem; }
+}
