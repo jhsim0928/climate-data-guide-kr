@@ -204,10 +204,10 @@ citations:
 notices:
   - date: "2026-09-04"
     level: warning
-    title: "JAXA, GCOM-W 운용 변경으로 2026-09-02 이후 AMSR2 표준 L1·L2 일부가 불완전 장면으로 제공"
+    title: "JAXA, 2026-09-02 이후 AMSR2 표준 L1·L2 일부가 한 장면보다 적은 자료로 제공"
     body: >-
-      JAXA G-Portal은 2026-09-02 00 UTC 이후 제공된 AMSR2 표준 L1·L2 산출물 일부가 'GCOM-W 운용 변경'으로 한 장면보다 적은 자료를 담고 있어 'fair' 상태로 등록했고,
-      다음 전송 때 정상본으로 덮어쓴다고 알렸습니다. 같은 날짜부터 L1 표준 산출물 제공 횟수도 하루 14~15회에서 4회로 줄었습니다. 이 시기 ASI 일 파일은 나중에 갱신될 수 있습니다.
+      JAXA G-Portal은 2026-09-02 00 UTC 이후 제공된 GCOM-W 표준 산출물 일부가 한 장면보다 적은 자료를 담고 있을 수 있다고 알렸고(원인 조사 중), 9월 4일 갱신에서
+      영향 범위를 AMSR2 표준 L1·L2로 밝히며 L3는 영향이 없고 문제 산출물은 다음 전송 때 정상본으로 덮어쓴다고 했습니다. 이 시기 ASI 일 파일은 나중에 갱신될 수 있습니다.
     source: https://gportal.jaxa.jp/gpr/notice/notice/view/1500
   - date: "2026-08-21"
     level: info
@@ -235,7 +235,7 @@ notices:
     title: "NOAA, AMSR2 산출물 퇴역·AMSR3 전환 공지 — JAXA의 AMSR2 표준 준실시간 자료 제공 2026년 9월 종료"
     body: >-
       NOAA NESDIS는 JAXA가 AMSR2 자료 제공을 중단할 예정이라 AMSR2 기반 운영 산출물(해빙 포함)을 2026-08-31 퇴역시키고 AMSR3로 바꾼다고 알렸습니다.
-      공지에 따르면 2026년 9월부터 AMSR2 표준 준실시간 자료 제공이 끝나며, 직접 수신은 종료일 없이 계속됩니다. 2026-10-13 확인 시 브레멘대학 AMSR2 ASI는 계속 갱신되고 있습니다.
+      공지에 따르면 2026년 9월부터 AMSR2 표준 준실시간 자료 제공이 끝나며, 전환 기간인 7~8월에는 스발바르 지상국에서 AMSR2 전 궤도를 수신했습니다. 2026-10-13 확인 시 브레멘대학 AMSR2 ASI는 계속 갱신되고 있습니다.
     source: https://ospo.noaa.gov/data/messages/2026/06/MSG_20260601_1400.html
   - date: "2025-09-23"
     level: info

@@ -23,8 +23,8 @@ provider: NASA GSFC Ocean Biology Processing Group (OBPG) and PACE Science Data 
 status: active
 status_note: >-
   Version 3.2, finalised in April 2026 (Earthdata alert of 2026-06-11), is the current version of the ocean products, and both near-real-time (NRT) and standard (refined) streams are being produced.
-  When checked on 2026-10-13, NRT Level-2 granules were available up to about 12 UTC that day and NRT Level-3 daily files through 2026-10-12, while standard Level-3 ran through the 2026-08-31 daily
-  and 2026-08 monthly files (registered 2026-09-30) and standard Level-2 through 2026-09-01. Aerosol, cloud and land products are still at V3.1 and trace gases (TRGAS) at V3.0.
+  When checked on 2026-10-13, NRT Level-2 granules were available up to about 12 UTC that day and NRT Level-3 daily files through 2026-10-12, while standard Level-3 ran through the 2026-08-31 daily file (registered 2026-09-30)
+  and the 2026-08 monthly file (registered 2026-10-06) and standard Level-2 through 2026-09-01. Aerosol, cloud and land products are still at V3.1 and trace gases (TRGAS) at V3.0.
 
 period:
   start: "2024-03"
@@ -52,7 +52,7 @@ coverage:
   note: "Daytime, cloud-free ocean only (gaps from clouds, low sun and glint). MOANA covers the Atlantic only (70°S–70°N, 85°W–25°E)"
 update: >-
   NRT Level-2 within hours of observation and NRT Level-3 daily files the next day (the 2026-10-12 daily file was registered at 13 UTC on 10-13). Standard products wait for ancillary data,
-  so their latency varies (on 2026-10-13 the 2026-08 monthly file had been registered on 2026-09-30)
+  so their latency varies (on 2026-10-13 the 2026-08 monthly file had been registered on 2026-10-06)
 license: >-
   Free and open under the NASA Earth Science Data and Information Policy (file license attribute https://science.nasa.gov/earth-science/earth-science-data/data-information-policy/).
   Downloads from OB.DAAC require a free NASA Earthdata Login, and users are asked to cite the dataset DOIs

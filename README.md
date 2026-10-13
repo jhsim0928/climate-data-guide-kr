@@ -14,7 +14,7 @@
 <p align="center">
   <a href="https://doi.org/10.5281/zenodo.23300923"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.23300923.svg" alt="DOI 10.5281/zenodo.23300923"></a>
   <a href="https://creativecommons.org/licenses/by/4.0/"><img src="https://img.shields.io/badge/content-CC%20BY%204.0-lightgrey.svg" alt="CC BY 4.0"></a>
-  <img src="https://img.shields.io/badge/datasets-119-1f6f8b.svg" alt="119 datasets">
+  <img src="https://img.shields.io/badge/datasets-138-1f6f8b.svg" alt="138 datasets">
 </p>
 
 ---
@@ -51,7 +51,7 @@
 - **정보 오류 신고** — 페이지마다 버튼 하나로 운영자에게 전달
 - **영어판** — [data4researchers.kr/en](https://data4researchers.kr/en/) (공식 영어 출처를 바탕으로 따로 작성)
 
-### 수록 자료 (119개)
+### 수록 자료 (138개)
 
 | 분야 | 분류 | 자료 |
 |---|---|---|
@@ -63,12 +63,12 @@
 | | 기온 | HadCRUT5, GISTEMP, Berkeley Earth, CRU TS |
 | | 복사 | CERES EBAF |
 | 해양 | 재분석 | GLORYS12, ORAS5, ORAS6(공개 예정), ECCO v4, SODA4, SODA3, GODAS, TOPAZ4b |
-| | 해수면온도 | OISST, ERSST v6, ERSST v5, COBE-SST2, COBE-SST3, HadISST, OSTIA, HadSST4, ESA CCI SST |
+| | 해수면온도 | OISST, ERSST v6, ERSST v5, COBE-SST2, COBE-SST3, HadISST, OSTIA, GHRSST MUR, HadSST4, ESA CCI SST |
 | | 수온·염분 | EN4, WOA23 |
-| | 위성 | DUACS (해수면 고도) |
+| | 위성 | DUACS (해수면 고도), SWOT, ESA Sea State CCI, CCMP, Metop ASCAT, AVHRR Pathfinder, MODIS·VIIRS 해양, PACE OCI, OC-CCI, GlobColour, GOCI, GOCI-II, SMAP·SMOS·ESA CCI 염분 |
 | | 모델 강제력 | JRA55-do |
 | 해빙 | 재분석 | PIOMAS, GIOMAS, neXtSIM, TOPAZ4b |
-| | 위성 | OSI SAF (해빙 농도), NOAA/NSIDC CDR, CryoSat-2, CS3SMOS, CS2SMOS, ESA CCI, ICESat-2 |
+| | 위성 | OSI SAF (해빙 농도), NOAA/NSIDC CDR, AMSR2 ASI, CryoSat-2, CS3SMOS, CS2SMOS, SMOS 얇은 해빙 두께, ESA CCI, ICESat-2 |
 | | 해빙 이동 | Polar Pathfinder, OSI SAF (해빙 이동) |
 | | 해빙 지수 | Sea Ice Index |
 | 지면 | 육상 재분석·자료동화 | GLDAS-2, FLDAS, NLDAS-2, TerraClimate, ERA5-Land |
@@ -84,7 +84,14 @@
 | | 구름·복사 | ISCCP-H, CLARA-A3, PATMOS-x, CERES SYN1deg, NOAA OLR, MODIS Cloud, VIIRS Cloud, GK-2A (+ CERES EBAF) |
 | | 기온·수증기 | AIRS, MSU/AMSU, RSS SSM/I·SSMIS, GNSS-RO, Aura MLS |
 | | 에어로졸·대기 성분 | MODIS Aerosol, VIIRS Aerosol, MISR, CALIPSO, EarthCARE, Aura OMI, TROPOMI, GEMS, OCO-2, GOSAT |
-| | 해양·해빙·지면 | 다른 탭의 위성 자료(DUACS, ESA CCI SST, 해빙 위성자료, MODIS·VIIRS 지면 자료 등)를 함께 실음 |
+| | 해수면온도 | GHRSST MUR, AVHRR Pathfinder (+ ESA CCI SST) |
+| | 해상풍 | CCMP, Metop ASCAT |
+| | 해색 | MODIS 해양, VIIRS 해양, PACE OCI, OC-CCI, GlobColour, GOCI-II, GOCI |
+| | 해면 염분 | SMAP SSS, SMOS SSS, ESA CCI SSS |
+| | 해면고도·파랑 | SWOT, ESA Sea State CCI (+ DUACS) |
+| | 해빙 | AMSR2 ASI, SMOS 얇은 해빙 두께 (+ 해빙 탭 위성 자료) |
+| | 빙하·빙상 | ITS_LIVE |
+| | 지면 | 지면 탭의 MODIS·VIIRS·ESA CCI 등 위성 자료를 함께 실음 |
 
 필요한 자료가 없다면 사이트의 **[데이터셋 제안](https://data4researchers.kr/suggest/)** 으로 알려주세요.
 
@@ -124,7 +131,7 @@ Information on the datasets used in this study was compiled with the help of the
 
 **👉 [data4researchers.kr/en](https://data4researchers.kr/en/)**
 
-A guide to climate, ocean, sea-ice, land and satellite datasets for researchers. For each of **119 datasets** — ERA5, JRA-3Q, MERRA-2, CARRA2, GPCP, IMERG, HadCRUT5, OISST, ERSST, GLORYS12, ECCO, EN4, WOA23, DUACS, OSI SAF, NSIDC CDR, CryoSat-2, ICESat-2, GLDAS, SMAP, MODIS, VIIRS, GRACE, GSMaP, TROPOMI, GEMS and more — it brings together, from the official sources:
+A guide to climate, ocean, sea-ice, land and satellite datasets for researchers. For each of **138 datasets** — ERA5, JRA-3Q, MERRA-2, CARRA2, GPCP, IMERG, HadCRUT5, OISST, ERSST, GLORYS12, ECCO, EN4, WOA23, DUACS, OSI SAF, NSIDC CDR, CryoSat-2, ICESat-2, GLDAS, SMAP, MODIS, VIIRS, GRACE, GSMaP, TROPOMI, GEMS and more — it brings together, from the official sources:
 
 - **How to get the data** — providers, account requirements, example Python code
 - **Variables and their time convention** — names, units, and whether each is **instantaneous, mean or accumulated**

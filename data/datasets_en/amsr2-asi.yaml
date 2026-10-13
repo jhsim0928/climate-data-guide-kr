@@ -204,10 +204,10 @@ citations:
 notices:
   - date: "2026-09-04"
     level: warning
-    title: "JAXA: some AMSR2 standard L1 and L2 products since 2026-09-02 contain incomplete scenes after GCOM-W operational changes"
+    title: "JAXA: some AMSR2 standard L1 and L2 products since 2026-09-02 contain less than one scene of data"
     body: >-
-      JAXA G-Portal reported that some AMSR2 standard L1 and L2 products delivered since 2026-09-02 00 UTC contain less than one scene of data because of "operational changes to GCOM-W";
-      they are registered with "fair" status and will be overwritten by good products at the next delivery. From the same date, L1 standard products are delivered four times a day instead of 14–15. ASI daily files for this period may be updated later.
+      JAXA G-Portal reported that some GCOM-W standard products delivered since 00:00 UTC on 2026-09-02 may contain less than one scene of data, with the cause under investigation.
+      A 4 September update narrowed this to AMSR2 standard L1 and L2 products, said L3 is not affected, and said the affected products will be overwritten with good products at the next delivery. ASI daily files for this period may be updated later.
     source: https://gportal.jaxa.jp/gpr/notice/notice/view/1500
   - date: "2026-08-21"
     level: info
@@ -235,7 +235,7 @@ notices:
     title: "NOAA notice on AMSR2 product decommissioning and AMSR3 transition — JAXA AMSR2 standard near-real-time data provision ends in September 2026"
     body: >-
       NOAA NESDIS announced that, because JAXA will discontinue AMSR2 data, its operational AMSR2 products (sea ice included) would be decommissioned on 2026-08-31 and replaced by AMSR3 versions.
-      The notice states that provision of AMSR2 standard near-real-time data ends in September 2026, while direct-readout reception continues with no end date. When checked on 2026-10-13, Bremen's AMSR2 ASI was still being updated.
+      The notice states that provision of AMSR2 standard near-real-time data ends in September 2026, and during the July–August 2026 transition AMSR2 global data was received on all passes at the Svalbard ground station. When checked on 2026-10-13, Bremen's AMSR2 ASI was still being updated.
     source: https://ospo.noaa.gov/data/messages/2026/06/MSG_20260601_1400.html
   - date: "2025-09-23"
     level: info
