@@ -82,7 +82,8 @@ variables:
         - text: "Merged passive microwave precipitation — `Grid/Intermediate/MWprecipitation` (mm/hr)"
           note: "`HQprecipitation` in V06. Has values only in grid cells with a microwave observation"
         - "IR precipitation — `Grid/Intermediate/IRprecipitation` (mm/hr)"
-        - "Microwave observation time — `Grid/Intermediate/MWobservationTime` (minutes), sensor code — `MWprecipSource`, IR influence — `IRinfluence`"
+        - text: "Microwave observation time, sensor and IR influence — `Grid/Intermediate/MWobservationTime` (minutes), `MWprecipSource` (code), `IRinfluence` (dimensionless)"
+          note: "MWprecipSource is the microwave sensor code; IRinfluence is the weight of infrared data"
     - name: Daily (GPM_3IMERGDF Final / DE Early / DL Late)
       kind: mean
       period: Daily (00–24 UTC)
@@ -104,11 +105,12 @@ variables:
         - "Random error — `randomError` (mm/hr)"
         - "Gauge relative weighting — `gaugeRelativeWeighting` (%)"
         - "Probability of liquid precipitation — `probabilityLiquidPrecipitation` (%)"
-        - "Quality index — `precipitationQualityIndex`"
+        - "Quality index — `precipitationQualityIndex` (dimensionless)"
     - name: Static fields
       kind: static
       items:
-        - "IMERG land/sea mask at 0.1° — GES DISC `GPM_IMERG_LandSeaMask` V2"
+        - text: "IMERG land/sea mask at 0.1° — `landseamask` (%)"
+          note: "GES DISC GPM_IMERG_LandSeaMask V2. Percent water in the grid box (100 = all water, 0 = all land)"
 
 access:
   - name: NASA GES DISC (Earthdata Cloud, HTTPS)

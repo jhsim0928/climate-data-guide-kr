@@ -93,8 +93,8 @@ variables:
       period: 일
       items:
         - "일평균 해빙 두께 — `hiday` (m)"
-        - text: "일평균 적설 깊이(물 환산) — `snowday`"
-          note: "PSC 표에는 '일(daily)' 자료로만 적혀 있고 평균인지 순간값인지는 명시되어 있지 않습니다."
+        - text: "일평균 적설 깊이(물 환산) — `snowday` (m)"
+          note: "PSC 표에는 '일(daily)' 자료로만 적혀 있고 평균인지 순간값인지는 명시되어 있지 않습니다. 단위는 월자료 snow 기준"
         - text: "일평균 해빙 농도 — `aiday` (area/ 디렉터리)"
           note: "서버 디렉터리에서 확인한 일별 파일입니다. 일평균인지 순간값인지 공식 문서에서 확인하지 못했습니다(hiday와 같은 규칙으로 추정)."
         - text: "일평균 해빙 속도 — `uiday` (other/ 디렉터리)"
@@ -115,21 +115,26 @@ variables:
 access:
   - name: PSC PIOMAS 부피·두께 시계열 페이지
     url: https://psc.apl.uw.edu/research/projects/arctic-sea-ice-volume-anomaly/data/
+    login: false
     method: 웹 다운로드 (텍스트·CSV)
     note: 범북극 일별·월별 부피와 일별 평균 두께 시계열(버전 2.1)을 받을 수 있습니다.
   - name: PSC 모델 격자 자료 안내 페이지
     url: https://psc.apl.uw.edu/research/projects/arctic-sea-ice-volume-anomaly/data/model_grid
+    login: false
     method: 웹 다운로드 / sftp·rsync (사용자명·비밀번호 anonymous)
     note: 변수표, 격자 파일(grid.dat 등), Fortran·IDL 읽기 프로그램과 커뮤니티 Python 도구 링크가 있습니다.
   - name: pscfiles 서버 — 해빙 두께 (heff)
     url: https://pscfiles.apl.uw.edu/zhang/PIOMAS/data/v2.1/heff/
+    login: false
     method: HTTPS 디렉터리
     note: 이진 파일(heff.H연도.gz)과 함께 1979~2025년 NetCDF(heff.H연도.nc.gz)도 있습니다.
   - name: pscfiles 서버 — 해빙 농도 (area, aiday)
     url: https://pscfiles.apl.washington.edu/zhang/PIOMAS/data/v2.1/area/
+    login: false
     method: HTTPS 디렉터리
   - name: pscfiles 서버 — 기타 변수 (other)
     url: https://pscfiles.apl.washington.edu/zhang/PIOMAS/data/v2.1/other/
+    login: false
     method: HTTPS 디렉터리
     note: 일부 해양 변수(ssh, tice0, uo1_10 등)는 2020년 파일까지만 있습니다.
 

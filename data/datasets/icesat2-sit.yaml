@@ -110,8 +110,9 @@ variables:
         - text: "일평균 프리보드 — `/daily/dayxx/mean_fb` (m)"
           period: 일
           note: 그달 날짜별 하위 그룹(dayxx). 실제 하위 그룹 이름은 파일에서 확인
-        - text: "격자 좌표·육지 마스크 — `/grid_x`, `/grid_y` (m), `/grid_lat`, `/grid_lon` (도), `/land_mask_map` (1 육지, 0 바다·해빙)"
+        - text: "격자 좌표·육지 마스크 — `/grid_x`, `/grid_y` (m), `/grid_lat`, `/grid_lon` (도), `/land_mask_map` (0/1)"
           kind: static
+          note: "land_mask_map은 1 육지, 0 바다·해빙"
     - name: 궤도 자료 (ATL07 해빙 높이 · ATL10 프리보드)
       kind: instant
       items:

@@ -151,10 +151,12 @@ access:
     note: 파일 이름은 GPCPDAY_L3_yyyymmdd_V3.3.nc4입니다.
   - name: NOAA NCEI — GPCP Monthly CDR (V3.3 / 이전 V2.3)
     url: https://www.ncei.noaa.gov/products/climate-data-records/precipitation-gpcp-monthly
+    login: false
     method: HTTPS / THREDDS / AWS·Google Cloud
     note: 계정 없이 받을 수 있습니다. 2026-10 확인 시 NCEI 직접 다운로드 폴더와 AWS 버킷(noaa-cdr-precip-gpcp-monthly-pds)에는 V2.3(v02r03) 파일만 있습니다.
   - name: NOAA NCEI — GPCP Daily CDR (V3.3 / 이전 V1.3)
     url: https://www.ncei.noaa.gov/products/climate-data-records/precipitation-gpcp-daily
+    login: false
     method: HTTPS / AWS·Google Cloud
     note: AWS 버킷(noaa-cdr-precip-gpcp-daily-pds)에는 2026-10 확인 시 V1.3(v01r03, 1°) 파일이 있습니다.
   - name: Copernicus CDS — GPCP v3.3 재배포본

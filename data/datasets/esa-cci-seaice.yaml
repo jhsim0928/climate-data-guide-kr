@@ -125,8 +125,8 @@ variables:
           note: 주 변수
         - text: "필터 전 농도 — `raw_ice_conc_values` (%)"
           note: 필터가 값을 바꾼 격자만 들어 있으며 0% 미만·100% 초과 값이 있을 수 있음
-        - text: "총 불확실성(1 표준편차) — `total_standard_uncertainty` (HR-SIC v3) / `total_standard_error` (AMSR v2.1) (%)"
-          note: 알고리즘(`algorithm_standard_*`)과 번짐(`smearing_standard_*`) 성분도 따로 제공
+        - text: "총 불확실성(1 표준편차) — `total_standard_uncertainty`, `total_standard_error` (%)"
+          note: "앞은 HR-SIC v3, 뒤는 AMSR v2.1 파일의 이름. 알고리즘(`algorithm_standard_*`)과 번짐(`smearing_standard_*`) 성분도 따로 제공"
         - text: "상태 플래그(육지·호수, 개빙 필터, 보간 등 비트값) — `status_flag` (코드값)"
     - name: 해빙 두께 월별 격자 (L3C v4.0)
       kind: mean
@@ -151,16 +151,19 @@ variables:
 access:
   - name: CEDA 카탈로그 — ESA Sea Ice CCI 자료 모음
     url: https://catalogue.ceda.ac.uk/uuid/5e789087d4e847308a39b3fe5b26e281
+    login: false
     method: HTTP 다운로드 / OPeNDAP / 익명 FTP (CEDA 아카이브 /neodc/esacci/sea_ice/data/)
     note: >-
       공개 자료라 계정 없이 받을 수 있습니다. 경로 예: 농도 HR-SIC v3 sea_ice_concentration/L4/ssmi_ssmis/12.5km/v3.0/, AMSR v2.1 sea_ice_concentration/L4/amsr/25km(50km)/v2.1,
       ESMR v1.1 sea_ice_concentration/L3C/esmr/25km/v1.1, 두께 sea_ice_thickness/L3C/cryosat2/v4.0/NH(SH). 각 기록의 'Citable as' 인용문을 꼭 확인하세요.
   - name: CEDA — HR-SIC v3 (SSM/I·SSMIS 12.5 km 해빙 농도)
     url: https://catalogue.ceda.ac.uk/uuid/eade27004395466aaa006135e1b2ad1a/
+    login: false
     method: HTTP / OPeNDAP / FTP
     note: 1991-01-07 ~ 2020-12-31, 북·남반구. 약 21,800개 파일(78 GB)입니다.
   - name: CEDA — CryoSat-2 북반구 월별 두께 L3C v4.0
     url: https://catalogue.ceda.ac.uk/uuid/887ebbe3aa4345f3bbcbe2dd1834d955/
+    login: false
     method: HTTP / OPeNDAP
     note: >-
       2010-10 ~ 2024-04, 99개 파일. 같은 v4.0의 ERS-2·Envisat·Sentinel-3A/B·남반구·L2P 기록은 CEDA 저자 목록(Stefan Hendricks)에서 찾을 수 있습니다.

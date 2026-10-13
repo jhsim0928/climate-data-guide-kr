@@ -152,16 +152,19 @@ variables:
 access:
   - name: ESGF input4MIPs — MRI-JRA55-do-1-6-0 (최종판)
     url: https://metagrid.esgf-west.org/search?project=input4MIPs&versionType=all&&activeFacets=%7B%22source_id%22%3A%5B%22MRI-JRA55-do-1-6-0%22%5D%7D
+    login: false
     method: ESGF 검색 → 변수별 wget 스크립트 / HTTPS
     note: >-
       검색 조건은 mip_era=CMIP6Plus, target_mip=OMIP, institution_id=MRI, source_id=MRI-JRA55-do-1-6-0 입니다.
       v1.5.0(1958~2020년 7월)이 필요하면 CMIP6 시대의 MRI-JRA55-do-1-5-0을 찾으세요.
   - name: ESGF ORNL 노드 THREDDS 카탈로그 (v1.6.0)
     url: https://esgf-node.ornl.gov/thredds/catalog/user_pub_work/input4MIPs/CMIP6Plus/OMIP/MRI/MRI-JRA55-do-1-6-0/catalog.html
+    login: false
     method: THREDDS / HTTPS 직접 다운로드
     note: atmos·land·landIce·ocean·seaIce 영역별 폴더로 나뉘어 있습니다.
   - name: MRI 서버 — v1.5.0.1 (2020년~2024년 1월)
     url: https://climate.mri-jma.go.jp/pub/ocean/JRA55-do/jra55do_latest.html
+    login: false
     method: HTTPS 직접 다운로드 (연도별 파일)
     note: 2020년 이후 연장분입니다. 1958~2019년은 input4MIPs에서 받으라고 안내되어 있습니다.
 

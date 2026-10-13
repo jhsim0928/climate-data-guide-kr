@@ -92,8 +92,8 @@ variables:
       period: day
       items:
         - "Sea ice thickness, daily mean — `hiday` (m)"
-        - text: "Snow depth, daily (water equivalent) — `snowday`"
-          note: "Listed in the PSC table only as daily data; whether values are means or snapshots is not stated."
+        - text: "Snow depth, daily (water equivalent) — `snowday` (m)"
+          note: "Listed in the PSC table only as daily data; whether values are means or snapshots is not stated. Units as for the monthly field snow"
         - text: "Daily sea ice concentration — `aiday` (area/ directory)"
           note: "Daily file found in the server directory. Whether it is a daily mean or a snapshot is not documented (assumed to follow hiday)."
         - text: "Daily sea ice velocity — `uiday` (other/ directory)"
@@ -114,21 +114,26 @@ variables:
 access:
   - name: PSC PIOMAS volume and thickness time series page
     url: https://psc.apl.uw.edu/research/projects/arctic-sea-ice-volume-anomaly/data/
+    login: false
     method: Web download (text and CSV)
     note: Pan-Arctic daily and monthly volume and daily mean thickness time series (version 2.1).
   - name: PSC model-grid data page
     url: https://psc.apl.uw.edu/research/projects/arctic-sea-ice-volume-anomaly/data/model_grid
+    login: false
     method: Web download / SFTP or rsync (username and password anonymous)
     note: Variable table, grid files (grid.dat etc.), Fortran and IDL reading programs, and links to community Python tools.
   - name: pscfiles server — sea ice thickness (heff)
     url: https://pscfiles.apl.uw.edu/zhang/PIOMAS/data/v2.1/heff/
+    login: false
     method: HTTPS directory
     note: Binary files (heff.H<yyyy>.gz) plus NetCDF versions for 1979–2025 (heff.H<yyyy>.nc.gz).
   - name: pscfiles server — sea ice concentration (area, aiday)
     url: https://pscfiles.apl.washington.edu/zhang/PIOMAS/data/v2.1/area/
+    login: false
     method: HTTPS directory
   - name: pscfiles server — other variables (other)
     url: https://pscfiles.apl.washington.edu/zhang/PIOMAS/data/v2.1/other/
+    login: false
     method: HTTPS directory
     note: Some ocean variables (ssh, tice0, uo1_10, etc.) stop with the 2020 files.
 

@@ -102,22 +102,26 @@ variables:
 access:
   - name: Berkeley Earth 데이터 페이지
     url: https://berkeleyearth.org/data/
+    login: false
     method: HTTPS (웹 / wget / curl)
     note: >-
       고해상도 전지구·육상 시계열과 1°·5° 격자 파일(storage.googleapis.com/berkeley-earth-temperature-hr/), 구 1° 제품(갱신 중단),
       관측소 자료를 안내합니다. 0.25° 전 해상도 격자와 국가·도시별 고해상도 시계열은 요청 양식으로 받습니다.
   - name: 고해상도 격자 1° (전지구 TAVG)
     url: https://storage.googleapis.com/berkeley-earth-temperature-hr/global/gridded/Global_TAVG_Gridded_1deg.nc
+    login: false
     method: HTTPS (약 400 MB)
     note: 5° 격자는 같은 폴더의 Global_TAVG_Gridded_5deg.nc(약 8 MB)입니다.
   - name: Zenodo 보관본 (2026년 4월판, 0.25° 포함)
     url: https://doi.org/10.5281/zenodo.20428381
+    login: false
     method: HTTPS (약 55 GB, 21개 파일)
     note: >-
       전지구 TAVG, 육상 TAVG·TMAX·TMIN의 월·연·앙상블 시계열, 1° 앙상블 NetCDF, 0.25° 격자 NetCDF가 들어 있습니다.
       특정 시점으로 고정된 판이라 논문 재현용으로 좋고, 최신 달은 데이터 페이지 파일에서 받으세요.
   - name: 구 1° 제품 (갱신 중단, 2025-01 실행분)
     url: https://berkeley-earth-temperature.s3.us-west-1.amazonaws.com/Global/Gridded/Land_and_Ocean_LatLong1.nc
+    login: false
     method: HTTPS (약 400 MB)
     note: 등면적판(Land_and_Ocean_EqualArea.nc), 해빙 위 해수 온도판(Alternate), 육상 Complete_TAVG/TMAX/TMIN, 일별 육상 파일이 같은 경로에 있습니다.
 

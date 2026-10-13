@@ -122,10 +122,14 @@ variables:
       kind: mean
       period: month
       items:
-        - "Surface shortwave flux down and up, all-sky and clear-sky (W m-2)"
-        - "Surface longwave flux down and up, all-sky and clear-sky (W m-2)"
-        - "Surface net shortwave, net longwave and net total flux (W m-2)"
-        - "TOA and surface cloud radiative effects, shortwave, longwave and net (W m-2)"
+        - text: "Surface shortwave flux down and up, all-sky and clear-sky (W m-2)"
+          note: "The official documents do not give the in-file variable names; check the downloaded file"
+        - text: "Surface longwave flux down and up, all-sky and clear-sky (W m-2)"
+          note: "The official documents do not give the in-file variable names; check the downloaded file"
+        - text: "Surface net shortwave, net longwave and net total flux (W m-2)"
+          note: "The official documents do not give the in-file variable names; check the downloaded file"
+        - text: "TOA and surface cloud radiative effects, shortwave, longwave and net (W m-2)"
+          note: "The official documents do not give the in-file variable names; check the downloaded file"
 
 access:
   - name: CERES ordering, subsetting and visualization tool (EBAF Ed4.2.1)

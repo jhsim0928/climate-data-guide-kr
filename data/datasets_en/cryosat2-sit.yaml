@@ -103,6 +103,7 @@ variables:
 access:
   - name: AWI FTP — CryoSat-2 v2.6 (L2P trajectory, L3C weekly and monthly grids)
     url: ftp://ftp.awi.de/sea_ice/product/cryosat2/v2p6/
+    login: false
     method: Anonymous FTP (FTP client required)
     note: >-
       Northern hemisphere data are in the nh/l3c_grid/month, nh/l3c_grid/isoweek and nh/l2p_trajectory folders. The Latest folders hold only the newest near-real-time
@@ -113,6 +114,7 @@ access:
     note: The same page also covers the Sentinel-3A/B sea ice thickness produced with the same v2.6 processing.
   - name: ESA Sea Ice CCI — CryoSat-2 northern hemisphere monthly thickness L3C v4.0 (CEDA)
     url: https://catalogue.ceda.ac.uk/uuid/887ebbe3aa4345f3bbcbe2dd1834d955/
+    login: false
     method: Web download / HTTP directory
     note: A climate-record reprocessing for 2010-10 to 2024-04, from the same processing lineage as AWI. ESA CCI sea ice terms of use apply.
   - name: CPOM (Centre for Polar Observation and Modelling, UK) Sea Ice Thickness portal

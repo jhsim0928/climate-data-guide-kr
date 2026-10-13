@@ -147,14 +147,17 @@ variables:
 access:
   - name: NCEI direct download (monthly NetCDF)
     url: https://www.ncei.noaa.gov/pub/data/cmb/ersst/v5/netcdf/
+    login: false
     method: HTTPS (wget / curl)
     note: One file per month, named ersst.v5.YYYYMM.nc. ASCII files are in the ascii/ folder alongside.
   - name: NOAA PSL (full record in one file)
     url: https://psl.noaa.gov/data/gridded/data.noaa.ersst.v5.html
+    login: false
     method: Web download / THREDDS / OPeNDAP
     note: The full record is in a single file, sst.mnmean.nc, which is convenient to use directly. Climatology files (e.g. 1991–2020) are also provided.
   - name: NOAA CoastWatch ERDDAP (nceiErsstv5)
     url: https://coastwatch.pfeg.noaa.gov/erddap/info/nceiErsstv5/index.html
+    login: false
     method: ERDDAP (choose region and period, then NetCDF, CSV, etc.)
     note: A mirror that re-downloads the NCEI files each month, so new months appear a few days later.
 

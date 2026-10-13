@@ -132,16 +132,19 @@ variables:
 access:
   - name: JMA NEAR-GOOS — COBE-SST2 monthly mean SST
     url: https://ds.data.jma.go.jp/goos/data/rrtdb/jma-pro/cobe2_sst_glb_M.html
+    login: false
     method: Web download (monthly text grid files)
     note: The file format is described in the Readme in the same directory (Readme_cobe2_sst_glb_M). Monthly normals and standard deviations for 1991–2020 are also provided.
   - name: NOAA PSL — COBE-SST2 (NetCDF)
     url: https://psl.noaa.gov/data/gridded/data.cobe2.html
+    login: false
     method: Web download / THREDDS / OPeNDAP
     note: >-
       The easiest option: the full SST record is in a single file, sst.mon.mean.nc. The sea-ice concentration file
       icec.mon.mean.nc ends in December 2019; climatology files (1981–2010, 1991–2020) are also available.
   - name: MRI research data server (yearly GRIB2)
     url: https://climate.mri-jma.go.jp/pub/ocean/cobe-sst2/
+    login: false
     method: Web download
     note: Yearly GRIB2 files and GrADS ctl files posted by the Meteorological Research Institute. Files are bundled by year, so the current year's file can lag by several months.
 

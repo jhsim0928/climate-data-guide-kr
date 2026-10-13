@@ -97,6 +97,7 @@ variables:
 access:
   - name: AWI FTP — sea ice product root
     url: ftp://ftp.awi.de/sea_ice/product/
+    login: false
     method: Anonymous FTP (web browser, FTP client or command line)
     note: >-
       No account needed. According to the quicklook links on the AWI wiki, the latest Northern Hemisphere files are under cryosat2_smos/v300/nh/LATEST/;

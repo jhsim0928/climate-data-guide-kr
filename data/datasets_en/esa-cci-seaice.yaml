@@ -125,8 +125,8 @@ variables:
           note: Main variable
         - text: "Unfiltered concentration — `raw_ice_conc_values` (%)"
           note: Present only where the filters changed the value; can contain values below 0% or above 100%
-        - text: "Total standard uncertainty (1 sigma) — `total_standard_uncertainty` (HR-SIC v3) / `total_standard_error` (AMSR v2.1) (%)"
-          note: The algorithm (`algorithm_standard_*`) and smearing (`smearing_standard_*`) components are also provided
+        - text: "Total standard uncertainty (1 sigma) — `total_standard_uncertainty`, `total_standard_error` (%)"
+          note: "The first name is used in HR-SIC v3 files, the second in AMSR v2.1 files. The algorithm (`algorithm_standard_*`) and smearing (`smearing_standard_*`) components are also provided"
         - text: "Status flag (bit array: land/lake, open-water filter, interpolation, etc.) — `status_flag` (code)"
     - name: Sea ice thickness monthly grids (L3C v4.0)
       kind: mean
@@ -151,16 +151,19 @@ variables:
 access:
   - name: CEDA catalogue — ESA Sea Ice CCI Dataset Collection
     url: https://catalogue.ceda.ac.uk/uuid/5e789087d4e847308a39b3fe5b26e281
+    login: false
     method: HTTP download / OPeNDAP / anonymous FTP (CEDA archive /neodc/esacci/sea_ice/data/)
     note: >-
       Public data, available without an account. Example paths: concentration HR-SIC v3 sea_ice_concentration/L4/ssmi_ssmis/12.5km/v3.0/, AMSR v2.1 sea_ice_concentration/L4/amsr/25km(50km)/v2.1,
       ESMR v1.1 sea_ice_concentration/L3C/esmr/25km/v1.1, thickness sea_ice_thickness/L3C/cryosat2/v4.0/NH(SH). Always check the "Citable as" text on each record.
   - name: CEDA — HR-SIC v3 (SSM/I and SSMIS 12.5 km sea ice concentration)
     url: https://catalogue.ceda.ac.uk/uuid/eade27004395466aaa006135e1b2ad1a/
+    login: false
     method: HTTP / OPeNDAP / FTP
     note: 1991-01-07 to 2020-12-31, both hemispheres. About 21,800 files (78 GB).
   - name: CEDA — CryoSat-2 Northern Hemisphere monthly thickness L3C v4.0
     url: https://catalogue.ceda.ac.uk/uuid/887ebbe3aa4345f3bbcbe2dd1834d955/
+    login: false
     method: HTTP / OPeNDAP
     note: >-
       2010-10 to 2024-04, 99 files. The ERS-2, Envisat, Sentinel-3A/B, Southern Hemisphere and L2P records of v4.0 can be found in the CEDA author listing (Stefan Hendricks).

@@ -94,11 +94,11 @@ variables:
       kind: mean
       period: Daily
       items:
-        - text: "Perturbed SST, 300 members (0.25° daily) — file cobe-sst3.mNNN.YYYY.nc (perturb/m001–m300)"
+        - text: "Perturbed SST, 300 members (0.25° daily) — file cobe-sst3.mNNN.YYYY.nc, folder perturb/m001–m300"
           kind: mean
           period: Daily
           note: Files for 1890–2020 on the server. According to the paper, SIC perturbations are computed consistently with the SST perturbations
-        - text: "Perturbed SST, 300 members (1° monthly) — file cobe-sst3.monthly.mNNN.YYYY.nc (1x1/perturb/m001–m300)"
+        - text: "Perturbed SST, 300 members (1° monthly) — file cobe-sst3.monthly.mNNN.YYYY.nc, folder 1x1/perturb/m001–m300"
           kind: mean
           period: Monthly
           note: Files for 1870–2024 on the server
@@ -115,6 +115,7 @@ variables:
 access:
   - name: MRI research data server — COBE-SST3 archive
     url: https://climate.mri-jma.go.jp/pub/archives/Ishii-et-al_COBE-SST3/
+    login: false
     method: Direct HTTPS directory download (wget / curl), NetCDF
     note: >-
       Under cobe-sst3/ are daily/ (0.25° daily, one file per year), monthly/ (0.25° monthly), 1x1/ (1° monthly and perturbations) and perturb/ (300-member daily perturbations).

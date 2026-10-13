@@ -81,16 +81,19 @@ variables:
 access:
   - name: Met Office Hadley Centre 다운로드 페이지
     url: https://www.metoffice.gov.uk/hadobs/hadisst/data/download.html
+    login: false
     method: 웹 다운로드 (NetCDF .nc.gz / ASCII .txt.gz)
     note: >-
       전체 기간 NetCDF(HadISST_sst.nc.gz 약 240 MB, HadISST_ice.nc.gz 약 17 MB)와 최근 1개월만 담은 update 파일이 있습니다.
       ASCII 파일은 기간별·연도별로 나뉘어 있고 형식은 Read_instructions 문서에 설명되어 있습니다. 계정 없이 받을 수 있습니다.
   - name: NOAA CoastWatch ERDDAP — HadISST SST (erdHadISST)
     url: https://coastwatch.pfeg.noaa.gov/erddap/info/erdHadISST/index.html
+    login: false
     method: ERDDAP (영역·기간 잘라 받기, OPeNDAP)
     note: Met Office 파일을 NOAA가 다시 제공하는 미러입니다. 원본보다 늦게 갱신될 수 있으니 최신 달은 원본 페이지를 확인하세요.
   - name: NOAA CoastWatch ERDDAP — HadISST 해빙 (erdHadISSTIce)
     url: https://coastwatch.pfeg.noaa.gov/erddap/griddap/erdHadISSTIce
+    login: false
     method: ERDDAP (영역·기간 잘라 받기, OPeNDAP)
 
 example:

@@ -131,9 +131,9 @@ variables:
         - text: "Latitude and longitude at end of displacement — `lat1`, `lon1` (degrees)"
           period: end of displacement period
           note: Ice position at the end of the displacement period
-        - text: "Delta time for start and end of displacement — `dt0`, `dt1` (s, OSI-405-d) / `t0`, `t1` (OSI-455)"
-          note: Actual start and end time relative to the nominal time_bnds; use them to compute the elapsed time
-        - text: "Latitude and longitude coordinate (start position) — `lat`, `lon` (degrees); projection coordinates — `xc`, `yc` (km)"
+        - text: "Delta time for start and end of displacement — `dt0`, `dt1`, `t0`, `t1` (s)"
+          note: "dt0 and dt1 are used in OSI-405-d files, t0 and t1 in OSI-455 files. Actual start and end time relative to the nominal time_bnds; use them to compute the elapsed time"
+        - text: "Latitude, longitude (start position) and projection coordinates — `lat`, `lon` (degrees), `xc`, `yc` (km)"
           kind: static
     - name: Quality information
       kind: accum
@@ -145,18 +145,22 @@ variables:
 access:
   - name: OSI SAF product page — OSI-405-d (near real time)
     url: https://osi-saf.eumetsat.int/products/osi-405-d
+    login: false
     method: Web / FTP (ftp://osisaf.met.no/prod/ice/drift_lr/ last 31 days, ftp://osisaf.met.no/archive/ice/drift_lr/ full archive) / EUMETCast
     note: The FTP server has merged and single_sensor folders. EUMETCast carries only the merged (multi-sensor) files.
   - name: MET Norway THREDDS — OSI SAF sea-ice drift catalogue
     url: https://thredds.met.no/thredds/catalog/osisaf/osisaf_seaicedrift.html
+    login: false
     method: THREDDS / OPeNDAP / HTTP
     note: No account needed. The climate data record (OSI-455) is at https://thredds.met.no/thredds/catalog/osisaf/osisaf_cdrseaicedrift.html
   - name: OSI SAF product page — OSI-455 (climate data record, 1991–2020)
     url: https://osi-saf.eumetsat.int/products/osi-455
+    login: false
     method: FTP (ftp://osisaf.met.no/reprocessed/ice/drift_lr/v1/) / THREDDS / EUMETSAT Data Store
     note: Merged files are under merged/YYYY/MM/; per-sensor and ERA5-wind files are under single_sensor/<sensor>/YYYY/MM/.
   - name: OSI SAF product page — OSI-435 (demonstrational ICDR, 2021–2025)
     url: https://osi-saf.eumetsat.int/products/osi-435-complementing-osi-455
+    login: false
     method: FTP (ftp://osisaf.met.no/reprocessed_test/ice/drift_lr_icdr/v1) / THREDDS
     note: A demonstrational climate product, served from the test FTP area (reprocessed_test); no DOI or recommended citation yet.
   - name: C3S Climate Data Store — Sea ice drift daily gridded data derived from satellite observations

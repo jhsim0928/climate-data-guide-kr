@@ -68,11 +68,11 @@ variables:
       period: month
       items:
         - "Surface temperature anomaly — 200 ensemble members (°C, relative to 1961–1990), in 20 zip files of 10 members each"
-        - "Surface temperature anomaly, ensemble mean — ensemble_mean.nc (°C)"
-        - text: "Land-ocean weights — weights.nc"
+        - "Surface temperature anomaly, ensemble mean — `tas_mean` (°C), ensemble_mean.nc"
+        - text: "Land-ocean weights — `weights` (0-1), weights.nc"
           kind: static
           note: The land air temperature contribution used when blending each grid cell
-        - text: "Non-infilled measurement and sampling uncertainties — uncorrelated.nc and decadal error_covariance zip files"
+        - text: "Non-infilled measurement and sampling uncertainties — `tas_unc` (°C), uncorrelated.nc and decadal error_covariance zip files"
           kind: mean
           period: month
           note: Non-infilled version only. Uncorrelated uncertainties and error covariances that are not represented in the ensemble members
@@ -91,12 +91,14 @@ variables:
 access:
   - name: Met Office Hadley Centre download page (HadCRUT.5.2.0.0)
     url: https://www.metoffice.gov.uk/hadobs/hadcrut5/data/HadCRUT.5.2.0.0/download.html
+    login: false
     method: HTTPS (web / wget / curl)
     note: >-
       Separate sections for the analysis and the non-infilled data, each with summary, ensemble and uncertainty component series (CSV and NetCDF, monthly and annual),
       gridded ensemble members (NetCDF zip files), and ensemble mean and weights files. File names include the version (HadCRUT.5.2.0.0), so URLs change with each new version.
   - name: Previous versions (5.0.0.0 to 5.1.0.0)
     url: https://www.metoffice.gov.uk/hadobs/hadcrut5/data/versions/versions.html
+    login: false
     method: HTTPS
     note: Use these to reproduce published results. Each version has release notes describing what changed.
   - name: CEDA Archive (HadCRUT.5.0.0.0)

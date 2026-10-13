@@ -89,17 +89,21 @@ variables:
 access:
   - name: NOAA PSL — GODAS dataset page
     url: https://psl.noaa.gov/data/gridded/data.godas.html
+    login: false
     method: Variable list, plotting and subsetting
     note: No account needed. netCDF4 files, one per variable per year.
   - name: NOAA PSL download server
     url: https://downloads.psl.noaa.gov/Datasets/godas/
+    login: false
     method: Direct HTTPS download
     note: Per-variable, per-year files, a ReadMe, and a Derived/ directory with monthly long-term means (1991–2020 and others).
   - name: NOAA PSL THREDDS / OPeNDAP
     url: https://psl.noaa.gov/thredds/catalog/Datasets/godas/catalog.html
+    login: false
     method: Remote access via OPeNDAP / NetCDF Subset Service
   - name: NOAA CPC — GODAS home page
     url: https://www.cpc.ncep.noaa.gov/products/GODAS/
+    login: false
     method: Maps and animations, monthly and pentad download links, monthly ocean briefing
     note: The original CPC GRIB files are pointed to the pub/cfs/godas path on cfs.ncep.noaa.gov. Most of the page has not been changed since 2019 (last modified July 30, 2019).
   - name: NSF NCAR GDEX — NCEP GODAS (d277006)

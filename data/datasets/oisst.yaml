@@ -87,19 +87,23 @@ variables:
 access:
   - name: NCEI 직접 다운로드 (일별 NetCDF)
     url: https://www.ncei.noaa.gov/data/sea-surface-temperature-optimum-interpolation/v2.1/access/avhrr/
+    login: false
     method: HTTPS (wget / curl)
     note: 월별 폴더 안에 하루 한 파일입니다. 예비 자료 파일은 최종본이 나오면 교체되므로 주기적으로 다시 받으세요.
   - name: NCEI THREDDS
     url: https://www.ncei.noaa.gov/thredds/catalog/OisstBase/NetCDF/V2.1/AVHRR/catalog.html
+    login: false
     method: OPeNDAP / NetCDF Subset
   - name: NOAA PSL (연도별 묶음 파일)
     url: https://psl.noaa.gov/data/gridded/data.noaa.oisst.v2.highres.html
+    login: false
     method: 웹 다운로드 / THREDDS / OPeNDAP
     note: >-
       sst.day.mean.YYYY.nc, sst.day.anom.YYYY.nc, sst.day.err.YYYY.nc, icec.day.mean.YYYY.nc처럼 변수·연도별로 묶여 있어
       긴 기간을 받기 편합니다. PSL 파일의 해빙 변수명은 icec 입니다.
   - name: AWS 오픈데이터 (NOAA CDR)
     url: https://noaa-cdr-sea-surface-temp-optimum-interpolation-pds.s3.amazonaws.com/index.html
+    login: false
     method: 클라우드 저장소(S3)
   - name: Google Cloud (NOAA CDR)
     url: https://console.cloud.google.com/storage/browser/noaa-cdr-sea-surface-temp-optimum-interpolation

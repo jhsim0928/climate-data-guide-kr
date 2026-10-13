@@ -128,12 +128,14 @@ variables:
 access:
   - name: Met Office Hadley Centre HadSST4 다운로드 페이지
     url: https://www.metoffice.gov.uk/hadobs/hadsst4/data/download.html
+    login: false
     method: 웹 다운로드 (NetCDF / zip / CSV)
     note: >-
       중앙값 파일(HadSST.4.2.0.0_median.nc), 앙상블(50개씩 4개 zip), 불확실성·오차 공분산, 관측 수, 전지구·북반구·남반구·열대 월·연 평균 시계열(CSV)을 받을 수 있습니다.
       계정은 필요 없고 MD5 체크섬이 제공됩니다.
   - name: 이전 버전 (HadSST.4.1.1.0, HadSST.4.0.1.0)
     url: https://www.metoffice.gov.uk/hadobs/hadsst4/previous_versions.html
+    login: false
     method: 웹 다운로드
     note: 4.0.1.0은 2024년 12월로 끝났고, 4.1.1.0은 한시적으로만 갱신된다고 안내되어 있습니다. 새 분석에는 최신 버전을 쓰세요.
 

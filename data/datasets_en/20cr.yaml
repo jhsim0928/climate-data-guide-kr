@@ -172,10 +172,12 @@ access:
     method: Overview, documentation for each version, links to plotting tools
   - name: NOAA PSL download server (20CR v3)
     url: https://downloads.psl.noaa.gov/Datasets/20thC_ReanV3/
+    login: false
     method: Direct HTTPS download
     note: No account needed. netCDF files by variable and year; daily means are in Dailies/, monthly means in Monthlies/ and the ensemble spread in spreads/.
   - name: NOAA PSL THREDDS / OPeNDAP (20CR v3)
     url: https://psl.noaa.gov/thredds/catalog/Datasets/20thC_ReanV3/catalog.html
+    login: false
     method: Remote access via OPeNDAP
   - name: NSF NCAR GDEX — 20CR Version 3 (d131003)
     url: https://gdex.ucar.edu/datasets/d131003/
@@ -183,6 +185,7 @@ access:
     note: Ensemble mean and spread, netCDF4, about 105 TB. Dataset DOI 10.5065/H93G-WS83, CC BY 4.0.
   - name: NERSC 20C Reanalysis portal (individual members)
     url: https://portal.nersc.gov/project/20C_Reanalysis/
+    login: false
     method: Web download (some data on HPSS tape)
     note: Use this when you need the analysis and forecast fields of each of the 80 members. Data come as tar bundles by variable and year.
 

@@ -130,22 +130,26 @@ access:
     note: Version description, links to yearly monthly-mean files, wget commands for bulk download, and how to cite.
   - name: UMD data server — SODA4.15.2 regridded (0.1°)
     url: https://dsrs.atmos.umd.edu/DATA/SODA4.15.2_REG/
+    login: false
     method: Direct HTTP(S) download
     note: >-
       5-day and monthly netCDF files in ocean/ and ice/. A 5-day ocean file is about 1.5–1.6 GB, a yearly monthly-mean ocean file 17–19 GB,
       and a yearly monthly-mean ice file about 0.4 GB. On 2026-10-12 the 2021 monthly ice file was missing.
   - name: UMD data server — SODA4.15.2 original grid (tripolar 3600 × 2700)
     url: https://dsrs.atmos.umd.edu/DATA/SODA4.15.2_OR/
+    login: false
     method: Direct HTTP(S) download
     note: >-
       Folders ocean/, ice/ and transport/. A 5-day ocean file is about 5.2–5.4 GB, a yearly monthly-mean ocean file about 65 GB, a 5-day ice file about 145 MB and a 10-day transport file about 2.2 GB.
       Original-grid ocean files start in 1983. The portal recommends computing basin-integrated transports (e.g. AMOC) on the original grid, because remapping can introduce truncation errors.
   - name: UMD data server — companion run without data assimilation (SODA4.15.2.0)
     url: https://dsrs.atmos.umd.edu/DATA/SODA4.15.2.0/
+    login: false
     method: Direct HTTP(S) download
     note: Folders ORIGINAL/ and REGRIDED/. Same forcing and bulk formulae with no assimilation, intended for closed-budget diagnostics.
   - name: UMD data server — per-stream output and analysis increments (soda4.15.2_s1 to _s4)
     url: https://dsrs.atmos.umd.edu/DATA/
+    login: false
     method: Direct HTTP(S) download
     note: >-
       The per-stream folders named in the preprint's data availability statement (e.g. soda4.15.2_s1/ with ORIGINAL/, REGRIDED/ and SODA/).

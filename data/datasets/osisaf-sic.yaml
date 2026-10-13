@@ -187,18 +187,22 @@ variables:
 access:
   - name: OSI SAF 제품 페이지 — OSI-450-a1 (SSMIS 계열 CDR v3.1)
     url: https://osi-saf.eumetsat.int/products/osi-450-a1
+    login: false
     method: 웹 안내 / FTP (ftp://osisaf.met.no/reprocessed/ 의 ice/conc/v3p1)
     note: 제품별 페이지에 FTP 경로, DOI, 인용 문구, 문서 링크가 정리되어 있습니다.
   - name: MET Norway THREDDS — 해빙 농도 기후자료 카탈로그
     url: https://thredds.met.no/thredds/catalog/osisaf/osisaf_cdrseaiceconc.html
+    login: false
     method: THREDDS / OPeNDAP / HTTP 다운로드
     note: 계정 없이 접근할 수 있고, OPeNDAP으로 필요한 영역·기간만 잘라 읽을 수 있습니다.
   - name: OSI SAF 제품 페이지 — OSI-438 (AMSR2 기반 연장판)
     url: https://osi-saf.eumetsat.int/products/osi-438
+    login: false
     method: FTP (ftp://osisaf.met.no/reprocessed/ 의 ice/conc-cont-reproc-amsr/) / THREDDS / EUMETSAT Data Store
     note: 2021년 이후 구간의 권장 연장판입니다. 2026-09-01부터는 정규(16일 지연) 파일만 새 FTP 경로로 계속 나옵니다.
   - name: OSI SAF 제품 페이지 — OSI-438-a (AMSR3 기반 연장판)
     url: https://osi-saf.eumetsat.int/products/osi-438-a
+    login: false
     method: FTP / THREDDS / EUMETSAT Data Store
     note: 2026-09-01 운영 시작. 약 2일 지연의 빠른 갱신 파일이 필요하면 이 제품을 씁니다.
   - name: Copernicus Marine — SEAICE_GLO_SEAICE_L4_REP_OBSERVATIONS_011_009
@@ -211,6 +215,7 @@ access:
     note: ECMWF 계정 필요. SSMIS 계열 자료는 2025년까지로 더 이상 갱신되지 않고, AMSR 계열만 운영 갱신됩니다.
   - name: OSI SAF 제품 페이지 — OSI-408-a (AMSR2 준실시간, 10 km)
     url: https://osi-saf.eumetsat.int/products/osi-408-a
+    login: false
     method: FTP (ftp://osisaf.met.no/prod/ 최근 31일, /archive/ 전체) / THREDDS / EUMETCast
     note: 준실시간 운영 자료로 기후자료와 알고리즘·격자가 다릅니다. 2026-09-01부터 AMSR3 기반 OSI-408-g가 주력입니다.
 

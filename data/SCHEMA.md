@@ -28,7 +28,7 @@
 | `account_required` | `true` / `false` |
 | `summary` | 한국어 개요 2~4문장 |
 | `variables` | 아래 형식 |
-| `access` | 받는 곳 목록 `[{name, url, method, note}]` |
+| `access` | 받는 곳 목록 `[{name, url, method, note, login}]` — 로그인·계정 없이 바로 받을 수 있는 곳은 `login: false`(페이지에 '로그인 없이 받기' 표시). 안내 페이지·확인 못 한 곳은 적지 않음 |
 | `example` | (선택) `{lang, note, code}` |
 | `tips` | (선택) 실전 팁 목록 |
 | `citations` | `{dataset: [...], papers: [...], acknowledgement}` 각 항목 `{label, text, doi, bibtex}` |

@@ -68,11 +68,11 @@ variables:
       period: 월
       items:
         - "지표 기온 편차 — 200개 앙상블 멤버 (°C, 1961~1990년 기준), 10개 멤버씩 묶은 zip 20개"
-        - "지표 기온 편차 앙상블 평균 — ensemble_mean.nc (°C)"
-        - text: "육지·해양 가중치 — weights.nc"
+        - "지표 기온 편차 앙상블 평균 — `tas_mean` (°C), ensemble_mean.nc"
+        - text: "육지·해양 가중치 — `weights` (0-1), weights.nc"
           kind: static
           note: 육상 기온과 해수면온도를 섞을 때 쓰인 육지 비율
-        - text: "비보간판 측정·표집 불확실성 — uncorrelated.nc, 10년 단위 error_covariance zip"
+        - text: "비보간판 측정·표집 불확실성 — `tas_unc` (°C), uncorrelated.nc, 10년 단위 error_covariance zip"
           kind: mean
           period: 월
           note: 비보간판에만 제공. 앙상블 멤버에 들어 있지 않은 상관 없는 오차와 오차 공분산
@@ -91,12 +91,14 @@ variables:
 access:
   - name: Met Office Hadley Centre 다운로드 페이지 (HadCRUT.5.2.0.0)
     url: https://www.metoffice.gov.uk/hadobs/hadcrut5/data/HadCRUT.5.2.0.0/download.html
+    login: false
     method: HTTPS (웹 / wget / curl)
     note: >-
       분석판(analysis)과 비보간판(noninfilled)이 따로 있고, 각각 요약·앙상블·성분 시계열(CSV·NetCDF, 월·연)과 격자 앙상블(NetCDF zip),
       앙상블 평균·가중치 파일이 있습니다. 파일 이름에 버전(HadCRUT.5.2.0.0)이 들어가므로 버전이 바뀌면 주소도 바뀝니다.
   - name: 이전 버전 목록 (5.0.0.0 ~ 5.1.0.0)
     url: https://www.metoffice.gov.uk/hadobs/hadcrut5/data/versions/versions.html
+    login: false
     method: HTTPS
     note: 논문 재현 등으로 이전 버전이 필요할 때 씁니다. 버전별 릴리스 노트에 바뀐 점이 정리돼 있습니다.
   - name: CEDA 아카이브 (HadCRUT.5.0.0.0)

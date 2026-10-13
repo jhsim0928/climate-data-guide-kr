@@ -104,6 +104,7 @@ access:
       2026-10-12 확인 시 v4.10은 아직 CEDA에 등록되지 않았습니다.
   - name: CRU 누리집 — CRU TS v4.10
     url: https://crudata.uea.ac.uk/cru/data/hrg/cru_ts_4.10/
+    login: false
     method: HTTPS 직접 다운로드 (로그인 없음)
     note: >-
       CEDA로 받을 수 없거나 해당 버전이 아직 CEDA에 없을 때 쓰라는 사본입니다. 변수별 폴더에 netCDF(*.dat.nc.gz)와 ASCII, stn·mae·maea 파일이

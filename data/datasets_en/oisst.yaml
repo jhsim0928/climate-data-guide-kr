@@ -88,19 +88,23 @@ variables:
 access:
   - name: NCEI direct download (daily NetCDF)
     url: https://www.ncei.noaa.gov/data/sea-surface-temperature-optimum-interpolation/v2.1/access/avhrr/
+    login: false
     method: HTTPS (wget / curl)
     note: One file per day inside monthly folders. Preliminary files are replaced when the final versions arrive, so re-download periodically.
   - name: NCEI THREDDS
     url: https://www.ncei.noaa.gov/thredds/catalog/OisstBase/NetCDF/V2.1/AVHRR/catalog.html
+    login: false
     method: OPeNDAP / NetCDF Subset
   - name: NOAA PSL (yearly files)
     url: https://psl.noaa.gov/data/gridded/data.noaa.oisst.v2.highres.html
+    login: false
     method: Web download / THREDDS / OPeNDAP
     note: >-
       Files are bundled by variable and year (sst.day.mean.YYYY.nc, sst.day.anom.YYYY.nc, sst.day.err.YYYY.nc, icec.day.mean.YYYY.nc),
       which makes long periods easy to download. In the PSL files the sea-ice variable is named icec.
   - name: AWS Open Data (NOAA CDR)
     url: https://noaa-cdr-sea-surface-temp-optimum-interpolation-pds.s3.amazonaws.com/index.html
+    login: false
     method: Cloud storage (S3)
   - name: Google Cloud (NOAA CDR)
     url: https://console.cloud.google.com/storage/browser/noaa-cdr-sea-surface-temp-optimum-interpolation

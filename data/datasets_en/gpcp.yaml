@@ -152,10 +152,12 @@ access:
     note: Files are named GPCPDAY_L3_yyyymmdd_V3.3.nc4.
   - name: NOAA NCEI — GPCP Monthly CDR (V3.3 / previous V2.3)
     url: https://www.ncei.noaa.gov/products/climate-data-records/precipitation-gpcp-monthly
+    login: false
     method: HTTPS / THREDDS / AWS and Google Cloud
     note: No account needed. As of 2026-10, the NCEI direct-download directory and the AWS bucket (noaa-cdr-precip-gpcp-monthly-pds) contain only V2.3 (v02r03) files.
   - name: NOAA NCEI — GPCP Daily CDR (V3.3 / previous V1.3)
     url: https://www.ncei.noaa.gov/products/climate-data-records/precipitation-gpcp-daily
+    login: false
     method: HTTPS / AWS and Google Cloud
     note: As of 2026-10, the AWS bucket (noaa-cdr-precip-gpcp-daily-pds) holds V1.3 (v01r03, 1°) files.
   - name: Copernicus CDS — GPCP v3.3 redistribution

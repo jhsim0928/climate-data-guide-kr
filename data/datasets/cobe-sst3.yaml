@@ -93,11 +93,11 @@ variables:
       kind: mean
       period: 일
       items:
-        - text: "섭동 SST 300개 멤버 (0.25° 일별) — 파일 cobe-sst3.mNNN.YYYY.nc (perturb/m001~m300)"
+        - text: "섭동 SST 300개 멤버 (0.25° 일별) — 파일 cobe-sst3.mNNN.YYYY.nc, 폴더 perturb/m001~m300"
           kind: mean
           period: 일
           note: 서버에 1890~2020년 파일. 논문에 따르면 SIC 섭동도 SST 섭동과 일관되게 계산됨
-        - text: "섭동 SST 300개 멤버 (1° 월별) — 파일 cobe-sst3.monthly.mNNN.YYYY.nc (1x1/perturb/m001~m300)"
+        - text: "섭동 SST 300개 멤버 (1° 월별) — 파일 cobe-sst3.monthly.mNNN.YYYY.nc, 폴더 1x1/perturb/m001~m300"
           kind: mean
           period: 월
           note: 서버에 1870~2024년 파일
@@ -114,6 +114,7 @@ variables:
 access:
   - name: MRI 연구 자료 서버 — COBE-SST3 아카이브
     url: https://climate.mri-jma.go.jp/pub/archives/Ishii-et-al_COBE-SST3/
+    login: false
     method: HTTPS 디렉터리 직접 다운로드 (wget / curl), NetCDF
     note: >-
       cobe-sst3/ 아래 daily/(0.25° 일별, 연 1파일), monthly/(0.25° 월별), 1x1/(1° 월별·섭동), perturb/(300개 멤버 일별 섭동)가 있고,

@@ -73,9 +73,9 @@ variables:
       kind: mean
       period: Monthly
       items:
-        - "Land-Ocean Temperature Index, ERSSTv5, 1200km smoothing — gistemp1200_GHCNv4_ERSSTv5 (°C)"
-        - "Surface air temperature (no ocean data), 250km smoothing — gistemp250_GHCNv4 (°C)"
-        - text: "Land mask on a 2°×2° grid — landmask.2degx2deg.txt"
+        - "Land-Ocean Temperature Index, ERSSTv5, 1200km smoothing — `tempanomaly` (°C), gistemp1200_GHCNv4_ERSSTv5.nc"
+        - "Surface air temperature (no ocean data), 250km smoothing — `tempanomaly` (°C), gistemp250_GHCNv4.nc"
+        - text: "Land mask on a 2°×2° grid — landmask.2degx2deg.txt, text file"
           kind: static
     - name: Summary tables (L-OTI, plain text and CSV)
       kind: mean
@@ -96,6 +96,7 @@ variables:
 access:
   - name: GISTEMP Data Downloads
     url: https://data.giss.nasa.gov/gistemp/data_v4.html
+    login: false
     method: HTTPS (browser / wget / curl)
     note: >-
       Summary tables (tabledata_v4/GLB.Ts+dSST.csv etc.), gzip-compressed 2°×2° NetCDF and Zarr v3 (tar.gz) files,
@@ -109,6 +110,7 @@ access:
       a minor error in labelling the time dimension.
   - name: Station data
     url: https://data.giss.nasa.gov/gistemp/station_data_v4_globe/
+    login: false
     method: Web tool
     note: Browse and download raw and adjusted records for individual stations.
   - name: GISTEMP source code

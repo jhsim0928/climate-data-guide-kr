@@ -118,7 +118,8 @@ variables:
       kind: static
       items:
         - "위도·경도 — `latitude`, `longitude` (degrees_north, degrees_east)"
-        - "투영 좌표 — `x`, `y` (m), 투영 정보 — `crs`"
+        - text: "투영 좌표·투영 정보 — `x`, `y` (m), `crs`"
+          note: "crs는 투영 정보(단위 없음)"
 
 access:
   - name: NSIDC 데이터셋 페이지 — NSIDC-0116 Version 4

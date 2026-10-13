@@ -562,9 +562,26 @@ def split_var(text: str) -> tuple[str, str, str, str]:
     t = oneline(text)
     name, rest = (t.split(" — ", 1) + [""])[:2] if " — " in t else (t, "")
     units, note = "", ""
-    unit_like = re.compile(r"[/%°^0-9]|^[A-Za-z][A-Za-z .\-²³⁻¹]*$|^(무차원|비율|개|일|분|초|코드값|비트값)$")
+    unit_like = re.compile(r"[/%°^0-9]|^[A-Za-z][A-Za-z .\-²³⁻¹]*$|^(무차원|비율|개|일|분|초|도|코드|코드값|비트값|비트 플래그|연중 일수|백만 km²)$")
+    # 변수명마다 단위가 붙은 경우: "`10si` (m s-1), `10wdir` (degrees)" → 단위 "m s-1, degrees"
+    # 단위 뒤에 다른 설명이 이어지는 경우: "`sst` (°C), 파일명…" → 단위 "°C", 나머지는 참고
+    def _unit_ok(inner):
+        inner = inner.strip()
+        return bool(inner) and "=" not in inner and "," not in inner and unit_like.search(inner) \
+            and not (_HANGUL.search(inner) and not re.fullmatch(r"(무차원|비율|개|일|분|초|도|코드|코드값|비트값|비트 플래그|연중 일수|백만 km²)", inner))
+    if rest:
+        pairs = list(re.finditer(r"(`[^`]+`)\s*\(([^()]*)\)", rest))
+        good = [m for m in pairs if _unit_ok(m.group(2))]
+        if good and (len(good) > 1 or good[-1].end() < len(rest.rstrip())):
+            us = []
+            for m in good:
+                if m.group(2).strip() not in us:
+                    us.append(m.group(2).strip())
+            for m in reversed(good):
+                rest = rest[:m.start()] + m.group(1) + rest[m.end():]
+            units = ", ".join(us)
     src = rest if rest else name
-    m = re.search(r"\(([^()]*(?:\([^()]*\)[^()]*)*)\)\s*$", src)
+    m = None if units else re.search(r"\(([^()]*(?:\([^()]*\)[^()]*)*)\)\s*$", src)
     if m:
         inner = m.group(1).strip()
         head = inner.split(",")[0].strip()
@@ -585,6 +602,8 @@ def split_var(text: str) -> tuple[str, str, str, str]:
     for c in codes:
         leftover = leftover.replace(c, "")
     leftover = re.sub(r"^[\s,/·]+|[\s,/·]+$", "", re.sub(r"\s*,\s*,", ",", leftover)).strip()
+    if re.fullmatch(r"\([^()]*\)", leftover):
+        leftover = leftover[1:-1].strip()
     if leftover:
         note = (leftover + (" · " + note if note else "")).strip()
     return name, ", ".join(codes), units, note
@@ -728,7 +747,9 @@ def render_dataset(d: dict, site_cite: dict) -> str:
     # 받는 방법
     L += ["## 받는 방법", ""]
     for a in d["access"]:
-        L.append(f"- **[{a['name']}]({a['url']})** — {a.get('method', '')}")
+        # login: false → 로그인(계정) 없이 바로 받을 수 있는 곳
+        free = ' <span class="login-free">로그인 없이 받기</span>' if a.get("login") is False else ""
+        L.append(f"- **[{a['name']}]({a['url']})** — {a.get('method', '')}{free}")
         if a.get("note"):
             L.append(f"    - {oneline(a['note'])}")
     L.append("")

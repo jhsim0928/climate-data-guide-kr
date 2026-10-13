@@ -117,7 +117,7 @@ variables:
           note: Hemispheric total computed from that day's concentration field; not smoothed
         - text: "Missing data area — `Missing` (million km²)"
           note: Total area of cells without data when that day's extent was computed
-        - text: "Input data source — `Source Data` (path string)"
+        - text: "Input data source — `Source Data`, path string"
           kind: static
           note: The path contains NSIDC-0051 (GSFC product) or NSIDC-0803 (AMSR2 product), identifying the input for that day's value
     - name: Monthly index (h_mm_extent_v4.0.csv, one file per month)
@@ -151,6 +151,7 @@ access:
     note: Links to the User Guide, Special Report 28 (V4 analysis) and the overview of the sea ice analysis spreadsheets.
   - name: NOAA@NSIDC HTTPS archive — G02135
     url: https://noaadata.apps.nsidc.org/NOAA/G02135/
+    login: false
     method: HTTPS (browser, wget, Python/R)
     note: >-
       No login needed. Under north/ and south/ there are daily/ (data, geotiff, images) and monthly/ (data, geotiff, etc.) folders and monthly shapefile folders (shp_extent, shp_median);

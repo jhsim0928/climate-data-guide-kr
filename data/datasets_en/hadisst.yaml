@@ -84,16 +84,19 @@ variables:
 access:
   - name: Met Office Hadley Centre download page
     url: https://www.metoffice.gov.uk/hadobs/hadisst/data/download.html
+    login: false
     method: Web download (NetCDF .nc.gz / ASCII .txt.gz)
     note: >-
       Full-period CF-compliant NetCDF files (HadISST_sst.nc.gz about 240 MB, HadISST_ice.nc.gz about 17 MB) and update files holding only the most
       recent available month. ASCII files are split by period and by year, with the format described in the read instructions. No account needed.
   - name: NOAA CoastWatch ERDDAP — HadISST SST (erdHadISST)
     url: https://coastwatch.pfeg.noaa.gov/erddap/info/erdHadISST/index.html
+    login: false
     method: ERDDAP (subset by region and time, OPeNDAP)
     note: A NOAA mirror of the Met Office files. It may lag behind the original, so check the Met Office page for the latest month.
   - name: NOAA CoastWatch ERDDAP — HadISST sea ice (erdHadISSTIce)
     url: https://coastwatch.pfeg.noaa.gov/erddap/griddap/erdHadISSTIce
+    login: false
     method: ERDDAP (subset by region and time, OPeNDAP)
 
 example:

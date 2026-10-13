@@ -130,22 +130,26 @@ access:
     note: 판 설명, 연도별 월평균 파일 링크, 일괄 내려받기용 wget 명령 예시, 인용 방법이 있습니다.
   - name: UMD 데이터 서버 — SODA4.15.2 재격자 (0.1°)
     url: https://dsrs.atmos.umd.edu/DATA/SODA4.15.2_REG/
+    login: false
     method: HTTP(S) 직접 다운로드
     note: >-
       ocean/·ice/ 폴더에 5일·월평균 netCDF가 있습니다. 해양 5일 파일 하나 약 1.5~1.6 GB, 해양 월평균 1년 파일 17~19 GB,
       해빙 월평균 1년 파일 약 0.4 GB입니다. 2026-10-12 확인 시 해빙 월평균 2021년 파일이 없습니다.
   - name: UMD 데이터 서버 — SODA4.15.2 원 격자 (삼극 3600×2700)
     url: https://dsrs.atmos.umd.edu/DATA/SODA4.15.2_OR/
+    login: false
     method: HTTP(S) 직접 다운로드
     note: >-
       ocean/·ice/·transport/ 폴더가 있습니다. 해양 5일 파일 하나 약 5.2~5.4 GB, 해양 월평균 1년 파일 약 65 GB, 해빙 5일 약 145 MB, 10일 수송량 약 2.2 GB입니다.
       원 격자 해양은 1983년부터입니다. 유역 적분 수송(AMOC 등)은 재격자 대신 원 격자로 계산하라고 포털이 권합니다.
   - name: UMD 데이터 서버 — 자료동화 없는 대조 실험 (SODA4.15.2.0)
     url: https://dsrs.atmos.umd.edu/DATA/SODA4.15.2.0/
+    login: false
     method: HTTP(S) 직접 다운로드
     note: ORIGINAL/·REGRIDED/ 폴더. 같은 강제력·벌크 공식으로 동화 없이 돌린 실험으로, 수지(budget) 진단 비교용입니다.
   - name: UMD 데이터 서버 — 스트림별 원자료·분석 증분 (soda4.15.2_s1 ~ _s4)
     url: https://dsrs.atmos.umd.edu/DATA/
+    login: false
     method: HTTP(S) 직접 다운로드
     note: >-
       프리프린트의 자료 공개 문구가 가리키는 스트림별 폴더입니다(예: soda4.15.2_s1/ 안에 ORIGINAL/·REGRIDED/·SODA/).

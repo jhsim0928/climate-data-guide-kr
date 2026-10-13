@@ -103,7 +103,7 @@ variables:
     - name: Flags and corrections
       kind: instant
       items:
-        - text: "Ice flag (15% sea ice concentration criterion; 0 = ocean, 1 = ice) — `flag_ice`"
+        - text: "Ice flag (15% sea ice concentration criterion; 0 = ocean, 1 = ice) — `flag_ice` (0/1)"
           note: Based on OSI SAF sea ice concentration.
         - text: "TOPEX-A instrumental drift correction — `tpa_correction` (m)"
           note: A one-dimensional variable (time only), in MY and C3S only. The C3S PUGS states that for vDT2024 the correction has not yet been computed and the variable holds a default value.

@@ -65,9 +65,9 @@ variables:
       kind: mean
       period: 월
       items:
-        - "육지+해양 기온 편차 (LOTI, 1200 km 반경) — gistemp1200_GHCNv4_ERSSTv5 (°C)"
-        - "육상 지상 기온 편차 (해양 자료 없음, 250 km 반경) — gistemp250_GHCNv4 (°C)"
-        - text: "2° 육지 마스크 — landmask.2degx2deg.txt"
+        - "육지+해양 기온 편차 (LOTI, 1200 km 반경) — `tempanomaly` (°C), gistemp1200_GHCNv4_ERSSTv5.nc"
+        - "육상 지상 기온 편차 (해양 자료 없음, 250 km 반경) — `tempanomaly` (°C), gistemp250_GHCNv4.nc"
+        - text: "2° 육지 마스크 — landmask.2degx2deg.txt, 텍스트 파일"
           kind: static
     - name: 요약 표 (LOTI, 텍스트·CSV)
       kind: mean
@@ -88,6 +88,7 @@ variables:
 access:
   - name: GISTEMP Data Downloads
     url: https://data.giss.nasa.gov/gistemp/data_v4.html
+    login: false
     method: HTTPS (웹 / wget / curl)
     note: >-
       요약 표(tabledata_v4/GLB.Ts+dSST.csv 등), 2° 격자 NetCDF(gz 압축)·Zarr v3(tar.gz), 원 분석 SBBX 파일과 변환용 Fortran 코드가 있습니다.
@@ -100,6 +101,7 @@ access:
       일부 파일은 페이지에 안내된 공용 아이디·비밀번호가 필요합니다. 2024-10-01에 NetCDF 시간 차원 표기 오류가 고쳐졌습니다.
   - name: 관측소 자료 검색
     url: https://data.giss.nasa.gov/gistemp/station_data_v4_globe/
+    login: false
     method: 웹 도구
     note: 관측소별 원자료·보정 자료를 보고 받을 수 있습니다.
   - name: GISTEMP 소스 코드

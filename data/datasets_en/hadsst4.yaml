@@ -131,12 +131,14 @@ variables:
 access:
   - name: Met Office Hadley Centre HadSST4 download page
     url: https://www.metoffice.gov.uk/hadobs/hadsst4/data/download.html
+    login: false
     method: Web download (NetCDF / zip / CSV)
     note: >-
       Provides the median file (HadSST.4.2.0.0_median.nc), the ensemble (four zips of 50 members), uncertainty and error covariance files, observation
       counts, and monthly and annual time series (CSV) for the globe, the Northern and Southern Hemispheres and the tropics. No account needed; MD5 checksums are listed.
   - name: Previous versions (HadSST.4.1.1.0, HadSST.4.0.1.0)
     url: https://www.metoffice.gov.uk/hadobs/hadsst4/previous_versions.html
+    login: false
     method: Web download
     note: 4.0.1.0 ended in December 2024 and 4.1.1.0 was to be updated monthly only until the end of 2025. Use the latest version for new analyses.
 

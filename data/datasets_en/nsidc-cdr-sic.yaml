@@ -169,10 +169,12 @@ access:
     note: User guide, C-ATBD, version-change report (Special Report 29) and a sign-up form for update notifications.
   - name: NOAA@NSIDC HTTPS archive — G02202_V6
     url: https://noaadata.apps.nsidc.org/NOAA/G02202_V6/
+    login: false
     method: HTTPS (browser, wget, Python/R scripts)
     note: No login needed. Daily and monthly files are under north/ and south/, and yearly aggregated daily files are also available.
   - name: NSIDC data set page — G10016 Version 4 (Near-Real-Time CDR)
     url: https://nsidc.org/data/g10016/versions/4
+    login: false
     method: Web documentation / HTTPS (https://noaadata.apps.nsidc.org/NOAA/G10016_V4/)
     note: Provisional data covering about the last three months. Replace that period with G02202 once the final CDR is available.
   - name: NOAA NCEI Sea Ice Concentration CDR page

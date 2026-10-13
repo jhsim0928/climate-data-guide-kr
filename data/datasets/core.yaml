@@ -129,12 +129,13 @@ variables:
     - name: 고정 지면 정보 (flx)
       kind: static
       items:
-        - "해륙 구분(0 바다, 1 육지) — `LAND`"
+        - "해륙 구분(0 바다, 1 육지) — `LAND` (0/1)"
         - "토양 형태 · 식생 형태 · 경사 형태 — `SOTYP`, `VGTYP`, `SLTYP` (코드)"
 
 access:
   - name: NOAA NODD — Google Cloud 버킷 noaa-nws-ncep-core
     url: https://storage.googleapis.com/noaa-nws-ncep-core/
+    login: false
     method: HTTPS 직접 다운로드 / Google Cloud(gsutil) / get_core.py
     note: >-
       1950년~현재 전 기간. 앙상블 평균만 있고(멤버·통계 없음) 3시간·일평균·월평균 GRIB2를 grib/3hour|day|month/flx|pgb/ 아래에
@@ -142,6 +143,7 @@ access:
       NOAA NODD 목록에는 Google Cloud만 올라 있고 AWS·Azure 사본은 없습니다.
   - name: NCEP NOMADS — CORe 현업 자료
     url: https://nomads.ncep.noaa.gov/pub/data/nccf/com/core/
+    login: false
     method: HTTPS 직접 다운로드
     note: >-
       최근 7일만 보관. 사이클 폴더(core.YYYYMMDD/HH/post/) 아래 flx(멤버 001~080·앙상블 평균), flx_stats(앙상블 통계),
@@ -154,6 +156,7 @@ access:
       2003~2025년 폴더가 보이지 않았으므로, 전 기간이 필요하면 NODD를 쓰세요.
   - name: CPC 다운로드 스크립트 get_core.py
     url: https://ftp.cpc.ncep.noaa.gov/CORe/get_core/get_core.py
+    login: false
     method: Python 스크립트(NODD에서 기간·변수 정규식으로 내려받기)
     note: 사용법은 https://ftp.cpc.ncep.noaa.gov/CORe/get_core/get_core.txt 에 있습니다. 예) get_core.py flx 195001 12 1 PRATE .
 

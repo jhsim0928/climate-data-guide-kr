@@ -92,22 +92,24 @@ variables:
       kind: mean
       period: 일
       items:
-        - text: "일평균 해빙 두께 — `hiday`"
-          note: "서버 디렉터리에서 확인한 일별 파일입니다. GIOMAS 페이지에 설명이 없어 일평균인지 순간값인지 확인하지 못했습니다(PIOMAS hiday가 일평균으로 명시된 것에 맞춰 분류)."
-        - text: "일평균 해빙 농도 — `aiday`"
-          note: "서버 디렉터리에서 확인한 일별 파일입니다. GIOMAS 페이지에 설명이 없어 일평균인지 순간값인지 확인하지 못했습니다(PIOMAS hiday가 일평균으로 명시된 것에 맞춰 분류)."
-        - text: "일평균 해빙 속도 — `uiday`"
-          note: "서버 디렉터리에서 확인한 일별 파일입니다. GIOMAS 페이지에 설명이 없어 일평균인지 순간값인지 확인하지 못했습니다(PIOMAS hiday가 일평균으로 명시된 것에 맞춰 분류)."
-        - text: "일평균 적설 깊이 — `snowday`"
-          note: "서버 디렉터리에서 확인한 일별 파일입니다. GIOMAS 페이지에 설명이 없어 일평균인지 순간값인지 확인하지 못했습니다(PIOMAS hiday가 일평균으로 명시된 것에 맞춰 분류)."
+        - text: "일평균 해빙 두께 — `hiday` (m)"
+          note: "서버 디렉터리에서 확인한 일별 파일입니다. GIOMAS 페이지에 설명이 없어 일평균인지 순간값인지 확인하지 못했습니다(PIOMAS hiday가 일평균으로 명시된 것에 맞춰 분류). 단위는 PIOMAS hiday 기준"
+        - text: "일평균 해빙 농도 — `aiday` (0-1)"
+          note: "서버 디렉터리에서 확인한 일별 파일로, GIOMAS 페이지에 설명이 없습니다. 단위는 같은 변수의 월자료(area) 기준"
+        - text: "일평균 해빙 속도 — `uiday` (m s-1)"
+          note: "서버 디렉터리에서 확인한 일별 파일로, GIOMAS 페이지에 설명이 없습니다. 단위는 같은 변수의 월자료(icevel) 기준"
+        - text: "일평균 적설 깊이(물 환산) — `snowday` (m)"
+          note: "서버 디렉터리에서 확인한 일별 파일로, GIOMAS 페이지에 설명이 없습니다. 단위는 같은 변수의 월자료(snow, 물 환산) 기준"
 
 access:
   - name: PSC GIOMAS 자료 안내 페이지
     url: https://psc.apl.uw.edu/data/global-sea-ice-giomas-data-sets/
+    login: false
     method: 웹 다운로드 / sftp·rsync (사용자명·비밀번호 anonymous)
     note: 변수표, 격자·마스크 파일(grid.dat, grid.dat.pop, io.dat_360_276.output), Fortran·IDL 읽기 프로그램 링크가 있습니다.
   - name: pscfiles 서버 — Global_seaice 디렉터리
     url: https://pscfiles.apl.washington.edu/zhang/Global_seaice/
+    login: false
     method: HTTPS 디렉터리
     note: 모든 변수·연도 파일이 한 디렉터리에 있습니다. 일평균 파일은 해마다 100 MB가 넘으니 필요한 변수만 받으세요.
 

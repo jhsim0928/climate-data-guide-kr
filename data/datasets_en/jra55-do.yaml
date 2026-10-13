@@ -152,16 +152,19 @@ variables:
 access:
   - name: ESGF input4MIPs — MRI-JRA55-do-1-6-0 (final version)
     url: https://metagrid.esgf-west.org/search?project=input4MIPs&versionType=all&&activeFacets=%7B%22source_id%22%3A%5B%22MRI-JRA55-do-1-6-0%22%5D%7D
+    login: false
     method: ESGF search → per-variable wget scripts / HTTPS
     note: >-
       Search facets: mip_era=CMIP6Plus, target_mip=OMIP, institution_id=MRI, source_id=MRI-JRA55-do-1-6-0.
       For v1.5.0 (1958 to July 2020), look for the CMIP6-era MRI-JRA55-do-1-5-0.
   - name: ESGF ORNL node THREDDS catalog (v1.6.0)
     url: https://esgf-node.ornl.gov/thredds/catalog/user_pub_work/input4MIPs/CMIP6Plus/OMIP/MRI/MRI-JRA55-do-1-6-0/catalog.html
+    login: false
     method: THREDDS / direct HTTPS download
     note: Organised in realm folders atmos, land, landIce, ocean and seaIce.
   - name: MRI server — v1.5.0.1 (2020 to January 2024)
     url: https://climate.mri-jma.go.jp/pub/ocean/JRA55-do/jra55do_latest.html
+    login: false
     method: Direct HTTPS download (yearly files)
     note: The post-2020 extension ("a preliminary release extending v1.5.0 to latest"). MRI directs users to input4MIPs for 1958–2019.
 

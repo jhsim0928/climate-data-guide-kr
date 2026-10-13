@@ -153,8 +153,10 @@ variables:
       period: "once daily (00 UTC)"
       items:
         - "Potential temperature and salinity — `THETA`, `SALT` (ECCO_L4_TEMP_SALINITY_LLC0090GRID_SNAPSHOT_V4R4)"
-        - "Sea surface height variables — ECCO_L4_SSH_LLC0090GRID_SNAPSHOT_V4R4"
-        - "Sea-ice and snow concentration and thickness — ECCO_L4_SEA_ICE_CONC_THICKNESS_LLC0090GRID_SNAPSHOT_V4R4"
+        - text: "Sea surface height — `SSH`, `SSHIBC`, `SSHNOIBC`, `ETAN` (m)"
+          note: "PO.DAAC dataset ECCO_L4_SSH_LLC0090GRID_SNAPSHOT_V4R4"
+        - text: "Sea-ice area fraction, sea-ice thickness and snow thickness — `SIarea` (0-1), `SIheff` (m), `SIhsnow` (m)"
+          note: "PO.DAAC dataset ECCO_L4_SEA_ICE_CONC_THICKNESS_LLC0090GRID_SNAPSHOT_V4R4. Thicknesses are grid-cell mean (effective) values"
 
 access:
   - name: NASA PO.DAAC — ECCO datasets

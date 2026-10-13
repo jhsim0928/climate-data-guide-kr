@@ -141,16 +141,19 @@ access:
     note: Version guide, how to cite, and links to the SODA3 and SODA4 portals.
   - name: UMD data server — SODA3.15.2
     url: https://dsrs.atmos.umd.edu/DATA/soda3.15.2/
+    login: false
     method: Direct HTTP(S) download
     note: >-
       netCDF files in REGRIDED/ (1/2° regridded: ocean, ice) and ORIGINAL/ (native grid: ocean, ice, transport). A regridded monthly file for one year is
       about 2.7 GB and a 5-day file about 286 MB (about 630 MB on the native grid). The no-assimilation control run is in soda3.15.2.0/.
   - name: UMD data server — earlier releases (soda3.3.2, soda3.4.2, etc.)
     url: https://dsrs.atmos.umd.edu/DATA/
+    login: false
     method: Direct HTTP(S) download
     note: Folders for earlier releases remain, e.g. MERRA-2 forcing (3.3.2) and ERA-Interim forcing (3.4.2).
   - name: APDRC ERDDAP — SODA 3.15.2 5-day 2-D variables
     url: https://apdrc.soest.hawaii.edu/erddap/griddap/hawaii_soest_65c6_e6c0_c600.html
+    login: false
     method: ERDDAP subsetting / OPeNDAP
     note: University of Hawaii APDRC copy. As of October 2026 it covers only 1980-01-03 to 2022-12-23, shorter than the UMD original.
   - name: NSF NCAR GDEX — SODA3 Ensemble Means and Standard Deviations (d650000)

@@ -80,7 +80,7 @@ variables:
           note: 같은 날 analysed_sst의 불확실성. L4는 불확실성이 하나뿐이라 오차 상관 성분을 나눌 수 없습니다
         - text: "해빙 면적 비율 — `sea_ice_fraction` (0~1)"
           note: OSI SAF 해빙 농도(OSI-450·OSI-430)를 입력으로 사용. 내부 시간 정의는 확인하지 못함
-        - text: "해양·육지·호수·해빙 마스크 — `mask`"
+        - text: "해양·육지·호수·해빙 마스크 — `mask` (비트 플래그)"
           kind: static
           note: 해양 화소는 1. 해빙 비트는 날마다 바뀔 수 있음
     - name: L3C 위성별 일별 묶음 (빈칸 있음)
@@ -108,6 +108,7 @@ variables:
 access:
   - name: CEDA Archive — L4 분석 v3.0 (ICDR 포함)
     url: https://catalogue.ceda.ac.uk/uuid/4a9654136a7148e39b7feb56f8bb02d2/
+    login: false
     method: HTTPS 직접 다운로드 / OPeNDAP
     note: >-
       로그인 없이 받을 수 있는 공개 자료입니다. 자료 경로는
@@ -115,6 +116,7 @@ access:
       L3C·L3U·L2P는 같은 CDR_v3 폴더 아래 센서별(AVHRR, SLSTR 등)로 있습니다.
   - name: CEDA — SST CCI CDR v3.0 모음
     url: https://catalogue.ceda.ac.uk/uuid/debfbf49823f4eb99ab0a578f8b25136
+    login: false
     method: 카탈로그 (수준·센서별 하위 기록)
   - name: C3S Climate Data Store (satellite-sea-surface-temperature)
     url: https://cds.climate.copernicus.eu/datasets/satellite-sea-surface-temperature
@@ -130,6 +132,7 @@ access:
       같은 제품의 C3S-GLO-SST-L4-REP-OBS-SST는 DMI가 만든 별개의 SST·해빙 표면온도 분석이므로 혼동하지 마세요.
   - name: ESA CCI Open Data Portal
     url: https://climate.esa.int/en/odp
+    login: false
     method: 웹 / OPeNDAP 등
   - name: surftemp.net (재격자·시계열·지역 추출)
     url: https://surftemp.net/

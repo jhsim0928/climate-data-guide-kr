@@ -100,7 +100,7 @@ variables:
     - name: 플래그·보정값
       kind: instant
       items:
-        - text: "해빙 플래그(해빙 농도 15% 기준, 0=바다 1=해빙) — `flag_ice`"
+        - text: "해빙 플래그(해빙 농도 15% 기준, 0=바다 1=해빙) — `flag_ice` (0/1)"
           note: OSI SAF 해빙 자료 기준
         - text: "TOPEX-A 기기 표류 보정값 — `tpa_correction` (m)"
           note: 위경도 없이 시간만 있는 1차원 변수. MY·C3S에만 있으며, C3S PUGS는 vDT2024에서 아직 계산되지 않아 기본값으로 채워졌다고 적고 있습니다.

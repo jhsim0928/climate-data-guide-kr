@@ -122,9 +122,9 @@ variables:
         - text: "도착점 위도·경도 — `lat1`, `lon1` (degrees)"
           period: 구간 끝 시각
           note: 변위 구간 끝 시각의 얼음 위치
-        - text: "벡터별 시작·끝 시각 보정 — `dt0`, `dt1` (s, OSI-405-d) / `t0`, `t1` (OSI-455)"
-          note: 공칭 time_bnds 대비 실제 시작·끝 시각. 경과 시간 계산에 사용
-        - text: "격자점(출발점) 위도·경도 — `lat`, `lon` (degrees), 격자 좌표 — `xc`, `yc` (km)"
+        - text: "벡터별 시작·끝 시각 보정 — `dt0`, `dt1`, `t0`, `t1` (s)"
+          note: "dt0·dt1은 OSI-405-d, t0·t1은 OSI-455 파일의 이름. 공칭 time_bnds 대비 실제 시작·끝 시각으로, 경과 시간 계산에 사용"
+        - text: "격자점(출발점) 위도·경도와 격자 좌표 — `lat`, `lon` (degrees), `xc`, `yc` (km)"
           kind: static
     - name: 품질 정보
       kind: accum
@@ -136,18 +136,22 @@ variables:
 access:
   - name: OSI SAF 제품 페이지 — OSI-405-d (준실시간)
     url: https://osi-saf.eumetsat.int/products/osi-405-d
+    login: false
     method: 웹 안내 / FTP (ftp://osisaf.met.no/prod/ice/drift_lr/ 최근 31일, ftp://osisaf.met.no/archive/ice/drift_lr/ 전체) / EUMETCast
     note: FTP에는 merged(병합)와 single_sensor(센서별) 폴더가 있습니다. EUMETCast로는 병합 파일만 나갑니다.
   - name: MET Norway THREDDS — OSI SAF 해빙 이동 카탈로그
     url: https://thredds.met.no/thredds/catalog/osisaf/osisaf_seaicedrift.html
+    login: false
     method: THREDDS / OPeNDAP / HTTP
     note: 계정 없이 접근할 수 있습니다. 기후자료(OSI-455)는 https://thredds.met.no/thredds/catalog/osisaf/osisaf_cdrseaicedrift.html 에 있습니다.
   - name: OSI SAF 제품 페이지 — OSI-455 (기후자료 1991~2020)
     url: https://osi-saf.eumetsat.int/products/osi-455
+    login: false
     method: FTP (ftp://osisaf.met.no/reprocessed/ice/drift_lr/v1/) / THREDDS / EUMETSAT Data Store
     note: merged/YYYY/MM/ 아래 병합 파일, single_sensor/<센서>/YYYY/MM/ 아래 센서별·ERA5 바람 파일이 있습니다.
   - name: OSI SAF 제품 페이지 — OSI-435 (시범 연장판 2021~2025)
     url: https://osi-saf.eumetsat.int/products/osi-435-complementing-osi-455
+    login: false
     method: FTP (ftp://osisaf.met.no/reprocessed_test/ice/drift_lr_icdr/v1) / THREDDS
     note: 시험(demonstrational) 단계 제품이라 DOI·권장 인용이 아직 없고, 시험용 FTP 폴더(reprocessed_test)에 있습니다.
   - name: C3S Climate Data Store — Sea ice drift daily gridded data derived from satellite observations

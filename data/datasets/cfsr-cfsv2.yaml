@@ -182,15 +182,18 @@ access:
     note: 2011-01 ~ 현재, 매일 갱신, GRIB2. 월평균은 d094002, 시간별 시계열은 d094001입니다.
   - name: NOAA NCEI — Climate Forecast System (CFSR·CFSv2 분석·예보)
     url: https://www.ncei.noaa.gov/products/weather-climate-models/climate-forecast-system
+    login: false
     method: HTTPS / THREDDS / ERDDAP(월평균)
     note: >-
       CFSR은 1979-01-01 ~ 2011-03-31, CFSv2 현업 분석은 2011-04-01 ~ 현재로 나뉩니다. 제품표에서 PGB·FLX·OCN 등 묶음과 격자를 고르세요.
       NCEI가 클라우드 이전 중이라 접근이 일시적으로 느릴 수 있다고 안내합니다.
   - name: NOAA NCEI THREDDS — CFSR 6시간 기압면(PGB) 예시
     url: https://www.ncei.noaa.gov/thredds/catalog/model-cfs_reanl_6h_pgb/catalog.html
+    login: false
     method: THREDDS / OPeNDAP
   - name: NCEP NOMADS — CFS 실시간 7일 순환 보관
     url: https://nomads.ncep.noaa.gov/pub/data/nccf/com/cfs/prod/
+    login: false
     method: HTTPS (최근 7일만)
 
 tips:

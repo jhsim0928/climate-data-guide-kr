@@ -85,12 +85,13 @@ variables:
         - "Practical salinity — `PSAL_CORRECTED` (1)"
         - "Depth, bias-corrected — `DEPH_CORRECTED` (m)"
         - "Julian day of the profile — `JULD` (days since 1950-01-01)"
-        - text: "Quality-control flags — `PROFILE_POTM_QC`, `PROFILE_PSAL_QC`, `QC_FLAGS_PROFILES`, `QC_FLAGS_LEVELS`"
+        - text: "Quality-control flags — `PROFILE_POTM_QC`, `PROFILE_PSAL_QC`, `QC_FLAGS_PROFILES`, `QC_FLAGS_LEVELS` (code)"
           note: Results of EN4's own automatic QC; apart from Argo, most QC flags supplied with the input data are discarded and re-assessed by EN4
 
 access:
   - name: Met Office Hadley Centre — EN.4.2.2 download page
     url: https://www.metoffice.gov.uk/hadobs/en4/download-en4-2-2.html
+    login: false
     method: Web download (yearly zip files; recent preliminary months as .nc.gz) / wget list files
     note: >-
       Profiles and analyses are provided separately for each bias-correction option (g10, l09, c13, c14). For multi-year downloads, use the per-option list files,
@@ -98,6 +99,7 @@ access:
       Data without bias corrections are available on request.
   - name: Earlier versions (EN.4.2.1 and before)
     url: https://www.metoffice.gov.uk/hadobs/en4/download.html
+    login: false
     method: Web download
     note: No longer updated; use only to reproduce earlier studies.
 

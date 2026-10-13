@@ -129,12 +129,13 @@ variables:
     - name: Fixed surface fields (flx)
       kind: static
       items:
-        - "Land cover (0 = sea, 1 = land) — `LAND`"
+        - "Land cover (0 = sea, 1 = land) — `LAND` (0/1)"
         - "Soil type, vegetation type and surface slope type — `SOTYP`, `VGTYP`, `SLTYP` (code)"
 
 access:
   - name: NOAA NODD — Google Cloud bucket noaa-nws-ncep-core
     url: https://storage.googleapis.com/noaa-nws-ncep-core/
+    login: false
     method: Direct HTTPS download / Google Cloud (gsutil) / get_core.py
     note: >-
       Full record from 1950 to near real time. Ensemble means only (no members or statistics), as 3-hourly, daily and monthly GRIB2 under grib/3hour|day|month/flx|pgb/,
@@ -142,6 +143,7 @@ access:
       The NOAA NODD listing shows Google Cloud only; there is no AWS or Azure copy.
   - name: NCEP NOMADS — operational CORe output
     url: https://nomads.ncep.noaa.gov/pub/data/nccf/com/core/
+    login: false
     method: Direct HTTPS download
     note: >-
       Last 7 days only. Cycle directories (core.YYYYMMDD/HH/post/) contain flx (members 001–080 and ensemble mean), flx_stats (ensemble statistics),
@@ -154,6 +156,7 @@ access:
       showed no folders for 2003–2025, so use NODD if you need the full record.
   - name: CPC download script get_core.py
     url: https://ftp.cpc.ncep.noaa.gov/CORe/get_core/get_core.py
+    login: false
     method: Python script (downloads from NODD by date range and field regex)
     note: Usage is documented at https://ftp.cpc.ncep.noaa.gov/CORe/get_core/get_core.txt. Example — get_core.py flx 195001 12 1 PRATE .
 

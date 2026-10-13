@@ -174,10 +174,10 @@ variables:
     - name: 고도면 (지상 15~500 m 11층, CDS 요청 이름)
       kind: instant
       items:
-        - "기온 — `temperature`"
-        - "풍속·풍향 — `wind_speed`, `wind_direction`"
-        - "상대습도 — `relative_humidity`"
-        - "기압 — `pressure`"
+        - "기온 — `temperature` (K)"
+        - "풍속·풍향 — `wind_speed` (m s-1), `wind_direction` (degrees)"
+        - "상대습도 — `relative_humidity` (%)"
+        - "기압 — `pressure` (Pa)"
     - name: 불변장
       kind: static
       items:

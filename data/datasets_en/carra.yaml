@@ -174,10 +174,10 @@ variables:
     - name: Height levels (11 levels, 15–500 m above the surface; CDS request names)
       kind: instant
       items:
-        - "Temperature — `temperature`"
-        - "Wind speed and wind direction — `wind_speed`, `wind_direction`"
-        - "Relative humidity — `relative_humidity`"
-        - "Pressure — `pressure`"
+        - "Temperature — `temperature` (K)"
+        - "Wind speed and wind direction — `wind_speed` (m s-1), `wind_direction` (degrees)"
+        - "Relative humidity — `relative_humidity` (%)"
+        - "Pressure — `pressure` (Pa)"
     - name: Invariant fields
       kind: static
       items:

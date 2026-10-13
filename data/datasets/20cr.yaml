@@ -171,10 +171,12 @@ access:
     method: 안내·버전별 문서·그림 도구 연결
   - name: NOAA PSL 다운로드 서버 (20CR v3)
     url: https://downloads.psl.noaa.gov/Datasets/20thC_ReanV3/
+    login: false
     method: HTTPS 직접 다운로드
     note: 계정 없이 받을 수 있습니다. 변수·연도별 netCDF이며, 일평균은 Dailies/, 월평균은 Monthlies/, 앙상블 스프레드은 spreads/에 있습니다.
   - name: NOAA PSL THREDDS / OPeNDAP (20CR v3)
     url: https://psl.noaa.gov/thredds/catalog/Datasets/20thC_ReanV3/catalog.html
+    login: false
     method: OPeNDAP 원격 읽기
   - name: NSF NCAR GDEX — 20CR Version 3 (d131003)
     url: https://gdex.ucar.edu/datasets/d131003/
@@ -182,6 +184,7 @@ access:
     note: 앙상블 평균·스프레드, netCDF4, 약 105 TB. 데이터셋 DOI 10.5065/H93G-WS83, CC BY 4.0.
   - name: NERSC 20C Reanalysis 포털 (멤버별 자료)
     url: https://portal.nersc.gov/project/20C_Reanalysis/
+    login: false
     method: 웹 다운로드 (일부는 HPSS 보관)
     note: 80개 멤버 각각의 분석·예보장이 필요할 때 씁니다. 변수·연도별 tar 묶음입니다.
 

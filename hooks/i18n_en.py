@@ -118,6 +118,7 @@ UI = {
     "시간 표기 규칙 — 순간값인가, 평균인가, 누적인가 — 눌러서 보기": "Time-stamp convention — instantaneous, mean or accumulated? — click to show",
     "전체 변수 엑셀로 저장": "Save all variables as Excel",
     "근거:": "Source:",
+    '<span class="login-free">로그인 없이 받기</span>': '<span class="login-free">No login needed</span>',
     "공식 문서": "official documentation",
     "— 순간값: 표시 시각의 값 · 평균/누적/최대/최소: 표시된 구간 동안의 값 · 고정값: 시간에 따라 변하지 않음":
         "— instantaneous: value at the time stamp · mean/accumulated/maximum/minimum: over the indicated interval · static: does not change with time",

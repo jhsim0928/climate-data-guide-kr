@@ -138,16 +138,19 @@ access:
     note: 판별 안내, 인용 방법, SODA3·SODA4 포털 링크가 있습니다.
   - name: UMD 데이터 서버 — SODA3.15.2
     url: https://dsrs.atmos.umd.edu/DATA/soda3.15.2/
+    login: false
     method: HTTP(S) 직접 다운로드
     note: >-
       REGRIDED/(1/2° 재격자: ocean·ice), ORIGINAL/(원 격자: ocean·ice·transport) 폴더에 netCDF 파일이 있습니다.
       재격자 월평균 1년 파일이 약 2.7 GB, 5일 파일 하나가 약 286 MB(원 격자는 약 630 MB)입니다. 자료동화 없는 대조 실험은 soda3.15.2.0/ 에 있습니다.
   - name: UMD 데이터 서버 — 과거 판 (soda3.3.2, soda3.4.2 등)
     url: https://dsrs.atmos.umd.edu/DATA/
+    login: false
     method: HTTP(S) 직접 다운로드
     note: MERRA-2 강제력(3.3.2), ERA-Interim 강제력(3.4.2) 등 이전 판 폴더가 남아 있습니다.
   - name: APDRC ERDDAP — SODA 3.15.2 5일 2차원 변수
     url: https://apdrc.soest.hawaii.edu/erddap/griddap/hawaii_soest_65c6_e6c0_c600.html
+    login: false
     method: ERDDAP 부분 추출 / OPeNDAP
     note: 하와이대 APDRC 사본입니다. 2026-10 확인 시 1980-01-03 ~ 2022-12-23까지만 있어 UMD 원본보다 짧습니다.
   - name: NSF NCAR GDEX — SODA3 앙상블 평균·표준편차 (d650000)

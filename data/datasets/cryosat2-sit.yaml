@@ -103,6 +103,7 @@ variables:
 access:
   - name: AWI FTP — CryoSat-2 v2.6 (L2P 궤도, L3C 주별·월별 격자)
     url: ftp://ftp.awi.de/sea_ice/product/cryosat2/v2p6/
+    login: false
     method: 익명 FTP (FTP 클라이언트 필요)
     note: >-
       북반구는 nh/l3c_grid/month, nh/l3c_grid/isoweek, nh/l2p_trajectory 폴더에 있습니다. 각 폴더의 Latest는 준실시간 최신본만 담고 있어
@@ -113,6 +114,7 @@ access:
     note: 같은 v2.6 처리로 만든 Sentinel-3A/B 해빙 두께도 이 페이지에서 안내합니다.
   - name: ESA Sea Ice CCI — CryoSat-2 북반구 월별 두께 L3C v4.0 (CEDA)
     url: https://catalogue.ceda.ac.uk/uuid/887ebbe3aa4345f3bbcbe2dd1834d955/
+    login: false
     method: 웹 다운로드 / HTTP 디렉터리
     note: 2010-10 ~ 2024-04 기후자료용 재처리본으로 AWI와 같은 계열 처리입니다. ESA CCI 해빙 이용약관을 따릅니다.
   - name: CPOM(영국 극지관측·모델링센터) Sea Ice Thickness 포털

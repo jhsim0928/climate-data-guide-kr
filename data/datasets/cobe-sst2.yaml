@@ -127,16 +127,19 @@ variables:
 access:
   - name: JMA NEAR-GOOS — COBE-SST2 월평균 SST
     url: https://ds.data.jma.go.jp/goos/data/rrtdb/jma-pro/cobe2_sst_glb_M.html
+    login: false
     method: 웹 다운로드 (월별 텍스트 격자 파일)
     note: 파일 형식은 같은 위치의 Readme(Readme_cobe2_sst_glb_M)에 설명되어 있습니다. 1991~2020년 월별 평년값·표준편차도 제공합니다.
   - name: NOAA PSL — COBE-SST2 (NetCDF)
     url: https://psl.noaa.gov/data/gridded/data.cobe2.html
+    login: false
     method: 웹 다운로드 / THREDDS / OPeNDAP
     note: >-
       전 기간 SST가 sst.mon.mean.nc 한 파일에 들어 있어 가장 쓰기 편합니다. 해빙 농도 icec.mon.mean.nc는 2019년 12월까지만 있고,
       기후값 파일(1981~2010, 1991~2020)도 있습니다.
   - name: MRI 연구 자료 서버 (연도별 GRIB2)
     url: https://climate.mri-jma.go.jp/pub/ocean/cobe-sst2/
+    login: false
     method: 웹 다운로드
     note: 기상연구소가 올리는 연도별 GRIB2 파일과 GrADS용 ctl 파일입니다. 1년 단위로 묶여 있어 올해 파일은 몇 달씩 늦게 갱신됩니다.
 

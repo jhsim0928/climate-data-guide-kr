@@ -85,12 +85,13 @@ variables:
         - "실용염분 — `PSAL_CORRECTED` (1)"
         - "깊이(보정 적용) — `DEPH_CORRECTED` (m)"
         - "관측 시각 — `JULD` (days since 1950-01-01)"
-        - text: "품질 플래그 — `PROFILE_POTM_QC`, `PROFILE_PSAL_QC`, `QC_FLAGS_PROFILES`, `QC_FLAGS_LEVELS`"
+        - text: "품질 플래그 — `PROFILE_POTM_QC`, `PROFILE_PSAL_QC`, `QC_FLAGS_PROFILES`, `QC_FLAGS_LEVELS` (코드값)"
           note: EN4 자체 자동 QC 결과. 입력 자료의 QC 플래그는 Argo 외에는 대부분 버리고 EN4 기준으로 다시 판정
 
 access:
   - name: Met Office Hadley Centre EN.4.2.2 다운로드 페이지
     url: https://www.metoffice.gov.uk/hadobs/en4/download-en4-2-2.html
+    login: false
     method: 웹 다운로드 (연도별 zip, 최근 월 예비 파일은 .nc.gz) / wget용 목록 파일
     note: >-
       보정 방식(g10, l09, c13, c14)마다 프로파일(profiles)과 분석장(analyses)이 따로 있습니다. 여러 해를 받을 때는
@@ -98,6 +99,7 @@ access:
       보정을 적용하지 않은 자료는 요청하면 받을 수 있다고 안내되어 있습니다.
   - name: 이전 버전 (EN.4.2.1 등)
     url: https://www.metoffice.gov.uk/hadobs/en4/download.html
+    login: false
     method: 웹 다운로드
     note: 갱신이 끝난 버전입니다. 과거 논문 재현용으로만 쓰세요.
 

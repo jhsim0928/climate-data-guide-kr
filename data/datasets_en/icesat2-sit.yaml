@@ -117,8 +117,9 @@ variables:
         - text: "Daily mean freeboard — `/daily/dayxx/mean_fb` (m)"
           period: Daily
           note: One subgroup per day of the month (dayxx); check the actual subgroup names in the file
-        - text: "Grid coordinates and land mask — `/grid_x`, `/grid_y` (m), `/grid_lat`, `/grid_lon` (degrees), `/land_mask_map` (1 = land, 0 = ocean/sea ice)"
+        - text: "Grid coordinates and land mask — `/grid_x`, `/grid_y` (m), `/grid_lat`, `/grid_lon` (degrees), `/land_mask_map` (0/1)"
           kind: static
+          note: "land_mask_map: 1 = land, 0 = ocean/sea ice"
     - name: Along-track data (ATL07 sea ice height · ATL10 freeboard)
       kind: instant
       items:

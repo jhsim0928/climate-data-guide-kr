@@ -55,8 +55,7 @@ time_convention:
 
 variables:
   note: >-
-    NOAA PSL 파일(sst.mnmean.nc)에는 `sst` 한 변수만 들어 있습니다. NCEI 메타데이터는 원본 파일에 SST와 편차(SSTA)가 함께 있다고 안내하지만,
-    이번 확인에서 원본 파일 속 편차 변수 이름은 직접 확인하지 못했습니다(v5 파일은 `ssta`).
+    NCEI 원본 파일(ersst.v6.YYYYMM.nc)에는 해수면온도 `sst`와 편차 `ssta`가 함께 들어 있고(둘 다 °C), NOAA PSL 파일(sst.mnmean.nc)에는 `sst` 한 변수만 들어 있습니다.
   full_list: https://www.ncei.noaa.gov/access/metadata/landing-page/bin/iso?id=gov.noaa.ncdc:C01737
   groups:
     - name: 해수면온도
@@ -64,10 +63,10 @@ variables:
       period: 월
       items:
         - "월평균 해수면온도 — `sst` (°C)"
-        - text: "해수면온도 편차 (1991~2020년 기후값 기준, NCEI 원본 파일)"
+        - text: "해수면온도 편차(1991~2020년 기후값 기준) — `ssta` (°C)"
           kind: mean
           period: 월
-          note: 월평균 SST에서 1991~2020년 월별 기후값을 뺀 편차
+          note: "월평균 SST에서 1991~2020년 월별 기후값을 뺀 편차. NCEI 원본 파일(ersst.v6.YYYYMM.nc)에만 있고 PSL 파일에는 없음"
     - name: 기후값 (PSL 별도 파일)
       kind: mean
       period: 월
@@ -78,16 +77,19 @@ variables:
 access:
   - name: NCEI 직접 다운로드 (월별 NetCDF)
     url: https://www.ncei.noaa.gov/data/sea-surface-temperature-extended-reconstructed/v6/access/
+    login: false
     method: HTTPS (wget / curl)
     note: NCEI 제품 페이지가 안내하는 공식 위치입니다. ersst.v6.YYYYMM.nc 처럼 한 달에 한 파일(약 164 KB)입니다.
   - name: NCEI pub 경로 (월별 + 전 기간 한 파일)
     url: https://www.ncei.noaa.gov/pub/data/cmb/ersst/v5/v6/
+    login: false
     method: HTTPS (wget / curl)
     note: >-
       같은 월별 파일(ersst.v6.185001.nc~)이 있고, netcdf.one/ 폴더에 1850년~최근을 한 파일로 묶은 ersst.v6.1850-last.nc(약 272 MB),
       index/ 폴더에 v6 기반 기후 지수 파일(ersst.v6.el_nino.dat, pdo, amo, iod, atl3)이 있습니다. v5 폴더 아래에 있으니 경로를 헷갈리지 마세요.
   - name: NOAA PSL (전 기간 한 파일)
     url: https://psl.noaa.gov/data/gridded/data.noaa.ersst.v6.html
+    login: false
     method: 웹 다운로드 / THREDDS / OPeNDAP
     note: >-
       전 기간 SST가 sst.mnmean.nc 한 파일에 들어 있어 바로 쓰기 편합니다. 월별 평년값 파일(1981~2010, 1991~2020)도 있습니다.

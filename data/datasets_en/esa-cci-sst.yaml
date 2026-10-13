@@ -82,7 +82,7 @@ variables:
           note: Uncertainty of the same day's analysed_sst. L4 has a single uncertainty, so correlation scales cannot be separated
         - text: "Sea ice area fraction — `sea_ice_fraction` (0–1)"
           note: Taken from OSI SAF sea-ice concentration (OSI-450, OSI-430). Its internal time definition was not checked
-        - text: "Land, sea, lake and sea-ice mask — `mask`"
+        - text: "Land, sea, lake and sea-ice mask — `mask` (bit flags)"
           kind: static
           note: Ice-free ocean pixels have mask = 1. The sea-ice bit can change from day to day
     - name: L3C single-sensor daily collation (with gaps)
@@ -110,6 +110,7 @@ variables:
 access:
   - name: CEDA Archive — L4 Analysis v3.0 (including ICDR)
     url: https://catalogue.ceda.ac.uk/uuid/4a9654136a7148e39b7feb56f8bb02d2/
+    login: false
     method: HTTPS direct download / OPeNDAP
     note: >-
       Open to registered and unregistered users. Data path:
@@ -117,6 +118,7 @@ access:
       L3C, L3U and L2P are under the same CDR_v3 folder, organised by sensor (AVHRR, SLSTR, etc.).
   - name: CEDA — ESA SST CCI CDR v3.0 collection
     url: https://catalogue.ceda.ac.uk/uuid/debfbf49823f4eb99ab0a578f8b25136
+    login: false
     method: Catalogue (sub-records per level and sensor)
   - name: C3S Climate Data Store (satellite-sea-surface-temperature)
     url: https://cds.climate.copernicus.eu/datasets/satellite-sea-surface-temperature
@@ -132,6 +134,7 @@ access:
       Do not confuse it with C3S-GLO-SST-L4-REP-OBS-SST in the same product, a separate SST and sea-ice surface temperature analysis produced by DMI.
   - name: ESA CCI Open Data Portal
     url: https://climate.esa.int/en/odp
+    login: false
     method: Web / OPeNDAP and other services
   - name: surftemp.net (regridding, time series, regional extraction)
     url: https://surftemp.net/

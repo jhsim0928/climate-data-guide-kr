@@ -119,7 +119,8 @@ variables:
       kind: static
       items:
         - "Latitude and longitude — `latitude`, `longitude` (degrees_north, degrees_east)"
-        - "Projected coordinates — `x`, `y` (m); projection information — `crs`"
+        - text: "Projected coordinates and projection information — `x`, `y` (m), `crs`"
+          note: "crs holds the projection information (no units)"
 
 access:
   - name: NSIDC dataset page — NSIDC-0116 Version 4

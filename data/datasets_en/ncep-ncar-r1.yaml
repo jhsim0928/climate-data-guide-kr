@@ -211,16 +211,19 @@ variables:
 access:
   - name: NOAA PSL — NCEP/NCAR Reanalysis 1 data page
     url: https://psl.noaa.gov/data/gridded/data.ncep.reanalysis.html
+    login: false
     method: Variable listing, plotting and subsetting
     note: No account needed. Files are netCDF, one per variable and year.
   - name: NOAA PSL download server (6-hourly data)
     url: https://downloads.psl.noaa.gov/Datasets/ncep.reanalysis/
+    login: false
     method: Direct HTTPS download
     note: >-
       Organised into pressure/, surface/, surface_gauss/, other_gauss/, spectral/ and tropopause/ folders.
       Daily means are in ncep.reanalysis.dailyavgs/ and monthly means in ncep.reanalysis.derived/.
   - name: NOAA PSL THREDDS / OPeNDAP (pressure-level example)
     url: https://psl.noaa.gov/thredds/catalog/Datasets/ncep.reanalysis/pressure/catalog.html
+    login: false
     method: Remote access via OPeNDAP
   - name: NSF NCAR GDEX — NCEP/NCAR Global Reanalysis Products (d090000)
     url: https://gdex.ucar.edu/datasets/d090000/

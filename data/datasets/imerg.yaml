@@ -82,7 +82,8 @@ variables:
         - text: "마이크로파 강수 — `Grid/Intermediate/MWprecipitation` (mm/hr)"
           note: "V06의 `HQprecipitation`. 마이크로파 관측이 있는 격자만 값이 있음"
         - "적외 강수 — `Grid/Intermediate/IRprecipitation` (mm/hr)"
-        - "마이크로파 관측 시각 — `Grid/Intermediate/MWobservationTime` (분), 센서 코드 — `MWprecipSource`, 적외 영향도 — `IRinfluence`"
+        - text: "마이크로파 관측 시각·센서·적외 영향도 — `Grid/Intermediate/MWobservationTime` (분), `MWprecipSource` (코드값), `IRinfluence` (무차원)"
+          note: "MWprecipSource는 마이크로파 센서 코드, IRinfluence는 적외 자료의 영향 정도"
     - name: 일자료 (GPM_3IMERGDF Final / DE Early / DL Late)
       kind: mean
       period: 일 (00~24 UTC)
@@ -104,11 +105,12 @@ variables:
         - "무작위 오차 — `randomError` (mm/hr)"
         - "우량계 상대 가중치 — `gaugeRelativeWeighting` (%)"
         - "액체 강수 확률 — `probabilityLiquidPrecipitation` (%)"
-        - "품질 지수 — `precipitationQualityIndex`"
+        - "품질 지수 — `precipitationQualityIndex` (무차원)"
     - name: 고정 자료
       kind: static
       items:
-        - "IMERG 해륙 마스크 0.1° — GES DISC `GPM_IMERG_LandSeaMask` V2"
+        - text: "IMERG 해륙 마스크 0.1° — `landseamask` (%)"
+          note: "GES DISC GPM_IMERG_LandSeaMask V2. 격자 안 물의 비율(100 = 전부 물, 0 = 전부 육지)"
 
 access:
   - name: NASA GES DISC (Earthdata Cloud, HTTPS)

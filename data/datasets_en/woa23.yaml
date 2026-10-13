@@ -109,7 +109,7 @@ variables:
   note: >-
     Based on the WOA23 data access page and the Product Documentation. File names follow woa23_[period]_[variable code][time code]_[grid].nc (e.g. woa23_decav91C0_t00_01.nc),
     and in-file variables follow `[variable code]_[field code]` (e.g. `t_an`). Variable codes: temperature t, salinity s, dissolved oxygen o, nitrate n, phosphate p, silicate i.
-    The in-file codes for AOU and percent oxygen saturation could not be confirmed in the official documents and are not listed.
+    Percent oxygen saturation uses code O and AOU uses code A (e.g. `O_an`, `A_an`).
   full_list: https://www.ncei.noaa.gov/access/world-ocean-atlas-2023/
   groups:
     - name: Objectively analyzed climatologies (main fields, `*_an`)
@@ -119,38 +119,46 @@ variables:
         - "Temperature — `t_an` (°C)"
         - "Salinity (practical salinity) — `s_an` (unitless)"
         - "Dissolved oxygen — `o_an` (µmol/kg)"
-        - "Percent oxygen saturation (%) · Apparent oxygen utilization, AOU (µmol/kg)"
-        - "Nitrate — `n_an`, phosphate — `p_an`, silicate — `i_an` (µmol/kg)"
+        - text: "Percent oxygen saturation and apparent oxygen utilization (AOU) — `O_an` (%), `A_an` (µmol/kg)"
+          note: "Files woa23_all_O… (oxygen saturation) and woa23_all_A… (AOU)"
+        - "Nitrate, phosphate and silicate — `n_an`, `p_an`, `i_an` (µmol/kg)"
     - name: Statistical fields (temperature shown; other variables follow the same pattern)
       kind: mean
       period: Climatological (annual, seasonal, monthly)
       items:
-        - "Statistical mean (simple mean of values passing QC) — `t_mn`"
+        - text: "Statistical mean (simple mean of values passing QC) — `t_mn` (°C)"
+          note: "Shown for temperature (t_); other variables use their own units"
         - text: "Number of observations — `t_dd` (count)"
           note: Number of observations passing QC in that period and grid box. Zero means the grid-box value was filled from surrounding observations
-        - "Standard deviation from statistical mean — `t_sd`, standard error of the statistical mean — `t_se`"
-        - "Statistical mean minus objectively analyzed climatology — `t_oa`, seasonal or monthly climatology minus annual climatology — `t_ma`"
-        - "Number of 1° grid squares with statistical means within the smallest radius of influence — `t_gp`"
+        - text: "Standard deviation and standard error of the statistical mean — `t_sd`, `t_se` (°C)"
+          note: "Shown for temperature (t_); other variables use their own units"
+        - text: "Difference from the objective analysis and from the annual climatology — `t_oa`, `t_ma` (°C)"
+          note: "`t_oa` = statistical mean minus objectively analyzed climatology; `t_ma` = seasonal or monthly minus annual climatology (seasonal and monthly files only). Shown for temperature (t_)"
+        - "Number of 1° grid squares with statistical means within the smallest radius of influence — `t_gp` (count)"
     - name: Masks (WOA23/MASKS)
       kind: static
       items:
-        - "Basin masks, land–sea masks and mixnumber masks — 1° and 0.25°"
+        - "Basin, land–sea and mixnumber masks — *.msk text files, 1° and 0.25° (code)"
 
 access:
   - name: NCEI WOA23 data access page
     url: https://www.ncei.noaa.gov/access/world-ocean-atlas-2023/
+    login: false
     method: Web (choose variable, period, grid and format)
     note: Offers CF-compliant netCDF, CSV, native ASCII and ArcGIS shapefiles. The Product Documentation discourages the legacy ASCII format because it does not explicitly give depth.
   - name: NCEI HTTPS directory
     url: https://www.ncei.noaa.gov/data/oceans/woa/WOA23/DATA/
+    login: false
     method: HTTPS (wget / curl)
     note: Layout is DATA/[variable]/netcdf/[period]/[grid]/, e.g. DATA/temperature/netcdf/decav91C0/1.00/woa23_decav91C0_t00_01.nc
   - name: NCEI THREDDS (thredds-ocean)
     url: https://www.ncei.noaa.gov/thredds-ocean/catalog/woa23/DATA/catalog.html
+    login: false
     method: THREDDS catalogue (HTTPServer download)
     note: As of 2026-10-12, the file pages list only HTTPServer; no OPeNDAP service was shown.
   - name: NCEI Archive (Accession 0270533)
     url: https://www.ncei.noaa.gov/archive/accession/0270533
+    login: false
     method: HTTPS / FTP (complete package)
   - name: WOA23 Figures
     url: https://www.ncei.noaa.gov/access/world-ocean-atlas-2023f/

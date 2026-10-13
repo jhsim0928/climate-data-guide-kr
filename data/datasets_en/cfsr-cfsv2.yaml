@@ -189,6 +189,7 @@ access:
     note: 2011-01 to present, updated daily, GRIB2. Monthly means are in d094002 and hourly time series in d094001.
   - name: NOAA NCEI — Climate Forecast System (CFSR and CFSv2 analyses and forecasts)
     url: https://www.ncei.noaa.gov/products/weather-climate-models/climate-forecast-system
+    login: false
     method: HTTPS / THREDDS / ERDDAP (monthly means)
     note: >-
       CFS Reanalysis covers 1979-01-01 to 2011-03-31 and the CFSv2 Operational Analysis 2011-04-01 to present. Pick the product
@@ -196,9 +197,11 @@ access:
       cloud, so access may be intermittently degraded.
   - name: NOAA NCEI THREDDS — CFSR 6-hourly pressure levels (PGB), example
     url: https://www.ncei.noaa.gov/thredds/catalog/model-cfs_reanl_6h_pgb/catalog.html
+    login: false
     method: THREDDS / OPeNDAP
   - name: NCEP NOMADS — CFS real-time rolling 7-day archive
     url: https://nomads.ncep.noaa.gov/pub/data/nccf/com/cfs/prod/
+    login: false
     method: HTTPS (last 7 days only)
 
 tips:

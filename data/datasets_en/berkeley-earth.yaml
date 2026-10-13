@@ -101,22 +101,26 @@ variables:
 access:
   - name: Berkeley Earth data page
     url: https://berkeleyearth.org/data/
+    login: false
     method: HTTPS (web / wget / curl)
     note: >-
       Lists the high-resolution global and land time series and 1° and 5° gridded files (storage.googleapis.com/berkeley-earth-temperature-hr/), the old 1° products
       (no longer updated) and station data. The full 0.25° grids and high-resolution country and city series are provided through a request form.
   - name: High-resolution 1° grid (global TAVG)
     url: https://storage.googleapis.com/berkeley-earth-temperature-hr/global/gridded/Global_TAVG_Gridded_1deg.nc
+    login: false
     method: HTTPS (about 400 MB)
     note: The 5° grid is Global_TAVG_Gridded_5deg.nc (about 8 MB) in the same folder.
   - name: Zenodo archive (April 2026 release, includes 0.25°)
     url: https://doi.org/10.5281/zenodo.20428381
+    login: false
     method: HTTPS (about 55 GB, 21 files)
     note: >-
       Contains monthly, annual and ensemble time series for global TAVG and land TAVG/TMAX/TMIN, 1° ensemble NetCDF files and 0.25° gridded NetCDF files.
       As a frozen release it suits reproducible publications; get the latest months from the data page files.
   - name: Old 1° product (no longer updated, January 2025 run)
     url: https://berkeley-earth-temperature.s3.us-west-1.amazonaws.com/Global/Gridded/Land_and_Ocean_LatLong1.nc
+    login: false
     method: HTTPS (about 400 MB)
     note: The Equal Area version (Land_and_Ocean_EqualArea.nc), the Alternate version (water temperatures under sea ice), land Complete_TAVG/TMAX/TMIN and the daily land files are in the same location.
 

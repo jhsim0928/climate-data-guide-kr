@@ -55,8 +55,7 @@ time_convention:
 
 variables:
   note: >-
-    The NOAA PSL file (sst.mnmean.nc) contains a single variable, `sst`. NCEI metadata say the original files contain both SST and SST anomalies (SSTAs),
-    but we did not confirm the anomaly variable name in the original v6 files (it is `ssta` in the v5 files).
+    The NCEI original files (ersst.v6.YYYYMM.nc) contain both the SST `sst` and the anomaly `ssta` (both °C); the NOAA PSL file (sst.mnmean.nc) contains only `sst`.
   full_list: https://www.ncei.noaa.gov/access/metadata/landing-page/bin/iso?id=gov.noaa.ncdc:C01737
   groups:
     - name: Sea surface temperature
@@ -64,10 +63,10 @@ variables:
       period: Monthly
       items:
         - "Monthly mean sea surface temperature — `sst` (°C)"
-        - text: "Sea surface temperature anomaly (relative to the 1991–2020 climatology, NCEI original files)"
+        - text: "Sea surface temperature anomaly (relative to the 1991–2020 climatology) — `ssta` (°C)"
           kind: mean
           period: Monthly
-          note: Monthly mean SST minus the 1991–2020 monthly climatology
+          note: "Monthly mean SST minus the 1991–2020 monthly climatology. Only in the NCEI original files (ersst.v6.YYYYMM.nc), not in the PSL file"
     - name: Climatology (separate PSL files)
       kind: mean
       period: Monthly
@@ -78,16 +77,19 @@ variables:
 access:
   - name: NCEI direct download (monthly NetCDF)
     url: https://www.ncei.noaa.gov/data/sea-surface-temperature-extended-reconstructed/v6/access/
+    login: false
     method: HTTPS (wget / curl)
     note: The official location given on the NCEI product page. One file per month, named ersst.v6.YYYYMM.nc (about 164 KB each).
   - name: NCEI pub directory (monthly files + full record in one file)
     url: https://www.ncei.noaa.gov/pub/data/cmb/ersst/v5/v6/
+    login: false
     method: HTTPS (wget / curl)
     note: >-
       Holds the same monthly files (ersst.v6.185001.nc onward), plus ersst.v6.1850-last.nc in netcdf.one/ (1850 to the latest month in one file, about 272 MB)
       and v6-based climate index files in index/ (ersst.v6.el_nino.dat, pdo, amo, iod, atl3). Note that it sits under the v5 directory.
   - name: NOAA PSL (full record in one file)
     url: https://psl.noaa.gov/data/gridded/data.noaa.ersst.v6.html
+    login: false
     method: Web download / THREDDS / OPeNDAP
     note: >-
       The full SST record is in a single file, sst.mnmean.nc, which is convenient to use directly. Monthly long-term mean files (1981–2010, 1991–2020) are also provided.

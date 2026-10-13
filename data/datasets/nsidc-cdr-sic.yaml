@@ -169,10 +169,12 @@ access:
     note: 사용자 가이드, C-ATBD, 버전 변경 보고서(Special Report 29), 갱신 알림 메일 신청 양식이 있습니다.
   - name: NOAA@NSIDC HTTPS 저장소 — G02202_V6
     url: https://noaadata.apps.nsidc.org/NOAA/G02202_V6/
+    login: false
     method: HTTPS (브라우저, wget, Python/R 스크립트)
     note: 로그인 없이 받을 수 있습니다. north/south 폴더 아래 일·월 파일이 나뉘어 있고, 연별 일자료 묶음 파일도 있습니다.
   - name: NSIDC 데이터셋 페이지 — G10016 Version 4 (준실시간 CDR)
     url: https://nsidc.org/data/g10016/versions/4
+    login: false
     method: 웹 안내 / HTTPS (https://noaadata.apps.nsidc.org/NOAA/G10016_V4/)
     note: 최근 약 3개월만 보관하는 예비 자료입니다. 최종 CDR이 나오면 그 구간은 G02202로 바꿔 쓰세요.
   - name: NOAA NCEI Sea Ice Concentration CDR 페이지

@@ -192,18 +192,22 @@ variables:
 access:
   - name: OSI SAF product page — OSI-450-a1 (SSMIS-series CDR v3.1)
     url: https://osi-saf.eumetsat.int/products/osi-450-a1
+    login: false
     method: Product information / FTP (ice/conc/v3p1 under ftp://osisaf.met.no/reprocessed/)
     note: Each product page lists the FTP directory, DOI, citation text and documentation.
   - name: MET Norway THREDDS — sea-ice concentration climate data record catalogue
     url: https://thredds.met.no/thredds/catalog/osisaf/osisaf_cdrseaiceconc.html
+    login: false
     method: THREDDS / OPeNDAP / HTTP download
     note: No account needed; OPeNDAP lets you read only the region and period you need.
   - name: OSI SAF product page — OSI-438 (AMSR2-based ICDR)
     url: https://osi-saf.eumetsat.int/products/osi-438
+    login: false
     method: FTP (ice/conc-cont-reproc-amsr/ under ftp://osisaf.met.no/reprocessed/) / THREDDS / EUMETSAT Data Store
     note: The recommended extension for 2021 onwards. From 2026-09-01 only the nominal (16-day latency) files continue, at a new FTP location.
   - name: OSI SAF product page — OSI-438-a (AMSR3-based ICDR)
     url: https://osi-saf.eumetsat.int/products/osi-438-a
+    login: false
     method: FTP / THREDDS / EUMETSAT Data Store
     note: Operational since 2026-09-01. Use this product for fast-track files with about 2 days latency.
   - name: Copernicus Marine — SEAICE_GLO_SEAICE_L4_REP_OBSERVATIONS_011_009
@@ -216,6 +220,7 @@ access:
     note: Requires an ECMWF account. The SSMIS-based product spans 1979–2025 and is not updated; only the AMSR-based product is updated operationally.
   - name: OSI SAF product page — OSI-408-a (AMSR2 near-real-time, 10 km)
     url: https://osi-saf.eumetsat.int/products/osi-408-a
+    login: false
     method: FTP (ftp://osisaf.met.no/prod/ last 31 days, /archive/ full record) / THREDDS / EUMETCast
     note: Operational near-real-time product with a different algorithm and grid from the climate records. From 2026-09-01 the AMSR3-based OSI-408-g is the main product.
 
