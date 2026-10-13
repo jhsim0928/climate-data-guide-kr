@@ -1,0 +1,348 @@
+# ─────────────────────────────────────────────────────────────
+# CCMP (Cross-Calibrated Multi-Platform) 해상풍 V3.1 — 데이터셋 정보 파일
+# 위성 탭(해상풍), 해양 탭(위성 관측 자료) 교차 수록. RSS가 위성 마이크로파 해상풍과 ERA5 배경장을 변분 분석(VAM)으로 합친 6시간 0.25° L4 자료.
+# 2026-10-13 확인 시 V3.1은 2026-08 자료까지(2026-09-17 게시), 별도의 준실시간판 v02.1.NRT는 2026-10-11 자료까지 올라와 있습니다.
+# 수정 후에는 공식 페이지에서 확인한 날짜로 last_verified 를 갱신하세요.
+# ─────────────────────────────────────────────────────────────
+id: ccmp
+name: CCMP V3.1
+full_name: RSS Cross-Calibrated Multi-Platform (CCMP) Ocean Vector Wind Analysis, Version 3.1 (위성 상호 보정 다중 플랫폼 해상풍 벡터 분석장)
+category: analysis
+domain: satellite
+group: 해상풍
+order: 10
+also_in:
+  - domain: ocean
+    group: 위성 관측 자료
+domains: [해양, 대기, 원격탐사]
+provider: Remote Sensing Systems (RSS) / NASA PO.DAAC (netCDF 재배포, NASA MEaSUREs)
+
+status: active
+status_note: >-
+  V3.1이 현재판이며 RSS가 대략 매달 갱신합니다. 2026-10-13 확인 시 RSS 서버와 PO.DAAC 모두 2026년 8월 31일분까지 올라와 있습니다(2026-09-17 게시, 약 2~7주 지연).
+  V3.0(2023-02)과 V2.0은 더 이상 갱신되지 않고, 수 일 지연의 준실시간판(v02.1.NRT)은 V3.1과 다른 배경장·처리를 쓰는 별개 자료입니다.
+
+period:
+  start: "1993-01"
+  end: present
+  note: >-
+    V3.x는 ERA5 바람을 보정하는 데 쓰는 OSCAR 해류 자료가 1993년에 시작해 1993년 1월부터입니다. RSS 설명 페이지의 'Temporal Coverage' 칸(1993-01-02~2019-12-30)과
+    본문(1993-01~2023-07)은 갱신되지 않은 값이고, 2026-10-13 확인 시 실제 파일은 2026-08-31까지 있습니다. 이전 V2.0은 1987년 7월부터 시작했습니다.
+
+resolution:
+  spatial_short: "28 km (0.25°)"
+  temporal_short: "6시간"
+  spatial: 0.25° × 0.25° 위경도 격자(파일 차원 위도 720 × 경도 1440, 좌표는 격자 중심). RSS·PO.DAAC는 자료 범위를 80°S~80°N으로 안내합니다
+  vertical: 해면 10 m 중립 안정도(equivalent neutral) 바람
+  temporal: >-
+    6시간 분석장(00·06·12·18 UTC, 하루 파일 하나에 4장) / 월평균(L4.5, 1995~2014년 기후값 대비 편차 포함)
+
+coverage:
+  short: 준전지구
+  note: "80°S~80°N, 해빙이 없는 바다 대상. 육지 위에도 값이 있으나 쓰지 말라고 RSS가 안내합니다"
+update: "RSS가 약 매달 갱신(2026-08 자료가 2026-09-17 게시). PO.DAAC는 새 파일 지연을 2~3개월로 안내합니다. 각 갱신에서 그달 마지막 날이 빠지고 다음 갱신 때 채워집니다"
+license: CC BY 4.0 (RSS CCMP 페이지). 출처 표기 문구를 넣고, 논문에 쓰면 RSS 사용자 지원(support@remss.com)에 알려 달라고 요청합니다
+account_required: false
+
+summary: >-
+  SSM/I·SSMIS·AMSR-E·AMSR2·TMI·GMI·WindSat 같은 마이크로파 복사계 풍속과 QuikSCAT·ASCAT 산란계 바람 벡터를 상호 보정한 뒤, 보정된 ERA5 10 m 중립 바람을 배경장으로
+  변분 분석(VAM)으로 합쳐 빈틈없는 6시간 0.25° 해상풍 벡터장을 만든 Level 4 자료입니다. 원래 NASA GSFC(Atlas et al., 2011)가 개발했고 V2.0부터 RSS가 생산합니다.
+  V3.0에서 배경장을 ERA-Interim에서 ERA5로 바꾸고 강풍 정확도와 장기 안정성을 개선했으며, V3.1은 2012년 7월 이후 AMSR2 V8.2와 ASCAT-B를 넣어 낮은 지연으로 갱신할 수 있게 한 판입니다.
+  해양 순환 모델 강제력, 바람 응력·응력 컬 계산, 재분석 바람 검증에 널리 쓰입니다.
+
+time_convention:
+  summary: >-
+    6시간 파일의 값은 00·06·12·18 UTC 각 분석 시각의 분석장입니다. 그 시각을 둘러싼 6시간 동화 창 안의 위성 관측을 ERA5 배경장에 합친 결과이며,
+    관측이 없는 곳은 보정된 ERA5 값이 그대로 남습니다. 월자료는 그달 6시간 분석장의 평균입니다.
+  points:
+    - "일 파일 하나에 time 차원이 4개(00·06·12·18 UTC)이고, time 단위는 'hours since 1987-01-01 00:00:00'입니다."
+    - "nobs는 6시간 동화 창 안에서 그 격자에 쓰인 위성 수입니다. 0이면 위성 관측 없이 배경장(보정된 ERA5)만 남은 값입니다."
+    - "위성은 하루 몇 차례 지나가므로 열대·저위도에서는 관측이 없는 분석 시각이 많습니다. nobs로 관측 기반 값과 배경장 값을 구분하세요."
+    - "월자료의 u·v는 벡터 평균, w(풍속)는 스칼라 평균이라 w가 √(u²+v²)보다 큽니다. 편차(*_anom)의 기준은 1995~2014년 기후값입니다."
+    - "준실시간판(v02.1.NRT, 파일명 CCMP_RT_…)은 하루 이틀 만에 나오지만 V3.1과 배경장·입력이 달라 확정판(V3.1)과 섞어 쓰지 않습니다."
+  source: https://archive.podaac.earthdata.nasa.gov/podaac-ops-cumulus-docs/ccmp/open/L4_V3.1/docs/User_Guide_3.1.r1.pdf
+  source_name: CCMP V3.1 User Guide (RSS, PO.DAAC 배포)
+
+variables:
+  note: >-
+    변수 이름은 CCMP V3.1 User Guide와 PO.DAAC 변수표 기준입니다. 바람은 모두 10 m 중립 안정도 바람이고, u·v는 진북 기준이며 방향은 해양학 관례(바람이 불어 가는 쪽)입니다.
+  full_list: https://archive.podaac.earthdata.nasa.gov/podaac-ops-cumulus-docs/ccmp/open/L4_V3.1/docs/User_Guide_3.1.r1.pdf
+  groups:
+    - name: 6시간 분석장 (L4, 일 파일)
+      kind: instant
+      items:
+        - "10 m 동서 바람 — `uwnd` (m s-1)"
+        - "10 m 남북 바람 — `vwnd` (m s-1)"
+        - "10 m 해상풍속 — `ws` (m s-1)"
+        - text: "동화된 위성 관측 수 — `nobs` (개)"
+          note: 6시간 동화 창 안에서 그 격자에 쓰인 위성 수
+          std: []
+    - name: 월평균 (L4.5)
+      kind: mean
+      period: 월
+      items:
+        - text: "10 m 동서 바람 월평균 — `u` (m s-1)"
+          note: 벡터 평균
+        - text: "10 m 남북 바람 월평균 — `v` (m s-1)"
+          note: 벡터 평균
+        - text: "10 m 해상풍속 월평균 — `w` (m s-1)"
+          note: 스칼라 평균
+        - text: "10 m 바람 월편차 — `u_anom`·`v_anom`·`w_anom` (m s-1)"
+          note: 1995~2014년 기후값 대비
+        - text: "평균에 쓴 분석 시각 수 — `nobs` (개)"
+          std: []
+
+access:
+  - name: RSS 자료 서버 (HTTPS)
+    url: https://data.remss.com/ccmp/
+    method: HTTPS 직접 다운로드 (netCDF-4, 예 v03.1/Y2026/M08/CCMP_Wind_Analysis_20260801_V03.1_L4.nc, 월자료 CCMP_Wind_Analysis_202608_monthly_mean_V03.1_L4.nc)
+    note: >-
+      v03.1(현재판), v03.0·v02.0(갱신 종료), v02.1.NRT(준실시간판) 폴더가 있습니다. 읽기 예제 코드는 read_routines/ccmp.py에 있습니다. FTP 접속은 무료 등록이 필요합니다.
+    login: false
+  - name: NASA PO.DAAC — CCMP V3.1 6시간 (CCMP_WINDS_10M6HR_L4_V3.1)
+    url: https://podaac.jpl.nasa.gov/dataset/CCMP_WINDS_10M6HR_L4_V3.1
+    method: Earthdata Search / earthaccess / OPeNDAP / Harmony 부분 추출 / podaac-data-subscriber
+    note: 월자료는 CCMP_WINDS_10MMONTHLY_L4_V3.1입니다. NASA Earthdata 로그인(무료)이 필요합니다.
+  - name: RSS CCMP 설명 페이지
+    url: https://www.remss.com/measurements/ccmp/
+    method: 웹 (입력 위성 목록, 버전 변경, 인용 문구, 미리보기 이미지)
+
+example:
+  lang: python
+  note: "PO.DAAC 파일을 earthaccess로 받는 예입니다. NASA Earthdata 계정으로 earthaccess.login()을 한 번 거친 뒤 실행하세요. RSS 서버에서 로그인 없이 받으려면 위 access의 파일 경로를 그대로 쓰면 됩니다."
+  code: |
+    # pip install earthaccess xarray netCDF4
+    import earthaccess
+    import xarray as xr
+
+    earthaccess.login()
+    results = earthaccess.search_data(
+        short_name="CCMP_WINDS_10M6HR_L4_V3.1",   # 월자료: CCMP_WINDS_10MMONTHLY_L4_V3.1
+        version="3.1",
+        temporal=("2025-01-01", "2025-01-31"),
+    )
+    files = earthaccess.download(results, "./ccmp")
+
+    ds = xr.open_mfdataset(files, combine="by_coords")
+    ws = ds["ws"].sel(latitude=slice(30, 40), longitude=slice(120, 135))  # 한반도 주변
+    obs_based = ws.where(ds["nobs"].sel(latitude=slice(30, 40), longitude=slice(120, 135)) > 0)
+    print(ws.mean("time").values.mean(), float(obs_based.count() / ws.count()))
+
+tips:
+  - "nobs가 0인 격자는 위성 관측 없이 보정된 ERA5 배경장만 남은 값입니다. 위성 관측의 효과를 보려는 분석이라면 nobs로 걸러 보세요."
+  - 태풍·열대저기압처럼 작고 강한 바람 구조는 ERA5가 잘 그리지 못하고 강수로 위성 관측도 빠지기 쉬워, RSS는 이런 현상 분석에 CCMP를 쓰지 말라고 안내합니다.
+  - 약 15~18 m/s 이상에서 CCMP는 부이·ASCAT-C보다 의도적으로 높게 맞춰져 있습니다(산란계·복사계 강풍 보정 반영). 부이와 비교할 때 이 차이를 고려하세요.
+  - 전지구·대양 평균 풍속의 수십 년 추세는 자료 불확실성과 비슷한 크기일 수 있어 RSS가 주의를 당부합니다. 지역적으로 수십 cm/s 이상인 변화는 비교적 믿을 만합니다.
+  - V3.1, V3.0, V2.0, V1.1, 준실시간판(CCMP-NRT)은 배경장·입력·보정이 서로 달라 한 시계열로 이어 붙이지 마세요. V3.1과 V3.0은 2012-07-02 이전 값이 같습니다.
+  - ASCAT-C 바람과 계류 부이 바람은 V3.x 분석에 넣지 않고 독립 검증용으로 남겨 두었습니다. 이 자료로 CCMP를 검증하는 것은 독립 비교가 됩니다.
+  - "RSS가 매달 갱신할 때 그달 마지막 날 파일이 빠지고 다음 갱신 때 채워집니다. 최근 월을 받을 때는 말일 파일이 있는지 확인하세요."
+  - 육지 위에도 값이 들어 있지만(배경장 기반) RSS는 쓰지 말라고 합니다. 해빙 위 위성 관측은 동화에서 빠지므로 해빙역 값도 배경장에 가깝습니다.
+  - 월자료의 w(스칼라 평균 풍속)와 u·v 벡터 평균으로 계산한 풍속은 크게 다를 수 있습니다. 바람 응력·에너지 계산에는 6시간 자료에서 직접 구하는 것이 안전합니다.
+  - "RSS 페이지의 데이터셋 DOI(10.56236/RSS-uv6h30, RSS-uv1m30)는 V3.0으로 표시되어 있습니다. V3.1을 썼다면 PO.DAAC V3.1 DOI를 함께 적어 판을 분명히 하세요."
+
+citations:
+  dataset:
+    - label: CCMP V3.1 6시간 자료 (PO.DAAC)
+      text: >-
+        RSS. 2024. RSS CCMP 6-Hourly 10 Meter Surface Winds Level 4 Version 3.1. Ver. 3.1. PO.DAAC, CA, USA. Dataset accessed [YYYY-MM-DD] at https://doi.org/10.5067/CCMP-6HW10M-L4V31
+      doi: 10.5067/CCMP-6HW10M-L4V31
+      bibtex: |
+        @misc{rss2024ccmp6h,
+          author    = {{Remote Sensing Systems}},
+          title     = {{RSS} {CCMP} 6-Hourly 10 Meter Surface Winds Level 4 Version 3.1},
+          year      = {2024},
+          publisher = {NASA Physical Oceanography Distributed Active Archive Center},
+          version   = {3.1},
+          doi       = {10.5067/CCMP-6HW10M-L4V31}
+        }
+    - label: CCMP V3.1 월자료 (PO.DAAC)
+      text: >-
+        RSS. 2024. RSS CCMP Monthly 10 Meter Surface Winds Level 4 Version 3.1. Ver. 3.1. PO.DAAC, CA, USA. Dataset accessed [YYYY-MM-DD] at https://doi.org/10.5067/CCMP-MW10M-L4V31
+      doi: 10.5067/CCMP-MW10M-L4V31
+      bibtex: |
+        @misc{rss2024ccmpmonthly,
+          author    = {{Remote Sensing Systems}},
+          title     = {{RSS} {CCMP} Monthly 10 Meter Surface Winds Level 4 Version 3.1},
+          year      = {2024},
+          publisher = {NASA Physical Oceanography Distributed Active Archive Center},
+          version   = {3.1},
+          doi       = {10.5067/CCMP-MW10M-L4V31}
+        }
+    - label: RSS 권장 인용 (6시간, V3.0으로 표기된 DOI)
+      text: >-
+        Mears, C.; Lee, T.; Ricciardulli, L.; Wang, X.; Wentz, F., 2022: RSS Cross-Calibrated Multi-Platform (CCMP) 6-hourly ocean vector wind analysis on 0.25 deg grid, Version 3.0,
+        Remote Sensing Systems, Santa Rosa, CA. Available at www.remss.com https://doi.org/10.56236/RSS-uv6h30
+      doi: 10.56236/RSS-uv6h30
+      bibtex: |
+        @misc{mears2022ccmpv3,
+          author    = {Mears, Carl and Lee, Tong and Ricciardulli, Lucrezia and Wang, Xiaochun and Wentz, Frank},
+          title     = {{RSS} Cross-Calibrated Multi-Platform ({CCMP}) 6-hourly ocean vector wind analysis on 0.25 deg grid, Version 3.0},
+          year      = {2022},
+          publisher = {Remote Sensing Systems},
+          address   = {Santa Rosa, CA},
+          doi       = {10.56236/RSS-uv6h30}
+        }
+  papers:
+    - label: CCMP V3.0 개선 (V3.x 대표 논문)
+      text: >-
+        Mears, C., Lee, T., Ricciardulli, L., Wang, X., Wentz, F. (2022): Improving the Accuracy of the Cross-Calibrated Multi-Platform (CCMP) Ocean Vector Winds. Remote Sensing, 14(17), 4230.
+      doi: 10.3390/rs14174230
+      bibtex: |
+        @article{mears2022ccmp,
+          author  = {Mears, Carl and Lee, Tong and Ricciardulli, Lucrezia and Wang, Xiaochun and Wentz, Frank},
+          title   = {Improving the Accuracy of the Cross-Calibrated Multi-Platform ({CCMP}) Ocean Vector Winds},
+          journal = {Remote Sensing},
+          volume  = {14},
+          number  = {17},
+          pages   = {4230},
+          year    = {2022},
+          doi     = {10.3390/rs14174230}
+        }
+    - label: CCMP 원 개발 논문
+      text: >-
+        Atlas, R., Hoffman, R. N., Ardizzone, J., Leidner, S. M., Jusem, J. C., Smith, D. K., Gombos, D. (2011): A Cross-calibrated, Multiplatform Ocean Surface Wind Velocity Product
+        for Meteorological and Oceanographic Applications. Bulletin of the American Meteorological Society, 92(2), 157–174.
+      doi: 10.1175/2010BAMS2946.1
+      bibtex: |
+        @article{atlas2011ccmp,
+          author  = {Atlas, Robert and Hoffman, Ross N. and Ardizzone, Joseph and Leidner, S. Mark and Jusem, Juan Carlos and Smith, Deborah K. and Gombos, Daniel},
+          title   = {A Cross-calibrated, Multiplatform Ocean Surface Wind Velocity Product for Meteorological and Oceanographic Applications},
+          journal = {Bulletin of the American Meteorological Society},
+          volume  = {92},
+          number  = {2},
+          pages   = {157--174},
+          year    = {2011},
+          doi     = {10.1175/2010BAMS2946.1}
+        }
+    - label: 준실시간판 CCMP-NRT
+      text: >-
+        Mears, C. A., Scott, J., Wentz, F. J., Ricciardulli, L., Leidner, S. M., Hoffman, R., Atlas, R. (2019): A Near-Real-Time Version of the Cross-Calibrated Multiplatform (CCMP)
+        Ocean Surface Wind Velocity Data Set. Journal of Geophysical Research: Oceans, 124, 6997–7010.
+      doi: 10.1029/2019JC015367
+      bibtex: |
+        @article{mears2019ccmpnrt,
+          author  = {Mears, Carl A. and Scott, Joel and Wentz, Frank J. and Ricciardulli, Lucrezia and Leidner, S. Mark and Hoffman, Ross and Atlas, Robert},
+          title   = {A Near-Real-Time Version of the Cross-Calibrated Multiplatform ({CCMP}) Ocean Surface Wind Velocity Data Set},
+          journal = {Journal of Geophysical Research: Oceans},
+          volume  = {124},
+          pages   = {6997--7010},
+          year    = {2019},
+          doi     = {10.1029/2019JC015367}
+        }
+  acknowledgement: >-
+    RSS는 "CCMP Version-3.1 vector wind analyses are produced by Remote Sensing Systems. Data are available at www.remss.com." 문구를 요청합니다.
+    자료를 쓴 논문의 학술지·출판 예정일을 support@remss.com에 알려 달라고도 부탁합니다(자료 생산 지원 유지에 쓰임).
+
+notices:
+  - date: "2024-07-22"
+    level: info
+    title: PO.DAAC에서 CCMP V3.1 6시간·월자료 배포 시작
+    body: >-
+      NASA PO.DAAC가 RSS CCMP Level 4 V3.1 자료(6시간 CCMP_WINDS_10M6HR_L4_V3.1, 월 CCMP_WINDS_10MMONTHLY_L4_V3.1)를 1993년부터 공개했습니다.
+      Earthdata 클라우드·OPeNDAP·Harmony로 받을 수 있고 각각 DOI가 붙었습니다.
+    source: https://podaac.jpl.nasa.gov/announcements
+  - date: "2023-08-25"
+    level: info
+    title: CCMP V3.1 공개 (1993~현재)
+    body: >-
+      V3.0과 같은 처리 체계에서 2021년 1월 이후 ERA5 보정에 OSCAR 준실시간판을 쓰고, AMSR2 V8.2와 ASCAT-B(2012-12-13~)를 넣은 V3.1이 나왔습니다.
+      낮은 지연으로 계속 갱신할 수 있게 한 판이며, 2012-07-02 이전 값은 V3.0과 같습니다.
+    source: https://www.remss.com/announcement/New-Version-3.1-Cross-Calibrated-Multi-Platform/
+  - date: "2023-02-13"
+    level: info
+    title: CCMP V3.0 공개 — 배경장 ERA-Interim → ERA5
+    body: >-
+      ERA-Interim 생산 종료(2019-07)에 따라 배경장을 ERA5 중립 안정도 바람으로 바꾸고, 해류·풍속 분포·계절 벡터 보정과 복사계 지역 보정을 더한 V3.0이 공개되었습니다.
+      강풍(15 m/s 이상) 정확도와 장기 추세 신뢰도가 좋아졌다고 RSS는 밝혔고, 기간은 OSCAR 해류 자료가 시작되는 1993년부터입니다.
+    source: https://www.remss.com/announcement/New-Version-3.0-Cross-Calibrated-Multi-Platform/
+
+transitions:
+  - from: CCMP V2.0
+    to: CCMP V3.0
+    status: completed
+    date: "2023-02"
+    summary: >-
+      배경장을 ERA-Interim에서 보정된 ERA5 중립 바람으로 바꾸고, 부이 동화를 빼고 GMI를 더했으며, 복사계 바람과 ERA5에 사전 보정을 적용했습니다.
+      기간 시작은 1987년에서 1993년으로 늦춰졌고 강풍 정확도와 장기 안정성이 나아졌습니다.
+    changes:
+      - aspect: 배경장
+        before: ERA-40·ERA-Interim 10 m 바람(보정 없음)
+        after: "ERA5 10 m 중립 안정도 바람 + OSCAR 해류 보정, 산란계 기준 풍속 분포 보정, 계절·지역 벡터 보정"
+      - aspect: 기간
+        before: "1987-07~ (RSS 서버 v02.0 폴더는 2019년에서 멈춤)"
+        after: "1993-01~ (OSCAR 해류 자료 시작 시점)"
+      - aspect: 위성 입력
+        before: "복사계 SSM/I·SSMIS·AMSR-E·WindSat·TMI·AMSR2, 산란계 QuikSCAT·ASCAT-A"
+        after: "V2.0 입력 + GMI"
+      - aspect: 부이 자료
+        before: TAO·TRITON·PIRATA·RAMA·NDBC 등 계류 부이 바람을 동화
+        after: 동화하지 않고 독립 검증용으로 남김
+      - aspect: 복사계 바람 보정
+        before: 없음
+        after: 19 GHz 계열(SSM/I·SSMIS)에서 가장 큰 소규모 지역 보정 적용
+      - aspect: 월자료 편차 기준
+        before: V2.0 기후값
+        after: 1995~2014년 기후값
+    impacts:
+      - V2.0과 V3.x를 한 시계열로 이어 붙이지 마세요. 관측이 없는 곳에서는 배경장 차이만큼 값이 다릅니다.
+      - V2.0은 부이를 동화해 부이 주변에 인공 구조가 생겨 응력 컬 같은 미분량에서 두드러졌습니다. V3.x는 이 문제가 없지만 부이 비교가 더는 '동화된 자료와의 비교'가 아닙니다.
+      - 1993년 이전 기간이 필요하면 V2.0만 있으므로, 그 기간을 쓰는 연구는 판을 분명히 적고 V3.x와의 차이를 따로 확인하세요.
+    sources:
+      - name: RSS — CCMP V3.0 공개 공지 (2023-02-13)
+        url: https://www.remss.com/announcement/New-Version-3.0-Cross-Calibrated-Multi-Platform/
+      - name: Mears et al. (2022), Remote Sensing
+        url: https://doi.org/10.3390/rs14174230
+      - name: Mears et al. (2019), JGR Oceans (V2.0·NRT 비교)
+        url: https://doi.org/10.1029/2019JC015367
+      - name: CCMP V3.1 User Guide (버전 비교표)
+        url: https://archive.podaac.earthdata.nasa.gov/podaac-ops-cumulus-docs/ccmp/open/L4_V3.1/docs/User_Guide_3.1.r1.pdf
+  - from: CCMP V3.0
+    to: CCMP V3.1
+    status: completed
+    date: "2023-08"
+    summary: >-
+      처리 체계는 같고 2012년 7월 이후 입력만 바뀐 판입니다. AMSR2 V8.2와 ASCAT-B가 들어가 그 이후 바람이 개선되었고, 준실시간 OSCAR를 써서 지연 없이 계속 갱신할 수 있게 되었습니다.
+    changes:
+      - aspect: 기간
+        before: "1993-01~2019 (계속 갱신 계획이었으나 V3.1로 대체)"
+        after: "1993-01~현재 (약 매달 갱신)"
+      - aspect: ERA5 사전 보정
+        before: OSCAR 해류 사용
+        after: "2021-01 이후 OSCAR025-nrt(준실시간판) 사용"
+      - aspect: 산란계 입력
+        before: QuikSCAT, ASCAT-A
+        after: "QuikSCAT, ASCAT-A(2016년 이후 V2.1.1, 2021-11 종료), ASCAT-B(2012-12-13~ 전 기간)"
+      - aspect: AMSR2
+        before: V8.0
+        after: "V8.2 (2012-07-02~ 전 기간)"
+      - aspect: 2012-07-02 이전 값
+        before: V3.0
+        after: V3.0과 동일
+    impacts:
+      - 2012-07 이후 구간은 V3.0과 값이 다르므로 V3.0으로 만든 결과를 V3.1과 섞지 마세요. 그 이전 구간은 같은 값입니다.
+      - "RSS 페이지의 인용 DOI는 아직 V3.0으로 표시되어 있습니다. 논문에는 실제로 쓴 판(파일명의 V03.1)을 적으세요."
+    sources:
+      - name: RSS — CCMP V3.1 공개 공지 (2023-08-25)
+        url: https://www.remss.com/announcement/New-Version-3.1-Cross-Calibrated-Multi-Platform/
+      - name: RSS CCMP 설명 페이지
+        url: https://www.remss.com/measurements/ccmp/
+
+links:
+  - name: RSS — CCMP 설명 페이지
+    url: https://www.remss.com/measurements/ccmp/
+  - name: PO.DAAC — CCMP V3.1 6시간 자료
+    url: https://podaac.jpl.nasa.gov/dataset/CCMP_WINDS_10M6HR_L4_V3.1
+  - name: PO.DAAC — CCMP V3.1 월자료
+    url: https://podaac.jpl.nasa.gov/dataset/CCMP_WINDS_10MMONTHLY_L4_V3.1
+  - name: CCMP V3.1 User Guide (PDF)
+    url: https://archive.podaac.earthdata.nasa.gov/podaac-ops-cumulus-docs/ccmp/open/L4_V3.1/docs/User_Guide_3.1.r1.pdf
+  - name: RSS — 자료 이용 조건
+    url: https://www.remss.com/support/terms-of-use
+  - name: 이 사이트 — Metop ASCAT 해상풍 (CCMP 입력 산란계)
+    url: ../ascat/
+
+watch_urls:
+  - https://www.remss.com/measurements/ccmp/
+  - https://www.remss.com/announcement/
+
+last_verified: "2026-10-13"

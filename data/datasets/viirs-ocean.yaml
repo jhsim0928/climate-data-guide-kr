@@ -1,0 +1,379 @@
+# ─────────────────────────────────────────────────────────────
+# VIIRS 해양 (Suomi NPP·NOAA-20·NOAA-21 VIIRS OBPG Level-3 해색·해수면온도) — 데이터셋 정보 파일
+# 위성 탭(해색), 해양 탭(위성 관측 자료) 교차 수록. MODIS 해양의 후속이며, MODIS → VIIRS 비교는 modis-ocean.yaml의 transitions에 있습니다.
+# 해색은 Suomi NPP·NOAA-20 R2022.0(부분 재처리 R2022.0.1·0.2), NOAA-21 R2025.0, 해수면온도는 Suomi NPP 2016.2·NOAA-20 2024.0입니다(NOAA-21 SST는 OB.DAAC에 없음).
+# NOAA가 Suomi NPP 과학 자료 전달을 2026-11-02 13:00 UTC에 끝내므로(VIIRS 포함) Suomi NPP판은 그 뒤 새 자료가 없습니다. OBPG 자체 공지는 2026-10-13 기준 확인되지 않았습니다.
+# 수정 후에는 공식 페이지에서 확인한 날짜로 last_verified 를 갱신하세요.
+# ─────────────────────────────────────────────────────────────
+id: viirs-ocean
+name: "VIIRS 해양 (해색·SST)"
+full_name: >-
+  Suomi NPP·NOAA-20·NOAA-21 VIIRS Level-3 Global Mapped/Binned Ocean Color(CHL·RRS·KD·PAR·POC·PIC·IOP, version R2022.0 / NOAA-21 2025.0)와
+  Sea Surface Temperature(SST·NSST·SST3) (NASA OBPG VIIRS 해색·해수면온도 L3 자료)
+category: satellite
+domain: satellite
+group: 해색
+order: 20
+also_in:
+  - domain: ocean
+    group: 위성 관측 자료
+domains: [해양, 원격탐사]
+provider: NASA GSFC Ocean Biology Processing Group(OBPG) / NASA Ocean Biology DAAC(OB.DAAC)
+
+status: active
+status_note: >-
+  NOAA-20·NOAA-21 판은 정상 생산 중입니다. 2026-10-13 확인 시 세 위성 모두 NRT 해색 일자료가 2026-10-11까지, 확정판 해색은 2026-07-31까지(2026-08-27~28 등록) 있습니다.
+  다만 NOAA NESDIS가 VIIRS를 포함한 Suomi NPP 과학 자료 전달을 2026년 11월 2일 13:00 UTC에 영구 중단한다고 공지했고(NASA GES DISC 2026-10-07 재공지), NASA는 NOAA-20·NOAA-21 산출물로 옮기라고 안내합니다.
+  위성 운용 종료가 아니라 자료 전달 중단이며 이미 만든 자료는 NASA가 계속 보관·배포합니다. OB.DAAC의 별도 공지는 확인되지 않았습니다.
+
+period:
+  start: "2012-01"
+  end: present
+  note: >-
+    Suomi NPP는 2012-01-02부터(2026-11-02 자료 전달 종료 예정), NOAA-20은 2017-11-29부터, NOAA-21은 2022-11-10부터입니다(CMR 컬렉션 시작일).
+    해수면온도 확정판은 Suomi NPP가 2026-08-29까지이고, NOAA-20은 Direct Data Access에 2026년 1월 초 이후 NRT판만 있습니다(2026-10-13 확인, NRT는 2026-10-11까지).
+
+resolution:
+  spatial_short: "4.6 km (0.04°)"
+  temporal_short: "1일"
+  spatial: >-
+    L3 mapped(L3m, Standard Mapped Image): 전지구 등거리 원통(Equidistant Cylindrical) 격자 `4km`(파일 속성 spatialResolution "4.638312 km")와 `9km` /
+    L3 binned(L3b): 정수화 사인곡선 등면적 격자 4320행(약 4.64 km 빈, Suomi NPP VIIRS 표준). 원자료는 VIIRS M 밴드 직하 750 m
+  vertical: 해면 원격 반사도와 표층 광학·생지화학 특성(위성이 보는 광학 깊이 안의 값) / 해수면온도는 피부(skin) 온도
+  temporal: >-
+    일(DAY)·8일(8D)·월(MO)·연(YR)·32일 이동(R32) 합성. 해수면온도는 주간(SST)·야간(NSST)·삼중창(SST3) 파일이 따로 있습니다.
+    세 위성 모두 오후에 지나는 같은 궤도 계열이며, 서로 약 50분 안에 지나갑니다.
+
+coverage:
+  short: 전지구
+  note: "해색은 주간·맑은 하늘의 바다만(구름·해빙·태양 고도·눈부심으로 빈칸). 해수면온도는 주야 모두 맑은 하늘의 바다만"
+update: >-
+  NRT L3 일자료는 관측 다음 날 등록(2026-10-11 자료가 10-12 등록). 확정판 해색은 약 1개월 늦게 한 달치씩 나옵니다(2026-07 자료가 2026-08-27~28 등록).
+  Suomi NPP는 2026-11-02 이후 새 자료 없음
+license: >-
+  NASA 지구과학 자료 정보 정책(https://science.nasa.gov/earth-science/earth-science-data/data-information-policy/)에 따른 무료 공개 자료입니다.
+  OB.DAAC 자료를 내려받으려면 무료 NASA Earthdata 로그인이 필요하며, 데이터셋 DOI 인용을 요청합니다
+account_required: true
+
+summary: >-
+  NASA OBPG가 Suomi NPP(2011년 발사), NOAA-20(옛 JPSS-1), NOAA-21(옛 JPSS-2) 위성의 VIIRS로 만든 전지구 해색·해수면온도 Level-3 자료로, MODIS 해색을 잇는 NASA의 다중 위성 해색 기록입니다.
+  MODIS와 같은 처리 체계로 엽록소 a(`chlor_a`), 5개 파장 원격 반사도, 490 nm 확산 감쇠 계수(`Kd_490`), 일 광합성 유효 복사(`par`), 입자성 유기·무기 탄소(`poc`·`pic`), GIOP 고유 광학 특성을 만들며,
+  해수면온도는 주간·야간 SST와 8.6·11·12 µm 삼중창 SST(`sst_triple`)가 있습니다. 4 km·9 km 등위경도 격자의 일·8일·월·연 합성을 확정판과 NRT판으로 제공합니다.
+  Suomi NPP 자료 전달이 2026-11-02에 끝나므로 앞으로는 NOAA-21·NOAA-20 판이 주력입니다.
+
+time_convention:
+  summary: >-
+    L3 일 파일은 그 '자료일(dataday)'에 지나간 맑은 하늘 L2 관측을 4.6 km 빈에 가중 평균해 모은 뒤 등위경도 격자로 옮긴 값입니다. 하루의 경계가 날짜변경선(180°)이라
+    한 파일이 24시간보다 조금 길게 걸칩니다(예 NOAA-20 2026-07-01 파일은 07-01 00:18Z~07-02 02:29Z). 8일·월·연 파일은 그 기간 빈 값을 다시 합친 평균이며, 흐려 관측이 없는 날은 빠져 있습니다.
+  points:
+    - "8일(8D)은 1월 1일부터 8일씩 끊고, R32는 32일 구간을 8일씩 옮긴 이동 합성입니다(예 JPSS1_VIIRS.20240601_20240702.L3m.R32.SST.sst.4km.nc). 파일 이름의 두 날짜가 합성 구간의 처음과 끝입니다."
+    - "`par`는 하루 적분값(mol m-2 day-1)입니다. MODIS에 있던 통과 시각 순간값 `ipar`와 형광 `nflh`(FLH 파일)는 VIIRS L3에 없습니다."
+    - "세 위성은 서로 약 50분 안에 지나가지만 같은 시각은 아닙니다. 위성마다 일 파일을 따로 만들므로 여러 위성을 합칠 때는 각자 평균한 뒤 합치거나 한 위성만 쓰세요."
+    - "NRT판(파일 이름 끝 .NRT.nc, 컬렉션 이름 _NRT)과 확정판은 별개 컬렉션입니다. 확정판이 나오면 확정판으로 바꾸고 두 판을 한 시계열에 섞지 마세요."
+    - "Suomi NPP 자료는 2026-11-02 13:00 UTC 이후 끊깁니다. 마지막 날(11-02) 일 파일은 하루를 다 채우지 못할 수 있으니 시계열 끝을 확인하세요."
+  source: https://oceandata.sci.gsfc.nasa.gov/files/resources/docs/format/Ocean_Data_Product_Users_Guide.pdf
+  source_name: "OBPG Ocean Science Data Product Format Specification(2017-11) + OB.DAAC CMR·OPeNDAP 파일 속성·Direct Data Access 파일 목록 + Earthdata 포럼(LP DAAC) 답변"
+
+variables:
+  note: >-
+    변수 이름과 단위는 OB.DAAC OPeNDAP 파일 속성, Direct Data Access 파일 목록(2026-10-11 일자료), CMR 컬렉션 설명 기준입니다. 파일 하나에 변수 하나가 들어 있고
+    (예 JPSS2_VIIRS.20260601.L3m.DAY.CHL.chlor_a.4km.nc), 파일 이름 접두는 Suomi NPP `SNPP_VIIRS`, NOAA-20 `JPSS1_VIIRS`, NOAA-21 `JPSS2_VIIRS`입니다.
+    Rrs·IOP 변수의 파장 숫자가 위성마다 다르므로 이름을 고정해 두지 마세요.
+  full_list: https://oceancolor.gsfc.nasa.gov/data/product_status
+  groups:
+    - name: 해색 L3 (CHL·RRS·KD·POC·PIC 파일)
+      kind: mean
+      period: 일·8일·월·연 합성
+      items:
+        - text: "엽록소 a 농도 — `chlor_a` (mg m-3)"
+          note: OCI 알고리즘(저농도 CI와 OCx를 섞음). MODIS와 같은 방식
+        - text: "원격 반사도(Suomi NPP) — `Rrs_410`·`Rrs_443`·`Rrs_486`·`Rrs_551`·`Rrs_671` (sr-1)"
+        - text: "원격 반사도(NOAA-20·NOAA-21) — `Rrs_411`·`Rrs_445`·`Rrs_489`·`Rrs_556`·`Rrs_667` (sr-1)"
+        - text: "에어로졸 광학두께(대기 보정 부산물) — `aot_862`(Suomi NPP)·`aot_868`(NOAA-20·21) (무차원)"
+          std: []
+        - text: "옹스트롬 지수(대기 보정 부산물) — `angstrom` (무차원)"
+          std: []
+        - text: "490 nm 하향 복사 확산 감쇠 계수 — `Kd_490` (m-1)"
+          std: []
+        - text: "입자성 유기탄소 — `poc` (mg m-3, 탄소 기준)"
+          std: []
+        - text: "입자성 무기탄소(방해석) — `pic` (mol m-3)"
+          std: []
+    - name: 광합성 유효 복사 (PAR 파일)
+      kind: accum
+      period: 일
+      items:
+        - text: "일 광합성 유효 복사 — `par` (mol m-2 day-1)"
+          note: 하루 적분값. 8일·월 파일은 그 평균
+          std: []
+    - name: 고유 광학 특성 (IOP 파일, GIOP 모델 — NOAA-20·21 기준 파장)
+      kind: mean
+      period: 일·8일·월·연 합성
+      items:
+        - text: "총흡수계수 — `a_411`·`a_445`·`a_489`·`a_556`·`a_667` (m-1)"
+          std: []
+        - text: "총후방산란계수 — `bb_411`·`bb_445`·`bb_489`·`bb_556`·`bb_667` (m-1)"
+          std: []
+        - text: "식물플랑크톤·용존쇄설물 흡수, 입자 후방산란 445 nm — `aph_445`·`adg_445`·`bbp_445` (m-1)"
+          std: []
+        - text: "분광 기울기와 불확실성 — `adg_s`·`bbp_s`·`aph_unc_445`·`adg_unc_445`·`bbp_unc_445`"
+          std: []
+    - name: 해수면온도 L3 (SST·NSST·SST3 파일 — Suomi NPP 2016.2, NOAA-20 2024.0)
+      kind: mean
+      period: 일·8일·월·연 합성
+      items:
+        - text: "주간 해수면온도 — `sst` (degree_C)"
+          note: SST 파일(11·12 µm). 주간 일사 가열이 섞일 수 있음
+        - text: "야간 해수면온도 — `sst` (degree_C)"
+          note: NSST 파일. 변수 이름은 주간과 같고 파일 이름으로 구분
+        - text: "삼중창 해수면온도 — `sst_triple` (degree_C)"
+          note: "8.6·11·12 µm 세 창으로 수증기 보정(SST3 파일)"
+        - text: "해수면온도 품질 등급 — `qual_sst`·`qual_sst_triple`"
+          std: []
+
+access:
+  - name: NASA Earthdata Search (OB.DAAC 포털)
+    url: https://search.earthdata.nasa.gov/search?portal=obdaac
+    method: 웹 검색·내려받기, earthaccess(Python, short_name 예 VIIRSJ2_L3m_CHL·VIIRSJ1_L3m_RRS·VIIRSN_L3m_SST)
+    note: >-
+      컬렉션 이름은 VIIRSN_(Suomi NPP)·VIIRSJ1_(NOAA-20)·VIIRSJ2_(NOAA-21) + L3m_{CHL,RRS,KD,PAR,POC,PIC,IOP}, 빈 자료는 L3b, NRT판은 _NRT입니다.
+      해수면온도는 VIIRSN_L3m_{SST,NSST,SST3}, VIIRSJ1_L3m_SST(2026-10-13 확인 시 CMR 등록 그래뉼 없음 — Direct Data Access 사용). NASA Earthdata 로그인(무료)이 필요합니다.
+  - name: OB.DAAC Direct Data Access (Level-3 Mapped / NOAA21-VIIRS)
+    url: https://oceandata.sci.gsfc.nasa.gov/directdataaccess/Level-3%20Mapped/NOAA21-VIIRS/
+    method: HTTPS 디렉터리(연·일별), 예 JPSS2_VIIRS.20260601_20260630.L3m.MO.CHL.chlor_a.4km.nc
+    note: NOAA-20은 Level-3%20Mapped/NOAA20-VIIRS/, Suomi NPP는 Level-3%20Mapped/SNPP-VIIRS/입니다. 같은 날짜 폴더에 확정판과 NRT판(.NRT.nc)이 함께 있습니다. Earthdata 로그인이 필요합니다.
+  - name: OB.DAAC OPeNDAP (L3 SMI)
+    url: https://oceandata.sci.gsfc.nasa.gov/opendap/VIIRSJ2/L3SMI/
+    method: OPeNDAP (연/월일 폴더, 예 L3SMI/2026/0601/), 원하는 영역만 잘라 읽기
+    note: NOAA-20은 /opendap/VIIRSJ1/L3SMI/, Suomi NPP는 /opendap/VIIRSN/L3SMI/입니다.
+  - name: OB.DAAC File Search
+    url: https://oceandata.sci.gsfc.nasa.gov/api/file_search/
+    method: 파일 이름·기간으로 목록 만들기(wget·curl용 목록)
+
+example:
+  lang: python
+  note: "earthaccess로 NOAA-21 월 엽록소(4 km)를 받아 한반도 주변을 보는 예입니다. NASA Earthdata 계정으로 earthaccess.login()을 한 번 거쳐야 합니다."
+  code: |
+    # pip install earthaccess xarray netCDF4
+    import earthaccess
+    import numpy as np
+    import xarray as xr
+
+    earthaccess.login()
+    results = earthaccess.search_data(
+        short_name="VIIRSJ2_L3m_CHL",           # NOAA-20: VIIRSJ1_L3m_CHL, Suomi NPP: VIIRSN_L3m_CHL
+        granule_name="*.MO.CHL.chlor_a.4km*",   # 일: *.DAY.*, 8일: *.8D.*  (NRT판은 *_NRT 컬렉션)
+        temporal=("2025-01-01", "2025-12-31"),
+    )
+    paths = earthaccess.download(results, "./viirs_chl")
+
+    ds = xr.open_mfdataset(paths, combine="nested", concat_dim="time")
+    ds = ds.sortby("lat")                                    # L3m은 북→남 순서
+    kr = ds["chlor_a"].sel(lat=slice(30, 42), lon=slice(117, 132))
+    print(float(10 ** np.log10(kr).mean()))                 # 엽록소는 로그 평균
+
+tips:
+  - "Suomi NPP 자료로 만든 시계열은 2026-11-02에서 끊깁니다. NESDIS는 NOAA-21을 1순위, NOAA-20을 2순위 대체 자료로 안내하므로, 겹치는 기간(NOAA-21은 2022-11 이후)에 비교한 뒤 바꾸세요."
+  - "Rrs 파장이 위성마다 다릅니다(Suomi NPP 671 nm, NOAA-20·21 667 nm 등). OBPG는 NOAA-20 Rrs(667)가 Suomi NPP Rrs(671)와 약 20% 다르다고 보고했으니 적색 밴드는 위성끼리 섞지 마세요."
+  - "NOAA-21 해색은 R2025.0, Suomi NPP·NOAA-20은 R2022.0(부분 재처리 포함)으로 처리 버전이 다릅니다. NOAA-21은 HyperNAV 현장 자료로 대리 보정을 다시 한 보정 전용 재처리입니다."
+  - "황해·동중국해 연안처럼 부유물이 많은 물에서는 `chlor_a` 불확실성이 크다고 CMR 설명과 ATBD가 경고합니다. 한반도 연안은 GOCI-II나 현장 자료와 비교해 쓰세요."
+  - "NOAA-21 해수면온도는 OB.DAAC에서 만들지 않습니다(2026-10-13 Direct Data Access 목록 기준). NOAA-21 SST가 필요하면 NOAA STAR의 GHRSST 자료를 찾아보세요."
+  - "NOAA-20 SST 확정판 일자료는 2026년 1월 초 이후 Direct Data Access에 보이지 않고 NRT만 있습니다. CMR의 VIIRSJ1_L3m_SST 컬렉션도 그래뉼이 비어 있어 earthaccess로는 찾지 못할 수 있습니다."
+  - "L3 mapped 격자는 고위도로 갈수록 같은 빈 값이 여러 화소에 반복됩니다. 면적 평균은 L3 binned 파일이나 위도 가중으로 계산하세요."
+  - "주간 SST는 일사 가열 영향을 받으므로 기후값·추세에는 야간(NSST)을 쓰는 편이 안전합니다."
+
+citations:
+  dataset:
+    - label: NOAA-21 VIIRS L3 Mapped 엽록소 R2025.0 (OB.DAAC)
+      text: >-
+        NASA Ocean Biology Processing Group. 2025. NOAA-21 VIIRS Level-3 Global Mapped Chlorophyll (CHL) Data, version 2025.0. NASA Ocean Biology Distributed Active Archive Center.
+        https://doi.org/10.5067/NOAA-21/VIIRS/L3M/CHL/2025.0
+      doi: 10.5067/NOAA-21/VIIRS/L3M/CHL/2025.0
+      bibtex: |
+        @misc{obpg2025viirsj2chl,
+          author    = {{NASA Ocean Biology Processing Group}},
+          title     = {{NOAA}-21 {VIIRS} Level-3 Global Mapped Chlorophyll ({CHL}) Data, version 2025.0},
+          year      = {2025},
+          publisher = {NASA Ocean Biology Distributed Active Archive Center},
+          doi       = {10.5067/NOAA-21/VIIRS/L3M/CHL/2025.0}
+        }
+    - label: NOAA-20 VIIRS L3 Mapped 엽록소 R2022.0 (OB.DAAC)
+      text: >-
+        NASA Ocean Biology Processing Group. 2025. NOAA-20 VIIRS Level-3 Global Mapped Chlorophyll (CHL) Data, version 2022.0. NASA Ocean Biology Distributed Active Archive Center.
+        https://doi.org/10.5067/NOAA-20/VIIRS/L3M/CHL/2022.0
+      doi: 10.5067/NOAA-20/VIIRS/L3M/CHL/2022.0
+      bibtex: |
+        @misc{obpg2025viirsj1chl,
+          author    = {{NASA Ocean Biology Processing Group}},
+          title     = {{NOAA}-20 {VIIRS} Level-3 Global Mapped Chlorophyll ({CHL}) Data, version 2022.0},
+          year      = {2025},
+          publisher = {NASA Ocean Biology Distributed Active Archive Center},
+          doi       = {10.5067/NOAA-20/VIIRS/L3M/CHL/2022.0}
+        }
+    - label: Suomi NPP VIIRS L3 Mapped 엽록소 R2022.0 (OB.DAAC)
+      text: >-
+        NASA Ocean Biology Processing Group. 2025. Suomi-NPP VIIRS Level-3 Global Mapped Chlorophyll (CHL) Data, version 2022.0. NASA Ocean Biology Distributed Active Archive Center.
+        https://doi.org/10.5067/SUOMI-NPP/VIIRS/L3M/CHL/2022.0
+      doi: 10.5067/SUOMI-NPP/VIIRS/L3M/CHL/2022.0
+      bibtex: |
+        @misc{obpg2025viirsnchl,
+          author    = {{NASA Ocean Biology Processing Group}},
+          title     = {Suomi-{NPP} {VIIRS} Level-3 Global Mapped Chlorophyll ({CHL}) Data, version 2022.0},
+          year      = {2025},
+          publisher = {NASA Ocean Biology Distributed Active Archive Center},
+          doi       = {10.5067/SUOMI-NPP/VIIRS/L3M/CHL/2022.0}
+        }
+  papers:
+    - label: OCx 엽록소 알고리즘 계수 (R2022에서 사용)
+      text: >-
+        O'Reilly, J. E., Werdell, P. J. (2019): Chlorophyll algorithms for ocean color sensors - OC4, OC5 & OC6. Remote Sensing of Environment, 229, 32–47.
+      doi: 10.1016/j.rse.2019.04.021
+      bibtex: |
+        @article{oreilly2019chl,
+          author  = {O'Reilly, John E. and Werdell, P. Jeremy},
+          title   = {Chlorophyll algorithms for ocean color sensors - {OC4}, {OC5} \& {OC6}},
+          journal = {Remote Sensing of Environment},
+          volume  = {229},
+          pages   = {32--47},
+          year    = {2019},
+          doi     = {10.1016/j.rse.2019.04.021}
+        }
+    - label: 저농도 엽록소 CI 알고리즘
+      text: >-
+        Hu, C., Lee, Z., Franz, B. (2012): Chlorophyll a algorithms for oligotrophic oceans: A novel approach based on three-band reflectance difference.
+        Journal of Geophysical Research: Oceans, 117(C1), 2011JC007395.
+      doi: 10.1029/2011JC007395
+      bibtex: |
+        @article{hu2012ci,
+          author  = {Hu, Chuanmin and Lee, Zhongping and Franz, Bryan},
+          title   = {Chlorophyll a algorithms for oligotrophic oceans: A novel approach based on three-band reflectance difference},
+          journal = {Journal of Geophysical Research: Oceans},
+          volume  = {117},
+          number  = {C1},
+          year    = {2012},
+          doi     = {10.1029/2011JC007395}
+        }
+    - label: OBPG 엽록소 a ATBD v1.1 (2023)
+      text: >-
+        NASA Ocean Biology Processing Group (2023): Chlorophyll a, Algorithm Theoretical Basis Document, version 1.1 (R2022 구현 기준).
+      doi: 10.5067/JCQB8QALDOYD
+  acknowledgement: >-
+    NASA는 실제로 쓴 산출물과 위성(Suomi NPP·NOAA-20·NOAA-21)별 데이터셋 DOI를 인용하라고 요청합니다. 처리 버전(R2022.0·2025.0, SST 2016.2·2024.0)과 NRT 여부를 함께 적으세요.
+
+notices:
+  - date: "2026-08-03"
+    level: critical
+    title: Suomi NPP 과학 자료 전달 2026년 11월 2일 13:00 UTC 종료 — NOAA-21·NOAA-20 판으로 전환
+    body: >-
+      NOAA NESDIS는 VIIRS·ATMS·CERES·OMPS를 포함한 Suomi NPP의 남은 모든 과학 자료 전달을 2026년 11월 2일 13:00 UTC에 영구 중단한다고 공지했고, NOAA-21(1순위)·NOAA-20(2순위)으로 옮기라고 안내했습니다.
+      위성 운용 종료가 아니라 자료 전달 중단이며, NASA는 이미 만든 Suomi NPP 자료를 계속 보관·배포합니다. NASA Earthdata 공지(2026-08-07)는 11월 1일로 적었으나 GES DISC 재공지(2026-10-07)는 11월 2일(2026/306)이고, 날짜는 바뀔 수 있습니다.
+    source: https://www.nesdis.noaa.gov/news/cessation-of-suomi-national-polar-orbiting-partnership-s-npp-data-users-onafter-november-2-2026
+  - date: "2025-10"
+    level: info
+    title: NOAA-21 VIIRS 해색 R2025.0 컬렉션 공개
+    body: >-
+      OBPG가 NOAA-21 VIIRS 해색을 보정만 다시 한 'VIIRS-NOAA21 Ocean Color Reprocessing 2025.0'으로 처리해 L2·L3·L4 컬렉션(version 2025.0)을 냈습니다. 대리 보정 계수를 HyperNAV 현장 복사 측정으로 다시 구해
+      빈영양 해역의 Rrs 편향을 줄였고 줄무늬도 줄었다고 설명합니다. 공지 페이지에 날짜가 없어 DOI 등록일(2025-10-06)을 기준으로 적었습니다.
+    source: https://oceancolor.gsfc.nasa.gov/data/reprocessing/r2025/noaa21
+  - date: "2025-05-02"
+    level: warning
+    title: MODIS에서 VIIRS로 전환 안내 — Terra·Aqua 2026년 말~2027년 초 종료 시작
+    body: >-
+      NASA는 Terra·Aqua가 2026년 말~2027년 초부터 운용 종료에 들어가고 궤도 표류로 자료가 영향을 받을 수 있다며 VIIRS 유사 산출물을 검토하라고 공지했습니다. MODIS 해색 사용자는 이 자료로 옮겨 오게 됩니다.
+    source: https://www.earthdata.nasa.gov/data/alerts-outages/transition-from-modis-viirs
+  - date: "2022-10"
+    level: info
+    title: Suomi NPP·NOAA-20 VIIRS 해색 R2022.0 전 기간 재처리 시작
+    body: >-
+      OBPG가 Suomi NPP와 NOAA-20 VIIRS 해색의 전 기간 재처리(R2022.0)를 2022년 10월에 시작했습니다. VIIRS L1 코드 v3.2(JPSS-2 지원)로 바꾸며 기하 보정을 다시 만들었고,
+      기기·대리 보정, 엽록소 계수, 보조자료를 고쳤습니다. 심해역 평균으로 두 위성과 MODIS Aqua의 엽록소·Rrs 차이는 10% 안이라고 밝혔습니다.
+    source: https://oceancolor.gsfc.nasa.gov/data/reprocessing/r2022/snpp
+
+transitions:
+  - from: VIIRS 해색 R2022.0 (Suomi NPP)
+    to: VIIRS 해색 R2022.0.1·R2022.0.2 (Suomi NPP 부분 재처리)
+    status: completed
+    summary: >-
+      R2022 보정에 남은 시간 표류를 없애 Suomi NPP를 NOAA-21 VIIRS·Aqua MODIS에 더 가깝게 맞춘 부분 재처리입니다. 2020년 말 자료의 작은 보정 오류도 함께 고쳤고, 2020-08-01 이후 자료를 다시 처리했습니다.
+    changes:
+      - aspect: Suomi NPP 보정
+        before: R2022.0 궤도상 보정(시간 표류 남음)
+        after: "표류를 없앤 새 보정(R2022.0.1), 2022년 이후 품질 문제 보정 반영(R2022.0.2)"
+      - aspect: 다시 처리한 기간
+        before: "-"
+        after: 2020-08-01 이후
+    impacts:
+      - "2020-08 이후 Suomi NPP 값이 바뀌었으니 예전에 받은 파일과 섞지 말고 다시 받으세요."
+    sources:
+      - name: OBPG — VIIRS-SNPP R2022.0.1
+        url: https://oceancolor.gsfc.nasa.gov/data/reprocessing/r2022.0.1/snpp
+      - name: OBPG — VIIRS-SNPP R2022.0.2
+        url: https://oceancolor.gsfc.nasa.gov/data/reprocessing/r2022.0.2/snpp
+  - from: Suomi NPP VIIRS 해양
+    to: NOAA-21·NOAA-20 VIIRS 해양
+    status: planned
+    date: "2026-11"
+    summary: >-
+      NOAA가 Suomi NPP 자료 전달을 2026-11-02 13:00 UTC에 끝내면 Suomi NPP판은 그 뒤 새 자료가 없습니다. 같은 VIIRS 센서·같은 OBPG 처리로 만든 NOAA-21(1순위)·NOAA-20(2순위) 판으로 옮기면 되지만,
+      처리 버전·밴드 중심 파장·제공 산출물이 조금씩 다릅니다.
+    changes:
+      - aspect: 기간
+        before: "2012-01-02~2026-11-02(전달 종료)"
+        after: "NOAA-20 2017-11-29~ / NOAA-21 2022-11-10~"
+      - aspect: 해색 처리 버전
+        before: R2022.0(부분 재처리 R2022.0.2)
+        after: "NOAA-20 R2022.0(R2022.0.2) / NOAA-21 R2025.0"
+      - aspect: 원격 반사도 파장
+        before: "`Rrs_410`·`Rrs_443`·`Rrs_486`·`Rrs_551`·`Rrs_671`"
+        after: "`Rrs_411`·`Rrs_445`·`Rrs_489`·`Rrs_556`·`Rrs_667`"
+      - aspect: 해수면온도
+        before: "SST·NSST·SST3 (version 2016.2)"
+        after: "NOAA-20 SST·NSST·SST3 (version 2024.0, 2026년 이후 NRT만 확인) / NOAA-21은 OB.DAAC SST 없음"
+      - aspect: 파일 이름 접두
+        before: SNPP_VIIRS
+        after: "JPSS1_VIIRS(NOAA-20)·JPSS2_VIIRS(NOAA-21)"
+    impacts:
+      - "Rrs 변수 이름이 바뀌므로 스크립트의 변수명을 고쳐야 합니다. 적색 밴드(671 → 667 nm)는 값 차이가 커서(OBPG 보고 약 20%) 그대로 이을 수 없습니다."
+      - "Suomi NPP와 NOAA-20·21의 엽록소는 심해역 평균으로 10% 안에서 맞지만 지역 차이는 더 클 수 있으니 겹치는 기간에 비교한 뒤 바꾸세요."
+      - "Suomi NPP 해수면온도(2016.2)를 이어 쓰려면 NOAA-20 SST(2024.0)뿐이며, 처리 버전이 달라 단순 연결은 피하세요."
+    sources:
+      - name: NOAA NESDIS — Cessation of S-NPP data to users on/after November 2, 2026
+        url: https://www.nesdis.noaa.gov/news/cessation-of-suomi-national-polar-orbiting-partnership-s-npp-data-users-onafter-november-2-2026
+      - name: NASA Earthdata — Suomi NPP Data Product Delivery to Cease (2026-08-07)
+        url: https://www.earthdata.nasa.gov/data/alerts-outages/suomi-npp-data-product-delivery-cease-november-1-2026
+      - name: OBPG — VIIRS-NOAA20 R2022.0 (센서 간 Rrs 차이)
+        url: https://oceancolor.gsfc.nasa.gov/data/reprocessing/r2022/noaa20
+
+links:
+  - name: OB.DAAC — VIIRS-SNPP 자료 안내
+    url: https://oceancolor.gsfc.nasa.gov/data/viirs-snpp/
+  - name: OBPG — VIIRS-NOAA21 R2025.0
+    url: https://oceancolor.gsfc.nasa.gov/data/reprocessing/r2025/noaa21
+  - name: OBPG — VIIRS-NOAA20 R2022.0
+    url: https://oceancolor.gsfc.nasa.gov/data/reprocessing/r2022/noaa20
+  - name: OBPG — VIIRS-SNPP R2022.0
+    url: https://oceancolor.gsfc.nasa.gov/data/reprocessing/r2022/snpp
+  - name: OBPG — Product Status (센서별 현재 버전)
+    url: https://oceancolor.gsfc.nasa.gov/data/product_status
+  - name: NASA GES DISC 공지 목록 (S-NPP 전달 종료 재공지 2026-10-07)
+    url: https://disc.gsfc.nasa.gov/api/alerts?page=1&size=10
+  - name: Earthdata 포럼 — Suomi NPP Data Product Delivery To Cease (LP DAAC·LAADS 답변)
+    url: https://forum.earthdata.nasa.gov/viewtopic.php?p=26446
+  - name: OBPG 엽록소 a ATBD (PDF)
+    url: https://oceancolor.gsfc.nasa.gov/files/atbd/atbd-obdaac-chlorophyll-a.pdf
+  - name: 이 사이트 — MODIS 해양 (이전 자료, MODIS → VIIRS 비교)
+    url: ../modis-ocean/
+  - name: 이 사이트 — PACE OCI (초분광 해색)
+    url: ../pace-oci/
+  - name: 이 사이트 — ESA OC-CCI (다중 위성 해색 기후자료)
+    url: ../oc-cci/
+  - name: 이 사이트 — GOCI-II (한반도 주변 정지궤도 해색)
+    url: ../goci2/
+  - name: 이 사이트 — VIIRS 지표면온도 (같은 위성의 S-NPP 종료 안내)
+    url: ../viirs-lst/
+
+watch_urls:
+  - https://oceancolor.gsfc.nasa.gov/data/reprocessing/
+  - https://www.nesdis.noaa.gov/news/cessation-of-suomi-national-polar-orbiting-partnership-s-npp-data-users-onafter-november-2-2026
+
+last_verified: "2026-10-13"

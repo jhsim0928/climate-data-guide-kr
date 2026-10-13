@@ -1,0 +1,320 @@
+# ─────────────────────────────────────────────────────────────
+# ESA Sea State CCI — 데이터셋 정보 파일
+# 위성 탭(해면고도·파랑), 해양 탭(위성 관측 자료) 교차 수록. 여러 위성 고도계 유의파고를 상호 보정한 기후자료(L2P 궤도·L3 일·L4 월 1°)와 Sentinel-1 SAR 파랑 자료.
+# 2026-10-13 확인 시 최신판은 v4(1991-08~2023-12)이며 CEDA에 2026-07-08 DOI와 함께 올라와 있습니다(갱신 계획 없음).
+# 수정 후에는 공식 페이지에서 확인한 날짜로 last_verified 를 갱신하세요.
+# ─────────────────────────────────────────────────────────────
+id: esa-cci-sea-state
+name: ESA Sea State CCI v4
+full_name: >-
+  ESA Sea State Climate Change Initiative (Sea_State_cci) version 4 — 다중 위성 고도계 유의파고 L2P·L3·L4와 Sentinel-1 SAR 파랑 L2P (위성 해상 파랑 기후자료)
+category: satellite
+domain: satellite
+group: 해면고도·파랑
+order: 30
+also_in:
+  - domain: ocean
+    group: 위성 관측 자료
+domains: [해양, 해양파랑, 원격탐사]
+provider: 유럽우주국(ESA) 기후변화 이니셔티브(CCI) Sea State 과제 — 자료 생산·배포 Ifremer(프랑스) / 기록 보관 영국 CEDA
+
+status: active
+status_note: >-
+  v4가 최신판입니다. Ifremer가 2025년 8월 임시판으로 먼저 내놓았고, 2026-07-08 CEDA에 DOI가 붙은 정식 기록(고도계 L2P·L3·L4, SAR L2P)으로 올라왔습니다.
+  CCI 자료는 버전 단위로 내는 연구용 기후자료라 정기 갱신은 없으며(CEDA 'Completed', 갱신 'Not Planned'), 2026-10-13 확인 시 고도계 기록은 2023-12-31에서 끝납니다.
+  과제는 2단계(Phase 2)로 이어지고 있고 2026년부터 Copernicus 기후변화 서비스(C3S)에 입력을 제공한다고 과제 페이지가 밝히지만, 다음 버전 일정은 공지되지 않았습니다.
+
+period:
+  start: "1991-08"
+  end: "2023-12"
+  note: >-
+    고도계 L2P·L3는 1991-08-03~2023-12-31, L4 월자료는 1992-01~2023-12입니다(CEDA 기준). v4에서 ERS-1·ERS-2·TOPEX/Poseidon을 넣어 1990년대로 늘었고(v3는 2002-06~2021-01),
+    Sentinel-1 SAR Wave Mode 유의파고는 2015-03-19~2025-06-11, Sentinel-1 WV 통합 해상 상태 변수(ISSP, DLR)는 2014-12-01~2024-12-30까지입니다.
+
+resolution:
+  spatial_short: "111 km (1°)"
+  temporal_short: "1일"
+  spatial: >-
+    고도계 L2P·L3 — 궤도 따라 1 Hz 평균 값(CEDA L3 설명 '약 6 km', 사용자 안내서 요약 '7 km' 간격) /
+    L4 — 전지구 1°×1° 정규 원통 투영(위경도) 격자 / Sentinel-1 SAR Wave Mode — 약 20 km 크기 이미지렛, 진행 방향 100 km 간격
+  vertical: 해면 단일층 (유의파고)
+  temporal: >-
+    L2P — 위성 pass 단위 파일, 1 Hz 관측 순간값 / L3 — 여러 위성을 합친 하루 파일(궤도 자료 그대로) / L4 — 월 통계(평균·최대·RMS·개수)
+coverage:
+  short: 준전지구
+  note: "고도계가 지나는 바다만 관측됩니다. L3 범위는 80°S~80°N(CEDA). 해빙이 섞인 관측은 품질 등급이 낮아 L3·L4에서 빠집니다"
+update: 정기 갱신 없음 — 버전 단위 재처리 공개(v1.1 2020-01, v3 2022-10, v4 2026-07 CEDA 등록)
+license: >-
+  ESA CCI Sea State 이용 조건(모든 용도 사용 가능). ESA CCI·Sea State CCI 과제·자료 제공자를 사사하고 데이터셋 DOI를 인용하며, 자료를 쓴 보고서·논문 사본을 CCI에 보내 달라고 요청합니다
+account_required: false
+
+summary: >-
+  ESA 기후변화 이니셔티브(CCI)가 만든 위성 해상 파랑 기후자료입니다. ERS-1부터 Sentinel-6A까지 고도계 12기의 파형을 다시 처리(재추적, WHALES 등)하고
+  Jason-3 기준으로 위성 간 편차를 맞춘 뒤, 부이로 보정하고 경험 모드 분해(EMD)로 잡음을 줄인 유의파고를 궤도 자료(L2P), 하루 병합 궤도 자료(L3), 1° 월 통계 격자(L4)로 제공합니다.
+  v4는 1991~2023년을 덮고, Sentinel-1 SAR 영상에서 얻은 유의파고·해상 상태 변수(L2P)도 함께 냅니다. 파랑 기후 변화, 파랑 모델·재분석 검증, 해안 공학에 쓰입니다.
+
+time_convention:
+  summary: >-
+    L2P·L3의 값은 위성이 지난 순간의 1 Hz 관측(전해상도 관측의 중앙값)이고, L3는 하루 동안 모든 위성의 좋은 품질 관측을 한 파일에 모은 것입니다.
+    L4는 달마다 각 1° 칸을 지난 pass별 중앙값을 먼저 구하고, 그 중앙값들로 평균·최대·RMS·개수 같은 월 통계를 낸 값입니다.
+  points:
+    - "파일명 예 — L2P ESACCI-SEASTATE-L2P-SWH-Jason-2-20170130T145103-fv01.nc(파일 첫 관측 시각), L3 ESACCI-SEASTATE-L3-SWH-MULTI_1D-20170130-fv01.nc, L4 ESACCI-SEASTATE-L4-SWH-MULTI_1M-201701-fv01.nc"
+    - "1 Hz 값은 20 Hz(Envisat·TOPEX 18 Hz, SARAL 40 Hz) 전해상도 관측 가운데 유효한 점의 중앙값입니다. 유효 점이 6개(SARAL 12개) 미만이면 불량으로 표시됩니다."
+    - "L4의 swh_mean은 하루하루를 고르게 평균한 값이 아니라 그달 위성이 지나간 pass의 중앙값들의 평균입니다. 위성이 지나지 않은 때의 파랑은 반영되지 않습니다."
+    - "L4의 swh_max는 관측된 pass 중앙값 가운데 최댓값이라, 위성이 지나지 않은 폭풍의 최대 파고는 담기지 않습니다."
+    - "L4에는 swh_sum·swh_squared_sum·swh_count가 있어 여러 달·여러 칸의 평균·분산을 개수 가중으로 다시 계산할 수 있습니다."
+  source: https://umr-lops.github.io/cci-seastate-pum/v4.0/altimetry/l4.html
+  source_name: CCI Sea State Product User Guide v4.0 (L2P·L3·L4·처리 상세)
+
+variables:
+  note: >-
+    변수 이름은 CCI Sea State 사용자 안내서 v4.0과 CEDA v4 카탈로그 기준입니다. 거의 모든 용도에 `swh_denoised`(위성 간 편차 보정 + 잡음 제거)를 쓰라고 안내서가 권장합니다.
+    L3·L4는 L2P에서 품질 등급 3(좋음)인 Ku 밴드 관측만 씁니다(SARAL만 Ka 밴드).
+  full_list: https://umr-lops.github.io/cci-seastate-pum/v4.0/altimetry/l2p.html
+  groups:
+    - name: 고도계 L2P·L3 (궤도 1 Hz)
+      kind: instant
+      items:
+        - text: "유의파고(편차 보정·잡음 제거, 권장) — `swh_denoised` (m)"
+          note: swh_adjusted에 EMD 잡음 제거를 적용한 값
+        - text: "유의파고(위성 간 편차 보정) — `swh_adjusted` (m)"
+        - text: "유의파고(재추적기 원값, 편차 보정 없음) — `swh` (m)"
+        - "유의파고 불확실성 — `swh_uncertainty` (m)"
+        - text: "유의파고 품질 등급(0 미정·1 불량·2 사용 가능·3 좋음, L2P) — `swh_quality_level`"
+          std: []
+        - text: "위성 식별 코드·사이클·상대 pass 번호(L3) — `satellite`, `cycle`, `relative_pass`"
+          std: []
+        - text: "해안까지 거리 — `distance_to_coast` (m)"
+          kind: static
+          std: []
+        - text: "수심(GEBCO 2024) — `bathymetry` (m)"
+          kind: static
+          std: []
+    - name: 고도계 L2P 보조 자료 (관측 지점에 맞춘 모델·해빙 값)
+      kind: instant
+      items:
+        - text: "해빙 비율 — `sea_ice_fraction` (1)"
+          std: []
+        - text: "ERA5 유의파고(풍랑+너울) — `era5_swh` (m)"
+          note: 모델 값(관측 아님)
+        - text: "WAVEWATCH III 후측 유의파고 — `ww3_swh` (m)"
+          note: 고도계와 독립인 모델 값
+    - name: 고도계 L4 (1° 월 통계)
+      kind: mean
+      period: 월
+      items:
+        - text: "월평균 유의파고 — `swh_mean` (m)"
+          note: pass별 칸 중앙값들의 평균
+        - text: "월 최대 유의파고 — `swh_max` (m)"
+          kind: max
+          note: pass별 칸 중앙값 가운데 최댓값
+        - text: "유의파고 제곱평균제곱근 — `swh_rms` (m)"
+        - text: "평균에 쓴 pass 중앙값 개수 — `swh_count` (개)"
+          std: []
+        - text: "문턱값(0.5~10 m)을 넘은 개수 — `swh_count_greater_than_0.50` … `swh_count_greater_than_10.00` (개)"
+          kind: accum
+          std: []
+        - text: "합계·제곱합(재평균용) — `swh_sum`, `swh_squared_sum` (m, m2)"
+          kind: accum
+          std: []
+
+access:
+  - name: CEDA — 고도계 L4 월 1° 격자 v4
+    url: https://catalogue.ceda.ac.uk/uuid/315d8e013696420192f1ea1d9191ca9c/
+    method: HTTPS·OPeNDAP·익명 FTP (data.ceda.ac.uk/neodc/esacci/sea_state/data/v4_release/altimeter/l4/v4.0/)
+    note: "L2P는 catalogue.ceda.ac.uk/uuid/baeb32fd74cb49a1b67a6a4164ff0899, L3는 catalogue.ceda.ac.uk/uuid/82273fe59b784e7c914e1bd3049e3483 기록에서 같은 방식으로 받습니다."
+    login: false
+  - name: Ifremer CERSAT — Sea State CCI v4 자료 서버
+    url: https://data-cersat.ifremer.fr/data/ocean-waves/cci-seastate/v4/
+    method: "HTTPS / FTP (ftp://ftp.ifremer.fr/ifremer/cersat/data/ocean-waves/cci-seastate/v4/)"
+    note: "로그인 없이 받을 수 있습니다. 경로는 data/satellite/altimeter/l2p·l3·l4(그리고 data/satellite/sar)이며, L4는 연도 폴더 아래 월 파일(예 l4/2020/ESACCI-SEASTATE-L4-SWH-MULTI_1M-202001-fv01.nc)입니다."
+    login: false
+  - name: Ifremer THREDDS — L4 원격 부분 추출
+    url: https://tds0.ifremer.fr/thredds/catalogs/ESACCI-SEASTATE-L4-SWH-MULTI_1M.html
+    method: OPeNDAP / THREDDS (L4만)
+    login: false
+  - name: ESA CCI Sea State 자료 추출 서비스
+    url: https://cci-seastate.ifremer.fr/
+    method: 웹에서 영역·위성·기간·변수를 골라 추출(Python·R·cURL 코드 생성)
+  - name: ESA Climate Office — Sea State 자료 목록
+    url: https://climate.esa.int/en/projects/sea-state/data/
+    method: 웹 (버전별 CEDA 카탈로그·DOI 목록)
+
+example:
+  lang: python
+  note: "Ifremer 서버에서 L4 월 파일을 받아 한반도 주변 월평균 유의파고를 보는 예입니다. 로그인은 필요 없습니다."
+  code: |
+    # pip install xarray netCDF4 requests
+    import requests, xarray as xr
+
+    base = "https://data-cersat.ifremer.fr/data/ocean-waves/cci-seastate/v4/data/satellite/altimeter/l4/"
+    fname = "ESACCI-SEASTATE-L4-SWH-MULTI_1M-202001-fv01.nc"      # 연도 폴더 아래 월 파일
+    with open(fname, "wb") as f:
+        f.write(requests.get(base + "2020/" + fname, timeout=120).content)
+
+    ds = xr.open_dataset(fname)
+    box = ds.where((ds.lat >= 30) & (ds.lat <= 42) & (ds.lon >= 120) & (ds.lon <= 135), drop=True)  # 한반도 주변
+    print(box["swh_mean"].values.round(2))
+    print("칸별 pass 수:", box["swh_count"].values)                  # 표본이 적은 칸은 조심
+
+tips:
+  - "안내서는 거의 모든 용도에 `swh_denoised`를 권장합니다. `swh`는 위성 간 편차 보정 전 값이라 여러 위성을 섞어 쓰면 위성이 바뀔 때 계단이 생길 수 있습니다."
+  - "L4는 위성이 지나간 순간들만으로 만든 월 통계입니다. 한반도 주변처럼 칸이 작고 위성 수가 시기마다 달라지는 곳은 swh_count가 작은 칸·달의 평균과 최댓값을 조심해서 보세요."
+  - "태풍 같은 고파고 영역에서는 위성 간 편차 보정이 덜 확실합니다(직접 비교 자료가 적은 5~10 m 구간, 10 m 이상은 외삽). 극값 분석에는 부이·모델과 함께 확인하세요."
+  - "해빙 농도 10% 초과는 품질 1, 0~10%는 품질 2로 표시되어 L3·L4에서 빠집니다. 겨울철 오호츠크해·발해처럼 해빙이 생기는 바다는 그 계절 자료가 비거나 표본이 적습니다."
+  - "1990년대(ERS-1·ERS-2·TOPEX)는 위성 수가 적고, TOPEX는 사이클 16 이전 제외·Side A/B 분리·기록기 노후로 인한 공백이 있다고 안내서가 밝힙니다. 장기 추세를 볼 때는 시기별 표본 수 변화를 함께 보세요."
+  - "재추적기가 위성마다 다릅니다 — Jason-1·2·3, Envisat, CryoSat-2, SARAL은 WHALES, ERS·TOPEX는 MLE3, Sentinel-3A/B·Sentinel-6A는 MLE4. 위성별 비교 시 이를 고려하세요."
+  - "L2P에는 관측 지점에 맞춘 ERA5·WAVEWATCH III 파고(era5_swh, ww3_swh)가 함께 들어 있어, 별도 모델 자료를 내려받지 않고도 모델 검증을 바로 할 수 있습니다."
+  - "v3(2002-06~2021-01)와 v4는 재추적기 판·수심·육지 마스크 처리가 달라 섞지 마세요. v1.1·v3를 쓴 이전 결과와 비교할 때는 v4로 다시 계산하는 것이 안전합니다."
+
+citations:
+  dataset:
+    - label: Sea State CCI v4 고도계 L4 월 1° 격자 (CEDA)
+      text: >-
+        Piollé, J.-F.; Dodet, G.; Ardhuin, F.; Passaro, M. (2026): ESA Sea State Climate Change Initiative (Sea_State_cci): Global remote sensing merged multi-mission
+        monthly gridded significant wave height from altimetry, L4 product, version 4. NERC EDS Centre for Environmental Data Analysis, 08 July 2026. doi:10.5285/315d8e013696420192f1ea1d9191ca9c
+      doi: 10.5285/315d8e013696420192f1ea1d9191ca9c
+      bibtex: |
+        @misc{piolle2026seastatel4,
+          author    = {Pioll{\'e}, Jean-Fran{\c{c}}ois and Dodet, Guillaume and Ardhuin, Fabrice and Passaro, Marcello},
+          title     = {{ESA} Sea State Climate Change Initiative (Sea\_State\_cci): Global remote sensing merged multi-mission monthly gridded significant wave height from altimetry, {L4} product, version 4},
+          year      = {2026},
+          publisher = {NERC EDS Centre for Environmental Data Analysis},
+          doi       = {10.5285/315d8e013696420192f1ea1d9191ca9c}
+        }
+    - label: Sea State CCI v4 고도계 L3 일 병합 궤도 자료 (CEDA)
+      text: >-
+        Piollé, J.-F.; Dodet, G.; Ardhuin, F.; Passaro, M. (2026): ESA Sea State Climate Change Initiative (Sea_State_cci): Global remote sensing daily merged multi-mission
+        along-track significant wave height from altimetry, L3 product, version 4. NERC EDS Centre for Environmental Data Analysis, 08 July 2026. doi:10.5285/82273fe59b784e7c914e1bd3049e3483
+      doi: 10.5285/82273fe59b784e7c914e1bd3049e3483
+      bibtex: |
+        @misc{piolle2026seastatel3,
+          author    = {Pioll{\'e}, Jean-Fran{\c{c}}ois and Dodet, Guillaume and Ardhuin, Fabrice and Passaro, Marcello},
+          title     = {{ESA} Sea State Climate Change Initiative (Sea\_State\_cci): Global remote sensing daily merged multi-mission along-track significant wave height from altimetry, {L3} product, version 4},
+          year      = {2026},
+          publisher = {NERC EDS Centre for Environmental Data Analysis},
+          doi       = {10.5285/82273fe59b784e7c914e1bd3049e3483}
+        }
+    - label: Sea State CCI v4 고도계 L2P 궤도 자료 (CEDA)
+      text: >-
+        Piollé, J.-F.; Dodet, G.; Ardhuin, F.; Passaro, M. (2026): ESA Sea State Climate Change Initiative (Sea_State_cci): Global remote sensing multi-mission
+        along-track significant wave height from altimetry, L2P product, version 4. NERC EDS Centre for Environmental Data Analysis, 08 July 2026. doi:10.5285/baeb32fd74cb49a1b67a6a4164ff0899
+      doi: 10.5285/baeb32fd74cb49a1b67a6a4164ff0899
+      bibtex: |
+        @misc{piolle2026seastatel2p,
+          author    = {Pioll{\'e}, Jean-Fran{\c{c}}ois and Dodet, Guillaume and Ardhuin, Fabrice and Passaro, Marcello},
+          title     = {{ESA} Sea State Climate Change Initiative (Sea\_State\_cci): Global remote sensing multi-mission along-track significant wave height from altimetry, {L2P} product, version 4},
+          year      = {2026},
+          publisher = {NERC EDS Centre for Environmental Data Analysis},
+          doi       = {10.5285/baeb32fd74cb49a1b67a6a4164ff0899}
+        }
+  papers:
+    - label: Sea State CCI 자료 소개 논문 (v1)
+      text: >-
+        Dodet, G., Piollé, J.-F., Quilfen, Y., Abdalla, S., Accensi, M., Ardhuin, F., Ash, E., Bidlot, J.-R., Gommenginger, C., Marechal, G., Passaro, M., Quartly, G., Stopa, J.,
+        Timmermans, B., Young, I., Cipollini, P., Donlon, C. (2020): The Sea State CCI dataset v1: towards a sea state climate data record based on satellite observations.
+        Earth System Science Data, 12(3), 1929–1951.
+      doi: 10.5194/essd-12-1929-2020
+      bibtex: |
+        @article{dodet2020seastate,
+          author  = {Dodet, Guillaume and Pioll{\'e}, Jean-Fran{\c{c}}ois and Quilfen, Yves and Abdalla, Saleh and Accensi, Micka{\"e}l and Ardhuin, Fabrice and Ash, Ellis and Bidlot, Jean-Raymond and Gommenginger, Christine and Marechal, Gwendal and Passaro, Marcello and Quartly, Graham and Stopa, Justin and Timmermans, Ben and Young, Ian and Cipollini, Paolo and Donlon, Craig},
+          title   = {The Sea State {CCI} dataset v1: towards a sea state climate data record based on satellite observations},
+          journal = {Earth System Science Data},
+          volume  = {12},
+          number  = {3},
+          pages   = {1929--1951},
+          year    = {2020},
+          doi     = {10.5194/essd-12-1929-2020}
+        }
+  acknowledgement: >-
+    ESA CCI 이용 조건에 따라 발표·논문에 ESA Climate Change Initiative, Sea State CCI 과제, 자료 제공자를 사사하고 사용한 데이터셋 DOI를 인용합니다.
+    CCI 자료가 연구의 핵심이라면 공동 저자 제안을 고려하고, 결과물 사본을 CCI에 보내 달라고 요청합니다.
+
+notices:
+  - date: "2026-07-08"
+    level: info
+    title: v4 정식 기록 CEDA 등록 (DOI 부여)
+    body: >-
+      고도계 L2P·L3(1991-08~2023-12)·L4(1992-01~2023-12) v4와 Sentinel-1 SAR L2P(Wave Mode 유의파고 2015-03~2025-06, ISSP 등) v4가 CEDA에 DOI와 함께 올라왔습니다.
+      모두 'Completed'이며 이후 갱신 계획은 없습니다.
+    source: https://catalogue.ceda.ac.uk/uuid/315d8e013696420192f1ea1d9191ca9c/
+  - date: "2025-08"
+    level: info
+    title: v4 공개 — 1991~2023년으로 확장, Sentinel-1 IW·EW SAR 산출물 추가
+    body: >-
+      ERS-1·ERS-2·TOPEX/Poseidon을 넣어 기록을 1990년대 초로 늘리고, Jason-3·SARAL·CryoSat-2를 3년 연장하고 Sentinel-3A/B·Sentinel-6A를 더해 2023년 12월까지 확장했습니다.
+      수심을 GEBCO 2024로 바꾸고 육지 마스크를 해안 거리 기반으로 바꿨으며, Sentinel-1 IW·EW 모드 SAR 산출물이 새로 나왔습니다. 처음에는 Ifremer 서버에 임시판으로 공개되었습니다.
+    source: https://umr-lops.github.io/cci-seastate-pum/v4.0/intro.html
+  - date: "2022-10-10"
+    level: info
+    title: v3 공개 (2002-06~2021-01)
+    body: >-
+      고도계 L2P·L3·L4 v3와 Envisat·Sentinel-1 SAR 산출물이 CEDA에 공개되었습니다. 기간을 2020년 말까지 늘리고 Sentinel-3 SAR 고도계 자료와 보조 변수를 추가한 판입니다.
+    source: https://catalogue.ceda.ac.uk/uuid/9c350d4ff7ee438f9f1fc7252cbb2282
+  - date: "2020-01-30"
+    level: info
+    title: v1.1 공개 (1991-07~2018-12)
+    body: >-
+      GlobWave 과제의 처리를 이어받은 첫 기후자료 판(L2P·L3·L4)이 CEDA에 공개되었습니다. 이후 v3·v4로 대체되었습니다.
+    source: https://catalogue.ceda.ac.uk/uuid/47140d618dcc40309e1edbca7e773478
+
+transitions:
+  - from: Sea State CCI v3
+    to: Sea State CCI v4
+    status: completed
+    date: "2025-08"
+    summary: >-
+      기록을 1991~2023년으로 늘리고(이전 2002~2021), 1990년대 위성 3기와 최신 위성 3기를 더한 판입니다. 수심·육지 마스크·Jason-3 재추적 파일이 바뀌고 Sentinel-1 IW·EW SAR 산출물이 추가되었습니다.
+    changes:
+      - aspect: 기간
+        before: "L4 2002-06~2021-01 (L2P·L3 2002~2021)"
+        after: "L2P·L3 1991-08~2023-12, L4 1992-01~2023-12"
+      - aspect: 고도계 위성
+        before: "Jason-1·2·3, Envisat, CryoSat-2, SARAL, Sentinel-3 등"
+        after: "ERS-1, ERS-2, TOPEX/Poseidon, Sentinel-3A/B, Sentinel-6A 추가 — 모두 12기"
+      - aspect: 수심·육지 마스크
+        before: 이전 수심 자료, 이전 육지 마스크
+        after: "GEBCO 2024 수심, 해안까지 거리로 육지 마스크 계산"
+      - aspect: Jason-3 입력
+        before: 이전 재추적 파일
+        after: 재추적 파일 판 갱신
+      - aspect: SAR 산출물
+        before: "Envisat·Sentinel-1 Wave Mode"
+        after: "Sentinel-1 IW·EW 모드 추가, Wave Mode 기록 2024~2025년까지 연장"
+      - aspect: DOI
+        before: "L4 10.5285/9c350d4ff7ee438f9f1fc7252cbb2282"
+        after: "L4 10.5285/315d8e013696420192f1ea1d9191ca9c"
+    impacts:
+      - v3와 v4 파일을 한 시계열에 섞지 마세요. 2002~2020년 구간도 v4로 다시 받으면 같은 처리로 이어집니다.
+      - "1990년대가 추가되었지만 그 시기는 위성 수가 적고 재추적기(MLE3)가 다르므로 장기 추세 분석 때 시기별 표본 수를 함께 확인하세요."
+    sources:
+      - name: CCI Sea State Product User Guide v4.0 — Changes
+        url: https://umr-lops.github.io/cci-seastate-pum/v4.0/changes.html
+      - name: CEDA — v4 L4 기록
+        url: https://catalogue.ceda.ac.uk/uuid/315d8e013696420192f1ea1d9191ca9c/
+      - name: CEDA — v3 L4 기록
+        url: https://catalogue.ceda.ac.uk/uuid/9c350d4ff7ee438f9f1fc7252cbb2282
+
+links:
+  - name: ESA Climate Office — Sea State 과제
+    url: https://climate.esa.int/en/projects/sea-state/
+  - name: ESA Climate Office — Sea State 자료 목록 (버전별)
+    url: https://climate.esa.int/en/projects/sea-state/data/
+  - name: CCI Sea State Product User Guide v4.0 (웹)
+    url: https://umr-lops.github.io/cci-seastate-pum/v4.0/intro.html
+  - name: Product User Guide v4.0 (PDF)
+    url: https://climate.esa.int/documents/3051/1_Sea_State_cci_PUG_V4.pdf
+  - name: 처리 상세 (재추적기·위성 간 보정·품질 관리)
+    url: https://umr-lops.github.io/cci-seastate-pum/v4.0/altimetry/baseline.html
+  - name: ESA CCI Sea State 이용 조건 (PDF)
+    url: https://artefacts.ceda.ac.uk/licences/specific_licences/esacci_sea_state_terms_and_conditions.pdf
+  - name: 이 사이트 — SWOT KaRIn 해수면 높이·유의파고
+    url: ../swot/
+  - name: 이 사이트 — DUACS 다중 위성 고도계 L4 해수면
+    url: ../duacs/
+
+watch_urls:
+  - https://climate.esa.int/en/projects/sea-state/data/
+  - https://climate.esa.int/en/projects/sea-state/
+
+last_verified: "2026-10-13"

@@ -1,0 +1,299 @@
+# ─────────────────────────────────────────────────────────────
+# AVHRR Pathfinder SST v5.3 — dataset information file (English edition)
+# Satellite tab (sea surface temperature), cross-listed in the ocean tab (satellite observations). NOAA NCEI's 4 km day/night L3C skin SST climate data record from AVHRR on NOAA polar orbiters.
+# NCEI announced on 2025-09-03 that updates have stopped; the record runs from 1981-08-25 to 2023-12-31 (no official successor).
+# After editing, update last_verified to the date you checked the official pages.
+# ─────────────────────────────────────────────────────────────
+id: avhrr-pathfinder
+name: AVHRR Pathfinder SST v5.3
+full_name: >-
+  AVHRR Pathfinder version 5.3 level 3 collated (L3C) global 4km sea surface temperature
+  (NOAA NCEI AVHRR Pathfinder SST climate data record, 4 km day/night L3C)
+category: satellite
+domain: satellite
+group: 해수면온도
+order: 80
+also_in:
+  - domain: ocean
+    group: 위성 관측 자료
+domains: [해양, 원격탐사]
+provider: NOAA National Centers for Environmental Information (NCEI)
+
+status: ended
+status_note: >-
+  Through a NOAA NESDIS Notice of Changes posted on 2025-09-03, NCEI announced that it has discontinued the AVHRR Pathfinder SST product and Climate Data Record, with no updates beyond 2023-12-31.
+  The NCEI product page states "This product is no longer updated. The period of record is 1981–2023.", and on 2026-10-13 the NCEI archive record (accession) was marked "Complete".
+  The archived data remain authoritative and available from NCEI.
+successor:
+  name: None (no successor announced by NCEI)
+  url: https://www.ncei.noaa.gov/products/avhrr-pathfinder-sst
+  note: >-
+    Neither the discontinuation notice nor the product page names a successor. The "future version" plans on the product page (filling the 1994–1995 gap, populating empty variables and so on) remain unscheduled.
+    If you need a satellite SST climate record that includes AVHRR and continues past 2023, consider ESA SST CCI CDR v3 (from 1980, extended daily by an ICDR), but do not splice it onto this record: the processing systems differ.
+
+period:
+  start: "1981-08"
+  end: "2023-12"
+  note: >-
+    The NCEI archive record covers 1981-08-25 to 2023-12-31 (the NOAA CoastWatch ERDDAP copy has the same range). The 2023 files come from AVHRR/3 on NOAA-19.
+    NCEI notes that part of September 1994 to February 1995 was temporarily filled with the earlier PFV5.0 data because of a gap in the source data, and that previous-year aerosol values were used in that period.
+
+resolution:
+  spatial_short: "4 km (0.04°)"
+  temporal_short: "1일"
+  spatial: >-
+    0.0416667° equal-angle latitude–longitude grid of 8640 × 4320 (global; latitude ordered from 90°N to 90°S). The algorithm document gives about 4.63 km per bin at the equator
+  vertical: Single sea-surface value — skin SST
+  temporal: >-
+    Two files per day — separate daytime and nighttime daily L3C files (observations from one satellite collated onto a daily grid). Version 5.3 has no monthly or 8-day composites
+coverage:
+  short: 전지구
+  note: "Global ocean. An L3 product with gaps where there is cloud, sea ice or low quality (no gap filling). l2p_flags marks land, ice, lakes and rivers"
+update: "Discontinued — the last data date is 2023-12-31 (discontinuation notice of 2025-09-03)"
+license: >-
+  Open data; the file attribute reads "These data are available for use without restriction." NCEI makes no warranty for the data and asks users to credit them with
+  "These data were provided by GHRSST and the NOAA National Centers for Environmental Information."
+account_required: false
+
+summary: >-
+  A long-term climate data record of skin SST, consistently reprocessed from 4 km GAC observations by the Advanced Very High Resolution Radiometer (AVHRR) on NOAA polar-orbiting weather satellites since 1981.
+  SST is computed with a non-linear regression algorithm whose coefficients come from matchups of in situ and satellite data (Kilpatrick et al. 2001), within a processing system rebuilt on NASA SeaDAS 6.4,
+  and is delivered as daily L3C files split into day and night. The values are satellite observations without statistical gap filling, so unlike an analysis they exist only where and when the sensor actually saw the sea.
+  Version 5.3, the last version, adds quality level 0 data, better sun glint handling and an updated land mask compared with 5.2; updates ended with 2023.
+
+time_convention:
+  summary: >-
+    Each day or night file collates one satellite's orbits for one day onto the 4 km grid, so each value is the skin temperature at the satellite overpass time (not a daily mean).
+    The data-day does not start at 00 UTC but when the satellite crosses the 180° meridian near the equator, so one file mixes observations from two UTC dates.
+  points:
+    - "Example: the 2023001 night file (NOAA-19) has time_coverage_start 2022-12-31 09:58 UTC and time_coverage_end 2023-01-01 19:06 UTC. Read the date as a data-day label."
+    - "sst_dtime, which would give per-pixel observation times, is empty in 5.3, so exact pixel times are unavailable; the time variable is only the file reference time."
+    - "Daytime skin SST keeps the diurnal warming of the surface layer. Use the night files to reduce diurnal effects."
+    - "Overpass local time changes with the satellite. In the algorithm document's table, only NOAA-17 (2002-07 to 2005-06) is a morning satellite (nominal 10:00 local time) and the rest are afternoon satellites, so account for this when comparing daytime SST over the long term."
+    - "dt_analysis is the difference from the previous day's SST analysis, an auxiliary field for spotting unusual values."
+  source: https://www.ncei.noaa.gov/sites/default/files/2020-04/AlgorithmDescription.pdf
+  source_name: AVHRR Pathfinder v5.3 Algorithm Description (NCEI) and v5.3 L3C file attributes
+
+variables:
+  note: >-
+    Names follow the attributes of the v5.3 L3C files on NCEI THREDDS. Values are packed as integers (scale_factor, add_offset), so make sure your library unpacks them.
+    sses_bias, sses_standard_deviation and sst_dtime are empty in 5.3.
+  full_list: https://www.ncei.noaa.gov/sites/default/files/2020-04/AlgorithmDescription.pdf
+  groups:
+    - name: Sea surface temperature (L3C day and night files)
+      kind: instant
+      items:
+        - text: "Skin sea surface temperature — `sea_surface_temperature` (K)"
+          note: Skin temperature at the overpass time (scale_factor 0.01, add_offset 273.15); separate day and night files
+        - text: "Deviation from the previous day's SST analysis — `dt_analysis` (K)"
+          note: scale_factor 0.1
+          std: []
+    - name: Quality information
+      kind: instant
+      items:
+        - text: "GHRSST quality level — `quality_level` (0–5)"
+          note: "0 no_data, 1 bad_data, 2 worst_quality, 3 low_quality, 4 acceptable_quality, 5 best_quality"
+        - text: "Native Pathfinder quality level — `pathfinder_quality_level` (0–7)"
+          note: 0 is worst and 7 best, -1 is missing (per the file attributes)
+        - text: "L2P flags — `l2p_flags` (bit flags)"
+          note: Marks microwave, land, ice, lake and river. According to the product page, 5.3 adds bit 6 for daytime SST above 39.8°C
+    - name: Ancillary fields
+      items:
+        - text: "Sea ice fraction — `sea_ice_fraction` (file units: percent, scale_factor 0.01)"
+          kind: mean
+          period: day
+          note: OSI SAF sea ice (NOAA OISST as fallback) regridded to 4 km. Its internal time definition was not confirmed
+        - text: "10 m wind speed — `wind_speed` (m s-1)"
+          kind: instant
+          note: NCEP/DOE reanalysis winds. How they are matched to the overpass time was not confirmed
+          std: []
+        - text: "Aerosol dynamic indicator — `aerosol_dynamic_indicator` (file units: percent)"
+          kind: instant
+          note: 0.63 µm aerosol optical thickness over cloud-free, non-glint water. NCEI calls it sub-optimal because it combines two sources
+          std: []
+
+access:
+  - name: NCEI HTTPS data server (v5.3 L3C)
+    url: https://www.ncei.noaa.gov/data/oceans/pathfinder/Version5.3/L3C/
+    method: Direct HTTPS download (per-year data folders, netCDF-4; e.g. 2023/data/20230101023227-NCEI-L3C_GHRSST-SSTskin-AVHRR_Pathfinder-PFV5.3_NOAA19_G_2023001_night-v02.0-fv01.0.nc)
+    note: Also available by FTP (ftp://ftp-oceans.ncei.noaa.gov/pub/data.nodc/pathfinder/Version5.3/L3C/). NCEI has warned of temporary access delays during its cloud migration in October 2026.
+    login: false
+  - name: NCEI THREDDS (v5.3 L3C)
+    url: https://www.ncei.noaa.gov/thredds-ocean/catalog/pathfinder/Version5.3/L3C/catalog.html
+    method: THREDDS catalog / OPeNDAP subsetting
+    note: Year folders from 1981 to 2023.
+    login: false
+  - name: NOAA CoastWatch ERDDAP — nceiPH53sstn1day (night), nceiPH53sstd1day (day)
+    url: https://coastwatch.pfeg.noaa.gov/erddap/info/nceiPH53sstn1day/index.html
+    method: ERDDAP griddap (regional and time subsets as netCDF, CSV and more)
+    note: 1981-08-25 to 2023-12-31. Times are labelled 12:00 UTC each day.
+    login: false
+  - name: Google Cloud Storage (public NOAA CDR bucket)
+    url: https://console.cloud.google.com/storage/browser/noaa-cdr-sea-surface-temp-pathfinder
+    method: Cloud storage (public bucket listed on the NCEI CDR page)
+  - name: Google Earth Engine (NOAA/CDR/SST_PATHFINDER/V53)
+    url: https://developers.google.com/earth-engine/datasets/catalog/NOAA_CDR_SST_PATHFINDER_V53
+    method: Cloud analysis
+    note: The catalog lists 1981-08-24 to 2023-12-30. An Earth Engine account is required.
+
+example:
+  lang: python
+  note: "Opens one night file through the NCEI THREDDS OPeNDAP address and clips the area around the Korean Peninsula. No login is needed. Latitude runs north to south, so the slice starts from the larger value."
+  code: |
+    # pip install xarray netCDF4
+    import xarray as xr
+
+    url = ("https://www.ncei.noaa.gov/thredds-ocean/dodsC/pathfinder/Version5.3/L3C/2023/data/"
+           "20230101023227-NCEI-L3C_GHRSST-SSTskin-AVHRR_Pathfinder-PFV5.3_NOAA19_G_2023001_night-v02.0-fv01.0.nc")
+    ds = xr.open_dataset(url)
+
+    sub = ds.sel(lat=slice(40, 30), lon=slice(120, 135))              # around Korea
+    sst = sub["sea_surface_temperature"].where(sub["quality_level"] >= 4) - 273.15   # levels 4-5 only, K -> °C
+    print(float(sst.count()), float(sst.mean()))
+
+tips:
+  - "This is gap-containing L3 data, so daily files over the East Sea and Yellow Sea have many gaps in the cloudy monsoon season and in winter. Check the number of valid pixels per day when computing climatologies or monthly means."
+  - "The file defines quality_level values (0 no_data to 5 best_quality), but the NCEI pages give no official threshold. State which levels you used and test how sensitive your results are to that choice."
+  - "An NCEI technical note says v5.2 and v5.3 SST above 50° latitude is often wrong near the June and December solstices (SeaDAS did not split mixed day/night granules properly). Treat those periods with care in high-latitude seasonal studies."
+  - "September 1994 to February 1995 was temporarily filled with earlier-version data, with previous-year aerosol values. Check any trend or climatology that includes this period separately."
+  - "A very small share of daytime SST values exceed 39.8°C. Version 5.3 marks them with bit 6 of l2p_flags, so check that bit when looking at extreme warm cases in the tropics or along coasts."
+  - "For data after 2023 you have to move to another product. Do not splice records from different processing systems into one series; compare them over an overlapping period first."
+
+citations:
+  dataset:
+    - label: AVHRR Pathfinder v5.3 L3C (NCEI)
+      text: >-
+        Saha, Korak; Zhao, Xuepeng; Zhang, Huai-min; Casey, Kenneth S.; Zhang, Dexin; Baker-Yeboah, Sheekela; Kilpatrick, Katherine A.; Evans, Robert H.; Ryan, Thomas; Relph, John M. (2016).
+        AVHRR Pathfinder version 5.3 level 3 collated (L3C) global 4km sea surface temperature for 1981-2023. NOAA National Centers for Environmental Information. Dataset. https://doi.org/10.7289/v52j68xx
+      doi: 10.7289/v52j68xx
+      bibtex: |
+        @misc{saha2016pathfinder53,
+          author    = {Saha, Korak and Zhao, Xuepeng and Zhang, Huai-min and Casey, Kenneth S. and Zhang, Dexin and Baker-Yeboah, Sheekela and Kilpatrick, Katherine A. and Evans, Robert H. and Ryan, Thomas and Relph, John M.},
+          title     = {{AVHRR} Pathfinder version 5.3 level 3 collated ({L3C}) global 4km sea surface temperature for 1981-2023},
+          year      = {2016},
+          publisher = {NOAA National Centers for Environmental Information},
+          doi       = {10.7289/v52j68xx}
+        }
+  papers:
+    - label: Pathfinder programme overview (requested by NCEI)
+      text: >-
+        Casey, K. S., Brandon, T. B., Cornillon, P., Evans, R. (2010): The Past, Present, and Future of the AVHRR Pathfinder SST Program.
+        In: Oceanography from Space, Springer Netherlands, 273–287.
+      doi: 10.1007/978-90-481-8681-5_16
+      bibtex: |
+        @incollection{casey2010pathfinder,
+          author    = {Casey, Kenneth S. and Brandon, Tess B. and Cornillon, Peter and Evans, Robert},
+          title     = {The Past, Present, and Future of the {AVHRR} Pathfinder {SST} Program},
+          booktitle = {Oceanography from Space},
+          publisher = {Springer Netherlands},
+          pages     = {273--287},
+          year      = {2010},
+          doi       = {10.1007/978-90-481-8681-5_16}
+        }
+    - label: Pathfinder SST algorithm and matchup database
+      text: >-
+        Kilpatrick, K. A., Podestá, G. P., Evans, R. (2001): Overview of the NOAA/NASA advanced very high resolution radiometer Pathfinder algorithm for sea surface temperature
+        and associated matchup database. Journal of Geophysical Research: Oceans, 106(C5), 9179–9197.
+      doi: 10.1029/1999JC000065
+      bibtex: |
+        @article{kilpatrick2001pathfinder,
+          author  = {Kilpatrick, K. A. and Podest{\'a}, G. P. and Evans, R.},
+          title   = {Overview of the {NOAA/NASA} advanced very high resolution radiometer Pathfinder algorithm for sea surface temperature and associated matchup database},
+          journal = {Journal of Geophysical Research: Oceans},
+          volume  = {106},
+          number  = {C5},
+          pages   = {9179--9197},
+          year    = {2001},
+          doi     = {10.1029/1999JC000065}
+        }
+  acknowledgement: >-
+    NCEI asks users to credit the data with "These data were provided by GHRSST and the NOAA National Centers for Environmental Information."
+    and to cite Casey et al. (2010) along with the dataset DOI.
+
+notices:
+  - date: "2025-09-03"
+    level: critical
+    title: AVHRR Pathfinder SST product and CDR discontinued (no updates after 2023-12-31)
+    body: >-
+      In a NOAA NESDIS Notice of Changes, NCEI announced that the AVHRR Pathfinder SST product and Climate Data Record are discontinued, with no updates beyond 2023-12-31.
+      All archived data remain authoritative and available from the product and CDR pages. No successor was mentioned.
+    source: https://www.nesdis.noaa.gov/news/avhrr-pathfinder-sst
+  - date: "2019-08-29"
+    level: info
+    title: PO.DAAC retires Pathfinder v5.0 and v5.1
+    body: >-
+      NASA PO.DAAC stopped supporting NOAA AVHRR Pathfinder SST v5.0 and v5.1 and directed users to NOAA NCEI, which hosts these and newer versions.
+    source: https://podaac.jpl.nasa.gov/announcements/2019-08-29_NOAA_AVHRR_PATHFINDER_SST_v5.0_and_v5.1_datasets_retired
+  - date: "2016-08-27"
+    level: info
+    title: Release of Pathfinder v5.3 L3C
+    body: >-
+      NCEI published v5.3 L3C, reprocessed on SeaDAS 6.4. Changes from 5.2 include quality level 0 data, improved sun glint handling, consistent cloud tests for NOAA-7 and NOAA-19, and an updated land mask.
+    source: https://www.ncei.noaa.gov/archive/accession/AVHRR_Pathfinder-NCEI-L3C-v5.3
+  - date: "2016-07-20"
+    level: warning
+    title: High-latitude SST errors near the solstices in v5.2 and v5.3
+    body: >-
+      An NCEI technical note (CDRP-RPT-0831) reported that Pathfinder v5.2 and v5.3 SST above 50° latitude is often incorrect near the June and December solstices.
+      The cause is improper splitting of mixed day/night granules, which affects L3C; NCEI said it would fix this in a future version, but updates ended without one.
+    source: https://www.ncei.noaa.gov/pub/data/sds/cdr/CDRs/Sea_Surface_Temperature_Pathfinder/TechnicalNote_01B-08.pdf
+
+transitions:
+  - from: AVHRR Pathfinder v5.2
+    to: AVHRR Pathfinder v5.3
+    status: completed
+    date: "2016-08"
+    summary: >-
+      A rebuild on SeaDAS 6.4 that adds quality level 0 data and improves sun glint and land-boundary handling and metadata conventions.
+      The record was also extended from 2012 to 2023.
+    changes:
+      - aspect: Period
+        before: "1981-09-01 to 2012-12-31"
+        after: "1981-08-25 to 2023-12-31"
+      - aspect: DOI
+        before: 10.7289/v5wd3xhb
+        after: 10.7289/v52j68xx
+      - aspect: Quality levels
+        before: Quality level 0 data excluded
+        after: "Quality level 0 data included; daytime SST above 39.8°C flagged with l2p_flags bit 6"
+      - aspect: Cloud and sun glint handling
+        before: NOAA-7 and NOAA-19 cloud tests differed from other sensors
+        after: "Consistent cloud tree tests, better sun glint handling, improved flagging of land–water boundary hot spots"
+      - aspect: Masks
+        before: Earlier land mask
+        after: "Land mask from the Global Lakes and Wetlands Database; Antarctic ice shelves flagged as 100% ice"
+      - aspect: File format
+        before: netCDF-4
+        after: "netCDF-4 classic with improved CF and ACDD compliance"
+    impacts:
+      - Pixel values and missing pixels differ between 5.2 and 5.3, so do not mix them in one series; download the whole period in 5.3.
+      - "Quality level 0 is now included, so re-check your quality_level and pathfinder_quality_level filters if you want to match 5.2-era screening."
+      - The high-latitude solstice errors are not fixed in 5.3.
+    sources:
+      - name: NCEI — AVHRR Pathfinder SST product page (5.3 changes, version history)
+        url: https://www.ncei.noaa.gov/products/avhrr-pathfinder-sst
+      - name: NCEI archive record — v5.3 L3C
+        url: https://www.ncei.noaa.gov/archive/accession/AVHRR_Pathfinder-NCEI-L3C-v5.3
+
+links:
+  - name: NCEI — AVHRR Pathfinder SST product page
+    url: https://www.ncei.noaa.gov/products/avhrr-pathfinder-sst
+  - name: NCEI — Pathfinder SST Climate Data Record page
+    url: https://www.ncei.noaa.gov/products/climate-data-records/pathfinder-sea-surface-temperature
+  - name: v5.3 Algorithm Description (PDF)
+    url: https://www.ncei.noaa.gov/sites/default/files/2020-04/AlgorithmDescription.pdf
+  - name: NCEI archive record — v5.3 L3C (1981–2023)
+    url: https://www.ncei.noaa.gov/archive/accession/AVHRR_Pathfinder-NCEI-L3C-v5.3
+  - name: NOAA NESDIS Notice of Changes — AVHRR Pathfinder SST discontinued
+    url: https://www.nesdis.noaa.gov/news/avhrr-pathfinder-sst
+  - name: On this site — ESA SST CCI (satellite SST climate record including AVHRR, from 1980)
+    url: ../esa-cci-sst/
+  - name: On this site — NOAA OISST v2.1 (AVHRR-based daily analysis)
+    url: ../oisst/
+  - name: On this site — GHRSST MUR (0.01° daily analysis)
+    url: ../ghrsst-mur/
+
+watch_urls:
+  - https://www.ncei.noaa.gov/products/avhrr-pathfinder-sst
+
+last_verified: "2026-10-13"

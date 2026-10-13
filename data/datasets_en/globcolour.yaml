@@ -1,0 +1,336 @@
+# ─────────────────────────────────────────────────────────────
+# Copernicus-GlobColour global ocean colour (Copernicus Marine OCEANCOLOUR_GLO_BGC_*_009_101 to 104) — dataset information file (English edition)
+# Satellite tab (ocean colour), cross-listed in the Ocean tab (satellite observations). ACRI-ST produces multi-sensor chlorophyll, reflectance, transparency, primary production and more as 4 km (OLCI 300 m) L3 daily, L4 monthly and gap-free daily data.
+# When checked on 2026-10-13, MY L3 ran to 2026-10-05 and NRT L3 multi-sensor chlorophyll to 2026-10-11. A new dataset version (202611) is scheduled for 2026-11-24.
+# After editing, update last_verified to the date you checked the official pages.
+# ─────────────────────────────────────────────────────────────
+id: globcolour
+name: Copernicus-GlobColour
+full_name: >-
+  Global Ocean Colour (Copernicus-GlobColour), Bio-Geo-Chemical, L3 (daily) / L4 (monthly and interpolated) from Satellite Observations
+  (Copernicus Marine; MY OCEANCOLOUR_GLO_BGC_L3_MY_009_103 and L4_MY_009_104, NRT L3_NRT_009_101 and L4_NRT_009_102)
+category: satellite
+domain: satellite
+group: 해색
+order: 50
+also_in:
+  - domain: ocean
+    group: 위성 관측 자료
+domains: [해양, 원격탐사]
+provider: Copernicus Marine Service (Ocean Colour TAC, produced by ACRI-ST with the Copernicus-GlobColour processor)
+
+status: active
+status_note: >-
+  Both the multi-year (MY) and near-real-time (NRT) products are updated daily. When checked on 2026-10-13, MY L3 daily data ran to 2026-10-05, NRT L3 multi-sensor chlorophyll to 2026-10-11, MY L4 monthly data to 2026-09 and MY L4 gap-free daily data to 2026-09-07.
+  In March 2026 a new version (202603) dropped MODIS from the multi-sensor data (from early 2023) and added VIIRS-NOAA21; a further version (202611) with updated OC5 coefficients and new carbon (POC, DOC) datasets is scheduled for November 2026.
+
+period:
+  start: "1997-09"
+  end: present
+  note: >-
+    MY multi-sensor data start on 1997-09-04 (L4 monthly in 1997-09) and OLCI-only data on 2016-04-25. NRT holds only the recent period (when checked on 2026-10-13, the NRT L3 collection started 2023-04-25 and the 202411 multi-sensor chlorophyll dataset 2024-09-30).
+    Some days are missing in the SeaWiFS-only period (1997–2002), and phytoplankton functional types (PFT) are not available before 2002.
+
+resolution:
+  spatial_short: "4 km (0.04°)"
+  temporal_short: "1일"
+  spatial: >-
+    4 km products use a plate carrée latitude–longitude grid of 4320 × 8640 with 0.0416667° spacing (cell centres 89.979°S–89.979°N, 179.979°W–179.979°E).
+    OLCI 300 m products use 32400 × 64800 with 0.0055556° spacing. The PUM explains that "4 km" is the approximate pixel size at the equator and that east–west spacing shrinks toward the poles
+  vertical: Satellite ocean-surface observation (remote-sensing reflectance and surface properties derived from it; primary production is water-column integrated)
+  temporal: >-
+    L3 daily (daily composite merging all satellite passes) / L4 monthly mean / L4 gap-free daily (chlorophyll and transparency, space–time interpolation). Primary production (PP) is available as L4 monthly only
+
+coverage:
+  short: 전지구
+  note: "Ocean only. L3 has no values under cloud, sea ice, at night or at low sun elevation (high-latitude winter); only the L4 gap-free daily data are interpolated"
+update: >-
+  MY L3 and NRT are updated daily at 22:00 (UTC) (first NRT version about 24 hours after acquisition); MY L4 monthly data are updated monthly. The PUM states that MY extensions (MYINT) are produced within 31 days of sensing,
+  and the QUID says the MY archive runs to about 8 days before present; when checked on 2026-10-13, the latest MY L3 day was 2026-10-05
+license: Free use under the Copernicus Marine Service Commitments and Licence. Acknowledgement and citation of the product DOI are required
+account_required: true
+
+summary: >-
+  Global ocean-colour biogeochemical data produced by the Copernicus Marine Ocean Colour TAC with ACRI-ST's Copernicus-GlobColour processor. There are 4 km multi-sensor products merging SeaWiFS, MODIS, MERIS,
+  VIIRS (SNPP, NOAA-20, NOAA-21) and OLCI (S3A, S3B), and OLCI-only 4 km and 300 m products, covering chlorophyll-a, phytoplankton functional types and size classes, remote-sensing reflectance, Kd(490),
+  transparency (Secchi depth), suspended matter, backscattering, coloured dissolved organic matter and primary production. Chlorophyll is computed per sensor and then merged, unlike OC-CCI, which merges reflectance first.
+  Separate near-real-time (NRT, available the day after observation) and multi-year (MY, from 1997) products are provided.
+
+time_convention:
+  summary: >-
+    L3 daily values are averages within a daily composite that merges all satellite passes of the day; L4 monthly values are temporal averages over the month. L4 gap-free daily data fill cloudy cells by space–time interpolation.
+    Monthly time values are the first day of the month at 00:00 UTC (e.g. 1997-09-01, … 2026-09-01), while the averaging period is the whole month.
+  points:
+    - "One daily composite covers about 24 hours of observations. The QUID notes that areas crossing the date line (180°) need products from two days."
+    - "NRT is first produced with climatological ancillary data (orbit, meteorology) and may be of somewhat lower quality; it is later reprocessed. MY extensions (MYINT) are replaced by MY only at a full reprocessing."
+    - "Primary production PP is in mg m-2 day-1, a monthly mean daily rate. Multiply by the number of days for a monthly total."
+    - "In the gap-free daily data, the flags variable is 1 for land (LAND) and 2 for interpolated cells (INTERPOLATED). Exclude cells with 2 to keep only observation-based values."
+    - "The *_uncertainty variables are uncertainty estimates for the value in the same cell, in %."
+  source: https://documentation.marine.copernicus.eu/PUM/CMEMS-OC-PUM.pdf
+  source_name: Copernicus Marine OC PUM (Issue 7.0) + QUID 009-101to104 (Issue 7.0) + STAC metadata
+
+variables:
+  note: >-
+    Variable names and units follow the Copernicus Marine dataset metadata (STAC, versions 202603 and 202411). The multi-sensor 4 km datasets are split into five groups: plankton (chlorophyll and PFT), reflectance,
+    optics (BBP, CDM), transp (KD490, SPM, ZSD) and pp (primary production). OLCI-only datasets have more reflectance bands (400–709 nm, per the product description).
+  full_list: https://data.marine.copernicus.eu/product/OCEANCOLOUR_GLO_BGC_L3_MY_009_103/description
+  groups:
+    - name: Chlorophyll and phytoplankton (plankton, L3 daily / L4 monthly)
+      kind: mean
+      period: Daily (L3) or monthly (L4)
+      items:
+        - text: "Chlorophyll-a concentration — `CHL` (mg m-3)"
+          note: CI (Hu et al.) in oligotrophic waters, OC5 in mesotrophic and coastal waters, blended between 0.15 and 0.2 mg m-3
+        - text: "Chlorophyll uncertainty — `CHL_uncertainty` (%)"
+          std: []
+        - text: "Phytoplankton functional type chlorophyll — `DIATO` (diatoms), `DINO` (dinophytes), `GREEN` (green algae), `HAPTO` (haptophytes), `PROCHLO` (Prochlorococcus), `PROKAR` (prokaryotes) (mg m-3)"
+          note: Each has a *_uncertainty variable (%). Not available before 2002
+        - text: "Phytoplankton size class chlorophyll — `MICRO`, `NANO`, `PICO` (mg m-3)"
+        - text: "Chlorophyll horizontal gradient — `CHL_gradient` (mg m-3 km-1)"
+          note: In the OLCI datasets; to be extended to the multi-sensor L3 daily data from November 2026
+          std: []
+        - text: "Flags — `flags`"
+          kind: static
+          note: "1 land (LAND). The gap-free daily data add 2 interpolated (INTERPOLATED)"
+          std: []
+    - name: Remote-sensing reflectance (reflectance, multi-sensor 4 km)
+      kind: mean
+      period: Daily (L3) or monthly (L4)
+      items:
+        - "Fully normalised remote-sensing reflectance — `RRS412`, `RRS443`, `RRS490`, `RRS555`, `RRS670` (sr-1)"
+        - text: "Reflectance uncertainty — `RRS412_uncertainty` etc. (%)"
+          std: []
+    - name: Optics and transparency (optics, transp)
+      kind: mean
+      period: Daily (L3) or monthly (L4)
+      items:
+        - "Diffuse attenuation coefficient at 490 nm — `KD490` (m-1)"
+        - "Secchi disk depth — `ZSD` (m)"
+        - "Inorganic suspended particulate matter — `SPM` (g m-3)"
+        - "Particulate backscattering coefficient at 443 nm — `BBP` (m-1)"
+        - "Coloured dissolved and detrital organic materials absorption — `CDM` (m-1)"
+        - text: "Uncertainty of each variable — `KD490_uncertainty`, `ZSD_uncertainty`, `SPM_uncertainty`, `BBP_uncertainty`, `CDM_uncertainty` (%)"
+          std: []
+    - name: Primary production (pp, L4 monthly only)
+      kind: mean
+      period: Monthly
+      items:
+        - text: "Primary productivity — `PP` (mg m-2 day-1)"
+          note: Antoine & Morel model using merged chlorophyll, PAR, Kd(PAR), OSTIA SST and GLORYS12V1 mixed layer depth
+        - text: "Primary productivity uncertainty — `PP_uncertainty` (%)"
+          std: []
+    - name: Gap-free daily data (L4 gap-free, multi-sensor 4 km)
+      kind: mean
+      period: Daily
+      items:
+        - text: "Interpolated chlorophyll-a — `CHL` (mg m-3)"
+          note: Cloudy cells filled by space–time interpolation; flags=2 marks interpolated cells
+        - text: "Interpolated chlorophyll uncertainty — `CHL_uncertainty` (%)"
+          std: []
+        - text: "Interpolated transparency data — transp gap-free dataset (KD490, ZSD, etc.)"
+          note: Gap-free KD and ZSD provided since 2019 and 2020 (QUID)
+
+access:
+  - name: Copernicus Marine — MY L3 daily (OCEANCOLOUR_GLO_BGC_L3_MY_009_103)
+    url: https://data.marine.copernicus.eu/product/OCEANCOLOUR_GLO_BGC_L3_MY_009_103/description
+    method: Copernicus Marine Toolbox (copernicusmarine subset, get, open_dataset) / web download and subsetting
+    note: >-
+      Dataset IDs include cmems_obs-oc_glo_bgc-plankton_my_l3-multi-4km_P1D, cmems_obs-oc_glo_bgc-reflectance_my_l3-multi-4km_P1D, cmems_obs-oc_glo_bgc-transp_my_l3-multi-4km_P1D,
+      cmems_obs-oc_glo_bgc-optics_my_l3-multi-4km_P1D, and for OLCI …_my_l3-olci-4km_P1D and …_my_l3-olci-300m_P1D. Downloads require signing in (a free Copernicus Marine account or a Copernicus Data Space account).
+  - name: Copernicus Marine — MY L4 monthly and gap-free daily (OCEANCOLOUR_GLO_BGC_L4_MY_009_104)
+    url: https://data.marine.copernicus.eu/product/OCEANCOLOUR_GLO_BGC_L4_MY_009_104/description
+    method: Copernicus Marine Toolbox / web
+    note: >-
+      Monthly cmems_obs-oc_glo_bgc-plankton_my_l4-multi-4km_P1M, primary production cmems_obs-oc_glo_bgc-pp_my_l4-multi-4km_P1M, gap-free daily cmems_obs-oc_glo_bgc-plankton_my_l4-gapfree-multi-4km_P1D,
+      daily climatology cmems_obs-oc_glo_bgc-plankton_my_l4-multi-climatology-4km_P1D, and others.
+  - name: Copernicus Marine — NRT L3 daily (OCEANCOLOUR_GLO_BGC_L3_NRT_009_101)
+    url: https://data.marine.copernicus.eu/product/OCEANCOLOUR_GLO_BGC_L3_NRT_009_101/description
+    method: Copernicus Marine Toolbox / web
+    note: Delivered the day after acquisition at 22:00 UTC. Dataset IDs replace _my_ with _nrt_ (e.g. cmems_obs-oc_glo_bgc-plankton_nrt_l3-multi-4km_P1D).
+  - name: Copernicus Marine — NRT L4 monthly and gap-free daily (OCEANCOLOUR_GLO_BGC_L4_NRT_009_102)
+    url: https://data.marine.copernicus.eu/product/OCEANCOLOUR_GLO_BGC_L4_NRT_009_102/description
+    method: Copernicus Marine Toolbox / web
+    note: For example cmems_obs-oc_glo_bgc-plankton_nrt_l4-gapfree-multi-4km_P1D and cmems_obs-oc_glo_bgc-pp_nrt_l4-multi-4km_P1M.
+
+example:
+  lang: python
+  note: >-
+    Downloads MY L4 monthly chlorophyll for the seas around Korea with the Copernicus Marine Toolbox. Run copernicusmarine.login() once to store your credentials.
+    Around a dataset version change (e.g. 2026-11), you can pin dataset_version to keep results reproducible.
+  code: |
+    # pip install copernicusmarine xarray
+    import copernicusmarine
+    import xarray as xr
+
+    copernicusmarine.login()   # once only (stores username and password)
+    copernicusmarine.subset(
+        dataset_id="cmems_obs-oc_glo_bgc-plankton_my_l4-multi-4km_P1M",
+        variables=["CHL", "CHL_uncertainty"],
+        minimum_longitude=120, maximum_longitude=132,
+        minimum_latitude=30, maximum_latitude=40,
+        start_datetime="2024-01-01", end_datetime="2024-12-31",
+        output_filename="globcolour_chl_korea_2024.nc",
+    )
+    ds = xr.open_dataset("globcolour_chl_korea_2024.nc")
+    print(ds["CHL"].mean(["latitude", "longitude"]).values)
+
+tips:
+  - "The PUM notes that GlobColour MY may contain time-series inconsistencies from upstream sensor recalibrations and processing changes, while OC-CCI, designed for inter-sensor consistency, does not extend to the present. Consider OC-CCI for long-term trends and GlobColour for recent and near-real-time monitoring."
+  - "In the multi-sensor data, MODIS was dropped from early 2023 and VIIRS-NOAA21 added from November 2022 (version 202603). Coverage and values may shift around these dates."
+  - "The QUID states that reprocessing can change values by more than 20% in some regions. Record the dataset ID and version (from the file and your download date) in papers, and do not mix versions."
+  - "In turbid waters such as the coastal Yellow Sea and East China Sea, OC5 applies an adaptation for complex waters, but suspended matter (SPM) and CDM may dominate the optics more than chlorophyll. Check SPM, CDM and the uncertainties together."
+  - "Gap-free daily data are interpolated. Cells with flags equal to 2 (INTERPOLATED) are not actual observations, so for short-lived events such as harmful algal blooms use L3 daily data or values filtered by flags."
+  - "The 300 m OLCI products help in coastal work but start only on 2016-04-25, and their algorithms and sensors differ from the multi-sensor 4 km data, so do not mix them."
+  - "Primary production PP relies on model and analysis inputs such as GLORYS12V1 mixed layer depth and OSTIA SST; the QUID notes that in situ validation is limited (r² about 0.63)."
+  - "Version 202611 is due on 2026-11-24, when some 202603 datasets are scheduled to retire (STAC metadata). The double-dissemination period is announced as 2026-11-03 to 2027-01-12, so check your scripts before then."
+
+citations:
+  dataset:
+    - label: MY L3 daily (OCEANCOLOUR_GLO_BGC_L3_MY_009_103)
+      text: >-
+        Global Ocean Colour (Copernicus-GlobColour), Bio-Geo-Chemical, L3 (daily) from Satellite Observations (1997-ongoing). E.U. Copernicus Marine Service Information (CMEMS).
+        Marine Data Store (MDS). DOI: 10.48670/moi-00280 (Accessed on DD MMM YYYY)
+      doi: 10.48670/moi-00280
+      bibtex: |
+        @misc{cmems_oc_glo_l3_my,
+          author    = {{E.U. Copernicus Marine Service Information (CMEMS)}},
+          title     = {Global Ocean Colour (Copernicus-GlobColour), Bio-Geo-Chemical, L3 (daily) from Satellite Observations (1997-ongoing)},
+          publisher = {Marine Data Store (MDS)},
+          doi       = {10.48670/moi-00280}
+        }
+    - label: MY L4 monthly and gap-free (OCEANCOLOUR_GLO_BGC_L4_MY_009_104)
+      text: >-
+        Global Ocean Colour (Copernicus-GlobColour), Bio-Geo-Chemical, L4 (monthly and interpolated) from Satellite Observations (1997-ongoing). E.U. Copernicus Marine Service Information (CMEMS).
+        Marine Data Store (MDS). DOI: 10.48670/moi-00281 (Accessed on DD MMM YYYY)
+      doi: 10.48670/moi-00281
+      bibtex: |
+        @misc{cmems_oc_glo_l4_my,
+          author    = {{E.U. Copernicus Marine Service Information (CMEMS)}},
+          title     = {Global Ocean Colour (Copernicus-GlobColour), Bio-Geo-Chemical, L4 (monthly and interpolated) from Satellite Observations (1997-ongoing)},
+          publisher = {Marine Data Store (MDS)},
+          doi       = {10.48670/moi-00281}
+        }
+    - label: NRT L3 daily (OCEANCOLOUR_GLO_BGC_L3_NRT_009_101)
+      text: >-
+        Global Ocean Colour (Copernicus-GlobColour), Bio-Geo-Chemical, L3 (daily) from Satellite Observations (Near Real Time). E.U. Copernicus Marine Service Information (CMEMS).
+        Marine Data Store (MDS). DOI: 10.48670/moi-00278 (Accessed on DD MMM YYYY)
+      doi: 10.48670/moi-00278
+    - label: NRT L4 monthly and gap-free (OCEANCOLOUR_GLO_BGC_L4_NRT_009_102)
+      text: >-
+        Global Ocean Colour (Copernicus-GlobColour), Bio-Geo-Chemical, L4 (monthly and interpolated) from Satellite Observations (Near Real Time). E.U. Copernicus Marine Service Information (CMEMS).
+        Marine Data Store (MDS). DOI: 10.48670/moi-00279 (Accessed on DD MMM YYYY)
+      doi: 10.48670/moi-00279
+  papers:
+    - label: GlobColour chlorophyll merging and flagging
+      text: >-
+        Garnesson, P., Mangin, A., Fanton d'Andon, O., Demaria, J., Bretagnon, M. (2019): The CMEMS GlobColour chlorophyll a product based on satellite observation: multi-sensor merging and flagging strategies.
+        Ocean Science, 15(3), 819–830.
+      doi: 10.5194/os-15-819-2019
+      bibtex: |
+        @article{garnesson2019globcolour,
+          author  = {Garnesson, Philippe and Mangin, Antoine and Fanton d'Andon, Odile and Demaria, Julien and Bretagnon, Marine},
+          title   = {The {CMEMS} {GlobColour} chlorophyll a product based on satellite observation: multi-sensor merging and flagging strategies},
+          journal = {Ocean Science},
+          volume  = {15},
+          number  = {3},
+          pages   = {819--830},
+          year    = {2019},
+          doi     = {10.5194/os-15-819-2019}
+        }
+  acknowledgement: >-
+    Copernicus Marine recommends the sentence "This study has been conducted using E.U. Copernicus Marine Service Information;" followed by the DOI links of all products used.
+
+notices:
+  - date: "2026-11"
+    level: warning
+    title: (Scheduled) November 2026 version update — new OC5 coefficients, carbon (POC, DOC) datasets, script changes needed
+    body: >-
+      Multi-sensor chlorophyll, transparency and primary production will be reprocessed with updated OC5 coefficients, the OLCI-era PFT series improved with the GLOPHYTS algorithm, and new carbon ("car") datasets (POC, DOC)
+      and a multi-sensor L3 chlorophyll gradient variable added. Copernicus Marine says data-handling scripts must be updated; the NRT double-dissemination period is 2026-11-03 to 2027-01-12.
+    source: https://marine.copernicus.eu/user-corner/product-roadmap/transition-information?product=OCEANCOLOUR_GLO_BGC_L3_NRT_009_101
+  - date: "2026-03"
+    level: warning
+    title: MODIS removed from multi-sensor data, VIIRS-NOAA21 added (MY L3 and L4 update)
+    body: >-
+      The March 2026 GLO MY (L3 and L4) update removed MODIS from the multi-sensor datasets from early 2023 and introduced VIIRS-NOAA21 from November 2022 (new dataset version 202603, released 2026-03-31).
+      The same change was applied to NRT.
+    source: https://marine.copernicus.eu/user-corner/product-roadmap/transition-information?product=OCEANCOLOUR_GLO_BGC_L4_MY_009_104
+  - date: "2025-11"
+    level: info
+    title: Uncertainty added to the OLCI 4 km chlorophyll gradient, MY series extended through 2024
+    body: >-
+      An uncertainty field was added alongside the chlorophyll gradient variable in cmems_obs-oc_glo_bgc-plankton_my_l3-olci-4km_P1D, and the MY time series was extended to include data up to 2024.
+    source: https://marine.copernicus.eu/user-corner/product-roadmap/transition-information?product=OCEANCOLOUR_GLO_BGC_L3_MY_009_103
+  - date: "2024-11"
+    level: info
+    title: OLCI-based chlorophyll horizontal gradient added, PFT recalibrated
+    body: >-
+      A chlorophyll horizontal gradient variable (CHL_gradient) computed from OLCI was added to GLO MY and NRT, and the phytoplankton functional type (PFT) variables were recalibrated with up-to-date data (same algorithm).
+    source: https://marine.copernicus.eu/user-corner/product-roadmap/transition-information?product=OCEANCOLOUR_GLO_BGC_L4_MY_009_104
+  - date: "2023-11"
+    level: info
+    title: Full MY reprocessing — improved reflectance merging, updated BBP and CDM algorithms
+    body: >-
+      The whole MY series was reprocessed, improving multi-sensor reflectance merging with the EUMETSAT OLCI reprocessing (3.01), the fourth MERIS reprocessing and NASA R2022 (Aqua, VIIRS) inputs, and updating the BBP and CDM algorithms.
+      Copernicus Marine said download scripts did not need to change.
+    source: https://marine.copernicus.eu/user-corner/product-roadmap/transition-information?product=OCEANCOLOUR_GLO_BGC_L4_MY_009_104
+
+transitions:
+  - from: GlobColour version 202603
+    to: GlobColour version 202611
+    status: planned
+    date: "2026-11"
+    summary: >-
+      A dataset version change within the same products. Multi-sensor chlorophyll, transparency and primary production are reprocessed with updated OC5 coefficients, and carbon datasets and new variables are added.
+    changes:
+      - aspect: Chlorophyll algorithm
+        before: OC5 (previous coefficients) blended with CI
+        after: OC5 coefficients refitted to the latest upstream reflectance reprocessing
+      - aspect: PFT (OLCI era)
+        before: Previous PFT algorithm
+        after: GLOPHYTS algorithm; PFT also added to the 300 m OLCI datasets
+      - aspect: New datasets and variables
+        before: "-"
+        after: "Carbon (car) datasets (POC, DOC; OCROC algorithms), multi-sensor L3 chlorophyll gradient"
+      - aspect: Dataset version
+        before: 202603 (some scheduled to retire on 2026-11-24)
+        after: 202611 (scheduled for release on 2026-11-24)
+    impacts:
+      - Chlorophyll and PP values change with the reprocessing, so do not mix results from version 202603 with the new version.
+      - Copernicus Marine says data-handling scripts need updating. Scripts that pin dataset_version may fail after the retirement date.
+    sources:
+      - name: Copernicus Marine product roadmap — L4_MY_009_104
+        url: https://marine.copernicus.eu/user-corner/product-roadmap/transition-information?product=OCEANCOLOUR_GLO_BGC_L4_MY_009_104
+      - name: Copernicus Marine product roadmap — L3_NRT_009_101
+        url: https://marine.copernicus.eu/user-corner/product-roadmap/transition-information?product=OCEANCOLOUR_GLO_BGC_L3_NRT_009_101
+
+links:
+  - name: Copernicus Marine — OCEANCOLOUR_GLO_BGC_L3_MY_009_103
+    url: https://data.marine.copernicus.eu/product/OCEANCOLOUR_GLO_BGC_L3_MY_009_103/description
+  - name: Copernicus Marine — OCEANCOLOUR_GLO_BGC_L4_MY_009_104
+    url: https://data.marine.copernicus.eu/product/OCEANCOLOUR_GLO_BGC_L4_MY_009_104/description
+  - name: Ocean Colour Product User Manual (PUM, PDF)
+    url: https://documentation.marine.copernicus.eu/PUM/CMEMS-OC-PUM.pdf
+  - name: Quality Information Document QUID 009-101 to 104 (PDF)
+    url: https://documentation.marine.copernicus.eu/QUID/CMEMS-OC-QUID-009-101to104-111-113-116-118.pdf
+  - name: Copernicus Marine Toolbox documentation
+    url: https://toolbox-docs.marine.copernicus.eu/en/stable/usage/quickoverview.html
+  - name: Copernicus Marine — how to cite
+    url: https://help.marine.copernicus.eu/en/articles/4444611-how-to-cite-or-reference-copernicus-marine-products-and-services
+  - name: This site — ESA OC-CCI (ocean colour climate record)
+    url: ../oc-cci/
+  - name: This site — MODIS ocean colour
+    url: ../modis-ocean/
+  - name: This site — VIIRS ocean colour
+    url: ../viirs-ocean/
+  - name: This site — PACE OCI
+    url: ../pace-oci/
+  - name: This site — GOCI-II
+    url: ../goci2/
+
+watch_urls:
+  - https://marine.copernicus.eu/user-corner/product-roadmap/transition-information?product=OCEANCOLOUR_GLO_BGC_L3_MY_009_103
+  - https://marine.copernicus.eu/user-corner/product-roadmap/transition-information?product=OCEANCOLOUR_GLO_BGC_L4_MY_009_104
+  - https://marine.copernicus.eu/user-corner/product-roadmap/transition-information?product=OCEANCOLOUR_GLO_BGC_L3_NRT_009_101
+
+last_verified: "2026-10-13"

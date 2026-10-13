@@ -1,0 +1,379 @@
+# ─────────────────────────────────────────────────────────────
+# VIIRS Ocean (Suomi NPP, NOAA-20 and NOAA-21 VIIRS OBPG Level-3 ocean color and SST) — dataset information file (English edition)
+# Satellite tab (ocean color), cross-listed in the Ocean tab (satellite observations). Successor to MODIS Ocean; the MODIS → VIIRS comparison is in modis-ocean.yaml transitions.
+# Ocean color is R2022.0 for Suomi NPP and NOAA-20 (mini-reprocessings R2022.0.1 and 0.2) and R2025.0 for NOAA-21; SST is 2016.2 for Suomi NPP and 2024.0 for NOAA-20 (no NOAA-21 SST at OB.DAAC).
+# NOAA ends delivery of Suomi NPP science data (including VIIRS) at 13:00 UTC on 2026-11-02, so the Suomi NPP version gets no new data after that. No separate OBPG notice was found as of 2026-10-13.
+# After editing, update last_verified to the date you checked the official pages.
+# ─────────────────────────────────────────────────────────────
+id: viirs-ocean
+name: "VIIRS Ocean (color and SST)"
+full_name: >-
+  Suomi NPP, NOAA-20 and NOAA-21 VIIRS Level-3 Global Mapped/Binned Ocean Color (CHL, RRS, KD, PAR, POC, PIC, IOP; version R2022.0 / NOAA-21 2025.0) and
+  Sea Surface Temperature (SST, NSST, SST3) from the NASA Ocean Biology Processing Group
+category: satellite
+domain: satellite
+group: 해색
+order: 20
+also_in:
+  - domain: ocean
+    group: 위성 관측 자료
+domains: [해양, 원격탐사]
+provider: NASA GSFC Ocean Biology Processing Group (OBPG) / NASA Ocean Biology DAAC (OB.DAAC)
+
+status: active
+status_note: >-
+  NOAA-20 and NOAA-21 products are being produced normally. When checked on 2026-10-13, NRT daily ocean color for all three satellites ran to 2026-10-11 and standard ocean color to 2026-07-31 (registered 2026-08-27/28).
+  However, NOAA NESDIS has announced that delivery of all Suomi NPP science data, including VIIRS, will permanently cease at 13:00 UTC on 2 November 2026 (re-announced by NASA GES DISC on 2026-10-07), and NASA advises moving to NOAA-20 and NOAA-21 products.
+  This is an end of data delivery, not of satellite operations, and NASA continues to archive and distribute existing data. No separate OB.DAAC notice was found.
+
+period:
+  start: "2012-01"
+  end: present
+  note: >-
+    Suomi NPP starts on 2012-01-02 (data delivery to end on 2026-11-02), NOAA-20 on 2017-11-29 and NOAA-21 on 2022-11-10 (CMR collection start dates).
+    Standard SST runs to 2026-08-29 for Suomi NPP; for NOAA-20, Direct Data Access shows only NRT SST after early January 2026 (checked 2026-10-13; NRT runs to 2026-10-11).
+
+resolution:
+  spatial_short: "4.6 km (0.04°)"
+  temporal_short: "1일"
+  spatial: >-
+    L3 mapped (L3m, Standard Mapped Image): global Equidistant Cylindrical grids `4km` (file attribute spatialResolution "4.638312 km") and `9km` /
+    L3 binned (L3b): integerized sinusoidal equal-area grid with 4320 rows (about 4.64 km bins, the Suomi NPP VIIRS standard). Source data are VIIRS M bands at 750 m at nadir
+  vertical: Surface remote sensing reflectance and near-surface optical and biogeochemical properties (within the optical depth seen by the sensor) / SST is skin temperature
+  temporal: >-
+    Daily (DAY), 8-day (8D), monthly (MO), annual (YR) and 32-day rolling (R32) composites. SST comes as separate daytime (SST), nighttime (NSST) and triple-window (SST3) files.
+    All three satellites fly in the same family of afternoon orbits and pass within about 50 minutes of each other.
+
+coverage:
+  short: 전지구
+  note: "Ocean color covers daytime, clear-sky ocean only (gaps from cloud, sea ice, low sun and glint); SST covers clear-sky ocean by day and night"
+update: >-
+  NRT L3 daily files are registered the day after observation (2026-10-11 data registered 10-12). Standard ocean color arrives about a month later in monthly batches (July 2026 data registered 2026-08-27/28).
+  No new Suomi NPP data after 2026-11-02
+license: >-
+  Free and open under the NASA Earth Science Data and Information Policy (https://science.nasa.gov/earth-science/earth-science-data/data-information-policy/).
+  Downloading from OB.DAAC requires a free NASA Earthdata Login, and users are asked to cite the dataset DOIs
+account_required: true
+
+summary: >-
+  Global Level-3 ocean color and sea surface temperature from VIIRS on Suomi NPP (launched 2011), NOAA-20 (formerly JPSS-1) and NOAA-21 (formerly JPSS-2), produced by NASA OBPG as the multi-satellite continuation of the MODIS ocean color record.
+  Using the same processing system as MODIS, OBPG produces chlorophyll-a (`chlor_a`), remote sensing reflectance at five wavelengths, the diffuse attenuation coefficient at 490 nm (`Kd_490`), daily photosynthetically available radiation (`par`),
+  particulate organic and inorganic carbon (`poc`, `pic`) and GIOP inherent optical properties, plus daytime and nighttime SST and an 8.6/11/12 µm triple-window SST (`sst_triple`).
+  Daily, 8-day, monthly and annual composites are provided on 4 km and 9 km latitude–longitude grids in standard and NRT versions. With Suomi NPP delivery ending on 2026-11-02, NOAA-21 and NOAA-20 become the main records.
+
+time_convention:
+  summary: >-
+    A daily L3 file is the weighted average of the clear-sky L2 observations from that "dataday", binned into 4.6 km bins and then mapped to a latitude–longitude grid. The day boundary is the date line (180°),
+    so one file spans slightly more than 24 hours (e.g. the NOAA-20 2026-07-01 file covers 07-01 00:18Z to 07-02 02:29Z). The 8-day, monthly and annual files re-average the bins over that period, and cloudy days simply drop out.
+  points:
+    - "8-day (8D) composites are counted from 1 January in 8-day blocks; R32 is a 32-day window that advances by 8 days (e.g. JPSS1_VIIRS.20240601_20240702.L3m.R32.SST.sst.4km.nc). The two dates in the file name are the first and last day of the composite."
+    - "`par` is a daily integral (mol m-2 day-1). The instantaneous `ipar` and fluorescence `nflh` (FLH files) that MODIS provides are not in the VIIRS L3 set."
+    - "The three satellites pass within about 50 minutes of each other but not at the same time. Each satellite has its own daily files, so when combining them average each one first or stick to a single satellite."
+    - "NRT (file names ending .NRT.nc, collection names ending _NRT) and standard files are separate collections. Switch to the standard files once they appear and do not mix the two in one time series."
+    - "Suomi NPP data stop after 13:00 UTC on 2026-11-02. The last daily file (11-02) may not cover the whole day, so check the end of your series."
+  source: https://oceandata.sci.gsfc.nasa.gov/files/resources/docs/format/Ocean_Data_Product_Users_Guide.pdf
+  source_name: "OBPG Ocean Science Data Product Format Specification (2017-11) + OB.DAAC CMR and OPeNDAP file attributes and Direct Data Access listings + Earthdata Forum (LP DAAC) replies"
+
+variables:
+  note: >-
+    Variable names and units are taken from OB.DAAC OPeNDAP file attributes, Direct Data Access file listings (2026-10-11 daily files) and CMR collection descriptions. Each file holds one variable
+    (e.g. JPSS2_VIIRS.20260601.L3m.DAY.CHL.chlor_a.4km.nc), and file names start with `SNPP_VIIRS` (Suomi NPP), `JPSS1_VIIRS` (NOAA-20) or `JPSS2_VIIRS` (NOAA-21).
+    The wavelength numbers in Rrs and IOP names differ between satellites, so do not hard-code them.
+  full_list: https://oceancolor.gsfc.nasa.gov/data/product_status
+  groups:
+    - name: Ocean color L3 (CHL, RRS, KD, POC, PIC files)
+      kind: mean
+      period: Daily, 8-day, monthly and annual composites
+      items:
+        - text: "Chlorophyll-a concentration — `chlor_a` (mg m-3)"
+          note: OCI algorithm (CI blended with OCx), the same as MODIS
+        - text: "Remote sensing reflectance (Suomi NPP) — `Rrs_410`, `Rrs_443`, `Rrs_486`, `Rrs_551`, `Rrs_671` (sr-1)"
+        - text: "Remote sensing reflectance (NOAA-20 and NOAA-21) — `Rrs_411`, `Rrs_445`, `Rrs_489`, `Rrs_556`, `Rrs_667` (sr-1)"
+        - text: "Aerosol optical thickness (atmospheric-correction by-product) — `aot_862` (Suomi NPP), `aot_868` (NOAA-20/21) (dimensionless)"
+          std: []
+        - text: "Angstrom exponent (atmospheric-correction by-product) — `angstrom` (dimensionless)"
+          std: []
+        - text: "Diffuse attenuation coefficient of downwelling irradiance at 490 nm — `Kd_490` (m-1)"
+          std: []
+        - text: "Particulate organic carbon — `poc` (mg m-3 as carbon)"
+          std: []
+        - text: "Particulate inorganic carbon (calcite) — `pic` (mol m-3)"
+          std: []
+    - name: Photosynthetically available radiation (PAR files)
+      kind: accum
+      period: Daily
+      items:
+        - text: "Daily photosynthetically available radiation — `par` (mol m-2 day-1)"
+          note: Daily integral; 8-day and monthly files hold its mean
+          std: []
+    - name: Inherent optical properties (IOP files, GIOP model — NOAA-20/21 wavelengths)
+      kind: mean
+      period: Daily, 8-day, monthly and annual composites
+      items:
+        - text: "Total absorption — `a_411`, `a_445`, `a_489`, `a_556`, `a_667` (m-1)"
+          std: []
+        - text: "Total backscattering — `bb_411`, `bb_445`, `bb_489`, `bb_556`, `bb_667` (m-1)"
+          std: []
+        - text: "Phytoplankton and dissolved/detrital absorption, particle backscattering at 445 nm — `aph_445`, `adg_445`, `bbp_445` (m-1)"
+          std: []
+        - text: "Spectral slopes and uncertainties — `adg_s`, `bbp_s`, `aph_unc_445`, `adg_unc_445`, `bbp_unc_445`"
+          std: []
+    - name: Sea surface temperature L3 (SST, NSST, SST3 files — Suomi NPP 2016.2, NOAA-20 2024.0)
+      kind: mean
+      period: Daily, 8-day, monthly and annual composites
+      items:
+        - text: "Daytime sea surface temperature — `sst` (degree_C)"
+          note: SST files (11/12 µm); may include diurnal warming
+        - text: "Nighttime sea surface temperature — `sst` (degree_C)"
+          note: NSST files; the variable name is the same as daytime, so tell them apart by file name
+        - text: "Triple-window sea surface temperature — `sst_triple` (degree_C)"
+          note: "Uses the 8.6, 11 and 12 µm windows for water-vapor correction (SST3 files)"
+        - text: "SST quality level — `qual_sst`, `qual_sst_triple`"
+          std: []
+
+access:
+  - name: NASA Earthdata Search (OB.DAAC portal)
+    url: https://search.earthdata.nasa.gov/search?portal=obdaac
+    method: Web search and download, earthaccess (Python; short_name e.g. VIIRSJ2_L3m_CHL, VIIRSJ1_L3m_RRS, VIIRSN_L3m_SST)
+    note: >-
+      Collections are named VIIRSN_ (Suomi NPP), VIIRSJ1_ (NOAA-20) or VIIRSJ2_ (NOAA-21) + L3m_{CHL,RRS,KD,PAR,POC,PIC,IOP}, with L3b for binned files and an _NRT suffix for NRT.
+      SST collections are VIIRSN_L3m_{SST,NSST,SST3} and VIIRSJ1_L3m_SST (on 2026-10-13 the latter had no granules registered in CMR — use Direct Data Access). A free NASA Earthdata Login is required.
+  - name: OB.DAAC Direct Data Access (Level-3 Mapped / NOAA21-VIIRS)
+    url: https://oceandata.sci.gsfc.nasa.gov/directdataaccess/Level-3%20Mapped/NOAA21-VIIRS/
+    method: HTTPS directories by year and day, e.g. JPSS2_VIIRS.20260601_20260630.L3m.MO.CHL.chlor_a.4km.nc
+    note: NOAA-20 is under Level-3%20Mapped/NOAA20-VIIRS/ and Suomi NPP under Level-3%20Mapped/SNPP-VIIRS/. Standard and NRT (.NRT.nc) files sit side by side in each date folder. Earthdata Login is required.
+  - name: OB.DAAC OPeNDAP (L3 SMI)
+    url: https://oceandata.sci.gsfc.nasa.gov/opendap/VIIRSJ2/L3SMI/
+    method: OPeNDAP (year/MMDD folders, e.g. L3SMI/2026/0601/) for reading just the region you need
+    note: NOAA-20 is under /opendap/VIIRSJ1/L3SMI/ and Suomi NPP under /opendap/VIIRSN/L3SMI/.
+  - name: OB.DAAC File Search
+    url: https://oceandata.sci.gsfc.nasa.gov/api/file_search/
+    method: Build file lists by name pattern and date range (for wget or curl)
+
+example:
+  lang: python
+  note: "Downloads NOAA-21 monthly 4 km chlorophyll with earthaccess and looks at the seas around Korea. Run earthaccess.login() once with a NASA Earthdata account."
+  code: |
+    # pip install earthaccess xarray netCDF4
+    import earthaccess
+    import numpy as np
+    import xarray as xr
+
+    earthaccess.login()
+    results = earthaccess.search_data(
+        short_name="VIIRSJ2_L3m_CHL",           # NOAA-20: VIIRSJ1_L3m_CHL, Suomi NPP: VIIRSN_L3m_CHL
+        granule_name="*.MO.CHL.chlor_a.4km*",   # daily: *.DAY.*, 8-day: *.8D.*  (NRT: the *_NRT collections)
+        temporal=("2025-01-01", "2025-12-31"),
+    )
+    paths = earthaccess.download(results, "./viirs_chl")
+
+    ds = xr.open_mfdataset(paths, combine="nested", concat_dim="time")
+    ds = ds.sortby("lat")                                    # L3m latitude runs north to south
+    kr = ds["chlor_a"].sel(lat=slice(30, 42), lon=slice(117, 132))
+    print(float(10 ** np.log10(kr).mean()))                 # log-space mean for chlorophyll
+
+tips:
+  - "Time series built from Suomi NPP stop on 2026-11-02. NESDIS names NOAA-21 as the primary and NOAA-20 as the secondary replacement, so compare over the overlap (NOAA-21 from 2022-11) before switching."
+  - "Rrs wavelengths differ between satellites (671 nm on Suomi NPP vs 667 nm on NOAA-20/21, etc.). OBPG reports that NOAA-20 Rrs(667) differs from Suomi NPP Rrs(671) by about 20%, so do not mix red-band values across satellites."
+  - "NOAA-21 ocean color is R2025.0 while Suomi NPP and NOAA-20 are R2022.0 (with mini-reprocessings). NOAA-21's R2025.0 is a calibration-only reprocessing that redid the vicarious calibration with HyperNAV in situ radiometry."
+  - "The CMR description and ATBD warn that `chlor_a` is less certain in sediment-rich waters such as the Yellow Sea and East China Sea coasts. Compare with GOCI-II or in situ data around Korea."
+  - "OB.DAAC does not produce NOAA-21 SST (per the 2026-10-13 Direct Data Access listings). For NOAA-21 SST, look for NOAA STAR's GHRSST products."
+  - "Standard NOAA-20 SST daily files do not appear on Direct Data Access after early January 2026; only NRT is there. The VIIRSJ1_L3m_SST collection in CMR has no granules either, so earthaccess may not find them."
+  - "On the L3 mapped grid the same bin value repeats over several pixels at high latitudes. Compute area means from L3 binned files or with latitude weighting."
+  - "Daytime SST is affected by diurnal warming, so nighttime SST (NSST) is safer for climatologies and trends."
+
+citations:
+  dataset:
+    - label: NOAA-21 VIIRS L3 mapped chlorophyll R2025.0 (OB.DAAC)
+      text: >-
+        NASA Ocean Biology Processing Group. 2025. NOAA-21 VIIRS Level-3 Global Mapped Chlorophyll (CHL) Data, version 2025.0. NASA Ocean Biology Distributed Active Archive Center.
+        https://doi.org/10.5067/NOAA-21/VIIRS/L3M/CHL/2025.0
+      doi: 10.5067/NOAA-21/VIIRS/L3M/CHL/2025.0
+      bibtex: |
+        @misc{obpg2025viirsj2chl,
+          author    = {{NASA Ocean Biology Processing Group}},
+          title     = {{NOAA}-21 {VIIRS} Level-3 Global Mapped Chlorophyll ({CHL}) Data, version 2025.0},
+          year      = {2025},
+          publisher = {NASA Ocean Biology Distributed Active Archive Center},
+          doi       = {10.5067/NOAA-21/VIIRS/L3M/CHL/2025.0}
+        }
+    - label: NOAA-20 VIIRS L3 mapped chlorophyll R2022.0 (OB.DAAC)
+      text: >-
+        NASA Ocean Biology Processing Group. 2025. NOAA-20 VIIRS Level-3 Global Mapped Chlorophyll (CHL) Data, version 2022.0. NASA Ocean Biology Distributed Active Archive Center.
+        https://doi.org/10.5067/NOAA-20/VIIRS/L3M/CHL/2022.0
+      doi: 10.5067/NOAA-20/VIIRS/L3M/CHL/2022.0
+      bibtex: |
+        @misc{obpg2025viirsj1chl,
+          author    = {{NASA Ocean Biology Processing Group}},
+          title     = {{NOAA}-20 {VIIRS} Level-3 Global Mapped Chlorophyll ({CHL}) Data, version 2022.0},
+          year      = {2025},
+          publisher = {NASA Ocean Biology Distributed Active Archive Center},
+          doi       = {10.5067/NOAA-20/VIIRS/L3M/CHL/2022.0}
+        }
+    - label: Suomi NPP VIIRS L3 mapped chlorophyll R2022.0 (OB.DAAC)
+      text: >-
+        NASA Ocean Biology Processing Group. 2025. Suomi-NPP VIIRS Level-3 Global Mapped Chlorophyll (CHL) Data, version 2022.0. NASA Ocean Biology Distributed Active Archive Center.
+        https://doi.org/10.5067/SUOMI-NPP/VIIRS/L3M/CHL/2022.0
+      doi: 10.5067/SUOMI-NPP/VIIRS/L3M/CHL/2022.0
+      bibtex: |
+        @misc{obpg2025viirsnchl,
+          author    = {{NASA Ocean Biology Processing Group}},
+          title     = {Suomi-{NPP} {VIIRS} Level-3 Global Mapped Chlorophyll ({CHL}) Data, version 2022.0},
+          year      = {2025},
+          publisher = {NASA Ocean Biology Distributed Active Archive Center},
+          doi       = {10.5067/SUOMI-NPP/VIIRS/L3M/CHL/2022.0}
+        }
+  papers:
+    - label: OCx chlorophyll coefficients (used in R2022)
+      text: >-
+        O'Reilly, J. E., Werdell, P. J. (2019): Chlorophyll algorithms for ocean color sensors - OC4, OC5 & OC6. Remote Sensing of Environment, 229, 32–47.
+      doi: 10.1016/j.rse.2019.04.021
+      bibtex: |
+        @article{oreilly2019chl,
+          author  = {O'Reilly, John E. and Werdell, P. Jeremy},
+          title   = {Chlorophyll algorithms for ocean color sensors - {OC4}, {OC5} \& {OC6}},
+          journal = {Remote Sensing of Environment},
+          volume  = {229},
+          pages   = {32--47},
+          year    = {2019},
+          doi     = {10.1016/j.rse.2019.04.021}
+        }
+    - label: CI algorithm for low chlorophyll
+      text: >-
+        Hu, C., Lee, Z., Franz, B. (2012): Chlorophyll a algorithms for oligotrophic oceans: A novel approach based on three-band reflectance difference.
+        Journal of Geophysical Research: Oceans, 117(C1), 2011JC007395.
+      doi: 10.1029/2011JC007395
+      bibtex: |
+        @article{hu2012ci,
+          author  = {Hu, Chuanmin and Lee, Zhongping and Franz, Bryan},
+          title   = {Chlorophyll a algorithms for oligotrophic oceans: A novel approach based on three-band reflectance difference},
+          journal = {Journal of Geophysical Research: Oceans},
+          volume  = {117},
+          number  = {C1},
+          year    = {2012},
+          doi     = {10.1029/2011JC007395}
+        }
+    - label: OBPG chlorophyll-a ATBD v1.1 (2023)
+      text: >-
+        NASA Ocean Biology Processing Group (2023): Chlorophyll a, Algorithm Theoretical Basis Document, version 1.1 (as implemented in R2022).
+      doi: 10.5067/JCQB8QALDOYD
+  acknowledgement: >-
+    NASA asks users to cite the dataset DOI for each product and platform (Suomi NPP, NOAA-20, NOAA-21) actually used. Also state the processing version (R2022.0 or 2025.0; SST 2016.2 or 2024.0) and whether the files were NRT.
+
+notices:
+  - date: "2026-08-03"
+    level: critical
+    title: Suomi NPP science data delivery ends 13:00 UTC on 2 November 2026 — move to NOAA-21 and NOAA-20
+    body: >-
+      NOAA NESDIS announced that delivery of all remaining Suomi NPP science data, including VIIRS, ATMS, CERES and OMPS, will permanently cease at 13:00 UTC on 2 November 2026, and named NOAA-21 (primary) and NOAA-20 (secondary) as replacements.
+      This ends data delivery, not satellite operations, and NASA continues to archive and distribute existing Suomi NPP data. The NASA Earthdata alert (2026-08-07) gives 1 November, while the GES DISC re-announcement (2026-10-07) gives 2 November (2026/306); the date may change.
+    source: https://www.nesdis.noaa.gov/news/cessation-of-suomi-national-polar-orbiting-partnership-s-npp-data-users-onafter-november-2-2026
+  - date: "2025-10"
+    level: info
+    title: NOAA-21 VIIRS ocean color R2025.0 collections released
+    body: >-
+      OBPG processed NOAA-21 VIIRS ocean color with the calibration-only "VIIRS-NOAA21 Ocean Color Reprocessing 2025.0" and released L2, L3 and L4 collections (version 2025.0). Vicarious calibration gains were rederived from HyperNAV in situ radiometry,
+      which OBPG says reduces residual Rrs bias in oligotrophic waters and reduces striping. The reprocessing page carries no date, so the DOI registration date (2025-10-06) is used here.
+    source: https://oceancolor.gsfc.nasa.gov/data/reprocessing/r2025/noaa21
+  - date: "2025-05-02"
+    level: warning
+    title: Transition from MODIS to VIIRS — Terra and Aqua to begin decommissioning in late 2026 to early 2027
+    body: >-
+      NASA announced that Terra and Aqua are expected to cease operations in late 2026 or early 2027, that orbit drift may affect their data, and that users should consider comparable VIIRS products. MODIS ocean color users will be moving to this dataset.
+    source: https://www.earthdata.nasa.gov/data/alerts-outages/transition-from-modis-viirs
+  - date: "2022-10"
+    level: info
+    title: Full-mission R2022.0 reprocessing of Suomi NPP and NOAA-20 VIIRS ocean color begins
+    body: >-
+      OBPG began the full-mission R2022.0 reprocessing of Suomi NPP and NOAA-20 VIIRS ocean color in October 2022. It moved to VIIRS Level-1 code v3.2 (with JPSS-2 support), regenerated geolocation,
+      and updated instrument and vicarious calibration, chlorophyll coefficients and ancillary data. OBPG reports chlorophyll and Rrs from both satellites and MODIS Aqua agree within 10% over global deep water.
+    source: https://oceancolor.gsfc.nasa.gov/data/reprocessing/r2022/snpp
+
+transitions:
+  - from: VIIRS ocean color R2022.0 (Suomi NPP)
+    to: VIIRS ocean color R2022.0.1 and R2022.0.2 (Suomi NPP mini-reprocessings)
+    status: completed
+    summary: >-
+      Mini-reprocessings that removed a temporal drift left in the R2022 calibration, bringing Suomi NPP closer to NOAA-21 VIIRS and Aqua MODIS. A minor calibration error in late-2020 data was fixed at the same time, and data since 2020-08-01 were reprocessed.
+    changes:
+      - aspect: Suomi NPP calibration
+        before: R2022.0 on-orbit calibration (residual drift)
+        after: "Updated calibration without the drift (R2022.0.1), plus fixes for post-2022 quality issues (R2022.0.2)"
+      - aspect: Period reprocessed
+        before: "-"
+        after: Since 2020-08-01
+    impacts:
+      - "Suomi NPP values after August 2020 changed, so download them again rather than mixing them with older files."
+    sources:
+      - name: OBPG — VIIRS-SNPP R2022.0.1
+        url: https://oceancolor.gsfc.nasa.gov/data/reprocessing/r2022.0.1/snpp
+      - name: OBPG — VIIRS-SNPP R2022.0.2
+        url: https://oceancolor.gsfc.nasa.gov/data/reprocessing/r2022.0.2/snpp
+  - from: Suomi NPP VIIRS Ocean
+    to: NOAA-21 and NOAA-20 VIIRS Ocean
+    status: planned
+    date: "2026-11"
+    summary: >-
+      Once NOAA ends Suomi NPP delivery at 13:00 UTC on 2026-11-02, the Suomi NPP version gets no new data. NOAA-21 (primary) and NOAA-20 (secondary) carry the same VIIRS sensor with the same OBPG processing,
+      but their processing versions, band centres and product sets differ slightly.
+    changes:
+      - aspect: Period
+        before: "2012-01-02 to 2026-11-02 (delivery ends)"
+        after: "NOAA-20 2017-11-29~ / NOAA-21 2022-11-10~"
+      - aspect: Ocean color processing version
+        before: R2022.0 (mini-reprocessing R2022.0.2)
+        after: "NOAA-20 R2022.0 (R2022.0.2) / NOAA-21 R2025.0"
+      - aspect: Rrs wavelengths
+        before: "`Rrs_410`, `Rrs_443`, `Rrs_486`, `Rrs_551`, `Rrs_671`"
+        after: "`Rrs_411`, `Rrs_445`, `Rrs_489`, `Rrs_556`, `Rrs_667`"
+      - aspect: Sea surface temperature
+        before: "SST, NSST, SST3 (version 2016.2)"
+        after: "NOAA-20 SST, NSST, SST3 (version 2024.0; only NRT seen since 2026) / no OB.DAAC SST for NOAA-21"
+      - aspect: File name prefix
+        before: SNPP_VIIRS
+        after: "JPSS1_VIIRS (NOAA-20), JPSS2_VIIRS (NOAA-21)"
+    impacts:
+      - "Rrs variable names change, so scripts need new variable names. The red band (671 → 667 nm) differs by about 20% according to OBPG and cannot be joined as is."
+      - "Suomi NPP and NOAA-20/21 chlorophyll agree within 10% over global deep water, but regional differences can be larger; compare over the overlap before switching."
+      - "The only continuation of Suomi NPP SST (2016.2) is NOAA-20 SST (2024.0), and the processing versions differ, so avoid simple splicing."
+    sources:
+      - name: NOAA NESDIS — Cessation of S-NPP data to users on/after November 2, 2026
+        url: https://www.nesdis.noaa.gov/news/cessation-of-suomi-national-polar-orbiting-partnership-s-npp-data-users-onafter-november-2-2026
+      - name: NASA Earthdata — Suomi NPP Data Product Delivery to Cease (2026-08-07)
+        url: https://www.earthdata.nasa.gov/data/alerts-outages/suomi-npp-data-product-delivery-cease-november-1-2026
+      - name: OBPG — VIIRS-NOAA20 R2022.0 (cross-sensor Rrs differences)
+        url: https://oceancolor.gsfc.nasa.gov/data/reprocessing/r2022/noaa20
+
+links:
+  - name: OB.DAAC — VIIRS-SNPP data overview
+    url: https://oceancolor.gsfc.nasa.gov/data/viirs-snpp/
+  - name: OBPG — VIIRS-NOAA21 R2025.0
+    url: https://oceancolor.gsfc.nasa.gov/data/reprocessing/r2025/noaa21
+  - name: OBPG — VIIRS-NOAA20 R2022.0
+    url: https://oceancolor.gsfc.nasa.gov/data/reprocessing/r2022/noaa20
+  - name: OBPG — VIIRS-SNPP R2022.0
+    url: https://oceancolor.gsfc.nasa.gov/data/reprocessing/r2022/snpp
+  - name: OBPG — Product Status (current version by sensor)
+    url: https://oceancolor.gsfc.nasa.gov/data/product_status
+  - name: NASA GES DISC alerts (S-NPP cessation re-announcement, 2026-10-07)
+    url: https://disc.gsfc.nasa.gov/api/alerts?page=1&size=10
+  - name: Earthdata Forum — Suomi NPP Data Product Delivery To Cease (LP DAAC and LAADS replies)
+    url: https://forum.earthdata.nasa.gov/viewtopic.php?p=26446
+  - name: OBPG chlorophyll-a ATBD (PDF)
+    url: https://oceancolor.gsfc.nasa.gov/files/atbd/atbd-obdaac-chlorophyll-a.pdf
+  - name: This site — MODIS Ocean (predecessor; MODIS → VIIRS comparison)
+    url: ../modis-ocean/
+  - name: This site — PACE OCI (hyperspectral ocean color)
+    url: ../pace-oci/
+  - name: This site — ESA OC-CCI (multi-sensor ocean colour climate record)
+    url: ../oc-cci/
+  - name: This site — GOCI-II (geostationary ocean color around Korea)
+    url: ../goci2/
+  - name: This site — VIIRS LST (same S-NPP cessation notice)
+    url: ../viirs-lst/
+
+watch_urls:
+  - https://oceancolor.gsfc.nasa.gov/data/reprocessing/
+  - https://www.nesdis.noaa.gov/news/cessation-of-suomi-national-polar-orbiting-partnership-s-npp-data-users-onafter-november-2-2026
+
+last_verified: "2026-10-13"

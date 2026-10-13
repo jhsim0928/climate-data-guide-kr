@@ -1,0 +1,332 @@
+# ─────────────────────────────────────────────────────────────
+# University of Bremen ASI sea ice concentration (AMSR-E/AMSR2, v5.4) — dataset information file (English edition)
+# Satellite tab (sea ice), cross-listed in the sea ice tab (satellite observations). Daily 6.25 km near-real-time sea ice concentration from the 89 GHz ASI algorithm.
+# When checked on 2026-10-13, AMSR2 v5.4 daily files ran through 2026-10-12, and a new preliminary AMSR3-based folder (amsr3/) had appeared on the server.
+# After editing, update last_verified to the date you checked the official pages.
+# ─────────────────────────────────────────────────────────────
+id: amsr2-asi
+name: "ASI AMSR2 (Univ. Bremen)"
+full_name: University of Bremen ASI (ARTIST Sea Ice) Sea Ice Concentration from AMSR-E/AMSR2, version 5.4
+category: satellite
+domain: satellite
+group: 해빙
+order: 25
+also_in:
+  - domain: seaice
+    group: 위성 관측 자료
+domains: [해빙, 원격탐사]
+provider: Institute of Environmental Physics (IUP), University of Bremen, polar remote sensing group — based on JAXA GCOM-W1 AMSR2 (formerly NASA Aqua AMSR-E) data
+
+status: active
+status_note: >-
+  Near-real-time production continues. When checked on 2026-10-13, Arctic (n6250) and Antarctic (s6250) v5.4 netCDF files were online through 2026-10-12, usually posted the next morning (around 06:00 server time).
+  However, JAXA lists the host satellite GCOM-W (launched 2012) as in its "Latter Phase" of operation, AMSR2 standard product delivery changed in September 2026 (fewer deliveries, some incomplete scenes),
+  and the University of Bremen has started posting preliminary ASI products from the successor sensor GOSAT-GW AMSR3 in an amsr3/ folder. No official switch-over date to an AMSR3 version has been announced.
+
+period:
+  start: "2002-06"
+  end: present
+  note: >-
+    The v5.4 record covers AMSR-E from 2002-06 to 2011-09 and AMSR2 from 2012-07 to present (gap between the two sensors from 2011-10 to 2012-07). All AMSR-E and AMSR2 data were reprocessed in 2018 with identical settings as v5.4;
+    earlier near-real-time data are v5.3 (from 2017-05-02) and v5.2. The yearly bundles on PANGAEA run to 2019 for AMSR2; later years are on the University of Bremen server.
+
+resolution:
+  spatial_short: "6.25 km (0.06°)"
+  temporal_short: "1일"
+  spatial: >-
+    NSIDC polar stereographic grids — Arctic n6250 at 6.25 km (EPSG:3411, true latitude 70°N, 1216 × 1792), Antarctic s6250 at 6.25 km (EPSG:3412, true latitude 70°S, 1264 × 1328).
+    Regional 3.125 km map grids (n3125, s3125, Arctic3125 etc.) are also produced but were not reprocessed in v5.4. The 89 GHz footprint is about 6 × 4 km²
+  vertical: Not applicable (surface product)
+  temporal: Daily grids (all swaths within one UTC calendar day) / per-orbit swath files (half-orbit files)
+
+coverage:
+  short: 양극
+  note: "Separate Arctic and Antarctic polar stereographic grids. Land spill-over can create false concentrations within about 20 km of the coast"
+update: Daily (near real time). As of October 2026, each day's file is posted the next morning (around 06:00 server time); regional 3.125 km maps and PNGs are updated at the same time
+license: >-
+  The AMSR2 v5.4 yearly datasets on PANGAEA are CC BY 4.0 (the AMSR-E Arctic dataset is CC BY-SA 4.0). Files on the University of Bremen server carry no licence statement
+  and are offered as research products without liability; users are asked to cite the algorithm paper and acknowledge the source in publications
+account_required: false
+
+summary: >-
+  Daily Arctic and Antarctic sea ice concentration produced by the University of Bremen with the ASI (ARTIST Sea Ice) algorithm, which uses the polarization difference of the AMSR-E and AMSR2 89 GHz channels.
+  Its 6.25 km grid is four times finer than the 25 km grids of the NOAA/NSIDC CDR and the OSI SAF climate records, so it resolves ice edges, polynyas and leads much better.
+  Updated every morning, it is widely used for icebreaker routing, field campaign planning and operational ice charting, and is available without login as HDF4, GeoTIFF, netCDF and PNG maps.
+  It was not designed as a climate data record, so long-term trends are best checked against the 25 km climate records.
+
+time_convention:
+  summary: >-
+    Each daily grid combines all swath data from one UTC calendar day into a single daily value (the server's note on the gridded brightness temperatures describes this as combining about 14 overpasses per day).
+    The values are not instantaneous; only the per-orbit swath files carry observation times.
+  points:
+    - "The date in the file name (e.g. asi-AMSR2-n6250-20261012-v5.4.nc) is a UTC calendar day, nine hours offset from a day in Korean time."
+    - "At high latitudes, where the satellite passes several times a day, a single grid value includes observations from several times that day."
+    - "Swath data (swath/asiYYYYMMDD/ folders, e.g. GW1AM2-20200101-073D-asi.nc) come as one file per half orbit, with the time of each scan line in `Scan_Time` (seconds since 1992-01-01 00:00 UTC)."
+  source: https://data.seaice.uni-bremen.de/amsr2/ASIuserguide.pdf
+  source_name: ASI Version 5 Sea Ice Concentration User Guide (V0.9.4, 2024-08-09) / swath data readme (Readme_AMSR_ASI_swath.txt)
+
+variables:
+  note: >-
+    The user guide says only that each daily file holds one two-dimensional sea ice concentration field (%) and does not give the variable name inside the netCDF files, so no name is listed here (check with xarray).
+    According to the data archive page, concentrations are scaled 0–100 with land and missing values set to 120 (older files: 0–200, land/missing 255). Latitudes and longitudes for the HDF4 files are in the separate grid_coordinates/ folder.
+  full_list: https://data.seaice.uni-bremen.de/amsr2/ASIuserguide.pdf
+  groups:
+    - name: Daily grids (n6250, s6250; HDF4, GeoTIFF, netCDF)
+      kind: mean
+      period: Daily
+      items:
+        - text: "Sea ice concentration (%)"
+          note: Daily value from all swaths in one UTC day. 0–100, land and missing 120
+    - name: Per-orbit swaths (swath, netCDF)
+      kind: instant
+      items:
+        - text: "Sea ice concentration — A and B scan arrays (%)"
+          note: Footprint values for the two 89 GHz scan lines A and B (about 5 km apart), with matching latitude and longitude arrays
+        - text: "Scan line acquisition time — `Scan_Time` (s since 1992-01-01 00:00 UTC)"
+          std: []
+
+access:
+  - name: University of Bremen data server (HTTPS)
+    url: https://data.seaice.uni-bremen.de/amsr2/asi_daygrid_swath/
+    method: Direct HTTPS download (e.g. n6250/netcdf/2026/asi-AMSR2-n6250-20261012-v5.4.nc; HDF4, GeoTIFF and PNG under n6250/2026/oct/Arctic/)
+    note: >-
+      No login needed. Under n6250 (Arctic) and s6250 (Antarctic), HDF4, GeoTIFF and PNG files sit in year/month/region folders, and yearly netCDF folders are under netcdf/, with past years also bundled as yearly zip files.
+      The same structure is reachable at https://seaice.uni-bremen.de/data/.
+    login: false
+  - name: University of Bremen data server (anonymous FTP)
+    url: ftp://data.seaice.uni-bremen.de/
+    method: Anonymous FTP (user name anonymous, no password)
+    note: Same folder structure as HTTPS. For bulk downloads the archive page suggests recursive tools such as wget -r.
+    login: false
+  - name: PANGAEA — AMSR2 ASI v5.4 yearly netCDF (Arctic and Antarctic)
+    url: https://doi.org/10.1594/PANGAEA.898399
+    method: Web download (DOI-registered archive, 2012-07 to 2019-12)
+    note: The Antarctic dataset is https://doi.org/10.1594/PANGAEA.898400; AMSR-E (2002-06 to 2011-09) is PANGAEA.919777 (Arctic) and 919778 (Antarctic).
+    login: false
+  - name: University of Bremen data browser (map viewer)
+    url: https://data.seaice.uni-bremen.de/databrowser/
+    method: Web maps (browse daily concentration maps)
+
+example:
+  lang: python
+  note: >-
+    Downloads one Arctic 6.25 km netCDF file from the University of Bremen server and opens it. Because the user guide does not name the variable, the example picks the largest data variable as the concentration field; run print(ds) first to check the name.
+  code: |
+    import urllib.request
+    import xarray as xr
+
+    day = "20261012"
+    url = f"https://data.seaice.uni-bremen.de/amsr2/asi_daygrid_swath/n6250/netcdf/{day[:4]}/asi-AMSR2-n6250-{day}-v5.4.nc"
+    urllib.request.urlretrieve(url, "asi.nc")
+
+    ds = xr.open_dataset("asi.nc")
+    print(ds)                                                   # check variable names and projection
+
+    sic = max(ds.data_vars.values(), key=lambda v: v.size)      # 2-D sea ice concentration (%)
+    sic = sic.where(sic <= 100)                                 # drop land/missing (120)
+    print("Cells with concentration >= 15%:", int((sic >= 15).sum()))
+
+tips:
+  - >-
+    Compared with the NOAA/NSIDC CDR (../nsidc-cdr-sic/) and OSI SAF (../osisaf-sic/) in the same tab, the difference is resolution and purpose. Those two are 25 km climate records with consistency across sensors,
+    and they provide per-cell uncertainty (OSI SAF) or a standard deviation between algorithms (NSIDC). ASI uses 89 GHz to reach 6.25 km, but it is not an inter-calibrated long-term record and has no per-cell uncertainty variable.
+    Use the climate records for long-term extent and area trends, and ASI for detailed structures such as ice edges, leads and polynyas.
+  - >-
+    The user guide gives an error of about 25% at 0% concentration and about 5.7% at 100%, below 10% above 65% concentration. Low concentrations carry large relative errors, so take care when locating the 15% edge precisely.
+  - >-
+    To remove spurious ice from atmospheric water vapour and clouds, concentration is set to 0 where the gradient ratios exceed thresholds (GR37V/18V > 0.045, GR23V/18V > 0.04) or the Bootstrap concentration is 5% or less,
+    and outside the maximum ice extent for that month over the past 40 years. A value of 0% is therefore partly the result of these filters and masks.
+  - >-
+    Within about 20 km of the coast, land emission can produce non-zero concentration over open water. Filter this band in East Asian seasonal ice zones with complex coastlines such as the Sea of Okhotsk, and in narrow bays.
+    Daily regional 3.125 km maps exist for the Sea of Okhotsk (SeaOfOkhotsk folders under n3125), but that grid was not reprocessed in v5.4.
+  - >-
+    There is a gap of about nine months between AMSR-E (2002–2011) and AMSR2 (2012–), and AMSR2 brightness temperatures are converted to AMSR-E equivalents. State how the gap and the sensor boundary are handled when building a combined series.
+  - >-
+    The server's SeaIceConcentration/ASI_CDR/ folder holds a separate 1991–2024 6.25 km EASE2 sea ice concentration record (v1, posted 2026-08) in which ASI is adapted to SSM/I and SSMIS.
+    It uses different sensors and a different grid from the AMSR2 v5.4 product described here, so do not mix the two. No DOI or official citation has been given yet.
+  - >-
+    During the move to AMSR3, the same date may give different values in the amsr2/ and amsr3/ folders. When checked on 2026-10-13 the readme files in amsr2/ and amsr3/ had swapped contents,
+    so identify the sensor from the file name (asi-AMSR2-…, amsr3-…) rather than the folder name.
+
+citations:
+  dataset:
+    - label: AMSR2 ASI v5.4 Arctic (PANGAEA)
+      text: >-
+        Melsheimer, Christian; Spreen, Gunnar (2019): AMSR2 ASI sea ice concentration data, Arctic, version 5.4 (NetCDF) (July 2012 - December 2019) [dataset].
+        PANGAEA, https://doi.org/10.1594/PANGAEA.898399
+      doi: 10.1594/PANGAEA.898399
+      bibtex: |
+        @misc{melsheimer2019asi_arctic,
+          author    = {Melsheimer, Christian and Spreen, Gunnar},
+          title     = {{AMSR2} {ASI} sea ice concentration data, {Arctic}, version 5.4 ({NetCDF}) (July 2012 - December 2019)},
+          year      = {2019},
+          publisher = {PANGAEA},
+          doi       = {10.1594/PANGAEA.898399}
+        }
+    - label: AMSR2 ASI v5.4 Antarctic (PANGAEA)
+      text: >-
+        Melsheimer, Christian; Spreen, Gunnar (2019): AMSR2 ASI sea ice concentration data, Antarctic, version 5.4 (NetCDF) (July 2012 - December 2019) [dataset].
+        PANGAEA, https://doi.org/10.1594/PANGAEA.898400
+      doi: 10.1594/PANGAEA.898400
+      bibtex: |
+        @misc{melsheimer2019asi_antarctic,
+          author    = {Melsheimer, Christian and Spreen, Gunnar},
+          title     = {{AMSR2} {ASI} sea ice concentration data, {Antarctic}, version 5.4 ({NetCDF}) (July 2012 - December 2019)},
+          year      = {2019},
+          publisher = {PANGAEA},
+          doi       = {10.1594/PANGAEA.898400}
+        }
+    - label: AMSR-E ASI v5.4 Arctic (PANGAEA, for 2002–2011)
+      text: >-
+        Melsheimer, Christian; Spreen, Gunnar (2020): AMSR-E ASI sea ice concentration data, Arctic, version 5.4 (NetCDF) (June 2002 - September 2011) [dataset].
+        PANGAEA, https://doi.org/10.1594/PANGAEA.919777
+      doi: 10.1594/PANGAEA.919777
+  papers:
+    - label: ASI algorithm paper (requested by the University of Bremen)
+      text: >-
+        Spreen, G., Kaleschke, L., and Heygster, G. (2008): Sea ice remote sensing using AMSR-E 89-GHz channels. Journal of Geophysical Research: Oceans, 113, C02S03.
+      doi: 10.1029/2005JC003384
+      bibtex: |
+        @article{spreen2008asi,
+          author  = {Spreen, Gunnar and Kaleschke, Lars and Heygster, Georg},
+          title   = {Sea ice remote sensing using {AMSR-E} 89-{GHz} channels},
+          journal = {Journal of Geophysical Research: Oceans},
+          volume  = {113},
+          number  = {C2},
+          pages   = {C02S03},
+          year    = {2008},
+          doi     = {10.1029/2005JC003384}
+        }
+  acknowledgement: >-
+    To help maintain the service, the University of Bremen asks publications to cite Spreen et al. (2008) and acknowledge the source (University of Bremen, seaice.uni-bremen.de).
+    Data from 2020 onward taken from the server have no DOI, so state the version (v5.4) and the download date.
+
+notices:
+  - date: "2026-09-04"
+    level: warning
+    title: "JAXA: some AMSR2 standard L1 and L2 products since 2026-09-02 contain less than one scene of data"
+    body: >-
+      JAXA G-Portal reported that some GCOM-W standard products delivered since 00:00 UTC on 2026-09-02 may contain less than one scene of data, with the cause under investigation.
+      A 4 September update narrowed this to AMSR2 standard L1 and L2 products, said L3 is not affected, and said the affected products will be overwritten with good products at the next delivery. ASI daily files for this period may be updated later.
+    source: https://gportal.jaxa.jp/gpr/notice/notice/view/1500
+  - date: "2026-08-21"
+    level: info
+    title: ASI sea ice concentration climate record from SSM/I and SSMIS (1991–2024, 6.25 km) posted
+    body: >-
+      The SeaIceConcentration/ASI_CDR/ folder on the University of Bremen server now holds 1991–2024 daily 6.25 km EASE2 sea ice concentration (netCDF and PNG) with ASI adapted to SSM/I and SSMIS using AMSR2 as reference,
+      plus an area and extent table and a report (v1.0, 2026-04-30). It is separate from the AMSR2 v5.4 product on this page.
+    source: https://data.seaice.uni-bremen.de/SeaIceConcentration/readme.txt
+  - date: "2026-08-19"
+    level: info
+    title: Preliminary AMSR3-based ASI sea ice concentration folder released
+    body: >-
+      An amsr3/ folder on the University of Bremen server provides preliminary ASI sea ice concentration (asi_daygrid_swath) and daily gridded brightness temperatures (tb_daygrid_swath) from GOSAT-GW AMSR3.
+      The AMSR3 readme (modified 2026-08-19; on the server it sits in the amsr2/ folder) says the preliminary concentration record starts on 2026-06-09, and gridded brightness temperature files go back to 2025-08-11. There is no website notice yet and no statement that it replaces the AMSR2 product.
+    source: https://data.seaice.uni-bremen.de/amsr3/
+  - date: "2026-06-30"
+    level: info
+    title: JAXA releases GOSAT-GW AMSR3 standard products (including sea ice concentration)
+    body: >-
+      JAXA began distributing AMSR3 brightness temperatures and geophysical products on G-Portal, including sea ice concentration, high-resolution sea ice concentration and sea ice motion vectors.
+      AMSR3 started observing on 2025-08-11 and, as AMSR2's successor, aims at continuity of use with AMSR2 data.
+    source: https://gportal.jaxa.jp/gpr/notice/notice/view/1473
+  - date: "2026-06-01"
+    level: warning
+    title: "NOAA notice on AMSR2 product decommissioning and AMSR3 transition — JAXA AMSR2 standard near-real-time data provision ends in September 2026"
+    body: >-
+      NOAA NESDIS announced that, because JAXA will discontinue AMSR2 data, its operational AMSR2 products (sea ice included) would be decommissioned on 2026-08-31 and replaced by AMSR3 versions.
+      The notice states that provision of AMSR2 standard near-real-time data ends in September 2026, and during the July–August 2026 transition AMSR2 global data was received on all passes at the Svalbard ground station. When checked on 2026-10-13, Bremen's AMSR2 ASI was still being updated.
+    source: https://ospo.noaa.gov/data/messages/2026/06/MSG_20260601_1400.html
+  - date: "2025-09-23"
+    level: info
+    title: Some days incomplete after JAXA AMSR2 data outage (22–24 September 2025)
+    body: >-
+      JAXA AMSR2 data delivery stopped from 22 to 24 September, leaving the 22 September maps incomplete and no data on 24 September. Delivery resumed on 24 September and the incomplete data were to be reprocessed.
+    source: https://seaice.uni-bremen.de/news-archive/
+
+transitions:
+  - from: ASI AMSR2 v5.4
+    to: ASI AMSR3 (preliminary)
+    status: planned
+    date: "2026-08"
+    summary: >-
+      With the AMSR2 host GCOM-W in its latter phase and JAXA releasing products from the successor AMSR3 (GOSAT-GW) since 2026-06-30, the University of Bremen has started posting preliminary AMSR3-based ASI concentrations in an amsr3/ folder.
+      As of 2026-10-13, AMSR2 v5.4 is still being updated, and no official version name, switch-over date or reprocessing plan for the AMSR3 product has been announced.
+    changes:
+      - aspect: Input sensor
+        before: "GCOM-W1 AMSR2 (2012-07 onward)"
+        after: "GOSAT-GW AMSR3 (observing since 2025-08-11)"
+      - aspect: Period
+        before: "2012-07 to present (2002-06 onward including AMSR-E)"
+        after: "Preliminary concentration record from 2026-06-09 (readme); gridded brightness temperatures from 2025-08-11"
+      - aspect: Server folder
+        before: "amsr2/asi_daygrid_swath/ (n6250, s6250, n3125, s3125, swath)"
+        after: "amsr3/asi_daygrid_swath/, amsr3/tb_daygrid_swath/ (n6250, n12500, n25000, s6250, s12500, s25000)"
+      - aspect: File names
+        before: "asi-AMSR2-n6250-YYYYMMDD-v5.4.nc"
+        after: "Gridded brightness temperatures as amsr3-n6250-YYYYMMDD-89h.hdf. Concentration file names could not be checked on 2026-10-13 because the folder listing is closed to automated reading"
+      - aspect: Version and status
+        before: "v5.4 (2018 reprocessing, operational)"
+        after: "Preliminary data, no version label or validation document"
+    impacts:
+      - AMSR2 and the preliminary AMSR3 product differ in calibration and swath width, so values for the same day may differ. Do not splice them into one series before an official comparison is published.
+      - Make automated download scripts check the date of the newest file in amsr2/ so that you notice if AMSR2 updates stop.
+      - Preliminary data may be reprocessed or changed later; state the download date and that the data are preliminary in publications.
+    sources:
+      - name: University of Bremen data server, amsr3/ folder
+        url: https://data.seaice.uni-bremen.de/amsr3/
+      - name: JAXA G-Portal — GOSAT-GW/AMSR3 Products Now Available (2026-06-30)
+        url: https://gportal.jaxa.jp/gpr/notice/notice/view/1473
+      - name: JAXA — GCOM-W satellite page (Latter Phase In Operation)
+        url: https://global.jaxa.jp/projects/sat/gcom_w/
+      - name: OSI SAF — Implications of AMSR2 being replaced by AMSR3 on OSI SAF products
+        url: https://osi-saf.eumetsat.int/community/stories/implications-amsr2-being-replaced-amsr3-osi-saf-products
+  - from: ASI v5.2 and v5.3 (near real time)
+    to: ASI v5.4
+    status: completed
+    date: "2018"
+    summary: >-
+      In 2018 all AMSR-E and AMSR2 data for both poles were reprocessed with the same parameters, settings and software as v5.4. Near-real-time data produced before that are v5.3 (from 2017-05-02) and v5.2.
+    changes:
+      - aspect: Processing
+        before: "Near-real-time processing by period (v5.2; v5.3 from 2017-05-02)"
+        after: "Whole period 2002 to present reprocessed with identical settings"
+      - aspect: Regional 3.125 km maps
+        before: "Produced in near real time"
+        after: "Still produced, but not reprocessed in v5.4"
+      - aspect: Value encoding
+        before: "Older files: concentration 0–200, land/missing 255"
+        after: "Concentration 0–100, land/missing 120"
+    impacts:
+      - Replace any v5.2 or v5.3 files you downloaded earlier with v5.4; the version string at the end of the file name tells them apart.
+      - Code written for the older files uses a different value range (0–200, 255) and would read concentrations twice as high if applied unchanged.
+    sources:
+      - name: ASI Version 5 Sea Ice Concentration User Guide (V0.9.4)
+        url: https://data.seaice.uni-bremen.de/amsr2/ASIuserguide.pdf
+      - name: University of Bremen data archive page (value encoding)
+        url: https://seaice.uni-bremen.de/data-archive/
+
+links:
+  - name: University of Bremen — AMSR-E/AMSR2 sea ice concentration page
+    url: https://seaice.uni-bremen.de/sea-ice-concentration/amsre-amsr2/
+  - name: ASI Version 5 user guide (PDF)
+    url: https://data.seaice.uni-bremen.de/amsr2/ASIuserguide.pdf
+  - name: University of Bremen — data archive (FTP, HTTPS, file formats)
+    url: https://seaice.uni-bremen.de/data-archive/
+  - name: University of Bremen — news archive
+    url: https://seaice.uni-bremen.de/news-archive/
+  - name: Grid coordinate files (latitude and longitude for HDF4)
+    url: https://seaice.uni-bremen.de/data/grid_coordinates/
+  - name: This site — OSI SAF sea ice concentration (25 km climate record, AMSR3 transition)
+    url: ../osisaf-sic/
+  - name: This site — NOAA/NSIDC CDR sea ice concentration (25 km climate record)
+    url: ../nsidc-cdr-sic/
+  - name: This site — SMOS thin sea ice thickness (University of Bremen and AWI)
+    url: ../smos-sit/
+
+watch_urls:
+  - https://seaice.uni-bremen.de/news-archive/
+  - https://data.seaice.uni-bremen.de/amsr3/
+  - https://gportal.jaxa.jp/gpr/notice/notice/list
+
+last_verified: "2026-10-13"

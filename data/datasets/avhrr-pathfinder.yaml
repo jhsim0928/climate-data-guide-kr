@@ -1,0 +1,299 @@
+# ─────────────────────────────────────────────────────────────
+# AVHRR Pathfinder SST v5.3 — 데이터셋 정보 파일
+# 위성 탭(해수면온도), 해양 탭(위성 관측 자료) 교차 수록. NOAA NCEI가 NOAA 극궤도 위성 AVHRR로 만든 4 km 주간·야간 L3C 피부 해수면온도 기후자료기록(CDR).
+# NCEI가 2025-09-03 갱신 중단을 공지했고, 자료는 1981-08-25~2023-12-31로 끝났습니다(공식 후속 자료 없음).
+# 수정 후에는 공식 페이지에서 확인한 날짜로 last_verified 를 갱신하세요.
+# ─────────────────────────────────────────────────────────────
+id: avhrr-pathfinder
+name: AVHRR Pathfinder SST v5.3
+full_name: >-
+  AVHRR Pathfinder version 5.3 level 3 collated (L3C) global 4km sea surface temperature
+  (NOAA NCEI AVHRR Pathfinder 해수면온도 기후자료기록, 4 km 주간·야간 L3C)
+category: satellite
+domain: satellite
+group: 해수면온도
+order: 80
+also_in:
+  - domain: ocean
+    group: 위성 관측 자료
+domains: [해양, 원격탐사]
+provider: NOAA National Centers for Environmental Information (NCEI)
+
+status: ended
+status_note: >-
+  NCEI가 2025-09-03 NOAA NESDIS '변경 공지(Notice of Changes)'로 AVHRR Pathfinder SST 제품과 기후자료기록(CDR)의 중단을 알렸고, 2023-12-31 이후로는 갱신하지 않습니다.
+  NCEI 제품 페이지도 "This product is no longer updated. The period of record is 1981–2023."라고 적고 있으며, 2026-10-13 확인 시 NCEI 보관 기록(accession)의 상태는 'Complete'입니다.
+  보관된 자료는 그대로 공식 자료로 남아 NCEI에서 계속 받을 수 있습니다.
+successor:
+  name: 없음 (NCEI 후속 미발표)
+  url: https://www.ncei.noaa.gov/products/avhrr-pathfinder-sst
+  note: >-
+    NCEI 중단 공지와 제품 페이지 모두 후속 자료를 지정하지 않았습니다. 제품 페이지의 '다음 버전' 개선 계획(1994~1995 공백 보완, 빈 변수 채우기 등)도 일정 없이 남아 있습니다.
+    2024년 이후까지 이어지는 AVHRR 포함 위성 SST 기후자료가 필요하면 ESA SST CCI CDR v3(1980~, ICDR 매일 연장)를 검토하되, 처리 체계가 달라 이 자료와 한 시계열로 이어 붙이지 마세요.
+
+period:
+  start: "1981-08"
+  end: "2023-12"
+  note: >-
+    NCEI 보관 기록 기준 1981-08-25~2023-12-31입니다(NOAA CoastWatch ERDDAP판도 같은 범위). 2023년 파일은 NOAA-19 AVHRR/3 자료입니다.
+    1994-09~1995-02는 원자료 공백으로 일부를 이전 판(PFV5.0) 자료로 임시로 채웠고, 이 기간 에어로졸 값은 전년도 값을 썼다고 NCEI가 밝혔습니다.
+
+resolution:
+  spatial_short: "4 km (0.04°)"
+  temporal_short: "1일"
+  spatial: >-
+    0.0416667° 등간격 위경도 격자 8640 × 4320(전지구, 위도는 90°N에서 90°S 순서). 알고리즘 문서는 적도에서 한 칸이 약 4.63 km라고 적고 있습니다
+  vertical: 해면 단일값 — 피부(skin) 해수면온도
+  temporal: >-
+    하루 두 장 — 주간(day)·야간(night) 파일을 따로 제공하는 일별 L3C(한 위성의 관측을 하루 단위 격자로 모은 자료). 월·8일 합성 같은 시간 평균 파일은 v5.3에 없음
+coverage:
+  short: 전지구
+  note: "해양 전역. 구름·해빙·품질 낮은 곳은 빈칸이 있는 L3 자료(빈칸 채움 없음). l2p_flags로 육지·해빙·호수·강을 구분"
+update: "갱신 종료 — 2023-12-31 자료가 마지막입니다(2025-09-03 중단 공지)"
+license: >-
+  파일 속성에 "These data are available for use without restriction."으로 되어 있는 공개 자료입니다. NCEI는 자료에 대해 어떤 보증도 하지 않으며,
+  "These data were provided by GHRSST and the NOAA National Centers for Environmental Information." 문구로 출처를 밝혀 달라고 요청합니다
+account_required: false
+
+summary: >-
+  1981년부터 NOAA 극궤도 기상위성에 실린 AVHRR(고해상도 복사계)의 4 km GAC 관측으로 피부 해수면온도를 일관되게 다시 처리한 장기 기후자료기록입니다.
+  NASA SeaDAS 6.4 기반 처리 체계에서 현장 관측과 위성의 동시 관측(matchup)으로 계수를 맞춘 비선형 회귀 알고리즘(Kilpatrick et al. 2001)으로 SST를 계산하고,
+  주간·야간을 나눈 일별 L3C로 제공합니다. 빈칸을 통계적으로 채우지 않은 위성 관측값이라, 분석장과 달리 실제로 관측된 곳과 날짜만 값이 있습니다.
+  v5.3은 v5.2보다 품질 등급 0 자료 포함, 태양 반사(sun glint) 처리 개선, 육지 마스크 갱신 등이 들어간 마지막 판이며, 2023년까지로 갱신이 끝났습니다.
+
+time_convention:
+  summary: >-
+    주간·야간 파일 각각이 한 위성의 하루치 궤도 관측을 4 km 격자에 모은 것으로, 각 값은 그 위성이 지나간 시각의 피부 수온입니다(일평균 아님).
+    하루(data-day)의 경계는 UTC 자정이 아니라 위성이 적도 근처에서 경도 180°를 지나는 시점이라, 한 파일에 UTC 기준 이틀에 걸친 관측이 섞여 있습니다.
+  points:
+    - "예: 2023001 야간 파일(NOAA-19)의 time_coverage_start는 2022-12-31 09:58 UTC, time_coverage_end는 2023-01-01 19:06 UTC입니다. 날짜는 '자료일(data-day)' 표시로 이해하세요."
+    - "화소별 관측 시각을 담는 sst_dtime이 v5.3에서는 비어 있어, 화소마다 정확한 관측 시각은 알 수 없습니다. time 변수는 파일의 기준 시각뿐입니다."
+    - "주간 파일의 피부 SST에는 낮 동안의 표층 가열(일변화)이 그대로 들어 있습니다. 일변화 영향을 줄이려면 야간 파일을 쓰세요."
+    - "위성이 바뀌면 지나가는 지방시도 바뀝니다. 알고리즘 문서 표에서 NOAA-17(2002-07~2005-06)만 오전(명목 지방시 10시) 위성이고 나머지는 오후 위성이라, 주간 SST를 장기 비교할 때 관측 시각 차이를 고려하세요."
+    - "dt_analysis는 전날 SST 분석값과의 차이로, 그날 관측의 이상 여부를 보는 보조값입니다."
+  source: https://www.ncei.noaa.gov/sites/default/files/2020-04/AlgorithmDescription.pdf
+  source_name: AVHRR Pathfinder v5.3 알고리즘 문서(NCEI) 및 v5.3 L3C 파일 속성
+
+variables:
+  note: >-
+    NCEI THREDDS에 있는 v5.3 L3C 파일 속성 기준입니다. 값이 정수로 압축 저장되어 있으므로(scale_factor·add_offset) 라이브러리가 자동 변환하는지 확인하세요.
+    sses_bias·sses_standard_deviation·sst_dtime은 v5.3에서 비어 있습니다.
+  full_list: https://www.ncei.noaa.gov/sites/default/files/2020-04/AlgorithmDescription.pdf
+  groups:
+    - name: 해수면온도 (L3C 주간·야간 파일)
+      kind: instant
+      items:
+        - text: "피부 해수면온도 — `sea_surface_temperature` (K)"
+          note: 위성이 지난 시각의 피부 수온(scale_factor 0.01, add_offset 273.15). 주간·야간 파일 분리
+        - text: "전날 SST 분석값과의 차이 — `dt_analysis` (K)"
+          note: scale_factor 0.1
+          std: []
+    - name: 품질 정보
+      kind: instant
+      items:
+        - text: "GHRSST 품질 등급 — `quality_level` (0~5)"
+          note: "0 no_data, 1 bad_data, 2 worst_quality, 3 low_quality, 4 acceptable_quality, 5 best_quality"
+        - text: "Pathfinder 고유 품질 등급 — `pathfinder_quality_level` (0~7)"
+          note: 0이 가장 나쁘고 7이 가장 좋음, -1은 결측(파일 속성 기준)
+        - text: "L2P 플래그 — `l2p_flags` (비트 플래그)"
+          note: 마이크로파·육지·해빙·호수·강 구분. 제품 페이지에 따르면 v5.3에서 39.8°C를 넘는 주간 SST를 표시하는 비트 6이 추가됨
+    - name: 보조 자료
+      items:
+        - text: "해빙 비율 — `sea_ice_fraction` (파일 속성 units: percent, scale_factor 0.01)"
+          kind: mean
+          period: 일
+          note: OSI SAF 해빙 자료(없으면 NOAA OISST)를 4 km로 재격자화. 내부 시간 정의는 확인하지 못함
+        - text: "10 m 풍속 — `wind_speed` (m s-1)"
+          kind: instant
+          note: NCEP/DOE 재분석 바람. 관측 시각에 맞춘 방법은 확인하지 못함
+          std: []
+        - text: "에어로졸 동적 지표 — `aerosol_dynamic_indicator` (파일 속성 units: percent)"
+          kind: instant
+          note: 구름·태양 반사가 없는 바다에서 산출한 0.63 µm 에어로졸 광학 두께. 두 출처를 섞어 최적이 아니라고 NCEI가 밝힘
+          std: []
+
+access:
+  - name: NCEI HTTPS 자료 서버 (v5.3 L3C)
+    url: https://www.ncei.noaa.gov/data/oceans/pathfinder/Version5.3/L3C/
+    method: HTTPS 직접 다운로드 (연도별 data 폴더, netCDF-4. 예 2023/data/20230101023227-NCEI-L3C_GHRSST-SSTskin-AVHRR_Pathfinder-PFV5.3_NOAA19_G_2023001_night-v02.0-fv01.0.nc)
+    note: FTP(ftp://ftp-oceans.ncei.noaa.gov/pub/data.nodc/pathfinder/Version5.3/L3C/)로도 받을 수 있습니다. NCEI는 2026-10 클라우드 이전 중이라 일시적인 접근 지연을 공지했습니다.
+    login: false
+  - name: NCEI THREDDS (v5.3 L3C)
+    url: https://www.ncei.noaa.gov/thredds-ocean/catalog/pathfinder/Version5.3/L3C/catalog.html
+    method: THREDDS 카탈로그 / OPeNDAP 부분 추출
+    note: 1981~2023년 연도 폴더가 있습니다.
+    login: false
+  - name: NOAA CoastWatch ERDDAP — nceiPH53sstn1day (야간)·nceiPH53sstd1day (주간)
+    url: https://coastwatch.pfeg.noaa.gov/erddap/info/nceiPH53sstn1day/index.html
+    method: ERDDAP griddap (영역·기간 잘라 netCDF·CSV 등으로 받기)
+    note: 1981-08-25~2023-12-31. 시각이 매일 12:00 UTC로 표시됩니다.
+    login: false
+  - name: Google Cloud Storage (NOAA CDR 공개 버킷)
+    url: https://console.cloud.google.com/storage/browser/noaa-cdr-sea-surface-temp-pathfinder
+    method: 클라우드 저장소 (NCEI CDR 페이지가 안내하는 공개 버킷)
+  - name: Google Earth Engine (NOAA/CDR/SST_PATHFINDER/V53)
+    url: https://developers.google.com/earth-engine/datasets/catalog/NOAA_CDR_SST_PATHFINDER_V53
+    method: 클라우드 분석
+    note: 카탈로그 기간은 1981-08-24~2023-12-30입니다. Earth Engine 계정이 필요합니다.
+
+example:
+  lang: python
+  note: "NCEI THREDDS의 OPeNDAP 주소로 하루치 야간 파일을 열어 한반도 주변만 잘라 보는 예입니다. 로그인은 필요 없습니다. 위도가 북→남 순서라 slice를 큰 값부터 씁니다."
+  code: |
+    # pip install xarray netCDF4
+    import xarray as xr
+
+    url = ("https://www.ncei.noaa.gov/thredds-ocean/dodsC/pathfinder/Version5.3/L3C/2023/data/"
+           "20230101023227-NCEI-L3C_GHRSST-SSTskin-AVHRR_Pathfinder-PFV5.3_NOAA19_G_2023001_night-v02.0-fv01.0.nc")
+    ds = xr.open_dataset(url)
+
+    sub = ds.sel(lat=slice(40, 30), lon=slice(120, 135))              # 한반도 주변
+    sst = sub["sea_surface_temperature"].where(sub["quality_level"] >= 4) - 273.15   # 등급 4·5만, K → °C
+    print(float(sst.count()), float(sst.mean()))
+
+tips:
+  - "빈칸을 채우지 않은 L3 자료라 구름이 잦은 장마철·겨울철 동해·황해는 하루치에 빈칸이 많습니다. 기후값이나 월평균을 낼 때는 날짜별 유효 화소 수를 함께 보세요."
+  - "quality_level의 값 뜻(0 no_data~5 best_quality)은 파일에 있지만 NCEI 페이지에 공식 권장 기준은 없습니다. 어느 등급부터 썼는지 논문에 밝히고, 등급을 바꿔 결과가 얼마나 달라지는지 확인하세요."
+  - "NCEI 기술 노트는 v5.2·v5.3의 50° 이상 고위도 SST가 6월·12월 하지·동지 무렵 잘못될 때가 많다고 밝혔습니다(주간·야간이 섞인 그래뉼을 SeaDAS가 제대로 나누지 못한 문제). 고위도 계절 분석에는 이 기간을 조심하세요."
+  - "1994-09~1995-02는 원자료 공백을 이전 판 자료로 임시로 채웠고 에어로졸 값도 전년도 값을 썼습니다. 이 구간이 들어가는 추세·기후값은 결과를 따로 확인하세요."
+  - "39.8°C를 넘는 주간 SST가 아주 드물게 남아 있습니다. v5.3에서 l2p_flags 비트 6으로 표시하므로 열대·연안의 이상 고온 사례를 볼 때 이 비트를 확인하세요."
+  - "2023년 이후가 필요하면 다른 자료로 넘어가야 합니다. 처리 체계가 다른 자료와 한 시계열로 이어 붙이지 말고, 겹치는 기간에서 차이를 먼저 확인하세요."
+
+citations:
+  dataset:
+    - label: AVHRR Pathfinder v5.3 L3C (NCEI)
+      text: >-
+        Saha, Korak; Zhao, Xuepeng; Zhang, Huai-min; Casey, Kenneth S.; Zhang, Dexin; Baker-Yeboah, Sheekela; Kilpatrick, Katherine A.; Evans, Robert H.; Ryan, Thomas; Relph, John M. (2016).
+        AVHRR Pathfinder version 5.3 level 3 collated (L3C) global 4km sea surface temperature for 1981-2023. NOAA National Centers for Environmental Information. Dataset. https://doi.org/10.7289/v52j68xx
+      doi: 10.7289/v52j68xx
+      bibtex: |
+        @misc{saha2016pathfinder53,
+          author    = {Saha, Korak and Zhao, Xuepeng and Zhang, Huai-min and Casey, Kenneth S. and Zhang, Dexin and Baker-Yeboah, Sheekela and Kilpatrick, Katherine A. and Evans, Robert H. and Ryan, Thomas and Relph, John M.},
+          title     = {{AVHRR} Pathfinder version 5.3 level 3 collated ({L3C}) global 4km sea surface temperature for 1981-2023},
+          year      = {2016},
+          publisher = {NOAA National Centers for Environmental Information},
+          doi       = {10.7289/v52j68xx}
+        }
+  papers:
+    - label: Pathfinder 프로그램 개요 (NCEI 권장 인용)
+      text: >-
+        Casey, K. S., Brandon, T. B., Cornillon, P., Evans, R. (2010): The Past, Present, and Future of the AVHRR Pathfinder SST Program.
+        In: Oceanography from Space, Springer Netherlands, 273–287.
+      doi: 10.1007/978-90-481-8681-5_16
+      bibtex: |
+        @incollection{casey2010pathfinder,
+          author    = {Casey, Kenneth S. and Brandon, Tess B. and Cornillon, Peter and Evans, Robert},
+          title     = {The Past, Present, and Future of the {AVHRR} Pathfinder {SST} Program},
+          booktitle = {Oceanography from Space},
+          publisher = {Springer Netherlands},
+          pages     = {273--287},
+          year      = {2010},
+          doi       = {10.1007/978-90-481-8681-5_16}
+        }
+    - label: Pathfinder SST 알고리즘·매치업 자료
+      text: >-
+        Kilpatrick, K. A., Podestá, G. P., Evans, R. (2001): Overview of the NOAA/NASA advanced very high resolution radiometer Pathfinder algorithm for sea surface temperature
+        and associated matchup database. Journal of Geophysical Research: Oceans, 106(C5), 9179–9197.
+      doi: 10.1029/1999JC000065
+      bibtex: |
+        @article{kilpatrick2001pathfinder,
+          author  = {Kilpatrick, K. A. and Podest{\'a}, G. P. and Evans, R.},
+          title   = {Overview of the {NOAA/NASA} advanced very high resolution radiometer Pathfinder algorithm for sea surface temperature and associated matchup database},
+          journal = {Journal of Geophysical Research: Oceans},
+          volume  = {106},
+          number  = {C5},
+          pages   = {9179--9197},
+          year    = {2001},
+          doi     = {10.1029/1999JC000065}
+        }
+  acknowledgement: >-
+    NCEI는 "These data were provided by GHRSST and the NOAA National Centers for Environmental Information." 문구로 출처를 밝히고,
+    데이터셋 DOI와 함께 Casey et al. (2010)을 인용해 달라고 요청합니다.
+
+notices:
+  - date: "2025-09-03"
+    level: critical
+    title: AVHRR Pathfinder SST 제품·CDR 중단 (2023-12-31 이후 갱신 없음)
+    body: >-
+      NCEI가 NOAA NESDIS 변경 공지로 AVHRR Pathfinder SST 제품과 기후자료기록(CDR)을 중단한다고 알렸습니다. 2023-12-31 이후 자료는 만들지 않으며,
+      이미 보관된 자료는 공식 자료로 남아 제품·CDR 페이지에서 계속 받을 수 있습니다. 후속 자료는 언급하지 않았습니다.
+    source: https://www.nesdis.noaa.gov/news/avhrr-pathfinder-sst
+  - date: "2019-08-29"
+    level: info
+    title: PO.DAAC에서 Pathfinder v5.0·v5.1 배포 종료
+    body: >-
+      NASA PO.DAAC가 NOAA AVHRR Pathfinder SST v5.0·v5.1 자료 지원을 끝내고, 이 자료와 새 판은 NOAA NCEI에서 받도록 안내했습니다.
+    source: https://podaac.jpl.nasa.gov/announcements/2019-08-29_NOAA_AVHRR_PATHFINDER_SST_v5.0_and_v5.1_datasets_retired
+  - date: "2016-08-27"
+    level: info
+    title: Pathfinder v5.3 L3C 공개
+    body: >-
+      SeaDAS 6.4 기반으로 다시 처리한 v5.3 L3C가 NCEI에 공개되었습니다. 품질 등급 0 자료 포함, 태양 반사 처리 개선, NOAA-7·NOAA-19 구름 판별 일관화, 육지 마스크 갱신 등이 v5.2와 달라졌습니다.
+    source: https://www.ncei.noaa.gov/archive/accession/AVHRR_Pathfinder-NCEI-L3C-v5.3
+  - date: "2016-07-20"
+    level: warning
+    title: v5.2·v5.3 고위도 SST 오류 (하지·동지 무렵)
+    body: >-
+      NCEI 기술 노트(CDRP-RPT-0831)가 Pathfinder v5.2·v5.3의 50° 이상 고위도 SST가 6월·12월 하지·동지 무렵 자주 틀린다고 밝혔습니다.
+      주간·야간이 섞인 그래뉼을 나누는 처리 오류 때문이며 L3C에 영향이 있고, NCEI는 다음 판에서 고치겠다고 했지만 후속 판 없이 갱신이 끝났습니다.
+    source: https://www.ncei.noaa.gov/pub/data/sds/cdr/CDRs/Sea_Surface_Temperature_Pathfinder/TechnicalNote_01B-08.pdf
+
+transitions:
+  - from: AVHRR Pathfinder v5.2
+    to: AVHRR Pathfinder v5.3
+    status: completed
+    date: "2016-08"
+    summary: >-
+      처리 체계를 SeaDAS 6.4로 새로 만들어 품질 등급 0 자료를 넣고, 태양 반사·육지 경계 처리와 메타데이터 규격을 개선한 판입니다.
+      기간도 2012년까지에서 2023년까지로 늘었습니다.
+    changes:
+      - aspect: 기간
+        before: "1981-09-01~2012-12-31"
+        after: "1981-08-25~2023-12-31"
+      - aspect: DOI
+        before: 10.7289/v5wd3xhb
+        after: 10.7289/v52j68xx
+      - aspect: 품질 등급
+        before: 품질 등급 0 자료 제외
+        after: "품질 등급 0 자료 포함, 39.8°C 넘는 주간 SST를 l2p_flags 비트 6으로 표시"
+      - aspect: 구름·태양 반사 처리
+        before: NOAA-7·NOAA-19 구름 판별이 다른 센서와 달랐음
+        after: "구름 판별 트리 일관화, 태양 반사(sun glint) 처리 개선, 육지·물 경계 고온점 표시 개선"
+      - aspect: 마스크
+        before: 이전 육지 마스크
+        after: "Global Lakes and Wetlands Database 기반 육지 마스크, 남극 빙붕을 해빙 100%로 표시"
+      - aspect: 파일 형식
+        before: netCDF-4
+        after: "netCDF-4 classic, CF·ACDD 규약 준수 개선"
+    impacts:
+      - v5.2와 v5.3은 화소 값과 결측 화소가 다르므로 한 시계열에 섞지 말고 전체 기간을 v5.3으로 받으세요.
+      - "품질 등급 0이 새로 들어가 있으므로 v5.2 때와 같은 기준으로 거르려면 quality_level·pathfinder_quality_level 조건을 다시 확인하세요."
+      - 하지·동지 무렵 고위도 오류는 v5.3에서도 고쳐지지 않았습니다.
+    sources:
+      - name: NCEI — AVHRR Pathfinder SST 제품 페이지 (v5.3 변경 사항, 버전 기록)
+        url: https://www.ncei.noaa.gov/products/avhrr-pathfinder-sst
+      - name: NCEI 보관 기록 — v5.3 L3C
+        url: https://www.ncei.noaa.gov/archive/accession/AVHRR_Pathfinder-NCEI-L3C-v5.3
+
+links:
+  - name: NCEI — AVHRR Pathfinder SST 제품 페이지
+    url: https://www.ncei.noaa.gov/products/avhrr-pathfinder-sst
+  - name: NCEI — Pathfinder SST 기후자료기록(CDR) 페이지
+    url: https://www.ncei.noaa.gov/products/climate-data-records/pathfinder-sea-surface-temperature
+  - name: v5.3 알고리즘 문서 (PDF)
+    url: https://www.ncei.noaa.gov/sites/default/files/2020-04/AlgorithmDescription.pdf
+  - name: NCEI 보관 기록 — v5.3 L3C (1981–2023)
+    url: https://www.ncei.noaa.gov/archive/accession/AVHRR_Pathfinder-NCEI-L3C-v5.3
+  - name: NOAA NESDIS 변경 공지 — AVHRR Pathfinder SST 중단
+    url: https://www.nesdis.noaa.gov/news/avhrr-pathfinder-sst
+  - name: 이 사이트 — ESA SST CCI (AVHRR 포함 위성 SST 기후자료기록, 1980~)
+    url: ../esa-cci-sst/
+  - name: 이 사이트 — NOAA OISST v2.1 (AVHRR 기반 일별 분석장)
+    url: ../oisst/
+  - name: 이 사이트 — GHRSST MUR (0.01° 일별 분석장)
+    url: ../ghrsst-mur/
+
+watch_urls:
+  - https://www.ncei.noaa.gov/products/avhrr-pathfinder-sst
+
+last_verified: "2026-10-13"

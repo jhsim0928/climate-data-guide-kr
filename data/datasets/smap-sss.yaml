@@ -1,0 +1,399 @@
+# ─────────────────────────────────────────────────────────────
+# NASA SMAP 해면 염분 (RSS V6.0 · JPL CAP V5.0) — 데이터셋 정보 파일
+# 위성 탭(해면 염분), 해양 탭(위성 관측 자료) 교차 수록. 같은 SMAP L밴드 복사계 관측을 RSS와 JPL이 서로 다른 알고리즘으로 처리한 두 계열의 L3 산출물을 한 페이지에 정리했습니다.
+# 2026-10-13 확인 시 JPL CAP V5.0 8일 L3는 2026-10-06 중심일 파일까지, RSS V6.0 8일 L3는 2026-09-19 중심일 파일까지 PO.DAAC에 올라와 있습니다.
+# 같은 페이지 안 버전 변경(RSS V5.0 → V6.0)은 transitions(to_id 없음)에 적었습니다. 토양수분 제품은 ../smap/ 페이지에 있습니다.
+# 수정 후에는 공식 페이지에서 확인한 날짜로 last_verified 를 갱신하세요.
+# ─────────────────────────────────────────────────────────────
+id: smap-sss
+name: "SMAP 해면 염분 (RSS·JPL)"
+full_name: >-
+  Soil Moisture Active Passive (SMAP) Sea Surface Salinity — RSS SMAP Level 2C/Level 3 SSS V6.0과 JPL SMAP CAP Level 2B/Level 3 SSS V5.0
+  (SMAP L밴드 복사계 해면 염분, NASA PO.DAAC 배포)
+category: satellite
+domain: satellite
+group: 해면 염분
+order: 10
+also_in:
+  - domain: ocean
+    group: 위성 관측 자료
+domains: [해양, 원격탐사]
+provider: Remote Sensing Systems(RSS, V6.0) · NASA JPL SMAP 염분 팀(CAP V5.0) / NASA PO.DAAC 배포, NASA Ocean Salinity Science Team 지원
+
+status: active
+status_note: >-
+  SMAP는 L밴드 복사계로 계속 관측 중이며 두 계열 모두 정상 갱신되고 있습니다. 2026-10-13 확인 시 PO.DAAC에 JPL CAP V5.0 8일 L3는 2026-10-06 중심일(10-02~10-10) 파일,
+  월자료는 2026년 9월분까지, RSS V6.0 8일 L3는 2026-09-19 중심일(09-15~09-23) 파일, 월자료는 2026년 8월분까지, RSS L2C 준실시간판은 2026-10-11 궤도까지 올라와 있습니다.
+  현재판은 RSS V6.0(2024-03 공개, 2024-09 전 기간 재처리 완료)과 JPL CAP V5.0입니다.
+
+period:
+  start: "2015-04"
+  end: present
+  note: >-
+    SMAP 과학 관측은 2015년 4월 시작했습니다. RSS V6.0 8일 L3 첫 파일은 2015-04-01 중심(2015-03-28~04-05), 월자료는 2015-04부터이고, JPL CAP V5.0 8일 L3는 2015-05-04 중심 파일부터입니다.
+    위성 안전모드로 2019-06-19~07-23과 2022년 8월 초~9월 하순(궤도 복귀는 10-06)에 자료가 없습니다. RSS 릴리스 노트는 공백을 2019-06-17~07-25, 2022-08-06~09-21(8일 파일 없음)로,
+    PO.DAAC 공지는 2019-06-19~07-23, 2022-08-09~10-06으로 적고 있어 문서마다 조금 다릅니다. RSS 기준 2019년 7월, 2022년 8·9월 월자료는 없습니다.
+
+resolution:
+  spatial_short: "70 km (0.25°)"
+  temporal_short: "8일"
+  spatial: >-
+    L3는 두 계열 모두 0.25° × 0.25° 정규 위경도 격자입니다. RSS V6.0은 약 70 km로 평활한 표준 염분(`sss_smap`)과 원래 약 40 km 해상도 염분(`sss_smap_40km`, 실험용)을 함께 싣고,
+    JPL CAP V5.0은 공간 해상도를 약 60 km로 안내합니다. L2(RSS L2C, JPL L2B)는 폭 1000 km 스와스 궤도 자료입니다
+  vertical: 해면 단일층 — L밴드(1.41 GHz) 복사계가 감지하는 표층 염분
+  temporal: >-
+    L3 8일 이동평균(파일은 하루 1개, 파일 날짜가 8일 구간의 가운데) / L3 월평균. 궤도 자료는 RSS L2C(지연 4일)·L2C 준실시간(약 5시간), JPL L2B·L2B 준실시간(2시간판 포함)이 따로 있습니다
+
+coverage:
+  short: 전지구
+  note: "전지구 해양. 해빙역·육지 가까운 격자는 비거나 플래그 처리되며, RSS는 해빙 오염 등급(sea_ice_zones)에 따라 염분을 빼거나 표준 평활 제품에서 제외합니다"
+update: >-
+  매일(8일 이동평균 파일 하루 1개). PO.DAAC 안내 지연은 RSS L3 8일·월 모두 구간 끝 후 약 7일, JPL 8일 약 7일·월 약 1개월입니다.
+  2026-10 확인 시 실제로는 JPL 8일 파일이 구간 끝 약 3일 뒤, JPL 월자료가 다음 달 2일께, RSS 8일 파일이 구간 끝 약 1주 뒤, RSS 월자료는 약 1개월 뒤에 올라왔습니다
+license: >-
+  NASA 지구과학 공개 자료 — 제한 없이 무료로 공개(PO.DAAC·Earthdata 안내). PO.DAAC에서 받으려면 무료 NASA Earthdata 로그인이 필요하고, RSS 서버(HTTPS)는 로그인 없이 받을 수 있습니다.
+  RSS는 데이터셋 DOI 인용과 감사 문구를 요청합니다
+account_required: false
+
+summary: >-
+  NASA SMAP 위성의 L밴드(1.41 GHz) 복사계 관측으로 만든 해면 염분(SSS) 자료입니다. SMAP는 토양수분 관측 위성이지만 2015년 6월 Aquarius가 끝난 뒤 NASA의 위성 염분 관측을 이어받았고,
+  같은 밝기온도를 두 팀이 서로 다른 알고리즘으로 처리합니다. Remote Sensing Systems(RSS)의 V6.0은 Aquarius와 같은 계열의 알고리즘에 CCMP 바람을 거칠기 보정에 쓰는 자료이고,
+  JPL의 CAP(Combined Active-Passive) V5.0은 Aquarius용으로 개발한 결합 알고리즘으로 염분과 바람을 함께 구하는 자료입니다. 둘 다 0.25° 격자의 8일 이동평균·월평균 L3를 PO.DAAC에서 제공합니다.
+
+time_convention:
+  summary: >-
+    L3 8일 파일은 그 날짜를 가운데로 앞뒤 3.5일(8일) 안의 유효 관측을 평균한 값이고, 파일은 하루 하나씩 나옵니다. 월자료는 그 달 전체의 평균입니다.
+    파일 속 time은 두 계열 모두 평균 구간의 가운데 시각입니다. 실제 관측은 오전 6시(하강)·오후 6시(상승) 무렵 위성이 지나간 순간들이며, 8일 동안 한 격자가 여러 번 관측됩니다.
+  points:
+    - "RSS 8일 파일 이름의 연중 일수(예 RSS_smap_SSS_L3_8day_running_2026_262_FNL_v06.0 → 2026년 262일 = 9월 19일)가 구간의 가운데이고, 그 날 ±3.5일 안의 관측을 평균합니다."
+    - "JPL 8일 파일 이름의 날짜(예 SMAP_L3_SSS_20261006_8DAYS_V5.0)도 구간 가운데입니다. PO.DAAC 기록상 이 파일 구간은 10월 2일 12 UTC~10월 10일 12 UTC이며, JPL은 가우스 가중치로 평균합니다(`weight` 변수)."
+    - "8일 파일은 매일 나오지만 이웃한 파일끼리 7일이 겹치므로 서로 독립 표본이 아닙니다. 독립적인 시계열이 필요하면 8일 간격으로 골라 쓰거나 월자료를 쓰세요."
+    - "time 기준이 다릅니다 — RSS는 'seconds since 2000-01-01T00:00:00Z', JPL은 'seconds since 2015-1-1 00:00:00 UTC'입니다."
+    - "RSS L3는 앞·뒤 관측(fore/aft)과 상승·하강 궤도를 모두 합쳐 평균합니다. 궤도별 순간값이 필요하면 L2C(RSS)나 L2B(JPL)를 쓰세요."
+  source: https://data.remss.com/smap/SSS/V06.0/documents/Release_V6.0.pdf
+  source_name: RSS SMAP Salinity V6.0 Release Notes + PO.DAAC·Earthdata 변수표
+
+variables:
+  note: >-
+    변수 이름과 단위는 NASA Earthdata 카탈로그(PO.DAAC) 변수표 기준입니다. 염분 단위 1e-3은 실용염분(psu와 같은 크기)입니다. RSS와 JPL은 파일 구조와 변수 이름이 다르니 함께 쓸 때 주의하세요.
+  full_list: https://www.earthdata.nasa.gov/data/catalog/pocloud-smap-rss-l3-sss-smi-8day-runningmean-v6-6.0
+  groups:
+    - name: RSS SMAP L3 V6.0 (8일 이동평균·월, 0.25°)
+      kind: mean
+      period: 8일 이동 또는 월
+      items:
+        - text: "해면 염분(약 70 km 평활, 표준) — `sss_smap` (1e-3)"
+          note: RSS가 공식 제품으로 권장
+        - text: "해면 염분(원 해상도 약 40 km, 실험용) — `sss_smap_40km` (1e-3)"
+          note: 잡음이 큼
+        - text: "강우 영향을 걸러낸 해면 염분(약 70 km) — `sss_smap_RF` (1e-3)"
+        - text: "염분 총 불확도 추정 — `sss_smap_unc`, `sss_smap_40km_unc`, `sss_smap_RF_unc` (1e-3)"
+          std: []
+        - text: "HYCOM 참고 염분 — `sss_ref` (1e-3)"
+          std: []
+        - text: "평균에 쓴 관측 수 — `nobs`, `nobs_40km`, `nobs_RF` (1)"
+          kind: accum
+          std: []
+        - text: "보조 해상풍속(CCMP NRT, 거칠기 보정용) — `winspd` (m s-1)"
+          std: []
+        - text: "보조 수온(CMC) — `surtep` (K)"
+          std: []
+        - text: "해빙 비율 추정(안테나 이득 가중) — `gice_est` (1)"
+          std: []
+        - text: "육지 비율 — `gland`, `fland` (1)"
+          std: []
+    - name: JPL SMAP CAP L3 V5.0 (8일 이동평균·월, 0.25°)
+      kind: mean
+      period: 8일 이동 또는 월
+      items:
+        - "해면 염분 — `smap_sss` (1e-3)"
+        - text: "염분 불확도 — `smap_sss_uncertainty` (1e-3)"
+          std: []
+        - text: "SMAP 10 m 해상풍속 — `smap_spd` (m s-1)"
+          note: SMAP 관측에서 염분과 함께 구한 값
+        - text: "SMAP 10 m 해상풍속(보조 염분 사용) — `smap_high_spd` (m s-1)"
+          std: [wind10]
+        - text: "HYCOM 염분 — `anc_sss` (1e-3)"
+          std: []
+        - text: "보조 수온 — `anc_sst` (K)"
+          std: []
+        - text: "해빙·육지 비율 — `ice_fraction`, `land_fraction` (1)"
+          std: []
+        - text: "가우스 가중치 합 — `weight` (1)"
+          kind: accum
+          std: []
+
+access:
+  - name: NASA PO.DAAC — RSS SMAP L3 8일 V6.0 (SMAP_RSS_L3_SSS_SMI_8DAY-RUNNINGMEAN_V6)
+    url: https://podaac.jpl.nasa.gov/dataset/SMAP_RSS_L3_SSS_SMI_8DAY-RUNNINGMEAN_V6
+    method: Earthdata Search / earthaccess / OPeNDAP / podaac-data-subscriber
+    note: >-
+      월자료는 SMAP_RSS_L3_SSS_SMI_MONTHLY_V6, 궤도 자료는 SMAP_RSS_L2_SSS_V6, 준실시간 궤도 자료는 SMAP_RSS_L2_SSS_NRT_V6입니다. 무료 NASA Earthdata 로그인이 필요합니다.
+  - name: NASA PO.DAAC — JPL SMAP CAP L3 8일 V5.0 (SMAP_JPL_L3_SSS_CAP_8DAY-RUNNINGMEAN_V5)
+    url: https://podaac.jpl.nasa.gov/dataset/SMAP_JPL_L3_SSS_CAP_8DAY-RUNNINGMEAN_V5
+    method: Earthdata Search / earthaccess / OPeNDAP / podaac-data-subscriber
+    note: >-
+      월자료는 SMAP_JPL_L3_SSS_CAP_MONTHLY_V5, 궤도 자료는 SMAP_JPL_L2B_SSS_CAP_V5, 준실시간 궤도 자료는 SMAP_JPL_L2B_NRT_SSS_CAP_V5·SMAP_JPL_L2B_NRT2_SSS_CAP_V5(2시간 지연)입니다.
+  - name: RSS 자료 서버 (HTTPS)
+    url: https://data.remss.com/smap/SSS/
+    method: HTTPS 직접 다운로드 (netCDF-4, 예 V06.0/FINAL/L3/8day_running/2026/)
+    note: >-
+      V6.0 문서(Release_V6.0.pdf), 쓰지 않은 궤도 목록(bad_orbits)도 같은 서버에 있습니다. FTP 접속은 무료 등록(register.remss.com)이 필요합니다.
+    login: false
+  - name: RSS SMAP 염분 설명 페이지
+    url: https://www.remss.com/missions/smap/salinity/
+    method: 웹 (버전 설명, 알려진 문제, 인용 문구, 미리보기 이미지)
+
+example:
+  lang: python
+  note: >-
+    earthaccess로 RSS V6.0 8일 L3 한 달치를 받아 한반도 주변 표준 염분(`sss_smap`)을 고르는 예입니다. NASA Earthdata 계정으로 earthaccess.login()을 한 번 거쳐야 합니다.
+    JPL CAP을 쓰려면 short_name을 SMAP_JPL_L3_SSS_CAP_8DAY-RUNNINGMEAN_V5로, 변수를 `smap_sss`, 좌표를 latitude·longitude로 바꾸세요.
+  code: |
+    # pip install earthaccess xarray netCDF4
+    import earthaccess
+    import xarray as xr
+
+    earthaccess.login()
+    results = earthaccess.search_data(
+        short_name="SMAP_RSS_L3_SSS_SMI_8DAY-RUNNINGMEAN_V6",  # 월자료: SMAP_RSS_L3_SSS_SMI_MONTHLY_V6
+        temporal=("2025-08-01", "2025-08-31"),
+    )
+    files = earthaccess.download(results, "./smap_sss")
+
+    ds = xr.open_dataset(files[0])
+    box = (ds.lat >= 25) & (ds.lat <= 40) & (ds.lon >= 120) & (ds.lon <= 135)  # 한반도·동중국해
+    sss = ds["sss_smap"].where(box, drop=True)
+    print(float(sss.mean()), int(ds["nobs"].where(box, drop=True).sum()))
+
+tips:
+  - "RSS는 약 70 km 평활 염분(`sss_smap`)을 공식 제품으로, 40 km 염분(`sss_smap_40km`)은 실험용으로 둡니다. 대부분의 외해 분석에는 잡음이 훨씬 적은 70 km 값을 쓰라고 안내합니다."
+  - "RSS는 일본·중국·대만 주변에서 특정 기간 탐지되지 않은 전파 간섭(RFI)으로 염분이 실제보다 낮게(싱겁게) 나올 수 있다고 밝힙니다. 동아시아 연해 분석에서는 이상하게 낮은 값을 의심하세요."
+  - 연안 가까운 격자는 육지 오염으로 값이 빠지거나 품질이 낮습니다. RSS는 강한 육지 오염 격자는 염분을 내지 않고, 중간 정도 오염은 표준 평활 제품에서 뺍니다. 황해·동중국해처럼 좁은 바다는 비는 곳이 많습니다.
+  - 강수 직후에는 표층이 성층되어 SMAP 염분이 Argo(약 5 m 깊이)나 HYCOM보다 낮게 나옵니다. 이것은 오차가 아니라 측정 깊이 차이일 수 있으며, 강우 영향을 줄인 `sss_smap_RF`를 함께 보세요.
+  - "RSS는 2020년부터 남위 60° 부근에서 염분이 점점 높게(짜게) 나오는 편향을 보고했습니다. 남극해 장기 추세 분석에는 주의하세요. 수온 5°C 미만 해역도 품질 저하로 표시됩니다."
+  - RSS와 JPL은 같은 SMAP 관측이라도 알고리즘·보조자료가 달라 값이 다릅니다. 한 시계열 안에서 섞지 말고, 논문에는 어느 계열(RSS V6.0 / JPL CAP V5.0)을 썼는지 적으세요.
+  - "2019-06~07, 2022-08~09 안전모드 공백 외에도 RSS는 L2 파일이 없는 날(2015-12-03·04, 2016-04-15·16, 2017-09-27·28, 2017-11-25, 2018-12-16)과 CCMP 바람이 없어 검색을 못 한 날(2017-05-25·26, 2020-10-22·23)을 공개합니다. 이 날을 포함한 8일 파일은 관측 수가 적습니다."
+  - "2026-10-13 확인 시 PO.DAAC의 RSS V6.0 8일 L3 가운데 2026년 5월 초~9월 초 중심일 파일들이 2026-09-12에 다시 만들어져 있고, 월자료 2026-05~08도 09-29에 갱신되었습니다(SMAP 2026-05-14~07-28 위치 오류 재처리 시기와 겹침). 이 기간 자료를 그 전에 받았다면 다시 받는 것이 안전합니다."
+
+citations:
+  dataset:
+    - label: RSS SMAP L3 8일 V6.0 (PO.DAAC)
+      text: >-
+        Remote Sensing Systems (RSS). 2024. SMAP Sea Surface Salinity Products. Ver. 6.0. PO.DAAC, CA, USA. Dataset accessed [YYYY-MM-DD] at https://doi.org/10.5067/SMP60-3SPCS
+      doi: 10.5067/SMP60-3SPCS
+      bibtex: |
+        @misc{rss2024smapsss8day,
+          author    = {{Remote Sensing Systems}},
+          title     = {{SMAP} Sea Surface Salinity Products, Level 3 8-Day Running Mean, Version 6.0},
+          year      = {2024},
+          publisher = {NASA Physical Oceanography Distributed Active Archive Center},
+          version   = {6.0},
+          doi       = {10.5067/SMP60-3SPCS}
+        }
+    - label: RSS SMAP L3 월 V6.0 (PO.DAAC)
+      text: >-
+        Remote Sensing Systems (RSS). 2024. SMAP Sea Surface Salinity Products. Ver. 6.0. PO.DAAC, CA, USA. Dataset accessed [YYYY-MM-DD] at https://doi.org/10.5067/SMP60-3SMCS
+      doi: 10.5067/SMP60-3SMCS
+      bibtex: |
+        @misc{rss2024smapsssmonthly,
+          author    = {{Remote Sensing Systems}},
+          title     = {{SMAP} Sea Surface Salinity Products, Level 3 Monthly, Version 6.0},
+          year      = {2024},
+          publisher = {NASA Physical Oceanography Distributed Active Archive Center},
+          version   = {6.0},
+          doi       = {10.5067/SMP60-3SMCS}
+        }
+    - label: RSS 권장 인용 (V6.0, 제품별 DOI 끝자리 2SOCS·3SPCS·3SMCS)
+      text: >-
+        T. Meissner, F. J. Wentz, A. Manaster, R. Lindsley, M. Brewer, M. Densberger, 2024: Remote Sensing Systems SMAP Ocean Surface Salinities
+        [Level 2C, Level 3 Running 8-day, Level 3 Monthly], Version 6.0 validated release. Remote Sensing Systems, Santa Rosa, CA, USA.
+        Available online at www.remss.com/missions/smap, doi: 10.5067/SMP60-xxxxx
+      bibtex: |
+        @misc{meissner2024smapv6,
+          author    = {Meissner, T. and Wentz, F. J. and Manaster, A. and Lindsley, R. and Brewer, M. and Densberger, M.},
+          title     = {Remote Sensing Systems {SMAP} Ocean Surface Salinities [Level 2C, Level 3 Running 8-day, Level 3 Monthly], Version 6.0 validated release},
+          year      = {2024},
+          publisher = {Remote Sensing Systems},
+          address   = {Santa Rosa, CA, USA},
+          note      = {doi: 10.5067/SMP60-xxxxx (2SOCS: L2C, 3SPCS: L3 8-day, 3SMCS: L3 monthly)}
+        }
+    - label: JPL SMAP CAP L3 8일 V5.0 (PO.DAAC)
+      text: >-
+        JPL. 2020. JPL CAP SMAP Sea Surface Salinity Products. Ver. 5.0. PO.DAAC, CA, USA. Dataset accessed [YYYY-MM-DD] at https://doi.org/10.5067/SMP50-3TPCS
+      doi: 10.5067/SMP50-3TPCS
+      bibtex: |
+        @misc{jpl2020smapcap8day,
+          author    = {{JPL}},
+          title     = {{JPL} {CAP} {SMAP} Sea Surface Salinity Products, Level 3 8-Day Running Mean, Version 5.0},
+          year      = {2020},
+          publisher = {NASA Physical Oceanography Distributed Active Archive Center},
+          version   = {5.0},
+          doi       = {10.5067/SMP50-3TPCS}
+        }
+    - label: JPL SMAP CAP L3 월 V5.0 (PO.DAAC)
+      text: >-
+        JPL. 2020. JPL CAP SMAP Sea Surface Salinity Products. Ver. 5.0. PO.DAAC, CA, USA. Dataset accessed [YYYY-MM-DD] at https://doi.org/10.5067/SMP50-3TMCS
+      doi: 10.5067/SMP50-3TMCS
+      bibtex: |
+        @misc{jpl2020smapcapmonthly,
+          author    = {{JPL}},
+          title     = {{JPL} {CAP} {SMAP} Sea Surface Salinity Products, Level 3 Monthly, Version 5.0},
+          year      = {2020},
+          publisher = {NASA Physical Oceanography Distributed Active Archive Center},
+          version   = {5.0},
+          doi       = {10.5067/SMP50-3TMCS}
+        }
+  papers:
+    - label: RSS 염분 알고리즘 (Aquarius V5·SMAP V3 기준)
+      text: >-
+        Meissner, T., Wentz, F. J., Le Vine, D. M. (2018): The Salinity Retrieval Algorithms for the NASA Aquarius Version 5 and SMAP Version 3 Releases. Remote Sensing, 10(7), 1121.
+      doi: 10.3390/rs10071121
+      bibtex: |
+        @article{meissner2018salinity,
+          author  = {Meissner, Thomas and Wentz, Frank J. and Le Vine, David M.},
+          title   = {The Salinity Retrieval Algorithms for the {NASA} {Aquarius} Version 5 and {SMAP} Version 3 Releases},
+          journal = {Remote Sensing},
+          volume  = {10},
+          number  = {7},
+          pages   = {1121},
+          year    = {2018},
+          doi     = {10.3390/rs10071121}
+        }
+    - label: RSS 해빙 경계 부근 염분 검색
+      text: >-
+        Meissner, T., Manaster, A. (2021): SMAP Salinity Retrievals near the Sea-Ice Edge Using Multi-Channel AMSR2 Brightness Temperatures. Remote Sensing, 13(24), 5120.
+      doi: 10.3390/rs13245120
+      bibtex: |
+        @article{meissner2021seaice,
+          author  = {Meissner, Thomas and Manaster, Andrew},
+          title   = {{SMAP} Salinity Retrievals near the Sea-Ice Edge Using Multi-Channel {AMSR2} Brightness Temperatures},
+          journal = {Remote Sensing},
+          volume  = {13},
+          number  = {24},
+          pages   = {5120},
+          year    = {2021},
+          doi     = {10.3390/rs13245120}
+        }
+    - label: JPL CAP 알고리즘
+      text: >-
+        Fore, A. G., Yueh, S. H., Tang, W., Stiles, B. W., Hayashi, A. K. (2016): Combined Active/Passive Retrievals of Ocean Vector Wind and Sea Surface Salinity With SMAP.
+        IEEE Transactions on Geoscience and Remote Sensing, 54(12), 7396–7404.
+      doi: 10.1109/TGRS.2016.2601486
+      bibtex: |
+        @article{fore2016cap,
+          author  = {Fore, Alexander G. and Yueh, Simon H. and Tang, Wenqing and Stiles, Bryan W. and Hayashi, Akiko K.},
+          title   = {Combined Active/Passive Retrievals of Ocean Vector Wind and Sea Surface Salinity With {SMAP}},
+          journal = {IEEE Transactions on Geoscience and Remote Sensing},
+          volume  = {54},
+          number  = {12},
+          pages   = {7396--7404},
+          year    = {2016},
+          doi     = {10.1109/TGRS.2016.2601486}
+        }
+  acknowledgement: >-
+    RSS 자료에는 "SMAP salinity data are produced by Remote Sensing Systems and sponsored by the NASA Ocean Salinity Science Team. Data are available at www.remss.com." 문구를 요청합니다.
+    PO.DAAC에서 받은 자료는 제품별 데이터셋 DOI와 접근 날짜를 적으세요.
+
+notices:
+  - date: "2026-08-11"
+    level: warning
+    title: SMAP 2026-05-14~07-28 위치(geolocation) 오류 — 표준 제품 재처리
+    body: >-
+      NSIDC는 SMAP 표준·준실시간 자료에 2026년 5월 14일~7월 28일 위치 오류가 있어 표준 제품을 재처리해 교체한다고 알렸습니다(준실시간 제품은 교체하지 않음).
+      공지는 NSIDC(토양수분 배포처) 안내라 염분 제품은 따로 언급하지 않습니다. 2026-10-13 확인 시 PO.DAAC의 RSS V6.0 8일 L3 중 2026년 5월 초~9월 초 중심일 파일이 2026-09-12에,
+      월자료 2026-05~08이 09-29에 다시 올라와 있으나, 이 교체가 위치 오류 때문인지는 PO.DAAC·RSS가 공지하지 않았습니다.
+    source: https://nsidc.org/data/user-resources/data-announcements/user-notice-smap-data-reprocessing
+  - date: "2024-09-23"
+    level: info
+    title: RSS SMAP 염분 V6.0 전 기간 재처리(back-fill) 완료
+    body: >-
+      PO.DAAC가 RSS SMAP 해면 염분 V6.0 검증 자료의 과거 기간 처리를 마쳤다고 알렸습니다(공지 문구는 '2015-05-25부터 현재까지'이나, PO.DAAC 목록에는 2015년 4월 파일부터 있습니다).
+      V5.3 평가판은 이 재처리가 끝날 때까지 대신 쓰라고 안내했던 임시판입니다.
+    source: https://podaac.jpl.nasa.gov/announcements/2024-09-23-Back-fill-completion-of-SMAP-RSS-Sea-Surface-Salinity-V6.0-Validated-Datasets
+  - date: "2024-03-26"
+    level: info
+    title: RSS SMAP 염분 V6.0 공개
+    body: >-
+      L2C, L2C 준실시간, L3 8일·월 V6.0이 PO.DAAC에 공개되었습니다. 2015년 4~8월 레이더 작동기의 편향 제거, 관측 방향에 따른 편향 완화, 북반구 고위도의 과도하게 짠 값 감소,
+      태양 반사(sun glint) 플래그 수정이 바뀐 점입니다. 지연은 L2C 4일, L2C 준실시간 5시간, L3 7일입니다.
+    source: https://podaac.jpl.nasa.gov/announcements/2024-03-26-SMAP-RSS-Sea-Surface-Salinity-V6.0-Validated-Dataset-Release
+  - date: "2022-08-22"
+    level: warning
+    title: SMAP 안전모드 (2022-08-08 진입) — 염분 관측 공백
+    body: >-
+      SMAP가 2022년 8월 8일 안전모드에 들어가 과학 관측이 멈췄습니다. SMAP 운영 이벤트 기록에는 이때 안테나 회전이 멈춘(spin down) 것으로 적혀 있고, 복사계는 9월 19일 다시 켜졌으며 10월 6일 궤도 조정으로 정상 과학 운용에 돌아왔습니다.
+      RSS 기준 2022년 8·9월 월자료가 없습니다.
+    source: https://nsidc.org/data/user-resources/data-announcements/user-notice-smap-safe-mode
+  - date: "2019-06-24"
+    level: warning
+    title: SMAP 안전모드 (2019-06-19~07-23 관측 공백)
+    body: >-
+      SMAP가 2019년 6월 19일 저녁 안전모드에 들어가 모든 기기가 꺼졌고, 7월 23일 복사계가 다시 켜질 때까지 관측이 없습니다. 이 기간에는 염분 L2·8일 L3 파일이 없고 RSS 2019년 7월 월자료도 없습니다.
+    source: https://nsidc.org/data/user-resources/data-announcements/smap-safe-mode
+
+transitions:
+  - from: RSS SMAP SSS V5.0
+    to: RSS SMAP SSS V6.0
+    status: completed
+    date: "2024-03"
+    summary: >-
+      입력 안테나 온도를 SMAP L1B Version 6(Piepmeier et al., 2023)으로 바꾸고 몇 가지 편향 보정을 손본 판입니다. 2024년 3월 공개, 9월에 전 기간 재처리가 끝났습니다.
+      전 기간 재처리가 끝나기 전에는 V6.0과 처리가 같고 입력만 V5 L1B인 V5.3 평가판(2023년 말까지)을 쓰도록 안내했습니다.
+    changes:
+      - aspect: 입력 L1B
+        before: SMAP L1B Version 5 안테나 온도
+        after: "SMAP L1B Version 6 안테나 온도(RFI 제외 문턱값이 낮아져 의심 간섭을 더 걸러냄)"
+      - aspect: 초기(2015-04~08) 편향
+        before: 레이더 작동기 고속·저속 안테나 온도 차이(약 0.25 K)로 대륙붕 주변에 짠 테두리
+        after: 이 편향을 수동 제거
+      - aspect: 반사 은하·반사판 온도 보정
+        before: 관측 방향에 따른 싱거운 편향, 북반구 고위도의 짠 편향
+        after: 반사 은하 보정·반사판 물리 온도 모델 조정으로 두 편향 감소
+      - aspect: 태양 반사(sun glint) 플래그
+        before: 음의 glint 각도도 플래그
+        after: "음의 각도는 플래그하지 않고, 고위도 약풍·측엽 후방산란용 새 플래그 추가"
+      - aspect: 데이터셋 DOI
+        before: "10.5067/SMP50-… (V5.0)"
+        after: "10.5067/SMP60-2SOCS(L2C)·3SPCS(L3 8일)·3SMCS(L3 월)"
+    impacts:
+      - V5.0으로 만든 시계열은 V6.0으로 전 기간을 다시 받아 바꾸세요. 특히 2015년 4~8월과 북반구 고위도 값이 달라집니다.
+      - "V6.0은 RFI를 더 강하게 걸러 일부 격자의 관측 수(`nobs`)가 줄 수 있습니다."
+      - "V6.0에서도 2020년 이후 남위 60° 부근의 짠 편향과 동아시아·아라비아해·지중해의 미탐지 RFI는 해결되지 않은 문제로 남아 있습니다."
+    sources:
+      - name: RSS SMAP Salinity V6.0 Release Notes (PDF)
+        url: https://data.remss.com/smap/SSS/V06.0/documents/Release_V6.0.pdf
+      - name: PO.DAAC — V6.0 공개 공지 (2024-03-26)
+        url: https://podaac.jpl.nasa.gov/announcements/2024-03-26-SMAP-RSS-Sea-Surface-Salinity-V6.0-Validated-Dataset-Release
+      - name: PO.DAAC — V5.3 평가판 공지 (2024-06-07)
+        url: https://podaac.jpl.nasa.gov/announcements/2024-06-07-SMAP-RSS-SSS-V5.3-Evaluation-Dataset-Release
+
+links:
+  - name: RSS — SMAP 해면 염분 설명 페이지
+    url: https://www.remss.com/missions/smap/salinity/
+  - name: PO.DAAC — SMAP 염분 자료 모음
+    url: https://podaac.jpl.nasa.gov/SMAP
+  - name: PO.DAAC — RSS SMAP L3 월 V6.0
+    url: https://podaac.jpl.nasa.gov/dataset/SMAP_RSS_L3_SSS_SMI_MONTHLY_V6
+  - name: PO.DAAC — JPL SMAP CAP L3 월 V5.0
+    url: https://podaac.jpl.nasa.gov/dataset/SMAP_JPL_L3_SSS_CAP_MONTHLY_V5
+  - name: RSS SMAP Salinity V6.0 Release Notes (PDF)
+    url: https://data.remss.com/smap/SSS/V06.0/documents/Release_V6.0.pdf
+  - name: JPL SMAP-SSS CAP V5.0 사용자 안내서 (PDF)
+    url: https://archive.podaac.earthdata.nasa.gov/podaac-ops-cumulus-docs/smap/open/docs/JPL-CAP_V5/SMAP-SSS_JPL_V5.0_Documentation.pdf
+  - name: SMAP 운영 이벤트 기록 (안전모드·궤도 조정)
+    url: https://smap.jpl.nasa.gov/user-products/master-events
+  - name: 이 사이트 — SMAP 토양수분 (같은 위성의 지면 제품)
+    url: ../smap/
+  - name: 이 사이트 — SMOS 해면 염분
+    url: ../smos-sss/
+  - name: 이 사이트 — ESA CCI 해면 염분 (SMAP·SMOS·Aquarius 병합)
+    url: ../esa-cci-sss/
+  - name: 이 사이트 — CCMP 해상풍 (RSS 염분 거칠기 보정 바람)
+    url: ../ccmp/
+
+watch_urls:
+  - https://podaac.jpl.nasa.gov/announcements
+  - https://www.remss.com/missions/smap/salinity/
+
+last_verified: "2026-10-13"

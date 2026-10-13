@@ -1,0 +1,413 @@
+# ─────────────────────────────────────────────────────────────
+# ESA SMOS sea surface salinity (ESA L2OS, CATDS L3/L4, BEC L3/L4) — dataset information file (English edition)
+# Satellite tab (sea surface salinity), also listed in the Ocean tab (satellite observations). Covers ESA swath data (L2OS v700) from the SMOS L-band interferometric radiometer (MIRAS)
+# and the gridded products of the French CATDS (operational L3OS, LOCEAN debiased L3 v11, SMOS/SMAP OI L4) and the Spanish BEC (L3/L4).
+# When checked on 2026-10-13, CATDS operational L3OS 10-day files ran through the 2026-09-28 to 10-07 window, and the LOCEAN debiased v11 product covers 2010-01 to 2025-12.
+# Version changes within this page (L2OS v662 → v700, LOCEAN v10 → v11) are recorded under transitions (no to_id).
+# After editing, update last_verified to the date you checked the official pages.
+# ─────────────────────────────────────────────────────────────
+id: smos-sss
+name: "SMOS sea surface salinity (ESA, CATDS, BEC)"
+full_name: >-
+  ESA Soil Moisture and Ocean Salinity (SMOS) Sea Surface Salinity — ESA Level 2 Ocean Salinity (L2OS v700),
+  CATDS Level 3/Level 4 fields (CPDC operational L3OS, CEC LOCEAN debiased L3 v11, CEC LOPS SMOS/SMAP OI L4) and BEC global L3/L4
+category: satellite
+domain: satellite
+group: 해면 염분
+order: 20
+also_in:
+  - domain: ocean
+    group: 위성 관측 자료
+domains: [해양, 원격탐사]
+provider: >-
+  ESA (satellite operations, L1/L2 processing) / CATDS (French ground segment run by CNES and IFREMER; research products by LOCEAN, LOPS and ACRI-st) / BEC (Barcelona Expert Center, ICM-CSIC, Spain)
+
+status: active
+status_note: >-
+  SMOS has been observing since its launch in November 2009. The ESA mission page (earth.esa.int) still says operations were extended "until the end of 2025", but ESA's presentation at the May 2026 ocean salinity meeting and the meeting report state that SMOS is
+  "currently extended until end of 2028", and the CNES project page (edited 2026-01) says "extended to 2026 (2028 envisaged)". When checked on 2026-10-13, CATDS operational L3OS 10-day fields ran through the 2026-09-28 to 10-07 window (posted 10-13), so updates continue normally.
+  The current ESA L2OS version is v700 (operational since 2021-05); ESA has announced v740 as the fourth mission reprocessing baseline ("as of end-2025") and v750 with an ice contamination correction for 2027.
+
+period:
+  start: "2010-01"
+  end: present
+  note: >-
+    SMOS launched on 2009-11-02 and L1 and L2 data start on 2010-01-12. ESA advises against using commissioning data from 2010-01-12 to 05-31; the L2OS v700 reprocessed data (REPR) cover 2010-06-01 to 2021-05-24,
+    and operational data (OPER) run from 2021-05-25. CATDS operational L3OS consists of reprocessing RE07 (2010-01 to 2021-05) and operational data (2021-06 onward); LOCEAN debiased v11 covers 2010-01 to 2025-12 (updated yearly, next update planned for early 2027);
+    BEC global L3/L4 covers 2011 to 2019 plus an extension from 2020-01 to 2021-05.
+
+resolution:
+  spatial_short: "25 km (0.23°)"
+  temporal_short: "1일"
+  spatial: >-
+    ESA L2OS: swath data on the ISEA 4H9 (Icosahedral Snyder Equal Area) grid, 1000 km swath, L1C spatial resolution 30–50 km.
+    CATDS L3OS: EASE-Grid 2.0 Global (EPSG:6933) at 25 km (A) and 50 km (B) sampling; the 25 km grid is 584 × 1388. CATDS LOCEAN debiased v11: 25 × 25 km² grid (with averaging over neighbouring pixels within 30 km).
+    CATDS SMOS/SMAP OI L4: 25 km EASE files, with the second mapping done at the SMOS/SMAP resolution scale (about 45 km). BEC: L3 on a 0.25° latitude–longitude grid, L4 on a 0.05° grid
+  vertical: Sea surface (single level) — the near-surface salinity sensed by the L-band (1.4 GHz) radiometer
+  temporal: >-
+    ESA L2OS per half orbit (29 files a day) / CATDS L3OS daily files (L2Q, ascending and descending separate), 10-day running means (daily) and monthly means /
+    LOCEAN v11 maps every 4 days with 9-day and 18-day Gaussian smoothing / SMOS/SMAP OI L4 7-day / BEC L3 9-day maps (daily) and daily L4
+
+coverage:
+  short: 전지구
+  note: "Global ocean. The CATDS EASE-Grid 2.0 grid spans 83.5°S–83.5°N. Values near sea ice, the ice edge and coasts are missing or biased because of ice and land contamination"
+update: >-
+  ESA L2OS and CATDS operational L3OS daily (CATDS operational files with about a 5-day delay, NRT files with a 1-day delay). CATDS LOCEAN debiased L3 is reprocessed yearly (next planned for early 2027); BEC global L3/L4 is extended irregularly
+license: >-
+  SMOS data are free under the ESA Earth observation data policy; downloading from the ESA dissemination service needs an EO Sign In account. CATDS data are freely distributed, with a request to cite the dataset and acknowledge the producers.
+  BEC data are downloaded by SFTP after free registration
+account_required: false
+
+summary: >-
+  SMOS is an ESA Earth Explorer that measures soil moisture and sea surface salinity with an L-band (1.4 GHz) interferometric synthetic-aperture radiometer (MIRAS), and it holds the longest satellite salinity record, starting in 2010.
+  ESA produces swath-level Level 2 salinity (L2OS). The French CATDS grids it into the operational L3OS on EASE-Grid 2.0 (updated daily), a research-grade debiased L3 (LOCEAN) and an OI L4 merged with SMAP,
+  while the Spanish BEC builds global L3/L4 fields with its own method for reducing land and radio-frequency interference contamination. Climate studies mostly use the carefully debiased CATDS LOCEAN and BEC products, and monitoring of recent conditions mostly uses the CATDS operational L3OS.
+
+time_convention:
+  summary: >-
+    ESA L2OS values are instantaneous swath retrievals, and ascending and descending passes have different bias characteristics. The CATDS operational L3OS 10-day product is a 10-day running mean produced every day, with the start and end of the averaging window in the file name;
+    the monthly product averages a calendar month. LOCEAN debiased v11 consists of maps produced every 4 days with Gaussian weighting of 9-day and 18-day full width at half maximum (FWHM).
+  points:
+    - "Example CATDS L3OS 10-day file name: SM_OPER_MIR_CSQ3A__20260928T000000_20261007T235959_343_002_7.tgz — an average over 2026-09-28 to 10-07, processor version 343, A for the 25 km grid (B for 50 km). Files in the same folder whose start and end span a month are the monthly product."
+    - "Each CATDS L3OS .tgz holds a header file (.HDR) and a data file (.DBL.nc, NetCDF3). In 1-day-delay files, MIR in the name is replaced by NRT."
+    - "CATDS L2Q daily files (MIR_CSF2QA, MIR_CSF2QD) hold that day's valid retrievals for ascending (A) and descending (D) passes separately. Check the difference between the two before combining them."
+    - "Neighbouring LOCEAN v11 9-day maps overlap heavily and are not independent samples. The 18-day product is less noisy but has coarser time resolution."
+    - "ESA L2OS files are half orbits of about 50 minutes of pole-to-pole sensing (29 a day). The file name distinguishes OPER (current baseline) and REPR (reprocessed) data."
+  source: https://archimer.ifremer.fr/doc/00811/92266/98299.pdf
+  source_name: CATDS L3/L4 OS ATBD + Sextant product records + LOCEAN v11 documentation + ESA L2OS v700 release note
+
+variables:
+  note: >-
+    ESA L2OS variable names follow the L2OS v700 release note, CATDS L3OS names follow the CATDS L3/L4 OS ATBD (Table 10), and LOCEAN variables follow the v11 documentation. Salinity in pss is practical salinity.
+    In CATDS L3OS names, the suffix _1 marks rain-corrected "bulk" salinity and _2 salinity without rain correction.
+  full_list: https://archimer.ifremer.fr/doc/00811/92266/98299.pdf
+  groups:
+    - name: ESA L2OS v700 (swath, ISEA 4H9)
+      kind: instant
+      items:
+        - text: "Sea surface salinity (land–sea contamination corrected) — `SSS_corr` (pss)"
+          note: Apply the filtering ESA recommends
+        - "Sea surface salinity (no land–sea contamination correction) — `SSS_uncorr` (pss)"
+        - text: "Sea surface salinity anomaly (relative to the 2013–2019 SMOS climatology) — `SSS_anom` (pss)"
+          std: []
+        - text: "Retrieval error estimates — `Sigma_SSS_corr`, `Sigma_SSS_uncorr`, `Sigma_SSS_anom` (pss)"
+          std: []
+        - text: "Position within the field of view — `Dg_af_fov`"
+          std: []
+          note: ESA recommends keeping only values above 130
+        - text: "Quality and sea-state flags — `Fg_ctrl_*`, `Fg_sc_*`"
+          std: []
+    - name: CATDS operational L3OS 3Q (EASE-Grid 2.0 25 and 50 km, 10-day running and monthly, ascending and descending merged)
+      kind: mean
+      period: 10-day running or monthly
+      items:
+        - text: "Mean sea surface salinity (rain-corrected bulk salinity) — `Mean_Sea_Surface_Salinity_1` (pss)"
+        - text: "Mean sea surface salinity (not rain-corrected) — `Mean_Sea_Surface_Salinity_2` (pss)"
+        - text: "Salinity standard deviation — `SSS_standard_deviation_1` (pss)"
+          std: []
+        - text: "Mean salinity error — `SSS_error_mean_1` (pss)"
+          std: []
+        - text: "Number of measurements used — `N_Used_Meas_1` (count)"
+          kind: accum
+          std: []
+        - text: "Number of measurements rejected before averaging — `N_Rejected_Meas_1` (count)"
+          kind: accum
+          std: []
+    - name: CATDS LOCEAN debiased L3 v11 (25 km, every 4 days)
+      kind: mean
+      period: 9-day or 18-day (Gaussian weighted)
+      items:
+        - text: "Debiased sea surface salinity (pss)"
+          note: The documentation does not give the variable name in the files
+        - text: "Raw salinity error estimate — `eSSS` (pss)"
+          std: []
+          note: Qualitative indicator from the spatial standard deviation within 50 km; unrealistically small near coasts
+
+access:
+  - name: CATDS — operational L3OS 10-day and monthly fields (HTTPS)
+    url: https://data.catds.fr/cpdc/Ocean_products/GRIDDED/L3OS/
+    method: Direct HTTPS download (OPER/MIR_CSQ3A_ 25 km and MIR_CSQ3B_ 50 km, reprocessing under RE07/, daily L2Q under MIR_CSF2QA and MIR_CSF2QD)
+    note: >-
+      NetCDF3 files inside .tgz archives. 1-day-delay NRT files are in the OPER/NRT_* folders. Use CATDS SIPAD (https://www.catds.fr/sipad/) for spatial and temporal subsets.
+      Also redistributed by Copernicus Marine (MULTIOBS_GLO_PHY_SSS_L3_MYNRT_015_014).
+    login: false
+  - name: CATDS — CEC LOCEAN debiased L3 v11 (HTTPS)
+    url: https://data.catds.fr/cecos-locean/Ocean_products/L3_DEBIAS_LOCEAN/
+    method: Direct HTTPS download (L3_DEBIAS_LOCEAN_v11/debiasedSSS_09days_v11.0, debiasedSSS_18days_v11.0)
+    note: The documentation (documentation/Doc_L3_DEBIAS_LOCEAN_v11.pdf) and data policy (DataPolicy.txt) are in the same folder. The products are experimental and user feedback is requested.
+    login: false
+  - name: CATDS — CEC LOPS SMOS/SMAP OI L4 (HTTPS)
+    url: https://data.catds.fr/cecos-locean/Ocean_products/SSS_SMOS-SMAP_OI_L4/
+    method: Direct HTTPS download (SSS_SMOS-SMAP_OI_L4_v01, 7-day 25 km EASE files)
+    note: An L4 merging SMOS and SMAP L3 by optimal interpolation. A new version was posted in January 2026.
+    login: false
+  - name: ESA SMOS dissemination service (L1 and L2OS)
+    url: https://smos-diss.eo.esa.int/
+    method: HTTPS web / FTPS (Earth Explorer format or NetCDF)
+    note: Requires a free ESA EO Sign In account. The L2OS product name is MIR_OSUDP2.
+  - name: BEC — global and polar SMOS salinity (SFTP)
+    url: https://bec.icm.csic.es/bec-ftp-service/
+    method: SFTP (becftp.icm.csic.es, port 27500)
+    note: Free registration required. Offers global L3 (0.25°, 9-day) and L4 (0.05°, daily) and dedicated Arctic and Southern Ocean products.
+
+example:
+  lang: python
+  note: >-
+    Downloads one CATDS operational L3OS 25 km 10-day file (no login needed), unpacks it and reads salinity around the Korean Peninsula. Variable names follow the ATBD table; check the coordinate variable names in the file (the ATBD lists lat and Lon).
+  code: |
+    # pip install xarray netCDF4 requests
+    import tarfile, glob, requests
+    import xarray as xr
+
+    base = "https://data.catds.fr/cpdc/Ocean_products/GRIDDED/L3OS/OPER/MIR_CSQ3A_/2026/09/"
+    name = "SM_OPER_MIR_CSQ3A__20260901T000000_20260910T235959_343_003_7.tgz"
+    with open(name, "wb") as f:
+        f.write(requests.get(base + name, timeout=120).content)
+    tarfile.open(name).extractall("smos_l3")
+
+    ds = xr.open_dataset(glob.glob("smos_l3/**/*.DBL.nc", recursive=True)[0])
+    print(list(ds.data_vars))                      # check variable names
+    sss = ds["Mean_Sea_Surface_Salinity_1"]        # rain-corrected bulk salinity (pss)
+    lat = ds["lat"]
+    print(float(sss.where((lat > 25) & (lat < 40)).mean()))
+
+tips:
+  - "ESA strongly recommends filtering L2OS with the procedure in the release note (reject Fg_ctrl_ecmwf or Fg_sc_low_wind equal to 0, reject flags for RFI, ice, sun glint and others equal to 1, keep only Dg_af_fov > 130). Applying all of it removes many grid points, and the note allows relaxing some criteria."
+  - "L2OS v700 still has ascending–descending differences, and biases and noise grow south of 50°S and near sea ice. For long-term analyses, the CATDS LOCEAN and BEC gridded products, which correct these systematic biases, are better choices."
+  - "ESA advises against using January to May 2010 commissioning data. Start time series in June 2010 or later."
+  - "The LOCEAN documentation notes that residual biases remain near coasts and dynamic river plumes even after land–sea correction. When studying coastal plumes such as the Changjiang diluted water in the East China Sea, always compare with in situ data."
+  - "The CATDS operational L3OS is updated daily, but its high-latitude ice correction is imperfect and residual RFI may remain. The research-grade LOCEAN v11 ends in December 2025, so check the differences between the two products before appending recent data."
+  - "For the Arctic, CATDS has produced the operational ARCTIC L3G (9-day) since April 2026, and the research CEC ARCTIC V2 runs to 2023-08-30. CATDS recommends using V2 where available and filling recent periods with L3G."
+  - "LOCEAN's eSSS is only a qualitative error indicator and is unrealistically small near coasts. Do not use it as a quantitative uncertainty."
+
+citations:
+  dataset:
+    - label: ESA SMOS L2OS v700
+      text: >-
+        European Space Agency, 2021, SMOS L2 OS V700, Version 700. https://doi.org/10.57780/SM1-294cb1b
+      doi: 10.57780/SM1-294cb1b
+      bibtex: |
+        @misc{esa2021smosl2os,
+          author    = {{European Space Agency}},
+          title     = {{SMOS} {L2} {OS} {V700}},
+          year      = {2021},
+          version   = {700},
+          publisher = {European Space Agency},
+          doi       = {10.57780/SM1-294cb1b}
+        }
+    - label: CATDS operational L3OS 3Q (10-day and monthly, debiased)
+      text: >-
+        CATDS (CNES, IFREMER, LOCEAN, ACRI) (2022). CATDS-PDC L3OS 3Q mixed - Debiased average 10 days & monthly salinity field product from SMOS satellite (mixed orbits).
+        https://doi.org/10.12770/0f02fc28-cb86-4c44-89f3-ee7df6177e7b
+      doi: 10.12770/0f02fc28-cb86-4c44-89f3-ee7df6177e7b
+      bibtex: |
+        @misc{catds2022l3os3q,
+          author    = {{CATDS}},
+          title     = {{CATDS-PDC} {L3OS} {3Q} mixed - Debiased average 10 days \& monthly salinity field product from {SMOS} satellite (mixed orbits)},
+          year      = {2022},
+          publisher = {CATDS (CNES, IFREMER, LOCEAN, ACRI)},
+          doi       = {10.12770/0f02fc28-cb86-4c44-89f3-ee7df6177e7b}
+        }
+    - label: CATDS CEC LOCEAN debiased L3 v11 (SEANOE)
+      text: >-
+        Boutin Jacqueline, Vergely Jean-Luc, Khvorostyanov Dmitry (2026). De-biased SMOS SSS L3 V11 maps generated by LOCEAN/ACRI-ST Expertise Center. SEANOE. https://doi.org/10.17882/52804#133087
+      doi: 10.17882/52804
+      bibtex: |
+        @misc{boutin2026debiasv11,
+          author    = {Boutin, Jacqueline and Vergely, Jean-Luc and Khvorostyanov, Dmitry},
+          title     = {De-biased {SMOS} {SSS} {L3} {V11} maps generated by {LOCEAN}/{ACRI-ST} Expertise Center},
+          year      = {2026},
+          publisher = {SEANOE},
+          doi       = {10.17882/52804},
+          note      = {https://doi.org/10.17882/52804\#133087}
+        }
+    - label: CATDS CEC LOPS SMOS/SMAP OI L4 (SEANOE)
+      text: >-
+        Kolodziejczyk, N., Hamon, M., Boutin, J., Vergely, J.-L., Supply, A., Reverdin, G. (2025). SSS SMOS/SMAP OI L4 maps. SEANOE. https://doi.org/10.17882/73142
+      doi: 10.17882/73142
+      bibtex: |
+        @misc{kolodziejczyk2020oil4,
+          author    = {Kolodziejczyk, Nicolas and Hamon, Mathieu and Boutin, Jacqueline and Vergely, Jean-Luc and Supply, Alexandre and Reverdin, Gilles},
+          title     = {{SSS} {SMOS}/{SMAP} {OI} {L4} maps},
+          year      = {2025},
+          publisher = {SEANOE},
+          doi       = {10.17882/73142}
+        }
+  papers:
+    - label: CATDS LOCEAN debiasing method
+      text: >-
+        Boutin, J., Vergely, J. L., Marchand, S., D'Amico, F., Hasson, A., Kolodziejczyk, N., Reul, N., Reverdin, G., Vialard, J. (2018): New SMOS Sea Surface Salinity with reduced systematic errors
+        and improved variability. Remote Sensing of Environment, 214, 115–134.
+      doi: 10.1016/j.rse.2018.05.022
+      bibtex: |
+        @article{boutin2018smos,
+          author  = {Boutin, J. and Vergely, J. L. and Marchand, S. and D'Amico, F. and Hasson, A. and Kolodziejczyk, N. and Reul, N. and Reverdin, G. and Vialard, J.},
+          title   = {New {SMOS} Sea Surface Salinity with reduced systematic errors and improved variability},
+          journal = {Remote Sensing of Environment},
+          volume  = {214},
+          pages   = {115--134},
+          year    = {2018},
+          doi     = {10.1016/j.rse.2018.05.022}
+        }
+    - label: SMOS/SMAP OI L4 method
+      text: >-
+        Kolodziejczyk, N., Hamon, M., Boutin, J., Vergely, J.-L., Reverdin, G., Supply, A., Reul, N. (2021): Objective Analysis of SMOS and SMAP Sea Surface Salinity to Reduce Large-Scale
+        and Time-Dependent Biases from Low to High Latitudes. Journal of Atmospheric and Oceanic Technology, 38(3), 405–421.
+      doi: 10.1175/JTECH-D-20-0093.1
+      bibtex: |
+        @article{kolodziejczyk2021oi,
+          author  = {Kolodziejczyk, Nicolas and Hamon, Mathieu and Boutin, Jacqueline and Vergely, Jean-Luc and Reverdin, Gilles and Supply, Alexandre and Reul, Nicolas},
+          title   = {Objective Analysis of {SMOS} and {SMAP} Sea Surface Salinity to Reduce Large-Scale and Time-Dependent Biases from Low to High Latitudes},
+          journal = {Journal of Atmospheric and Oceanic Technology},
+          volume  = {38},
+          number  = {3},
+          pages   = {405--421},
+          year    = {2021},
+          doi     = {10.1175/JTECH-D-20-0093.1}
+        }
+    - label: BEC global SMOS salinity (L3 DOI 10.20350/digitalCSIC/12601, L4 DOI 10.20350/digitalCSIC/12600)
+      text: >-
+        Olmedo, E., González-Haro, C., Hoareau, N., Umbert, M., González-Gambau, V., Martínez, J., Gabarró, C., Turiel, A. (2021): Nine years of SMOS sea surface salinity global maps
+        at the Barcelona Expert Center. Earth System Science Data, 13(2), 857–888.
+      doi: 10.5194/essd-13-857-2021
+      bibtex: |
+        @article{olmedo2021bec,
+          author  = {Olmedo, Estrella and Gonz{\'a}lez-Haro, Cristina and Hoareau, Nina and Umbert, Marta and Gonz{\'a}lez-Gambau, Ver{\'o}nica and Mart{\'i}nez, Justino and Gabarr{\'o}, Carolina and Turiel, Antonio},
+          title   = {Nine years of {SMOS} sea surface salinity global maps at the {Barcelona} {Expert} {Center}},
+          journal = {Earth System Science Data},
+          volume  = {13},
+          number  = {2},
+          pages   = {857--888},
+          year    = {2021},
+          doi     = {10.5194/essd-13-857-2021}
+        }
+  acknowledgement: >-
+    For CATDS LOCEAN products, the data policy (DataPolicy.txt) asks for an acknowledgement that the maps were produced by LOCEAN/IPSL and ACRI-st within the CATDS Ocean Salinity Expertise Center (CECOS) and distributed by IFREMER (Plouzané, France).
+    If you combine ESA L2OS, CATDS and BEC products, cite each DOI.
+
+notices:
+  - date: "2026-08-05"
+    level: info
+    title: CATDS LOCEAN debiased L3 v11 released (2010-01 to 2025-12)
+    body: >-
+      LOCEAN's debiased SMOS salinity L3 v11 is available at CATDS. It keeps the v10 debiasing and adds a correction for the ice-vicinity bias in the Southern Ocean, reducing uncertainty up to about 800 km from the ice edge.
+      9-day and 18-day products are provided; the products are experimental and user feedback is requested.
+    source: https://www.catds.fr/News/New-version-v11-of-debiased-SSS-L3-maps-from-Locean
+  - date: "2026-04-09"
+    level: info
+    title: CATDS Arctic salinity maps now produced operationally
+    body: >-
+      The CATDS production centre (CPDC) now produces Arctic sea surface salinity maps (ARCTIC L3G, 9-day) operationally, following the research CEC ARCTIC V2. CEC ARCTIC V2 runs to 2023-08-30,
+      and CATDS recommends using V2 where available for scientific studies and filling recent periods with L3G.
+    source: https://www.catds.fr/News/Arctic-SSS-Maps-now-produced-operationally
+  - date: "2026-01-29"
+    level: info
+    title: New version of the CATDS SMOS/SMAP OI L4 salinity maps
+    body: >-
+      A new version of the LOPS SMOS–SMAP merged optimal interpolation (OI) L4 sea surface salinity is available at CATDS. It first estimates and removes large-scale, time-varying biases and then remaps at about 45 km, and it also provides density and spiciness.
+    source: https://www.catds.fr/News/New-version-of-SSS-SMOS-SMAP-OI-L4-maps
+  - date: "2023-03-21"
+    level: info
+    title: SMOS mission extended to the end of 2025
+    body: >-
+      ESA announced that SMOS, CryoSat and Swarm had each been extended at least until the end of 2025. ESA's May 2026 presentation later stated that SMOS is "currently extended until end of 2028".
+    source: https://earth.esa.int/eogateway/news/esa-s-excellent-earth-explorer-missions-extended-to-2025
+  - date: "2021-05-28"
+    level: info
+    title: SMOS L1 and L2 processing baseline version 7 operational, full mission reprocessed
+    body: >-
+      From 25 May 2021 the SMOS L1 and L2 processors run on version 7, and the full mission archive was reprocessed with it. ESA said the new dataset supersedes the version 6 data and asked users to read the read-me-first notes before use.
+    source: https://earth.esa.int/eogateway/news/smos-level-1-and-level-2-products-new-baseline-is-now-available
+
+transitions:
+  - from: ESA SMOS L2OS v662
+    to: ESA SMOS L2OS v700
+    status: completed
+    date: "2021-05"
+    summary: >-
+      The third mission reprocessing baseline. The anomaly reference changed to a SMOS-derived climatology, a new dielectric model improves retrievals in cold water, and the land–sea contamination correction now uses ISAS-15 reference fields.
+    changes:
+      - aspect: Anomaly (SSS_anom) reference
+        before: WOA2009 climatology
+        after: "SMOS-derived climatology (2013–2019), with some systematic biases corrected"
+      - aspect: Seawater dielectric model
+        before: Klein–Swift
+        after: "Somaraju–Trumpf (ST) — better cold-water retrievals"
+      - aspect: Land–sea contamination reference fields
+        before: WOA
+        after: ISAS-15, with stricter RFI filtering
+      - aspect: Input L1C
+        before: Previous L1 baseline
+        after: L1C brightness temperatures v724
+      - aspect: Period split
+        before: v662 reprocessed and operational data
+        after: "REPR v700 2010-06-01 to 2021-05-24, OPER v700 from 2021-05-25"
+    impacts:
+      - Do not mix v662 time series with v700. The anomaly reference and dielectric model changed, so values differ for the same dates.
+      - "The v700 release note lists known issues: seasonal biases at southern high latitudes, negative biases of about -0.5 pss or more on ascending passes, and ascending–descending differences."
+      - "ESA has announced the next mission reprocessing baseline v740 (as of end-2025) and v750 with an ice contamination correction (2027). Download the data again once a new baseline is distributed."
+    sources:
+      - name: ESA SMOS L2OS v700 release note (PDF)
+        url: https://earth.esa.int/eogateway/documents/d/earth-online/l2osv700_release_note_20220321-pdf
+      - name: ESA — new SMOS L1 and L2 baseline announcement (2021-05-28)
+        url: https://earth.esa.int/eogateway/news/smos-level-1-and-level-2-products-new-baseline-is-now-available
+      - name: ESA SMOS status presentation (R. Sabia, 2026 Ocean Salinity Science & Technology Meeting)
+        url: https://salinity.oceansciences.org/docs/02_Opening_Sabia.pdf
+  - from: CATDS LOCEAN debiased L3 v10
+    to: CATDS LOCEAN debiased L3 v11
+    status: completed
+    date: "2026-08"
+    summary: >-
+      Keeps the v10 debiasing method, adds a Southern Ocean ice-vicinity bias correction and extends the record to December 2025. The products are experimental and updated yearly.
+    changes:
+      - aspect: Southern Ocean ice-vicinity bias
+        before: Not corrected
+        after: "Corrected up to about 800 km from the ice edge"
+      - aspect: Period
+        before: "v10 period (released before 2025)"
+        after: "2010-01 to 2025-12"
+      - aspect: Citation DOI
+        before: "10.17882/52804#120028 (Boutin et al., 2025, debias V10.0)"
+        after: "10.17882/52804#133087 (Boutin et al., 2026, debias V11.0)"
+    impacts:
+      - Do not mix v10 and v11 in one time series; replace the full record with v11. Southern Ocean values change the most.
+      - In papers, give the version and the SEANOE DOI with its version anchor (#133087).
+    sources:
+      - name: CATDS — v11 release news
+        url: https://www.catds.fr/News/New-version-v11-of-debiased-SSS-L3-maps-from-Locean
+      - name: CATDS — CEC LOCEAN L3 Debiased v11 product page
+        url: https://www.catds.fr/Products/Products-over-Ocean/CEC-Locean-L3-Debiased-v11
+
+links:
+  - name: ESA Earth Online — SMOS mission
+    url: https://earth.esa.int/eogateway/missions/smos
+  - name: ESA — SMOS science products (L1 and L2 list, documents)
+    url: https://earth.esa.int/eogateway/catalog/smos-science-products
+  - name: CATDS — ocean products
+    url: https://www.catds.fr/Products/Products-over-Ocean
+  - name: CATDS — differences between operational and research L3 (PDF)
+    url: https://www.catds.fr/content/download/68781/file/OS_L3_products_Differences_and_ProsCons.pdf
+  - name: CATDS L3/L4 OS ATBD (PDF)
+    url: https://archimer.ifremer.fr/doc/00811/92266/98299.pdf
+  - name: BEC — global SMOS salinity
+    url: https://bec.icm.csic.es/ocean-global-sss/
+  - name: Pi-MEP satellite salinity validation reports
+    url: https://www.salinity-pimep.org
+  - name: ESA SMOS status presentation (2026-05, extended until end of 2028)
+    url: https://salinity.oceansciences.org/docs/02_Opening_Sabia.pdf
+  - name: CNES — SMOS project page
+    url: https://cnes.fr/projets/smos
+  - name: This site — SMAP sea surface salinity
+    url: ../smap-sss/
+  - name: This site — ESA CCI sea surface salinity (merged SMOS, SMAP and Aquarius)
+    url: ../esa-cci-sss/
+  - name: This site — SMOS thin sea ice thickness (sea ice products from the same satellite)
+    url: ../smos-sit/
+  - name: This site — CS2SMOS sea ice thickness (merged CryoSat-2 and SMOS)
+    url: ../cs2smos/
+
+watch_urls:
+  - https://www.catds.fr/
+  - https://earth.esa.int/eogateway/missions/smos
+
+last_verified: "2026-10-13"

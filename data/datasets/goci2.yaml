@@ -1,0 +1,305 @@
+# ─────────────────────────────────────────────────────────────
+# 천리안위성 2B호 GOCI-II — 데이터셋 정보 파일
+# 위성 탭(해색), 해양 탭(위성 관측 자료) 교차 수록. 국립해양조사원 국가해양위성센터(NOSC)가 배포하는 정지궤도 해색 L1B·L2 자료입니다.
+# 한반도 주변(LA) 하루 10회(1시간 간격) + 전구(FD) 하루 1회, 250 m. 누리집에서 로그인 없이 받을 수 있고, NASA OBPG에는 GOCI-II 자료가 없습니다.
+# 2026-10-14 확인 시 첫 화면 최신 GOCI-II RGB는 2026-10-13 17:15(KST), 마지막 운영공지는 2026-10-07입니다.
+# 수정 후에는 공식 페이지에서 확인한 날짜로 last_verified 를 갱신하세요.
+# ─────────────────────────────────────────────────────────────
+id: goci2
+name: "GOCI-II (천리안 2B호)"
+full_name: Geostationary Ocean Color Imager II (GOCI-II) on GEO-KOMPSAT-2B (천리안위성 2B호 정지궤도 해양관측 탑재체 — 한반도 주변 시간별·전구 일별 해색 관측)
+category: satellite
+domain: satellite
+group: 해색
+order: 70
+also_in:
+  - domain: ocean
+    group: 위성 관측 자료
+domains: [해양, 에어로졸, 육지, 원격탐사]
+provider: 국립해양조사원 국가해양위성센터(NOSC) / 한국해양과학기술원 해양위성센터(KIOST KOSC, 알고리즘 개발)
+
+status: active
+status_note: >-
+  2020년 2월 발사된 천리안위성 2B호의 GOCI-II가 한반도 주변(LA)을 하루 10회, 전구(FD)를 하루 1회 관측하고 있으며, 국가해양위성센터가 L1B와 L2 산출물을 배포합니다.
+  2026-10-14 확인 시 누리집 첫 화면의 최신 GOCI-II RGB 영상은 2026-10-13 17:15(KST)이고, 마지막 운영공지는 2026-10-07(10월 6일 궤도유지기동으로 17:15 촬영 일부 취소)입니다.
+  2025년 2월 과거 L2 산출물을 재처리해 다시 서비스했으므로, 그 전에 받은 L2 파일은 새로 받아 쓰는 것이 좋습니다.
+
+period:
+  start: "2020-10"
+  end: present
+  note: >-
+    천리안위성 2B호는 2020년 2월 발사되었고, 국가해양위성센터 연혁은 2020년 10월을 '천리안위성 2B호 서비스 개시'로 적고 있습니다(궤도상 시험은 2020년 9월까지).
+    KIOST는 L1 자료를 2020년 10월부터, L2 산출물 26종을 2021년 1월부터 공개했다고 밝혔습니다. 임무 수명은 10년(2020~2029)으로 계획되어 있습니다.
+
+resolution:
+  spatial_short: "0.25 km (0.0023°)"
+  temporal_short: "1시간"
+  spatial: >-
+    한반도 주변(Local Area, LA)과 전구(Full Disk, FD) 모두 공간해상도 250 m × 250 m입니다. LA 영역은 2,500 km × 2,500 km이며 12개 슬롯(S000~S011)으로 나눠 찍어 합칩니다.
+    FD는 슬롯 0~235로 나뉘어 있습니다. 관측 밴드는 380~865 nm의 12개 분광 밴드(폭 10~40 nm)와 기하보정용 광대역 밴드(B13) 하나입니다.
+  vertical: 해수면(해색·원격반사도), 대기 기둥(에어로졸 광학 두께), 지표면(육상 산출물)
+  temporal: >-
+    LA는 1시간 간격 하루 10회(UTC 23:15~08:15, 한국 시간 08:15~17:15), FD는 하루 1회입니다. 궤도·자세 유지 기동과 달 촬영이 있는 날은 LA가 8~9회로 줄어듭니다.
+    파일은 관측 회차(시각)별 L1B·L2이며, 별도의 일·월 합성 L3는 누리집 다운로드 메뉴에 없습니다.
+
+coverage:
+  short: 아시아
+  note: "LA는 한반도 중심 2,500 km × 2,500 km(동아시아 연안·황해·동중국해·동해), FD는 천리안위성 2B호에서 보이는 전구(아시아·오세아니아). 낮 시간에만 관측"
+update: "LA 매일 10회 관측 후 1시간 이내 갱신을 목표로 함(센터 FAQ). FD는 하루 1회. 궤도유지기동·안전모드 등으로 빠지는 회차는 운영공지로 안내"
+license: >-
+  누리집에 공공누리 유형 같은 이용 허락 범위는 따로 밝혀져 있지 않고 'Copyright ⓒ 2022 국립해양조사원 국가해양위성센터. All rights reserved.' 표기만 있습니다.
+  운영 근거는 '천리안 해양위성 운영규정(국립해양조사원 예규 제217호)'입니다. Open API 결과를 화면에 쓸 때는 '국립해양조사원 OPEN API' 출처 표기가 약관상 의무입니다.
+  재배포·상업 이용 범위는 위성자료팀(nosc@korea.kr, 051-400-4432)에 확인하세요
+account_required: false
+
+summary: >-
+  GOCI-II는 2010~2021년 운영된 세계 최초 정지궤도 해색 센서 GOCI(천리안 1호)의 후속으로, 천리안위성 2B호에 실려 2020년 2월 발사되었습니다.
+  한반도 주변 바다를 낮 동안 1시간마다(하루 10회) 250 m 해상도로 찍고, GOCI에는 없던 전구(FD) 관측을 하루 1회 더합니다. 밴드는 GOCI의 8개에서 12개(380~865 nm)로 늘었습니다.
+  국가해양위성센터가 원격반사도·엽록소·부유물질·용존유기물 같은 기본 해색 산출물과 적조·부유조류·해무·표층해류·저염분수·에어로졸·육상 산출물 등 L2 산출물을 NetCDF로 배포합니다.
+  같은 위성에 대기환경 탑재체 GEMS가 함께 실려 있습니다.
+
+time_convention:
+  summary: >-
+    L1B·L2 파일은 관측 회차 하나의 영상(순간값)입니다. 파일명의 날짜·시각은 UTC 관측 시각이고, LA는 매일 UTC 23:15부터 08:15까지 정시 15분에 한 번씩 찍습니다.
+    파일명에 슬롯 번호(S000~S011)가 붙은 것은 영역 일부, 슬롯 번호가 없는 것은 모든 슬롯을 합친 영상입니다.
+  points:
+    - "파일명 예 GK2B_GOCI2_L2_20211221_001530_LA_S002_AC.nc — 위성(GK2B)·센서(GOCI2)·레벨·관측일(UTC)·관측시각(UTC)·영역(LA/FD)·슬롯·산출물 코드 순입니다(센터는 순서가 바뀔 수 있다고 안내)."
+    - "UTC 날짜와 한국 날짜가 다릅니다. 한국 시간 08:15 첫 관측은 전날 UTC 23:15 파일이므로, 한국 날짜 하루치를 모으려면 전날 UTC 23:15 파일부터 받아야 합니다."
+    - "궤도유지기동(매주 화·목요일 임의 시각), 자세유지기동(1년 3회), 복사보정용 달 촬영 때는 해당 회차가 빠집니다. 센터 FAQ는 이런 날 LA가 8~9회라고 안내합니다."
+    - "일평균·월평균 같은 합성장은 기본 다운로드에 없으므로, 시간 평균이 필요하면 회차별 L2를 직접 합성해야 합니다."
+  source: https://www.nosc.go.kr/boardContents/actionBoardContentsCons0017.do
+  source_name: 국가해양위성센터 위성자료 파일명 규칙 + 자주 묻는 질문(FAQ)
+
+variables:
+  note: >-
+    산출물 이름과 코드는 국가해양위성센터 다운로드 메뉴·Open API 안내에 적힌 것이고, 코드는 L2 파일명 끝에 붙는 산출물 구분자입니다(예 …_LA_Chl.nc).
+    파일 안 NetCDF 변수명과 단위는 센터 '알고리즘 기술문서' 게시판의 'GOCI-II Level-2 OCR 자료 형식(v04, 2025-02-28)'에 있으며, 이 문서를 확인하지 못해 여기에는 적지 않았습니다.
+    이 밖에 해빙(SI), 해양 일차 생산력(PP), 어장환경지수(FGI), 육상 산출물(육상지표반사도 SRL, 육상 알베도 LSAB·LSAN, 식생지수 VI, 토지피복 LCC)도 있습니다.
+  full_list: https://www.nosc.go.kr/board/actionBoardListBoard0009.do
+  groups:
+    - name: 대기보정·광학 특성 (L2, 회차별)
+      kind: instant
+      items:
+        - text: "원격반사도·대기분자산란 보정 반사도 — `AC` (RRS·RhoC, 밴드별)"
+          std: []
+        - text: "고유 광특성 — `IOP` (흡광계수 a·후방산란계수 bb)"
+          std: []
+        - text: "하향 확산 감쇠 계수 — `Kd`"
+          std: []
+        - text: "세키 깊이(투명도) — `Zsd`"
+          std: []
+    - name: 기본 해색 (L2, 회차별)
+      kind: instant
+      items:
+        - text: "엽록소 농도 — `Chl`"
+          std: []
+        - text: "총 부유물 농도 — `TSS`"
+          std: []
+        - text: "용존 유기물 — `CDOM`"
+          std: []
+    - name: 해양 산출물 (L2, 회차별)
+      kind: instant
+      items:
+        - text: "적조 지수 — `RI`"
+          std: []
+        - text: "부유 조류 — `FA`"
+          std: []
+        - text: "해무 — `MF`"
+          std: []
+        - "저염분수(표층 염분) — `LSSS`"
+        - text: "엽록소 전선(해양 전선) — `CF`"
+          std: []
+        - "표층 해류 — `SSC`"
+    - name: 대기 산출물 (L2, 회차별)
+      kind: instant
+      items:
+        - "에어로졸 광학 두께 — `AOD` (에어로졸 타입 AT·황사 DUST 포함)"
+
+access:
+  - name: 국가해양위성센터 — 한반도 주변(LA) 다운로드
+    url: https://www.nosc.go.kr/program/actionGociDownload.do
+    method: 웹 검색·다운로드 (레벨·산출물·관측일·슬롯 선택, NetCDF·JPG)
+    note: >-
+      회원가입·로그인 없이 바로 받을 수 있습니다. 관측일을 KST/UTC로 고를 수 있고, 슬롯(S000~S011) 또는 합성(Mosaic)을 선택합니다. NetCDF는 PC에서만 받을 수 있습니다.
+      같은 페이지에서 센터가 만든 활용산출물(해수면온도, 괭생이모자반 일·시간)도 받을 수 있습니다.
+    login: false
+  - name: 국가해양위성센터 — 전구(FD) 다운로드
+    url: https://www.nosc.go.kr/program/actionGociFdDownload.do
+    method: 웹 검색·다운로드 (L1B·L2)
+    note: FD L2는 대기보정·고유 광특성·하향 확산 감쇠 계수·세키 깊이·엽록소·부유물·용존유기물·부유조류 등 해색 산출물 위주입니다.
+    login: false
+  - name: 국가해양위성센터 웹디렉토리
+    url: https://www.nosc.go.kr/wd/zTreeView.do
+    method: 폴더 탐색 다운로드 (레벨·산출물 그룹 AC·IOP·AERO·OC·OCEAN·LAND, 영역 LA/FD, NetCDF/JPG)
+    note: 센터 FAQ가 대용량 자료를 받을 때 OPeNDAP과 함께 권하는 방법입니다.
+    login: false
+  - name: 국가해양위성센터 OPeNDAP
+    url: https://nosc.go.kr/opendap/
+    method: OPeNDAP (검색 페이지 https://www.nosc.go.kr/program/opendapSearch.do — 한 번에 최대 90일)
+    note: >-
+      사용자 매뉴얼(PDF·동영상, 2026-06-04)과 대량 내려받기 프로그램 noscCollector(2024-06-21)가 일반자료실에 있습니다.
+      2026-10-14 자동 접속으로는 서버 목록이 열리지 않아 로그인 여부를 확인하지 못했습니다.
+  - name: 국가해양위성센터 OPEN API
+    url: https://www.nosc.go.kr/openapi/actionOpenApiIssue.do
+    method: REST (JSON·XML) — 메타정보·위성영상정보·위성 NetCDF 정보 API
+    note: >-
+      약관 동의 후 발급 요청(사용 유형·소속·서비스 URL·목적 입력)을 하면 센터 승인 뒤 인증키가 나옵니다. 하루 20,000건 제한이 있고, 키를 잃어버리면 새로 받아야 합니다.
+      NetCDF 정보 API(openapi/GK2BNcMedia/search.do)는 startDate·endDate·slot(0~11, 한반도 전체 13)으로 파일 경로·파일명을 돌려줍니다.
+
+example:
+  lang: python
+  note: >-
+    국가해양위성센터에서 받은 L2 NetCDF 파일 하나의 그룹·변수 구조를 먼저 확인하는 예입니다. 파일 안 변수명은 'GOCI-II Level-2 OCR 자료 형식' 문서와 대조하세요.
+    파일명은 센터 Open API 안내의 예시이므로 받은 파일 이름으로 바꾸세요.
+  code: |
+    # pip install netCDF4 xarray
+    import netCDF4
+    import xarray as xr
+
+    fname = "GK2B_GOCI2_L2_20211221_001530_LA_S002_AC.nc"   # 받은 파일 이름으로 바꾸기
+
+    # 1) 그룹과 변수 구조 확인 (L2 파일은 그룹으로 나뉘어 있을 수 있음)
+    with netCDF4.Dataset(fname) as nc:
+        print(nc.ncattrs())                       # 관측 시각 등 전역 속성
+        for gname, g in nc.groups.items():
+            print(gname, list(g.variables))
+
+    # 2) 원하는 그룹을 xarray로 열기 — 위에서 확인한 그룹 이름을 넣으세요
+    # ds = xr.open_dataset(fname, group="<그룹 이름>")
+    # print(ds)
+
+tips:
+  - "파일명의 날짜·시각은 UTC입니다. 한국 시간 08:15 관측은 전날 날짜(UTC 23:15) 파일이라, 한국 날짜 기준 일 합성을 만들 때 하루 치가 두 UTC 날짜에 걸칩니다."
+  - "2025-02-28 센터가 과거 L2 산출물을 재처리해 다시 서비스한다고 알렸습니다(대기보정 v31, 고유광특성 v20, 자료 형식 v04 문서). 그 전에 받은 L2로 만든 시계열은 다시 받아 맞추세요."
+  - "원격반사도 산출 알고리즘이 2023년 10월 지상국에 반영되었고(KIOST, IOCS 2023), 2024-04-15 개선 설명 자료가 게시되었습니다. 기간에 따라 처리 판이 섞이지 않았는지 파일의 처리 정보를 확인하세요."
+  - "궤도유지기동은 매주 화·목요일 임의 시각에 있어 그 회차가 빠집니다(센터 FAQ). 하루 10회가 다 있다고 가정하고 일평균을 내면 빠진 시각이 날마다 달라 편향이 생길 수 있습니다."
+  - "춘분·추분 무렵에는 태양전파간섭 안내 공지가 올라옵니다. 이 기간과 안전모드 공지가 난 날(예 2022-09-04, 2023-12-11)은 자료가 빠지거나 서비스에서 제외되었습니다."
+  - "NASA OBPG(oceancolor)와 NASA CMR에는 GOCI-II 자료가 없습니다(2026-10-14 확인, OBPG Level-2 목록에는 이전 GOCI만 있음). GOCI-II는 국가해양위성센터에서 받아야 합니다."
+  - "GOCI(2011~2021)와 이어 쓰려면 GOCI는 NASA OBPG에서, GOCI-II는 국가해양위성센터에서 받아야 해 처리 체계가 다릅니다. 겹치는 2020-10~2021-03 기간으로 두 자료의 차이를 먼저 확인하세요."
+  - "같은 위성의 GEMS(국립환경과학원)도 낮 동안 시간마다 동아시아를 관측합니다. KIOST는 GEMS·GK-2A 오존 칼럼을 GOCI-II 대기보정에 쓰는 방안을 평가했습니다(Lee et al., 2025, 대한원격탐사학회지 41(6))."
+
+citations:
+  dataset: []
+  papers:
+    - label: GOCI-II 발사 1년 현황 (한국어)
+      text: >-
+        최종국, 박명숙, 한경수, 김현철, 임정호 (2021): GOCI-II 발사 1년, 현재와 미래. 대한원격탐사학회지, 37(5-2), 1229–1234.
+      doi: 10.7780/kjrs.2021.37.5.2.1
+      bibtex: |
+        @article{choi2021goci2,
+          author  = {Choi, Jong-kuk and Park, Myung-sook and Han, Kyung-soo and Kim, Hyun-cheol and Im, Jungho},
+          title   = {{GOCI-II} 발사 1년, 현재와 미래 (One Year of {GOCI-II} Launch: Present and Future)},
+          journal = {Korean Journal of Remote Sensing},
+          volume  = {37},
+          number  = {5-2},
+          pages   = {1229--1234},
+          year    = {2021},
+          doi     = {10.7780/kjrs.2021.37.5.2.1}
+        }
+    - label: GOCI-II 수증기 흡수 보정 개선 (대기보정)
+      text: >-
+        Lee, K.-S., Park, M.-S., Choi, J.-K., Ahn, J.-H. (2023): Improvement of GOCI-II Water Vapor Absorption Correction through Fusion with GK-2A/AMI Data. Remote Sensing, 15(8), 2124.
+      doi: 10.3390/rs15082124
+      bibtex: |
+        @article{lee2023goci2wv,
+          author  = {Lee, Kyeong-Sang and Park, Myung-Sook and Choi, Jong-Kuk and Ahn, Jae-Hyun},
+          title   = {Improvement of {GOCI-II} Water Vapor Absorption Correction through Fusion with {GK-2A/AMI} Data},
+          journal = {Remote Sensing},
+          volume  = {15},
+          number  = {8},
+          pages   = {2124},
+          year    = {2023},
+          doi     = {10.3390/rs15082124}
+        }
+    - label: GOCI·GOCI-II 동중국해 표층 염분 연속성
+      text: >-
+        Jang, E., Choi, J.-K., Ahn, J.-H. (2024): Continuity and Enhancements in Sea Surface Salinity Estimation in the East China Sea Using GOCI and GOCI-II: Challenges and Further Developments.
+        Remote Sensing, 16(12), 2111.
+      doi: 10.3390/rs16122111
+      bibtex: |
+        @article{jang2024gocisss,
+          author  = {Jang, Eunna and Choi, Jong-Kuk and Ahn, Jae-Hyun},
+          title   = {Continuity and Enhancements in Sea Surface Salinity Estimation in the {East China Sea} Using {GOCI} and {GOCI-II}: Challenges and Further Developments},
+          journal = {Remote Sensing},
+          volume  = {16},
+          number  = {12},
+          pages   = {2111},
+          year    = {2024},
+          doi     = {10.3390/rs16122111}
+        }
+  acknowledgement: >-
+    국가해양위성센터 누리집에서 GOCI-II 자료의 데이터셋 DOI나 권장 인용 문구는 찾지 못했습니다. 논문에는 자료 출처를 '국립해양조사원 국가해양위성센터(NOSC), 천리안위성 2B호 GOCI-II'로 밝히고,
+    산출물 코드·레벨·영역(LA/FD)과 받은 날짜(재처리 이후인지)를 함께 적으세요. Open API 결과를 화면에 표시한다면 '국립해양조사원 OPEN API' 문구가 필요합니다.
+
+notices:
+  - date: "2026-10-07"
+    level: info
+    title: 천리안위성 2B호 관측 스케줄 변경(10월 6일)
+    body: >-
+      궤도유지기동(station keeping) 때문에 2026년 10월 6일 17:15(KST) 촬영 일부가 취소(SKIP)되었습니다. 하루 전 공지(2026-10-06)에서는 10월 1일 04:15 UTC 관측 취소를 알렸습니다.
+      이런 관측 스케줄 변경 공지가 매달 여러 건 올라오므로, 시계열 분석 전에 빠진 회차를 운영공지로 확인하세요.
+    source: https://www.nosc.go.kr/board/actionBoardViewBoard0005.do?BOARD_SNO=235&boardSelectPage=1
+  - date: "2025-06-25"
+    level: info
+    title: L2 알고리즘 기술문서(ATBD) 5종 갱신
+    body: >-
+      에어로졸 광학 두께, 적조 지수, 저염분수, 해양 전선(엽록소 전선), 표층 해류 ATBD가 갱신본으로 다시 게시되었습니다. 이 산출물을 쓴다면 갱신된 문서의 알고리즘·품질 기준을 확인하세요.
+    source: https://www.nosc.go.kr/board/actionBoardListBoard0009.do
+  - date: "2025-02-28"
+    level: warning
+    title: 과거 L2 기본산출물 재처리 서비스
+    body: >-
+      센터가 천리안위성 2B호에서 과거에 생산한 기본산출물(L2)을 재처리해 서비스한다고 알리며 'GOCI-II Level-2 OCR 자료 형식(v04)', 대기보정(v31), 고유광특성(v20) 기술문서를 함께 올렸습니다.
+      재처리 대상 기간은 게시글에 적혀 있지 않습니다. 그 전에 받은 L2로 만든 결과는 새 자료로 다시 확인하세요.
+    source: https://www.nosc.go.kr/board/actionBoardViewBoard0009.do?BOARD_SNO=34&boardSelectPage=2
+  - date: "2024-04-15"
+    level: info
+    title: GOCI-II 원격반사도 산출 개선 설명 자료 게시
+    body: >-
+      대기보정 업데이트 설명 자료(GOCI-II_대기보정업데이트_설명자료_20240409.pdf)가 게시되었습니다. KIOST 발표에 따르면 개선된 대기보정은 2023년 10월부터 지상국 운영에 반영되었습니다.
+    source: https://www.nosc.go.kr/board/actionBoardViewBoard0009.do?BOARD_SNO=33&boardSelectPage=2
+  - date: "2023-12-12"
+    level: warning
+    title: 천리안위성 2B호 서비스 일시 중단(12월 11일)
+    body: >-
+      위성이 안전모드(safe mode)에 들어가 관측 자료의 위치 정보에 오류가 생겨, 2023년 12월 11일 해양위성영상 자료 서비스가 중단되었습니다.
+    source: https://www.nosc.go.kr/board/actionBoardViewBoard0005.do?BOARD_SNO=83&boardSelectPage=15
+  - date: "2022-10-21"
+    level: warning
+    title: 안전모드 복구 중 일부 영상 서비스 제외(2022년 9월)
+    body: >-
+      2022년 9월 3일 21시경 천리안위성 2B호가 안전모드에 들어갔고, 정상 상태로 복구하는 과정에서 장애가 생긴 9월 4일 08:15~15:15(KST) 영상을 서비스에서 제외했습니다.
+      영문 공지는 날짜를 9월 3일로 적고 있어, 해당 날짜 자료가 비어 있으면 이 공지를 참고하세요.
+    source: https://www.nosc.go.kr/board/actionBoardViewBoard0005.do?BOARD_SNO=19&boardSelectPage=21
+
+links:
+  - name: 국가해양위성센터 누리집
+    url: https://www.nosc.go.kr/main.do
+  - name: 정지궤도 해양위성 소개 (관측 영역·밴드)
+    url: https://www.nosc.go.kr/boardContents/actionBoardContentsCons0037.do
+  - name: 위성자료 파일명 규칙
+    url: https://www.nosc.go.kr/boardContents/actionBoardContentsCons0017.do
+  - name: 알고리즘 기술문서(ATBD)·자료 형식 문서
+    url: https://www.nosc.go.kr/board/actionBoardListBoard0009.do
+  - name: 자주 묻는 질문(관측 횟수·갱신 시각·대용량 내려받기)
+    url: https://www.nosc.go.kr/board/actionBoardListBoard0020.do
+  - name: OPEN API 개발자 가이드
+    url: https://www.nosc.go.kr/boardContents/actionBoardContentsCons0008.do
+  - name: 일반자료실 (OPeNDAP 매뉴얼, noscCollector)
+    url: https://www.nosc.go.kr/board/actionBoardListBoard0018.do
+  - name: 관련 법규 (천리안 해양위성 운영규정)
+    url: https://www.nosc.go.kr/board/actionBoardListBoard0017.do
+  - name: WMO OSCAR — GOCI-II
+    url: https://space.oscar.wmo.int/instruments/view/goci_ii
+  - name: 이 사이트 — 이전 자료 GOCI (천리안 1호)
+    url: ../goci/
+  - name: 이 사이트 — 같은 위성의 GEMS (천리안 2B호 환경탑재체)
+    url: ../gems/
+  - name: 이 사이트 — GK-2A (천리안 2A호 기상위성)
+    url: ../gk2a/
+
+watch_urls:
+  - https://www.nosc.go.kr/board/actionBoardListBoard0005.do
+  - https://www.nosc.go.kr/board/actionBoardListBoard0009.do
+
+last_verified: "2026-10-14"

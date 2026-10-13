@@ -1,0 +1,464 @@
+# ─────────────────────────────────────────────────────────────
+# NASA PACE OCI (hyperspectral ocean color) ocean products, L2/L3/L4 (AOP, IOP, BGC, KD, PAR, MOANA, NPP_CAFE), version 3.2 — dataset information file (English edition)
+# Satellite tab (ocean color), cross-listed in the ocean tab (satellite observations). Launched 2024-02-08, data public from 2024-04-11; reprocessed V2 → V3 (2025-02) → V3.1 (2025-08) → V3.2 (2026-04, announced 2026-06).
+# When checked on 2026-10-13, near-real-time (NRT) L3 daily files ran through 2026-10-12 and standard L3 through 2026-08-31 (monthly through 2026-08).
+# Links to MODIS and VIIRS ocean color are in links (../modis-ocean/, ../viirs-ocean/). Atmospheric products (aerosol, cloud, trace gas; HARP2, SPEXone) are only mentioned in the summary.
+# After editing, update last_verified to the date you checked the official pages.
+# ─────────────────────────────────────────────────────────────
+id: pace-oci
+name: "PACE OCI Ocean Color"
+full_name: >-
+  PACE (Plankton, Aerosol, Cloud, ocean Ecosystem) Ocean Color Instrument (OCI) Level-2 and Level-3 ocean products (AOP, IOP, BGC, KD, PAR) and Level-4 MOANA and NPP_CAFE, version 3.2
+  (NASA hyperspectral ocean color)
+category: satellite
+domain: satellite
+group: 해색
+order: 30
+also_in:
+  - domain: ocean
+    group: 위성 관측 자료
+domains: [해양, 원격탐사]
+provider: NASA GSFC Ocean Biology Processing Group (OBPG) and PACE Science Data Segment / NASA Ocean Biology DAAC (OB.DAAC)
+
+status: active
+status_note: >-
+  Version 3.2, finalised in April 2026 (Earthdata alert of 2026-06-11), is the current version of the ocean products, and both near-real-time (NRT) and standard (refined) streams are being produced.
+  When checked on 2026-10-13, NRT Level-2 granules were available up to about 12 UTC that day and NRT Level-3 daily files through 2026-10-12, while standard Level-3 ran through the 2026-08-31 daily file (registered 2026-09-30)
+  and the 2026-08 monthly file (registered 2026-10-06) and standard Level-2 through 2026-09-01. Aerosol, cloud and land products are still at V3.1 and trace gases (TRGAS) at V3.0.
+
+period:
+  start: "2024-03"
+  end: present
+  note: >-
+    PACE launched on 2024-02-08 and its data were first released on 2024-04-11 (V1). When checked on 2026-10-13, every V3.2 Level-2, Level-3 and Level-4 collection begins on 2024-03-05.
+    A spacecraft safe hold stopped science collection from 22:40 UTC on 2024-05-24 (instrument recovery began on 28 May), and a safe hold on 2026-02-09 left a data gap on 2026-02-10.
+
+resolution:
+  spatial_short: "4.6 km (0.04°)"
+  temporal_short: "1일"
+  spatial: >-
+    L2 swath: 1.2 km × 1.2 km ground sample footprint at scan centre (larger toward the scan edges), swath width about 2,700 km, 5-minute granules /
+    L3 mapped (L3m): two global Equidistant Cylindrical grids — `4km` (4320×8640, file attribute spatialResolution "4.638312 km") and `0p1deg` (0.1°, 1800×3600) /
+    L3 binned: quasi-equal-area sinusoidal grid at 4.6 km or 9.2 km (release notes) / L4 MOANA: Atlantic domain 70°S–70°N, 85°W–25°E (3360×2640 in 4km files)
+  vertical: >-
+    Remote sensing reflectance and near-surface optical and biogeochemical properties (values within the optical depth seen by the satellite). `Rrs` in AOP files has 172 wavelengths (hyperspectral),
+    `Kd` in KD files has 17, and IOP files carry separate variables at 17 wavelengths from 400 to 701 nm.
+  temporal: >-
+    L2 in 5-minute granules (daytime only). The sun-synchronous orbit (676.5 km altitude, 98° inclination) gives global coverage about every 2 days /
+    L3m and L3b daily (DAY), 8-day (8D) and monthly (MO) composites / L4 MOANA daily and monthly, NPP_CAFE daily. Most products come as separate standard and near-real-time (NRT) versions.
+
+coverage:
+  short: 전지구
+  note: "Daytime, cloud-free ocean only (gaps from clouds, low sun and glint). MOANA covers the Atlantic only (70°S–70°N, 85°W–25°E)"
+update: >-
+  NRT Level-2 within hours of observation and NRT Level-3 daily files the next day (the 2026-10-12 daily file was registered at 13 UTC on 10-13). Standard products wait for ancillary data,
+  so their latency varies (on 2026-10-13 the 2026-08 monthly file had been registered on 2026-10-06)
+license: >-
+  Free and open under the NASA Earth Science Data and Information Policy (file license attribute https://science.nasa.gov/earth-science/earth-science-data/data-information-policy/).
+  Downloads from OB.DAAC require a free NASA Earthdata Login, and users are asked to cite the dataset DOIs
+account_required: true
+
+summary: >-
+  PACE is a NASA ocean and atmosphere satellite launched in February 2024. Its main sensor, OCI, is a hyperspectral spectrometer that measures continuously from the ultraviolet to the near infrared (340–895 nm)
+  in 2.5 nm steps with 5 nm bandwidth, plus seven shortwave infrared bands (940–2260 nm). This page covers the OCI ocean products made by OBPG: hyperspectral remote sensing reflectance (Rrs)
+  with fluorescence line height and apparent visible wavelength (AOP), inherent optical properties such as absorption and backscattering (IOP), diffuse attenuation (Kd), chlorophyll a,
+  phytoplankton carbon and particulate organic and inorganic carbon (BGC), photosynthetically available radiation (PAR), picophytoplankton community composition (MOANA) and net primary production (NPP_CAFE).
+  They carry the NASA ocean color record from SeaWiFS, MODIS and VIIRS into the hyperspectral era. The OCI aerosol (UAA), cloud, trace gas (NO2, O3) and land products, and the aerosol and cloud products
+  from the HARP2 and SPEXone polarimeters, are separate collections and are not covered here.
+
+time_convention:
+  summary: >-
+    Level-2 values are instantaneous daytime observations at the time of overpass, and the time in the file name (PACE_OCI.YYYYMMDDTHHMMSS.L2…) is the start of the 5-minute granule (UTC).
+    Level-3 mapped and Level-4 files are composites (averages) of the Level-2 values in the period, marked DAY (daily), 8D (8-day) or MO (monthly) in the file name. In PAR files, `par_day_*` are daily integrals and `ipar_*` are instantaneous values at overpass.
+  points:
+    - "In CMR a daily L3m file spans 00:00–23:59:59 UTC of its date, but the time_coverage_start and time_coverage_end attributes reach past both ends (the PACE_OCI.20260801 daily file covers 2026-07-31T23:42Z to 2026-08-02T01:45Z)."
+    - "8-day (8D) composites count from 1 January in 8-day steps, so the last one of the year is shorter (20251227_20251231, followed by 20260101_20260108). The first year starts on 2024-03-05."
+    - "Monthly (MO) composites cover the calendar month (PACE_OCI.20260801_20260831.L3m.MO.BGC.V3_2.0p1deg.nc)."
+    - "NRT files end in .NRT.nc and are made without the final refined calibration and ancillary inputs (Help Hub FAQ). Switch to the standard files once they are out, and do not mix the two in one time series."
+    - "V3_2 in the file name is the processing version. The same date folder mixes V3_2 (ocean), V3_1 (aerosol, cloud, land) and V3_0 (trace gas) files."
+    - "L3m values are stored as Int16 with scale_factor and add_offset (Rrs, for example). xarray unpacks them automatically."
+  source: https://oceandata.sci.gsfc.nasa.gov/files/data/reprocessing/V3/PACE_OCI_V3_Release_Notes.pdf
+  source_name: "PACE OCI V3 Release Notes (OBPG) + OB.DAAC CMR granule metadata and OPeNDAP file attributes + Oceandata Help Hub"
+
+variables:
+  note: >-
+    Variable names and units come from the V3.2 L3m and L4m files (OB.DAAC OPeNDAP attributes) and the PACE OCI V3 release notes, which rate most ocean products as Provisional (reviewed but not yet validated).
+    Level-2 files hold the same variables in the `geophysical_data` group, with latitude and longitude in the `navigation_data` group.
+  full_list: https://oceandata.sci.gsfc.nasa.gov/files/data/reprocessing/V3/PACE_OCI_V3_Release_Notes.pdf
+  groups:
+    - name: L3m apparent optical properties (AOP file, PACE_OCI_L3M_AOP)
+      kind: mean
+      period: Daily, 8-day and monthly composites
+      items:
+        - text: "Remote sensing reflectance (hyperspectral, 172 wavelengths) — `Rrs` (sr-1)"
+          note: "3-D lat×lon×wavelength, with the `wavelength` coordinate in nm. Not validated below 400 nm"
+        - "Normalized fluorescence line height — `nflh` (W m-2 um-1 sr-1)"
+        - "Apparent visible wavelength — `avw` (nm)"
+        - text: "Aerosol optical thickness at 865 nm (atmospheric correction diagnostic) — `aot_865` (dimensionless)"
+          note: Diagnostic maturity (not for science use)
+        - text: "Angstrom exponent, 443 to 865 nm (atmospheric correction diagnostic) — `angstrom` (dimensionless)"
+          note: Diagnostic maturity
+    - name: L3m inherent optical properties (IOP file, PACE_OCI_L3M_IOP)
+      kind: mean
+      period: Daily, 8-day and monthly composites
+      items:
+        - text: "Total absorption — `a_400` to `a_701` (m-1)"
+          note: "17 wavelengths (400, 413, 425, 442, 460, 475, 490, 510, 532, 555, 583, 618, 640, 655, 665, 678, 701 nm), GIOP model"
+        - "Total backscattering — `bb_400` to `bb_701` (m-1)"
+        - "Phytoplankton absorption — `aph_400` to `aph_701` (m-1)"
+        - "Absorption by gelbstoff and detrital material at 442 nm — `adg_442` (m-1)"
+        - "Particulate backscattering at 442 nm — `bbp_442` (m-1)"
+        - "adg spectral slope — `adg_s` (m-1 nm-1)"
+        - "bbp spectral slope — `bbp_s` (m-1 nm-1)"
+        - "Uncertainty in absorption and backscattering at 442 nm — `aph_unc_442`, `adg_unc_442`, `bbp_unc_442` (m-1)"
+    - name: L3m diffuse attenuation (KD file, PACE_OCI_L3M_KD)
+      kind: mean
+      period: Daily, 8-day and monthly composites
+      items:
+        - text: "Diffuse attenuation coefficient of downwelling irradiance (17 wavelengths) — `Kd` (m-1)"
+          note: 3-D lat×lon×wavelength
+    - name: L3m biogeochemical properties (BGC file, PACE_OCI_L3M_BGC)
+      kind: mean
+      period: Daily, 8-day and monthly composites
+      items:
+        - text: "Chlorophyll a concentration — `chlor_a` (mg m-3)"
+          note: OBPG standard algorithm blending CI and the OC4 band ratio (same family as MODIS and VIIRS ocean color)
+        - "Phytoplankton carbon — `carbon_phyto` (mg m-3)"
+        - "Particulate organic carbon — `poc` (mg m-3)"
+        - text: "Particulate inorganic carbon (calcite) — `pic` (mol m-3)"
+          note: Added in V3.2 (CI2 algorithm)
+    - name: L3m photosynthetically available radiation (PAR file, PACE_OCI_L3M_PAR)
+      kind: mean
+      period: Daily, 8-day and monthly composites
+      items:
+        - text: "Daily scalar PAR just below the surface — `par_day_scalar_below` (mol m-2 day-1)"
+          kind: accum
+          period: Daily
+          note: Daily integral; 8-day and monthly files hold its mean
+        - text: "Daily planar PAR just above the surface — `par_day_planar_above` (mol m-2 day-1)"
+          kind: accum
+          period: Daily
+        - text: "Daily planar PAR just below the surface — `par_day_planar_below` (mol m-2 day-1)"
+          kind: accum
+          period: Daily
+        - text: "Instantaneous PAR at overpass — `ipar_planar_above`, `ipar_planar_below`, `ipar_scalar_below` (micromol m-2 s-1)"
+          kind: instant
+    - name: L4m phytoplankton community and net primary production (PACE_OCI_L4M_MOANA, NPP_CAFE)
+      kind: mean
+      period: Daily (MOANA also monthly)
+      items:
+        - text: "Prochlorococcus cell abundance — `prococcus_moana` (cells ml-1)"
+          note: Atlantic only; uses sea surface temperature as an ancillary input
+        - "Synechococcus cell abundance — `syncoccus_moana` (cells ml-1)"
+        - "Picoeukaryote cell abundance — `picoeuk_moana` (cells ml-1)"
+        - text: "Daily ocean net primary production (CAFE model) — `npp_cafe` (mg m-2 day-1)"
+          kind: accum
+          period: Daily
+    - name: L2 swath (OC_AOP, OC_IOP, OC_BGC and PAR 5-minute granules)
+      kind: instant
+      period: Overpass time
+      items:
+        - text: "Remote sensing reflectance — `Rrs` (sr-1), uncertainty `Rrs_unc`"
+          note: "3-D number_of_lines×pixels_per_line×wavelength in Level-2"
+        - "Chlorophyll a concentration — `chlor_a` (mg m-3), uncertainty `chlor_a_unc`"
+        - "Phytoplankton carbon — `carbon_phyto`, uncertainty `carbon_phyto_unc`"
+        - "Inherent optical properties — `a`, `bb`, `aph`, `adg`, `bbp` and `Kd`"
+        - text: "Latitude and longitude — `latitude`, `longitude` (navigation_data group)"
+          kind: static
+
+access:
+  - name: NASA Earthdata Search (OB.DAAC portal)
+    url: https://search.earthdata.nasa.gov/search?portal=obdaac
+    method: Web search and download, earthaccess (Python; short names such as PACE_OCI_L3M_BGC or PACE_OCI_L2_AOP), Harmony subsetting (Level-2)
+    note: >-
+      Collections are PACE_OCI_L2_{AOP,IOP,BGC,PAR}, PACE_OCI_L3M_{AOP,IOP,KD,BGC,PAR} and PACE_OCI_L4M_{MOANA,NPP_CAFE}, each with an _NRT counterpart.
+      According to the Help Hub FAQ, Harmony does not yet support spatial subsetting of Level-3 mapped data. A free NASA Earthdata Login is required.
+  - name: OB.DAAC Direct Data Access (Level-3 Mapped / PACE-OCI)
+    url: https://oceandata.sci.gsfc.nasa.gov/directdataaccess/Level-3%20Mapped/PACE-OCI/
+    method: HTTPS directories by year and day, e.g. PACE_OCI.20260801_20260831.L3m.MO.BGC.V3_2.0p1deg.nc
+    note: The Level-2 and Level-4 Mapped folders follow the same layout. Downloads require an Earthdata Login.
+  - name: OB.DAAC File Search
+    url: https://oceandata.sci.gsfc.nasa.gov/api/file_search/
+    method: File lists by name pattern, date range and region (for wget or curl)
+  - name: OB.DAAC OPeNDAP (L3 SMI and L4 SMI)
+    url: https://oceandata.sci.gsfc.nasa.gov/opendap/PACE_OCI/L3SMI/
+    method: OPeNDAP (year/MMDD folders, e.g. L3SMI/2026/0801/)
+    note: Level-4 files are under /opendap/PACE_OCI/L4SMI/.
+  - name: OB.DAAC Level 3 & 4 Browser
+    url: https://oceandata.sci.gsfc.nasa.gov/l3/
+    method: Web map previews and file selection (choose Provisional under Product Status)
+
+example:
+  lang: python
+  note: "Downloads a V3.2 L3m monthly BGC file (0.1°) with earthaccess and looks at chlorophyll around the Korean Peninsula. Run earthaccess.login() once with your NASA Earthdata account. Latitude in L3m files runs from north to south, so slice it as slice(north, south)."
+  code: |
+    # pip install earthaccess xarray netCDF4
+    import earthaccess
+    import xarray as xr
+
+    earthaccess.login()
+    results = earthaccess.search_data(
+        short_name="PACE_OCI_L3M_BGC",           # Rrs is in PACE_OCI_L3M_AOP
+        temporal=("2025-05-01", "2025-05-31"),
+        granule_name="*.MO.BGC.V3_2.0p1deg.nc",   # daily: *.DAY.*, 8-day: *.8D.*, 4km: *.4km.nc
+    )
+    paths = earthaccess.download(results, local_path="pace")
+
+    ds = xr.open_dataset(paths[0])
+    chl = ds["chlor_a"].sel(lat=slice(40, 30), lon=slice(120, 132))   # around Korea
+    print(float(chl.median()), int(chl.count()))
+
+    # For an AOP file: ds["Rrs"].sel(wavelength=443, method="nearest")
+
+tips:
+  - "Do not mix versions. V3.2 fixed a BRDF correction that ignored changes in relative azimuth across the scan, which substantially changed Rrs accuracy and cross-track stability. Files downloaded before V3.2 are best replaced (check for V3_2 in the file name)."
+  - "Rrs below 400 nm is not validated and may carry significant biases. Rrs at 590–610 nm has been removed since V3 because of the discontinuity between the blue and red focal planes."
+  - "Red-wavelength Rrs may keep residual water vapour and oxygen absorption artifacts, and nflh is affected by scan-edge reflectance errors and the 680 nm O2 b-band (known issues in the V3.2 alert)."
+  - "Elevated red reflectance near the scan edges at high view zenith angles is flagged in Level-2 and masked in Level-3 above 60°. Check the flags if you work with Level-2 directly."
+  - "The CMR description warns that BGC retrievals carry higher uncertainty in coastal and inland waters and under heavy aerosol or glint. Be especially careful with chlorophyll in the turbid coastal Yellow Sea and East China Sea and during spring dust events, and check the quality flags."
+  - "V3.2 added a coccolithophore flag to Level-2. BGC values there may be biased, and the coccolithophore mask is not applied to Level-3 AOP."
+  - "MOANA (picophytoplankton community) covers only the Atlantic (70°S–70°N, 85°W–25°E), so it has no values around Korea."
+  - "chlor_a uses the same OBPG standard algorithm family as MODIS and VIIRS ocean color (CI at low concentrations, OCx band ratio at higher), which eases comparison, but sensors, calibration and versions differ. Check the differences over an overlap period before joining records."
+  - "From V3.2 each Level-3 AOP, IOP and BGC file holds all variables of its suite. Rrs in a 4km AOP file is a 4320×8640×172 array, so use the 0p1deg files for broad-scale patterns."
+  - "Safe holds left gaps from 22:40 UTC on 2024-05-24 to at least 28 May and on 2026-02-10. Check how many cells are empty in daily and 8-day composites for those periods."
+
+citations:
+  dataset:
+    - label: PACE OCI L3m Ocean Biogeochemical Properties V3.2
+      text: >-
+        NASA Ocean Biology Processing Group. (2026). PACE OCI Level-3 Global Mapped Ocean Biogeochemical Properties Data, version 3.2.
+        NASA Ocean Biology Distributed Active Archive Center. doi: 10.5067/PACE/OCI/L3M/OC_BGC/3.2. Accessed on [YYYY/MM/DD].
+      doi: 10.5067/PACE/OCI/L3M/OC_BGC/3.2
+      bibtex: |
+        @misc{obpg2026paceocil3mbgc,
+          author    = {{NASA Ocean Biology Processing Group}},
+          title     = {{PACE} {OCI} Level-3 Global Mapped Ocean Biogeochemical Properties Data, version 3.2},
+          year      = {2026},
+          publisher = {NASA Ocean Biology Distributed Active Archive Center},
+          version   = {3.2},
+          doi       = {10.5067/PACE/OCI/L3M/OC_BGC/3.2}
+        }
+    - label: PACE OCI L3m Apparent Optical Properties (Rrs) V3.2
+      text: >-
+        NASA Ocean Biology Processing Group. (2026). PACE OCI Level-3 Global Mapped Apparent Optical Properties Data, version 3.2.
+        NASA Ocean Biology Distributed Active Archive Center. doi: 10.5067/PACE/OCI/L3M/OC_AOP/3.2. Accessed on [YYYY/MM/DD].
+      doi: 10.5067/PACE/OCI/L3M/OC_AOP/3.2
+      bibtex: |
+        @misc{obpg2026paceocil3maop,
+          author    = {{NASA Ocean Biology Processing Group}},
+          title     = {{PACE} {OCI} Level-3 Global Mapped Apparent Optical Properties Data, version 3.2},
+          year      = {2026},
+          publisher = {NASA Ocean Biology Distributed Active Archive Center},
+          version   = {3.2},
+          doi       = {10.5067/PACE/OCI/L3M/OC_AOP/3.2}
+        }
+    - label: PACE OCI L2 Apparent Optical Properties V3.2
+      text: >-
+        NASA Ocean Biology Processing Group. (2026). PACE OCI Level-2 Regional Apparent Optical Properties Data, version 3.2.
+        NASA Ocean Biology Distributed Active Archive Center. doi: 10.5067/PACE/OCI/L2/OC_AOP/3.2. Accessed on [YYYY/MM/DD].
+      doi: 10.5067/PACE/OCI/L2/OC_AOP/3.2
+      bibtex: |
+        @misc{obpg2026paceocil2aop,
+          author    = {{NASA Ocean Biology Processing Group}},
+          title     = {{PACE} {OCI} Level-2 Regional Apparent Optical Properties Data, version 3.2},
+          year      = {2026},
+          publisher = {NASA Ocean Biology Distributed Active Archive Center},
+          version   = {3.2},
+          doi       = {10.5067/PACE/OCI/L2/OC_AOP/3.2}
+        }
+  papers:
+    - label: PACE mission overview
+      text: >-
+        Werdell, P. J., Behrenfeld, M. J., Bontempi, P. S., Boss, E., Cairns, B., Davis, G. T., Franz, B. A., Gliese, U. B., Gorman, E. T., Hasekamp, O., Knobelspiesse, K. D.,
+        Mannino, A., Martins, J. V., McClain, C. R., Meister, G., Remer, L. A. (2019): The Plankton, Aerosol, Cloud, Ocean Ecosystem Mission: Status, Science, Advances.
+        Bulletin of the American Meteorological Society, 100(9), 1775–1794.
+      doi: 10.1175/BAMS-D-18-0056.1
+      bibtex: |
+        @article{werdell2019pace,
+          author  = {Werdell, P. Jeremy and Behrenfeld, Michael J. and Bontempi, Paula S. and Boss, Emmanuel and Cairns, Brian and Davis, Gary T. and Franz, Bryan A. and Gliese, Ulrik B. and Gorman, Eric T. and Hasekamp, Otto and Knobelspiesse, Kirk D. and Mannino, Antonio and Martins, J. Vanderlei and McClain, Charles R. and Meister, Gerhard and Remer, Lorraine A.},
+          title   = {The Plankton, Aerosol, Cloud, Ocean Ecosystem Mission: Status, Science, Advances},
+          journal = {Bulletin of the American Meteorological Society},
+          volume  = {100},
+          number  = {9},
+          pages   = {1775--1794},
+          year    = {2019},
+          doi     = {10.1175/BAMS-D-18-0056.1}
+        }
+    - label: Chlorophyll CI algorithm (low-concentration chlor_a)
+      text: >-
+        Hu, C., Lee, Z., Franz, B. (2012): Chlorophyll a algorithms for oligotrophic oceans: A novel approach based on three-band reflectance difference.
+        Journal of Geophysical Research: Oceans, 117(C1), 2011JC007395.
+      doi: 10.1029/2011JC007395
+      bibtex: |
+        @article{hu2012ci,
+          author  = {Hu, Chuanmin and Lee, Zhongping and Franz, Bryan},
+          title   = {Chlorophyll a algorithms for oligotrophic oceans: A novel approach based on three-band reflectance difference},
+          journal = {Journal of Geophysical Research: Oceans},
+          volume  = {117},
+          number  = {C1},
+          year    = {2012},
+          doi     = {10.1029/2011JC007395}
+        }
+  acknowledgement: >-
+    OBPG asks that datasets be cited as author (NASA Ocean Biology Processing Group), release date, dataset title, publisher (NASA OB.DAAC), DOI and date accessed,
+    and that published work include a general acknowledgement of OBPG/OB.DAAC for data before the reference list (no fixed wording is given).
+
+notices:
+  - date: "2026-06-11"
+    level: warning
+    title: OCI ocean products reprocessed to V3.2
+    body: >-
+      AOP, IOP, BGC and PAR (Level-2), AOP, KD, IOP, BGC and PAR (Level-3 mapped) and MOANA (Level-4) were reprocessed to V3.2 and are in Earthdata Search. A fix to the BRDF correction's handling of relative azimuth
+      substantially improves Rrs accuracy and cross-track stability; polarization correction, gas absorption (HITRAN) and vicarious calibration gains were updated; Level-2 gained a coccolithophore flag;
+      and the Level-3 AOP products were consolidated into a single file.
+    source: https://www.earthdata.nasa.gov/data/alerts-outages/pace-ocean-color-products-have-been-reprocessed-v3.2
+  - date: "2026-03-24"
+    level: info
+    title: Safe hold on 2026-02-09 leaves a gap on 2026-02-10
+    body: >-
+      OB.DAAC User Services replied that the spacecraft entered a safe hold on 2026-02-09, taking the instruments offline for a while; data are missing for 2026-02-10 and the instruments came back online on 2026-02-11.
+    source: https://forum.earthdata.nasa.gov/viewtopic.php?p=25222
+  - date: "2025-08-26"
+    level: warning
+    title: OCI V3.1 processing starts, V3.0 forward stream stops, new products released
+    body: >-
+      All OCI Level-1B data were reprocessed with a minor correction, NRT Level-2 and Level-3 processing moved to V3.1 from 2025-07-02 data onward, and V3.0 forward-stream processing stopped. A full-mission V3.1
+      reprocessing followed, and new OCI aerosol (UAA), SPEXone (RemoTAP, FastMAPOL) and HARP2 (GPC cloud, FastMAPOL) products began to appear.
+    source: https://pace.oceansciences.org/news_more.htm?id=92
+  - date: "2025-02-04"
+    level: warning
+    title: PACE OCI V3 reprocessing starts, V2 processing halted
+    body: >-
+      OCI V3 reprocessing began and V2 processing was halted. According to PACE, the V2 time series will not be extended beyond 2025-02-04, and all OCI data back to 2024-03-05 are being reprocessed to V3.
+      V3 Level-1B came first, from 2025-01-01 onward, followed by Level-2 and Level-3.
+    source: https://oceancolor.gsfc.nasa.gov/
+  - date: "2024-05-29"
+    level: info
+    title: Safe hold on 2024-05-24 stops science collection
+    body: >-
+      The observatory entered safe hold at 22:40 UTC on 2024-05-24, halting science data collection, and instrument recovery began on 28 May. No science data exist for that interval.
+    source: https://pace.oceansciences.org/blog.htm?id=23
+  - date: "2024-04-11"
+    level: info
+    title: First public PACE data release (V1)
+    body: >-
+      Distribution of data from PACE, launched on 2024-02-08, began. The first release (V1) contained Level-1 data and a limited set of derived products from OCI, HARP2 and SPEXone, described as highly preliminary.
+    source: https://www.nasa.gov/earth/nasas-pace-data-on-ocean-atmosphere-climate-now-available/
+
+transitions:
+  - from: PACE OCI V2
+    to: PACE OCI V3.0
+    status: completed
+    date: "2025-02"
+    summary: >-
+      A full-mission reprocessing that recalibrated OCI using only on-orbit solar diffuser data and applied system vicarious calibration (SVC) gains for the first time. Rrs atmospheric correction changed in several ways,
+      some wavelengths were removed, and several products were raised to Provisional.
+    changes:
+      - aspect: L1B calibration
+        before: Absolute calibration from the solar diffuser and pre-launch GLAMR data
+        after: "Absolute calibration from on-orbit solar diffuser data only (larger UV radiance increases), diffuser reflectance degradation included, better dark subtraction (less striping), definitive ephemerides for geolocation"
+      - aspect: Rrs atmospheric correction
+        before: No vicarious calibration gains
+        after: "First SVC gains, polarization and NO2 corrections, improved gas transmittance, extreme glint masking, BRDF table regenerated for hyperspectral wavelengths"
+      - aspect: Rrs wavelengths
+        before: Included 340–345 nm and 590–610 nm
+        after: 340–345 nm and 590–610 nm removed
+      - aspect: Product maturity
+        before: "avw, carbon_phyto, poc, Kd and PAR at Test"
+        after: "avw, carbon_phyto, poc and PAR Provisional; nflh added"
+      - aspect: Period
+        before: "From instrument first light in February 2024; not extended beyond 2025-02-04"
+        after: From 2024-03-05, ongoing
+    impacts:
+      - V2 and V3-or-later files use different calibrations, so Rrs and chlorophyll differ. Do not mix them in one time series.
+      - Rrs at 340–345 nm and 590–610 nm, present in V2, is gone from V3. Re-check wavelength lists in code that used them.
+    sources:
+      - name: OBPG — PACE Science Data Reprocessing Version 3
+        url: https://oceancolor.gsfc.nasa.gov/data/reprocessing/V3.0/pace/
+      - name: PACE — OCI Version 3 (V3) Reprocessing announcement
+        url: https://pace.oceansciences.org/news_more.htm?id=90
+      - name: PACE Science Data V2 Release Notes
+        url: https://oceandata.sci.gsfc.nasa.gov/files/reprocessing/PACE_Science_Data_V2_Release_Notes.pdf
+  - from: PACE OCI V3.0
+    to: PACE OCI V3.1
+    status: completed
+    date: "2025-08"
+    summary: >-
+      Level-2 and Level-3 remade after adding a 650–900 nm ghosting correction to Level-1B (V3.0.1) and fixing the vicarious gains (red over-calibration). NRT switched to V3.1 from 2025-07-02 data and the full mission was reprocessed.
+    changes:
+      - aspect: L1B
+        before: V3.0
+        after: "V3.0.1 — ghosting correction for 650–900 nm, pixels 680–800"
+      - aspect: Atmospheric correction
+        before: V3.0 vicarious gains and earlier humidity and glint handling
+        after: "Updated vicarious gains (red over-calibration fixed), relative humidity from MERRA2 at 925 hPa, seawater refractive index in glint correction, adjusted nflh algorithm"
+      - aspect: IOP
+        before: Output at all wavelengths, Kd at Test
+        after: Output limited to 400–720 nm, Kd Provisional
+    impacts:
+      - "V3.0 and V3.1 differ in red Rrs and nflh. Check for V3_0 or V3_1 in file names and do not mix them."
+    sources:
+      - name: PACE — OCI V3.1 Reprocessing and New Product Release (2025-08-26)
+        url: https://pace.oceansciences.org/news_more.htm?id=92
+      - name: PACE OCI V3 Release Notes
+        url: https://oceandata.sci.gsfc.nasa.gov/files/data/reprocessing/V3/PACE_OCI_V3_Release_Notes.pdf
+  - from: PACE OCI V3.1
+    to: PACE OCI V3.2
+    status: completed
+    date: "2026-04"
+    summary: >-
+      An ocean-product reprocessing that fixed a BRDF implementation error in spectral Rrs. Cross-scan artifacts dropped, the Level-3 AOP, IOP and BGC suites each became one file, and pic was added.
+    changes:
+      - aspect: BRDF correction
+        before: Ignored changes in relative azimuth across the scan
+        after: Accounts for relative azimuth, substantially improving Rrs accuracy and cross-track stability
+      - aspect: L1B calibration
+        before: "Calibration table error causing a date offset of about 22 days"
+        after: V3.0.2 calibration (date error fixed) applied for the first time
+      - aspect: Atmospheric correction
+        before: V3.1
+        after: "Polarization correction computed correctly across the scan, gas absorption recomputed with the latest HITRAN, updated vicarious gains (adding HyperNAV SVC site match-ups)"
+      - aspect: Flags
+        before: None
+        after: Coccolithophore flag in Level-2 (BGC may be biased); coccolithophore masking not applied to Level-3 AOP
+      - aspect: Level-3 file layout
+        before: Separate Level-3 files per product
+        after: "One file per suite for AOP, IOP and BGC (e.g. …L3m.DAY.AOP.V3_2.4km.nc)"
+      - aspect: Products
+        before: "BGC had chlor_a, carbon_phyto and poc"
+        after: "pic added (CI2 algorithm), IOP model fit sampled about every 10 nm in the visible, NPP_CAFE driven by V3.2 IOP and PAR"
+    impacts:
+      - Rrs before V3.2 has cross-scan artifacts, so download V3.2 again.
+      - "Level-3 file names and layout changed (per-product files to per-suite files), so update the file name patterns in automated download scripts."
+    sources:
+      - name: Earthdata — PACE ocean color products have been reprocessed (V3.2)
+        url: https://www.earthdata.nasa.gov/data/alerts-outages/pace-ocean-color-products-have-been-reprocessed-v3.2
+      - name: PACE OCI V3 Release Notes (V3.2 changes)
+        url: https://oceandata.sci.gsfc.nasa.gov/files/data/reprocessing/V3/PACE_OCI_V3_Release_Notes.pdf
+
+links:
+  - name: PACE — Access PACE Data and release notes
+    url: https://pace.oceansciences.org/access_pace_data.htm
+  - name: PACE — Data products overview (DOIs by suite)
+    url: https://pace.oceansciences.org/data.htm
+  - name: OBPG — PACE Version 3 reprocessing
+    url: https://oceancolor.gsfc.nasa.gov/data/reprocessing/V3.0/pace/
+  - name: PACE OCI V3 Release Notes (PDF)
+    url: https://oceandata.sci.gsfc.nasa.gov/files/data/reprocessing/V3/PACE_OCI_V3_Release_Notes.pdf
+  - name: Oceandata Help Hub (PACE notebooks and FAQ)
+    url: https://nasa.github.io/oceandata-notebooks/
+  - name: About the OCI instrument
+    url: https://pace.oceansciences.org/oci.htm
+  - name: OBPG chlorophyll a ATBD
+    url: https://oceandata.sci.gsfc.nasa.gov/files/atbd/atbd-obdaac-chlorophyll-a.pdf
+  - name: This site — MODIS ocean color (earlier multispectral record)
+    url: ../modis-ocean/
+  - name: This site — VIIRS ocean color (current multispectral record)
+    url: ../viirs-ocean/
+
+watch_urls:
+  - https://oceancolor.gsfc.nasa.gov/
+  - https://pace.oceansciences.org/news.htm
+  - https://pace.oceansciences.org/access_pace_data.htm
+
+last_verified: "2026-10-13"

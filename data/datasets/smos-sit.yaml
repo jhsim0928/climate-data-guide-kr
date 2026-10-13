@@ -1,0 +1,332 @@
+# ─────────────────────────────────────────────────────────────
+# SMOS 얇은 해빙 두께 (AWI/ESA SMOS L3 Sea Ice Thickness v3.6 + 브레멘대학 SMOS·SMOS/SMAP) — 데이터셋 정보 파일
+# 위성 탭(해빙), 해빙 탭(위성 관측 자료) 교차 수록. L-band 복사계로 재는 약 1 m 이하 얇은 얼음의 일별 두께. 결빙기에만 생산.
+# 2026-10-13 확인 시 AWI 판은 v3.6(2025-10-15부터), ESA 배포 서버 색인은 2026년 10월분까지 갱신(남반구 시즌 마무리, 북반구 10-15 시작 예정).
+# 수정 후에는 공식 페이지에서 확인한 날짜로 last_verified 를 갱신하세요.
+# ─────────────────────────────────────────────────────────────
+id: smos-sit
+name: SMOS 얇은 해빙 두께
+full_name: SMOS L3 Sea Ice Thickness (AWI/ESA, v3.6) 및 브레멘대학 SMOS·SMOS/SMAP Thin Sea Ice Thickness (L-band 복사계 기반 얇은 해빙 두께)
+category: satellite
+domain: satellite
+group: 해빙
+order: 45
+also_in:
+  - domain: seaice
+    group: 위성 관측 자료
+domains: [해빙, 원격탐사]
+provider: 독일 알프레드 베게너 연구소(AWI) — ESA CS2SMOS-PDS 과제, ESA 배포 / 독일 브레멘대학 환경물리연구소(IUP, SMOS·SMOS/SMAP 판) — 원자료 ESA SMOS, NASA SMAP
+
+status: active
+status_note: >-
+  AWI 판은 2025-10-15 2025/26 겨울부터 v3.3에서 v3.6으로 바뀌었고, 2026-04-15 북극 산출을 마친 뒤 남반구 겨울(4/15~10/15) 산출을 이어 왔습니다.
+  2026-10-13 확인 시 ESA 배포 서버 L3_SIT_Open 색인은 2026년 10월분까지(2026-10-12 생성) 올라와 있고, 2026/27 북극 시즌 시작(10-15 예정) 공지는 아직 AWI 위키에 없습니다.
+  브레멘대학 SMOS·SMOS/SMAP 판(v300)은 '최선 노력(best effort)'으로 계속 생산된다고 안내하지만, 자료 폴더 목록이 자동 읽기를 막고 있어 최신 파일 날짜는 확인하지 못했습니다.
+
+period:
+  start: "2010-10"
+  end: present
+  note: >-
+    AWI v3.6 북극 기록은 2010-10-15부터이며 2010~2024년을 v3.6으로 모두 재처리했습니다. 남반구도 2010년부터 있고(v3.3은 2024년 4월부터 운영, v3.6은 2026년 4월부터 운영),
+    2010-01~05 시험 운용기 자료는 요청 시에만 제공합니다. 북반구는 10/15~4/15, 남반구는 4/15~10/15만 있고 그 밖의 달은 비어 있습니다.
+    브레멘대학 판은 북극 10월~4월, 남극 3월~9월에 산출합니다.
+
+resolution:
+  spatial_short: "12.5 km (0.11°)"
+  temporal_short: "1일"
+  spatial: >-
+    AWI v3.6 — 12.5 km NSIDC 극 평사도법 격자(북반구 EPSG:3413, 남반구 EPSG:3976, x 608 × y 896). 12.5 km EASE2 격자(EPSG:6931/6932, 864×864) 판도 만들지만 배포하는 것은 극 평사도판뿐입니다.
+    SMOS 자체의 공간 해상도는 약 40 km(브레멘대학 안내, 사용 입사각 범위 기준)로 격자 간격보다 훨씬 거칩니다
+  vertical: 해당 없음 (두께 단일 값)
+  temporal: 일평균(하루 한 장, time_coverage 00:00:00~23:59:59, P1D). 결빙기에만 생산
+
+coverage:
+  short: 양극
+  note: "결빙기에만 — 북반구 10/15~4/15, 남반구 4/15~10/15(AWI). 두꺼운 얼음은 신호가 포화되어 과소 추정"
+update: >-
+  결빙기 동안 매일(AWI). 브레멘대학 SMOS 판은 하루 두 번(약 7시간 뒤, 다시 23시간 뒤), SMOS/SMAP 판은 약 8시간 뒤 처리하고 24시간 뒤·1주 뒤 다시 처리
+license: >-
+  ESA 배포본은 ESA 지구관측 자료 이용약관(무료, ESA EO Sign In 계정 필요). AWI 배포본은 별도 라이선스 표기 없이 논문 인용과 감사 문구를 요청.
+  브레멘대학 판은 라이선스 표기 없이 '보증 없는 연구용 산출물'로 공개
+account_required: false
+
+summary: >-
+  ESA SMOS 위성의 L-band(1.4 GHz) 밝기온도가 얇은 해빙 두께에 민감하다는 점을 이용해, 얇은 얼음의 두께를 매일 추정한 자료입니다(AWI 설명서 기준 약 1.5 m까지 두께 정보를 얻을 수 있음).
+  레이더 고도계(CryoSat-2)는 프리보드가 작은 얇은 얼음에서 상대오차가 커서, SMOS는 결빙 초기·가장자리·폴리냐의 얇은 얼음을 보완하는 역할을 합니다.
+  AWI가 ESA 과제로 만드는 L3 판(v3.6)이 대표이며, 병합 두께 CS2SMOS·CS3SMOS의 SMOS 입력으로도 쓰입니다.
+  브레멘대학은 다른 경험적 방법으로 SMOS 단독 판과 NASA SMAP을 합친 SMOS/SMAP 판(v300)을 따로 만듭니다.
+
+time_convention:
+  summary: >-
+    AWI 파일 하나는 하루치 일평균장입니다. v3.6은 궤도(스와스) 단위로 먼저 두께를 계산한 뒤 그날의 스와스 두께를 평균해 일평균 두께를 만들며,
+    전역 속성 time_coverage_start·end가 그날 00:00:00~23:59:59로 적혀 있습니다. 순간값이 아니라 하루 동안 지나간 여러 궤도의 평균입니다.
+  points:
+    - "`time` 변수는 'hours since 2010-01-01 00:00:00' 단위의 날짜 하나입니다. 제품 설명서(PDD v5.0)에는 하루 경계의 시간대(UTC 여부)가 명시되어 있지 않습니다."
+    - "v3.6은 v3.3에서 쓰던 준실시간 JRA-55/JRA-3Q 대신 ERA5 2010~2023년 기후값(2 m 기온, 10 m 풍속)을 보조 자료로 씁니다. 그날의 실제 날씨가 아니라 같은 날짜의 기후값이 들어갑니다."
+    - "`TB_uncertainty`는 그날 밝기온도 표준편차를 자료 쌍 수(`nPair`)의 제곱근으로 나눈 값이라 하루 평균의 불확실성입니다."
+    - "브레멘대학 판도 전날 하루치를 처리하는 일 자료이며, 같은 날짜 파일이 나중에 다시 처리되어 바뀔 수 있습니다(SMOS/SMAP 판은 24시간 뒤·1주 뒤 재처리)."
+  source: https://spaces.awi.de/download/attachments/297634432/AWI_ESA_SMOS_PDD_v5.pdf?version=1&modificationDate=1760692666142&api=v2
+  source_name: AWI SMOS Sea Ice Thickness PDD v5.0 (2025-04-24) / ReadMe-first Technical Note v4.0 (2025-10-15) / 브레멘대학 Thin Ice Thickness 페이지
+
+variables:
+  note: >-
+    AWI v3.6 제품 설명서(PDD v5.0, 표 6) 기준 변수입니다. 브레멘대학 SMOS·SMOS/SMAP 파일의 변수 이름은 공식 페이지에 없어 적지 않았습니다.
+  full_list: https://spaces.awi.de/download/attachments/297634432/AWI_ESA_SMOS_PDD_v5.pdf?version=1&modificationDate=1760692666142&api=v2
+  groups:
+    - name: 두께 (AWI v3.6 일 파일)
+      kind: mean
+      period: 일
+      items:
+        - text: "SMOS 해빙 두께 — `sea_ice_thickness` (m)"
+          note: 그날 스와스 두께의 일평균. 해빙 농도 100%를 가정한 값이라 농도가 낮은 곳은 과소 추정
+        - text: "해빙 두께 총불확실성 — `ice_thickness_uncertainty` (m)"
+          note: 1 m를 넘으면 주의. 해빙 농도 100% 미만에 따른 과소 추정은 불확실성에 들어 있지 않음
+        - text: "두께 포화 비율(최대 산출 가능 두께 대비) — `saturation_ratio` (%)"
+          note: 95%를 넘으면 두꺼운 얼음에서 신호가 포화된 것이므로 주의
+          std: []
+    - name: 밝기온도·보조 물리량
+      kind: mean
+      period: 일
+      items:
+        - text: "밝기온도 세기 (TBh+TBv)/2 — `TB` (K)"
+          std: []
+        - text: "밝기온도 불확실성 — `TB_uncertainty` (K)"
+          std: []
+        - text: "SMOS로 추정한 눈 표면 온도 — `Tsurf` (K)"
+          std: []
+        - text: "얼음 전체 평균 소금 농도(벌크 염도) — `Sice` (psu)"
+          note: 남반구 값은 아직 충분히 평가되지 않음
+          std: []
+    - name: 자료 수·품질 지표
+      kind: accum
+      period: 일
+      items:
+        - text: "사용한 TBh·TBv 쌍의 수 — `nPair` (개)"
+          std: []
+        - text: "전파 간섭(RFI)에 오염된 측정 비율 — `RFI_ratio` (%)"
+          kind: mean
+          std: []
+        - text: "육지 마스크 — `land` (0/1)"
+          kind: static
+          std: []
+
+access:
+  - name: ESA SMOS 배포 서버 — L3_SIT_Open 컬렉션
+    url: https://smos-diss.eo.esa.int/oads/meta/L3_SIT_Open/index/
+    method: HTTPS / FTPS (ftps://smos-diss.eo.esa.int/), 월별 색인 파일 제공
+    note: 무료 ESA EO Sign In 계정으로 로그인해야 받을 수 있습니다. 2026-10-13 확인 시 2010-04~2026-10 월별 색인이 있습니다.
+  - name: AWI FTP — 해빙 산출물 루트
+    url: ftp://ftp.awi.de/sea_ice/product/
+    method: 익명 FTP
+    note: >-
+      계정 없이 접근할 수 있다고 AWI가 안내합니다. AWI 위키의 v3.3 퀵룩 경로(smos/v3.3/nh/)로 보아 smos/<버전>/<nh|sh> 구조로 보이지만, v3.6 폴더 경로는 공식 페이지에서 확인하지 못했으니 FTP 목록에서 직접 찾으세요.
+    login: false
+  - name: 브레멘대학 자료 서버 — SMOS·SMOS/SMAP 얇은 해빙 두께
+    url: https://data.seaice.uni-bremen.de/
+    method: HTTPS / 익명 FTP (data.seaice.uni-bremen.de, 사용자 anonymous)
+    note: smos/(SMOS 단독)와 smos_smap/(SMOS/SMAP 병합) 폴더에 있습니다. 하위 폴더 구성과 파일 형식은 공식 페이지에 안내가 없어 직접 확인해야 합니다.
+    login: false
+  - name: ESA Earth Online — SMOS L3 Sea Ice Thickness 카탈로그
+    url: https://earth.esa.int/eogateway/catalog/smos-l3-sea-ice-thickness
+    method: 웹 안내 (DOI, 제품 설명서·ATBD·읽어보기 문서)
+
+example:
+  lang: python
+  note: >-
+    AWI v3.6 북반구 일 파일(SMOS_Icethickness_v3.6_north_<날짜>.nc)을 열어, 읽어보기 문서가 권하는 기준(불확실성 1 m 초과, 포화 비율 95% 초과)으로 거른 뒤 오호츠크해 두께를 보는 예입니다.
+  code: |
+    import glob
+    import xarray as xr
+
+    f = sorted(glob.glob("SMOS_Icethickness_v3.6_north_*.nc"))[-1]
+    ds = xr.open_dataset(f).squeeze()
+
+    sit = ds["sea_ice_thickness"]                       # m, 일평균
+    ok = (ds["ice_thickness_uncertainty"] <= 1.0) & (ds["saturation_ratio"] <= 95) & (ds["land"] == 0)
+    sit = sit.where(ok)
+
+    # 오호츠크해 (대략 44–60°N, 135–160°E) — 위경도는 2차원 변수
+    box = (ds["latitude"] > 44) & (ds["latitude"] < 60) & (ds["longitude"] > 135) & (ds["longitude"] < 160)
+    print(str(ds["time"].values), "평균 얇은 얼음 두께(m):", float(sit.where(box).mean()))
+    print("RFI 비율 50% 넘는 격자 수:", int((ds["RFI_ratio"].where(box) > 50).sum()))
+
+tips:
+  - >-
+    같은 탭의 CS2SMOS(../cs2smos/)·CS3SMOS(../cs3smos/)는 이 SMOS L3 두께를 CryoSat-2(·Sentinel-3) 고도계 두께와 최적 내삽으로 합친 주간(7일) L4 자료입니다.
+    두께 전 범위를 한 장으로 보려면 병합 자료를, 결빙 초기의 하루 단위 변화나 얇은 얼음 자체를 보려면 이 일별 L3를 쓰세요. CS2SMOS v206은 SMOS v3.3, CS3SMOS v300은 v3.6을 입력으로 씁니다.
+  - >-
+    CryoSat-2 단독 두께(../cryosat2-sit/)는 대략 1 m 미만 얇은 얼음에서 상대오차가 크고, SMOS는 반대로 두꺼운 얼음에서 신호가 포화됩니다. AWI 제품 설명서는 약 1.5 m까지
+    두께 정보를 얻을 수 있다고 하지만, 최대 산출 가능 두께는 얼음 염도·온도에 따라 달라지므로 `saturation_ratio`가 95%를 넘는 값은 '그 이상 두꺼움'으로 해석하세요.
+  - >-
+    해빙 농도 100%를 가정하므로 바다가 섞인 격자(가장자리, 리드)는 두께가 낮게 나오고, 이 효과는 불확실성에도 들어 있지 않습니다. 오호츠크해처럼 농도가 낮은 계절 해빙역에서는
+    해빙 농도 자료(예 ../amsr2-asi/, ../osisaf-sic/)를 함께 보며 해석하세요.
+  - >-
+    북극에서는 전파 간섭(RFI)이 여전히 문제이며 특히 2023년 이후 러시아 연안(바렌츠·카라·랍테프해)에서 심합니다. `RFI_ratio`와 `nPair`로 관측이 적은 격자를 확인하세요. 남극에서는 RFI가 거의 없습니다.
+  - >-
+    v3.6은 그날 기상장 대신 ERA5 기후값을 쓰므로 보조 자료 서버 장애에는 강해졌지만 해마다 다른 기온·바람의 영향은 반영하지 못합니다. 이 차이는 평균 약 5 cm입니다.
+    v3.3으로 만든 결과와 섞지 말고, ESA 카탈로그 인용 문구가 아직 'Version 3.3'으로 되어 있어도 논문에는 실제로 쓴 판(파일 이름의 v3.6)을 적으세요.
+  - >-
+    남극 두께는 눈 처리에 북극식 매개변수를 쓰고 남반구 염도가 충분히 평가되지 않아 불확실성이 큽니다. 웨델해 빙산 A-23A(약 75.3°S, 37.3°W)가 비정상적으로 얇은 얼음으로 나타나는 문제도 아직 고쳐지지 않았습니다.
+  - >-
+    브레멘대학 판은 AWI 판과 알고리즘이 다릅니다(Huntemann et al. 2014의 경험적 방법, SMAP을 섞은 Paţilea et al. 2019). 브레멘대학은 SMOS 단독보다 RFI를 거른 판이나
+    SMOS/SMAP 병합판을 쓰라고 권하며, 해상도가 약 40 km라 그보다 넓은 얇은 얼음 구역만 제대로 잡힌다고 안내합니다. 두 기관 값을 한 시계열로 섞지 마세요.
+
+citations:
+  dataset:
+    - label: ESA SMOS Level 3 Sea Ice Thickness (ESA 카탈로그 DOI)
+      text: >-
+        European Space Agency, 2023, SMOS Level 3 Sea Ice Thickness, Version 3.3, https://doi.org/10.57780/sm1-5ebe10b
+      doi: 10.57780/sm1-5ebe10b
+      bibtex: |
+        @misc{esa_smos_l3_sit,
+          author    = {{European Space Agency}},
+          title     = {{SMOS} Level 3 Sea Ice Thickness, Version 3.3},
+          year      = {2023},
+          publisher = {European Space Agency},
+          doi       = {10.57780/sm1-5ebe10b}
+        }
+  papers:
+    - label: AWI SMOS 얇은 해빙 두께 알고리즘 (AWI 권장 인용)
+      text: >-
+        Tian-Kunze, X., Kaleschke, L., Maaß, N., Mäkynen, M., Serra, N., Drusch, M., and Krumpen, T. (2014): SMOS-derived thin sea ice thickness:
+        algorithm baseline, product specifications and initial verification. The Cryosphere, 8, 997–1018.
+      doi: 10.5194/tc-8-997-2014
+      bibtex: |
+        @article{tiankunze2014smos,
+          author  = {Tian-Kunze, Xiangshan and Kaleschke, Lars and Maa{\ss}, Nina and M{\"a}kynen, Marko and Serra, Nuno and Drusch, Matthias and Krumpen, Thomas},
+          title   = {{SMOS}-derived thin sea ice thickness: algorithm baseline, product specifications and initial verification},
+          journal = {The Cryosphere},
+          volume  = {8},
+          pages   = {997--1018},
+          year    = {2014},
+          doi     = {10.5194/tc-8-997-2014}
+        }
+    - label: 바렌츠해 운영 활용·검증 (AWI 권장 인용)
+      text: >-
+        Kaleschke, L., Tian-Kunze, X., Maaß, N., Beitsch, A., Wernecke, A., Miernecki, M., Müller, G., Fock, B. H., Gierisch, A. M. U., Schlünzen, K. H., et al. (2016):
+        SMOS sea ice product: Operational application and validation in the Barents Sea marginal ice zone. Remote Sensing of Environment, 180, 264–273.
+      doi: 10.1016/j.rse.2016.03.009
+    - label: 남극 얇은 해빙 두께 (남반구 자료 사용 시, AWI 권장 인용)
+      text: >-
+        Kaleschke, L., Tian-Kunze, X., Hendricks, S., and Ricker, R. (2024): SMOS-derived Antarctic thin sea ice thickness: data description and validation in the Weddell Sea.
+        Earth System Science Data, 16, 3149–3170.
+      doi: 10.5194/essd-16-3149-2024
+    - label: 브레멘대학 SMOS 판 방법
+      text: >-
+        Huntemann, M., Heygster, G., Kaleschke, L., Krumpen, T., Mäkynen, M., and Drusch, M. (2014): Empirical sea ice thickness retrieval during the freeze-up period
+        from SMOS high incident angle observations. The Cryosphere, 8, 439–451.
+      doi: 10.5194/tc-8-439-2014
+    - label: 브레멘대학 SMOS/SMAP 병합판 방법
+      text: >-
+        Paţilea, C., Heygster, G., Huntemann, M., and Spreen, G. (2019): Combined SMAP–SMOS thin sea ice thickness retrieval. The Cryosphere, 13, 675–691.
+      doi: 10.5194/tc-13-675-2019
+  acknowledgement: >-
+    AWI는 위 세 논문(Tian-Kunze et al. 2014, Kaleschke et al. 2016, 남극 자료는 Kaleschke et al. 2024)을 인용하고, "SMOS 해빙 두께 생산은 ESA 과제
+    SMOS & CryoSat-2 Sea Ice Data Product Processing and Dissemination Service의 지원을 받았으며, DATE~DATE 자료를 AWI에서 받았다"는 취지의 감사 문구를 넣도록 요청합니다.
+    정확한 영문 문구는 읽어보기 문서(ReadMe-first Technical Note)에서 복사하세요. 브레멘대학 판을 썼다면 Huntemann et al. (2014) 또는 Paţilea et al. (2019)을 인용합니다.
+
+notices:
+  - date: "2026-04-17"
+    level: info
+    title: 북극 2025/26 시즌 종료, L3 산출을 남반구로 전환
+    body: >-
+      AWI가 2026-04-15 북극 L3 SMOS 두께 처리·배포를 마치고, 같은 날부터 남반구 겨울 L3 자료를 제공한다고 알렸습니다. 결빙기만 만드는 자료의 정상적인 계절 전환이며,
+      2026/27 북극 시즌은 10-15 시작이 관례입니다(2026-10-13 현재 시작 공지 없음).
+    source: https://spaces.awi.de/spaces/CS2SMOS/blog/2026/04/17/624499172/The+L3+product+has+been+switched+from+the+Arctic+to+the+Antarctic.
+  - date: "2025-10-17"
+    level: warning
+    title: "2025/26 겨울부터 제품 버전 v3.3 → v3.6"
+    body: >-
+      2025-10-15 L3 SMOS 해빙 두께 처리·배포가 재개되면서 버전이 v3.3에서 v3.6으로 바뀌었습니다. 스와스 기반 처리, RFI 필터 개선, 보조 기상 자료를 ERA5 기후값으로 바꾼 것이 핵심이며
+      2010~2024년도 v3.6으로 재처리되었습니다. 파일 이름과 값이 달라지므로 다운로드 스크립트와 기존 분석을 점검하세요.
+    source: https://spaces.awi.de/spaces/CS2SMOS/blog/2025/10/17/595263548/L3+SMOS+sea+ice+thickness+processing+started+for+2025+26+winter+season.
+  - date: "2025-06-06"
+    level: info
+    title: "v3.3 생산 일시 중단(2025-06-02~) — v3.6은 영향 없음"
+    body: >-
+      보조 자료(JRA-3Q)를 내려받는 NSF NCAR 계산 시스템 점검으로 v3.3 생산이 6월 2일부터 멈췄습니다. ERA5 기후값을 쓰는 v3.6은 정상 생산되었고,
+      v3.3은 6월 6일 정상화되어 6월 3~5일 결측분을 다시 처리했습니다(2025-06-10 공지).
+    source: https://spaces.awi.de/spaces/CS2SMOS/blog/2025/06/06/565587944/Update+on+SMOS+L3+Sea+Ice+Thickness+Data+Production+v3.3
+  - date: "2025-02-06"
+    level: warning
+    title: "v3.3 생산 중단(2025-02-03~03-03) — 2월 4~16일 자료 결측"
+    body: >-
+      일본 기상청 JRA-3Q 자료 서버 중단으로 v3.3 L3와 이를 입력으로 쓰는 CS2SMOS v206 생산이 멈췄다가 2025-03-03 재개되었습니다. L3 v3.3은 2025-02-04~16 자료가 빠져 있습니다.
+      ERA5 기후값을 쓰는 새 판은 영향을 받지 않았습니다.
+    source: https://spaces.awi.de/spaces/CS2SMOS/blog/2025/02/06/543621383/SMOS+L3+v3.3+data+production+stopped+2025-02-03
+  - date: "2022-10-08"
+    level: info
+    title: "브레멘대학 SMOS/SMAP 얇은 해빙 두께 v300 공개"
+    body: >-
+      브레멘대학이 SMOS/SMAP 병합 얇은 해빙 두께 v300을 공개했습니다. 투영 정보 갱신, 격자 위치 어긋남 수정(NSIDC 북극 극 평사도 좌표에 맞춤), 2021년 9월 이후 SMAP 자료 누락 수정,
+      새 SMAP L1B 입력이 바뀐 점입니다. 2022-08-06~10-05에는 SMAP 자료가 없어 준실시간판이 SMOS만으로 만들어졌습니다.
+    source: https://seaice.uni-bremen.de/news-archive/
+
+transitions:
+  - from: SMOS L3 SIT v3.3
+    to: SMOS L3 SIT v3.6
+    status: completed
+    date: "2025-10"
+    summary: >-
+      AWI가 SMOS L3 해빙 두께를 스와스 단위로 먼저 계산하도록 바꾸고 RFI 필터와 보조 기상 자료를 개선한 판입니다. 2010~2024년 전체를 재처리했고,
+      2025-10-15 북극 시즌부터 운영판이 되었으며 남반구는 2026년 4월부터 v3.6으로 운영됩니다.
+    changes:
+      - aspect: 처리 단위
+        before: "일평균 밝기온도로 바로 두께 계산"
+        after: "스와스(L2, 내부용)에서 두께를 계산한 뒤 일평균. 밝기온도 평균 때 복사 분해능 가중(평균 약 0.3 K 차이)"
+      - aspect: RFI 필터
+        before: "v3.3 기준 필터"
+        after: "화소 단위 경계 플래그 추가, 300 K 문턱값은 입사각 0~40°·복사 정확도 5 K 미만일 때만 적용(평균 약 0.5 K 차이) — 북극 자료 범위 확대"
+      - aspect: 보조 기상 자료
+        before: "준실시간 JRA-55/JRA-3Q 재분석"
+        after: "ERA5 2010~2023년 기후값(2 m 기온, 10 m 풍속) — 두께 평균 약 5 cm 차이"
+      - aspect: 격자·배포
+        before: "12.5 km 극 평사도(EPSG:3413), NetCDF4"
+        after: "12.5 km 극 평사도(북 EPSG:3413, 남 EPSG:3976)와 EASE2를 만들지만 극 평사도판만 배포"
+      - aspect: 기간
+        before: "북극 2010-10~ (남반구 v3.3은 2024-04 운영 시작)"
+        after: "북극 2010-10-15~ 전 기간 재처리, 남반구 2010~ (v3.6 운영 2026-04~)"
+      - aspect: 파일 이름
+        before: "SMOS_Icethickness_v3.3_north_<날짜>.nc"
+        after: "SMOS_Icethickness_v3.6_north_<날짜>.nc / …_south_… (EASE2판은 끝에 _ease2)"
+      - aspect: 문서·인용
+        before: "PDD·읽어보기 문서 Issue 3.1 (2023-10-15)"
+        after: "PDD v5.0 (2025-04-24), 읽어보기 문서 Issue 4.0 (2025-10-15). ESA 카탈로그 DOI 10.57780/sm1-5ebe10b는 그대로(인용 문구는 Version 3.3 표기)"
+    impacts:
+      - v3.3과 v3.6을 한 시계열로 섞지 마세요. 전 기간이 v3.6으로 재처리되었으므로 2010년부터 다시 받는 것이 안전합니다.
+      - ERA5 기후값을 쓰면서 해마다 다른 기온·바람 영향이 빠졌습니다. 이상 기온이 있었던 겨울의 두께 변화를 해석할 때 이 한계를 고려하세요.
+      - CS2SMOS v206(SMOS v3.3 입력)과 CS3SMOS v300(SMOS v3.6 입력)의 차이에는 이 SMOS 판 교체도 들어 있습니다.
+    sources:
+      - name: AWI — SMOS Sea Ice Thickness 제품 페이지 (버전 이력, v3.6 개선점)
+        url: https://spaces.awi.de/spaces/CS2SMOS/pages/297634432/SMOS+Sea+Ice+Thickness
+      - name: AWI SMOS ReadMe-first Technical Note v4.0 (2025-10-15)
+        url: https://spaces.awi.de/download/attachments/297634432/%5BDT4-1%5D-AWI_ESA_SMOS_RM_TN_v4.0_20251015.pdf?version=1&modificationDate=1760948153123&api=v2
+      - name: AWI SMOS PDD v5.0 (2025-04-24)
+        url: https://spaces.awi.de/download/attachments/297634432/AWI_ESA_SMOS_PDD_v5.pdf?version=1&modificationDate=1760692666142&api=v2
+      - name: AWI 공지 — 2025/26 시즌 시작, v3.6 전환 (2025-10-17)
+        url: https://spaces.awi.de/spaces/CS2SMOS/blog/2025/10/17/595263548/L3+SMOS+sea+ice+thickness+processing+started+for+2025+26+winter+season.
+
+links:
+  - name: AWI — SMOS Sea Ice Thickness 제품 페이지 (버전 이력·문서)
+    url: https://spaces.awi.de/spaces/CS2SMOS/pages/297634432/SMOS+Sea+Ice+Thickness
+  - name: AWI CS2SMOS-PDS 위키 (운영 공지)
+    url: https://spaces.awi.de/spaces/CS2SMOS/overview
+  - name: ESA — SMOS L3 Sea Ice Thickness 카탈로그
+    url: https://earth.esa.int/eogateway/catalog/smos-l3-sea-ice-thickness
+  - name: 브레멘대학 — Thin Ice Thickness (SMOS, SMOS/SMAP)
+    url: https://seaice.uni-bremen.de/thin-ice-thickness/
+  - name: 이 사이트 — CS3SMOS 병합 해빙 두께 (SMOS v3.6 입력)
+    url: ../cs3smos/
+  - name: 이 사이트 — CS2SMOS 병합 해빙 두께 (SMOS v3.3 입력, 갱신 종료)
+    url: ../cs2smos/
+  - name: 이 사이트 — CryoSat-2 해빙 두께
+    url: ../cryosat2-sit/
+  - name: 이 사이트 — 브레멘대학 ASI AMSR2 해빙 농도
+    url: ../amsr2-asi/
+
+watch_urls:
+  - https://spaces.awi.de/spaces/CS2SMOS/overview
+  - https://seaice.uni-bremen.de/news-archive/
+  - https://earth.esa.int/eogateway/catalog/smos-l3-sea-ice-thickness
+
+last_verified: "2026-10-13"

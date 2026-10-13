@@ -1,0 +1,304 @@
+# ─────────────────────────────────────────────────────────────
+# ESA Sea Surface Salinity CCI (CCI+SSS) — 데이터셋 정보 파일
+# 위성 탭(해면 염분), 해양 탭(위성 관측 자료) 교차 수록. SMOS·Aquarius·SMAP L밴드 복사계 염분을 합친 L4 주간·월 염분장.
+# 2026-10-14 확인 시 공개 최신판은 v5.5(2010-01~2023-12, CEDA 2025-02-24 공개)이고, v6.3 기록은 CEDA에 미리보기(미공개) 상태로만 있습니다.
+# 같은 페이지 안 버전 변경(v4.41 → v5.5)은 transitions(to_id 없음)에 적었습니다.
+# 수정 후에는 공식 페이지에서 확인한 날짜로 last_verified 를 갱신하세요.
+# ─────────────────────────────────────────────────────────────
+id: esa-cci-sss
+name: ESA SSS CCI v5.5
+full_name: >-
+  ESA Sea Surface Salinity Climate Change Initiative (Sea_Surface_Salinity_cci) — Weekly and monthly sea surface salinity products from L-band, v5.5
+  (SMOS·Aquarius·SMAP 병합 L4 해면 염분 기후자료, CEDA 배포)
+category: satellite
+domain: satellite
+group: 해면 염분
+order: 30
+also_in:
+  - domain: ocean
+    group: 위성 관측 자료
+domains: [해양, 원격탐사]
+provider: >-
+  ESA Climate Change Initiative 해면 염분 과제(CCI+SSS, 과학 책임 LOCEAN, 과제 관리 ARGANS) / CEDA(영국 NERC 환경자료분석센터) 보관·배포
+
+status: active
+status_note: >-
+  과제는 CCI+ 2단계로 이어지고 있으며, 공개된 최신판은 v5.5(2010-01~2023-12)로 CEDA에 2025-02-24 올라왔습니다. CCI 자료는 버전 단위로 재처리해 내는 기후자료라
+  정기 갱신은 없고(CEDA 'Not Planned'), 2026-10-14 확인 시에도 v5.5 파일은 2023-12-30(주간)·2023-12-15(월)이 마지막입니다.
+  CEDA에는 다음 판 v6.3(2010~2023) 기록이 '미리보기(PREVIEW ONLY)' 상태로만 있고 내려받을 수 없습니다. 2026-05 염분 학회 포스터는 CCI+SSS v6 기반 C3S 염분 기후자료(2010~2024)와
+  2025년 이후 준실시간 연장(ICDR)을 준비 중이라고 밝혔으나 공개 일정은 확정 공지되지 않았습니다.
+
+period:
+  start: "2010-01"
+  end: "2023-12"
+  note: >-
+    CEDA 기록 기준 2010-01-01~2023-12-30입니다. 실제 파일은 전지구 월자료가 20100115~20231215, 주간 자료는 2023-12-30이 마지막이며,
+    극역 주간 자료는 남반구 2010-01-02·북반구 2010-01-09부터입니다. 입력 위성은 SMOS(2010~), Aquarius(2011-08~2015-06), SMAP(2015-04~)입니다(v4.41 PUG 기준).
+    2010년 1~5월은 SMOS 시험 운용(commissioning) 기간 자료로 만들어졌고, PUG는 SMAP이 들어온 2015년 이후 품질이 전반적으로 더 낫다고 적고 있습니다.
+
+resolution:
+  spatial_short: "50 km (0.25°)"
+  temporal_short: "7일"
+  spatial: >-
+    유효 해상도 50 km. 전지구 0.25° 정규 위경도 격자(위도 720 × 경도 1440, 격자 중심 89.875°S~89.875°N, 179.875°W~179.875°E) /
+    극역 25 km EASE-2 격자(북반구 45°N 이북, 남반구 45°S 이남, 별도 파일)
+  vertical: 해면 단일층 — L밴드 복사계가 감지하는 표층 약 1 cm의 염분
+  temporal: >-
+    주간 — 7일 이동평균을 하루 간격으로 제공(파일 하루 1개) / 월 — 1개월 평균을 매월 1일·15일 중심으로 두 번 제공(15일 간격).
+    두 제품 모두 가우스 자기상관 함수로 가중한 이동평균입니다
+
+coverage:
+  short: 전지구
+  note: "전지구 해양. 해빙 주변과 연안은 육지·해빙 오염 플래그(lsc_qc, isc_qc)로 표시되며, 극역 EASE-2 파일은 위도 45° 바깥만 담습니다"
+update: "버전 단위 재처리, 정기 갱신 없음(CEDA 'Not Planned'). v3.21(2021-10), v4.41(2024-02), v5.5(2025-02) 순으로 기간을 1~2년씩 늘려 왔습니다"
+license: >-
+  ESA CCI Salinity 이용 조건 — 누구나 어떤 목적으로든 쓸 수 있으나, 발표·논문에 ESA Climate Change Initiative와 Sea Surface Salinity CCI 과제를 밝히고
+  데이터셋 DOI를 인용해야 합니다. 파일 속성에는 "ESA CCI Data Policy: free and open access"로 적혀 있습니다
+account_required: false
+
+summary: >-
+  ESA 기후변화 이니셔티브(CCI)가 SMOS(ESA), Aquarius·SMAP(NASA) 세 L밴드 복사계 위성의 해면 염분을 상호 보정해 하나로 합친 Level 4 기후자료입니다.
+  위성마다 다른 편향을 맞추고, 화소마다 장기 평균을 현장 관측 기반 ISAS 염분 분석장의 장기 평균에 맞춘 뒤, 50 km 해상도의 주간(7일 이동평균, 매일)·월(15일 간격) 염분장을
+  0.25° 전지구 격자와 25 km 극역 EASE-2 격자로 제공합니다. 모든 값에 무작위 오차 추정치와 품질 플래그가 붙고,
+  v5.5는 SMOS 유전율 모형 교체, SMAP RSS v5.3 입력, 전지구 전파 간섭(RFI) 완화로 2010~2023년을 다시 만든 판입니다.
+
+time_convention:
+  summary: >-
+    파일 이름의 날짜는 평균 창의 가운데 날짜입니다. 주간 파일(…_7DAY_RUNNINGMEAN_DAILY_…-YYYYMMDD-…)은 그 날짜를 가운데에 둔 약 7일(파일 속성 P7D) 평균이고,
+    월 파일(…_Monthly_CENTRED_15Day_…)은 매월 1일과 15일을 가운데에 둔 1개월(P1M) 평균입니다. 평균은 가우스 가중이라 창 밖의 관측도 작은 가중치로 들어갑니다.
+  points:
+    - "예를 들어 주간 파일 20231230의 time_coverage는 2023-12-26 00:00~2024-01-02 23:59 UTC, 월 파일 20230115는 2023-01-01~2023-01-30, 월 파일 20230101은 2022-12-18~2023-01-16입니다."
+    - "그 달 달력 월평균에 가장 가까운 것은 매월 15일 파일입니다. 1일 파일은 앞뒤 두 달에 걸친 평균이라 15일 파일과 기간이 절반쯤 겹칩니다."
+    - "주간 자료는 날마다 하나씩 나오지만 이웃한 파일끼리 6일 이상 겹치는 이동평균이라 서로 독립이 아닙니다. 주간 시계열이 필요하면 7일 간격으로 골라 쓰세요."
+    - "time 단위는 'days since 1970-01-01 00:00:00 UTC'입니다."
+    - "total_nobs·noutliers는 그 평균 창 안의 위성 염분 관측 수입니다. PUG는 관측 수 값이 참고용(indicative)일 뿐이라고 적고 있습니다."
+  source: https://climate.esa.int/documents/2489/SSS_cci_PHASE02_D4.3-PUG-v4.1_final_signed.pdf
+  source_name: SSS CCI Product User Guide (D4.3 PUG v4.1) + CEDA v5.5 파일 속성(time_coverage_start·end)
+
+variables:
+  note: >-
+    변수 이름은 CEDA v5.5 기록과 PUG의 ncdump 기준입니다. 주간·월 파일에 같은 변수가 들어 있습니다. 염분 단위 속성은 "0.001"(실용 염분 척도 값, 대략 30~38)이고,
+    품질 플래그는 0이 좋음, 1이 나쁨입니다.
+  full_list: https://catalogue.ceda.ac.uk/uuid/4321d9b540fe48f8943179aa3ef06c79/
+  groups:
+    - name: 주간 (7일 이동평균, 매일)
+      kind: mean
+      period: 7일
+      items:
+        - text: "해면 염분(편향 보정 병합) — `sss` (0.001)"
+          note: Unbiased merged Sea Surface Salinity. CF standard_name sea_surface_salinity
+        - text: "염분 무작위 오차 — `sss_random_error` (0.001)"
+          std: []
+        - text: "산출물이 설명하지 못할 것으로 예상되는 변동 비율 — `pct_var` (%)"
+          std: []
+        - text: "평균 창 안의 관측 수 — `total_nobs` (개)"
+          kind: accum
+          std: []
+        - text: "평균 창 안의 이상값 수 — `noutliers` (개)"
+          kind: accum
+          std: []
+        - text: "종합 품질 플래그 — `sss_qc` (0 좋음, 1 나쁨)"
+          std: []
+        - text: "육지 오염 플래그 — `lsc_qc` (0 좋음, 1 나쁨)"
+          std: []
+        - text: "해빙 오염 플래그 — `isc_qc` (0 좋음, 1 나쁨)"
+          std: []
+    - name: 월 (매월 1일·15일 중심)
+      kind: mean
+      period: 월
+      items:
+        - text: "해면 염분(편향 보정 병합) — `sss` (0.001)"
+          note: 주간 파일과 같은 변수 구성
+        - text: "염분 무작위 오차 — `sss_random_error` (0.001)"
+          std: []
+        - text: "품질·관측 정보 — `pct_var`·`total_nobs`·`noutliers`·`sss_qc`·`lsc_qc`·`isc_qc`"
+          note: 주간 파일과 같은 정의
+          std: []
+
+access:
+  - name: CEDA Archive — SSS CCI v5.5 모음 (HTTPS·FTP·OPeNDAP)
+    url: https://catalogue.ceda.ac.uk/uuid/7294d93479654c139770f13fae4142d1/
+    login: false
+    method: HTTPS 직접 다운로드 / 익명 FTP(anon-ftp.ceda.ac.uk) / OPeNDAP (netCDF)
+    note: >-
+      로그인 없이 받을 수 있습니다. 경로는 https://data.ceda.ac.uk/neodc/esacci/sea_surface_salinity/data/v05.5/ 아래 GLOBALv5.5(0.25°), NHv5.5·SHv5.5(25 km EASE-2)이고,
+      각각 7days(주간)·30days(월) 폴더에 연도별로 나뉩니다. 예 GLOBALv5.5/30days/2023/ESACCI-SEASURFACESALINITY-L4-SSS-GLOBAL-MERGED_OI_Monthly_CENTRED_15Day_0.25deg-20230115-fv5.5.nc
+  - name: CCI THREDDS 서버 (OPeNDAP·카탈로그)
+    url: https://data.cci.ceda.ac.uk/thredds/catalog/esacci/sea_surface_salinity/data/catalog.html
+    login: false
+    method: OPeNDAP / HTTP (v05.5, v04.41, v03.21, v02.31, v01.8 폴더)
+    note: 파일을 받지 않고 xarray 등으로 원하는 영역만 읽을 수 있습니다. OPeNDAP 주소는 catalog를 dodsC로 바꾼 형태입니다(아래 예제 참고).
+
+example:
+  lang: python
+  note: "CCI THREDDS의 OPeNDAP으로 로그인 없이 월 파일 하나를 읽어 한반도 주변을 자르는 예입니다. 플래그 세 개를 모두 0으로 거르는 것은 보수적인 선택의 예입니다."
+  code: |
+    # pip install xarray netCDF4
+    import xarray as xr
+
+    base = ("https://data.cci.ceda.ac.uk/thredds/dodsC/esacci/sea_surface_salinity/"
+            "data/v05.5/GLOBALv5.5/30days/2023/")
+    fn = "ESACCI-SEASURFACESALINITY-L4-SSS-GLOBAL-MERGED_OI_Monthly_CENTRED_15Day_0.25deg-20230815-fv5.5.nc"
+    ds = xr.open_dataset(base + fn).sortby("lat")
+
+    good = (ds["sss_qc"] == 0) & (ds["lsc_qc"] == 0) & (ds["isc_qc"] == 0)
+    sss = ds["sss"].where(good)
+    sub = sss.sel(lat=slice(25, 45), lon=slice(115, 145))   # 황해·동중국해·동해
+    print(float(sub.mean()), int(sub.count()))
+
+tips:
+  - >-
+    L밴드 위성 염분은 표층 약 1 cm의 값입니다. 보통 상층 몇 m를 대표하지만, 비가 온 직후 몇 시간이나 하천 유출수처럼 성층이 강한 곳에서는
+    수 m 깊이의 Argo·선박 관측보다 낮게(싱겁게) 나올 수 있다고 PUG가 설명합니다.
+  - >-
+    화소마다 장기 평균을 ISAS(Argo 기반 현장 염분 분석장)의 장기 평균에 맞춘 자료입니다. 시간 변동은 위성에서 오지만 평균값 자체는 현장 관측에 묶여 있으므로,
+    Argo·ISAS 평균장과 비교해 '독립 검증'했다고 말하기는 어렵습니다.
+  - >-
+    연안과 하천 플룸 해역은 Argo 대비 강건 표준편차가 0.4 pss를 넘는다고 PVIR이 보고합니다. 황해·동중국해처럼 육지에 가깝고 창장(양쯔강) 유출수 영향이 큰 바다에서는
+    lsc_qc를 꼭 확인하고 정량 분석은 조심하세요.
+  - "북반구에는 계절에 따라 변하는 편향(첨두 간 0.05 pss 미만)이 남아 있다고 파일 속성과 PVIR이 밝힙니다. 북반구 중고위도의 계절 진폭을 다룰 때 이 크기를 염두에 두세요."
+  - "월평균이 필요하면 매월 15일 파일을 쓰세요. 1일 파일까지 함께 평균하면 이웃 달이 섞입니다. 주간 자료도 이웃한 날끼리 겹치는 이동평균이라 통계 자유도를 셀 때 주의하세요."
+  - "극역 25 km EASE-2 파일은 전지구 산출물을 최근접 보간으로 옮긴 것이라고 PUG(v4.1)가 설명합니다. 격자가 촘촘해도 유효 해상도는 50 km 그대로입니다."
+  - >-
+    v4.41 이전 판과 v5.5를 한 시계열로 섞지 마세요. v5.5에서 2010년 과소 추정과 2015년 4~8월 북대서양 SMAP 관련 오류가 고쳐졌고, SMOS 유전율 모형과 SMAP 입력판이 바뀌었습니다.
+  - "바렌츠해처럼 수온 4°C 미만인 고위도 해역은 유전율 모형 오차나 해빙 오염 때문에 분산이 커진다고 PVIR이 보고합니다. 극해 분석에는 isc_qc와 sss_random_error를 함께 보세요."
+
+citations:
+  dataset:
+    - label: CEDA SSS CCI v5.5 (주간·월 모음)
+      text: >-
+        Boutin, J.; Vergely, J.-L.; Reul, N.; Catany, R.; Jouanno, J.; Martin, A.; Rouffi, F.; Bertino, L.; Bonjean, F.; Corato, G.; Gévaudan, M.; Guimbard, S.;
+        Khvorostyanov, D.; Kolodziejczyk, N.; Matthews, M.; Olivier, L.; Raj, R.; Rémy, E.; Reverdin, G.; Supply, A.; Thouvenin-Masson, C.; Vialard, J.; Sabia, R.;
+        Mecklenburg, S. (2025): ESA Sea Surface Salinity Climate Change Initiative (Sea_Surface_Salinity_cci): Weekly and monthly sea surface salinity products from L-band, v5.5.
+        NERC EDS Centre for Environmental Data Analysis, 03 March 2025. doi:10.5285/7294d93479654c139770f13fae4142d1
+      doi: 10.5285/7294d93479654c139770f13fae4142d1
+      bibtex: |
+        @misc{ssscci_v55,
+          author    = {Boutin, J. and Vergely, J.-L. and Reul, N. and Catany, R. and Jouanno, J. and Martin, A. and Rouffi, F. and Bertino, L. and Bonjean, F. and Corato, G. and G{\'e}vaudan, M. and Guimbard, S. and Khvorostyanov, D. and Kolodziejczyk, N. and Matthews, M. and Olivier, L. and Raj, R. and R{\'e}my, E. and Reverdin, G. and Supply, A. and Thouvenin-Masson, C. and Vialard, J. and Sabia, R. and Mecklenburg, S.},
+          title     = {{ESA} Sea Surface Salinity Climate Change Initiative ({Sea\_Surface\_Salinity\_cci}): Weekly and monthly sea surface salinity products from L-band, v5.5},
+          year      = {2025},
+          publisher = {NERC EDS Centre for Environmental Data Analysis},
+          doi       = {10.5285/7294d93479654c139770f13fae4142d1}
+        }
+    - label: 이전 판 v04.41 (2010~2022)
+      text: >-
+        Boutin, J. et al. (2024): ESA Sea Surface Salinity Climate Change Initiative (Sea_Surface_Salinity_cci): Weekly and monthly sea surface salinity products, v04.41, for 2010 to 2022.
+        NERC EDS Centre for Environmental Data Analysis, 16 February 2024. doi:10.5285/f2ca631f29a24c47a7e98654ddf2c7d9
+      doi: 10.5285/f2ca631f29a24c47a7e98654ddf2c7d9
+  papers:
+    - label: CCI 염분 자료 설명 논문 (CEDA·PUG 권장)
+      text: >-
+        Boutin, J., Reul, N., Koehler, J., Martin, A., Catany, R., Guimbard, S., Rouffi, F., Vergely, J. L., Arias, M., Chakroun, M., Corato, G., Estella-Perez, V., Hasson, A.,
+        Josey, S., Khvorostyanov, D., Kolodziejczyk, N., Mignot, J., Olivier, L., Reverdin, G., Stammer, D., Supply, A., Thouvenin-Masson, C., Turiel, A., Vialard, J.,
+        Cipollini, P., Donlon, C., Sabia, R., Mecklenburg, S. (2021): Satellite-Based Sea Surface Salinity Designed for Ocean and Climate Studies.
+        Journal of Geophysical Research: Oceans, 126(11), e2021JC017676.
+      doi: 10.1029/2021JC017676
+      bibtex: |
+        @article{boutin2021sss,
+          author  = {Boutin, J. and Reul, N. and Koehler, J. and Martin, A. and Catany, R. and Guimbard, S. and Rouffi, F. and Vergely, J. L. and Arias, M. and Chakroun, M. and Corato, G. and Estella-Perez, V. and Hasson, A. and Josey, S. and Khvorostyanov, D. and Kolodziejczyk, N. and Mignot, J. and Olivier, L. and Reverdin, G. and Stammer, D. and Supply, A. and Thouvenin-Masson, C. and Turiel, A. and Vialard, J. and Cipollini, P. and Donlon, C. and Sabia, R. and Mecklenburg, S.},
+          title   = {Satellite-Based Sea Surface Salinity Designed for Ocean and Climate Studies},
+          journal = {Journal of Geophysical Research: Oceans},
+          volume  = {126},
+          number  = {11},
+          pages   = {e2021JC017676},
+          year    = {2021},
+          doi     = {10.1029/2021JC017676}
+        }
+  acknowledgement: >-
+    ESA CCI Salinity 이용 조건은 발표·논문에서 ESA Climate Change Initiative와 Sea Surface Salinity CCI 과제(및 자료 제공자)를 밝히고 데이터셋 DOI를 인용하라고 요구합니다.
+    자료를 쓴 보고서·논문 사본을 CCI 쪽에 보내 주고, CCI 자료가 연구의 중심이면 공저자 제안을 고려해 달라고도 부탁합니다.
+
+notices:
+  - date: "2025-11-30"
+    level: info
+    title: CEDA v5.5 자료 다운로드 복구
+    body: >-
+      CEDA가 2025-11-20부터 SSS CCI v5.5 데이터셋(전지구·극역, 주간·월)을 일시적으로 받을 수 없게 했다가 2025-11-30 온라인 접근을 복구했다고 각 기록에 알렸습니다.
+    source: https://catalogue.ceda.ac.uk/uuid/4321d9b540fe48f8943179aa3ef06c79/
+  - date: "2025-03-03"
+    level: info
+    title: SSS CCI v5.5 공개 (2010~2023)
+    body: >-
+      v4.41보다 1년 늘어난 v5.5가 CEDA에 공개되었습니다(개별 데이터셋 2025-02-24, 모음 DOI 2025-03-03). SMOS L2 염분을 새 유전율 모형으로 재처리하고 SMAP v5.3을 쓰며,
+      SMOS 전파 간섭(RFI) 완화를 전지구로 넓히고 65°N 이북 절대 보정을 개선했습니다. 2010년 과소 추정과 SMAP v5.0의 4~8월 문제도 해결되었다고 ESA는 밝혔습니다.
+    source: https://climate.esa.int/en/news-events/Sea-Surface-Salinity-Record-Extended/
+  - date: "2024-03-20"
+    level: info
+    title: SSS CCI v4.41 공개 (2010~2022)
+    body: >-
+      기간을 2년 늘리고 계절 편향 보정, 고위도 안정성, 극역 관측 범위를 개선한 v4.41이 공개되었습니다(CEDA 공개 2024-02-16). 주간·월 산출물을 0.25° 전지구 격자와 25 km 극역 EASE 격자로 제공합니다.
+    source: https://climate.esa.int/en/news-events/new-sea-surface-salinity-record-released/
+  - date: "2021-10-08"
+    level: info
+    title: SSS CCI v3.21 공개 (2010~2020)
+    body: v3.21 주간·월 염분 산출물이 CEDA에 공개되었습니다. 이후 v04.41(2024-02-16)로 대체되었습니다.
+    source: https://catalogue.ceda.ac.uk/uuid/5920a2c77e3c45339477acd31ce62c3c
+
+transitions:
+  - from: SSS CCI v4.41
+    to: SSS CCI v5.5
+    status: completed
+    date: "2025-02"
+    summary: >-
+      기간을 2023년까지 1년 늘리고 SMOS 재처리(새 유전율 모형)·SMAP 입력판 교체·전지구 RFI 완화를 반영한 판입니다.
+      v4.41의 2010년 과소 추정과 2015년 4~8월 북대서양 고염 오류가 고쳐졌고, 북반구 계절 편향도 줄었습니다.
+    changes:
+      - aspect: 기간
+        before: "2010-01~2022 (CEDA 공개 2024-02-16)"
+        after: "2010-01~2023-12 (CEDA 공개 2025-02-24)"
+      - aspect: SMOS 입력
+        before: ESA L2OS v700 재처리
+        after: "CCI 자체 L2OS 재처리(DPGS L1C v7 기반), 새 유전율 모형, RFI 완화 전지구 확대"
+      - aspect: SMAP 입력
+        before: RSS L2 v5.0
+        after: RSS L2 v5.3
+      - aspect: 알려진 오류
+        before: "2010년 약 0.1 pss 과소 추정(SMOS 시험 운용기), 2015년 4~8월 북대서양 0.2 pss 이상 고염(SMAP v5.0)"
+        after: 두 문제 해결(PVIR v5.1)
+      - aspect: 북반구 계절 편향
+        before: 0.1 pss 미만
+        after: 0.05 pss 미만(첨두 간)
+      - aspect: 고위도 절대 보정
+        before: v4 방식
+        after: 65°N 이북 절대 보정 개선
+      - aspect: 데이터셋 DOI
+        before: 10.5285/f2ca631f29a24c47a7e98654ddf2c7d9
+        after: 10.5285/7294d93479654c139770f13fae4142d1
+    impacts:
+      - 두 판을 한 시계열로 이어 붙이지 말고 전체 기간을 v5.5로 다시 받으세요. 특히 2010년과 2015년 북대서양 값이 다릅니다.
+      - Argo와의 전체 비교 성능은 비슷하지만 연안·고염 해역은 v5.5가 낫고, 5°C 미만 저수온 해역은 약간 나빠졌다고 PVIR이 보고합니다.
+      - 인용 DOI가 바뀌었습니다. CEDA 경로도 v04.41에서 v05.5 폴더로 바뀝니다.
+    sources:
+      - name: ESA CCI — Sea Surface Salinity Record Extended (v5.5)
+        url: https://climate.esa.int/en/news-events/Sea-Surface-Salinity-Record-Extended/
+      - name: SSS CCI PVIR v5.1 (2025-02-25)
+        url: https://climate.esa.int/documents/2953/SSS_cci_PHASE02_D4.1_PVIR_v5.1.pdf
+      - name: SSS CCI PUG v4.1 (v4.41 알려진 문제)
+        url: https://climate.esa.int/documents/2489/SSS_cci_PHASE02_D4.3-PUG-v4.1_final_signed.pdf
+
+links:
+  - name: ESA CCI 해면 염분 과제 페이지
+    url: https://climate.esa.int/en/projects/sea-surface-salinity/
+  - name: CEDA — SSS CCI v5.5 모음
+    url: https://catalogue.ceda.ac.uk/uuid/7294d93479654c139770f13fae4142d1/
+  - name: CEDA — SSS CCI 전체 데이터셋 목록 (버전별)
+    url: https://catalogue.ceda.ac.uk/record/party/4414/
+  - name: SSS CCI 제품 사용자 안내서 (PUG v4.1, PDF)
+    url: https://climate.esa.int/documents/2489/SSS_cci_PHASE02_D4.3-PUG-v4.1_final_signed.pdf
+  - name: SSS CCI 검증 보고서 (PVIR v5.1, v5.5 검증, PDF)
+    url: https://climate.esa.int/documents/2953/SSS_cci_PHASE02_D4.1_PVIR_v5.1.pdf
+  - name: ESA CCI Salinity 이용 조건 (PDF)
+    url: https://artefacts.ceda.ac.uk/licences/specific_licences/esacci_salinity_terms_and_conditions.pdf
+  - name: C3S 해면 염분 기후자료 준비 포스터 (2026-05)
+    url: https://salinity.oceansciences.org/documents-more.htm?id=1509
+  - name: 이 사이트 — SMAP 해면 염분 (CCI 입력 위성)
+    url: ../smap-sss/
+  - name: 이 사이트 — SMOS 해면 염분 (CCI 입력 위성)
+    url: ../smos-sss/
+
+watch_urls:
+  - https://catalogue.ceda.ac.uk/record/party/4414/
+  - https://climate.esa.int/en/news-events/?project=18
+  - https://catalogue.ceda.ac.uk/uuid/7294d93479654c139770f13fae4142d1/
+
+last_verified: "2026-10-14"

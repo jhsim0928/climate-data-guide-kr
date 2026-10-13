@@ -1,0 +1,332 @@
+# ─────────────────────────────────────────────────────────────
+# 브레멘대학 ASI 해빙 농도 (AMSR-E/AMSR2, v5.4) — 데이터셋 정보 파일
+# 위성 탭(해빙), 해빙 탭(위성 관측 자료) 교차 수록. 89 GHz 채널을 쓰는 ASI 알고리즘으로 만든 6.25 km 일별 해빙 농도(준실시간).
+# 2026-10-13 확인 시 AMSR2 v5.4 일 파일은 2026-10-12분까지 올라와 있고, 서버에 AMSR3 기반 예비(preliminary) 폴더(amsr3/)가 새로 생겼습니다.
+# 수정 후에는 공식 페이지에서 확인한 날짜로 last_verified 를 갱신하세요.
+# ─────────────────────────────────────────────────────────────
+id: amsr2-asi
+name: "ASI AMSR2 (브레멘대학)"
+full_name: University of Bremen ASI (ARTIST Sea Ice) Sea Ice Concentration from AMSR-E/AMSR2, version 5.4 (브레멘대학 89 GHz 기반 고해상도 해빙 농도)
+category: satellite
+domain: satellite
+group: 해빙
+order: 25
+also_in:
+  - domain: seaice
+    group: 위성 관측 자료
+domains: [해빙, 원격탐사]
+provider: 독일 브레멘대학 환경물리연구소(IUP) 극지원격탐사 그룹 — 원자료 JAXA GCOM-W1 AMSR2(이전 NASA Aqua AMSR-E)
+
+status: active
+status_note: >-
+  준실시간 생산이 계속되고 있습니다. 2026-10-13 확인 시 북극(n6250)·남극(s6250) v5.4 netCDF가 2026-10-12분까지 올라와 있고, 보통 다음 날 아침(서버 표시 시각 06시 무렵) 게시됩니다.
+  다만 입력 위성 GCOM-W(2012년 발사)는 JAXA가 '후기 운용 단계'로 분류하고 있고, 2026년 9월부터 AMSR2 표준 자료 제공 방식이 바뀌었으며(제공 횟수 축소, 일부 장면 불완전),
+  브레멘대학은 후속 센서 GOSAT-GW AMSR3로 만든 예비 ASI 산출물을 amsr3/ 폴더에 올리기 시작했습니다. AMSR3 판으로의 공식 전환 일정은 아직 공지되지 않았습니다.
+
+period:
+  start: "2002-06"
+  end: present
+  note: >-
+    v5.4 기록은 AMSR-E 2002-06~2011-09, AMSR2 2012-07~현재입니다(2011-10~2012-07은 두 센서 사이 공백). 2018년에 AMSR-E·AMSR2 전 기간을 같은 설정으로 재처리해 v5.4가 되었고,
+    그 이전 준실시간 자료는 v5.3(2017-05-02부터)·v5.2입니다. PANGAEA에 묶어 올린 연도별 자료는 AMSR2가 2019년까지이고, 그 뒤는 브레멘대학 서버에서 받습니다.
+
+resolution:
+  spatial_short: "6.25 km (0.06°)"
+  temporal_short: "1일"
+  spatial: >-
+    NSIDC 극 평사도법 격자 — 북극 n6250 6.25 km(EPSG:3411, 기준위도 70°N, 1216×1792), 남극 s6250 6.25 km(EPSG:3412, 기준위도 70°S, 1264×1328).
+    해역별 지도용 3.125 km 격자(n3125·s3125, Arctic3125 등)도 있으나 v5.4로 재처리되지 않았습니다. 89 GHz 채널 관측 지점 크기는 약 6×4 km²입니다
+  vertical: 해당 없음 (지표면 자료)
+  temporal: 일 격자(UTC 달력일 하루 동안의 모든 궤도를 합침) / 궤도별 스와스 자료(반궤도 파일)
+
+coverage:
+  short: 양극
+  note: "북극·남극 각각의 극 평사도 격자. 해안에서 약 20 km 안쪽은 육지 오염으로 거짓 농도가 생길 수 있음"
+update: 매일(준실시간). 2026-10 기준 하루치 파일이 다음 날 아침(서버 표시 시각 06시 무렵)에 게시됨. 해역별 3.125 km 지도·PNG도 같은 시각 갱신
+license: >-
+  PANGAEA에 올린 AMSR2 v5.4 연도별 자료는 CC BY 4.0(AMSR-E 북극 자료는 CC BY-SA 4.0). 브레멘대학 서버 자료는 별도 라이선스 표기 없이
+  '책임을 지지 않는 연구용 산출물'로 공개되며, 논문에 쓰면 알고리즘 논문을 인용하고 출처를 밝혀 달라고 요청합니다
+account_required: false
+
+summary: >-
+  브레멘대학이 AMSR-E·AMSR2의 89 GHz 편광차를 이용하는 ASI(ARTIST Sea Ice) 알고리즘으로 만든 북극·남극 일별 해빙 농도입니다.
+  25 km 격자인 NOAA/NSIDC CDR나 OSI SAF 기후자료보다 네 배 촘촘한 6.25 km 격자로, 해빙 가장자리·폴리냐·수로 같은 작은 구조를 보는 데 강점이 있습니다.
+  매일 아침 갱신되는 준실시간 자료라 쇄빙선 운항, 현장 관측 계획, 일기도 같은 업무에 널리 쓰이며, HDF4·GeoTIFF·netCDF·PNG 지도로 로그인 없이 받을 수 있습니다.
+  다만 기후자료(CDR)로 설계된 것은 아니어서 장기 추세 분석에는 25 km 기후자료와 함께 비교해 쓰는 것이 좋습니다.
+
+time_convention:
+  summary: >-
+    일 격자 파일은 UTC 기준 하루(달력일) 동안 지나간 모든 궤도의 관측을 격자에 모아 계산한 하루 대표값입니다(같은 서버의 격자 밝기온도 안내는 하루 약 14회 궤도를 합친다고 설명).
+    특정 시각의 순간값이 아니며, 궤도별 스와스 파일만 관측 시각이 붙은 순간값입니다.
+  points:
+    - "파일 이름의 날짜(예 asi-AMSR2-n6250-20261012-v5.4.nc)는 UTC 달력일입니다. 한국 시간 기준 하루와는 9시간 어긋납니다."
+    - "위성이 하루에 여러 번 지나가는 고위도에서는 한 격자 값에 그날 여러 시각의 관측이 함께 들어갑니다."
+    - "스와스 자료(swath/asiYYYYMMDD/ 폴더, 예 GW1AM2-20200101-073D-asi.nc)는 반궤도마다 파일 하나이고, 주사선별 관측 시각이 `Scan_Time`(1992-01-01 00:00 UTC 기준 초)에 들어 있습니다."
+  source: https://data.seaice.uni-bremen.de/amsr2/ASIuserguide.pdf
+  source_name: ASI Version 5 Sea Ice Concentration User Guide (V0.9.4, 2024-08-09) / 스와스 자료 읽어보기(Readme_AMSR_ASI_swath.txt)
+
+variables:
+  note: >-
+    사용자 안내서는 일 파일에 '해빙 농도 2차원 장 하나(%)'가 들어 있다고만 적고 netCDF 안의 변수 이름은 밝히지 않아, 이름은 적지 않았습니다(xarray로 열어 확인하세요).
+    자료 보관 페이지 안내에 따르면 농도는 0~100으로 저장되고 육지·결측은 120입니다(옛 파일은 농도 0~200, 육지·결측 255). HDF4 파일의 위경도는 grid_coordinates/ 폴더에 따로 있습니다.
+  full_list: https://data.seaice.uni-bremen.de/amsr2/ASIuserguide.pdf
+  groups:
+    - name: 일 격자 (n6250·s6250, HDF4·GeoTIFF·netCDF)
+      kind: mean
+      period: 일
+      items:
+        - text: "해빙 농도 (%)"
+          note: UTC 하루 동안의 모든 궤도로 만든 하루 대표값. 0~100, 육지·결측 120
+    - name: 궤도별 스와스 (swath, netCDF)
+      kind: instant
+      items:
+        - text: "해빙 농도 — A·B 주사 배열 (%)"
+          note: 89 GHz A·B 두 주사선(약 5 km 간격) 각각의 관측 지점 값. 위경도 배열이 함께 들어 있음
+        - text: "주사선 관측 시각 — `Scan_Time` (s, 1992-01-01 00:00 UTC 기준)"
+          std: []
+
+access:
+  - name: 브레멘대학 자료 서버 (HTTPS)
+    url: https://data.seaice.uni-bremen.de/amsr2/asi_daygrid_swath/
+    method: HTTPS 직접 다운로드 (예 n6250/netcdf/2026/asi-AMSR2-n6250-20261012-v5.4.nc, HDF4·GeoTIFF·PNG는 n6250/2026/oct/Arctic/)
+    note: >-
+      로그인 없이 받을 수 있습니다. n6250(북극)·s6250(남극) 아래 연/월/해역 폴더에 HDF4·GeoTIFF·PNG가, netcdf/ 폴더에 연도별 netCDF가 있고 지난 연도는 연도별 zip으로도 묶여 있습니다.
+      같은 구조를 https://seaice.uni-bremen.de/data/ 로도 열 수 있습니다.
+    login: false
+  - name: 브레멘대학 자료 서버 (익명 FTP)
+    url: ftp://data.seaice.uni-bremen.de/
+    method: 익명 FTP (사용자 이름 anonymous, 암호 없음)
+    note: 폴더 구조는 HTTPS와 같습니다. 대량으로 받을 때는 wget -r 같은 재귀 다운로드를 안내합니다.
+    login: false
+  - name: PANGAEA — AMSR2 ASI v5.4 연도별 netCDF (북극·남극)
+    url: https://doi.org/10.1594/PANGAEA.898399
+    method: 웹 다운로드 (DOI가 붙은 보관본, 2012-07~2019-12)
+    note: 남극은 https://doi.org/10.1594/PANGAEA.898400, AMSR-E(2002-06~2011-09)는 PANGAEA.919777(북극)·919778(남극)입니다.
+    login: false
+  - name: 브레멘대학 자료 탐색기 (지도 보기)
+    url: https://data.seaice.uni-bremen.de/databrowser/
+    method: 웹 지도 (날짜별 농도 지도 넘겨 보기)
+
+example:
+  lang: python
+  note: >-
+    브레멘대학 서버에서 북극 6.25 km netCDF 하나를 받아 여는 예입니다. 안내서에 변수 이름이 없어, 파일 안에서 가장 큰 2차원 변수를 농도로 골랐습니다. 먼저 print(ds)로 이름을 확인하세요.
+  code: |
+    import urllib.request
+    import xarray as xr
+
+    day = "20261012"
+    url = f"https://data.seaice.uni-bremen.de/amsr2/asi_daygrid_swath/n6250/netcdf/{day[:4]}/asi-AMSR2-n6250-{day}-v5.4.nc"
+    urllib.request.urlretrieve(url, "asi.nc")
+
+    ds = xr.open_dataset("asi.nc")
+    print(ds)                                                   # 변수 이름·투영 정보 확인
+
+    sic = max(ds.data_vars.values(), key=lambda v: v.size)      # 해빙 농도 2차원 장 (%)
+    sic = sic.where(sic <= 100)                                 # 육지·결측(120) 제외
+    print("농도 15% 이상 격자 수:", int((sic >= 15).sum()))
+
+tips:
+  - >-
+    같은 탭의 NOAA/NSIDC CDR(../nsidc-cdr-sic/)·OSI SAF(../osisaf-sic/)와 다른 점은 해상도와 목적입니다. 두 기후자료는 25 km 격자에서 센서 간 일관성을 맞춘 장기 기록이고
+    격자별 불확실성(OSI SAF)이나 알고리즘 간 표준편차(NSIDC)를 함께 주지만, ASI는 89 GHz를 써서 6.25 km로 촘촘한 대신 센서 간 상호 보정된 장기 기록이 아니고 격자별 불확실성 변수도 없습니다.
+    면적·범위의 장기 추세는 기후자료로, 가장자리·수로·폴리냐 같은 세부 구조는 ASI로 보는 식으로 나눠 쓰세요.
+  - >-
+    안내서에 따르면 오차는 농도 0%에서 약 25%, 100%에서 약 5.7%로, 65%를 넘으면 10% 아래입니다. 낮은 농도 값의 상대오차가 크므로 15% 경계 위치를 정밀하게 다룰 때는 주의하세요.
+  - >-
+    대기 수증기·구름에 따른 거짓 해빙을 없애려고 경사비(GR37V/18V > 0.045, GR23V/18V > 0.04) 기준과 Bootstrap 농도 5% 이하 조건에서 농도를 0으로 만들고,
+    지난 40년 그 달의 최대 해빙 범위 밖도 0으로 둡니다. 따라서 0%는 이 필터·마스크를 거친 판정 결과이기도 합니다.
+  - >-
+    해안에서 약 20 km 안쪽은 육지 복사가 섞여 바다인데도 농도가 나올 수 있습니다. 오호츠크해처럼 해안선이 복잡한 동아시아 결빙 해역이나 좁은 만에서는 이 띠를 걸러 내세요.
+    오호츠크해는 해역별 3.125 km 지도(n3125 아래 SeaOfOkhotsk 폴더)도 매일 나오지만 이 격자는 v5.4로 재처리되지 않았습니다.
+  - >-
+    AMSR-E(2002~2011)와 AMSR2(2012~) 사이에 약 9개월 공백이 있고, AMSR2 밝기온도는 AMSR-E와 같게 환산해 씁니다. 두 센서를 이은 시계열을 만들 때는 공백 처리와 센서 경계를 밝히세요.
+  - >-
+    서버의 SeaIceConcentration/ASI_CDR/ 폴더에 SSM/I·SSMIS에 ASI를 맞춘 별도의 1991~2024년 6.25 km EASE2 해빙 농도 기록(v1, 2026-08 게시)이 있습니다. 격자·센서가 달라
+    이 페이지의 AMSR2 v5.4와는 다른 자료이니 섞지 마세요. 아직 DOI와 공식 인용 방식은 안내되지 않았습니다.
+  - >-
+    AMSR3로 바뀌는 시기에는 같은 날짜라도 amsr2/와 amsr3/ 폴더 값이 다를 수 있습니다. 2026-10-13 확인 시 amsr2/·amsr3/ 폴더의 readme 내용이 서로 뒤바뀌어 있으니,
+    어느 센서 자료인지는 폴더 이름이 아니라 파일 이름(asi-AMSR2-…, amsr3-…)으로 확인하세요.
+
+citations:
+  dataset:
+    - label: AMSR2 ASI v5.4 북극 (PANGAEA)
+      text: >-
+        Melsheimer, Christian; Spreen, Gunnar (2019): AMSR2 ASI sea ice concentration data, Arctic, version 5.4 (NetCDF) (July 2012 - December 2019) [dataset].
+        PANGAEA, https://doi.org/10.1594/PANGAEA.898399
+      doi: 10.1594/PANGAEA.898399
+      bibtex: |
+        @misc{melsheimer2019asi_arctic,
+          author    = {Melsheimer, Christian and Spreen, Gunnar},
+          title     = {{AMSR2} {ASI} sea ice concentration data, {Arctic}, version 5.4 ({NetCDF}) (July 2012 - December 2019)},
+          year      = {2019},
+          publisher = {PANGAEA},
+          doi       = {10.1594/PANGAEA.898399}
+        }
+    - label: AMSR2 ASI v5.4 남극 (PANGAEA)
+      text: >-
+        Melsheimer, Christian; Spreen, Gunnar (2019): AMSR2 ASI sea ice concentration data, Antarctic, version 5.4 (NetCDF) (July 2012 - December 2019) [dataset].
+        PANGAEA, https://doi.org/10.1594/PANGAEA.898400
+      doi: 10.1594/PANGAEA.898400
+      bibtex: |
+        @misc{melsheimer2019asi_antarctic,
+          author    = {Melsheimer, Christian and Spreen, Gunnar},
+          title     = {{AMSR2} {ASI} sea ice concentration data, {Antarctic}, version 5.4 ({NetCDF}) (July 2012 - December 2019)},
+          year      = {2019},
+          publisher = {PANGAEA},
+          doi       = {10.1594/PANGAEA.898400}
+        }
+    - label: AMSR-E ASI v5.4 북극 (PANGAEA, 2002~2011년을 쓸 때)
+      text: >-
+        Melsheimer, Christian; Spreen, Gunnar (2020): AMSR-E ASI sea ice concentration data, Arctic, version 5.4 (NetCDF) (June 2002 - September 2011) [dataset].
+        PANGAEA, https://doi.org/10.1594/PANGAEA.919777
+      doi: 10.1594/PANGAEA.919777
+  papers:
+    - label: ASI 알고리즘 논문 (브레멘대학 권장 인용)
+      text: >-
+        Spreen, G., Kaleschke, L., and Heygster, G. (2008): Sea ice remote sensing using AMSR-E 89-GHz channels. Journal of Geophysical Research: Oceans, 113, C02S03.
+      doi: 10.1029/2005JC003384
+      bibtex: |
+        @article{spreen2008asi,
+          author  = {Spreen, Gunnar and Kaleschke, Lars and Heygster, Georg},
+          title   = {Sea ice remote sensing using {AMSR-E} 89-{GHz} channels},
+          journal = {Journal of Geophysical Research: Oceans},
+          volume  = {113},
+          number  = {C2},
+          pages   = {C02S03},
+          year    = {2008},
+          doi     = {10.1029/2005JC003384}
+        }
+  acknowledgement: >-
+    브레멘대학은 서비스 유지를 위해 논문에 자료를 쓸 때 Spreen et al. (2008)을 인용하고 출처(University of Bremen, seaice.uni-bremen.de)를 밝혀 달라고 요청합니다.
+    서버에서 받은 2020년 이후 자료에는 DOI가 없으므로 버전(v5.4)과 받은 날짜를 함께 적으세요.
+
+notices:
+  - date: "2026-09-04"
+    level: warning
+    title: "JAXA, 2026-09-02 이후 AMSR2 표준 L1·L2 일부가 한 장면보다 적은 자료로 제공"
+    body: >-
+      JAXA G-Portal은 2026-09-02 00 UTC 이후 제공된 GCOM-W 표준 산출물 일부가 한 장면보다 적은 자료를 담고 있을 수 있다고 알렸고(원인 조사 중), 9월 4일 갱신에서
+      영향 범위를 AMSR2 표준 L1·L2로 밝히며 L3는 영향이 없고 문제 산출물은 다음 전송 때 정상본으로 덮어쓴다고 했습니다. 이 시기 ASI 일 파일은 나중에 갱신될 수 있습니다.
+    source: https://gportal.jaxa.jp/gpr/notice/notice/view/1500
+  - date: "2026-08-21"
+    level: info
+    title: SSM/I·SSMIS 기반 ASI 해빙 농도 기후 기록(1991~2024, 6.25 km) 게시
+    body: >-
+      브레멘대학 서버의 SeaIceConcentration/ASI_CDR/ 폴더에 AMSR2를 기준으로 SSM/I·SSMIS에 ASI 알고리즘을 맞춘 1991~2024년 6.25 km EASE2 일별 해빙 농도(netCDF·PNG)와
+      면적·범위 표, 보고서(v1.0, 2026-04-30)가 올라왔습니다. 이 페이지의 AMSR2 v5.4와 별개 자료입니다.
+    source: https://data.seaice.uni-bremen.de/SeaIceConcentration/readme.txt
+  - date: "2026-08-19"
+    level: info
+    title: AMSR3 기반 예비(preliminary) ASI 해빙 농도 폴더 공개
+    body: >-
+      브레멘대학 서버에 amsr3/ 폴더가 생겨 GOSAT-GW AMSR3로 만든 예비 ASI 해빙 농도(asi_daygrid_swath)와 일별 격자 밝기온도(tb_daygrid_swath)를 제공합니다.
+      AMSR3 설명 readme(2026-08-19 수정, 서버에서는 amsr2/ 폴더에 들어 있음)는 예비 농도 기록이 2026-06-09에 시작한다고 적고 있고, 격자 밝기온도 파일은 2025-08-11부터 있습니다. 홈페이지 공지나 AMSR2 판을 대체한다는 안내는 아직 없습니다.
+    source: https://data.seaice.uni-bremen.de/amsr3/
+  - date: "2026-06-30"
+    level: info
+    title: JAXA, GOSAT-GW AMSR3 표준 산출물 공개 (해빙 농도 포함)
+    body: >-
+      JAXA가 G-Portal에서 AMSR3 밝기온도와 해빙 농도·고해상도 해빙 농도·해빙 이동 벡터 등 물리량 산출물 공개를 시작했습니다. AMSR3는 2025-08-11 관측을 시작했으며,
+      AMSR2의 후속 센서로 AMSR2 자료와의 이용 연속성을 목표로 합니다.
+    source: https://gportal.jaxa.jp/gpr/notice/notice/view/1473
+  - date: "2026-06-01"
+    level: warning
+    title: "NOAA, AMSR2 산출물 퇴역·AMSR3 전환 공지 — JAXA의 AMSR2 표준 준실시간 자료 제공 2026년 9월 종료"
+    body: >-
+      NOAA NESDIS는 JAXA가 AMSR2 자료 제공을 중단할 예정이라 AMSR2 기반 운영 산출물(해빙 포함)을 2026-08-31 퇴역시키고 AMSR3로 바꾼다고 알렸습니다.
+      공지에 따르면 2026년 9월부터 AMSR2 표준 준실시간 자료 제공이 끝나며, 전환 기간인 7~8월에는 스발바르 지상국에서 AMSR2 전 궤도를 수신했습니다. 2026-10-13 확인 시 브레멘대학 AMSR2 ASI는 계속 갱신되고 있습니다.
+    source: https://ospo.noaa.gov/data/messages/2026/06/MSG_20260601_1400.html
+  - date: "2025-09-23"
+    level: info
+    title: JAXA AMSR2 자료 중단(2025-09-22~24)으로 일부 날짜 불완전
+    body: >-
+      JAXA의 AMSR2 자료 공급이 9월 22~24일 멈춰 22일 지도가 불완전하고 24일에는 자료가 들어오지 않았습니다. 9월 24일 공급이 재개되었고 22일 불완전 자료는 다시 처리한다고 안내했습니다.
+    source: https://seaice.uni-bremen.de/news-archive/
+
+transitions:
+  - from: ASI AMSR2 v5.4
+    to: ASI AMSR3 (예비판)
+    status: planned
+    date: "2026-08"
+    summary: >-
+      AMSR2를 실은 GCOM-W가 후기 운용 단계에 들어가고 JAXA가 후속 AMSR3(GOSAT-GW) 산출물을 2026-06-30부터 공개하면서, 브레멘대학도 AMSR3로 만든 예비 ASI 농도를 amsr3/ 폴더에 올리기 시작했습니다.
+      2026-10-13 현재 AMSR2 v5.4는 계속 갱신되고 있으며, AMSR3 판의 정식 버전 이름·전환 시점·재처리 계획은 공지되지 않았습니다.
+    changes:
+      - aspect: 입력 센서
+        before: "GCOM-W1 AMSR2 (2012-07~)"
+        after: "GOSAT-GW AMSR3 (2025-08-11 관측 시작)"
+      - aspect: 기간
+        before: "2012-07~현재 (AMSR-E 포함 2002-06~)"
+        after: "예비 농도 기록 2026-06-09~ (readme), 격자 밝기온도 2025-08-11~"
+      - aspect: 서버 폴더
+        before: "amsr2/asi_daygrid_swath/ (n6250, s6250, n3125, s3125, swath)"
+        after: "amsr3/asi_daygrid_swath/, amsr3/tb_daygrid_swath/ (n6250·n12500·n25000, s6250·s12500·s25000)"
+      - aspect: 파일 이름
+        before: "asi-AMSR2-n6250-YYYYMMDD-v5.4.nc"
+        after: "격자 밝기온도는 amsr3-n6250-YYYYMMDD-89h.hdf 형식. 농도 파일 이름은 2026-10-13 확인 시 목록을 볼 수 없어 확인 못함"
+      - aspect: 버전·상태
+        before: "v5.4 (2018 재처리, 운영)"
+        after: "예비(preliminary) 자료, 버전 표기·검증 문서 없음"
+    impacts:
+      - AMSR2와 AMSR3 예비판은 센서 보정·관측 폭이 달라 같은 날 값이 다를 수 있습니다. 공식 비교·검증이 나오기 전에는 한 시계열로 이어 붙이지 마세요.
+      - 자동 다운로드 스크립트는 AMSR2 갱신이 멈출 때를 대비해 amsr2/ 폴더의 최신 파일 날짜를 점검하도록 해 두세요.
+      - 예비 자료는 나중에 다시 처리되거나 바뀔 수 있으니 논문에는 받은 날짜와 '예비판'임을 밝히세요.
+    sources:
+      - name: 브레멘대학 자료 서버 amsr3/ 폴더
+        url: https://data.seaice.uni-bremen.de/amsr3/
+      - name: JAXA G-Portal — GOSAT-GW/AMSR3 Products Now Available (2026-06-30)
+        url: https://gportal.jaxa.jp/gpr/notice/notice/view/1473
+      - name: JAXA — GCOM-W 위성 페이지 (Latter Phase In Operation)
+        url: https://global.jaxa.jp/projects/sat/gcom_w/
+      - name: OSI SAF — Implications of AMSR2 being replaced by AMSR3 on OSI SAF products
+        url: https://osi-saf.eumetsat.int/community/stories/implications-amsr2-being-replaced-amsr3-osi-saf-products
+  - from: ASI v5.2·v5.3 (준실시간)
+    to: ASI v5.4
+    status: completed
+    date: "2018"
+    summary: >-
+      2018년에 AMSR-E·AMSR2의 남북극 자료 전체를 같은 매개변수·설정·소프트웨어로 다시 처리해 v5.4로 통일했습니다. 그 전에 준실시간으로 만든 자료는 v5.3(2017-05-02부터)과 v5.2입니다.
+    changes:
+      - aspect: 처리 방식
+        before: "시기별 준실시간 처리(v5.2, 2017-05-02부터 v5.3)"
+        after: "2002~현재 전 기간을 같은 설정으로 재처리"
+      - aspect: 해역별 3.125 km 지도
+        before: "준실시간 생산"
+        after: "계속 생산되지만 v5.4로 재처리하지 않음"
+      - aspect: 값 저장 방식
+        before: "옛 파일 농도 0~200, 육지·결측 255"
+        after: "농도 0~100, 육지·결측 120"
+    impacts:
+      - 예전에 받아 둔 v5.2·v5.3 파일은 v5.4로 다시 받아 쓰세요. 파일 이름 끝의 버전 문자열로 구분됩니다.
+      - 옛 파일을 읽던 코드는 값 범위(0~200, 255)가 달라 그대로 쓰면 농도가 두 배로 읽힙니다.
+    sources:
+      - name: ASI Version 5 Sea Ice Concentration User Guide (V0.9.4)
+        url: https://data.seaice.uni-bremen.de/amsr2/ASIuserguide.pdf
+      - name: 브레멘대학 자료 보관 안내 (값 저장 방식)
+        url: https://seaice.uni-bremen.de/data-archive/
+
+links:
+  - name: 브레멘대학 — AMSR-E/AMSR2 해빙 농도 페이지
+    url: https://seaice.uni-bremen.de/sea-ice-concentration/amsre-amsr2/
+  - name: ASI Version 5 사용자 안내서 (PDF)
+    url: https://data.seaice.uni-bremen.de/amsr2/ASIuserguide.pdf
+  - name: 브레멘대학 — 자료 보관 안내 (FTP·HTTPS, 파일 형식)
+    url: https://seaice.uni-bremen.de/data-archive/
+  - name: 브레멘대학 — 공지 모음 (News Archive)
+    url: https://seaice.uni-bremen.de/news-archive/
+  - name: 격자 좌표 파일 (HDF4용 위경도)
+    url: https://seaice.uni-bremen.de/data/grid_coordinates/
+  - name: 이 사이트 — OSI SAF 해빙 농도 (25 km 기후자료, AMSR3 전환)
+    url: ../osisaf-sic/
+  - name: 이 사이트 — NOAA/NSIDC CDR 해빙 농도 (25 km 기후자료)
+    url: ../nsidc-cdr-sic/
+  - name: 이 사이트 — SMOS 얇은 해빙 두께 (브레멘대학·AWI)
+    url: ../smos-sit/
+
+watch_urls:
+  - https://seaice.uni-bremen.de/news-archive/
+  - https://data.seaice.uni-bremen.de/amsr3/
+  - https://gportal.jaxa.jp/gpr/notice/notice/list
+
+last_verified: "2026-10-13"

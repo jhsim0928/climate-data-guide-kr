@@ -1,0 +1,257 @@
+# ─────────────────────────────────────────────────────────────
+# GOCI on COMS (Chollian-1) — dataset information file (English edition)
+# Satellite tab (ocean colour), cross-listed in the Ocean tab (satellite observations). The world's first geostationary ocean colour sensor, imaging the seas around Korea 8 times a day from 2010 to 2021.
+# The mission ended in March 2021 and was succeeded by GOCI-II on GEO-KOMPSAT-2B (goci2). NASA OB.DAAC keeps L1B and L2 (R2014.0) data for the whole mission.
+# As checked on 2026-10-14, the OB.DAAC L2 directories run from 2011-04-08 to 2021-03-31.
+# After editing, update last_verified to the date you checked the official pages.
+# ─────────────────────────────────────────────────────────────
+id: goci
+name: "GOCI (COMS)"
+full_name: Geostationary Ocean Color Imager (GOCI) on the Communication, Ocean and Meteorological Satellite (COMS, Chollian-1) — hourly ocean colour around Korea
+category: satellite
+domain: satellite
+group: 해색
+order: 71
+also_in:
+  - domain: ocean
+    group: 위성 관측 자료
+domains: [해양, 원격탐사]
+provider: Korea Ocean Satellite Center, KIOST (operations and processing) / NASA OB.DAAC (OBPG reprocessing R2014.0, L1B and L2 distribution)
+
+status: ended
+status_note: >-
+  GOCI on COMS, launched in June 2010, officially ended its mission in March 2021, and ocean observation passed to GOCI-II on GEO-KOMPSAT-2B.
+  As checked on 2026-10-14, the NASA OB.DAAC GOCI L2 record (R2014.0) runs from 2011-04-08 to 2021-03-31 and is no longer growing. The NOSC download menus offer only GOCI-II.
+  The satellite itself was moved to a disposal orbit and ended operations on 8 June 2026 (announced by KARI, as reported in the press).
+
+successor:
+  name: GOCI-II (GEO-KOMPSAT-2B)
+  url: https://www.nosc.go.kr/eng/main.do
+  note: >-
+    Launched in February 2020 and served by NOSC since October 2020. 250 m resolution, 12 spectral bands, 10 Local Area acquisitions around Korea plus one Full Disk acquisition per day, downloadable without login.
+
+period:
+  start: "2011-04"
+  end: "2021-03"
+  note: >-
+    COMS was launched on 27 June 2010 (Korean time). NASA CMR gives the L2 collection period as 2010-06-26 to 2021-03-31 and the L1B collection as 2011-04-01 to 2021-03-31,
+    but as checked on 2026-10-14 the OB.DAAC L2 directories start on 2011-04-08 and end on 2021-03-31. From 2011 to 2017 only 21–56 days a year are present,
+    whereas 2018 (274 days), 2019 (359), 2020 (366) and January–March 2021 (89) are nearly complete.
+
+resolution:
+  spatial_short: "0.5 km (0.005°)"
+  temporal_short: "1시간"
+  spatial: >-
+    500 m ground sampling distance (NASA OBPG). KIOST describes it as about 500 m at the projection centre (36°N) and about 400 m at nadir. The 2,500 km × 2,500 km area is centred on 36°N, 130°E,
+    with 8 bands (6 visible, 2 near-infrared; 412, 443, 490, 555, 660, 680, 745 and 865 nm). OB.DAAC L2 files keep the native satellite pixels (swath-style L2).
+  vertical: Sea surface (ocean colour, remote-sensing reflectance), atmospheric column (aerosol optical thickness)
+  temporal: >-
+    Hourly in daylight, 8 times a day (09:00–16:00 local time). For example, OB.DAAC has 8 L2 files for 2021-03-31, one per hour from 00:16 to 07:16 UTC. OB.DAAC holds no L3 gridded GOCI data.
+
+coverage:
+  short: 아시아
+  note: "2,500 km × 2,500 km centred on 36°N, 130°E — seas around Korea, Yellow Sea, East China Sea, East Sea and around Japan. Daylight only"
+update: Updates ended (mission ended in March 2021). The OB.DAAC record is the R2014.0 reprocessing completed in May 2016
+license: >-
+  OB.DAAC data are free under NASA's open data policy; downloading requires a (free) NASA Earthdata Login.
+  The CMR metadata list no additional use constraints
+account_required: true
+
+summary: >-
+  GOCI on COMS (Chollian-1) was the world's first geostationary ocean colour sensor, imaging a 2,500 km square of sea centred on Korea every hour in daylight, 8 times a day, at 500 m.
+  Unlike polar orbiters that pass once or twice a day, it captured the daily evolution of the same waters (tidal sediment transport, spreading algal blooms, sea fog), and it was widely used for the Yellow Sea and East China Sea.
+  KIOST's Korea Ocean Satellite Center operated and processed it, and NASA OBPG distributes through OB.DAAC its reprocessing (R2014.0), cross-calibrated to VIIRS, as L1B and L2 data (remote-sensing reflectance, chlorophyll, diffuse attenuation and more).
+
+time_convention:
+  summary: >-
+    Each L2 file is one acquisition (one image, roughly hourly) of instantaneous values. The time in the OB.DAAC file name G{year}{day of year}{hhmmss}.L2_COMS_OC.nc is the UTC acquisition start time.
+  points:
+    - "There are 8 files a day at roughly 00–07 UTC (09–16 KST). For example, G2021090001641.L2_COMS_OC.nc is day 90 of 2021 (31 March) at 00:16:41 UTC."
+    - "OB.DAAC has no daily or monthly (L3) composites, so grid and composite the L2 acquisitions yourself if you need time means."
+    - "From 2011 to 2017 only some dates are present at OB.DAAC. Check which dates exist each year before building a long time series."
+  source: https://oceancolor.gsfc.nasa.gov/data/reprocessing/r2014/goci
+  source_name: "NASA OBPG — GOCI Ocean Color Reprocessing 2014.0 + OB.DAAC Level-2 GOCI directory"
+
+variables:
+  note: >-
+    Variables named in the CMR description of the OB.DAAC GOCI L2 OC collection (GOCI_L2_OC, R2014.0). Units follow the NASA OBPG standard product descriptions; files are netCDF-4 with values in the geophysical_data group.
+    Rrs is stored as one variable per band (Rrs_<wavelength>).
+  full_list: https://oceancolor.gsfc.nasa.gov/resources/docs/format/l2nc/
+  groups:
+    - name: L2 ocean colour (OB.DAAC, per acquisition)
+      kind: instant
+      items:
+        - text: "Remote-sensing reflectance — `Rrs` (sr-1, per band)"
+          std: []
+        - text: "Chlorophyll-a concentration — `chlor_a` (mg m-3)"
+          std: []
+        - text: "Chlorophyll-a concentration (OCx band ratio) — `chl_ocx` (mg m-3)"
+          std: []
+        - text: "Diffuse attenuation coefficient at 490 nm — `Kd_490` (m-1)"
+          std: []
+        - text: "Particulate organic carbon — `poc` (mg m-3)"
+          std: []
+        - "Aerosol optical thickness at 865 nm — `aot_865` (dimensionless)"
+        - text: "Aerosol Ångström exponent — `angstrom` (dimensionless)"
+          std: [aerosol]
+        - text: "Quality flags — `l2_flags` (bits)"
+          std: []
+
+access:
+  - name: NASA OB.DAAC — GOCI L2 directory (direct download)
+    url: https://oceandata.sci.gsfc.nasa.gov/directdataaccess/Level-2/GOCI/
+    method: HTTPS direct download (netCDF-4, year/date folders, e.g. 2021/31-Mar-2021/G2021090001641.L2_COMS_OC.nc)
+    note: Requires a (free) NASA Earthdata Login. L1B files are in the Level-1B/GOCI/ folder with the same layout.
+  - name: NASA Earthdata Search — COMS GOCI Level-2 Regional OC (GOCI_L2_OC, 2014.0)
+    url: https://search.earthdata.nasa.gov/search/granules?p=C3558858528-OB_CLOUD
+    method: Earthdata Search / earthaccess / CMR API / AWS cloud (s3://ob-cumulus-prod-public/, us-west-2)
+    note: L1B is the GOCI_L1 collection (C1240264612-OB_DAAC). Requires a NASA Earthdata Login.
+
+example:
+  lang: python
+  note: >-
+    Finds and downloads OB.DAAC GOCI L2 files with earthaccess and reads chlorophyll. Run earthaccess.login() once with your NASA Earthdata account.
+    L2 files are grouped: latitude and longitude are in navigation_data and values in geophysical_data.
+  code: |
+    # pip install earthaccess xarray netCDF4
+    import earthaccess
+    import xarray as xr
+
+    earthaccess.login()
+    results = earthaccess.search_data(
+        short_name="GOCI_L2_OC",
+        temporal=("2020-08-01", "2020-08-01"),
+    )
+    files = earthaccess.download(results, "./goci")   # 8 files per day
+
+    f = sorted(files)[0]
+    geo = xr.open_dataset(f, group="geophysical_data")
+    nav = xr.open_dataset(f, group="navigation_data")
+    chl = geo["chlor_a"]                     # mg m-3
+    print(chl.shape, float(chl.median()))
+    print(float(nav["latitude"].min()), float(nav["latitude"].max()))
+
+tips:
+  - "OB.DAAC has only 21–56 days a year for 2011–2017 (checked 2026-10-14). For a continuous record in that period, look into the data held by KIOST's Korea Ocean Satellite Center (KOSC)."
+  - "OBPG applied a vicarious calibration cross-calibrating GOCI to VIIRS, which moved the chlorophyll ratio against MODIS-Aqua from about 0.6 to about 0.9. The KOSC processing (GDPS) and the OBPG version can differ, so do not mix them."
+  - "OBPG lists a spectral artefact around clouds (Fukushima et al., 2015) and radiometric discontinuities between some slots due to stray light (Kim et al., 2015) as known issues not corrected in R2014.0. Treat values near cloud edges and slot boundaries with care."
+  - "OBPG notes that GOCI L2 processing was at an early stage and that quality should improve as understanding matures. Check chlorophyll in turbid Yellow Sea coastal waters against in situ data before use."
+  - "GOCI-II differs in resolution (500 m → 250 m), bands, acquisition times and processing. Before splicing the two, compare values for the same waters during the overlap (2020-10 to 2021-03)."
+  - "Gaps are especially frequent in the cloudy winter months. A study of missing GOCI chlorophyll reported an average missing ratio of about 80% for hourly images, so multi-day composites may be needed (Ocean and Polar Research, 2022)."
+
+citations:
+  dataset:
+    - label: COMS GOCI Level-2 Regional Ocean Color (OC) Data, version 2014.0 (OB.DAAC)
+      text: >-
+        NASA Ocean Biology Processing Group. COMS GOCI Level-2 Regional Ocean Color (OC) Data, version 2014.0. NASA Ocean Biology Distributed Active Archive Center (OB.DAAC).
+        https://doi.org/10.5067/COMS/GOCI/L2/OC/2014.0 (accessed [YYYY-MM-DD])
+      doi: 10.5067/COMS/GOCI/L2/OC/2014.0
+      bibtex: |
+        @misc{obpg_goci_l2oc_2014,
+          author    = {{NASA Ocean Biology Processing Group}},
+          title     = {{COMS} {GOCI} Level-2 Regional Ocean Color ({OC}) Data, version 2014.0},
+          publisher = {NASA Ocean Biology Distributed Active Archive Center (OB.DAAC)},
+          doi       = {10.5067/COMS/GOCI/L2/OC/2014.0}
+        }
+  papers:
+    - label: Overview of GOCI and its data processing system (GDPS)
+      text: >-
+        Ryu, J.-H., Han, H.-J., Cho, S., Park, Y.-J., Ahn, Y.-H. (2012): Overview of geostationary ocean color imager (GOCI) and GOCI data processing system (GDPS).
+        Ocean Science Journal, 47(3), 223–233.
+      doi: 10.1007/s12601-012-0024-4
+      bibtex: |
+        @article{ryu2012goci,
+          author  = {Ryu, Joo-Hyung and Han, Hee-Jeong and Cho, Seongick and Park, Young-Je and Ahn, Yu-Hwan},
+          title   = {Overview of geostationary ocean color imager ({GOCI}) and {GOCI} data processing system ({GDPS})},
+          journal = {Ocean Science Journal},
+          volume  = {47},
+          number  = {3},
+          pages   = {223--233},
+          year    = {2012},
+          doi     = {10.1007/s12601-012-0024-4}
+        }
+  acknowledgement: >-
+    If you used OB.DAAC data, cite the dataset DOI above with your access date. If you used KOSC-processed data, credit the KIOST Korea Ocean Satellite Center, and state in the text which processing (OBPG R2014.0 or KOSC GDPS) you used.
+
+notices:
+  - date: "2021-03"
+    level: warning
+    title: GOCI mission ended
+    body: >-
+      GOCI on COMS officially ended its mission in March 2021, about four years beyond its design life (to 2017). Ocean observation passed to GOCI-II on GEO-KOMPSAT-2B.
+      The OB.DAAC record ends on 2021-03-31.
+    source: https://koreascience.or.kr/article/JAKO202131452697681.pdf
+  - date: "2020-10"
+    level: info
+    title: Successor GOCI-II data service started
+    body: >-
+      NOSC started the GEO-KOMPSAT-2B (GOCI-II) data service in October 2020. From 2020-10 to 2021-03 both GOCI and GOCI-II observed, allowing the two records to be compared.
+    source: https://www.nosc.go.kr/boardContents/actionBoardContentsCons0015.do
+  - date: "2016-05"
+    level: info
+    title: NASA OBPG GOCI reprocessing R2014.0 completed — L1B and L2 distribution begins
+    body: >-
+      NASA OBPG completed the full-mission GOCI reprocessing (R2014.0) and began distributing L1B (HDF5) and L2 ocean colour products through OB.DAAC. A vicarious calibration against VIIRS moved the chlorophyll ratio against MODIS-Aqua
+      from about 0.6 to about 0.9, and the interpretation of COMS orbit information and the timing of data slots were improved.
+    source: https://oceancolor.gsfc.nasa.gov/data/reprocessing/r2014/goci
+
+transitions:
+  - from: GOCI (COMS)
+    to: GOCI-II (GEO-KOMPSAT-2B)
+    to_id: goci2
+    status: completed
+    date: "2021-03"
+    summary: >-
+      GOCI-II raised the resolution from 500 m to 250 m and the spectral bands from 8 to 12, increased acquisitions around Korea from 8 to 10 a day and added a Full Disk acquisition.
+      GOCI ended its mission in March 2021, and both sensors observed together from 2020-10 to 2021-03.
+    changes:
+      - aspect: Period
+        before: "2011-04 to 2021-03 (OB.DAAC L2)"
+        after: "2020-10 to present (planned mission life 2020–2029)"
+      - aspect: Spatial resolution
+        before: 500 m
+        after: 250 m
+      - aspect: Spectral bands
+        before: "8 (412–865 nm; 6 visible, 2 NIR)"
+        after: "12 (380–865 nm) + a wideband channel for navigation"
+      - aspect: Acquisitions and coverage
+        before: "2,500 km × 2,500 km around Korea, 8 a day (09:00–16:00 local time)"
+        after: "Local Area of the same size 10 a day (08:15–17:15 KST) + Full Disk once a day"
+      - aspect: Products
+        before: "OB.DAAC L2 — NASA standard ocean colour products such as Rrs, chlor_a, Kd_490, poc and aot_865"
+        after: "NOSC L2, 26 products — reflectance, chlorophyll, suspended matter and CDOM plus red tide, floating algae, sea fog, surface currents, low-salinity water, aerosol and land products"
+      - aspect: Provider and account
+        before: "NASA OB.DAAC (Earthdata Login), KIOST Korea Ocean Satellite Center"
+        after: "KHOA National Ocean Satellite Center (no login; web, web directory, OPeNDAP). Not at NASA OB.DAAC"
+    impacts:
+      - The two sensors differ in resolution, bands, atmospheric correction and processing, so compare values for the same waters during the overlap (2020-10 to 2021-03) before splicing them into one time series.
+      - GOCI comes from OB.DAAC (NASA processing) and GOCI-II from NOSC (Korean processing), so product names, variable names and file structures differ. Prepare separate reading code.
+      - GOCI-II starts an hour earlier and ends an hour later (08:15–17:15 KST), so match acquisition times when comparing diurnal variability.
+    sources:
+      - name: Choi et al. (2021), One Year of GOCI-II Launch — Korean Journal of Remote Sensing
+        url: https://koreascience.or.kr/article/JAKO202131452697681.pdf
+      - name: NOSC — GK-2B GOCI-II
+        url: https://www.nosc.go.kr/eng/boardContents/actionBoardContentsCons0024.do
+      - name: NASA OBPG — GOCI Ocean Color Reprocessing 2014.0
+        url: https://oceancolor.gsfc.nasa.gov/data/reprocessing/r2014/goci
+
+links:
+  - name: NASA OBPG — GOCI reprocessing R2014.0
+    url: https://oceancolor.gsfc.nasa.gov/data/reprocessing/r2014/goci
+  - name: OB.DAAC — GOCI L2 directory
+    url: https://oceandata.sci.gsfc.nasa.gov/directdataaccess/Level-2/GOCI/
+  - name: OB.DAAC — GOCI L1B directory
+    url: https://oceandata.sci.gsfc.nasa.gov/directdataaccess/Level-1B/GOCI/
+  - name: NASA Level-2 ocean colour file format
+    url: https://oceancolor.gsfc.nasa.gov/resources/docs/format/l2nc/
+  - name: WMO OSCAR — GOCI
+    url: https://space.oscar.wmo.int/instruments/view/goci
+  - name: This site — successor GOCI-II (GEO-KOMPSAT-2B)
+    url: ../goci2/
+  - name: This site — GK-2A (GEO-KOMPSAT-2A meteorological satellite)
+    url: ../gk2a/
+
+watch_urls:
+  - https://oceancolor.gsfc.nasa.gov/data/reprocessing/
+
+last_verified: "2026-10-14"

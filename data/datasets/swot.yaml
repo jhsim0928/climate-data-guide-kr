@@ -1,0 +1,359 @@
+# ─────────────────────────────────────────────────────────────
+# SWOT KaRIn 해양 산출물 — 데이터셋 정보 파일
+# 위성 탭(해면고도·파랑), 해양 탭(위성 관측 자료) 교차 수록. NASA·CNES 광폭 고도계 위성 SWOT의 KaRIn 저속(LR) 해수면 높이 L2(PO.DAAC)와 AVISO L3.
+# 2026-10-13 확인 시 L2_LR_SSH는 Version D가 현재판(2025-05 전환)이며, PO.DAAC에 2026-10-10 관측분까지(PID0) 올라와 있습니다.
+# 수정 후에는 공식 페이지에서 확인한 날짜로 last_verified 를 갱신하세요.
+# ─────────────────────────────────────────────────────────────
+id: swot
+name: SWOT KaRIn (L2 LR SSH · L3)
+full_name: >-
+  Surface Water and Ocean Topography (SWOT) KaRIn Low Rate Sea Surface Height — PO.DAAC SWOT_L2_LR_SSH Version D(Basic·Expert·WindWave·Unsmoothed),
+  AVISO SWOT_L3_LR_SSH (광폭 간섭 고도계 KaRIn 해수면 높이·유의파고 자료)
+category: satellite
+domain: satellite
+group: 해면고도·파랑
+order: 20
+also_in:
+  - domain: ocean
+    group: 위성 관측 자료
+domains: [해양, 원격탐사]
+provider: NASA JPL·CNES SWOT 사업(L2 생산) / NASA PO.DAAC 배포 / AVISO·DUACS(CNES·CLS) L3 생산·배포
+
+status: active
+status_note: >-
+  정상 제공 중입니다. KaRIn 자료는 2025년 5월 Version C에서 Version D로 바뀌었고(2025-05-06 관측분부터 순처리 PID0), 2023-03~2025-05 구간은 Version D로 재처리(PGD0)되었습니다.
+  2026-10-13 확인 시 PO.DAAC SWOT_L2_LR_SSH_BASIC_D에 2026-10-10 관측분까지(2026-10-12 게시) 올라와 있습니다. Version C 컬렉션(_2.0)은 2025-05 초 관측분에서 멈췄지만 삭제되지 않고 남아 있습니다.
+  명목 운영 기간(Phase E)은 3년이며, NASA 2026 Senior Review(임무 연장 심사) 초청 대상에 SWOT이 들어 있습니다.
+
+period:
+  start: "2023-03"
+  end: present
+  note: >-
+    2022-12-16 발사. KaRIn 보정 단계(1일 반복 궤도)는 2023-03-30에 시작해 2023-07-10까지였고, 궤도 이동 후 과학 궤도(21일 반복)가 2023-07-21에 시작했습니다(사이클 1).
+    2023-07-21~07-26은 KaRIn이 과학 궤도용으로 설정되지 않아 자료가 없거나 의심스럽습니다. PO.DAAC Version D는 2023-03-27(사이클 473)부터 파일이 있습니다.
+    공개 이력 — 2023-12 베타(사전 검증), 2024-03 Version C 정식 공개, 2025-05 Version D.
+
+resolution:
+  spatial_short: "2 km (0.02°)"
+  temporal_short: "1일"
+  spatial: >-
+    L2 Basic·Expert·WindWave — 스와스에 맞춘 지리 고정 2 km × 2 km 격자 / L2 Unsmoothed — 250 m × 250 m '고유(native)' 격자(평활 최소).
+    AVISO L3 — Basic·Expert·Technical 2 km, Unsmoothed 250 m. KaRIn 관측 폭은 120 km이고 직하 쪽에 약 20 km 빈틈이 있으며, 이 빈틈은 직하 고도계(Jason급 nadir altimeter)가 잽니다
+  vertical: 해면 단일층 (해수면 높이·유의파고·풍속)
+  temporal: >-
+    반 궤도(pass) 하나가 파일 하나이고, 각 값은 그 화소를 지난 순간의 관측입니다. 과학 궤도 반복 주기는 20.86455일(사이클당 584 pass, 평균 재방문 약 11일).
+    보정 단계(2023-03-30~07-10)는 같은 곳을 매일 지나는 1일 반복 궤도(고도 857 km)였습니다
+coverage:
+  short: 준전지구
+  note: "궤도 경사각 77.6°라 극 주변은 관측되지 않습니다. 한 사이클(약 21일)에 걸쳐 스와스가 바다를 덮고, 하루 자료는 띠 모양입니다"
+update: >-
+  L2 — 순처리로 매일 갱신(2026-10-10 관측분이 2026-10-12 게시, AVISO는 L2_LR_SSH 전달 지연을 5일 미만으로 안내) /
+  L3 — AVISO가 L2 지연 단축(2025-11)에 맞춰 목표 지연 48시간으로 운영
+license: >-
+  PO.DAAC 자료는 NASA 지구과학 자료 정책에 따라 제한 없이 공개(인용 시 DOI 명시) / AVISO L3는 AVISO+ 표준 이용 약관(무료, 계정 필요, 지정 인용 문구 사용)
+account_required: true
+
+summary: >-
+  SWOT은 NASA와 프랑스 CNES가 2022년 12월 쏘아 올린 위성으로, Ka 밴드 간섭 레이더 KaRIn이 폭 120 km 띠를 한 번에 재서 기존 직하 고도계로는 보이지 않던
+  수십 km 이하 해수면 구조(소규모 소용돌이·전선·내부 조석)를 2차원으로 보여 줍니다. 해양용 저속(LR) L2 해수면 높이 자료는 일반 사용자용 Basic, 모든 보정항이 든 Expert,
+  유의파고·풍속을 담은 WindWave(이상 2 km 격자)와 250 m 격자 Unsmoothed로 나뉘고, AVISO·DUACS가 교차 보정·잡음 제거·지형류를 더한 L3를 따로 냅니다.
+  같은 KaRIn의 고속(HR) 모드로 만든 강·호수 수위·유량 산출물(PIXC·RiverSP·LakeSP·Raster)도 있지만 이 페이지는 해양 산출물만 다룹니다.
+
+time_convention:
+  summary: >-
+    L2·L3 파일은 반 궤도(pass) 단위이며, 값은 시간 평균이 아니라 각 화소를 위성이 지난 순간의 관측입니다. 같은 지점을 다시 보는 간격은 과학 궤도에서 약 21일이고(위도에 따라 그 사이 다른 pass가 지나감),
+    보정 단계(2023-03-30~07-10)만 1일 간격으로 같은 곳을 반복 관측했습니다.
+  points:
+    - "파일명은 SWOT_L2_LR_SSH_<Basic|Expert|WindWave|Unsmoothed>_<사이클>_<pass>_<시작>_<끝>_<CRID>_<counter>.nc 형식입니다. 예 SWOT_L2_LR_SSH_Basic_057_261_20261010T223423_20261010T232551_PID0_01.nc."
+    - "사이클 번호 474~578은 보정 단계(1일 궤도), 001부터는 과학 단계(21일 궤도)입니다. 두 단계의 사이클 번호 체계가 달라 시간순 정렬은 파일명 속 날짜로 하세요."
+    - "CRID로 판을 구분합니다 — PGC0(Version C 재처리), PIC0·PIC2(Version C 순처리), PGD0(Version D 재처리, 2023-03~2025-05), PID0(Version D 순처리, 2025-05-06~). PID0와 PGD0가 겹치면 PGD0를 씁니다."
+    - "같은 pass에 counter(파일명 끝 _01, _02)가 여러 개면 가장 큰 counter가 최신 재생산본입니다."
+    - "`time_tai`는 2000-01-01 00:00:00 TAI 기준 초(윤초 없음)이며, UTC와의 차이는 time 변수의 tai_utc_difference 속성에 있습니다. AVISO L3의 `time`은 1950-01-01 00:00:00 UTC 기준 초입니다."
+  source: https://archive.podaac.earthdata.nasa.gov/podaac-ops-cumulus-docs/web-misc/swot_mission_docs/releases/SWOT_VersionD_KaRIn_Products_Release_Note_20251219.pdf
+  source_name: SWOT Version D KaRIn Products Release Note (2025-12-19) / PO.DAAC SWOT Mission Events / AVISO SWOT L3 Handbook issue 3.1
+
+variables:
+  note: >-
+    L2 변수 이름은 PO.DAAC 데이터셋 페이지(Basic·Expert 변수표)와 NASA CMR 변수 정의, L3는 AVISO SWOT_L3_LR_SSH 사용자 안내서(issue 3.1, v3.0) 기준입니다.
+    L2의 `_2`가 붙은 변수(ssh_karin_2 등)가 현재 권장되는 보정 조합을 쓴 값이고, Expert는 Basic·WindWave 변수를 모두 포함합니다.
+  full_list: https://podaac.jpl.nasa.gov/dataset/SWOT_L2_LR_SSH_EXPERT_D
+  groups:
+    - name: L2 해수면 높이 (Basic·Expert, 2 km)
+      kind: instant
+      items:
+        - text: "해수면 높이 편차 — `ssha_karin_2` (m)"
+          note: "ssh_karin_2에서 평균 해수면(CNES/CLS)·고체 지구 조석·해양 조석(FES)·내부 조석(HRET)·극 조석·동적 대기 보정(dac)을 뺀 값"
+        - text: "해수면 높이(기준 타원체 위, 모든 보정 적용) — `ssh_karin_2` (m)"
+        - text: "해수면 높이 편차 품질 플래그 — `ssha_karin_2_qual` (비트 플래그)"
+          note: "0이면 의심·저하·불량 비트가 하나도 켜지지 않은 값"
+          std: []
+        - text: "KaRIn 교차점 보정값 — `height_cor_xover` (m)"
+          note: "ssh_karin·ssha_karin 계열에 적용되어 있지 않으며, 쓰려면 더해야 함"
+          std: []
+        - text: "평균 해수면 높이(CNES/CLS, 기준 타원체 위) — `mean_sea_surface_cnescls` (m)"
+          kind: static
+          std: []
+        - text: "평균 역학 지형(지오이드 위, Expert) — `mean_dynamic_topography` (m)"
+          kind: static
+        - text: "동적 대기 보정(Expert) — `dac` (m)"
+          std: []
+        - text: "직하로부터의 거리(음수 왼쪽, 양수 오른쪽 스와스, Expert) — `cross_track_distance` (m)"
+          kind: static
+          std: []
+        - text: "강수·해빙 플래그 — `rain_flag`, `dynamic_ice_flag`"
+          std: []
+    - name: L2 파랑·바람 (WindWave·Expert, 2 km)
+      kind: instant
+      items:
+        - "KaRIn 유의파고 — `swh_karin` (m)"
+        - text: "KaRIn 해상풍속(sig0_karin_2에서 계산) — `wind_speed_karin_2` (m/s)"
+          std: [wind10]
+        - text: "KaRIn 후방산란계수 sigma0(선형 단위) — `sig0_karin_2` (1)"
+          std: []
+        - text: "유의파고 품질 플래그 — `swh_karin_qual`"
+          std: []
+        - text: "모델 유의파고·평균 파향·평균 파주기 — `swh_model`, `mean_wave_direction`, `mean_wave_period_t02`"
+          note: Expert에 들어 있는 모델 정보(관측값 아님)
+    - name: L2 Unsmoothed (250 m)
+      kind: instant
+      items:
+        - text: "해수면 높이 편차·해수면 높이 — `ssha_karin_2`, `ssh_karin_2` (m)"
+          note: "평활을 최소로 한 고해상도 값. AVISO 안내 기준 하루 약 40 GB, 1년 약 15 TB 규모"
+    - name: AVISO L3 (Basic·Expert, 2 km)
+      kind: instant
+      items:
+        - text: "잡음 제거한 해수면 높이 편차 — `ssha_filtered` (m)"
+          note: "U-Net 신경망으로 KaRIn 잡음을 걸러 낸 값(이전 이름 ssha_noiseless)"
+        - text: "잡음 제거 전 해수면 높이 편차 — `ssha_unfiltered` (m)"
+        - text: "평균 역학 지형 — `mdt` (m)"
+          kind: static
+        - text: "절대 지형류(잡음 제거 SSHA 기반, Expert) — `ugos_filtered`, `vgos_filtered` (m/s)"
+        - text: "지형류 편차(Expert) — `ugosa_filtered`, `vgosa_filtered` (m/s)"
+        - text: "교차 보정값(Expert) — `calibration` (m)"
+          std: []
+        - text: "품질 플래그(Expert) — `quality_flag`"
+          note: "AVISO는 대부분의 연구에 0~3만 쓰라고 권장"
+          std: []
+
+access:
+  - name: NASA PO.DAAC — SWOT L2 KaRIn LR SSH Version D (SWOT_L2_LR_SSH_D)
+    url: https://podaac.jpl.nasa.gov/dataset/SWOT_L2_LR_SSH_D
+    method: Earthdata Search / earthaccess / podaac-data-subscriber (netCDF-4, pass 단위 파일)
+    note: >-
+      하위 컬렉션 SWOT_L2_LR_SSH_BASIC_D·SWOT_L2_LR_SSH_EXPERT_D·SWOT_L2_LR_SSH_WINDWAVE_D·SWOT_L2_LR_SSH_UNSMOOTHED_D로 따로 받을 수 있습니다.
+      NASA Earthdata 로그인(무료) 필요. Version C는 SWOT_L2_LR_SSH_2.0 계열로 남아 있습니다.
+  - name: AVISO+ — SWOT L3 LR SSH (SWOT_L3_LR_SSH)
+    url: https://www.aviso.altimetry.fr/en/data/products/sea-surface-height-products/global/swot-l3-ocean-products.html
+    method: "FTP/SFTP ftp-access.aviso.altimetry.fr (경로 /swot_products/l3_karin_nadir/l3_lr_ssh), THREDDS(tds-odatis.aviso.altimetry.fr)"
+    note: "AVISO+ 계정 필요. Basic·Expert·Technical v3.0(2 km), Unsmoothed v2.0.1(250 m)이 최신입니다."
+  - name: AVISO+ — SWOT 해양 자료 접근 안내 (L2·L3·L3 Wind Wave)
+    url: https://www.aviso.altimetry.fr/en/missions/current-missions/swot/swot-ocean-data-access.html
+    method: "FTP/SFTP — L2 LR SSH /swot_products/l2_karin/l2_lr_ssh, L3 Wind Wave /swot_products/l3_karin/l3_lr_wind_wave"
+    note: CNES 쪽 L2 배포와 L3 파랑 산출물(SWOT_L3_LR_WIND_WAVE v2.0)도 여기서 받습니다. AVISO+ 계정 필요.
+
+example:
+  lang: python
+  note: "PO.DAAC의 L2 Basic 파일을 earthaccess로 받는 예입니다. NASA Earthdata 계정으로 earthaccess.login()을 한 번 거친 뒤 실행하세요."
+  code: |
+    # pip install earthaccess xarray netCDF4
+    import earthaccess
+    import xarray as xr
+
+    earthaccess.login()
+    results = earthaccess.search_data(
+        short_name="SWOT_L2_LR_SSH_BASIC_D",       # Expert: SWOT_L2_LR_SSH_EXPERT_D
+        temporal=("2025-06-01", "2025-06-21"),      # 과학 궤도 한 사이클(약 21일)
+        bounding_box=(120, 30, 135, 42),            # 한반도 주변 (서, 남, 동, 북)
+    )
+    files = earthaccess.download(results[:5], "./swot")
+
+    ds = xr.open_dataset(files[0])
+    ssha = ds["ssha_karin_2"] + ds["height_cor_xover"]   # 교차점 보정은 직접 더해야 함
+    ssha = ssha.where(ds["ssha_karin_2_qual"] == 0)      # 플래그가 하나도 없는 값만
+    print(files[0], float(ssha.std()))
+
+tips:
+  - "`height_cor_xover`(교차점 보정)는 ssh_karin·ssha_karin 계열에 적용되어 있지 않습니다. 스와스 가로 방향 기울기·오프셋 같은 긴 파장 오차를 줄이려면 직접 더하세요. 대안으로 이 보정이 들어간 AVISO L3를 쓸 수 있습니다."
+  - "Version D 릴리스 노트는 해빙·강수 플래그를 완전히 믿을 수 없다고 적습니다. ssha_karin_qual이 0이어도 rain_flag나 dynamic_ice_flag가 0이 아닐 수 있으니 두 플래그를 따로 확인하세요."
+  - "연안 가까운 곳은 검증이 충분하지 않고 오차가 클 수 있으며, 연안 근처에 플래그 없는 가로 줄무늬(도플러 중심 점프)가 생길 수 있습니다. 해안선이 복잡한 남해·서해 연안에서는 특히 조심하세요."
+  - "선박·빙산이 플래그로 걸러지지 않을 수 있습니다. 통항이 많은 대한해협·동중국해에서 고립된 튀는 값은 의심해 보세요."
+  - "Version C와 D는 조석 모델(FES2014→FES2022b), 평균 해수면, MDT, sigma0 보정(약 2.5 dB 낮아짐), 지오이드 오류 수정이 달라 섞어 쓰면 안 됩니다. 2023-03~2025-05 구간도 Version D 재처리본(PGD0)으로 다시 받으세요."
+  - "`swh_karin`에는 위성 태양각(beta angle)과 연결된 약 78일 주기 잔차 오차가 남아 있다고 릴리스 노트가 밝힙니다. 장기 파고 통계에는 직하 고도계 기반 자료(예 ESA Sea State CCI)를 함께 보세요."
+  - "2023-03-30~07-10 보정 단계(1일 반복 궤도)는 좁은 띠를 매일 반복 관측해 빠른 변화 연구에 쓰이지만, 띠 바깥은 비어 있습니다. 과학 단계(21일 궤도)와 공간 표본 방식이 전혀 다르니 두 구간을 한 통계로 합치지 마세요."
+  - "Unsmoothed(250 m)는 하루 약 40 GB, 1년 약 15 TB입니다. 필요한 사이클·pass만 골라 받고, 대부분의 중규모 분석에는 2 km Basic·Expert로 충분합니다."
+  - "2026-10-13 확인 시 PO.DAAC 하위 컬렉션 SWOT_L2_LR_SSH_BASIC_D 검색에서 2025-04-08~05-02 구간이 비어 있었지만, 상위 컬렉션 SWOT_L2_LR_SSH_D에는 같은 구간의 Basic 파일(PGD0)이 있었습니다. 특정 기간이 비면 상위 컬렉션으로도 검색해 보세요."
+  - "Copernicus Marine DUACS 운영 L4 지도는 2023-11부터 SWOT의 직하 고도계(SWOT-Nadir) 관측은 넣지만 KaRIn 광폭 관측은 넣지 않습니다. KaRIn을 합친 L4는 2025-11부터 시범(demo) 데이터셋으로만 제공됩니다."
+
+citations:
+  dataset:
+    - label: SWOT L2 KaRIn LR SSH Version D (PO.DAAC)
+      text: >-
+        Surface Water Ocean Topography (SWOT). 2025. SWOT Level 2 KaRIn Low Rate Sea Surface Height Data Product, Version D. Ver. D. PO.DAAC, CA, USA.
+        Dataset accessed [YYYY-MM-DD] at https://doi.org/10.5067/SWOT-SSH-D
+      doi: 10.5067/SWOT-SSH-D
+      bibtex: |
+        @misc{swot2025lrsshD,
+          author    = {{Surface Water Ocean Topography (SWOT)}},
+          title     = {{SWOT} Level 2 {KaRIn} Low Rate Sea Surface Height Data Product, Version {D}},
+          year      = {2025},
+          publisher = {NASA Physical Oceanography Distributed Active Archive Center},
+          version   = {D},
+          doi       = {10.5067/SWOT-SSH-D}
+        }
+    - label: AVISO SWOT L3 KaRIn LR SSH Basic v3.0
+      text: >-
+        AVISO/DUACS, 2024. SWOT Level-3 KaRIn Low Rate SSH Basic (v3.0) [Data set]. CNES. https://doi.org/10.24400/527896/A01-2023.017
+      doi: 10.24400/527896/A01-2023.017
+      bibtex: |
+        @misc{avisoduacs2024swotl3basic,
+          author    = {{AVISO/DUACS}},
+          title     = {{SWOT} Level-3 {KaRIn} Low Rate {SSH} Basic (v3.0)},
+          year      = {2024},
+          publisher = {CNES},
+          doi       = {10.24400/527896/A01-2023.017}
+        }
+    - label: AVISO SWOT L3 KaRIn LR SSH Expert v3.0
+      text: >-
+        AVISO/DUACS, 2024. SWOT Level-3 KaRIn Low Rate SSH Expert (v3.0) [Data set]. CNES. https://doi.org/10.24400/527896/A01-2023.018
+      doi: 10.24400/527896/A01-2023.018
+      bibtex: |
+        @misc{avisoduacs2024swotl3expert,
+          author    = {{AVISO/DUACS}},
+          title     = {{SWOT} Level-3 {KaRIn} Low Rate {SSH} Expert (v3.0)},
+          year      = {2024},
+          publisher = {CNES},
+          doi       = {10.24400/527896/A01-2023.018}
+        }
+  papers:
+    - label: SWOT 임무 개관
+      text: >-
+        Fu, L.-L., Pavelsky, T., Cretaux, J.-F., Morrow, R., Farrar, J. T., Vaze, P., Sengenes, P., Vinogradova-Shiffer, N., Sylvestre-Baron, A., Picot, N., Dibarboure, G. (2024):
+        The Surface Water and Ocean Topography Mission: A Breakthrough in Radar Remote Sensing of the Ocean and Land Surface Water. Geophysical Research Letters, 51(4), e2023GL107652.
+      doi: 10.1029/2023GL107652
+      bibtex: |
+        @article{fu2024swot,
+          author  = {Fu, Lee-Lueng and Pavelsky, Tamlin and Cretaux, Jean-Francois and Morrow, Rosemary and Farrar, J. Thomas and Vaze, Parag and Sengenes, Pierre and Vinogradova-Shiffer, Nadya and Sylvestre-Baron, Annick and Picot, Nicolas and Dibarboure, Gerald},
+          title   = {The Surface Water and Ocean Topography Mission: A Breakthrough in Radar Remote Sensing of the Ocean and Land Surface Water},
+          journal = {Geophysical Research Letters},
+          volume  = {51},
+          number  = {4},
+          pages   = {e2023GL107652},
+          year    = {2024},
+          doi     = {10.1029/2023GL107652}
+        }
+  acknowledgement: >-
+    L3를 쓰면 AVISO가 요청하는 문구 "The SWOT L3_LR_SSH product, derived from the L2 SWOT KaRIn low rate ocean data products (NASA/JPL and CNES),
+    is produced and made freely available by AVISO and DUACS teams as part of the DESMOS Science Team project"와 해당 DOI를 넣습니다.
+    PO.DAAC 자료는 저자·제목·배포처·DOI를 갖춘 데이터 인용을 참고문헌에 넣으라고 안내합니다.
+
+notices:
+  - date: "2025-11"
+    level: info
+    title: AVISO L3 LR SSH v3.0 공개, L2 지연 단축
+    body: >-
+      AVISO가 SWOT L3 LR SSH Basic·Expert v3.0(2 km, 보정 단계 사이클 474~578과 과학 단계)을 공개했고, 12월에는 대체 모델·알고리즘을 담은 Technical v3.0을 더했습니다.
+      같은 달 L2_LR_SSH 전달 지연이 6시간 줄었고, L3는 목표 지연 48시간으로 운영됩니다. 250 m Unsmoothed는 아직 v2.0.1이 최신입니다.
+    source: https://www.aviso.altimetry.fr/en/missions/current-missions/swot/swot-ocean-data-access.html
+  - date: "2025-11"
+    level: info
+    title: Copernicus Marine에 SWOT KaRIn 병합 L4 시범 데이터셋 추가
+    body: >-
+      직하 고도계와 SWOT KaRIn을 합친 NRT L4 해수면 지도(cmems_obs-sl_glo_phy-ssh_nrt_demo-allsat-swos-l4-duacs-0.125deg_P1D-i)가 시범(demo) 데이터셋으로 추가되었습니다.
+      L3 KaRIn 입력이 아직 운영 단계가 아니어서 별도 데이터셋이며, 공식 운영 제품은 계속 직하 고도계만 쓴 DUACS 지도입니다.
+    source: https://marine.copernicus.eu/user-corner/product-roadmap/transition-information?product=SEALEVEL_GLO_PHY_L4_NRT_008_046
+  - date: "2025-05-21"
+    level: warning
+    title: KaRIn 자료 Version C → Version D 전환 완료
+    body: >-
+      Version C 마지막 순처리는 2025-05-05 무렵, Version D 첫 순처리는 2025-05-06 무렵 관측분입니다. 2023-03-30~2025-05 구간은 Version D로 재처리 중이라고 안내했고(2026년 초 완료 예정),
+      Version C 컬렉션은 계속 남아 있습니다. 2025-05-06 직후 3~5일은 이상 파일이 생성되어 더 큰 counter로 다시 만들었으므로 counter가 가장 큰 파일을 쓰라고 당부했습니다.
+    source: https://podaac.jpl.nasa.gov/announcements/2025-05-21-SWOT-Science-Data-Products-Transition-from-Version-C-to-Version-D-complete
+  - date: "2024-08-14"
+    level: warning
+    title: 2024-07-31~08-07 SWOT 자료 품질 저하
+    body: >-
+      원격 측정 자료가 늦게 도착해 이 기간 PIC0 산출물 품질이 떨어졌습니다. KaRIn LR 산출물은 재처리를 마쳤으니 이 기간은 counter가 가장 큰 파일을 쓰라고 안내했습니다.
+    source: https://podaac.jpl.nasa.gov/announcements/2024-08-14-Degraded-SWOT-data-quality-from-July-31-to-August-7
+  - date: "2024-03-06"
+    level: info
+    title: KaRIn 과학 자료(Version C) 정식 공개
+    body: >-
+      LR 해양 산출물(SWOT_L2_LR_SSH_2.0, DOI 10.5067/SWOT-SSH-2.0)이 사이클 7(2023-11-23)부터 순처리로 공개되었습니다.
+      2023-03-30~2024-01-25 구간은 차례로 재처리해 공개하며, 사이클 7~9 순처리본은 재처리본으로 대체된다고 밝혔습니다.
+    source: https://podaac.jpl.nasa.gov/announcements/2024-03-06-SWOT-KaRIn-Science-Data-Products-Release
+  - date: "2023-12-01"
+    level: info
+    title: KaRIn 베타(사전 검증) 자료 공개
+    body: >-
+      실제 KaRIn 자료에 익숙해지도록 베타 사전 검증 산출물이 공개되었습니다. LR 해양 자료는 보정 단계(1일 궤도, 2023-03-30~07-10) 재처리본(SWOT_L2_LR_SSH_1.1)과
+      과학 단계(21일 궤도, 2023-09-07부터) 순처리본(SWOT_L2_LR_SSH_1.0)입니다.
+    source: https://podaac.jpl.nasa.gov/announcements/2023-12-01-SWOT-KaRIn-Beta-Pre-Validated-Data-Products
+
+transitions:
+  - from: SWOT KaRIn Version C
+    to: SWOT KaRIn Version D
+    status: completed
+    date: "2025-05"
+    summary: >-
+      Version C의 알려진 문제를 고치려고 처리 알고리즘·보정 계수·일부 지구물리 모델을 바꾼 판입니다. 조석 모델, 평균 해수면, MDT가 새것으로 바뀌고
+      지오이드 오류(10 cm 규모)가 고쳐졌으며, 2023-03 이후 전 구간이 Version D로 다시 처리되었습니다.
+    changes:
+      - aspect: 컬렉션·DOI
+        before: "SWOT_L2_LR_SSH_2.0 (10.5067/SWOT-SSH-2.0)"
+        after: "SWOT_L2_LR_SSH_D (10.5067/SWOT-SSH-D)"
+      - aspect: 파일명 CRID
+        before: "PGC0(재처리, 2023-03-30~2024-01-25), PIC0(2024-01-25~10-15), PIC2(2024-10-16~2025-05 초)"
+        after: "PGD0(재처리, 2023-03~2025-05), PID0(순처리, 2025-05-06~)"
+      - aspect: 해양·하중 조석 모델
+        before: FES2014
+        after: "FES2022b, 비평형 장주기 해양 조석을 SSHA에 새로 적용"
+      - aspect: 평균 해수면(MSS)
+        before: "CNES/CLS 2022, DTU 2018"
+        after: "CNES/CLS/SIO/DTU Hybrid 2023, DTU2021"
+      - aspect: 평균 역학 지형(MDT)
+        before: CNES/CLS 2022
+        after: CNES/CLS 2024
+      - aspect: 보정
+        before: "-"
+        after: "KaRIn 높이 보정 정밀화(짧은 파장 5 mm 규모 변화), sigma0 약 2.5 dB 낮아짐, 복사계(AMR) 보정 갱신으로 좌·우 상대 편차 0.2 mm 미만"
+      - aspect: 기타
+        before: "-"
+        after: "지오이드 오류(10 cm 규모) 수정, 교차점 처리 갱신, Unsmoothed SSHA·도플러 완화·위성 사건 플래그(Expert) 등 새 변수"
+    impacts:
+      - Version C와 D 파일을 한 시계열에 섞지 마세요. 조석·MSS·MDT가 바뀌어 SSHA·ADT 평균장이 다릅니다.
+      - "sigma0가 약 2.5 dB 낮아졌으므로 sigma0로 만든 경험식(풍속·해빙 판별 등)은 다시 맞춰야 합니다."
+      - "PID0와 PGD0가 모두 있는 기간은 PGD0를, 같은 pass에 counter가 여러 개면 가장 큰 counter를 쓰세요."
+    sources:
+      - name: PO.DAAC — Version C → D 전환 완료 공지 (2025-05-21)
+        url: https://podaac.jpl.nasa.gov/announcements/2025-05-21-SWOT-Science-Data-Products-Transition-from-Version-C-to-Version-D-complete
+      - name: PO.DAAC — Version C → D 전환 예고 (2025-04-24)
+        url: https://podaac.jpl.nasa.gov/announcements/2025-04-24-SWOT-Science-Data-Products-Transitioning-from-Version-C-to-Version-D-on-April-28-2025
+      - name: SWOT Version D KaRIn Products Release Note (2025-12-19)
+        url: https://archive.podaac.earthdata.nasa.gov/podaac-ops-cumulus-docs/web-misc/swot_mission_docs/releases/SWOT_VersionD_KaRIn_Products_Release_Note_20251219.pdf
+      - name: Major Changes to SWOT Products from Version C to D (2025-05-19)
+        url: https://archive.podaac.earthdata.nasa.gov/podaac-ops-cumulus-docs/web-misc/swot_mission_docs/KaRIn_VersionD_Summary20250519.pdf
+
+links:
+  - name: PO.DAAC — SWOT 임무 페이지 (문서·릴리스 노트)
+    url: https://podaac.jpl.nasa.gov/SWOT
+  - name: PO.DAAC — SWOT 임무 사건 기록 (자료 공백·궤도 조정)
+    url: https://podaac.jpl.nasa.gov/SWOT-events/SWOT_events.html
+  - name: SWOT 사용자 핸드북 (D-109532 Rev A, PDF)
+    url: https://archive.podaac.earthdata.nasa.gov/podaac-ops-cumulus-docs/web-misc/swot_mission_docs/D-109532_SWOT_UserHandbook_RevA_20250311_sig-final.pdf
+  - name: L2_LR_SSH 제품 설명서 (D-56407 Rev C, PDF)
+    url: https://archive.podaac.earthdata.nasa.gov/podaac-ops-cumulus-docs/web-misc/swot_mission_docs/pdd/D-56407_SWOT_Product_Description_L2_LR_SSH_20250224a_RevC_clean_sig.pdf
+  - name: AVISO SWOT L3 사용자 안내서 (issue 3.1, PDF)
+    url: https://www.aviso.altimetry.fr/fileadmin/documents/data/tools/handbook_duacs_SWOT_L3.pdf
+  - name: NASA JPL — SWOT 임무 개요
+    url: https://swot.jpl.nasa.gov/mission/overview/
+  - name: 이 사이트 — DUACS 다중 위성 고도계 L4 해수면
+    url: ../duacs/
+  - name: 이 사이트 — ESA Sea State CCI 고도계 유의파고
+    url: ../esa-cci-sea-state/
+
+watch_urls:
+  - https://podaac.jpl.nasa.gov/announcements
+  - https://podaac.jpl.nasa.gov/SWOT-events/SWOT_events.html
+  - https://www.aviso.altimetry.fr/en/missions/current-missions/swot/swot-ocean-data-access.html
+
+last_verified: "2026-10-13"
