@@ -1,0 +1,262 @@
+# ─────────────────────────────────────────────────────────────
+# GHRSST MUR (Multi-scale Ultra-high Resolution) SST v4.1 — dataset information file (English edition)
+# Satellite tab (sea surface temperature), cross-listed in the ocean tab (SST analyses). NASA JPL's daily 0.01° L4 foundation SST, blending nighttime satellite and in situ SST with a wavelet-based multi-resolution variational analysis (MRVA).
+# When checked on 2026-10-13, PO.DAAC (CMR) held files through 2026-10-12 for both MUR v4.1 and the 0.25° MUR25 v4.2.
+# After editing, update last_verified to the date you checked the official pages.
+# ─────────────────────────────────────────────────────────────
+id: ghrsst-mur
+name: GHRSST MUR v4.1
+full_name: >-
+  GHRSST Level 4 MUR Global Foundation Sea Surface Temperature Analysis, Version 4.1
+  (NASA JPL Multi-scale Ultra-high Resolution daily 0.01° foundation SST), plus the 0.25° MUR25 v4.2
+category: analysis
+domain: satellite
+group: 해수면온도
+order: 65
+also_in:
+  - domain: ocean
+    group: 해수면온도 분석장
+domains: [해양, 원격탐사]
+provider: NASA JPL MUR MEaSUREs Project (production) / NASA PO.DAAC (distribution)
+
+status: active
+status_note: >-
+  Both v4.1 (0.01°) and MUR25 v4.2 (0.25°) are produced daily. When checked on 2026-10-13, the PO.DAAC catalog (CMR) held files for both through 2026-10-12 (posted on 2026-10-13).
+  A near-real-time file appears after about one day and is replaced by the retrospective file after about four days; the global "history" attribute tells them apart.
+  The "Granule Time Span" end dates on the PO.DAAC dataset pages (2026-09-12 for v4.1, 2026-08-19 for MUR25) lag behind the actual files.
+
+period:
+  start: "2002-06"
+  end: present
+  note: >-
+    The first v4.1 file is dated 2002-06-01 (the catalog start is 2002-05-31 21:00 UTC). MUR25 v4.2 starts on 2002-09-01.
+    The dt_1km_data variable appears from 2015-10-04, and sst_anomaly in v4.1 from 2019-07-23.
+
+resolution:
+  spatial_short: "1 km (0.01°)"
+  temporal_short: "1일"
+  spatial: >-
+    v4.1: regular 0.01° latitude–longitude grid (17999 latitudes × 36000 longitudes, 89.99°S–89.99°N, 179.99°W–180°E).
+    MUR25 v4.2: 0.25° grid (720 × 1440, cell centres 89.875°S–89.875°N, 179.875°W–179.875°E)
+  vertical: Single sea-surface value — foundation SST (the near-surface temperature free of diurnal warming)
+  temporal: >-
+    One daily analysis (file name and time at 09:00 UTC). In the catalog each file spans 21:00 UTC on the previous day to 21:00 UTC on the given day
+coverage:
+  short: 전지구
+  note: "Global ocean and lakes (open_lake in the mask). Sea ice comes from EUMETSAT OSI SAF ice concentration (sea_ice_fraction)"
+update: "Daily. Near-real-time version about 1 day behind, retrospective version about 4 days behind (it overwrites the near-real-time file). According to CoastWatch ERDDAP, the most recent 7 days are usually revised every day"
+license: >-
+  Free and open. The ERDDAP metadata states the data are free to use and redistribute under the JPL PO.DAAC data policy, and the AWS Open Data registry lists CC BY 4.0.
+  Downloading from PO.DAAC requires a free NASA Earthdata Login; cite the dataset DOI following the PO.DAAC citation guidelines
+account_required: false
+
+summary: >-
+  A global daily 0.01° (about 1 km) SST analysis produced at JPL by Dr. Toshio Chin's team under NASA's MEaSUREs program.
+  It combines high-resolution infrared SST from MODIS (Aqua and Terra) and AVHRR, cloud-penetrating microwave SST from AMSR-E, AMSR2 and WindSat, and NOAA iQuam in situ data,
+  relying on nighttime observations, and fills gaps with a Multi-Resolution Variational Analysis (MRVA) that uses wavelets as basis functions. Sea ice comes from EUMETSAT OSI SAF.
+  Because the method keeps observations at their original locations instead of binning them to a grid first, MUR retains more fine-scale structure than other SST analyses.
+  MUR25 (v4.2), a 0.25° version built with the same method, adds anomalies relative to a 2003–2014 MUR climatology and is convenient for long-term studies.
+
+time_convention:
+  summary: >-
+    One foundation SST analysis per day. The file name and time value are 09:00 UTC on that day (the time variable is described as "Nominal time of analyzed fields"),
+    and the catalog (CMR) registers each file as spanning 21:00 UTC on the previous day to 21:00 UTC on the given day. Because it is built mainly from nighttime satellite data to avoid daytime warming,
+    treat it as that day's reference temperature with the diurnal cycle removed, not as an instantaneous temperature at a given hour.
+  points:
+    - "Example file name 20261012090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc — the leading 14 digits give the nominal time (2026-10-12 09:00 UTC). Time units are 'seconds since 1981-01-01 00:00:00 UTC'."
+    - "09:00 UTC is 18:00 Korea time, and the catalog's daily span (21:00 to 21:00 UTC) runs from 06:00 to 06:00 the next morning in Korea."
+    - "A near-real-time file (about 1-day latency) is posted first, then overwritten about four days later by the retrospective file with the same name. A global history attribute of 'created at nominal 4-day latency; replaced nrt (1-day latency) version.' marks the retrospective version."
+    - "dt_1km_data is the time distance (in hours) to the nearest infrared (about 1 km) measurement. Large values mean the cell was filled without high-resolution data that day."
+    - "MUR25 sst_anomaly is relative to the day-of-year mean of MUR data from 2003 to 2014."
+  source: https://podaac.jpl.nasa.gov/dataset/MUR-JPL-L4-GLOB-v4.1
+  source_name: PO.DAAC MUR v4.1 dataset page and CMR metadata; NOAA CoastWatch ERDDAP file attributes (jplMURSST41)
+
+variables:
+  note: >-
+    Names follow the PO.DAAC variable table and file attributes. PO.DAAC originals are in kelvin, while the NOAA CoastWatch ERDDAP copies (jplMURSST41, jplMURSST42) are converted to °C.
+    MUR25 v4.2 contains analysed_sst, analysis_error, mask, sea_ice_fraction and sst_anomaly, but not dt_1km_data.
+  full_list: https://podaac.jpl.nasa.gov/dataset/MUR-JPL-L4-GLOB-v4.1
+  groups:
+    - name: Analysed SST (daily L4)
+      kind: mean
+      period: day
+      items:
+        - text: "Analysed sea surface temperature (foundation SST) — `analysed_sst` (K)"
+          note: One analysis per day based on nighttime satellite and in situ data; nominal time 09:00 UTC
+        - text: "Estimated error standard deviation — `analysis_error` (K)"
+          note: Estimated error of analysed_sst for the same day
+        - text: "SST anomaly — `sst_anomaly` (K)"
+          note: Relative to the MUR climatology (day-of-year mean over 2003–2014). In v4.1 only in files from 2019-07-23
+    - name: Ancillary fields
+      items:
+        - text: "Sea ice area fraction — `sea_ice_fraction` (0–1)"
+          kind: mean
+          period: day
+          note: EUMETSAT OSI SAF ice concentration, nearest-neighbour interpolated. Its internal time definition was not confirmed
+        - text: "Time to the nearest infrared measurement — `dt_1km_data` (hours)"
+          kind: instant
+          note: v4.1 only, in files from 2015-10-04
+          std: []
+        - text: "Sea/land/lake/ice mask — `mask` (bit flags)"
+          kind: static
+          note: "open_sea, land, open_lake, open_sea_with_ice_in_the_grid, open_lake_with_ice_in_the_grid (1, 2, 4, 8, 16). The ice bits can change from day to day"
+
+access:
+  - name: NASA PO.DAAC — MUR v4.1 (MUR-JPL-L4-GLOB-v4.1)
+    url: https://podaac.jpl.nasa.gov/dataset/MUR-JPL-L4-GLOB-v4.1
+    method: Earthdata Search / earthaccess / OPeNDAP / Harmony subsetting / podaac-data-subscriber / direct AWS S3 access (us-west-2)
+    note: >-
+      Requires a free NASA Earthdata Login. Each daily netCDF-4 file is about 300 MB, so subset small regions such as the Korean Peninsula with OPeNDAP or Harmony.
+      The AWS Open Data entry (arn:aws:s3:::podaac-ops-cumulus-protected/MUR-JPL-L4-GLOB-v4.1/) also needs Earthdata credentials.
+  - name: NASA PO.DAAC — MUR25 v4.2 (MUR25-JPL-L4-GLOB-v04.2)
+    url: https://podaac.jpl.nasa.gov/dataset/MUR25-JPL-L4-GLOB-v04.2
+    method: Earthdata Search / earthaccess / OPeNDAP / Harmony
+    note: The 0.25° version, with sst_anomaly (relative to 2003–2014) over the whole record. Earthdata Login required.
+  - name: NOAA CoastWatch ERDDAP — jplMURSST41 (0.01°)
+    url: https://coastwatch.pfeg.noaa.gov/erddap/info/jplMURSST41/index.html
+    method: ERDDAP griddap (regional and time subsets as netCDF, CSV and more; OPeNDAP)
+    note: No login needed. SST is converted to °C; on 2026-10-13 it ran through 2026-10-10. The 0.25° version is jplMURSST42.
+    login: false
+
+example:
+  lang: python
+  note: "Opens PO.DAAC files with earthaccess and clips the area around the Korean Peninsula. Run earthaccess.login() once with your NASA Earthdata account first. Files are large, so read only the region you need."
+  code: |
+    # pip install earthaccess xarray netCDF4 h5netcdf
+    import earthaccess
+    import xarray as xr
+
+    earthaccess.login()
+    results = earthaccess.search_data(
+        short_name="MUR-JPL-L4-GLOB-v4.1",      # 0.25° version: MUR25-JPL-L4-GLOB-v04.2
+        temporal=("2025-08-01", "2025-08-03"),
+    )
+    files = earthaccess.open(results)           # open without downloading
+
+    ds = xr.open_mfdataset(files, combine="by_coords")
+    sst = ds["analysed_sst"].sel(lat=slice(30, 40), lon=slice(120, 135)) - 273.15   # K -> °C, around Korea
+    print(sst.mean("time").values.mean())
+    print(ds["dt_1km_data"].sel(lat=slice(30, 40), lon=slice(120, 135)).max().values)  # max hours to an IR measurement
+
+tips:
+  - "Foundation SST excludes daytime warming, so on calm, clear summer afternoons it can be lower than satellite skin SST or near-surface buoy readings. Check depth and time definitions before comparing."
+  - "A 0.01° grid does not mean 1 km features were observed every day. Infrared data are blocked by cloud, so use dt_1km_data (time to the nearest IR measurement) to see whether high-resolution data were present. Areas under persistent cloud are filled from microwave (about 25 km) data and look smoother."
+  - "Recent days switch from near-real-time to retrospective files, and ERDDAP notes that the most recent 7 days are usually revised daily. Re-download recent data about a week later before finalising results."
+  - "PO.DAAC originals are in kelvin and the CoastWatch ERDDAP copies in °C. Harmonise units when mixing files from different sources."
+  - "Quality drops when inputs are missing. PO.DAAC reported that AMSR2 was excluded from 2022-12-17 to 2023-02-27, and that 2025-08-25 and 08-26 lost most high-resolution input and are very blurry (provided as is until reprocessed). Avoid these dates for case studies."
+  - "sst_anomaly in v4.1 exists only from 2019-07-23 and uses a 2003–2014 baseline. Compute anomalies yourself from analysed_sst if you need a standard normal such as 1991–2020."
+  - "PO.DAAC presents the much smaller MUR25 (0.25°) for long-term SST studies and large-scale analyses such as ENSO. Use the 0.01° version only when you need fine structure such as coastal fronts or eddies, and you will download far less."
+  - "PO.DAAC has said there is no dedicated status page for MUR production. Delay and quality notices go out through the PO.DAAC mailing list, the announcements page and the Earthdata Forum."
+
+citations:
+  dataset:
+    - label: MUR v4.1 (PO.DAAC)
+      text: >-
+        JPL MUR MEaSUREs Project. 2015. GHRSST Level 4 MUR Global Foundation Sea Surface Temperature Analysis. Ver. 4.1. PO.DAAC, CA, USA.
+        Dataset accessed [YYYY-MM-DD] at https://doi.org/10.5067/GHGMR-4FJ04
+      doi: 10.5067/GHGMR-4FJ04
+      bibtex: |
+        @misc{jplmur2015v41,
+          author    = {{JPL MUR MEaSUREs Project}},
+          title     = {{GHRSST} Level 4 {MUR} Global Foundation Sea Surface Temperature Analysis. Ver. 4.1},
+          year      = {2015},
+          publisher = {NASA Physical Oceanography Distributed Active Archive Center},
+          version   = {4.1},
+          doi       = {10.5067/GHGMR-4FJ04}
+        }
+    - label: MUR25 v4.2 (PO.DAAC)
+      text: >-
+        JPL MUR MEaSUREs Project. 2019. GHRSST Level 4 MUR 0.25 deg Global Foundation Sea Surface Temperature Analysis. Ver. 4.2. PO.DAAC, CA, USA.
+        Dataset accessed [YYYY-MM-DD] at https://doi.org/10.5067/GHM25-4FJ42
+      doi: 10.5067/GHM25-4FJ42
+      bibtex: |
+        @misc{jplmur2019mur25,
+          author    = {{JPL MUR MEaSUREs Project}},
+          title     = {{GHRSST} Level 4 {MUR} 0.25 deg Global Foundation Sea Surface Temperature Analysis. Ver. 4.2},
+          year      = {2019},
+          publisher = {NASA Physical Oceanography Distributed Active Archive Center},
+          version   = {4.2},
+          doi       = {10.5067/GHM25-4FJ42}
+        }
+  papers:
+    - label: MUR analysis method (citation requested by PO.DAAC)
+      text: >-
+        Chin, T. M., Vazquez-Cuervo, J., Armstrong, E. M. (2017): A multi-scale high-resolution analysis of global sea surface temperature.
+        Remote Sensing of Environment, 200, 154–169.
+      doi: 10.1016/j.rse.2017.07.029
+      bibtex: |
+        @article{chin2017mur,
+          author  = {Chin, Toshio Michael and Vazquez-Cuervo, Jorge and Armstrong, Edward M.},
+          title   = {A multi-scale high-resolution analysis of global sea surface temperature},
+          journal = {Remote Sensing of Environment},
+          volume  = {200},
+          pages   = {154--169},
+          year    = {2017},
+          doi     = {10.1016/j.rse.2017.07.029}
+        }
+  acknowledgement: >-
+    The file attributes ask users to acknowledge the data with "These data were provided by JPL under support by NASA MEaSUREs program."
+    Following the PO.DAAC citation guidelines (https://podaac.jpl.nasa.gov/CitingPODAAC), cite the DOI of the version you actually used (v4.1 or MUR25 v4.2).
+
+notices:
+  - date: "2025-09-02"
+    level: warning
+    title: MUR severely degraded on 2025-08-25 and 08-26 (provided as is until reprocessed)
+    body: >-
+      A break in the input-data production chain meant inputs were progressively missing after 2025-08-24; on 25 and 26 August most high-resolution satellite data were absent,
+      leaving very low-resolution fields, a PO.DAAC expert explained on the Earthdata Forum. Production has been normal since about 27 August; the 25–26 August files will need reprocessing at some point but are currently provided as is.
+    source: https://forum.earthdata.nasa.gov/viewtopic.php?p=23994
+  - date: "2024-10-14"
+    level: warning
+    title: Hurricanes Helene and Milton reduce MUR and MUR25 quality
+    body: >-
+      Hurricanes Helene and Milton had major impacts on NOAA data centres, leaving gaps in several SST datasets including RSS AMSR2 L2P.
+      PO.DAAC announced that MUR v4.1 and MUR25 v4.2 quality was affected because they use AMSR2 microwave SST as a key input layer.
+    source: https://podaac.jpl.nasa.gov/announcements/2024-10-14-Impacts-to-recent-PODAAC-SST-datasets
+  - date: "2024-09-04"
+    level: info
+    title: MUR v4.1 posting outage caused by an ingest error resolved
+    body: >-
+      New files had stopped appearing after 2024-08-29 because of an internal PO.DAAC problem ingesting MUR v4.1; it was fixed on 4 September and the backlog was posted,
+      PO.DAAC User Services said on the Earthdata Forum. Such outages may not reach the announcements page, so PO.DAAC suggested joining its mailing list.
+    source: https://forum.earthdata.nasa.gov/viewtopic.php?p=20284
+  - date: "2023-03-31"
+    level: warning
+    title: AMSR2 gap (2022-12-17 to 2023-02-27) and switch to cloud inputs
+    body: >-
+      Reprocessing of AMSR2 from v8a to v8.2 left a gap at PO.DAAC, so MUR (1 km) and MUR25 were produced without AMSR2 from 2022-12-17 to 2023-02-27,
+      with some possible loss of SST fidelity. From 2023-03-13 MUR production also takes its L2P inputs from NASA Earthdata Cloud, which PO.DAAC said does not affect users.
+    source: https://podaac.jpl.nasa.gov/announcements/2023-03-31-Update-to-the-MUR-SST-processing-chain-and-recent-timeline
+  - date: "2019-10-18"
+    level: info
+    title: Release of the 0.25° MUR25 v4.2
+    body: >-
+      PO.DAAC released MUR25 v4.2 (from 2002-09-01), a daily 0.25° analysis using the same method and inputs as MUR.
+      It has a much more compact data volume and includes SST anomalies relative to a MUR climatology, aimed at long-term climate studies.
+    source: https://podaac.jpl.nasa.gov/announcements/2019-10-18_GHRSST_L4_MUR_0.25deg_Global_Foundation_SST_Analysis_v4.2_Dataset_Release
+
+links:
+  - name: PO.DAAC — MUR v4.1 dataset page
+    url: https://podaac.jpl.nasa.gov/dataset/MUR-JPL-L4-GLOB-v4.1
+  - name: PO.DAAC — MUR25 v4.2 dataset page
+    url: https://podaac.jpl.nasa.gov/dataset/MUR25-JPL-L4-GLOB-v04.2
+  - name: PO.DAAC — MUR project overview (MEaSUREs-MUR)
+    url: https://podaac.jpl.nasa.gov/MEaSUREs-MUR
+  - name: GHRSST Data Specification GDS 2.0 (PDF)
+    url: https://archive.podaac.earthdata.nasa.gov/podaac-ops-cumulus-docs/ghrsst/open/docs/GDS20r5.pdf
+  - name: Chin et al. (2017), Remote Sensing of Environment
+    url: https://doi.org/10.1016/j.rse.2017.07.029
+  - name: On this site — OSTIA (Met Office 0.05° foundation SST analysis)
+    url: ../ostia/
+  - name: On this site — NOAA OISST v2.1 (0.25° daily analysis)
+    url: ../oisst/
+  - name: On this site — ESA SST CCI (satellite-only SST climate data record)
+    url: ../esa-cci-sst/
+  - name: On this site — AVHRR Pathfinder SST (discontinued 4 km satellite SST)
+    url: ../avhrr-pathfinder/
+
+watch_urls:
+  - https://podaac.jpl.nasa.gov/announcements
+  - https://podaac.jpl.nasa.gov/dataset/MUR-JPL-L4-GLOB-v4.1
+
+last_verified: "2026-10-13"

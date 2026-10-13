@@ -1,0 +1,486 @@
+# ─────────────────────────────────────────────────────────────
+# Metop ASCAT 해상풍 — 데이터셋 정보 파일
+# 위성 탭(해상풍), 해양 탭(위성 관측 자료) 교차 수록. EUMETSAT OSI SAF(KNMI 생산)의 Metop-B·C ASCAT L2 스와스 바람(25 km OSI-102, 해안 12.5 km OSI-104)이 중심이고,
+# Metop-A 기후자료(OSI-150), Copernicus Marine L3 일 격자, RSS V2.1 기후자료도 함께 안내합니다.
+# 2026-10-13 확인 시 PO.DAAC의 Metop-B·C L2는 2026-10-13 낮 궤도까지 올라와 있습니다. 후속 Metop-SG-B1(산란계 SCA)은 2026년 하반기 발사 예정입니다.
+# 수정 후에는 공식 페이지에서 확인한 날짜로 last_verified 를 갱신하세요.
+# ─────────────────────────────────────────────────────────────
+id: ascat
+name: Metop ASCAT 해상풍
+full_name: Metop Advanced Scatterometer (ASCAT) ocean surface winds — EUMETSAT OSI SAF L2 wind products (Metop 위성 C밴드 산란계 해상풍 벡터)
+category: satellite
+domain: satellite
+group: 해상풍
+order: 20
+also_in:
+  - domain: ocean
+    group: 위성 관측 자료
+domains: [해양, 대기, 원격탐사]
+provider: EUMETSAT OSI SAF (KNMI 생산) / NASA PO.DAAC 재배포 / Copernicus Marine (L3 격자) / Remote Sensing Systems (V2.1 기후자료)
+
+status: active
+status_note: >-
+  Metop-B(2012~)와 Metop-C(2019~)의 ASCAT 바람이 준실시간으로 계속 생산되고 있으며, Metop-A는 2021-11-15에 바람 생산을 마치고 궤도를 낮추는 퇴역 절차에 들어갔습니다.
+  2026-10-13 확인 시 PO.DAAC에는 Metop-B·C 25 km·해안 L2가 2026-10-13 10~11 UTC 시작 궤도까지(약 2~3시간 지연), Copernicus Marine L3 NRT는 2026-10-12까지, RSS V2.1 격자 자료는 2026-09-08까지 올라와 있습니다.
+  후속 산란계 SCA를 실은 Metop-SG-B1은 ESA가 2026년 10월 발사 예정이라 밝혔고(2026-02-25), WMO OSCAR는 2026년 11월로 적고 있습니다(2026-09-23 갱신). SCA 자료 공개 일정은 아직 공식 발표가 없습니다.
+
+period:
+  start: "2007-01"
+  end: present
+  note: >-
+    Metop-A ASCAT 준실시간 바람은 2007-03-28 시범 생산, 2008-12-03 운영을 시작해 2021-11-15에 끝났습니다. Metop-B는 2012-11-14 첫 시범판, 2013-05-27 운영,
+    Metop-C는 2019-02-12 시범, 2019-10 운영입니다. 재처리 기후자료 OSI-150(Metop-A)은 2007-01-01부터인데, 끝을 OSI SAF 페이지는 2014-12-31, KNMI 설명 페이지와 PO.DAAC는 2014년 3월(2014-04-01)로 적어 서로 다릅니다.
+
+resolution:
+  spatial_short: "25 km (0.23°)"
+  temporal_short: "1일"
+  spatial: >-
+    L2 스와스: 25 km 간격 바람 벡터 격자(WVC, 한 줄 42개 = 좌우 스와스 각 21개, 유효 스와스 폭 525 km). PO.DAAC는 유효 해상도를 50 km로 안내합니다.
+    해안 L2(OSI-104): 12.5 km 간격(한 줄 82개), WVC 중심 15 km 안의 후방산란을 평균하며 유효 해상도 25 km. 시범판 6 km(OSI-AW5.7, Metop-B, KNMI FTP만).
+    Copernicus Marine L3: 0.125°(해안 12.5 km 입력)·0.25°(25 km 입력) 위경도 격자.
+  vertical: "해면 10 m 바람. 2018-09-25부터 응력 등가(stress-equivalent) 바람, 그 전은 10 m 중립 등가 바람"
+  temporal: >-
+    L2: 궤도마다 파일 하나(약 100분), 각 WVC는 위성이 지나간 순간의 관측. 위성 하나가 한 지점을 하루 최대 오전(하강)·저녁(상승) 두 번 지나며 스와스 사이에 빈 곳이 남습니다.
+    L3(Copernicus Marine·RSS): 하루 단위로 상승·하강 궤도를 따로 격자에 옮긴 파일(평균 아님).
+
+coverage:
+  short: 전지구
+  note: "전 세계 바다(얼음 없는 해면). 육지는 산출하지 않고, 25 km 자료는 해안 약 35 km 안이 빠지며(해안판은 약 15 km까지), 해빙 위 값은 플래그로 걸러야 합니다. 하루 스와스 사이에 빈 곳이 있음"
+update: "L2 준실시간: 궤도마다, 관측 후 약 2시간(OSI SAF 목표 2시간 45분 이내). Copernicus Marine L3 NRT: 매일(다음날 12 UTC, 이틀 뒤 00 UTC). Copernicus Marine L3 재처리(MY): 매달. RSS V2.1: 비정기 갱신(2026-10-13 확인 시 2026-09-08분까지, 2026-09-11 게시)"
+license: >-
+  OSI SAF 바람 제품은 CC BY 4.0이며 EUMETSAT OSI SAF를 출처로 밝혀야 합니다. KNMI는 쓴 제품마다 'copyright (연도) EUMETSAT' 표기를 요청합니다.
+  RSS ASCAT 자료는 RSS 이용 조건(제품별 감사 문구, 논문 게재 시 support@remss.com에 알림)을 따릅니다
+account_required: true
+
+summary: >-
+  ASCAT은 유럽 기상위성 Metop에 실린 C밴드(5.255 GHz) 산란계로, 위성 궤도 좌우로 약 550 km 폭의 스와스 두 개를 세 방위각의 빔으로 비춰 해면 거칠기에서 10 m 바람의 세기와 방향을 구합니다.
+  EUMETSAT OSI SAF가 KNMI에서 25 km(OSI-102)와 해안용 12.5 km(OSI-104) L2 바람을 관측 후 약 2시간 만에 내며, NASA PO.DAAC·Copernicus Marine이 이를 다시 배포하거나 격자로 만듭니다.
+  2007년 Metop-A부터 이어진 기록은 재분석·수치예보 동화, 해양 모델 바람 강제력 검증, 바람 응력·컬 연구에 널리 쓰이고, CCMP 같은 다중 위성 바람 분석장의 주요 입력이기도 합니다.
+
+time_convention:
+  summary: >-
+    L2 스와스 자료의 값은 위성이 그 격자(WVC)를 지나간 순간의 관측이며, 각 WVC에 관측 시각(time, 1990-01-01 00:00:00 기준 초)이 들어 있습니다. 파일 하나는 궤도 하나(약 100분)입니다.
+    Copernicus Marine L3 일 파일도 하루 평균이 아니라 상승·하강 궤도별로 순간 관측을 격자에 옮긴 것이며, 격자마다 실제 관측 시각(measurement_time)이 따로 들어 있습니다.
+  points:
+    - "NetCDF(L2·L3)의 풍향은 해양학 관례(바람이 불어 가는 방향, 0° = 북쪽으로 부는 바람)이고 BUFR는 기상학 관례(불어오는 방향)입니다. 기상학 관례 풍향과 비교할 때 180° 차이에 주의하세요."
+    - "Metop-B·C는 현지 태양시 오전 9시~9시 30분께 남쪽으로 내려가며 적도를 지나는 태양동기 궤도라, 한 지점을 대체로 오전(하강)·저녁(상승)에 지납니다. 하루 평균이나 일변화 분석에는 그대로 쓸 수 없습니다."
+    - "2018-09-25부터 바람은 10 m 응력 등가 바람(대기 안정도·공기 밀도 효과를 반영해 해면 응력과 직접 대응하는 바람)입니다. 실제 10 m 바람과 정의가 다르므로 부이·모델과 비교할 때 같은 정의로 맞추세요."
+    - "model_speed·model_dir는 ECMWF 모델 바람을 관측 위치에 맞춘 배경값으로, 바람 방향 모호성 제거에 쓰인 참고값이지 관측이 아닙니다."
+    - "Copernicus Marine L3 NRT 일 파일은 다음날 12 UTC에 나오고 이틀 뒤 00 UTC에 한 번 더 갱신됩니다."
+  source: https://scatterometer.knmi.nl/publications/pdf/ASCAT_Product_Manual.pdf
+  source_name: ASCAT Wind Product User Manual v1.17 (OSI SAF/EARS, KNMI) + Copernicus Marine WIND_GLO_PHY_L3 제품 설명서
+
+variables:
+  note: >-
+    L2 변수명은 ASCAT Wind Product User Manual 부록 B(NetCDF) 기준이며 PO.DAAC 변수표와 같습니다. NetCDF에는 선택된 바람 해 하나만 들어 있고(모호성 해·sigma0 없음), 배열은 (NUMROWS, NUMCELLS) 스와스 모양입니다.
+    L3 변수명은 Copernicus Marine 제품 설명서 기준입니다.
+  full_list: https://scatterometer.knmi.nl/publications/pdf/ASCAT_Product_Manual.pdf
+  groups:
+    - name: L2 스와스 (OSI SAF 25 km·해안 12.5 km NetCDF, PO.DAAC 동일)
+      kind: instant
+      items:
+        - text: "10 m 풍속 — `wind_speed` (m s-1)"
+          note: 2018-09-25부터 응력 등가 바람
+        - text: "10 m 풍향 — `wind_dir` (degree)"
+          note: 해양학 관례(불어 가는 방향)
+        - text: "ECMWF 모델 10 m 풍속 — `model_speed` (m s-1)"
+          note: 배경 모델 바람(관측 아님)
+          std: []
+        - text: "ECMWF 모델 10 m 풍향 — `model_dir` (degree)"
+          note: 배경 모델 바람(관측 아님)
+          std: []
+        - text: "해빙 확률 — `ice_prob` (1)"
+          std: []
+        - text: "해빙 나이(a 매개변수) — `ice_age` (dB)"
+          std: []
+        - text: "WVC 품질 플래그 — `wvc_quality_flag` (비트)"
+          note: "비트 16 VarQC, 17 KNMI QC, 18 감시 플래그가 서 있으면 쓰지 않음(사용자 안내서)"
+          std: []
+        - text: "후방산란 거리(모델 함수와의 차이) — `bs_distance` (1)"
+          std: []
+        - text: "관측 시각 — `time` (seconds since 1990-01-01 00:00:00)"
+          std: []
+    - name: L3 일 격자 (Copernicus Marine, 위성·상승/하강 궤도별)
+      kind: instant
+      items:
+        - text: "10 m 동서 바람(응력 등가) — `eastward_wind` (m s-1)"
+          std: [wind10]
+        - text: "10 m 남북 바람(응력 등가) — `northward_wind` (m s-1)"
+          std: [wind10]
+        - text: "10 m 풍속(응력 등가) — `wind_speed` (m s-1)"
+          std: [wind10]
+        - text: "10 m 풍향(불어 가는 방향) — `wind_to_dir` (degree)"
+        - "바람 응력 크기 — `wind_stress_magnitude` (N m-2)"
+        - "동서·남북 바람 응력 — `eastward_stress`·`northward_stress` (N m-2)"
+        - "바람 응력 컬·발산 — `stress_curl`·`stress_divergence` (N m-3)"
+        - text: "10 m 바람 컬·발산 — `wind_curl`·`wind_divergence` (s-1)"
+          std: []
+        - text: "공기 밀도 — `air_density` (kg m-3)"
+          std: []
+        - text: "격자별 관측 시각 — `measurement_time` (seconds since 1990-01-01 00:00:00)"
+          std: []
+
+access:
+  - name: NASA PO.DAAC — Metop-C ASCAT L2 25 km (ASCATC-L2-25km)
+    url: https://podaac.jpl.nasa.gov/dataset/ASCATC-L2-25km
+    method: Earthdata Search / earthaccess / OPeNDAP / Harmony 부분 추출 / podaac-data-subscriber
+    note: >-
+      Metop-B는 ASCATB-L2-25km(2012-10-29~), 해안판은 ASCATB-L2-Coastal·ASCATC-L2-Coastal, 끝난 Metop-A는 ASCATA-L2-25km·ASCATA-L2-Coastal(~2021-11-15),
+      Metop-A 기후자료는 ASCATA_L2_25KM_CDR입니다. 궤도 하나가 NetCDF 파일 하나이며 NASA Earthdata 로그인(무료)이 필요합니다.
+  - name: EUMETSAT Data Store (OSI SAF 원 배포처, 전체 기록 보관)
+    url: https://data.eumetsat.int/
+    method: 웹 검색·다운로드, EUMETSAT Data Access API (BUFR·NetCDF)
+    note: >-
+      예 OSI-102-c는 EO:EUM:DAT:0760, OSI-104-b는 EO:EUM:DAT:0192, OSI-104-c는 EO:EUM:DAT:0202, Metop-A 기후자료 OSI-150-a는 EO:EUM:DAT:METOP:OSI-150-A 모음입니다.
+      EUMETSAT 계정(무료)이 필요합니다. 실시간 위성 방송 EUMETCast로도 받을 수 있습니다.
+  - name: OSI SAF·KNMI FTP (최근 3일)
+    url: https://osi-saf.eumetsat.int/products/osi-102-b
+    method: FTP (ftppro.knmi.nl, 디렉터리 ascat_b_osi·ascat_c_osi, 시범 6 km는 ascat_b_osi_057)
+    note: 등록 후 요청하면 계정을 줍니다. 최근 3일치만 있으므로 과거 자료는 Data Store나 PO.DAAC에서 받으세요.
+  - name: Copernicus Marine — L3 일 격자 NRT (WIND_GLO_PHY_L3_NRT_012_002)
+    url: https://data.marine.copernicus.eu/product/WIND_GLO_PHY_L3_NRT_012_002/description
+    method: copernicusmarine 도구(Python·명령행) / 웹 부분 추출
+    note: >-
+      Metop-B·C(0.125°·0.25°)와 HY-2·Oceansat-3·FY-3E 산란계를 위성·상승/하강 궤도별 데이터셋으로 제공합니다(2016-01-01~, 예 cmems_obs-wind_glo_phy_nrt_l3-metopc-ascat-des-0.125deg_P1D-i).
+      재처리판 WIND_GLO_PHY_L3_MY_012_005(1991-08~2026-06, Metop-A·B, QuikSCAT, ERS, Oceansat-2)도 있습니다. Copernicus Marine 계정(무료)이 필요합니다.
+  - name: RSS ASCAT V2.1 (C-2015 모델 함수, A·B·C 상호 보정 기후자료)
+    url: https://data.remss.com/ascat/
+    method: HTTPS 직접 다운로드 (metopa·metopb·metopc 폴더, 일 0.25° 격자 bmaps_v02.1, 스와스 ascat*_wind_vectors_v02.1)
+    note: OSI SAF와 다른 RSS 자체 처리 자료입니다. 일 격자는 오전(하강)·저녁(상승) 지도를 따로 담습니다.
+    login: false
+
+example:
+  lang: python
+  note: >-
+    PO.DAAC의 Metop-C 25 km L2 파일을 earthaccess로 받아 한반도 주변에서 사용자 안내서가 권하는 품질 플래그(VarQC·KNMI QC·감시 플래그)로 거른 뒤 평균 풍속을 구하는 예입니다.
+    NASA Earthdata 계정으로 earthaccess.login()을 한 번 거친 뒤 실행하세요. KNMI FTP 파일(.nc.gz)은 먼저 압축을 푸세요.
+  code: |
+    # pip install earthaccess xarray netCDF4
+    import earthaccess
+    import xarray as xr
+
+    earthaccess.login()
+    results = earthaccess.search_data(
+        short_name="ASCATC-L2-25km",            # Metop-B: ASCATB-L2-25km, 해안판: ASCATC-L2-Coastal
+        temporal=("2025-08-01", "2025-08-01T23:59:59"),
+        bounding_box=(120, 30, 135, 40),        # 서, 남, 동, 북 (한반도 주변)
+    )
+    files = earthaccess.download(results, "./ascat")
+
+    REJECT = (1 << 16) | (1 << 17) | (1 << 18)  # VarQC 실패, KNMI QC 실패, 감시 플래그
+    for f in files:
+        ds = xr.open_dataset(f)
+        lon = ds["lon"] % 360                    # 경도 표기(0~360 / ±180)에 상관없이
+        flag = ds["wvc_quality_flag"].fillna(0).astype("int64")
+        box = (ds["lat"] >= 30) & (ds["lat"] <= 40) & (lon >= 120) & (lon <= 135)
+        ws = ds["wind_speed"].where(box & ((flag & REJECT) == 0))
+        if ws.count() > 0:
+            print(f, int(ws.count()), float(ws.mean()))  # 궤도별 유효 WVC 수, 평균 풍속(m/s)
+
+tips:
+  - "KNMI QC 플래그(wvc_quality_flag 비트 17)가 선 WVC는 반드시 버리라고 사용자 안내서가 강조합니다. 변분 QC(비트 16)와 감시 플래그(비트 18)가 선 값도 쓰지 말라고 권합니다."
+  - "C밴드라 강수에 비교적 둔감하지만, 비가 강한 곳은 모델 함수와 맞지 않아(역산 잔차가 커) KNMI QC로 걸러집니다. RSS는 강한 비 속, 특히 약한 바람에서 ASCAT 정확도가 떨어진다고 안내합니다. 장마전선·태풍 강수대 주변은 플래그와 결측을 꼭 확인하세요."
+  - "해빙 위에도 바람 해가 들어 있으며(가짜 바람), KNMI QC와 해빙 플래그(비트 14)로 표시됩니다. 베이즈 해빙 판별이 비가 오는 WVC를 해빙으로 잘못 볼 때도 있고, 모델 해수면온도 5 °C 이상인 곳은 늘 바다로 봅니다. 겨울 오호츠크해·발해처럼 해빙이 생기는 바다에서는 해빙 플래그와 ice_prob를 함께 보세요."
+  - "육지 비율이 0.02를 넘는 WVC는 산출하지 않습니다. 25 km·일반 12.5 km 자료는 해안 약 35 km 안이 육지 오염으로 빠지므로, 서해·남해처럼 섬과 해안이 복잡한 곳은 약 15 km까지 산출하는 해안판(OSI-104, PO.DAAC *-L2-Coastal)을 쓰세요."
+  - 사용자 안내서는 25 m/s를 넘는 풍속은 대체로 덜 믿을 만하다고 적습니다. 30 m/s 초과에는 플래그(비트 12)가 섭니다. 태풍 최대풍속 분석에는 그대로 쓰지 마세요.
+  - "25 km 간격이지만 PO.DAAC는 유효 해상도를 50 km(해안판 25 km)로 안내합니다. 격자 간격 규모의 컬·발산은 잡음이 크니 해상도에 맞게 해석하세요."
+  - 스와스 두 개 사이(위성 바로 아래)와 궤도 사이에 빈 곳이 있어 위성 하나로는 하루에 모든 바다를 덮지 못합니다. Metop-B와 Metop-C를 함께 쓰면 빈 곳이 줄지만, 일평균이 필요하면 CCMP 같은 격자 분석장이 낫습니다.
+  - "준실시간 기록은 처리 방식이 중간에 바뀌었습니다(2008-11 중립 바람 전환으로 +0.2 m/s, 2018-09-25 CMOD7·응력 등가 바람). 장기 분석에는 재처리 자료(Copernicus Marine L3 MY, OSI-150, RSS V2.1)를 쓰세요."
+  - "RSS 상호 보정 연구에 따르면 ASCAT-C는 ASCAT-B보다 약 0.05 m/s 낮고, ASCAT-A는 2016년 중반과 2019년 말에 보정 계단이 있었습니다(RSS V2.1.1에서 보정). 위성을 섞을 때 확인하세요."
+  - "PO.DAAC 해안판 설명에는 아직 CMOD5.n으로 적혀 있지만, KNMI 제품 이력상 2018-09-25부터 CMOD7을 씁니다. 판 정보는 KNMI·OSI SAF 제품 페이지를 기준으로 보세요."
+  - "궤도 기동·장비 이상으로 몇 시간씩 자료가 빠지는 일이 잦습니다(예 2026-09-16 Metop-C 궤도면 기동). 빈 시간대는 KNMI 제품 페이지의 이상 이력과 OSI SAF 서비스 메시지에서 확인할 수 있습니다."
+
+citations:
+  dataset:
+    - label: Metop-B ASCAT 25 km Winds (OSI-102-b)
+      text: >-
+        EUMETSAT OSI SAF. Metop-B ASCAT 25 km Winds (OSI-102-b), near-real-time product, produced by KNMI. https://doi.org/10.15770/EUM_SAF_OSI_NRT_2021
+      doi: 10.15770/EUM_SAF_OSI_NRT_2021
+      bibtex: |
+        @misc{osisaf_osi102b,
+          author    = {{EUMETSAT OSI SAF}},
+          title     = {Metop-B {ASCAT} 25 km Winds ({OSI-102-b})},
+          publisher = {EUMETSAT Ocean and Sea Ice Satellite Application Facility},
+          doi       = {10.15770/EUM_SAF_OSI_NRT_2021}
+        }
+    - label: Metop-C ASCAT 25 km Winds (OSI-102-c)
+      text: >-
+        EUMETSAT OSI SAF. Metop-C ASCAT 25 km Winds (OSI-102-c), near-real-time product, produced by KNMI. https://doi.org/10.15770/EUM_SAF_OSI_NRT_2022
+      doi: 10.15770/EUM_SAF_OSI_NRT_2022
+      bibtex: |
+        @misc{osisaf_osi102c,
+          author    = {{EUMETSAT OSI SAF}},
+          title     = {Metop-C {ASCAT} 25 km Winds ({OSI-102-c})},
+          publisher = {EUMETSAT Ocean and Sea Ice Satellite Application Facility},
+          doi       = {10.15770/EUM_SAF_OSI_NRT_2022}
+        }
+    - label: Metop-B ASCAT coastal Winds (OSI-104-b)
+      text: >-
+        EUMETSAT OSI SAF. Metop-B ASCAT coastal Winds (OSI-104-b), near-real-time product, produced by KNMI. https://doi.org/10.15770/EUM_SAF_OSI_NRT_2018
+      doi: 10.15770/EUM_SAF_OSI_NRT_2018
+      bibtex: |
+        @misc{osisaf_osi104b,
+          author    = {{EUMETSAT OSI SAF}},
+          title     = {Metop-B {ASCAT} coastal Winds ({OSI-104-b})},
+          publisher = {EUMETSAT Ocean and Sea Ice Satellite Application Facility},
+          doi       = {10.15770/EUM_SAF_OSI_NRT_2018}
+        }
+    - label: Metop-C ASCAT coastal Winds (OSI-104-c)
+      text: >-
+        EUMETSAT OSI SAF. Metop-C ASCAT coastal Winds (OSI-104-c), near-real-time product, produced by KNMI. https://doi.org/10.15770/EUM_SAF_OSI_NRT_2019
+      doi: 10.15770/EUM_SAF_OSI_NRT_2019
+      bibtex: |
+        @misc{osisaf_osi104c,
+          author    = {{EUMETSAT OSI SAF}},
+          title     = {Metop-C {ASCAT} coastal Winds ({OSI-104-c})},
+          publisher = {EUMETSAT Ocean and Sea Ice Satellite Application Facility},
+          doi       = {10.15770/EUM_SAF_OSI_NRT_2019}
+        }
+    - label: Metop-A ASCAT L2 25 km 기후자료 (OSI-150-a)
+      text: >-
+        EUMETSAT OSI SAF, Metop-A ASCAT L2 25 km winds data record 2007-2014 (v1.0, 2016), OSI-150-a, doi: 10.15770/EUM_SAF_OSI_0006
+      doi: 10.15770/EUM_SAF_OSI_0006
+      bibtex: |
+        @misc{osisaf_osi150a,
+          author    = {{EUMETSAT OSI SAF}},
+          title     = {Metop-A {ASCAT} {L2} 25 km winds data record 2007-2014},
+          year      = {2016},
+          version   = {1.0},
+          publisher = {EUMETSAT Ocean and Sea Ice Satellite Application Facility},
+          doi       = {10.15770/EUM_SAF_OSI_0006}
+        }
+  papers:
+    - label: CMOD7 모델 함수 (2018-09 이후 OSI SAF 바람)
+      text: >-
+        Stoffelen, A., Verspeek, J., Vogelzang, J., Verhoef, A. (2017): The CMOD7 Geophysical Model Function for ASCAT and ERS Wind Retrievals.
+        IEEE Journal of Selected Topics in Applied Earth Observations and Remote Sensing, 10(5), 2123–2134.
+      doi: 10.1109/JSTARS.2017.2681806
+      bibtex: |
+        @article{stoffelen2017cmod7,
+          author  = {Stoffelen, A. and Verspeek, J. and Vogelzang, J. and Verhoef, A.},
+          title   = {The {CMOD7} Geophysical Model Function for {ASCAT} and {ERS} Wind Retrievals},
+          journal = {IEEE Journal of Selected Topics in Applied Earth Observations and Remote Sensing},
+          volume  = {10},
+          number  = {5},
+          pages   = {2123--2134},
+          year    = {2017},
+          doi     = {10.1109/JSTARS.2017.2681806}
+        }
+    - label: 산란계 바람 기후자료 (OSI SAF CDR)
+      text: >-
+        Verhoef, A., Vogelzang, J., Verspeek, J., Stoffelen, A. (2017): Long-Term Scatterometer Wind Climate Data Records.
+        IEEE Journal of Selected Topics in Applied Earth Observations and Remote Sensing, 10(5), 2186–2194.
+      doi: 10.1109/JSTARS.2016.2615873
+      bibtex: |
+        @article{verhoef2017cdr,
+          author  = {Verhoef, A. and Vogelzang, J. and Verspeek, J. and Stoffelen, A.},
+          title   = {Long-Term Scatterometer Wind Climate Data Records},
+          journal = {IEEE Journal of Selected Topics in Applied Earth Observations and Remote Sensing},
+          volume  = {10},
+          number  = {5},
+          pages   = {2186--2194},
+          year    = {2017},
+          doi     = {10.1109/JSTARS.2016.2615873}
+        }
+    - label: ASCAT-A·B·C 상호 보정 (RSS V2.1 기후자료)
+      text: >-
+        Ricciardulli, L., Manaster, A. (2021): Intercalibration of ASCAT Scatterometer Winds from MetOp-A, -B, and -C, for a Stable Climate Data Record. Remote Sensing, 13(18), 3678.
+      doi: 10.3390/rs13183678
+      bibtex: |
+        @article{ricciardulli2021ascat,
+          author  = {Ricciardulli, Lucrezia and Manaster, Andrew},
+          title   = {Intercalibration of {ASCAT} Scatterometer Winds from {MetOp-A}, -{B}, and -{C}, for a Stable Climate Data Record},
+          journal = {Remote Sensing},
+          volume  = {13},
+          number  = {18},
+          pages   = {3678},
+          year    = {2021},
+          doi     = {10.3390/rs13183678}
+        }
+  acknowledgement: >-
+    OSI SAF 제품은 CC BY 4.0이므로 EUMETSAT OSI SAF를 출처로 밝히고 제품 DOI를 인용하세요. KNMI 제품 페이지는 쓴 제품마다 'copyright (연도) EUMETSAT' 표기를 요청합니다.
+    RSS 자료를 썼다면 "C-2015 ASCAT data are produced by Remote Sensing Systems and sponsored by the NASA Ocean Vector Winds Science Team." 문구를 넣어 달라고 RSS가 요청합니다.
+
+notices:
+  - date: "2026-09-16"
+    level: info
+    title: Metop-C 궤도면 기동으로 ASCAT 바람 일시 중단 (OSI-102-c·OSI-104-c)
+    body: >-
+      OSI SAF 서비스 메시지 3579. 2026-09-16 12 UTC 무렵 Metop-C의 궤도면 기동(out-of-plane manoeuvre)이 있어 OSI SAF·EARS Metop-C ASCAT 바람이 상당 시간 빠질 수 있다고 알렸습니다.
+      이런 기동·장비 이상으로 몇 시간 단위 결측이 생기므로 그 시간대 자료는 결측 여부를 확인하세요.
+    source: https://osi-saf.eumetsat.int/community/list-of-service-messages/metop-c-ascat-wind-products-planned-outage-16-september-out
+  - date: "2026-06-18"
+    level: info
+    title: ASCAT-B L1b 보정 갱신 — 2024년 7월부터 있던 스와스 가로 방향 작은 편차 수정
+    body: >-
+      KNMI ASCAT-B 제품 이력에 따르면 2024년 7월부터 나타난 스와스 가로 방향(across-swath)의 작은 변동을 바로잡도록 ASCAT-B L1b 보정이 갱신되었습니다.
+      2024-07~2026-06 준실시간 ASCAT-B 바람을 WVC 위치별로 비교·평균하는 분석이라면 이 구간을 주의하세요.
+    source: https://scatterometer.knmi.nl/ascat_b_osi_25_prod/
+  - date: "2026-02-25"
+    level: info
+    title: 후속 산란계 SCA를 실은 MetOp-SG-B1, 2026년 10월 발사 예정 (ESA)
+    body: >-
+      ESA는 해상풍 벡터와 토양수분을 관측할 산란계를 실은 MetOp Second Generation B1의 발사가 2026년 10월 쿠루(프랑스령 기아나)에서 예정되어 있다고 밝혔습니다.
+      WMO OSCAR(2026-09-23 갱신)는 발사를 2026년 11월로 적고 있어, 정확한 날짜와 SCA 자료 공개 일정은 EUMETSAT 발표를 확인해야 합니다.
+    source: https://www.esa.int/Applications/Observing_the_Earth/Meteorological_missions/MetOp_Second_Generation/First_MetOp_Second_Generation-B_satellite_spreads_its_wing
+  - date: "2021-11-15"
+    level: warning
+    title: Metop-A 운용 종료 — ASCAT-A 바람 생산 중단, 궤도 하강 시작
+    body: >-
+      15년간 운용된 Metop-A가 2021-11-15부터 궤도를 낮추는 퇴역 절차에 들어갔고, OSI SAF Metop-A ASCAT 바람(OSI-102·OSI-104)도 이날로 끝났습니다.
+      이후 ASCAT 바람은 Metop-B·C 두 위성만 남아, 2021-11-15 앞뒤로 하루 관측 범위가 줄었습니다.
+    source: https://www.eumetsat.int/europes-first-meteorological-satellite-polar-orbit-ends-its-run
+  - date: "2019-10-02"
+    level: info
+    title: Metop-C ASCAT 바람 운영 시작
+    body: >-
+      2019년 2월 시범 생산을 시작한 Metop-C ASCAT 25 km·해안 바람이 운영 제품이 되었고, 2019-11-28부터 EUMETCast로 모든 사용자에게 배포되었습니다.
+    source: https://scatterometer.knmi.nl/ascat_c_osi_25_prod/
+  - date: "2018-09-25"
+    level: warning
+    title: OSI SAF ASCAT 바람에 CMOD7과 응력 등가 바람 적용
+    body: >-
+      바람 산출 모델 함수가 CMOD5.n에서 CMOD7로 바뀌고, 배경 바람으로 실제 10 m ECMWF 바람 대신 응력 등가 ECMWF 바람을 쓰게 되었습니다(AWDP 3_2_01).
+      이날 앞뒤로 바람의 정의와 값이 달라지므로 준실시간 기록을 이어 붙인 장기 분석에서는 주의하세요.
+    source: https://scatterometer.knmi.nl/ascat_b_osi_25_prod/
+
+transitions:
+  - from: Metop-A ASCAT (ASCAT-A)
+    to: Metop-B·C ASCAT (ASCAT-B, ASCAT-C)
+    status: completed
+    date: "2021-11"
+    summary: >-
+      2007년부터 이어진 Metop-A ASCAT 바람이 2021-11-15에 끝나고, 2012년부터 함께 돌던 Metop-B와 2019년 운영을 시작한 Metop-C가 기록을 잇습니다.
+      세 위성의 ASCAT은 같은 설계지만 보정 차이가 조금씩 있어 RSS는 A·B·C를 상호 보정한 기후자료(V2.1/V2.1.1)를 따로 만들었습니다.
+    changes:
+      - aspect: 위성
+        before: "Metop-A (2006-10-19 발사, 2021-11-30 퇴역)"
+        after: "Metop-B (2012-09-17 발사), Metop-C (2018-11-07 발사)"
+      - aspect: 준실시간 바람 기간
+        before: "2007-03-28 시범, 2008-12-03 운영 ~ 2021-11-15"
+        after: "ASCAT-B 2012-11 시범·2013-05-27 운영 ~, ASCAT-C 2019-02 시범·2019-10 운영 ~"
+      - aspect: 궤도
+        before: "2017년 6월부터 수명 연장을 위해 표류(drifting) 궤도로 운용 — 상승 노드 지방시가 21:30(2017-06)에서 19:30(2021)으로 앞당겨짐"
+        after: "적도 통과 시각을 유지하는 태양동기 궤도 (WMO OSCAR 기준 Metop-B 09:00, Metop-C 09:31 하강)"
+      - aspect: 보정 안정성 (RSS 분석)
+        before: "2016년 중반·2019년 말 두 번의 작은 보정 계단(각 0.1 m/s 미만) — RSS V2.1.1에서 보정"
+        after: "첫 6개월 뒤로 안정. ASCAT-C가 ASCAT-B보다 약 0.05 m/s 낮음"
+      - aspect: PO.DAAC 모음
+        before: "ASCATA-L2-25km, ASCATA-L2-Coastal, ASCATA_L2_25KM_CDR"
+        after: "ASCATB-L2-25km·ASCATC-L2-25km, ASCATB-L2-Coastal·ASCATC-L2-Coastal"
+    impacts:
+      - "2021-11-15 이후 ASCAT 위성 수가 셋에서 둘로 줄어 하루 관측 범위·횟수가 달라졌습니다. 관측 횟수에 민감한 통계는 이 시점 앞뒤를 나눠 보세요."
+      - "위성을 바꿔 이어 붙일 때는 0.1 m/s 수준의 보정 차이가 있을 수 있으니 RSS V2.1/V2.1.1처럼 상호 보정된 기후자료를 쓰거나 겹치는 기간으로 차이를 확인하세요."
+      - "Metop-A는 2017년 6월부터 표류 궤도라 통과 시각이 2021년까지 약 2시간 앞당겨졌습니다. 일변화가 있는 바람(해륙풍 등)을 볼 때 이 점을 고려하세요."
+    sources:
+      - name: OSI SAF — Metop-C ASCAT 25 km Winds (OSI-102-c) 제품 이력
+        url: https://osi-saf.eumetsat.int/products/osi-102-c
+      - name: EUMETSAT — Metop-A 운용 종료 (2021-11-15)
+        url: https://www.eumetsat.int/europes-first-meteorological-satellite-polar-orbit-ends-its-run
+      - name: EUMETSAT — Metop-A 표류 궤도 운용 결정
+        url: https://www.eumetsat.int/eumetsat-council-agreed-ageing-still-healthy-metop-satellite-will-be-exploited-drifting-orbit-june
+      - name: RSS — ASCAT-A·B·C 해상풍 기후자료 공지 (2021-08-16)
+        url: https://www.remss.com/announcement/ASCAT-ABC-ocean-surface-wind-CDR
+      - name: Ricciardulli & Manaster (2021), Remote Sensing
+        url: https://doi.org/10.3390/rs13183678
+  - from: OSI SAF ASCAT 바람 (CMOD5.n, 10 m 중립 바람)
+    to: OSI SAF ASCAT 바람 (CMOD7, 10 m 응력 등가 바람)
+    status: completed
+    date: "2018-09"
+    summary: >-
+      2018-09-25 KNMI 처리기(AWDP 3_2_01)가 바뀌며 모델 함수가 CMOD7로, 바람 정의가 10 m 응력 등가 바람으로, 배경 ECMWF 바람도 응력 등가 바람으로 바뀌었습니다.
+      준실시간 기록은 다시 처리하지 않았으므로 이 날짜를 사이에 두고 정의가 다른 값이 이어져 있습니다.
+    changes:
+      - aspect: 모델 함수 (GMF)
+        before: CMOD5.n
+        after: CMOD7
+      - aspect: 바람 정의
+        before: "10 m 중립 등가 바람 (2008-11 중립 바람 전환 때 +0.2 m/s)"
+        after: "10 m 응력 등가 바람 (대기 안정도·공기 밀도 효과 반영)"
+      - aspect: 배경 모델 바람 (model_speed·model_dir)
+        before: 실제 10 m ECMWF 바람
+        after: 응력 등가 ECMWF 바람
+      - aspect: 처리기
+        before: AWDP 2.x
+        after: "AWDP 3_2_01 (2022-10-04 3_3_01로 갱신)"
+    impacts:
+      - "2018-09-25 앞뒤 준실시간 값을 한 시계열로 쓰면 정의 차이가 섞입니다. 장기 분석에는 재처리 자료를 쓰세요."
+      - "부이 바람과 비교하려면 부이 값을 같은 응력 등가 바람으로 바꿔야 공정합니다(KNMI CMOD7 안내)."
+      - "PO.DAAC 일부 설명(해안판)은 아직 CMOD5.n으로 적혀 있으니 판 정보는 KNMI·OSI SAF 이력을 기준으로 보세요."
+    sources:
+      - name: KNMI — OSI SAF ASCAT-B 25 km 제품 이력
+        url: https://scatterometer.knmi.nl/ascat_b_osi_25_prod/
+      - name: KNMI — CMOD7 설명
+        url: https://scatterometer.knmi.nl/cmod7/
+      - name: ASCAT Wind Product User Manual v1.17
+        url: https://scatterometer.knmi.nl/publications/pdf/ASCAT_Product_Manual.pdf
+  - from: Metop ASCAT
+    to: Metop-SG-B SCA (Scatterometer)
+    status: planned
+    date: "2026"
+    summary: >-
+      EUMETSAT 2세대 극궤도 위성 Metop-SG의 B형 위성에 실리는 C밴드 산란계 SCA가 ASCAT을 잇습니다. 첫 위성 B1은 ESA 발표로 2026년 10월, WMO OSCAR로 2026년 11월 발사 예정이며,
+      2026-10-13 확인 시 SCA 자료 공개 일정은 공식 발표가 없습니다. 더 넓은 스와스와 교차 편파 관측으로 해상도·강풍 관측 범위를 넓히는 것이 목표입니다.
+    changes:
+      - aspect: 위성
+        before: "Metop-B (2012~), Metop-C (2018~)"
+        after: "Metop-SG-B1 (2026 발사 예정), B2 (2033 예정), B3 (2040 예정)"
+      - aspect: 주파수
+        before: C밴드 5.255 GHz
+        after: "C밴드 약 5.355 GHz"
+      - aspect: 스와스
+        before: "약 550 km 스와스 두 개(약 700 km 간격, 유효 폭 525 km)"
+        after: "660 km 스와스 두 개(가운데 525 km 공백), 세 방위(45°·90°·135°) 관측, 약 1.5일에 준전지구 관측"
+      - aspect: 해상도
+        before: "25 km 간격(유효 약 50 km), 해안판 12.5 km 간격(유효 25 km)"
+        after: "공칭 25 km를 12.5 km 간격으로, 고해상도 방식 15~20 km를 6.25 km 간격으로 (WMO OSCAR)"
+      - aspect: 편파·강풍
+        before: "VV 편파. 25 m/s 넘는 바람은 덜 믿을 만함"
+        after: "VV에 더해 가운데 빔 교차 편파(VH) 관측 — 약 40 m/s 이상까지 강풍 관측 기대 (SCA Science Plan)"
+    impacts:
+      - "SCA 자료가 공개되면 ASCAT과 겹치는 기간의 상호 보정 결과를 확인한 뒤 이어 쓰세요. 모델 함수·해상도가 달라 그대로 이어 붙이면 계단이 생길 수 있습니다."
+      - "발사일과 자료 공개(시범·운영) 일정은 EUMETSAT·OSI SAF 공지로 다시 확인해야 합니다."
+    sources:
+      - name: ESA — First MetOp Second Generation-B satellite spreads its wing (2026-02-25)
+        url: https://www.esa.int/Applications/Observing_the_Earth/Meteorological_missions/MetOp_Second_Generation/First_MetOp_Second_Generation-B_satellite_spreads_its_wing
+      - name: WMO OSCAR — Metop-SG-B1
+        url: https://space.oscar.wmo.int/satellites/view/metop_sg_b1
+      - name: WMO OSCAR — SCA 산란계
+        url: https://space.oscar.wmo.int/instruments/view/sca_scatterometer
+      - name: ESA/EUMETSAT SCA Science Plan (2019)
+        url: https://user.eumetsat.int/s3/eup-strapi-media/pdf_science_epssg_sca_plan_b35ccedaa8.pdf
+      - name: ESA — MetOp-SG facts and figures
+        url: https://www.esa.int/Applications/Observing_the_Earth/Meteorological_missions/MetOp_Second_Generation/MetOp-SG_facts_and_figures
+
+links:
+  - name: OSI SAF — 바람 제품 목록
+    url: https://osi-saf.eumetsat.int/products/wind-products
+  - name: OSI SAF — Metop-B ASCAT 25 km Winds (OSI-102-b)
+    url: https://osi-saf.eumetsat.int/products/osi-102-b
+  - name: OSI SAF — Metop-B ASCAT coastal Winds (OSI-104-b)
+    url: https://osi-saf.eumetsat.int/products/osi-104-b
+  - name: OSI SAF — Metop-A ASCAT 기후자료 (OSI-150-a)
+    url: https://osi-saf.eumetsat.int/products/osi-150-a
+  - name: ASCAT Wind Product User Manual (PDF)
+    url: https://scatterometer.knmi.nl/publications/pdf/ASCAT_Product_Manual.pdf
+  - name: KNMI — ASCAT-B 25 km 제품 페이지 (이상·변경 이력)
+    url: https://scatterometer.knmi.nl/ascat_b_osi_25_prod/
+  - name: KNMI — 바람 처리 상태
+    url: https://scatterometer.knmi.nl/proc_status/
+  - name: OSI SAF — 서비스 메시지
+    url: https://osi-saf.eumetsat.int/community/list-of-service-messages
+  - name: Copernicus Marine — L3 산란계 바람 NRT
+    url: https://data.marine.copernicus.eu/product/WIND_GLO_PHY_L3_NRT_012_002/description
+  - name: Copernicus Marine — L3 산란계 바람 재처리
+    url: https://data.marine.copernicus.eu/product/WIND_GLO_PHY_L3_MY_012_005/description
+  - name: RSS — ASCAT 설명 페이지
+    url: https://www.remss.com/missions/ascat/
+  - name: 이 사이트 — CCMP V3.1 (ASCAT 등 위성 바람을 합친 6시간 격자 분석장)
+    url: ../ccmp/
+
+watch_urls:
+  - https://osi-saf.eumetsat.int/community/list-of-service-messages
+  - https://scatterometer.knmi.nl/ascat_b_osi_25_prod/
+  - https://scatterometer.knmi.nl/ascat_c_osi_25_prod/
+
+last_verified: "2026-10-13"

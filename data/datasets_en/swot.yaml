@@ -1,0 +1,359 @@
+# ─────────────────────────────────────────────────────────────
+# SWOT KaRIn ocean products — dataset information file (English edition)
+# Satellite tab (sea surface height and waves), also listed in the ocean tab (satellite observations). KaRIn low-rate (LR) L2 sea surface height (PO.DAAC) and AVISO L3 from the NASA–CNES wide-swath altimetry mission.
+# As checked on 2026-10-13, Version D (since May 2025) is the current L2_LR_SSH release, and PO.DAAC holds data through 2026-10-10 (PID0).
+# After editing, update last_verified to the date you checked the official pages.
+# ─────────────────────────────────────────────────────────────
+id: swot
+name: SWOT KaRIn (L2 LR SSH · L3)
+full_name: >-
+  Surface Water and Ocean Topography (SWOT) KaRIn Low Rate Sea Surface Height — PO.DAAC SWOT_L2_LR_SSH Version D (Basic, Expert, WindWave, Unsmoothed)
+  and AVISO SWOT_L3_LR_SSH (wide-swath interferometric altimeter sea surface height and significant wave height)
+category: satellite
+domain: satellite
+group: 해면고도·파랑
+order: 20
+also_in:
+  - domain: ocean
+    group: 위성 관측 자료
+domains: [해양, 원격탐사]
+provider: NASA JPL and CNES SWOT project (L2 production) / NASA PO.DAAC (distribution) / AVISO and DUACS (CNES, CLS; L3 production and distribution)
+
+status: active
+status_note: >-
+  Operational. KaRIn products moved from Version C to Version D in May 2025 (forward processing, PID0, from measurements of 2025-05-06), and the 2023-03 to 2025-05 record was reprocessed as Version D (PGD0).
+  When checked on 2026-10-13, PO.DAAC SWOT_L2_LR_SSH_BASIC_D held measurements through 2026-10-10 (posted 2026-10-12). The Version C collections (_2.0) stop in early May 2025 but have not been retired.
+  The nominal operations phase (Phase E) is three years, and SWOT is among the missions invited to the NASA 2026 Earth Science Senior Review.
+
+period:
+  start: "2023-03"
+  end: present
+  note: >-
+    Launched on 2022-12-16. The KaRIn calibration phase on the 1-day repeat orbit began on 2023-03-30 and lasted until 2023-07-10; after the orbit transition, the 21-day science orbit started on 2023-07-21 (cycle 1).
+    KaRIn data from 2023-07-21 to 07-26 are missing or suspect because the instrument was not yet configured for the science orbit. PO.DAAC Version D files start on 2023-03-27 (cycle 473).
+    Release history — beta (pre-validated) in December 2023, Version C public release in March 2024, Version D in May 2025.
+
+resolution:
+  spatial_short: "2 km (0.02°)"
+  temporal_short: "1일"
+  spatial: >-
+    L2 Basic, Expert and WindWave — geographically fixed, swath-aligned 2 km × 2 km grid / L2 Unsmoothed — 250 m × 250 m "native" grid with minimal smoothing.
+    AVISO L3 — Basic, Expert and Technical on 2 km, Unsmoothed on 250 m. KaRIn covers a 120 km wide swath with a gap of about 20 km along nadir, which is sampled by the Jason-class nadir altimeter
+  vertical: Single level (sea surface height, significant wave height, wind speed)
+  temporal: >-
+    One file per pass (half orbit); each value is the measurement taken as the satellite passed over that pixel. The science orbit repeats every 20.86455 days (584 passes per cycle, average revisit about 11 days).
+    The calibration phase (2023-03-30 to 07-10) used a 1-day repeat orbit at 857 km altitude that revisited the same tracks every day
+coverage:
+  short: 준전지구
+  note: "The 77.6° orbit inclination leaves the polar caps unobserved. Swaths fill in the ocean over one cycle (about 21 days); a single day of data is a set of stripes"
+update: >-
+  L2 — forward processing updated daily (measurements of 2026-10-10 posted on 2026-10-12; AVISO quotes a delivery delay of under 5 days for L2_LR_SSH) /
+  L3 — AVISO targets 48-hour latency, following the shorter L2 latency introduced in November 2025
+license: >-
+  PO.DAAC data are shared openly without restriction under NASA's Earth science data policy (cite the DOI) / AVISO L3 is distributed under the standard AVISO+ licence (free, account required, prescribed citation)
+account_required: true
+
+summary: >-
+  SWOT, launched by NASA and the French space agency CNES in December 2022, carries KaRIn, a Ka-band radar interferometer that maps a 120 km wide swath in one pass.
+  It resolves two-dimensional sea surface structure below a few tens of kilometres (submesoscale eddies, fronts, internal tides) that conventional nadir altimeters miss.
+  The low-rate (LR) L2 ocean product comes as Basic for general users, Expert with every correction term, WindWave with significant wave height and wind speed (all on a 2 km grid), and Unsmoothed on a 250 m grid;
+  AVISO and DUACS produce a separate L3 with cross-calibration, noise filtering and geostrophic currents. KaRIn's high-rate (HR) mode also feeds river and lake products (PIXC, RiverSP, LakeSP, Raster), which this page does not cover.
+
+time_convention:
+  summary: >-
+    L2 and L3 files are organised by pass (half orbit), and each value is an instantaneous measurement taken as the satellite passed over the pixel, not a time average.
+    On the science orbit the same point is revisited roughly every 21 days (other passes may cross it in between depending on latitude); only the calibration phase (2023-03-30 to 07-10) repeated the same tracks daily.
+  points:
+    - "File names follow SWOT_L2_LR_SSH_<Basic|Expert|WindWave|Unsmoothed>_<cycle>_<pass>_<start>_<end>_<CRID>_<counter>.nc, e.g. SWOT_L2_LR_SSH_Basic_057_261_20261010T223423_20261010T232551_PID0_01.nc."
+    - "Cycles 474–578 belong to the calibration phase (1-day orbit) and cycles from 001 to the science phase (21-day orbit). The two numbering schemes differ, so sort by the dates in the file name."
+    - "The CRID identifies the processing — PGC0 (Version C reprocessing), PIC0 and PIC2 (Version C forward), PGD0 (Version D reprocessing, 2023-03 to 2025-05), PID0 (Version D forward, from 2025-05-06). Where PID0 and PGD0 overlap, use PGD0."
+    - "When a pass has several product counters (the trailing _01, _02), the highest counter is the latest regeneration."
+    - "`time_tai` is in seconds since 2000-01-01 00:00:00 TAI (no leap seconds); the TAI–UTC offset is in the tai_utc_difference attribute of the time variable. The AVISO L3 `time` is in seconds since 1950-01-01 00:00:00 UTC."
+  source: https://archive.podaac.earthdata.nasa.gov/podaac-ops-cumulus-docs/web-misc/swot_mission_docs/releases/SWOT_VersionD_KaRIn_Products_Release_Note_20251219.pdf
+  source_name: SWOT Version D KaRIn Products Release Note (2025-12-19) / PO.DAAC SWOT Mission Events / AVISO SWOT L3 Handbook issue 3.1
+
+variables:
+  note: >-
+    L2 variable names follow the PO.DAAC dataset pages (Basic and Expert variable lists) and NASA CMR variable definitions; L3 names follow the AVISO SWOT_L3_LR_SSH handbook (issue 3.1, v3.0).
+    In L2, the variables with the `_2` suffix (ssh_karin_2 and so on) use the currently recommended set of corrections, and the Expert file contains every Basic and WindWave variable.
+  full_list: https://podaac.jpl.nasa.gov/dataset/SWOT_L2_LR_SSH_EXPERT_D
+  groups:
+    - name: L2 sea surface height (Basic and Expert, 2 km)
+      kind: instant
+      items:
+        - text: "Sea surface height anomaly — `ssha_karin_2` (m)"
+          note: "ssh_karin_2 minus the CNES/CLS mean sea surface, solid earth tide, ocean tide (FES), internal tide (HRET), pole tide and dynamic atmospheric correction (dac)"
+        - text: "Sea surface height above the reference ellipsoid, fully corrected — `ssh_karin_2` (m)"
+        - text: "SSHA quality flag — `ssha_karin_2_qual` (bit flags)"
+          note: "0 means none of the suspect, degraded or bad bits is set"
+          std: []
+        - text: "Height correction from KaRIn crossovers — `height_cor_xover` (m)"
+          note: "Not applied to the ssh_karin and ssha_karin variables; add it yourself to use it"
+          std: []
+        - text: "Mean sea surface height (CNES/CLS, above the reference ellipsoid) — `mean_sea_surface_cnescls` (m)"
+          kind: static
+          std: []
+        - text: "Mean dynamic topography above the geoid (Expert) — `mean_dynamic_topography` (m)"
+          kind: static
+        - text: "Dynamic atmospheric correction (Expert) — `dac` (m)"
+          std: []
+        - text: "Distance from nadir (negative left, positive right of the swath; Expert) — `cross_track_distance` (m)"
+          kind: static
+          std: []
+        - text: "Rain and ice flags — `rain_flag`, `dynamic_ice_flag`"
+          std: []
+    - name: L2 waves and wind (WindWave and Expert, 2 km)
+      kind: instant
+      items:
+        - "Significant wave height from KaRIn — `swh_karin` (m)"
+        - text: "Wind speed from KaRIn (computed from sig0_karin_2) — `wind_speed_karin_2` (m/s)"
+          std: [wind10]
+        - text: "KaRIn normalized radar cross section sigma0 (linear units) — `sig0_karin_2` (1)"
+          std: []
+        - text: "Significant wave height quality flag — `swh_karin_qual`"
+          std: []
+        - text: "Model significant wave height, mean wave direction and mean wave period — `swh_model`, `mean_wave_direction`, `mean_wave_period_t02`"
+          note: Model information carried in the Expert file (not measurements)
+    - name: L2 Unsmoothed (250 m)
+      kind: instant
+      items:
+        - text: "Sea surface height anomaly and sea surface height — `ssha_karin_2`, `ssh_karin_2` (m)"
+          note: "High-resolution values with minimal smoothing. About 40 GB per day and 15 TB per year according to AVISO"
+    - name: AVISO L3 (Basic and Expert, 2 km)
+      kind: instant
+      items:
+        - text: "Denoised sea surface height anomaly — `ssha_filtered` (m)"
+          note: "KaRIn noise removed with a U-Net neural network (formerly ssha_noiseless)"
+        - text: "Sea surface height anomaly before denoising — `ssha_unfiltered` (m)"
+        - text: "Mean dynamic topography — `mdt` (m)"
+          kind: static
+        - text: "Absolute geostrophic velocity from the denoised SSHA (Expert) — `ugos_filtered`, `vgos_filtered` (m/s)"
+        - text: "Geostrophic velocity anomaly (Expert) — `ugosa_filtered`, `vgosa_filtered` (m/s)"
+        - text: "Cross-calibration correction (Expert) — `calibration` (m)"
+          std: []
+        - text: "Quality flag (Expert) — `quality_flag`"
+          note: "AVISO recommends keeping only flags 0 to 3 for most studies"
+          std: []
+
+access:
+  - name: NASA PO.DAAC — SWOT L2 KaRIn LR SSH Version D (SWOT_L2_LR_SSH_D)
+    url: https://podaac.jpl.nasa.gov/dataset/SWOT_L2_LR_SSH_D
+    method: Earthdata Search / earthaccess / podaac-data-subscriber (netCDF-4, one file per pass)
+    note: >-
+      The sub-collections SWOT_L2_LR_SSH_BASIC_D, SWOT_L2_LR_SSH_EXPERT_D, SWOT_L2_LR_SSH_WINDWAVE_D and SWOT_L2_LR_SSH_UNSMOOTHED_D can be downloaded separately.
+      A free NASA Earthdata login is required. Version C remains available in the SWOT_L2_LR_SSH_2.0 collections.
+  - name: AVISO+ — SWOT L3 LR SSH (SWOT_L3_LR_SSH)
+    url: https://www.aviso.altimetry.fr/en/data/products/sea-surface-height-products/global/swot-l3-ocean-products.html
+    method: "FTP/SFTP at ftp-access.aviso.altimetry.fr (path /swot_products/l3_karin_nadir/l3_lr_ssh), THREDDS (tds-odatis.aviso.altimetry.fr)"
+    note: "AVISO+ account required. Basic, Expert and Technical v3.0 (2 km) and Unsmoothed v2.0.1 (250 m) are the latest versions."
+  - name: AVISO+ — SWOT ocean data access (L2, L3 and L3 Wind Wave)
+    url: https://www.aviso.altimetry.fr/en/missions/current-missions/swot/swot-ocean-data-access.html
+    method: "FTP/SFTP — L2 LR SSH at /swot_products/l2_karin/l2_lr_ssh, L3 Wind Wave at /swot_products/l3_karin/l3_lr_wind_wave"
+    note: CNES-side L2 distribution and the L3 wave product (SWOT_L3_LR_WIND_WAVE v2.0) are also available here. AVISO+ account required.
+
+example:
+  lang: python
+  note: "Downloads L2 Basic files from PO.DAAC with earthaccess. Run earthaccess.login() once with your NASA Earthdata account first."
+  code: |
+    # pip install earthaccess xarray netCDF4
+    import earthaccess
+    import xarray as xr
+
+    earthaccess.login()
+    results = earthaccess.search_data(
+        short_name="SWOT_L2_LR_SSH_BASIC_D",       # Expert: SWOT_L2_LR_SSH_EXPERT_D
+        temporal=("2025-06-01", "2025-06-21"),      # one science-orbit cycle (~21 days)
+        bounding_box=(120, 30, 135, 42),            # around Korea (west, south, east, north)
+    )
+    files = earthaccess.download(results[:5], "./swot")
+
+    ds = xr.open_dataset(files[0])
+    ssha = ds["ssha_karin_2"] + ds["height_cor_xover"]   # crossover correction must be added by the user
+    ssha = ssha.where(ds["ssha_karin_2_qual"] == 0)      # keep values with no flag bits set
+    print(files[0], float(ssha.std()))
+
+tips:
+  - "`height_cor_xover` (the crossover correction) is not applied to the ssh_karin and ssha_karin variables. Add it yourself to remove long-wavelength errors such as cross-swath tilts and offsets, or use AVISO L3, which includes it."
+  - "The Version D release note says the ice and rain flags are not fully reliable. ssha_karin_qual can be 0 even when rain_flag or dynamic_ice_flag is non-zero, so check both flags separately."
+  - "Near-coast data are not well validated and can have large errors, and unflagged cross-track stripes (from Doppler centroid jumps) can appear near coasts. Take particular care along the intricate southern and western coasts of Korea."
+  - "Ships and icebergs may not be flagged. Treat isolated spikes in busy waters such as the Korea Strait and the East China Sea with suspicion."
+  - "Versions C and D differ in tide model (FES2014 to FES2022b), mean sea surface, MDT, sigma0 calibration (about 2.5 dB lower) and a geoid fix, so do not mix them. Download the Version D reprocessing (PGD0) for 2023-03 to 2025-05 as well."
+  - "The release note reports residual errors in `swh_karin` on roughly 78-day timescales linked to the satellite beta angle. For long-term wave statistics, compare with nadir-altimeter records such as ESA Sea State CCI."
+  - "The calibration phase (2023-03-30 to 07-10, 1-day repeat orbit) revisits narrow stripes every day, which suits studies of fast variability, but leaves everything outside them empty. Its sampling is entirely different from the 21-day science orbit, so do not pool the two periods into one statistic."
+  - "Unsmoothed (250 m) runs to about 40 GB per day and 15 TB per year. Select only the cycles and passes you need; 2 km Basic or Expert is enough for most mesoscale work."
+  - "When checked on 2026-10-13, a search of the PO.DAAC sub-collection SWOT_L2_LR_SSH_BASIC_D returned nothing for 2025-04-08 to 05-02, while the parent collection SWOT_L2_LR_SSH_D held Basic files (PGD0) for that period. If a period looks empty, search the parent collection too."
+  - "The operational Copernicus Marine DUACS L4 maps have used SWOT nadir altimeter (SWOT-Nadir) measurements since November 2023, but not the KaRIn wide-swath data. An L4 that merges KaRIn has been available since November 2025 only as a demonstration dataset."
+
+citations:
+  dataset:
+    - label: SWOT L2 KaRIn LR SSH Version D (PO.DAAC)
+      text: >-
+        Surface Water Ocean Topography (SWOT). 2025. SWOT Level 2 KaRIn Low Rate Sea Surface Height Data Product, Version D. Ver. D. PO.DAAC, CA, USA.
+        Dataset accessed [YYYY-MM-DD] at https://doi.org/10.5067/SWOT-SSH-D
+      doi: 10.5067/SWOT-SSH-D
+      bibtex: |
+        @misc{swot2025lrsshD,
+          author    = {{Surface Water Ocean Topography (SWOT)}},
+          title     = {{SWOT} Level 2 {KaRIn} Low Rate Sea Surface Height Data Product, Version {D}},
+          year      = {2025},
+          publisher = {NASA Physical Oceanography Distributed Active Archive Center},
+          version   = {D},
+          doi       = {10.5067/SWOT-SSH-D}
+        }
+    - label: AVISO SWOT L3 KaRIn LR SSH Basic v3.0
+      text: >-
+        AVISO/DUACS, 2024. SWOT Level-3 KaRIn Low Rate SSH Basic (v3.0) [Data set]. CNES. https://doi.org/10.24400/527896/A01-2023.017
+      doi: 10.24400/527896/A01-2023.017
+      bibtex: |
+        @misc{avisoduacs2024swotl3basic,
+          author    = {{AVISO/DUACS}},
+          title     = {{SWOT} Level-3 {KaRIn} Low Rate {SSH} Basic (v3.0)},
+          year      = {2024},
+          publisher = {CNES},
+          doi       = {10.24400/527896/A01-2023.017}
+        }
+    - label: AVISO SWOT L3 KaRIn LR SSH Expert v3.0
+      text: >-
+        AVISO/DUACS, 2024. SWOT Level-3 KaRIn Low Rate SSH Expert (v3.0) [Data set]. CNES. https://doi.org/10.24400/527896/A01-2023.018
+      doi: 10.24400/527896/A01-2023.018
+      bibtex: |
+        @misc{avisoduacs2024swotl3expert,
+          author    = {{AVISO/DUACS}},
+          title     = {{SWOT} Level-3 {KaRIn} Low Rate {SSH} Expert (v3.0)},
+          year      = {2024},
+          publisher = {CNES},
+          doi       = {10.24400/527896/A01-2023.018}
+        }
+  papers:
+    - label: SWOT mission overview
+      text: >-
+        Fu, L.-L., Pavelsky, T., Cretaux, J.-F., Morrow, R., Farrar, J. T., Vaze, P., Sengenes, P., Vinogradova-Shiffer, N., Sylvestre-Baron, A., Picot, N., Dibarboure, G. (2024):
+        The Surface Water and Ocean Topography Mission: A Breakthrough in Radar Remote Sensing of the Ocean and Land Surface Water. Geophysical Research Letters, 51(4), e2023GL107652.
+      doi: 10.1029/2023GL107652
+      bibtex: |
+        @article{fu2024swot,
+          author  = {Fu, Lee-Lueng and Pavelsky, Tamlin and Cretaux, Jean-Francois and Morrow, Rosemary and Farrar, J. Thomas and Vaze, Parag and Sengenes, Pierre and Vinogradova-Shiffer, Nadya and Sylvestre-Baron, Annick and Picot, Nicolas and Dibarboure, Gerald},
+          title   = {The Surface Water and Ocean Topography Mission: A Breakthrough in Radar Remote Sensing of the Ocean and Land Surface Water},
+          journal = {Geophysical Research Letters},
+          volume  = {51},
+          number  = {4},
+          pages   = {e2023GL107652},
+          year    = {2024},
+          doi     = {10.1029/2023GL107652}
+        }
+  acknowledgement: >-
+    For L3, AVISO asks users to include "The SWOT L3_LR_SSH product, derived from the L2 SWOT KaRIn low rate ocean data products (NASA/JPL and CNES),
+    is produced and made freely available by AVISO and DUACS teams as part of the DESMOS Science Team project" together with the product DOI.
+    PO.DAAC asks for a data citation with authors, title, publisher and DOI in the reference list.
+
+notices:
+  - date: "2025-11"
+    level: info
+    title: AVISO L3 LR SSH v3.0 released; shorter L2 latency
+    body: >-
+      AVISO released SWOT L3 LR SSH Basic and Expert v3.0 (2 km, calibration cycles 474–578 and the science phase), followed in December by Technical v3.0 with alternative models and algorithms.
+      In the same month L2_LR_SSH delivery became six hours faster, and L3 now targets 48-hour latency. The 250 m Unsmoothed product is still at v2.0.1.
+    source: https://www.aviso.altimetry.fr/en/missions/current-missions/swot/swot-ocean-data-access.html
+  - date: "2025-11"
+    level: info
+    title: Copernicus Marine adds a demonstration L4 that merges SWOT KaRIn
+    body: >-
+      An NRT L4 sea level map merging nadir altimeters with SWOT KaRIn (cmems_obs-sl_glo_phy-ssh_nrt_demo-allsat-swos-l4-duacs-0.125deg_P1D-i) was added as a demonstration dataset.
+      It is kept separate because the L3 KaRIn input is not yet operational; the official operational product remains the nadir-only DUACS map.
+    source: https://marine.copernicus.eu/user-corner/product-roadmap/transition-information?product=SEALEVEL_GLO_PHY_L4_NRT_008_046
+  - date: "2025-05-21"
+    level: warning
+    title: KaRIn products transition from Version C to Version D complete
+    body: >-
+      The last Version C forward products cover measurements from about 2025-05-05 and the first Version D products those from about 2025-05-06. Reprocessing of 2023-03-30 to 2025-05 into Version D was under way (expected to finish in early 2026),
+      and Version C collections remain available. Some anomalous products from the 3–5 days after 2025-05-06 were regenerated with higher counters, so users should always take the file with the highest product counter.
+    source: https://podaac.jpl.nasa.gov/announcements/2025-05-21-SWOT-Science-Data-Products-Transition-from-Version-C-to-Version-D-complete
+  - date: "2024-08-14"
+    level: warning
+    title: Degraded SWOT data quality from 2024-07-31 to 08-07
+    body: >-
+      Late-arriving telemetry degraded PIC0 products for this period. KaRIn LR products have been reprocessed, so use the file with the highest product counter for these dates.
+    source: https://podaac.jpl.nasa.gov/announcements/2024-08-14-Degraded-SWOT-data-quality-from-July-31-to-August-7
+  - date: "2024-03-06"
+    level: info
+    title: Public release of KaRIn science data products (Version C)
+    body: >-
+      LR ocean products (SWOT_L2_LR_SSH_2.0, DOI 10.5067/SWOT-SSH-2.0) were released in forward processing from cycle 7 (2023-11-23).
+      Data from 2023-03-30 to 2024-01-25 were to be reprocessed and released in stages, with the reprocessed products superseding the forward-processed cycles 7–9.
+    source: https://podaac.jpl.nasa.gov/announcements/2024-03-06-SWOT-KaRIn-Science-Data-Products-Release
+  - date: "2023-12-01"
+    level: info
+    title: KaRIn beta pre-validated products released
+    body: >-
+      Beta pre-validated products were released so users could become familiar with in-flight KaRIn data. LR ocean data comprised a reprocessing of the calibration phase (1-day orbit, 2023-03-30 to 07-10; SWOT_L2_LR_SSH_1.1)
+      and forward processing of the science phase (21-day orbit, from 2023-09-07; SWOT_L2_LR_SSH_1.0).
+    source: https://podaac.jpl.nasa.gov/announcements/2023-12-01-SWOT-KaRIn-Beta-Pre-Validated-Data-Products
+
+transitions:
+  - from: SWOT KaRIn Version C
+    to: SWOT KaRIn Version D
+    status: completed
+    date: "2025-05"
+    summary: >-
+      A release that fixes known Version C issues through updated processing algorithms, calibration parameters and some geophysical models. Tide models, the mean sea surface and the MDT were replaced,
+      a geoid error of order 10 cm was fixed, and the whole record since 2023-03 was reprocessed as Version D.
+    changes:
+      - aspect: Collection and DOI
+        before: "SWOT_L2_LR_SSH_2.0 (10.5067/SWOT-SSH-2.0)"
+        after: "SWOT_L2_LR_SSH_D (10.5067/SWOT-SSH-D)"
+      - aspect: CRID in file names
+        before: "PGC0 (reprocessing, 2023-03-30 to 2024-01-25), PIC0 (2024-01-25 to 10-15), PIC2 (2024-10-16 to early 2025-05)"
+        after: "PGD0 (reprocessing, 2023-03 to 2025-05), PID0 (forward, from 2025-05-06)"
+      - aspect: Ocean and load tide models
+        before: FES2014
+        after: "FES2022b; a non-equilibrium long-period ocean tide is now applied to SSHA"
+      - aspect: Mean sea surface (MSS)
+        before: "CNES/CLS 2022, DTU 2018"
+        after: "CNES/CLS/SIO/DTU Hybrid 2023, DTU2021"
+      - aspect: Mean dynamic topography (MDT)
+        before: CNES/CLS 2022
+        after: CNES/CLS 2024
+      - aspect: Calibration
+        before: "-"
+        after: "Refined KaRIn height calibration (short-wavelength changes of order 5 mm), sigma0 about 2.5 dB lower, updated radiometer (AMR) calibration reducing the side-to-side bias to under 0.2 mm"
+      - aspect: Other
+        before: "-"
+        after: "Geoid fix (errors of order 10 cm), updated crossover processing, new variables such as unsmoothed SSHA posting, Doppler mitigation and a spacecraft event flag (Expert)"
+    impacts:
+      - Do not mix Version C and D files in one time series. Changes in tides, MSS and MDT shift the SSHA and ADT mean fields.
+      - "Sigma0 is about 2.5 dB lower, so empirical relations built on sigma0 (wind speed, ice detection and the like) need refitting."
+      - "Where both PID0 and PGD0 exist, use PGD0; when a pass has several counters, use the highest."
+    sources:
+      - name: PO.DAAC — Version C to D transition complete (2025-05-21)
+        url: https://podaac.jpl.nasa.gov/announcements/2025-05-21-SWOT-Science-Data-Products-Transition-from-Version-C-to-Version-D-complete
+      - name: PO.DAAC — Version C to D transition announcement (2025-04-24)
+        url: https://podaac.jpl.nasa.gov/announcements/2025-04-24-SWOT-Science-Data-Products-Transitioning-from-Version-C-to-Version-D-on-April-28-2025
+      - name: SWOT Version D KaRIn Products Release Note (2025-12-19)
+        url: https://archive.podaac.earthdata.nasa.gov/podaac-ops-cumulus-docs/web-misc/swot_mission_docs/releases/SWOT_VersionD_KaRIn_Products_Release_Note_20251219.pdf
+      - name: Major Changes to SWOT Products from Version C to D (2025-05-19)
+        url: https://archive.podaac.earthdata.nasa.gov/podaac-ops-cumulus-docs/web-misc/swot_mission_docs/KaRIn_VersionD_Summary20250519.pdf
+
+links:
+  - name: PO.DAAC — SWOT mission page (documents and release notes)
+    url: https://podaac.jpl.nasa.gov/SWOT
+  - name: PO.DAAC — SWOT mission events (data gaps and manoeuvres)
+    url: https://podaac.jpl.nasa.gov/SWOT-events/SWOT_events.html
+  - name: SWOT User Handbook (D-109532 Rev A, PDF)
+    url: https://archive.podaac.earthdata.nasa.gov/podaac-ops-cumulus-docs/web-misc/swot_mission_docs/D-109532_SWOT_UserHandbook_RevA_20250311_sig-final.pdf
+  - name: L2_LR_SSH Product Description Document (D-56407 Rev C, PDF)
+    url: https://archive.podaac.earthdata.nasa.gov/podaac-ops-cumulus-docs/web-misc/swot_mission_docs/pdd/D-56407_SWOT_Product_Description_L2_LR_SSH_20250224a_RevC_clean_sig.pdf
+  - name: AVISO SWOT L3 handbook (issue 3.1, PDF)
+    url: https://www.aviso.altimetry.fr/fileadmin/documents/data/tools/handbook_duacs_SWOT_L3.pdf
+  - name: NASA JPL — SWOT mission overview
+    url: https://swot.jpl.nasa.gov/mission/overview/
+  - name: This site — DUACS multi-mission altimetry L4 sea level
+    url: ../duacs/
+  - name: This site — ESA Sea State CCI altimeter significant wave height
+    url: ../esa-cci-sea-state/
+
+watch_urls:
+  - https://podaac.jpl.nasa.gov/announcements
+  - https://podaac.jpl.nasa.gov/SWOT-events/SWOT_events.html
+  - https://www.aviso.altimetry.fr/en/missions/current-missions/swot/swot-ocean-data-access.html
+
+last_verified: "2026-10-13"

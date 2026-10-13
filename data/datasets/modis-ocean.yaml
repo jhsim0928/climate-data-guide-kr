@@ -1,0 +1,477 @@
+# ─────────────────────────────────────────────────────────────
+# MODIS 해양 (Aqua·Terra MODIS OBPG Level-3 해색·해수면온도) — 데이터셋 정보 파일
+# 위성 탭(해색), 해양 탭(위성 관측 자료) 교차 수록. 해색은 R2022.0(부분 재처리 R2022.0.1~0.3), 해수면온도는 R2019.0입니다.
+# 2026-10-13 확인 시 Aqua 해색 확정판 L3는 2026-05-30, 준실시간(NRT)은 2026-10-12까지 있고, Terra 해색 확정판은 2025-11-30에서 멈춰 그 뒤로는 NRT만 나옵니다.
+# Terra·Aqua 궤도 표류와 임무 종료(Terra 2027-02, Aqua 2027-09 전망)가 핵심 주의사항입니다. 후속 VIIRS 해양은 viirs-ocean.yaml.
+# 수정 후에는 공식 페이지에서 확인한 날짜로 last_verified 를 갱신하세요.
+# ─────────────────────────────────────────────────────────────
+id: modis-ocean
+name: "MODIS 해양 (해색·SST)"
+full_name: >-
+  Aqua·Terra MODIS Level-3 Global Mapped/Binned Ocean Color(CHL·RRS·KD·PAR·POC·PIC·IOP·FLH, version R2022.0)와
+  Sea Surface Temperature(SST·NSST·SST4, version R2019.0) (NASA OBPG MODIS 해색·해수면온도 L3 자료)
+category: satellite
+domain: satellite
+group: 해색
+order: 10
+also_in:
+  - domain: ocean
+    group: 위성 관측 자료
+domains: [해양, 원격탐사]
+provider: NASA GSFC Ocean Biology Processing Group(OBPG) / NASA Ocean Biology DAAC(OB.DAAC). 해수면온도 L3는 NASA PO.DAAC도 함께 배포
+
+status: deprecated
+status_note: >-
+  자료는 계속 나오고 있지만 Terra·Aqua가 궤도를 벗어나 통과 시각이 바뀌었고, NASA는 과학 운용 종료를 Terra 2027년 2월·Aqua 2027년 9월로 전망하며 VIIRS 유사 산출물로 옮기라고 안내합니다.
+  2026-10-13 확인 시 Aqua 해색 L3는 NRT판이 2026-10-12, 확정판이 2026-05-30 일자료(2026-07-08 등록, 파일 속성 R2022.0.3)까지 있고, Aqua 해수면온도(R2019.0)는 확정판 2026-08-31·NRT 2026-10-11까지 있습니다.
+  Terra 해색은 확정판이 2025-11-30에서 멈추고 그 뒤로 NRT만 나오며(해수면온도 확정판은 2026-09-01까지), OBPG는 2022년 이후 Aqua 해색을 장기 변화 분석에 쓰기에는 신뢰도가 낮다고 밝혔습니다.
+
+period:
+  start: "2000-02"
+  end: present
+  note: >-
+    Terra는 2000-02-24, Aqua는 2002-07-04부터입니다(CMR 컬렉션 시작일). 2026-10-13 확인 시 Aqua·Terra 모두 NRT 일자료가 2026-10-12까지 올라와 있습니다.
+    확정판은 해색 Aqua 2026-05-30(월자료 2026-04), Terra 2025-11-30까지, 해수면온도 Aqua 2026-08-31·Terra 2026-09-01까지입니다. OBPG는 다음 MODIS Aqua 해색 재처리를 임무가 끝난 뒤로 미뤘습니다.
+
+resolution:
+  spatial_short: "4.6 km (0.04°)"
+  temporal_short: "1일"
+  spatial: >-
+    L3 mapped(L3m, Standard Mapped Image): 전지구 등거리 원통(Equidistant Cylindrical, Plate Carrée) 격자 두 가지 — `4km`(4320×8640, 파일 속성 spatialResolution "4.638312 km")와
+    `9km`(2160×4320, "9.276624 km") / L3 binned(L3b): 정수화 사인곡선(integerized sinusoidal) 등면적 격자 4320행(약 4.64 km 빈, Terra·Aqua MODIS 표준)
+  vertical: 해면 원격 반사도와 표층 광학·생지화학 특성(위성이 보는 광학 깊이 안의 값) / 해수면온도는 피부(skin) 온도
+  temporal: >-
+    일(DAY)·8일(8D)·월(MO)·연(YR) 합성과 32일 이동 합성(R32, 8일 간격으로 이동), 전 기간 기후값(MC 등)·누적(CU) 파일. 해수면온도는 주간(SST)·야간(NSST)·4 µm(SST4) 파일이 따로 있습니다.
+    설계상 적도 통과 시각은 Terra 10:30(오전), Aqua 13:30(오후)이지만 궤도 표류로 바뀌었습니다.
+
+coverage:
+  short: 전지구
+  note: "해색은 주간·맑은 하늘의 바다만(구름·해빙·태양 고도·눈부심으로 빈칸). 해수면온도는 주야 모두 맑은 하늘의 바다만"
+update: >-
+  NRT L3 일자료는 관측 다음 날 등록(2026-10-12 Aqua 엽록소가 10-13 등록). 확정판은 해색 약 2개월 이상(2026-05-30 일자료가 07-08 등록), 해수면온도 약 3~4주(2026-08-31 자료가 09-24 등록) 늦게 나옵니다
+license: >-
+  NASA 지구과학 자료 정보 정책(파일 license 속성 https://science.nasa.gov/earth-science/earth-science-data/data-information-policy/)에 따른 무료 공개 자료입니다.
+  OB.DAAC 자료를 내려받으려면 무료 NASA Earthdata 로그인이 필요하며, 데이터셋 DOI 인용을 요청합니다
+account_required: true
+
+summary: >-
+  NASA OBPG가 Terra(1999년 발사)와 Aqua(2002년 발사) 위성의 MODIS로 만든 전지구 해색·해수면온도 Level-3 자료로, SeaWiFS를 이어 20년 넘게 쓰여 온 대표 위성 해양 자료입니다.
+  해색 산출물은 엽록소 a(`chlor_a`), 10개 파장 원격 반사도(`Rrs_412`~`Rrs_678`), 490 nm 확산 감쇠 계수(`Kd_490`), 일 광합성 유효 복사(`par`), 입자성 유기·무기 탄소(`poc`·`pic`),
+  형광선 높이(`nflh`), GIOP 고유 광학 특성이며, 해수면온도는 11·12 µm 주간·야간 SST와 3.95·4.05 µm 야간용 SST4가 있습니다.
+  4 km·9 km 등위경도 격자의 일·8일·월·연 합성을 확정판과 NRT판으로 제공합니다. Terra·Aqua 궤도 표류와 임무 종료로 NASA는 VIIRS와 PACE OCI로 옮겨 갈 것을 안내합니다.
+
+time_convention:
+  summary: >-
+    L3 일 파일은 그 '자료일(dataday)'에 지나간 맑은 하늘 L2 관측을 4.6 km 빈에 가중 평균해 모은 뒤 등위경도 격자로 옮긴 값입니다. 하루의 경계가 UTC 자정이 아니라 날짜변경선(180°)이라
+    한 파일이 24시간보다 조금 길게 걸칩니다(예 Aqua 2026-05-30 파일은 05-29 23:45Z~05-31 05:24Z). 8일·월·연 파일은 그 기간 빈 값을 다시 합친 평균이며, 흐려 관측이 없는 날은 빠져 있습니다.
+  points:
+    - "OBPG 형식 문서는 야간 자료일이 주간 자료일과 12시간 어긋나 있다고 설명합니다. 야간 해수면온도(NSST)·SST4 일 파일의 시간 범위가 주간 파일과 다르니 파일 속성 time_coverage_start·end를 확인하세요."
+    - "8일(8D) 합성은 1월 1일부터 8일씩 끊고(예 20260501_20260508), R32는 32일 구간을 8일씩 옮긴 이동 합성입니다(예 20260407_20260508, 20260415_20260516). 파일 이름의 두 날짜가 합성 구간의 처음과 끝입니다."
+    - "`par`는 하루 적분값(mol m-2 day-1)이고 `ipar`는 위성 통과 시각의 순간값(micromol m-2 s-1)입니다. 8일·월 파일의 `par`는 일 적분값의 평균입니다."
+    - "Aqua는 2021년 7월부터 통과 시각이 늦어져 2023년 2월 13:45를 넘었고 2026년 8월 무렵 약 15:50으로 예상되었습니다(LP DAAC). Terra는 2020년 경사각 조정을 멈춘 뒤 2022년 가을 10:15로 앞당겨졌습니다. 같은 '일자료'라도 관측 시각이 해마다 다릅니다."
+    - "NRT판(파일 이름 끝 .NRT.nc, 컬렉션 이름 _NRT)과 확정판은 별개 컬렉션입니다. 확정판이 나오면 확정판으로 바꾸고 두 판을 한 시계열에 섞지 마세요."
+    - "L3 해수면온도는 각 빈에서 품질이 가장 좋은 L2 화소만 남겨 합칩니다(OB.DAAC 포럼 답변). `qual_sst`는 0(최상)~4(실패·육지)이며, 구름이 잦은 곳의 월자료에는 품질 2 값이 남을 수 있습니다."
+  source: https://oceandata.sci.gsfc.nasa.gov/files/resources/docs/format/Ocean_Data_Product_Users_Guide.pdf
+  source_name: "OBPG Ocean Science Data Product Format Specification(2017-11) + Ocean Level-3 SMI Products + OB.DAAC CMR·OPeNDAP 파일 속성 + LP DAAC Aqua 궤도 계획"
+
+variables:
+  note: >-
+    변수 이름과 단위는 OB.DAAC OPeNDAP 파일 속성, Direct Data Access 파일 목록, CMR 컬렉션 설명 기준입니다. 파일 하나에 변수 하나가 들어 있고(예 AQUA_MODIS.20260530.L3m.DAY.CHL.chlor_a.4km.nc),
+    Terra(TERRA_MODIS…) 파일도 변수 이름이 같습니다. 해수면온도는 Int16에 scale_factor 0.005가 붙어 있고, 해색 L3m 일부는 float로 저장됩니다(xarray가 자동 처리).
+  full_list: https://oceancolor.gsfc.nasa.gov/data/product_status
+  groups:
+    - name: 해색 L3 (CHL·RRS·KD·POC·PIC 파일)
+      kind: mean
+      period: 일·8일·월·연 합성
+      items:
+        - text: "엽록소 a 농도 — `chlor_a` (mg m-3)"
+          note: "OCI 알고리즘(저농도 CI, 0.25~0.35 mg m-3 구간에서 OCx와 섞음). 유효 범위 0.001~100"
+        - text: "원격 반사도 — `Rrs_412`·`Rrs_443`·`Rrs_469`·`Rrs_488`·`Rrs_531`·`Rrs_547`·`Rrs_555`·`Rrs_645`·`Rrs_667`·`Rrs_678` (sr-1)"
+        - text: "869 nm 에어로졸 광학두께(대기 보정 부산물) — `aot_869` (무차원)"
+          std: []
+        - text: "옹스트롬 지수(대기 보정 부산물) — `angstrom` (무차원)"
+          std: []
+        - text: "490 nm 하향 복사 확산 감쇠 계수 — `Kd_490` (m-1)"
+          std: []
+        - text: "입자성 유기탄소 — `poc` (mg m-3, 탄소 기준)"
+          std: []
+        - text: "입자성 무기탄소(방해석) — `pic` (mol m-3)"
+          std: []
+    - name: 광합성 유효 복사·형광 (PAR·FLH 파일)
+      kind: mean
+      period: 일·8일·월·연 합성
+      items:
+        - text: "일 광합성 유효 복사 — `par` (mol m-2 day-1)"
+          kind: accum
+          period: 일
+          note: 하루 적분값. 8일·월 파일은 그 평균
+          std: []
+        - text: "통과 시각 순간 광합성 유효 복사 — `ipar` (micromol m-2 s-1)"
+          kind: instant
+          std: []
+        - text: "정규화 형광선 높이 — `nflh` (W m-2 um-1 sr-1)"
+          std: []
+    - name: 고유 광학 특성 (IOP 파일, GIOP 모델)
+      kind: mean
+      period: 일·8일·월·연 합성
+      items:
+        - text: "총흡수계수 — `a_412`~`a_678` (m-1)"
+          note: Rrs와 같은 10개 파장
+          std: []
+        - text: "식물플랑크톤 흡수계수 443 nm — `aph_443` (m-1)"
+          std: []
+        - text: "용존·쇄설물 흡수계수 443 nm — `adg_443` (m-1)"
+          std: []
+        - text: "용존·쇄설물 흡수 분광 기울기·불확실성 — `adg_s`·`adg_unc_443`"
+          std: []
+    - name: 해수면온도 L3 (SST·NSST·SST4 파일, R2019.0)
+      kind: mean
+      period: 일·8일·월·연 합성
+      items:
+        - text: "주간 11 µm 해수면온도 — `sst` (degree_C)"
+          note: SST 파일(11·12 µm 분할창). 주간 일사 가열이 섞일 수 있음
+        - text: "야간 11 µm 해수면온도 — `sst` (degree_C)"
+          note: NSST 파일. 변수 이름은 주간과 같고 파일 이름으로 구분
+        - text: "4 µm 해수면온도 — `sst4` (degree_C)"
+          note: "3.95·4.05 µm 밴드. 태양 반사 때문에 야간에만 쓸 수 있음"
+        - text: "해수면온도 품질 등급 — `qual_sst`·`qual_sst4` (0~4)"
+          std: []
+
+access:
+  - name: NASA Earthdata Search (OB.DAAC 포털)
+    url: https://search.earthdata.nasa.gov/search?portal=obdaac
+    method: 웹 검색·내려받기, earthaccess(Python, short_name 예 MODISA_L3m_CHL·MODISA_L3m_RRS·MODIST_L3m_CHL·MODISA_L3m_SST·MODISA_L3m_SST4)
+    note: >-
+      컬렉션 이름은 MODISA_L3m_{CHL,RRS,KD,PAR,POC,PIC,IOP,FLH}(Aqua), MODIST_L3m_…(Terra), 빈 자료는 L3b, NRT판은 _NRT입니다. 해수면온도는 MODISA_L3m_{SST,NSST,SST4}(R2019.0).
+      NASA Earthdata 로그인(무료)이 필요합니다.
+  - name: OB.DAAC Direct Data Access (Level-3 Mapped / Aqua-MODIS)
+    url: https://oceandata.sci.gsfc.nasa.gov/directdataaccess/Level-3%20Mapped/Aqua-MODIS/
+    method: HTTPS 디렉터리(연·일별), 예 AQUA_MODIS.20260601_20260630.L3m.MO.SST4.sst4.4km.nc
+    note: Terra는 Level-3%20Mapped/Terra-MODIS/, 빈 자료는 Level-3%20Binned/ 폴더입니다. 같은 날짜 폴더에 확정판과 NRT판(.NRT.nc)이 함께 있습니다. Earthdata 로그인이 필요합니다.
+  - name: OB.DAAC OPeNDAP (L3 SMI)
+    url: https://oceandata.sci.gsfc.nasa.gov/opendap/MODISA/L3SMI/
+    method: OPeNDAP (연/월일 폴더, 예 L3SMI/2026/0530/), 원하는 영역만 잘라 읽기
+    note: Terra는 /opendap/MODIST/L3SMI/입니다.
+  - name: OB.DAAC File Search
+    url: https://oceandata.sci.gsfc.nasa.gov/api/file_search/
+    method: 파일 이름·기간으로 목록 만들기(wget·curl용 목록)
+  - name: NASA PO.DAAC — MODIS L3 해수면온도 미러 (예 MODIS_AQUA_L3_SST_THERMAL_DAILY_4KM_DAYTIME_V2019.0)
+    url: https://podaac.jpl.nasa.gov/dataset/MODIS_AQUA_L3_SST_THERMAL_DAILY_4KM_DAYTIME_V2019.0
+    method: Earthdata Search / earthaccess / OPeNDAP / Harmony / podaac-data-subscriber
+    note: Thermal IR(11 µm)·MID-IR(4 µm), 주간·야간, 일·8일·월·연, 4 km·9 km 조합마다 컬렉션이 따로 있습니다(Terra는 MODIS_TERRA_L3_SST_…).
+
+example:
+  lang: python
+  note: "earthaccess로 Aqua 월 엽록소(4 km)를 받아 한반도 주변을 보는 예입니다. NASA Earthdata 계정으로 earthaccess.login()을 한 번 거쳐야 합니다. granule_name 패턴은 OB.DAAC 튜토리얼 방식입니다."
+  code: |
+    # pip install earthaccess xarray netCDF4
+    import earthaccess
+    import numpy as np
+    import xarray as xr
+
+    earthaccess.login()
+    results = earthaccess.search_data(
+        short_name="MODISA_L3m_CHL",          # Terra: MODIST_L3m_CHL, SST: MODISA_L3m_SST / MODISA_L3m_NSST
+        granule_name="*.MO.CHL.chlor_a.4km*",  # 일: *.DAY.*, 8일: *.8D.*  (NRT판은 *_NRT 컬렉션)
+        temporal=("2025-01-01", "2025-12-31"),
+    )
+    paths = earthaccess.download(results, "./modis_chl")
+
+    ds = xr.open_mfdataset(paths, combine="nested", concat_dim="time")
+    ds = ds.sortby("lat")                                   # L3m은 북→남 순서
+    kr = ds["chlor_a"].sel(lat=slice(30, 42), lon=slice(117, 132))
+    log_mean = np.log10(kr).mean("time")                    # 엽록소는 로그로 보는 것이 일반적
+    print(float(10 ** log_mean.mean()))
+
+tips:
+  - "OBPG는 궤도 변화와 보정 문제가 완전히 고쳐지지 않을 수 있어 2022년 이후 Aqua 해색 자료는 장기 변화 평가에 신뢰도가 낮다고 밝혔습니다(2025-12 포럼 답변). 최근 기간은 VIIRS나 PACE OCI와 함께 확인하세요."
+  - "황해·동중국해 연안처럼 부유물·용존유기물이 많은 '광학적으로 복잡한' 물에서는 `chlor_a` 불확실성이 크다고 CMR 설명과 ATBD가 경고합니다(외해 목표 정확도 ±35%). 한반도 연안 연구는 현장 자료로 검증하거나 GOCI-II와 비교하세요."
+  - "Terra 해색 확정판은 2025-11-30 이후 나오지 않고 NRT만 있습니다(2026-10-13 확인). 2025년 12월 이후 Terra 해색을 쓰려면 NRT라는 점을 밝히거나 Aqua·VIIRS를 쓰세요."
+  - 주간 SST(11 µm)는 일사 가열과 눈부심 영향을 받으므로, 기후값·추세에는 야간(NSST)이나 SST4를 쓰는 편이 안전합니다. SST4는 야간에만 유효합니다.
+  - "L3 mapped 격자는 고위도로 갈수록 한 빈에 여러 화소가 대응해 같은 값이 반복됩니다(OBPG 빈 설명). 면적 평균·통계는 L3 binned 파일이나 위도 가중으로 계산하세요."
+  - "R2022 배포 때 파일 이름이 AQUA_MODIS.YYYYMMDD.L3m.… 형식으로 바뀌었고 OPeNDAP 폴더도 연중일(3자리)에서 월일(4자리)로 바뀌었습니다. 옛 스크립트의 A2020001… 이름은 더 이상 맞지 않습니다."
+  - "OBPG는 R2022 Terra·Aqua 엽록소·Rrs 차이가 10% 안이라고 밝혔고 R2022.0.2에서 Terra를 Aqua에 다시 교차 보정했지만, 오전·오후로 통과 시각이 다르고 둘 다 표류하므로 한 시계열로 섞지 마세요."
+  - "확정판과 NRT판은 보정 단계가 다릅니다. 최근 몇 달은 NRT만 있으니 논문에는 판(파일 이름의 .NRT, 속성 processing_version)을 적으세요."
+
+citations:
+  dataset:
+    - label: Aqua MODIS L3 Mapped 엽록소 R2022.0 (OB.DAAC)
+      text: >-
+        NASA Ocean Biology Processing Group. 2025. Aqua MODIS Level-3 Global Mapped Chlorophyll (CHL) Data, version 2022.0. NASA Ocean Biology Distributed Active Archive Center.
+        https://doi.org/10.5067/AQUA/MODIS/L3M/CHL/2022.0
+      doi: 10.5067/AQUA/MODIS/L3M/CHL/2022.0
+      bibtex: |
+        @misc{obpg2025modisachl,
+          author    = {{NASA Ocean Biology Processing Group}},
+          title     = {Aqua {MODIS} Level-3 Global Mapped Chlorophyll ({CHL}) Data, version 2022.0},
+          year      = {2025},
+          publisher = {NASA Ocean Biology Distributed Active Archive Center},
+          doi       = {10.5067/AQUA/MODIS/L3M/CHL/2022.0}
+        }
+    - label: Aqua MODIS L3 Mapped 원격 반사도 R2022.0 (OB.DAAC)
+      text: >-
+        NASA Ocean Biology Processing Group. 2025. Aqua MODIS Level-3 Global Mapped Remote-Sensing Reflectance (RRS) Data, version 2022.0. NASA Ocean Biology Distributed Active Archive Center.
+        https://doi.org/10.5067/AQUA/MODIS/L3M/RRS/2022.0
+      doi: 10.5067/AQUA/MODIS/L3M/RRS/2022.0
+      bibtex: |
+        @misc{obpg2025modisarrs,
+          author    = {{NASA Ocean Biology Processing Group}},
+          title     = {Aqua {MODIS} Level-3 Global Mapped Remote-Sensing Reflectance ({RRS}) Data, version 2022.0},
+          year      = {2025},
+          publisher = {NASA Ocean Biology Distributed Active Archive Center},
+          doi       = {10.5067/AQUA/MODIS/L3M/RRS/2022.0}
+        }
+    - label: Terra MODIS L3 Mapped 엽록소 R2022.0 (OB.DAAC)
+      text: >-
+        NASA Ocean Biology Processing Group. 2025. Terra MODIS Level-3 Global Mapped Chlorophyll (CHL) Data, version 2022.0. NASA Ocean Biology Distributed Active Archive Center.
+        https://doi.org/10.5067/TERRA/MODIS/L3M/CHL/2022.0
+      doi: 10.5067/TERRA/MODIS/L3M/CHL/2022.0
+      bibtex: |
+        @misc{obpg2025modistchl,
+          author    = {{NASA Ocean Biology Processing Group}},
+          title     = {Terra {MODIS} Level-3 Global Mapped Chlorophyll ({CHL}) Data, version 2022.0},
+          year      = {2025},
+          publisher = {NASA Ocean Biology Distributed Active Archive Center},
+          doi       = {10.5067/TERRA/MODIS/L3M/CHL/2022.0}
+        }
+    - label: Aqua MODIS L3 주간 해수면온도 일 4 km R2019.0 (PO.DAAC)
+      text: >-
+        NASA/JPL. 2020. MODIS Aqua Level 3 SST Thermal IR Daily 4km Daytime V2019.0. NASA Physical Oceanography Distributed Active Archive Center. https://doi.org/10.5067/MODSA-1D4D9
+      doi: 10.5067/MODSA-1D4D9
+      bibtex: |
+        @misc{jpl2020modisasst,
+          author    = {{NASA/JPL}},
+          title     = {{MODIS} Aqua Level 3 {SST} Thermal {IR} Daily 4km Daytime V2019.0},
+          year      = {2020},
+          publisher = {NASA Physical Oceanography Distributed Active Archive Center},
+          doi       = {10.5067/MODSA-1D4D9}
+        }
+  papers:
+    - label: OCx 엽록소 알고리즘 계수 (R2022에서 사용)
+      text: >-
+        O'Reilly, J. E., Werdell, P. J. (2019): Chlorophyll algorithms for ocean color sensors - OC4, OC5 & OC6. Remote Sensing of Environment, 229, 32–47.
+      doi: 10.1016/j.rse.2019.04.021
+      bibtex: |
+        @article{oreilly2019chl,
+          author  = {O'Reilly, John E. and Werdell, P. Jeremy},
+          title   = {Chlorophyll algorithms for ocean color sensors - {OC4}, {OC5} \& {OC6}},
+          journal = {Remote Sensing of Environment},
+          volume  = {229},
+          pages   = {32--47},
+          year    = {2019},
+          doi     = {10.1016/j.rse.2019.04.021}
+        }
+    - label: 저농도 엽록소 CI 알고리즘
+      text: >-
+        Hu, C., Lee, Z., Franz, B. (2012): Chlorophyll a algorithms for oligotrophic oceans: A novel approach based on three-band reflectance difference.
+        Journal of Geophysical Research: Oceans, 117(C1), 2011JC007395.
+      doi: 10.1029/2011JC007395
+      bibtex: |
+        @article{hu2012ci,
+          author  = {Hu, Chuanmin and Lee, Zhongping and Franz, Bryan},
+          title   = {Chlorophyll a algorithms for oligotrophic oceans: A novel approach based on three-band reflectance difference},
+          journal = {Journal of Geophysical Research: Oceans},
+          volume  = {117},
+          number  = {C1},
+          year    = {2012},
+          doi     = {10.1029/2011JC007395}
+        }
+    - label: MODIS 해수면온도 10년 평가
+      text: >-
+        Kilpatrick, K. A., Podestá, G., Walsh, S., Williams, E., Halliwell, V., Szczodrak, M., Brown, O. B., Minnett, P. J., Evans, R. (2015): A decade of sea surface temperature from MODIS.
+        Remote Sensing of Environment, 165, 27–41.
+      doi: 10.1016/j.rse.2015.04.023
+      bibtex: |
+        @article{kilpatrick2015modissst,
+          author  = {Kilpatrick, K. A. and Podest{\'a}, G. and Walsh, S. and Williams, E. and Halliwell, V. and Szczodrak, M. and Brown, O. B. and Minnett, P. J. and Evans, R.},
+          title   = {A decade of sea surface temperature from {MODIS}},
+          journal = {Remote Sensing of Environment},
+          volume  = {165},
+          pages   = {27--41},
+          year    = {2015},
+          doi     = {10.1016/j.rse.2015.04.023}
+        }
+    - label: OBPG 엽록소 a ATBD v1.1 (2023)
+      text: >-
+        NASA Ocean Biology Processing Group (2023): Chlorophyll a, Algorithm Theoretical Basis Document, version 1.1 (R2022 구현 기준).
+      doi: 10.5067/JCQB8QALDOYD
+  acknowledgement: >-
+    NASA는 실제로 쓴 산출물(CHL·RRS·SST 등)과 위성(Aqua·Terra)별 데이터셋 DOI를 인용하라고 요청합니다. 버전(R2022.0, SST는 R2019.0)과 NRT 여부를 함께 적으세요.
+
+notices:
+  - date: "2026-03-20"
+    level: warning
+    title: NASA, Terra 과학 운용 종료를 2027년 2월·Aqua를 2027년 9월로 전망
+    body: >-
+      NASA Science 기사 'Terra: The End of An Era'(2025-12-29 게재, 2026-03-20 갱신)의 편집자 주는 연료·전력 한계로 Terra는 2027년 2월, Aqua는 2027년 9월에 과학 운용이 끝날 것으로 전망하며
+      그때까지 운용을 계속한다고 밝혔습니다. 두 위성이 끝나면 MODIS 해색·해수면온도도 더 생산되지 않습니다.
+    source: https://science.nasa.gov/science-research/earth-science/terra-the-end-of-an-era
+  - date: "2025-12-09"
+    level: warning
+    title: OBPG, 다음 MODIS Aqua 해색 재처리는 임무 종료 뒤 — 2022년 이후 자료 신뢰도 경고
+    body: >-
+      OB.DAAC 담당자는 MODIS 재처리 계획을 묻는 질문에, 다음 Aqua 해색 재처리는 임무가 끝난 뒤에야 하며 예산 때문에 날짜를 정할 수 없다고 답했습니다.
+      궤도 변화와 궤도상 보정 문제가 완전히 고쳐지지 않을 수 있어 2022년 이후 자료는 장기 변화 평가에 신뢰도가 낮을 것이라며, 최근 기간은 VIIRS나 PACE OCI 자료를 고려하라고 권했습니다.
+    source: https://forum.earthdata.nasa.gov/viewtopic.php?p=24652
+  - date: "2025-05-02"
+    level: warning
+    title: MODIS에서 VIIRS로 전환 안내 — Terra·Aqua 2026년 말~2027년 초 종료 시작
+    body: >-
+      NASA는 Terra·Aqua가 2026년 말~2027년 초부터 운용 종료에 들어가며, 두 위성이 설계 궤도를 벗어나 적도 통과 시각이 바뀌고 있어 자료에 영향을 줄 수 있다고 공지했습니다.
+      MODIS 수집이 멈추면 마지막 재처리를 하며 사용자는 VIIRS 유사 산출물을 검토하라고 권고했습니다.
+    source: https://www.earthdata.nasa.gov/data/alerts-outages/transition-from-modis-viirs
+  - date: "2022-10-27"
+    level: info
+    title: Aqua MODIS 해색 R2022.0 재처리 자료 배포 — 파일 이름·폴더 구조 변경
+    body: >-
+      OB.DAAC는 R2022.0으로 재처리한 Aqua MODIS L3 binned·mapped 파일을 Direct Data Access에 올렸고 옛 판은 지우는 중이라고 안내했습니다. 새 파일은 이름 규칙이 바뀌었고,
+      OPeNDAP에서는 옛 파일이 연중일 3자리 폴더, 새 파일이 월일 4자리 폴더에 있습니다. Terra 재처리는 2022년 11월에 시작되었습니다.
+    source: https://forum.earthdata.nasa.gov/viewtopic.php?p=12936
+  - date: "2021-11-10"
+    level: info
+    title: Aqua 궤도 유지 중단 — 적도 통과 시각이 점점 늦어짐
+    body: >-
+      LP DAAC 공지에 따르면 Aqua는 2021-03-18 마지막 궤도 유지 기동을 마쳤고 2021년 7월부터 통과 시각이 늦어지기 시작해 2023년 2월 13:45를 넘고 2026년 8월 무렵 약 15:50에 이를 것으로 예상되었습니다.
+      오후 늦은 관측은 태양 고도가 낮아 그림자가 늘고, 고도가 낮아져 관측 폭과 16일 반복 주기가 바뀝니다.
+    source: https://lpdaac.usgs.gov/news/aqua-modis-acquisition-plan-through-august-2026/
+
+transitions:
+  - from: MODIS 해색 R2018.0
+    to: MODIS 해색 R2022.0
+    status: completed
+    date: "2022-10"
+    summary: >-
+      SeaWiFS부터 VIIRS·OLCI까지 함께 다시 처리한 다중 위성 재처리입니다. 기기 보정과 대리 보정(MOBY)을 새로 하고 보조 기상·오존 자료와 엽록소 계수, 해륙 마스크를 바꿨으며
+      산출물 형식과 구성은 R2014.0과 같게 유지했습니다(파일 이름 규칙은 바뀜). 해수면온도는 이 재처리에 들어가지 않고 R2019.0을 그대로 씁니다.
+    changes:
+      - aspect: 기기 보정
+        before: R2018.0까지의 태양·달 보정 자료
+        after: R2018.0 이후 쌓인 태양 확산판·달 관측과 개선된 감쇠 모델 반영
+      - aspect: 보조 기상·오존
+        before: NCEP 기상장, OMI·TOMS·TOVS·TOAST 오존
+        after: "MERRA-2(NRT 처리는 GEOS-IT)"
+      - aspect: 대기 보정용 해수면온도
+        before: NOAA OI SST V2
+        after: "GHRSST L4 CMC 해수면온도(SST R2019부터 사용)"
+      - aspect: 엽록소 알고리즘
+        before: 이전 OCx 계수
+        after: "O'Reilly & Werdell(2019) OCx 계수"
+      - aspect: 해륙 마스크·수심
+        before: 이전 수심·육지 마스크 파일
+        after: 수정한 GEBCO_2020 격자(큰 호수 수면 높이 포함)
+      - aspect: 고유 광학 특성
+        before: 라만 산란 보정 없음
+        after: "IOP 계산 시 Rrs의 라만 산란 보정(Westberry et al., 2013)"
+      - aspect: 파일 이름
+        before: "A2020001.L3m_DAY_CHL_chlor_a_4km 형식"
+        after: "AQUA_MODIS.20200101.L3m.DAY.CHL.chlor_a.4km.nc 형식(2019-10 도입 규칙)"
+    impacts:
+      - R2018.0과 R2022.0 값을 섞지 말고 전 기간을 R2022 계열로 다시 받으세요.
+      - "엽록소 계수와 보조자료가 바뀌어 같은 날짜라도 값이 다릅니다. 이전 논문 값과 비교할 때 판을 확인하세요."
+    sources:
+      - name: OBPG — Reprocessing 2022.0 General Description
+        url: https://oceancolor.gsfc.nasa.gov/data/reprocessing/r2022/
+      - name: OBPG — MODIS-Aqua R2022.0
+        url: https://oceancolor.gsfc.nasa.gov/data/reprocessing/r2022/aqua/
+      - name: OBPG — MODIS-Terra R2022.0
+        url: https://oceancolor.gsfc.nasa.gov/data/reprocessing/r2022/terra
+  - from: MODIS 해색 R2022.0
+    to: MODIS 해색 R2022.0.1~R2022.0.3 (부분 재처리)
+    status: completed
+    summary: >-
+      궤도 표류 이후의 보정 문제를 고치기 위한 부분 재처리입니다. R2022.0.1은 2021-07-01 이후 Aqua 자료의 시간별 보정을 고쳤고, R2022.0.2는 2024년 8월 두 번째 요(yaw) 기동 뒤
+      품질이 떨어진 Aqua를 NOAA-20 VIIRS에 교차 보정했으며 Terra는 Aqua에 교차 보정했습니다. 2026-10-13 확인 시 최신 Aqua 확정판 파일 속성은 R2022.0.3입니다.
+    changes:
+      - aspect: Aqua 보정 (R2022.0.1)
+        before: R2022.0 보정
+        after: "2021-07-01 이후 자료의 시간별 보정 수정(궤도 표류로 사막 기준지 관측 기하·태양 확산판 입사각이 바뀐 영향)"
+      - aspect: Aqua 보정 (R2022.0.2)
+        before: R2022.0.1
+        after: "NOAA-20 VIIRS와 교차 보정(보정표 전환일 2022-01-01)"
+      - aspect: Terra 보정
+        before: R2022.0
+        after: "R2022.0.1·0.2에서 Aqua와 교차 보정, 2021-07-01 이후 자료"
+      - aspect: 최신 처리 버전
+        before: R2022.0
+        after: "Aqua 확정판 R2022.0.3(파일 속성), NRT는 R2022.0.2(2026-06 파일 속성)"
+    impacts:
+      - "2021-07 이후 구간은 부분 재처리마다 값이 바뀌었습니다. 예전에 받은 파일과 새로 받은 파일을 섞지 말고 processing_version 속성을 확인하세요."
+      - 부분 재처리 뒤에도 OBPG는 2022년 이후 Aqua 해색을 장기 변화 분석에 쓰기 어렵다고 봅니다.
+    sources:
+      - name: OBPG — MODIS-Aqua R2022.0.1
+        url: https://oceancolor.gsfc.nasa.gov/data/reprocessing/r2022.0.1/aqua/
+      - name: OBPG — MODIS-Aqua R2022.0.2
+        url: https://oceancolor.gsfc.nasa.gov/data/reprocessing/r2022.0.2/aqua/
+      - name: OBPG — MODIS-Terra R2022.0.2
+        url: https://oceancolor.gsfc.nasa.gov/data/reprocessing/r2022.0.2/terra
+  - from: MODIS 해양 (Aqua·Terra, 해색 R2022.0·SST R2019.0)
+    to: VIIRS 해양 (Suomi NPP·NOAA-20·NOAA-21)
+    to_id: viirs-ocean
+    status: planned
+    summary: >-
+      NASA는 Terra·Aqua 종료에 대비해 VIIRS 유사 산출물로 옮기라고 안내합니다. OBPG는 같은 처리 체계(l2gen·OCI 엽록소·GIOP)로 VIIRS 해색 L3를 만들며,
+      심해역 전체 평균으로 VIIRS(Suomi NPP·NOAA-20)와 Aqua의 엽록소·Rrs 차이가 10% 안이라고 밝혔습니다. 다만 밴드 수·파장이 달라 형광·4 µm SST처럼 VIIRS에 없는 산출물이 있습니다.
+    changes:
+      - aspect: 원격 반사도 파장
+        before: "10개(412·443·469·488·531·547·555·645·667·678 nm)"
+        after: "5개(Suomi NPP 410·443·486·551·671, NOAA-20·21 411·445·489·556·667 nm)"
+      - aspect: 형광·순간 PAR
+        before: "`nflh`·`ipar`(FLH 파일)"
+        after: 없음(L3 파일 목록에 FLH 없음)
+      - aspect: 해수면온도
+        before: "11 µm 주간(SST)·야간(NSST), 4 µm SST4 (R2019.0)"
+        after: "SST·NSST·삼중창 SST3 `sst_triple`(Suomi NPP 2016.2, NOAA-20 2024.0). NOAA-21은 OB.DAAC SST 없음"
+      - aspect: 통과 시각
+        before: "Terra 10:30(오전)·Aqua 13:30(오후), 둘 다 표류"
+        after: "세 위성 모두 오후 궤도(통과 시각 차 약 50분 이내). Terra 오전 관측을 잇는 VIIRS는 없음"
+      - aspect: 기간
+        before: "Terra 2000-02~ / Aqua 2002-07~"
+        after: "Suomi NPP 2012-01~(2026-11-02 자료 전달 종료) / NOAA-20 2017-11~ / NOAA-21 2022-11~"
+      - aspect: 파일 이름 접두
+        before: "AQUA_MODIS·TERRA_MODIS"
+        after: "SNPP_VIIRS·JPSS1_VIIRS(NOAA-20)·JPSS2_VIIRS(NOAA-21)"
+    impacts:
+      - "Rrs 파장이 달라 밴드별 값을 바로 이을 수 없습니다. 예로 NOAA-20 Rrs(667)는 Suomi NPP Rrs(671)와 약 20%, Aqua Rrs(667)와 약 16% 다르다고 OBPG가 보고했습니다."
+      - "MODIS `nflh`(형광)와 SST4 시계열은 VIIRS에서 이어지지 않습니다. 형광은 PACE OCI를 검토하세요."
+      - 겹치는 기간(2012년 이후)에 두 자료를 비교해 차이를 확인한 뒤 바꾸고, MODIS와 VIIRS를 한 시계열로 단순히 이어 붙이지 마세요.
+    sources:
+      - name: OBPG — VIIRS-NOAA20 R2022.0 (센서 간 비교)
+        url: https://oceancolor.gsfc.nasa.gov/data/reprocessing/r2022/noaa20
+      - name: OBPG — VIIRS-SNPP R2022.0
+        url: https://oceancolor.gsfc.nasa.gov/data/reprocessing/r2022/snpp
+      - name: Transition from MODIS to VIIRS (Earthdata, 2025-05-02)
+        url: https://www.earthdata.nasa.gov/data/alerts-outages/transition-from-modis-viirs
+
+links:
+  - name: OBPG — 처리 이력(Reprocessing) 목록
+    url: https://oceancolor.gsfc.nasa.gov/data/reprocessing/
+  - name: OBPG — Product Status (센서별 현재 버전)
+    url: https://oceancolor.gsfc.nasa.gov/data/product_status
+  - name: OBPG — 파일 이름 규칙
+    url: https://oceancolor.gsfc.nasa.gov/resources/docs/filenaming-convention
+  - name: OBPG — L3 빈(bin) 격자 설명
+    url: https://oceancolor.gsfc.nasa.gov/resources/docs/format/l3bins
+  - name: OBPG 엽록소 a ATBD (PDF)
+    url: https://oceancolor.gsfc.nasa.gov/files/atbd/atbd-obdaac-chlorophyll-a.pdf
+  - name: OBPG — SST 품질 플래그 설명
+    url: https://oceancolor.gsfc.nasa.gov/resources/atbd/sst/flag/
+  - name: Earthdata 공지 — Aqua MODIS Mini-reprocessing R2022.0.3
+    url: https://www.earthdata.nasa.gov/data/alerts-outages/aqua-modis-mini-reprocessing-r2022.0.3
+  - name: Oceandata Help Hub (튜토리얼·노트북)
+    url: https://nasa.github.io/oceandata-notebooks/
+  - name: 이 사이트 — VIIRS 해양 (후속)
+    url: ../viirs-ocean/
+  - name: 이 사이트 — PACE OCI (초분광 후속)
+    url: ../pace-oci/
+  - name: 이 사이트 — ESA OC-CCI (MODIS를 포함한 다중 위성 해색 기후자료)
+    url: ../oc-cci/
+  - name: 이 사이트 — GOCI-II (한반도 주변 정지궤도 해색)
+    url: ../goci2/
+  - name: 이 사이트 — MODIS 지표면온도 (같은 위성의 궤도 표류 설명)
+    url: ../modis-lst/
+
+watch_urls:
+  - https://oceancolor.gsfc.nasa.gov/data/reprocessing/
+  - https://oceancolor.gsfc.nasa.gov/
+
+last_verified: "2026-10-13"

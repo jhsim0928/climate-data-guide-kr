@@ -1,0 +1,399 @@
+# ─────────────────────────────────────────────────────────────
+# NASA SMAP sea surface salinity (RSS V6.0 and JPL CAP V5.0) — dataset information file (English edition)
+# Satellite tab (sea surface salinity), also listed in the Ocean tab (satellite observations). Two L3 product lines that RSS and JPL derive from the same SMAP L-band radiometer data with different algorithms.
+# When checked on 2026-10-13, PO.DAAC held JPL CAP V5.0 8-day L3 files through the one centred on 2026-10-06, and RSS V6.0 8-day L3 files through the one centred on 2026-09-19.
+# The version change within this page (RSS V5.0 → V6.0) is recorded under transitions (no to_id). Soil moisture products are on the ../smap/ page.
+# After editing, update last_verified to the date you checked the official pages.
+# ─────────────────────────────────────────────────────────────
+id: smap-sss
+name: "SMAP sea surface salinity (RSS and JPL)"
+full_name: >-
+  Soil Moisture Active Passive (SMAP) Sea Surface Salinity — RSS SMAP Level 2C/Level 3 SSS V6.0 and JPL SMAP CAP Level 2B/Level 3 SSS V5.0 (distributed by NASA PO.DAAC)
+category: satellite
+domain: satellite
+group: 해면 염분
+order: 10
+also_in:
+  - domain: ocean
+    group: 위성 관측 자료
+domains: [해양, 원격탐사]
+provider: Remote Sensing Systems (RSS, V6.0) and the NASA JPL SMAP salinity team (CAP V5.0) / distributed by NASA PO.DAAC, sponsored by the NASA Ocean Salinity Science Team
+
+status: active
+status_note: >-
+  SMAP continues to observe with its L-band radiometer, and both product lines are updated normally. When checked on 2026-10-13, PO.DAAC held JPL CAP V5.0 8-day L3 files through the one centred on 2026-10-06 (2 to 10 October)
+  and monthly files through September 2026, RSS V6.0 8-day L3 files through the one centred on 2026-09-19 (15 to 23 September) and monthly files through August 2026, and RSS L2C near-real-time swaths through 2026-10-11.
+  The current versions are RSS V6.0 (released 2024-03, back-processing of the full record completed 2024-09) and JPL CAP V5.0.
+
+period:
+  start: "2015-04"
+  end: present
+  note: >-
+    SMAP science observations began in April 2015. The first RSS V6.0 8-day L3 file is centred on 2015-04-01 (28 March to 5 April 2015) and monthly files start in April 2015; JPL CAP V5.0 8-day L3 files start with the one centred on 2015-05-04.
+    Safe-mode events left no data from 2019-06-19 to 07-23 and from early August to late September 2022 (return to the nominal orbit on 10-06). The RSS release notes give the gaps as 2019-06-17 to 07-25 and 2022-08-06 to 09-21 (no 8-day files),
+    while the PO.DAAC announcements give 2019-06-19 to 07-23 and 2022-08-09 to 10-06, so the documents differ slightly. RSS has no monthly files for July 2019 or August and September 2022.
+
+resolution:
+  spatial_short: "70 km (0.25°)"
+  temporal_short: "8일"
+  spatial: >-
+    Both L3 lines use a regular 0.25° × 0.25° latitude–longitude grid. RSS V6.0 carries the standard salinity smoothed to about 70 km (`sss_smap`) and salinity at the original resolution of about 40 km (`sss_smap_40km`, experimental);
+    JPL describes CAP V5.0 as having a spatial resolution of about 60 km. The L2 products (RSS L2C, JPL L2B) are swath data from a 1000 km wide swath
+  vertical: Sea surface (single level) — the near-surface salinity sensed by the L-band (1.41 GHz) radiometer
+  temporal: >-
+    L3 8-day running mean (one file per day, file date at the centre of the 8-day window) / L3 monthly mean. Swath products are separate: RSS L2C (4-day latency) and L2C near-real-time (about 5 hours),
+    JPL L2B and L2B near-real-time (including a 2-hour version)
+
+coverage:
+  short: 전지구
+  note: "Global ocean. Cells over sea ice or close to land are empty or flagged; RSS drops salinity or excludes it from the standard smoothed product according to the sea-ice contamination zone (sea_ice_zones)"
+update: >-
+  Daily (one 8-day running-mean file per day). PO.DAAC lists latencies of about 7 days after the end of the averaging window for both RSS L3 products, about 7 days for JPL 8-day files and about a month for JPL monthly files.
+  When checked in October 2026, JPL 8-day files appeared about 3 days after the window ended, JPL monthly files around the 2nd of the next month, RSS 8-day files about a week after the window ended, and RSS monthly files about a month later
+license: >-
+  NASA Earth science open data — openly shared without restriction (PO.DAAC and Earthdata). Downloading from PO.DAAC needs a free NASA Earthdata Login; the RSS HTTPS server needs no login.
+  RSS asks users to cite the dataset DOI and include its acknowledgement statement
+account_required: false
+
+summary: >-
+  Sea surface salinity (SSS) from the L-band (1.41 GHz) radiometer on NASA's SMAP satellite. SMAP is a soil moisture mission, but after Aquarius ended in June 2015 it took over NASA's satellite salinity record,
+  and two teams process the same brightness temperatures with different algorithms. The Remote Sensing Systems (RSS) V6.0 product uses an algorithm from the Aquarius family with CCMP winds for the roughness correction,
+  while JPL's CAP (Combined Active-Passive) V5.0 uses a combined algorithm developed for Aquarius that retrieves salinity and wind speed together. Both provide 8-day running-mean and monthly L3 fields on a 0.25° grid through PO.DAAC.
+
+time_convention:
+  summary: >-
+    An L3 8-day file averages all valid observations within ±3.5 days (8 days) of its date, and a new file is produced every day. Monthly files average the whole month.
+    In both lines the time stored in the file is the centre of the averaging interval. The actual observations are instantaneous overpasses around 6 a.m. (descending) and 6 p.m. (ascending) local time, and a grid cell is seen several times within 8 days.
+  points:
+    - "The day of year in an RSS 8-day file name (e.g. RSS_smap_SSS_L3_8day_running_2026_262_FNL_v06.0 → day 262 of 2026 = 19 September) is the centre of the window, and observations within ±3.5 days of it are averaged."
+    - "The date in a JPL 8-day file name (e.g. SMAP_L3_SSS_20261006_8DAYS_V5.0) is also the window centre. PO.DAAC lists this file as covering 2 October 12 UTC to 10 October 12 UTC, and JPL uses Gaussian weights (the `weight` variable)."
+    - "8-day files are produced daily, but neighbouring files overlap by 7 days and are not independent samples. For an independent series, take every eighth file or use the monthly product."
+    - "The time reference differs — RSS uses 'seconds since 2000-01-01T00:00:00Z', JPL uses 'seconds since 2015-1-1 00:00:00 UTC'."
+    - "RSS L3 averages fore and aft looks and ascending and descending passes together. For instantaneous swath values, use L2C (RSS) or L2B (JPL)."
+  source: https://data.remss.com/smap/SSS/V06.0/documents/Release_V6.0.pdf
+  source_name: RSS SMAP Salinity V6.0 Release Notes + PO.DAAC and Earthdata variable tables
+
+variables:
+  note: >-
+    Variable names and units follow the NASA Earthdata catalogue (PO.DAAC) variable tables. Salinity in 1e-3 is practical salinity (same magnitude as psu). RSS and JPL use different file structures and variable names, so take care when combining them.
+  full_list: https://www.earthdata.nasa.gov/data/catalog/pocloud-smap-rss-l3-sss-smi-8day-runningmean-v6-6.0
+  groups:
+    - name: RSS SMAP L3 V6.0 (8-day running mean and monthly, 0.25°)
+      kind: mean
+      period: 8-day running or monthly
+      items:
+        - text: "Sea surface salinity (smoothed to about 70 km, standard) — `sss_smap` (1e-3)"
+          note: Recommended by RSS as the official product
+        - text: "Sea surface salinity (original resolution of about 40 km, experimental) — `sss_smap_40km` (1e-3)"
+          note: Noisier
+        - text: "Rain-filtered sea surface salinity (about 70 km) — `sss_smap_RF` (1e-3)"
+        - text: "Total formal salinity uncertainty — `sss_smap_unc`, `sss_smap_40km_unc`, `sss_smap_RF_unc` (1e-3)"
+          std: []
+        - text: "HYCOM reference salinity — `sss_ref` (1e-3)"
+          std: []
+        - text: "Number of observations in the average — `nobs`, `nobs_40km`, `nobs_RF` (1)"
+          kind: accum
+          std: []
+        - text: "Ancillary wind speed (CCMP NRT, used in the roughness correction) — `winspd` (m s-1)"
+          std: []
+        - text: "Ancillary sea surface temperature (CMC) — `surtep` (K)"
+          std: []
+        - text: "Estimated sea-ice fraction (weighted by antenna gain) — `gice_est` (1)"
+          std: []
+        - text: "Land fraction — `gland`, `fland` (1)"
+          std: []
+    - name: JPL SMAP CAP L3 V5.0 (8-day running mean and monthly, 0.25°)
+      kind: mean
+      period: 8-day running or monthly
+      items:
+        - "Sea surface salinity — `smap_sss` (1e-3)"
+        - text: "Salinity uncertainty — `smap_sss_uncertainty` (1e-3)"
+          std: []
+        - text: "SMAP 10 m wind speed — `smap_spd` (m s-1)"
+          note: Retrieved from SMAP together with salinity
+        - text: "SMAP 10 m wind speed (using ancillary salinity) — `smap_high_spd` (m s-1)"
+          std: [wind10]
+        - text: "HYCOM salinity — `anc_sss` (1e-3)"
+          std: []
+        - text: "Ancillary sea surface temperature — `anc_sst` (K)"
+          std: []
+        - text: "Sea-ice and land fractions — `ice_fraction`, `land_fraction` (1)"
+          std: []
+        - text: "Sum of Gaussian weights — `weight` (1)"
+          kind: accum
+          std: []
+
+access:
+  - name: NASA PO.DAAC — RSS SMAP L3 8-day V6.0 (SMAP_RSS_L3_SSS_SMI_8DAY-RUNNINGMEAN_V6)
+    url: https://podaac.jpl.nasa.gov/dataset/SMAP_RSS_L3_SSS_SMI_8DAY-RUNNINGMEAN_V6
+    method: Earthdata Search / earthaccess / OPeNDAP / podaac-data-subscriber
+    note: >-
+      Monthly files are SMAP_RSS_L3_SSS_SMI_MONTHLY_V6, swaths SMAP_RSS_L2_SSS_V6 and near-real-time swaths SMAP_RSS_L2_SSS_NRT_V6. A free NASA Earthdata Login is required.
+  - name: NASA PO.DAAC — JPL SMAP CAP L3 8-day V5.0 (SMAP_JPL_L3_SSS_CAP_8DAY-RUNNINGMEAN_V5)
+    url: https://podaac.jpl.nasa.gov/dataset/SMAP_JPL_L3_SSS_CAP_8DAY-RUNNINGMEAN_V5
+    method: Earthdata Search / earthaccess / OPeNDAP / podaac-data-subscriber
+    note: >-
+      Monthly files are SMAP_JPL_L3_SSS_CAP_MONTHLY_V5, swaths SMAP_JPL_L2B_SSS_CAP_V5, and near-real-time swaths SMAP_JPL_L2B_NRT_SSS_CAP_V5 and SMAP_JPL_L2B_NRT2_SSS_CAP_V5 (2-hour latency).
+  - name: RSS data server (HTTPS)
+    url: https://data.remss.com/smap/SSS/
+    method: Direct HTTPS download (netCDF-4, e.g. V06.0/FINAL/L3/8day_running/2026/)
+    note: >-
+      The V6.0 document (Release_V6.0.pdf) and the lists of unused orbits (bad_orbits) are on the same server. FTP access requires free registration (register.remss.com).
+    login: false
+  - name: RSS SMAP salinity page
+    url: https://www.remss.com/missions/smap/salinity/
+    method: Web (version description, known issues, citation text, preview images)
+
+example:
+  lang: python
+  note: >-
+    Downloads a month of RSS V6.0 8-day L3 files with earthaccess and selects the standard salinity (`sss_smap`) around the Korean Peninsula. Run earthaccess.login() once with a NASA Earthdata account.
+    For JPL CAP, change short_name to SMAP_JPL_L3_SSS_CAP_8DAY-RUNNINGMEAN_V5, the variable to `smap_sss`, and the coordinates to latitude and longitude.
+  code: |
+    # pip install earthaccess xarray netCDF4
+    import earthaccess
+    import xarray as xr
+
+    earthaccess.login()
+    results = earthaccess.search_data(
+        short_name="SMAP_RSS_L3_SSS_SMI_8DAY-RUNNINGMEAN_V6",  # monthly: SMAP_RSS_L3_SSS_SMI_MONTHLY_V6
+        temporal=("2025-08-01", "2025-08-31"),
+    )
+    files = earthaccess.download(results, "./smap_sss")
+
+    ds = xr.open_dataset(files[0])
+    box = (ds.lat >= 25) & (ds.lat <= 40) & (ds.lon >= 120) & (ds.lon <= 135)  # Korea and the East China Sea
+    sss = ds["sss_smap"].where(box, drop=True)
+    print(float(sss.mean()), int(ds["nobs"].where(box, drop=True).sum()))
+
+tips:
+  - "RSS treats the ~70 km smoothed salinity (`sss_smap`) as the official product and the 40 km salinity (`sss_smap_40km`) as experimental, and advises using the much less noisy 70 km fields for most open-ocean work."
+  - "RSS notes that undetected radio-frequency interference (RFI) near Japan, China and Taiwan during certain periods can make salinity too fresh. Treat unusually low values in East Asian coastal seas with suspicion."
+  - Cells near the coast are dropped or degraded by land contamination. RSS provides no salinity where land contamination is strong and excludes moderate contamination from the standard smoothed product, so narrow seas such as the Yellow Sea and East China Sea have many gaps.
+  - Right after rain the surface layer stratifies, and SMAP reads fresher than Argo (about 5 m depth) or HYCOM. This can be a difference in measurement depth rather than an error; compare with the rain-filtered `sss_smap_RF`.
+  - "RSS reports an increasing salty bias near 60°S since 2020, so be careful with long-term trends in the Southern Ocean. Waters colder than 5°C are also flagged as degraded."
+  - RSS and JPL values differ for the same SMAP observations because their algorithms and ancillary data differ. Do not mix them in one time series, and state in papers which line you used (RSS V6.0 or JPL CAP V5.0).
+  - "Besides the 2019-06 to 07 and 2022-08 to 09 safe-mode gaps, RSS lists days with no L2 files (2015-12-03 and 04, 2016-04-15 and 16, 2017-09-27 and 28, 2017-11-25, 2018-12-16) and days without retrievals because CCMP winds were missing (2017-05-25 and 26, 2020-10-22 and 23). 8-day files that include these days have fewer observations."
+  - "When checked on 2026-10-13, the RSS V6.0 8-day L3 files on PO.DAAC centred between early May and early September 2026 had been regenerated on 2026-09-12, and the May to August 2026 monthly files on 09-29 (overlapping the reprocessing of the SMAP 2026-05-14 to 07-28 geolocation error). If you downloaded these periods earlier, downloading them again is the safe choice."
+
+citations:
+  dataset:
+    - label: RSS SMAP L3 8-day V6.0 (PO.DAAC)
+      text: >-
+        Remote Sensing Systems (RSS). 2024. SMAP Sea Surface Salinity Products. Ver. 6.0. PO.DAAC, CA, USA. Dataset accessed [YYYY-MM-DD] at https://doi.org/10.5067/SMP60-3SPCS
+      doi: 10.5067/SMP60-3SPCS
+      bibtex: |
+        @misc{rss2024smapsss8day,
+          author    = {{Remote Sensing Systems}},
+          title     = {{SMAP} Sea Surface Salinity Products, Level 3 8-Day Running Mean, Version 6.0},
+          year      = {2024},
+          publisher = {NASA Physical Oceanography Distributed Active Archive Center},
+          version   = {6.0},
+          doi       = {10.5067/SMP60-3SPCS}
+        }
+    - label: RSS SMAP L3 monthly V6.0 (PO.DAAC)
+      text: >-
+        Remote Sensing Systems (RSS). 2024. SMAP Sea Surface Salinity Products. Ver. 6.0. PO.DAAC, CA, USA. Dataset accessed [YYYY-MM-DD] at https://doi.org/10.5067/SMP60-3SMCS
+      doi: 10.5067/SMP60-3SMCS
+      bibtex: |
+        @misc{rss2024smapsssmonthly,
+          author    = {{Remote Sensing Systems}},
+          title     = {{SMAP} Sea Surface Salinity Products, Level 3 Monthly, Version 6.0},
+          year      = {2024},
+          publisher = {NASA Physical Oceanography Distributed Active Archive Center},
+          version   = {6.0},
+          doi       = {10.5067/SMP60-3SMCS}
+        }
+    - label: RSS recommended citation (V6.0, product DOI suffixes 2SOCS, 3SPCS and 3SMCS)
+      text: >-
+        T. Meissner, F. J. Wentz, A. Manaster, R. Lindsley, M. Brewer, M. Densberger, 2024: Remote Sensing Systems SMAP Ocean Surface Salinities
+        [Level 2C, Level 3 Running 8-day, Level 3 Monthly], Version 6.0 validated release. Remote Sensing Systems, Santa Rosa, CA, USA.
+        Available online at www.remss.com/missions/smap, doi: 10.5067/SMP60-xxxxx
+      bibtex: |
+        @misc{meissner2024smapv6,
+          author    = {Meissner, T. and Wentz, F. J. and Manaster, A. and Lindsley, R. and Brewer, M. and Densberger, M.},
+          title     = {Remote Sensing Systems {SMAP} Ocean Surface Salinities [Level 2C, Level 3 Running 8-day, Level 3 Monthly], Version 6.0 validated release},
+          year      = {2024},
+          publisher = {Remote Sensing Systems},
+          address   = {Santa Rosa, CA, USA},
+          note      = {doi: 10.5067/SMP60-xxxxx (2SOCS: L2C, 3SPCS: L3 8-day, 3SMCS: L3 monthly)}
+        }
+    - label: JPL SMAP CAP L3 8-day V5.0 (PO.DAAC)
+      text: >-
+        JPL. 2020. JPL CAP SMAP Sea Surface Salinity Products. Ver. 5.0. PO.DAAC, CA, USA. Dataset accessed [YYYY-MM-DD] at https://doi.org/10.5067/SMP50-3TPCS
+      doi: 10.5067/SMP50-3TPCS
+      bibtex: |
+        @misc{jpl2020smapcap8day,
+          author    = {{JPL}},
+          title     = {{JPL} {CAP} {SMAP} Sea Surface Salinity Products, Level 3 8-Day Running Mean, Version 5.0},
+          year      = {2020},
+          publisher = {NASA Physical Oceanography Distributed Active Archive Center},
+          version   = {5.0},
+          doi       = {10.5067/SMP50-3TPCS}
+        }
+    - label: JPL SMAP CAP L3 monthly V5.0 (PO.DAAC)
+      text: >-
+        JPL. 2020. JPL CAP SMAP Sea Surface Salinity Products. Ver. 5.0. PO.DAAC, CA, USA. Dataset accessed [YYYY-MM-DD] at https://doi.org/10.5067/SMP50-3TMCS
+      doi: 10.5067/SMP50-3TMCS
+      bibtex: |
+        @misc{jpl2020smapcapmonthly,
+          author    = {{JPL}},
+          title     = {{JPL} {CAP} {SMAP} Sea Surface Salinity Products, Level 3 Monthly, Version 5.0},
+          year      = {2020},
+          publisher = {NASA Physical Oceanography Distributed Active Archive Center},
+          version   = {5.0},
+          doi       = {10.5067/SMP50-3TMCS}
+        }
+  papers:
+    - label: RSS salinity algorithm (Aquarius V5 and SMAP V3)
+      text: >-
+        Meissner, T., Wentz, F. J., Le Vine, D. M. (2018): The Salinity Retrieval Algorithms for the NASA Aquarius Version 5 and SMAP Version 3 Releases. Remote Sensing, 10(7), 1121.
+      doi: 10.3390/rs10071121
+      bibtex: |
+        @article{meissner2018salinity,
+          author  = {Meissner, Thomas and Wentz, Frank J. and Le Vine, David M.},
+          title   = {The Salinity Retrieval Algorithms for the {NASA} {Aquarius} Version 5 and {SMAP} Version 3 Releases},
+          journal = {Remote Sensing},
+          volume  = {10},
+          number  = {7},
+          pages   = {1121},
+          year    = {2018},
+          doi     = {10.3390/rs10071121}
+        }
+    - label: RSS retrievals near the sea-ice edge
+      text: >-
+        Meissner, T., Manaster, A. (2021): SMAP Salinity Retrievals near the Sea-Ice Edge Using Multi-Channel AMSR2 Brightness Temperatures. Remote Sensing, 13(24), 5120.
+      doi: 10.3390/rs13245120
+      bibtex: |
+        @article{meissner2021seaice,
+          author  = {Meissner, Thomas and Manaster, Andrew},
+          title   = {{SMAP} Salinity Retrievals near the Sea-Ice Edge Using Multi-Channel {AMSR2} Brightness Temperatures},
+          journal = {Remote Sensing},
+          volume  = {13},
+          number  = {24},
+          pages   = {5120},
+          year    = {2021},
+          doi     = {10.3390/rs13245120}
+        }
+    - label: JPL CAP algorithm
+      text: >-
+        Fore, A. G., Yueh, S. H., Tang, W., Stiles, B. W., Hayashi, A. K. (2016): Combined Active/Passive Retrievals of Ocean Vector Wind and Sea Surface Salinity With SMAP.
+        IEEE Transactions on Geoscience and Remote Sensing, 54(12), 7396–7404.
+      doi: 10.1109/TGRS.2016.2601486
+      bibtex: |
+        @article{fore2016cap,
+          author  = {Fore, Alexander G. and Yueh, Simon H. and Tang, Wenqing and Stiles, Bryan W. and Hayashi, Akiko K.},
+          title   = {Combined Active/Passive Retrievals of Ocean Vector Wind and Sea Surface Salinity With {SMAP}},
+          journal = {IEEE Transactions on Geoscience and Remote Sensing},
+          volume  = {54},
+          number  = {12},
+          pages   = {7396--7404},
+          year    = {2016},
+          doi     = {10.1109/TGRS.2016.2601486}
+        }
+  acknowledgement: >-
+    For RSS data, include "SMAP salinity data are produced by Remote Sensing Systems and sponsored by the NASA Ocean Salinity Science Team. Data are available at www.remss.com."
+    For data from PO.DAAC, cite the product-specific dataset DOI and your access date.
+
+notices:
+  - date: "2026-08-11"
+    level: warning
+    title: SMAP geolocation error from 2026-05-14 to 07-28 — standard products being reprocessed
+    body: >-
+      NSIDC announced that SMAP standard and near-real-time data had a geolocation error from 14 May to 28 July 2026, and that standard products would be reprocessed and replaced (near-real-time products will not be).
+      The notice comes from NSIDC, the soil moisture archive, and does not mention salinity products. When checked on 2026-10-13, RSS V6.0 8-day L3 files on PO.DAAC centred between early May and early September 2026 had been reposted on 2026-09-12
+      and the May to August 2026 monthly files on 09-29, but neither PO.DAAC nor RSS has said whether this replacement relates to the geolocation error.
+    source: https://nsidc.org/data/user-resources/data-announcements/user-notice-smap-data-reprocessing
+  - date: "2024-09-23"
+    level: info
+    title: Back-fill of RSS SMAP salinity V6.0 completed
+    body: >-
+      PO.DAAC announced that back-fill processing of the RSS SMAP sea surface salinity V6.0 validated datasets was complete (the notice says "from May 25, 2015, to the present", although the PO.DAAC listing starts in April 2015).
+      The V5.3 evaluation datasets were an interim release meant to be used until this back-processing was finished.
+    source: https://podaac.jpl.nasa.gov/announcements/2024-09-23-Back-fill-completion-of-SMAP-RSS-Sea-Surface-Salinity-V6.0-Validated-Datasets
+  - date: "2024-03-26"
+    level: info
+    title: RSS SMAP salinity V6.0 released
+    body: >-
+      L2C, L2C near-real-time, and L3 8-day and monthly V6.0 products were released on PO.DAAC. Changes include removal of biases from the radar operation period (April to August 2015), reduced look-angle-dependent biases,
+      reduced excessive salinity at high northern latitudes, and a small revision of the sun-glint flag. Latencies are 4 days for L2C, 5 hours for L2C NRT and 7 days for L3.
+    source: https://podaac.jpl.nasa.gov/announcements/2024-03-26-SMAP-RSS-Sea-Surface-Salinity-V6.0-Validated-Dataset-Release
+  - date: "2022-08-22"
+    level: warning
+    title: SMAP safe mode (entered 2022-08-08) — gap in salinity data
+    body: >-
+      SMAP entered safe mode on 8 August 2022 and science data collection stopped. The SMAP master events log records an antenna spin-down at that time; the radiometer was powered on again on 19 September, and an orbit manoeuvre on 6 October returned SMAP to nominal science operations.
+      RSS has no monthly files for August or September 2022.
+    source: https://nsidc.org/data/user-resources/data-announcements/user-notice-smap-safe-mode
+  - date: "2019-06-24"
+    level: warning
+    title: SMAP safe mode (no data 2019-06-19 to 07-23)
+    body: >-
+      SMAP entered safe mode on the evening of 19 June 2019 and all instruments were shut down; there are no observations until the radiometer was powered on again on 23 July. There are no salinity L2 or 8-day L3 files for this period, and no RSS monthly file for July 2019.
+    source: https://nsidc.org/data/user-resources/data-announcements/smap-safe-mode
+
+transitions:
+  - from: RSS SMAP SSS V5.0
+    to: RSS SMAP SSS V6.0
+    status: completed
+    date: "2024-03"
+    summary: >-
+      Switches the input antenna temperatures to SMAP L1B Version 6 (Piepmeier et al., 2023) and refines several bias corrections. Released in March 2024, with back-processing of the full record finished in September 2024.
+      Until then, users were told to use the V5.3 evaluation release (through the end of 2023), which is identical to V6.0 apart from its V5 L1B input.
+    changes:
+      - aspect: Input L1B
+        before: SMAP L1B Version 5 antenna temperatures
+        after: "SMAP L1B Version 6 antenna temperatures (lower RFI exclusion threshold removes more potential interference)"
+      - aspect: Early-mission (2015-04 to 08) bias
+        before: A ~0.25 K difference between high-rate and low-rate antenna temperatures during radar operation caused salty halos near continental shelves
+        after: Bias removed manually
+      - aspect: Reflected galaxy and reflector temperature corrections
+        before: Look-direction-dependent fresh biases and salty biases at high northern latitudes
+        after: Adjusted galaxy correction and reflector physical-temperature model reduce both
+      - aspect: Sun-glint flag
+        before: Negative glint angles were also flagged
+        after: "Negative angles no longer flagged; new flags for low winds at high latitudes and sidelobe or backscatter cases"
+      - aspect: Dataset DOIs
+        before: "10.5067/SMP50-… (V5.0)"
+        after: "10.5067/SMP60-2SOCS (L2C), 3SPCS (L3 8-day), 3SMCS (L3 monthly)"
+    impacts:
+      - Replace any V5.0 time series by downloading the full V6.0 record. Values change most in April to August 2015 and at high northern latitudes.
+      - "V6.0 filters RFI more aggressively, so the observation count (`nobs`) can drop in some cells."
+      - "V6.0 still has unresolved issues: the salty bias near 60°S since 2020 and undetected RFI in East Asia, the Arabian Sea and the Mediterranean."
+    sources:
+      - name: RSS SMAP Salinity V6.0 Release Notes (PDF)
+        url: https://data.remss.com/smap/SSS/V06.0/documents/Release_V6.0.pdf
+      - name: PO.DAAC — V6.0 release announcement (2024-03-26)
+        url: https://podaac.jpl.nasa.gov/announcements/2024-03-26-SMAP-RSS-Sea-Surface-Salinity-V6.0-Validated-Dataset-Release
+      - name: PO.DAAC — V5.3 evaluation release announcement (2024-06-07)
+        url: https://podaac.jpl.nasa.gov/announcements/2024-06-07-SMAP-RSS-SSS-V5.3-Evaluation-Dataset-Release
+
+links:
+  - name: RSS — SMAP sea surface salinity page
+    url: https://www.remss.com/missions/smap/salinity/
+  - name: PO.DAAC — SMAP salinity overview
+    url: https://podaac.jpl.nasa.gov/SMAP
+  - name: PO.DAAC — RSS SMAP L3 monthly V6.0
+    url: https://podaac.jpl.nasa.gov/dataset/SMAP_RSS_L3_SSS_SMI_MONTHLY_V6
+  - name: PO.DAAC — JPL SMAP CAP L3 monthly V5.0
+    url: https://podaac.jpl.nasa.gov/dataset/SMAP_JPL_L3_SSS_CAP_MONTHLY_V5
+  - name: RSS SMAP Salinity V6.0 Release Notes (PDF)
+    url: https://data.remss.com/smap/SSS/V06.0/documents/Release_V6.0.pdf
+  - name: JPL SMAP-SSS CAP V5.0 user guide (PDF)
+    url: https://archive.podaac.earthdata.nasa.gov/podaac-ops-cumulus-docs/smap/open/docs/JPL-CAP_V5/SMAP-SSS_JPL_V5.0_Documentation.pdf
+  - name: SMAP master events log (safe modes and manoeuvres)
+    url: https://smap.jpl.nasa.gov/user-products/master-events
+  - name: This site — SMAP soil moisture (land products from the same satellite)
+    url: ../smap/
+  - name: This site — SMOS sea surface salinity
+    url: ../smos-sss/
+  - name: This site — ESA CCI sea surface salinity (merged SMAP, SMOS and Aquarius)
+    url: ../esa-cci-sss/
+  - name: This site — CCMP ocean winds (used in the RSS roughness correction)
+    url: ../ccmp/
+
+watch_urls:
+  - https://podaac.jpl.nasa.gov/announcements
+  - https://www.remss.com/missions/smap/salinity/
+
+last_verified: "2026-10-13"

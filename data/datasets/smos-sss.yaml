@@ -1,0 +1,413 @@
+# ─────────────────────────────────────────────────────────────
+# ESA SMOS 해면 염분 (ESA L2OS · CATDS L3/L4 · BEC L3/L4) — 데이터셋 정보 파일
+# 위성 탭(해면 염분), 해양 탭(위성 관측 자료) 교차 수록. 같은 SMOS L밴드 간섭 복사계(MIRAS) 관측으로 만든 ESA 궤도 자료(L2OS v700)와
+# 프랑스 CATDS(운영 L3OS, LOCEAN 편향 보정 L3 v11, SMOS/SMAP OI L4), 스페인 BEC(L3/L4) 격자 자료를 한 페이지에 정리했습니다.
+# 2026-10-13 확인 시 CATDS 운영 L3OS 10일 파일은 2026-09-28~10-07 구간까지 올라와 있고, LOCEAN 편향 보정 v11은 2010-01~2025-12입니다.
+# 같은 페이지 안 버전 변경(L2OS v662 → v700, LOCEAN v10 → v11)은 transitions(to_id 없음)에 적었습니다.
+# 수정 후에는 공식 페이지에서 확인한 날짜로 last_verified 를 갱신하세요.
+# ─────────────────────────────────────────────────────────────
+id: smos-sss
+name: "SMOS 해면 염분 (ESA·CATDS·BEC)"
+full_name: >-
+  ESA Soil Moisture and Ocean Salinity (SMOS) Sea Surface Salinity — ESA Level 2 Ocean Salinity(L2OS v700),
+  CATDS Level 3/Level 4 염분장(CPDC 운영 L3OS, CEC LOCEAN 편향 보정 L3 v11, CEC LOPS SMOS/SMAP OI L4), BEC 전지구 L3/L4
+category: satellite
+domain: satellite
+group: 해면 염분
+order: 20
+also_in:
+  - domain: ocean
+    group: 위성 관측 자료
+domains: [해양, 원격탐사]
+provider: >-
+  ESA(위성 운영·L1/L2 처리) / CATDS(프랑스 CNES·IFREMER 지상 처리 센터, 연구 제품은 LOCEAN·LOPS·ACRI-st) / BEC(스페인 바르셀로나 전문가 센터, ICM-CSIC)
+
+status: active
+status_note: >-
+  SMOS는 2009년 11월 발사 후 계속 관측 중입니다. ESA 임무 페이지(earth.esa.int)는 아직 '2025년 말까지 연장'으로 적혀 있지만, 2026년 5월 해면 염분 학회의 ESA 발표와 회의 보고서는 '2028년 말까지 연장'을,
+  CNES 페이지(2026-01 수정)는 '2026년까지 연장(2028년 검토)'을 적고 있습니다. 2026-10-13 확인 시 CATDS 운영 L3OS 10일 염분장은 2026-09-28~10-07 구간 파일(10-13 게시)까지 올라와 있어 정상 갱신 중입니다.
+  ESA L2OS 현재판은 v700(2021-05 운영)이며, ESA는 4차 전 기간 재처리 기준판 v740('2025년 말 기준')과 해빙 오염 보정을 넣을 v750(2027)을 예고했습니다.
+
+period:
+  start: "2010-01"
+  end: present
+  note: >-
+    SMOS는 2009-11-02 발사, L1·L2 자료는 2010-01-12부터입니다. ESA는 2010-01-12~05-31 시험 운용(commissioning) 기간 자료를 쓰지 말라고 안내하며, L2OS v700 재처리판(REPR)은 2010-06-01~2021-05-24,
+    운영판(OPER)은 2021-05-25부터입니다. CATDS 운영 L3OS는 재처리 RE07(2010-01~2021-05)과 운영판(2021-06~), LOCEAN 편향 보정 v11은 2010-01~2025-12(연 1회 갱신, 다음은 2027년 초 예정),
+    BEC 전지구 L3/L4는 2011~2019년에 2020-01~2021-05 연장분이 더해진 기간입니다.
+
+resolution:
+  spatial_short: "25 km (0.23°)"
+  temporal_short: "1일"
+  spatial: >-
+    ESA L2OS: ISEA 4H9(정이십면체 Snyder 등면적) 격자의 궤도(스와스) 자료, 관측 폭 1000 km, L1C 공간 해상도 30~50 km.
+    CATDS L3OS: EASE-Grid 2.0 전지구(EPSG:6933) 25 km(A)·50 km(B) 격자, 25 km 격자는 584 × 1388. CATDS LOCEAN 편향 보정 v11: 25 × 25 km² 격자(30 km 안 이웃 격자 평균 적용).
+    CATDS SMOS/SMAP OI L4: EASE 25 km 격자 파일, 두 번째 매핑을 SMOS/SMAP 해상도(약 45 km) 규모로 수행. BEC: L3 0.25° 위경도 격자, L4 0.05° 위경도 격자
+  vertical: 해면 단일층 — L밴드(1.4 GHz) 복사계가 감지하는 표층 염분
+  temporal: >-
+    ESA L2OS 궤도별(반궤도 파일, 하루 29개) / CATDS L3OS 일 파일(L2Q 상승·하강 궤도 따로)·10일 이동평균(매일)·월평균 /
+    LOCEAN v11 4일 간격 지도, 9일·18일 가우스 평활 / SMOS/SMAP OI L4 7일 / BEC L3 9일 지도(매일)·L4 일
+
+coverage:
+  short: 전지구
+  note: "전지구 해양. CATDS EASE-Grid 2.0 격자는 83.5°S~83.5°N입니다. 해빙역·해빙 가장자리와 연안은 해빙·육지 오염으로 값이 빠지거나 편향이 남습니다"
+update: >-
+  ESA L2OS·CATDS 운영 L3OS는 매일(CATDS 운영판은 약 5일 지연, NRT판은 1일 지연). CATDS LOCEAN 편향 보정 L3는 연 1회 재처리(다음 2027년 초 예정), BEC 전지구 L3/L4는 비정기 확장
+license: >-
+  ESA SMOS 자료는 ESA 지구관측 자료 정책에 따라 무료이며, ESA 배포 서버에서 받으려면 EO Sign In 계정이 필요합니다. CATDS 자료는 무료로 배포되며 데이터셋 인용과 생산 기관 감사 문구를 요청합니다.
+  BEC 자료는 무료 등록 후 SFTP로 받습니다
+account_required: false
+
+summary: >-
+  ESA의 지구탐사 위성 SMOS는 L밴드(1.4 GHz) 간섭 합성개구 복사계(MIRAS)로 토양수분과 해면 염분을 관측하는 위성으로, 2010년부터 가장 긴 위성 염분 기록을 만들고 있습니다.
+  ESA는 궤도 단위의 Level 2 염분(L2OS)을 내고, 프랑스 CATDS는 이를 EASE-Grid 2.0 격자로 모은 운영 L3OS(매일 갱신)와 연구용 편향 보정 L3(LOCEAN), SMAP과 합친 OI L4를,
+  스페인 BEC는 독자 방법으로 육지·전파 간섭 오염을 줄인 전지구 L3/L4를 만듭니다. 기후 연구에는 편향을 정교하게 보정한 CATDS LOCEAN·BEC 제품이, 최근 감시에는 CATDS 운영 L3OS가 주로 쓰입니다.
+
+time_convention:
+  summary: >-
+    ESA L2OS는 위성이 지나간 순간의 궤도 관측값이고 상승·하강 궤도의 편향 특성이 서로 다릅니다. CATDS 운영 L3OS의 10일 자료는 매일 만들어지는 10일 이동평균이며 파일 이름에 평균 구간의 시작·끝 날짜가 들어 있고,
+    월자료는 달력 한 달 평균입니다. LOCEAN 편향 보정 v11은 4일마다 만든 지도에 반치폭(FWHM) 9일·18일 가우스 가중 평균을 적용한 값입니다.
+  points:
+    - "CATDS L3OS 10일 파일 이름 예: SM_OPER_MIR_CSQ3A__20260928T000000_20261007T235959_343_002_7.tgz — 2026-09-28~10-07 평균, 343은 처리기 버전, A는 25 km 격자(B는 50 km)입니다. 같은 폴더의 시작~끝이 한 달인 파일이 월자료입니다."
+    - "CATDS L3OS 파일은 .tgz 묶음 안에 머리 파일(.HDR)과 자료 파일(.DBL.nc, NetCDF3)이 들어 있습니다. 1일 지연판은 이름의 MIR가 NRT로 바뀝니다."
+    - "CATDS L2Q 일 파일(MIR_CSF2QA·MIR_CSF2QD)은 상승(A)·하강(D) 궤도를 따로 담은 그날의 유효 관측값입니다. 두 궤도의 편향이 다르니 섞기 전에 확인하세요."
+    - "LOCEAN v11의 9일 제품은 이웃한 지도끼리 구간이 크게 겹쳐 독립 표본이 아닙니다. 18일 제품은 잡음이 더 적지만 시간 해상도가 낮습니다."
+    - "ESA L2OS 파일은 극에서 극까지 약 50분 관측을 담은 반궤도 단위(하루 29개)입니다. OPER(현재 기준판으로 처리)와 REPR(재처리) 구분이 파일 이름에 있습니다."
+  source: https://archimer.ifremer.fr/doc/00811/92266/98299.pdf
+  source_name: CATDS L3/L4 OS ATBD + Sextant 제품 기록 + LOCEAN v11 설명서 + ESA L2OS v700 릴리스 노트
+
+variables:
+  note: >-
+    ESA L2OS 변수 이름은 L2OS v700 릴리스 노트, CATDS L3OS 이름은 CATDS L3/L4 OS ATBD(표 10), LOCEAN 변수는 v11 설명서 기준입니다. 염분 단위 pss는 실용염분입니다.
+    CATDS L3OS 이름 끝 _1은 강수 보정한 '벌크' 염분, _2는 강수 보정하지 않은 염분입니다.
+  full_list: https://archimer.ifremer.fr/doc/00811/92266/98299.pdf
+  groups:
+    - name: ESA L2OS v700 (궤도 자료, ISEA 4H9)
+      kind: instant
+      items:
+        - text: "해면 염분(육지-해양 오염 보정) — `SSS_corr` (pss)"
+          note: ESA 권장 필터를 적용해 쓰세요
+        - "해면 염분(육지-해양 오염 미보정) — `SSS_uncorr` (pss)"
+        - text: "해면 염분 편차(SMOS 기후값 2013~2019 대비) — `SSS_anom` (pss)"
+          std: []
+        - text: "염분 추정 오차 — `Sigma_SSS_corr`, `Sigma_SSS_uncorr`, `Sigma_SSS_anom` (pss)"
+          std: []
+        - text: "시야(FOV) 안 위치 지표 — `Dg_af_fov`"
+          std: []
+          note: ESA는 130 초과만 쓰라고 권장
+        - text: "품질·해상 상태 플래그 — `Fg_ctrl_*`, `Fg_sc_*`"
+          std: []
+    - name: CATDS 운영 L3OS 3Q (EASE-Grid 2.0 25·50 km, 10일 이동평균·월, 상승·하강 합침)
+      kind: mean
+      period: 10일 이동 또는 월
+      items:
+        - text: "평균 해면 염분(강수 보정 벌크 염분) — `Mean_Sea_Surface_Salinity_1` (pss)"
+        - text: "평균 해면 염분(강수 미보정) — `Mean_Sea_Surface_Salinity_2` (pss)"
+        - text: "염분 표준편차 — `SSS_standard_deviation_1` (pss)"
+          std: []
+        - text: "평균 염분 오차 — `SSS_error_mean_1` (pss)"
+          std: []
+        - text: "평균에 쓴 관측 수 — `N_Used_Meas_1` (개)"
+          kind: accum
+          std: []
+        - text: "평균 전에 제외한 관측 수 — `N_Rejected_Meas_1` (개)"
+          kind: accum
+          std: []
+    - name: CATDS LOCEAN 편향 보정 L3 v11 (25 km, 4일 간격)
+      kind: mean
+      period: 9일 또는 18일 (가우스 가중)
+      items:
+        - text: "편향 보정 해면 염분 (pss)"
+          note: 설명서에 파일 속 변수 이름은 적혀 있지 않습니다
+        - text: "염분 오차 대략값 — `eSSS` (pss)"
+          std: []
+          note: 50 km 안 공간 표준편차로 만든 정성적 지표, 연안에서 지나치게 작게 나옴
+
+access:
+  - name: CATDS — 운영 L3OS 10일·월 염분장 (HTTPS)
+    url: https://data.catds.fr/cpdc/Ocean_products/GRIDDED/L3OS/
+    method: HTTPS 직접 다운로드 (OPER/MIR_CSQ3A_ 25 km·MIR_CSQ3B_ 50 km, 재처리 RE07/, 일 L2Q는 MIR_CSF2QA·MIR_CSF2QD)
+    note: >-
+      .tgz 안에 NetCDF3 파일이 들어 있습니다. 1일 지연 NRT판은 OPER/NRT_* 폴더에 있습니다. 영역·기간을 잘라 받으려면 CATDS SIPAD(https://www.catds.fr/sipad/)를 쓰세요.
+      Copernicus Marine(MULTIOBS_GLO_PHY_SSS_L3_MYNRT_015_014)으로도 재배포됩니다.
+    login: false
+  - name: CATDS — CEC LOCEAN 편향 보정 L3 v11 (HTTPS)
+    url: https://data.catds.fr/cecos-locean/Ocean_products/L3_DEBIAS_LOCEAN/
+    method: HTTPS 직접 다운로드 (L3_DEBIAS_LOCEAN_v11/debiasedSSS_09days_v11.0, debiasedSSS_18days_v11.0)
+    note: 설명서(documentation/Doc_L3_DEBIAS_LOCEAN_v11.pdf)와 이용 조건(DataPolicy.txt)이 같은 폴더에 있습니다. 실험 제품이라 사용 후기를 요청합니다.
+    login: false
+  - name: CATDS — CEC LOPS SMOS/SMAP OI L4 (HTTPS)
+    url: https://data.catds.fr/cecos-locean/Ocean_products/SSS_SMOS-SMAP_OI_L4/
+    method: HTTPS 직접 다운로드 (SSS_SMOS-SMAP_OI_L4_v01, 7일 25 km EASE 파일)
+    note: SMOS·SMAP L3를 최적 내삽으로 합친 L4입니다. 2026-01 새 판이 올라왔습니다.
+    login: false
+  - name: ESA SMOS 배포 서비스 (L1·L2OS)
+    url: https://smos-diss.eo.esa.int/
+    method: HTTPS 웹 / FTPS (Earth Explorer 형식 또는 NetCDF)
+    note: ESA EO Sign In 무료 계정이 필요합니다. L2OS 제품 이름은 MIR_OSUDP2입니다.
+  - name: BEC — 전지구·극역 SMOS 염분 (SFTP)
+    url: https://bec.icm.csic.es/bec-ftp-service/
+    method: SFTP (becftp.icm.csic.es, 포트 27500)
+    note: 무료 등록이 필요합니다. 전지구 L3(0.25°, 9일)·L4(0.05°, 일)와 북극·남극해 전용 제품이 있습니다.
+
+example:
+  lang: python
+  note: >-
+    CATDS 운영 L3OS 25 km 10일 파일 하나를 받아 압축을 풀고 한반도 주변 염분을 읽는 예입니다(로그인 불필요). 변수 이름은 ATBD 표 기준이며, 좌표 변수 이름은 파일에서 확인하세요(ATBD에는 lat·Lon으로 적혀 있음).
+  code: |
+    # pip install xarray netCDF4 requests
+    import tarfile, glob, requests
+    import xarray as xr
+
+    base = "https://data.catds.fr/cpdc/Ocean_products/GRIDDED/L3OS/OPER/MIR_CSQ3A_/2026/09/"
+    name = "SM_OPER_MIR_CSQ3A__20260901T000000_20260910T235959_343_003_7.tgz"
+    with open(name, "wb") as f:
+        f.write(requests.get(base + name, timeout=120).content)
+    tarfile.open(name).extractall("smos_l3")
+
+    ds = xr.open_dataset(glob.glob("smos_l3/**/*.DBL.nc", recursive=True)[0])
+    print(list(ds.data_vars))                      # 변수 이름 확인
+    sss = ds["Mean_Sea_Surface_Salinity_1"]        # 강수 보정 벌크 염분 (pss)
+    lat = ds["lat"]
+    print(float(sss.where((lat > 25) & (lat < 40)).mean()))
+
+tips:
+  - "ESA는 L2OS를 그대로 쓰지 말고 릴리스 노트의 필터(Fg_ctrl_ecmwf·Fg_sc_low_wind가 0인 값, 간섭·해빙·햇빛 반사 등 플래그가 1인 값 제외, Dg_af_fov > 130만 사용)를 강하게 권장합니다. 필터를 다 쓰면 유효 격자가 크게 줄어 일부를 완화해도 된다고 적고 있습니다."
+  - "L2OS v700은 상승·하강 궤도 사이 차이가 남아 있고, 남위 50° 이남과 해빙 주변에서 편향·잡음이 커집니다. 장기 분석에는 이런 체계적 편향을 보정한 CATDS LOCEAN·BEC 격자 자료가 낫습니다."
+  - "2010년 1~5월은 시험 운용 기간이라 ESA가 쓰지 말라고 안내합니다. 2010년 초를 포함한 시계열은 시작 시점을 2010년 6월 이후로 잡으세요."
+  - "LOCEAN 설명서는 육지-해양 편향을 보정해도 연안과 변동이 큰 강 하구 플룸 주변에는 잔여 편향이 남는다고 밝힙니다. 동중국해 장강 희석수처럼 연안 플룸을 볼 때는 현장 관측과 꼭 비교하세요."
+  - "CATDS 운영 L3OS는 최근 자료가 매일 나오지만 고위도 해빙 보정이 불완전하고 전파 간섭(RFI)이 남을 수 있습니다. 연구용 LOCEAN v11은 2025년 말까지만 있으므로, 최근 기간을 이어 붙일 때는 두 제품의 차이를 먼저 확인하세요."
+  - "북극 염분은 CATDS가 2026-04부터 운영으로 만드는 ARCTIC L3G(9일)와 연구용 CEC ARCTIC V2(2023-08-30까지)가 있습니다. CATDS는 가능한 기간은 V2를, 최근은 L3G로 보충하라고 권합니다."
+  - "LOCEAN의 eSSS는 정성적 오차 지표일 뿐이며 연안 근처에서는 지나치게 작게 나옵니다. 정량 불확도로 쓰지 마세요."
+
+citations:
+  dataset:
+    - label: ESA SMOS L2OS v700
+      text: >-
+        European Space Agency, 2021, SMOS L2 OS V700, Version 700. https://doi.org/10.57780/SM1-294cb1b
+      doi: 10.57780/SM1-294cb1b
+      bibtex: |
+        @misc{esa2021smosl2os,
+          author    = {{European Space Agency}},
+          title     = {{SMOS} {L2} {OS} {V700}},
+          year      = {2021},
+          version   = {700},
+          publisher = {European Space Agency},
+          doi       = {10.57780/SM1-294cb1b}
+        }
+    - label: CATDS 운영 L3OS 3Q (10일·월, 편향 보정)
+      text: >-
+        CATDS (CNES, IFREMER, LOCEAN, ACRI) (2022). CATDS-PDC L3OS 3Q mixed - Debiased average 10 days & monthly salinity field product from SMOS satellite (mixed orbits).
+        https://doi.org/10.12770/0f02fc28-cb86-4c44-89f3-ee7df6177e7b
+      doi: 10.12770/0f02fc28-cb86-4c44-89f3-ee7df6177e7b
+      bibtex: |
+        @misc{catds2022l3os3q,
+          author    = {{CATDS}},
+          title     = {{CATDS-PDC} {L3OS} {3Q} mixed - Debiased average 10 days \& monthly salinity field product from {SMOS} satellite (mixed orbits)},
+          year      = {2022},
+          publisher = {CATDS (CNES, IFREMER, LOCEAN, ACRI)},
+          doi       = {10.12770/0f02fc28-cb86-4c44-89f3-ee7df6177e7b}
+        }
+    - label: CATDS CEC LOCEAN 편향 보정 L3 v11 (SEANOE)
+      text: >-
+        Boutin Jacqueline, Vergely Jean-Luc, Khvorostyanov Dmitry (2026). SMOS SSS L3 maps generated by CATDS CEC LOCEAN. debias V11.0. SEANOE. https://doi.org/10.17882/52804#133087
+      doi: 10.17882/52804
+      bibtex: |
+        @misc{boutin2026debiasv11,
+          author    = {Boutin, Jacqueline and Vergely, Jean-Luc and Khvorostyanov, Dmitry},
+          title     = {{SMOS} {SSS} {L3} maps generated by {CATDS} {CEC} {LOCEAN}. debias {V11.0}},
+          year      = {2026},
+          publisher = {SEANOE},
+          doi       = {10.17882/52804},
+          note      = {https://doi.org/10.17882/52804\#133087}
+        }
+    - label: CATDS CEC LOPS SMOS/SMAP OI L4 (SEANOE)
+      text: >-
+        Kolodziejczyk, N., Hamon, M., Boutin, J., Vergely, J.-L., Supply, A., Reverdin, G. (2020). SSS SMOS/SMAP OI L4 maps. SEANOE. https://doi.org/10.17882/73142
+      doi: 10.17882/73142
+      bibtex: |
+        @misc{kolodziejczyk2020oil4,
+          author    = {Kolodziejczyk, Nicolas and Hamon, Mathieu and Boutin, Jacqueline and Vergely, Jean-Luc and Supply, Alexandre and Reverdin, Gilles},
+          title     = {{SSS} {SMOS}/{SMAP} {OI} {L4} maps},
+          year      = {2020},
+          publisher = {SEANOE},
+          doi       = {10.17882/73142}
+        }
+  papers:
+    - label: CATDS LOCEAN 편향 보정 방법
+      text: >-
+        Boutin, J., Vergely, J. L., Marchand, S., D'Amico, F., Hasson, A., Kolodziejczyk, N., Reul, N., Reverdin, G., Vialard, J. (2018): New SMOS Sea Surface Salinity with reduced systematic errors
+        and improved variability. Remote Sensing of Environment, 214, 115–134.
+      doi: 10.1016/j.rse.2018.05.022
+      bibtex: |
+        @article{boutin2018smos,
+          author  = {Boutin, J. and Vergely, J. L. and Marchand, S. and D'Amico, F. and Hasson, A. and Kolodziejczyk, N. and Reul, N. and Reverdin, G. and Vialard, J.},
+          title   = {New {SMOS} Sea Surface Salinity with reduced systematic errors and improved variability},
+          journal = {Remote Sensing of Environment},
+          volume  = {214},
+          pages   = {115--134},
+          year    = {2018},
+          doi     = {10.1016/j.rse.2018.05.022}
+        }
+    - label: SMOS/SMAP OI L4 방법
+      text: >-
+        Kolodziejczyk, N., Hamon, M., Boutin, J., Vergely, J.-L., Reverdin, G., Supply, A., Reul, N. (2021): Objective Analysis of SMOS and SMAP Sea Surface Salinity to Reduce Large-Scale
+        and Time-Dependent Biases from Low to High Latitudes. Journal of Atmospheric and Oceanic Technology, 38(3), 405–421.
+      doi: 10.1175/JTECH-D-20-0093.1
+      bibtex: |
+        @article{kolodziejczyk2021oi,
+          author  = {Kolodziejczyk, Nicolas and Hamon, Mathieu and Boutin, Jacqueline and Vergely, Jean-Luc and Reverdin, Gilles and Supply, Alexandre and Reul, Nicolas},
+          title   = {Objective Analysis of {SMOS} and {SMAP} Sea Surface Salinity to Reduce Large-Scale and Time-Dependent Biases from Low to High Latitudes},
+          journal = {Journal of Atmospheric and Oceanic Technology},
+          volume  = {38},
+          number  = {3},
+          pages   = {405--421},
+          year    = {2021},
+          doi     = {10.1175/JTECH-D-20-0093.1}
+        }
+    - label: BEC 전지구 SMOS 염분 (L3 DOI 10.20350/digitalCSIC/12601, L4 DOI 10.20350/digitalCSIC/12600)
+      text: >-
+        Olmedo, E., González-Haro, C., Hoareau, N., Umbert, M., González-Gambau, V., Martínez, J., Gabarró, C., Turiel, A. (2021): Nine years of SMOS sea surface salinity global maps
+        at the Barcelona Expert Center. Earth System Science Data, 13(2), 857–888.
+      doi: 10.5194/essd-13-857-2021
+      bibtex: |
+        @article{olmedo2021bec,
+          author  = {Olmedo, Estrella and Gonz{\'a}lez-Haro, Cristina and Hoareau, Nina and Umbert, Marta and Gonz{\'a}lez-Gambau, Ver{\'o}nica and Mart{\'i}nez, Justino and Gabarr{\'o}, Carolina and Turiel, Antonio},
+          title   = {Nine years of {SMOS} sea surface salinity global maps at the {Barcelona} {Expert} {Center}},
+          journal = {Earth System Science Data},
+          volume  = {13},
+          number  = {2},
+          pages   = {857--888},
+          year    = {2021},
+          doi     = {10.5194/essd-13-857-2021}
+        }
+  acknowledgement: >-
+    CATDS LOCEAN 제품은 "LOCEAN/IPSL과 ACRI-st가 CATDS 해양 염분 전문 센터(CECOS)에서 만들고 IFREMER(프랑스 Plouzané)가 배포했다"는 취지의 감사 문구를 요청합니다(DataPolicy.txt).
+    ESA L2OS·CATDS·BEC 제품을 함께 썼다면 각각의 DOI를 인용하세요.
+
+notices:
+  - date: "2026-08-05"
+    level: info
+    title: CATDS LOCEAN 편향 보정 L3 v11 공개 (2010-01~2025-12)
+    body: >-
+      LOCEAN이 만든 편향 보정 SMOS 염분 L3 v11이 CATDS에 올라왔습니다. v10과 같은 편향 보정에 남극해 해빙 주변 편향 보정을 더해 해빙 가장자리에서 약 800 km까지 불확도를 줄였습니다.
+      9일·18일 제품이 있고, 실험 제품이라 사용 후기를 요청합니다.
+    source: https://www.catds.fr/News/New-version-v11-of-debiased-SSS-L3-maps-from-Locean
+  - date: "2026-04-09"
+    level: info
+    title: CATDS 북극 염분 지도 운영 생산 시작
+    body: >-
+      CATDS 처리 센터(CPDC)가 연구용 CEC ARCTIC V2를 이어 북극 해면 염분 지도(ARCTIC L3G, 9일)를 운영으로 만들기 시작했습니다. CEC ARCTIC V2는 2023-08-30까지이며,
+      CATDS는 연구에는 가능한 기간 V2를 쓰고 최근 기간을 L3G로 보충하라고 권합니다.
+    source: https://www.catds.fr/News/Arctic-SSS-Maps-now-produced-operationally
+  - date: "2026-01-29"
+    level: info
+    title: CATDS SMOS/SMAP OI L4 염분 새 판 공개
+    body: >-
+      LOPS가 만든 SMOS·SMAP 병합 최적 내삽(OI) L4 해면 염분의 새 판이 CATDS에 올라왔습니다. 대규모·시간 변동 편향을 먼저 추정해 제거한 뒤 약 45 km 규모로 다시 매핑하며, 밀도·스파이시니스도 함께 제공합니다.
+    source: https://www.catds.fr/News/New-version-of-SSS-SMOS-SMAP-OI-L4-maps
+  - date: "2023-03-21"
+    level: info
+    title: SMOS 임무 2025년 말까지 연장 승인
+    body: >-
+      ESA는 SMOS·CryoSat·Swarm 임무를 적어도 2025년 말까지 연장했다고 알렸습니다. 이후 2026년 5월 ESA 발표 자료는 SMOS가 '2028년 말까지 연장'되었다고 밝히고 있습니다.
+    source: https://earth.esa.int/eogateway/news/esa-s-excellent-earth-explorer-missions-extended-to-2025
+  - date: "2021-05-28"
+    level: info
+    title: SMOS L1·L2 처리 기준판 버전 7 운영 시작, 전 기간 재처리
+    body: >-
+      2021년 5월 25일부터 SMOS L1·L2 처리기가 버전 7로 바뀌었고, 전체 임무 기간이 버전 7로 재처리되었습니다. ESA는 이전 버전 6 자료를 대체한다고 밝히고 사용 전에 릴리스 노트를 읽으라고 안내했습니다.
+    source: https://earth.esa.int/eogateway/news/smos-level-1-and-level-2-products-new-baseline-is-now-available
+
+transitions:
+  - from: ESA SMOS L2OS v662
+    to: ESA SMOS L2OS v700
+    status: completed
+    date: "2021-05"
+    summary: >-
+      3차 전 기간 재처리 기준판입니다. 편차 계산 기준을 SMOS 자체 기후값으로 바꾸고, 해수 유전율 모델을 바꿔 저수온 해역 검색을 개선했으며, 육지-해양 오염 보정 기준장을 ISAS-15로 바꾸었습니다.
+    changes:
+      - aspect: 염분 편차(SSS_anom) 기준
+        before: WOA2009 기후값
+        after: "SMOS 자체 기후값(2013~2019), 일부 체계적 편향 보정"
+      - aspect: 해수 유전율 모델
+        before: Klein-Swift
+        after: "Somaraju-Trumpf(ST) — 찬물 검색 개선"
+      - aspect: 육지-해양 오염 보정 기준장
+        before: WOA
+        after: ISAS-15, 더 엄격한 RFI 필터
+      - aspect: 입력 L1C
+        before: 이전 L1 기준판
+        after: L1C 밝기온도 v724
+      - aspect: 기간 구분
+        before: v662 재처리·운영판
+        after: "REPR v700 2010-06-01~2021-05-24, OPER v700 2021-05-25~"
+    impacts:
+      - v662 자료로 만든 시계열을 v700과 섞지 마세요. 편차 기준장과 유전율 모델이 바뀌어 같은 날짜도 값이 다릅니다.
+      - "v700 릴리스 노트는 남반구 고위도의 계절 편향, 상승 궤도의 약 -0.5 pss 이상 음의 편향, 상승·하강 차이를 알려진 문제로 적고 있습니다."
+      - "ESA는 다음 전 기간 재처리 기준판 v740(2025년 말 기준)과 해빙 오염 보정을 넣을 v750(2027)을 예고했습니다. 새 판이 배포되면 다시 받아야 합니다."
+    sources:
+      - name: ESA SMOS L2OS v700 릴리스 노트 (PDF)
+        url: https://earth.esa.int/eogateway/documents/d/earth-online/l2osv700_release_note_20220321-pdf
+      - name: ESA — SMOS L1·L2 새 기준판 공지 (2021-05-28)
+        url: https://earth.esa.int/eogateway/news/smos-level-1-and-level-2-products-new-baseline-is-now-available
+      - name: ESA SMOS 현황 발표 (R. Sabia, 2026 Ocean Salinity Science & Technology Meeting)
+        url: https://salinity.oceansciences.org/docs/02_Opening_Sabia.pdf
+  - from: CATDS LOCEAN 편향 보정 L3 v10
+    to: CATDS LOCEAN 편향 보정 L3 v11
+    status: completed
+    date: "2026-08"
+    summary: >-
+      v10과 같은 편향 보정 방법에 남극해 해빙 주변 편향 보정을 더하고 기간을 2025년 12월까지 늘린 판입니다. 실험 제품이며 연 1회 갱신합니다.
+    changes:
+      - aspect: 남극해 해빙 주변 편향
+        before: 보정 없음
+        after: "해빙 가장자리에서 약 800 km까지 해빙 근접 편향 보정"
+      - aspect: 기간
+        before: "v10 기간(2025년 이전 공개)"
+        after: "2010-01~2025-12"
+      - aspect: 인용 DOI
+        before: "10.17882/52804#120028 (Boutin et al., 2025, debias V10.0)"
+        after: "10.17882/52804#133087 (Boutin et al., 2026, debias V11.0)"
+    impacts:
+      - v10과 v11을 한 시계열로 섞지 말고 전 기간을 v11로 바꾸세요. 남극해 값이 특히 달라집니다.
+      - 논문에는 판 번호와 SEANOE DOI의 판별 번호(#133087)를 함께 적으세요.
+    sources:
+      - name: CATDS — v11 공개 소식
+        url: https://www.catds.fr/News/New-version-v11-of-debiased-SSS-L3-maps-from-Locean
+      - name: CATDS — CEC LOCEAN L3 Debiased v11 제품 페이지
+        url: https://www.catds.fr/Products/Products-over-Ocean/CEC-Locean-L3-Debiased-v11
+
+links:
+  - name: ESA Earth Online — SMOS 임무
+    url: https://earth.esa.int/eogateway/missions/smos
+  - name: ESA — SMOS 과학 제품 (L1·L2 목록, 문서)
+    url: https://earth.esa.int/eogateway/catalog/smos-science-products
+  - name: CATDS — 해양 제품 목록
+    url: https://www.catds.fr/Products/Products-over-Ocean
+  - name: CATDS — 운영 L3 와 연구용 L3 차이 (PDF)
+    url: https://www.catds.fr/content/download/68781/file/OS_L3_products_Differences_and_ProsCons.pdf
+  - name: CATDS L3/L4 OS ATBD (PDF)
+    url: https://archimer.ifremer.fr/doc/00811/92266/98299.pdf
+  - name: BEC — 전지구 SMOS 염분
+    url: https://bec.icm.csic.es/ocean-global-sss/
+  - name: Pi-MEP 위성 염분 검증 보고서
+    url: https://www.salinity-pimep.org
+  - name: ESA SMOS 현황 발표 (2026-05, 2028년 말까지 연장)
+    url: https://salinity.oceansciences.org/docs/02_Opening_Sabia.pdf
+  - name: CNES — SMOS 과제 페이지
+    url: https://cnes.fr/projets/smos
+  - name: 이 사이트 — SMAP 해면 염분
+    url: ../smap-sss/
+  - name: 이 사이트 — ESA CCI 해면 염분 (SMOS·SMAP·Aquarius 병합)
+    url: ../esa-cci-sss/
+  - name: 이 사이트 — SMOS 얇은 해빙 두께 (같은 위성의 해빙 제품)
+    url: ../smos-sit/
+  - name: 이 사이트 — CS2SMOS 해빙 두께 (CryoSat-2·SMOS 병합)
+    url: ../cs2smos/
+
+watch_urls:
+  - https://www.catds.fr/
+  - https://earth.esa.int/eogateway/missions/smos
+
+last_verified: "2026-10-13"

@@ -1,0 +1,350 @@
+# ─────────────────────────────────────────────────────────────
+# ESA Ocean Colour CCI (OC-CCI) v6.0 — dataset information file (English edition)
+# Satellite tab (ocean colour), cross-listed in the Ocean tab (satellite observations). Multi-sensor 4 km L3 ocean-colour climate record merging SeaWiFS, MERIS, MODIS, VIIRS and OLCI reflectances aligned to MERIS.
+# When checked on 2026-10-13, the v6.0 climate data record at CEDA ends on 2022-12-31; the C3S CDS release of the same v6.0 system runs to 2026-03-31 (daily) and 2026-06 (monthly). v7.0 has not been released yet.
+# After editing, update last_verified to the date you checked the official pages.
+# ─────────────────────────────────────────────────────────────
+id: oc-cci
+name: ESA OC-CCI v6.0
+full_name: >-
+  ESA Ocean Colour Climate Change Initiative (Ocean_Colour_cci) Version 6.0, 4km resolution data
+  (produced by PML, archived at CEDA, and extended through C3S as "Ocean colour from 1997 to present derived from satellite observations")
+category: satellite
+domain: satellite
+group: 해색
+order: 40
+also_in:
+  - domain: ocean
+    group: 위성 관측 자료
+domains: [해양, 원격탐사]
+provider: >-
+  ESA Climate Change Initiative Ocean Colour project (produced by Plymouth Marine Laboratory (PML), supported by NERC NEODAAS) / archived at CEDA /
+  distributed by the Copernicus Climate Change Service (C3S) Climate Data Store
+
+status: active
+status_note: >-
+  v6.0 is the current version. The v6.0 climate data record (CDR) archived at CEDA covers 1997-09-04 to 2022-12-31; later data come as quarterly extensions of the same v6.0 system from PML (oceancolour.org) and the C3S CDS.
+  When checked on 2026-10-13, the C3S CDS held v6.0 daily data through 2026-03-31 and monthly data through 2026-06 (CDS updated 2026-09-05). CCI+ Phase 2 began in May 2025,
+  and the user guide said v7.0 was planned for 2025 or 2026, but it has not been released.
+
+period:
+  start: "1997-09"
+  end: present
+  note: >-
+    The record starts on 1997-09-04 with SeaWiFS. The CEDA v6.0 record ends on 2022-12-31 (status Completed); data from 2023 onward are the C3S CDS and PML extensions.
+    The latest date on the PML server could not be checked because automated reading is blocked. Some days are missing in the SeaWiFS-only period (1997–2000).
+
+resolution:
+  spatial_short: "4 km (0.04°)"
+  temporal_short: "1일"
+  spatial: >-
+    Two grids. Sinusoidal equal-area 4 km grid (4320 latitude rows; file dimensions [time, bin_index]) /
+    latitude–longitude grid of 8640×4320 (file dimensions [time, lat, lon]; C3S describes it as 0.042°×0.042°, 4 km at the equator). PML also provides separate 1 km products for chlorophyll and reflectance only
+  vertical: Satellite ocean-surface observation (remote-sensing reflectance and surface properties derived from it)
+  temporal: >-
+    Daily, 5-day, 8-day, monthly and yearly composites (L3, not gap-filled) and a monthly climatology (1997–2022). The user guide lists 8-day and monthly composites as official products,
+    with 5-day and other cycles made on request. The C3S CDS release offers daily and monthly only
+
+coverage:
+  short: 전지구
+  note: "Ocean only. Values exist only where there is no cloud or sea ice (L3, not gap-filled)"
+update: >-
+  PML extends the current version (v6.0) every quarter. The C3S CDS is also updated quarterly, with a stated latency of 9–12 months. The CEDA v6.0 CDR record has no planned updates
+license: >-
+  Free and open, under the ESA CCI ocean colour Terms and Conditions, which require acknowledgement and citation.
+  The C3S CDS release is covered by CC BY 4.0 together with the ESA CCI Essential Climate Variable (ECV) products licence
+account_required: false
+
+summary: >-
+  The ESA Climate Change Initiative (CCI) Ocean Colour project's multi-sensor merged ocean-colour climate record. Remote-sensing reflectances (Rrs) from SeaWiFS, MERIS, MODIS-Aqua, VIIRS (S-NPP)
+  and OLCI (Sentinel-3A and 3B) are band-shifted to the six MERIS wavelengths, corrected for inter-sensor bias and merged, and chlorophyll-a, Kd(490) and inherent optical properties (IOPs) are then derived.
+  Every value carries per-pixel uncertainty (RMSD and bias), and chlorophyll is a blend of algorithms weighted by optical water class membership. Since v5.0, C3S has produced the data with the same
+  processing chain and keeps extending chlorophyll and reflectance in the C3S CDS.
+
+time_convention:
+  summary: >-
+    All values are L3 composites, the mean of observations that fell within the compositing period (daily, 5-day, 8-day, monthly or yearly); cells without observations are empty.
+    Daily composites use a UTC-based data-day, so one day may contain observations spanning 24–28 hours. Each file has a time dimension of length 1 and an indicative date in its name.
+  points:
+    - "File names carry YYYYMMDD for daily and YYYYMM for monthly composites. 8-day composites are named every 8 days from 1 January each year (20220101, 20220109, … 20221227). The user guide does not say where in the period this date falls, so check the time value and metadata in the file."
+    - "Chlorophyll is log-normally distributed, so the guide advises computing means and trends on log10 values and transforming back. The chlorophyll uncertainties (chlor_a_log10_rmsd, chlor_a_log10_bias) are also in log10 space."
+    - "Do not simply average uncertainty variables over several days; use the compositing equations (2.12–2.15) in the user guide."
+    - "The nobs variables count the observations (per sensor) in that cell and compositing period. When they are close to zero, one or two passes represent the whole composite."
+  source: https://www.climate.esa.int/documents/3068/D4.2_-_OC-CCI_Product_User_Guide_PUG_v6.5b.docx
+  source_name: OC-CCI Product User Guide (D4.2, Issue 6.5, 2024-04-23, v6.0)
+
+variables:
+  note: >-
+    Variable names follow the v6.0 Product User Guide (PUG). Reflectance and IOP wavelengths are the MERIS bands 412, 443, 490, 510, 560 and 665 nm. All are float32 with missing values.
+    The C3S CDS release contains only chlor_a and Rrs (plus observation counts). The PUG uses both MODIS_nobs and MODISA_nobs for the per-sensor count, so check your files.
+  full_list: https://www.climate.esa.int/documents/3068/D4.2_-_OC-CCI_Product_User_Guide_PUG_v6.5b.docx
+  groups:
+    - name: Ocean-colour products (L3 composites, 4 km)
+      kind: mean
+      period: Compositing period (daily, 5-day, 8-day, monthly, yearly)
+      items:
+        - text: "Chlorophyll-a concentration — `chlor_a` (mg m-3)"
+          note: Blend of OCI, OCI2, OC2 and OCx weighted by optical water class membership
+        - "Remote-sensing reflectance — `Rrs_412`, `Rrs_443`, `Rrs_490`, `Rrs_510`, `Rrs_560`, `Rrs_665` (sr-1)"
+        - text: "Diffuse attenuation coefficient at 490 nm — `kd_490` (m-1)"
+          note: Computed from the IOPs following Lee et al. (2005)
+        - text: "Phytoplankton absorption coefficient — `aph_412` to `aph_665` (m-1)"
+          note: Based on QAA_v6
+        - "Detrital and dissolved material absorption coefficient — `adg_412` to `adg_665` (m-1)"
+        - text: "Total absorption coefficient — `atot_412` to `atot_665` (m-1)"
+          note: Convenience variable (no uncertainty)
+        - text: "Particulate backscattering coefficient — `bbp_412` to `bbp_665` (m-1)"
+          note: No uncertainty because of insufficient in situ data
+    - name: Per-pixel uncertainty (based on in situ match-ups)
+      kind: mean
+      period: Compositing period
+      items:
+        - text: "Chlorophyll uncertainty — `chlor_a_log10_rmsd`, `chlor_a_log10_bias`"
+          note: RMSD and bias of log10(chlorophyll)
+          std: []
+        - text: "Reflectance uncertainty — `Rrs_<wavelength>_rmsd`, `Rrs_<wavelength>_bias`"
+          std: []
+        - text: "Kd(490) uncertainty — `kd_490_rmsd`, `kd_490_bias`"
+          std: []
+        - text: "Absorption uncertainty — `aph_<wavelength>_rmsd`, `aph_<wavelength>_bias`, `adg_<wavelength>_rmsd`, `adg_<wavelength>_bias`"
+          std: []
+    - name: Optical water classes and observation counts
+      kind: mean
+      period: Compositing period
+      items:
+        - text: "Optical water class membership — `water_class1` to `water_class14`"
+          note: Membership in 14 optical water classes, used to blend chlorophyll algorithms and assign uncertainties
+          std: []
+        - text: "Observation counts — `total_nobs` and per-sensor `SeaWiFS_nobs`, `MERIS_nobs`, `MODISA_nobs`, `VIIRS_nobs`, `OLCI-A_nobs`, `OLCI-B_nobs` (count)"
+          kind: accum
+          note: Number of observations in the cell during the compositing period (stored as float)
+          std: []
+
+access:
+  - name: CEDA Archive — OC-CCI v6.0 4 km collection (CDR, 1997-09 to 2022-12)
+    url: https://catalogue.ceda.ac.uk/uuid/5011d22aae5a4671b0cbc7d05c56c4f0/
+    method: Direct HTTPS download / OPeNDAP / THREDDS (data.cci.ceda.ac.uk)
+    note: >-
+      No registration needed. Example path esacci/ocean_colour/data/v6.0-release/geographic/netcdf/all_products/monthly/v6.0/2022/
+      ESACCI-OC-L3S-OC_PRODUCTS-MERGED-1M_MONTHLY_4km_GEO_PML_OCx_QAA-202212-fv6.0.nc. Lighter chlor_a-only files are under netcdf/chlor_a/.
+      Earlier versions (v1 to v5.0) are on the same THREDDS server (https://data.cci.ceda.ac.uk/thredds/catalog/esacci/ocean_colour/data/catalog.html).
+    login: false
+  - name: PML oceancolour.org (THREDDS, OPeNDAP, FTP, web GIS)
+    url: https://www.oceancolour.org/
+    method: THREDDS (NetcdfSubset for lat/lon and time subsets, OPeNDAP), FTP, composite browser, web GIS portal
+    note: >-
+      The FAQ describes this as the most up-to-date source for the current version (all 4 km variables, plus 1 km chlorophyll and reflectance). NetcdfSubset requests cannot exceed 4 GB,
+      so use Stride to thin them. FTP credentials are published on the ESA data page. Some Mac FTP clients corrupt monthly composites larger than 4 GB, so the team suggests using the terminal.
+  - name: C3S Climate Data Store (satellite-ocean-colour)
+    url: https://cds.climate.copernicus.eu/datasets/satellite-ocean-colour
+    method: Web download / CDS API (cdsapi)
+    note: >-
+      Requires an ECMWF account and acceptance of the licence. Variables are mass_concentration_of_chlorophyll_a and remote_sensing_reflectance; version is 6_0 (5_0_1 and 5_0 are marked deprecated);
+      projection is regular_latitude_longitude_grid or sinusoidal_grid; temporal_resolution is daily or monthly.
+  - name: Copernicus Marine — OCEANCOLOUR_GLO_BGC_L3_MY_009_107 / L4_MY_009_108 (ESA-CCI based)
+    url: https://data.marine.copernicus.eu/product/OCEANCOLOUR_GLO_BGC_L3_MY_009_107/description
+    method: Copernicus Marine Toolbox / Marine Data Store
+    note: >-
+      Chlorophyll, phytoplankton size classes and reflectance (L3 daily, L4 monthly) built from ESA-CCI inputs (datasets such as c3s_obs-oc_glo_bgc-plankton_my_l3-multi-4km_P1D).
+      When checked on 2026-10-13 the catalogue extent ran to 2025-12, with irregular updates. A free Copernicus Marine account is required.
+  - name: Google Earth Engine (COPERNICUS/MARINE/SATELLITE_OCEAN_COLOR/V6)
+    url: https://developers.google.com/earth-engine/datasets/catalog/COPERNICUS_MARINE_SATELLITE_OCEAN_COLOR_V6
+    method: Cloud analysis (chlor_a, Rrs and observation counts from the C3S daily data)
+    note: When checked on 2026-10-13 it ran through 2026-03-31.
+
+example:
+  lang: python
+  note: >-
+    Opens one v6.0 monthly chlorophyll file through the CEDA THREDDS OPeNDAP service (no login) and clips the seas around Korea. For data from 2023 onward, use the C3S CDS (cdsapi) or the PML server.
+  code: |
+    # pip install xarray netCDF4 numpy
+    import numpy as np
+    import xarray as xr
+
+    url = ("https://data.cci.ceda.ac.uk/thredds/dodsC/esacci/ocean_colour/data/v6.0-release/"
+           "geographic/netcdf/chlor_a/monthly/v6.0/2022/"
+           "ESACCI-OC-L3S-CHLOR_A-MERGED-1M_MONTHLY_4km_GEO_PML_OCx-202211-fv6.0.nc")
+    ds = xr.open_dataset(url)
+    chl = ds["chlor_a"].sel(lon=slice(120, 132))
+    chl = chl.where((chl.lat >= 30) & (chl.lat <= 40), drop=True)   # seas around Korea
+    # Chlorophyll is log-normal: average in log10 space, then transform back
+    print(float(10 ** np.log10(chl).mean()))
+
+tips:
+  - "The FAQ warns that uncertainties are generally higher in coastal and turbid waters (such as the coastal Yellow Sea and the southern coast of Korea), where suspended matter or dissolved organic matter rather than chlorophyll may drive the optical properties. Check the uncertainty variables and water class memberships for coastal work."
+  - "Chlorophyll is log-normally distributed. Compute area means, climatologies and trends on log10 values. Statistics from the lat–lon grid over-weight high-latitude cells, so apply area weights or use the sinusoidal files."
+  - "In v6.0, MODIS and VIIRS were dropped from the record after 2019. Coverage and performance in recent years differ from v5.0, and residual inter-sensor bias may remain around sensor transitions (around 2002, 2012, 2016 and 2020), so take care with long-term trends."
+  - "The user guide notes missing days in the SeaWiFS-only period (1997–2000) and that major events such as the January 2022 Hunga Tonga–Hunga Ha'apai eruption can cause chlorophyll anomalies."
+  - "Do not mix v6.0, v5.0, v5.0.1, v4.2 and other versions: input sensors, reprocessing and algorithms differ. In the C3S CDS, v5.0 had a reflectance jump in December 2020 to February 2021 that was fixed in v5.0.1."
+  - "L3 composites are not gap-filled. The FAQ explains that gap-filled L4 data have poorer error characteristics than L3, so none are provided. If you need gap-free daily fields, consider the GlobColour gap-free products from Copernicus Marine."
+  - "The C3S CDS release holds chlorophyll and reflectance only. For Kd(490), IOPs, uncertainties or water classes, download from CEDA (through 2022) or the PML server."
+
+citations:
+  dataset:
+    - label: OC-CCI v6.0 4 km collection (CEDA)
+      text: >-
+        Sathyendranath, S.; Jackson, T.; Brockmann, C.; Brotas, V.; Calton, B.; Chuprin, A.; Clements, O.; Cipollini, P.; Danne, O.; Dingle, J.; Donlon, C.; Grant, M.;
+        Groom, S.; Krasemann, H.; Lavender, S.; Mazeran, C.; Mélin, F.; Müller, D.; Steinmetz, F.; Valente, A.; Zühlke, M.; Feldman, G.; Franz, B.; Frouin, R.; Werdell, J.; Platt, T. (2023):
+        ESA Ocean Colour Climate Change Initiative (Ocean_Colour_cci): Version 6.0, 4km resolution data. NERC EDS Centre for Environmental Data Analysis, 08 August 2023.
+        doi:10.5285/5011d22aae5a4671b0cbc7d05c56c4f0
+      doi: 10.5285/5011d22aae5a4671b0cbc7d05c56c4f0
+      bibtex: |
+        @misc{sathyendranath2023occciv6,
+          author    = {Sathyendranath, S. and Jackson, T. and Brockmann, C. and Brotas, V. and Calton, B. and Chuprin, A. and Clements, O. and Cipollini, P. and Danne, O. and Dingle, J. and Donlon, C. and Grant, M. and Groom, S. and Krasemann, H. and Lavender, S. and Mazeran, C. and M{\'e}lin, F. and M{\"u}ller, D. and Steinmetz, F. and Valente, A. and Z{\"u}hlke, M. and Feldman, G. and Franz, B. and Frouin, R. and Werdell, J. and Platt, T.},
+          title     = {{ESA} Ocean Colour Climate Change Initiative ({Ocean\_Colour\_cci}): Version 6.0, 4km resolution data},
+          year      = {2023},
+          publisher = {NERC EDS Centre for Environmental Data Analysis},
+          doi       = {10.5285/5011d22aae5a4671b0cbc7d05c56c4f0}
+        }
+    - label: C3S CDS release (including extensions from 2023 onward)
+      text: >-
+        Copernicus Climate Change Service (2019): Ocean colour from 1997 to present derived from satellite observations. Copernicus Climate Change Service (C3S) Climate Data Store (CDS).
+        DOI: 10.24381/cds.f85b319d (Accessed on DD-MMM-YYYY)
+      doi: 10.24381/cds.f85b319d
+      bibtex: |
+        @misc{c3s2019oceancolour,
+          author    = {{Copernicus Climate Change Service}},
+          title     = {Ocean colour from 1997 to present derived from satellite observations},
+          year      = {2019},
+          publisher = {Copernicus Climate Change Service (C3S) Climate Data Store (CDS)},
+          doi       = {10.24381/cds.f85b319d}
+        }
+  papers:
+    - label: Main OC-CCI reference
+      text: >-
+        Sathyendranath, S., Brewin, R. J. W., Brockmann, C., et al. (2019): An Ocean-Colour Time Series for Use in Climate Studies: The Experience of the Ocean-Colour Climate Change Initiative (OC-CCI).
+        Sensors, 19(19), 4285.
+      doi: 10.3390/s19194285
+      bibtex: |
+        @article{sathyendranath2019occci,
+          author  = {Sathyendranath, Shubha and Brewin, Robert and Brockmann, Carsten and Brotas, Vanda and Calton, Ben and Chuprin, Andrei and others},
+          title   = {An Ocean-Colour Time Series for Use in Climate Studies: The Experience of the Ocean-Colour Climate Change Initiative ({OC-CCI})},
+          journal = {Sensors},
+          volume  = {19},
+          number  = {19},
+          pages   = {4285},
+          year    = {2019},
+          doi     = {10.3390/s19194285}
+        }
+  acknowledgement: >-
+    The ESA data page asks users to acknowledge that "The European Space Agency (ESA) Climate Change Initiative (CCI) Ocean Colour data are developed and produced" with funding and resources from ESA,
+    the Copernicus Climate Change Service (C3S) and the NERC EO Data Analysis and AI Service (NEODAAS), to cite Sathyendranath et al. (2019), and to cite the DOI of the version used.
+    It also asks that publications be reported to the OC-CCI team (help@esa-oceancolour-cci.org).
+
+notices:
+  - date: "2026-01-19"
+    level: info
+    title: Downloads of OC-CCI v6.0 data at CEDA restored (unavailable since 2025-11-20)
+    body: >-
+      CEDA announced on 20 November 2025 that downloads of OC-CCI v6.0 records (such as sinusoidal chlor_a) were temporarily unavailable, and on 19 January 2026 that online access had been restored.
+      Re-run any automated downloads that failed during this period.
+    source: https://catalogue.ceda.ac.uk/uuid/474ac06235e54e6cb0ec6eed635e1213/
+  - date: "2025-05"
+    level: info
+    title: OC-CCI enters CCI+ Phase 2 — v7.0 in preparation
+    body: >-
+      The Ocean Colour project began CCI+ Phase 2 in May 2025 with the same consortium, continuing to extend and improve the record. The processing system has moved into an operational setting in Copernicus,
+      and the v6.0 user guide said the next version, v7.0, was planned for 2025 or 2026 (not yet released when checked on 2026-10-13).
+    source: https://climate.esa.int/en/projects/ocean-colour/about/
+  - date: "2023-08-08"
+    level: info
+    title: OC-CCI v6.0 4 km collection published at CEDA (DOI assigned)
+    body: >-
+      The v6.0 4 km data for 1997-09-04 to 2022-12-31 (sinusoidal and lat–lon grids; daily, 5-day, 8-day, monthly and yearly composites; monthly climatology) were archived at CEDA under the collection DOI
+      10.5285/5011d22aae5a4671b0cbc7d05c56c4f0. The main changes from v5.0 are the addition of Sentinel-3B OLCI, the fourth MERIS reprocessing, OLCI bug fixes and QAA v6.
+    source: https://catalogue.ceda.ac.uk/uuid/5011d22aae5a4671b0cbc7d05c56c4f0/
+  - date: "2022-06-01"
+    level: warning
+    title: Reflectance jump in C3S CDS v5.0 (December 2020 to February 2021) — fixed in v5.0.1
+    body: >-
+      A spurious jump in remote-sensing reflectance from December 2020 to February 2021 was reported in the C3S CDS v5.0 release, and a corrected v5.0.1 was published in the CDS.
+      The CDS request form now marks v5.0 and v5.0.1 as deprecated, with v6.0 as the default.
+    source: https://cds.climate.copernicus.eu/datasets/satellite-ocean-colour?tab=documentation
+  - date: "2021-05-19"
+    level: info
+    title: OC-CCI v5.0 released — first version with OLCI
+    body: >-
+      v5.0 (1997-09 to 2020-12, DOI 10.5285/1dbe7a109c0244aaad713e078fd3059a), the first version to include Sentinel-3A OLCI, was released. It has since been superseded by v6.0.
+    source: https://climate.esa.int/en/projects/ocean-colour/data/
+
+transitions:
+  - from: OC-CCI v5.0
+    to: OC-CCI v6.0
+    status: completed
+    summary: >-
+      Adds Sentinel-3B OLCI, uses the fourth MERIS reprocessing, and applies OLCI bug fixes, updated system vicarious calibration (SVC) and masking, and QAA v6.
+      MODIS and VIIRS were dropped after 2019, changing the sensor mix in recent years.
+    changes:
+      - aspect: Period (CEDA CDR)
+        before: 1997-09-04 to 2020-12-31
+        after: 1997-09-04 to 2022-12-31 (then C3S and PML extensions)
+      - aspect: Input sensors
+        before: SeaWiFS, MERIS (earlier reprocessing), MODIS-Aqua, VIIRS, OLCI-A
+        after: "SeaWiFS, MERIS (fourth reprocessing), MODIS-Aqua and VIIRS (through 2019), OLCI-A, OLCI-B (2018 onward)"
+      - aspect: IOP and Kd(490) algorithms
+        before: v5.0 system
+        after: "IOPs from QAA_v6G with Zhang backscattering coefficients; Kd(490) from a Lee variant with Zhang coefficients"
+      - aspect: Processing improvements
+        before: "-"
+        after: OLCI bug fixes, updated SVC and masking
+      - aspect: DOI
+        before: 10.5285/1dbe7a109c0244aaad713e078fd3059a
+        after: 10.5285/5011d22aae5a4671b0cbc7d05c56c4f0
+    impacts:
+      - Do not splice the two versions into one series. From 2019 onward the input sensors differ, so coverage and values differ from v5.0.
+      - When downloading from the C3S CDS, set version to 6_0 explicitly. 5_0 and 5_0_1 are deprecated.
+    sources:
+      - name: C3S CDS dataset overview (v6.0 changes)
+        url: https://cds.climate.copernicus.eu/datasets/satellite-ocean-colour?tab=overview
+      - name: OC-CCI Product User Guide v6.5 (D4.2)
+        url: https://www.climate.esa.int/documents/3068/D4.2_-_OC-CCI_Product_User_Guide_PUG_v6.5b.docx
+      - name: CEDA — v5.0 record (Superseded)
+        url: https://catalogue.ceda.ac.uk/uuid/8154e881452f49c1ba86982ed88b20f0
+  - from: OC-CCI v6.0
+    to: OC-CCI v7.0
+    status: planned
+    summary: >-
+      The next version, in preparation under CCI+ Phase 2. Plans include an updated in situ database, re-evaluated calibration and new OLCI-era bands (400, 620, 681 and 709 nm). No release date has been announced.
+    changes:
+      - aspect: Reflectance bands (OLCI era)
+        before: 412, 443, 490, 510, 560, 665 nm
+        after: The existing six plus planned 400, 620, 681 and 709 nm
+      - aspect: Release
+        before: v6.0 (CEDA, 2023-08)
+        after: Planned for 2025–2026 in the user guide; not released when checked on 2026-10-13
+    impacts:
+      - v7.0 will reprocess the full record, so do not mix it with v6.0 and state the version clearly.
+    sources:
+      - name: OC-CCI Product User Guide v6.5 (v7.0 plans)
+        url: https://www.climate.esa.int/documents/3068/D4.2_-_OC-CCI_Product_User_Guide_PUG_v6.5b.docx
+      - name: IOCS 2025 agency talk (NCEO, OC-CCI V7 plans)
+        url: https://iocs.ioccg.org/wp-content/uploads/2025/12/AgencyTalk_Groom_NCEO_rr.pdf
+
+links:
+  - name: ESA CCI — Ocean Colour project
+    url: https://climate.esa.int/en/projects/ocean-colour/
+  - name: ESA CCI — Ocean Colour data and citation guidance
+    url: https://climate.esa.int/en/projects/ocean-colour/data/
+  - name: oceancolour.org — FAQ
+    url: https://www.oceancolour.org/faq/
+  - name: OC-CCI Product User Guide v6.5 (docx)
+    url: https://www.climate.esa.int/documents/3068/D4.2_-_OC-CCI_Product_User_Guide_PUG_v6.5b.docx
+  - name: C3S CDS — Ocean colour from 1997 to present
+    url: https://cds.climate.copernicus.eu/datasets/satellite-ocean-colour
+  - name: This site — Copernicus-GlobColour ocean colour (Copernicus Marine)
+    url: ../globcolour/
+  - name: This site — MODIS ocean colour
+    url: ../modis-ocean/
+  - name: This site — VIIRS ocean colour
+    url: ../viirs-ocean/
+  - name: This site — PACE OCI
+    url: ../pace-oci/
+  - name: This site — GOCI-II
+    url: ../goci2/
+
+watch_urls:
+  - https://climate.esa.int/en/projects/ocean-colour/news-and-events/news
+  - https://catalogue.ceda.ac.uk/uuid/5011d22aae5a4671b0cbc7d05c56c4f0/
+  - https://cds.climate.copernicus.eu/datasets/satellite-ocean-colour?tab=documentation
+
+last_verified: "2026-10-13"

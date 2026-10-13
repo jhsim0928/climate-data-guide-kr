@@ -1,0 +1,262 @@
+# ─────────────────────────────────────────────────────────────
+# GHRSST MUR (Multi-scale Ultra-high Resolution) SST v4.1 — 데이터셋 정보 파일
+# 위성 탭(해수면온도), 해양 탭(해수면온도 분석장) 교차 수록. NASA JPL이 야간 위성 SST와 현장 관측을 웨이블릿 기반 변분 분석(MRVA)으로 합친 일별 0.01° L4 foundation SST.
+# 2026-10-13 확인 시 PO.DAAC(CMR)에 MUR v4.1과 0.25°판 MUR25 v4.2 모두 2026-10-12 자료까지 올라와 있습니다.
+# 수정 후에는 공식 페이지에서 확인한 날짜로 last_verified 를 갱신하세요.
+# ─────────────────────────────────────────────────────────────
+id: ghrsst-mur
+name: GHRSST MUR v4.1
+full_name: >-
+  GHRSST Level 4 MUR Global Foundation Sea Surface Temperature Analysis, Version 4.1
+  (NASA JPL 다중 규모 초고해상도 전지구 foundation 해수면온도 분석장, 일별 0.01°) + 0.25°판 MUR25 v4.2
+category: analysis
+domain: satellite
+group: 해수면온도
+order: 65
+also_in:
+  - domain: ocean
+    group: 해수면온도 분석장
+domains: [해양, 원격탐사]
+provider: NASA JPL MUR MEaSUREs 과제(생산) / NASA PO.DAAC(배포)
+
+status: active
+status_note: >-
+  v4.1(0.01°)과 MUR25 v4.2(0.25°) 모두 매일 생산되고 있습니다. 2026-10-13 확인 시 PO.DAAC 카탈로그(CMR)에 두 자료 모두 2026-10-12자 파일까지 있습니다(2026-10-13 게시).
+  하루 뒤 준실시간판이 먼저 올라오고 약 4일 뒤 재처리판(retrospective)으로 바뀌며, 전역 속성 history로 둘을 구분합니다.
+  PO.DAAC 자료 페이지의 'Granule Time Span' 끝 날짜(v4.1 2026-09-12, MUR25 2026-08-19)는 실제 파일보다 늦게 갱신되는 값입니다.
+
+period:
+  start: "2002-06"
+  end: present
+  note: >-
+    v4.1 첫 파일은 2002-06-01자입니다(카탈로그 시작 2002-05-31 21:00 UTC). MUR25 v4.2는 2002-09-01자부터입니다.
+    dt_1km_data 변수는 2015-10-04부터, v4.1의 sst_anomaly 변수는 2019-07-23부터 파일에 들어 있습니다.
+
+resolution:
+  spatial_short: "1 km (0.01°)"
+  temporal_short: "1일"
+  spatial: >-
+    v4.1은 0.01° 정규 위경도 격자(위도 17999 × 경도 36000, 위도 89.99°S~89.99°N, 경도 179.99°W~180°E).
+    MUR25 v4.2는 0.25° 격자(위도 720 × 경도 1440, 격자 중심 89.875°S~89.875°N, 179.875°W~179.875°E)
+  vertical: 해면 단일값 — foundation SST(낮 동안 표층 가열에 따른 일변화가 없는 근표층 수온)
+  temporal: >-
+    일별 분석장 하나(파일 이름·time 09:00 UTC). 카탈로그상 각 파일의 시간 범위는 전날 21:00 UTC~당일 21:00 UTC입니다
+coverage:
+  short: 전지구
+  note: "전지구 바다와 호수(mask에 open_lake 구분). 고위도 해빙은 EUMETSAT OSI SAF 해빙 농도(sea_ice_fraction)로 함께 제공"
+update: "매일. 준실시간판 약 1일 지연, 재처리판 약 4일 지연(준실시간판을 덮어씀). CoastWatch ERDDAP 안내로는 최근 7일 자료가 보통 매일 다시 계산됩니다"
+license: >-
+  무료 공개. ERDDAP 메타데이터는 JPL PO.DAAC 자료 정책에 따라 무료로 쓰고 재배포할 수 있다고 적고 있고, AWS Open Data 등록 페이지는 CC BY 4.0으로 표기합니다.
+  PO.DAAC에서 받으려면 NASA Earthdata 로그인(무료)이 필요하고, PO.DAAC 인용 지침에 따라 데이터셋 DOI를 인용합니다
+account_required: false
+
+summary: >-
+  NASA MEaSUREs 과제로 JPL(Toshio Chin 연구팀)이 만든 전지구 일별 0.01°(약 1 km) 해수면온도 분석장입니다.
+  MODIS(Aqua·Terra)·AVHRR 같은 적외선 센서의 고해상도 관측과 AMSR-E·AMSR2·WindSat 마이크로파 관측(구름에 덜 막힘), iQuam 현장 관측을 야간 자료 위주로 모아
+  웨이블릿을 기저로 한 다중 해상도 변분 분석(MRVA)으로 빈틈없이 채웠고, 해빙 농도는 EUMETSAT OSI SAF 자료를 씁니다.
+  격자로 먼저 모으지 않고 관측 위치를 그대로 쓰는 방식이라 작은 규모 구조를 다른 SST 분석장보다 잘 살린다는 것이 특징이며,
+  같은 방법으로 만든 0.25° 축소판 MUR25(v4.2)는 2003~2014년 MUR 기후값 대비 편차를 함께 제공해 장기 분석에 쓰기 편합니다.
+
+time_convention:
+  summary: >-
+    하루에 한 장인 foundation SST 분석장입니다. 파일 이름과 time 값은 그날 09:00 UTC(time 변수 설명은 'Nominal time of analyzed fields')이고,
+    카탈로그(CMR)에는 각 파일의 시간 범위가 전날 21:00 UTC~당일 21:00 UTC로 등록되어 있습니다. 낮 가열 영향을 피하려고 야간 위성 관측을 바탕으로 하므로
+    특정 시각의 순간 수온이 아니라 일변화를 뺀 그날의 기준 수온으로 보는 것이 맞습니다.
+  points:
+    - "파일 이름 예 20261012090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc — 앞의 14자리가 명목 시각(2026-10-12 09:00 UTC)입니다. time 단위는 'seconds since 1981-01-01 00:00:00 UTC'입니다."
+    - "09:00 UTC는 한국 시각 18시이고, 카탈로그의 하루 범위(21:00~21:00 UTC)는 한국 시각으로 아침 6시~다음날 아침 6시입니다."
+    - "준실시간판(약 1일 지연)이 먼저 올라오고 약 4일 뒤 재처리판이 같은 파일 이름으로 덮어씁니다. 전역 속성 history가 'created at nominal 4-day latency; replaced nrt (1-day latency) version.'이면 재처리판입니다."
+    - "dt_1km_data는 그 격자에서 가장 가까운 적외선(약 1 km) 관측까지의 시간 거리(시간 단위)입니다. 값이 크면 그날 고해상도 관측 없이 채운 값입니다."
+    - "MUR25의 sst_anomaly는 2003~2014년 MUR 자료의 같은 날짜(day-of-year) 평균에 대한 편차입니다."
+  source: https://podaac.jpl.nasa.gov/dataset/MUR-JPL-L4-GLOB-v4.1
+  source_name: PO.DAAC MUR v4.1 자료 페이지·CMR 카탈로그 메타데이터, NOAA CoastWatch ERDDAP 파일 속성(jplMURSST41)
+
+variables:
+  note: >-
+    PO.DAAC 변수표와 파일 속성 기준입니다. PO.DAAC 원본은 K 단위이고, NOAA CoastWatch ERDDAP판(jplMURSST41·jplMURSST42)은 °C로 바꿔 제공합니다.
+    MUR25 v4.2는 analysed_sst·analysis_error·mask·sea_ice_fraction·sst_anomaly를 담고 dt_1km_data는 없습니다.
+  full_list: https://podaac.jpl.nasa.gov/dataset/MUR-JPL-L4-GLOB-v4.1
+  groups:
+    - name: 분석 해수면온도 (일별 L4)
+      kind: mean
+      period: 일
+      items:
+        - text: "분석 해수면온도(foundation SST) — `analysed_sst` (K)"
+          note: 야간 위성·현장 관측을 바탕으로 한 하루 한 장의 분석값. 명목 시각 09:00 UTC
+        - text: "분석 오차 표준편차 — `analysis_error` (K)"
+          note: 같은 날 analysed_sst의 추정 오차
+        - text: "해수면온도 편차 — `sst_anomaly` (K)"
+          note: MUR 기후값(2003~2014년 같은 날짜 평균) 대비. v4.1은 2019-07-23 이후 파일에만 있음
+    - name: 보조 정보
+      items:
+        - text: "해빙 면적 비율 — `sea_ice_fraction` (0~1)"
+          kind: mean
+          period: 일
+          note: EUMETSAT OSI SAF 해빙 농도를 최근접 보간한 값. 내부 시간 정의는 확인하지 못함
+        - text: "가장 가까운 적외선 관측까지의 시간 — `dt_1km_data` (시간)"
+          kind: instant
+          note: v4.1만, 2015-10-04 이후 파일에만 있음
+          std: []
+        - text: "바다·육지·호수·해빙 구분 마스크 — `mask` (비트 플래그)"
+          kind: static
+          note: "open_sea, land, open_lake, open_sea_with_ice_in_the_grid, open_lake_with_ice_in_the_grid (1·2·4·8·16). 해빙 비트는 날마다 바뀔 수 있음"
+
+access:
+  - name: NASA PO.DAAC — MUR v4.1 (MUR-JPL-L4-GLOB-v4.1)
+    url: https://podaac.jpl.nasa.gov/dataset/MUR-JPL-L4-GLOB-v4.1
+    method: Earthdata Search / earthaccess / OPeNDAP / Harmony 부분 추출 / podaac-data-subscriber / AWS S3 직접 접근(us-west-2)
+    note: >-
+      NASA Earthdata 로그인(무료)이 필요합니다. 하루 파일 하나가 netCDF-4 약 300 MB라 한반도처럼 좁은 영역은 OPeNDAP·Harmony로 잘라 받는 편이 낫습니다.
+      AWS Open Data 등록(arn:aws:s3:::podaac-ops-cumulus-protected/MUR-JPL-L4-GLOB-v4.1/)도 Earthdata 자격 증명이 필요합니다.
+  - name: NASA PO.DAAC — MUR25 v4.2 (MUR25-JPL-L4-GLOB-v04.2)
+    url: https://podaac.jpl.nasa.gov/dataset/MUR25-JPL-L4-GLOB-v04.2
+    method: Earthdata Search / earthaccess / OPeNDAP / Harmony
+    note: 0.25° 축소판으로 sst_anomaly(2003~2014년 기후값 대비)가 전 기간에 들어 있습니다. Earthdata 로그인 필요.
+  - name: NOAA CoastWatch ERDDAP — jplMURSST41 (0.01°)
+    url: https://coastwatch.pfeg.noaa.gov/erddap/info/jplMURSST41/index.html
+    method: ERDDAP griddap (영역·기간 잘라 netCDF·CSV 등으로 받기, OPeNDAP)
+    note: 로그인 없이 받을 수 있습니다. SST 단위가 °C로 바뀌어 있고, 2026-10-13 확인 시 2026-10-10자까지 있습니다. 0.25°판은 jplMURSST42입니다.
+    login: false
+
+example:
+  lang: python
+  note: "PO.DAAC 파일을 earthaccess로 열어 한반도 주변만 잘라 보는 예입니다. NASA Earthdata 계정으로 earthaccess.login()을 한 번 거친 뒤 실행하세요. 파일이 커서 필요한 영역만 읽습니다."
+  code: |
+    # pip install earthaccess xarray netCDF4 h5netcdf
+    import earthaccess
+    import xarray as xr
+
+    earthaccess.login()
+    results = earthaccess.search_data(
+        short_name="MUR-JPL-L4-GLOB-v4.1",      # 0.25°판: MUR25-JPL-L4-GLOB-v04.2
+        temporal=("2025-08-01", "2025-08-03"),
+    )
+    files = earthaccess.open(results)           # 내려받지 않고 바로 열기
+
+    ds = xr.open_mfdataset(files, combine="by_coords")
+    sst = ds["analysed_sst"].sel(lat=slice(30, 40), lon=slice(120, 135)) - 273.15   # K → °C, 한반도 주변
+    print(sst.mean("time").values.mean())
+    print(ds["dt_1km_data"].sel(lat=slice(30, 40), lon=slice(120, 135)).max().values)  # 적외선 관측까지 최대 시간 거리
+
+tips:
+  - "foundation SST는 낮 가열을 뺀 값이라 맑고 바람 약한 여름 한낮의 위성 피부 수온이나 표층 부이 관측보다 낮게 나올 수 있습니다. 비교할 때 깊이·시각 정의 차이를 먼저 확인하세요."
+  - "0.01° 격자라고 해서 날마다 1 km 구조가 관측된 것은 아닙니다. 적외선 관측은 구름에 막히므로 dt_1km_data(가장 가까운 적외선 관측까지의 시간)로 그날 실제 고해상도 관측이 있었는지 확인하세요. 구름이 오래 덮인 해역은 마이크로파(약 25 km) 관측으로 채워져 부드러워집니다."
+  - "최근 며칠 자료는 준실시간판이 재처리판으로 바뀌고, ERDDAP 안내로는 최근 7일이 보통 매일 다시 계산됩니다. 최근 자료로 만든 결과는 일주일쯤 뒤 다시 받아 확인하세요."
+  - "PO.DAAC 원본은 K, CoastWatch ERDDAP판은 °C입니다. 여러 경로에서 받은 파일을 섞을 때 단위를 꼭 맞추세요."
+  - "입력 위성 자료가 빠진 기간은 품질이 떨어집니다. PO.DAAC는 2022-12-17~2023-02-27 AMSR2가 빠졌고, 2025-08-25·26은 고해상도 관측이 대부분 빠져 매우 흐린 장이 되었다고(재처리 전까지 그대로 제공) 밝혔습니다. 이 날짜를 사례 분석에 쓰지 마세요."
+  - "v4.1의 sst_anomaly는 2019-07-23 이후 파일에만 있고 기준 기간이 2003~2014년입니다. 1991~2020 같은 표준 평년값 편차가 필요하면 analysed_sst로 직접 계산하세요."
+  - "PO.DAAC는 자료량이 훨씬 작은 MUR25(0.25°)를 장기 SST 연구·ENSO 같은 대규모 분석용으로 소개합니다. 연안·전선·소용돌이처럼 작은 구조가 필요할 때만 0.01°판을 쓰면 내려받는 양을 크게 줄일 수 있습니다."
+  - "PO.DAAC는 MUR 생산 상태를 따로 보여 주는 페이지가 없다고 밝혔습니다. 지연·품질 문제 안내는 PO.DAAC 메일링 리스트와 공지 페이지, Earthdata 포럼으로 나옵니다."
+
+citations:
+  dataset:
+    - label: MUR v4.1 (PO.DAAC)
+      text: >-
+        JPL MUR MEaSUREs Project. 2015. GHRSST Level 4 MUR Global Foundation Sea Surface Temperature Analysis. Ver. 4.1. PO.DAAC, CA, USA.
+        Dataset accessed [YYYY-MM-DD] at https://doi.org/10.5067/GHGMR-4FJ04
+      doi: 10.5067/GHGMR-4FJ04
+      bibtex: |
+        @misc{jplmur2015v41,
+          author    = {{JPL MUR MEaSUREs Project}},
+          title     = {{GHRSST} Level 4 {MUR} Global Foundation Sea Surface Temperature Analysis. Ver. 4.1},
+          year      = {2015},
+          publisher = {NASA Physical Oceanography Distributed Active Archive Center},
+          version   = {4.1},
+          doi       = {10.5067/GHGMR-4FJ04}
+        }
+    - label: MUR25 v4.2 (PO.DAAC)
+      text: >-
+        JPL MUR MEaSUREs Project. 2019. GHRSST Level 4 MUR 0.25 deg Global Foundation Sea Surface Temperature Analysis. Ver. 4.2. PO.DAAC, CA, USA.
+        Dataset accessed [YYYY-MM-DD] at https://doi.org/10.5067/GHM25-4FJ42
+      doi: 10.5067/GHM25-4FJ42
+      bibtex: |
+        @misc{jplmur2019mur25,
+          author    = {{JPL MUR MEaSUREs Project}},
+          title     = {{GHRSST} Level 4 {MUR} 0.25 deg Global Foundation Sea Surface Temperature Analysis. Ver. 4.2},
+          year      = {2019},
+          publisher = {NASA Physical Oceanography Distributed Active Archive Center},
+          version   = {4.2},
+          doi       = {10.5067/GHM25-4FJ42}
+        }
+  papers:
+    - label: MUR 분석 방법 (PO.DAAC 권장 인용)
+      text: >-
+        Chin, T. M., Vazquez-Cuervo, J., Armstrong, E. M. (2017): A multi-scale high-resolution analysis of global sea surface temperature.
+        Remote Sensing of Environment, 200, 154–169.
+      doi: 10.1016/j.rse.2017.07.029
+      bibtex: |
+        @article{chin2017mur,
+          author  = {Chin, Toshio Michael and Vazquez-Cuervo, Jorge and Armstrong, Edward M.},
+          title   = {A multi-scale high-resolution analysis of global sea surface temperature},
+          journal = {Remote Sensing of Environment},
+          volume  = {200},
+          pages   = {154--169},
+          year    = {2017},
+          doi     = {10.1016/j.rse.2017.07.029}
+        }
+  acknowledgement: >-
+    파일 속성은 "These data were provided by JPL under support by NASA MEaSUREs program." 문구로 감사를 표하도록 요청합니다.
+    PO.DAAC 인용 지침(https://podaac.jpl.nasa.gov/CitingPODAAC)에 따라 실제로 쓴 판(v4.1 또는 MUR25 v4.2)의 DOI를 적으세요.
+
+notices:
+  - date: "2025-09-02"
+    level: warning
+    title: 2025-08-25·26 MUR 품질 크게 저하 (재처리 전까지 그대로 제공)
+    body: >-
+      입력 자료 생산 체인이 끊겨 2025-08-24 이후 입력이 점점 빠졌고, 특히 8월 25·26일은 고해상도 위성 관측이 대부분 빠져 해상도가 매우 낮은 장이 되었다고
+      PO.DAAC 담당자가 Earthdata 포럼에서 밝혔습니다. 8월 27일 무렵부터 정상 생산 중이며, 25·26일 자료는 언젠가 재처리할 예정이지만 현재는 그대로 제공됩니다.
+    source: https://forum.earthdata.nasa.gov/viewtopic.php?p=23994
+  - date: "2024-10-14"
+    level: warning
+    title: 허리케인 Helene·Milton 영향으로 MUR·MUR25 품질 저하
+    body: >-
+      허리케인 Helene·Milton이 NOAA 자료 센터에 큰 피해를 주어 AMSR2 L2P(RSS) 등 여러 SST 자료가 빠졌습니다.
+      MUR v4.1과 MUR25 v4.2는 AMSR2 마이크로파 SST를 핵심 입력으로 쓰기 때문에 이 기간 품질이 떨어졌다고 PO.DAAC가 공지했습니다.
+    source: https://podaac.jpl.nasa.gov/announcements/2024-10-14-Impacts-to-recent-PODAAC-SST-datasets
+  - date: "2024-09-04"
+    level: info
+    title: MUR v4.1 수집 오류로 인한 게시 중단 해소
+    body: >-
+      2024-08-29 이후 새 파일이 올라오지 않던 문제는 PO.DAAC 내부의 MUR v4.1 수집(ingest) 오류 때문이었고, 9월 4일 고쳐 밀린 파일이 모두 올라왔다고
+      PO.DAAC 사용자 지원팀이 Earthdata 포럼에서 알렸습니다. 이런 개별 장애는 공지 페이지에 올라오지 않을 수 있어 메일링 리스트 가입을 권했습니다.
+    source: https://forum.earthdata.nasa.gov/viewtopic.php?p=20284
+  - date: "2023-03-31"
+    level: warning
+    title: AMSR2 빠진 기간(2022-12-17~2023-02-27)과 클라우드 입력 전환
+    body: >-
+      AMSR2 자료가 v8a에서 v8.2로 재처리되는 과정에서 PO.DAAC에 공백이 생겨, MUR(1 km)과 MUR25가 2022-12-17~2023-02-27에 AMSR2 없이 만들어졌습니다.
+      이 기간에는 SST 품질이 다소 떨어졌을 수 있습니다. 또 2023-03-13부터 MUR 생산이 NASA Earthdata Cloud의 L2P 입력을 쓰도록 바뀌었으며 사용자에게는 영향이 없다고 밝혔습니다.
+    source: https://podaac.jpl.nasa.gov/announcements/2023-03-31-Update-to-the-MUR-SST-processing-chain-and-recent-timeline
+  - date: "2019-10-18"
+    level: info
+    title: 0.25° 축소판 MUR25 v4.2 공개
+    body: >-
+      MUR과 같은 분석 방법·입력으로 만든 0.25° 일별 분석장 MUR25 v4.2(2002-09-01~)가 PO.DAAC에 공개되었습니다.
+      자료량이 훨씬 작고 MUR 기후값 대비 SST 편차를 함께 담아 장기 기후 연구용으로 내놓았습니다.
+    source: https://podaac.jpl.nasa.gov/announcements/2019-10-18_GHRSST_L4_MUR_0.25deg_Global_Foundation_SST_Analysis_v4.2_Dataset_Release
+
+links:
+  - name: PO.DAAC — MUR v4.1 자료 페이지
+    url: https://podaac.jpl.nasa.gov/dataset/MUR-JPL-L4-GLOB-v4.1
+  - name: PO.DAAC — MUR25 v4.2 자료 페이지
+    url: https://podaac.jpl.nasa.gov/dataset/MUR25-JPL-L4-GLOB-v04.2
+  - name: PO.DAAC — MUR 과제 소개 (MEaSUREs-MUR)
+    url: https://podaac.jpl.nasa.gov/MEaSUREs-MUR
+  - name: GHRSST 자료 형식 규격 GDS 2.0 (PDF)
+    url: https://archive.podaac.earthdata.nasa.gov/podaac-ops-cumulus-docs/ghrsst/open/docs/GDS20r5.pdf
+  - name: Chin et al. (2017) Remote Sensing of Environment
+    url: https://doi.org/10.1016/j.rse.2017.07.029
+  - name: 이 사이트 — OSTIA (Met Office 0.05° foundation SST 분석장)
+    url: ../ostia/
+  - name: 이 사이트 — NOAA OISST v2.1 (0.25° 일별 분석장)
+    url: ../oisst/
+  - name: 이 사이트 — ESA SST CCI (위성 전용 SST 기후자료기록)
+    url: ../esa-cci-sst/
+  - name: 이 사이트 — AVHRR Pathfinder SST (갱신 종료된 4 km 위성 SST)
+    url: ../avhrr-pathfinder/
+
+watch_urls:
+  - https://podaac.jpl.nasa.gov/announcements
+  - https://podaac.jpl.nasa.gov/dataset/MUR-JPL-L4-GLOB-v4.1
+
+last_verified: "2026-10-13"

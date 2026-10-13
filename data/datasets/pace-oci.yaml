@@ -1,0 +1,461 @@
+# ─────────────────────────────────────────────────────────────
+# NASA PACE OCI(초분광 해색) 해양 산출물 L2·L3·L4 (AOP·IOP·BGC·KD·PAR·MOANA·NPP_CAFE) version 3.2 — 데이터셋 정보 파일
+# 위성 탭(해색), 해양 탭(위성 관측 자료) 교차 수록. 2024-02-08 발사, 2024-04-11 공개, V2 → V3(2025-02) → V3.1(2025-08) → V3.2(2026-04, 2026-06 공지) 순으로 재처리되었습니다.
+# 2026-10-13 확인 시 준실시간(NRT) L3 일자료는 2026-10-12까지, 확정(표준) L3는 2026-08-31(월자료 2026-08)까지 있습니다.
+# MODIS·VIIRS 해색과의 연결은 links(../modis-ocean/, ../viirs-ocean/)에 있습니다. 대기 산출물(에어로졸·구름·미량기체, HARP2·SPEXone)은 summary에서만 언급합니다.
+# 수정 후에는 공식 페이지에서 확인한 날짜로 last_verified 를 갱신하세요.
+# ─────────────────────────────────────────────────────────────
+id: pace-oci
+name: "PACE OCI Ocean Color"
+full_name: >-
+  PACE (Plankton, Aerosol, Cloud, ocean Ecosystem) Ocean Color Instrument (OCI) Level-2·Level-3 해양 산출물(AOP·IOP·BGC·KD·PAR)과 Level-4 MOANA·NPP_CAFE, version 3.2
+  (NASA 초분광 해색 위성 자료)
+category: satellite
+domain: satellite
+group: 해색
+order: 30
+also_in:
+  - domain: ocean
+    group: 위성 관측 자료
+domains: [해양, 원격탐사]
+provider: NASA GSFC Ocean Biology Processing Group(OBPG)·PACE Science Data Segment / NASA Ocean Biology DAAC(OB.DAAC)
+
+status: active
+status_note: >-
+  해양 산출물은 2026년 4월에 정리된 V3.2가 현재판이며(2026-06-11 Earthdata 공지), 준실시간(NRT)판과 확정(표준)판이 함께 생산되고 있습니다.
+  2026-10-13 확인 시 NRT L2는 그날 12시대(UTC) 그래뉼까지, NRT L3 일자료는 2026-10-12까지 올라와 있고, 확정판 L3는 2026-08-31 일자료와 2026-08 월자료까지(2026-09-30 등록), 확정판 L2는 2026-09-01까지 있습니다.
+  에어로졸·구름·지면 산출물은 아직 V3.1, 미량기체(TRGAS)는 V3.0입니다.
+
+period:
+  start: "2024-03"
+  end: present
+  note: >-
+    PACE는 2024-02-08에 발사되었고 2024-04-11에 자료가 처음 공개되었습니다(V1). 2026-10-13 확인 시 V3.2 L2·L3·L4 컬렉션은 모두 2024-03-05에 시작합니다.
+    2024-05-24 22:40 UTC부터 우주선 안전모드(safe hold)로 과학 관측이 멈췄고(5월 28일 관측기 복구 시작), 2026-02-09 안전모드로 2026-02-10 자료가 비어 있습니다.
+
+resolution:
+  spatial_short: "4.6 km (0.04°)"
+  temporal_short: "1일"
+  spatial: >-
+    L2 스와스: 스캔 중심에서 1.2 km × 1.2 km 지상 표본(스캔 가장자리로 갈수록 커짐), 관측 폭 약 2,700 km, 5분 그래뉼 /
+    L3 mapped(L3m): 전지구 등거리 원통(Equidistant Cylindrical) 격자 두 가지 — `4km`(4320×8640, 파일 속성 spatialResolution "4.638312 km")와 `0p1deg`(0.1°, 1800×3600) /
+    L3 binned: 준등면적 사인곡선 격자 4.6 km 또는 9.2 km(릴리스 노트) / L4 MOANA: 대서양 영역 70°S~70°N·85°W~25°E(4km 파일 3360×2640)
+  vertical: >-
+    해면 원격 반사도와 표층 광학·생지화학 특성(위성이 보는 광학 깊이 안의 값). AOP 파일의 `Rrs`는 172개 파장(초분광), KD 파일의 `Kd`는 17개 파장,
+    IOP는 400~701 nm의 17개 파장별 변수로 들어 있습니다.
+  temporal: >-
+    L2는 5분 그래뉼(주간 관측). 태양동기궤도(고도 676.5 km, 경사각 98°)로 약 2일에 전지구를 한 번 덮습니다 /
+    L3m·L3b 일(DAY)·8일(8D)·월(MO) 합성 / L4 MOANA 일·월, NPP_CAFE 일 파일. 대부분의 산출물에 확정(표준)판과 준실시간(NRT)판이 따로 있습니다.
+
+coverage:
+  short: 전지구
+  note: "주간·맑은 하늘의 바다만(구름·태양 고도·눈부심으로 빈칸). MOANA는 대서양(70°S~70°N, 85°W~25°E)만"
+update: >-
+  NRT L2는 관측 후 수 시간 안, NRT L3 일자료는 다음 날 등록됩니다(2026-10-12 일자료가 10-13 13시 UTC 등록). 확정판은 보조자료가 갖춰진 뒤 만들어져 지연이 일정하지 않습니다
+  (2026-10-13 확인 시 2026-08 월자료가 2026-09-30 등록)
+license: >-
+  NASA 지구과학 자료 정보 정책(파일 license 속성 https://science.nasa.gov/earth-science/earth-science-data/data-information-policy/)에 따른 무료 공개 자료입니다.
+  OB.DAAC에서 내려받으려면 무료 NASA Earthdata 로그인이 필요하며, 데이터셋 DOI 인용을 요청합니다
+account_required: true
+
+summary: >-
+  PACE는 2024년 2월 발사된 NASA의 해양·대기 관측 위성으로, 주 탑재체 OCI는 자외선~근적외(340~895 nm)를 2.5 nm 간격·5 nm 대역폭으로 연속 측정하고 단파적외 7개 밴드(940~2260 nm)를 더한 초분광 분광계입니다.
+  이 페이지는 OBPG가 만드는 OCI 해양 산출물을 다룹니다. 초분광 원격 반사도(Rrs)와 형광·겉보기 가시 파장(AOP), 흡수·후방산란 같은 고유 광학 특성(IOP), 확산 감쇠 계수(Kd),
+  엽록소 a·식물플랑크톤 탄소·입자성 유기·무기 탄소(BGC), 광합성 유효 복사(PAR), 피코플랑크톤 군집(MOANA)과 순일차생산(NPP_CAFE)이 있으며, SeaWiFS·MODIS·VIIRS로 이어 온 NASA 해색 자료를 초분광으로 잇는 자료입니다.
+  같은 위성의 OCI 에어로졸(UAA)·구름·미량기체(NO2·O3)·지면 산출물과 편광계 HARP2·SPEXone의 에어로졸·구름 산출물은 별도 컬렉션이라 여기서는 다루지 않습니다.
+
+time_convention:
+  summary: >-
+    L2는 위성이 지나간 순간의 주간 관측값이고, 파일 이름의 시각(PACE_OCI.YYYYMMDDTHHMMSS.L2…)은 5분 그래뉼의 시작 시각(UTC)입니다.
+    L3m·L4는 그 기간 L2 값을 격자로 모은 합성(평균)이며, 파일 이름의 기간 표시가 DAY(일)·8D(8일)·MO(월)입니다. PAR의 `par_day_*`는 하루 동안 적분한 값, `ipar_*`는 통과 시각의 순간값입니다.
+  points:
+    - "L3m 일 파일의 CMR 시간 범위는 그 날짜 00:00~23:59:59 UTC이지만, 파일 속성 time_coverage_start·end는 앞뒤로 넘어갑니다(예 PACE_OCI.20260801 일 파일은 2026-07-31T23:42Z~2026-08-02T01:45Z)."
+    - "8일(8D) 합성은 1월 1일부터 8일씩 끊고 연말 마지막 구간은 짧아집니다(예 20251227_20251231, 다음은 20260101_20260108). 첫 해는 2024-03-05에서 시작합니다."
+    - "월(MO) 합성은 달력 월 전체입니다(예 PACE_OCI.20260801_20260831.L3m.MO.BGC.V3_2.0p1deg.nc)."
+    - "NRT 파일은 이름 끝이 .NRT.nc이고 최종 보정·보조자료 없이 만들어집니다(Help Hub FAQ). 확정판이 나오면 확정판을 쓰고, 두 판을 한 시계열에 섞지 마세요."
+    - "파일 이름의 V3_2는 처리 버전입니다. 같은 날짜 폴더에 V3_2(해양)·V3_1(에어로졸·구름·지면)·V3_0(미량기체)이 섞여 있습니다."
+    - "L3m 값은 Int16으로 저장되고 scale_factor·add_offset이 붙어 있습니다(예 Rrs). xarray는 자동으로 풀어 줍니다."
+  source: https://oceandata.sci.gsfc.nasa.gov/files/data/reprocessing/V3/PACE_OCI_V3_Release_Notes.pdf
+  source_name: "PACE OCI V3 Release Notes (OBPG) + OB.DAAC CMR 그래뉼 메타데이터·OPeNDAP 파일 속성 + Oceandata Help Hub"
+
+variables:
+  note: >-
+    변수 이름과 단위는 V3.2 L3m·L4m 파일(OB.DAAC OPeNDAP 속성)과 PACE OCI V3 릴리스 노트 기준입니다. 릴리스 노트는 해양 산출물 대부분을 Provisional(검토했으나 아직 검증 전) 등급으로 둡니다.
+    L2 파일은 같은 이름의 변수를 `geophysical_data` 그룹에, 위경도를 `navigation_data` 그룹에 담습니다.
+  full_list: https://oceandata.sci.gsfc.nasa.gov/files/data/reprocessing/V3/PACE_OCI_V3_Release_Notes.pdf
+  groups:
+    - name: L3m 겉보기 광학 특성 (AOP 파일, PACE_OCI_L3M_AOP)
+      kind: mean
+      period: 일·8일·월 합성
+      items:
+        - text: "원격 반사도(초분광 172개 파장) — `Rrs` (sr-1)"
+          note: "lat×lon×wavelength 3차원. 파장 좌표는 `wavelength`(nm). 400 nm 미만은 검증 전"
+        - text: "정규화 형광선 높이 — `nflh` (W m-2 um-1 sr-1)"
+        - text: "겉보기 가시 파장 — `avw` (nm)"
+        - text: "865 nm 광학두께(대기 보정 진단값) — `aot_865` (무차원)"
+          note: Diagnostic 등급(과학 분석용 아님)
+        - text: "옹스트롬 지수 443~865 nm(대기 보정 진단값) — `angstrom` (무차원)"
+          note: Diagnostic 등급
+    - name: L3m 고유 광학 특성 (IOP 파일, PACE_OCI_L3M_IOP)
+      kind: mean
+      period: 일·8일·월 합성
+      items:
+        - text: "총흡수계수 — `a_400`~`a_701` (m-1)"
+          note: "17개 파장(400·413·425·442·460·475·490·510·532·555·583·618·640·655·665·678·701 nm), GIOP 모델"
+        - text: "총후방산란계수 — `bb_400`~`bb_701` (m-1)"
+        - text: "식물플랑크톤 흡수계수 — `aph_400`~`aph_701` (m-1)"
+        - text: "용존·쇄설물 흡수계수 442 nm — `adg_442` (m-1)"
+        - text: "입자 후방산란계수 442 nm — `bbp_442` (m-1)"
+        - text: "adg 분광 기울기 — `adg_s` (m-1 nm-1)"
+        - text: "bbp 분광 기울기 — `bbp_s` (m-1 nm-1)"
+        - "흡수·후방산란 불확실성 442 nm — `aph_unc_442`·`adg_unc_442`·`bbp_unc_442` (m-1)"
+    - name: L3m 확산 감쇠 계수 (KD 파일, PACE_OCI_L3M_KD)
+      kind: mean
+      period: 일·8일·월 합성
+      items:
+        - text: "하향 복사 확산 감쇠 계수(17개 파장) — `Kd` (m-1)"
+          note: lat×lon×wavelength 3차원
+    - name: L3m 생지화학 특성 (BGC 파일, PACE_OCI_L3M_BGC)
+      kind: mean
+      period: 일·8일·월 합성
+      items:
+        - text: "엽록소 a 농도 — `chlor_a` (mg m-3)"
+          note: CI와 OC4 밴드비를 섞는 OBPG 표준 알고리즘(MODIS·VIIRS 해색과 같은 계열)
+        - text: "식물플랑크톤 탄소 — `carbon_phyto` (mg m-3)"
+        - text: "입자성 유기탄소 — `poc` (mg m-3)"
+        - text: "입자성 무기탄소(방해석) — `pic` (mol m-3)"
+          note: V3.2에서 추가(CI2 알고리즘)
+    - name: L3m 광합성 유효 복사 (PAR 파일, PACE_OCI_L3M_PAR)
+      kind: mean
+      period: 일·8일·월 합성
+      items:
+        - text: "해면 바로 아래 일 PAR(스칼라) — `par_day_scalar_below` (mol m-2 day-1)"
+          kind: accum
+          period: 일
+          note: 하루 적분값. 8일·월 파일은 그 평균
+        - text: "해면 바로 위 일 PAR(평면) — `par_day_planar_above` (mol m-2 day-1)"
+          kind: accum
+          period: 일
+        - text: "해면 바로 아래 일 PAR(평면) — `par_day_planar_below` (mol m-2 day-1)"
+          kind: accum
+          period: 일
+        - text: "통과 시각 순간 PAR — `ipar_planar_above`·`ipar_planar_below`·`ipar_scalar_below` (micromol m-2 s-1)"
+          kind: instant
+    - name: L4m 식물플랑크톤 군집·순일차생산 (PACE_OCI_L4M_MOANA·NPP_CAFE)
+      kind: mean
+      period: 일(MOANA는 월도 있음)
+      items:
+        - text: "Prochlorococcus 세포 수 — `prococcus_moana` (cells ml-1)"
+          note: 대서양만. 해수면온도를 보조 입력으로 씀
+        - text: "Synechococcus 세포 수 — `syncoccus_moana` (cells ml-1)"
+        - text: "피코진핵생물 세포 수 — `picoeuk_moana` (cells ml-1)"
+        - text: "일 해양 순일차생산(CAFE 모델) — `npp_cafe` (mg m-2 day-1)"
+          kind: accum
+          period: 일
+          std: []
+    - name: L2 스와스 (OC_AOP·OC_IOP·OC_BGC·PAR 5분 그래뉼)
+      kind: instant
+      period: 통과 시각
+      items:
+        - text: "원격 반사도 — `Rrs` (sr-1) · 불확실성 `Rrs_unc`"
+          note: "L2에서는 number_of_lines×pixels_per_line×wavelength 3차원"
+        - text: "엽록소 a 농도 — `chlor_a` (mg m-3) · 불확실성 `chlor_a_unc`"
+        - text: "식물플랑크톤 탄소 — `carbon_phyto` · 불확실성 `carbon_phyto_unc`"
+        - text: "고유 광학 특성 — `a`·`bb`·`aph`·`adg`·`bbp`와 `Kd`"
+        - text: "위도·경도 — `latitude`·`longitude` (navigation_data 그룹)"
+          kind: static
+
+access:
+  - name: NASA Earthdata Search (OB.DAAC 포털)
+    url: https://search.earthdata.nasa.gov/search?portal=obdaac
+    method: 웹 검색·내려받기, earthaccess(Python, 예 short_name PACE_OCI_L3M_BGC·PACE_OCI_L2_AOP), Harmony 부분 추출(L2)
+    note: >-
+      컬렉션 이름은 PACE_OCI_L2_{AOP,IOP,BGC,PAR}, PACE_OCI_L3M_{AOP,IOP,KD,BGC,PAR}, PACE_OCI_L4M_{MOANA,NPP_CAFE}이고 각각 _NRT판이 있습니다.
+      Help Hub FAQ에 따르면 Harmony는 L3 mapped의 공간 부분 추출을 아직 지원하지 않습니다. NASA Earthdata 로그인(무료)이 필요합니다.
+  - name: OB.DAAC Direct Data Access (L3 Mapped / PACE-OCI)
+    url: https://oceandata.sci.gsfc.nasa.gov/directdataaccess/Level-3%20Mapped/PACE-OCI/
+    method: HTTPS 디렉터리(연·일별), 예 PACE_OCI.20260801_20260831.L3m.MO.BGC.V3_2.0p1deg.nc
+    note: Level-2, Level-4 Mapped 폴더도 같은 구조입니다. 내려받기에는 Earthdata 로그인이 필요합니다.
+  - name: OB.DAAC File Search
+    url: https://oceandata.sci.gsfc.nasa.gov/api/file_search/
+    method: 파일 이름·기간·영역으로 목록 만들기(wget·curl용 목록)
+  - name: OB.DAAC OPeNDAP (L3 SMI·L4 SMI)
+    url: https://oceandata.sci.gsfc.nasa.gov/opendap/PACE_OCI/L3SMI/
+    method: OPeNDAP (연/월일 폴더, 예 L3SMI/2026/0801/)
+    note: L4는 /opendap/PACE_OCI/L4SMI/에 있습니다.
+  - name: OB.DAAC Level 3 & 4 Browser
+    url: https://oceandata.sci.gsfc.nasa.gov/l3/
+    method: 웹 지도 미리보기·파일 고르기 (Product Status에서 Provisional 선택)
+
+example:
+  lang: python
+  note: "earthaccess로 V3.2 L3m 월 BGC 파일(0.1°)을 받아 한반도 주변 엽록소를 보는 예입니다. NASA Earthdata 계정으로 earthaccess.login()을 한 번 거쳐야 합니다. L3m의 lat은 북→남으로 줄어드니 slice(북, 남) 순서로 자르세요."
+  code: |
+    # pip install earthaccess xarray netCDF4
+    import earthaccess
+    import xarray as xr
+
+    earthaccess.login()
+    results = earthaccess.search_data(
+        short_name="PACE_OCI_L3M_BGC",           # Rrs는 PACE_OCI_L3M_AOP
+        temporal=("2025-05-01", "2025-05-31"),
+        granule_name="*.MO.BGC.V3_2.0p1deg.nc",   # 일: *.DAY.*, 8일: *.8D.*, 4km: *.4km.nc
+    )
+    paths = earthaccess.download(results, local_path="pace")
+
+    ds = xr.open_dataset(paths[0])
+    chl = ds["chlor_a"].sel(lat=slice(40, 30), lon=slice(120, 132))   # 한반도 주변
+    print(float(chl.median()), int(chl.count()))
+
+    # AOP 파일이면: ds["Rrs"].sel(wavelength=443, method="nearest")
+
+tips:
+  - "버전을 섞지 마세요. V3.2는 BRDF 보정에서 스캔 방향 상대 방위각을 무시하던 오류를 고쳐 Rrs 정확도와 스캔 방향 안정성이 크게 달라졌습니다. V3.1 이전에 받은 파일은 V3.2로 다시 받는 것이 안전합니다(파일 이름 V3_2 확인)."
+  - "400 nm 미만 Rrs는 검증되지 않았고 상당한 편향이 있을 수 있습니다. 590~610 nm는 청색·적색 초점면 경계의 불연속 때문에 V3부터 Rrs에서 빠졌습니다."
+  - "적색 파장 Rrs에는 수증기·산소 흡수 잔차가 남을 수 있고, nflh는 스캔 가장자리 반사도 오류와 680 nm 부근 O2 b-band 영향을 받습니다(V3.2 공지의 알려진 문제)."
+  - "관측 천정각이 큰 스캔 가장자리의 적색 반사도 상승은 L2에서 플래그로 표시되고 L3에서는 60°를 넘는 화소를 가립니다. L2를 직접 쓸 때는 플래그를 확인하세요."
+  - "CMR 설명에 따르면 연안·내수면, 에어로졸이 많거나 태양 반사(glint)가 강한 조건에서는 BGC 산출물의 불확실성이 큽니다. 탁한 황해·동중국해 연안과 봄철 황사 때 엽록소는 특히 조심하고 품질 플래그를 함께 보세요."
+  - "V3.2부터 L2에 원석조류(coccolithophore) 플래그가 생겼습니다. 이런 곳의 BGC 값은 편향될 수 있고, L3 AOP에는 이 마스크가 적용되지 않습니다."
+  - "MOANA(피코플랑크톤 군집)는 대서양(70°S~70°N, 85°W~25°E)에만 있어 한반도 주변에는 값이 없습니다."
+  - "chlor_a는 MODIS·VIIRS 해색과 같은 OBPG 표준 알고리즘 계열(저농도 CI, 고농도 OCx 밴드비)이라 기존 해색 자료와 비교하기 쉽지만, 센서·보정·버전이 달라 한 시계열로 이어 붙일 때는 겹치는 기간으로 차이를 먼저 확인하세요."
+  - "L3 해양 산출물은 V3.2부터 AOP·IOP·BGC가 각각 파일 하나에 모든 변수를 담습니다. 4km AOP 파일의 Rrs는 4320×8640×172 배열이라 크니, 넓은 영역의 경향만 볼 때는 0p1deg 파일을 쓰세요."
+  - "안전모드로 2024-05-24 22:40 UTC부터 적어도 5월 28일까지와 2026-02-10에 자료 공백이 있습니다. 일·8일 합성에서 빈칸이 많은 기간을 확인하세요."
+
+citations:
+  dataset:
+    - label: PACE OCI L3m 생지화학 특성 V3.2
+      text: >-
+        NASA Ocean Biology Processing Group. (2026). PACE OCI Level-3 Global Mapped Ocean Biogeochemical Properties Data, version 3.2.
+        NASA Ocean Biology Distributed Active Archive Center. doi: 10.5067/PACE/OCI/L3M/OC_BGC/3.2. Accessed on [YYYY/MM/DD].
+      doi: 10.5067/PACE/OCI/L3M/OC_BGC/3.2
+      bibtex: |
+        @misc{obpg2026paceocil3mbgc,
+          author    = {{NASA Ocean Biology Processing Group}},
+          title     = {{PACE} {OCI} Level-3 Global Mapped Ocean Biogeochemical Properties Data, version 3.2},
+          year      = {2026},
+          publisher = {NASA Ocean Biology Distributed Active Archive Center},
+          version   = {3.2},
+          doi       = {10.5067/PACE/OCI/L3M/OC_BGC/3.2}
+        }
+    - label: PACE OCI L3m 겉보기 광학 특성(Rrs) V3.2
+      text: >-
+        NASA Ocean Biology Processing Group. (2026). PACE OCI Level-3 Global Mapped Apparent Optical Properties Data, version 3.2.
+        NASA Ocean Biology Distributed Active Archive Center. doi: 10.5067/PACE/OCI/L3M/OC_AOP/3.2. Accessed on [YYYY/MM/DD].
+      doi: 10.5067/PACE/OCI/L3M/OC_AOP/3.2
+      bibtex: |
+        @misc{obpg2026paceocil3maop,
+          author    = {{NASA Ocean Biology Processing Group}},
+          title     = {{PACE} {OCI} Level-3 Global Mapped Apparent Optical Properties Data, version 3.2},
+          year      = {2026},
+          publisher = {NASA Ocean Biology Distributed Active Archive Center},
+          version   = {3.2},
+          doi       = {10.5067/PACE/OCI/L3M/OC_AOP/3.2}
+        }
+    - label: PACE OCI L2 겉보기 광학 특성 V3.2
+      text: >-
+        NASA Ocean Biology Processing Group. (2026). PACE OCI Level-2 Regional Apparent Optical Properties Data, version 3.2.
+        NASA Ocean Biology Distributed Active Archive Center. doi: 10.5067/PACE/OCI/L2/OC_AOP/3.2. Accessed on [YYYY/MM/DD].
+      doi: 10.5067/PACE/OCI/L2/OC_AOP/3.2
+      bibtex: |
+        @misc{obpg2026paceocil2aop,
+          author    = {{NASA Ocean Biology Processing Group}},
+          title     = {{PACE} {OCI} Level-2 Regional Apparent Optical Properties Data, version 3.2},
+          year      = {2026},
+          publisher = {NASA Ocean Biology Distributed Active Archive Center},
+          version   = {3.2},
+          doi       = {10.5067/PACE/OCI/L2/OC_AOP/3.2}
+        }
+  papers:
+    - label: PACE 임무 개요
+      text: >-
+        Werdell, P. J., Behrenfeld, M. J., Bontempi, P. S., Boss, E., Cairns, B., Davis, G. T., Franz, B. A., Gliese, U. B., Gorman, E. T., Hasekamp, O., Knobelspiesse, K. D.,
+        Mannino, A., Martins, J. V., McClain, C. R., Meister, G., Remer, L. A. (2019): The Plankton, Aerosol, Cloud, Ocean Ecosystem Mission: Status, Science, Advances.
+        Bulletin of the American Meteorological Society, 100(9), 1775–1794.
+      doi: 10.1175/BAMS-D-18-0056.1
+      bibtex: |
+        @article{werdell2019pace,
+          author  = {Werdell, P. Jeremy and Behrenfeld, Michael J. and Bontempi, Paula S. and Boss, Emmanuel and Cairns, Brian and Davis, Gary T. and Franz, Bryan A. and Gliese, Ulrik B. and Gorman, Eric T. and Hasekamp, Otto and Knobelspiesse, Kirk D. and Mannino, Antonio and Martins, J. Vanderlei and McClain, Charles R. and Meister, Gerhard and Remer, Lorraine A.},
+          title   = {The Plankton, Aerosol, Cloud, Ocean Ecosystem Mission: Status, Science, Advances},
+          journal = {Bulletin of the American Meteorological Society},
+          volume  = {100},
+          number  = {9},
+          pages   = {1775--1794},
+          year    = {2019},
+          doi     = {10.1175/BAMS-D-18-0056.1}
+        }
+    - label: 엽록소 CI 알고리즘 (chlor_a 저농도 구간)
+      text: >-
+        Hu, C., Lee, Z., Franz, B. (2012): Chlorophyll a algorithms for oligotrophic oceans: A novel approach based on three-band reflectance difference.
+        Journal of Geophysical Research: Oceans, 117(C1), 2011JC007395.
+      doi: 10.1029/2011JC007395
+      bibtex: |
+        @article{hu2012ci,
+          author  = {Hu, Chuanmin and Lee, Zhongping and Franz, Bryan},
+          title   = {Chlorophyll a algorithms for oligotrophic oceans: A novel approach based on three-band reflectance difference},
+          journal = {Journal of Geophysical Research: Oceans},
+          volume  = {117},
+          number  = {C1},
+          year    = {2012},
+          doi     = {10.1029/2011JC007395}
+        }
+  acknowledgement: >-
+    OBPG는 자료 인용을 "저자(NASA Ocean Biology Processing Group), 공개 연도, 자료 이름, 배포처(NASA OB.DAAC), DOI, 접속 날짜" 순으로 적고,
+    논문 끝(참고문헌 앞)에 OBPG·OB.DAAC의 자료 제공에 감사하는 문장을 넣어 달라고 요청합니다(정해진 문구는 없음).
+
+notices:
+  - date: "2026-06-11"
+    level: warning
+    title: OCI 해양 산출물 V3.2로 재처리 완료
+    body: >-
+      AOP·IOP·BGC·PAR(L2), AOP·KD·IOP·BGC·PAR(L3m), MOANA(L4)가 V3.2로 재처리되어 Earthdata Search에 올라왔습니다. BRDF 보정의 상대 방위각 오류를 고쳐 Rrs 정확도와 스캔 방향 안정성이 크게 좋아졌고,
+      편광 보정·기체 흡수 보정(HITRAN)·대리 보정 계수를 갱신했으며, L2에 원석조류 플래그를 추가하고 L3 AOP 산출물을 한 파일로 합쳤습니다.
+    source: https://www.earthdata.nasa.gov/data/alerts-outages/pace-ocean-color-products-have-been-reprocessed-v3.2
+  - date: "2026-03-24"
+    level: info
+    title: 2026-02-09 안전모드로 2026-02-10 자료 공백
+    body: >-
+      OB.DAAC 사용자 지원팀은 우주선이 2026-02-09 안전모드에 들어가 관측기가 한동안 꺼졌고, 2026-02-10 자료가 비며 2026-02-11에 관측기가 다시 켜졌다고 답했습니다.
+    source: https://forum.earthdata.nasa.gov/viewtopic.php?p=25222
+  - date: "2025-08-26"
+    level: warning
+    title: OCI V3.1 처리 시작, V3.0 정규 처리 중단, 새 산출물 공개
+    body: >-
+      모든 OCI L1B를 작은 보정을 넣어 다시 처리했고, 2025-07-02 자료부터 L2·L3 NRT를 V3.1로 만들기 시작하며 V3.0 정규 처리를 멈췄습니다. 전 기간 V3.1 재처리가 뒤따랐고,
+      OCI 에어로졸(UAA), SPEXone(RemoTAP·FastMAPOL), HARP2(GPC 구름·FastMAPOL) 산출물이 새로 공개되기 시작했습니다.
+    source: https://pace.oceansciences.org/news_more.htm?id=92
+  - date: "2025-02-04"
+    level: warning
+    title: PACE OCI V3 재처리 시작, V2 처리 중단
+    body: >-
+      OCI V3 재처리가 시작되고 V2 처리는 멈췄습니다. PACE 공지에 따르면 V2 시계열은 2025-02-04 이후로 늘어나지 않으며, 2024-03-05 이후 모든 OCI 자료를 V3로 다시 처리해 배포합니다.
+      V3 L1B는 2025-01-01 자료부터 먼저 공개되었고 L2·L3가 뒤따랐습니다.
+    source: https://oceancolor.gsfc.nasa.gov/
+  - date: "2024-05-29"
+    level: info
+    title: 2024-05-24 안전모드로 과학 관측 중단·복구
+    body: >-
+      관측소가 2024-05-24 22:40 UTC에 안전모드(safe hold)에 들어가 과학 자료 수집이 멈췄고, 5월 28일 관측기 복구를 시작했습니다. 그 사이 과학 자료는 없습니다.
+    source: https://pace.oceansciences.org/blog.htm?id=23
+  - date: "2024-04-11"
+    level: info
+    title: PACE 자료 첫 공개 (V1)
+    body: >-
+      2024-02-08 발사된 PACE의 자료 배포가 시작되었습니다. 첫 공개판(V1)은 OCI·HARP2·SPEXone의 Level-1 자료와 일부 산출물로, 매우 예비적인 자료로 안내되었습니다.
+    source: https://www.nasa.gov/earth/nasas-pace-data-on-ocean-atmosphere-climate-now-available/
+
+transitions:
+  - from: PACE OCI V2
+    to: PACE OCI V3.0
+    status: completed
+    date: "2025-02"
+    summary: >-
+      궤도상 태양 확산판만으로 절대 보정을 다시 하고, 처음으로 대리 보정(SVC) 계수를 적용한 전 기간 재처리입니다. Rrs 대기 보정이 여러 면에서 바뀌고 일부 파장이 빠졌으며 여러 산출물이 Provisional로 올라갔습니다.
+    changes:
+      - aspect: L1B 보정
+        before: 태양 확산판과 발사 전 GLAMR 자료로 절대 보정
+        after: "궤도상 태양 확산판만으로 절대 보정(자외선 복사휘도 상승 폭이 큼), 확산판 반사율 열화 반영, 암전류 차감 개선(줄무늬 감소), 확정 궤도력으로 위치 개선"
+      - aspect: Rrs 대기 보정
+        before: 대리 보정 계수 없음
+        after: "대리 보정 계수 첫 적용, 편광·NO2 보정 추가, 기체 투과율 개선, 극단적 태양 반사 마스크, 초분광 파장용 BRDF 표 재생성"
+      - aspect: Rrs 파장
+        before: 340~345 nm, 590~610 nm 포함
+        after: 340~345 nm, 590~610 nm 제외
+      - aspect: 산출물 등급
+        before: "avw·carbon_phyto·poc·Kd·PAR은 Test"
+        after: "avw·carbon_phyto·poc·PAR은 Provisional, nflh 추가"
+      - aspect: 기간
+        before: "2024-02 공학 첫 관측부터, 2025-02-04 이후로는 늘어나지 않음"
+        after: 2024-03-05부터 계속 갱신
+    impacts:
+      - V2 파일과 V3 이후 파일은 보정이 달라 Rrs·엽록소 값이 다릅니다. 한 시계열에 섞지 마세요.
+      - V2에 있던 340~345 nm와 590~610 nm Rrs는 V3부터 없습니다. 이 파장을 쓰던 코드는 파장 목록을 다시 확인하세요.
+    sources:
+      - name: OBPG — PACE Science Data Reprocessing Version 3
+        url: https://oceancolor.gsfc.nasa.gov/data/reprocessing/V3.0/pace/
+      - name: PACE — OCI Version 3 (V3) Reprocessing 공지
+        url: https://pace.oceansciences.org/news_more.htm?id=90
+      - name: PACE Science Data V2 Release Notes
+        url: https://oceandata.sci.gsfc.nasa.gov/files/reprocessing/PACE_Science_Data_V2_Release_Notes.pdf
+  - from: PACE OCI V3.0
+    to: PACE OCI V3.1
+    status: completed
+    date: "2025-08"
+    summary: >-
+      L1B에 650~900 nm 고스트 보정(V3.0.1)을 넣고 대리 보정 계수를 고쳐(적색 과보정 수정) L2·L3를 다시 만든 판입니다. 2025-07-02 자료부터 NRT가 V3.1로 바뀌고 전 기간이 재처리되었습니다.
+    changes:
+      - aspect: L1B
+        before: V3.0
+        after: "V3.0.1 — 650~900 nm, 화소 680~800 구간 고스트 보정"
+      - aspect: 대기 보정
+        before: V3.0 대리 보정 계수, 기존 상대습도·태양 반사 처리
+        after: "대리 보정 계수 갱신(적색 과보정 수정), 상대습도를 MERRA2 925 hPa로, 태양 반사 보정에 해수 굴절률 반영, nflh 알고리즘 조정"
+      - aspect: IOP
+        before: 전 파장 출력, Kd는 Test
+        after: 400~720 nm만 출력, Kd는 Provisional
+    impacts:
+      - "V3.0과 V3.1은 적색 Rrs와 nflh가 다릅니다. 파일 이름의 V3_0·V3_1을 확인하고 섞지 마세요."
+    sources:
+      - name: PACE — OCI V3.1 Reprocessing and New Product Release (2025-08-26)
+        url: https://pace.oceansciences.org/news_more.htm?id=92
+      - name: PACE OCI V3 Release Notes
+        url: https://oceandata.sci.gsfc.nasa.gov/files/data/reprocessing/V3/PACE_OCI_V3_Release_Notes.pdf
+  - from: PACE OCI V3.1
+    to: PACE OCI V3.2
+    status: completed
+    date: "2026-04"
+    summary: >-
+      스펙트럼 Rrs의 BRDF 구현 오류를 고친 해양 산출물 재처리입니다. 스캔 방향의 인공 변동이 줄었고, L3 AOP·IOP·BGC가 각각 한 파일로 합쳐졌으며 pic이 추가되었습니다.
+    changes:
+      - aspect: BRDF 보정
+        before: 스캔에 따른 상대 방위각 변화를 무시
+        after: 상대 방위각을 반영해 Rrs 정확도와 스캔 방향 안정성이 크게 개선
+      - aspect: L1B 보정
+        before: "보정 표 오류로 약 22일 날짜 어긋남"
+        after: V3.0.2 보정(날짜 오류 수정)을 처음 적용
+      - aspect: 대기 보정
+        before: V3.1
+        after: "편광 보정의 스캔 방향 계산 수정, 최신 HITRAN으로 기체 흡수 보정 재계산, 대리 보정 계수 갱신(HyperNAV 대리 보정 지점 매치업 추가)"
+      - aspect: 플래그
+        before: 없음
+        after: L2에 원석조류 플래그(BGC 편향 가능). L3 AOP에는 원석조류 마스크를 쓰지 않음
+      - aspect: L3 파일 구성
+        before: 산출물마다 따로 나뉜 L3 파일
+        after: "AOP·IOP·BGC가 각각 파일 하나에 모든 변수(예 …L3m.DAY.AOP.V3_2.4km.nc)"
+      - aspect: 산출물
+        before: "BGC는 chlor_a·carbon_phyto·poc"
+        after: "pic(CI2 알고리즘) 추가, IOP 모델 맞춤을 가시 영역 약 10 nm 간격으로, NPP_CAFE는 V3.2 IOP·PAR 입력 사용"
+    impacts:
+      - V3.1 이전 Rrs는 스캔 방향 인공 구조가 있으므로 V3.2로 다시 받으세요.
+      - "L3 파일 이름과 구성이 바뀌었으니(제품별 파일 → 묶음 파일) 자동 내려받기 스크립트의 파일 이름 패턴을 고치세요."
+    sources:
+      - name: Earthdata — PACE ocean color products have been reprocessed (V3.2)
+        url: https://www.earthdata.nasa.gov/data/alerts-outages/pace-ocean-color-products-have-been-reprocessed-v3.2
+      - name: PACE OCI V3 Release Notes (V3.2 변경 사항)
+        url: https://oceandata.sci.gsfc.nasa.gov/files/data/reprocessing/V3/PACE_OCI_V3_Release_Notes.pdf
+
+links:
+  - name: PACE 자료 접근·릴리스 노트 (PACE 누리집)
+    url: https://pace.oceansciences.org/access_pace_data.htm
+  - name: PACE 자료 산출물 개요 (산출물군별 DOI)
+    url: https://pace.oceansciences.org/data.htm
+  - name: OBPG — PACE V3 재처리 설명
+    url: https://oceancolor.gsfc.nasa.gov/data/reprocessing/V3.0/pace/
+  - name: PACE OCI V3 Release Notes (PDF)
+    url: https://oceandata.sci.gsfc.nasa.gov/files/data/reprocessing/V3/PACE_OCI_V3_Release_Notes.pdf
+  - name: Oceandata Help Hub (PACE 노트북·FAQ)
+    url: https://nasa.github.io/oceandata-notebooks/
+  - name: OCI 관측기 소개
+    url: https://pace.oceansciences.org/oci.htm
+  - name: OBPG 엽록소 a ATBD
+    url: https://oceandata.sci.gsfc.nasa.gov/files/atbd/atbd-obdaac-chlorophyll-a.pdf
+  - name: 이 사이트 — MODIS 해색 (선행 다중분광 해색)
+    url: ../modis-ocean/
+  - name: 이 사이트 — VIIRS 해색 (현역 다중분광 해색)
+    url: ../viirs-ocean/
+
+watch_urls:
+  - https://oceancolor.gsfc.nasa.gov/
+  - https://pace.oceansciences.org/news.htm
+  - https://pace.oceansciences.org/access_pace_data.htm
+
+last_verified: "2026-10-13"

@@ -1,0 +1,348 @@
+# ─────────────────────────────────────────────────────────────
+# CCMP (Cross-Calibrated Multi-Platform) ocean vector winds V3.1 — dataset information file (English edition)
+# Satellite tab (ocean surface wind), also listed in the Ocean tab (satellite observations). A 6-hourly 0.25° L4 product from RSS that merges satellite microwave winds with an ERA5 background using a variational analysis method (VAM).
+# When checked on 2026-10-13, V3.1 ran through August 2026 (posted 2026-09-17), and the separate near-real-time product v02.1.NRT through 2026-10-11.
+# After editing, update last_verified to the date you checked the official pages.
+# ─────────────────────────────────────────────────────────────
+id: ccmp
+name: CCMP V3.1
+full_name: RSS Cross-Calibrated Multi-Platform (CCMP) Ocean Vector Wind Analysis, Version 3.1
+category: analysis
+domain: satellite
+group: 해상풍
+order: 10
+also_in:
+  - domain: ocean
+    group: 위성 관측 자료
+domains: [해양, 대기, 원격탐사]
+provider: Remote Sensing Systems (RSS) / NASA PO.DAAC (netCDF redistribution, NASA MEaSUREs)
+
+status: active
+status_note: >-
+  V3.1 is the current version and RSS updates it roughly monthly. When checked on 2026-10-13, both the RSS server and PO.DAAC held data through 31 August 2026 (posted 2026-09-17, a lag of about 2–7 weeks).
+  V3.0 (2023-02) and V2.0 are no longer updated, and the near-real-time product (v02.1.NRT), available within a few days, is a separate dataset with a different background field and processing.
+
+period:
+  start: "1993-01"
+  end: present
+  note: >-
+    V3.x starts in January 1993 because the OSCAR ocean current product used to adjust the ERA5 winds begins in 1993. The 'Temporal Coverage' field on the RSS product page (1993-01-02 to 2019-12-30)
+    and the text (1993-01 to 2023-07) have not been updated; when checked on 2026-10-13, files actually ran through 2026-08-31. The previous V2.0 started in July 1987.
+
+resolution:
+  spatial_short: "28 km (0.25°)"
+  temporal_short: "6시간"
+  spatial: 0.25° × 0.25° latitude–longitude grid (file dimensions 720 latitudes × 1440 longitudes, coordinates at cell centres). RSS and PO.DAAC describe the coverage as 80°S–80°N
+  vertical: 10 m equivalent neutral-stability wind over the sea surface
+  temporal: >-
+    6-hourly analyses (00, 06, 12 and 18 UTC; four maps per daily file) / monthly means (L4.5, with anomalies relative to the 1995–2014 climatology)
+
+coverage:
+  short: 준전지구
+  note: "80°S–80°N, intended for ice-free oceans. Values also exist over land, but RSS advises against using them"
+update: "RSS updates roughly monthly (August 2026 data posted 2026-09-17). PO.DAAC states an expected latency of 2–3 months for new files. Each update omits the last day of the month, which is filled in at the next update"
+license: CC BY 4.0 (RSS CCMP page). Include the acknowledgement statement, and RSS asks to be told about publications (support@remss.com)
+account_required: false
+
+summary: >-
+  A Level 4 product that inter-calibrates wind speeds from microwave radiometers (SSM/I, SSMIS, AMSR-E, AMSR2, TMI, GMI, WindSat) and wind vectors from scatterometers (QuikSCAT, ASCAT),
+  then blends them with adjusted ERA5 10 m neutral winds as the background using a variational analysis method (VAM), giving gap-free 6-hourly 0.25° ocean vector wind fields.
+  It was originally developed at NASA GSFC (Atlas et al., 2011) and has been produced by RSS since V2.0. V3.0 switched the background from ERA-Interim to ERA5 and improved high-wind accuracy and long-term stability;
+  V3.1 adds AMSR2 V8.2 and ASCAT-B from July 2012 onward and allows low-latency updates. It is widely used to force ocean circulation models, to compute wind stress and stress curl, and to evaluate reanalysis winds.
+
+time_convention:
+  summary: >-
+    Values in the 6-hourly files are analyses valid at 00, 06, 12 and 18 UTC. Each combines satellite observations within the 6-hour assimilation window around that time with the ERA5 background,
+    and where there are no observations the adjusted ERA5 value remains. Monthly files are averages of the 6-hourly analyses in the month.
+  points:
+    - "Each daily file has a time dimension of length 4 (00, 06, 12 and 18 UTC), with time in 'hours since 1987-01-01 00:00:00'."
+    - "nobs is the number of satellites assimilated at that grid cell within the 6-hour window. A value of 0 means no satellite observations, so only the adjusted ERA5 background remains."
+    - "Satellites pass only a few times a day, so many analysis times in the tropics and low latitudes have no observations. Use nobs to separate observation-based values from background values."
+    - "In the monthly files, u and v are vector averages while w (wind speed) is a scalar average, so w is larger than √(u²+v²). Anomalies (*_anom) are relative to the 1995–2014 climatology."
+    - "The near-real-time product (v02.1.NRT, files named CCMP_RT_…) appears within a day or two, but it uses a different background and inputs from V3.1, so do not mix it with the final V3.1 record."
+  source: https://archive.podaac.earthdata.nasa.gov/podaac-ops-cumulus-docs/ccmp/open/L4_V3.1/docs/User_Guide_3.1.r1.pdf
+  source_name: CCMP V3.1 User Guide (RSS, distributed by PO.DAAC)
+
+variables:
+  note: >-
+    Variable names follow the CCMP V3.1 User Guide and the PO.DAAC variable list. All winds are 10 m neutral-stability winds; u and v are relative to true north and the direction follows the oceanographic convention (the direction the wind blows toward).
+  full_list: https://archive.podaac.earthdata.nasa.gov/podaac-ops-cumulus-docs/ccmp/open/L4_V3.1/docs/User_Guide_3.1.r1.pdf
+  groups:
+    - name: 6-hourly analyses (L4, daily files)
+      kind: instant
+      items:
+        - "10 m zonal wind — `uwnd` (m s-1)"
+        - "10 m meridional wind — `vwnd` (m s-1)"
+        - "10 m wind speed — `ws` (m s-1)"
+        - text: "Number of satellite observations assimilated — `nobs` (count)"
+          note: Number of satellites used at the cell within the 6-hour assimilation window
+          std: []
+    - name: Monthly means (L4.5)
+      kind: mean
+      period: Monthly
+      items:
+        - text: "Monthly mean 10 m zonal wind — `u` (m s-1)"
+          note: Vector average
+        - text: "Monthly mean 10 m meridional wind — `v` (m s-1)"
+          note: Vector average
+        - text: "Monthly mean 10 m wind speed — `w` (m s-1)"
+          note: Scalar average
+        - text: "Monthly 10 m wind anomalies — `u_anom`, `v_anom`, `w_anom` (m s-1)"
+          note: Relative to the 1995–2014 climatology
+        - text: "Number of analysis times averaged — `nobs` (count)"
+          std: []
+
+access:
+  - name: RSS data server (HTTPS)
+    url: https://data.remss.com/ccmp/
+    method: Direct HTTPS download (netCDF-4, e.g. v03.1/Y2026/M08/CCMP_Wind_Analysis_20260801_V03.1_L4.nc; monthly CCMP_Wind_Analysis_202608_monthly_mean_V03.1_L4.nc)
+    note: >-
+      Folders for v03.1 (current), v03.0 and v02.0 (no longer updated) and v02.1.NRT (near real time). Example reading code is in read_routines/ccmp.py. FTP access requires free registration.
+    login: false
+  - name: NASA PO.DAAC — CCMP V3.1 6-hourly (CCMP_WINDS_10M6HR_L4_V3.1)
+    url: https://podaac.jpl.nasa.gov/dataset/CCMP_WINDS_10M6HR_L4_V3.1
+    method: Earthdata Search / earthaccess / OPeNDAP / Harmony subsetting / podaac-data-subscriber
+    note: The monthly product is CCMP_WINDS_10MMONTHLY_L4_V3.1. A free NASA Earthdata Login is required.
+  - name: RSS CCMP product page
+    url: https://www.remss.com/measurements/ccmp/
+    method: Web (input satellites, version changes, citation text, preview images)
+
+example:
+  lang: python
+  note: "Downloads PO.DAAC files with earthaccess. Run earthaccess.login() once with your NASA Earthdata account first. To download from RSS without logging in, use the file paths shown under access."
+  code: |
+    # pip install earthaccess xarray netCDF4
+    import earthaccess
+    import xarray as xr
+
+    earthaccess.login()
+    results = earthaccess.search_data(
+        short_name="CCMP_WINDS_10M6HR_L4_V3.1",   # monthly: CCMP_WINDS_10MMONTHLY_L4_V3.1
+        version="3.1",
+        temporal=("2025-01-01", "2025-01-31"),
+    )
+    files = earthaccess.download(results, "./ccmp")
+
+    ds = xr.open_mfdataset(files, combine="by_coords")
+    ws = ds["ws"].sel(latitude=slice(30, 40), longitude=slice(120, 135))  # around the Korean Peninsula
+    obs_based = ws.where(ds["nobs"].sel(latitude=slice(30, 40), longitude=slice(120, 135)) > 0)
+    print(ws.mean("time").values.mean(), float(obs_based.count() / ws.count()))
+
+tips:
+  - "Cells with nobs = 0 hold only the adjusted ERA5 background, with no satellite observations. If your analysis is about what the satellites add, filter with nobs."
+  - Small, intense wind features such as typhoons and other tropical cyclones are poorly resolved in ERA5, and satellite retrievals are often lost to rain, so RSS says not to use CCMP to analyse these events.
+  - Above about 15–18 m/s, CCMP is intentionally biased high relative to buoys and ASCAT-C (reflecting high-wind calibration of scatterometers and radiometers). Keep this in mind when comparing with buoys.
+  - Multi-decadal trends in global or basin-mean wind speed can be comparable to the dataset's uncertainty, and RSS urges caution. Regional changes larger than a few tenths of a metre per second are more trustworthy.
+  - V3.1, V3.0, V2.0, V1.1 and the near-real-time CCMP-NRT differ in background, inputs and adjustments, so do not splice them into one time series. V3.1 and V3.0 are identical before 2012-07-02.
+  - ASCAT-C winds and moored buoy winds were withheld from the V3.x analysis for independent validation, so comparing CCMP with them is an independent check.
+  - "Each monthly RSS update leaves out the last day of the month, which arrives with the next update. When downloading the latest month, check that the last-day file is there."
+  - Values exist over land (from the background), but RSS advises against using them. Satellite retrievals influenced by sea ice are excluded from the analysis, so values in ice-covered areas are also close to the background.
+  - The monthly w (scalar mean speed) can differ greatly from the speed computed from the vector-mean u and v. For wind stress or energy calculations, it is safer to work from the 6-hourly files.
+  - "The dataset DOIs on the RSS page (10.56236/RSS-uv6h30, RSS-uv1m30) are labelled Version 3.0. If you used V3.1, cite the PO.DAAC V3.1 DOI as well to make the version clear."
+
+citations:
+  dataset:
+    - label: CCMP V3.1 6-hourly (PO.DAAC)
+      text: >-
+        RSS. 2024. RSS CCMP 6-Hourly 10 Meter Surface Winds Level 4 Version 3.1. Ver. 3.1. PO.DAAC, CA, USA. Dataset accessed [YYYY-MM-DD] at https://doi.org/10.5067/CCMP-6HW10M-L4V31
+      doi: 10.5067/CCMP-6HW10M-L4V31
+      bibtex: |
+        @misc{rss2024ccmp6h,
+          author    = {{Remote Sensing Systems}},
+          title     = {{RSS} {CCMP} 6-Hourly 10 Meter Surface Winds Level 4 Version 3.1},
+          year      = {2024},
+          publisher = {NASA Physical Oceanography Distributed Active Archive Center},
+          version   = {3.1},
+          doi       = {10.5067/CCMP-6HW10M-L4V31}
+        }
+    - label: CCMP V3.1 monthly (PO.DAAC)
+      text: >-
+        RSS. 2024. RSS CCMP Monthly 10 Meter Surface Winds Level 4 Version 3.1. Ver. 3.1. PO.DAAC, CA, USA. Dataset accessed [YYYY-MM-DD] at https://doi.org/10.5067/CCMP-MW10M-L4V31
+      doi: 10.5067/CCMP-MW10M-L4V31
+      bibtex: |
+        @misc{rss2024ccmpmonthly,
+          author    = {{Remote Sensing Systems}},
+          title     = {{RSS} {CCMP} Monthly 10 Meter Surface Winds Level 4 Version 3.1},
+          year      = {2024},
+          publisher = {NASA Physical Oceanography Distributed Active Archive Center},
+          version   = {3.1},
+          doi       = {10.5067/CCMP-MW10M-L4V31}
+        }
+    - label: RSS recommended citation (6-hourly; DOI labelled Version 3.0)
+      text: >-
+        Mears, C.; Lee, T.; Ricciardulli, L.; Wang, X.; Wentz, F., 2022: RSS Cross-Calibrated Multi-Platform (CCMP) 6-hourly ocean vector wind analysis on 0.25 deg grid, Version 3.0,
+        Remote Sensing Systems, Santa Rosa, CA. Available at www.remss.com https://doi.org/10.56236/RSS-uv6h30
+      doi: 10.56236/RSS-uv6h30
+      bibtex: |
+        @misc{mears2022ccmpv3,
+          author    = {Mears, Carl and Lee, Thomas and Ricciardulli, Lucrezia and Wang, Xiaochun and Wentz, Frank},
+          title     = {{RSS} Cross-Calibrated Multi-Platform ({CCMP}) 6-hourly ocean vector wind analysis on 0.25 deg grid, Version 3.0},
+          year      = {2022},
+          publisher = {Remote Sensing Systems},
+          address   = {Santa Rosa, CA},
+          doi       = {10.56236/RSS-uv6h30}
+        }
+  papers:
+    - label: CCMP V3.0 improvements (main V3.x reference)
+      text: >-
+        Mears, C., Lee, T., Ricciardulli, L., Wang, X., Wentz, F. (2022): Improving the Accuracy of the Cross-Calibrated Multi-Platform (CCMP) Ocean Vector Winds. Remote Sensing, 14(17), 4230.
+      doi: 10.3390/rs14174230
+      bibtex: |
+        @article{mears2022ccmp,
+          author  = {Mears, Carl and Lee, Tong and Ricciardulli, Lucrezia and Wang, Xiaochun and Wentz, Frank},
+          title   = {Improving the Accuracy of the Cross-Calibrated Multi-Platform ({CCMP}) Ocean Vector Winds},
+          journal = {Remote Sensing},
+          volume  = {14},
+          number  = {17},
+          pages   = {4230},
+          year    = {2022},
+          doi     = {10.3390/rs14174230}
+        }
+    - label: Original CCMP paper
+      text: >-
+        Atlas, R., Hoffman, R. N., Ardizzone, J., Leidner, S. M., Jusem, J. C., Smith, D. K., Gombos, D. (2011): A Cross-calibrated, Multiplatform Ocean Surface Wind Velocity Product
+        for Meteorological and Oceanographic Applications. Bulletin of the American Meteorological Society, 92(2), 157–174.
+      doi: 10.1175/2010BAMS2946.1
+      bibtex: |
+        @article{atlas2011ccmp,
+          author  = {Atlas, Robert and Hoffman, Ross N. and Ardizzone, Joseph and Leidner, S. Mark and Jusem, Juan Carlos and Smith, Deborah K. and Gombos, Daniel},
+          title   = {A Cross-calibrated, Multiplatform Ocean Surface Wind Velocity Product for Meteorological and Oceanographic Applications},
+          journal = {Bulletin of the American Meteorological Society},
+          volume  = {92},
+          number  = {2},
+          pages   = {157--174},
+          year    = {2011},
+          doi     = {10.1175/2010BAMS2946.1}
+        }
+    - label: Near-real-time CCMP-NRT
+      text: >-
+        Mears, C. A., Scott, J., Wentz, F. J., Ricciardulli, L., Leidner, S. M., Hoffman, R., Atlas, R. (2019): A Near-Real-Time Version of the Cross-Calibrated Multiplatform (CCMP)
+        Ocean Surface Wind Velocity Data Set. Journal of Geophysical Research: Oceans, 124, 6997–7010.
+      doi: 10.1029/2019JC015367
+      bibtex: |
+        @article{mears2019ccmpnrt,
+          author  = {Mears, Carl A. and Scott, Joel and Wentz, Frank J. and Ricciardulli, Lucrezia and Leidner, S. Mark and Hoffman, Ross and Atlas, Robert},
+          title   = {A Near-Real-Time Version of the Cross-Calibrated Multiplatform ({CCMP}) Ocean Surface Wind Velocity Data Set},
+          journal = {Journal of Geophysical Research: Oceans},
+          volume  = {124},
+          pages   = {6997--7010},
+          year    = {2019},
+          doi     = {10.1029/2019JC015367}
+        }
+  acknowledgement: >-
+    RSS asks for the statement "CCMP Version-3.1 vector wind analyses are produced by Remote Sensing Systems. Data are available at www.remss.com."
+    RSS also asks users to email support@remss.com with the journal name and expected publication date of papers that use the data, since continued funding depends on this.
+
+notices:
+  - date: "2024-07-22"
+    level: info
+    title: PO.DAAC releases CCMP V3.1 6-hourly and monthly datasets
+    body: >-
+      NASA PO.DAAC publicly released the RSS CCMP Level 4 Version 3.1 datasets (6-hourly CCMP_WINDS_10M6HR_L4_V3.1 and monthly CCMP_WINDS_10MMONTHLY_L4_V3.1) from 1993 onward.
+      They are available through Earthdata Cloud, OPeNDAP and Harmony, and each has its own DOI.
+    source: https://podaac.jpl.nasa.gov/announcements
+  - date: "2023-08-25"
+    level: info
+    title: CCMP V3.1 released (1993 to present)
+    body: >-
+      V3.1 uses the same processing system as V3.0, but from January 2021 adjusts ERA5 with the near-real-time OSCAR, and ingests AMSR2 V8.2 and ASCAT-B (from 2012-12-13).
+      These changes allow low-latency production to continue, and values before 2012-07-02 are identical to V3.0.
+    source: https://www.remss.com/announcement/New-Version-3.1-Cross-Calibrated-Multi-Platform/
+  - date: "2023-02-13"
+    level: info
+    title: CCMP V3.0 released — background changed from ERA-Interim to ERA5
+    body: >-
+      With ERA-Interim production having ended in July 2019, V3.0 switched the background to ERA5 neutral-stability winds and added current, wind-speed-distribution and seasonal vector adjustments plus regional radiometer corrections.
+      RSS reports better accuracy above 15 m/s and more reliable long-term trends; the record starts in 1993, when the OSCAR current dataset begins.
+    source: https://www.remss.com/announcement/New-Version-3.0-Cross-Calibrated-Multi-Platform/
+
+transitions:
+  - from: CCMP V2.0
+    to: CCMP V3.0
+    status: completed
+    date: "2023-02"
+    summary: >-
+      The background changed from ERA-Interim to adjusted ERA5 neutral winds, buoy assimilation was dropped, GMI was added, and radiometer winds and ERA5 were adjusted before the analysis.
+      The record now starts in 1993 instead of 1987, with better high-wind accuracy and long-term stability.
+    changes:
+      - aspect: Background field
+        before: ERA-40 and ERA-Interim 10 m winds (no adjustment)
+        after: "ERA5 10 m neutral-stability winds + OSCAR current adjustment, wind-speed distribution matched to scatterometers, seasonal and regional vector corrections"
+      - aspect: Period
+        before: "1987-07 onward (the v02.0 folder on the RSS server stops in 2019)"
+        after: "1993-01 onward (start of the OSCAR current record)"
+      - aspect: Satellite inputs
+        before: "Radiometers SSM/I, SSMIS, AMSR-E, WindSat, TMI, AMSR2; scatterometers QuikSCAT, ASCAT-A"
+        after: "V2.0 inputs + GMI"
+      - aspect: Buoy data
+        before: Moored buoy winds (TAO, TRITON, PIRATA, RAMA, NDBC and others) assimilated
+        after: Not assimilated; kept for independent validation
+      - aspect: Radiometer wind adjustment
+        before: None
+        after: Small regional corrections, largest for 19 GHz instruments (SSM/I, SSMIS)
+      - aspect: Monthly anomaly baseline
+        before: V2.0 climatology
+        after: 1995–2014 climatology
+    impacts:
+      - Do not splice V2.0 and V3.x into one time series. Where there are no observations, values differ by the difference between backgrounds.
+      - V2.0 assimilated buoys, which left artificial structures around buoy sites that stood out in derivatives such as stress curl. V3.x does not have this problem, but buoy comparisons are no longer comparisons with assimilated data.
+      - Only V2.0 covers the years before 1993, so studies using that period should state the version clearly and check differences from V3.x separately.
+    sources:
+      - name: RSS — CCMP V3.0 release announcement (2023-02-13)
+        url: https://www.remss.com/announcement/New-Version-3.0-Cross-Calibrated-Multi-Platform/
+      - name: Mears et al. (2022), Remote Sensing
+        url: https://doi.org/10.3390/rs14174230
+      - name: Mears et al. (2019), JGR Oceans (V2.0 and NRT comparison)
+        url: https://doi.org/10.1029/2019JC015367
+      - name: CCMP V3.1 User Guide (version comparison table)
+        url: https://archive.podaac.earthdata.nasa.gov/podaac-ops-cumulus-docs/ccmp/open/L4_V3.1/docs/User_Guide_3.1.r1.pdf
+  - from: CCMP V3.0
+    to: CCMP V3.1
+    status: completed
+    date: "2023-08"
+    summary: >-
+      Same processing system, with inputs changed only from July 2012 onward. Adding AMSR2 V8.2 and ASCAT-B improves winds after that date, and using near-real-time OSCAR lets the record be extended continuously with low latency.
+    changes:
+      - aspect: Period
+        before: "1993-01 to 2019 (planned to be extended, but superseded by V3.1)"
+        after: "1993-01 to present (updated roughly monthly)"
+      - aspect: ERA5 pre-adjustment
+        before: OSCAR currents
+        after: "OSCAR025-nrt (near-real-time) from 2021-01"
+      - aspect: Scatterometer inputs
+        before: QuikSCAT, ASCAT-A
+        after: "QuikSCAT, ASCAT-A (V2.1.1 after 2016, ended 2021-11), ASCAT-B (full mission from 2012-12-13)"
+      - aspect: AMSR2
+        before: V8.0
+        after: "V8.2 (full mission from 2012-07-02)"
+      - aspect: Values before 2012-07-02
+        before: V3.0
+        after: Identical to V3.0
+    impacts:
+      - Values from July 2012 onward differ from V3.0, so do not mix results produced with V3.0 and V3.1. Earlier values are the same.
+      - "The citation DOIs on the RSS page are still labelled Version 3.0. In papers, state the version you actually used (V03.1 in the file names)."
+    sources:
+      - name: RSS — CCMP V3.1 release announcement (2023-08-25)
+        url: https://www.remss.com/announcement/New-Version-3.1-Cross-Calibrated-Multi-Platform/
+      - name: RSS CCMP product page
+        url: https://www.remss.com/measurements/ccmp/
+
+links:
+  - name: RSS — CCMP product page
+    url: https://www.remss.com/measurements/ccmp/
+  - name: PO.DAAC — CCMP V3.1 6-hourly
+    url: https://podaac.jpl.nasa.gov/dataset/CCMP_WINDS_10M6HR_L4_V3.1
+  - name: PO.DAAC — CCMP V3.1 monthly
+    url: https://podaac.jpl.nasa.gov/dataset/CCMP_WINDS_10MMONTHLY_L4_V3.1
+  - name: CCMP V3.1 User Guide (PDF)
+    url: https://archive.podaac.earthdata.nasa.gov/podaac-ops-cumulus-docs/ccmp/open/L4_V3.1/docs/User_Guide_3.1.r1.pdf
+  - name: RSS — Terms of use
+    url: https://www.remss.com/support/terms-of-use
+  - name: This site — Metop ASCAT ocean winds (a CCMP input scatterometer)
+    url: ../ascat/
+
+watch_urls:
+  - https://www.remss.com/measurements/ccmp/
+  - https://www.remss.com/announcement/
+
+last_verified: "2026-10-13"

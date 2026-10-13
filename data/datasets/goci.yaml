@@ -1,0 +1,257 @@
+# ─────────────────────────────────────────────────────────────
+# 천리안위성 1호(COMS) GOCI — 데이터셋 정보 파일
+# 위성 탭(해색), 해양 탭(위성 관측 자료) 교차 수록. 세계 최초 정지궤도 해색 센서로 2010~2021년 한반도 주변을 하루 8회 관측했습니다.
+# 2021년 3월 임무가 끝났고 후속은 천리안위성 2B호 GOCI-II(goci2)입니다. NASA OB.DAAC에 L1B·L2(R2014.0) 전 기간 자료가 남아 있습니다.
+# 2026-10-14 확인 시 OB.DAAC L2 디렉터리는 2011-04-08부터 2021-03-31까지입니다.
+# 수정 후에는 공식 페이지에서 확인한 날짜로 last_verified 를 갱신하세요.
+# ─────────────────────────────────────────────────────────────
+id: goci
+name: "GOCI (천리안 1호)"
+full_name: Geostationary Ocean Color Imager (GOCI) on COMS (천리안위성 1호 통신해양기상위성의 정지궤도 해색 탑재체 — 한반도 주변 시간별 해색 관측)
+category: satellite
+domain: satellite
+group: 해색
+order: 71
+also_in:
+  - domain: ocean
+    group: 위성 관측 자료
+domains: [해양, 원격탐사]
+provider: 한국해양과학기술원 해양위성센터(KIOST KOSC, 운영·처리) / NASA OB.DAAC(OBPG 재처리 R2014.0 L1B·L2 배포)
+
+status: ended
+status_note: >-
+  2010년 6월 발사된 천리안위성 1호의 GOCI는 2021년 3월 공식 임무를 마쳤고, 해양 관측은 천리안위성 2B호의 GOCI-II가 이어받았습니다.
+  2026-10-14 확인 시 NASA OB.DAAC의 GOCI L2 자료(R2014.0)는 2011-04-08부터 2021-03-31까지 남아 있으며 더는 늘지 않습니다. 국가해양위성센터(NOSC) 다운로드 메뉴에는 GOCI-II만 있습니다.
+  위성 자체도 2026년 6월 8일 폐기궤도로 옮겨져 운영을 끝냈습니다(한국항공우주연구원 발표, 언론 보도).
+
+successor:
+  name: GOCI-II (천리안위성 2B호)
+  url: https://www.nosc.go.kr/main.do
+  note: >-
+    2020년 2월 발사, 2020년 10월부터 국가해양위성센터가 서비스합니다. 250 m 해상도, 12개 분광 밴드, 한반도 주변 하루 10회 + 전구 하루 1회 관측이며 로그인 없이 받을 수 있습니다.
+
+period:
+  start: "2011-04"
+  end: "2021-03"
+  note: >-
+    천리안위성 1호는 2010년 6월 27일(한국 시간) 발사되었습니다. NASA CMR은 L2 모음 기간을 2010-06-26~2021-03-31, L1B 모음은 2011-04-01~2021-03-31로 적지만,
+    2026-10-14 확인 시 OB.DAAC L2 디렉터리의 첫 날은 2011-04-08, 마지막 날은 2021-03-31입니다. 2011~2017년은 연 21~56일만 있어 띄엄띄엄하고,
+    2018년(274일), 2019년(359일), 2020년(366일), 2021년 1~3월(89일)은 거의 매일 있습니다.
+
+resolution:
+  spatial_short: "0.5 km (0.005°)"
+  temporal_short: "1시간"
+  spatial: >-
+    지상 표본 간격 500 m(NASA OBPG). KIOST는 투영 중심(36°N) 기준 약 500 m, 천저 기준 약 400 m로 설명합니다. 관측 영역은 36°N·130°E를 중심으로 한 2,500 km × 2,500 km이며,
+    8개 밴드(가시 6개, 근적외 2개; 412·443·490·555·660·680·745·865 nm)입니다. OB.DAAC L2는 위성 관측 화소 그대로의 스와스형(L2) 파일입니다.
+  vertical: 해수면(해색·원격반사도), 대기 기둥(에어로졸 광학 두께)
+  temporal: >-
+    낮 동안 1시간 간격 하루 8회(현지 시각 09~16시). 예를 들어 OB.DAAC의 2021-03-31 L2 파일은 00:16~07:16 UTC 매시 1개씩 8개입니다. L3 격자 자료는 OB.DAAC에 없습니다.
+
+coverage:
+  short: 아시아
+  note: "36°N·130°E 중심 2,500 km × 2,500 km — 한반도 주변·황해·동중국해·동해·일본 주변. 낮 시간에만 관측"
+update: 갱신 종료 (2021년 3월 임무 종료). OB.DAAC 자료는 2016년 5월 완료한 R2014.0 재처리판입니다
+license: >-
+  OB.DAAC 자료는 NASA 공개 자료 정책에 따라 무료이며, 내려받으려면 NASA Earthdata 로그인(무료 등록)이 필요합니다.
+  CMR 메타데이터에는 별도 이용 제한(UseConstraints)이 적혀 있지 않습니다
+account_required: true
+
+summary: >-
+  GOCI는 천리안위성 1호(COMS)에 실린 세계 최초의 정지궤도 해색 센서로, 한반도를 중심으로 한 2,500 km 사방 바다를 낮 동안 1시간마다 500 m 해상도로 하루 8회 찍었습니다.
+  하루 한두 번 지나가는 극궤도 해색 위성과 달리 같은 바다의 하루 변화(조석에 따른 부유물질 이동, 적조·녹조 확산, 해무)를 볼 수 있어 황해·동중국해 연구에 널리 쓰였습니다.
+  KIOST 해양위성센터가 운영·처리했고, NASA OBPG가 VIIRS 기준으로 교차 보정한 재처리판(R2014.0)의 L1B와 L2(원격반사도·엽록소·확산 감쇠 계수 등)를 OB.DAAC에서 배포합니다.
+
+time_convention:
+  summary: >-
+    L2 파일 하나는 관측 회차 하나(약 1시간 간격 촬영 한 장)의 순간값입니다. OB.DAAC 파일명 G{연도}{연중일}{시분초}.L2_COMS_OC.nc의 시각은 UTC 관측 시작 시각입니다.
+  points:
+    - "하루 8개 파일이 대략 00~07 UTC(한국 시간 09~16시)에 있습니다. 예 G2021090001641.L2_COMS_OC.nc는 2021년 90번째 날(3월 31일) 00:16:41 UTC입니다."
+    - "OB.DAAC에는 일·월 합성(L3)이 없으므로 시간 평균이 필요하면 L2 회차를 직접 격자화·합성해야 합니다."
+    - "2011~2017년은 OB.DAAC에 일부 날짜만 있습니다. 장기 시계열을 만들기 전에 연도별로 있는 날짜를 먼저 확인하세요."
+  source: https://oceancolor.gsfc.nasa.gov/data/reprocessing/r2014/goci
+  source_name: "NASA OBPG — GOCI Ocean Color Reprocessing 2014.0 + OB.DAAC Level-2 GOCI 디렉터리"
+
+variables:
+  note: >-
+    OB.DAAC GOCI L2 OC 모음(GOCI_L2_OC, R2014.0)의 CMR 설명에 적힌 변수입니다. 단위는 NASA OBPG 표준 산출물 설명 기준이며, 파일은 netCDF-4이고 geophysical_data 그룹에 들어 있습니다.
+    Rrs는 밴드마다 변수가 따로 있습니다(Rrs_<파장>).
+  full_list: https://oceancolor.gsfc.nasa.gov/resources/docs/format/l2nc/
+  groups:
+    - name: L2 해색 (OB.DAAC, 회차별)
+      kind: instant
+      items:
+        - text: "원격반사도 — `Rrs` (sr-1, 밴드별)"
+          std: []
+        - text: "엽록소 a 농도 — `chlor_a` (mg m-3)"
+          std: []
+        - text: "엽록소 a 농도(밴드비 OCx) — `chl_ocx` (mg m-3)"
+          std: []
+        - text: "490 nm 확산 감쇠 계수 — `Kd_490` (m-1)"
+          std: []
+        - text: "입자성 유기탄소 — `poc` (mg m-3)"
+          std: []
+        - "865 nm 에어로졸 광학 두께 — `aot_865` (무차원)"
+        - text: "에어로졸 옹스트롬 지수 — `angstrom` (무차원)"
+          std: [aerosol]
+        - text: "품질 플래그 — `l2_flags` (비트)"
+          std: []
+
+access:
+  - name: NASA OB.DAAC — GOCI L2 디렉터리 (직접 다운로드)
+    url: https://oceandata.sci.gsfc.nasa.gov/directdataaccess/Level-2/GOCI/
+    method: HTTPS 직접 다운로드 (netCDF-4, 연도/날짜 폴더, 예 2021/31-Mar-2021/G2021090001641.L2_COMS_OC.nc)
+    note: NASA Earthdata 로그인(무료)이 필요합니다. L1B는 같은 구조의 Level-1B/GOCI/ 폴더에 있습니다.
+  - name: NASA Earthdata Search — COMS GOCI Level-2 Regional OC (GOCI_L2_OC, 2014.0)
+    url: https://search.earthdata.nasa.gov/search/granules?p=C3558858528-OB_CLOUD
+    method: Earthdata Search / earthaccess / CMR API / AWS 클라우드(s3://ob-cumulus-prod-public/, us-west-2)
+    note: L1B는 GOCI_L1(C1240264612-OB_DAAC) 모음입니다. NASA Earthdata 로그인이 필요합니다.
+
+example:
+  lang: python
+  note: >-
+    earthaccess로 OB.DAAC GOCI L2 파일을 찾아 받고 엽록소를 읽는 예입니다. NASA Earthdata 계정으로 earthaccess.login()을 한 번 거쳐야 합니다.
+    L2 파일은 그룹 구조라 위경도는 navigation_data, 값은 geophysical_data 그룹에서 읽습니다.
+  code: |
+    # pip install earthaccess xarray netCDF4
+    import earthaccess
+    import xarray as xr
+
+    earthaccess.login()
+    results = earthaccess.search_data(
+        short_name="GOCI_L2_OC",
+        temporal=("2020-08-01", "2020-08-01"),
+    )
+    files = earthaccess.download(results, "./goci")   # 하루 8개 파일
+
+    f = sorted(files)[0]
+    geo = xr.open_dataset(f, group="geophysical_data")
+    nav = xr.open_dataset(f, group="navigation_data")
+    chl = geo["chlor_a"]                     # mg m-3
+    print(chl.shape, float(chl.median()))
+    print(float(nav["latitude"].min()), float(nav["latitude"].max()))
+
+tips:
+  - "OB.DAAC의 2011~2017년 자료는 연 21~56일만 있습니다(2026-10-14 확인). 이 기간의 연속 시계열이 필요하면 KIOST 해양위성센터(KOSC) 자료를 따로 알아봐야 합니다."
+  - "OBPG는 GOCI를 VIIRS에 교차 보정한 대리 보정(vicarious calibration)을 적용했고, 그 결과 MODIS-Aqua 대비 엽록소 비가 약 0.6에서 약 0.9로 바뀌었다고 밝혔습니다. KOSC 처리판(GDPS)과 OBPG판은 값이 다를 수 있으니 섞어 쓰지 마세요."
+  - "OBPG는 구름 주변 분광 왜곡(Fukushima et al., 2015)과 일부 슬롯 사이의 복사 불연속(미광 영향, Kim et al., 2015)을 알려진 문제로 적고 있고, R2014.0에는 고쳐지지 않았습니다. 구름 가장자리와 슬롯 경계 근처 값은 조심하세요."
+  - "OBPG는 GOCI L2 처리가 초기 단계이고 자료 이해가 늘면 품질이 나아질 것이라고 적었습니다. 혼탁한 황해 연안의 엽록소는 현장 자료로 확인한 뒤 쓰세요."
+  - "GOCI-II와 이어 붙이려면 해상도(500 m → 250 m)·밴드·관측 시각·처리 체계가 모두 다르므로, 두 자료가 겹치는 2020-10~2021-03 기간에 같은 해역 값을 먼저 비교하세요."
+  - "구름이 잦은 겨울철에는 결측이 특히 많습니다. GOCI 엽록소 결측을 분석한 연구는 시간별 영상의 평균 결측 비율을 약 80%로 보고했으므로, 며칠 합성이 필요할 수 있습니다(Ocean and Polar Research, 2022)."
+
+citations:
+  dataset:
+    - label: COMS GOCI Level-2 Regional Ocean Color (OC) Data, version 2014.0 (OB.DAAC)
+      text: >-
+        NASA Ocean Biology Processing Group. COMS GOCI Level-2 Regional Ocean Color (OC) Data, version 2014.0. NASA Ocean Biology Distributed Active Archive Center (OB.DAAC).
+        https://doi.org/10.5067/COMS/GOCI/L2/OC/2014.0 (accessed [YYYY-MM-DD])
+      doi: 10.5067/COMS/GOCI/L2/OC/2014.0
+      bibtex: |
+        @misc{obpg_goci_l2oc_2014,
+          author    = {{NASA Ocean Biology Processing Group}},
+          title     = {{COMS} {GOCI} Level-2 Regional Ocean Color ({OC}) Data, version 2014.0},
+          publisher = {NASA Ocean Biology Distributed Active Archive Center (OB.DAAC)},
+          doi       = {10.5067/COMS/GOCI/L2/OC/2014.0}
+        }
+  papers:
+    - label: GOCI와 자료처리시스템(GDPS) 개요
+      text: >-
+        Ryu, J.-H., Han, H.-J., Cho, S., Park, Y.-J., Ahn, Y.-H. (2012): Overview of geostationary ocean color imager (GOCI) and GOCI data processing system (GDPS).
+        Ocean Science Journal, 47(3), 223–233.
+      doi: 10.1007/s12601-012-0024-4
+      bibtex: |
+        @article{ryu2012goci,
+          author  = {Ryu, Joo-Hyung and Han, Hee-Jeong and Cho, Seongick and Park, Young-Je and Ahn, Yu-Hwan},
+          title   = {Overview of geostationary ocean color imager ({GOCI}) and {GOCI} data processing system ({GDPS})},
+          journal = {Ocean Science Journal},
+          volume  = {47},
+          number  = {3},
+          pages   = {223--233},
+          year    = {2012},
+          doi     = {10.1007/s12601-012-0024-4}
+        }
+  acknowledgement: >-
+    OB.DAAC 자료를 썼다면 위 데이터셋 DOI와 받은 날짜를 적으세요. KOSC 처리판을 썼다면 KIOST 해양위성센터를 출처로 밝히고, 어느 처리판(OBPG R2014.0 또는 KOSC GDPS)인지 본문에 적어 두는 것이 좋습니다.
+
+notices:
+  - date: "2021-03"
+    level: warning
+    title: GOCI 임무 종료
+    body: >-
+      천리안위성 1호 GOCI가 2021년 3월 공식 임무를 마쳤습니다. 원래 설계 수명(2017년까지)보다 약 4년 더 운영되었고, 해양 관측은 천리안위성 2B호 GOCI-II가 이어받았습니다.
+      OB.DAAC 자료는 2021-03-31이 마지막입니다.
+    source: https://koreascience.or.kr/article/JAKO202131452697681.pdf
+  - date: "2020-10"
+    level: info
+    title: 후속 GOCI-II 자료 서비스 시작
+    body: >-
+      국가해양위성센터가 2020년 10월 천리안위성 2B호(GOCI-II) 자료 서비스를 시작했습니다. 2020-10~2021-03에는 GOCI와 GOCI-II가 함께 관측해 두 자료를 비교할 수 있습니다.
+    source: https://www.nosc.go.kr/boardContents/actionBoardContentsCons0015.do
+  - date: "2016-05"
+    level: info
+    title: NASA OBPG GOCI 재처리 R2014.0 완료 — L1B·L2 배포 시작
+    body: >-
+      NASA OBPG가 GOCI 전 기간 재처리(R2014.0)를 마치고 OB.DAAC에서 L1B(HDF5)와 L2 해색 산출물 배포를 시작했습니다. VIIRS 기준 교차 보정을 적용해 MODIS-Aqua 대비 엽록소 비가 약 0.6에서 약 0.9로 바뀌었고,
+      위성 궤도 정보 해석과 슬롯 시각 처리를 개선했습니다.
+    source: https://oceancolor.gsfc.nasa.gov/data/reprocessing/r2014/goci
+
+transitions:
+  - from: GOCI (천리안위성 1호)
+    to: GOCI-II (천리안위성 2B호)
+    to_id: goci2
+    status: completed
+    date: "2021-03"
+    summary: >-
+      GOCI-II는 해상도를 500 m에서 250 m로, 분광 밴드를 8개에서 12개로 늘리고, 한반도 주변 관측을 하루 8회에서 10회로 늘리며 전구(FD) 관측을 새로 더했습니다.
+      GOCI는 2021년 3월 임무를 마쳤고, 2020-10~2021-03에는 두 센서가 함께 관측했습니다.
+    changes:
+      - aspect: 기간
+        before: "2011-04~2021-03 (OB.DAAC L2 기준)"
+        after: "2020-10~현재 (임무 수명 계획 2020~2029)"
+      - aspect: 공간 해상도
+        before: 500 m
+        after: 250 m
+      - aspect: 분광 밴드
+        before: "8개 (412~865 nm, 가시 6·근적외 2)"
+        after: "12개 (380~865 nm) + 기하보정용 광대역 밴드"
+      - aspect: 관측 횟수·영역
+        before: "한반도 주변 2,500 km × 2,500 km, 하루 8회(현지 09~16시)"
+        after: "한반도 주변(LA) 같은 크기 하루 10회(한국 시간 08:15~17:15) + 전구(FD) 하루 1회"
+      - aspect: 산출물
+        before: "OB.DAAC L2 — Rrs, chlor_a, Kd_490, poc, aot_865 등 NASA 표준 해색 산출물"
+        after: "NOSC L2 26종 — 원격반사도·엽록소·부유물·용존유기물에 적조·부유조류·해무·표층해류·저염분수·에어로졸·육상 산출물 추가"
+      - aspect: 제공처·계정
+        before: "NASA OB.DAAC (Earthdata 로그인), KIOST 해양위성센터"
+        after: "국립해양조사원 국가해양위성센터 (로그인 없이 웹·웹디렉토리·OPeNDAP). NASA OB.DAAC에는 없음"
+    impacts:
+      - 두 센서는 해상도·밴드·대기보정·처리 체계가 달라 같은 시계열로 이어 붙이기 전에 겹치는 기간(2020-10~2021-03)의 같은 해역 값을 비교해야 합니다.
+      - GOCI는 OB.DAAC(NASA 처리), GOCI-II는 NOSC(국내 처리)에서 받으므로 산출물 이름·변수명·파일 구조가 다릅니다. 읽기 코드를 따로 준비하세요.
+      - GOCI-II는 관측 시각이 한 시간 이르게 시작해 늦게 끝나므로(08:15~17:15 KST), 하루 변화 분석에서 시각을 맞춰 비교하세요.
+    sources:
+      - name: 최종국 외 (2021), GOCI-II 발사 1년, 현재와 미래 — 대한원격탐사학회지
+        url: https://koreascience.or.kr/article/JAKO202131452697681.pdf
+      - name: 국가해양위성센터 — 정지궤도 해양위성 소개
+        url: https://www.nosc.go.kr/boardContents/actionBoardContentsCons0037.do
+      - name: NASA OBPG — GOCI Ocean Color Reprocessing 2014.0
+        url: https://oceancolor.gsfc.nasa.gov/data/reprocessing/r2014/goci
+
+links:
+  - name: NASA OBPG — GOCI 재처리 R2014.0 설명
+    url: https://oceancolor.gsfc.nasa.gov/data/reprocessing/r2014/goci
+  - name: OB.DAAC — GOCI L2 디렉터리
+    url: https://oceandata.sci.gsfc.nasa.gov/directdataaccess/Level-2/GOCI/
+  - name: OB.DAAC — GOCI L1B 디렉터리
+    url: https://oceandata.sci.gsfc.nasa.gov/directdataaccess/Level-1B/GOCI/
+  - name: NASA L2 해색 파일 형식 설명
+    url: https://oceancolor.gsfc.nasa.gov/resources/docs/format/l2nc/
+  - name: WMO OSCAR — GOCI
+    url: https://space.oscar.wmo.int/instruments/view/goci
+  - name: 이 사이트 — 후속 자료 GOCI-II (천리안 2B호)
+    url: ../goci2/
+  - name: 이 사이트 — GK-2A (천리안 2A호 기상위성)
+    url: ../gk2a/
+
+watch_urls:
+  - https://oceancolor.gsfc.nasa.gov/data/reprocessing/
+
+last_verified: "2026-10-14"

@@ -1,0 +1,380 @@
+# ─────────────────────────────────────────────────────────────
+# ITS_LIVE (NASA MEaSUREs Inter-mission Time Series of Land Ice Velocity and Elevation) 빙하·빙상 유속 — 데이터셋 정보 파일
+# 위성 탭(빙하·빙상). Landsat·Sentinel-1·Sentinel-2 영상쌍에 autoRIFT 특징 추적을 적용한 120 m 표면 유속:
+# L2 영상쌍 유속(netCDF), Zarr 데이터큐브, L3 연평균·기후값 모자이크(NSIDC-0776 V2). 현재 주 버전은 V2(V1 → V2 전환은 이 파일 안 transitions, to_id 없음).
+# 2026-10-13 확인 시 영상쌍은 2026-10-13 취득분까지 매일 올라오고, NSIDC 연평균 모자이크 V2는 2022년까지, AWS의 V02.1 모자이크는 2024년까지입니다.
+# 수정 후에는 공식 페이지에서 확인한 날짜로 last_verified 를 갱신하세요.
+# ─────────────────────────────────────────────────────────────
+id: its-live
+name: ITS_LIVE
+full_name: NASA MEaSUREs ITS_LIVE (Inter-mission Time Series of Land Ice Velocity and Elevation) 빙하·빙상 표면 유속 — 영상쌍 유속, 데이터큐브, 지역 연평균 모자이크
+category: satellite
+domain: satellite
+group: 빙하·빙상
+order: 10
+domains: [빙상, 원격탐사]
+provider: NASA JPL (NASA MEaSUREs ITS_LIVE 사업) / NSIDC DAAC(지역 연평균 모자이크 보관) / AWS Open Data(its-live-data 버킷, Alaska Satellite Facility 관리)
+
+status: active
+status_note: >-
+  주 버전은 V2이며 영상쌍(L2) 유속은 새 위성 영상이 들어오는 대로 매일 처리됩니다. 2026-10-13 확인 시 STAC 카탈로그에 2026-10-13 취득한 Sentinel-1C·1D 영상쌍,
+  2026-10-12 취득한 Sentinel-2·Landsat 8/9 영상쌍이 올라와 있었습니다. 반면 Zarr 데이터큐브(v2-updated-october2024, STAC 시간 범위 2025-06-01까지)와
+  NSIDC의 공식 연평균 모자이크 V2(NSIDC-0776, 1984~2022년)는 별도 갱신 주기로 뒤처지며, AWS 버킷에는 2024년까지 늘린 V02.1 연평균 모자이크(2025-10 생성)가 따로 있습니다.
+
+period:
+  start: "1982"
+  end: present
+  note: >-
+    가장 이른 영상쌍은 1982년 Landsat 자료(Gardner et al., 2025)이며, 초기 몇 해는 자료가 매우 성기고 2013년 이후에야 거의 빈틈없이 덮입니다. ITS_LIVE 누리집은 '1985-present'로,
+    NSIDC-0776 V2 메타데이터는 1984-01-01~2022-12-31로 적고 있습니다. AWS의 V02.1 연평균 모자이크는 알래스카(RGI01A) 기준 1982~2024년 파일이 있습니다(2026-10-13 확인).
+
+resolution:
+  spatial_short: "0.12 km (0.001°)"
+  temporal_short: "1일"
+  spatial: >-
+    모든 센서 공통 120 m 격자(V1은 240 m). 영상쌍은 위치에 따라 극 입체 투영(북쪽 EPSG:3413, 남극 EPSG:3031) 또는 UTM 좌표계, 데이터큐브는 100 km × 100 km 타일(833 × 833 격자).
+    지역 모자이크는 RGI 16개 지역별 파일로, 55°N 이북은 EPSG:3413, 56°S 이남은 EPSG:3031, 고산아시아(RGI14A)는 Lambert(EPSG:102027), 나머지는 해당 UTM 구역입니다
+  vertical: 빙하·빙상 표면의 수평 유속(지도 좌표 x·y 성분과 크기)
+  temporal: >-
+    영상쌍: 두 영상의 취득 간격(date_dt)마다 하나의 평균 유속, 간격은 영상쌍마다 다름(광학 최대 546일, 레이더 최대 12일) / 데이터큐브: 영상쌍 시계열(mid_date 축) /
+    연평균 모자이크(NSIDC-0776 V2, 1984~2022) / 기후값 요약 모자이크(2014~2022년 영상쌍의 평균·계절 진폭·추세)
+
+coverage:
+  short: 전지구
+  note: "육상 빙하·빙상 전체(83°S 이북의 5 km² 이상 빙하, 약 1419만 km²). 연평균 모자이크는 RGI 6.0의 16개 지역(알래스카, 그린란드 주변, 고산아시아, 남극 등)으로 나뉩니다"
+update: >-
+  영상쌍은 최대 매일(AWS 안내 'Up to daily'). Landsat은 영상 공개 후 약 15분, Sentinel-2는 ESA 공개 후 약 30시간, Sentinel-1은 30시간 안에 처리하는 것이 목표입니다.
+  L3 모자이크와 데이터큐브는 기여 영상이 다 모인 뒤 별도 작업으로 만들어 수개월~수년 늦습니다
+license: >-
+  무료 공개. AWS 버킷 README와 AWS Open Data 등록 정보는 CC0 1.0, STAC 카탈로그 컬렉션 정보는 CC-BY-4.0으로 적고 있습니다.
+  어느 쪽이든 ITS_LIVE 프로젝트·autoRIFT 출처 문구와 원 위성 자료(USGS Landsat, ESA Sentinel) 출처를 밝혀 달라고 요청합니다
+account_required: false
+
+summary: >-
+  NASA MEaSUREs 사업의 ITS_LIVE는 Landsat 4~9, Sentinel-2A/B/C 광학 영상과 Sentinel-1A/B/C 레이더 영상의 짝(영상쌍)에서 autoRIFT 특징 추적으로 빙하 표면의 변위를 구해
+  전 세계 육상 빙하·빙상의 표면 유속을 만드는 자료입니다. 3600만 쌍이 넘는 영상쌍 유속(L2, netCDF)과 이를 100 km 타일로 모은 클라우드 최적화 Zarr 데이터큐브,
+  오차 가중 최소제곱으로 만든 지역 연평균·기후값 모자이크(L3)를 모두 120 m 격자로 제공합니다. 새 영상은 하루 안에 처리되어 서지(surge)·분리(calving)·계절 가속 같은
+  빠른 변화를 거의 실시간으로 볼 수 있고, 빙상 유출량(discharge) 계산과 빙하 역학 연구에 널리 쓰입니다.
+
+time_convention:
+  summary: >-
+    영상쌍 유속은 두 영상 사이 변위를 취득 간격(date_dt)으로 나눈 값이라 그 간격 동안의 평균 속도이고, 대표 시각은 두 취득 시각의 중간(mid_date)입니다.
+    연평균 모자이크는 그해와 걸친 모든 영상쌍을 오차 가중 최소제곱으로 풀어 취득 시기에 치우치지 않게 만든 그해 평균이고, 기후값 모자이크는 2014~2022년 영상쌍에 평균·계절 사인 곡선·선형 추세를 맞춘 값입니다.
+  points:
+    - "데이터큐브의 시간 축 mid_date는 두 영상 취득 시각의 중간입니다. 실제로는 acquisition_date_img1~img2 전체 구간의 평균이므로, date_dt가 수백 일인 쌍은 계절 변화가 섞여 있습니다."
+    - "date_dt가 짧으면 시간 해상도는 좋지만 오차가 크고, 길면 오차는 작지만 짧은 변화를 놓칩니다. 공식 논문은 분석 목적에 맞게 date_dt로 영상쌍을 골라 쓰라고 안내합니다."
+    - "연평균 파일은 한 해 동안의 시간 평균입니다. 영상쌍마다 그해에 걸친 일수 비율로 가중해 풀기 때문에, 영상이 여름에 몰려 있어도 연평균이 여름 쪽으로 치우치지 않도록 설계되었습니다."
+    - "기후값 모자이크의 v·vx·vy는 2014-01-01~2023-01-01 사이 mid_date 영상쌍으로 맞춘 선에서 2018-01-01 기준값입니다(NSIDC 사용자 안내서). 공식 논문에는 2018-07-02로 적혀 있어 문서 간 차이가 있습니다."
+    - "모든 속도는 지도 투영 평면 위 값입니다(m/yr). V2는 V1과 달리 투영 왜곡(최대 몇 %)을 보정하지 않으므로 GPS 실측과 비교하려면 직접 보정해야 합니다."
+  source: https://nsidc.org/sites/default/files/documents/user-guide/nsidc-0776-v002-userguide.pdf
+  source_name: NSIDC-0776 V2 사용자 안내서 + Gardner et al. (2025), The Cryosphere
+
+variables:
+  note: >-
+    영상쌍 변수는 Lei et al. (2022)과 ITS_LIVE 생산 코드(its_live_production)의 변수 정의, 데이터큐브 변수는 STAC 카탈로그, 연평균·기후값 변수는 NSIDC-0776 V2 사용자 안내서 기준입니다.
+    vx·vy는 지도 투영 좌표(x·y) 방향 성분이라 동서·남북 성분이 아닙니다.
+  full_list: https://nsidc.org/sites/default/files/documents/user-guide/nsidc-0776-v002-userguide.pdf
+  groups:
+    - name: 영상쌍 유속 (L2 netCDF, 영상쌍 하나에 파일 하나)
+      kind: mean
+      period: 영상쌍 취득 간격(date_dt)
+      items:
+        - "빙하 표면 속도 크기 — `v` (m/yr)"
+        - "x 방향 표면 속도 — `vx` (m/yr)"
+        - "y 방향 표면 속도 — `vy` (m/yr)"
+        - text: "속도 크기 오차 — `v_error` (m/yr)"
+          std: []
+        - text: "레이더 거리(range) 방향 속도 — `vr`"
+          note: Sentinel-1 영상쌍만
+          std: []
+        - text: "레이더 방위(azimuth) 방향 속도 — `va`"
+          note: Sentinel-1 영상쌍만
+          std: []
+        - text: "x·y 속도를 거리 방향 변위로 바꾸는 변환 행렬 원소 — `M11`·`M12`"
+          note: Sentinel-1 영상쌍만. 상승·하강 궤도 결합에 씀
+          kind: static
+          std: []
+        - text: "보간 여부 표시 — `interp_mask`"
+          std: []
+        - text: "특징 추적 탐색 창(chip) 크기 — `chip_size_height`·`chip_size_width`"
+          std: []
+        - text: "안정 지표 편향 보정 방식 — `stable_shift_flag` (0 미보정, 1 정지 지표 마스크, 2 가장 느린 25% 화소)"
+          std: []
+        - text: "영상쌍 정보(위성·센서·취득 시각·간격) — `img_pair_info`"
+          kind: instant
+          std: []
+    - name: 데이터큐브 (Zarr, 100 km 타일, 시간 축 mid_date)
+      kind: mean
+      period: 영상쌍 취득 간격(date_dt)
+      items:
+        - "빙하 표면 속도 크기 — `v` (m/yr)"
+        - "x 방향 표면 속도 — `vx` (m/yr)"
+        - "y 방향 표면 속도 — `vy` (m/yr)"
+        - text: "속도 크기 오차 — `v_error` (m/yr)"
+          std: []
+        - text: "보간 여부 표시 — `interp_mask`"
+          std: []
+        - text: "두 영상의 취득 간격 — `date_dt` (일)"
+          kind: instant
+          std: []
+        - text: "두 영상의 취득 시각 — `acquisition_date_img1`·`acquisition_date_img2`"
+          kind: instant
+          std: []
+        - text: "영상을 찍은 위성 — `satellite_img1`·`satellite_img2`"
+          kind: static
+          std: []
+    - name: 연평균 모자이크 (L3, NSIDC-0776 V2 연도별 파일)
+      kind: mean
+      period: 연
+      items:
+        - "연평균 빙하 표면 속도 크기 — `v` (m/yr)"
+        - "연평균 x 방향 표면 속도 — `vx` (m/yr)"
+        - "연평균 y 방향 표면 속도 — `vy` (m/yr)"
+        - text: "속도 오차 — `v_error`·`vx_error`·`vy_error` (m/yr)"
+          note: 형식 오차라 실제보다 작게 나오는 경향
+          std: []
+        - text: "최소제곱 맞춤에 쓴 영상쌍 수 — `count` (개)"
+          std: []
+        - text: "육상 빙하 마스크 — `landice` (0·1)"
+          kind: static
+          std: []
+        - text: "부유빙(빙붕) 마스크 — `floatingice` (0·1)"
+          kind: static
+          std: []
+    - name: 기후값 요약 모자이크 (L3, NSIDC-0776 V2 2014–2022 파일)
+      kind: mean
+      period: 2014~2022년
+      items:
+        - text: "기준일 표면 속도 크기 — `v` (m/yr)"
+          note: 2018-01-01 절편값
+        - text: "기준일 x·y 방향 표면 속도 — `vx`·`vy` (m/yr)"
+        - text: "계절 변동 진폭 — `v_amp`·`vx_amp`·`vy_amp` (m/yr)"
+          std: []
+        - text: "계절 최대 속도가 나타나는 날(연중 일) — `v_phase`·`vx_phase`·`vy_phase`"
+          std: []
+        - text: "속도 추세 — `dv_dt`·`dvx_dt`·`dvy_dt` (m/yr²)"
+          std: []
+        - text: "이상치로 뺀 자료 비율 — `outlier_percent` (%)"
+          std: []
+        - text: "센서 그룹 포함 여부 — `sensor`·`sensor_flag`"
+          kind: static
+          std: []
+        - text: "맞춤에 허용한 최대 취득 간격 — `dt_max` (일)"
+          kind: static
+          std: []
+
+access:
+  - name: AWS Open Data — its-live-data 버킷 (us-west-2)
+    url: https://its-live-data.s3.amazonaws.com/README.html
+    method: >-
+      S3(s3://its-live-data, 익명 접근) 또는 HTTPS 직접 다운로드. 영상쌍 velocity_image_pair/(landsatOLI·sentinel1·sentinel2/v02/), 데이터큐브 datacubes/,
+      연평균 모자이크 velocity_mosaic/(v2·v2.1), 연평균 합성 composites/
+    note: >-
+      버킷에 객체가 10억 개가 넘어 재귀 목록 조회는 피하라고 안내합니다. 데이터큐브 목록은 datacubes/catalog_v02.json(GeoJSON)에 있고, 새 파일 알림용 SNS 토픽도 있습니다.
+      남극(RGI19A) 연평균 파일은 한 해에 약 8~9 GB, 기후값 파일은 약 21 GB입니다.
+    login: false
+  - name: ITS_LIVE STAC API
+    url: https://stac.itslive.cloud
+    method: STAC 검색(pystac-client) — 컬렉션 itslive-granules(영상쌍), itslive-cubes(데이터큐브), velocity-mosaics(연평균 모자이크 V2)
+    note: 위치·기간·platform·date_dt·percent_valid_pixels로 영상쌍을 골라 S3·HTTPS 주소를 받습니다.
+    login: false
+  - name: NSIDC DAAC — NSIDC-0776 V2 지역 연평균·기후값 모자이크
+    url: https://nsidc.org/data/nsidc-0776/versions/2
+    method: NSIDC Data Access Tool / Earthdata Search / HTTPS / earthaccess / Earthdata Cloud(us-west-2 직접 접근)
+    note: NASA Earthdata 로그인(무료)이 필요합니다. 공식 DOI가 붙은 판이며 1984~2022년입니다.
+  - name: NSIDC ITS_LIVE 웹 앱
+    url: https://nsidc.org/apps/itslive/
+    method: 웹 지도에서 지점 시계열 보기·자료 고르기
+
+example:
+  lang: python
+  note: "STAC에서 한 지점의 데이터큐브를 찾아 시계열을 뽑는 예입니다. 로그인은 필요 없습니다. 좌표는 장보고기지가 있는 남극 빅토리아랜드 테라노바만 부근의 예시 지점이니 관심 빙하로 바꾸세요."
+  code: |
+    # pip install pystac-client xarray zarr fsspec aiohttp pyproj
+    from pystac_client import Client
+    from pyproj import Transformer
+    import xarray as xr
+
+    lon, lat = 164.5, -74.4                         # 예시 지점 (경도, 위도)
+    cat = Client.open("https://stac.itslive.cloud")
+    items = cat.search(collections=["itslive-cubes"],
+                       intersects={"type": "Point", "coordinates": [lon, lat]}).item_collection()
+    cube = xr.open_zarr(items[0].assets["zarr"].href)
+    print(list(cube.data_vars)[:10])
+
+    epsg = items[0].properties["proj:code"]          # 예: "EPSG:3031"
+    x, y = Transformer.from_crs("EPSG:4326", epsg, always_xy=True).transform(lon, lat)
+    v = cube["v"].sel(x=x, y=y, method="nearest").sortby("mid_date")
+    print(v.dropna("mid_date").to_series().tail())   # 영상쌍별 평균 속도(m/yr), 시각은 두 영상의 중간
+
+tips:
+  - "영상쌍 값은 취득 간격 동안의 평균 속도입니다. 계절 변화를 보려면 date_dt가 짧은 쌍만, 장기 평균을 보려면 긴 쌍이나 연평균 모자이크를 쓰는 식으로 목적에 맞게 고르세요."
+  - "v_error·vx_error 같은 오차는 형식적으로 전파한 값이라 실제보다 작게 나오는 경향이 있다고 생산자가 밝힙니다. 특히 맑은 영상이 드문 적설·축적 지역에서 그렇습니다. 오차와 count는 상대적인 품질 지표로 쓰세요."
+  - "V2 속도는 지도 투영 평면에서 잰 값이라 위치에 따라 최대 몇 % 축척 오차가 있습니다. 유출량(flux gate) 계산에는 보정이 필요 없지만 GPS 실측과 비교할 때는 투영 왜곡을 보정해야 합니다."
+  - "고산아시아(RGI14A) 모자이크는 UTM이 아니라 Lambert(EPSG:102027) 좌표계입니다. 이 지역에서는 Landsat 4·5 TM 유속이 Landsat 8보다 약 5 m/yr 느리게 치우친다는 보고(Dehecq et al., 2019)가 있어 1980~90년대 값과 최근 값을 비교할 때 주의하세요."
+  - "UTM 지역 모자이크의 mapping 변수는 CF 표준 이름과 달라 Panoply 같은 도구에서 자료가 지구 반대편에 겹쳐 그려질 수 있습니다. 값 자체에는 문제가 없습니다."
+  - "빙하 가장자리·빙폭·굽은 흐름에서는 특징 추적이 지형에 '고정(locking)'되어 거의 0인 속도가 나올 수 있고, Sentinel-2는 대비가 낮은 곳에서 잡음이 큽니다. 연평균·기후값은 이런 자료를 거른 것이지만 서지 빙하에서는 추세·계절 값이 왜곡될 수 있어 전체 시계열을 함께 보세요."
+  - "연평균 파일 중 일부 지역·연도는 유효 자료가 거의 없습니다. 특히 1980~90년대는 자료가 성기니 count와 미리보기 그림으로 먼저 확인하세요."
+  - "NSIDC의 DOI 판(NSIDC-0776 V2)은 2022년까지이고, AWS 버킷의 velocity_mosaic/v2.1(파일명 V02.1)은 2024년까지 늘린 판입니다. 논문에는 실제로 쓴 판과 경로를 함께 적으세요."
+  - "남극 연평균 파일은 한 해에 8 GB가 넘습니다. 특정 빙하만 필요하면 전체 파일 대신 STAC으로 해당 100 km 데이터큐브를 찾아 필요한 화소만 읽는 편이 훨씬 빠릅니다."
+
+citations:
+  dataset:
+    - label: 지역 연평균·기후값 모자이크 V2 (NSIDC-0776)
+      text: >-
+        Gardner, A. S., Fahnestock, M., Greene, C. A., Kennedy, J. H., Liukis, M., López, L. A., & Scambos, T. (2025). MEaSUREs ITS_LIVE Regional Glacier and Ice Sheet Surface Velocities
+        (NSIDC-0776, Version 2). NASA National Snow and Ice Data Center DAAC. https://doi.org/10.5067/JQ6337239C96
+      doi: 10.5067/JQ6337239C96
+      bibtex: |
+        @misc{gardner2025itslive0776,
+          author    = {Gardner, A. S. and Fahnestock, M. and Greene, C. A. and Kennedy, J. H. and Liukis, M. and L{\'o}pez, L. A. and Scambos, T.},
+          title     = {{MEaSUREs} {ITS\_LIVE} Regional Glacier and Ice Sheet Surface Velocities ({NSIDC-0776}, Version 2)},
+          year      = {2025},
+          publisher = {NASA National Snow and Ice Data Center Distributed Active Archive Center},
+          version   = {2},
+          doi       = {10.5067/JQ6337239C96}
+        }
+    - label: Landsat 영상쌍 유속 V1 (NSIDC-0775, 이전 판)
+      text: >-
+        Gardner, A. S., M. A. Fahnestock, and T. A. Scambos, 2019 [update to time of data download]: MEaSUREs ITS_LIVE Landsat Image-Pair Glacier and Ice Sheet Surface Velocities: Version 1.
+        NASA National Snow and Ice Data Center DAAC. https://doi.org/10.5067/IMR9D3PEI28U
+      doi: 10.5067/IMR9D3PEI28U
+  papers:
+    - label: ITS_LIVE V2 전체 설명 (영상쌍·데이터큐브·모자이크)
+      text: >-
+        Gardner, A. S., Greene, C. A., Kennedy, J. H., Fahnestock, M. A., Liukis, M., López, L. A., Lei, Y., Scambos, T. A., Dehecq, A. (2025): ITS_LIVE global glacier velocity data in near-real time.
+        The Cryosphere, 19(9), 3517–3533.
+      doi: 10.5194/tc-19-3517-2025
+      bibtex: |
+        @article{gardner2025itslive,
+          author  = {Gardner, Alex S. and Greene, Chad A. and Kennedy, Joseph H. and Fahnestock, Mark A. and Liukis, Maria and L{\'o}pez, Luis A. and Lei, Yang and Scambos, Ted A. and Dehecq, Amaury},
+          title   = {{ITS\_LIVE} global glacier velocity data in near-real time},
+          journal = {The Cryosphere},
+          volume  = {19},
+          number  = {9},
+          pages   = {3517--3533},
+          year    = {2025},
+          doi     = {10.5194/tc-19-3517-2025}
+        }
+    - label: autoRIFT 적용·출처 표기 문구에서 요청하는 논문
+      text: >-
+        Gardner, A. S., Moholdt, G., Scambos, T., Fahnstock, M., Ligtenberg, S., van den Broeke, M., Nilsson, J. (2018): Increased West Antarctic and unchanged East Antarctic ice discharge
+        over the last 7 years. The Cryosphere, 12(2), 521–547.
+      doi: 10.5194/tc-12-521-2018
+      bibtex: |
+        @article{gardner2018discharge,
+          author  = {Gardner, Alex S. and Moholdt, Geir and Scambos, Ted and Fahnstock, Mark and Ligtenberg, Stefan and van den Broeke, Michiel and Nilsson, Johan},
+          title   = {Increased {West} {Antarctic} and unchanged {East} {Antarctic} ice discharge over the last 7 years},
+          journal = {The Cryosphere},
+          volume  = {12},
+          number  = {2},
+          pages   = {521--547},
+          year    = {2018},
+          doi     = {10.5194/tc-12-521-2018}
+        }
+    - label: Sentinel-1 영상쌍 처리 방법 (V2)
+      text: >-
+        Lei, Y., Gardner, A. S., Agram, P. (2022): Processing methodology for the ITS_LIVE Sentinel-1 ice velocity products. Earth System Science Data, 14(11), 5111–5137.
+      doi: 10.5194/essd-14-5111-2022
+      bibtex: |
+        @article{lei2022itslives1,
+          author  = {Lei, Yang and Gardner, Alex S. and Agram, Piyush},
+          title   = {Processing methodology for the {ITS\_LIVE} {Sentinel-1} ice velocity products},
+          journal = {Earth System Science Data},
+          volume  = {14},
+          number  = {11},
+          pages   = {5111--5137},
+          year    = {2022},
+          doi     = {10.5194/essd-14-5111-2022}
+        }
+  acknowledgement: >-
+    ITS_LIVE 누리집은 "Velocity data generated using auto-RIFT (Gardner et al., 2018) and provided by the NASA MEaSUREs ITS_LIVE project (Gardner et al., 20XX)." 문구를 요청합니다
+    (20XX에는 실제로 쓴 자료의 인용 연도를 넣습니다). Landsat 영상은 USGS, Sentinel 영상은 ESA(Copernicus)가 제공했음을 함께 밝히세요.
+
+notices:
+  - date: "2026-06-09"
+    level: info
+    title: NSIDC GoLIVE 지도 앱 종료(2026-06-30) — 대안으로 ITS_LIVE 안내
+    body: >-
+      NSIDC DAAC가 Landsat 8 빙하 유속 자료 GoLIVE(NSIDC-0710)의 지도 앱을 2026년 6월 30일 종료한다고 알렸습니다. GoLIVE 자료 자체는 계속 받을 수 있으며,
+      더 폭넓게 재처리된 유속 자료가 필요하면 1984년~현재 전지구 유속을 제공하는 ITS_LIVE를 쓰라고 안내했습니다.
+    source: https://nsidc.org/data/user-resources/data-announcements/user-notice-upcoming-retirement-golive-map-application
+  - date: "2025-09-05"
+    level: info
+    title: ITS_LIVE V2 공식 설명 논문 출판 — Sentinel-1 처리 일시 중단 명시
+    body: >-
+      Gardner et al. (2025, The Cryosphere)가 V2.0 영상쌍·데이터큐브·모자이크의 처리 방법과 지연 시간, 알려진 오차를 정리했습니다. 논문 작성 시점에는 처리 비용 때문에
+      Sentinel-1 처리가 멈춰 2014~2022년만 처리되어 있었고 2025년 중반 재개를 예상한다고 밝혔습니다. 2026-10-13 확인 시 STAC에는 2026년 Sentinel-1C·1D 영상쌍이 올라오고 있습니다.
+    source: https://doi.org/10.5194/tc-19-3517-2025
+  - date: "2025-07-23"
+    level: warning
+    title: NSIDC-0776 지역 연평균 모자이크 V2 공개, V1은 2025-08-26 퇴역
+    body: >-
+      NSIDC DAAC가 Sentinel-1·Sentinel-2·Landsat 4~9를 autoRIFT로 처리한 120 m 지역 연평균 유속(1984~2022)과 2014~2022년 기후값 모자이크 V2를 공개했습니다.
+      V1(Landsat만, 1985~2018)은 2025년 8월 26일 NSIDC에서 내려가 더 이상 받을 수 없고 문서만 남습니다.
+    source: https://nsidc.org/data/user-resources/data-announcements/new-version-release-measures-its_live-regional-glacier-and-ice-sheet-surface-velocities-version-2
+
+transitions:
+  - from: ITS_LIVE V1
+    to: ITS_LIVE V2
+    status: completed
+    date: "2025-07"
+    summary: >-
+      Landsat만 쓰던 V1을 Sentinel-1·Sentinel-2·Landsat 9까지 넓히고, 격자를 240 m에서 120 m로 줄이며 개선된 autoRIFT 특징 추적과 오차 산정으로 전 기간을 다시 처리한 판입니다.
+      AWS의 영상쌍·데이터큐브가 먼저 V2로 바뀌었고, NSIDC 지역 모자이크는 2025-07 V2(NSIDC-0776)가 공개되며 V1이 퇴역했습니다.
+    changes:
+      - aspect: 입력 위성
+        before: Landsat 4·5·7·8 (TM, ETM+, OLI)
+        after: "Landsat 4·5·7·8·9, Sentinel-2A/B(/C), Sentinel-1A/B(/C) IW"
+      - aspect: 격자 간격
+        before: "240 m (NSIDC-0776 V1 일부 120 m)"
+        after: 모든 센서 공통 120 m
+      - aspect: 지역 모자이크 기간
+        before: "1985~2018 (2013년 이전 성김)"
+        after: "1984~2022 (NSIDC V2), 기후값 2014~2022. AWS V02.1은 2024년까지"
+      - aspect: 투영 왜곡
+        before: 지도 투영 축척 왜곡을 보정한 속도
+        after: 지도 투영 평면의 속도 그대로(최대 몇 % 축척 오차, 사용자가 보정)
+      - aspect: 처리 알고리즘
+        before: auto-RIFT 초기판
+        after: 개선된 autoRIFT 특징 추적, 안정 지표 기반 편향 보정(stable_shift), 오차 산정 갱신
+      - aspect: 제공처
+        before: NSIDC(Earthdata 로그인), 2023년 4월 이전 자료
+        after: "AWS its-live-data 버킷·STAC(로그인 없음), NSIDC-0776 V2(로그인)"
+    impacts:
+      - V1과 V2 값을 한 시계열로 이어 붙이지 마세요. 센서 구성·격자·투영 왜곡 보정 여부가 달라 같은 지점도 값이 다릅니다.
+      - "V1으로 GPS와 비교하던 분석 절차를 V2에 그대로 쓰면 투영 왜곡만큼(최대 몇 %) 차이가 납니다. V2에서는 비교 전에 축척 보정을 직접 하세요."
+      - "NSIDC-0776 V1 파일은 2025-08-26 이후 받을 수 없습니다. 예전 결과를 재현하려면 V2로 다시 계산하고 판 차이를 적으세요."
+      - "NSIDC의 Landsat 영상쌍 V1(NSIDC-0775, 240 m, 1985~2018)은 아직 '최신 판'으로 남아 있지만 V2 영상쌍은 AWS·STAC에서만 받을 수 있습니다."
+    sources:
+      - name: NSIDC — NSIDC-0776 V2 공개·V1 퇴역 공지 (2025-07-23)
+        url: https://nsidc.org/data/user-resources/data-announcements/new-version-release-measures-its_live-regional-glacier-and-ice-sheet-surface-velocities-version-2
+      - name: NSIDC-0776 V2 사용자 안내서
+        url: https://nsidc.org/sites/default/files/documents/user-guide/nsidc-0776-v002-userguide.pdf
+      - name: Gardner et al. (2025), The Cryosphere
+        url: https://doi.org/10.5194/tc-19-3517-2025
+      - name: Lei et al. (2022), ESSD (Sentinel-1 V2 처리)
+        url: https://doi.org/10.5194/essd-14-5111-2022
+
+links:
+  - name: ITS_LIVE 누리집 (NASA JPL)
+    url: https://its-live.jpl.nasa.gov/
+  - name: NSIDC — NSIDC-0776 V2 지역 연평균 모자이크
+    url: https://nsidc.org/data/nsidc-0776/versions/2
+  - name: NSIDC-0776 V2 사용자 안내서 (PDF)
+    url: https://nsidc.org/sites/default/files/documents/user-guide/nsidc-0776-v002-userguide.pdf
+  - name: AWS Open Data — ITS_LIVE
+    url: https://registry.opendata.aws/its-live-data/
+  - name: ITS_LIVE 지역 유속 알려진 문제 (PDF)
+    url: http://its-live-data.jpl.nasa.gov.s3.amazonaws.com/documentation/ITS_LIVE-Regional-Glacier-and-Ice-Sheet-Surface-Velocities-Known-Issues.pdf
+  - name: ITS_LIVE 도구·노트북 (GitHub)
+    url: https://github.com/nasa-jpl/its_live
+  - name: 이 사이트 — GRACE / GRACE-FO (빙상·빙하 질량 변화)
+    url: ../grace/
+
+watch_urls:
+  - https://nsidc.org/data/user-resources/data-announcements
+  - https://its-live.jpl.nasa.gov/
+  - https://nsidc.org/data/nsidc-0776/versions/2
+
+last_verified: "2026-10-13"

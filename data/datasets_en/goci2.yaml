@@ -1,0 +1,305 @@
+# ─────────────────────────────────────────────────────────────
+# GOCI-II on GEO-KOMPSAT-2B (Chollian-2B) — dataset information file (English edition)
+# Satellite tab (ocean colour), cross-listed in the Ocean tab (satellite observations). Geostationary ocean colour L1B and L2 data distributed by the KHOA National Ocean Satellite Center (NOSC).
+# Local Area (LA) 10 times a day (hourly) plus Full Disk (FD) once a day at 250 m. Downloads need no login; NASA OBPG does not hold GOCI-II data.
+# As checked on 2026-10-14, the latest GOCI-II RGB image on the NOSC home page was 2026-10-13 17:15 KST and the latest operational notice was dated 2026-10-07.
+# After editing, update last_verified to the date you checked the official pages.
+# ─────────────────────────────────────────────────────────────
+id: goci2
+name: "GOCI-II (GEO-KOMPSAT-2B)"
+full_name: Geostationary Ocean Color Imager II (GOCI-II) on GEO-KOMPSAT-2B — hourly ocean colour around Korea and daily full-disk observations
+category: satellite
+domain: satellite
+group: 해색
+order: 70
+also_in:
+  - domain: ocean
+    group: 위성 관측 자료
+domains: [해양, 에어로졸, 육지, 원격탐사]
+provider: National Ocean Satellite Center (NOSC), Korea Hydrographic and Oceanographic Agency (KHOA) / Korea Ocean Satellite Center, KIOST (algorithm development)
+
+status: active
+status_note: >-
+  GOCI-II on GEO-KOMPSAT-2B, launched in February 2020, observes the Local Area (LA) around Korea 10 times a day and the Full Disk (FD) once a day, and NOSC distributes the L1B and L2 products.
+  As checked on 2026-10-14, the latest GOCI-II RGB image on the NOSC home page was 2026-10-13 17:15 KST, and the latest operational notice (2026-10-07) reported a partly skipped 17:15 KST acquisition on 6 October due to station keeping.
+  NOSC reprocessed and re-released past L2 products in February 2025, so L2 files downloaded before then are best fetched again.
+
+period:
+  start: "2020-10"
+  end: present
+  note: >-
+    GEO-KOMPSAT-2B was launched in February 2020, and the NOSC history page lists October 2020 as the start of the GEO-KOMPSAT-2B service (in-orbit testing ran through September 2020).
+    KIOST reports that Level 1 data have been public since October 2020 and the 26 Level 2 products since January 2021. The planned mission lifetime is 10 years (2020 to 2029).
+
+resolution:
+  spatial_short: "0.25 km (0.0023°)"
+  temporal_short: "1시간"
+  spatial: >-
+    250 m × 250 m for both the Local Area (LA) and the Full Disk (FD). The LA swath is 2,500 km × 2,500 km, acquired as 12 slots (S000–S011) that are merged into one image;
+    FD is divided into slots 0–235. GOCI-II has 12 spectral bands from 380 to 865 nm (10–40 nm wide) plus one wideband channel (B13) for image navigation and registration.
+  vertical: Sea surface (ocean colour, remote-sensing reflectance), atmospheric column (aerosol optical depth), land surface (land products)
+  temporal: >-
+    LA hourly, 10 times a day (23:15 to 08:15 UTC, 08:15 to 17:15 KST); FD once a day. On days with orbit or attitude manoeuvres or lunar calibration, LA drops to 8 or 9 acquisitions.
+    Files are per-acquisition L1B and L2; the NOSC download menus offer no daily or monthly L3 composites.
+
+coverage:
+  short: 아시아
+  note: "LA is a 2,500 km × 2,500 km area centred on Korea (East Asian coastal seas, Yellow Sea, East China Sea, East Sea); FD is the full disk seen from GEO-KOMPSAT-2B (Asia and Oceania). Daylight only"
+update: "LA observed 10 times daily, with NOSC aiming to update within one hour of each observation (NOSC FAQ); FD once a day. Skipped acquisitions (station keeping, safe mode) are announced as operational notices"
+license: >-
+  The NOSC website does not state a licence such as a KOGL type; it shows only "Copyright ⓒ 2022 National Ocean Satellite Center. All rights reserved."
+  Operations follow the GOCI operating regulation (KHOA Rule No. 217). The Open API terms require pages that display API results to credit the "KHOA OPEN API".
+  Ask the satellite data team (nosc@korea.kr, +82-51-400-4432) about redistribution and commercial use
+account_required: false
+
+summary: >-
+  GOCI-II succeeds GOCI on COMS (Chollian-1), the world's first geostationary ocean colour sensor (2010–2021), and was launched on GEO-KOMPSAT-2B in February 2020.
+  It images the seas around Korea every hour in daylight (10 times a day) at 250 m and adds a once-daily Full Disk observation that GOCI did not have. The number of bands rose from 8 to 12 (380–865 nm).
+  NOSC distributes L2 products in NetCDF, from basic ocean colour (remote-sensing reflectance, chlorophyll, suspended matter, coloured dissolved organic matter) to red tide, floating algae, sea fog,
+  surface currents, low-salinity water, aerosol and land products. The same satellite also carries the GEMS air-quality spectrometer.
+
+time_convention:
+  summary: >-
+    Each L1B or L2 file is a single acquisition (an instantaneous image). The date and time in the file name are the UTC observation time, and LA is acquired at 15 minutes past each hour from 23:15 to 08:15 UTC.
+    A file with a slot number (S000–S011) covers part of the area; a file without one is the merged image of all slots.
+  points:
+    - "Example file name GK2B_GOCI2_L2_20211221_001530_LA_S002_AC.nc: satellite (GK2B), sensor (GOCI2), level, observation date (UTC), observation time (UTC), coverage (LA/FD), slot and product code (NOSC notes that the order may change)."
+    - "UTC and Korean dates differ. The first acquisition at 08:15 KST is the 23:15 UTC file of the previous day, so a Korean calendar day starts with the previous UTC day's 23:15 file."
+    - "Acquisitions are skipped during station keeping (on Tuesdays and Thursdays at varying times), attitude manoeuvres (three times a year) and lunar calibration. The NOSC FAQ says LA then has 8 or 9 acquisitions."
+    - "Daily or monthly composites are not part of the standard downloads, so compute time means yourself from the per-acquisition L2 files."
+  source: https://www.nosc.go.kr/eng/boardContents/actionBoardContentsCons0027.do
+  source_name: NOSC GOCI-II Products (file naming) + NOSC FAQ
+
+variables:
+  note: >-
+    Product names and codes are those listed in the NOSC download menus and Open API guide; the code is the product identifier at the end of an L2 file name (e.g. …_LA_Chl.nc).
+    The NetCDF variable names and units inside the files are given in "GOCI-II Level-2 OCR data format (v04, 2025-02-28)" on the NOSC technical documents board; we could not read that document, so they are not listed here.
+    Other products include sea ice (SI), primary production (PP), fishing ground information (FGI) and land products (land surface reflectance SRL, broadband and narrowband land albedo LSAB/LSAN, vegetation index VI, land cover LCC).
+  full_list: https://www.nosc.go.kr/eng/board/actionBoardListBoard0011.do
+  groups:
+    - name: Atmospheric correction and optical properties (L2, per acquisition)
+      kind: instant
+      items:
+        - text: "Remote-sensing reflectance and Rayleigh-corrected reflectance — `AC` (RRS and RhoC, per band)"
+          std: []
+        - text: "Inherent optical properties — `IOP` (absorption a, backscattering bb)"
+          std: []
+        - text: "Diffuse attenuation coefficient — `Kd`"
+          std: []
+        - text: "Secchi disk depth — `Zsd`"
+          std: []
+    - name: Basic ocean colour (L2, per acquisition)
+      kind: instant
+      items:
+        - text: "Chlorophyll-a concentration — `Chl`"
+          std: []
+        - text: "Total suspended material — `TSS`"
+          std: []
+        - text: "Coloured dissolved organic matter — `CDOM`"
+          std: []
+    - name: Ocean products (L2, per acquisition)
+      kind: instant
+      items:
+        - text: "Red tide index — `RI`"
+          std: []
+        - text: "Floating algae — `FA`"
+          std: []
+        - text: "Marine fog — `MF`"
+          std: []
+        - "Low sea surface salinity — `LSSS`"
+        - text: "Chlorophyll-a front — `CF`"
+          std: []
+        - "Sea surface current — `SSC`"
+    - name: Atmospheric products (L2, per acquisition)
+      kind: instant
+      items:
+        - "Aerosol optical depth — `AOD` (with aerosol type AT and dust DUST)"
+
+access:
+  - name: NOSC — GOCI-II LA Downloads
+    url: https://www.nosc.go.kr/eng/program/actionGociDownload.do
+    method: Web search and download (level, product, date, slot; NetCDF and JPG)
+    note: >-
+      No registration or login is needed. Dates can be chosen in KST or UTC, and you pick individual slots (S000–S011) or the mosaic. NetCDF downloads work only on a PC.
+      The Korean page also offers NOSC application products (sea surface temperature, Sargassum horneri daily and hourly).
+    login: false
+  - name: NOSC — GOCI-II FD Downloads
+    url: https://www.nosc.go.kr/eng/program/actionGociFdDownload.do
+    method: Web search and download (L1B, L2)
+    note: FD L2 products are mainly ocean colour products (atmospheric correction, IOP, Kd, Secchi depth, chlorophyll, suspended matter, CDOM, floating algae).
+    login: false
+  - name: NOSC Web Directory
+    url: https://www.nosc.go.kr/wd/zTreeView.do
+    method: Folder browsing and download (level, product groups AC, IOP, AERO, OC, OCEAN, LAND; LA/FD; NetCDF/JPG)
+    note: Recommended by the NOSC FAQ, together with OPeNDAP, for bulk downloads.
+    login: false
+  - name: NOSC OPeNDAP
+    url: https://nosc.go.kr/opendap/
+    method: OPeNDAP (search page https://www.nosc.go.kr/program/opendapSearch.do, up to 90 days per search)
+    note: >-
+      A user manual (PDF and video, 2026-06-04) and the bulk-download tool noscCollector (2024-06-21) are on the NOSC general documents board.
+      Automated access to the server listing failed on 2026-10-14, so whether it requires a login was not confirmed.
+  - name: NOSC OPEN API
+    url: https://www.nosc.go.kr/openapi/actionOpenApiIssue.do
+    method: REST (JSON, XML) — metadata, satellite image and satellite NetCDF information APIs
+    note: >-
+      After agreeing to the terms and submitting a request (usage type, affiliation, service URL, purpose), NOSC approves it and issues a service key. Calls are limited to 20,000 a day, and a lost key must be requested again.
+      The NetCDF information API (openapi/GK2BNcMedia/search.do) returns file paths and names for given startDate, endDate and slot (0–11, or 13 for the whole Korean area).
+
+example:
+  lang: python
+  note: >-
+    Inspects the group and variable structure of one L2 NetCDF file downloaded from NOSC. Check the variable names against the "GOCI-II Level-2 OCR data format" document.
+    The file name is the example from the NOSC Open API guide; replace it with your own.
+  code: |
+    # pip install netCDF4 xarray
+    import netCDF4
+    import xarray as xr
+
+    fname = "GK2B_GOCI2_L2_20211221_001530_LA_S002_AC.nc"   # replace with your file
+
+    # 1) List groups and variables (L2 files may be organised in groups)
+    with netCDF4.Dataset(fname) as nc:
+        print(nc.ncattrs())                       # global attributes such as observation time
+        for gname, g in nc.groups.items():
+            print(gname, list(g.variables))
+
+    # 2) Open the group you need with xarray, using a group name found above
+    # ds = xr.open_dataset(fname, group="<group name>")
+    # print(ds)
+
+tips:
+  - "File names use UTC. The 08:15 KST acquisition carries the previous UTC date (23:15 UTC), so a daily composite for a Korean calendar day spans two UTC dates."
+  - "On 2025-02-28 NOSC announced that past L2 products had been reprocessed and re-released (with atmospheric correction v31, IOP v20 and data format v04 documents). Fetch again any L2 time series built from earlier downloads."
+  - "An updated atmospheric correction was implemented in the ground segment in October 2023 (KIOST, IOCS 2023), and an explanatory document on the improved remote-sensing reflectance was posted on 2024-04-15. Check the processing information in your files so that versions are not mixed across periods."
+  - "Station keeping happens on Tuesdays and Thursdays at varying times, removing that acquisition (NOSC FAQ). Daily means that assume all 10 acquisitions can be biased because the missing hour changes from day to day."
+  - "Around the equinoxes NOSC posts solar interference notices. In those periods and on days with safe-mode notices (e.g. 2022-09-04, 2023-12-11), data are missing or were withheld from the service."
+  - "NASA OBPG (OceanColor) and NASA CMR hold no GOCI-II data (checked 2026-10-14; the OBPG Level-2 listing includes only the earlier GOCI). Get GOCI-II from NOSC."
+  - "To join GOCI (2011–2021) with GOCI-II, note that GOCI comes from NASA OBPG and GOCI-II from NOSC with different processing. Compare the two over the overlap period (2020-10 to 2021-03) first."
+  - "GEMS on the same satellite (NIER) also observes East Asia hourly in daylight. KIOST has evaluated using GEMS and GK-2A total ozone in GOCI-II atmospheric correction (Lee et al., 2025, Korean Journal of Remote Sensing 41(6))."
+
+citations:
+  dataset: []
+  papers:
+    - label: One year of GOCI-II (in Korean)
+      text: >-
+        Choi, J.-K., Park, M.-S., Han, K.-S., Kim, H.-C., Im, J. (2021): One Year of GOCI-II Launch: Present and Future. Korean Journal of Remote Sensing, 37(5-2), 1229–1234.
+      doi: 10.7780/kjrs.2021.37.5.2.1
+      bibtex: |
+        @article{choi2021goci2,
+          author  = {Choi, Jong-kuk and Park, Myung-sook and Han, Kyung-soo and Kim, Hyun-cheol and Im, Jungho},
+          title   = {One Year of {GOCI-II} Launch: Present and Future},
+          journal = {Korean Journal of Remote Sensing},
+          volume  = {37},
+          number  = {5-2},
+          pages   = {1229--1234},
+          year    = {2021},
+          doi     = {10.7780/kjrs.2021.37.5.2.1}
+        }
+    - label: Improved GOCI-II water vapour absorption correction (atmospheric correction)
+      text: >-
+        Lee, K.-S., Park, M.-S., Choi, J.-K., Ahn, J.-H. (2023): Improvement of GOCI-II Water Vapor Absorption Correction through Fusion with GK-2A/AMI Data. Remote Sensing, 15(8), 2124.
+      doi: 10.3390/rs15082124
+      bibtex: |
+        @article{lee2023goci2wv,
+          author  = {Lee, Kyeong-Sang and Park, Myung-Sook and Choi, Jong-Kuk and Ahn, Jae-Hyun},
+          title   = {Improvement of {GOCI-II} Water Vapor Absorption Correction through Fusion with {GK-2A/AMI} Data},
+          journal = {Remote Sensing},
+          volume  = {15},
+          number  = {8},
+          pages   = {2124},
+          year    = {2023},
+          doi     = {10.3390/rs15082124}
+        }
+    - label: GOCI and GOCI-II sea surface salinity continuity in the East China Sea
+      text: >-
+        Jang, E., Choi, J.-K., Ahn, J.-H. (2024): Continuity and Enhancements in Sea Surface Salinity Estimation in the East China Sea Using GOCI and GOCI-II: Challenges and Further Developments.
+        Remote Sensing, 16(12), 2111.
+      doi: 10.3390/rs16122111
+      bibtex: |
+        @article{jang2024gocisss,
+          author  = {Jang, Eunna and Choi, Jong-Kuk and Ahn, Jae-Hyun},
+          title   = {Continuity and Enhancements in Sea Surface Salinity Estimation in the {East China Sea} Using {GOCI} and {GOCI-II}: Challenges and Further Developments},
+          journal = {Remote Sensing},
+          volume  = {16},
+          number  = {12},
+          pages   = {2111},
+          year    = {2024},
+          doi     = {10.3390/rs16122111}
+        }
+  acknowledgement: >-
+    We found no dataset DOI or recommended citation for GOCI-II data on the NOSC website. Credit the source as "National Ocean Satellite Center (NOSC), KHOA — GEO-KOMPSAT-2B GOCI-II",
+    and state the product code, level, coverage (LA/FD) and download date (before or after the reprocessing). Pages displaying Open API results must credit the KHOA OPEN API.
+
+notices:
+  - date: "2026-10-07"
+    level: info
+    title: GEO-KOMPSAT-2B observation schedule change (6 October)
+    body: >-
+      Part of the 17:15 KST acquisition on 6 October 2026 was skipped because of station keeping. The previous day's notice (2026-10-06) announced the cancellation of the 04:15 UTC acquisition on 1 October.
+      Several such schedule-change notices appear every month, so check the operational notices for missing acquisitions before time-series work.
+    source: https://www.nosc.go.kr/board/actionBoardViewBoard0005.do?BOARD_SNO=235&boardSelectPage=1
+  - date: "2025-06-25"
+    level: info
+    title: Five L2 algorithm documents (ATBDs) updated
+    body: >-
+      Updated ATBDs were posted for Aerosol Retrieval, Red Tide Index (RI), Low Sea Surface Salinity, Chlorophyll(-a) Front and Sea Surface Current. If you use these products, check the updated algorithms and quality criteria.
+    source: https://www.nosc.go.kr/eng/board/actionBoardListBoard0011.do
+  - date: "2025-02-28"
+    level: warning
+    title: Past L2 basic products reprocessed and re-released
+    body: >-
+      NOSC announced that the basic L2 products produced in the past by GEO-KOMPSAT-2B were reprocessed and are now served, and posted the "GOCI-II Level-2 OCR data format (v04)", atmospheric correction (v31) and IOP (v20) documents.
+      The post does not state the reprocessed period. Re-check results made from L2 files downloaded earlier.
+    source: https://www.nosc.go.kr/board/actionBoardViewBoard0009.do?BOARD_SNO=34&boardSelectPage=2
+  - date: "2024-04-15"
+    level: info
+    title: Algorithm update for the GOCI-II remote-sensing reflectance product
+    body: >-
+      NOSC posted "Algorithm update for GOCI-II remote-sensing reflectance product". According to KIOST, the updated atmospheric correction has been implemented in the GOCI-II ground segment since October 2023.
+    source: https://www.nosc.go.kr/eng/board/actionBoardViewBoard0011.do?BOARD_SNO=32&boardSelectPage=1
+  - date: "2023-12-12"
+    level: warning
+    title: GEO-KOMPSAT-2B service temporarily suspended (11 December)
+    body: >-
+      The satellite entered safe mode and the geolocation of the observations became erroneous, so the ocean satellite image service was suspended on 11 December 2023.
+    source: https://www.nosc.go.kr/board/actionBoardViewBoard0005.do?BOARD_SNO=83&boardSelectPage=15
+  - date: "2022-10-21"
+    level: warning
+    title: Some images withheld after safe-mode recovery (September 2022)
+    body: >-
+      GEO-KOMPSAT-2B switched to safe hold mode at about 21:00 KST on 3 September 2022, and images from 08:15 to 15:15 KST that failed during recovery were excluded from the service.
+      The English notice dates the affected window to 3 September while the Korean notice gives 4 September; check this notice if data for those days are missing.
+    source: https://www.nosc.go.kr/eng/board/actionBoardViewBoard0012.do?BOARD_SNO=8&boardSelectPage=18
+
+links:
+  - name: NOSC website (English)
+    url: https://www.nosc.go.kr/eng/main.do
+  - name: GK-2B GOCI-II (coverage and bands)
+    url: https://www.nosc.go.kr/eng/boardContents/actionBoardContentsCons0024.do
+  - name: GOCI-II Products (file naming)
+    url: https://www.nosc.go.kr/eng/boardContents/actionBoardContentsCons0027.do
+  - name: Technical documents (ATBDs)
+    url: https://www.nosc.go.kr/eng/board/actionBoardListBoard0011.do
+  - name: Operational notices (English)
+    url: https://www.nosc.go.kr/eng/board/actionBoardListBoard0012.do
+  - name: NOSC FAQ (Korean; acquisitions per day, update timing, bulk downloads)
+    url: https://www.nosc.go.kr/board/actionBoardListBoard0020.do
+  - name: OPEN API developer guide (Korean)
+    url: https://www.nosc.go.kr/boardContents/actionBoardContentsCons0008.do
+  - name: General documents (OPeNDAP manual, noscCollector; Korean)
+    url: https://www.nosc.go.kr/board/actionBoardListBoard0018.do
+  - name: WMO OSCAR — GOCI-II
+    url: https://space.oscar.wmo.int/instruments/view/goci_ii
+  - name: This site — predecessor GOCI (COMS)
+    url: ../goci/
+  - name: This site — GEMS on the same satellite
+    url: ../gems/
+  - name: This site — GK-2A (GEO-KOMPSAT-2A meteorological satellite)
+    url: ../gk2a/
+
+watch_urls:
+  - https://www.nosc.go.kr/board/actionBoardListBoard0005.do
+  - https://www.nosc.go.kr/board/actionBoardListBoard0009.do
+
+last_verified: "2026-10-14"

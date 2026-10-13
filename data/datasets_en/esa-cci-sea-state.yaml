@@ -1,0 +1,321 @@
+# ─────────────────────────────────────────────────────────────
+# ESA Sea State CCI — dataset information file (English edition)
+# Satellite tab (sea surface height and waves), also listed in the ocean tab (satellite observations). Intercalibrated multi-mission altimeter significant wave height (L2P along-track, L3 daily, L4 monthly 1°) plus Sentinel-1 SAR wave products.
+# As checked on 2026-10-13, version 4 (1991-08 to 2023-12) is the latest, registered at CEDA with DOIs on 2026-07-08 (no further updates planned).
+# After editing, update last_verified to the date you checked the official pages.
+# ─────────────────────────────────────────────────────────────
+id: esa-cci-sea-state
+name: ESA Sea State CCI v4
+full_name: >-
+  ESA Sea State Climate Change Initiative (Sea_State_cci) version 4 — multi-mission altimeter significant wave height L2P, L3 and L4, and Sentinel-1 SAR wave L2P (satellite sea state climate data record)
+category: satellite
+domain: satellite
+group: 해면고도·파랑
+order: 30
+also_in:
+  - domain: ocean
+    group: 위성 관측 자료
+domains: [해양, 해양파랑, 원격탐사]
+provider: European Space Agency (ESA) Climate Change Initiative (CCI) Sea State project — produced and distributed by Ifremer (France) / archived at CEDA (UK)
+
+status: active
+status_note: >-
+  Version 4 is the latest. Ifremer first made it available as an interim release in August 2025, and on 2026-07-08 the formal records (altimeter L2P, L3, L4 and SAR L2P) were published at CEDA with DOIs.
+  CCI products are research climate data records released by version, with no routine updates (CEDA status "Completed", update frequency "Not Planned"); as checked on 2026-10-13 the altimeter record ends on 2023-12-31.
+  The project continues in Phase 2, and its page says it has fed the Copernicus Climate Change Service (C3S) since 2026, but no date for a next version has been announced.
+
+period:
+  start: "1991-08"
+  end: "2023-12"
+  note: >-
+    Altimeter L2P and L3 cover 1991-08-03 to 2023-12-31 and the L4 monthly product 1992-01 to 2023-12 (CEDA). Version 4 adds ERS-1, ERS-2 and TOPEX/Poseidon to reach back into the 1990s (version 3 covered 2002-06 to 2021-01).
+    Sentinel-1 SAR Wave Mode significant wave height runs from 2015-03-19 to 2025-06-11, and the Sentinel-1 WV Integrated Sea State Parameters (ISSP, DLR) from 2014-12-01 to 2024-12-30.
+
+resolution:
+  spatial_short: "111 km (1°)"
+  temporal_short: "1일"
+  spatial: >-
+    Altimeter L2P and L3 — 1 Hz along-track values (about 6 km according to the CEDA L3 record, 7 km in the user guide summary) /
+    L4 — global 1° × 1° regular cylindrical (latitude–longitude) grid / Sentinel-1 SAR Wave Mode — imagettes of about 20 km every 100 km along track
+  vertical: Single level (significant wave height)
+  temporal: >-
+    L2P — one file per satellite pass, instantaneous 1 Hz measurements / L3 — daily multi-mission files (still along-track) / L4 — monthly statistics (mean, maximum, RMS, counts)
+coverage:
+  short: 준전지구
+  note: "Only ocean under altimeter tracks is sampled. L3 spans 80°S–80°N (CEDA). Measurements contaminated by sea ice get a lower quality level and are excluded from L3 and L4"
+update: No routine updates — reprocessed releases by version (v1.1 in 2020-01, v3 in 2022-10, v4 registered at CEDA in 2026-07)
+license: >-
+  ESA CCI Sea State terms and conditions (any use permitted). Users must acknowledge the ESA CCI, the Sea State CCI project and the data providers, cite the dataset DOIs, and send copies of reports or publications that use the data to the CCI
+account_required: false
+
+summary: >-
+  A satellite sea state climate data record from the ESA Climate Change Initiative. Waveforms from twelve altimeters, from ERS-1 to Sentinel-6A, are retracked (WHALES and others),
+  intercalibrated against Jason-3, calibrated against buoys and denoised with empirical mode decomposition (EMD). The resulting significant wave height comes as along-track data (L2P),
+  daily merged along-track files (L3) and 1° monthly gridded statistics (L4). Version 4 spans 1991–2023 and also provides significant wave height and sea state parameters from Sentinel-1 SAR imagery (L2P).
+  It is used for wave climate change studies, validation of wave models and reanalyses, and coastal engineering.
+
+time_convention:
+  summary: >-
+    L2P and L3 values are 1 Hz measurements taken as the satellite passed (the median of the full-resolution samples), and each L3 file gathers one day of good-quality measurements from all missions.
+    For L4, the median of each pass crossing a 1° cell is computed first, and the monthly statistics (mean, maximum, RMS, counts) are then computed from those per-pass medians.
+  points:
+    - "File name examples — L2P ESACCI-SEASTATE-L2P-SWH-Jason-2-20170130T145103-fv01.nc (time of the first measurement), L3 ESACCI-SEASTATE-L3-SWH-MULTI_1D-20170130-fv01.nc, L4 ESACCI-SEASTATE-L4-SWH-MULTI_1M-201701-fv01.nc"
+    - "Each 1 Hz value is the median of the valid full-resolution samples at 20 Hz (18 Hz for Envisat and TOPEX, 40 Hz for SARAL). It is flagged bad when fewer than 6 valid samples (12 for SARAL) are available."
+    - "The L4 swh_mean is not an even average over all days; it is the mean of the medians of the passes that crossed the cell that month. Wave conditions when no satellite passed are not represented."
+    - "The L4 swh_max is the largest of the observed per-pass medians, so the peak of a storm that no satellite overflew is missing."
+    - "L4 includes swh_sum, swh_squared_sum and swh_count, so means and variances over several months or cells can be recomputed with count weighting."
+  source: https://umr-lops.github.io/cci-seastate-pum/v4.0/altimetry/l4.html
+  source_name: CCI Sea State Product User Guide v4.0 (L2P, L3, L4 and processing details)
+
+variables:
+  note: >-
+    Variable names follow the CCI Sea State Product User Guide v4.0 and the CEDA v4 catalogue records. The guide recommends `swh_denoised` (cross-mission bias corrected and denoised) for most applications.
+    L3 and L4 use only L2P measurements with quality level 3 (good), from the Ku band (Ka band for SARAL only).
+  full_list: https://umr-lops.github.io/cci-seastate-pum/v4.0/altimetry/l2p.html
+  groups:
+    - name: Altimeter L2P and L3 (1 Hz along-track)
+      kind: instant
+      items:
+        - text: "Significant wave height, bias corrected and denoised (recommended) — `swh_denoised` (m)"
+          note: swh_adjusted with EMD denoising applied
+        - text: "Significant wave height, cross-mission bias corrected — `swh_adjusted` (m)"
+        - text: "Significant wave height from the retracker, no bias correction — `swh` (m)"
+        - "Significant wave height uncertainty — `swh_uncertainty` (m)"
+        - text: "SWH quality level (0 undefined, 1 bad, 2 acceptable, 3 good; L2P) — `swh_quality_level`"
+          std: []
+        - text: "Satellite code, cycle and relative pass number (L3) — `satellite`, `cycle`, `relative_pass`"
+          std: []
+        - text: "Distance to coast — `distance_to_coast` (m)"
+          kind: static
+          std: []
+        - text: "Bathymetry (GEBCO 2024) — `bathymetry` (m)"
+          kind: static
+          std: []
+    - name: Altimeter L2P ancillary fields (model and sea ice values at the measurement)
+      kind: instant
+      items:
+        - text: "Sea ice fraction — `sea_ice_fraction` (1)"
+          std: []
+        - text: "ERA5 significant height of combined wind waves and swell — `era5_swh` (m)"
+          note: Model value (not a measurement)
+        - text: "WAVEWATCH III hindcast significant wave height — `ww3_swh` (m)"
+          note: Model value independent of altimetry
+    - name: Altimeter L4 (1° monthly statistics)
+      kind: mean
+      period: Monthly
+      items:
+        - text: "Monthly mean significant wave height — `swh_mean` (m)"
+          note: Mean of the per-pass cell medians
+        - text: "Monthly maximum significant wave height — `swh_max` (m)"
+          kind: max
+          note: Largest per-pass cell median
+        - text: "Root mean square of significant wave height — `swh_rms` (m)"
+        - text: "Number of per-pass medians — `swh_count` (count)"
+          std: []
+        - text: "Counts above thresholds (0.5–10 m) — `swh_count_greater_than_0.50` … `swh_count_greater_than_10.00` (count)"
+          kind: accum
+          std: []
+        - text: "Sum and sum of squares (for re-averaging) — `swh_sum`, `swh_squared_sum` (m, m2)"
+          kind: accum
+          std: []
+
+access:
+  - name: CEDA — altimeter L4 monthly 1° grid, version 4
+    url: https://catalogue.ceda.ac.uk/uuid/315d8e013696420192f1ea1d9191ca9c/
+    method: HTTPS, OPeNDAP, anonymous FTP (data.ceda.ac.uk/neodc/esacci/sea_state/data/v4_release/altimeter/l4/v4.0/)
+    note: "L2P is at catalogue.ceda.ac.uk/uuid/baeb32fd74cb49a1b67a6a4164ff0899 and L3 at catalogue.ceda.ac.uk/uuid/82273fe59b784e7c914e1bd3049e3483, downloadable the same way."
+    login: false
+  - name: Ifremer CERSAT — Sea State CCI v4 data server
+    url: https://data-cersat.ifremer.fr/data/ocean-waves/cci-seastate/v4/
+    method: "HTTPS / FTP (ftp://ftp.ifremer.fr/ifremer/cersat/data/ocean-waves/cci-seastate/v4/)"
+    note: "No login required. Paths are data/satellite/altimeter/l2p, l3 and l4 (plus data/satellite/sar); L4 holds monthly files under year folders (e.g. l4/2020/ESACCI-SEASTATE-L4-SWH-MULTI_1M-202001-fv01.nc)."
+    login: false
+  - name: Ifremer THREDDS — remote subsetting of L4
+    url: https://tds0.ifremer.fr/thredds/catalogs/ESACCI-SEASTATE-L4-SWH-MULTI_1M.html
+    method: OPeNDAP / THREDDS (L4 only)
+    login: false
+  - name: ESA CCI Sea State data extraction service
+    url: https://cci-seastate.ifremer.fr/
+    method: Web extraction by area, mission, period and variable (generates Python, R and cURL code)
+  - name: ESA Climate Office — Sea State data list
+    url: https://climate.esa.int/en/projects/sea-state/data/
+    method: Web (CEDA catalogue links and DOIs by version)
+
+example:
+  lang: python
+  note: "Downloads an L4 monthly file from the Ifremer server and prints monthly mean significant wave height around Korea. No login is needed."
+  code: |
+    # pip install xarray netCDF4 requests
+    import requests, xarray as xr
+
+    base = "https://data-cersat.ifremer.fr/data/ocean-waves/cci-seastate/v4/data/satellite/altimeter/l4/"
+    fname = "ESACCI-SEASTATE-L4-SWH-MULTI_1M-202001-fv01.nc"      # monthly file under a year folder
+    with open(fname, "wb") as f:
+        f.write(requests.get(base + "2020/" + fname, timeout=120).content)
+
+    ds = xr.open_dataset(fname)
+    box = ds.where((ds.lat >= 30) & (ds.lat <= 42) & (ds.lon >= 120) & (ds.lon <= 135), drop=True)  # around Korea
+    print(box["swh_mean"].values.round(2))
+    print("passes per cell:", box["swh_count"].values)               # be careful where samples are few
+
+tips:
+  - "The guide recommends `swh_denoised` for most uses. `swh` has no cross-mission bias correction, so mixing missions with it can create steps when the satellite changes."
+  - "L4 is a monthly statistic built only from the moments satellites passed. In small regions such as the seas around Korea, where the number of missions changes over time, treat means and maxima from cells and months with a small swh_count with caution."
+  - "Cross-mission bias correction is less certain at high sea states (5–10 m, where comparison pairs are sparse; above 10 m it is extrapolated). For typhoon extremes, check against buoys and models."
+  - "Measurements with sea ice concentration above 10% get quality level 1 and those with 0–10% level 2, so they drop out of L3 and L4. Seas that freeze in winter, such as the Sea of Okhotsk and the Bohai Sea, have gaps or few samples in that season."
+  - "The 1990s (ERS-1, ERS-2, TOPEX) have few missions, and the guide notes that TOPEX cycles up to 16 are excluded, Sides A and B are treated separately, and recorder degradation left gaps. For long-term trends, check how sample numbers change over time."
+  - "Retrackers differ by mission — WHALES for Jason-1/2/3, Envisat, CryoSat-2 and SARAL; MLE3 for ERS and TOPEX; MLE4 for Sentinel-3A/B and Sentinel-6A. Keep this in mind when comparing missions."
+  - "L2P carries ERA5 and WAVEWATCH III wave heights colocated with each measurement (era5_swh, ww3_swh), so model validation can be done without downloading model data separately."
+  - "Version 3 (2002-06 to 2021-01) and version 4 differ in retracker versions, bathymetry and land masking, so do not mix them. When comparing with earlier results based on v1.1 or v3, recompute with v4."
+
+citations:
+  dataset:
+    - label: Sea State CCI v4 altimeter L4 monthly 1° grid (CEDA)
+      text: >-
+        Piollé, J.-F.; Dodet, G.; Ardhuin, F.; Passaro, M. (2026): ESA Sea State Climate Change Initiative (Sea_State_cci): Global remote sensing merged multi-mission
+        monthly gridded significant wave height from altimetry, L4 product, version 4. NERC EDS Centre for Environmental Data Analysis, 08 July 2026. doi:10.5285/315d8e013696420192f1ea1d9191ca9c
+      doi: 10.5285/315d8e013696420192f1ea1d9191ca9c
+      bibtex: |
+        @misc{piolle2026seastatel4,
+          author    = {Pioll{\'e}, Jean-Fran{\c{c}}ois and Dodet, Guillaume and Ardhuin, Fabrice and Passaro, Marcello},
+          title     = {{ESA} Sea State Climate Change Initiative (Sea\_State\_cci): Global remote sensing merged multi-mission monthly gridded significant wave height from altimetry, {L4} product, version 4},
+          year      = {2026},
+          publisher = {NERC EDS Centre for Environmental Data Analysis},
+          doi       = {10.5285/315d8e013696420192f1ea1d9191ca9c}
+        }
+    - label: Sea State CCI v4 altimeter L3 daily merged along-track (CEDA)
+      text: >-
+        Piollé, J.-F.; Dodet, G.; Ardhuin, F.; Passaro, M. (2026): ESA Sea State Climate Change Initiative (Sea_State_cci): Global remote sensing daily merged multi-mission
+        along-track significant wave height from altimetry, L3 product, version 4. NERC EDS Centre for Environmental Data Analysis, 08 July 2026. doi:10.5285/82273fe59b784e7c914e1bd3049e3483
+      doi: 10.5285/82273fe59b784e7c914e1bd3049e3483
+      bibtex: |
+        @misc{piolle2026seastatel3,
+          author    = {Pioll{\'e}, Jean-Fran{\c{c}}ois and Dodet, Guillaume and Ardhuin, Fabrice and Passaro, Marcello},
+          title     = {{ESA} Sea State Climate Change Initiative (Sea\_State\_cci): Global remote sensing daily merged multi-mission along-track significant wave height from altimetry, {L3} product, version 4},
+          year      = {2026},
+          publisher = {NERC EDS Centre for Environmental Data Analysis},
+          doi       = {10.5285/82273fe59b784e7c914e1bd3049e3483}
+        }
+    - label: Sea State CCI v4 altimeter L2P along-track (CEDA)
+      text: >-
+        Piollé, J.-F.; Dodet, G.; Ardhuin, F.; Passaro, M. (2026): ESA Sea State Climate Change Initiative (Sea_State_cci): Global remote sensing multi-mission
+        along-track significant wave height from altimetry, L2P product, version 4. NERC EDS Centre for Environmental Data Analysis, 08 July 2026. doi:10.5285/baeb32fd74cb49a1b67a6a4164ff0899
+      doi: 10.5285/baeb32fd74cb49a1b67a6a4164ff0899
+      bibtex: |
+        @misc{piolle2026seastatel2p,
+          author    = {Pioll{\'e}, Jean-Fran{\c{c}}ois and Dodet, Guillaume and Ardhuin, Fabrice and Passaro, Marcello},
+          title     = {{ESA} Sea State Climate Change Initiative (Sea\_State\_cci): Global remote sensing multi-mission along-track significant wave height from altimetry, {L2P} product, version 4},
+          year      = {2026},
+          publisher = {NERC EDS Centre for Environmental Data Analysis},
+          doi       = {10.5285/baeb32fd74cb49a1b67a6a4164ff0899}
+        }
+  papers:
+    - label: Sea State CCI dataset description (v1)
+      text: >-
+        Dodet, G., Piollé, J.-F., Quilfen, Y., Abdalla, S., Accensi, M., Ardhuin, F., Ash, E., Bidlot, J.-R., Gommenginger, C., Marechal, G., Passaro, M., Quartly, G., Stopa, J.,
+        Timmermans, B., Young, I., Cipollini, P., Donlon, C. (2020): The Sea State CCI dataset v1: towards a sea state climate data record based on satellite observations.
+        Earth System Science Data, 12(3), 1929–1951.
+      doi: 10.5194/essd-12-1929-2020
+      bibtex: |
+        @article{dodet2020seastate,
+          author  = {Dodet, Guillaume and Pioll{\'e}, Jean-Fran{\c{c}}ois and Quilfen, Yves and Abdalla, Saleh and Accensi, Micka{\"e}l and Ardhuin, Fabrice and Ash, Ellis and Bidlot, Jean-Raymond and Gommenginger, Christine and Marechal, Gwendal and Passaro, Marcello and Quartly, Graham and Stopa, Justin and Timmermans, Ben and Young, Ian and Cipollini, Paolo and Donlon, Craig},
+          title   = {The Sea State {CCI} dataset v1: towards a sea state climate data record based on satellite observations},
+          journal = {Earth System Science Data},
+          volume  = {12},
+          number  = {3},
+          pages   = {1929--1951},
+          year    = {2020},
+          doi     = {10.5194/essd-12-1929-2020}
+        }
+  acknowledgement: >-
+    Under the ESA CCI terms, presentations and publications must acknowledge the ESA Climate Change Initiative, the Sea State CCI project and the data providers, and cite the dataset DOIs used.
+    If CCI data are a major component of the work, consider offering co-authorship, and send copies of resulting publications to the CCI.
+
+notices:
+  - date: "2026-07-08"
+    level: info
+    title: Version 4 records published at CEDA with DOIs
+    body: >-
+      Version 4 altimeter L2P and L3 (1991-08 to 2023-12) and L4 (1992-01 to 2023-12), together with Sentinel-1 SAR L2P (Wave Mode SWH 2015-03 to 2025-06, ISSP and others), were published at CEDA with DOIs.
+      All are marked "Completed", with no further updates planned.
+    source: https://catalogue.ceda.ac.uk/uuid/315d8e013696420192f1ea1d9191ca9c/
+  - date: "2025-08"
+    level: info
+    title: Version 4 released — extended to 1991–2023, new Sentinel-1 IW and EW SAR products
+    body: >-
+      ERS-1, ERS-2 and TOPEX/Poseidon extend the record back to the early 1990s, three more years were added for Jason-3, SARAL and CryoSat-2, and Sentinel-3A/B and Sentinel-6A bring it to December 2023.
+      Bathymetry moved to GEBCO 2024, the land mask is now based on distance to coast, and Sentinel-1 IW and EW mode SAR products are new. The release first appeared as an interim version on the Ifremer server.
+    source: https://umr-lops.github.io/cci-seastate-pum/v4.0/intro.html
+  - date: "2022-10-10"
+    level: info
+    title: Version 3 released (2002-06 to 2021-01)
+    body: >-
+      Version 3 altimeter L2P, L3 and L4 and the Envisat and Sentinel-1 SAR products were published at CEDA. The record was extended to the end of 2020, with Sentinel-3 SAR altimetry and additional ancillary variables.
+    source: https://catalogue.ceda.ac.uk/uuid/9c350d4ff7ee438f9f1fc7252cbb2282
+  - date: "2020-01-30"
+    level: info
+    title: Version 1.1 released (1991-07 to 2018-12)
+    body: >-
+      The first climate data record release (L2P, L3, L4), inheriting the processing of the GlobWave project, was published at CEDA. It has since been superseded by versions 3 and 4.
+    source: https://catalogue.ceda.ac.uk/uuid/47140d618dcc40309e1edbca7e773478
+
+transitions:
+  - from: Sea State CCI v3
+    to: Sea State CCI v4
+    status: completed
+    date: "2025-08"
+    summary: >-
+      Extends the record to 1991–2023 (previously 2002–2021) by adding three 1990s missions and three recent ones. Bathymetry, the land mask and the Jason-3 retracked files were updated, and Sentinel-1 IW and EW SAR products were added.
+    changes:
+      - aspect: Period
+        before: "L4 2002-06 to 2021-01 (L2P and L3 2002–2021)"
+        after: "L2P and L3 1991-08 to 2023-12, L4 1992-01 to 2023-12"
+      - aspect: Altimeter missions
+        before: "Jason-1/2/3, Envisat, CryoSat-2, SARAL, Sentinel-3 and others"
+        after: "Adds ERS-1, ERS-2, TOPEX/Poseidon, Sentinel-3A/B and Sentinel-6A — twelve missions in all"
+      - aspect: Bathymetry and land mask
+        before: Previous bathymetry and land mask
+        after: "GEBCO 2024 bathymetry; land mask computed from distance to coast"
+      - aspect: Jason-3 input
+        before: Earlier retracked files
+        after: Updated version of the retracked files
+      - aspect: SAR products
+        before: "Envisat and Sentinel-1 Wave Mode"
+        after: "Sentinel-1 IW and EW modes added; Wave Mode record extended into 2024–2025"
+      - aspect: DOI
+        before: "L4 10.5285/9c350d4ff7ee438f9f1fc7252cbb2282"
+        after: "L4 10.5285/315d8e013696420192f1ea1d9191ca9c"
+    impacts:
+      - Do not mix v3 and v4 files in one time series. Download v4 for 2002–2020 as well so the whole record shares the same processing.
+      - "The 1990s are now included, but with fewer missions and a different retracker (MLE3), so check sample numbers by period when analysing long-term trends."
+    sources:
+      - name: CCI Sea State Product User Guide v4.0 — Changes
+        url: https://umr-lops.github.io/cci-seastate-pum/v4.0/changes.html
+      - name: CEDA — v4 L4 record
+        url: https://catalogue.ceda.ac.uk/uuid/315d8e013696420192f1ea1d9191ca9c/
+      - name: CEDA — v3 L4 record
+        url: https://catalogue.ceda.ac.uk/uuid/9c350d4ff7ee438f9f1fc7252cbb2282
+
+links:
+  - name: ESA Climate Office — Sea State project
+    url: https://climate.esa.int/en/projects/sea-state/
+  - name: ESA Climate Office — Sea State data (by version)
+    url: https://climate.esa.int/en/projects/sea-state/data/
+  - name: CCI Sea State Product User Guide v4.0 (web)
+    url: https://umr-lops.github.io/cci-seastate-pum/v4.0/intro.html
+  - name: Product User Guide v4.0 (PDF)
+    url: https://climate.esa.int/documents/3051/1_Sea_State_cci_PUG_V4.pdf
+  - name: Processing details (retrackers, intercalibration, quality control)
+    url: https://umr-lops.github.io/cci-seastate-pum/v4.0/altimetry/baseline.html
+  - name: ESA CCI Sea State terms and conditions (PDF)
+    url: https://artefacts.ceda.ac.uk/licences/specific_licences/esacci_sea_state_terms_and_conditions.pdf
+  - name: This site — SWOT KaRIn sea surface height and significant wave height
+    url: ../swot/
+  - name: This site — DUACS multi-mission altimetry L4 sea level
+    url: ../duacs/
+
+watch_urls:
+  - https://climate.esa.int/en/projects/sea-state/data/
+  - https://climate.esa.int/en/projects/sea-state/
+
+last_verified: "2026-10-13"

@@ -1,0 +1,309 @@
+# ─────────────────────────────────────────────────────────────
+# ESA Sea Surface Salinity CCI (CCI+SSS) — dataset information file (English edition)
+# Satellite tab (sea surface salinity), cross-listed in the ocean tab (satellite observations). Level 4 weekly and monthly salinity merged from the SMOS, Aquarius and SMAP L-band radiometers.
+# When checked on 2026-10-14 the latest public version was v5.5 (2010-01 to 2023-12, released at CEDA on 2025-02-24); v6.3 records exist at CEDA only as unpublished previews.
+# The version change within this page (v4.41 → v5.5) is recorded under transitions (no to_id).
+# After editing, update last_verified to the date you checked the official pages.
+# ─────────────────────────────────────────────────────────────
+id: esa-cci-sss
+name: ESA SSS CCI v5.5
+full_name: >-
+  ESA Sea Surface Salinity Climate Change Initiative (Sea_Surface_Salinity_cci) — Weekly and monthly sea surface salinity products from L-band, v5.5
+  (merged SMOS, Aquarius and SMAP Level 4 sea surface salinity climate record, distributed by CEDA)
+category: satellite
+domain: satellite
+group: 해면 염분
+order: 30
+also_in:
+  - domain: ocean
+    group: 위성 관측 자료
+domains: [해양, 원격탐사]
+provider: >-
+  ESA Climate Change Initiative Sea Surface Salinity project (CCI+SSS; science lead LOCEAN, project management ARGANS) /
+  archived and distributed by CEDA (NERC EDS Centre for Environmental Data Analysis, UK)
+
+status: active
+status_note: >-
+  The project continues in CCI+ Phase 2, and the latest public release is v5.5 (2010-01 to 2023-12), published at CEDA on 2025-02-24. CCI products are climate records
+  reprocessed version by version, so there are no routine updates (CEDA: "Not Planned"); when checked on 2026-10-14 the last v5.5 files were still 2023-12-30 (weekly) and 2023-12-15 (monthly).
+  CEDA holds records for the next version, v6.3 (2010–2023), but only as "PREVIEW ONLY" entries that cannot be downloaded. A May 2026 poster at the salinity conference
+  described a C3S salinity climate record (2010–2024) based on CCI+SSS v6 with a near-real-time Interim CDR from 2025, but no release date has been formally announced.
+
+period:
+  start: "2010-01"
+  end: "2023-12"
+  note: >-
+    The CEDA records give 2010-01-01 to 2023-12-30. The global monthly files run from 20100115 to 20231215, the last global weekly file is 2023-12-30,
+    and the polar weekly files start on 2010-01-02 (Southern Hemisphere) and 2010-01-09 (Northern Hemisphere). Input missions are SMOS (2010 onward),
+    Aquarius (2011-08 to 2015-06) and SMAP (2015-04 onward), according to the v4.41 PUG. January to May 2010 is built from SMOS commissioning-phase data,
+    and the PUG notes that products are generally better after 2015, once SMAP is included.
+
+resolution:
+  spatial_short: "50 km (0.25°)"
+  temporal_short: "7일"
+  spatial: >-
+    50 km effective resolution. Global regular 0.25° latitude–longitude grid (720 latitudes × 1440 longitudes, cell centres 89.875°S–89.875°N, 179.875°W–179.875°E) /
+    polar 25 km EASE-2 grids (Northern Hemisphere north of 45°N, Southern Hemisphere south of 45°S, separate files)
+  vertical: Sea surface only — salinity of the top centimetre or so sensed by L-band radiometers
+  temporal: >-
+    Weekly — a 7-day running mean provided at daily sampling (one file per day) / monthly — a one-month mean provided twice a month, centred on the 1st and the 15th.
+    Both are running means weighted by a Gaussian autocorrelation function
+
+coverage:
+  short: 전지구
+  note: "Global ocean. Coastal and sea-ice-adjacent pixels are marked by land and ice contamination flags (lsc_qc, isc_qc); polar EASE-2 files cover only latitudes poleward of 45°"
+update: "Reprocessed version by version, no routine updates (CEDA: Not Planned). Each release has extended the record by one or two years: v3.21 (2021-10), v4.41 (2024-02), v5.5 (2025-02)"
+license: >-
+  ESA CCI Salinity terms and conditions — anyone may use the data for any purpose, but presentations and publications must acknowledge the ESA Climate Change Initiative
+  and the Sea Surface Salinity CCI project and cite the dataset DOI. The file attributes state "ESA CCI Data Policy: free and open access"
+account_required: false
+
+summary: >-
+  A Level 4 climate record from the ESA Climate Change Initiative (CCI) that cross-calibrates and merges sea surface salinity from three L-band radiometer missions:
+  SMOS (ESA), Aquarius and SMAP (NASA). Biases between sensors are removed and each pixel's long-term mean is anchored to the long-term mean of the in situ ISAS salinity analysis,
+  giving 50 km resolution weekly (7-day running mean, daily) and monthly (every 15 days) salinity fields on a global 0.25° grid and on 25 km polar EASE-2 grids.
+  Every value carries a random-error estimate and quality flags. Version 5.5 reprocesses 2010–2023 with a new SMOS dielectric constant model, SMAP RSS v5.3 input and global RFI mitigation.
+
+time_convention:
+  summary: >-
+    The date in each file name is the centre of the averaging window. A weekly file (…_7DAY_RUNNINGMEAN_DAILY_…-YYYYMMDD-…) is a roughly 7-day (P7D) mean centred on that date,
+    and a monthly file (…_Monthly_CENTRED_15Day_…) is a one-month (P1M) mean centred on the 1st or the 15th of the month. Means are Gaussian-weighted, so observations just outside the window still contribute with small weights.
+  points:
+    - "For example, weekly file 20231230 has time_coverage 2023-12-26 00:00 to 2024-01-02 23:59 UTC, monthly file 20230115 covers 2023-01-01 to 2023-01-30, and monthly file 20230101 covers 2022-12-18 to 2023-01-16."
+    - "The file closest to a calendar-month mean is the one dated the 15th. Files dated the 1st straddle two months and overlap the 15th files by about half."
+    - "Weekly files are produced every day, but neighbouring files share six or more days of the running mean and are not independent. For a weekly series, take every seventh file."
+    - "Time units are 'days since 1970-01-01 00:00:00 UTC'."
+    - "total_nobs and noutliers count satellite salinity retrievals within the averaging window. The PUG states that these counts are indicative only."
+  source: https://climate.esa.int/documents/2489/SSS_cci_PHASE02_D4.3-PUG-v4.1_final_signed.pdf
+  source_name: SSS CCI Product User Guide (D4.3 PUG v4.1) + CEDA v5.5 file attributes (time_coverage_start and end)
+
+variables:
+  note: >-
+    Variable names follow the CEDA v5.5 records and the ncdump in the PUG. Weekly and monthly files contain the same variables. The salinity units attribute is "0.001"
+    (practical salinity values, typically about 30–38), and the quality flags use 0 for good and 1 for bad.
+  full_list: https://catalogue.ceda.ac.uk/uuid/4321d9b540fe48f8943179aa3ef06c79/
+  groups:
+    - name: Weekly (7-day running mean, daily)
+      kind: mean
+      period: 7 days
+      items:
+        - text: "Sea surface salinity (unbiased, merged) — `sss` (0.001)"
+          note: Unbiased merged Sea Surface Salinity. CF standard_name sea_surface_salinity
+        - text: "Random error of salinity — `sss_random_error` (0.001)"
+          std: []
+        - text: "Percentage of variability expected not to be explained by the product — `pct_var` (%)"
+          std: []
+        - text: "Number of retrievals in the window — `total_nobs` (count)"
+          kind: accum
+          std: []
+        - text: "Number of outliers in the window — `noutliers` (count)"
+          kind: accum
+          std: []
+        - text: "Overall quality flag — `sss_qc` (0 good, 1 bad)"
+          std: []
+        - text: "Land contamination flag — `lsc_qc` (0 good, 1 bad)"
+          std: []
+        - text: "Sea ice contamination flag — `isc_qc` (0 good, 1 bad)"
+          std: []
+    - name: Monthly (centred on the 1st and 15th)
+      kind: mean
+      period: Monthly
+      items:
+        - text: "Sea surface salinity (unbiased, merged) — `sss` (0.001)"
+          note: Same variables as the weekly files
+        - text: "Random error of salinity — `sss_random_error` (0.001)"
+          std: []
+        - text: "Quality and sampling information — `pct_var`, `total_nobs`, `noutliers`, `sss_qc`, `lsc_qc`, `isc_qc`"
+          note: Same definitions as the weekly files
+          std: []
+
+access:
+  - name: CEDA Archive — SSS CCI v5.5 collection (HTTPS, FTP, OPeNDAP)
+    url: https://catalogue.ceda.ac.uk/uuid/7294d93479654c139770f13fae4142d1/
+    login: false
+    method: Direct HTTPS download / anonymous FTP (anon-ftp.ceda.ac.uk) / OPeNDAP (netCDF)
+    note: >-
+      No login is needed. Files are under https://data.ceda.ac.uk/neodc/esacci/sea_surface_salinity/data/v05.5/ in GLOBALv5.5 (0.25°) and NHv5.5 and SHv5.5 (25 km EASE-2),
+      each split into 7days (weekly) and 30days (monthly) folders by year. Example: GLOBALv5.5/30days/2023/ESACCI-SEASURFACESALINITY-L4-SSS-GLOBAL-MERGED_OI_Monthly_CENTRED_15Day_0.25deg-20230115-fv5.5.nc
+  - name: CCI THREDDS server (OPeNDAP and catalogue)
+    url: https://data.cci.ceda.ac.uk/thredds/catalog/esacci/sea_surface_salinity/data/catalog.html
+    login: false
+    method: OPeNDAP / HTTP (folders v05.5, v04.41, v03.21, v02.31, v01.8)
+    note: Lets you read just the region you need with xarray and similar tools without downloading whole files. Replace catalog with dodsC in the path to get the OPeNDAP address (see the example below).
+
+example:
+  lang: python
+  note: "Reads one monthly file over OPeNDAP from the CCI THREDDS server without logging in, and clips the seas around Korea. Requiring all three flags to be 0 is one conservative choice."
+  code: |
+    # pip install xarray netCDF4
+    import xarray as xr
+
+    base = ("https://data.cci.ceda.ac.uk/thredds/dodsC/esacci/sea_surface_salinity/"
+            "data/v05.5/GLOBALv5.5/30days/2023/")
+    fn = "ESACCI-SEASURFACESALINITY-L4-SSS-GLOBAL-MERGED_OI_Monthly_CENTRED_15Day_0.25deg-20230815-fv5.5.nc"
+    ds = xr.open_dataset(base + fn).sortby("lat")
+
+    good = (ds["sss_qc"] == 0) & (ds["lsc_qc"] == 0) & (ds["isc_qc"] == 0)
+    sss = ds["sss"].where(good)
+    sub = sss.sel(lat=slice(25, 45), lon=slice(115, 145))   # Yellow Sea, East China Sea, East Sea
+    print(float(sub.mean()), int(sub.count()))
+
+tips:
+  - >-
+    L-band satellite salinity describes the top centimetre or so. The PUG explains that it usually represents the upper few metres, but for a few hours after rain
+    or in strongly stratified water such as river plumes it can be fresher than Argo or ship measurements taken metres below.
+  - >-
+    Each pixel's long-term mean is adjusted to the long-term mean of ISAS, an Argo-based in situ salinity analysis. The time variability comes from the satellites,
+    but the mean itself is tied to in situ data, so comparing it with Argo or ISAS mean fields is not a fully independent validation.
+  - >-
+    The PVIR reports robust standard deviations above 0.4 pss against Argo in coastal and river-plume regions. In seas close to land and strongly influenced by Changjiang (Yangtze) outflow,
+    such as the Yellow Sea and East China Sea, always check lsc_qc and be careful with quantitative analysis.
+  - "Both the file attributes and the PVIR note a seasonally varying bias (under 0.05 pss peak to peak) in the Northern Hemisphere. Keep this size in mind when studying seasonal amplitudes at northern mid and high latitudes."
+  - "For monthly means, use the files dated the 15th; averaging in the files dated the 1st mixes in neighbouring months. Weekly files also overlap as running means, so count degrees of freedom carefully."
+  - "The PUG (v4.1) explains that the polar 25 km EASE-2 files are nearest-neighbour interpolations of the global product. The finer grid does not change the 50 km effective resolution."
+  - >-
+    Do not join v5.5 with v4.41 or older versions in one time series. Version 5.5 fixed the 2010 underestimation and the April–August 2015 North Atlantic error linked to SMAP,
+    and it changed the SMOS dielectric model and the SMAP input version.
+  - "The PVIR reports larger scatter in cold high-latitude water below 4°C, such as the Barents Sea, possibly from dielectric model errors or sea-ice contamination. For polar seas, check isc_qc together with sss_random_error."
+
+citations:
+  dataset:
+    - label: CEDA SSS CCI v5.5 (weekly and monthly collection)
+      text: >-
+        Boutin, J.; Vergely, J.-L.; Reul, N.; Catany, R.; Jouanno, J.; Martin, A.; Rouffi, F.; Bertino, L.; Bonjean, F.; Corato, G.; Gévaudan, M.; Guimbard, S.;
+        Khvorostyanov, D.; Kolodziejczyk, N.; Matthews, M.; Olivier, L.; Raj, R.; Rémy, E.; Reverdin, G.; Supply, A.; Thouvenin-Masson, C.; Vialard, J.; Sabia, R.;
+        Mecklenburg, S. (2025): ESA Sea Surface Salinity Climate Change Initiative (Sea_Surface_Salinity_cci): Weekly and monthly sea surface salinity products from L-band, v5.5.
+        NERC EDS Centre for Environmental Data Analysis, 03 March 2025. doi:10.5285/7294d93479654c139770f13fae4142d1
+      doi: 10.5285/7294d93479654c139770f13fae4142d1
+      bibtex: |
+        @misc{ssscci_v55,
+          author    = {Boutin, J. and Vergely, J.-L. and Reul, N. and Catany, R. and Jouanno, J. and Martin, A. and Rouffi, F. and Bertino, L. and Bonjean, F. and Corato, G. and G{\'e}vaudan, M. and Guimbard, S. and Khvorostyanov, D. and Kolodziejczyk, N. and Matthews, M. and Olivier, L. and Raj, R. and R{\'e}my, E. and Reverdin, G. and Supply, A. and Thouvenin-Masson, C. and Vialard, J. and Sabia, R. and Mecklenburg, S.},
+          title     = {{ESA} Sea Surface Salinity Climate Change Initiative ({Sea\_Surface\_Salinity\_cci}): Weekly and monthly sea surface salinity products from L-band, v5.5},
+          year      = {2025},
+          publisher = {NERC EDS Centre for Environmental Data Analysis},
+          doi       = {10.5285/7294d93479654c139770f13fae4142d1}
+        }
+    - label: Previous version v04.41 (2010–2022)
+      text: >-
+        Boutin, J. et al. (2024): ESA Sea Surface Salinity Climate Change Initiative (Sea_Surface_Salinity_cci): Weekly and monthly sea surface salinity products, v04.41, for 2010 to 2022.
+        NERC EDS Centre for Environmental Data Analysis, 16 February 2024. doi:10.5285/f2ca631f29a24c47a7e98654ddf2c7d9
+      doi: 10.5285/f2ca631f29a24c47a7e98654ddf2c7d9
+  papers:
+    - label: CCI salinity data description paper (recommended by CEDA and the PUG)
+      text: >-
+        Boutin, J., Reul, N., Koehler, J., Martin, A., Catany, R., Guimbard, S., Rouffi, F., Vergely, J. L., Arias, M., Chakroun, M., Corato, G., Estella-Perez, V., Hasson, A.,
+        Josey, S., Khvorostyanov, D., Kolodziejczyk, N., Mignot, J., Olivier, L., Reverdin, G., Stammer, D., Supply, A., Thouvenin-Masson, C., Turiel, A., Vialard, J.,
+        Cipollini, P., Donlon, C., Sabia, R., Mecklenburg, S. (2021): Satellite-Based Sea Surface Salinity Designed for Ocean and Climate Studies.
+        Journal of Geophysical Research: Oceans, 126(11), e2021JC017676.
+      doi: 10.1029/2021JC017676
+      bibtex: |
+        @article{boutin2021sss,
+          author  = {Boutin, J. and Reul, N. and Koehler, J. and Martin, A. and Catany, R. and Guimbard, S. and Rouffi, F. and Vergely, J. L. and Arias, M. and Chakroun, M. and Corato, G. and Estella-Perez, V. and Hasson, A. and Josey, S. and Khvorostyanov, D. and Kolodziejczyk, N. and Mignot, J. and Olivier, L. and Reverdin, G. and Stammer, D. and Supply, A. and Thouvenin-Masson, C. and Turiel, A. and Vialard, J. and Cipollini, P. and Donlon, C. and Sabia, R. and Mecklenburg, S.},
+          title   = {Satellite-Based Sea Surface Salinity Designed for Ocean and Climate Studies},
+          journal = {Journal of Geophysical Research: Oceans},
+          volume  = {126},
+          number  = {11},
+          pages   = {e2021JC017676},
+          year    = {2021},
+          doi     = {10.1029/2021JC017676}
+        }
+  acknowledgement: >-
+    The ESA CCI Salinity terms and conditions require presentations and publications to acknowledge the ESA Climate Change Initiative and the Sea Surface Salinity CCI project
+    (and the individual data providers) and to cite the dataset DOIs. Users are also asked to send copies of reports and publications to the CCI programme and to consider
+    offering co-authorship when CCI data are a major component of a paper.
+
+notices:
+  - date: "2025-11-30"
+    level: info
+    title: CEDA v5.5 downloads restored
+    body: >-
+      CEDA made the SSS CCI v5.5 datasets (global and polar, weekly and monthly) temporarily unavailable for download from 2025-11-20 and announced on each record that online access was restored on 2025-11-30.
+    source: https://catalogue.ceda.ac.uk/uuid/4321d9b540fe48f8943179aa3ef06c79/
+  - date: "2025-03-03"
+    level: info
+    title: SSS CCI v5.5 released (2010–2023)
+    body: >-
+      Version 5.5, one year longer than v4.41, was published at CEDA (individual datasets on 2025-02-24, collection DOI on 2025-03-03). SMOS L2 salinity was reprocessed with a new dielectric constant model,
+      SMAP v5.3 is used, SMOS RFI mitigation was extended globally and absolute calibration north of 65°N was improved. ESA states that the 2010 underestimation and the April–August issue linked to SMAP v5.0 were resolved.
+    source: https://climate.esa.int/en/news-events/Sea-Surface-Salinity-Record-Extended/
+  - date: "2024-03-20"
+    level: info
+    title: SSS CCI v4.41 released (2010–2022)
+    body: >-
+      Version 4.41 extended the record by two years and improved seasonal bias correction, high-latitude stability and polar coverage (published at CEDA on 2024-02-16).
+      Weekly and monthly products are provided on a 0.25° global grid and on 25 km polar EASE grids.
+    source: https://climate.esa.int/en/news-events/new-sea-surface-salinity-record-released/
+  - date: "2021-10-08"
+    level: info
+    title: SSS CCI v3.21 released (2010–2020)
+    body: Weekly and monthly v3.21 salinity products were published at CEDA. They were later superseded by v04.41 (2024-02-16).
+    source: https://catalogue.ceda.ac.uk/uuid/5920a2c77e3c45339477acd31ce62c3c
+
+transitions:
+  - from: SSS CCI v4.41
+    to: SSS CCI v5.5
+    status: completed
+    date: "2025-02"
+    summary: >-
+      Extends the record by one year to 2023 and brings in reprocessed SMOS data (new dielectric model), a newer SMAP input version and global RFI mitigation.
+      The 2010 underestimation and the April–August 2015 salty error in the North Atlantic found in v4.41 were fixed, and the Northern Hemisphere seasonal bias was reduced.
+    changes:
+      - aspect: Period
+        before: "2010-01 to 2022 (published at CEDA 2024-02-16)"
+        after: "2010-01 to 2023-12 (published at CEDA 2025-02-24)"
+      - aspect: SMOS input
+        before: ESA L2OS v700 reprocessing
+        after: "CCI's own L2OS reprocessing (from DPGS L1C v7), new dielectric constant model, RFI mitigation extended globally"
+      - aspect: SMAP input
+        before: RSS L2 v5.0
+        after: RSS L2 v5.3
+      - aspect: Known errors
+        before: "About 0.1 pss underestimation in 2010 (SMOS commissioning), North Atlantic more than 0.2 pss too salty in April–August 2015 (SMAP v5.0)"
+        after: Both resolved (PVIR v5.1)
+      - aspect: Northern Hemisphere seasonal bias
+        before: Below 0.1 pss
+        after: Below 0.05 pss (peak to peak)
+      - aspect: High-latitude absolute calibration
+        before: v4 approach
+        after: Improved absolute calibration north of 65°N
+      - aspect: Dataset DOI
+        before: 10.5285/f2ca631f29a24c47a7e98654ddf2c7d9
+        after: 10.5285/7294d93479654c139770f13fae4142d1
+    impacts:
+      - Do not splice the two versions into one series; download the whole period again as v5.5. Values differ especially in 2010 and in the North Atlantic in 2015.
+      - The PVIR reports similar overall performance against Argo, with v5.5 better near coasts and at high salinity and slightly worse in water colder than 5°C.
+      - The citation DOI has changed, and the CEDA path moves from the v04.41 folder to v05.5.
+    sources:
+      - name: ESA CCI — Sea Surface Salinity Record Extended (v5.5)
+        url: https://climate.esa.int/en/news-events/Sea-Surface-Salinity-Record-Extended/
+      - name: SSS CCI PVIR v5.1 (2025-02-25)
+        url: https://climate.esa.int/documents/2953/SSS_cci_PHASE02_D4.1_PVIR_v5.1.pdf
+      - name: SSS CCI PUG v4.1 (known issues in v4.41)
+        url: https://climate.esa.int/documents/2489/SSS_cci_PHASE02_D4.3-PUG-v4.1_final_signed.pdf
+
+links:
+  - name: ESA CCI Sea Surface Salinity project page
+    url: https://climate.esa.int/en/projects/sea-surface-salinity/
+  - name: CEDA — SSS CCI v5.5 collection
+    url: https://catalogue.ceda.ac.uk/uuid/7294d93479654c139770f13fae4142d1/
+  - name: CEDA — all SSS CCI datasets (by version)
+    url: https://catalogue.ceda.ac.uk/record/party/4414/
+  - name: SSS CCI Product User Guide (PUG v4.1, PDF)
+    url: https://climate.esa.int/documents/2489/SSS_cci_PHASE02_D4.3-PUG-v4.1_final_signed.pdf
+  - name: SSS CCI Product Validation and Intercomparison Report (PVIR v5.1, validates v5.5, PDF)
+    url: https://climate.esa.int/documents/2953/SSS_cci_PHASE02_D4.1_PVIR_v5.1.pdf
+  - name: ESA CCI Salinity terms and conditions (PDF)
+    url: https://artefacts.ceda.ac.uk/licences/specific_licences/esacci_salinity_terms_and_conditions.pdf
+  - name: Poster on the planned C3S sea surface salinity record (2026-05)
+    url: https://salinity.oceansciences.org/documents-more.htm?id=1509
+  - name: SMAP sea surface salinity on this site (a CCI input mission)
+    url: ../smap-sss/
+  - name: SMOS sea surface salinity on this site (a CCI input mission)
+    url: ../smos-sss/
+
+watch_urls:
+  - https://catalogue.ceda.ac.uk/record/party/4414/
+  - https://climate.esa.int/en/news-events/?project=18
+  - https://catalogue.ceda.ac.uk/uuid/7294d93479654c139770f13fae4142d1/
+
+last_verified: "2026-10-14"

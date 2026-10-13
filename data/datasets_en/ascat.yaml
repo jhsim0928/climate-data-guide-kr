@@ -1,0 +1,487 @@
+# ─────────────────────────────────────────────────────────────
+# Metop ASCAT ocean surface winds — dataset information file (English edition)
+# Satellite tab (ocean surface wind), also listed in the Ocean tab (satellite observations). Centred on the EUMETSAT OSI SAF (produced by KNMI) Metop-B/C ASCAT L2 swath winds
+# (25 km OSI-102, 12.5 km coastal OSI-104), with the Metop-A climate data record (OSI-150), Copernicus Marine L3 daily grids and the RSS V2.1 climate record also covered.
+# When checked on 2026-10-13, PO.DAAC held Metop-B/C L2 data up to orbits on the morning of 2026-10-13. The follow-on Metop-SG-B1 (scatterometer SCA) is due to launch in late 2026.
+# After editing, update last_verified to the date you checked the official pages.
+# ─────────────────────────────────────────────────────────────
+id: ascat
+name: Metop ASCAT ocean winds
+full_name: Metop Advanced Scatterometer (ASCAT) ocean surface winds — EUMETSAT OSI SAF L2 wind products
+category: satellite
+domain: satellite
+group: 해상풍
+order: 20
+also_in:
+  - domain: ocean
+    group: 위성 관측 자료
+domains: [해양, 대기, 원격탐사]
+provider: EUMETSAT OSI SAF (produced by KNMI) / NASA PO.DAAC (redistribution) / Copernicus Marine (L3 grids) / Remote Sensing Systems (V2.1 climate record)
+
+status: active
+status_note: >-
+  ASCAT winds from Metop-B (since 2012) and Metop-C (since 2019) are produced continuously in near real time; Metop-A wind production ended on 2021-11-15, when the satellite began its deorbiting.
+  When checked on 2026-10-13, PO.DAAC held Metop-B and Metop-C 25 km and coastal L2 files up to orbits starting at 10–11 UTC on 2026-10-13 (about 2–3 hours behind), Copernicus Marine L3 NRT ran through 2026-10-12, and RSS V2.1 gridded files through 2026-09-08.
+  ESA said on 2026-02-25 that Metop-SG-B1, which carries the successor scatterometer SCA, was scheduled to launch in October 2026; WMO OSCAR (updated 2026-09-23) lists November 2026. No official schedule for SCA data release has been announced yet.
+
+period:
+  start: "2007-01"
+  end: present
+  note: >-
+    Near-real-time Metop-A ASCAT winds started as a demonstration product on 2007-03-28, became operational on 2008-12-03 and ended on 2021-11-15. Metop-B followed with a first development version on 2012-11-14 and operational status on 2013-05-27,
+    and Metop-C with a demonstration on 2019-02-12 and operational status in October 2019. The reprocessed Metop-A climate data record OSI-150 starts on 2007-01-01; its end date is given as 2014-12-31 on the OSI SAF page but as March 2014 (2014-04-01) on the KNMI page and at PO.DAAC.
+
+resolution:
+  spatial_short: "25 km (0.23°)"
+  temporal_short: "1일"
+  spatial: >-
+    L2 swath: wind vector cells (WVCs) every 25 km (42 per row = 21 per swath on each side; effective swath width 525 km). PO.DAAC gives the effective resolution as 50 km.
+    Coastal L2 (OSI-104): 12.5 km spacing (82 per row), averaging backscatter within 15 km of each WVC centre, effective resolution 25 km. A 6 km demonstration product (OSI-AW5.7, Metop-B) is on the KNMI FTP site only.
+    Copernicus Marine L3: 0.125° (from 12.5 km coastal input) and 0.25° (from 25 km input) latitude–longitude grids.
+  vertical: "10 m wind over the sea surface. Stress-equivalent wind since 2018-09-25; 10 m equivalent neutral wind before that"
+  temporal: >-
+    L2: one file per orbit (about 100 minutes); each WVC is an instantaneous observation at overpass. A single satellite passes a given location at most twice a day (morning descending, evening ascending), leaving gaps between swaths.
+    L3 (Copernicus Marine, RSS): daily files with ascending and descending passes gridded separately (not averages).
+
+coverage:
+  short: 전지구
+  note: "Global ice-free oceans. No retrievals over land; the 25 km product misses about 35 km nearest the coast (the coastal product reaches about 15 km), and values over sea ice must be removed with flags. Gaps remain between daily swaths"
+update: "L2 near real time: every orbit, about 2 hours after sensing (OSI SAF target within 2 h 45 min). Copernicus Marine L3 NRT: daily (12 UTC next day, again at 00 UTC two days later). Copernicus Marine L3 reprocessed (MY): monthly. RSS V2.1: irregular (when checked on 2026-10-13, through 2026-09-08, posted 2026-09-11)"
+license: >-
+  OSI SAF wind products are CC BY 4.0 with attribution to EUMETSAT OSI SAF. KNMI asks for the credit "copyright (year) EUMETSAT" on each product used.
+  RSS ASCAT data follow the RSS terms of use (product-specific acknowledgement; tell support@remss.com about publications)
+account_required: true
+
+summary: >-
+  ASCAT is a C-band (5.255 GHz) scatterometer on Europe's Metop weather satellites. Beams pointing in three azimuth directions illuminate two swaths, each about 550 km wide, on either side of the ground track,
+  and the 10 m wind speed and direction are retrieved from sea-surface roughness. EUMETSAT OSI SAF produces 25 km (OSI-102) and 12.5 km coastal (OSI-104) L2 winds at KNMI about 2 hours after sensing,
+  and NASA PO.DAAC and Copernicus Marine redistribute or grid them. The record, which began with Metop-A in 2007, is widely assimilated in reanalyses and weather forecasting, used to evaluate ocean-model wind forcing
+  and to study wind stress and curl, and is a key input to multi-satellite wind analyses such as CCMP.
+
+time_convention:
+  summary: >-
+    Values in the L2 swath files are instantaneous observations taken as the satellite passed over each wind vector cell (WVC), and each WVC carries its observation time (time, seconds since 1990-01-01 00:00:00). Each file covers one orbit (about 100 minutes).
+    Copernicus Marine L3 daily files are not daily means either: instantaneous observations are gridded separately for ascending and descending passes, and each grid cell keeps its actual observation time (measurement_time).
+  points:
+    - "In NetCDF (L2 and L3) the wind direction follows the oceanographic convention (direction the wind blows toward; 0° = blowing toward north), while BUFR uses the meteorological convention (direction the wind comes from). Watch for the 180° difference when comparing with meteorological directions."
+    - "Metop-B and Metop-C are in sun-synchronous orbits crossing the equator southbound at about 09:00–09:30 local solar time, so they usually pass a location in the morning (descending) and evening (ascending). The data cannot be used as they are for daily means or diurnal cycles."
+    - "Since 2018-09-25 the winds are 10 m stress-equivalent winds (which account for atmospheric stability and air density so that they relate directly to surface stress). They are defined differently from real 10 m winds, so use the same definition when comparing with buoys or models."
+    - "model_speed and model_dir are ECMWF model winds interpolated to the observation as background values used for ambiguity removal; they are not observations."
+    - "Copernicus Marine L3 NRT daily files appear at 12 UTC the next day and are refreshed once more at 00 UTC two days later."
+  source: https://scatterometer.knmi.nl/publications/pdf/ASCAT_Product_Manual.pdf
+  source_name: ASCAT Wind Product User Manual v1.17 (OSI SAF/EARS, KNMI) + Copernicus Marine WIND_GLO_PHY_L3 product user manual
+
+variables:
+  note: >-
+    L2 variable names follow Appendix B (NetCDF) of the ASCAT Wind Product User Manual and match the PO.DAAC variable list. NetCDF files hold only the selected wind solution (no ambiguities or sigma0), in swath-shaped (NUMROWS, NUMCELLS) arrays.
+    L3 variable names follow the Copernicus Marine product user manual.
+  full_list: https://scatterometer.knmi.nl/publications/pdf/ASCAT_Product_Manual.pdf
+  groups:
+    - name: L2 swath (OSI SAF 25 km and 12.5 km coastal NetCDF, same at PO.DAAC)
+      kind: instant
+      items:
+        - text: "10 m wind speed — `wind_speed` (m s-1)"
+          note: Stress-equivalent wind since 2018-09-25
+        - text: "10 m wind direction — `wind_dir` (degree)"
+          note: Oceanographic convention (direction blowing toward)
+        - text: "ECMWF model 10 m wind speed — `model_speed` (m s-1)"
+          note: Background model wind (not an observation)
+          std: []
+        - text: "ECMWF model 10 m wind direction — `model_dir` (degree)"
+          note: Background model wind (not an observation)
+          std: []
+        - text: "Ice probability — `ice_prob` (1)"
+          std: []
+        - text: "Ice age (a-parameter) — `ice_age` (dB)"
+          std: []
+        - text: "WVC quality flag — `wvc_quality_flag` (bits)"
+          note: "Do not use WVCs with bit 16 (VarQC), 17 (KNMI QC) or 18 (monitoring) set (user manual)"
+          std: []
+        - text: "Backscatter distance (from the model function) — `bs_distance` (1)"
+          std: []
+        - text: "Observation time — `time` (seconds since 1990-01-01 00:00:00)"
+          std: []
+    - name: L3 daily grids (Copernicus Marine, per satellite and pass direction)
+      kind: instant
+      items:
+        - text: "10 m eastward wind (stress-equivalent) — `eastward_wind` (m s-1)"
+          std: [wind10]
+        - text: "10 m northward wind (stress-equivalent) — `northward_wind` (m s-1)"
+          std: [wind10]
+        - text: "10 m wind speed (stress-equivalent) — `wind_speed` (m s-1)"
+          std: [wind10]
+        - text: "10 m wind direction (blowing toward) — `wind_to_dir` (degree)"
+        - "Wind stress magnitude — `wind_stress_magnitude` (N m-2)"
+        - "Eastward and northward wind stress — `eastward_stress`, `northward_stress` (N m-2)"
+        - "Wind stress curl and divergence — `stress_curl`, `stress_divergence` (N m-3)"
+        - text: "10 m wind curl and divergence — `wind_curl`, `wind_divergence` (s-1)"
+          std: []
+        - text: "Air density — `air_density` (kg m-3)"
+          std: []
+        - text: "Per-cell observation time — `measurement_time` (seconds since 1990-01-01 00:00:00)"
+          std: []
+
+access:
+  - name: NASA PO.DAAC — Metop-C ASCAT L2 25 km (ASCATC-L2-25km)
+    url: https://podaac.jpl.nasa.gov/dataset/ASCATC-L2-25km
+    method: Earthdata Search / earthaccess / OPeNDAP / Harmony subsetting / podaac-data-subscriber
+    note: >-
+      Metop-B is ASCATB-L2-25km (from 2012-10-29), the coastal products are ASCATB-L2-Coastal and ASCATC-L2-Coastal, the ended Metop-A records are ASCATA-L2-25km and ASCATA-L2-Coastal (to 2021-11-15),
+      and the Metop-A climate data record is ASCATA_L2_25KM_CDR. Each NetCDF file holds one orbit. A free NASA Earthdata Login is required.
+  - name: EUMETSAT Data Store (original OSI SAF archive, full record)
+    url: https://data.eumetsat.int/
+    method: Web search and download, EUMETSAT Data Access API (BUFR and NetCDF)
+    note: >-
+      For example, OSI-102-c is collection EO:EUM:DAT:0760, OSI-104-b is EO:EUM:DAT:0192, OSI-104-c is EO:EUM:DAT:0202 and the Metop-A climate record OSI-150-a is EO:EUM:DAT:METOP:OSI-150-A.
+      A free EUMETSAT account is required. The data are also broadcast in real time via EUMETCast.
+  - name: OSI SAF / KNMI FTP (last 3 days)
+    url: https://osi-saf.eumetsat.int/products/osi-102-b
+    method: FTP (ftppro.knmi.nl; directories ascat_b_osi and ascat_c_osi, 6 km demonstration product in ascat_b_osi_057)
+    note: Credentials are provided on request after registration. Only the last 3 days are kept, so get older data from the Data Store or PO.DAAC.
+  - name: Copernicus Marine — L3 daily grids NRT (WIND_GLO_PHY_L3_NRT_012_002)
+    url: https://data.marine.copernicus.eu/product/WIND_GLO_PHY_L3_NRT_012_002/description
+    method: copernicusmarine toolbox (Python and command line) / web subsetting
+    note: >-
+      Metop-B and Metop-C (0.125° and 0.25°) and the HY-2, Oceansat-3 and FY-3E scatterometers, as separate datasets per satellite and pass direction (from 2016-01-01; e.g. cmems_obs-wind_glo_phy_nrt_l3-metopc-ascat-des-0.125deg_P1D-i).
+      A reprocessed product, WIND_GLO_PHY_L3_MY_012_005 (1991-08 to 2026-06; Metop-A/B, QuikSCAT, ERS, Oceansat-2), is also available. A free Copernicus Marine account is required.
+  - name: RSS ASCAT V2.1 (C-2015 model function; inter-calibrated A/B/C climate record)
+    url: https://data.remss.com/ascat/
+    method: Direct HTTPS download (metopa, metopb and metopc folders; daily 0.25° grids in bmaps_v02.1, swaths in ascat*_wind_vectors_v02.1)
+    note: RSS's own processing, separate from OSI SAF. Daily grids hold separate morning (descending) and evening (ascending) maps.
+    login: false
+
+example:
+  lang: python
+  note: >-
+    Downloads Metop-C 25 km L2 files from PO.DAAC with earthaccess, applies the quality flags recommended in the user manual (VarQC, KNMI QC, monitoring) around the Korean Peninsula and prints the mean wind speed.
+    Run earthaccess.login() once with your NASA Earthdata account first. Files from the KNMI FTP site (.nc.gz) need to be decompressed first.
+  code: |
+    # pip install earthaccess xarray netCDF4
+    import earthaccess
+    import xarray as xr
+
+    earthaccess.login()
+    results = earthaccess.search_data(
+        short_name="ASCATC-L2-25km",            # Metop-B: ASCATB-L2-25km, coastal: ASCATC-L2-Coastal
+        temporal=("2025-08-01", "2025-08-01T23:59:59"),
+        bounding_box=(120, 30, 135, 40),        # west, south, east, north (around Korea)
+    )
+    files = earthaccess.download(results, "./ascat")
+
+    REJECT = (1 << 16) | (1 << 17) | (1 << 18)  # VarQC failed, KNMI QC failed, monitoring flag
+    for f in files:
+        ds = xr.open_dataset(f)
+        lon = ds["lon"] % 360                    # works whether longitudes are 0–360 or ±180
+        flag = ds["wvc_quality_flag"].fillna(0).astype("int64")
+        box = (ds["lat"] >= 30) & (ds["lat"] <= 40) & (lon >= 120) & (lon <= 135)
+        ws = ds["wind_speed"].where(box & ((flag & REJECT) == 0))
+        if ws.count() > 0:
+            print(f, int(ws.count()), float(ws.mean()))  # valid WVCs and mean wind speed (m/s) per orbit
+
+tips:
+  - "The user manual stresses that WVCs with the KNMI QC flag (wvc_quality_flag bit 17) set must be rejected, and recommends not using values with the variational QC flag (bit 16) or the monitoring flag (bit 18) set either."
+  - "C-band is fairly insensitive to rain, but in heavy rain the measurements no longer fit the model function (large inversion residual) and are rejected by KNMI QC. RSS notes that ASCAT can be less accurate in heavy rain, especially at low winds. Check flags and gaps around monsoon fronts and typhoon rain bands."
+  - "Wind solutions are also present over sea ice (bogus winds), marked by both the KNMI QC flag and the ice flag (bit 14). The Bayesian ice screening sometimes mistakes rainy WVCs for ice, and cells with model SST above 5 °C are always treated as open water. In seas that freeze in winter, such as the Sea of Okhotsk and the Bohai Sea, check the ice flag together with ice_prob."
+  - "No winds are retrieved when the land fraction of a WVC exceeds 0.02. The 25 km and standard 12.5 km products miss about 35 km nearest the coast because of land contamination, so along complex coastlines with many islands, such as Korea's west and south coasts, use the coastal product (OSI-104, PO.DAAC *-L2-Coastal), which reaches about 15 km from the coast."
+  - The user manual notes that wind speeds above 25 m/s are generally less reliable, and winds above 30 m/s are flagged (bit 12). Do not use them as they are for typhoon peak winds.
+  - "Although WVCs are spaced 25 km apart, PO.DAAC gives the effective resolution as 50 km (25 km for the coastal product). Curl and divergence at grid-spacing scales are noisy, so interpret them at the effective resolution."
+  - There are gaps between the two swaths (below the satellite) and between orbits, so one satellite cannot cover all oceans in a day. Combining Metop-B and Metop-C reduces the gaps, but for daily means a gridded analysis such as CCMP is better.
+  - "Processing changed during the near-real-time record (a +0.2 m/s step with the switch to neutral winds in November 2008; CMOD7 and stress-equivalent winds from 2018-09-25). Use reprocessed data (Copernicus Marine L3 MY, OSI-150, RSS V2.1) for long-term work."
+  - "According to the RSS inter-calibration study, ASCAT-C is about 0.05 m/s lower than ASCAT-B, and ASCAT-A had calibration steps in mid-2016 and late 2019 (corrected in RSS V2.1.1). Check for these when mixing satellites."
+  - "The PO.DAAC description of the coastal products still mentions CMOD5.n, but according to the KNMI product history CMOD7 has been used since 2018-09-25. Rely on the KNMI and OSI SAF product pages for version information."
+  - "Gaps of several hours due to orbit manoeuvres or instrument anomalies are common (e.g. the Metop-C out-of-plane manoeuvre on 2026-09-16). Missing periods are listed in the anomaly history on the KNMI product pages and in OSI SAF service messages."
+
+citations:
+  dataset:
+    - label: Metop-B ASCAT 25 km Winds (OSI-102-b)
+      text: >-
+        EUMETSAT OSI SAF. Metop-B ASCAT 25 km Winds (OSI-102-b), near-real-time product, produced by KNMI. https://doi.org/10.15770/EUM_SAF_OSI_NRT_2021
+      doi: 10.15770/EUM_SAF_OSI_NRT_2021
+      bibtex: |
+        @misc{osisaf_osi102b,
+          author    = {{EUMETSAT OSI SAF}},
+          title     = {Metop-B {ASCAT} 25 km Winds ({OSI-102-b})},
+          publisher = {EUMETSAT Ocean and Sea Ice Satellite Application Facility},
+          doi       = {10.15770/EUM_SAF_OSI_NRT_2021}
+        }
+    - label: Metop-C ASCAT 25 km Winds (OSI-102-c)
+      text: >-
+        EUMETSAT OSI SAF. Metop-C ASCAT 25 km Winds (OSI-102-c), near-real-time product, produced by KNMI. https://doi.org/10.15770/EUM_SAF_OSI_NRT_2022
+      doi: 10.15770/EUM_SAF_OSI_NRT_2022
+      bibtex: |
+        @misc{osisaf_osi102c,
+          author    = {{EUMETSAT OSI SAF}},
+          title     = {Metop-C {ASCAT} 25 km Winds ({OSI-102-c})},
+          publisher = {EUMETSAT Ocean and Sea Ice Satellite Application Facility},
+          doi       = {10.15770/EUM_SAF_OSI_NRT_2022}
+        }
+    - label: Metop-B ASCAT coastal Winds (OSI-104-b)
+      text: >-
+        EUMETSAT OSI SAF. Metop-B ASCAT coastal Winds (OSI-104-b), near-real-time product, produced by KNMI. https://doi.org/10.15770/EUM_SAF_OSI_NRT_2018
+      doi: 10.15770/EUM_SAF_OSI_NRT_2018
+      bibtex: |
+        @misc{osisaf_osi104b,
+          author    = {{EUMETSAT OSI SAF}},
+          title     = {Metop-B {ASCAT} coastal Winds ({OSI-104-b})},
+          publisher = {EUMETSAT Ocean and Sea Ice Satellite Application Facility},
+          doi       = {10.15770/EUM_SAF_OSI_NRT_2018}
+        }
+    - label: Metop-C ASCAT coastal Winds (OSI-104-c)
+      text: >-
+        EUMETSAT OSI SAF. Metop-C ASCAT coastal Winds (OSI-104-c), near-real-time product, produced by KNMI. https://doi.org/10.15770/EUM_SAF_OSI_NRT_2019
+      doi: 10.15770/EUM_SAF_OSI_NRT_2019
+      bibtex: |
+        @misc{osisaf_osi104c,
+          author    = {{EUMETSAT OSI SAF}},
+          title     = {Metop-C {ASCAT} coastal Winds ({OSI-104-c})},
+          publisher = {EUMETSAT Ocean and Sea Ice Satellite Application Facility},
+          doi       = {10.15770/EUM_SAF_OSI_NRT_2019}
+        }
+    - label: Metop-A ASCAT L2 25 km winds data record (OSI-150-a)
+      text: >-
+        EUMETSAT OSI SAF, Metop-A ASCAT L2 25 km winds data record 2007-2014 (v1.0, 2016), OSI-150-a, doi: 10.15770/EUM_SAF_OSI_0006
+      doi: 10.15770/EUM_SAF_OSI_0006
+      bibtex: |
+        @misc{osisaf_osi150a,
+          author    = {{EUMETSAT OSI SAF}},
+          title     = {Metop-A {ASCAT} {L2} 25 km winds data record 2007-2014},
+          year      = {2016},
+          version   = {1.0},
+          publisher = {EUMETSAT Ocean and Sea Ice Satellite Application Facility},
+          doi       = {10.15770/EUM_SAF_OSI_0006}
+        }
+  papers:
+    - label: CMOD7 model function (OSI SAF winds since 2018-09)
+      text: >-
+        Stoffelen, A., Verspeek, J., Vogelzang, J., Verhoef, A. (2017): The CMOD7 Geophysical Model Function for ASCAT and ERS Wind Retrievals.
+        IEEE Journal of Selected Topics in Applied Earth Observations and Remote Sensing, 10(5), 2123–2134.
+      doi: 10.1109/JSTARS.2017.2681806
+      bibtex: |
+        @article{stoffelen2017cmod7,
+          author  = {Stoffelen, A. and Verspeek, J. and Vogelzang, J. and Verhoef, A.},
+          title   = {The {CMOD7} Geophysical Model Function for {ASCAT} and {ERS} Wind Retrievals},
+          journal = {IEEE Journal of Selected Topics in Applied Earth Observations and Remote Sensing},
+          volume  = {10},
+          number  = {5},
+          pages   = {2123--2134},
+          year    = {2017},
+          doi     = {10.1109/JSTARS.2017.2681806}
+        }
+    - label: Scatterometer wind climate data records (OSI SAF CDR)
+      text: >-
+        Verhoef, A., Vogelzang, J., Verspeek, J., Stoffelen, A. (2017): Long-Term Scatterometer Wind Climate Data Records.
+        IEEE Journal of Selected Topics in Applied Earth Observations and Remote Sensing, 10(5), 2186–2194.
+      doi: 10.1109/JSTARS.2016.2615873
+      bibtex: |
+        @article{verhoef2017cdr,
+          author  = {Verhoef, A. and Vogelzang, J. and Verspeek, J. and Stoffelen, A.},
+          title   = {Long-Term Scatterometer Wind Climate Data Records},
+          journal = {IEEE Journal of Selected Topics in Applied Earth Observations and Remote Sensing},
+          volume  = {10},
+          number  = {5},
+          pages   = {2186--2194},
+          year    = {2017},
+          doi     = {10.1109/JSTARS.2016.2615873}
+        }
+    - label: ASCAT-A/B/C inter-calibration (RSS V2.1 climate record)
+      text: >-
+        Ricciardulli, L., Manaster, A. (2021): Intercalibration of ASCAT Scatterometer Winds from MetOp-A, -B, and -C, for a Stable Climate Data Record. Remote Sensing, 13(18), 3678.
+      doi: 10.3390/rs13183678
+      bibtex: |
+        @article{ricciardulli2021ascat,
+          author  = {Ricciardulli, Lucrezia and Manaster, Andrew},
+          title   = {Intercalibration of {ASCAT} Scatterometer Winds from {MetOp-A}, -{B}, and -{C}, for a Stable Climate Data Record},
+          journal = {Remote Sensing},
+          volume  = {13},
+          number  = {18},
+          pages   = {3678},
+          year    = {2021},
+          doi     = {10.3390/rs13183678}
+        }
+  acknowledgement: >-
+    OSI SAF products are CC BY 4.0, so credit EUMETSAT OSI SAF and cite the product DOI. The KNMI product pages ask for "copyright (year) EUMETSAT" on each product used.
+    If you used RSS data, RSS asks for the statement "C-2015 ASCAT data are produced by Remote Sensing Systems and sponsored by the NASA Ocean Vector Winds Science Team."
+
+notices:
+  - date: "2026-09-16"
+    level: info
+    title: ASCAT winds interrupted by a Metop-C out-of-plane manoeuvre (OSI-102-c, OSI-104-c)
+    body: >-
+      OSI SAF service message 3579 announced that a Metop-C out-of-plane manoeuvre around 12:00 UTC on 2026-09-16 might cause a considerable outage of the OSI SAF and EARS Metop-C ASCAT winds.
+      Manoeuvres and anomalies like this leave gaps of several hours, so check for missing data around such times.
+    source: https://osi-saf.eumetsat.int/community/list-of-service-messages/metop-c-ascat-wind-products-planned-outage-16-september-out
+  - date: "2026-06-18"
+    level: info
+    title: ASCAT-B L1b calibration updated — small across-swath variations since July 2024 corrected
+    body: >-
+      According to the KNMI ASCAT-B product history, the ASCAT-B level 1b calibrations were updated to correct small across-swath variations present since July 2024.
+      Take care with this period (2024-07 to 2026-06) if you compare or average near-real-time ASCAT-B winds by WVC position.
+    source: https://scatterometer.knmi.nl/ascat_b_osi_25_prod/
+  - date: "2026-02-25"
+    level: info
+    title: MetOp-SG-B1, carrying the successor scatterometer SCA, scheduled for launch in October 2026 (ESA)
+    body: >-
+      ESA said that MetOp Second Generation B1, whose scatterometer will measure ocean-surface wind vectors and land-surface soil moisture, was scheduled for launch from Kourou, French Guiana, in October 2026.
+      WMO OSCAR (updated 2026-09-23) lists November 2026, so check EUMETSAT announcements for the exact date and for when SCA data will be released.
+    source: https://www.esa.int/Applications/Observing_the_Earth/Meteorological_missions/MetOp_Second_Generation/First_MetOp_Second_Generation-B_satellite_spreads_its_wing
+  - date: "2021-11-15"
+    level: warning
+    title: Metop-A mission ends — ASCAT-A wind production stops and deorbiting begins
+    body: >-
+      After fifteen years in service, Metop-A began deorbiting manoeuvres on 2021-11-15, and the OSI SAF Metop-A ASCAT winds (OSI-102, OSI-104) ended on the same day.
+      Since then only Metop-B and Metop-C provide ASCAT winds, so daily coverage dropped from that date.
+    source: https://www.eumetsat.int/europes-first-meteorological-satellite-polar-orbit-ends-its-run
+  - date: "2019-10-02"
+    level: info
+    title: Metop-C ASCAT winds become operational
+    body: >-
+      Metop-C ASCAT 25 km and coastal winds, produced as demonstration products since February 2019, gained operational status and were made available to all users on EUMETCast from 2019-11-28.
+    source: https://scatterometer.knmi.nl/ascat_c_osi_25_prod/
+  - date: "2018-09-25"
+    level: warning
+    title: OSI SAF ASCAT winds switch to CMOD7 and stress-equivalent winds
+    body: >-
+      The geophysical model function changed from CMOD5.n to CMOD7, and stress-equivalent ECMWF winds replaced real 10 m ECMWF winds as the background (AWDP 3_2_01).
+      The wind definition and values differ before and after this date, so take care in long-term analyses that splice the near-real-time record.
+    source: https://scatterometer.knmi.nl/ascat_b_osi_25_prod/
+
+transitions:
+  - from: Metop-A ASCAT (ASCAT-A)
+    to: Metop-B/C ASCAT (ASCAT-B, ASCAT-C)
+    status: completed
+    date: "2021-11"
+    summary: >-
+      Metop-A ASCAT winds, available since 2007, ended on 2021-11-15. The record continues with Metop-B, flying alongside since 2012, and Metop-C, operational since 2019.
+      The three ASCATs share the same design but differ slightly in calibration, which is why RSS produced a separate inter-calibrated A/B/C climate record (V2.1/V2.1.1).
+    changes:
+      - aspect: Satellites
+        before: "Metop-A (launched 2006-10-19, retired 2021-11-30)"
+        after: "Metop-B (launched 2012-09-17), Metop-C (launched 2018-11-07)"
+      - aspect: Near-real-time wind period
+        before: "Demonstration from 2007-03-28, operational from 2008-12-03 to 2021-11-15"
+        after: "ASCAT-B: development version 2012-11, operational 2013-05-27 onward; ASCAT-C: demonstration 2019-02, operational 2019-10 onward"
+      - aspect: Orbit
+        before: "Drifting orbit from June 2017 to extend its life — ascending-node local time moved earlier from 21:30 (June 2017) to 19:30 (2021)"
+        after: "Sun-synchronous orbits with a fixed equator crossing time (per WMO OSCAR, Metop-B 09:00 and Metop-C 09:31 descending)"
+      - aspect: Calibration stability (RSS analysis)
+        before: "Two small calibration steps (each under 0.1 m/s) in mid-2016 and late 2019 — corrected in RSS V2.1.1"
+        after: "Stable after the first six months; ASCAT-C about 0.05 m/s lower than ASCAT-B"
+      - aspect: PO.DAAC collections
+        before: "ASCATA-L2-25km, ASCATA-L2-Coastal, ASCATA_L2_25KM_CDR"
+        after: "ASCATB-L2-25km and ASCATC-L2-25km, ASCATB-L2-Coastal and ASCATC-L2-Coastal"
+    impacts:
+      - "After 2021-11-15 the number of ASCATs dropped from three to two, changing daily coverage and sampling. Split statistics that are sensitive to sampling at this date."
+      - "Calibration differences of around 0.1 m/s may exist when switching satellites, so use an inter-calibrated climate record such as RSS V2.1/V2.1.1 or check the differences over overlap periods."
+      - "Metop-A flew in a drifting orbit from June 2017, so its overpass time moved about 2 hours earlier by 2021. Keep this in mind for winds with a diurnal cycle, such as sea breezes."
+    sources:
+      - name: OSI SAF — Metop-C ASCAT 25 km Winds (OSI-102-c) product history
+        url: https://osi-saf.eumetsat.int/products/osi-102-c
+      - name: EUMETSAT — Metop-A end of mission (2021-11-15)
+        url: https://www.eumetsat.int/europes-first-meteorological-satellite-polar-orbit-ends-its-run
+      - name: EUMETSAT — decision to operate Metop-A in a drifting orbit
+        url: https://www.eumetsat.int/eumetsat-council-agreed-ageing-still-healthy-metop-satellite-will-be-exploited-drifting-orbit-june
+      - name: RSS — ASCAT-A, -B and -C ocean surface wind CDR announcement (2021-08-16)
+        url: https://www.remss.com/announcement/ASCAT-ABC-ocean-surface-wind-CDR
+      - name: Ricciardulli & Manaster (2021), Remote Sensing
+        url: https://doi.org/10.3390/rs13183678
+  - from: OSI SAF ASCAT winds (CMOD5.n, 10 m neutral winds)
+    to: OSI SAF ASCAT winds (CMOD7, 10 m stress-equivalent winds)
+    status: completed
+    date: "2018-09"
+    summary: >-
+      On 2018-09-25 the KNMI processor changed (AWDP 3_2_01): the model function became CMOD7, the winds became 10 m stress-equivalent winds, and the ECMWF background winds became stress-equivalent as well.
+      The near-real-time record was not reprocessed, so values with different definitions sit on either side of this date.
+    changes:
+      - aspect: Geophysical model function (GMF)
+        before: CMOD5.n
+        after: CMOD7
+      - aspect: Wind definition
+        before: "10 m equivalent neutral wind (+0.2 m/s at the switch to neutral winds in November 2008)"
+        after: "10 m stress-equivalent wind (accounts for atmospheric stability and air density)"
+      - aspect: Background model winds (model_speed, model_dir)
+        before: Real 10 m ECMWF winds
+        after: Stress-equivalent ECMWF winds
+      - aspect: Processor
+        before: AWDP 2.x
+        after: "AWDP 3_2_01 (upgraded to 3_3_01 on 2022-10-04)"
+    impacts:
+      - "Using near-real-time values from before and after 2018-09-25 as one time series mixes definitions. Use reprocessed data for long-term analyses."
+      - "For a fair comparison with buoys, convert buoy winds to the same stress-equivalent definition (KNMI CMOD7 guidance)."
+      - "Some PO.DAAC descriptions (coastal products) still mention CMOD5.n, so rely on the KNMI and OSI SAF histories for version information."
+    sources:
+      - name: KNMI — OSI SAF ASCAT-B 25 km product history
+        url: https://scatterometer.knmi.nl/ascat_b_osi_25_prod/
+      - name: KNMI — CMOD7 description
+        url: https://scatterometer.knmi.nl/cmod7/
+      - name: ASCAT Wind Product User Manual v1.17
+        url: https://scatterometer.knmi.nl/publications/pdf/ASCAT_Product_Manual.pdf
+  - from: Metop ASCAT
+    to: Metop-SG-B SCA (Scatterometer)
+    status: planned
+    date: "2026"
+    summary: >-
+      SCA, a C-band scatterometer on the B-type satellites of EUMETSAT's second-generation polar system Metop-SG, will succeed ASCAT. The first, B1, is due to launch in October 2026 according to ESA and November 2026 according to WMO OSCAR;
+      when checked on 2026-10-13 there was no official schedule for SCA data release. Wider swaths and cross-polarised measurements are meant to improve resolution and extend the range of measurable high winds.
+    changes:
+      - aspect: Satellites
+        before: "Metop-B (2012 onward), Metop-C (2018 onward)"
+        after: "Metop-SG-B1 (launch planned 2026), B2 (planned 2033), B3 (planned 2040)"
+      - aspect: Frequency
+        before: C-band 5.255 GHz
+        after: "C-band, about 5.355 GHz"
+      - aspect: Swath
+        before: "Two swaths of about 550 km (separated by about 700 km; effective width 525 km)"
+        after: "Two 660 km swaths with a 525 km gap, three azimuth looks (45°, 90°, 135°), near-global coverage in about 1.5 days"
+      - aspect: Resolution
+        before: "25 km spacing (effective about 50 km); coastal product 12.5 km spacing (effective 25 km)"
+        after: "Nominal 25 km sampled every 12.5 km; high-resolution mode 15–20 km sampled every 6.25 km (WMO OSCAR)"
+      - aspect: Polarisation and high winds
+        before: "VV polarisation; winds above 25 m/s less reliable"
+        after: "VV plus cross-polarisation (VH) on the mid beam — expected to measure winds up to about 40 m/s or more (SCA Science Plan)"
+    impacts:
+      - "Once SCA data are released, check inter-calibration results over the overlap with ASCAT before joining the records. Different model functions and resolution can create steps if they are simply spliced."
+      - "Confirm the launch date and the data release (demonstration and operational) schedule through EUMETSAT and OSI SAF announcements."
+    sources:
+      - name: ESA — First MetOp Second Generation-B satellite spreads its wing (2026-02-25)
+        url: https://www.esa.int/Applications/Observing_the_Earth/Meteorological_missions/MetOp_Second_Generation/First_MetOp_Second_Generation-B_satellite_spreads_its_wing
+      - name: WMO OSCAR — Metop-SG-B1
+        url: https://space.oscar.wmo.int/satellites/view/metop_sg_b1
+      - name: WMO OSCAR — SCA scatterometer
+        url: https://space.oscar.wmo.int/instruments/view/sca_scatterometer
+      - name: ESA/EUMETSAT SCA Science Plan (2019)
+        url: https://user.eumetsat.int/s3/eup-strapi-media/pdf_science_epssg_sca_plan_b35ccedaa8.pdf
+      - name: ESA — MetOp-SG facts and figures
+        url: https://www.esa.int/Applications/Observing_the_Earth/Meteorological_missions/MetOp_Second_Generation/MetOp-SG_facts_and_figures
+
+links:
+  - name: OSI SAF — wind products list
+    url: https://osi-saf.eumetsat.int/products/wind-products
+  - name: OSI SAF — Metop-B ASCAT 25 km Winds (OSI-102-b)
+    url: https://osi-saf.eumetsat.int/products/osi-102-b
+  - name: OSI SAF — Metop-B ASCAT coastal Winds (OSI-104-b)
+    url: https://osi-saf.eumetsat.int/products/osi-104-b
+  - name: OSI SAF — Metop-A ASCAT climate data record (OSI-150-a)
+    url: https://osi-saf.eumetsat.int/products/osi-150-a
+  - name: ASCAT Wind Product User Manual (PDF)
+    url: https://scatterometer.knmi.nl/publications/pdf/ASCAT_Product_Manual.pdf
+  - name: KNMI — ASCAT-B 25 km product page (anomaly and change history)
+    url: https://scatterometer.knmi.nl/ascat_b_osi_25_prod/
+  - name: KNMI — wind processing status
+    url: https://scatterometer.knmi.nl/proc_status/
+  - name: OSI SAF — service messages
+    url: https://osi-saf.eumetsat.int/community/list-of-service-messages
+  - name: Copernicus Marine — L3 scatterometer winds NRT
+    url: https://data.marine.copernicus.eu/product/WIND_GLO_PHY_L3_NRT_012_002/description
+  - name: Copernicus Marine — L3 scatterometer winds reprocessed
+    url: https://data.marine.copernicus.eu/product/WIND_GLO_PHY_L3_MY_012_005/description
+  - name: RSS — ASCAT page
+    url: https://www.remss.com/missions/ascat/
+  - name: This site — CCMP V3.1 (6-hourly gridded analysis combining ASCAT and other satellite winds)
+    url: ../ccmp/
+
+watch_urls:
+  - https://osi-saf.eumetsat.int/community/list-of-service-messages
+  - https://scatterometer.knmi.nl/ascat_b_osi_25_prod/
+  - https://scatterometer.knmi.nl/ascat_c_osi_25_prod/
+
+last_verified: "2026-10-13"

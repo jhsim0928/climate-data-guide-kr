@@ -1,0 +1,332 @@
+# ─────────────────────────────────────────────────────────────
+# SMOS thin sea ice thickness (AWI/ESA SMOS L3 Sea Ice Thickness v3.6 + University of Bremen SMOS and SMOS/SMAP) — dataset information file (English edition)
+# Satellite tab (sea ice), cross-listed in the sea ice tab (satellite observations). Daily thickness of thin ice from L-band radiometry, produced only in the freezing season.
+# When checked on 2026-10-13, the AWI product was v3.6 (since 2025-10-15) and the ESA dissemination index ran to October 2026 (end of the Southern Hemisphere season; Northern Hemisphere due to start on 10-15).
+# After editing, update last_verified to the date you checked the official pages.
+# ─────────────────────────────────────────────────────────────
+id: smos-sit
+name: SMOS thin sea ice thickness
+full_name: SMOS L3 Sea Ice Thickness (AWI/ESA, v3.6) and University of Bremen SMOS and SMOS/SMAP Thin Sea Ice Thickness
+category: satellite
+domain: satellite
+group: 해빙
+order: 45
+also_in:
+  - domain: seaice
+    group: 위성 관측 자료
+domains: [해빙, 원격탐사]
+provider: Alfred Wegener Institute (AWI) — ESA CS2SMOS-PDS project, distributed by ESA / Institute of Environmental Physics, University of Bremen (SMOS and SMOS/SMAP products) — based on ESA SMOS and NASA SMAP data
+
+status: active
+status_note: >-
+  The AWI product moved from v3.3 to v3.6 with the 2025/26 winter on 2025-10-15, ended Arctic production on 2026-04-15 and has since produced Southern Hemisphere winter fields (15 April–15 October).
+  When checked on 2026-10-13, the ESA L3_SIT_Open index ran to October 2026 (generated 2026-10-12), and the AWI wiki had not yet announced the start of the 2026/27 Arctic season (normally 15 October).
+  The University of Bremen says its SMOS and SMOS/SMAP products (v300) continue on a "best effort" basis, but its data folders are closed to automated reading, so the latest file date could not be checked.
+
+period:
+  start: "2010-10"
+  end: present
+  note: >-
+    The AWI v3.6 Arctic record starts on 2010-10-15, with 2010–2024 fully reprocessed in v3.6. Southern Hemisphere data also go back to 2010 (v3.3 operational since April 2024, v3.6 operational from April 2026);
+    commissioning-phase data from January to May 2010 are available on request only. Northern Hemisphere fields exist only from 15 October to 15 April and Southern Hemisphere fields from 15 April to 15 October.
+    The University of Bremen products are retrieved from October to April in the Arctic and from March to September in the Antarctic.
+
+resolution:
+  spatial_short: "12.5 km (0.11°)"
+  temporal_short: "1일"
+  spatial: >-
+    AWI v3.6 — 12.5 km NSIDC polar stereographic grid (Northern Hemisphere EPSG:3413, Southern Hemisphere EPSG:3976, x 608 × y 896). A 12.5 km EASE2 version (EPSG:6931/6932, 864 × 864) is also produced, but only the polar stereographic version is disseminated.
+    The spatial resolution of SMOS itself is about 40 km (University of Bremen, for the incidence angles used), much coarser than the grid spacing
+  vertical: Not applicable (single thickness value)
+  temporal: Daily mean (one field per day; time_coverage 00:00:00–23:59:59, P1D). Freezing season only
+
+coverage:
+  short: 양극
+  note: "Freezing season only — Northern Hemisphere 15 Oct–15 Apr, Southern Hemisphere 15 Apr–15 Oct (AWI). Thick ice saturates the signal and is underestimated"
+update: >-
+  Daily during the freezing season (AWI). The University of Bremen SMOS product is processed twice a day (about 7 hours after observation and again 23 hours later); the SMOS/SMAP product after about 8 hours, then reprocessed after 24 hours and after one week
+license: >-
+  ESA distribution under the ESA Earth Observation Terms and Conditions (free, ESA EO Sign In account required). The AWI distribution has no licence statement but asks for paper citations and an acknowledgement.
+  The University of Bremen products carry no licence statement and are offered as research products without warranty
+account_required: false
+
+summary: >-
+  Daily thickness of thin sea ice derived from ESA SMOS L-band (1.4 GHz) brightness temperatures, which are sensitive to the thickness of thin ice (the AWI product description says thickness information can be derived up to about 1.5 m).
+  Radar altimeters such as CryoSat-2 have large relative errors over thin ice with small freeboard, so SMOS complements them over newly forming ice, ice edges and polynyas.
+  The main product is AWI's L3 (v3.6), produced under an ESA project, which is also the SMOS input to the merged CS2SMOS and CS3SMOS thickness products.
+  The University of Bremen produces separate products with a different empirical method: a SMOS-only product and a SMOS/SMAP product that adds NASA SMAP (v300).
+
+time_convention:
+  summary: >-
+    Each AWI file is a daily mean. In v3.6 thickness is first computed per swath and the swath thicknesses of the day are then averaged into the daily mean thickness;
+    the global attributes time_coverage_start and time_coverage_end span 00:00:00 to 23:59:59 of that day. Values are averages of several overpasses, not instantaneous values.
+  points:
+    - "`time` holds one date in 'hours since 2010-01-01 00:00:00'. The product description document (PDD v5.0) does not state the time zone of the day boundary (whether UTC)."
+    - "Instead of the near-real-time JRA-55/JRA-3Q used in v3.3, v3.6 uses an ERA5 climatology for 2010–2023 (2 m air temperature, 10 m wind speed) as auxiliary data, so the values for that calendar day enter, not the actual weather of the day."
+    - "`TB_uncertainty` is the standard deviation of the day's brightness temperatures divided by the square root of the number of pairs (`nPair`), i.e. the uncertainty of the daily mean."
+    - "The University of Bremen products are also daily files of the previous day, and the same date may be reprocessed and change later (the SMOS/SMAP product is reprocessed after 24 hours and after one week)."
+  source: https://spaces.awi.de/download/attachments/297634432/AWI_ESA_SMOS_PDD_v5.pdf?version=1&modificationDate=1760692666142&api=v2
+  source_name: AWI SMOS Sea Ice Thickness PDD v5.0 (2025-04-24) / ReadMe-first Technical Note v4.0 (2025-10-15) / University of Bremen Thin Ice Thickness page
+
+variables:
+  note: >-
+    Variables from the AWI v3.6 product description document (PDD v5.0, Table 6). Variable names in the University of Bremen SMOS and SMOS/SMAP files are not given on the official pages, so they are not listed.
+  full_list: https://spaces.awi.de/download/attachments/297634432/AWI_ESA_SMOS_PDD_v5.pdf?version=1&modificationDate=1760692666142&api=v2
+  groups:
+    - name: Thickness (AWI v3.6 daily files)
+      kind: mean
+      period: Daily
+      items:
+        - text: "SMOS sea ice thickness — `sea_ice_thickness` (m)"
+          note: Daily mean of the swath thicknesses. Assumes 100% ice concentration, so it is underestimated where concentration is lower
+        - text: "Total sea ice thickness uncertainty — `ice_thickness_uncertainty` (m)"
+          note: Use with caution above 1 m. Underestimation from concentrations below 100% is not included
+        - text: "Ratio of retrieved to maximum retrievable thickness — `saturation_ratio` (%)"
+          note: Above 95% the signal is saturated over thick ice; use with caution
+          std: []
+    - name: Brightness temperature and auxiliary quantities
+      kind: mean
+      period: Daily
+      items:
+        - text: "Brightness temperature intensity (TBh+TBv)/2 — `TB` (K)"
+          std: []
+        - text: "Brightness temperature uncertainty — `TB_uncertainty` (K)"
+          std: []
+        - text: "SMOS-derived snow surface temperature — `Tsurf` (K)"
+          std: []
+        - text: "Bulk ice salinity — `Sice` (psu)"
+          note: Not yet fully evaluated for the Southern Hemisphere
+          std: []
+    - name: Data counts and quality indicators
+      kind: accum
+      period: Daily
+      items:
+        - text: "Number of TBh and TBv pairs used — `nPair` (count)"
+          std: []
+        - text: "Percentage of RFI-contaminated measurements — `RFI_ratio` (%)"
+          kind: mean
+          std: []
+        - text: "Land mask — `land` (0/1)"
+          kind: static
+          std: []
+
+access:
+  - name: ESA SMOS dissemination server — L3_SIT_Open collection
+    url: https://smos-diss.eo.esa.int/oads/meta/L3_SIT_Open/index/
+    method: HTTPS / FTPS (ftps://smos-diss.eo.esa.int/), with monthly index files
+    note: Download requires a free ESA EO Sign In account. When checked on 2026-10-13, monthly indexes covered 2010-04 to 2026-10.
+  - name: AWI FTP — sea ice product root
+    url: ftp://ftp.awi.de/sea_ice/product/
+    method: Anonymous FTP
+    note: >-
+      AWI states that access is anonymous. The v3.3 quicklook path on the AWI wiki (smos/v3.3/nh/) suggests a smos/<version>/<nh|sh> layout, but the v3.6 folder path is not confirmed on the official pages, so check the FTP listing.
+    login: false
+  - name: University of Bremen data server — SMOS and SMOS/SMAP thin ice thickness
+    url: https://data.seaice.uni-bremen.de/
+    method: HTTPS / anonymous FTP (data.seaice.uni-bremen.de, user anonymous)
+    note: The products are in the smos/ (SMOS only) and smos_smap/ (SMOS/SMAP) folders. Subfolder layout and file format are not documented on the official pages, so check them directly.
+    login: false
+  - name: ESA Earth Online — SMOS L3 Sea Ice Thickness catalogue
+    url: https://earth.esa.int/eogateway/catalog/smos-l3-sea-ice-thickness
+    method: Web information (DOI, product description, ATBD, read-me note)
+
+example:
+  lang: python
+  note: >-
+    Opens an AWI v3.6 Northern Hemisphere daily file (SMOS_Icethickness_v3.6_north_<date>.nc), applies the checks recommended in the read-me note (uncertainty above 1 m, saturation ratio above 95%), and looks at thickness in the Sea of Okhotsk.
+  code: |
+    import glob
+    import xarray as xr
+
+    f = sorted(glob.glob("SMOS_Icethickness_v3.6_north_*.nc"))[-1]
+    ds = xr.open_dataset(f).squeeze()
+
+    sit = ds["sea_ice_thickness"]                       # m, daily mean
+    ok = (ds["ice_thickness_uncertainty"] <= 1.0) & (ds["saturation_ratio"] <= 95) & (ds["land"] == 0)
+    sit = sit.where(ok)
+
+    # Sea of Okhotsk (roughly 44–60°N, 135–160°E) — latitude/longitude are 2-D variables
+    box = (ds["latitude"] > 44) & (ds["latitude"] < 60) & (ds["longitude"] > 135) & (ds["longitude"] < 160)
+    print(str(ds["time"].values), "mean thin-ice thickness (m):", float(sit.where(box).mean()))
+    print("cells with RFI ratio above 50%:", int((ds["RFI_ratio"].where(box) > 50).sum()))
+
+tips:
+  - >-
+    CS2SMOS (../cs2smos/) and CS3SMOS (../cs3smos/) in the same tab merge this SMOS L3 thickness with CryoSat-2 (and Sentinel-3) altimeter thickness by optimal interpolation into weekly (7-day) L4 fields.
+    Use the merged products for the full thickness range in one map, and this daily L3 for day-to-day changes during freeze-up or for thin ice itself. CS2SMOS v206 used SMOS v3.3 as input, and CS3SMOS v300 uses v3.6.
+  - >-
+    CryoSat-2-only thickness (../cryosat2-sit/) has large relative errors over thin ice (below roughly 1 m), whereas SMOS saturates over thick ice. The AWI product description says thickness information can be derived up to about 1.5 m,
+    but the maximum retrievable thickness depends on ice salinity and temperature, so read values with `saturation_ratio` above 95% as "at least this thick".
+  - >-
+    The retrieval assumes 100% ice concentration, so cells containing open water (ice edges, leads) are biased thin, and this effect is not included in the uncertainty. In seasonal ice zones with lower concentration such as the Sea of Okhotsk,
+    interpret the thickness together with a concentration product (e.g. ../amsr2-asi/, ../osisaf-sic/).
+  - >-
+    Radio-frequency interference (RFI) is still a problem in the Arctic, especially along the Russian coast (Barents, Kara and Laptev Seas) since 2023. Use `RFI_ratio` and `nPair` to find poorly sampled cells. RFI is negligible in the Antarctic.
+  - >-
+    Because v3.6 uses an ERA5 climatology instead of daily weather, it is robust to outages of auxiliary data servers but cannot capture inter-annual variability in air temperature and wind; the average effect is about 5 cm.
+    Do not mix results from v3.3, and even though the ESA catalogue citation still reads "Version 3.3", state the version you actually used (v3.6 in the file name) in publications.
+  - >-
+    Antarctic thickness is more uncertain because snow is handled with Arctic parameterizations and Southern Hemisphere bulk salinity has not been fully evaluated. Iceberg A-23A in the Weddell Sea (about 75.3°S, 37.3°W) appears as anomalously thin ice, which is not yet corrected.
+  - >-
+    The University of Bremen products use different algorithms from AWI (the empirical method of Huntemann et al. 2014, and the SMAP-combined method of Paţilea et al. 2019). Bremen recommends the RFI-filtered SMOS version or the SMOS/SMAP product
+    over the raw SMOS one, and notes that with about 40 km resolution only larger areas of thin ice are retrieved correctly. Do not mix values from the two institutes in one series.
+
+citations:
+  dataset:
+    - label: ESA SMOS Level 3 Sea Ice Thickness (ESA catalogue DOI)
+      text: >-
+        European Space Agency, 2023, SMOS Level 3 Sea Ice Thickness, Version 3.3, https://doi.org/10.57780/sm1-5ebe10b
+      doi: 10.57780/sm1-5ebe10b
+      bibtex: |
+        @misc{esa_smos_l3_sit,
+          author    = {{European Space Agency}},
+          title     = {{SMOS} Level 3 Sea Ice Thickness, Version 3.3},
+          year      = {2023},
+          publisher = {European Space Agency},
+          doi       = {10.57780/sm1-5ebe10b}
+        }
+  papers:
+    - label: AWI SMOS thin sea ice thickness algorithm (requested by AWI)
+      text: >-
+        Tian-Kunze, X., Kaleschke, L., Maaß, N., Mäkynen, M., Serra, N., Drusch, M., and Krumpen, T. (2014): SMOS-derived thin sea ice thickness:
+        algorithm baseline, product specifications and initial verification. The Cryosphere, 8, 997–1018.
+      doi: 10.5194/tc-8-997-2014
+      bibtex: |
+        @article{tiankunze2014smos,
+          author  = {Tian-Kunze, Xiangshan and Kaleschke, Lars and Maa{\ss}, Nina and M{\"a}kynen, Marko and Serra, Nuno and Drusch, Matthias and Krumpen, Thomas},
+          title   = {{SMOS}-derived thin sea ice thickness: algorithm baseline, product specifications and initial verification},
+          journal = {The Cryosphere},
+          volume  = {8},
+          pages   = {997--1018},
+          year    = {2014},
+          doi     = {10.5194/tc-8-997-2014}
+        }
+    - label: Operational application and validation in the Barents Sea (requested by AWI)
+      text: >-
+        Kaleschke, L., Tian-Kunze, X., Maaß, N., Beitsch, A., Wernecke, A., Miernecki, M., Müller, G., Fock, B. H., Gierisch, A. M. U., Schlünzen, K. H., et al. (2016):
+        SMOS sea ice product: Operational application and validation in the Barents Sea marginal ice zone. Remote Sensing of Environment, 180, 264–273.
+      doi: 10.1016/j.rse.2016.03.009
+    - label: Antarctic thin sea ice thickness (for Southern Hemisphere data, requested by AWI)
+      text: >-
+        Kaleschke, L., Tian-Kunze, X., Hendricks, S., and Ricker, R. (2024): SMOS-derived Antarctic thin sea ice thickness: data description and validation in the Weddell Sea.
+        Earth System Science Data, 16, 3149–3170.
+      doi: 10.5194/essd-16-3149-2024
+    - label: University of Bremen SMOS method
+      text: >-
+        Huntemann, M., Heygster, G., Kaleschke, L., Krumpen, T., Mäkynen, M., and Drusch, M. (2014): Empirical sea ice thickness retrieval during the freeze-up period
+        from SMOS high incident angle observations. The Cryosphere, 8, 439–451.
+      doi: 10.5194/tc-8-439-2014
+    - label: University of Bremen SMOS/SMAP method
+      text: >-
+        Paţilea, C., Heygster, G., Huntemann, M., and Spreen, G. (2019): Combined SMAP–SMOS thin sea ice thickness retrieval. The Cryosphere, 13, 675–691.
+      doi: 10.5194/tc-13-675-2019
+  acknowledgement: >-
+    AWI asks users to cite the three papers above (Tian-Kunze et al. 2014, Kaleschke et al. 2016, and Kaleschke et al. 2024 for Antarctic data) and to acknowledge that the production of SMOS sea ice thickness data
+    was funded by the ESA project SMOS & CryoSat-2 Sea Ice Data Product Processing and Dissemination Service and that data from DATE to DATE were obtained from AWI. Copy the exact wording from the ReadMe-first Technical Note.
+    For the University of Bremen products, cite Huntemann et al. (2014) or Paţilea et al. (2019).
+
+notices:
+  - date: "2026-04-17"
+    level: info
+    title: Arctic 2025/26 season ends; L3 production switched to the Southern Hemisphere
+    body: >-
+      AWI ended Arctic L3 SMOS thickness processing and dissemination on 2026-04-15 and has provided Southern Hemisphere winter L3 data from the same day. This is the normal seasonal switch for a freezing-season product;
+      the 2026/27 Arctic season usually starts on 15 October (no start notice as of 2026-10-13).
+    source: https://spaces.awi.de/spaces/CS2SMOS/blog/2026/04/17/624499172/The+L3+product+has+been+switched+from+the+Arctic+to+the+Antarctic.
+  - date: "2025-10-17"
+    level: warning
+    title: "Product version changes from v3.3 to v3.6 with the 2025/26 winter"
+    body: >-
+      When L3 SMOS sea ice thickness processing and dissemination resumed on 2025-10-15, the product version changed from v3.3 to v3.6. The key changes are swath-based processing, an improved RFI filter and an ERA5 climatology as auxiliary weather data,
+      and 2010–2024 were reprocessed in v3.6. File names and values change, so check download scripts and existing analyses.
+    source: https://spaces.awi.de/spaces/CS2SMOS/blog/2025/10/17/595263548/L3+SMOS+sea+ice+thickness+processing+started+for+2025+26+winter+season.
+  - date: "2025-06-06"
+    level: info
+    title: "v3.3 production suspended from 2025-06-02 — v3.6 not affected"
+    body: >-
+      Maintenance of the NSF NCAR computing systems used to obtain the auxiliary JRA-3Q data stopped v3.3 production from 2 June. v3.6, which uses an ERA5 climatology, was produced normally;
+      v3.3 returned to normal on 6 June and the missing 3–5 June data were reprocessed (notice of 2025-06-10).
+    source: https://spaces.awi.de/spaces/CS2SMOS/blog/2025/06/06/565587944/Update+on+SMOS+L3+Sea+Ice+Thickness+Data+Production+v3.3
+  - date: "2025-02-06"
+    level: warning
+    title: "v3.3 production stopped (2025-02-03 to 03-03) — data for 4–16 February missing"
+    body: >-
+      Downtime of the JMA JRA-3Q data server stopped production of L3 v3.3 and of CS2SMOS v206, which uses it as input, until 2025-03-03. L3 v3.3 has no data for 2025-02-04 to 16.
+      The new version based on an ERA5 climatology was not affected.
+    source: https://spaces.awi.de/spaces/CS2SMOS/blog/2025/02/06/543621383/SMOS+L3+v3.3+data+production+stopped+2025-02-03
+  - date: "2022-10-08"
+    level: info
+    title: "University of Bremen SMOS/SMAP thin sea ice thickness v300 released"
+    body: >-
+      The University of Bremen released version 300 of its SMOS/SMAP thin sea ice thickness product, with updated projection information, a corrected grid shift (aligned with the official NSIDC north polar stereographic coordinates),
+      a fix for missing SMAP data after September 2021 and newer SMAP L1B input. SMAP data were unavailable from 2022-08-06 to 10-05, so the near-real-time product then used SMOS only.
+    source: https://seaice.uni-bremen.de/news-archive/
+
+transitions:
+  - from: SMOS L3 SIT v3.3
+    to: SMOS L3 SIT v3.6
+    status: completed
+    date: "2025-10"
+    summary: >-
+      AWI changed the SMOS L3 sea ice thickness processing to compute thickness per swath first, and improved the RFI filter and auxiliary weather data. The whole period 2010–2024 was reprocessed;
+      v3.6 became the operational version with the Arctic season starting on 2025-10-15, and the Southern Hemisphere has been processed with v3.6 since April 2026.
+    changes:
+      - aspect: Processing unit
+        before: "Thickness computed directly from daily mean brightness temperatures"
+        after: "Thickness computed from swath data (L2, internal use only) and then averaged per day; brightness temperatures weighted by radiometric resolution when averaged (about 0.3 K mean difference)"
+      - aspect: RFI filtering
+        before: "v3.3 filter"
+        after: "Pixel-based border flag added; the 300 K threshold applied only within 0–40° incidence and radiometric accuracy below 5 K (about 0.5 K mean difference) — more Arctic coverage"
+      - aspect: Auxiliary weather data
+        before: "Near-real-time JRA-55/JRA-3Q reanalysis"
+        after: "ERA5 2010–2023 climatology (2 m air temperature, 10 m wind speed) — about 5 cm mean thickness difference"
+      - aspect: Grid and distribution
+        before: "12.5 km polar stereographic (EPSG:3413), NetCDF4"
+        after: "12.5 km polar stereographic (north EPSG:3413, south EPSG:3976) and EASE2 produced, only polar stereographic disseminated"
+      - aspect: Period
+        before: "Arctic from 2010-10 (Southern Hemisphere v3.3 operational from 2024-04)"
+        after: "Arctic from 2010-10-15 fully reprocessed; Southern Hemisphere from 2010 (v3.6 operational from 2026-04)"
+      - aspect: File names
+        before: "SMOS_Icethickness_v3.3_north_<date>.nc"
+        after: "SMOS_Icethickness_v3.6_north_<date>.nc / …_south_… (EASE2 versions end in _ease2)"
+      - aspect: Documents and citation
+        before: "PDD and read-me note Issue 3.1 (2023-10-15)"
+        after: "PDD v5.0 (2025-04-24), read-me note Issue 4.0 (2025-10-15). ESA catalogue DOI 10.57780/sm1-5ebe10b unchanged (citation text still says Version 3.3)"
+    impacts:
+      - Do not mix v3.3 and v3.6 in one series. The whole period has been reprocessed in v3.6, so the safest option is to download again from 2010.
+      - With an ERA5 climatology, inter-annual variations in air temperature and wind are no longer included. Keep this limitation in mind when interpreting thickness changes in anomalous winters.
+      - The differences between CS2SMOS v206 (SMOS v3.3 input) and CS3SMOS v300 (SMOS v3.6 input) include this change of SMOS version.
+    sources:
+      - name: AWI — SMOS Sea Ice Thickness product page (version history, v3.6 improvements)
+        url: https://spaces.awi.de/spaces/CS2SMOS/pages/297634432/SMOS+Sea+Ice+Thickness
+      - name: AWI SMOS ReadMe-first Technical Note v4.0 (2025-10-15)
+        url: https://spaces.awi.de/download/attachments/297634432/%5BDT4-1%5D-AWI_ESA_SMOS_RM_TN_v4.0_20251015.pdf?version=1&modificationDate=1760948153123&api=v2
+      - name: AWI SMOS PDD v5.0 (2025-04-24)
+        url: https://spaces.awi.de/download/attachments/297634432/AWI_ESA_SMOS_PDD_v5.pdf?version=1&modificationDate=1760692666142&api=v2
+      - name: AWI notice — 2025/26 season start and switch to v3.6 (2025-10-17)
+        url: https://spaces.awi.de/spaces/CS2SMOS/blog/2025/10/17/595263548/L3+SMOS+sea+ice+thickness+processing+started+for+2025+26+winter+season.
+
+links:
+  - name: AWI — SMOS Sea Ice Thickness product page (version history, documents)
+    url: https://spaces.awi.de/spaces/CS2SMOS/pages/297634432/SMOS+Sea+Ice+Thickness
+  - name: AWI CS2SMOS-PDS wiki (operational news)
+    url: https://spaces.awi.de/spaces/CS2SMOS/overview
+  - name: ESA — SMOS L3 Sea Ice Thickness catalogue
+    url: https://earth.esa.int/eogateway/catalog/smos-l3-sea-ice-thickness
+  - name: University of Bremen — Thin Ice Thickness (SMOS, SMOS/SMAP)
+    url: https://seaice.uni-bremen.de/thin-ice-thickness/
+  - name: This site — CS3SMOS merged sea ice thickness (SMOS v3.6 input)
+    url: ../cs3smos/
+  - name: This site — CS2SMOS merged sea ice thickness (SMOS v3.3 input, updates ended)
+    url: ../cs2smos/
+  - name: This site — CryoSat-2 sea ice thickness
+    url: ../cryosat2-sit/
+  - name: This site — University of Bremen ASI AMSR2 sea ice concentration
+    url: ../amsr2-asi/
+
+watch_urls:
+  - https://spaces.awi.de/spaces/CS2SMOS/overview
+  - https://seaice.uni-bremen.de/news-archive/
+  - https://earth.esa.int/eogateway/catalog/smos-l3-sea-ice-thickness
+
+last_verified: "2026-10-13"

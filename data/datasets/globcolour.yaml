@@ -1,0 +1,335 @@
+# ─────────────────────────────────────────────────────────────
+# Copernicus-GlobColour 전지구 해색 (Copernicus Marine OCEANCOLOUR_GLO_BGC_*_009_101~104) — 데이터셋 정보 파일
+# 위성 탭(해색), 해양 탭(위성 관측 자료) 교차 수록. ACRI-ST가 다위성 엽록소·반사도·투명도·일차생산 등을 4 km(OLCI 300 m) L3 일·L4 월/빈칸 없는 일 자료로 생산.
+# 2026-10-13 확인 시 MY L3는 2026-10-05, NRT L3 다중센서 엽록소는 2026-10-11까지 있습니다. 2026-11-24 새 데이터셋 판(202611)으로 바뀔 예정입니다.
+# 수정 후에는 공식 페이지에서 확인한 날짜로 last_verified 를 갱신하세요.
+# ─────────────────────────────────────────────────────────────
+id: globcolour
+name: Copernicus-GlobColour
+full_name: >-
+  Global Ocean Colour (Copernicus-GlobColour), Bio-Geo-Chemical, L3 (daily) / L4 (monthly and interpolated) from Satellite Observations
+  (Copernicus Marine 전지구 다위성 해색 — MY OCEANCOLOUR_GLO_BGC_L3_MY_009_103·L4_MY_009_104, NRT L3_NRT_009_101·L4_NRT_009_102)
+category: satellite
+domain: satellite
+group: 해색
+order: 50
+also_in:
+  - domain: ocean
+    group: 위성 관측 자료
+domains: [해양, 원격탐사]
+provider: Copernicus Marine Service (해색 TAC, ACRI-ST 생산 — Copernicus-GlobColour 처리기)
+
+status: active
+status_note: >-
+  다년(MY)·준실시간(NRT) 모두 매일 갱신되고 있습니다. 2026-10-13 확인 시 MY L3 일자료는 2026-10-05, NRT L3 다중센서 엽록소는 2026-10-11, MY L4 월자료는 2026-09, MY L4 빈칸 없는 일자료는 2026-09-07까지 있습니다.
+  2026년 3월 다중센서 자료에서 MODIS를 빼고(2023년 초 이후) VIIRS-NOAA21을 넣은 새 판(202603)이 나왔고, 2026년 11월에는 OC5 계수 갱신·탄소(POC·DOC) 데이터셋 추가 등을 담은 판(202611)으로 바뀔 예정입니다.
+
+period:
+  start: "1997-09"
+  end: present
+  note: >-
+    MY 다중센서는 1997-09-04(L4 월은 1997-09)부터, OLCI 단독 자료는 2016-04-25부터입니다. NRT는 최근 기간만 담습니다(2026-10-13 확인 시 NRT L3 모음 2023-04-25~, 다중센서 엽록소 202411판 2024-09-30~).
+    1997~2002년 SeaWiFS 단독 기간에는 빠진 날이 있고, 식물플랑크톤 기능군(PFT)은 2002년 이전에 없습니다.
+
+resolution:
+  spatial_short: "4 km (0.04°)"
+  temporal_short: "1일"
+  spatial: >-
+    4 km 제품은 정방위경도(plate carrée) 격자 위도 4320 × 경도 8640, 격자 간격 0.0416667°(격자 중심 89.979°S~89.979°N, 179.979°W~179.979°E).
+    OLCI 300 m 제품은 위도 32400 × 경도 64800, 간격 0.0055556°. PUM은 '4 km'가 적도에서의 대략적 화소 크기이며 고위도로 갈수록 동서 간격이 좁아진다고 설명합니다
+  vertical: 해면 위성 관측(원격 반사도와 그로부터 구한 표층 물성, 일차생산은 수층 적분값)
+  temporal: >-
+    L3 일(모든 위성 통과를 합친 일 합성) / L4 월평균 / L4 빈칸 없는 일자료(엽록소·투명도, 시공간 보간). 일차생산(PP)은 L4 월자료만 있습니다
+
+coverage:
+  short: 전지구
+  note: "바다만 대상. L3는 구름·해빙·야간·낮은 태양 고도(고위도 겨울)에서 값이 없고, L4 gap-free 일자료만 빈칸을 보간"
+update: >-
+  MY L3·NRT는 매일 22:00(UTC) 갱신(NRT 첫 판은 관측 후 약 24시간), MY L4 월자료는 매월. PUM은 MY 연장분(MYINT)을 관측 후 31일 안에 낸다고 적고 있으며,
+  QUID는 MY가 현재보다 약 8일 전까지 이어진다고 적고 있으며 2026-10-13 확인 시 MY L3 최신일은 2026-10-05입니다
+license: Copernicus Marine Service 이용 약관(Service Commitments and Licence)에 따른 무료 이용. 출처 표기와 제품 DOI 인용을 요구합니다
+account_required: true
+
+summary: >-
+  Copernicus Marine 해색 TAC가 ACRI-ST의 Copernicus-GlobColour 처리기로 만드는 전지구 해색 생지화학 자료입니다. SeaWiFS·MODIS·MERIS·VIIRS(SNPP·NOAA-20·NOAA-21)·OLCI(S3A·S3B)를
+  병합한 4 km 다중센서 제품과 OLCI 단독 4 km·300 m 제품이 있고, 엽록소 a·식물플랑크톤 기능군·크기군·원격 반사도·Kd(490)·투명도(Secchi 깊이)·부유물·후방산란·유색 용존 유기물·일차생산을 냅니다.
+  센서별로 엽록소를 먼저 계산한 뒤 병합하는 방식이라 반사도를 먼저 병합하는 OC-CCI와 다르며, 관측 다음 날 나오는 NRT와 1997년부터의 다년(MY) 자료가 따로 있습니다.
+
+time_convention:
+  summary: >-
+    L3 일자료는 그날 모든 위성 통과를 합친 일 합성의 평균값이고, L4 월자료는 그달 값을 시간 평균한 것입니다. L4 빈칸 없는 일자료는 시공간 보간으로 구름 낀 칸을 채운 값입니다.
+    월자료의 time 값은 그달 1일 00:00 UTC(예 1997-09-01, … 2026-09-01)이며 실제 평균 구간은 그달 전체입니다.
+  points:
+    - "일 합성 하나는 약 24시간 관측을 담습니다. QUID는 날짜 변경선(180°)을 가로지르는 영역은 두 날의 제품이 필요하다고 안내합니다."
+    - "NRT는 처음에 기후값 보조자료(궤도·기상)로 만들어 품질이 다소 낮을 수 있고, 나중에 재처리됩니다. MY 연장분(MYINT)은 전체 재처리 때에만 MY로 대체됩니다."
+    - "일차생산 PP의 단위는 mg m-2 day-1로 하루 생산률의 월평균입니다. 월 총량은 그달 일수를 곱해야 합니다."
+    - "gap-free 일자료의 flags 변수에서 1은 육지(LAND), 2는 보간된 칸(INTERPOLATED)입니다. 실제 관측 기반 값만 쓰려면 2인 칸을 빼세요."
+    - "*_uncertainty 변수는 같은 칸 값의 불확도 추정치이며 단위는 %입니다."
+  source: https://documentation.marine.copernicus.eu/PUM/CMEMS-OC-PUM.pdf
+  source_name: Copernicus Marine OC PUM (Issue 7.0) + QUID 009-101to104 (Issue 7.0) + STAC 메타데이터
+
+variables:
+  note: >-
+    변수 이름·단위는 Copernicus Marine 데이터셋 메타데이터(STAC, 202603·202411판) 기준입니다. 다중센서 4 km 데이터셋은 plankton(엽록소·PFT), reflectance(반사도), optics(BBP·CDM),
+    transp(KD490·SPM·ZSD), pp(일차생산) 다섯 묶음으로 나뉩니다. OLCI 단독 데이터셋은 반사도 파장이 더 많습니다(400~709 nm, 제품 설명 기준).
+  full_list: https://data.marine.copernicus.eu/product/OCEANCOLOUR_GLO_BGC_L3_MY_009_103/description
+  groups:
+    - name: 엽록소·식물플랑크톤 (plankton, L3 일 / L4 월)
+      kind: mean
+      period: 일(L3) 또는 월(L4)
+      items:
+        - text: "엽록소 a 농도 — `CHL` (mg m-3)"
+          note: 저영양 해역은 CI(Hu et al.), 중영양·연안은 OC5, 0.15~0.2 mg m-3에서 혼합
+        - text: "엽록소 불확도 — `CHL_uncertainty` (%)"
+          std: []
+        - text: "식물플랑크톤 기능군 엽록소 — `DIATO`(규조류)·`DINO`(와편모류)·`GREEN`(녹조류)·`HAPTO`(착편모류)·`PROCHLO`(프로클로로코쿠스)·`PROKAR`(원핵생물) (mg m-3)"
+          note: 각 변수마다 *_uncertainty(%)가 있음. 2002년 이전 없음
+        - text: "식물플랑크톤 크기군 엽록소 — `MICRO`·`NANO`·`PICO` (mg m-3)"
+        - text: "엽록소 수평 경사 — `CHL_gradient` (mg m-3 km-1)"
+          note: OLCI 데이터셋에 있으며 2026년 11월부터 다중센서 L3 일자료로 확대 예정
+          std: []
+        - text: "플래그 — `flags`"
+          kind: static
+          note: "1 육지(LAND). gap-free 일자료는 2 보간(INTERPOLATED) 추가"
+          std: []
+    - name: 원격 반사도 (reflectance, 다중센서 4 km)
+      kind: mean
+      period: 일(L3) 또는 월(L4)
+      items:
+        - "완전 정규화 원격 반사도 — `RRS412`·`RRS443`·`RRS490`·`RRS555`·`RRS670` (sr-1)"
+        - text: "반사도 불확도 — `RRS412_uncertainty` 등 (%)"
+          std: []
+    - name: 광학·투명도 (optics·transp)
+      kind: mean
+      period: 일(L3) 또는 월(L4)
+      items:
+        - "490 nm 확산 감쇠 계수 — `KD490` (m-1)"
+        - "투명도(Secchi 깊이) — `ZSD` (m)"
+        - "무기 부유 입자 농도 — `SPM` (g m-3)"
+        - "443 nm 입자 후방산란 계수 — `BBP` (m-1)"
+        - "유색 용존·쇄설 유기물 흡수 — `CDM` (m-1)"
+        - text: "각 변수의 불확도 — `KD490_uncertainty`·`ZSD_uncertainty`·`SPM_uncertainty`·`BBP_uncertainty`·`CDM_uncertainty` (%)"
+          std: []
+    - name: 일차생산 (pp, L4 월만)
+      kind: mean
+      period: 월
+      items:
+        - text: "일차생산 — `PP` (mg m-2 day-1)"
+          note: Antoine & Morel 모델. 병합 엽록소·PAR·Kd(PAR), OSTIA SST, GLORYS12V1 혼합층 깊이 사용
+        - text: "일차생산 불확도 — `PP_uncertainty` (%)"
+          std: []
+    - name: 빈칸 없는 일자료 (L4 gap-free, 다중센서 4 km)
+      kind: mean
+      period: 일
+      items:
+        - text: "보간 엽록소 a — `CHL` (mg m-3)"
+          note: 시공간 보간으로 구름 칸을 채움. flags=2가 보간된 칸
+        - text: "보간 엽록소 불확도 — `CHL_uncertainty` (%)"
+          std: []
+        - text: "보간 투명도 자료 — transp gap-free 데이터셋 (KD490·ZSD 등)"
+          note: 2019·2020년부터 KD·ZSD gap-free 제공(QUID)
+
+access:
+  - name: Copernicus Marine — MY L3 일 (OCEANCOLOUR_GLO_BGC_L3_MY_009_103)
+    url: https://data.marine.copernicus.eu/product/OCEANCOLOUR_GLO_BGC_L3_MY_009_103/description
+    method: Copernicus Marine Toolbox(copernicusmarine subset·get·open_dataset) / 웹 내려받기·부분 추출
+    note: >-
+      데이터셋 ID 예 cmems_obs-oc_glo_bgc-plankton_my_l3-multi-4km_P1D, cmems_obs-oc_glo_bgc-reflectance_my_l3-multi-4km_P1D, cmems_obs-oc_glo_bgc-transp_my_l3-multi-4km_P1D,
+      cmems_obs-oc_glo_bgc-optics_my_l3-multi-4km_P1D, OLCI는 …_my_l3-olci-4km_P1D·…_my_l3-olci-300m_P1D. 내려받으려면 로그인(무료 Copernicus Marine 계정 또는 Copernicus Data Space 계정)이 필요합니다.
+  - name: Copernicus Marine — MY L4 월·gap-free 일 (OCEANCOLOUR_GLO_BGC_L4_MY_009_104)
+    url: https://data.marine.copernicus.eu/product/OCEANCOLOUR_GLO_BGC_L4_MY_009_104/description
+    method: Copernicus Marine Toolbox / 웹
+    note: >-
+      월자료 cmems_obs-oc_glo_bgc-plankton_my_l4-multi-4km_P1M, 일차생산 cmems_obs-oc_glo_bgc-pp_my_l4-multi-4km_P1M, 빈칸 없는 일자료 cmems_obs-oc_glo_bgc-plankton_my_l4-gapfree-multi-4km_P1D,
+      일 기후값 cmems_obs-oc_glo_bgc-plankton_my_l4-multi-climatology-4km_P1D 등.
+  - name: Copernicus Marine — NRT L3 일 (OCEANCOLOUR_GLO_BGC_L3_NRT_009_101)
+    url: https://data.marine.copernicus.eu/product/OCEANCOLOUR_GLO_BGC_L3_NRT_009_101/description
+    method: Copernicus Marine Toolbox / 웹
+    note: 관측 다음 날 22:00 UTC 배포. 데이터셋 ID는 MY의 _my_를 _nrt_로 바꾼 형식입니다(예 cmems_obs-oc_glo_bgc-plankton_nrt_l3-multi-4km_P1D).
+  - name: Copernicus Marine — NRT L4 월·gap-free 일 (OCEANCOLOUR_GLO_BGC_L4_NRT_009_102)
+    url: https://data.marine.copernicus.eu/product/OCEANCOLOUR_GLO_BGC_L4_NRT_009_102/description
+    method: Copernicus Marine Toolbox / 웹
+    note: 예 cmems_obs-oc_glo_bgc-plankton_nrt_l4-gapfree-multi-4km_P1D, cmems_obs-oc_glo_bgc-pp_nrt_l4-multi-4km_P1M.
+
+example:
+  lang: python
+  note: >-
+    Copernicus Marine Toolbox로 MY L4 월 엽록소를 한반도 주변만 잘라 받는 예입니다. 처음 한 번 copernicusmarine.login()으로 계정을 저장하세요.
+    데이터셋 판이 바뀌는 시기(예 2026-11)에는 dataset_version을 지정해 결과를 고정할 수 있습니다.
+  code: |
+    # pip install copernicusmarine xarray
+    import copernicusmarine
+    import xarray as xr
+
+    copernicusmarine.login()   # 처음 한 번만 (사용자 이름·비밀번호 저장)
+    copernicusmarine.subset(
+        dataset_id="cmems_obs-oc_glo_bgc-plankton_my_l4-multi-4km_P1M",
+        variables=["CHL", "CHL_uncertainty"],
+        minimum_longitude=120, maximum_longitude=132,
+        minimum_latitude=30, maximum_latitude=40,
+        start_datetime="2024-01-01", end_datetime="2024-12-31",
+        output_filename="globcolour_chl_korea_2024.nc",
+    )
+    ds = xr.open_dataset("globcolour_chl_korea_2024.nc")
+    print(ds["CHL"].mean(["latitude", "longitude"]).values)
+
+tips:
+  - "PUM은 GlobColour MY가 상류 센서 재보정·처리 변경 때문에 시계열 불연속이 있을 수 있고, 센서 간 일관성을 우선한 OC-CCI는 대신 현재까지 이어지지 않는다고 설명합니다. 장기 추세는 OC-CCI, 최근·준실시간 감시는 GlobColour로 나눠 쓰는 것을 검토하세요."
+  - "다중센서 자료에서 MODIS가 2023년 초 이후 빠지고 VIIRS-NOAA21이 2022년 11월 이후 들어갔습니다(2026-03 판). 이 시기 앞뒤로 채움률·값이 달라질 수 있습니다."
+  - 재처리로 일부 해역에서 값이 20% 넘게 바뀔 수 있다고 QUID가 밝힙니다. 논문에는 데이터셋 ID와 판(파일 속 버전·내려받은 날짜)을 적고, 새 판과 섞지 마세요.
+  - "황해·동중국해 연안처럼 탁한 바다에서는 OC5의 복잡 수역 보정이 쓰이지만, 엽록소보다 부유물(SPM)·CDM이 광학을 좌우할 수 있으니 SPM·CDM과 불확도를 함께 보세요."
+  - gap-free 일자료는 보간값입니다. flags가 2(INTERPOLATED)인 칸은 실제 관측이 아니므로, 적조·블룸 같은 짧은 현상 분석에는 L3 일자료나 flags로 거른 값을 쓰세요.
+  - "300 m OLCI 제품은 연안 분석에 유리하지만 2016-04-25 이후만 있고, 다중센서 4 km와 알고리즘·센서가 달라 섞어 쓰면 안 됩니다."
+  - 일차생산 PP는 GLORYS12V1 혼합층 깊이와 OSTIA SST 같은 모델·분석 입력에 기대므로, 현장 검증(r² 약 0.63)이 제한적이라는 QUID 설명을 고려하세요.
+  - "2026-11-24 202611판이 공개되고 일부 202603판은 같은 날 퇴역할 예정입니다(STAC 메타데이터). 이중 배포 기간은 2026-11-03~2027-01-12로 안내되어 있으니 그 전에 스크립트를 점검하세요."
+
+citations:
+  dataset:
+    - label: MY L3 일 (OCEANCOLOUR_GLO_BGC_L3_MY_009_103)
+      text: >-
+        Global Ocean Colour (Copernicus-GlobColour), Bio-Geo-Chemical, L3 (daily) from Satellite Observations (1997-ongoing). E.U. Copernicus Marine Service Information (CMEMS).
+        Marine Data Store (MDS). DOI: 10.48670/moi-00280 (Accessed on DD MMM YYYY)
+      doi: 10.48670/moi-00280
+      bibtex: |
+        @misc{cmems_oc_glo_l3_my,
+          author    = {{E.U. Copernicus Marine Service Information (CMEMS)}},
+          title     = {Global Ocean Colour (Copernicus-GlobColour), Bio-Geo-Chemical, L3 (daily) from Satellite Observations (1997-ongoing)},
+          publisher = {Marine Data Store (MDS)},
+          doi       = {10.48670/moi-00280}
+        }
+    - label: MY L4 월·gap-free (OCEANCOLOUR_GLO_BGC_L4_MY_009_104)
+      text: >-
+        Global Ocean Colour (Copernicus-GlobColour), Bio-Geo-Chemical, L4 (monthly and interpolated) from Satellite Observations (1997-ongoing). E.U. Copernicus Marine Service Information (CMEMS).
+        Marine Data Store (MDS). DOI: 10.48670/moi-00281 (Accessed on DD MMM YYYY)
+      doi: 10.48670/moi-00281
+      bibtex: |
+        @misc{cmems_oc_glo_l4_my,
+          author    = {{E.U. Copernicus Marine Service Information (CMEMS)}},
+          title     = {Global Ocean Colour (Copernicus-GlobColour), Bio-Geo-Chemical, L4 (monthly and interpolated) from Satellite Observations (1997-ongoing)},
+          publisher = {Marine Data Store (MDS)},
+          doi       = {10.48670/moi-00281}
+        }
+    - label: NRT L3 일 (OCEANCOLOUR_GLO_BGC_L3_NRT_009_101)
+      text: >-
+        Global Ocean Colour (Copernicus-GlobColour), Bio-Geo-Chemical, L3 (daily) from Satellite Observations (Near Real Time). E.U. Copernicus Marine Service Information (CMEMS).
+        Marine Data Store (MDS). DOI: 10.48670/moi-00278 (Accessed on DD MMM YYYY)
+      doi: 10.48670/moi-00278
+    - label: NRT L4 월·gap-free (OCEANCOLOUR_GLO_BGC_L4_NRT_009_102)
+      text: >-
+        Global Ocean Colour (Copernicus-GlobColour), Bio-Geo-Chemical, L4 (monthly and interpolated) from Satellite Observations (Near Real Time). E.U. Copernicus Marine Service Information (CMEMS).
+        Marine Data Store (MDS). DOI: 10.48670/moi-00279 (Accessed on DD MMM YYYY)
+      doi: 10.48670/moi-00279
+  papers:
+    - label: GlobColour 엽록소 병합·플래그 방식
+      text: >-
+        Garnesson, P., Mangin, A., Fanton d'Andon, O., Demaria, J., Bretagnon, M. (2019): The CMEMS GlobColour chlorophyll a product based on satellite observation: multi-sensor merging and flagging strategies.
+        Ocean Science, 15(3), 819–830.
+      doi: 10.5194/os-15-819-2019
+      bibtex: |
+        @article{garnesson2019globcolour,
+          author  = {Garnesson, Philippe and Mangin, Antoine and Fanton d'Andon, Odile and Demaria, Julien and Bretagnon, Marine},
+          title   = {The {CMEMS} {GlobColour} chlorophyll a product based on satellite observation: multi-sensor merging and flagging strategies},
+          journal = {Ocean Science},
+          volume  = {15},
+          number  = {3},
+          pages   = {819--830},
+          year    = {2019},
+          doi     = {10.5194/os-15-819-2019}
+        }
+  acknowledgement: >-
+    Copernicus Marine은 논문에 "This study has been conducted using E.U. Copernicus Marine Service Information;" 뒤에 사용한 모든 제품의 DOI 링크를 붙이는 문구를 권합니다.
+
+notices:
+  - date: "2026-11"
+    level: warning
+    title: (예정) 2026년 11월 판 갱신 — OC5 계수 갱신, 탄소(POC·DOC) 데이터셋 추가, 스크립트 수정 필요
+    body: >-
+      OC5 계수 갱신으로 다중센서 엽록소·투명도·일차생산을 재처리하고, GLOPHYTS 알고리즘으로 OLCI 시기 PFT를 개선하며, 새 탄소(car) 데이터셋(POC·DOC)과
+      다중센서 L3 엽록소 경사 변수를 추가합니다. 자료 처리 스크립트를 고쳐야 한다고 안내했고, NRT 이중 배포 기간은 2026-11-03~2027-01-12입니다.
+    source: https://marine.copernicus.eu/user-corner/product-roadmap/transition-information?product=OCEANCOLOUR_GLO_BGC_L3_NRT_009_101
+  - date: "2026-03"
+    level: warning
+    title: 다중센서 자료에서 MODIS 제외, VIIRS-NOAA21 추가 (MY L3·L4 갱신)
+    body: >-
+      2026년 3월 GLO MY(L3·L4) 갱신에서 다중센서 데이터셋의 2023년 초 이후 MODIS 자료를 빼고, 2022년 11월 이후 VIIRS-NOAA21을 넣었습니다(새 데이터셋 판 202603, 2026-03-31 공개).
+      NRT에도 같은 변경이 적용되었습니다.
+    source: https://marine.copernicus.eu/user-corner/product-roadmap/transition-information?product=OCEANCOLOUR_GLO_BGC_L4_MY_009_104
+  - date: "2025-11"
+    level: info
+    title: OLCI 4 km 엽록소 경사 변수에 불확도 추가, MY 시계열 2024년까지 연장
+    body: >-
+      cmems_obs-oc_glo_bgc-plankton_my_l3-olci-4km_P1D의 엽록소 경사 변수에 불확도 필드가 붙었고, MY 시계열이 2024년 자료까지 연장되었습니다.
+    source: https://marine.copernicus.eu/user-corner/product-roadmap/transition-information?product=OCEANCOLOUR_GLO_BGC_L3_MY_009_103
+  - date: "2024-11"
+    level: info
+    title: OLCI 기반 엽록소 수평 경사 변수 추가, PFT 재보정
+    body: >-
+      OLCI 자료로 계산한 엽록소 수평 경사(CHL_gradient) 변수가 GLO MY·NRT에 추가되었고, 식물플랑크톤 기능군(PFT) 변수가 최신 자료로 재보정되었습니다(알고리즘은 같음).
+    source: https://marine.copernicus.eu/user-corner/product-roadmap/transition-information?product=OCEANCOLOUR_GLO_BGC_L4_MY_009_104
+  - date: "2023-11"
+    level: info
+    title: MY 전체 시계열 재처리 — 반사도 병합 개선, BBP·CDM 알고리즘 갱신
+    body: >-
+      EUMETSAT OLCI 재처리(3.01), MERIS 4차 재처리, NASA R2022(Aqua·VIIRS) 입력으로 다중센서 반사도 병합을 개선하고 BBP·CDM 알고리즘을 갱신해 MY 전 기간을 재처리했습니다.
+      내려받기 스크립트는 바꿀 필요가 없다고 안내했습니다.
+    source: https://marine.copernicus.eu/user-corner/product-roadmap/transition-information?product=OCEANCOLOUR_GLO_BGC_L4_MY_009_104
+
+transitions:
+  - from: GlobColour 202603판
+    to: GlobColour 202611판
+    status: planned
+    date: "2026-11"
+    summary: >-
+      같은 제품 안에서 데이터셋 판이 바뀝니다. OC5 계수 갱신으로 다중센서 엽록소·투명도·일차생산이 재처리되고, 탄소 데이터셋과 새 변수가 추가됩니다.
+    changes:
+      - aspect: 엽록소 알고리즘
+        before: OC5(이전 계수) + CI 혼합
+        after: 최신 상류 반사도 재처리로 다시 맞춘 OC5 계수
+      - aspect: PFT (OLCI 시기)
+        before: 기존 PFT 알고리즘
+        after: GLOPHYTS 알고리즘, 300 m OLCI 데이터셋에도 PFT 추가
+      - aspect: 새 데이터셋·변수
+        before: "-"
+        after: "탄소(car) 데이터셋(POC·DOC, OCROC 알고리즘), 다중센서 L3 엽록소 경사"
+      - aspect: 데이터셋 판
+        before: 202603 (일부 2026-11-24 퇴역 예정)
+        after: 202611 (2026-11-24 공개 예정)
+    impacts:
+      - 엽록소·PP 값이 재처리로 바뀌므로 202603판으로 만든 결과와 섞지 마세요.
+      - 자료 처리 스크립트 수정이 필요하다고 안내되었습니다. dataset_version을 고정해 둔 스크립트는 퇴역일 이후 실패할 수 있습니다.
+    sources:
+      - name: Copernicus Marine 제품 로드맵 — L4_MY_009_104
+        url: https://marine.copernicus.eu/user-corner/product-roadmap/transition-information?product=OCEANCOLOUR_GLO_BGC_L4_MY_009_104
+      - name: Copernicus Marine 제품 로드맵 — L3_NRT_009_101
+        url: https://marine.copernicus.eu/user-corner/product-roadmap/transition-information?product=OCEANCOLOUR_GLO_BGC_L3_NRT_009_101
+
+links:
+  - name: Copernicus Marine — OCEANCOLOUR_GLO_BGC_L3_MY_009_103
+    url: https://data.marine.copernicus.eu/product/OCEANCOLOUR_GLO_BGC_L3_MY_009_103/description
+  - name: Copernicus Marine — OCEANCOLOUR_GLO_BGC_L4_MY_009_104
+    url: https://data.marine.copernicus.eu/product/OCEANCOLOUR_GLO_BGC_L4_MY_009_104/description
+  - name: 해색 제품 사용자 안내서 PUM (PDF)
+    url: https://documentation.marine.copernicus.eu/PUM/CMEMS-OC-PUM.pdf
+  - name: 품질 정보 문서 QUID 009-101~104 (PDF)
+    url: https://documentation.marine.copernicus.eu/QUID/CMEMS-OC-QUID-009-101to104-111-113-116-118.pdf
+  - name: Copernicus Marine Toolbox 안내
+    url: https://toolbox-docs.marine.copernicus.eu/en/stable/usage/quickoverview.html
+  - name: Copernicus Marine — 인용 방법
+    url: https://help.marine.copernicus.eu/en/articles/4444611-how-to-cite-or-reference-copernicus-marine-products-and-services
+  - name: 이 사이트 — ESA OC-CCI (해색 기후자료)
+    url: ../oc-cci/
+  - name: 이 사이트 — MODIS 해색
+    url: ../modis-ocean/
+  - name: 이 사이트 — VIIRS 해색
+    url: ../viirs-ocean/
+  - name: 이 사이트 — PACE OCI
+    url: ../pace-oci/
+  - name: 이 사이트 — GOCI-II
+    url: ../goci2/
+
+watch_urls:
+  - https://marine.copernicus.eu/user-corner/product-roadmap/transition-information?product=OCEANCOLOUR_GLO_BGC_L3_MY_009_103
+  - https://marine.copernicus.eu/user-corner/product-roadmap/transition-information?product=OCEANCOLOUR_GLO_BGC_L4_MY_009_104
+  - https://marine.copernicus.eu/user-corner/product-roadmap/transition-information?product=OCEANCOLOUR_GLO_BGC_L3_NRT_009_101
+
+last_verified: "2026-10-13"

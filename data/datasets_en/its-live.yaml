@@ -1,0 +1,382 @@
+# ─────────────────────────────────────────────────────────────
+# ITS_LIVE (NASA MEaSUREs Inter-mission Time Series of Land Ice Velocity and Elevation) glacier and ice-sheet velocity — dataset information file (English edition)
+# Satellite tab (glaciers & ice sheets). 120 m surface velocities from autoRIFT feature tracking on Landsat, Sentinel-1 and Sentinel-2 image pairs:
+# L2 image-pair velocities (netCDF), Zarr datacubes, L3 annual and climatology mosaics (NSIDC-0776 V2). The current major version is V2 (V1 → V2 is in transitions in this file, no to_id).
+# When checked on 2026-10-13, image pairs were arriving daily through acquisitions of 2026-10-13; NSIDC annual mosaics V2 run to 2022 and the V02.1 mosaics on AWS to 2024.
+# After editing, update last_verified to the date you checked the official pages.
+# ─────────────────────────────────────────────────────────────
+id: its-live
+name: ITS_LIVE
+full_name: NASA MEaSUREs ITS_LIVE (Inter-mission Time Series of Land Ice Velocity and Elevation) glacier and ice-sheet surface velocity — image pairs, datacubes and regional annual mosaics
+category: satellite
+domain: satellite
+group: 빙하·빙상
+order: 10
+domains: [빙상, 원격탐사]
+provider: NASA JPL (NASA MEaSUREs ITS_LIVE project) / NSIDC DAAC (archive of the regional annual mosaics) / AWS Open Data (its-live-data bucket, managed by the Alaska Satellite Facility)
+
+status: active
+status_note: >-
+  The current major version is V2, and image-pair (L2) velocities are processed every day as new satellite scenes arrive. When checked on 2026-10-13, the STAC catalogue held Sentinel-1C/1D pairs
+  acquired on 2026-10-13 and Sentinel-2 and Landsat 8/9 pairs acquired on 2026-10-12. The Zarr datacubes (v2-updated-october2024, STAC time extent to 2025-06-01) and the official NSIDC
+  annual mosaics V2 (NSIDC-0776, 1984–2022) are refreshed on separate, slower schedules, and the AWS bucket also holds V02.1 annual mosaics extended to 2024 (generated 2025-10).
+
+period:
+  start: "1982"
+  end: present
+  note: >-
+    The earliest image pairs are Landsat scenes from 1982 (Gardner et al., 2025), but the first years are very sparse and coverage is nearly complete only after 2013. The ITS_LIVE website says
+    "1985-present" and the NSIDC-0776 V2 metadata gives 1984-01-01 to 2022-12-31. On AWS, the V02.1 annual mosaics for Alaska (RGI01A) run from 1982 to 2024 (checked 2026-10-13).
+
+resolution:
+  spatial_short: "0.12 km (0.001°)"
+  temporal_short: "1일"
+  spatial: >-
+    A common 120 m grid for all sensors (V1 used 240 m). Image pairs use a polar stereographic projection (EPSG:3413 in the north, EPSG:3031 in Antarctica) or the local UTM zone; datacubes are
+    100 km × 100 km tiles (833 × 833 cells). Regional mosaics come as one file per RGI region (16 regions): EPSG:3413 north of 55°N, EPSG:3031 south of 56°S, Lambert (EPSG:102027) for
+    High Mountain Asia (RGI14A) and the local UTM zone elsewhere
+  vertical: Horizontal surface velocity of glaciers and ice sheets (map x and y components and magnitude)
+  temporal: >-
+    Image pairs: one mean velocity per pair over its acquisition interval (date_dt), which varies by pair (up to 546 days for optical, 12 days for radar) / datacubes: image-pair time series
+    (mid_date axis) / annual mosaics (NSIDC-0776 V2, 1984–2022) / climatology summary mosaics (mean, seasonal amplitude and trend from 2014–2022 image pairs)
+
+coverage:
+  short: 전지구
+  note: "All land ice: every glacier larger than 5 km² north of 83°S, about 14.19 million km². The annual mosaics are split into the 16 RGI 6.0 regions (Alaska, Greenland periphery, High Mountain Asia, Antarctica and others)"
+update: >-
+  Image pairs up to daily ("Up to daily" on the AWS registry). Targets are about 15 minutes after a new Landsat scene, about 30 hours after ESA publishes a Sentinel-2 scene and under 30 hours
+  for Sentinel-1. L3 mosaics and datacubes are built in separate campaigns once all contributing images are in, so they lag by months to years
+license: >-
+  Free and open. The AWS bucket README and the AWS Open Data registry state CC0 1.0, while the STAC collection metadata says CC-BY-4.0. In either case the project asks you to credit
+  ITS_LIVE and autoRIFT and the source imagery (USGS Landsat, ESA Sentinel)
+account_required: false
+
+summary: >-
+  ITS_LIVE, a NASA MEaSUREs project, measures glacier surface displacement with autoRIFT feature tracking on pairs of Landsat 4–9 and Sentinel-2A/B/C optical images and Sentinel-1A/B/C radar
+  images, giving surface velocities for all of the world's land ice. It provides more than 36 million image-pair velocities (L2, netCDF), cloud-optimised Zarr datacubes that stack them in
+  100 km tiles, and regional annual and climatology mosaics (L3) from an error-weighted least-squares fit, all on a 120 m grid. New scenes are processed within a day, so surges, calving and
+  seasonal speed-up can be followed in near-real time, and the data are widely used for ice-sheet discharge estimates and glacier dynamics.
+
+time_convention:
+  summary: >-
+    An image-pair velocity is the displacement divided by the time between the two acquisitions (date_dt), so it is the mean speed over that interval, stamped at the midpoint of the two
+    acquisitions (mid_date). Annual mosaics solve all pairs overlapping a year by error-weighted least squares to give an annual mean that is not biased by when images were taken; climatology
+    mosaics fit a mean, a seasonal sinusoid and a linear trend to the 2014–2022 pairs.
+  points:
+    - "The datacube time axis mid_date is the midpoint of the two acquisitions. The value really averages the whole span from acquisition_date_img1 to img2, so pairs with date_dt of hundreds of days mix in seasonal changes."
+    - "Short date_dt gives better time resolution but larger errors; long date_dt gives smaller errors but misses short events. The reference paper advises choosing pairs by date_dt to suit the analysis."
+    - "Annual files are time means over the year. Each pair is weighted by the fraction of the year it spans, which is designed to keep the annual mean from leaning towards summer even when images cluster in summer."
+    - "In the climatology mosaics, v, vx and vy are the value of the fit at 2018-01-01, using pairs with mid-dates from 2014-01-01 to 2023-01-01 (NSIDC user guide). The reference paper says 2 July 2018, so the documents disagree."
+    - "All velocities are in the map projection plane (m/yr). Unlike V1, V2 does not correct projection distortion (up to a few percent), so correct it yourself before comparing with GPS."
+  source: https://nsidc.org/sites/default/files/documents/user-guide/nsidc-0776-v002-userguide.pdf
+  source_name: NSIDC-0776 V2 user guide + Gardner et al. (2025), The Cryosphere
+
+variables:
+  note: >-
+    Image-pair variables follow Lei et al. (2022) and the variable definitions in the ITS_LIVE production code (its_live_production); datacube variables follow the STAC catalogue; annual and
+    climatology variables follow the NSIDC-0776 V2 user guide. vx and vy are components along the map projection axes (x, y), not east–west and north–south.
+  full_list: https://nsidc.org/sites/default/files/documents/user-guide/nsidc-0776-v002-userguide.pdf
+  groups:
+    - name: Image-pair velocities (L2 netCDF, one file per pair)
+      kind: mean
+      period: Image-pair interval (date_dt)
+      items:
+        - "Glacier surface speed — `v` (m/yr)"
+        - "Surface velocity, x component — `vx` (m/yr)"
+        - "Surface velocity, y component — `vy` (m/yr)"
+        - text: "Speed error — `v_error` (m/yr)"
+          std: []
+        - text: "Velocity in radar range direction — `vr`"
+          note: Sentinel-1 pairs only
+          std: []
+        - text: "Velocity in radar azimuth direction — `va`"
+          note: Sentinel-1 pairs only
+          std: []
+        - text: "Conversion matrix elements from x/y velocity to range displacement — `M11`, `M12`"
+          note: Sentinel-1 pairs only; used to combine ascending and descending passes
+          kind: static
+          std: []
+        - text: "Interpolation flag — `interp_mask`"
+          std: []
+        - text: "Feature-tracking search chip size — `chip_size_height`, `chip_size_width`"
+          std: []
+        - text: "Bias-correction method over stable ground — `stable_shift_flag` (0 none, 1 stationary-surface mask, 2 slowest 25% of pixels)"
+          std: []
+        - text: "Image-pair information (satellite, sensor, acquisition times, interval) — `img_pair_info`"
+          kind: instant
+          std: []
+    - name: Datacubes (Zarr, 100 km tiles, time axis mid_date)
+      kind: mean
+      period: Image-pair interval (date_dt)
+      items:
+        - "Glacier surface speed — `v` (m/yr)"
+        - "Surface velocity, x component — `vx` (m/yr)"
+        - "Surface velocity, y component — `vy` (m/yr)"
+        - text: "Speed error — `v_error` (m/yr)"
+          std: []
+        - text: "Interpolation flag — `interp_mask`"
+          std: []
+        - text: "Time between the two acquisitions — `date_dt` (days)"
+          kind: instant
+          std: []
+        - text: "Acquisition times of the two images — `acquisition_date_img1`, `acquisition_date_img2`"
+          kind: instant
+          std: []
+        - text: "Satellite that took each image — `satellite_img1`, `satellite_img2`"
+          kind: static
+          std: []
+    - name: Annual mosaics (L3, NSIDC-0776 V2 yearly files)
+      kind: mean
+      period: Year
+      items:
+        - "Annual mean glacier surface speed — `v` (m/yr)"
+        - "Annual mean surface velocity, x component — `vx` (m/yr)"
+        - "Annual mean surface velocity, y component — `vy` (m/yr)"
+        - text: "Velocity errors — `v_error`, `vx_error`, `vy_error` (m/yr)"
+          note: Formal errors, which tend to be too small
+          std: []
+        - text: "Number of image pairs in the least-squares fit — `count`"
+          std: []
+        - text: "Land ice mask — `landice` (0/1)"
+          kind: static
+          std: []
+        - text: "Floating ice (ice shelf) mask — `floatingice` (0/1)"
+          kind: static
+          std: []
+    - name: Climatology summary mosaics (L3, NSIDC-0776 V2 2014–2022 files)
+      kind: mean
+      period: 2014–2022
+      items:
+        - text: "Surface speed at the reference date — `v` (m/yr)"
+          note: Intercept at 2018-01-01
+        - text: "Surface velocity x and y components at the reference date — `vx`, `vy` (m/yr)"
+        - text: "Seasonal amplitude — `v_amp`, `vx_amp`, `vy_amp` (m/yr)"
+          std: []
+        - text: "Day of year of maximum seasonal speed — `v_phase`, `vx_phase`, `vy_phase`"
+          std: []
+        - text: "Velocity trend — `dv_dt`, `dvx_dt`, `dvy_dt` (m/yr²)"
+          std: []
+        - text: "Share of data removed as outliers — `outlier_percent` (%)"
+          std: []
+        - text: "Sensor group included or excluded — `sensor`, `sensor_flag`"
+          kind: static
+          std: []
+        - text: "Maximum pair interval allowed in the fit — `dt_max` (days)"
+          kind: static
+          std: []
+
+access:
+  - name: AWS Open Data — its-live-data bucket (us-west-2)
+    url: https://its-live-data.s3.amazonaws.com/README.html
+    method: >-
+      S3 (s3://its-live-data, anonymous) or direct HTTPS download. Image pairs in velocity_image_pair/ (landsatOLI, sentinel1, sentinel2 /v02/), datacubes in datacubes/,
+      annual mosaics in velocity_mosaic/ (v2, v2.1), annual composites in composites/
+    note: >-
+      The bucket holds more than a billion objects, so the README discourages recursive listing. The datacube index is datacubes/catalog_v02.json (GeoJSON), and an SNS topic announces new files.
+      Antarctic (RGI19A) annual files are about 8–9 GB per year and the climatology file about 21 GB.
+    login: false
+  - name: ITS_LIVE STAC API
+    url: https://stac.itslive.cloud
+    method: STAC search (pystac-client) — collections itslive-granules (image pairs), itslive-cubes (datacubes), velocity-mosaics (annual mosaics V2)
+    note: Filter image pairs by location, time, platform, date_dt and percent_valid_pixels to get S3 and HTTPS links.
+    login: false
+  - name: NSIDC DAAC — NSIDC-0776 V2 regional annual and climatology mosaics
+    url: https://nsidc.org/data/nsidc-0776/versions/2
+    method: NSIDC Data Access Tool / Earthdata Search / HTTPS / earthaccess / Earthdata Cloud (direct access in us-west-2)
+    note: Requires a free NASA Earthdata Login. This is the DOI-registered release, covering 1984–2022.
+  - name: NSIDC ITS_LIVE web app
+    url: https://nsidc.org/apps/itslive/
+    method: Web map for point time series and data selection
+
+example:
+  lang: python
+  note: "Finds the datacube covering one point through STAC and extracts its time series. No login is needed. The coordinates are an example point in Victoria Land, Antarctica, near Terra Nova Bay; change them to your glacier."
+  code: |
+    # pip install pystac-client xarray zarr fsspec aiohttp pyproj
+    from pystac_client import Client
+    from pyproj import Transformer
+    import xarray as xr
+
+    lon, lat = 164.5, -74.4                         # example point (lon, lat)
+    cat = Client.open("https://stac.itslive.cloud")
+    items = cat.search(collections=["itslive-cubes"],
+                       intersects={"type": "Point", "coordinates": [lon, lat]}).item_collection()
+    cube = xr.open_zarr(items[0].assets["zarr"].href)
+    print(list(cube.data_vars)[:10])
+
+    epsg = items[0].properties["proj:code"]          # e.g. "EPSG:3031"
+    x, y = Transformer.from_crs("EPSG:4326", epsg, always_xy=True).transform(lon, lat)
+    v = cube["v"].sel(x=x, y=y, method="nearest").sortby("mid_date")
+    print(v.dropna("mid_date").to_series().tail())   # mean speed per pair (m/yr), stamped at the midpoint of the two images
+
+tips:
+  - "An image-pair value is the mean speed over the acquisition interval. Pick pairs to suit the question: short date_dt for seasonal changes, long pairs or the annual mosaics for long-term means."
+  - "The producers say errors such as v_error and vx_error are formally propagated and usually too small, especially in snowy accumulation zones where clear images are scarce. Treat the errors and count as relative quality indicators."
+  - "V2 velocities are measured in the map projection plane, so scale errors of up to a few percent occur depending on location. Flux-gate calculations need no correction, but comparisons with GPS do."
+  - "The High Mountain Asia (RGI14A) mosaic uses Lambert (EPSG:102027), not UTM. In this region Landsat 4/5 TM velocities have been reported about 5 m/yr slower than Landsat 8 (Dehecq et al., 2019), so take care when comparing 1980s–90s values with recent ones."
+  - "In UTM regional mosaics the mapping variable does not use the CF name, so tools such as Panoply may draw the data a second time on the other side of the globe. The values themselves are fine."
+  - "At glacier edges, icefalls and flow bends, feature tracking can lock onto terrain and return near-zero speeds, and Sentinel-2 is noisy where contrast is low. Annual and climatology products filter much of this, but surges can distort trend and seasonal values, so look at the full time series."
+  - "Some annual files for certain regions and years hold little or no valid data, especially in the 1980s and 1990s. Check count and the quicklook images first."
+  - "The DOI release at NSIDC (NSIDC-0776 V2) stops in 2022, while velocity_mosaic/v2.1 on AWS (file names V02.1) extends to 2024. State the release and path you actually used in your paper."
+  - "Antarctic annual files exceed 8 GB per year. If you need only a few glaciers, find the matching 100 km datacubes through STAC and read just the pixels you need instead of the whole file."
+
+citations:
+  dataset:
+    - label: Regional annual and climatology mosaics V2 (NSIDC-0776)
+      text: >-
+        Gardner, A. S., Fahnestock, M., Greene, C. A., Kennedy, J. H., Liukis, M., López, L. A., & Scambos, T. (2025). MEaSUREs ITS_LIVE Regional Glacier and Ice Sheet Surface Velocities
+        (NSIDC-0776, Version 2). NASA National Snow and Ice Data Center DAAC. https://doi.org/10.5067/JQ6337239C96
+      doi: 10.5067/JQ6337239C96
+      bibtex: |
+        @misc{gardner2025itslive0776,
+          author    = {Gardner, A. S. and Fahnestock, M. and Greene, C. A. and Kennedy, J. H. and Liukis, M. and L{\'o}pez, L. A. and Scambos, T.},
+          title     = {{MEaSUREs} {ITS\_LIVE} Regional Glacier and Ice Sheet Surface Velocities ({NSIDC-0776}, Version 2)},
+          year      = {2025},
+          publisher = {NASA National Snow and Ice Data Center Distributed Active Archive Center},
+          version   = {2},
+          doi       = {10.5067/JQ6337239C96}
+        }
+    - label: Landsat image-pair velocities V1 (NSIDC-0775, earlier release)
+      text: >-
+        Gardner, A. S., M. A. Fahnestock, and T. A. Scambos, 2019 [update to time of data download]: MEaSUREs ITS_LIVE Landsat Image-Pair Glacier and Ice Sheet Surface Velocities: Version 1.
+        NASA National Snow and Ice Data Center DAAC. https://doi.org/10.5067/IMR9D3PEI28U
+      doi: 10.5067/IMR9D3PEI28U
+  papers:
+    - label: Full description of ITS_LIVE V2 (image pairs, datacubes, mosaics)
+      text: >-
+        Gardner, A. S., Greene, C. A., Kennedy, J. H., Fahnestock, M. A., Liukis, M., López, L. A., Lei, Y., Scambos, T. A., Dehecq, A. (2025): ITS_LIVE global glacier velocity data in near-real time.
+        The Cryosphere, 19(9), 3517–3533.
+      doi: 10.5194/tc-19-3517-2025
+      bibtex: |
+        @article{gardner2025itslive,
+          author  = {Gardner, Alex S. and Greene, Chad A. and Kennedy, Joseph H. and Fahnestock, Mark A. and Liukis, Maria and L{\'o}pez, Luis A. and Lei, Yang and Scambos, Ted A. and Dehecq, Amaury},
+          title   = {{ITS\_LIVE} global glacier velocity data in near-real time},
+          journal = {The Cryosphere},
+          volume  = {19},
+          number  = {9},
+          pages   = {3517--3533},
+          year    = {2025},
+          doi     = {10.5194/tc-19-3517-2025}
+        }
+    - label: Paper requested in the auto-RIFT credit line
+      text: >-
+        Gardner, A. S., Moholdt, G., Scambos, T., Fahnstock, M., Ligtenberg, S., van den Broeke, M., Nilsson, J. (2018): Increased West Antarctic and unchanged East Antarctic ice discharge
+        over the last 7 years. The Cryosphere, 12(2), 521–547.
+      doi: 10.5194/tc-12-521-2018
+      bibtex: |
+        @article{gardner2018discharge,
+          author  = {Gardner, Alex S. and Moholdt, Geir and Scambos, Ted and Fahnstock, Mark and Ligtenberg, Stefan and van den Broeke, Michiel and Nilsson, Johan},
+          title   = {Increased {West} {Antarctic} and unchanged {East} {Antarctic} ice discharge over the last 7 years},
+          journal = {The Cryosphere},
+          volume  = {12},
+          number  = {2},
+          pages   = {521--547},
+          year    = {2018},
+          doi     = {10.5194/tc-12-521-2018}
+        }
+    - label: Sentinel-1 image-pair processing (V2)
+      text: >-
+        Lei, Y., Gardner, A. S., Agram, P. (2022): Processing methodology for the ITS_LIVE Sentinel-1 ice velocity products. Earth System Science Data, 14(11), 5111–5137.
+      doi: 10.5194/essd-14-5111-2022
+      bibtex: |
+        @article{lei2022itslives1,
+          author  = {Lei, Yang and Gardner, Alex S. and Agram, Piyush},
+          title   = {Processing methodology for the {ITS\_LIVE} {Sentinel-1} ice velocity products},
+          journal = {Earth System Science Data},
+          volume  = {14},
+          number  = {11},
+          pages   = {5111--5137},
+          year    = {2022},
+          doi     = {10.5194/essd-14-5111-2022}
+        }
+  acknowledgement: >-
+    The ITS_LIVE website asks for "Velocity data generated using auto-RIFT (Gardner et al., 2018) and provided by the NASA MEaSUREs ITS_LIVE project (Gardner et al., 20XX)."
+    (replace 20XX with the year of the dataset citation you used). Also credit USGS for Landsat imagery and ESA (Copernicus) for Sentinel imagery.
+
+notices:
+  - date: "2026-06-09"
+    level: info
+    title: NSIDC retires the GoLIVE map application (30 June 2026) and points users to ITS_LIVE
+    body: >-
+      NSIDC DAAC announced that the map application for GoLIVE (NSIDC-0710), the Landsat 8 glacier velocity dataset, would be retired on 30 June 2026. The GoLIVE data remain available,
+      and users who need a more fully reprocessed velocity product were pointed to ITS_LIVE, which provides global ice velocities from 1984 to the present.
+    source: https://nsidc.org/data/user-resources/data-announcements/user-notice-upcoming-retirement-golive-map-application
+  - date: "2025-09-05"
+    level: info
+    title: Reference paper for ITS_LIVE V2 published, noting a pause in Sentinel-1 processing
+    body: >-
+      Gardner et al. (2025, The Cryosphere) describe how V2.0 image pairs, datacubes and mosaics are made, their latency and known errors. At the time of writing, Sentinel-1 processing was on
+      hold because of its cost, with only 2014–2022 processed, and the authors expected it to resume by mid-2025. When checked on 2026-10-13, 2026 Sentinel-1C/1D pairs were appearing in STAC.
+    source: https://doi.org/10.5194/tc-19-3517-2025
+  - date: "2025-07-23"
+    level: warning
+    title: NSIDC-0776 regional annual mosaics V2 released; V1 retired on 2025-08-26
+    body: >-
+      NSIDC DAAC released V2 of the 120 m regional annual velocities (1984–2022) and 2014–2022 climatology mosaics, made with autoRIFT from Sentinel-1, Sentinel-2 and Landsat 4–9.
+      V1 (Landsat only, 1985–2018) was removed from NSIDC on 26 August 2025 and can no longer be downloaded; only its documentation remains.
+    source: https://nsidc.org/data/user-resources/data-announcements/new-version-release-measures-its_live-regional-glacier-and-ice-sheet-surface-velocities-version-2
+
+transitions:
+  - from: ITS_LIVE V1
+    to: ITS_LIVE V2
+    status: completed
+    date: "2025-07"
+    summary: >-
+      V2 extends the Landsat-only V1 to Sentinel-1, Sentinel-2 and Landsat 9, refines the grid from 240 m to 120 m and reprocesses the full record with improved autoRIFT feature tracking and error
+      estimates. Image pairs and datacubes on AWS moved to V2 first; the NSIDC regional mosaics followed with V2 (NSIDC-0776) in 2025-07, when V1 was retired.
+    changes:
+      - aspect: Input satellites
+        before: Landsat 4, 5, 7, 8 (TM, ETM+, OLI)
+        after: "Landsat 4, 5, 7, 8, 9, Sentinel-2A/B(/C), Sentinel-1A/B(/C) IW"
+      - aspect: Grid spacing
+        before: "240 m (some NSIDC-0776 V1 files 120 m)"
+        after: 120 m for all sensors
+      - aspect: Regional mosaic period
+        before: "1985–2018 (sparse before 2013)"
+        after: "1984–2022 (NSIDC V2), climatology 2014–2022. AWS V02.1 runs to 2024"
+      - aspect: Projection distortion
+        before: Velocities corrected for map projection scale distortion
+        after: Velocities left in the map projection plane (scale errors up to a few percent; users correct)
+      - aspect: Processing
+        before: Early auto-RIFT
+        after: Improved autoRIFT feature tracking, stable-ground bias correction (stable_shift), updated error estimates
+      - aspect: Distribution
+        before: NSIDC (Earthdata Login), data before April 2023
+        after: "AWS its-live-data bucket and STAC (no login), NSIDC-0776 V2 (login)"
+    impacts:
+      - Do not join V1 and V2 into one time series. Sensors, grid and projection-distortion handling differ, so values differ at the same point.
+      - "A V1 workflow for comparing with GPS will be off by the projection distortion (up to a few percent) if applied to V2 unchanged. Apply the scale correction yourself before comparing."
+      - "NSIDC-0776 V1 files cannot be downloaded after 2025-08-26. To reproduce older results, recompute with V2 and note the version difference."
+      - "The NSIDC Landsat image-pair V1 (NSIDC-0775, 240 m, 1985–2018) is still listed as the most recent version there, but V2 image pairs are available only from AWS and STAC."
+    sources:
+      - name: NSIDC — NSIDC-0776 V2 release and V1 retirement (2025-07-23)
+        url: https://nsidc.org/data/user-resources/data-announcements/new-version-release-measures-its_live-regional-glacier-and-ice-sheet-surface-velocities-version-2
+      - name: NSIDC-0776 V2 user guide
+        url: https://nsidc.org/sites/default/files/documents/user-guide/nsidc-0776-v002-userguide.pdf
+      - name: Gardner et al. (2025), The Cryosphere
+        url: https://doi.org/10.5194/tc-19-3517-2025
+      - name: Lei et al. (2022), ESSD (Sentinel-1 V2 processing)
+        url: https://doi.org/10.5194/essd-14-5111-2022
+
+links:
+  - name: ITS_LIVE website (NASA JPL)
+    url: https://its-live.jpl.nasa.gov/
+  - name: NSIDC — NSIDC-0776 V2 regional annual mosaics
+    url: https://nsidc.org/data/nsidc-0776/versions/2
+  - name: NSIDC-0776 V2 user guide (PDF)
+    url: https://nsidc.org/sites/default/files/documents/user-guide/nsidc-0776-v002-userguide.pdf
+  - name: AWS Open Data — ITS_LIVE
+    url: https://registry.opendata.aws/its-live-data/
+  - name: ITS_LIVE regional velocities known issues (PDF)
+    url: http://its-live-data.jpl.nasa.gov.s3.amazonaws.com/documentation/ITS_LIVE-Regional-Glacier-and-Ice-Sheet-Surface-Velocities-Known-Issues.pdf
+  - name: ITS_LIVE tools and notebooks (GitHub)
+    url: https://github.com/nasa-jpl/its_live
+  - name: This site — GRACE / GRACE-FO (ice sheet and glacier mass change)
+    url: ../grace/
+
+watch_urls:
+  - https://nsidc.org/data/user-resources/data-announcements
+  - https://its-live.jpl.nasa.gov/
+  - https://nsidc.org/data/nsidc-0776/versions/2
+
+last_verified: "2026-10-13"

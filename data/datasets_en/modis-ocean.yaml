@@ -1,0 +1,477 @@
+# ─────────────────────────────────────────────────────────────
+# MODIS Ocean (Aqua and Terra MODIS OBPG Level-3 ocean color and SST) — dataset information file (English edition)
+# Satellite tab (ocean color), cross-listed in the Ocean tab (satellite observations). Ocean color is R2022.0 (mini-reprocessings R2022.0.1–0.3); SST is R2019.0.
+# Checked 2026-10-13: Aqua standard ocean color L3 runs to 2026-05-30 and near-real-time (NRT) to 2026-10-12; Terra standard ocean color stops at 2025-11-30, NRT only after that.
+# Orbit drift and the end of Terra and Aqua (projected February and September 2027) are the key caveats. The VIIRS successor is viirs-ocean.yaml.
+# After editing, update last_verified to the date you checked the official pages.
+# ─────────────────────────────────────────────────────────────
+id: modis-ocean
+name: "MODIS Ocean (color and SST)"
+full_name: >-
+  Aqua and Terra MODIS Level-3 Global Mapped/Binned Ocean Color (CHL, RRS, KD, PAR, POC, PIC, IOP, FLH; version R2022.0) and
+  Sea Surface Temperature (SST, NSST, SST4; version R2019.0) from the NASA Ocean Biology Processing Group
+category: satellite
+domain: satellite
+group: 해색
+order: 10
+also_in:
+  - domain: ocean
+    group: 위성 관측 자료
+domains: [해양, 원격탐사]
+provider: NASA GSFC Ocean Biology Processing Group (OBPG) / NASA Ocean Biology DAAC (OB.DAAC); SST L3 is also distributed by NASA PO.DAAC
+
+status: deprecated
+status_note: >-
+  Data are still being produced, but Terra and Aqua have left their design orbits and their overpass times have shifted. NASA projects the end of science operations in February 2027 (Terra) and September 2027 (Aqua) and points users to comparable VIIRS products.
+  When checked on 2026-10-13, Aqua ocean color L3 ran to 2026-10-12 in NRT and to the 2026-05-30 daily file in the standard collection (registered 2026-07-08, file attribute R2022.0.3); Aqua SST (R2019.0) ran to 2026-08-31 standard and 2026-10-11 NRT.
+  Terra standard ocean color stops at 2025-11-30 with NRT only afterwards (Terra standard SST runs to 2026-09-01), and OBPG has said post-2022 Aqua ocean color is of lower reliability for long-term change studies.
+
+period:
+  start: "2000-02"
+  end: present
+  note: >-
+    Terra starts on 2000-02-24 and Aqua on 2002-07-04 (CMR collection start dates). On 2026-10-13 both Aqua and Terra NRT daily files were available through 2026-10-12.
+    Standard files run to 2026-05-30 for Aqua ocean color (monthly 2026-04), 2025-11-30 for Terra ocean color, 2026-08-31 for Aqua SST and 2026-09-01 for Terra SST. OBPG has deferred the next MODIS Aqua ocean color reprocessing until after the mission ends.
+
+resolution:
+  spatial_short: "4.6 km (0.04°)"
+  temporal_short: "1일"
+  spatial: >-
+    L3 mapped (L3m, Standard Mapped Image): global Equidistant Cylindrical (Plate Carrée) grids `4km` (4320×8640, file attribute spatialResolution "4.638312 km") and
+    `9km` (2160×4320, "9.276624 km") / L3 binned (L3b): integerized sinusoidal equal-area grid with 4320 rows (about 4.64 km bins, the Terra and Aqua MODIS standard)
+  vertical: Surface remote sensing reflectance and near-surface optical and biogeochemical properties (within the optical depth seen by the sensor) / SST is skin temperature
+  temporal: >-
+    Daily (DAY), 8-day (8D), monthly (MO) and annual (YR) composites, plus 32-day rolling composites (R32, stepped every 8 days), mission climatologies (MC etc.) and cumulative (CU) files. SST comes as separate daytime (SST), nighttime (NSST) and 4 µm (SST4) files.
+    Design equator crossing times are 10:30 (morning) for Terra and 13:30 (afternoon) for Aqua, but both have changed with orbit drift.
+
+coverage:
+  short: 전지구
+  note: "Ocean color covers daytime, clear-sky ocean only (gaps from cloud, sea ice, low sun and glint); SST covers clear-sky ocean by day and night"
+update: >-
+  NRT L3 daily files are registered the day after observation (Aqua chlorophyll for 2026-10-12 was registered on 10-13). Standard files lag by two months or more for ocean color (2026-05-30 daily registered 07-08) and about 3–4 weeks for SST (2026-08-31 registered 09-24)
+license: >-
+  Free and open under the NASA Earth Science Data and Information Policy (file license attribute https://science.nasa.gov/earth-science/earth-science-data/data-information-policy/).
+  Downloading from OB.DAAC requires a free NASA Earthdata Login, and users are asked to cite the dataset DOIs
+account_required: true
+
+summary: >-
+  Global Level-3 ocean color and sea surface temperature from MODIS on Terra (launched 1999) and Aqua (launched 2002), produced by NASA OBPG. It continues the SeaWiFS record and has been a workhorse satellite ocean dataset for more than 20 years.
+  Ocean color products include chlorophyll-a (`chlor_a`), remote sensing reflectance at ten wavelengths (`Rrs_412` to `Rrs_678`), the diffuse attenuation coefficient at 490 nm (`Kd_490`), daily photosynthetically available radiation (`par`),
+  particulate organic and inorganic carbon (`poc`, `pic`), fluorescence line height (`nflh`) and GIOP inherent optical properties. SST comes as 11/12 µm daytime and nighttime SST and the night-only 3.95/4.05 µm SST4.
+  Daily, 8-day, monthly and annual composites are provided on 4 km and 9 km latitude–longitude grids in standard and NRT versions. With Terra and Aqua drifting and nearing end of mission, NASA points users to VIIRS and PACE OCI.
+
+time_convention:
+  summary: >-
+    A daily L3 file is the weighted average of the clear-sky L2 observations from that "dataday", binned into 4.6 km bins and then mapped to a latitude–longitude grid. The day boundary is the date line (180°), not UTC midnight,
+    so one file spans slightly more than 24 hours (e.g. the Aqua 2026-05-30 file covers 05-29 23:45Z to 05-31 05:24Z). The 8-day, monthly and annual files re-average the bins over that period, and cloudy days simply drop out.
+  points:
+    - "The OBPG format specification notes that the nighttime dataday is shifted by 12 hours from the daytime one, so nighttime SST (NSST) and SST4 daily files cover a different window from daytime files. Check the time_coverage_start and time_coverage_end attributes."
+    - "8-day (8D) composites are counted from 1 January in 8-day blocks (e.g. 20260501_20260508); R32 is a 32-day window that advances by 8 days (e.g. 20260407_20260508, 20260415_20260516). The two dates in the file name are the first and last day of the composite."
+    - "`par` is a daily integral (mol m-2 day-1) and `ipar` is the instantaneous value at overpass (micromol m-2 s-1). In 8-day and monthly files, `par` is the mean of the daily integrals."
+    - "Aqua's crossing time began drifting later in July 2021, passed 13:45 in February 2023 and was expected to reach about 15:50 around August 2026 (LP DAAC). Terra stopped inclination adjustments in 2020 and was crossing at 10:15 by fall 2022. A 'daily' value therefore represents a different local time from year to year."
+    - "NRT (file names ending .NRT.nc, collection names ending _NRT) and standard files are separate collections. Switch to the standard files once they appear and do not mix the two in one time series."
+    - "L3 SST keeps only the best-quality L2 pixels in each bin (OB.DAAC forum reply). `qual_sst` runs from 0 (best) to 4 (failed or land), and quality-2 values can remain in monthly files over persistently cloudy regions."
+  source: https://oceandata.sci.gsfc.nasa.gov/files/resources/docs/format/Ocean_Data_Product_Users_Guide.pdf
+  source_name: "OBPG Ocean Science Data Product Format Specification (2017-11) + Ocean Level-3 SMI Products + OB.DAAC CMR and OPeNDAP file attributes + LP DAAC Aqua orbit plan"
+
+variables:
+  note: >-
+    Variable names and units are taken from OB.DAAC OPeNDAP file attributes, Direct Data Access file listings and CMR collection descriptions. Each file holds one variable (e.g. AQUA_MODIS.20260530.L3m.DAY.CHL.chlor_a.4km.nc),
+    and Terra files (TERRA_MODIS…) use the same names. SST is stored as Int16 with scale_factor 0.005, while some ocean color L3m variables are stored as float (xarray handles both).
+  full_list: https://oceancolor.gsfc.nasa.gov/data/product_status
+  groups:
+    - name: Ocean color L3 (CHL, RRS, KD, POC, PIC files)
+      kind: mean
+      period: Daily, 8-day, monthly and annual composites
+      items:
+        - text: "Chlorophyll-a concentration — `chlor_a` (mg m-3)"
+          note: "OCI algorithm (CI at low concentrations, blended with OCx between 0.25 and 0.35 mg m-3). Valid range 0.001–100"
+        - text: "Remote sensing reflectance — `Rrs_412`, `Rrs_443`, `Rrs_469`, `Rrs_488`, `Rrs_531`, `Rrs_547`, `Rrs_555`, `Rrs_645`, `Rrs_667`, `Rrs_678` (sr-1)"
+        - text: "Aerosol optical thickness at 869 nm (atmospheric-correction by-product) — `aot_869` (dimensionless)"
+          std: []
+        - text: "Angstrom exponent (atmospheric-correction by-product) — `angstrom` (dimensionless)"
+          std: []
+        - text: "Diffuse attenuation coefficient of downwelling irradiance at 490 nm — `Kd_490` (m-1)"
+          std: []
+        - text: "Particulate organic carbon — `poc` (mg m-3 as carbon)"
+          std: []
+        - text: "Particulate inorganic carbon (calcite) — `pic` (mol m-3)"
+          std: []
+    - name: Photosynthetically available radiation and fluorescence (PAR, FLH files)
+      kind: mean
+      period: Daily, 8-day, monthly and annual composites
+      items:
+        - text: "Daily photosynthetically available radiation — `par` (mol m-2 day-1)"
+          kind: accum
+          period: Daily
+          note: Daily integral; 8-day and monthly files hold its mean
+          std: []
+        - text: "Instantaneous PAR at overpass — `ipar` (micromol m-2 s-1)"
+          kind: instant
+          std: []
+        - text: "Normalized fluorescence line height — `nflh` (W m-2 um-1 sr-1)"
+          std: []
+    - name: Inherent optical properties (IOP files, GIOP model)
+      kind: mean
+      period: Daily, 8-day, monthly and annual composites
+      items:
+        - text: "Total absorption — `a_412` to `a_678` (m-1)"
+          note: The same ten wavelengths as Rrs
+          std: []
+        - text: "Phytoplankton absorption at 443 nm — `aph_443` (m-1)"
+          std: []
+        - text: "Absorption by dissolved and detrital matter at 443 nm — `adg_443` (m-1)"
+          std: []
+        - text: "adg spectral slope and uncertainty — `adg_s`, `adg_unc_443`"
+          std: []
+    - name: Sea surface temperature L3 (SST, NSST, SST4 files, R2019.0)
+      kind: mean
+      period: Daily, 8-day, monthly and annual composites
+      items:
+        - text: "Daytime 11 µm sea surface temperature — `sst` (degree_C)"
+          note: SST files (11/12 µm split window); may include diurnal warming
+        - text: "Nighttime 11 µm sea surface temperature — `sst` (degree_C)"
+          note: NSST files; the variable name is the same as daytime, so tell them apart by file name
+        - text: "4 µm sea surface temperature — `sst4` (degree_C)"
+          note: "3.95 and 4.05 µm bands; usable at night only because of solar reflection"
+        - text: "SST quality level — `qual_sst`, `qual_sst4` (0–4)"
+          std: []
+
+access:
+  - name: NASA Earthdata Search (OB.DAAC portal)
+    url: https://search.earthdata.nasa.gov/search?portal=obdaac
+    method: Web search and download, earthaccess (Python; short_name e.g. MODISA_L3m_CHL, MODISA_L3m_RRS, MODIST_L3m_CHL, MODISA_L3m_SST, MODISA_L3m_SST4)
+    note: >-
+      Collections are named MODISA_L3m_{CHL,RRS,KD,PAR,POC,PIC,IOP,FLH} (Aqua) and MODIST_L3m_… (Terra), with L3b for binned files and an _NRT suffix for NRT. SST collections are MODISA_L3m_{SST,NSST,SST4} (R2019.0).
+      A free NASA Earthdata Login is required.
+  - name: OB.DAAC Direct Data Access (Level-3 Mapped / Aqua-MODIS)
+    url: https://oceandata.sci.gsfc.nasa.gov/directdataaccess/Level-3%20Mapped/Aqua-MODIS/
+    method: HTTPS directories by year and day, e.g. AQUA_MODIS.20260601_20260630.L3m.MO.SST4.sst4.4km.nc
+    note: Terra is under Level-3%20Mapped/Terra-MODIS/ and binned files under Level-3%20Binned/. Standard and NRT (.NRT.nc) files sit side by side in each date folder. Earthdata Login is required.
+  - name: OB.DAAC OPeNDAP (L3 SMI)
+    url: https://oceandata.sci.gsfc.nasa.gov/opendap/MODISA/L3SMI/
+    method: OPeNDAP (year/MMDD folders, e.g. L3SMI/2026/0530/) for reading just the region you need
+    note: Terra is under /opendap/MODIST/L3SMI/.
+  - name: OB.DAAC File Search
+    url: https://oceandata.sci.gsfc.nasa.gov/api/file_search/
+    method: Build file lists by name pattern and date range (for wget or curl)
+  - name: NASA PO.DAAC — MODIS L3 SST mirror (e.g. MODIS_AQUA_L3_SST_THERMAL_DAILY_4KM_DAYTIME_V2019.0)
+    url: https://podaac.jpl.nasa.gov/dataset/MODIS_AQUA_L3_SST_THERMAL_DAILY_4KM_DAYTIME_V2019.0
+    method: Earthdata Search / earthaccess / OPeNDAP / Harmony / podaac-data-subscriber
+    note: There is a separate collection for each combination of Thermal IR (11 µm) or MID-IR (4 µm), day or night, daily/8-day/monthly/annual and 4 or 9 km (Terra collections start with MODIS_TERRA_L3_SST_…).
+
+example:
+  lang: python
+  note: "Downloads Aqua monthly 4 km chlorophyll with earthaccess and looks at the seas around Korea. Run earthaccess.login() once with a NASA Earthdata account. The granule_name pattern follows the OB.DAAC tutorial."
+  code: |
+    # pip install earthaccess xarray netCDF4
+    import earthaccess
+    import numpy as np
+    import xarray as xr
+
+    earthaccess.login()
+    results = earthaccess.search_data(
+        short_name="MODISA_L3m_CHL",          # Terra: MODIST_L3m_CHL, SST: MODISA_L3m_SST / MODISA_L3m_NSST
+        granule_name="*.MO.CHL.chlor_a.4km*",  # daily: *.DAY.*, 8-day: *.8D.*  (NRT: the *_NRT collections)
+        temporal=("2025-01-01", "2025-12-31"),
+    )
+    paths = earthaccess.download(results, "./modis_chl")
+
+    ds = xr.open_mfdataset(paths, combine="nested", concat_dim="time")
+    ds = ds.sortby("lat")                                   # L3m latitude runs north to south
+    kr = ds["chlor_a"].sel(lat=slice(30, 42), lon=slice(117, 132))
+    log_mean = np.log10(kr).mean("time")                    # chlorophyll is usually averaged in log space
+    print(float(10 ** log_mean.mean()))
+
+tips:
+  - "OBPG said in December 2025 that orbit changes and calibration problems may not be fully correctable, so post-2022 Aqua ocean color is of lower reliability for long-term change. Cross-check recent years with VIIRS or PACE OCI."
+  - "The CMR description and ATBD warn that `chlor_a` is less certain in optically complex waters rich in sediment and dissolved organic matter, such as the Yellow Sea and East China Sea coasts (the open-ocean accuracy goal is ±35%). Validate against in situ data or compare with GOCI-II for Korean coastal work."
+  - "Terra standard ocean color stops at 2025-11-30 and only NRT exists after that (checked 2026-10-13). If you use Terra ocean color from December 2025 on, say it is NRT or use Aqua or VIIRS instead."
+  - Daytime SST (11 µm) is affected by diurnal warming and glint, so nighttime SST (NSST) or SST4 is safer for climatologies and trends. SST4 is valid only at night.
+  - "On the L3 mapped grid, several pixels share one bin at high latitudes, so values repeat (OBPG bin description). Compute area means and statistics from L3 binned files or with latitude weighting."
+  - "With the R2022 release the file names changed to the AQUA_MODIS.YYYYMMDD.L3m.… pattern and OPeNDAP folders moved from three-digit day of year to four-digit MMDD. Old scripts that build names like A2020001… no longer work."
+  - "OBPG reports R2022 Terra and Aqua chlorophyll and Rrs within 10% of each other, and R2022.0.2 re-cross-calibrated Terra to Aqua, but their morning and afternoon overpasses differ and both are drifting, so do not merge them into one series."
+  - "Standard and NRT files are calibrated differently. The latest months exist only as NRT, so state the version in papers (the .NRT in the file name and the processing_version attribute)."
+
+citations:
+  dataset:
+    - label: Aqua MODIS L3 mapped chlorophyll R2022.0 (OB.DAAC)
+      text: >-
+        NASA Ocean Biology Processing Group. 2025. Aqua MODIS Level-3 Global Mapped Chlorophyll (CHL) Data, version 2022.0. NASA Ocean Biology Distributed Active Archive Center.
+        https://doi.org/10.5067/AQUA/MODIS/L3M/CHL/2022.0
+      doi: 10.5067/AQUA/MODIS/L3M/CHL/2022.0
+      bibtex: |
+        @misc{obpg2025modisachl,
+          author    = {{NASA Ocean Biology Processing Group}},
+          title     = {Aqua {MODIS} Level-3 Global Mapped Chlorophyll ({CHL}) Data, version 2022.0},
+          year      = {2025},
+          publisher = {NASA Ocean Biology Distributed Active Archive Center},
+          doi       = {10.5067/AQUA/MODIS/L3M/CHL/2022.0}
+        }
+    - label: Aqua MODIS L3 mapped remote sensing reflectance R2022.0 (OB.DAAC)
+      text: >-
+        NASA Ocean Biology Processing Group. 2025. Aqua MODIS Level-3 Global Mapped Remote-Sensing Reflectance (RRS) Data, version 2022.0. NASA Ocean Biology Distributed Active Archive Center.
+        https://doi.org/10.5067/AQUA/MODIS/L3M/RRS/2022.0
+      doi: 10.5067/AQUA/MODIS/L3M/RRS/2022.0
+      bibtex: |
+        @misc{obpg2025modisarrs,
+          author    = {{NASA Ocean Biology Processing Group}},
+          title     = {Aqua {MODIS} Level-3 Global Mapped Remote-Sensing Reflectance ({RRS}) Data, version 2022.0},
+          year      = {2025},
+          publisher = {NASA Ocean Biology Distributed Active Archive Center},
+          doi       = {10.5067/AQUA/MODIS/L3M/RRS/2022.0}
+        }
+    - label: Terra MODIS L3 mapped chlorophyll R2022.0 (OB.DAAC)
+      text: >-
+        NASA Ocean Biology Processing Group. 2025. Terra MODIS Level-3 Global Mapped Chlorophyll (CHL) Data, version 2022.0. NASA Ocean Biology Distributed Active Archive Center.
+        https://doi.org/10.5067/TERRA/MODIS/L3M/CHL/2022.0
+      doi: 10.5067/TERRA/MODIS/L3M/CHL/2022.0
+      bibtex: |
+        @misc{obpg2025modistchl,
+          author    = {{NASA Ocean Biology Processing Group}},
+          title     = {Terra {MODIS} Level-3 Global Mapped Chlorophyll ({CHL}) Data, version 2022.0},
+          year      = {2025},
+          publisher = {NASA Ocean Biology Distributed Active Archive Center},
+          doi       = {10.5067/TERRA/MODIS/L3M/CHL/2022.0}
+        }
+    - label: Aqua MODIS L3 daytime SST, daily 4 km, R2019.0 (PO.DAAC)
+      text: >-
+        NASA/JPL. 2020. MODIS Aqua Level 3 SST Thermal IR Daily 4km Daytime V2019.0. NASA Physical Oceanography Distributed Active Archive Center. https://doi.org/10.5067/MODSA-1D4D9
+      doi: 10.5067/MODSA-1D4D9
+      bibtex: |
+        @misc{jpl2020modisasst,
+          author    = {{NASA/JPL}},
+          title     = {{MODIS} Aqua Level 3 {SST} Thermal {IR} Daily 4km Daytime V2019.0},
+          year      = {2020},
+          publisher = {NASA Physical Oceanography Distributed Active Archive Center},
+          doi       = {10.5067/MODSA-1D4D9}
+        }
+  papers:
+    - label: OCx chlorophyll coefficients (used in R2022)
+      text: >-
+        O'Reilly, J. E., Werdell, P. J. (2019): Chlorophyll algorithms for ocean color sensors - OC4, OC5 & OC6. Remote Sensing of Environment, 229, 32–47.
+      doi: 10.1016/j.rse.2019.04.021
+      bibtex: |
+        @article{oreilly2019chl,
+          author  = {O'Reilly, John E. and Werdell, P. Jeremy},
+          title   = {Chlorophyll algorithms for ocean color sensors - {OC4}, {OC5} \& {OC6}},
+          journal = {Remote Sensing of Environment},
+          volume  = {229},
+          pages   = {32--47},
+          year    = {2019},
+          doi     = {10.1016/j.rse.2019.04.021}
+        }
+    - label: CI algorithm for low chlorophyll
+      text: >-
+        Hu, C., Lee, Z., Franz, B. (2012): Chlorophyll a algorithms for oligotrophic oceans: A novel approach based on three-band reflectance difference.
+        Journal of Geophysical Research: Oceans, 117(C1), 2011JC007395.
+      doi: 10.1029/2011JC007395
+      bibtex: |
+        @article{hu2012ci,
+          author  = {Hu, Chuanmin and Lee, Zhongping and Franz, Bryan},
+          title   = {Chlorophyll a algorithms for oligotrophic oceans: A novel approach based on three-band reflectance difference},
+          journal = {Journal of Geophysical Research: Oceans},
+          volume  = {117},
+          number  = {C1},
+          year    = {2012},
+          doi     = {10.1029/2011JC007395}
+        }
+    - label: A decade of MODIS SST
+      text: >-
+        Kilpatrick, K. A., Podestá, G., Walsh, S., Williams, E., Halliwell, V., Szczodrak, M., Brown, O. B., Minnett, P. J., Evans, R. (2015): A decade of sea surface temperature from MODIS.
+        Remote Sensing of Environment, 165, 27–41.
+      doi: 10.1016/j.rse.2015.04.023
+      bibtex: |
+        @article{kilpatrick2015modissst,
+          author  = {Kilpatrick, K. A. and Podest{\'a}, G. and Walsh, S. and Williams, E. and Halliwell, V. and Szczodrak, M. and Brown, O. B. and Minnett, P. J. and Evans, R.},
+          title   = {A decade of sea surface temperature from {MODIS}},
+          journal = {Remote Sensing of Environment},
+          volume  = {165},
+          pages   = {27--41},
+          year    = {2015},
+          doi     = {10.1016/j.rse.2015.04.023}
+        }
+    - label: OBPG chlorophyll-a ATBD v1.1 (2023)
+      text: >-
+        NASA Ocean Biology Processing Group (2023): Chlorophyll a, Algorithm Theoretical Basis Document, version 1.1 (as implemented in R2022).
+      doi: 10.5067/JCQB8QALDOYD
+  acknowledgement: >-
+    NASA asks users to cite the dataset DOI for each product (CHL, RRS, SST, …) and platform (Aqua, Terra) actually used. Also state the version (R2022.0, or R2019.0 for SST) and whether the files were NRT.
+
+notices:
+  - date: "2026-03-20"
+    level: warning
+    title: NASA projects end of science operations for Terra in February 2027 and Aqua in September 2027
+    body: >-
+      An editor's note on the NASA Science article "Terra: The End of An Era" (published 2025-12-29, updated 2026-03-20) says that, because of fuel and power limits, science operations are projected to end in February 2027 for Terra and September 2027 for Aqua,
+      and that both will keep operating until then. MODIS ocean color and SST production ends with the satellites.
+    source: https://science.nasa.gov/science-research/earth-science/terra-the-end-of-an-era
+  - date: "2025-12-09"
+    level: warning
+    title: OBPG — next MODIS Aqua ocean color reprocessing only after end of mission; post-2022 data less reliable
+    body: >-
+      Asked about MODIS reprocessing plans, OB.DAAC user services replied that the next Aqua ocean color reprocessing will not happen until the mission ends and that no date can be given because budgets are not settled.
+      Orbit changes and on-orbit calibration challenges will likely not be fully correctable, so post-2022 data will probably be of lower reliability for long-term change, and VIIRS or PACE OCI should be considered for recent years.
+    source: https://forum.earthdata.nasa.gov/viewtopic.php?p=24652
+  - date: "2025-05-02"
+    level: warning
+    title: Transition from MODIS to VIIRS — Terra and Aqua to begin decommissioning in late 2026 to early 2027
+    body: >-
+      NASA announced that Terra and Aqua are expected to cease operations in late 2026 or early 2027 and that their drift from the design orbits is changing equator crossing times, which may affect the data.
+      A final reprocessing will follow the end of MODIS collection, and users are advised to consider comparable VIIRS products.
+    source: https://www.earthdata.nasa.gov/data/alerts-outages/transition-from-modis-viirs
+  - date: "2022-10-27"
+    level: info
+    title: Aqua MODIS ocean color R2022.0 files released — new file names and folder layout
+    body: >-
+      OB.DAAC posted the R2022.0 Aqua MODIS L3 binned and mapped files on Direct Data Access and said the old versions were being deleted. The new files follow a new naming pattern, and on OPeNDAP
+      old files sit in three-digit day-of-year folders while new files sit in four-digit MMDD folders. Terra reprocessing began in November 2022.
+    source: https://forum.earthdata.nasa.gov/viewtopic.php?p=12936
+  - date: "2021-11-10"
+    level: info
+    title: Aqua stops orbit maintenance — equator crossing time drifting later
+    body: >-
+      According to LP DAAC, Aqua completed its final orbit-maintenance maneuvers on 2021-03-18; its crossing time began drifting later in July 2021, was expected to pass 13:45 in February 2023 and reach about 15:50 around August 2026.
+      Later afternoon observations mean lower sun angles and more shadows, and the lower orbit changes swath width and the 16-day repeat cycle.
+    source: https://lpdaac.usgs.gov/news/aqua-modis-acquisition-plan-through-august-2026/
+
+transitions:
+  - from: MODIS ocean color R2018.0
+    to: MODIS ocean color R2022.0
+    status: completed
+    date: "2022-10"
+    summary: >-
+      A multi-mission reprocessing covering SeaWiFS through VIIRS and OLCI. It updated instrument calibration and vicarious calibration (MOBY), ancillary meteorology and ozone, chlorophyll coefficients and the land/water mask,
+      while keeping product formats and suites as in R2014.0 (the file naming did change). SST was not part of this reprocessing and stays at R2019.0.
+    changes:
+      - aspect: Instrument calibration
+        before: Solar and lunar calibration data up to R2018.0
+        after: Solar diffuser and lunar data collected since R2018.0 plus improved degradation modelling
+      - aspect: Ancillary meteorology and ozone
+        before: NCEP meteorology; OMI, TOMS, TOVS and TOAST ozone
+        after: "MERRA-2 (GEOS-IT for NRT processing)"
+      - aspect: SST used in atmospheric correction
+        before: NOAA OI SST V2
+        after: "GHRSST L4 CMC SST (used since SST R2019)"
+      - aspect: Chlorophyll algorithm
+        before: Earlier OCx coefficients
+        after: "O'Reilly & Werdell (2019) OCx coefficients"
+      - aspect: Land/water mask and bathymetry
+        before: Previous bathymetry and land-mask files
+        after: Modified GEBCO_2020 grid (including water surface height of large lakes)
+      - aspect: Inherent optical properties
+        before: No Raman correction
+        after: "Raman scattering correction of Rrs for IOP retrieval (Westberry et al., 2013)"
+      - aspect: File names
+        before: "A2020001.L3m_DAY_CHL_chlor_a_4km style"
+        after: "AQUA_MODIS.20200101.L3m.DAY.CHL.chlor_a.4km.nc style (convention introduced in October 2019)"
+    impacts:
+      - Do not mix R2018.0 and R2022.0 values; download the whole period again from the R2022 series.
+      - "Chlorophyll coefficients and ancillary data changed, so values differ for the same date. Check the version when comparing with earlier publications."
+    sources:
+      - name: OBPG — Reprocessing 2022.0 General Description
+        url: https://oceancolor.gsfc.nasa.gov/data/reprocessing/r2022/
+      - name: OBPG — MODIS-Aqua R2022.0
+        url: https://oceancolor.gsfc.nasa.gov/data/reprocessing/r2022/aqua/
+      - name: OBPG — MODIS-Terra R2022.0
+        url: https://oceancolor.gsfc.nasa.gov/data/reprocessing/r2022/terra
+  - from: MODIS ocean color R2022.0
+    to: MODIS ocean color R2022.0.1 to R2022.0.3 (mini-reprocessings)
+    status: completed
+    summary: >-
+      Mini-reprocessings to fix calibration problems after the orbits began drifting. R2022.0.1 revised the temporal calibration of Aqua data since 2021-07-01; R2022.0.2 cross-calibrated Aqua to NOAA-20 VIIRS after the
+      second yaw maneuver in August 2024 degraded quality, and cross-calibrated Terra to Aqua. On 2026-10-13 the latest Aqua standard files carry the attribute R2022.0.3.
+    changes:
+      - aspect: Aqua calibration (R2022.0.1)
+        before: R2022.0 calibration
+        after: "Revised temporal calibration for data since 2021-07-01 (orbit drift changed desert-site viewing geometry and the solar diffuser incidence angle)"
+      - aspect: Aqua calibration (R2022.0.2)
+        before: R2022.0.1
+        after: "Cross-calibration with NOAA-20 VIIRS (LUT transition date 2022-01-01)"
+      - aspect: Terra calibration
+        before: R2022.0
+        after: "Cross-calibrated to Aqua in R2022.0.1 and 0.2, for data since 2021-07-01"
+      - aspect: Latest processing version
+        before: R2022.0
+        after: "Aqua standard R2022.0.3 (file attribute); NRT R2022.0.2 (June 2026 file attribute)"
+    impacts:
+      - "Values after July 2021 changed with each mini-reprocessing. Do not mix files downloaded at different times; check the processing_version attribute."
+      - Even after these fixes, OBPG considers post-2022 Aqua ocean color hard to use for long-term change.
+    sources:
+      - name: OBPG — MODIS-Aqua R2022.0.1
+        url: https://oceancolor.gsfc.nasa.gov/data/reprocessing/r2022.0.1/aqua/
+      - name: OBPG — MODIS-Aqua R2022.0.2
+        url: https://oceancolor.gsfc.nasa.gov/data/reprocessing/r2022.0.2/aqua/
+      - name: OBPG — MODIS-Terra R2022.0.2
+        url: https://oceancolor.gsfc.nasa.gov/data/reprocessing/r2022.0.2/terra
+  - from: MODIS Ocean (Aqua and Terra; ocean color R2022.0, SST R2019.0)
+    to: VIIRS Ocean (Suomi NPP, NOAA-20, NOAA-21)
+    to_id: viirs-ocean
+    status: planned
+    summary: >-
+      NASA advises moving to comparable VIIRS products as Terra and Aqua end. OBPG produces VIIRS ocean color L3 with the same processing system (l2gen, OCI chlorophyll, GIOP)
+      and reports that VIIRS (Suomi NPP and NOAA-20) and Aqua chlorophyll and Rrs agree within 10% over global deep water. VIIRS has fewer bands, though, so some products such as fluorescence and 4 µm SST have no VIIRS counterpart.
+    changes:
+      - aspect: Rrs wavelengths
+        before: "Ten (412, 443, 469, 488, 531, 547, 555, 645, 667, 678 nm)"
+        after: "Five (Suomi NPP 410, 443, 486, 551, 671; NOAA-20 and -21 411, 445, 489, 556, 667 nm)"
+      - aspect: Fluorescence and instantaneous PAR
+        before: "`nflh` and `ipar` (FLH files)"
+        after: None (no FLH files in the L3 listings)
+      - aspect: Sea surface temperature
+        before: "11 µm daytime (SST) and nighttime (NSST), 4 µm SST4 (R2019.0)"
+        after: "SST, NSST and triple-window SST3 `sst_triple` (Suomi NPP 2016.2, NOAA-20 2024.0); no OB.DAAC SST for NOAA-21"
+      - aspect: Overpass time
+        before: "Terra 10:30 (morning) and Aqua 13:30 (afternoon), both drifting"
+        after: "All three in afternoon orbits (within about 50 minutes of each other); no VIIRS continues Terra's morning observations"
+      - aspect: Period
+        before: "Terra 2000-02~ / Aqua 2002-07~"
+        after: "Suomi NPP 2012-01~ (data delivery ends 2026-11-02) / NOAA-20 2017-11~ / NOAA-21 2022-11~"
+      - aspect: File name prefix
+        before: "AQUA_MODIS, TERRA_MODIS"
+        after: "SNPP_VIIRS, JPSS1_VIIRS (NOAA-20), JPSS2_VIIRS (NOAA-21)"
+    impacts:
+      - "Rrs wavelengths differ, so band values cannot be joined directly. OBPG reports, for example, that NOAA-20 Rrs(667) differs from Suomi NPP Rrs(671) by about 20% and from Aqua Rrs(667) by about 16%."
+      - "MODIS `nflh` (fluorescence) and SST4 series do not continue in VIIRS. Look at PACE OCI for fluorescence."
+      - Compare the two records over the overlap (2012 onward) before switching, and do not simply splice MODIS and VIIRS into one series.
+    sources:
+      - name: OBPG — VIIRS-NOAA20 R2022.0 (cross-sensor comparison)
+        url: https://oceancolor.gsfc.nasa.gov/data/reprocessing/r2022/noaa20
+      - name: OBPG — VIIRS-SNPP R2022.0
+        url: https://oceancolor.gsfc.nasa.gov/data/reprocessing/r2022/snpp
+      - name: Transition from MODIS to VIIRS (Earthdata, 2025-05-02)
+        url: https://www.earthdata.nasa.gov/data/alerts-outages/transition-from-modis-viirs
+
+links:
+  - name: OBPG — Reprocessing history
+    url: https://oceancolor.gsfc.nasa.gov/data/reprocessing/
+  - name: OBPG — Product Status (current version by sensor)
+    url: https://oceancolor.gsfc.nasa.gov/data/product_status
+  - name: OBPG — File naming convention
+    url: https://oceancolor.gsfc.nasa.gov/resources/docs/filenaming-convention
+  - name: OBPG — Level-3 binning scheme
+    url: https://oceancolor.gsfc.nasa.gov/resources/docs/format/l3bins
+  - name: OBPG chlorophyll-a ATBD (PDF)
+    url: https://oceancolor.gsfc.nasa.gov/files/atbd/atbd-obdaac-chlorophyll-a.pdf
+  - name: OBPG — SST quality flags
+    url: https://oceancolor.gsfc.nasa.gov/resources/atbd/sst/flag/
+  - name: Earthdata alert — Aqua MODIS Mini-reprocessing R2022.0.3
+    url: https://www.earthdata.nasa.gov/data/alerts-outages/aqua-modis-mini-reprocessing-r2022.0.3
+  - name: Oceandata Help Hub (tutorials and notebooks)
+    url: https://nasa.github.io/oceandata-notebooks/
+  - name: This site — VIIRS Ocean (successor)
+    url: ../viirs-ocean/
+  - name: This site — PACE OCI (hyperspectral successor)
+    url: ../pace-oci/
+  - name: This site — ESA OC-CCI (multi-sensor ocean colour climate record including MODIS)
+    url: ../oc-cci/
+  - name: This site — GOCI-II (geostationary ocean color around Korea)
+    url: ../goci2/
+  - name: This site — MODIS LST (orbit drift of the same satellites)
+    url: ../modis-lst/
+
+watch_urls:
+  - https://oceancolor.gsfc.nasa.gov/data/reprocessing/
+  - https://oceancolor.gsfc.nasa.gov/
+
+last_verified: "2026-10-13"
