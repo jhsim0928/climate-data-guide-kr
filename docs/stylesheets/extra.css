@@ -454,3 +454,22 @@ details.hint summary { cursor: pointer; }
   .md-typeset .list-table .md-typeset__table { overflow-x: auto; }
   .md-typeset .list-table table:not([class]) { min-width: 44rem; }
 }
+
+/* 자료 페이지 — 변수 표: 모든 그룹 표의 가로 길이·열 너비를 같게 */
+.md-typeset .var-tbl .md-typeset__scrollwrap { display: block; width: 100%; margin-left: 0; margin-right: 0; }
+.md-typeset .var-tbl .md-typeset__table { display: block; width: 100%; padding: 0; }
+.md-typeset .var-tbl table:not([class]) { display: table; width: 100%; table-layout: fixed; font-size: 0.74rem; }
+.md-typeset .var-tbl table:not([class]) td { white-space: normal; word-break: keep-all; overflow-wrap: anywhere; vertical-align: top; }
+.md-typeset .var-tbl table:not([class]) th { white-space: nowrap; }
+.md-typeset .var-tbl table:not([class]) th, .md-typeset .var-tbl table:not([class]) td { padding: 0.75em 0.8em; }
+.md-typeset .var-tbl table:not([class]) td:nth-child(n+2) { overflow-wrap: break-word; }
+.md-typeset .var-tbl th:nth-child(1) { width: 27%; }
+.md-typeset .var-tbl th:nth-child(2) { width: 16%; }
+.md-typeset .var-tbl th:nth-child(3) { width: 15%; }
+.md-typeset .var-tbl th:nth-child(4) { width: 13%; }
+.md-typeset .var-tbl th:nth-child(5) { width: 29%; }
+.md-typeset .var-tbl td:nth-child(5) { color: var(--md-default-fg-color--light); }
+@media screen and (max-width: 44.9375em) {
+  .md-typeset .var-tbl .md-typeset__table { overflow-x: auto; }
+  .md-typeset .var-tbl table:not([class]) { min-width: 40rem; }
+}

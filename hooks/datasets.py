@@ -554,6 +554,62 @@ def kind_badge(it: dict) -> str:
     return f' <span class="kind kind-{it["kind"]}">{label}</span>'
 
 
+_HANGUL = re.compile("[가-힣]")
+
+
+def split_var(text: str) -> tuple[str, str, str, str]:
+    """변수 설명 한 줄 → (이름, 변수명, 단위, 참고). 예) "총강수량 — `tp` (m)" → ("총강수량", "`tp`", "m", "")"""
+    t = oneline(text)
+    name, rest = (t.split(" — ", 1) + [""])[:2] if " — " in t else (t, "")
+    units, note = "", ""
+    unit_like = re.compile(r"[/%°^0-9]|^[A-Za-z][A-Za-z .\-²³⁻¹]*$|^(무차원|비율|개|일|분|초|코드값|비트값)$")
+    src = rest if rest else name
+    m = re.search(r"\(([^()]*(?:\([^()]*\)[^()]*)*)\)\s*$", src)
+    if m:
+        inner = m.group(1).strip()
+        head = inner.split(",")[0].strip()
+        if (rest and unit_like.search(head)) or (rest and not unit_like.search(head) and not _HANGUL.search(head)) or re.search(r"[/%°^0-9]", head):
+            if rest:
+                rest = rest[:m.start()].rstrip()
+            else:
+                name = name[:m.start()].rstrip()
+            parts = [x.strip() for x in inner.split(",")]
+            if len(parts) > 1 and re.search("[가-힣]|파일", ", ".join(parts[1:])):
+                units, note = parts[0], ", ".join(parts[1:])
+            else:
+                units = inner
+            if units.endswith("/") or (_HANGUL.search(units) and not unit_like.search(units)):
+                note, units = (units + (" · " + note if note else "")), ""
+    codes = re.findall(r"`[^`]+`", rest)
+    leftover = rest
+    for c in codes:
+        leftover = leftover.replace(c, "")
+    leftover = re.sub(r"^[\s,/·]+|[\s,/·]+$", "", re.sub(r"\s*,\s*,", ",", leftover)).strip()
+    if leftover:
+        note = (leftover + (" · " + note if note else "")).strip()
+    return name, ", ".join(codes), units, note
+
+
+def var_table(g: dict) -> list[str]:
+    """변수 그룹 → 표 (변수 · 변수명 · 단위 · 시간 특성 · 참고)"""
+    rows, any_note = [], False
+    for it in g["items"]:
+        it = norm_item(it, g)
+        name, codes, units, note = split_var(it["text"])
+        if it.get("note"):
+            note = (note + " · " if note else "") + oneline(it["note"])
+        any_note = any_note or bool(note)
+        rows.append((name, codes, units, kind_badge(it).strip(), note))
+    md = lambda x: x.replace("|", "\\|")
+    any_note = True  # 모든 표의 열 구성을 같게 (참고 칸이 비어도 둠)
+    head = loc("| 변수 | 변수명 | 단위 | 시간 특성 |") + (loc(" 참고 |") if any_note else "")
+    sep = "|---|---|---|---|" + ("---|" if any_note else "")
+    out = ['<div class="var-tbl" markdown>', "", head, sep]
+    for name, codes, units, kind, note in rows:
+        out.append(f"| {md(name)} | {md(codes) or '-'} | {md(units) or '-'} | {kind or '-'} |" + (f" {md(note) or ''} |" if any_note else ""))
+    return out + ["", "</div>"]
+
+
 def variables_block(v: dict, tc: dict | None = None) -> list[str]:
     L = ["## 활용 가능한 변수", ""]
     if not v.get("groups"):
@@ -575,14 +631,7 @@ def variables_block(v: dict, tc: dict | None = None) -> list[str]:
         "",
     ]
     for g in v["groups"]:
-        L += [f"### {g['name']}", "", '<div class="var-list" markdown>', ""]
-        for it in g["items"]:
-            it = norm_item(it, g)
-            line = f"- {oneline(it['text'])}{kind_badge(it)}"
-            if it.get("note"):
-                line += f' <span class="hint">— {oneline(it["note"])}</span>'
-            L.append(line)
-        L += ["", "</div>", ""]
+        L += [f"### {g['name']}", ""] + var_table(g) + [""]
     if v.get("full_list"):
         L += [f"전체 변수 목록은 [공식 문서]({v['full_list']})에서 확인하세요.", ""]
     return L
