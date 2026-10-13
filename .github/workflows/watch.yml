@@ -1,11 +1,12 @@
-# 매일 아침 6시(한국 시간)쯤 자료 제공 기관의 공지 페이지를 점검해 바뀐 부분을 watch/changes.json에 남깁니다.
+# 매일 새벽(한국 시간) 자료 제공 기관의 공지 페이지를 점검해 바뀐 부분을 watch/changes.json에 남깁니다.
+# 주 시작: Apps Script startWatch(05:40쯤, workflow_dispatch). GitHub 예약 실행은 늦거나 빠지는 일이 잦아 예비로만 둡니다.
 # 이어서 8시쯤 Claude 점검이 진짜 공지인지 판단해 공지 후보(PR)를 만들고, 9시에 운영자에게 요약 메일이 갑니다.
 # 운영자가 PR을 머지(승인)해야 사이트와 구독자 메일에 반영됩니다.
 name: 공지 페이지 점검
 
 on:
   schedule:
-    - cron: "7 21 * * *"   # UTC 21:07 = 한국 06:07
+    - cron: "7 21 * * *"   # UTC 21:07 = 한국 06:07 (예비 — 그날 점검이 이미 있으면 건너뜀)
   workflow_dispatch:
 
 permissions:
@@ -21,16 +22,27 @@ jobs:
     timeout-minutes: 20
     steps:
       - uses: actions/checkout@v6
-      - uses: actions/setup-python@v6
+      # 예약 실행이 늦게 돌 때, 오늘(한국 시간) 이미 점검했으면 건너뜀 — 아침에 본 변경 기록을 덮어쓰지 않도록
+      - id: today
+        if: github.event_name == 'schedule'
+        run: |
+          last=$(python3 -c "import json;print(json.load(open('watch/changes.json')).get('date_kst',''))" 2>/dev/null || true)
+          if [ "$last" = "$(TZ=Asia/Seoul date +%F)" ]; then echo "오늘 점검이 이미 있어 건너뜀"; echo "skip=true" >> "$GITHUB_OUTPUT"; fi
+      - if: steps.today.outputs.skip != 'true'
+        uses: actions/setup-python@v6
         with:
           python-version: "3.12"
-      - run: pip install requests beautifulsoup4 PyYAML playwright
+      - if: steps.today.outputs.skip != 'true'
+        run: pip install requests beautifulsoup4 PyYAML playwright
       # 자바스크립트로 그리는 페이지·수집기를 막는 페이지는 실제 브라우저(Chromium)로 다시 읽음
-      - run: python -m playwright install --with-deps chromium
-      - run: python scripts/watch.py
+      - if: steps.today.outputs.skip != 'true'
+        run: python -m playwright install --with-deps chromium
+      - if: steps.today.outputs.skip != 'true'
+        run: python scripts/watch.py
         env:
           WATCH_DEBUG: ${{ github.event_name == 'workflow_dispatch' && '1' || '' }}
-      - name: 점검 결과 저장
+      - if: steps.today.outputs.skip != 'true'
+        name: 점검 결과 저장
         run: |
           git config user.name "notice-watch"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"

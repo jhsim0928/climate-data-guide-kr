@@ -5,8 +5,9 @@
 
 ## 전체 흐름
 
-1. **06시 — GitHub Actions `공지 페이지 점검`** (`.github/workflows/watch.yml`, `scripts/watch.py`)
-   각 데이터셋 YAML의 `watch_urls`를 열어 지난번과 달라진 줄을 `watch/changes.json`에 남깁니다.
+1. **05:40쯤 — GitHub Actions `공지 페이지 점검`** (`.github/workflows/watch.yml`, `scripts/watch.py`)
+   Apps Script `startWatch`가 시작시킵니다(GitHub 예약 실행 06:07은 예비). 각 데이터셋 YAML의 `watch_urls`를 열어
+   지난번과 달라진 줄을 `watch/changes.json`에 남깁니다.
 2. **08시 — Claude (이 문서)**
    바뀐 부분이 진짜 새 공지인지 판단하고, 공지라면 한국어·영어 YAML에 공지를 써서 **PR(공지 후보)** 을 엽니다.
    결과를 `watch/digest.json`에 남깁니다.
@@ -34,7 +35,7 @@ pip install --break-system-packages -q -r requirements.txt
 
 ### 2. 감지 결과 확인
 
-- `watch/changes.json`의 `run_at`이 **오늘 05:30(한국 시간)보다 이르거나 3시간 넘게 지났으면** 06시 감지가 돌지 않은 것입니다
+- `watch/changes.json`의 `run_at`이 **오늘 05:00(한국 시간)보다 이르거나 4시간 넘게 지났으면** 새벽 감지가 돌지 않은 것입니다
   (GitHub 예약 실행은 늦거나 빠질 때가 있음. `date_kst`만 보면 새벽에 수동으로 돌린 결과를 오늘 결과로 착각하므로 반드시 `run_at`을 봅니다).
   `gh api -X POST $R/actions/workflows/watch.yml/dispatches -f ref=main` 로 직접 실행하고,
   `gh api "$R/actions/workflows/watch.yml/runs?per_page=1" --jq '.workflow_runs[0]|[.status,.conclusion]'` 가 `completed`가 될 때까지(최대 15분) 기다린 뒤 `git pull origin main`.

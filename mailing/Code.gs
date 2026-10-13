@@ -10,7 +10,8 @@
  *  5) 각 페이지의 "정보 오류 신고"를 받아 오류 신고 시트에 저장하고 운영자에게 알립니다.
  *  6) 사이트의 "의견 보내기" 양식을 받아 의견 시트에 저장하고 운영자에게 알립니다.
  *  7) 영어판(/en/)에서 신청한 사람에게는 확인 메일·알림 메일을 영어로 보냅니다(구독자 시트 lang 열).
- *  8) 매일 오전 9시, 자동 공지 점검 결과(watch/digest.json)를 운영자에게 요약 메일로 보냅니다.
+ *  8) 매일 오전 5시 40분쯤, GitHub Actions '공지 페이지 점검'을 시작시킵니다(GitHub 예약 실행이 늦거나 빠지는 일이 잦아서).
+ *  9) 매일 오전 9시, 자동 공지 점검 결과(watch/digest.json)를 운영자에게 요약 메일로 보냅니다.
  *     새 공지 후보는 GitHub PR로 올라오며, 운영자가 머지(승인)하면 사이트에 반영되고
  *     한 시간 안에(오전 8시~오후 9시 사이) 구독자에게 알림 메일이 나갑니다.
  *
@@ -27,6 +28,10 @@ var SEND_OLD = false; // testSend 실행 때만 true (오래된 공지도 보냄
 var OLD_DAYS = 30;  // 공지 날짜가 이보다 오래된 새 공지는 메일로 보내지 않음 (새 데이터셋 추가 시 과거 공지 일괄 발송 방지)
 var SEND_FROM = 8, SEND_UNTIL = 21; // 구독자 알림은 이 시간대(프로젝트 시간대, Asia/Seoul)에만 발송 — 밤에 승인해도 아침에 나감
 var DIGEST_HOUR = 9; // 운영자 요약 메일 시각
+var WATCH_HOUR = 5, WATCH_MINUTE = 40; // GitHub Actions '공지 페이지 점검' 시작 시각 (Apps Script는 ±15분 안에서 실행)
+var WATCH_DISPATCH_URL = 'https://api.github.com/repos/jhsim0928/climate-data-guide-kr/actions/workflows/watch.yml/dispatches';
+// GitHub 토큰은 코드(공개 저장소)에 적지 않고 [프로젝트 설정 → 스크립트 속성]에 속성 GITHUB_TOKEN으로 넣습니다.
+// 이 저장소만, 권한은 Actions: Read and write 하나만 준 fine-grained 토큰 (MAINTAINING.md 참고).
 var DIGEST_URL = 'https://raw.githubusercontent.com/jhsim0928/climate-data-guide-kr/main/watch/digest.json';
 // 요약 메일을 함께 받을 주소는 코드(공개 저장소)에 적지 않고 [프로젝트 설정 → 스크립트 속성]에
 // 속성 DIGEST_TO, 값 'a@example.com,b@example.com' 형태로 넣습니다. OWNER_EMAIL에는 항상 갑니다.
@@ -119,16 +124,50 @@ function setup() {
   Logger.log('설치 완료. 이제 [배포 → 새 배포 → 웹 앱]으로 배포하세요.');
 }
 
-// ── 실행 예약: 구독자 알림 확인(매시간) + 운영자 요약 메일(매일 9시) ──
+// ── 실행 예약: 공지 페이지 점검 시작(매일 5시 40분쯤) + 구독자 알림 확인(매시간) + 운영자 요약 메일(매일 9시) ──
 // 예약을 바꾼 뒤 한 번만 실행하면 됩니다. 이미 보낸 기록은 건드리지 않습니다.
 function setupTriggers() {
   ScriptApp.getProjectTriggers().forEach(function (t) {
     var f = t.getHandlerFunction();
-    if (f === 'checkNotices' || f === 'dailyDigest') ScriptApp.deleteTrigger(t);
+    if (f === 'checkNotices' || f === 'dailyDigest' || f === 'startWatch') ScriptApp.deleteTrigger(t);
   });
+  ScriptApp.newTrigger('startWatch').timeBased().everyDays(1).atHour(WATCH_HOUR).nearMinute(WATCH_MINUTE).create();
   ScriptApp.newTrigger('checkNotices').timeBased().everyHours(1).create();
   ScriptApp.newTrigger('dailyDigest').timeBased().everyDays(1).atHour(DIGEST_HOUR).nearMinute(0).create();
-  Logger.log('예약 완료: 공지 확인 매시간, 운영자 요약 매일 ' + DIGEST_HOUR + '시. 요약 받을 주소: ' + digestRecipients_().join(', '));
+  Logger.log('예약 완료: 공지 페이지 점검 매일 ' + WATCH_HOUR + '시 ' + WATCH_MINUTE + '분쯤, 공지 확인 매시간, 운영자 요약 매일 ' + DIGEST_HOUR +
+    '시. 요약 받을 주소: ' + digestRecipients_().join(', ') +
+    (PropertiesService.getScriptProperties().getProperty('GITHUB_TOKEN') ? '' : ' / 주의: 스크립트 속성 GITHUB_TOKEN이 없어 점검 시작은 건너뜁니다.'));
+}
+
+// ── 매일 새벽: GitHub Actions '공지 페이지 점검'(watch.yml) 시작 ──
+// GitHub의 예약 실행(schedule)은 몇 시간씩 늦거나 아예 빠지는 일이 있어, 정시에 도는 Apps Script가 직접 시작시킵니다.
+// 실패해도 08시 Claude 점검이 결과가 오래된 것을 보고 다시 돌리지만, 토큰 만료 같은 문제는 사람이 고쳐야 하므로 운영자에게 알립니다.
+function startWatch() {
+  var token = PropertiesService.getScriptProperties().getProperty('GITHUB_TOKEN');
+  if (!token) { Logger.log('GITHUB_TOKEN 스크립트 속성이 없어 공지 페이지 점검을 시작하지 않았습니다.'); return; }
+  var res, code = 0, body = '';
+  for (var i = 0; i < 2 && code !== 204; i++) {
+    if (i) Utilities.sleep(30000);
+    try {
+      res = UrlFetchApp.fetch(WATCH_DISPATCH_URL, {
+        method: 'post', contentType: 'application/json', muteHttpExceptions: true,
+        payload: JSON.stringify({ ref: 'main' }),
+        headers: { Authorization: 'Bearer ' + token, Accept: 'application/vnd.github+json', 'X-GitHub-Api-Version': '2022-11-28' }
+      });
+      code = res.getResponseCode(); body = res.getContentText().slice(0, 300);
+    } catch (err) { code = -1; body = String(err).slice(0, 300); }
+  }
+  if (code === 204) { Logger.log('공지 페이지 점검을 시작했습니다.'); return; }
+  var hint = (code === 401) ? '토큰이 만료되었거나 잘못되었습니다. 새 토큰을 만들어 스크립트 속성 GITHUB_TOKEN을 바꿔 주세요.' :
+             (code === 403 || code === 404) ? '토큰에 이 저장소의 Actions 쓰기 권한이 있는지 확인해 주세요.' :
+             'GitHub 쪽 일시 문제일 수 있습니다. 08시 Claude 점검이 다시 시도합니다.';
+  Logger.log('공지 페이지 점검 시작 실패: HTTP ' + code + ' ' + body);
+  MailApp.sendEmail({
+    to: OWNER_EMAIL, name: '기후데이터 길잡이',
+    subject: '[점검] 공지 페이지 점검을 시작하지 못했습니다 (HTTP ' + code + ')',
+    htmlBody: '매일 새벽 GitHub Actions <b>공지 페이지 점검</b>을 시작하지 못했습니다.<br>' + esc_(hint) +
+      '<br><br>응답: ' + esc_(body)
+  });
 }
 
 function ensureSheet_(ss, name, headers) {
@@ -401,7 +440,7 @@ function fetchNoticeFile_(url) {
 }
 
 // ── 매일 9시: 운영자에게 자동 공지 점검 요약 ─────────────────
-// 06시 GitHub Actions가 공지 페이지 변경을 찾고(watch/changes.json), 08시쯤 Claude 점검이 진짜 공지를 골라
+// 새벽(05:40쯤) GitHub Actions가 공지 페이지 변경을 찾고(watch/changes.json), 08시쯤 Claude 점검이 진짜 공지를 골라
 // 공지 후보 PR과 watch/digest.json을 만듭니다. 이 함수는 그 결과를 메일로 정리해 보냅니다.
 function digestRecipients_() {
   var extra = PropertiesService.getScriptProperties().getProperty('DIGEST_TO') || '';
