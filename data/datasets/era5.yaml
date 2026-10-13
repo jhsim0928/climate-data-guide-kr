@@ -146,7 +146,8 @@ variables:
         - "동서풍 — `u` (m s-1)"
         - "남북풍 — `v` (m s-1)"
         - "연직속도(기압좌표) — `w` (Pa s-1)"
-        - "지위(geopotential) — `z` (m2 s-2)"
+        - text: "지위(geopotential) — `z` (m2 s-2)"
+          note: "9.80665로 나누면 지위고도(m)"
         - "비습 — `q` (kg kg-1)"
         - "상대습도 — `r` (%)"
         - "상대와도 — `vo` (s-1)"
@@ -171,6 +172,7 @@ variables:
           kind: static
         - text: "지표 지위(지형) — `z` (m2 s-2)"
           kind: static
+          note: "9.80665로 나누면 지형 높이(m)"
 
 access:
   - name: Copernicus Climate Data Store (CDS) — 단일면(single levels)

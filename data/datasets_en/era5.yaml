@@ -151,7 +151,8 @@ variables:
         - "U component of wind — `u` (m s-1)"
         - "V component of wind — `v` (m s-1)"
         - "Vertical velocity — `w` (Pa s-1)"
-        - "Geopotential — `z` (m2 s-2)"
+        - text: "Geopotential — `z` (m2 s-2)"
+          note: "divide by 9.80665 for geopotential height (m)"
         - "Specific humidity — `q` (kg kg-1)"
         - "Relative humidity — `r` (%)"
         - "Vorticity (relative) — `vo` (s-1)"
@@ -176,6 +177,7 @@ variables:
           kind: static
         - text: "Geopotential at the surface (orography) — `z` (m2 s-2)"
           kind: static
+          note: "divide by 9.80665 for terrain height (m)"
 
 access:
   - name: Copernicus Climate Data Store (CDS) — single levels

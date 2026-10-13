@@ -103,7 +103,8 @@ variables:
       kind: static
       items:
         - "Land-sea mask — `lsm` (0-1)"
-        - "Geopotential (orography) — `z` (m2 s-2)"
+        - text: "Geopotential (orography) — `z` (m2 s-2)"
+          note: "divide by 9.80665 for terrain height (m)"
         - "High and low vegetation cover — `cvh`, `cvl` (0-1)"
         - "Soil type — `slt`"
         - "Glacier mask — `glm` (proportion)"

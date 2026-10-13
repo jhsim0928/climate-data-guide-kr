@@ -116,7 +116,8 @@ variables:
     - name: 기압면 (17층)
       kind: instant
       items:
-        - "지위(geopotential) — `Z` (m2 s-2)"
+        - text: "지위(geopotential) — `Z` (m2 s-2)"
+          note: "9.80665로 나누면 지위고도(m)"
         - "기온 — `T` (K)"
         - "동서풍 — `U` (m s-1)"
         - "남북풍 — `V` (m s-1)"

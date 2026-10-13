@@ -123,7 +123,8 @@ variables:
     - name: Pressure levels (23)
       kind: instant
       items:
-        - "Geopotential — `z` (m2 s-2)"
+        - text: "Geopotential — `z` (m2 s-2)"
+          note: "divide by 9.80665 for geopotential height (m)"
         - "Temperature — `t` (K)"
         - "Eastward wind component — `u` (m s-1)"
         - "Northward wind component — `v` (m s-1)"

@@ -155,7 +155,8 @@ variables:
     - name: 기압면 (37층)
       kind: instant
       items:
-        - "지위(geopotential) — `z` (m2 s-2)"
+        - text: "지위(geopotential) — `z` (m2 s-2)"
+          note: "9.80665로 나누면 지위고도(m)"
         - "기온 — `t` (K)"
         - "동서풍 — `u` (m s-1)"
         - "남북풍 — `v` (m s-1)"
@@ -183,6 +184,7 @@ variables:
           kind: static
         - text: "지표 지위(지형) — `z` (m2 s-2)"
           kind: static
+          note: "9.80665로 나누면 지형 높이(m)"
 
 access:
   - name: Copernicus Climate Data Store (CDS) — ERA-Interim
