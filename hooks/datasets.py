@@ -615,10 +615,6 @@ def variables_block(v: dict, tc: dict | None = None, ds_id: str | None = None) -
     if not v.get("groups"):
         L += [oneline(v.get("note") or "아직 공개 전이라 변수 목록이 확정되지 않았습니다. 공개되면 정리하겠습니다."), ""]
         return L
-    # 한국어판에만: 변수 이름의 원래 영어 표기는 같은 자료의 영어판 페이지로 안내
-    if ds_id and not is_en() and (DATA_DIR_EN / f"{ds_id}.yaml").exists():
-        L += [f'<p class="var-en-hint">변수 이름은 우리말로 옮겨 적었습니다. 원래 영어 이름은 '
-              f'<a href="../../en/datasets/{ds_id}/" hreflang="en">영어판 이 페이지</a>에서 볼 수 있습니다.</p>', ""]
     if v.get("note"):
         L += [oneline(v["note"]), ""]
     if tc:
@@ -634,6 +630,10 @@ def variables_block(v: dict, tc: dict | None = None, ds_id: str | None = None) -
         + ' <span class="hint">— 순간값: 표시 시각의 값 · 평균/누적/최대/최소: 표시된 구간 동안의 값 · 고정값: 시간에 따라 변하지 않음</span></p>',
         "",
     ]
+    # 한국어판에만: 변수 이름의 원래 영어 표기는 같은 자료의 영어판 페이지로 안내 (첫 표 바로 위)
+    if ds_id and not is_en() and (DATA_DIR_EN / f"{ds_id}.yaml").exists():
+        L += [f'<p class="var-en-hint">변수 이름은 우리말로 옮겨 적었습니다. 원래 영어 이름은 '
+              f'<a href="../../en/datasets/{ds_id}/" hreflang="en">영어판 이 페이지</a>에서 볼 수 있습니다.</p>', ""]
     for g in v["groups"]:
         L += [f"### {g['name']}", ""] + var_table(g) + [""]
     if v.get("full_list"):
