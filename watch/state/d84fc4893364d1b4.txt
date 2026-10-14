@@ -17,23 +17,32 @@ here
 Time series files
 Time series files are available in csv format.
 Annual time series files
+Full globe (90S-90N):
 HadSST.4.2.0.0_annual_GLOBE.csv
 (14K) - md5sum checksum = 73f8fd76d949004cd5082bb681e06d9f
+Reduced globe (60S-60N):
+HadSST.4.2.0.0_annual_6060.csv
+(14K) - md5sum checksum = 7070697c59fec42a28600b9f28a881c1
+Northern Hemisphere (0-90N):
 HadSST.4.2.0.0_annual_NHEM.csv
 (14K) - md5sum checksum = 130e062c2386f0cc06f76f16ca141eec
+Southern Hemisphere (0-90S):
 HadSST.4.2.0.0_annual_SHEM.csv
 (14K) - md5sum checksum = 9acca597bb30292265be457832e1b0b8
+Tropics (20S-20N):
 HadSST.4.2.0.0_annual_TROP.csv
 (14K) - md5sum checksum = b70856fd438abe4d50ab76c693856a43
 Monthly time series files
 HadSST.4.2.0.0_monthly_GLOBE.csv
-(169K) - md5sum checksum = ca5bbe7a7bd5100e0e0596711a263611
+(169K) - md5sum checksum = 05decec250cd2d1d67abe0a1905eb183
+HadSST.4.2.0.0_monthly_6060.csv
+(169K) - md5sum checksum = da060239b294cf62aa4695ab28ecc846
 HadSST.4.2.0.0_monthly_NHEM.csv
-(168K) - md5sum checksum = 998142564ae04e50104fb8b44dfe727b
+(168K) - md5sum checksum = bc6adb58228da16ca10c2d8ee79fb610
 HadSST.4.2.0.0_monthly_SHEM.csv
-(169K) - md5sum checksum = 667d5e8513d9302e1a6123e4713d13fb
+(169K) - md5sum checksum = a7cb31485e82257388da4a23710c69c1
 HadSST.4.2.0.0_monthly_TROP.csv
-(168K) - md5sum checksum = 5c1ada867b0c951c23e71fd9f7fc10e1
+(169K) - md5sum checksum = fc373091909a3f172824254d6faa0406
 Gridded data files
 The gridded data are available as a set of
 NetCDF (external link)
@@ -46,50 +55,50 @@ The ensemble is provided as four zip files, each containing 50 members that repr
 structurally different parts of the ensemble. The full ensemble is required to
 obtain a complete representation of the bias uncertainty.
 HadSST.4.2.0.0_median.nc
-(8.7M) - md5sum checksum = 2d5b32d2a1082c03ac00875dd7b415d9
+(8.7M) - md5sum checksum = c1ffad82ea8790d26592a05a0ea48907
 HadSST.4.2.0.0_ensemble_members_1-50.zip
-(433M) - md5sum checksum = 5b3ab2ce19ce8892e32a3a9887eb8dfe
+(433M) - md5sum checksum = a01f929ca1476e162e70f48d3568d4a8
 HadSST.4.2.0.0_ensemble_members_51-100.zip
-(433M) - md5sum checksum = 1a041b509ac075e3ee08a787fa601c59
+(433M) - md5sum checksum = 9b4dfd9fc2d92d804c09845025bdedea
 HadSST.4.2.0.0_ensemble_members_101-150.zip
-(433M) - md5sum checksum = 1414b08154c7ddeb4d7cf94eeca0a67d
+(433M) - md5sum checksum = ec47c9e2d51c2c6b1c78b0c725772d0c
 HadSST.4.2.0.0_ensemble_members_151-200.zip
-(433M) - md5sum checksum = bef40b57ca5002fcfdde2c3e3b3494e6
+(433M) - md5sum checksum = ed2bf541495e663bc450c44ab43e55c4
 Uncertainty components
 Including correlated and uncorrelated components for use in uncertainty propagation.
 Please see the
 Product User Guide
 for further details.
 HadSST.4.2.0.0_total_uncertainty.nc
-(8.1M) - md5sum checksum = 58221b436350aea41b1dda5b78d3ceec
+(8.1M) - md5sum checksum = 3fa968b84bd5145237a2d23328867d7d
 HadSST.4.2.0.0_measurement_and_sampling_uncertainty.nc
-(8.1M) - md5sum checksum = 270e4bddc760989fa17678fd85c8550e
+(8.1M) - md5sum checksum = 5a60068e1866a4bf0fde341c632b19f4
 HadSST.4.2.0.0_error_covariance_1850-1899.zip
-(421M) - md5sum checksum = d154362bdc9cc589f7a5b157bea8b8c6
+(421M) - md5sum checksum = a9ec03c60a037d72d653d4c96f1c55e2
 HadSST.4.2.0.0_error_covariance_1900-1949.zip
-(707M) - md5sum checksum = 8e90349e9e913d19fbfb48bd4b477e8c
+(707M) - md5sum checksum = cb55629f4d83c81c097c5478a5bde233
 HadSST.4.2.0.0_error_covariance_1950-1999.zip
-(1.1G) - md5sum checksum = f4f28ef9a993cc545b7dd08a54e41a31
+(1.1G) - md5sum checksum = 8bc0a20e5f4c6bc9470a029c561b88d5
 HadSST.4.2.0.0_error_covariance_2000-present.zip
-(622M) - md5sum checksum = 621cfe85cffcd1cf1d95ec50c1e6f8fc
+(625M) - md5sum checksum = 66af5bbea947f924a7cee8a15b42383c
 Observation counts
 HadSST.4.2.0.0_number_of_observations.nc
-(4.3M) - md5sum checksum = 02399a9e74fdb15eb033bf65f9cdbdf5
+(4.3M) - md5sum checksum = d159edbb1dba79daa3be2daa833e11e4
 HadSST.4.2.0.0_number_of_superobservations.nc
-(3.7M) - md5sum checksum = f852675c4f07e4f478cea9ab37a60b8e
+(3.7M) - md5sum checksum = 9ee4abf26eb20b575761b30dcff2ca2c
 Additional products
 HadSST.4.2.0.0_unadjusted.nc
-(8.7M) - md5sum checksum = 557ca182a9be04aaa36193f4ebcf4b33
+(8.7M) - md5sum checksum = de4f201681ebb17fa908520cef84c87d
 HadSST.4.2.0.0_actuals_median.nc
-(7.9M) - md5sum checksum = 246c1a84929dc372cfbba3f95a5eaf93
+(7.9M) - md5sum checksum = 65406348acfe46bdcc3274d8c8f7815c
 HadSST.4.2.0.0_actuals_ensemble_members_1-50.zip
-(393M) - md5sum checksum = aa7ea684bb6e784925718bcc3ac6c436
+(394M) - md5sum checksum = 498dd9adf3f18152fcbd6848c4047d84
 HadSST.4.2.0.0_actuals_ensemble_members_51-100.zip
-(393M) - md5sum checksum = a5f2e1ab93d90a598d0a9051d068d043
+(394M) - md5sum checksum = 8fd28ff094289a13ecedbd53954bd79e
 HadSST.4.2.0.0_actuals_ensemble_members_101-150.zip
-(393M) - md5sum checksum = b47ac2b26a630e4177ac396d2ca0bfc2
+(394M) - md5sum checksum = 7824330e389e265056e97398c63d91f5
 HadSST.4.2.0.0_actuals_ensemble_members_151-200.zip
-(393M) - md5sum checksum = 6c0fd7af207fd070fcbc82ed2d8c2cd1
+(394M) - md5sum checksum = 90a674cd1f5bbc73cca11a6bd7436dc0
 Commercial and media enquiries
 You can access the Met Office Customer Centre, any time of the day or night
 by phone, fax or e-mail. Trained staff will help you find the information
