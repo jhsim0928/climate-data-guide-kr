@@ -29,13 +29,7 @@ This site does not host any data. Every entry links to the official source. <!--
 - Researchers comparing several datasets side by side or cross-checking results
 - Researchers from outside atmospheric, ocean, sea-ice or land science who need climate data and want to learn what is available and how to use it
 
-## Latest notices from data providers
-
-End of production, delays and version changes announced by the agencies that produce or distribute each dataset (ECMWF, NASA, NOAA and others). Click a title to open the provider's original notice.
-
-<!-- RECENT_NOTICES -->
-
-[All provider notices →](notices.md)
+<div id="notice-popup-root" hidden></div>
 
 ## How to use this site
 

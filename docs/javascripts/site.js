@@ -486,7 +486,74 @@
     });
   }
 
+  // ── 홈: 최근 7일 안에 올라온 '중요' 공지를 팝업으로 (오늘 하루 보지 않기 지원) ──
+  var POPUP_KEY = "kcdn-notice-popup-hide";   // 값: 숨긴 날짜(한국 시간 YYYY-MM-DD)
+  function kstToday() {
+    try {
+      return new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Seoul", year: "numeric", month: "2-digit", day: "2-digit" }).format(new Date());
+    } catch (e) { return new Date().toISOString().slice(0, 10); }
+  }
+  function daysBetween(a, b) {  // a, b: YYYY-MM-DD → b - a (일)
+    return Math.round((Date.UTC(+b.slice(0, 4), +b.slice(5, 7) - 1, +b.slice(8, 10)) -
+                       Date.UTC(+a.slice(0, 4), +a.slice(5, 7) - 1, +a.slice(8, 10))) / 86400000);
+  }
+  function setupNoticePopup() {
+    var root = document.getElementById("notice-popup-root");
+    if (!root || document.querySelector(".notice-popup")) return;
+    var today = kstToday();
+    try { if (localStorage.getItem(POPUP_KEY) === today) return; } catch (e) {}
+    try { if (sessionStorage.getItem(POPUP_KEY) === "closed") return; } catch (e) {}
+    var en = IS_EN;
+    fetch("assets/notices.json", { cache: "no-cache" }).then(function (r) { return r.ok ? r.json() : null; }).then(function (data) {
+      if (!data || !data.notices) return;
+      var items = data.notices.filter(function (n) {
+        if (n.level !== "critical" || !/^\d{4}-\d{2}-\d{2}$/.test(n.date)) return false;
+        var d = daysBetween(n.date, today);
+        return d >= 0 && d <= 7;
+      }).sort(function (a, b) { return a.date < b.date ? 1 : -1; });
+      if (!items.length) return;
+      var t = en ? {
+        title: "Important notices from the past week", page: "Dataset page", src: "Original notice ↗",
+        hide: "Don't show again today", close: "Close", all: "All provider notices →", lv: "Important"
+      } : {
+        title: "최근 1주일 중요 공지", page: "자료 페이지", src: "기관 원문 ↗",
+        hide: "오늘 하루 보지 않기", close: "닫기", all: "기관 공지 전체 보기 →", lv: "중요"
+      };
+      var list = items.slice(0, 5).map(function (n) {
+        return '<li><div class="np-meta"><span class="np-lv">' + esc(t.lv) + "</span> " + esc(n.date) + " · <b>" + esc(n.dataset_name) + "</b></div>" +
+          '<div class="np-title">' + esc(n.title) + "</div>" +
+          (n.body ? '<p class="np-body">' + esc(n.body) + "</p>" : "") +
+          '<div class="np-links"><a href="' + esc(n.url) + '">' + esc(t.page) + "</a>" +
+          (n.source ? ' · <a href="' + esc(n.source) + '" target="_blank" rel="noopener noreferrer">' + esc(t.src) + "</a>" : "") + "</div></li>";
+      }).join("");
+      var wrap = document.createElement("div");
+      wrap.className = "notice-popup";
+      wrap.innerHTML = '<div class="np-backdrop"></div><div class="np-box" role="dialog" aria-modal="true" aria-labelledby="np-h">' +
+        '<div class="np-head"><h2 id="np-h">' + esc(t.title) + '</h2><button type="button" class="np-x" aria-label="' + esc(t.close) + '">×</button></div>' +
+        '<ul class="np-list">' + list + "</ul>" +
+        '<a class="np-all" href="notices/">' + esc(t.all) + "</a>" +
+        '<div class="np-foot"><button type="button" class="np-hide">' + esc(t.hide) + '</button><button type="button" class="np-close">' + esc(t.close) + "</button></div></div>";
+      document.body.appendChild(wrap);
+      function close(hideToday) {
+        try {
+          if (hideToday) localStorage.setItem(POPUP_KEY, today);
+          else sessionStorage.setItem(POPUP_KEY, "closed");  // 닫기: 이번 방문 동안만 다시 안 뜸
+        } catch (e) {}
+        document.removeEventListener("keydown", onKey);
+        wrap.remove();
+      }
+      function onKey(e) { if (e.key === "Escape") close(false); }
+      wrap.querySelector(".np-hide").addEventListener("click", function () { close(true); });
+      wrap.querySelector(".np-close").addEventListener("click", function () { close(false); });
+      wrap.querySelector(".np-x").addEventListener("click", function () { close(false); });
+      wrap.querySelector(".np-backdrop").addEventListener("click", function () { close(false); });
+      document.addEventListener("keydown", onKey);
+      wrap.querySelector(".np-close").focus({ preventScroll: true });
+    }).catch(function () {});
+  }
+
   function init() {
+    setupNoticePopup();
     setupLangSwitch();
     setupGenerations();
     setupPickCompare();

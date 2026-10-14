@@ -489,3 +489,22 @@ details.hint summary { cursor: pointer; }
 [data-md-color-scheme="slate"] .md-typeset .login-free { color: #a5d6a7; background: rgba(76,175,80,0.15); border-color: rgba(165,214,167,0.4); }
 /* 변수 표 안의 시간 특성 표시는 칸 너비 안에서 줄바꿈 (예: "순간값 (통과 시각)") */
 .md-typeset .var-tbl td .kind { white-space: normal; display: inline-block; max-width: 100%; line-height: 1.35; }
+/* 홈 — 최근 1주일 중요 공지 팝업 */
+.notice-popup { position: fixed; inset: 0; z-index: 1000; display: flex; align-items: center; justify-content: center; padding: 16px; }
+.notice-popup .np-backdrop { position: absolute; inset: 0; background: rgba(0,0,0,0.45); }
+.notice-popup .np-box { position: relative; width: min(34rem, 100%); max-height: min(85vh, 42rem); display: flex; flex-direction: column; overflow: hidden; background: var(--md-default-bg-color); color: var(--md-default-fg-color); border-radius: 10px; box-shadow: 0 12px 40px rgba(0,0,0,0.3); font-size: 0.78rem; line-height: 1.55; }
+.notice-popup .np-head { flex: none; display: flex; align-items: center; justify-content: space-between; gap: 0.5em; padding: 0.9em 1.1em 0.6em; border-bottom: 3px solid #c62828; }
+.notice-popup .np-head h2 { margin: 0; font-size: 1rem; font-weight: 700; }
+.notice-popup .np-x { border: 0; background: none; font-size: 1.4rem; line-height: 1; cursor: pointer; color: var(--md-default-fg-color--light); }
+.notice-popup .np-list { list-style: none; margin: 0; padding: 0.4em 1.1em; overflow-y: auto; flex: 1 1 auto; min-height: 0; }
+.notice-popup .np-list li { padding: 0.7em 0; border-bottom: 1px solid var(--md-default-fg-color--lightest); }
+.notice-popup .np-list li:last-child { border-bottom: 0; }
+.notice-popup .np-meta { font-size: 0.7rem; color: var(--md-default-fg-color--light); }
+.notice-popup .np-lv { display: inline-block; padding: 0 0.45em; border-radius: 3px; background: #c62828; color: #fff; font-weight: 700; font-size: 0.66rem; }
+.notice-popup .np-title { font-weight: 700; margin-top: 0.15em; }
+.notice-popup .np-body { margin: 0.3em 0 0; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; color: var(--md-default-fg-color--light); }
+.notice-popup .np-links { margin-top: 0.35em; font-size: 0.72rem; }
+.notice-popup .np-all { flex: none; padding-top: 0.5em !important; display: block; padding: 0 1.1em 0.6em; font-size: 0.72rem; }
+.notice-popup .np-foot { flex: none; display: flex; justify-content: space-between; border-top: 1px solid var(--md-default-fg-color--lightest); }
+.notice-popup .np-foot button { flex: 1; padding: 0.85em; border: 0; background: var(--md-default-fg-color--lightest); color: var(--md-default-fg-color); cursor: pointer; font: inherit; }
+.notice-popup .np-foot .np-close { background: var(--md-primary-fg-color); color: var(--md-primary-bg-color); font-weight: 700; }
