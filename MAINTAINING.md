@@ -76,7 +76,7 @@ data/datasets/*.yaml     ← 데이터셋 정보 (여기만 고치면 됩니다)
 data/SCHEMA.md           ← YAML 작성 규칙 (변수 목록·시간 특성, 전환 분석 형식 포함)
 scripts/validate.py      ← YAML 검사 도구 (사이트 빌드와 같은 규칙)
 hooks/datasets.py        ← YAML을 읽어 페이지·메뉴·목록·중요 공지·세대별 비교·폼을 자동 생성 + 검증
-docs/index.md            ← 홈 (최근 공지는 자동으로 채워짐)
+docs/index.md            ← 홈 (최근 7일 안의 "중요" 공지는 팝업으로 자동 표시)
 docs/assets/             ← 로고·파비콘, 빌드 때 notices.json(메일 알림용 공지 목록) 자동 생성
 mailing/Code.gs          ← 메일 알림·제안 접수용 Google Apps Script (사이트에는 올라가지 않음)
 docs/about.md, privacy.md, subscribe.md, suggest.md
