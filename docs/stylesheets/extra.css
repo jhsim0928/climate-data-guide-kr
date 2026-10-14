@@ -504,7 +504,8 @@ details.hint summary { cursor: pointer; }
 .notice-popup .np-title { font-weight: 700; margin-top: 0.15em; }
 .notice-popup .np-body { margin: 0.3em 0 0; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; color: var(--md-default-fg-color--light); }
 .notice-popup .np-links { margin-top: 0.35em; font-size: 0.72rem; }
-.notice-popup .np-all { flex: none; padding-top: 0.5em !important; display: block; padding: 0 1.1em 0.6em; font-size: 0.72rem; }
+.notice-popup .np-more { flex: none; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.3em 1em; padding: 0.5em 1.1em 0.6em; font-size: 0.72rem; }
+.notice-popup .np-intro { flex: none; margin: 0; padding: 0.7em 1.1em 0; color: var(--md-default-fg-color--light); font-size: 0.74rem; }
 .notice-popup .np-foot { flex: none; display: flex; justify-content: space-between; border-top: 1px solid var(--md-default-fg-color--lightest); }
 .notice-popup .np-foot button { flex: 1; padding: 0.85em; border: 0; background: var(--md-default-fg-color--lightest); color: var(--md-default-fg-color); cursor: pointer; font: inherit; }
 .notice-popup .np-foot .np-close { background: var(--md-primary-fg-color); color: var(--md-primary-bg-color); font-weight: 700; }

@@ -506,17 +506,27 @@
     var en = IS_EN;
     fetch("assets/notices.json", { cache: "no-cache" }).then(function (r) { return r.ok ? r.json() : null; }).then(function (data) {
       if (!data || !data.notices) return;
-      var items = data.notices.filter(function (n) {
-        if (n.level !== "critical" || !/^\d{4}-\d{2}-\d{2}$/.test(n.date)) return false;
-        var d = daysBetween(n.date, today);
-        return d >= 0 && d <= 7;
+      var crit = data.notices.filter(function (n) {
+        return n.level === "critical" && /^\d{4}-\d{2}-\d{2}$/.test(n.date) && daysBetween(n.date, today) >= 0;
       }).sort(function (a, b) { return a.date < b.date ? 1 : -1; });
+      var items = crit.filter(function (n) { return daysBetween(n.date, today) <= 7; });
+      // 미리 보기: 1주일 안 중요 공지가 없을 때, 가장 최근 중요 공지(같은 날짜 묶음, 최대 3건)를 예시로 보여 줌
+      // (index.md 의 data-preview="1" 을 지우면 꺼짐. 1주일 안 공지가 생기면 자동으로 원래 방식)
+      var preview = false;
+      if (!items.length && root.getAttribute("data-preview") === "1" && crit.length) {
+        items = crit.filter(function (n) { return n.date === crit[0].date; }).slice(0, 3);
+        preview = true;
+      }
       if (!items.length) return;
       var t = en ? {
-        title: "Important notices from the past week", page: "Dataset page", src: "Original notice ↗",
+        title: "Important notices from the past week", ptitle: "Important notice alerts (preview)",
+        pintro: "When a provider announces an important change (end of production, version switch and so on), it pops up here for one week. Below is the most recent important notice.",
+        sub: "Get these by email →", page: "Dataset page", src: "Original notice ↗",
         hide: "Don't show again today", close: "Close", all: "All provider notices →", lv: "Important"
       } : {
-        title: "최근 1주일 중요 공지", page: "자료 페이지", src: "기관 원문 ↗",
+        title: "최근 1주일 중요 공지", ptitle: "중요 공지 알림 (미리 보기)",
+        pintro: "자료 제공 기관이 제공 중단·버전 교체 같은 중요한 공지를 내면, 1주일 동안 이렇게 홈 화면에 알려 드립니다. 아래는 가장 최근의 중요 공지입니다.",
+        sub: "메일로 받아 보기 →", page: "자료 페이지", src: "기관 원문 ↗",
         hide: "오늘 하루 보지 않기", close: "닫기", all: "기관 공지 전체 보기 →", lv: "중요"
       };
       var list = items.slice(0, 5).map(function (n) {
@@ -529,9 +539,10 @@
       var wrap = document.createElement("div");
       wrap.className = "notice-popup";
       wrap.innerHTML = '<div class="np-backdrop"></div><div class="np-box" role="dialog" aria-modal="true" aria-labelledby="np-h">' +
-        '<div class="np-head"><h2 id="np-h">' + esc(t.title) + '</h2><button type="button" class="np-x" aria-label="' + esc(t.close) + '">×</button></div>' +
+        '<div class="np-head"><h2 id="np-h">' + esc(preview ? t.ptitle : t.title) + '</h2><button type="button" class="np-x" aria-label="' + esc(t.close) + '">×</button></div>' +
+        (preview ? '<p class="np-intro">' + esc(t.pintro) + "</p>" : "") +
         '<ul class="np-list">' + list + "</ul>" +
-        '<a class="np-all" href="notices/">' + esc(t.all) + "</a>" +
+        '<div class="np-more"><a href="notices/">' + esc(t.all) + '</a><a href="subscribe/">' + esc(t.sub) + "</a></div>" +
         '<div class="np-foot"><button type="button" class="np-hide">' + esc(t.hide) + '</button><button type="button" class="np-close">' + esc(t.close) + "</button></div></div>";
       document.body.appendChild(wrap);
       function close(hideToday) {

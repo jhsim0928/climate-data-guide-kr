@@ -29,7 +29,7 @@ hide:
 - 여러 자료를 비교하거나 교차 검증하려는 연구자
 - 대기·해양·해빙·지면 전공은 아니지만, 연구에 기후자료가 필요해 어떤 자료가 있고 어떻게 쓰는지부터 알아보려는 연구자
 
-<div id="notice-popup-root" hidden></div>
+<div id="notice-popup-root" data-preview="1" hidden></div>
 
 ## 이렇게 쓰세요
 
