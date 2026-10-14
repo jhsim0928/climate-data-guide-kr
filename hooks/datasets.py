@@ -383,6 +383,10 @@ ORG_RULES = [  # (provider에 들어 있는 말, 기관) — provider 글에서 
     ("NASA", "NASA"), ("NOAA", "NOAA"), ("Met Office", "Met Office"), ("Copernicus Marine", "CMEMS"),
     ("Mercator", "CMEMS"), ("ESA", "ESA"), ("Maryland", "UMD"), ("Washington", "UW"),
     ("East Anglia", "UEA"), ("Berkeley Earth", "Berkeley Earth"), ("APHRODITE", "APHRODITE"),
+    ("KIOST", "KIOST"), ("국립해양조사원", "KHOA"), ("NIES", "NIES"), ("JAXA", "JAXA"), ("브레멘", "Univ. of Bremen"),
+    ("Bremen", "Univ. of Bremen"), ("Remote Sensing Systems", "RSS"), ("Climatology Lab", "Climatology Lab"),
+    ("Climate Hazards", "UCSB CHC"), ("UCSB", "UCSB CHC"), ("Ghent", "Ghent Univ."), ("겐트", "Ghent Univ."), ("KNMI", "KNMI"),
+    ("CM SAF", "EUMETSAT"), ("VITO", "VITO"),
 ]
 
 
@@ -1012,7 +1016,13 @@ NOTICE_HOSTS = [
     ("uea.ac.uk", "UEA CRU"), ("eumetsat.int", "EUMETSAT OSI SAF"), ("awi.de", "AWI"), ("esa.int", "ESA"),
     ("ucar.edu", "NSF NCAR"), ("diasjp.net", "DIAS"), ("hirosaki-u.ac.jp", "APHRODITE"), ("chikyu.ac.jp", "APHRODITE"),
     ("berkeleyearth.org", "Berkeley Earth"), ("umd.edu", "Univ. of Maryland"), ("uw.edu", "Univ. of Washington"),
-    ("ecco-group.org", "ECCO"), ("ecco-access", "ECCO"),
+    ("ecco-group.org", "ECCO"), ("ecco-access", "ECCO"), ("mailman.mit.edu", "ECCO"),
+    ("nies.go.jp", "NIES"), ("jaxa.jp", "JAXA"), ("uni-bremen.de", "Univ. of Bremen"), ("ornl.gov", "NASA ORNL DAAC"),
+    ("lpdaac.usgs.gov", "NASA LP DAAC"), ("nmsc.kma.go.kr", "KMA NMSC"), ("nosc.go.kr", "KHOA NOSC"), ("remss.com", "RSS"),
+    ("knmi.nl", "KNMI"), ("catds.fr", "CATDS"), ("chc.ucsb.edu", "UCSB CHC"), ("climatologylab.org", "Climatology Lab"),
+    ("cmsaf.eu", "EUMETSAT CM SAF"), ("gleam.eu", "GLEAM"), ("globalfiredata.org", "GFED"), ("nesdis.noaa.gov", "NOAA NESDIS"),
+    ("ospo.noaa.gov", "NOAA OSPO"), ("aviso.altimetry.fr", "AVISO"), ("pace.oceansciences.org", "NASA PACE"),
+    ("esa-worldcover.org", "ESA"), ("terrascope.be", "VITO Terrascope"), ("drroyspencer.com", "UAH"),
 ]
 
 
