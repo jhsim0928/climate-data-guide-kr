@@ -268,7 +268,7 @@ UI = {
     "<strong>자료 비교</strong><span>최대 4개 자료를 한 표로 나란히</span>": "<strong>Compare datasets</strong><span>Up to four datasets side by side in one table</span>",
     "<strong>표준 변수 목록</strong><span>자료마다 다른 변수 이름 한눈에</span>": "<strong>Standard variables</strong><span>What each dataset calls the same quantity</span>",
     '<label class="field var-search">찾을 변수': '<label class="field var-search">Variable',
-    "위 칸에 변수 이름(한국어·영어)이나 자료의 변수명(<code>tp</code>, <code>PRECTOT</code> …)을 넣거나 아래 예시를 눌러 보세요.":
+    "위 칸에 변수 이름(한국어·영어)이나 자료의 변수명(<code>tp</code>, <code>PRECTOT</code> …)을 넣거나 위 예시 단어를 눌러 보세요.":
         "Type a variable name or a dataset's short name (<code>tp</code>, <code>PRECTOT</code> …) above, or click an example.",
     '??? cite-bibtex "BibTeX (참고문헌 관리 프로그램용) — 눌러서 보기"': '??? cite-bibtex "BibTeX (for reference managers) — click to show"',
     '<span class="hint">(선택)</span></legend>': '<span class="hint">(optional)</span></legend>',

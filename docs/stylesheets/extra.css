@@ -94,6 +94,7 @@
 }
 .cdg-form input[type="email"],
 .cdg-form input[type="text"],
+.cdg-form input[type="search"],
 .cdg-form input[type="url"],
 .cdg-form select,
 .cdg-form textarea {
@@ -509,3 +510,4 @@ details.hint summary { cursor: pointer; }
 .notice-popup .np-foot { flex: none; display: flex; justify-content: space-between; border-top: 1px solid var(--md-default-fg-color--lightest); }
 .notice-popup .np-foot button { flex: 1; padding: 0.85em; border: 0; background: var(--md-default-fg-color--lightest); color: var(--md-default-fg-color); cursor: pointer; font: inherit; }
 .notice-popup .np-foot .np-close { background: var(--md-primary-fg-color); color: var(--md-primary-bg-color); font-weight: 700; }
+.cmp-selects[hidden], .var-basket[hidden], #var-results[hidden] { display: none !important; }  /* 변수로 찾기: 자료 선택 칸 숨김 (display:grid가 hidden을 덮지 않도록) */

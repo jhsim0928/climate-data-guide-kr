@@ -1288,7 +1288,7 @@ def compare_app(datasets: list[dict], mode: str = "compare") -> str:
             '<input type="search" id="cmp-q" list="std-list" autocomplete="off" placeholder="예) 강수, 2m 기온, tp, SST, 해빙 두께"></label>'
             f'<datalist id="std-list">{opts_dl}</datalist>'
             f'<div class="chips">{chips}</div></section>'
-            '<p class="hint" id="cmp-empty" data-search-exclude>위 칸에 변수 이름(한국어·영어)이나 자료의 변수명(<code>tp</code>, <code>PRECTOT</code> …)을 넣거나 아래 예시를 눌러 보세요.</p>'
+            '<p class="hint" id="cmp-empty" data-search-exclude>위 칸에 변수 이름(한국어·영어)이나 자료의 변수명(<code>tp</code>, <code>PRECTOT</code> …)을 넣거나 위 예시 단어를 눌러 보세요.</p>'
             '<div hidden><table id="cmp-table" hidden></table></div>'
             '<section id="var-results" data-search-exclude hidden></section>'
             '<div id="var-basket" class="var-basket" data-search-exclude hidden></div>'
