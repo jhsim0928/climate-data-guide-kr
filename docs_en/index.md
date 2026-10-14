@@ -16,7 +16,7 @@ This site does not host any data. Every entry links to the official source. <!--
 
 **Forecast and projection data** — subseasonal-to-seasonal (S2S) and seasonal forecasts, CMIP climate model simulations and more — will be added over time. To hear when they arrive, leave your email address via [Feedback](feedback.md?topic=forecast) and we will let you know.
 
-!!! warning "Please read before use"
+??? warning "Please read before use — click to show"
     <!-- DISCLAIMER -->
 
 [All datasets](datasets/index.md){ .md-button .md-button--primary } [Find by variable](find-variable.md){ .md-button } [Compare datasets](compare.md){ .md-button } [Generation changes](transitions.md){ .md-button }

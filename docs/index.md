@@ -16,7 +16,7 @@ hide:
 
 앞으로 S2S(아계절~계절) 예측, 계절예측, CMIP 기후모델 시뮬레이션 같은 **예측·전망 자료**도 차례로 추가할 예정입니다. 추가 소식을 받고 싶으시면 [의견 보내기](feedback.md?topic=forecast)에서 답변 받을 이메일을 남겨 주세요. 자료가 올라가면 알려 드리겠습니다.
 
-!!! warning "이용 전에 꼭 읽어주세요"
+??? warning "이용 전에 꼭 읽어주세요 — 눌러서 보기"
     <!-- DISCLAIMER -->
 
 [전체 목록](datasets/index.md){ .md-button .md-button--primary } [변수로 찾기](find-variable.md){ .md-button } [자료 비교하기](compare.md){ .md-button } [세대별 비교](transitions.md){ .md-button }
