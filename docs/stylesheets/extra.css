@@ -417,9 +417,12 @@ details.hint summary { cursor: pointer; }
 .var-concept strong { font-size: 1.02em; }
 .var-related { display: flex; flex-wrap: wrap; gap: 0.35em; align-items: center; margin-top: 0.3em; }
 .md-typeset .var-table td { vertical-align: top; }
-.md-typeset .var-table td:first-child { min-width: 8.5rem; }
-.md-typeset .var-table td:nth-child(2) { min-width: 18rem; }
-.md-typeset .var-table td:nth-child(4) { min-width: 7.5rem; }
+.md-typeset .var-table td:first-child { min-width: 7.5rem; }
+.md-typeset .var-table td code { overflow-wrap: anywhere; }
+.md-typeset .var-table td:nth-child(2) { min-width: 14rem; }
+.md-typeset .var-table td:nth-child(3) { min-width: 4.5rem; }
+.md-typeset .var-table td:nth-child(4) { min-width: 7rem; }
+.md-typeset .var-table td:nth-child(5) { min-width: 6.5rem; }
 .md-typeset .var-table th { white-space: nowrap; }
 .md-typeset .var-table .var-add { font-size: 0.68rem; padding: 0.2em 0.7em; margin: 0.45em 0 0; white-space: nowrap; }
 .md-typeset .var-table .var-add.is-on { background: var(--md-accent-fg-color); border-color: var(--md-accent-fg-color); color: var(--md-accent-bg-color, #fff); }
@@ -511,3 +514,15 @@ details.hint summary { cursor: pointer; }
 .notice-popup .np-foot button { flex: 1; padding: 0.85em; border: 0; background: var(--md-default-fg-color--lightest); color: var(--md-default-fg-color); cursor: pointer; font: inherit; }
 .notice-popup .np-foot .np-close { background: var(--md-primary-fg-color); color: var(--md-primary-bg-color); font-weight: 700; }
 .cmp-selects[hidden], .var-basket[hidden], #var-results[hidden] { display: none !important; }  /* 변수로 찾기: 자료 선택 칸 숨김 (display:grid가 hidden을 덮지 않도록) */
+/* 변수 찾기 결과 표: 화면 폭에 맞춰 고정 열 너비 (휴대폰은 표 안에서 가로 스크롤) */
+.md-typeset .var-table table { width: 100%; table-layout: fixed; }
+.md-typeset .var-table th { white-space: normal; }
+.md-typeset .var-table th:nth-child(1) { width: 16%; }
+.md-typeset .var-table th:nth-child(2) { width: 36%; }
+.md-typeset .var-table th:nth-child(3) { width: 9%; }
+.md-typeset .var-table th:nth-child(4) { width: 14%; }
+.md-typeset .var-table th:nth-child(5) { width: 13%; }
+.md-typeset .var-table th:nth-child(6) { width: 12%; }
+.md-typeset .var-table td { min-width: 0 !important; word-break: keep-all; overflow-wrap: anywhere; }
+@media screen and (max-width: 44.9375em) { .md-typeset .var-table table { min-width: 46rem; } }
+.md-typeset .var-table .status-badge { white-space: normal; }

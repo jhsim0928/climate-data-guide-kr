@@ -133,7 +133,7 @@
         : L("자료 " + rows.length + "개 · 시간 특성(순간값·평균·누적)과 단위가 자료마다 다르니 꼭 확인하세요. <b>비교에 넣기</b>를 누르면 위 비교표에 들어갑니다.",
             rows.length + " datasets · the time convention (instantaneous, mean, accumulated) and units differ between datasets. Use <b>Add to compare</b> to put a dataset in the table above.")) + "</p>";
       h += '<div class="table-scroll var-table"><table><thead><tr><th>' + L("자료", "Dataset") + "</th><th>" + L("변수 (이 자료의 이름·단위)", "Variable (name and units in this dataset)") +
-        "</th><th>" + L("시간 간격", "Interval") + "</th><th>" + L("기간", "Period") + "</th><th>" + L("상태", "Status") + "</th></tr></thead><tbody>";
+        "</th><th>" + L("범위", "Coverage") + "</th><th>" + L("해상도 (공간·시간)", "Resolution (space · time)") + "</th><th>" + L("기간", "Period") + "</th><th>" + L("상태", "Status") + "</th></tr></thead><tbody>";
       rows.forEach(function (x) {
         var d = x.d, on = picked.indexOf(d.id) !== -1;
         h += "<tr><td><a href=\"../datasets/" + d.id + '/"><span class="notranslate" translate="no">' + esc(d.name) + '</span></a><br><span class="hint">' + esc(d.group) + "</span>" +
@@ -142,7 +142,9 @@
           '<td><ul class="cmp-vars">' + x.m.slice(0, 6).map(function (v) {
             return "<li>" + codeText(v.it.t) + " " + (v.it.b || "") + "</li>";
           }).join("") + (x.m.length > 6 ? '<li class="hint">' + L("외 " + (x.m.length - 6) + "개", "+ " + (x.m.length - 6) + " more") + "</li>" : "") + "</ul></td>" +
-          '<td class="nowrap">' + esc(d.temporal_s) + "</td><td>" + esc(d.period) + "</td><td>" + d.status + "</td></tr>";
+          "<td>" + esc(d.coverage_s || "-") + "</td>" +
+          "<td>" + esc(d.spatial) + '<br><span class="hint">' + esc(d.temporal_s) + "</span></td>" +
+          "<td>" + esc(d.period) + "</td><td>" + d.status + "</td></tr>";
       });
       results.innerHTML = h + "</tbody></table></div>";
       results.hidden = false;

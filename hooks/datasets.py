@@ -1177,6 +1177,7 @@ def compare_data(datasets: list[dict]) -> list[dict]:
             "id": d["id"], "name": d["name"], "domain": domain_label(d["domain"]), "group": g_label(d["group"]),
             "category": cat_label(d["category"]), "provider": d["provider"], "status": badge(d["status"]),
             "period": period_text(d["period"]), "coverage": cov_text(d),
+            "coverage_s": cov_label((d.get("coverage") or {}).get("short") or "-"),
             "spatial": r.get("spatial_short") or "-",
             "spatial_d": oneline(r.get("spatial") or "-"),
             "temporal_s": t_label(r.get("temporal_short") or "-"),
