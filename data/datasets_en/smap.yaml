@@ -327,6 +327,13 @@ transitions:
         url: https://nsidc.org/data/spl4cmdl/versions/8
 
 notices:
+  - date: "2026-10-15"
+    level: info
+    title: "User notice: SMAP data reprocessing complete (14 May to 28 July 2026)"
+    body: >-
+      Data from the SMAP Standard products at the NSIDC DAAC have been reprocessed from 14 May 2026 to 28 July 2026 to correct for a geolocation issue discovered in August 2026.
+      Users who previously downloaded data from that time period are recommended to redownload the corrected files.
+    source: https://nsidc.org/data/user-resources/data-announcements/user-notice-smap-data-reprocessing-complete
   - date: "2026-08-11"
     level: warning
     title: Geolocation issue from 14 May to 28 July 2026 — standard products being reprocessed
@@ -407,4 +414,4 @@ watch_urls:
   - https://nsidc.org/data/smap/news
   - https://nsidc.org/data/spl3smp
 
-last_verified: "2026-10-13"
+last_verified: "2026-10-16"
