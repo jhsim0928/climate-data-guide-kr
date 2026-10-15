@@ -233,21 +233,24 @@ notices:
     title: Copernicus Marine Toolbox 1.x 지원 종료
     body: Toolbox 1.x의 지원이 끝났습니다. 2.x로 올려야 하며, 2.4.0부터 Python 3.9 지원이 빠졌습니다.
     source: https://toolbox-docs.marine.copernicus.eu/en/stable/end-of-life.html
-  - date: "2025-06"
+  - date: "2025-06-25"
+    key_date: "2025-06"  # 메일 발송 기록용 원래 날짜(바꾸지 마세요)
     level: info
     title: AI 보정 해빙 두께 변수(sithick_corr) 추가
     body: >-
       두께 관측 동화가 시작된 2010년 전후의 불연속을 줄이려고, 2010년 이전의 얇은 편향을 AI 기법으로 보정한 sithick_corr가 추가되었습니다(데이터셋 버전 202506).
       2010년 이후에는 기존 sithick과 같습니다.
     source: https://marine.copernicus.eu/user-corner/product-roadmap/transition-information?product=ARCTIC_MULTIYEAR_PHY_002_003
-  - date: "2024-11"
+  - date: "2024-11-26"
+    key_date: "2024-11"  # 메일 발송 기록용 원래 날짜(바꾸지 마세요)
     level: info
     title: 해면 운동량·열 플럭스 데이터셋 추가
     body: >-
       바람 응력(cmems_mod_arc_phy_my_mflux_P1D-m, _P1M-m)과 총 열 플럭스(cmems_mod_arc_phy_my_hflux_P1D-m, _P1M-m) 데이터셋 4개가 새로 생겼습니다.
       기존 데이터셋은 바뀌지 않았습니다.
     source: https://marine.copernicus.eu/user-corner/product-roadmap/transition-information?product=ARCTIC_MULTIYEAR_PHY_002_003
-  - date: "2023-11"
+  - date: "2023-11-30"
+    key_date: "2023-11"  # 메일 발송 기록용 원래 날짜(바꾸지 마세요)
     level: info
     title: 북극 예보 시스템은 TOPAZ5로 교체 — 재분석은 TOPAZ4b 유지
     body: >-

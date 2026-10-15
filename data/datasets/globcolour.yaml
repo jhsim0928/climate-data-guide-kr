@@ -240,33 +240,38 @@ citations:
     Copernicus Marine은 논문에 "This study has been conducted using E.U. Copernicus Marine Service Information;" 뒤에 사용한 모든 제품의 DOI 링크를 붙이는 문구를 권합니다.
 
 notices:
-  - date: "2026-11"
+  - date: "2026-11-24"
+    key_date: "2026-11"  # 메일 발송 기록용 원래 날짜(바꾸지 마세요)
     level: warning
     title: (예정) 2026년 11월 판 갱신 — OC5 계수 갱신, 탄소(POC·DOC) 데이터셋 추가, 스크립트 수정 필요
     body: >-
       OC5 계수 갱신으로 다중센서 엽록소·투명도·일차생산을 재처리하고, GLOPHYTS 알고리즘으로 OLCI 시기 PFT를 개선하며, 새 탄소(car) 데이터셋(POC·DOC)과
       다중센서 L3 엽록소 경사 변수를 추가합니다. 자료 처리 스크립트를 고쳐야 한다고 안내했고, NRT 이중 배포 기간은 2026-11-03~2027-01-12입니다.
     source: https://marine.copernicus.eu/user-corner/product-roadmap/transition-information?product=OCEANCOLOUR_GLO_BGC_L3_NRT_009_101
-  - date: "2026-03"
+  - date: "2026-03-31"
+    key_date: "2026-03"  # 메일 발송 기록용 원래 날짜(바꾸지 마세요)
     level: warning
     title: 다중센서 자료에서 MODIS 제외, VIIRS-NOAA21 추가 (MY L3·L4 갱신)
     body: >-
       2026년 3월 GLO MY(L3·L4) 갱신에서 다중센서 데이터셋의 2023년 초 이후 MODIS 자료를 빼고, 2022년 11월 이후 VIIRS-NOAA21을 넣었습니다(새 데이터셋 판 202603, 2026-03-31 공개).
       NRT에도 같은 변경이 적용되었습니다.
     source: https://marine.copernicus.eu/user-corner/product-roadmap/transition-information?product=OCEANCOLOUR_GLO_BGC_L4_MY_009_104
-  - date: "2025-11"
+  - date: "2025-11-25"
+    key_date: "2025-11"  # 메일 발송 기록용 원래 날짜(바꾸지 마세요)
     level: info
     title: OLCI 4 km 엽록소 경사 변수에 불확도 추가, MY 시계열 2024년까지 연장
     body: >-
       cmems_obs-oc_glo_bgc-plankton_my_l3-olci-4km_P1D의 엽록소 경사 변수에 불확도 필드가 붙었고, MY 시계열이 2024년 자료까지 연장되었습니다.
     source: https://marine.copernicus.eu/user-corner/product-roadmap/transition-information?product=OCEANCOLOUR_GLO_BGC_L3_MY_009_103
-  - date: "2024-11"
+  - date: "2024-11-26"
+    key_date: "2024-11"  # 메일 발송 기록용 원래 날짜(바꾸지 마세요)
     level: info
     title: OLCI 기반 엽록소 수평 경사 변수 추가, PFT 재보정
     body: >-
       OLCI 자료로 계산한 엽록소 수평 경사(CHL_gradient) 변수가 GLO MY·NRT에 추가되었고, 식물플랑크톤 기능군(PFT) 변수가 최신 자료로 재보정되었습니다(알고리즘은 같음).
     source: https://marine.copernicus.eu/user-corner/product-roadmap/transition-information?product=OCEANCOLOUR_GLO_BGC_L4_MY_009_104
-  - date: "2023-11"
+  - date: "2023-11-30"
+    key_date: "2023-11"  # 메일 발송 기록용 원래 날짜(바꾸지 마세요)
     level: info
     title: MY 전체 시계열 재처리 — 반사도 병합 개선, BBP·CDM 알고리즘 갱신
     body: >-

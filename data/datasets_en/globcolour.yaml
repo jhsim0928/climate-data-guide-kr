@@ -241,33 +241,38 @@ citations:
     Copernicus Marine recommends the sentence "This study has been conducted using E.U. Copernicus Marine Service Information;" followed by the DOI links of all products used.
 
 notices:
-  - date: "2026-11"
+  - date: "2026-11-24"
+    key_date: "2026-11"  # 메일 발송 기록용 원래 날짜(바꾸지 마세요)
     level: warning
     title: (Scheduled) November 2026 version update — new OC5 coefficients, carbon (POC, DOC) datasets, script changes needed
     body: >-
       Multi-sensor chlorophyll, transparency and primary production will be reprocessed with updated OC5 coefficients, the OLCI-era PFT series improved with the GLOPHYTS algorithm, and new carbon ("car") datasets (POC, DOC)
       and a multi-sensor L3 chlorophyll gradient variable added. Copernicus Marine says data-handling scripts must be updated; the NRT double-dissemination period is 2026-11-03 to 2027-01-12.
     source: https://marine.copernicus.eu/user-corner/product-roadmap/transition-information?product=OCEANCOLOUR_GLO_BGC_L3_NRT_009_101
-  - date: "2026-03"
+  - date: "2026-03-31"
+    key_date: "2026-03"  # 메일 발송 기록용 원래 날짜(바꾸지 마세요)
     level: warning
     title: MODIS removed from multi-sensor data, VIIRS-NOAA21 added (MY L3 and L4 update)
     body: >-
       The March 2026 GLO MY (L3 and L4) update removed MODIS from the multi-sensor datasets from early 2023 and introduced VIIRS-NOAA21 from November 2022 (new dataset version 202603, released 2026-03-31).
       The same change was applied to NRT.
     source: https://marine.copernicus.eu/user-corner/product-roadmap/transition-information?product=OCEANCOLOUR_GLO_BGC_L4_MY_009_104
-  - date: "2025-11"
+  - date: "2025-11-25"
+    key_date: "2025-11"  # 메일 발송 기록용 원래 날짜(바꾸지 마세요)
     level: info
     title: Uncertainty added to the OLCI 4 km chlorophyll gradient, MY series extended through 2024
     body: >-
       An uncertainty field was added alongside the chlorophyll gradient variable in cmems_obs-oc_glo_bgc-plankton_my_l3-olci-4km_P1D, and the MY time series was extended to include data up to 2024.
     source: https://marine.copernicus.eu/user-corner/product-roadmap/transition-information?product=OCEANCOLOUR_GLO_BGC_L3_MY_009_103
-  - date: "2024-11"
+  - date: "2024-11-26"
+    key_date: "2024-11"  # 메일 발송 기록용 원래 날짜(바꾸지 마세요)
     level: info
     title: OLCI-based chlorophyll horizontal gradient added, PFT recalibrated
     body: >-
       A chlorophyll horizontal gradient variable (CHL_gradient) computed from OLCI was added to GLO MY and NRT, and the phytoplankton functional type (PFT) variables were recalibrated with up-to-date data (same algorithm).
     source: https://marine.copernicus.eu/user-corner/product-roadmap/transition-information?product=OCEANCOLOUR_GLO_BGC_L4_MY_009_104
-  - date: "2023-11"
+  - date: "2023-11-30"
+    key_date: "2023-11"  # 메일 발송 기록용 원래 날짜(바꾸지 마세요)
     level: info
     title: Full MY reprocessing — improved reflectance merging, updated BBP and CDM algorithms
     body: >-
