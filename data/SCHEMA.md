@@ -33,7 +33,7 @@
 | `example` | (선택) `{lang, note, code}` |
 | `tips` | (선택) 실전 팁 목록 |
 | `citations` | `{dataset: [...], papers: [...], acknowledgement}` 각 항목 `{label, text, doi, bibtex}` |
-| `notices` | 공지 목록 `[{date, level, title, body, source}]` — `level`: `critical` / `warning` / `info`, `source`는 필수 |
+| `notices` | 공지 목록 `[{date, level, title, body, source, key_date}]` — `level`: `critical` / `warning` / `info`, `source`는 필수. `date`는 `YYYY-MM-DD`(원문에 달까지만 있으면 `YYYY-MM` → '(일자 미공개)'로 표시). 제목이 `(예정)`으로 시작하거나 날짜가 미래면 중요 공지 페이지의 '예정된 변경'에 따로 표시. 이미 메일로 나간 공지의 날짜를 고칠 때는 `key_date`에 원래 날짜를 남겨 다시 발송되지 않게 함 |
 | `links` | 참고 링크 `[{name, url}]` |
 | `watch_urls` | 자동 감시할 공지 페이지 |
 | `last_verified` | 공식 페이지에서 확인한 날짜 `"YYYY-MM-DD"` |

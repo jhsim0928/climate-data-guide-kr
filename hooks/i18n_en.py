@@ -165,6 +165,10 @@ UI = {
     "시간 표기 규칙 — 순간값인가, 평균인가, 누적인가 — 눌러서 보기": "Time-stamp convention — instantaneous, mean or accumulated? — click to show",
     "전체 변수 엑셀로 저장": "Save all variables as Excel",
     "근거:": "Source:",
+    "## 예정된 변경": "## Upcoming changes",
+    "기관이 미리 알린 앞으로의 변경입니다. 날짜가 달까지만 발표된 것도 있으니, 정확한 시점은 원문에서 확인하세요.": "Changes the providers have announced in advance. Some are announced only to the month, so check the original notice for the exact timing.",
+    "<th>예정일</th><th>자료</th><th>발표 기관</th><th>구분</th><th>기관 공지 (원문)</th>": "<th>Planned</th><th>Dataset</th><th>Provider</th><th>Level</th><th>Provider notice (original)</th>",
+    "## 발표된 공지 (최신순)": "## Published notices (newest first)",
     '<span class="login-free">로그인 없이 받기</span>': '<span class="login-free">No login needed</span>',
     "공식 문서": "official documentation",
     "— 순간값: 표시 시각의 값 · 평균/누적/최대/최소: 표시된 구간 동안의 값 · 고정값: 시간에 따라 변하지 않음":

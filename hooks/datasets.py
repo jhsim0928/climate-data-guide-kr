@@ -836,7 +836,7 @@ def render_dataset(d: dict, site_cite: dict) -> str:
     if d["notices"]:
         for n in d["notices"]:
             label, kind = level_label(n["level"]), LEVEL[n["level"]][1]
-            L += [f'!!! {kind} "{n["date"]} · {label} · {n["title"]}"', ""]
+            L += [f'!!! {kind} "{notice_date_label(n)} · {label} · {n["title"]}"', ""]
             if n.get("body"):
                 L += ["    " + oneline(n["body"]), ""]
             L += [f"    [원문 보기]({n['source']})", ""]
@@ -992,9 +992,32 @@ def render_domain(dom: str, datasets: list[dict]) -> str:
     return loc("\n".join(L) + "\n")
 
 
+def notice_sort_key(n: dict) -> str:
+    """정렬용 날짜. 달까지만 아는 공지(YYYY-MM)는 그 달의 마지막 순서(최신순 목록에서 그 달 날짜 있는 공지 뒤)"""
+    d = str(n["date"])
+    return d + "-00" if re.fullmatch(r"\d{4}-\d{2}", d) else d
+
+
+def is_upcoming(n: dict) -> bool:
+    """앞으로 있을 변경(제목이 '(예정)'으로 시작하거나 날짜가 오늘 이후)"""
+    t = str(n.get("title") or "")
+    if t.startswith(("(예정)", "(Planned)", "(Scheduled)")):
+        return True
+    d = str(n["date"])
+    return d > date.today().isoformat() if len(d) == 10 else d > date.today().isoformat()[:7]
+
+
+def notice_date_label(n: dict) -> str:
+    """표시용 날짜: 달까지만 아는 지난 공지는 '(일자 미공개)'를 붙임"""
+    d = str(n["date"])
+    if re.fullmatch(r"\d{4}-\d{2}", d) and not is_upcoming(n):
+        return d + (" (day not given)" if is_en() else " (일자 미공개)")
+    return d
+
+
 def all_notices(datasets: list[dict]) -> list[tuple[dict, dict]]:
     pairs = [(d, n) for d in datasets for n in d["notices"]]
-    return sorted(pairs, key=lambda p: str(p[1]["date"]), reverse=True)
+    return sorted(pairs, key=lambda p: notice_sort_key(p[1]), reverse=True)
 
 
 ORG_LABEL = {"UW": "Univ. of Washington", "UMD": "Univ. of Maryland", "UEA": "UEA CRU", "CMEMS": "Copernicus Marine"}
@@ -1039,7 +1062,7 @@ def notice_rows(pairs, link_prefix: str) -> list[str]:
     for d, n in pairs:
         label = level_label(n["level"])
         L.append(
-            f"| {n['date']} | [{nt(d['name'])}]({link_prefix}{d['id']}.md) | {html.escape(notice_org(d, n))} "
+            f"| {notice_date_label(n)} | [{nt(d['name'])}]({link_prefix}{d['id']}.md) | {html.escape(notice_org(d, n))} "
             f"| <span class=\"level-{n['level']}\">{label}</span> | [{n['title']} ↗]({n['source']}) |"
         )
     return [loc(x) for x in L]
@@ -1047,7 +1070,9 @@ def notice_rows(pairs, link_prefix: str) -> list[str]:
 
 def render_notices(datasets: list[dict]) -> str:
     """중요 공지 — 데이터셋·공지 구분으로 걸러 볼 수 있는 표"""
-    pairs = all_notices(datasets)
+    allp = all_notices(datasets)
+    upcoming = sorted([p for p in allp if is_upcoming(p[1])], key=lambda p: notice_sort_key(p[1]))
+    pairs = [p for p in allp if not is_upcoming(p[1])]
     opts = ""
     for dom, (label, _) in DOMAINS.items():
         items = [d for d in datasets if d["domain"] == dom and d["notices"]]
@@ -1060,19 +1085,27 @@ def render_notices(datasets: list[dict]) -> str:
         f'<span class="level-{k}">{level_label(k)}</span></label>'
         for k in LEVEL
     )
-    rows = "".join(
-        f'<tr data-dataset="{d["id"]}" data-level="{n["level"]}">'
-        f'<td class="nowrap">{n["date"]}</td>'
-        f'<td><a href="../datasets/{d["id"]}/">{nt(html.escape(d["name"]))}</a></td>'
-        f'<td>{html.escape(notice_org(d, n))}</td>'
-        f'<td><span class="level-{n["level"]}">{level_label(n["level"])}</span></td>'
-        f'<td><a href="{html.escape(n["source"])}" target="_blank" rel="noopener">{html.escape(n["title"])} ↗</a></td></tr>'
-        for d, n in pairs
-    )
+    def row(d, n, attrs=True):
+        return (f'<tr data-dataset="{d["id"]}" data-level="{n["level"]}">' if attrs else "<tr>") + (
+            f'<td class="nowrap">{notice_date_label(n)}</td>'
+            f'<td><a href="../datasets/{d["id"]}/">{nt(html.escape(d["name"]))}</a></td>'
+            f'<td>{html.escape(notice_org(d, n))}</td>'
+            f'<td><span class="level-{n["level"]}">{level_label(n["level"])}</span></td>'
+            f'<td><a href="{html.escape(n["source"])}" target="_blank" rel="noopener">{html.escape(n["title"])} ↗</a></td></tr>')
+    rows = "".join(row(d, n) for d, n in pairs)
+    up = ([
+        "## 예정된 변경", "",
+        "기관이 미리 알린 앞으로의 변경입니다. 날짜가 달까지만 발표된 것도 있으니, 정확한 시점은 원문에서 확인하세요.", "",
+        '<div data-search-exclude><table class="upcoming-table">'
+        "<thead><tr><th>예정일</th><th>자료</th><th>발표 기관</th><th>구분</th><th>기관 공지 (원문)</th></tr></thead>"
+        "<tbody>" + "".join(row(d, n, False) for d, n in upcoming) + "</tbody></table></div>", "",
+        "## 발표된 공지 (최신순)", "",
+    ] if upcoming else [])
     return loc("\n".join([
         "# 중요 공지", "",
         "자료를 만들거나 배포하는 **기관**(ECMWF·NASA·NOAA 등)이 발표한 공지 가운데, 제공 중단·서비스 이전·품질 문제처럼 **분석에 영향을 주는 것**을 최신순으로 모았습니다.",
         "이 사이트의 소식이 아니라 각 기관 공지를 짧게 정리한 것이며, 제목을 누르면 **기관의 원문 공지**로 연결됩니다. 새 공지를 메일로 받고 싶다면 [중요 공지 알림 신청](subscribe.md)을 이용하세요.", "",
+    ] + up + [
         '<section class="notice-filter cdg-form" id="notice-filter" data-search-exclude>'
         '<label class="field">데이터셋<select id="nf-dataset"><option value="">전체 데이터셋</option>' + opts + "</select></label>"
         f'<div class="nf-levels"><span class="nf-label">구분</span>{lv}</div>'
@@ -1414,8 +1447,8 @@ def notices_json(datasets: list[dict]) -> str:
             i = d["notices"].index(n)
             kn = ko_by_id[d["id"]]["notices"]
             if i < len(kn):
-                return f"{d['id']}|{kn[i]['date']}|{kn[i]['title']}"
-        return f"{d['id']}|{n['date']}|{n['title']}"
+                return f"{d['id']}|{kn[i].get('key_date') or kn[i]['date']}|{kn[i]['title']}"
+        return f"{d['id']}|{n.get('key_date') or n['date']}|{n['title']}"
 
     out = []
     for d, n in all_notices(datasets):
@@ -1454,7 +1487,7 @@ def notices_rss(datasets: list[dict], config) -> str:
             "<item>"
             f"<title>{x('[' + d['name'] + '] ' + n['title'])}</title>"
             f"<link>{x(link)}</link>"
-            f"<guid isPermaLink=\"false\">{x(d['id'] + '|' + str(n['date']) + '|' + str(datasets.index(d)) + '|' + n['title'][:60])}</guid>"
+            f"<guid isPermaLink=\"false\">{x(d['id'] + '|' + str(n.get('key_date') or n['date']) + '|' + str(datasets.index(d)) + '|' + n['title'][:60])}</guid>"
             f"<pubDate>{pub(n['date'])}</pubDate>"
             f"<category>{x(level_label(n['level']))}</category>"
             f"<description>{x(oneline(n.get('body') or n['title']))}</description>"
