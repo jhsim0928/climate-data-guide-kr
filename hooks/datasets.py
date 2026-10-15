@@ -1085,9 +1085,13 @@ def render_notices(datasets: list[dict]) -> str:
         f'<span class="level-{k}">{level_label(k)}</span></label>'
         for k in LEVEL
     )
+    def date_cell(n):  # 날짜 자체는 줄바꿈하지 않음 ('(일자 미공개)'만 다음 줄로)
+        d = str(n["date"])
+        return notice_date_label(n).replace(d, '<span class="nobr">' + d + "</span>", 1)
+
     def row(d, n, attrs=True):
         return (f'<tr data-dataset="{d["id"]}" data-level="{n["level"]}">' if attrs else "<tr>") + (
-            f'<td class="nowrap">{notice_date_label(n)}</td>'
+            f'<td class="nowrap">{date_cell(n)}</td>'
             f'<td><a href="../datasets/{d["id"]}/">{nt(html.escape(d["name"]))}</a></td>'
             f'<td>{html.escape(notice_org(d, n))}</td>'
             f'<td><span class="level-{n["level"]}">{level_label(n["level"])}</span></td>'
@@ -1096,7 +1100,7 @@ def render_notices(datasets: list[dict]) -> str:
     up = ([
         "## 예정된 변경", "",
         "기관이 미리 알린 앞으로의 변경입니다. 날짜가 달까지만 발표된 것도 있으니, 정확한 시점은 원문에서 확인하세요.", "",
-        '<div data-search-exclude><table class="upcoming-table">'
+        '<div class="notice-tbl" data-search-exclude><table>'
         "<thead><tr><th>예정일</th><th>자료</th><th>발표 기관</th><th>구분</th><th>기관 공지 (원문)</th></tr></thead>"
         "<tbody>" + "".join(row(d, n, False) for d, n in upcoming) + "</tbody></table></div>", "",
         "## 발표된 공지 (최신순)", "",
@@ -1111,7 +1115,7 @@ def render_notices(datasets: list[dict]) -> str:
         f'<div class="nf-levels"><span class="nf-label">구분</span>{lv}</div>'
         f'<p class="hint" id="nf-count">{("All " + str(len(pairs))) if is_en() else ("전체 " + str(len(pairs)) + "건")}</p></section>',
         "",
-        '<div data-search-exclude><table id="notice-table">'
+        '<div class="notice-tbl" data-search-exclude><table id="notice-table">'
         "<thead><tr><th>공지일</th><th>자료</th><th>발표 기관</th><th>구분</th><th>기관 공지 (원문)</th></tr></thead>"
         f"<tbody>{rows}</tbody></table></div>",
         '<p class="hint" id="nf-empty" hidden data-search-exclude>조건에 맞는 공지가 없습니다.</p>',

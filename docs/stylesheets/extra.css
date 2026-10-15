@@ -526,3 +526,20 @@ details.hint summary { cursor: pointer; }
 .md-typeset .var-table td { min-width: 0 !important; word-break: keep-all; overflow-wrap: anywhere; }
 @media screen and (max-width: 44.9375em) { .md-typeset .var-table table { min-width: 46rem; } }
 .md-typeset .var-table .status-badge { white-space: normal; }
+/* 중요 공지 — '예정된 변경'과 '발표된 공지' 표를 같은 폭·같은 열 너비로 */
+.md-typeset .notice-tbl .md-typeset__scrollwrap { display: block; width: 100%; margin-left: 0; margin-right: 0; }
+.md-typeset .notice-tbl .md-typeset__table { display: block; width: 100%; padding: 0; }
+.md-typeset .notice-tbl table:not([class]) { display: table; width: 100%; table-layout: fixed; }
+.md-typeset .notice-tbl th:nth-child(1) { width: 13%; }
+.md-typeset .notice-tbl th:nth-child(2) { width: 17%; }
+.md-typeset .notice-tbl th:nth-child(3) { width: 16%; }
+.md-typeset .notice-tbl th:nth-child(4) { width: 10%; }
+.md-typeset .notice-tbl th:nth-child(5) { width: 44%; }
+.md-typeset .notice-tbl table:not([class]) td { word-break: keep-all; overflow-wrap: break-word; vertical-align: top; }
+.md-typeset .notice-tbl table:not([class]) td:nth-child(4) { white-space: nowrap; }
+.md-typeset .notice-tbl table:not([class]) td.nowrap { white-space: normal; }
+@media screen and (max-width: 44.9375em) {
+  .md-typeset .notice-tbl .md-typeset__table { overflow-x: auto; }
+  .md-typeset .notice-tbl table:not([class]) { min-width: 44rem; }
+}
+.md-typeset .notice-tbl .nobr { white-space: nowrap; }
