@@ -237,21 +237,24 @@ notices:
     title: Copernicus Marine Toolbox 1.x end of support
     body: Toolbox v1 is no longer supported and should be replaced with v2. Version 2.4.0 dropped support for Python 3.9.
     source: https://toolbox-docs.marine.copernicus.eu/en/stable/end-of-life.html
-  - date: "2025-06"
+  - date: "2025-06-25"
+    key_date: "2025-06"  # 메일 발송 기록용 원래 날짜(바꾸지 마세요)
     level: info
     title: New AI-corrected sea ice thickness variable (sithick_corr)
     body: >-
       The reanalysis assimilates CryoSat-2 and SMOS sea ice thickness from 2010, which creates a discontinuity. A new variable, sithick_corr, corrects the pre-2010 thin bias
       with an AI technique (dataset version 202506); it equals the model-based sithick from 2010 onward.
     source: https://marine.copernicus.eu/user-corner/product-roadmap/transition-information?product=ARCTIC_MULTIYEAR_PHY_002_003
-  - date: "2024-11"
+  - date: "2024-11-26"
+    key_date: "2024-11"  # 메일 발송 기록용 원래 날짜(바꾸지 마세요)
     level: info
     title: Surface momentum and heat flux datasets added
     body: >-
       Four new datasets provide wind stress (cmems_mod_arc_phy_my_mflux_P1D-m, _P1M-m) and total heat fluxes (cmems_mod_arc_phy_my_hflux_P1D-m, _P1M-m).
       Pre-existing datasets remain unchanged.
     source: https://marine.copernicus.eu/user-corner/product-roadmap/transition-information?product=ARCTIC_MULTIYEAR_PHY_002_003
-  - date: "2023-11"
+  - date: "2023-11-30"
+    key_date: "2023-11"  # 메일 발송 기록용 원래 날짜(바꾸지 마세요)
     level: info
     title: Arctic forecasting system upgraded to TOPAZ5 — reanalysis stays on TOPAZ4b
     body: >-
