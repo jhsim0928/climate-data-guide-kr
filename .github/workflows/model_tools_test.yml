@@ -19,8 +19,12 @@ jobs:
       - uses: actions/setup-python@v6
         with:
           python-version: "3.12"
-      - run: pip install requests netCDF4 h5netcdf fsspec aiohttp xarray cftime numpy pandas
-      - run: mkdir -p ci-results && python ci/probe.py 2>&1 | tee ci-results/probe.log
+      - run: pip install requests netCDF4 h5netcdf h5py fsspec aiohttp xarray cftime numpy pandas
+      - name: 카탈로그 생성 (전체)
+        run: |
+          mkdir -p ci-results
+          set -o pipefail
+          ( time python scripts/model_catalog.py --out ci-results/catalog.json ) 2>&1 | tee ci-results/catalog.log
       - name: 결과 저장
         if: always()
         run: |
