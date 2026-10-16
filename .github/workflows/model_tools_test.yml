@@ -1,4 +1,4 @@
-# 시험용: ci/model-tools-test 브랜치에 push하면 ESGF 접속 시험을 돌리고 결과를 같은 브랜치에 커밋
+# 시험용: ci/model-tools-test 브랜치에 push하면 카탈로그 생성 + 스크립트 시험을 돌리고 결과를 같은 브랜치에 커밋
 name: 모델 도구 시험
 on:
   push:
@@ -13,21 +13,35 @@ concurrency:
 jobs:
   test:
     runs-on: ubuntu-latest
-    timeout-minutes: 90
+    timeout-minutes: 120
     steps:
       - uses: actions/checkout@v6
       - uses: actions/setup-python@v6
         with:
           python-version: "3.12"
-      - run: pip install requests netCDF4 h5netcdf h5py fsspec aiohttp xarray cftime numpy pandas
-      - name: 카탈로그 생성 (전체)
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - run: pip install requests netCDF4 h5netcdf h5py fsspec aiohttp xarray cftime numpy pandas dask "intake-esgf>=2026.9.28"
+      - run: mkdir -p ci-results && pip list 2>/dev/null | grep -i -E "intake|xarray|netcdf|cftime|dask|numpy|pandas" > ci-results/versions.txt
+      - name: 카탈로그 생성
         run: |
-          mkdir -p ci-results
           set -o pipefail
-          ( time python scripts/model_catalog.py --out ci-results/catalog.json ) 2>&1 | tee ci-results/catalog.log
+          python scripts/model_catalog.py --out ci-results/catalog.json 2>&1 | tee ci-results/catalog.log
+      - name: 합치기 스크립트 시험 (가짜 파일)
+        if: always()
+        run: |
+          set -o pipefail
+          python scripts/tests/test_merge_script.py "$RUNNER_TEMP/mt" 2>&1 | tee ci-results/merge_test.log
+      - name: intake-esgf 스크립트 실제 실행
+        if: always()
+        run: |
+          set -o pipefail
+          python scripts/tests/smoke_search_script.py --catalog ci-results/catalog.json --out ci-results/smoke --cmip6 2 --cmip7 1 2>&1 | tee ci-results/smoke.log
       - name: 결과 저장
         if: always()
         run: |
+          echo "run: ${{ github.run_id }} sha: ${{ github.sha }}" > ci-results/run.txt
           git config user.name "model-tools-test"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add ci-results

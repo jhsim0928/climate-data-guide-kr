@@ -9,6 +9,7 @@ ESGF 검색 색인에 "어떤 모델이 어떤 실험·변수를 갖고 있는�
 - 달력: 색인에 없어서 모델(대기·해양 묶음)마다 파일 하나의 헤더만 원격으로 읽음 (OPeNDAP → HTTPS 범위 읽기)
 
 색인 하나가 실패해도 나머지는 저장하고, 실패한 부분은 지난번 값을 그대로 두고 사유를 JSON 'errors'에 남깁니다.
+(JSON 안의 글은 영어로만 씁니다 — 영어판 페이지에도 그대로 들어가기 때문)
 
     python scripts/model_catalog.py              # 전체 (Actions)
     python scripts/model_catalog.py --quick      # 시험용: 변수·실험 일부만
@@ -197,9 +198,9 @@ def calendar_of(url: str, how: str) -> str:
     try:
         r = subprocess.run([sys.executable, "-c", _CAL_CODE, url, how, UA], capture_output=True, text=True, timeout=CAL_TIMEOUT)
     except subprocess.TimeoutExpired:
-        raise TimeoutError(f"{CAL_TIMEOUT}초 안에 응답 없음") from None
+        raise TimeoutError(f"no response within {CAL_TIMEOUT} s") from None
     if r.returncode != 0:
-        msg = (r.stderr.strip().splitlines() or ["오류"])[-1]
+        msg = (r.stderr.strip().splitlines() or ["error"])[-1]
         raise RuntimeError(msg[:200])
     return r.stdout.strip()
 
@@ -219,7 +220,7 @@ def read_calendar(dap_urls: list[str], http_urls: list[str]) -> tuple[str, str, 
             return CAL_ALIAS.get(c, c), u, ""
         except Exception as e:  # noqa: BLE001
             errs.append(f"HTTPS {urlparse(u).netloc}: {str(e)[:120]}")
-    return "", "", " / ".join(errs) or "읽을 파일 주소 없음"
+    return "", "", " / ".join(errs) or "no file URL to read"
 
 
 def node_rank(url_or_node: str) -> int:
@@ -406,7 +407,7 @@ def run_calendars(proj, cal_jobs, prev_models, do_cal, fn):
             if not cal:
                 old = ((prev_models.get(model) or {}).get("calendar") or {}).get(grp) or {}
                 if old.get("value"):
-                    c = dict(old, note=f"이번 확인 실패 — 이전 값 유지 ({err[:150]})")
+                    c = dict(old, note=f"this check failed, previous value kept ({err[:150]})")
                 else:
                     c["note"] = err[:300]
             proj["models"][model]["calendar"][grp] = c
@@ -485,7 +486,7 @@ def build_cmip7(http: Http, prev: dict | None, quick: bool, do_cal: bool) -> dic
     if feats is None:
         if prev:
             out = dict(prev)
-            out["errors"] = errors + [{"what": "CMIP7", "error": "모든 STAC 색인 실패 — 지난번 결과 유지", "kept_previous": True}]
+            out["errors"] = errors + [{"what": "CMIP7", "error": "all STAC indices failed, previous result kept", "kept_previous": True}]
             out["stale"] = True
             return out
         return {"index": STAC[0], "errors": errors, "experiments": [], "variables": [], "models": {}, "avail": {},
@@ -603,7 +604,7 @@ def main():
             traceback.print_exc()
             err = {"what": name, "error": f"{type(e).__name__}: {str(e)[:300]}"}
             if old:
-                cat["projects"][name] = dict(old, stale=True, errors=[err, {"what": name, "error": "지난번 결과 유지", "kept_previous": True}])
+                cat["projects"][name] = dict(old, stale=True, errors=[err, {"what": name, "error": "previous result kept", "kept_previous": True}])
             else:
                 cat["projects"][name] = {"errors": [err], "experiments": [], "variables": [], "models": {}, "avail": {}, "entry_fields": ENTRY_FIELDS}
         p = cat["projects"][name]
