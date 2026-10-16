@@ -1,0 +1,329 @@
+# ─────────────────────────────────────────────────────────────
+# CMIP7 — dataset information file (English edition)
+# WCRP Coupled Model Intercomparison Project Phase 7 (DECK + Assessment Fast Track)
+# ─────────────────────────────────────────────────────────────
+id: cmip7
+name: CMIP7
+full_name: Coupled Model Intercomparison Project Phase 7
+category: model_output
+domain: model
+group: 전지구 모델 실험
+order: 10
+domains: [대기, 해양, 해빙, 육지]
+provider: WCRP CMIP (coordinated by the CMIP International Project Office, CMIP-IPO) · contributing modelling centres · Earth System Grid Federation (ESGF)
+
+status: active
+status_note: >-
+  Checked on 2026-10-16: about 78,000 CMIP7 datasets are listed in the new ESGF STAC indexes (discovery.east/west.esgf.io) and can be downloaded.
+  This is still the early publication stage, though — only 8 models from 5 institutions and 24 experiments, with most datasets coming from
+  CanESM6-0-MR and CanESM5-1. More Assessment Fast Track data is expected over the coming months, so check that enough models are available
+  before starting a multi-model analysis.
+
+period:
+  start: "1850-01"
+  end: "2100-12"
+  note: >-
+    The CMIP7 historical experiment runs from 1850-01-01 to 2021-12-31 (172 years), and the scenarios (scen7-*) from 2022-01-01 to 2100-12-31
+    (CMIP7 experiment set-up guidance). Scenario extensions (-ext) start in 2101 and may run to 2500 at the latest; idealised experiments such as
+    piControl, 1pctCO2 and abrupt-4xCO2 use model years. As of 2026-10-16 no extension (-ext) data are in the index yet.
+
+resolution:
+  spatial_short: "모델마다 다름"
+  temporal_short: "3시간"
+  spatial: >-
+    Varies by model. Grids are identified by a registered grid_label number (g100 or higher, e.g. g115, g126); the CMIP6 gn/gr labels are no longer used.
+    The nominal_resolution values of the data published in the STAC index on 2026-10-16 are 25 km, 100 km, 250 km and 500 km (plus two datasets labelled 10000 km).
+  vertical: >-
+    Varies by variable, identified by the vertical label of the branded variable — e.g. 19 pressure levels (p19) or 39 (p39), atmosphere model levels (al),
+    ocean model levels (ol), 2 m (h2m) or 10 m (h10m) above ground, or no specific level (u).
+  temporal: >-
+    Frequency is specified separately from the variable. Data published as of 2026-10-16 come at 3hr, 6hr, day, mon and yr frequencies plus fx
+    (time-independent); the collection definition also lists 1hr, subhr and dec, but no data at those frequencies have been published yet.
+
+coverage:
+  short: 전지구
+  note: >-
+    Mostly global (region = glb). Some variables are provided for 30°S–90°S (30S-90S), the Northern Hemisphere (nh) or the Southern Hemisphere (sh);
+    region codes for Antarctica (ata) and Greenland (grl) are also defined.
+update: Ongoing (published to ESGF as each modelling group's data become ready)
+license: >-
+  Each dataset records its licence in the license_id global attribute, either CC-BY-4.0 or CC0-1.0 (all data published as of 2026-10-16 are CC-BY-4.0).
+  The CMIP7 guidance for users makes three things mandatory: citing each dataset, acknowledging CMIP7, and following the licence conditions of each dataset.
+account_required: false
+
+summary: >-
+  CMIP7 is the seventh phase of the Coupled Model Intercomparison Project coordinated by the World Climate Research Programme (WCRP): modelling centres
+  worldwide run a common experimental protocol and publish the output through ESGF. It consists of the DECK, the baseline experiments every model
+  contributes, and the Assessment Fast Track (AFT), a series of 58 high-priority experiments drawn from the community MIPs to support assessments such as
+  IPCC AR7, with a focus on CO2-emissions-driven experiments (esm-*). Future projections use the new ScenarioMIP scenarios (scen7-h, hl, m, ml, l, ln, vl)
+  instead of the SSPs, and variables are identified by "branded variable" names.
+
+time_convention:
+  summary: >-
+    In CMIP7 the time sampling of a quantity is identified by the first label (the temporal label) of the branded variable name: tavg is a time average,
+    tpt a synoptic (point) sample, tmax and tmin a time maximum and minimum, and ti time-independent. The averaging interval (month, day, …) is not part of
+    the name; it is given by the separate frequency.
+  points:
+    - "tas_tavg-h2m-hxy-u at monthly (mon) frequency corresponds to CMIP6 Amon tas; at daily (day) frequency it corresponds to CMIP6 day tas"
+    - "tavg means cell_methods include time: mean, tpt means time: point, and tsum means time: sum. tmaxavg and tminavg are the mean of daily maxima and minima"
+    - "tas_tavg (mean), tas_tmax (maximum), tas_tmin (minimum) and tas_tpt (instantaneous) are different variables. Searching on variable_id alone can mix them"
+    - "The calendar attribute of the time coordinate (standard, noleap, 360_day, proleptic_gregorian, all_leap, …) differs between models — check it and read the data with cftime"
+  source: https://wcrp-cmip.github.io/cmip7-guidance/docs/CMIP7/Branded_Variables/
+  source_name: CMIP7 Guidance — Branded Variables / Guidance for users
+
+variables:
+  note: >-
+    Core variables checked on 2026-10-16 against the properties (variable_branded_name, variable_units) of CMIP7 items in the ESGF STAC index
+    (discovery.west.esgf.io). The variable name inside the file is the variable_id (the first part, e.g. tas); searches and directory paths use the
+    branded variable name (e.g. tas_tavg-h2m-hxy-u) together with frequency and region. The full list of requested variables is in the CMIP7 Data
+    Request (DR7) v1.2.2.5 database.
+  full_list: https://wcrp-cmip.org/cmip7-data-request-v1-2-2-5/
+  groups:
+    - name: Monthly atmosphere (atmos, mon)
+      kind: mean
+      period: Monthly
+      items:
+        - "Near-surface (2 m) air temperature — `tas_tavg-h2m-hxy-u` (K)"
+        - "Precipitation — `pr_tavg-u-hxy-u` (kg m-2 s-1)"
+        - "Sea level pressure — `psl_tavg-u-hxy-u` (Pa)"
+        - "Near-surface specific humidity — `huss_tavg-h2m-hxy-u` (1)"
+        - "Near-surface (10 m) wind speed — `sfcWind_tavg-h10m-hxy-u` (m s-1)"
+        - "Surface downwelling shortwave radiation — `rsds_tavg-u-hxy-u` (W m-2)"
+        - "Total cloud cover percentage — `clt_tavg-u-hxy-u` (%)"
+        - "Air temperature (19 pressure levels) — `ta_tavg-p19-hxy-air` (K)"
+        - "Eastward wind (19 pressure levels) — `ua_tavg-p19-hxy-air` (m s-1)"
+        - "Geopotential height (19 pressure levels) — `zg_tavg-p19-hxy-air` (m)"
+    - name: Daily atmosphere (atmos, day)
+      kind: mean
+      period: Daily
+      items:
+        - "Daily mean near-surface air temperature — `tas_tavg-h2m-hxy-u` (K)"
+        - text: "Daily maximum near-surface air temperature — `tas_tmax-h2m-hxy-u` (K)"
+          kind: max
+        - text: "Daily minimum near-surface air temperature — `tas_tmin-h2m-hxy-u` (K)"
+          kind: min
+        - "Daily precipitation — `pr_tavg-u-hxy-u` (kg m-2 s-1)"
+    - name: Monthly ocean (ocean, mon)
+      kind: mean
+      period: Monthly
+      items:
+        - "Sea surface temperature — `tos_tavg-u-hxy-sea` (degC)"
+        - "Sea surface salinity — `sos_tavg-u-hxy-sea` (1E-03)"
+        - "Sea surface height above geoid — `zos_tavg-u-hxy-sea` (m)"
+        - "Sea water potential temperature — `thetao_tavg-ol-hxy-sea` (degC)"
+        - "Sea water salinity — `so_tavg-ol-hxy-sea` (1E-03)"
+        - "Ocean mixed layer thickness — `mlotst_tavg-u-hxy-sea` (m)"
+    - name: Monthly sea ice and land (seaIce, land, mon)
+      kind: mean
+      period: Monthly
+      items:
+        - "Sea-ice area percentage (ocean grid) — `siconc_tavg-u-hxy-u` (%)"
+        - "Sea-ice thickness — `sithick_tavg-u-hxy-si` (m)"
+        - "Total soil moisture content — `mrso_tavg-u-hxy-lnd` (kg m-2)"
+    - name: Fixed fields (fx)
+      kind: static
+      items:
+        - "Percentage of grid cell occupied by land — `sftlf_ti-u-hxy-u` (%)"
+        - "Surface altitude — `orog_ti-u-hxy-u` (m)"
+        - "Grid-cell area for atmospheric variables — `areacella_ti-u-hxy-u` (m2)"
+        - "Grid-cell area for ocean variables — `areacello_ti-u-hxy-u` (m2)"
+
+access:
+  - name: ESGF MetaGrid (East index, CEDA)
+    url: https://metagrid-ceda.east.esgf.io/search
+    method: Web search → HTTP download, wget scripts, OPeNDAP, Globus
+    note: >-
+      The web search interface recommended by the CMIP7 guidance for users. As of 2026-10-07 the MetaGrid deployments on the West indexes were not
+      displaying CMIP7, and users are told to use the East index. Best suited to small downloads.
+  - name: intake-esgf (Python)
+    url: https://intake-esgf.readthedocs.io/en/latest/
+    method: Python package (search → download → open as xarray)
+    note: >-
+      CMIP7 is the default project, and the STAC indexes (discovery.east/west.esgf.io) are searched by default. Suited to larger, automated downloads.
+  - name: ESGF STAC index — CMIP7 collection
+    url: https://discovery.east.esgf.io/collections/CMIP7
+    method: STAC API (an HTTPS URL for each file of each item)
+    note: >-
+      The same collection is also on discovery.west.esgf.io. Item properties include the branded variable, units, version, licence and a cite-as link.
+
+example:
+  lang: python
+  note: >-
+    Uses the ESGFCatalog search shown in the intake-esgf documentation. CMIP7 is the default project, so project does not need to be set. The intake-esgf
+    documentation has no CMIP7 search example yet, so facet names such as variable_branding_suffix and region follow the CMIP7 item properties in the
+    STAC index. If a search returns nothing, check the facet names with print(cat).
+  code: |
+    # pip install intake-esgf
+    from intake_esgf import ESGFCatalog
+
+    cat = ESGFCatalog()
+    cat.search(
+        experiment_id="historical",
+        variable_id="tas",
+        variable_branding_suffix="tavg-h2m-hxy-u",  # time-mean 2 m air temperature
+        frequency="mon",
+        region="glb",
+    )
+    print(cat)                    # check the results by model and member
+    dsd = cat.to_dataset_dict()   # downloads to the local cache (~/.esgf) and returns a dict of xarray Datasets
+    for key, ds in dsd.items():
+        print(key, ds["tas"].attrs.get("units"), ds.time.encoding.get("calendar"))
+
+tips:
+  - >-
+    This is still the early publication stage. On 2026-10-16, CanESM6-0-MR and CanESM5-1 accounted for about 78% of the datasets in the STAC index, and
+    the other models have only some experiments and variables (CNRM-ESM2-1e has a single dataset). The CMIP7 collection summary lists 23 source_id
+    values, but that is the list of registered values; aggregating the actual items by model gives 8 models with data. The Rapid Evaluation Framework (REF) also labels its CMIP7 results as preliminary because
+    "only limited CMIP7 data available at the moment", and charts CMIP6 and CMIP7 separately. Check the number of models before computing a multi-model
+    mean or spread.
+  - >-
+    Do not mix CMIP6 and CMIP7 data in one ensemble. Experiment names (scen7-* vs ssp*), the end of the historical run (2021 vs 2014) and the forcing
+    datasets differ, and intake-esgf now searches CMIP7 by default, so old CMIP6 scripts need project="CMIP6" added.
+  - >-
+    CMIP6 tables (Amon, day, …) are gone; a variable is now identified by its branded variable plus frequency plus region. Filenames follow
+    <variable_id>_<branding_suffix>_<frequency>_<region>_<grid_label>_<source_id>_<experiment_id>_<variant_label>[_<time range>].nc,
+    so code that parses CMIP6 filenames has to be updated.
+  - >-
+    Downloads are split by model, experiment, member (variant_label, e.g. r1i1p1f1), region, frequency, variable, grid (g###), version and time range.
+    Grid numbers differ between models, so regrid to a common grid (e.g. conservatively) before comparing models, and do not mix files from different
+    regions (e.g. glb and 30S-90S).
+  - >-
+    Dataset versions appear at the end of the name as vYYYYMMDD. When an error is confirmed the provider retracts the dataset and republishes a corrected
+    version, so check that you have the latest version and the errata service (errata.esgf.io) before analysis, and report the versions you used.
+  - >-
+    As of 2026-09-23 no CMIP7 data DOIs had been minted. Once the CMIP7 citation service issues citations per model and experiment you can cite them by
+    DOI; until then, record the dataset IDs and versions you used.
+  - For downloading and combining many models and members at once, see this site's "Model data download" page (/model-data/).
+
+citations:
+  dataset:
+    - label: CMIP7 data citation (per model and experiment)
+      text: >-
+        One citation covers each model's contribution to an experiment, including all ensemble members and errata. The format is authors (data creators),
+        year, title, "Earth System Grid Federation" and DOI; find it in the CMIP7 Citation Search (https://cmip7-citations.ceda.ac.uk/citations/) or the
+        citation tab in MetaGrid. A table of the models, institutions and citations used (ideally with dataset versions) and a data availability statement
+        acknowledging ESGF are also required. As of 2026-09-23 no DOIs had been minted yet; according to the CMIP7 Citation Guidance, data providers
+        have to review and complete the information on the citation landing pages before DOIs can be issued.
+  papers:
+    - label: CMIP7 experimental design overview (recommended)
+      text: >-
+        Dunne, J. P., Hewitt, H. T., Arblaster, J. M., Bonou, F., Boucher, O., Cavazos, T., Dingley, B., Durack, P. J., Hassler, B., Juckes, M.,
+        Miyakawa, T., Mizielinski, M., Naik, V., Nicholls, Z., O'Rourke, E., Pincus, R., Sanderson, B. M., Simpson, I. R., and Taylor, K. E. (2025):
+        An evolving Coupled Model Intercomparison Project phase 7 (CMIP7) and Fast Track in support of future climate assessment.
+        Geoscientific Model Development, 18, 6671–6700.
+      doi: 10.5194/gmd-18-6671-2025
+      bibtex: |
+        @article{dunne2025cmip7,
+          author  = {Dunne, J. P. and Hewitt, H. T. and Arblaster, J. M. and Bonou, F. and Boucher, O. and Cavazos, T. and Dingley, B. and Durack, P. J. and Hassler, B. and Juckes, M. and Miyakawa, T. and Mizielinski, M. and Naik, V. and Nicholls, Z. and O'Rourke, E. and Pincus, R. and Sanderson, B. M. and Simpson, I. R. and Taylor, K. E.},
+          title   = {An evolving Coupled Model Intercomparison Project phase 7 ({CMIP7}) and Fast Track in support of future climate assessment},
+          journal = {Geoscientific Model Development},
+          volume  = {18},
+          number  = {19},
+          pages   = {6671--6700},
+          year    = {2025},
+          doi     = {10.5194/gmd-18-6671-2025}
+        }
+    - label: CMIP7 Data Request (DR7 v1.2.2.5)
+      text: >-
+        Mackallah, C., Juckes, M., Anstey, J., Dingley, B., Pascoe, C., Rigoudy, G., Moine, M.-P., Lovato, T., Pamment, A., Schupfner, M.,
+        Kawamiya, M., Bergman, T., Koven, C., O'Rourke, E., Turner, B., Ellis, D., and Mizielinski, M. (2026):
+        CMIP7 Data Request: co-created guidance for the production of CMIP7 data [v1.2.2.5]. Geoscientific Model Development, 19, 8053–8079.
+      doi: 10.5194/gmd-19-8053-2026
+      bibtex: |
+        @article{mackallah2026dr7,
+          author  = {Mackallah, C. and Juckes, M. and Anstey, J. and Dingley, B. and Pascoe, C. and Rigoudy, G. and Moine, M.-P. and Lovato, T. and Pamment, A. and Schupfner, M. and Kawamiya, M. and Bergman, T. and Koven, C. and O'Rourke, E. and Turner, B. and Ellis, D. and Mizielinski, M.},
+          title   = {{CMIP7} Data Request: co-created guidance for the production of {CMIP7} data [v1.2.2.5]},
+          journal = {Geoscientific Model Development},
+          volume  = {19},
+          number  = {17},
+          pages   = {8053--8079},
+          year    = {2026},
+          doi     = {10.5194/gmd-19-8053-2026}
+        }
+    - label: CMIP7 scenarios (ScenarioMIP-CMIP7)
+      text: >-
+        Van Vuuren, D. P., O'Neill, B. C., Tebaldi, C., Sanderson, B. M., Chini, L. P., et al. (2026):
+        The Scenario Model Intercomparison Project for CMIP7 (ScenarioMIP-CMIP7). Geoscientific Model Development, 19, 2627–2656.
+      doi: 10.5194/gmd-19-2627-2026
+      bibtex: |
+        @article{vanvuuren2026scenariomip,
+          author  = {Van Vuuren, D. P. and O'Neill, B. C. and Tebaldi, C. and Sanderson, B. M. and Chini, L. P. and others},
+          title   = {The Scenario Model Intercomparison Project for {CMIP7} ({ScenarioMIP-CMIP7})},
+          journal = {Geoscientific Model Development},
+          volume  = {19},
+          number  = {7},
+          pages   = {2627--2656},
+          year    = {2026},
+          doi     = {10.5194/gmd-19-2627-2026}
+        }
+  acknowledgement: >-
+    The CMIP7 guidance for users prescribes a mandatory acknowledgement under "Acknowledge CMIP7". It thanks the WCRP CMIP contributors who coordinated
+    CMIP7, the modelling groups for producing and sharing their output, ESGF for archiving and providing access, and the agencies funding CMIP7 and ESGF.
+    Copy the exact wording from that page. Registering publications on the CMIP Publication Hub is recommended, but as of the 2026-09-24 version of the
+    guidance, CMIP7 registration was not yet available.
+
+notices:
+  - date: "2026-10-07"
+    level: warning
+    title: MetaGrid on the West indexes not showing CMIP7 — use the East index
+    body: >-
+      MetaGrid deployments on the West indexes have not been displaying CMIP7 data, so users are asked to use the East (CEDA) MetaGrid for CMIP7 searches.
+      A URL update for the ORNL deployment is expected within a month.
+    source: https://wcrp-cmip.github.io/cmip7-guidance/docs/CMIP7/Guidance_for_users/
+  - date: "2026-09-23"
+    level: info
+    title: No CMIP7 data DOIs minted yet
+    body: >-
+      As of this date no CMIP7 data DOIs had been minted. Data citations are at the level of a model's contribution to an experiment, and the Citation
+      Search can be used to find the DOI once one exists.
+    source: https://wcrp-cmip.github.io/cmip7-guidance/docs/CMIP7/Guidance_for_users/
+  - date: "2026-09-04"
+    level: info
+    title: First CMIP7 data now available on ESGF
+    body: >-
+      CMIP7 datasets have started to be published on ESGF. At the time of the announcement, data from five models across three modelling centres and seven
+      experiments were available, with more expected over the coming months. Because ESGF has undergone a number of updates since CMIP6, users are advised
+      to read the CMIP7 guidance first.
+    source: https://wcrp-cmip.github.io/cmip7-guidance/docs/Updates_for_Users/
+  - date: "2026-07-17"
+    level: info
+    title: CMIP7 Data Request v1.2.2.5 released (latest for the Fast Track)
+    body: >-
+      Data Request v1.2.2.5, the latest version for the Assessment Fast Track, was released. Some regional variables were replaced by their global
+      equivalents, four sea-ice variables moved from mid-month to start-of-month sampling, and experiment IDs that had been wrongly lowercased were fixed.
+    source: https://wcrp-cmip.org/cmip7-data-request-v1-2-2-5/
+  - date: "2025-10-01"
+    level: info
+    title: CMIP7 and the Assessment Fast Track launched — design paper published
+    body: >-
+      CMIP7 and its Assessment Fast Track were announced with the publication in GMD of Dunne et al. (2025), which sets out the experimental framework
+      (the mandatory DECK and the optional AFT experiments).
+    source: https://wcrp-cmip.org/cmip7-overview-announcement/
+
+links:
+  - name: CMIP7 Guidance for users
+    url: https://wcrp-cmip.github.io/cmip7-guidance/docs/CMIP7/Guidance_for_users/
+  - name: CMIP7 Branded Variables
+    url: https://wcrp-cmip.github.io/cmip7-guidance/docs/CMIP7/Branded_Variables/
+  - name: CMIP7 Global Attributes and filename conventions
+    url: https://wcrp-cmip.github.io/cmip7-guidance/docs/CMIP7/Global_Attributes/
+  - name: CMIP7 Experiment set-up and forcings (periods and parent experiments)
+    url: https://wcrp-cmip.github.io/cmip7-guidance/docs/CMIP7/Experiment_set_up_and_Forcings/
+  - name: CMIP7 Assessment Fast Track
+    url: https://wcrp-cmip.org/cmip-phases/cmip7/fast-track/
+  - name: CMIP7 Data Request v1.2.2.5
+    url: https://wcrp-cmip.org/cmip7-data-request-v1-2-2-5/
+  - name: CMIP7 Citation Search
+    url: https://cmip7-citations.ceda.ac.uk/citations/
+  - name: ESGF Errata Service
+    url: https://errata.esgf.io/
+  - name: ESGF information (WCRP CMIP)
+    url: https://wcrp-cmip.org/esgf-information/
+
+watch_urls:
+  - https://wcrp-cmip.github.io/cmip7-guidance/docs/Updates_for_Users/
+  - https://wcrp-cmip.github.io/cmip7-guidance/docs/CMIP7/Guidance_for_users/
+  - https://wcrp-cmip.org/news/
+  - https://wcrp-cmip.org/esgf-information/
+
+last_verified: "2026-10-16"

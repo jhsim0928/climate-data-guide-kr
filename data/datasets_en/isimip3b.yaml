@@ -1,0 +1,320 @@
+# ─────────────────────────────────────────────────────────────
+# ISIMIP3b — dataset information file (English edition)
+# ISIMIP3b bias-adjusted and statistically downscaled atmospheric climate input data (CMIP6-based, 0.5°, daily)
+# ─────────────────────────────────────────────────────────────
+id: isimip3b
+name: ISIMIP3b bias-adjusted climate input data
+full_name: ISIMIP3b bias-adjusted atmospheric climate input data (Inter-Sectoral Impact Model Intercomparison Project, simulation round 3b)
+category: model_output
+domain: model
+group: 통계 다운스케일링·편이보정
+order: 20
+domains: [대기, 육지]
+provider: ISIMIP (Inter-Sectoral Impact Model Intercomparison Project) cross-sectoral science team — bias adjustment by Stefan Lange (ISIMIP3BASD)
+
+status: active
+status_note: >-
+  The data remain available from the ISIMIP Repository (data.isimip.org), which the ISIMIP3 protocol says can be used without login (checked 2026-10-16). The CMIP7-based ISIMIP4b round
+  kicked off in August 2026 with first input data from EC-Earth3-ESM-1-1, but the ISIMIP Steering Committee (February 2026) still "strongly
+  encourage[s] initiating ISIMIP3-based studies", so ISIMIP3b has not been superseded or withdrawn. Watch for more GCMs and scenarios in ISIMIP4b.
+
+transitions:
+  - from: ISIMIP3b
+    to: ISIMIP4b
+    status: planned
+    date: "2026-08"
+    summary: >-
+      The next, CMIP7-based simulation round. First input data from a single model, EC-Earth3-ESM-1-1, were released in August 2026; further CMIP7
+      GCMs and scenarios will be added at a later stage.
+    changes:
+      - aspect: Driving climate models
+        before: CMIP6 GCMs — 5 primary + 5 secondary
+        after: CMIP7 GCMs — EC-Earth3-ESM-1-1 only in the first phase; UKESM and other GCMs to follow as soon as possible
+      - aspect: Future scenarios
+        before: SSP1-2.6, SSP3-7.0, SSP5-8.5 (secondary data add ssp119, ssp245, ssp460 and others)
+        after: CMIP7 ScenarioMIP Very Low (VL) and High (H); at least one additional scenario with overshoot of the 1.5°C goal planned
+      - aspect: Fixed direct human forcing in Group II
+        before: Fixed at 2015 levels
+        after: Fixed at 2021 levels
+      - aspect: Horizontal resolution
+        before: 0.5° (ISIMIP3BASD statistical downscaling)
+        after: Bias-adjusted 0.5° data planned, plus 0.1° high-resolution data derived by dynamical downscaling within CORDEX
+      - aspect: Bias-adjustment method and reference
+        before: ISIMIP3BASD v2.5.0, W5E5 v2.0
+        after: Not stated on the official pages as of 2026-10-16
+      - aspect: File path
+        before: ISIMIP3b/InputData/climate/atmosphere/bias-adjusted/global/daily/
+        after: ISIMIP4b/InputData/climate/atmosphere/bias-adjusted/global/daily/
+    impacts:
+      - "ISIMIP4b starts with a single GCM. Multi-model impact assessments will realistically rely on ISIMIP3b for some time, and the ISIMIP Steering Committee encourages new ISIMIP3-based studies, especially Group III."
+      - "The two rounds differ in model generation (CMIP6/CMIP7), scenario framework (SSPs/VL and H) and the year of fixed direct human forcing; do not treat them as the same scenarios or pool them into one ensemble."
+      - "Paths and file-name prefixes change (ISIMIP3b to ISIMIP4b), so download scripts with hard-coded paths need checking."
+    sources:
+      - name: ISIMIP — ISIMIP4b kicked off (2026-08-28)
+        url: https://www.isimip.org/news/isimip4b-kicked-off
+      - name: ISIMIP4 Protocol (isimip.org)
+        url: https://www.isimip.org/protocol/isimip4-protocol/
+      - name: ISIMIP4 simulation protocol
+        url: https://protocol4.isimip.org/
+      - name: Summary of the ISIMIP Steering Committee meeting, February 2026
+        url: https://www.isimip.org/outcomes/fact-sheets-and-documents/summary-of-the-isimip-steering-committee-meeting-february-2026/
+
+period:
+  start: "1601-01"
+  end: "2100-12"
+  note: >-
+    Pre-industrial (piControl) 1601–1849, historical 1850–2014, future (ssp126, ssp370, ssp585) 2015–2100. piControl years differ by model and were
+    harmonised to 1601–2100. The training period for bias adjustment is 1979–2014 from W5E5.
+
+resolution:
+  spatial_short: "56 km (0.5°)"
+  temporal_short: "1일"
+  spatial: >-
+    0.5° regular latitude-longitude grid. Daily CMIP6 output was first remapped (first-order conservative) to whichever of 0.5°, 1.0° or 2.0° is
+    closest to the native resolution, bias-adjusted against W5E5 v2.0 aggregated to that resolution, then statistically downscaled to 0.5° with
+    ISIMIP3BASD (one step for 1.0° models, two steps 1.0° then 0.5° for 2.0° models)
+  vertical: Near-surface (single level) only
+  temporal: Daily
+
+coverage:
+  short: 전지구
+  note: >-
+    Global files covering land and ocean. The reference, W5E5 v2.0, is "version 2.0 of WFDE5 over land merged with ERA5 over the ocean".
+update: No regular updates. Secondary GCMs and extra experiments were added as separate datasets; changes are announced in the ISIMIP issues and notes log
+license: >-
+  The official isimip.org pages checked on 2026-10-16 do not state a licence specific to these input data (website content is CC BY 4.0; CC0 is
+  encouraged for ISIMIP3 model output). Check the licence shown on the dataset page in the ISIMIP Repository. The terms of use for publicly
+  available data ask users to cite the relevant DOIs and to notify ISIMIP of data use (info@isimip.org).
+account_required: false
+
+summary: >-
+  The ISIMIP3b climate input data are CMIP6-based daily forcing prepared to drive sectoral impact models (agriculture, water, ecosystems, health and
+  others) in round 3b of the Inter-Sectoral Impact Model Intercomparison Project. piControl, historical and SSP output from CMIP6 GCMs was
+  bias-adjusted towards the observation-based W5E5 v2.0 with trend-preserving quantile mapping (ISIMIP3BASD v2.5.0) and statistically downscaled to 0.5°.
+  There are five mandatory primary GCMs (GFDL-ESM4, IPSL-CM6A-LR, MPI-ESM1-2-HR, MRI-ESM2-0, UKESM1-0-LL) and five optional secondary GCMs, each
+  with eleven variables covering temperature, precipitation, snowfall, humidity, pressure, radiation and wind.
+
+time_convention:
+  summary: >-
+    All variables are daily values. tas, pr, prsn, hurs, huss, ps, rlds, rsds and sfcWind are daily means; tasmax and tasmin are daily maximum and
+    minimum temperature. Calendars were harmonised to the proleptic Gregorian calendar by inserting missing days, filled by linear interpolation in time.
+  points:
+    - "pr is total precipitation (rainfall plus snowfall) and prsn is the snowfall part, so rainfall is pr − prsn."
+    - "pr and prsn are in kg m-2 s-1 (mean daily rate); multiply by 86400 for mm per day."
+    - "For models with 360-day or 365-day calendars, the inserted days (e.g. leap days, 31st days) are interpolated, not simulated by the model."
+    - "After adjustment, values were clipped to variable-specific limits (e.g. hurs 1–100 %, sfcWind 0.1–50 m s-1)."
+  source: https://www.isimip.org/documents/413/ISIMIP3b_bias_adjustment_fact_sheet_Gnsz7CO.pdf
+  source_name: ISIMIP3b bias adjustment fact sheet (Lange, 1 December 2021)
+
+variables:
+  note: >-
+    All eleven variables in Table 1 of the ISIMIP3b bias adjustment fact sheet and on the ISIMIP input data detail pages. Names are as in the files
+    (identical to CMIP6 names); units follow the fact sheet. huss is derived from adjusted hurs, ps and tas; prsn from pr and the snowfall ratio;
+    tasmax and tasmin from tas, the diurnal temperature range and its skewness.
+  full_list: https://www.isimip.org/gettingstarted/input-data-bias-adjustment/details/84/
+  groups:
+    - name: Daily atmosphere (bias-adjusted, daily)
+      kind: mean
+      period: Daily
+      items:
+        - "Near-surface air temperature — `tas` (K)"
+        - text: "Daily maximum near-surface air temperature — `tasmax` (K)"
+          kind: max
+        - text: "Daily minimum near-surface air temperature — `tasmin` (K)"
+          kind: min
+        - text: "Precipitation (total) — `pr` (kg m-2 s-1)"
+          note: Includes both rainfall and snowfall.
+        - "Snowfall flux — `prsn` (kg m-2 s-1)"
+        - "Near-surface relative humidity — `hurs` (%)"
+        - "Near-surface specific humidity — `huss` (kg kg-1)"
+        - "Surface air pressure — `ps` (Pa)"
+        - "Surface downwelling longwave radiation — `rlds` (W m-2)"
+        - "Surface downwelling shortwave radiation — `rsds` (W m-2)"
+        - text: "Near-surface wind speed — `sfcWind` (m s-1)"
+          std: [wind10]
+
+access:
+  - name: ISIMIP Repository
+    url: https://data.isimip.org/
+    login: false
+    method: Web search and download, file list + wget, API (isimip-client), country/region masking and cut-outs
+    note: >-
+      The ISIMIP protocol states the data are available at the ISIMIP Repository "without login". Primary-GCM data are under
+      ISIMIP3b/InputData/climate/atmosphere/bias-adjusted/global/daily/ and secondary-GCM data under ISIMIP3b/SecondaryInputData/climate/atmosphere/,
+      organised by scenario and model. The ESGF service for ISIMIP data was decommissioned in May 2022.
+
+example:
+  lang: python
+  note: Search as in the official isimip-client README; then download from the returned file lists, or get a file list from the web interface and run wget -ci.
+  code: |
+    # pip install isimip-client
+    from isimip_client.client import ISIMIPClient
+
+    client = ISIMIPClient()
+    response = client.datasets(simulation_round='ISIMIP3b',
+                               product='InputData',
+                               climate_forcing='gfdl-esm4',
+                               climate_scenario='ssp370',
+                               climate_variable='pr')
+    for dataset in response['results']:
+        print(dataset)
+
+    # Opening downloaded files (file-name pattern:
+    # <climate-forcing>_<ensemble-member>_<bias-adjustment>_<climate-scenario>_<climate-variable>_global_daily_<start-year>_<end-year>.nc)
+    # import xarray as xr
+    # ds = xr.open_mfdataset("gfdl-esm4_*_ssp370_pr_global_daily_*.nc")
+    # pr_mm = ds["pr"] * 86400   # kg m-2 s-1 -> mm/day
+
+tips:
+  - >-
+    All GCMs share the same 0.5° grid, variable names and proleptic Gregorian calendar, so unlike raw CMIP6 output you do not have to reconcile calendars
+    (noleap, 360_day) or grids yourself. Days that did not exist in a model's calendar (e.g. the 31st in a 360-day calendar) are linearly interpolated,
+    which matters for daily extremes.
+  - >-
+    The five primary GCMs (GFDL-ESM4, IPSL-CM6A-LR, MPI-ESM1-2-HR, MRI-ESM2-0, UKESM1-0-LL) are mandatory for ISIMIP impact modellers; the five secondary
+    GCMs (CanESM5, CNRM-CM6-1, CNRM-ESM2-1, EC-Earth3, MIROC6) and extra experiments of the primary models (hist-nat, ssp119, ssp245, ssp460,
+    ssp534-over) are published as separate "Secondary" data. There is one member per model (r1i1p1f2 for UKESM1-0-LL and the CNRM models, r1i1p1f1 otherwise).
+  - >-
+    ISIMIP3BASD is designed to preserve the simulated trends, but precipitation trends are preserved "multiplicatively in most cases", so absolute
+    precipitation changes can differ from the parent GCM. Adjustment is univariate (the multivariate MBCn option was not used). The fact sheet reports that
+    biases remain only for prsn and that CanESM5 shows discontinuities in the prsn time series under ssp585.
+  - >-
+    Some models lacked ps or sfcWind, which were computed from proxies (MRI-ESM2-0 ps; CNRM-CM6-1 and CNRM-ESM2-1 ps and sfcWind, from psl and uas/vas).
+    CNRM-ESM2-1 provided only 291 piControl years, which were recycled to reach 500 years — take care in piControl analyses.
+  - >-
+    ISIMIP3b data obtained before May 2021 (ISIMIP3BASD v2.4.1 or earlier, W5E5 v1.0) are retracted versions. The Specifications sections of some input
+    data detail pages still mention v2.4.1 and W5E5 v1.0, so confirm v2.5.0 and W5E5 v2.0 in the file attributes or on the repository dataset page.
+  - >-
+    Files are split by model, scenario, variable and period chunk. If you only need a region, use "Configure download" (country/bounding-box masks and
+    cut-outs) in the ISIMIP Repository or cutout_bbox/mask_bbox in isimip-client rather than downloading global files (processing can take tens of minutes).
+
+citations:
+  dataset:
+    - label: ISIMIP3b bias-adjusted atmospheric climate input data (primary GCMs)
+      text: >-
+        ISIMIP3b bias-adjusted atmospheric climate input data. ISIMIP Repository. https://doi.org/10.48364/ISIMIP.842396
+        (copy the author list and version from the citation on the repository DOI page)
+      doi: 10.48364/ISIMIP.842396
+    - label: Secondary GCMs and extra experiments
+      text: >-
+        Secondary ISIMIP3b bias-adjusted atmospheric climate input data. ISIMIP Repository. https://doi.org/10.48364/ISIMIP.581124
+        (copy the author list and version from the citation on the repository DOI page)
+      doi: 10.48364/ISIMIP.581124
+    - label: Reference dataset W5E5 v2.0
+      text: >-
+        Lange, S., Menz, C., Gleixner, S., Cucchi, M., Weedon, G. P., Amici, A., Bellouin, N., Müller Schmied, H., Hersbach, H., Buontempo, C., Cagnazzo, C. (2021):
+        WFDE5 over land merged with ERA5 over the ocean (W5E5 v2.0). https://doi.org/10.48364/ISIMIP.342217
+      doi: 10.48364/ISIMIP.342217
+  papers:
+    - label: Bias adjustment and downscaling method (ISIMIP3BASD v1.0 paper)
+      text: >-
+        Lange, S. (2019): Trend-preserving bias adjustment and statistical downscaling with ISIMIP3BASD (v1.0).
+        Geoscientific Model Development, 12(7), 3055–3070.
+      doi: 10.5194/gmd-12-3055-2019
+      bibtex: |
+        @article{lange2019isimip3basd,
+          author  = {Lange, Stefan},
+          title   = {Trend-preserving bias adjustment and statistical downscaling with {ISIMIP3BASD} (v1.0)},
+          journal = {Geoscientific Model Development},
+          volume  = {12},
+          number  = {7},
+          pages   = {3055--3070},
+          year    = {2019},
+          doi     = {10.5194/gmd-12-3055-2019}
+        }
+    - label: ISIMIP3BASD v2.5.0 code (version actually used)
+      text: "Lange, S. (2021): ISIMIP3BASD v2.5.0. https://doi.org/10.5281/zenodo.4686991"
+      doi: 10.5281/zenodo.4686991
+    - label: WFDE5, the land part of W5E5
+      text: >-
+        Cucchi, M., Weedon, G. P., Amici, A., Bellouin, N., Lange, S., Müller Schmied, H., Hersbach, H., Buontempo, C. (2020):
+        WFDE5: bias-adjusted ERA5 reanalysis data for impact studies. Earth System Science Data, 12(3), 2097–2120.
+      doi: 10.5194/essd-12-2097-2020
+      bibtex: |
+        @article{cucchi2020wfde5,
+          author  = {Cucchi, Marco and Weedon, Graham P. and Amici, Alessandro and Bellouin, Nicolas and Lange, Stefan and M{\"u}ller Schmied, Hannes and Hersbach, Hans and Buontempo, Carlo},
+          title   = {{WFDE5}: bias-adjusted {ERA5} reanalysis data for impact studies},
+          journal = {Earth System Science Data},
+          volume  = {12},
+          number  = {3},
+          pages   = {2097--2120},
+          year    = {2020},
+          doi     = {10.5194/essd-12-2097-2020}
+        }
+  acknowledgement: >-
+    The bias adjustment fact sheet asks users of bias-adjusted ISIMIP3b climate input data to cite Lange (2019) and Lange (2021) for the method and
+    Cucchi et al. (2020) and Lange et al. (2021) for W5E5. The ISIMIP terms of use for publicly available data ask users to cite the relevant DOIs and
+    notify info@isimip.org, and suggest the acknowledgement "For their roles in producing, coordinating, and making available the ISIMIP input data and
+    impact model output, we acknowledge …". The parent GCMs are CMIP6 data, so consider the CMIP6 model output citations as well.
+
+notices:
+  - date: "2026-08-28"
+    level: info
+    title: CMIP7-based ISIMIP4b kicked off — first input data released
+    body: >-
+      The first package of ISIMIP4b input data, based on the first CMIP7-ScenarioMIP simulations from EC-Earth (picontrol, historical, High and Very Low
+      scenarios), has been released. UKESM and other GCMs will be added as soon as possible, working towards the AR7 submission deadline expected in May 2027.
+    source: https://www.isimip.org/news/isimip4b-kicked-off
+  - date: "2022-01-10"
+    level: info
+    title: Secondary climate input data now available
+    body: >-
+      Bias-adjusted data for extra experiments of the five primary GCMs (hist-nat, ssp119, ssp245, ssp460) and for five secondary GCMs (CNRM-CM6-1,
+      CNRM-ESM2-1, CanESM5, EC-Earth3, MIROC6) were released (DOI 10.48364/ISIMIP.581124). They are not part of the protocol, so modellers are asked to
+      prioritise the protocol experiments.
+    source: https://www.isimip.org/newsletter/isimip3b-secondary-climate-input-data-now-available
+  - date: "2021-05-17"
+    level: critical
+    title: ISIMIP3b bias-adjusted climate input data completely replaced (ISIMIP3BASD v2.5.0, W5E5 v2.0)
+    body: >-
+      "The ISIMIP3b bias-adjusted climate input data have been completely replaced." ISIMIP3BASD was updated from v2.4.1 to v2.5.0 and the reference W5E5
+      from v1.0 to v2.0. Any new ISIMIP3b simulation should use the new data; whether simulations based on the old input must be replaced was not yet decided.
+    source: https://www.isimip.org/gettingstarted/input-data-changelog/isimip3-replaced-bias-adjusted-climate-input-data
+  - date: "2021-04-19"
+    level: critical
+    title: Faulty ISIMIP3 climate input data retracted
+    body: >-
+      The faulty version of the ISIMIP3b bias-adjusted climate input data (and of the ISIMIP3a observational inputs) was retracted from the ESGF and ISIMIP
+      servers. Users were asked not to use it and to wait for the revised release.
+    source: https://www.isimip.org/gettingstarted/input-data-changelog/isimip3-climate-input-data-retracted-isimip-servers
+  - date: "2021-02-18"
+    level: warning
+    title: Discontinuities found in bias-adjusted climate input data
+    body: Statistics of the ISIMIP3b bias-adjusted climate input data were found to be discontinuous at the turn of each month, because the bias adjustment was applied calendar month by calendar month.
+    source: https://www.isimip.org/gettingstarted/input-data-changelog/isimip3b-discontinuities-found-bias-adjusted-climate-input-data
+  - date: "2020-06-19"
+    level: warning
+    title: Bias-adjusted GCM data replaced after ISIMIP3BASD v2.3.1 flaw
+    body: >-
+      A flaw in ISIMIP3BASD v2.3.1 gave poor bias adjustments for all variables except ps, rlds and tas, particularly severe for precipitation. The data were
+      redone with v2.4.1 and replaced on 19 June 2020. All climate models and climate scenarios were affected.
+    source: https://www.isimip.org/gettingstarted/input-data-changelog/isimip3b-bias-adjusted-gcm-data-replaced/
+
+links:
+  - name: ISIMIP3b bias adjustment (ISIMIP3BASD v2.5.0, W5E5 v2.0)
+    url: https://www.isimip.org/gettingstarted/isimip3b-bias-adjustment/
+  - name: ISIMIP3b bias adjustment fact sheet (PDF)
+    url: https://www.isimip.org/documents/413/ISIMIP3b_bias_adjustment_fact_sheet_Gnsz7CO.pdf
+  - name: ISIMIP input data and bias adjustment
+    url: https://www.isimip.org/gettingstarted/input-data-bias-adjustment/
+  - name: ISIMIP3 simulation protocol
+    url: https://protocol.isimip.org/
+  - name: ISIMIP input data changelog (before January 2022)
+    url: https://www.isimip.org/gettingstarted/input-data-changelog/
+  - name: ISIMIP issues and notes (from January 2022)
+    url: https://data.isimip.org/issues-and-notes/
+  - name: Using the ISIMIP Repository
+    url: https://www.isimip.org/outputdata/isimip-repository/
+  - name: ISIMIP terms of use for publicly available data
+    url: https://www.isimip.org/gettingstarted/terms-of-use/terms-use-publicly-available-isimip-data-after-embargo-period/
+  - name: isimip-client (official Python client)
+    url: https://github.com/ISI-MIP/isimip-client/blob/master/README.md
+  - name: NEX-GDDP-CMIP6 (0.25° bias-corrected data in the same group, NCCS)
+    url: https://www.nccs.nasa.gov/services/data-collections/land-based-products/nex-gddp-cmip6
+
+watch_urls:
+  - https://www.isimip.org/gettingstarted/input-data-bias-adjustment/
+  - https://www.isimip.org/protocol/isimip4-protocol/
+  - https://protocol4.isimip.org/
+
+last_verified: "2026-10-16"

@@ -56,6 +56,7 @@ nav:
       - 변수로 찾기: find-variable.md
       - 자료 비교: compare.md
       - 표준 변수 목록: variables.md
+      - 모델 자료 받기: model-data.md
   # 대기·해양·해빙·지면·위성 메뉴는 data/datasets/*.yaml 의 domain·group·order 값으로 자동 생성됩니다
   - __DATA_SECTIONS__: auto
   - 세대별 비교: transitions.md
@@ -90,6 +91,7 @@ extra_javascript:
   - javascripts/forms.js
   - javascripts/site.js
   - javascripts/excel.js
+  - javascripts/model-data.js
 
 extra:
   # 베타 운영 표시 (위쪽 안내 띠 + 사이트 이름 옆 "Beta"). 정식 공개 때 false로 바꾸면 한국어·영어판 모두에서 사라집니다.

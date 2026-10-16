@@ -139,6 +139,13 @@ CITATION.cff             ← GitHub "Cite this repository" 버튼
 - 감시 주소를 바꾸려면 YAML의 `watch_urls`만 고치면 됩니다. 저장된 페이지 사본은 `watch/state/`, 지난 30일 감지 기록은 `watch/history/`에 있습니다.
 - Actions와 Claude가 main에 올리는 점검 기록 커밋에는 `[skip ci]`가 붙어 사이트를 다시 배포하지 않습니다.
 
+## 모델 자료 받기 — 가용성 표 자동 갱신 (매주)
+
+- 페이지: `docs/model-data.md`·`docs_en/model-data.md` (자리표시 `<!-- MODEL_DATA_APP -->` → `hooks/datasets.py`의 `model_data_app()`), 화면·스크립트 생성: `docs/javascripts/model-data.js`
+- 가용성 표: `data/model-catalog/catalog.json` — `scripts/model_catalog.py`가 ESGF 색인(CMIP6: ORNL ESGF 1.5 색인, CMIP7: STAC `discovery.west`/`east`)을 조회하고, 모델마다 파일 하나의 머리글을 원격으로 읽어 달력을 적습니다.
+- `.github/workflows/model_catalog.yml`: 매주 화요일 04:23(한국) — 카탈로그 생성 → 시험(가짜 파일 합치기 `scripts/tests/test_merge_script.py`, ESGF에서 실제로 작은 자료 받기 `scripts/tests/smoke_search_script.py`, 사이트 빌드) → 바뀌었으면 main에 "model-catalog: 가용성 표 갱신" 커밋 → 사이트 배포 실행. 시험이 실패하면 커밋하지 않고 실패로 끝납니다.
+- 색인 하나가 실패하면 그 부분은 지난번 값을 두고 `errors`에 사유를 남깁니다(페이지에 '이번 갱신 실패' 표시). 조회 범위(실험·변수)는 `scripts/model_catalog.py` 위쪽 목록에서 바꿉니다.
+
 ## 방문자 수 집계
 
 GoatCounter(쿠키 없음)를 씁니다. Code는 `docs/javascripts/notranslate.js`의 `GOATCOUNTER_CODE`에 있고, 통계는 https://data4researchers.goatcounter.com 에서 봅니다.
