@@ -202,6 +202,13 @@ citations:
     Data from 2020 onward taken from the server have no DOI, so state the version (v5.4) and the download date.
 
 notices:
+  - date: "2026-10-16"
+    level: warning
+    title: "Delay in the provision of GCOM-W products due to system maintenance (2026-10-20 00:30 to 10-21 09:00 UTC)"
+    body: >-
+      JAXA G-Portal announced that, due to system maintenance, the provision of GCOM-W Standard Products is expected to be delayed from 00:30 UTC on 20 October to 09:00 UTC on 21 October 2026, and that products will be provided in sequence after the system recovers.
+      ASI sea ice concentration is derived from GCOM-W AMSR2 data, so daily files for this period may appear late.
+    source: https://gportal.jaxa.jp/gpr/notice/notice/view/1512
   - date: "2026-09-04"
     level: warning
     title: "JAXA: some AMSR2 standard L1 and L2 products since 2026-09-02 contain less than one scene of data"
@@ -329,4 +336,4 @@ watch_urls:
   - https://data.seaice.uni-bremen.de/amsr3/
   - https://gportal.jaxa.jp/gpr/notice/notice/list
 
-last_verified: "2026-10-13"
+last_verified: "2026-10-17"

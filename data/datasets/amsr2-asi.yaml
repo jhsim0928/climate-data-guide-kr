@@ -202,6 +202,13 @@ citations:
     서버에서 받은 2020년 이후 자료에는 DOI가 없으므로 버전(v5.4)과 받은 날짜를 함께 적으세요.
 
 notices:
+  - date: "2026-10-16"
+    level: warning
+    title: "JAXA, 시스템 점검으로 GCOM-W 표준 산출물 제공 지연 예정 (2026-10-20 00:30 ~ 10-21 09:00 UTC)"
+    body: >-
+      JAXA G-Portal은 시스템 점검 때문에 2026-10-20 00:30 UTC부터 10-21 09:00 UTC까지 GCOM-W 표준 산출물 등록·제공이 늦어질 예정이며, 복구 후 차례로 제공한다고 알렸습니다.
+      ASI 해빙 농도는 GCOM-W AMSR2 자료로 만들어지므로 이 기간 일 파일이 늦게 올라올 수 있습니다.
+    source: https://gportal.jaxa.jp/gpr/notice/notice/view/1512
   - date: "2026-09-04"
     level: warning
     title: "JAXA, 2026-09-02 이후 AMSR2 표준 L1·L2 일부가 한 장면보다 적은 자료로 제공"
@@ -329,4 +336,4 @@ watch_urls:
   - https://data.seaice.uni-bremen.de/amsr3/
   - https://gportal.jaxa.jp/gpr/notice/notice/list
 
-last_verified: "2026-10-13"
+last_verified: "2026-10-17"
