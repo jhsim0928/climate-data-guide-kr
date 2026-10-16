@@ -291,6 +291,13 @@ transitions:
         url: https://nsidc.org/sites/default/files/documents/user-guide/multi_vnp10a1-v002-userguide.pdf
 
 notices:
+  - date: "2026-10-16"
+    level: warning
+    title: Gaps in Level 0 VIIRS data between October 12 and 13 delay downstream processing
+    body: >-
+      NSIDC reported on the VNP10A1 data set page and the VIIRS news page that gaps in Level 0 SNPP, JPSS1 and JPSS2 VIIRS data between October 12 and 13 are causing a delay in processing data products further downstream, particularly for products relying on the CloudMask.
+      The science team is working to fill the gaps.
+    source: https://nsidc.org/data/viirs/news
   - date: "2026-10-06"
     level: critical
     title: Suomi NPP VIIRS data delivery ends on 2 November 2026 — no new VNP10 data
@@ -340,4 +347,4 @@ watch_urls:
   - https://nsidc.org/data/viirs/news
   - https://nsidc.org/data/vnp10a1/versions/2
 
-last_verified: "2026-10-13"
+last_verified: "2026-10-17"

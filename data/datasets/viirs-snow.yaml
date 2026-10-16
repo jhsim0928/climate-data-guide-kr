@@ -291,6 +291,13 @@ transitions:
         url: https://nsidc.org/sites/default/files/documents/user-guide/multi_vnp10a1-v002-userguide.pdf
 
 notices:
+  - date: "2026-10-16"
+    level: warning
+    title: 10월 12~13일 VIIRS Level 0 자료 공백으로 하위 산출물 처리 지연
+    body: >-
+      NSIDC는 10월 12~13일 Suomi NPP·JPSS-1·JPSS-2 VIIRS Level 0 자료에 공백이 생겨 하위 산출물, 특히 구름 마스크(CloudMask)를 쓰는 산출물 처리가 늦어지고 있으며 과학팀이 공백을 메우는 중이라고 VNP10A1 자료 페이지와 VIIRS 공지 페이지에 알렸습니다.
+      이 날짜 전후 VNP10·VJ110·VJ210 파일이 늦게 올라올 수 있습니다.
+    source: https://nsidc.org/data/viirs/news
   - date: "2026-10-06"
     level: critical
     title: Suomi NPP VIIRS 자료 전달 2026년 11월 2일 종료 — VNP10 신규 자료 중단
@@ -340,4 +347,4 @@ watch_urls:
   - https://nsidc.org/data/viirs/news
   - https://nsidc.org/data/vnp10a1/versions/2
 
-last_verified: "2026-10-13"
+last_verified: "2026-10-17"
