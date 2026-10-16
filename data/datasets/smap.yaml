@@ -329,6 +329,13 @@ transitions:
         url: https://nsidc.org/data/spl4cmdl/versions/8
 
 notices:
+  - date: "2026-10-15"
+    level: info
+    title: 2026-05-14~07-28 위치 오류 재처리 완료 — 이 기간 표준 제품 다시 받기 권고
+    body: >-
+      NSIDC DAAC는 2026년 8월 발견된 위치(geolocation) 오류를 바로잡기 위해 SMAP 표준 제품의 2026년 5월 14일~7월 28일 자료를 재처리했다고 알렸습니다.
+      이 기간 자료를 이미 받았다면 수정된 파일로 다시 받으라고 권고합니다.
+    source: https://nsidc.org/data/user-resources/data-announcements/user-notice-smap-data-reprocessing-complete
   - date: "2026-08-11"
     level: warning
     title: 2026-05-14~07-28 위치(geolocation) 오류 — 표준 제품 재처리 중
@@ -409,4 +416,4 @@ watch_urls:
   - https://nsidc.org/data/smap/news
   - https://nsidc.org/data/spl3smp
 
-last_verified: "2026-10-13"
+last_verified: "2026-10-16"
