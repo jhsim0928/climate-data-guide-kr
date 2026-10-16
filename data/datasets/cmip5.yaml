@@ -1,0 +1,323 @@
+# ─────────────────────────────────────────────────────────────
+# CMIP5 — 데이터셋 정보 파일
+# WCRP 결합모델 상호비교 프로젝트 5단계 (IPCC AR5 기반 자료)
+# ─────────────────────────────────────────────────────────────
+id: cmip5
+name: CMIP5
+full_name: Coupled Model Intercomparison Project Phase 5 (WCRP 결합모델 상호비교 프로젝트 5단계)
+category: model_output
+domain: model
+group: 전지구 모델 실험
+order: 30
+domains: [대기, 해양, 해빙, 육지]
+provider: WCRP 결합모델링 실무그룹(WGCM) · PCMDI(미국 LLNL) 조정 · 참여 모델링 그룹 · ESGF
+
+status: ended
+status_note: >-
+  CMIP5는 끝난 단계로, 자료는 더 이상 추가·갱신되지 않습니다. CMIP3·CMIP5는 새 ESGF 색인(ESGF-NG)으로 옮길 계획이 없다고 공지되었고,
+  CMIP5 자료를 보관하던 LLNL 노드도 2025-07-29 종료되었습니다. 2026-10-16 확인 시 ORNL의 ESGF 검색 색인에는 CMIP5 최신 데이터셋 92,556개가
+  남아 있어 내려받을 수 있지만, 새 연구에는 후속 단계(CMIP6, 그리고 공개가 시작된 CMIP7)를 우선 검토하세요.
+successor:
+  name: CMIP6
+  url: https://wcrp-cmip.org/cmip-phases/cmip6/
+  note: >-
+    CMIP6는 DECK와 여러 공인 MIP으로 구성되고, 미래 시나리오가 RCP에서 SSP 기반 시나리오로 바뀌었습니다. 자세한 차이는 아래 '후속 자료와의 차이'를 보세요.
+    2026년 9월부터는 CMIP7 자료도 ESGF에 공개되고 있습니다.
+
+transitions:
+  - from: CMIP5
+    to: CMIP6
+    to_id: cmip6
+    status: completed
+    summary: >-
+      CMIP6는 실험 35개를 한 설계로 묶은 CMIP5의 중앙집중형 구조 대신 DECK + historical + 공인 MIP의 연합형 구조를 택했고,
+      historical은 2014년까지 늘고 미래 시나리오는 RCP에서 SSP 기반 시나리오(ScenarioMIP)로 바뀌었습니다.
+    changes:
+      - aspect: 실험 구조
+        before: 실험 35개를 하나의 실험 설계로 정의한 중앙집중형 구조 (장기·근미래 10년 예측·대기 단독 실험 묶음)
+        after: 모든 모델이 수행하는 DECK 4개(AMIP·piControl·abrupt-4xCO2·1pctCO2)와 historical + 개별 설계된 CMIP 공인 MIP들의 연합형 구조
+      - aspect: historical 기간
+        before: 1850–2005 (최소 2005년까지)
+        after: 1850–2014 (역사 강제력 1850–2014)
+      - aspect: 미래 시나리오
+        before: RCP2.6·4.5·6.0·8.5 (2006–2100), 일부 2300년까지 연장
+        after: >-
+          ScenarioMIP의 SSP 기반 시나리오 (2015–2100). Tier 1은 SSP1-2.6·SSP2-4.5·SSP3-7.0·SSP5-8.5이며,
+          SSP1-2.6·2-4.5·5-8.5는 RCP2.6·4.5·8.5의 SSP 기반 갱신판, SSP3-7.0은 CMIP5에 없던 강제력 수준을 채움
+      - aspect: 앙상블 멤버 표기
+        before: "r<N>i<M>p<L> (realization·initialization·physics 3개 지수, 예: r1i1p1)"
+        after: "r i p f (forcing 지수 f 추가, 예: r1i1p1f1)"
+      - aspect: 출력 요청
+        before: CMIP5 표준 출력 목록 (MIP 테이블별)
+        after: 중앙에서 조정한 CMIP6 Data Request (MIP별 출력 요청을 한데 정의)
+      - aspect: 변수 이름·단위 예
+        before: "해빙 농도 `sic` (OImon, %), 해수면온도 `tos` (K), 해면 염분 `sos` (psu)"
+        after: "해빙 농도 `siconc` (SImon, %), 해수면온도 `tos` (degC), 해면 염분 `sos` (0.001)"
+      - aspect: 이용 조건
+        before: CMIP5 이용 약관 (2020년 5월 개정으로 모든 출력 '제한 없는' 이용, 출처 표시 등 조건)
+        after: 모델별 라이선스 — 대부분 CC BY 4.0 (2022년 10월 모든 모델 그룹이 비상업·동일조건 제한 해제)
+      - aspect: 제공처
+        before: ESGF 옛 색인 (새 ESGF-NG 색인으로 옮기지 않음, ORNL 색인 등에 남아 있음)
+        after: ESGF (Globus·STAC 색인), 클라우드 사본(Pangeo 등), Copernicus CDS 등
+    impacts:
+      - CMIP5 RCP와 CMIP6 SSP는 같은 이름의 강제력 수준이라도 배출·토지이용·에어로졸 경로가 다른 시나리오입니다. 두 단계 자료를 한 앙상블로 묶거나 한 시계열로 이어 붙이지 마세요.
+      - historical 종료 연도(2005 대 2014)와 시나리오 시작 연도(2006 대 2015)가 다르므로 기준기간·미래기간을 정할 때 따로 맞춰야 합니다.
+      - 변수 이름(sic → siconc)과 단위(tos K → degC, sos psu → 0.001)가 바뀐 경우가 있어, CMIP5용 스크립트를 CMIP6에 그대로 쓰면 값이 틀릴 수 있습니다.
+      - "앙상블 표기에 f가 추가되어 r1i1p1과 r1i1p1f1처럼 멤버 이름 형식이 다릅니다. 파일 이름·디렉터리를 해석하는 코드를 점검하세요."
+    sources:
+      - name: Taylor, Stouffer & Meehl (2012), An Overview of CMIP5 and the Experiment Design, BAMS
+        url: https://doi.org/10.1175/BAMS-D-11-00094.1
+      - name: Taylor et al. (2009/2011), A Summary of the CMIP5 Experiment Design (PCMDI)
+        url: https://pcmdi.llnl.gov/mips/cmip5/docs/Taylor_CMIP5_design.pdf
+      - name: WCRP CMIP — CMIP5 소개 (실험 35개, 2008년 WGCM 승인)
+        url: https://wcrp-cmip.org/cmip-phases/cmip5/
+      - name: Eyring et al. (2016), Overview of the CMIP6 experimental design and organization, GMD
+        url: https://doi.org/10.5194/gmd-9-1937-2016
+      - name: O'Neill et al. (2016), The Scenario Model Intercomparison Project (ScenarioMIP) for CMIP6, GMD
+        url: https://doi.org/10.5194/gmd-9-3461-2016
+      - name: CMIP5 Data Reference Syntax (DRS) and Controlled Vocabularies v1.3.1 (2012)
+        url: https://pcmdi.llnl.gov/mips/cmip5/docs/cmip5_data_reference_syntax.pdf
+      - name: PCMDI — Guide for CMIP6 data users (ripf 앙상블 표기)
+        url: https://pcmdi.llnl.gov/CMIP6/Guide/dataUsers.html
+      - name: PCMDI — CMIP6 Terms of Use 6.2
+        url: https://pcmdi.llnl.gov/CMIP6/TermsOfUse/TermsOfUse6-2.html
+
+period:
+  start: "1850-01"
+  end: "2100-12"
+  note: >-
+    historical 실험은 1850년부터 최소 2005년까지(설계 문서는 2012년까지 연장 권장), RCP 시나리오는 2006–2100년입니다(CMIP5 실험 설계 문서).
+    RCP4.5·8.5·2.6 일부는 2300년까지 연장되었고, AMIP은 1979–최소 2008년, 10년 예측(decadal) 실험은 1960년 이후 초기화 연도별로 따로 있습니다.
+
+resolution:
+  spatial_short: "모델마다 다름"
+  temporal_short: "1시간 미만"
+  spatial: 모델마다 다름 (각 모델의 원래 격자로 제공되며, 공통 격자로 맞춘 공식 자료는 없음)
+  vertical: >-
+    변수·테이블마다 다름 — 대기 3차원 변수는 표준 기압면(Amon 등), 해양 3차원 변수는 모델 깊이층(Omon), 지표 변수는 단일면.
+  temporal: >-
+    MIP 테이블별 빈도 — 월(mon), 일(day), 6시간(6hr), 3시간(3hr), 연(yr), 월 기후값(monClim), 고정장(fx).
+    1시간 미만(subhr) 자료는 일부 모델의 지점(cfSites) 출력에만 있습니다.
+
+coverage:
+  short: 전지구
+update: 갱신 종료 (CMIP5 단계 종료, 새 자료 추가 없음)
+license: >-
+  CMIP5 이용 약관(2020년 5월 개정, 문서 2021-09-28판)에 따라 CMIP5 보관소의 모든 모델 출력은 '제한 없이(unrestricted)' 쓸 수 있습니다.
+  단 자료 제공자를 사사 문장으로 밝히고, 모델·출력의 오류에 대해 모델링 그룹에 책임을 묻지 않으며, 자료를 넓게 재배포할 때는 받는 사람에게
+  약관과 원자료 위치를 알려야 합니다.
+account_required: false
+
+summary: >-
+  CMIP5는 WCRP 결합모델링 실무그룹(WGCM)이 2008년 승인하고 PCMDI가 조정한 결합모델 상호비교 프로젝트 5단계로, IPCC 5차 평가보고서(AR5)의 바탕이 된
+  전 세계 기후모델 출력 모음입니다. 장기 기후변화 실험(산업화 이전 대조, historical, RCP 시나리오, CO2 증가 실험 등), 10년 예측 실험, 대기 단독 실험 등
+  35개 실험으로 이루어졌으며, 탄소순환·구름 되먹임 이해, 10년 규모 예측 가능성, 같은 강제력에 대한 모델 간 반응 차이 원인 분석을 목표로 했습니다.
+
+time_convention:
+  summary: >-
+    대부분의 변수는 테이블 빈도(월·일·3시간 등)의 시간 평균이며, 시간 좌표는 평균 구간의 가운데 값이고 구간은 time_bnds로 제공됩니다.
+    고정장(fx)은 시간 축이 없습니다.
+  points:
+    - "시간 평균 변수의 시간 좌표는 평균 구간의 중간점(두 time_bnds의 평균)입니다 (CMIP5 Model Output Requirements)"
+    - "한 시뮬레이션의 모든 파일은 같은 기준 시각(days since …)을 써야 하지만, 달력(calendar)은 모델마다 다를 수 있습니다"
+    - "Amon의 tasmax·tasmin은 '일 최고·최저기온의 월평균'(cell_methods: time: maximum within days time: mean over days)이고, 일 최고·최저는 day 테이블에 있습니다"
+    - "고정장(fx) 변수는 앙상블 표기가 r0i0p0입니다 (CMIP5 DRS)"
+  source: https://pcmdi.llnl.gov/mips/cmip5/docs/CMIP5_output_metadata_requirements.pdf
+  source_name: Taylor & Doutriaux, CMIP5 Model Output Requirements (PCMDI)
+
+variables:
+  note: >-
+    CMIP5 CMOR 테이블(PCMDI/cmip5-cmor-tables, 2013-07-17판)과 ORNL ESGF 색인의 파일 메타데이터(variable_units)로 확인한 핵심 변수입니다.
+    변수명은 파일 안의 이름(out_name)이며, 같은 변수라도 테이블(Amon·day·Omon·OImon·fx)에 따라 빈도와 시간 처리 방식이 다릅니다.
+  full_list: https://pcmdi.llnl.gov/mips/cmip5/docs/standard_output.pdf
+  groups:
+    - name: 월평균 대기 (Amon)
+      kind: mean
+      period: 월
+      items:
+        - text: "근지표 기온 — `tas` (K)"
+          std: [t2m]
+        - "강수량 — `pr` (kg m-2 s-1)"
+        - "해면기압 — `psl` (Pa)"
+        - "지표 기압 — `ps` (Pa)"
+        - "근지표 비습 — `huss` (1)"
+        - text: "근지표 풍속 — `sfcWind` (m s-1)"
+          std: [wind10]
+        - "지표 하향 단파복사 — `rsds` (W m-2)"
+        - "대기상단 상향 장파복사 — `rlut` (W m-2)"
+        - "전운량 — `clt` (%)"
+        - "기온(기압면) — `ta` (K)"
+        - "동서풍(기압면) — `ua` (m s-1)"
+        - "지위고도(기압면) — `zg` (m)"
+    - name: 일 대기 (day)
+      kind: mean
+      period: 일
+      items:
+        - text: "일평균 근지표 기온 — `tas` (K)"
+          std: [t2m]
+        - text: "일 최고기온 — `tasmax` (K)"
+          kind: max
+        - text: "일 최저기온 — `tasmin` (K)"
+          kind: min
+        - "일 강수량 — `pr` (kg m-2 s-1)"
+        - "일평균 해면기압 — `psl` (Pa)"
+        - text: "일평균 근지표 풍속 — `sfcWind` (m s-1)"
+          std: [wind10]
+    - name: 월평균 해양 (Omon)
+      kind: mean
+      period: 월
+      items:
+        - "해수면온도 — `tos` (K)"
+        - "해면 염분 — `sos` (psu)"
+        - "해수면 높이(지오이드 기준) — `zos` (m)"
+        - "해수 잠재수온 — `thetao` (K)"
+        - "해수 염분 — `so` (psu)"
+        - "혼합층 두께(시그마-T 기준) — `mlotst` (m)"
+    - name: 월평균 해빙 (OImon)
+      kind: mean
+      period: 월
+      items:
+        - "해빙 면적 비율 — `sic` (%)"
+        - "해빙 두께 — `sit` (m)"
+    - name: 고정장 (fx)
+      kind: static
+      items:
+        - "육지 비율 — `sftlf` (%)"
+        - "지표 고도 — `orog` (m)"
+        - "대기 격자 면적 — `areacella` (m2)"
+        - "해양 격자 면적 — `areacello` (m2)"
+        - "해저 깊이 — `deptho` (m)"
+
+access:
+  - name: ORNL ESGF 검색 색인 (Solr 호환 검색 API, project=CMIP5)
+    url: https://esgf-node.ornl.gov/esgf-1-5-bridge?project=CMIP5&limit=0&facets=institute&format=application%2Fsolr%2Bjson
+    login: false
+    method: 검색 API → 파일별 HTTP·OPeNDAP·Globus 주소
+    note: >-
+      2026-10-16 확인 시 CMIP5 데이터셋 97,939개(최신 버전 92,556개)가 색인되어 있고, 파일 주소는 ORNL·ALCF·캐나다 CCCma·일본 DIAS·GFDL·NASA NCCS 등
+      데이터 노드를 가리킵니다. ORNL 노드 파일의 OPeNDAP 접근 화면은 로그인 없이 열렸습니다. 다른 노드의 파일은 노드 상태에 따라 받히지 않을 수 있습니다.
+
+example:
+  lang: python
+  note: >-
+    ORNL ESGF 검색 API(Solr 형식 응답)로 파일 목록을 찾고, ORNL 노드의 OPeNDAP 주소로 바로 엽니다. 응답의 url 항목은 "주소|형식|서비스" 꼴입니다.
+  code: |
+    # pip install requests xarray netCDF4
+    import requests
+    import xarray as xr
+
+    params = {
+        "project": "CMIP5", "type": "File", "latest": "true",
+        "experiment": "historical", "time_frequency": "mon", "cmor_table": "Amon",
+        "variable": "tas", "model": "CNRM-CM5", "ensemble": "r1i1p1",
+        "limit": 100, "format": "application/solr+json",
+    }
+    r = requests.get("https://esgf-node.ornl.gov/esgf-1-5-bridge", params=params, timeout=120)
+    docs = r.json()["response"]["docs"]
+
+    # OPeNDAP 주소만 골라 ".html"을 떼어 냄 (같은 파일의 복제본이 여러 노드에 있을 수 있음)
+    urls = sorted({u.split("|")[0].removesuffix(".html")
+                   for d in docs for u in d["url"] if u.endswith("|OPENDAP")})
+    ds = xr.open_mfdataset(urls, combine="by_coords")
+    print(ds["tas"])
+
+tips:
+  - >-
+    CMIP3·CMIP5는 새 ESGF 색인으로 옮겨지지 않아, 새 MetaGrid 화면이나 intake-esgf 기본 설정(STAC·Globus 색인)에서는 CMIP5가 검색되지 않을 수 있습니다.
+    WCRP 안내는 CEDA·DKRZ 보관소 같은 다른 경로로 받아야 할 수 있다고 하므로, 지금 동작하는 경로(ORNL 색인 등)를 먼저 확인하세요.
+  - >-
+    PCMDI의 CMIP5 'Getting Started' 안내(2012년 작성)는 esgf-node.llnl.gov 계정·OpenID 등록과 연구용/상업용 그룹 가입을 설명하지만,
+    LLNL 노드는 2025-07-29 종료되었고 이용 약관도 2020년 5월에 '제한 없는 이용'으로 바뀌었습니다. 옛 절차를 그대로 따르지 마세요.
+  - >-
+    historical은 2005년, RCP는 2006년에 시작하므로 연속 시계열을 만들려면 같은 모델·같은 멤버(rip)의 historical과 RCP 파일을 이어 붙여야 합니다.
+    이때 RCP 파일의 부모 실험·멤버(parent_experiment_rip)가 맞는지 확인하세요.
+  - >-
+    파일은 모델·실험·멤버(r1i1p1 등)·테이블·버전(vYYYYMMDD)·시간 구간으로 나뉘어 받아집니다. 같은 파일이 여러 노드에 복제되어 있을 수 있으니
+    데이터셋 ID와 버전으로 중복을 걸러 내고, 최신 버전(latest=true)인지 확인하세요.
+  - >-
+    모델마다 달력(gregorian·noleap·360_day 등)과 격자가 다릅니다. 여러 모델을 비교할 때는 cftime으로 시간을 읽고, 보존적 보간 등으로 공통 격자에 맞춘 뒤 계산하세요.
+  - >-
+    PCMDI의 CMIP5 정오표(2012-01~2015-02)에는 단위 오류(예: NorESM1-M 증발량 1000배, MIROC-ESM 육지 비율을 0–1로 저장), 시간 구간 누락·중복, 잘못된 분기 시각 같은 알려진 문제가 정리되어 있습니다.
+    쓰려는 모델이 목록에 있는지 먼저 확인하세요.
+  - 여러 모델·멤버를 한꺼번에 받고 합치는 방법은 이 사이트의 '모델 자료 받기' 페이지(/model-data/)를 참고하세요.
+
+citations:
+  dataset: []
+  papers:
+    - label: CMIP5 개요·실험 설계 논문
+      text: >-
+        Taylor, K. E., Stouffer, R. J., and Meehl, G. A. (2012): An Overview of CMIP5 and the Experiment Design.
+        Bulletin of the American Meteorological Society, 93(4), 485–498.
+      doi: 10.1175/BAMS-D-11-00094.1
+      bibtex: |
+        @article{taylor2012cmip5,
+          author  = {Taylor, Karl E. and Stouffer, Ronald J. and Meehl, Gerald A.},
+          title   = {An Overview of {CMIP5} and the Experiment Design},
+          journal = {Bulletin of the American Meteorological Society},
+          volume  = {93},
+          number  = {4},
+          pages   = {485--498},
+          year    = {2012},
+          doi     = {10.1175/BAMS-D-11-00094.1}
+        }
+  acknowledgement: >-
+    PCMDI의 CMIP5 인용 안내는 자료를 "the CMIP5 multi-model ensemble"로 부르고, 사용한 모델·기관 표(공식 CMIP5 모델 이름)를 넣고, 다음 사사 문장을 쓰도록 합니다.
+    "We acknowledge the World Climate Research Programme's Working Group on Coupled Modelling, which is responsible for CMIP, and we thank the climate
+    modeling groups (listed in Table XX of this paper) for producing and making available their model output. For CMIP the U.S. Department of Energy's
+    Program for Climate Model Diagnosis and Intercomparison provides coordinating support and led development of software infrastructure in partnership
+    with the Global Organization for Earth System Science Portals." (Table XX는 본인 논문의 모델 표 번호로 바꿈.)
+    가능하면 사용한 모델의 기술 논문도 인용합니다.
+
+notices:
+  - date: "2025-07-29"
+    level: warning
+    title: LLNL ESGF 노드 종료
+    body: >-
+      CMIP 자료를 보관·제공하던 LLNL ESGF 노드가 2025년 7월 29일 종료되었습니다. 예전 안내에 나오는 esgf-node.llnl.gov 경로는 쓸 수 없습니다.
+    source: https://wcrp-cmip.org/esgf-information/
+  - date: "2025-02-12"
+    level: warning
+    title: CMIP3·CMIP5는 새 ESGF 색인으로 옮기지 않음
+    body: >-
+      ESGF 차세대 체계(ESGF-NG)로 옮기는 과정에서 CMIP3·CMIP5 같은 이전 프로젝트는 새 색인으로 옮길 계획이 없다고 안내되었습니다.
+      CMIP5는 처음에는 검색되지 않을 수 있으며, 자료는 보존되지만 CEDA·DKRZ 보관소 같은 별도 경로로 받아야 할 수 있습니다.
+      (안내 페이지에는 게시일이 없어, 날짜는 WCRP CMIP 뉴스 목록의 'ESGF 인프라 변경 예고' 공지 날짜를 따랐습니다.)
+    source: https://wcrp-cmip.org/esgf-information/
+  - date: "2020-05"
+    level: info
+    title: CMIP5 이용 약관 개정 — 모든 출력 '제한 없는' 이용
+    body: >-
+      개정 약관이 기존 이용 약관을 대체하며, CMIP5 보관소의 모든 모델 출력을 '제한 없이(unrestricted)' 쓸 수 있게 되었습니다.
+      사사 문장 표기 등 약관에 적힌 조건은 그대로 지켜야 합니다.
+    source: https://pcmdi.llnl.gov/mips/cmip5/terms-of-use.html
+
+links:
+  - name: PCMDI CMIP5 페이지
+    url: https://pcmdi.llnl.gov/mips/cmip5/
+  - name: CMIP5 이용 약관 (Terms of Use)
+    url: https://pcmdi.llnl.gov/mips/cmip5/terms-of-use.html
+  - name: CMIP5 인용 안내 (Citation)
+    url: https://pcmdi.llnl.gov/mips/cmip5/citation.html
+  - name: CMIP5 실험 설계 문서 (Taylor et al.)
+    url: https://pcmdi.llnl.gov/mips/cmip5/docs/Taylor_CMIP5_design.pdf
+  - name: CMIP5 표준 출력 목록 (Standard output, PDF)
+    url: https://pcmdi.llnl.gov/mips/cmip5/docs/standard_output.pdf
+  - name: CMIP5 정오표 (Errata)
+    url: https://pcmdi.llnl.gov/mips/cmip5/errata.html
+  - name: CMIP5 CMOR 테이블 (GitHub)
+    url: https://github.com/PCMDI/cmip5-cmor-tables/blob/master/Tables/CMIP5_Amon
+  - name: CEDA 카탈로그 — WCRP CMIP5 프로젝트 기록
+    url: https://catalogue.ceda.ac.uk/uuid/d2d8f982d66cce55bb59fc769ca39264
+  - name: WCRP CMIP — CMIP5 소개
+    url: https://wcrp-cmip.org/cmip-phases/cmip5/
+  - name: ESGF 변경 안내 (WCRP CMIP)
+    url: https://wcrp-cmip.org/esgf-information/
+  - name: CMIP7 FAQ — CMIP5가 ESGF-NG로 옮겨지지 않는 이유
+    url: https://wcrp-cmip.github.io/cmip7-guidance/docs/CMIP7/FAQ/
+
+watch_urls:
+  - https://wcrp-cmip.org/esgf-information/
+  - https://wcrp-cmip.org/cmip-data-access/
+  - https://wcrp-cmip.github.io/cmip7-guidance/docs/CMIP7/FAQ/
+
+last_verified: "2026-10-16"

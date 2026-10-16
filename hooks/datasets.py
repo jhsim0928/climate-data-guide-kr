@@ -107,6 +107,7 @@ DOMAINS = {
     "seaice": ("해빙", ["재분석", "관측 기반 분석장", "위성 관측 자료", "해빙 이동", "해빙 지수"]),
     "land": ("지면", ["육상 재분석·자료동화", "토양수분", "증발산", "식생", "토지피복", "지표면온도·알베도", "적설", "육수저장량", "산불"]),
     "satellite": ("위성", ["강수", "구름·복사", "기온·수증기", "에어로졸·대기 성분", "해수면온도", "해상풍", "해색", "해면 염분", "해면고도·파랑", "해빙", "빙하·빙상", "지면"]),
+    "model": ("기후모델", ["전지구 모델 실험", "지역 다운스케일링", "통계 다운스케일링·편이보정", "국가 기후변화 시나리오"]),
 }
 DOMAIN_INTRO = {
     "atmosphere": "대기 재분석(전지구·지역·육상)과 관측 기반 강수·기온·복사 자료입니다. 현역 자료와 함께, 옛 논문 재현이나 비교 연구에 필요한 이전 세대 자료도 정리했습니다.",
@@ -114,6 +115,8 @@ DOMAIN_INTRO = {
     "seaice": "해빙 농도·두께·부피·이동 자료입니다. 모델 기반 재분석, 관측 기반 분석장, 위성 관측 자료, 해빙 이동 벡터, 해빙 면적·범위 지수로 나눠 정리했습니다.",
     "land": "육상 재분석·자료동화 시스템과 위성 기반 토양수분·증발산·식생(LAI·NDVI)·토지피복·지표면온도·알베도·적설·육수저장량·산불 자료입니다. 수문·농업·생태·지면 과정 연구에 쓰는 자료를 모았습니다.",
     "satellite": "위성 관측으로 만든 자료를 관측 대상별로 모았습니다. 강수·구름·복사·기온·대기 성분, 해수면온도·해상풍·해색·염분·해면고도, 해빙·빙상, 지면 자료가 있습니다. 다른 탭에 실린 위성 자료도 함께 실었습니다.",
+    "model": "기후모델 시뮬레이션 자료입니다. 전지구 모델 비교 실험(CMIP), 이를 지역 모델로 상세화한 CORDEX, 통계적으로 상세화·편이보정한 자료, 국가 기후변화 시나리오를 세대별로 정리했습니다. "
+             "모델 자료는 모델·실험·멤버·격자마다 파일이 나뉘어 있으니, [모델 자료 받기](../model-data.md)에서 가용성 표와 받기·합치기 스크립트를 함께 보세요.",
 }
 # 소분류 아래에 붙는 한 줄 설명 (없으면 생략)
 GROUP_INTRO = {
@@ -142,6 +145,10 @@ GROUP_INTRO = {
     "해면 염분": "L 밴드 마이크로파 위성으로 관측한 해면 염분 자료입니다.",
     "해면고도·파랑": "위성 고도계로 관측한 해면고도와 유의파고 자료입니다.",
     "빙하·빙상": "위성으로 관측한 빙하·빙상의 유속·고도·질량 변화 자료입니다.",
+    "전지구 모델 실험": "여러 나라 기관의 전지구 기후모델이 같은 실험 설계(과거 재현·미래 시나리오 등)로 돌린 결과를 모은 국제 비교 실험(CMIP)입니다. 모델·실험·멤버·격자·시간 구간마다 파일이 따로 제공됩니다.",
+    "지역 다운스케일링": "전지구 모델 결과를 경계 조건으로 지역 기후모델을 돌려 특정 대륙·지역을 더 촘촘한 격자로 상세화한 자료(CORDEX)입니다.",
+    "통계 다운스케일링·편이보정": "전지구 모델 결과를 관측 자료에 맞춰 통계적으로 편이보정하고 촘촘한 공통 격자로 상세화한 자료입니다. 모든 모델이 같은 격자·달력·변수 이름으로 제공되는 경우가 많아 바로 쓰기 쉽습니다.",
+    "국가 기후변화 시나리오": "국가 기관이 공식 기후변화 대응 정책의 기준으로 만든 기후변화 시나리오입니다.",
 }
 NAV_PLACEHOLDER = "__DATA_SECTIONS__"
 
@@ -173,12 +180,12 @@ REQUIRED = [
 DATE_RE = re.compile(r"^\d{4}-\d{2}(-\d{2})?$")
 
 # 자료 간 비교를 쉽게 하기 위한 대표 해상도 표기 (세부 내용은 각 데이터셋 페이지에)
-SPATIAL_SHORT_RE = re.compile(r"^\d+(\.\d+)? km \(\d+(\.\d+)?°(×\d+(\.\d+)?°)?\)$")
-TEMPORAL_SHORT = ["10분", "30분", "1시간", "3시간", "6시간", "1일", "5일", "7일", "8일", "10일", "15일", "16일", "1개월", "1년"]
-TEMPORAL_HOURS = {"10분": 1 / 6, "30분": 0.5, "1시간": 1, "3시간": 3, "6시간": 6, "1일": 24, "5일": 120, "7일": 168, "8일": 192,
+SPATIAL_SHORT_RE = re.compile(r"^(\d+(\.\d+)? km \(\d+(\.\d+)?°(×\d+(\.\d+)?°)?\)|모델마다 다름)$")  # 기후모델 자료는 "모델마다 다름" 허용
+TEMPORAL_SHORT = ["1시간 미만", "10분", "30분", "1시간", "3시간", "6시간", "1일", "5일", "7일", "8일", "10일", "15일", "16일", "1개월", "1년"]
+TEMPORAL_HOURS = {"1시간 미만": 0.1, "10분": 1 / 6, "30분": 0.5, "1시간": 1, "3시간": 3, "6시간": 6, "1일": 24, "5일": 120, "7일": 168, "8일": 192,
                   "10일": 240, "15일": 360, "16일": 384, "1개월": 720, "1년": 8760}
 # 공간 범위 (목록·비교표 '범위' 열). 순서 = 정렬 순서. 빠진 곳·위경도는 coverage.note에
-COVERAGE = ["전지구", "준전지구", "양극", "북극", "북극·북대서양", "북극 일부", "남극", "아시아", "북미"]
+COVERAGE = ["전지구", "준전지구", "양극", "북극", "북극·북대서양", "북극 일부", "남극", "아시아", "북미", "대륙별 영역"]
 
 # 해상도 표기 주의 — 목록·비교·데이터셋 페이지에 접힌 상자로 표시
 RES_NOTE = [
@@ -328,7 +335,9 @@ def validate(d: dict, src: Path) -> None:
         errors.append("time_convention.summary(시간 표기 규칙 요약)가 없어요")
     r = d.get("resolution") or {}
     if not SPATIAL_SHORT_RE.match(str(r.get("spatial_short", ""))):
-        errors.append('resolution.spatial_short는 "28 km (0.25°)" 또는 "56 km (0.5°×0.625°)" 형식으로 적어주세요')
+        errors.append('resolution.spatial_short는 "28 km (0.25°)" 또는 "56 km (0.5°×0.625°)" 형식으로 적어주세요 (기후모델 자료는 "모델마다 다름"도 가능)')
+    if r.get("spatial_short") == "모델마다 다름" and dom != "model":
+        errors.append('resolution.spatial_short "모델마다 다름"은 기후모델(domain: model) 자료에만 쓸 수 있어요')
     if r.get("temporal_short") not in TEMPORAL_SHORT:
         errors.append(f"resolution.temporal_short는 {TEMPORAL_SHORT} 중 하나")
     if (d.get("coverage") or {}).get("short") not in COVERAGE:
@@ -387,6 +396,7 @@ ORG_RULES = [  # (provider에 들어 있는 말, 기관) — provider 글에서 
     ("Bremen", "Univ. of Bremen"), ("Remote Sensing Systems", "RSS"), ("Climatology Lab", "Climatology Lab"),
     ("Climate Hazards", "UCSB CHC"), ("UCSB", "UCSB CHC"), ("Ghent", "Ghent Univ."), ("겐트", "Ghent Univ."), ("KNMI", "KNMI"),
     ("CM SAF", "EUMETSAT"), ("VITO", "VITO"),
+    ("WCRP", "WCRP"), ("기상청", "KMA"), ("Korea Meteorological", "KMA"), ("ISIMIP", "ISIMIP"),
 ]
 
 
@@ -450,7 +460,7 @@ def std_tags(d: dict, text: str, explicit=None) -> list[str]:
     doms = {d["domain"]} | {x["domain"] for x in d.get("also_in") or []}
     out = []
     for c in sv["concepts"]:
-        if c.get("domains") and not doms & set(c["domains"]):
+        if c.get("domains") and not doms & set(c["domains"]) and "model" not in doms:  # 기후모델은 모든 분야 변수를 다룸
             continue
         if c.get("dataset_groups") and d.get("group") not in c["dataset_groups"]:
             continue
@@ -961,6 +971,7 @@ def render_index(datasets: list[dict]) -> str:
         '<a href="../find-variable/"><strong>변수로 찾기</strong><span>강수·기온·SST처럼 변수 이름으로 자료 찾기</span></a>'
         '<a href="../compare/"><strong>자료 비교</strong><span>최대 4개 자료를 한 표로 나란히</span></a>'
         '<a href="../variables/"><strong>표준 변수 목록</strong><span>자료마다 다른 변수 이름 한눈에</span></a>'
+        '<a href="../model-data/"><strong>모델 자료 받기</strong><span>CMIP 가용성 표와 받기·합치기 스크립트</span></a>'
         "</nav>"
     )
     L[L.index("# 전체 데이터셋 목록") + 2:L.index("# 전체 데이터셋 목록") + 2] = [tools, "", f'<nav class="domain-jump">{chips}</nav>', ""]
@@ -1034,7 +1045,7 @@ NOTICE_HOSTS = [
     ("ecmwf.int", "ECMWF"), ("marine.copernicus.eu", "Copernicus Marine"), ("copernicus.eu", "Copernicus C3S"),
     ("ncei.noaa.gov", "NOAA NCEI"), ("psl.noaa.gov", "NOAA PSL"), ("cpc.ncep.noaa.gov", "NOAA CPC"), ("weather.gov", "NOAA NWS"),
     ("nsidc.org", "NSIDC"), ("gesdisc", "NASA GES DISC"), ("earthdata.nasa.gov", "NASA Earthdata"), ("gpm.nasa.gov", "NASA GPM"),
-    ("giss.nasa.gov", "NASA GISS"), ("gmao", "NASA GMAO"), ("larc.nasa.gov", "NASA LaRC"), ("nasa.gov", "NASA"),
+    ("nccs.nasa.gov", "NASA NCCS"), ("giss.nasa.gov", "NASA GISS"), ("gmao", "NASA GMAO"), ("larc.nasa.gov", "NASA LaRC"), ("nasa.gov", "NASA"),
     ("metoffice.gov.uk", "Met Office"), ("mri-jma.go.jp", "JMA MRI"), ("jma.go.jp", "JMA"), ("ceda.ac.uk", "CEDA"),
     ("uea.ac.uk", "UEA CRU"), ("eumetsat.int", "EUMETSAT OSI SAF"), ("awi.de", "AWI"), ("esa.int", "ESA"),
     ("ucar.edu", "NSF NCAR"), ("diasjp.net", "DIAS"), ("hirosaki-u.ac.jp", "APHRODITE"), ("chikyu.ac.jp", "APHRODITE"),
@@ -1046,6 +1057,8 @@ NOTICE_HOSTS = [
     ("cmsaf.eu", "EUMETSAT CM SAF"), ("gleam.eu", "GLEAM"), ("globalfiredata.org", "GFED"), ("nesdis.noaa.gov", "NOAA NESDIS"),
     ("ospo.noaa.gov", "NOAA OSPO"), ("aviso.altimetry.fr", "AVISO"), ("pace.oceansciences.org", "NASA PACE"),
     ("esa-worldcover.org", "ESA"), ("terrascope.be", "VITO Terrascope"), ("drroyspencer.com", "UAH"),
+    ("wcrp-cmip", "WCRP CMIP"), ("pcmdi.llnl.gov", "PCMDI"), ("esgf", "ESGF"), ("cordex", "WCRP CORDEX"),
+    ("isimip.org", "ISIMIP"), ("kma.go.kr", "KMA"), ("climate.go.kr", "KMA"),
 ]
 
 
@@ -1225,7 +1238,7 @@ def compare_data(datasets: list[dict]) -> list[dict]:
             "category": cat_label(d["category"]), "provider": d["provider"], "status": badge(d["status"]),
             "period": period_text(d["period"]), "coverage": cov_text(d),
             "coverage_s": cov_label((d.get("coverage") or {}).get("short") or "-"),
-            "spatial": r.get("spatial_short") or "-",
+            "spatial": loc(r.get("spatial_short") or "-"),
             "spatial_d": oneline(r.get("spatial") or "-"),
             "temporal_s": t_label(r.get("temporal_short") or "-"),
             "vertical": oneline(r.get("vertical") or "-"), "temporal": oneline(r.get("temporal") or "-"),
@@ -1351,6 +1364,100 @@ def compare_app(datasets: list[dict], mode: str = "compare") -> str:
         '<div class="table-scroll" data-search-exclude><table id="cmp-table" hidden></table></div>'
         '<section id="var-results" data-search-exclude hidden></section>'
     ) + f'<script type="application/json" id="cmp-data">{data}</script>' + f'<script type="application/json" id="std-data">{stdj}</script>'
+
+
+MODEL_CATALOG = ROOT / "data" / "model-catalog" / "catalog.json"  # scripts/model_catalog.py 가 매주 갱신 (.github/workflows/model_catalog.yml)
+
+
+def model_data_app() -> str:
+    """모델 자료 받기 페이지: 가용성 카탈로그(JSON)와 화면 틀 — 표·스크립트는 docs/javascripts/model-data.js 가 그림"""
+    try:
+        cat = json.loads(MODEL_CATALOG.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        cat = None
+    if not cat or not any((p or {}).get("avail") for p in (cat.get("projects") or {}).values()):
+        return loc(
+            '<div class="admonition warning" data-search-exclude><p class="admonition-title">가용성 표 준비 중</p>'
+            "<p>모델 가용성 표(카탈로그)가 아직 만들어지지 않았습니다. 매주 자동으로 ESGF 색인을 확인해 채워 넣으니, "
+            "그동안은 아래 안내와 각 자료 페이지의 받는 방법을 참고하세요.</p></div>"
+        )
+    data = json.dumps(cat, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
+    radio = lambda name, items: "".join(  # noqa: E731
+        f'<label class="check"><input type="radio" name="{name}" value="{v}"{" checked" if i == 0 else ""}> <span>{t}</span></label>'
+        for i, (v, t) in enumerate(items)
+    )
+    ui = (
+        '<p class="hint" id="mdd-loading" data-search-exclude>가용성 표를 불러오는 중입니다… (자바스크립트가 꺼져 있으면 보이지 않습니다)</p>'
+        '<div id="mdd-app" class="mdd-app" data-search-exclude hidden>'
+        '<p class="hint" id="mdd-meta"></p>'
+        '<section class="cdg-form mdd-pick">'
+        '<h2 id="mdd-step1">1. 자료 고르기</h2>'
+        '<div class="mdd-row">'
+        '<label class="field">프로젝트<select id="mdd-project"></select></label>'
+        '<label class="field">빈도<select id="mdd-freq"></select></label>'
+        '<label class="field mdd-grow">변수 <span class="hint">(괄호 안: 모델 수)</span><select id="mdd-var"></select></label>'
+        "</div>"
+        '<fieldset><legend>실험 (여러 개 고를 수 있음)</legend><div class="check-grid" id="mdd-exps"></div>'
+        '<label class="check"><input type="checkbox" id="mdd-only-all"> <span>고른 실험이 모두 있는 모델만 보기</span></label></fieldset>'
+        "</section>"
+        '<h2 id="mdd-step2">2. 가용성 표</h2>'
+        '<p class="hint">모델 이름 왼쪽 칸으로 스크립트에 넣을 모델을 고릅니다(처음에는 전부). 실험 칸의 숫자는 멤버 수, 아래는 기간이며 '
+        "칸에 마우스를 올리면 멤버 목록·파일 수·크기가 보입니다. 크기·파일 수는 고른 실험의 모든 멤버를 합친 값입니다. "
+        '<span id="mdd-count"></span></p>'
+        '<div class="table-scroll mdd-table-wrap"><table id="mdd-table"></table></div>'
+        '<section class="cdg-form mdd-options" id="mdd-options">'
+        '<h2 id="mdd-step3">3. 스크립트 옵션</h2>'
+        '<fieldset><legend>멤버</legend>'
+        + radio("mdd-members", [("first", "모델별 첫 멤버"), ("all", "전부"), ("custom", "직접 입력")])
+        + '<input type="text" id="mdd-members-custom" placeholder="예) r1i1p1f1, r2i1p1f1" disabled></fieldset>'
+        '<fieldset><legend>기간 (연도)</legend><div class="mdd-row">'
+        '<label class="field">시작<input type="number" id="mdd-y0" value="1985" min="1" max="2500"></label>'
+        '<label class="field">끝<input type="number" id="mdd-y1" value="2050" min="1" max="2500"></label></div>'
+        '<p class="hint">비워 두면 전체 기간입니다.</p></fieldset>'
+        '<fieldset><legend>영역</legend>'
+        + radio("mdd-region", [("box", "위경도 상자"), ("global", "전지구")])
+        + '<div class="mdd-row" id="mdd-box">'
+        '<label class="field">남 (°N)<input type="number" id="mdd-lat0" value="30" step="any"></label>'
+        '<label class="field">북 (°N)<input type="number" id="mdd-lat1" value="45" step="any"></label>'
+        '<label class="field">서 (°E)<input type="number" id="mdd-lon0" value="120" step="any"></label>'
+        '<label class="field">동 (°E)<input type="number" id="mdd-lon1" value="135" step="any"></label></div>'
+        '<p class="hint">기본값은 한반도 주변(30–45°N, 120–135°E)입니다.</p></fieldset>'
+        '<fieldset><legend>달력·격자·단위</legend><div class="mdd-row">'
+        '<label class="field">달력 통일<select id="mdd-cal"><option value="">그대로</option><option value="noleap">noleap (365일)</option>'
+        '<option value="standard">standard (그레고리력)</option></select></label>'
+        '<label class="field">재격자<select id="mdd-regrid"><option value="">없음</option><option value="bilinear">공통 1° 격자 · bilinear</option>'
+        '<option value="conservative">공통 1° 격자 · conservative</option></select></label></div>'
+        '<label class="check"><input type="checkbox" id="mdd-pr"> <span>강수 pr → mm/day</span></label>'
+        '<label class="check"><input type="checkbox" id="mdd-k"> <span>기온 K → °C</span></label>'
+        '<label class="check"><input type="checkbox" id="mdd-join" checked> <span>historical + 시나리오 이어 붙이기 (같은 멤버끼리)</span></label>'
+        "</fieldset>"
+        '<fieldset><legend>출력</legend>'
+        + radio("mdd-output", [("per_model", "모델별 파일"), ("ensemble", "여러 모델을 model 차원으로 묶은 한 파일")])
+        + '<label class="check"><input type="checkbox" id="mdd-stream"> <span>내려받지 않고 OPeNDAP으로 필요한 부분만 읽기 (실험적 — 노드에 따라 실패할 수 있음)</span></label>'
+        "</fieldset>"
+        '<div class="mdd-warn" id="mdd-warn" hidden></div>'
+        "</section>"
+        '<h2 id="mdd-step4">4. 스크립트</h2>'
+        '<p class="hint" id="mdd-sum"></p>'
+        '<div class="mdd-tabs" role="tablist">'
+        '<button type="button" class="mdd-tab is-on" role="tab" aria-selected="true" aria-controls="mdd-pane-search">ESGF에서 받아 합치기 (intake-esgf)</button>'
+        '<button type="button" class="mdd-tab" role="tab" aria-selected="false" aria-controls="mdd-pane-merge">이미 받은 파일 폴더 합치기</button>'
+        "</div>"
+        '<div class="mdd-pane" id="mdd-pane-search" role="tabpanel">'
+        '<p class="hint">고른 모델을 ESGF에서 찾아 받고(원본은 ~/.esgf/), 기간·영역을 잘라 시간 순으로 이어 붙여 cmip_out/ 에 저장합니다.</p>'
+        '<div class="mdd-actions"><button type="button" class="md-button md-button--primary" data-copy="mdd-code-search">복사</button>'
+        '<button type="button" class="md-button" data-save="mdd-code-search">.py 저장</button></div>'
+        '<pre class="mdd-code"><code id="mdd-code-search" class="language-python"></code></pre></div>'
+        '<div class="mdd-pane" id="mdd-pane-merge" role="tabpanel" hidden>'
+        '<label class="field">받은 파일이 있는 폴더<input type="text" id="mdd-folder" value="./cmip_files"></label>'
+        '<p class="hint">폴더(하위 폴더 포함)의 CMIP6·CMIP7 파일 이름을 읽어 변수·모델·실험·멤버·격자별로 묶고, 시간 순 정렬 → 겹침·빈 구간 검사 → '
+        "버전이 여럿이면 최신만 → 이어 붙여 하나로 저장합니다. 버전은 폴더 이름(v20190429 같은)에서 읽습니다.</p>"
+        '<div class="mdd-actions"><button type="button" class="md-button md-button--primary" data-copy="mdd-code-merge">복사</button>'
+        '<button type="button" class="md-button" data-save="mdd-code-merge">.py 저장</button></div>'
+        '<pre class="mdd-code"><code id="mdd-code-merge" class="language-python"></code></pre></div>'
+        "</div>"
+    )
+    return loc(ui) + f'<script type="application/json" id="model-catalog">{data}</script>'
 
 
 def domain_summary(datasets: list[dict]) -> str:
@@ -1682,6 +1789,8 @@ def on_page_markdown(markdown, page, config, files):
         markdown = markdown.replace("<!-- VARIABLE_APP -->", compare_app(_datasets, mode="var"))
     if "<!-- COMPARE_APP -->" in markdown:
         markdown = markdown.replace("<!-- COMPARE_APP -->", compare_app(_datasets))
+    if "<!-- MODEL_DATA_APP -->" in markdown:
+        markdown = markdown.replace("<!-- MODEL_DATA_APP -->", model_data_app())
     if "<!-- RES_NOTE -->" in markdown:
         markdown = markdown.replace("<!-- RES_NOTE -->", "\n".join(res_note()))
     if "<!-- DISCLAIMER -->" in markdown:
@@ -1705,7 +1814,8 @@ def on_page_markdown(markdown, page, config, files):
 
 def _cut(text: str, n: int = 150) -> str:
     """검색 결과 설명용: n자 안에서 문장 단위로 자름"""
-    t = oneline(re.sub(r"`|\*\*|\*", "", str(text or ""))).replace('"', "'").replace("<", "‹").replace(">", "›")
+    text = re.sub(r"\[([^\]]+)\]\([^)]+\)", r"\1", str(text or ""))  # 마크다운 링크는 글자만
+    t = oneline(re.sub(r"`|\*\*|\*", "", text)).replace('"', "'").replace("<", "‹").replace(">", "›")
     if len(t) <= n:
         return t
     cut = t[:n]
@@ -1728,6 +1838,9 @@ PAGE_SEO = {
     "notices.md": (("중요 공지 — 기후자료 제공 중단·서비스 이전·품질 문제 모음", "Notices — discontinuations, service migrations and quality issues of climate datasets"),
                    ("ERA5·JRA-3Q·NCEP 재분석, OISST·ERSST, 해빙 위성자료 등의 제공 중단, 버전 교체, 서비스 이전, 품질 문제 공지를 원문 링크와 함께 최신순으로 모았습니다.",
                     "Discontinuations, version changes, service migrations and quality issues for ERA5, JRA-3Q, NCEP reanalyses, OISST, ERSST, sea-ice satellite products and more, newest first with links to the original announcements.")),
+    "model-data.md": (("모델 자료 받기 — CMIP6·CMIP7 가용성 표와 받기·합치기 Python 스크립트", "Model data download — CMIP6/CMIP7 availability table and download-and-merge Python scripts"),
+                      ("CMIP6·CMIP7 모델별로 실험·멤버·격자·달력·파일 크기를 한 표로 보고, intake-esgf로 받아 기간·영역을 자르고 달력·격자를 맞춰 하나로 합치는 Python 스크립트를 만들어 줍니다.",
+                       "See which CMIP6 and CMIP7 models have each experiment, with members, grids, calendars and file sizes, and generate a Python script that downloads with intake-esgf, subsets, harmonises calendars and grids and merges the files.")),
     "transitions.md": (("세대별 비교 — 재분석·관측 자료 버전이 바뀌면 무엇이 달라지나", "Generation changes — what changes between dataset generations and versions"),
                        ("ERA-Interim→ERA5, JRA-55→JRA-3Q, ERSST v5→v6, CS2SMOS→CS3SMOS 등 세대·버전이 바뀔 때 기간·해상도·관측 입력·변수가 어떻게 달라지는지와 바꿔 쓸 때 주의할 점.",
                         "ERA-Interim→ERA5, JRA-55→JRA-3Q, ERSST v5→v6, CS2SMOS→CS3SMOS and more: how period, resolution, observational input and variables change, and what to watch when switching.")),

@@ -1,0 +1,469 @@
+# ─────────────────────────────────────────────────────────────
+# CMIP6 — 데이터셋 정보 파일
+# WCRP 결합모델 상호비교 프로젝트 6단계 (DECK + historical + CMIP6 승인 MIP)
+# ─────────────────────────────────────────────────────────────
+id: cmip6
+name: CMIP6
+full_name: Coupled Model Intercomparison Project Phase 6 (WCRP 결합모델 상호비교 프로젝트 6단계)
+category: model_output
+domain: model
+group: 전지구 모델 실험
+order: 20
+domains: [대기, 해양, 해빙, 육지]
+provider: WCRP CMIP (WGCM 조정) · 참여 모델링 센터 · ESGF(지구시스템 그리드 연합)
+
+status: deprecated
+status_note: >-
+  2026-10-16 확인 시 CMIP6 자료는 모두 그대로 받을 수 있으며, 지금도 가장 많은 모델이 모인 다중모델 기후모델 자료입니다(삭제 예정 없음).
+  다만 ESGF의 CMIP6 프로젝트는 2025-04-07부터 새 자료 게시를 받지 않고, 후속 단계인 CMIP7 자료가 2026-09-04부터 ESGF에 올라오기 시작해
+  '대체 예정'으로 표시했습니다. ESGF 검색 체계도 새 색인으로 옮겨 가는 중이라 검색 경로·도구 설정이 바뀌고 있으니 아래 공지와 팁을 확인하세요.
+
+transitions:
+  - from: CMIP6
+    to: CMIP7
+    to_id: cmip7
+    status: planned
+    date: "2026-09"
+    summary: >-
+      CMIP7 자료가 2026-09-04부터 ESGF에 공개되기 시작했지만(발표 당시 모델 5개·기관 3곳·실험 7개, 2026-10-16 STAC 색인 집계 모델 8개·기관 5곳·실험 24개), 아직 초기 단계라 다중모델 분석의 중심은 당분간 CMIP6입니다.
+      실험 설계·시나리오·변수 이름·파일 이름 규칙이 모두 바뀌었으므로 두 자료를 한 앙상블로 섞지 말고 따로 다루세요.
+    changes:
+      - aspect: 실험 설계
+        before: DECK + CMIP historical + CMIP6 승인 MIP 23개
+        after: 확장된 DECK(historical·esm-hist·piClim-control·piClim-anthro·piClim-4xCO2 추가) + Assessment Fast Track 우선 실험 58개
+      - aspect: historical 기간
+        before: 1850–2014
+        after: 1850-01-01 ~ 2021-12-31 (172년)
+      - aspect: 미래 시나리오
+        before: SSP 시나리오(ssp119·ssp126·ssp245·ssp370·ssp585 등), 2015–2100, 일부 연장
+        after: 새 ScenarioMIP 시나리오(scen7-h·hl·m·ml·l·ln·vl, 배출 구동 esm-scen7-*), 2022-01-01 ~ 2100-12-31, 연장(-ext)은 최대 2500년
+      - aspect: 데이터 요청(Data Request)
+        before: DR6 — 실험 322개에 변수 약 2,063개, 빈도는 MIP 테이블(Amon·day 등)로 지정
+        after: DR7 v1.2.2.5 — 전체 규모는 DR6와 비슷, 모든 실험에 요청하는 핵심 변수(ESM-BCV) 135개, 활용 사례(Opportunities) 46개 단위로 정리
+      - aspect: 변수 이름
+        before: 테이블 + 변수 (예 Amon.tas)
+        after: 브랜드 변수 + 빈도 + 지역 (예 atmos.tas.tavg-h2m-hxy-u.mon.glb) — 빈도가 변수 정의에서 분리됨
+      - aspect: 파일 이름·디렉터리(DRS)
+        before: <variable_id>_<table_id>_<source_id>_<experiment_id>_<member_id>_<grid_label>[_<기간>].nc
+        after: <variable_id>_<branding_suffix>_<frequency>_<region>_<grid_label>_<source_id>_<experiment_id>_<variant_label>[_<기간>].nc (member_id 대신 variant_label)
+      - aspect: 격자 표기(grid_label)
+        before: gn(원본 격자)·gr(재격자)·gr1~gr9·gm(전지구 평균)
+        after: 등록된 격자 번호 g<세 자리 수>(g100 이상, 예 g104)
+      - aspect: 라이선스 표기
+        before: 대부분 CC BY 4.0(일부 CC0), 모델별 라이선스 페이지가 파일 속성보다 우선
+        after: 데이터셋마다 license_id 속성에 CC-BY-4.0 또는 CC0-1.0
+      - aspect: 검색 색인
+        before: ESGF Solr 색인 → 미국 노드는 Globus 기반 ESGF 1.5 색인
+        after: ESGF 차세대(ESGF-NG) STAC 색인(discovery.east.esgf.io·discovery.west.esgf.io)
+      - aspect: 메타데이터 규약
+        before: CF-1.7 CMIP-6.2
+        after: CF-1.11~CF-1.13 (2026-10-16 STAC 색인 CMIP7 컬렉션 요약)
+    impacts:
+      - CMIP 평가 체계(REF)는 "두 앙상블은 직접 비교할 수 없다"며 CMIP6와 CMIP7 결과를 따로 보여 줍니다. 두 세대 모델을 한 앙상블 평균·범위에 섞지 마세요.
+      - historical 종료 연도(2014 대 2021)와 시나리오(SSP 대 scen7-*)가 달라 미래 변화량의 기준 기간과 시나리오를 그대로 맞대어 비교할 수 없습니다.
+      - intake-esgf v2026.9.4부터 기본 프로젝트가 CMIP7입니다. 예전 CMIP6 스크립트에는 project="CMIP6"을 꼭 넣으세요.
+      - 테이블(Amon 등)·member_id·gn/gr를 전제로 한 파일 이름 해석·디렉터리 탐색 코드는 CMIP7에서 고쳐야 합니다.
+    sources:
+      - name: Mackallah et al. (2026), CMIP7 Data Request, GMD 19, 8053–8079
+        url: https://doi.org/10.5194/gmd-19-8053-2026
+      - name: Dunne et al. (2025), CMIP7 and Fast Track, GMD 18, 6671–6700
+        url: https://doi.org/10.5194/gmd-18-6671-2025
+      - name: Van Vuuren et al. (2026), ScenarioMIP-CMIP7, GMD 19, 2627–2656
+        url: https://doi.org/10.5194/gmd-19-2627-2026
+      - name: WCRP CMIP — CMIP7 개요 (DECK 확장)
+        url: https://wcrp-cmip.org/cmip-phases/cmip7/
+      - name: WCRP CMIP — CMIP6 개요 (DECK·승인 MIP 23개)
+        url: https://wcrp-cmip.org/cmip-phases/cmip6/
+      - name: CMIP7 Guidance — Updates for Users (2026-09-04 첫 공개, REF 안내)
+        url: https://wcrp-cmip.github.io/cmip7-guidance/docs/Updates_for_Users/
+      - name: CMIP7 Guidance — Guidance for users (브랜드 변수)
+        url: https://wcrp-cmip.github.io/cmip7-guidance/docs/CMIP7/Guidance_for_users/
+      - name: CMIP7 Guidance — Global Attributes (파일 이름·DRS·grid_label·license_id)
+        url: https://wcrp-cmip.github.io/cmip7-guidance/docs/CMIP7/Global_Attributes/
+      - name: CMIP7 Guidance — historical 실험 설정
+        url: https://wcrp-cmip.github.io/cmip7-guidance/docs/CMIP7/Experiment_set_up_and_Forcings/historical/
+      - name: CMIP7 Guidance — scen7-m 실험 설정
+        url: https://wcrp-cmip.github.io/cmip7-guidance/docs/CMIP7/Experiment_set_up_and_Forcings/scen7-m/
+      - name: CMIP6 Global Attributes, DRS, Filenames and CVs (v6.2.7)
+        url: https://wcrp-cmip.github.io/WGCM_Infrastructure_Panel/Papers/CMIP6_global_attributes_filenames_CVs_v6.2.7.pdf
+      - name: CMIP6_CVs — grid_label
+        url: https://github.com/WCRP-CMIP/CMIP6_CVs/blob/main/CMIP6_grid_label.json
+      - name: intake-esgf 릴리스 v2026.9.4 (기본 프로젝트 CMIP7, STAC 색인)
+        url: https://github.com/esgf2-us/intake-esgf/releases/tag/v2026.9.4
+      - name: ESGF STAC 색인 — CMIP7 컬렉션
+        url: https://discovery.west.esgf.io/collections/CMIP7
+
+period:
+  start: "1850-01"
+  end: "2100-12"
+  note: >-
+    대표 실험 기준입니다. historical은 1850~2014년, ScenarioMIP의 SSP 시나리오(ssp119·ssp126·ssp245·ssp370·ssp585 등)는 2015~2100년이며
+    일부 모델은 2300년(드물게 2500년)까지 연장했습니다. 다른 실험은 기간이 다릅니다 — 예를 들어 amip은 1979~2014년, DAMIP의 hist-nat·hist-GHG는
+    1850~2020년이고, piControl·1pctCO2·abrupt-4xCO2 같은 이상화 실험은 실제 연도가 아닌 모델 연도입니다(CMIP6_CVs 실험 목록, ESGF 색인 확인).
+
+resolution:
+  spatial_short: "모델마다 다름"
+  temporal_short: "1시간 미만"
+  spatial: >-
+    모델마다 다름. 파일 전역 속성 nominal_resolution(CMIP6 CV 값 0.5 km~10000 km, 1x1 degree)이 대략적인 격자 간격을 나타내며,
+    2026-10-16 ORNL 색인에서 historical·Amon·tas 최신 데이터셋은 250 km 1,198개, 100 km 630개, 500 km 535개, 10000 km 3개, 50 km 2개였습니다.
+    grid_label은 gn = 모델 원본(native) 격자, gr = 제공 기관이 고른 대상 격자로 재격자화한 자료, gr1~gr9 = 그 밖의 재격자, gm = 전지구 평균입니다
+    (CMIP6_CVs grid_label). 해양·해빙 변수는 대개 모델 원본의 곡선 격자(gn, 예 ORCA1)로 제공됩니다.
+  vertical: >-
+    변수(테이블)마다 다름 — Amon의 3차원 대기 변수는 기압면 19층(plev19), day 테이블의 3차원 변수는 기압면 8층(plev8)이며(CMOR 표),
+    일부 테이블은 plev3·plev27이나 모델층(alevel)을 씁니다. 해양 3차원 변수는 모델 연직층(lev, 단위 m)입니다. 근지표 변수는 2 m(height2m)·10 m(height10m)입니다.
+  temporal: >-
+    빈도(frequency)는 CMIP6_CVs의 16가지 — subhrPt(1시간 미만 순간 샘플), 1hr·1hrPt·1hrCM, 3hr·3hrPt, 6hr·6hrPt, day, mon·monPt·monC, yr·yrPt, dec, fx(고정장).
+    이름 끝에 Pt가 붙은 빈도는 순간 샘플, 붙지 않은 빈도는 그 간격의 평균입니다. 자료 대부분은 월(mon)·일(day) 평균이며,
+    1시간 미만 자료는 CFsubhr·Esubhr 테이블의 일부 변수(지점·격자 순간값)뿐입니다.
+
+coverage:
+  short: 전지구
+  note: >-
+    대부분 전지구 격자 자료입니다. 일부 테이블은 영역이 다릅니다 — 빙상 테이블(ImonAnt·ImonGre 등)은 남극·그린란드만, CFsubhr 등의 일부 변수는
+    선택된 지점(site)만, EmonZ·EdayZ 등은 동서 평균(위도-고도 단면) 자료입니다.
+update: 신규 게시 종료 (2025-04-07부터 ESGF CMIP6 프로젝트에 새 자료 게시를 받지 않음). 이미 게시된 자료는 계속 제공
+license: >-
+  CMIP6 이용 약관(Terms of Use 6.2, 2022-10-12) 기준 CC BY 4.0입니다. 2022년 10월 모든 모델 그룹이 이전의 CC BY-NC-SA·CC BY-SA 제한을 풀었고,
+  모델별 현재 라이선스는 CMIP6 라이선스 표(132개 중 CC BY 4.0 125개, CC0 6개)에서 확인합니다. 이 표가 NetCDF 파일의 license 전역 속성보다 우선합니다.
+  인용(데이터 인용 지침), 사사 문장, 사용한 모델·기관 표가 요구됩니다.
+account_required: false
+
+summary: >-
+  CMIP6는 세계기후연구프로그램(WCRP) 결합모델작업반(WGCM)이 조정한 결합모델 상호비교 프로젝트 6단계로, 전 세계 모델링 센터가 같은 실험 설계로 돌린
+  기후모델 출력을 ESGF를 통해 공개한 자료입니다. 모든 모델이 수행하는 기본 실험(DECK)과 historical, 그리고 23개 CMIP6 승인 MIP(ScenarioMIP·DAMIP 등)
+  실험으로 이루어지며, IPCC 6차 평가보고서(AR6)의 바탕이 되었습니다. 미래 기후 전망, 원인 규명(탐지·귀속), 모델 평가,
+  지역 다운스케일링·편이보정의 입력 자료로 가장 널리 쓰입니다.
+
+time_convention:
+  summary: >-
+    변수마다 시간 처리 방식이 cell_methods 속성에 적혀 있습니다. Amon·day 같은 평균 테이블의 변수는 time_bnds로 표시된 구간(한 달·하루)의 평균("time: mean")이고,
+    tasmax·tasmin은 하루 최댓값·최솟값, 빈도 이름에 Pt가 붙은 3hrPt·6hrPt·1hrPt·subhrPt 테이블 변수는 그 시각의 순간 샘플("time: point")입니다.
+  points:
+    - "평균 변수의 time 값은 time_bnds 구간 안의 한 시각일 뿐 그 시각의 값이 아닙니다. 예: EC-Earth3 historical Amon 파일은 time이 time_bnds의 가운데(월 중앙)에 있지만, CF 규약은 '구간 안 또는 끝'만 요구하므로 모델마다 위치가 다를 수 있습니다. 월·일을 가를 때는 time_bnds를 기준으로 하세요"
+    - "Amon의 tasmax·tasmin은 cell_methods가 \"time: maximum within days time: mean over days\"(최솟값은 minimum)로, 하루 최고·최저기온을 한 달 동안 평균한 값입니다. day 테이블의 tasmax·tasmin은 하루 최댓값·최솟값 자체입니다"
+    - "같은 변수 이름도 테이블에 따라 의미가 다릅니다 — 3hr 테이블의 pr은 3시간 평균, tas·uas·vas·huss는 3hrPt(순간값, 좌표 이름 time1)입니다. 테이블(table_id)·frequency를 함께 확인하세요"
+    - "강수 pr은 누적량이 아니라 평균 플럭스(kg m-2 s-1)입니다. 일 강수량(mm/일)은 86400을 곱해 구합니다"
+    - "time의 calendar 속성(proleptic_gregorian·standard·noleap·360_day 등)이 모델마다 다릅니다. ESGF 색인의 SSP585 월자료 시작 시각만 봐도 2015-01-16T12, 2015-01-16T00, 2015-01-15T12 등으로 제각각입니다"
+  source: https://cfconventions.org/cf-conventions/cf-conventions.html#cell-methods
+  source_name: CF Conventions 7장(셀 경계·cell_methods·기후 통계) + CMIP6 CMOR 표(github.com/PCMDI/cmip6-cmor-tables)
+
+variables:
+  note: >-
+    CMIP6 CMOR 표(PCMDI/cmip6-cmor-tables, data_specs_version 01.00.33)와 ORNL ESGF 색인·실제 파일 속성으로 단위와 cell_methods를 확인한 핵심 변수입니다.
+    변수명은 CMOR 이름(파일 속 변수명)이며, 같은 변수가 여러 테이블(빈도)에 있으니 검색할 때 table_id를 함께 지정하세요.
+    모든 모델이 모든 변수를 낸 것은 아닙니다. 전체 목록은 CMOR 표와 CMIP6 Data Request에서 볼 수 있습니다.
+  full_list: https://github.com/PCMDI/cmip6-cmor-tables/tree/main/Tables
+  groups:
+    - name: 월평균 대기 — 지표·단일면 (Amon)
+      kind: mean
+      period: 월
+      items:
+        - "근지표(2 m) 기온 — `tas` (K)"
+        - text: "일 최고기온의 월평균 — `tasmax` (K)"
+          kind: max
+          period: 일 최고값의 월평균
+          note: 'cell_methods "area: mean time: maximum within days time: mean over days"'
+        - text: "일 최저기온의 월평균 — `tasmin` (K)"
+          kind: min
+          period: 일 최저값의 월평균
+          note: 'cell_methods "area: mean time: minimum within days time: mean over days"'
+        - "강수량 — `pr` (kg m-2 s-1)"
+        - "해면기압 — `psl` (Pa)"
+        - "근지표(2 m) 비습 — `huss` (1)"
+        - "근지표(2 m) 상대습도 — `hurs` (%)"
+        - "근지표(10 m) 동서 바람 — `uas` (m s-1)"
+        - "근지표(10 m) 남북 바람 — `vas` (m s-1)"
+        - "지표 하향 단파복사 — `rsds` (W m-2)"
+        - "지표 하향 장파복사 — `rlds` (W m-2)"
+        - "전운량 — `clt` (%)"
+    - name: 월평균 대기 — 기압면 19층 (Amon, plev19)
+      kind: mean
+      period: 월
+      items:
+        - "기온 — `ta` (K)"
+        - "동서풍 — `ua` (m s-1)"
+        - "남북풍 — `va` (m s-1)"
+        - "지위고도 — `zg` (m)"
+        - "비습 — `hus` (1)"
+    - name: 일 대기 (day)
+      kind: mean
+      period: 일
+      items:
+        - "일평균 근지표(2 m) 기온 — `tas` (K)"
+        - text: "일 최고기온 — `tasmax` (K)"
+          kind: max
+          note: 'cell_methods "area: mean time: maximum"'
+        - text: "일 최저기온 — `tasmin` (K)"
+          kind: min
+          note: 'cell_methods "area: mean time: minimum"'
+        - "일 강수량 — `pr` (kg m-2 s-1)"
+        - "해면기압 — `psl` (Pa)"
+        - "근지표(2 m) 비습 — `huss` (1)"
+        - "근지표(10 m) 풍속 — `sfcWind` (m s-1)"
+        - "근지표(10 m) 동서 바람 — `uas` (m s-1)"
+        - "근지표(10 m) 남북 바람 — `vas` (m s-1)"
+        - "지표 하향 단파복사 — `rsds` (W m-2)"
+    - name: 월평균 해양 (Omon)
+      kind: mean
+      period: 월
+      items:
+        - "해수면온도 — `tos` (degC)"
+        - text: "해면 염분 — `sos` (0.001)"
+          note: 소수의 오래된 파일은 단위가 psu로 적혀 있습니다(ORNL 색인).
+        - "해수면 높이(지오이드 기준) — `zos` (m)"
+        - "해수 잠재수온 — `thetao` (degC)"
+        - "해수 염분 — `so` (0.001)"
+    - name: 월평균 해빙 (SImon)
+      kind: mean
+      period: 월
+      items:
+        - "해빙 면적 비율(해양 격자) — `siconc` (%)"
+        - text: "해빙 두께 — `sithick` (m)"
+          note: >-
+            격자 평균이 아니라 해빙이 덮인 부분만 평균한 실제(floe) 두께입니다(cell_methods "area: time: mean where sea_ice"). CMIP5처럼 부피를 격자 면적으로 나눈 값이 아닙니다.
+        - "단위 면적당 해빙 질량 — `simass` (kg m-2)"
+    - name: 고정장 (fx·Ofx)
+      kind: static
+      items:
+        - text: "대기 격자 면적 — `areacella` (m2)"
+          note: '대기 격자 변수의 면적 가중 평균에 씁니다(cell_methods "area: sum").'
+        - "육지 비율(호수 포함) — `sftlf` (%)"
+        - "지표 고도 — `orog` (m)"
+        - text: "해양 격자 면적 — `areacello` (m2)"
+          note: 해양·해빙 변수(Omon·SImon)의 면적 가중에 씁니다.
+        - "해양 비율 — `sftof` (%)"
+        - "해저 깊이 — `deptho` (m)"
+
+access:
+  - name: ESGF MetaGrid — ORNL (미국 Globus 색인)
+    url: https://esgf-node.ornl.gov/search
+    login: false
+    method: 웹 검색 → HTTP 다운로드·wget 스크립트·Globus
+    note: >-
+      CMIP6 자료는 이용 제한 없이 공개되어 있어 로그인 없이 파일을 받을 수 있습니다(Globus 전송만 무료 Globus 계정 필요).
+      WCRP는 DKRZ·CEDA·NCI·IPSL의 검색 화면도 안내하지만, 과도기에는 유럽 노드(옛 Solr 색인)와 미국 노드(Globus 색인)의 검색 결과가 다를 수 있습니다.
+  - name: intake-esgf (Python)
+    url: https://intake-esgf.readthedocs.io/en/latest/
+    login: false
+    method: Python 패키지 (검색 → 내려받아 xarray로 열기, 면적 정보 자동 포함)
+    note: >-
+      2026-09 이후 기본 프로젝트가 CMIP7이므로 search()에 project="CMIP6"을 넣어야 합니다. CMIP6를 STAC 색인에 다시 올리는 과정의 오류로
+      일부 member_id가 잘못 표시되니, 문서 권고대로 CMIP6 검색 때는 STAC 색인을 끄세요(아래 예시).
+  - name: ORNL ESGF 1.5 색인 검색 API (Solr 호환)
+    url: https://esgf-node.ornl.gov/esgf-1-5-bridge
+    login: false
+    method: REST 검색 API (project·experiment_id·table_id·variable_id 등 조건 → 파일별 HTTPS·OPeNDAP·Globus 주소)
+    note: 예전 ESGF Solr 검색 API와 같은 형식의 응답을 돌려줍니다. latest=true로 최신 버전만 골라 보세요.
+  - name: Copernicus Climate Data Store — CMIP6 climate projections
+    url: https://cds.climate.copernicus.eu/datasets/projections-cmip6
+    login: true
+    method: 웹 양식·CDS API (영역·기간 잘라 받기, NetCDF4 CF-1.7)
+    note: >-
+      historical(1850–2014)과 SSP(2015–2100)의 일·월 자료 중 주요 변수 46개만 제공합니다. 요청하면 자료가 있는 ESGF 노드에서 잘라 보내 줍니다.
+      CDS 계정과 데이터셋 이용 약관 동의가 필요합니다.
+  - name: Pangeo/ESGF 클라우드 사본 — Google Cloud (gs://cmip6)·AWS (s3://cmip6-pds)
+    url: https://pangeo-data.github.io/pangeo-cmip6-cloud/
+    login: false
+    method: 클라우드 Zarr (카탈로그 https://storage.googleapis.com/cmip6/pangeo-cmip6.json, intake-esm으로 열기)
+    note: >-
+      일부 핵심 CMIP6 자료를 Zarr로 바꿔 둔 사본입니다. 문서에 따르면 AWS 사본은 복사 과정이 고장 나 Google Cloud 사본과 다를 수 있고,
+      새 버전(Pangeo-ESGF CMIP6 Zarr Data 2.0, leap-stc/cmip6-leap-feedstock)이 시험 중입니다. -noQC 카탈로그에는 정오표 상태가 함께 들어 있습니다.
+  - name: AWS Open Data — CMIP6 (Zarr cmip6-pds, NetCDF esgf-world)
+    url: https://registry.opendata.aws/cmip6/
+    login: false
+    method: S3 (--no-sign-request), Zarr(us-west-2)·원본 NetCDF(us-east-2)
+    note: ESGF·Pangeo가 관리합니다. NetCDF 사본 목록은 https://cmip6-nc.s3.amazonaws.com/esgf-world.csv.gz 에 있습니다.
+
+example:
+  lang: python
+  note: >-
+    intake-esgf 문서의 ESGFCatalog 검색 방식입니다. 기본 프로젝트가 CMIP7로 바뀌었으므로 project="CMIP6"을 넣고,
+    문서 권고에 따라 CMIP6 검색 동안 STAC 색인을 끕니다(기본 Globus 색인으로 검색).
+  code: |
+    # pip install intake-esgf
+    import intake_esgf
+    from intake_esgf import ESGFCatalog
+
+    stac_off = {"discovery.west.esgf.io": False, "discovery.east.esgf.io": False}
+    with intake_esgf.conf.set(indices=stac_off):
+        cat = ESGFCatalog()
+        cat.search(
+            project="CMIP6",
+            experiment_id="historical",
+            source_id="CanESM5",
+            member_id="r1i1p1f1",
+            table_id="Amon",
+            variable_id="tas",
+        )
+        print(cat)                    # 검색된 데이터셋 확인
+        dsd = cat.to_dataset_dict()   # 로컬 캐시에 받은 뒤 xarray Dataset 딕셔너리로 반환
+
+    ds = dsd["tas"]
+    print(ds["tas"].attrs.get("cell_methods"), ds.time.encoding.get("calendar"))
+
+tips:
+  - >-
+    한 변수도 모델·실험·멤버·격자·버전·시간 구간별로 여러 파일로 나뉘어 받아집니다. 파일 이름은
+    <variable_id>_<table_id>_<source_id>_<experiment_id>_<member_id>_<grid_label>_<기간>.nc 형식(예 tas_Amon_EC-Earth3_historical_r1i1p1f1_gr_188201-188212.nc,
+    1년 단위 파일)이고, 디렉터리에 버전(vYYYYMMDD)이 들어갑니다. 여러 모델·멤버를 한꺼번에 받고 합치는 방법과 가용성 표는 이 사이트의
+    '모델 자료 받기' 페이지(/model-data/)를 참고하세요.
+  - >-
+    모델마다 달력이 다릅니다(proleptic_gregorian·standard·noleap·360_day 등). xarray로 열 때 cftime으로 디코딩하고, 월·연 평균은 time_bnds 길이로
+    가중하세요. 360_day 모델은 2월 30일이 있고 noleap 모델은 2월 29일이 없습니다.
+  - >-
+    멤버 이름 r<k>i<l>p<m>f<n>은 실현(realization)·초기화·물리·강제력 번호입니다. f2처럼 f 번호가 다르면 강제력 설정이 다른 실험이고
+    (예: 2026-10-16 ORNL 색인에서 UKESM1-0-LL historical은 r1i1p1f1 없이 f2·f3 멤버만 있음), 그 차이가 variant_info 속성에 잘 적혀 있지 않을 수 있으니 ES-DOC 문서를 확인하세요.
+    DCPP 예측 실험은 member_id가 s1960-r1i1p1f1처럼 sub_experiment_id(초기화 연도)가 앞에 붙습니다.
+  - >-
+    gn은 모델 원본 격자, gr은 재격자 자료입니다. 같은 모델·변수가 gn과 gr로 함께 있을 수 있으니 하나만 고르고,
+    면적 평균에는 cos(위도) 대신 같은 모델·격자의 areacella(대기)·areacello(해양) 고정장을 쓰세요. 여러 모델을 공통 격자로 맞출 때는
+    보존적 보간(예 xESMF conservative)을 쓰고, 해양 곡선 격자는 경계 좌표가 필요합니다.
+  - >-
+    오류가 확인되면 기존 데이터셋이 철회(retracted)되고 새 버전으로 다시 올라옵니다. 분석 전에 최신 버전(latest)인지와
+    ESGF 정오표(errata.esgf.io)를 확인하고, 논문에는 사용한 데이터셋 버전(없으면 내려받은 날짜)을 적으세요.
+  - >-
+    ESGF가 옛 Solr 색인을 퇴역시키고 새 STAC 색인으로 옮기는 중입니다. 과도기에는 노드마다 검색 결과가 다를 수 있고, STAC 색인의 일부 CMIP6 항목은
+    member_id 앞에 sub_experiment_id가 잘못 붙어 있습니다(예 s2000-r1i1p1f1, 실제는 r1i1p1f1). 예전 Solr 주소(esgf-node.llnl.gov 등)를 쓰던 스크립트는
+    LLNL 노드 종료(2025-07-29)로 동작하지 않을 수 있습니다.
+  - >-
+    파일 안의 license 속성이 옛 값(예 CC BY-SA 4.0)으로 남아 있는 경우가 있습니다. 이용 약관은 CMIP6 라이선스 표가 파일 속성보다 우선한다고 밝히므로
+    현재 라이선스는 그 표에서 확인하세요.
+  - >-
+    CMIP6와 CMIP7을 한 앙상블로 섞지 마세요. historical 종료 연도·시나리오·강제력이 다르고, CMIP 평가 체계(REF)도 두 앙상블을 따로 보여 줍니다.
+    intake-esgf 등 도구의 기본값이 CMIP7로 바뀌었으니 CMIP6 검색에는 project="CMIP6"을 명시하세요.
+
+citations:
+  dataset:
+    - label: CMIP6 모델 출력 데이터 인용 (필수)
+      text: >-
+        CMIP6 데이터 인용 지침에 따라 사용한 모델 출력을 모델·실험 단위(세밀) 또는 모델·MIP 단위(대략)로 인용하고, 데이터셋 버전(없으면 내려받은 날짜)을 넣습니다.
+        WDC-Climate(DKRZ) 인용 서비스에서 데이터셋별 인용문과 DOI를 찾을 수 있습니다.
+        예: EC-Earth Consortium (EC-Earth) (2019). EC-Earth-Consortium EC-Earth3 model output prepared for CMIP6 CMIP historical.
+        Version YYYYMMDD. Earth System Grid Federation. https://doi.org/10.22033/ESGF/CMIP6.4700
+  papers:
+    - label: CMIP6 실험 설계 개요 논문 (권장 인용)
+      text: >-
+        Eyring, V., Bony, S., Meehl, G. A., Senior, C. A., Stevens, B., Stouffer, R. J., and Taylor, K. E. (2016):
+        Overview of the Coupled Model Intercomparison Project Phase 6 (CMIP6) experimental design and organization.
+        Geoscientific Model Development, 9, 1937–1958.
+      doi: 10.5194/gmd-9-1937-2016
+      bibtex: |
+        @article{eyring2016cmip6,
+          author  = {Eyring, V. and Bony, S. and Meehl, G. A. and Senior, C. A. and Stevens, B. and Stouffer, R. J. and Taylor, K. E.},
+          title   = {Overview of the Coupled Model Intercomparison Project Phase 6 ({CMIP6}) experimental design and organization},
+          journal = {Geoscientific Model Development},
+          volume  = {9},
+          number  = {5},
+          pages   = {1937--1958},
+          year    = {2016},
+          doi     = {10.5194/gmd-9-1937-2016}
+        }
+    - label: SSP 시나리오 실험(ScenarioMIP) 논문 — 시나리오 자료를 쓸 때
+      text: >-
+        O'Neill, B. C., Tebaldi, C., van Vuuren, D. P., Eyring, V., Friedlingstein, P., Hurtt, G., Knutti, R., Kriegler, E., Lamarque, J.-F.,
+        Lowe, J., Meehl, G. A., Moss, R., Riahi, K., and Sanderson, B. M. (2016): The Scenario Model Intercomparison Project (ScenarioMIP) for CMIP6.
+        Geoscientific Model Development, 9, 3461–3482.
+      doi: 10.5194/gmd-9-3461-2016
+      bibtex: |
+        @article{oneill2016scenariomip,
+          author  = {O'Neill, B. C. and Tebaldi, C. and van Vuuren, D. P. and Eyring, V. and Friedlingstein, P. and Hurtt, G. and Knutti, R. and Kriegler, E. and Lamarque, J.-F. and Lowe, J. and Meehl, G. A. and Moss, R. and Riahi, K. and Sanderson, B. M.},
+          title   = {The Scenario Model Intercomparison Project ({ScenarioMIP}) for {CMIP6}},
+          journal = {Geoscientific Model Development},
+          volume  = {9},
+          number  = {9},
+          pages   = {3461--3482},
+          year    = {2016},
+          doi     = {10.5194/gmd-9-3461-2016}
+        }
+  acknowledgement: >-
+    CMIP6 이용 약관(6.2)은 논문에 다음과 비슷한 사사 문장을 넣도록 요구합니다(원문 그대로 권장):
+    "We acknowledge the World Climate Research Programme, which, through its Working Group on Coupled Modelling, coordinated and promoted CMIP6.
+    We thank the climate modeling groups for producing and making available their model output, the Earth System Grid Federation (ESGF) for archiving
+    the data and providing access, and the multiple funding agencies who support CMIP6 and ESGF."
+    또한 사용한 모델·기관을 공식 CMIP6 이름으로 정리한 표를 넣고, 논문이 DOI를 받으면 CMIP6 출판물 목록에 등록하도록 요청합니다.
+
+notices:
+  - date: "2026-09-28"
+    level: warning
+    title: CMIP6 STAC 색인 게시 오류 — 일부 member_id 잘못 표시
+    body: >-
+      intake-esgf v2026.9.28에 'CMIP6 STAC 게시 오류' 경고가 추가되었습니다. intake-esgf 문서에 따르면 CMIP6를 새 STAC 색인에 다시 올리는 과정의 오류로
+      일부 항목의 member_id 앞에 sub_experiment_id가 붙어 있고(예 s2000-r1i1p1f1, 원래 r1i1p1f1), 해결될 때까지 CMIP6 검색에서는 STAC 색인을 끄라고 권합니다.
+    source: https://github.com/esgf2-us/intake-esgf/releases/tag/v2026.9.28
+  - date: "2026-09-04"
+    level: info
+    title: 첫 CMIP7 자료 ESGF 공개
+    body: >-
+      CMIP7 데이터셋이 ESGF에 공개되기 시작했습니다. 발표 시점에는 모델링 센터 3곳의 모델 5개, 실험 7개 자료이며 앞으로 수개월에 걸쳐 더 추가될 예정입니다.
+    source: https://wcrp-cmip.github.io/cmip7-guidance/docs/Updates_for_Users/
+  - date: "2026-09-04"
+    level: warning
+    title: intake-esgf 기본 프로젝트가 CMIP7로 변경 — CMIP6 스크립트에 project="CMIP6" 필요
+    body: >-
+      intake-esgf v2026.9.4부터 기본 프로젝트(default_project)가 CMIP7로 바뀌고, 기본 색인에 Globus 기반 ESGF 1.5 색인(CMIP3~6)과 CMIP7용 East·West STAC 색인이 들어갔습니다.
+      검색에 project="CMIP6"을 넣으면 예전 동작이 유지됩니다. 설정을 저장해 둔 사용자는 설정을 초기화해야 할 수 있습니다.
+    source: https://github.com/esgf2-us/intake-esgf/releases/tag/v2026.9.4
+  - date: "2025-07-29"
+    level: warning
+    title: LLNL ESGF 노드 종료 — 노드별 검색 결과 차이 주의
+    body: >-
+      LLNL ESGF 노드가 종료되었습니다. ESGF는 두 검색 체계가 함께 돌아가는 과도기에 있어 일부 서비스가 동작하지 않을 수 있고,
+      미국 노드(ORNL 등, Globus 색인)와 DKRZ·IPSL·CEDA(옛 Solr 색인)의 검색 결과가 서로 다를 수 있습니다.
+    source: https://wcrp-cmip.org/esgf-information/
+  - date: "2025-04-07"
+    level: warning
+    title: ESGF CMIP6 프로젝트 신규 게시 종료
+    body: >-
+      CMIP7 기반 시설에 자원을 돌리기 위해 ESGF의 CMIP6 프로젝트가 새 자료 게시를 받지 않게 되었습니다. CMIP6 자료는 모두 계속 제공되며,
+      CMIP6Plus·obs4MIPs·input4MIPs 등은 영향을 받지 않습니다. DECK와 비슷한 실험의 새 자료는 CMIP6Plus로 게시할 수 있습니다.
+    source: https://wcrp-cmip.org/esgf-information/
+  - date: "2022-10-12"
+    level: info
+    title: 모든 CMIP6 모델 출력 라이선스 완화 (CC BY 4.0)
+    body: >-
+      이용 약관 6.2판에서 2022년 10월 기준 모든 CMIP6 모델 그룹이 출력 자료의 라이선스를 완화했다고 밝혔습니다. 이전의 CC BY-NC-SA·CC BY-SA 제한이 풀렸고,
+      현재 라이선스는 CMIP6 라이선스 페이지가 파일의 license 속성보다 우선합니다.
+    source: https://pcmdi.llnl.gov/CMIP6/TermsOfUse/TermsOfUse6-2.html
+
+links:
+  - name: CMIP6 이용 약관 (Terms of Use 6.2)
+    url: https://pcmdi.llnl.gov/CMIP6/TermsOfUse/TermsOfUse6-2.html
+  - name: CMIP6 모델별 라이선스 표 (CMIP6_CVs)
+    url: https://wcrp-cmip.github.io/CMIP6_CVs/docs/CMIP6_source_id_licenses.html
+  - name: CMIP6 자료 이용자 안내 (Guide to Data Users, PCMDI)
+    url: https://pcmdi.llnl.gov/CMIP6/Guide/dataUsers.html
+  - name: WCRP CMIP — CMIP6 소개
+    url: https://wcrp-cmip.org/cmip-phases/cmip6/
+  - name: WCRP CMIP — 자료 받는 곳 안내 (CMIP data access)
+    url: https://wcrp-cmip.org/cmip-data-access/
+  - name: WCRP CMIP — ESGF 변경 안내
+    url: https://wcrp-cmip.org/esgf-information/
+  - name: CMIP6 실험 목록 (CMIP6_CVs experiment_id)
+    url: https://wcrp-cmip.github.io/CMIP6_CVs/docs/CMIP6_experiment_id.html
+  - name: CMIP6 CMOR 변수 표 (PCMDI/cmip6-cmor-tables)
+    url: https://github.com/PCMDI/cmip6-cmor-tables/tree/main/Tables
+  - name: CMIP6 전역 속성·파일 이름·DRS 규칙 (v6.2.7)
+    url: https://wcrp-cmip.github.io/WGCM_Infrastructure_Panel/Papers/CMIP6_global_attributes_filenames_CVs_v6.2.7.pdf
+  - name: ES-DOC CMIP6 모델·실험 문서
+    url: https://es-doc.org/cmip6/
+  - name: ESGF 정오표 서비스 (Errata)
+    url: https://errata.esgf.io/
+  - name: WDC-Climate CMIP6 데이터 인용 페이지 (예 EC-Earth3 historical — input 값을 바꿔 다른 모델·실험 검색)
+    url: https://www.wdc-climate.de/ui/cmip6?input=CMIP6.CMIP.EC-Earth-Consortium.EC-Earth3.historical
+  - name: Pangeo/ESGF CMIP6 클라우드 자료 안내
+    url: https://pangeo-data.github.io/pangeo-cmip6-cloud/
+  - name: NEX-GDDP-CMIP6 (NASA, CMIP6 기반 0.25° 편이보정 자료)
+    url: https://www.nccs.nasa.gov/services/data-collections/land-based-products/nex-gddp-cmip6
+  - name: ISIMIP3b 편이보정 (CMIP6 기반)
+    url: https://www.isimip.org/gettingstarted/isimip3b-bias-adjustment/
+  - name: CORDEX-CMIP6 자료 접근 안내
+    url: https://cordex.org/data-access/cordex-cmip6-data/
+
+watch_urls:
+  - https://wcrp-cmip.org/esgf-information/
+  - https://intake-esgf.readthedocs.io/en/latest/
+  - https://github.com/esgf2-us/intake-esgf/releases
+  - https://wcrp-cmip.github.io/cmip7-guidance/docs/Updates_for_Users/
+
+last_verified: "2026-10-16"

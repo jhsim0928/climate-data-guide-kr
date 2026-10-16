@@ -1,0 +1,267 @@
+# ─────────────────────────────────────────────────────────────
+# NEX-GDDP-CMIP6 — 데이터셋 정보 파일
+# NASA Earth Exchange Global Daily Downscaled Projections (CMIP6 기반 0.25° 일 편이보정·다운스케일링 자료)
+# ─────────────────────────────────────────────────────────────
+id: nex-gddp-cmip6
+name: NEX-GDDP-CMIP6
+full_name: NASA Earth Exchange Global Daily Downscaled Projections, CMIP6 (NASA 전지구 일 단위 상세화 기후 전망 자료)
+category: model_output
+domain: model
+group: 통계 다운스케일링·편이보정
+order: 10
+domains: [대기, 육지]
+provider: NASA Ames Research Center (NEX, Climate Analytics Group) 제작, NASA Center for Climate Simulation (NCCS) 배포
+
+status: active
+status_note: >-
+  2026-10-16 확인 시 NCCS THREDDS와 AWS 공개 버킷(nex-gddp-cmip6)에서 계속 제공되고 있지만, AWS 레지스트리의 갱신 주기 항목은
+  "No future updates planned"입니다. NCCS 자료 페이지는 버전을 1.0·1.1·1.2로 적으면서 v2 기술노트(2025-05-31 갱신)를 함께 걸어 두었고,
+  v2.0 파일이 어디에 어떤 이름으로 올라가 있는지는 공식 페이지에 적혀 있지 않습니다. 또 NCCS가 Nexus Compute로 바뀌면서 웹사이트를
+  2026년 말까지 옮기고 있어 안내 페이지 주소가 바뀔 수 있습니다.
+
+period:
+  start: "1950-01"
+  end: "2100-12"
+  note: >-
+    historical 1950–2014, SSP 전망 2015–2100(SSP1-2.6·SSP2-4.5·SSP3-7.0·SSP5-8.5). 편이보정 기준기간은 GMFD 1960–2014입니다.
+    원본 GCM 출력에 없는 연도(일부 모델의 2100년, SSP3-7.0의 2099년, hurs SSP2-4.5의 2058년·SSP1-2.6의 2023년)는 빠져 있고,
+    모델에 따라 일부 시나리오가 없을 수 있습니다(기술노트 부록 I 각주).
+
+resolution:
+  spatial_short: "28 km (0.25°)"
+  temporal_short: "1일"
+  spatial: >-
+    0.25° × 0.25° 위경도 격자(Geographic, WGS-84; 위경도 값은 격자 중심), lat 600 × lon 1440. 35개 CMIP6 GCM 출력을
+    BCSD(Bias-Correction Spatial Disaggregation)로 편이보정한 뒤 GMFD 0.25° 기후값으로 공간 상세화
+  vertical: 지상(단일면)만
+  temporal: 일 (일평균, 일 최고·최저기온)
+
+coverage:
+  short: 준전지구
+  note: >-
+    180°W–180°E, 60°S–90°N. 60°S 남쪽(남극 대륙 대부분)은 없습니다. 기준자료 GMFD가 해양에서 검증되지 않아
+    작은 섬 지역 값은 현실적이지 않을 수 있다고 기술노트가 경고합니다.
+update: 갱신 계획 없음 (AWS 레지스트리 "No future updates planned"). 오류 수정은 v1.1·v1.2 버전 파일로 추가됨(v2 수정은 기술노트만 공개, 파일 배포 위치 미기재)
+license: >-
+  처음에는 CMIP6 원자료 라이선스에 맞춰 CC BY-SA 4.0으로 공개되었고, CMIP6 라이선스가 2022년 6월 바뀐 뒤 2022년 9월부터 모든 출력이
+  CC0(퍼블릭 도메인 헌정)로 제공된다고 AWS 레지스트리와 v1 기술노트가 안내합니다. v2 기술노트(7절)는 원자료인 CMIP6 이용 약관을 따르며
+  각 파일의 전역 속성 cmip6_license에 해당 라이선스가 적혀 있다고 설명하므로, 파일 속성도 함께 확인하세요. 과학 연구용이며 상업·공학 설계 용도는 권장하지 않습니다.
+account_required: false
+
+summary: >-
+  NASA Ames 연구센터의 NASA Earth Exchange(NEX) 팀이 CMIP6 GCM 35개(모델당 멤버 1개)의 일 자료를 BCSD 방법으로 편이보정·상세화해
+  0.25° 공통 격자로 만든 전지구(60°S 이북) 일 단위 기후 전망 자료입니다. 기온(평균·최고·최저), 강수, 습도, 하향 단파·장파 복사, 풍속 9개 변수를
+  historical(1950–2014)과 SSP 4개 시나리오(2015–2100)로 제공하며, NCCS THREDDS와 AWS 공개 버킷에서 계정 없이 받을 수 있습니다.
+  지형 효과가 중요한 지역 영향 평가(수문·농업·보건 등)의 입력이나 다중 모델 비교에 널리 쓰입니다.
+
+time_convention:
+  summary: >-
+    모든 변수는 하루 단위 값입니다. tas·pr·hurs·huss·rlds·rsds·sfcWind는 일평균(강수는 일평균 강수율), tasmax·tasmin은 그날의 최고·최저기온입니다.
+    시간 좌표 단위는 "days since 기준일"이며 기준일은 모델마다 다르고 해당 CMIP6 실험을 따릅니다.
+  points:
+    - "NCCS 공식 페이지의 NetcdfSubset 예시는 시간 범위를 2014-01-01T12:00:00Z~2014-12-31T12:00:00Z처럼 정오(12 UTC)로 지정합니다. 시각이 찍혀 있어도 값은 그날 하루 전체를 대표합니다"
+    - "pr 단위는 kg m-2 s-1(일평균 강수율)이므로 mm/일로 바꾸려면 86400을 곱합니다"
+    - "기술노트는 달력(calendar) 종류나 윤일 처리를 따로 설명하지 않습니다. 여러 모델을 합칠 때는 각 파일 time 변수의 calendar 속성을 먼저 확인하세요"
+  source: https://www.nccs.nasa.gov/wp-content/uploads/2025/06/NEX-GDDP-CMIP6-v2-Tech_Note.pdf
+  source_name: NEX-GDDP-CMIP6 v2 Technical Note (NCCS)
+
+variables:
+  note: >-
+    v1·v2 기술노트에 실린 9개 변수 전체입니다(CMIP6 CMOR 변수명). 단위는 기술노트와 CMIP6 day 표 기준이며,
+    파일 하나에 변수 하나·한 해 분량이 들어 있습니다.
+  full_list: https://www.nccs.nasa.gov/wp-content/uploads/2025/06/NEX-GDDP-CMIP6-v2-Tech_Note.pdf
+  groups:
+    - name: 일 대기 (day)
+      kind: mean
+      period: 일
+      items:
+        - "일평균 기온(지상) — `tas` (K)"
+        - text: "일 최고기온 — `tasmax` (K)"
+          kind: max
+        - text: "일 최저기온 — `tasmin` (K)"
+          kind: min
+        - text: "강수 플럭스 — `pr` (kg m-2 s-1)"
+          note: 일평균 강수율입니다. 86400을 곱하면 mm/일.
+        - "지상 상대습도 — `hurs` (%)"
+        - text: "지상 비습 — `huss` (1)"
+          note: kg/kg 무차원 비입니다.
+        - "지표 하향 장파 복사 — `rlds` (W m-2)"
+        - "지표 하향 단파 복사 — `rsds` (W m-2)"
+        - text: "지상 풍속(일평균) — `sfcWind` (m s-1)"
+          std: [wind10]
+
+access:
+  - name: AWS Open Data — nex-gddp-cmip6 버킷 (us-west-2)
+    url: https://nex-gddp-cmip6.s3.us-west-2.amazonaws.com/index.html
+    login: false
+    method: S3 (aws s3 cp/ls --no-sign-request), HTTPS
+    note: >-
+      2022년 9월부터 제공되는 NCCS 자료의 클라우드 사본입니다(NetCDF, CF-1.7). AWS 계정 없이 받을 수 있습니다. 별도 버킷 nex-gddp-cmip6-cog에는
+      GFDL-CM4·GISS-E2-1-G 두 모델과 ssp245·ssp585 두 시나리오만 Cloud-Optimized GeoTIFF(일·월·2°C 도달 연도)로 들어 있습니다.
+  - name: NCCS THREDDS — AMES/NEX/GDDP-CMIP6
+    url: https://ds.nccs.nasa.gov/thredds/catalog/AMES/NEX/GDDP-CMIP6/catalog.html
+    login: false
+    method: THREDDS (HTTP 파일 다운로드, NetcdfSubset로 영역·기간 잘라 받기)
+    note: >-
+      모델 → 시나리오 → 멤버 → 변수 순서의 폴더에 연도별 파일이 있습니다. 전체 파일 URL과 체크섬 목록(gddpcmip6-thredds-fileserver.csv,
+      _v1.1.csv, _v1.2.csv)이 https://ds.nccs.nasa.gov/thredds/fileServer/AMES/NEX/GDDP-CMIP6/ 에 있습니다.
+
+example:
+  lang: python
+  note: NCCS 공식 페이지의 NetcdfSubset 예시와 같은 요청 형식으로 한반도 주변 2014년 강수만 잘라 받습니다.
+  code: |
+    # pip install xarray netCDF4
+    import urllib.request
+    import xarray as xr
+
+    base = "https://ds.nccs.nasa.gov/thredds/ncss/grid/AMES/NEX/GDDP-CMIP6"
+    path = "ACCESS-CM2/historical/r1i1p1f1/pr/pr_day_ACCESS-CM2_historical_r1i1p1f1_gn_2014.nc"
+    query = ("?var=pr&north=39&west=124&east=131&south=33&horizStride=1"
+             "&time_start=2014-01-01T12:00:00Z&time_end=2014-12-31T12:00:00Z"
+             "&accept=netcdf3&addLatLon=true")
+    urllib.request.urlretrieve(f"{base}/{path}{query}", "pr_korea_2014.nc")
+
+    ds = xr.open_dataset("pr_korea_2014.nc")
+    print(ds["time"].encoding.get("calendar"))   # 모델마다 달력이 다를 수 있으니 확인
+    pr_mm = ds["pr"] * 86400                      # kg m-2 s-1 → mm/일
+    print(pr_mm.mean(["lat", "lon"]).to_series().head())
+
+    # AWS 버킷 목록 보기(계정 불필요): aws s3 ls --no-sign-request s3://nex-gddp-cmip6/
+
+tips:
+  - >-
+    파일은 모델·시나리오·멤버·변수·연도마다 하나씩 나뉘어 있습니다(파일명 <변수>_day_<모델>_<실험>_<멤버>_<격자>_<연도>.nc, 전체 38 TB).
+    전 기간·다중 모델을 받으면 수천 개 파일이 되므로, 필요한 영역이 작다면 THREDDS NetcdfSubset으로 잘라 받는 편이 훨씬 가볍습니다.
+  - >-
+    수정된 파일은 _v1.1.nc, _v1.2.nc 꼬리표를 붙여 추가되었고 v1.0 파일도 그대로 남아 있습니다(v1 기술노트). 같은 연도에 파일이 여러 개 있으면
+    가장 높은 버전을 쓰고, 전역 속성 version을 확인하세요. 특히 tasmin·tas의 SSP1-2.6·SSP3-7.0(v1.2), pr(v1.1), hurs(v1.1)가 해당합니다.
+  - >-
+    모든 모델이 같은 0.25° 격자·같은 변수명으로 맞춰져 있어 CMIP6 원자료보다 다중 모델 비교가 쉽지만, 시간 좌표의 기준일은 모델마다 다르고
+    기술노트는 달력을 따로 설명하지 않습니다. 모델을 합치기 전에 time 변수의 calendar 속성(예: 365일·360일 달력 여부)을 확인하세요.
+  - >-
+    멤버는 모델당 하나지만 모두 r1i1p1f1은 아닙니다(CESM2 r4i1p1f1, CESM2-WACCM·FGOALS-g3 r3i1p1f1, CNRM·GISS-E2-1-G·MIROC-ES2L·UKESM1-0-LL은 f2,
+    HadGEM3 계열은 f3). 또 GFDL-CM4는 gr1·gr2 두 격자로 두 번 실려 있어 목록 35개가 실제로는 34개 모델입니다. 앙상블 평균에서 GFDL-CM4를 두 번 세지 마세요.
+  - >-
+    BCSD는 원래 CMIP6 시나리오에 없는 정보를 더하지 않으며, 1960–2014년의 상대적 공간 패턴이 미래에도 유지된다고 가정하고 GCM의 추세 기울기는 조정하지 않습니다.
+    Thrasher et al.(2022)은 일부 지역에서 극한값이 과소평가될 수 있다고 적고 있습니다. 극한 지표나 작은 섬 지역 분석에는 원 GCM·관측과 함께 비교하세요.
+  - >-
+    CMCC 모델은 원 GCM의 tasmax·tasmin이 CMCC에 의해 철회(retracted)되었다고 기술노트 부록에 표시되어 있습니다. 기온 극값 분석에 쓰기 전에
+    부록 I의 각주와 버전 이력을 확인하세요.
+  - >-
+    NCCS는 Earth Modeling Nexus Core Computing(Nexus Compute)으로 바뀌는 중이며 웹사이트 내용은 2026년 말까지 science.nasa.gov의 Nexus Compute 페이지로 옮겨집니다.
+    THREDDS 경로가 바뀌는지는 공지되지 않았으니, 스크립트에 넣은 주소가 안 될 때는 AWS 버킷을 대안으로 쓰세요.
+
+citations:
+  dataset:
+    - label: NEX-GDDP-CMIP6 데이터셋 (기술노트 권장 인용)
+      text: >-
+        Thrasher, B., Wang, W., Michaelis, A., Nemani, R. (2021). NEX-GDDP-CMIP6. NASA Center for Climate Simulation.
+        https://doi.org/10.7917/OFSG3345
+      doi: 10.7917/OFSG3345
+      bibtex: |
+        @misc{nexgddpcmip6,
+          author    = {Thrasher, B. and Wang, W. and Michaelis, A. and Nemani, R.},
+          title     = {{NEX-GDDP-CMIP6}},
+          year      = {2021},
+          publisher = {NASA Center for Climate Simulation},
+          doi       = {10.7917/OFSG3345}
+        }
+    - label: AWS에서 받은 경우 (AWS 레지스트리 How to Cite)
+      text: >-
+        NEX-GDDP-CMIP6 data was accessed on [date] from https://registry.opendata.aws/nex-gddp-cmip6
+  papers:
+    - label: 자료 기술 논문 (주 인용)
+      text: >-
+        Thrasher, B., Wang, W., Michaelis, A., Melton, F., Lee, T., Nemani, R. (2022): NASA Global Daily Downscaled Projections, CMIP6.
+        Scientific Data, 9, 262.
+      doi: 10.1038/s41597-022-01393-4
+      bibtex: |
+        @article{thrasher2022nexgddpcmip6,
+          author  = {Thrasher, Bridget and Wang, Weile and Michaelis, Andrew and Melton, Forrest and Lee, Tsengdar and Nemani, Ramakrishna},
+          title   = {{NASA} Global Daily Downscaled Projections, {CMIP6}},
+          journal = {Scientific Data},
+          volume  = {9},
+          number  = {1},
+          pages   = {262},
+          year    = {2022},
+          doi     = {10.1038/s41597-022-01393-4}
+        }
+    - label: 편이보정 방법 (BCSD 일 변형)
+      text: >-
+        Thrasher, B., Maurer, E. P., McKellar, C., Duffy, P. B. (2012): Technical Note: Bias correcting climate model simulated daily
+        temperature extremes with quantile mapping. Hydrology and Earth System Sciences, 16(9), 3309–3314.
+      doi: 10.5194/hess-16-3309-2012
+      bibtex: |
+        @article{thrasher2012bcsd,
+          author  = {Thrasher, B. and Maurer, E. P. and McKellar, C. and Duffy, P. B.},
+          title   = {Technical Note: Bias correcting climate model simulated daily temperature extremes with quantile mapping},
+          journal = {Hydrology and Earth System Sciences},
+          volume  = {16},
+          number  = {9},
+          pages   = {3309--3314},
+          year    = {2012},
+          doi     = {10.5194/hess-16-3309-2012}
+        }
+  acknowledgement: >-
+    기술노트 6절은 논문에 다음 사사를 넣도록 요청합니다: "Climate scenarios used were from the NEX-GDDP-CMIP6 dataset, prepared by the Climate
+    Analytics Group and NASA Ames Research Center using the NASA Earth eXchange (NEX) and distributed by the NASA Center for Climate Simulation (NCCS)."
+    이어지는 둘째 문단(WCRP·CMIP6 모델링 그룹·ESGF·재원 기관 사사)도 기술노트에서 그대로 복사해 쓰세요. CMIP6 원자료의 이용 약관도 함께 따릅니다.
+
+notices:
+  - date: "2025-05-31"
+    level: warning
+    title: v2.0 기술노트 게시 — 9개 변수 전반 수정
+    body: >-
+      v1.x 변수에 수정을 적용해 v2 출력을 만들었다는 v2 기술노트가 공개되었습니다(문서 "Latest update" 날짜). hurs 상한 105%, huss·rlds·sfcWind 음수 하한 0,
+      기후값이 아주 작은 격자의 비정상적으로 큰 pr·rsds 값 조정, 조정된 GMFD로 tasmax·tasmin 전면 재처리(tx<tn인 격자는 값 교환)와 이에 따른 tas 재계산이 포함됩니다.
+      v2 파일의 배포 위치와 파일명 꼬리표는 문서에 적혀 있지 않습니다.
+    source: https://www.nccs.nasa.gov/wp-content/uploads/2025/06/NEX-GDDP-CMIP6-v2-Tech_Note.pdf
+  - date: "2024-02-01"
+    level: warning
+    title: pr 재처리(v1.1)와 tasmin·tas 전면 재처리(v1.2)
+    body: >-
+      건조 지역 과보정을 고친 pr이 _v1.1.nc 파일로 추가되었습니다. 또 2023년 8월의 SSP1-2.6·SSP3-7.0 tasmin 수정이 충분한 격자에 적용되지 않은 것으로 밝혀져
+      해당 tasmin과 tas를 전부 다시 처리해 _v1.2.nc 파일로 올렸습니다.
+    source: https://www.nccs.nasa.gov/wp-content/uploads/2024/03/NEX-GDDP-CMIP6-Tech_Note_4.pdf
+  - date: "2023-08-27"
+    level: warning
+    title: tasmin(SSP1-2.6·SSP3-7.0)·TaiESM1·hurs 수정 파일 추가(v1.1)
+    body: >-
+      주로 해안 격자에서 값이 잘못된 SSP1-2.6·SSP3-7.0 tasmin을 다시 처리했고, CMIP6에서 철회된 TaiESM1 historical tasmax·tasmin을 교체해 tas·tasmax·tasmin을
+      재처리했으며, hurs에 더 현실적인 상한을 적용했습니다. 수정 파일은 _v1.1.nc로 추가되고 v1.0 파일은 그대로 남습니다.
+    source: https://www.nccs.nasa.gov/wp-content/uploads/2024/03/NEX-GDDP-CMIP6-Tech_Note_4.pdf
+  - date: "2022-09-20"
+    level: info
+    title: 라이선스 CC0로 변경, AWS 사본 제공 시작
+    body: >-
+      CMIP6 라이선스 변경에 따라 2022년 9월부터 모든 NEX-GDDP-CMIP6 출력이 CC BY-SA 4.0 대신 CC0로 제공됩니다(인용 안내는 그대로 유지).
+      같은 달부터 AWS에 자료 사본(s3://nex-gddp-cmip6/)이 제공됩니다.
+    source: https://www.nccs.nasa.gov/wp-content/uploads/2024/03/NEX-GDDP-CMIP6-Tech_Note_4.pdf
+  - date: "2022-03-18"
+    level: info
+    title: SSP1-2.6·SSP3-7.0 시나리오 추가
+    body: 기술노트 개정 2판에서 SSP1-2.6과 SSP3-7.0 시나리오가 추가된 것을 반영했습니다.
+    source: https://www.nccs.nasa.gov/wp-content/uploads/2024/03/NEX-GDDP-CMIP6-Tech_Note_4.pdf
+
+links:
+  - name: NCCS NEX-GDDP-CMIP6 자료 페이지
+    url: https://www.nccs.nasa.gov/services/data-collections/land-based-products/nex-gddp-cmip6
+  - name: AWS Open Data 레지스트리 — NEX-GDDP-CMIP6
+    url: https://registry.opendata.aws/nex-gddp-cmip6/
+  - name: v1 기술노트 (Tech Note 4, 2024-02 개정)
+    url: https://www.nccs.nasa.gov/wp-content/uploads/2024/03/NEX-GDDP-CMIP6-Tech_Note_4.pdf
+  - name: v2 기술노트 (2025-05-31 갱신)
+    url: https://www.nccs.nasa.gov/wp-content/uploads/2025/06/NEX-GDDP-CMIP6-v2-Tech_Note.pdf
+  - name: Thrasher et al. (2022) Scientific Data 논문
+    url: https://www.nature.com/articles/s41597-022-01393-4
+  - name: NCCS → Nexus Compute 전환 안내
+    url: https://www.nccs.nasa.gov/nexus-compute-transition/
+  - name: ISIMIP3b 편이보정 안내 (같은 분류의 다른 편이보정 자료)
+    url: https://www.isimip.org/gettingstarted/isimip3b-bias-adjustment/
+
+watch_urls:
+  - https://www.nccs.nasa.gov/services/data-collections/land-based-products/nex-gddp-cmip6
+  - https://registry.opendata.aws/nex-gddp-cmip6/
+  - https://www.nccs.nasa.gov/nexus-compute-transition/
+
+last_verified: "2026-10-16"
