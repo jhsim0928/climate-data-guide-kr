@@ -1,0 +1,31 @@
+# 시험용: ci/model-tools-test 브랜치에 push하면 ESGF 접속 시험을 돌리고 결과를 같은 브랜치에 커밋
+name: 모델 도구 시험
+on:
+  push:
+    branches: [ci/model-tools-test]
+    paths-ignore: ["ci-results/**"]
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: model-tools-test
+  cancel-in-progress: false
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - run: pip install requests netCDF4 h5netcdf fsspec aiohttp xarray cftime numpy pandas
+      - run: mkdir -p ci-results && python ci/probe.py 2>&1 | tee ci-results/probe.log
+      - name: 결과 저장
+        if: always()
+        run: |
+          git config user.name "model-tools-test"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add ci-results
+          git commit -q -m "ci: model tools test results [skip ci]" || exit 0
+          for i in 1 2 3; do git pull -q --rebase origin ci/model-tools-test && git push -q origin HEAD:ci/model-tools-test && exit 0; sleep 5; done
