@@ -999,7 +999,7 @@ if __name__ == "__main__":
   };
 
   function setup() {
-    var app = $("md-app");
+    var app = $("mdd-app");
     var dataEl = $("model-catalog");
     if (!app || !dataEl || app.dataset.bound) return;
     app.dataset.bound = "1";
@@ -1009,11 +1009,11 @@ if __name__ == "__main__":
     if (!projects.length) return;
     var state = { project: projects[0], freq: null, varKey: null, exps: {}, onlyAll: false, off: {}, sortCol: null, sortAsc: true, tab: "search" };
     var el = {
-      meta: $("md-meta"), project: $("md-project"), freq: $("md-freq"), variable: $("md-var"), exps: $("md-exps"),
-      onlyAll: $("md-only-all"), table: $("md-table"), count: $("md-count"), notes: $("md-notes"),
-      codeA: $("md-code-search"), codeB: $("md-code-merge"), warn: $("md-warn")
+      meta: $("mdd-meta"), project: $("mdd-project"), freq: $("mdd-freq"), variable: $("mdd-var"), exps: $("mdd-exps"),
+      onlyAll: $("mdd-only-all"), table: $("mdd-table"), count: $("mdd-count"), notes: $("mdd-notes"),
+      codeA: $("mdd-code-search"), codeB: $("mdd-code-merge"), warn: $("mdd-warn")
     };
-    var opt = app.querySelector("#md-options");
+    var opt = app.querySelector("#mdd-options");
 
     function proj() { return CAT.projects[state.project]; }
     function vars() { return proj().variables || []; }
@@ -1024,7 +1024,7 @@ if __name__ == "__main__":
       projects.map(function (p) {
         var x = CAT.projects[p];
         return esc(p) + " " + L("색인", "index") + ": <code>" + esc(String(x.index || "").replace(/^https?:\/\//, "")) + "</code>" +
-          (x.stale ? ' <span class="md-bad">' + L("(이번 갱신 실패 — 지난 결과)", "(last update failed — previous result)") + "</span>" : "");
+          (x.stale ? ' <span class="mdd-bad">' + L("(이번 갱신 실패 — 지난 결과)", "(last update failed — previous result)") + "</span>" : "");
       }).join(" · ");
 
     el.project.innerHTML = projects.map(function (p) { return '<option value="' + p + '">' + p + " (" + L("모델 ", "") + Object.keys(CAT.projects[p].models || {}).length + L("개)", " models)") + "</option>"; }).join("");
@@ -1102,7 +1102,7 @@ if __name__ == "__main__":
       var rows = rowsNow();
       var cols = COLS.concat(exps.map(function (e) { return { k: "exp:" + e, t: e, exp: true }; }));
       var h = "<thead><tr>" + cols.map(function (c) {
-        if (c.k === "pick") return '<th class="pick-col" data-nosort="1"><input type="checkbox" id="md-pick-all" aria-label="' + L("모두 고르기", "Select all") + '"></th>';
+        if (c.k === "pick") return '<th class="pick-col" data-nosort="1"><input type="checkbox" id="mdd-pick-all" aria-label="' + L("모두 고르기", "Select all") + '"></th>';
         var s = state.sortCol === c.k ? (state.sortAsc ? "ascending" : "descending") : "none";
         return '<th class="sort-th" tabindex="0" aria-sort="' + s + '" data-k="' + esc(c.k) + '" title="' + L("눌러서 정렬", "Click to sort") + '">' +
           (c.exp ? "<code>" + esc(c.t) + "</code>" : esc(c.t)) + "</th>";
@@ -1111,7 +1111,7 @@ if __name__ == "__main__":
         var on = !state.off[r.model];
         var mshow = r.members.slice(0, 3).join(", ") + (r.members.length > 3 ? " …" : "");
         h += '<tr data-model="' + esc(r.model) + '"' + (on ? "" : ' class="is-off"') + ">" +
-          '<td class="pick-col"><input type="checkbox" class="md-pick" value="' + esc(r.model) + '"' + (on ? " checked" : "") + ' aria-label="' + esc(r.model) + '"></td>' +
+          '<td class="pick-col"><input type="checkbox" class="mdd-pick" value="' + esc(r.model) + '"' + (on ? " checked" : "") + ' aria-label="' + esc(r.model) + '"></td>' +
           '<td><span class="notranslate" translate="no"><b>' + esc(r.model) + "</b></span></td>" +
           "<td>" + esc(r.institution) + "</td>" +
           '<td data-sort="' + r.members.length + '"><b>' + r.members.length + '</b> <span class="hint">' + esc(mshow) + "</span></td>" +
@@ -1123,15 +1123,15 @@ if __name__ == "__main__":
           "<td>" + esc(r.version ? "v" + r.version : "-") + "</td>" +
           exps.map(function (e) {
             var o = r.per[e];
-            if (!o) return '<td class="md-no" data-sort="">–</td>';
+            if (!o) return '<td class="mdd-no" data-sort="">–</td>';
             var tip = o.members + " · " + (o.start || "?") + "–" + (o.end || "?") + " · " + L("파일 ", "") + o.files + L("개", " files") + " · " + humanSize(o.size_bytes) + " · " + L("노드 ", "") + o.data_nodes + L("곳", " nodes");
-            return '<td class="md-yes" data-sort="' + o.n_members + '" title="' + esc(tip) + '">✓ ' + o.n_members + '<br><span class="hint">' + esc((o.start || "").slice(0, 4) + "–" + (o.end || "").slice(0, 4)) + "</span></td>";
+            return '<td class="mdd-yes" data-sort="' + o.n_members + '" title="' + esc(tip) + '">✓ ' + o.n_members + '<br><span class="hint">' + esc((o.start || "").slice(0, 4) + "–" + (o.end || "").slice(0, 4)) + "</span></td>";
           }).join("") + "</tr>";
       });
       el.table.innerHTML = h + "</tbody>";
       var nOn = rows.filter(function (r) { return !state.off[r.model]; }).length;
       el.count.textContent = L("모델 " + rows.length + "개 표시 · " + nOn + "개 선택", rows.length + " models shown · " + nOn + " selected");
-      var all = $("md-pick-all");
+      var all = $("mdd-pick-all");
       if (all) { all.checked = nOn === rows.length && rows.length > 0; all.indeterminate = nOn > 0 && nOn < rows.length; }
       return rows;
     }
@@ -1141,20 +1141,20 @@ if __name__ == "__main__":
     function num(id) { var x = $(id); return x && x.value !== "" ? +x.value : null; }
     function readCfg(rows) {
       var v = vinfo();
-      var memberMode = val("md-members");
-      var custom = ($("md-members-custom").value || "").split(/[\s,]+/).filter(Boolean);
-      var y0 = num("md-y0"), y1 = num("md-y1");
+      var memberMode = val("mdd-members");
+      var custom = ($("mdd-members-custom").value || "").split(/[\s,]+/).filter(Boolean);
+      var y0 = num("mdd-y0"), y1 = num("mdd-y1");
       var cfg = {
         lang: IS_EN ? "en" : "ko", project: state.project, catalogDate: String(CAT.generated || "").slice(0, 10),
         variables: v ? [v] : [], experiments: selectedExps(),
         models: rows.filter(function (r) { return !state.off[r.model]; }).map(function (r) { return r.model; }),
         members: memberMode === "custom" ? (custom.length ? custom : "first") : memberMode,
         years: y0 != null && y1 != null ? [Math.min(y0, y1), Math.max(y0, y1)] : null,
-        box: val("md-region") === "box" ? { lat: [num("md-lat0"), num("md-lat1")], lon: [num("md-lon0"), num("md-lon1")] } : null,
-        calendar: $("md-cal").value || null, regrid: $("md-regrid").value || null,
-        prMmDay: $("md-pr").checked, kToC: $("md-k").checked, join: $("md-join").checked,
-        output: val("md-output") || "per_model", stream: $("md-stream").checked,
-        folder: $("md-folder").value || "./cmip_files", outDir: "cmip_out"
+        box: val("mdd-region") === "box" ? { lat: [num("mdd-lat0"), num("mdd-lat1")], lon: [num("mdd-lon0"), num("mdd-lon1")] } : null,
+        calendar: $("mdd-cal").value || null, regrid: $("mdd-regrid").value || null,
+        prMmDay: $("mdd-pr").checked, kToC: $("mdd-k").checked, join: $("mdd-join").checked,
+        output: val("mdd-output") || "per_model", stream: $("mdd-stream").checked,
+        folder: $("mdd-folder").value || "./cmip_files", outDir: "cmip_out"
       };
       return cfg;
     }
@@ -1205,7 +1205,7 @@ if __name__ == "__main__":
       cfg.fileName = fileName(cfg, "merge");
       el.codeB.textContent = buildMergeScript(cfg);
       el.codeB.dataset.file = cfg.fileName;
-      $("md-sum").textContent = L("모델 " + cfg.models.length + "개 · 실험 " + cfg.experiments.join(", ") + " · 변수 " + ((cfg.variables[0] || {})["var"] || "-"),
+      $("mdd-sum").textContent = L("모델 " + cfg.models.length + "개 · 실험 " + cfg.experiments.join(", ") + " · 변수 " + ((cfg.variables[0] || {})["var"] || "-"),
                                     cfg.models.length + " models · " + cfg.experiments.join(", ") + " · " + ((cfg.variables[0] || {})["var"] || "-"));
     }
     function renderAll() {
@@ -1226,11 +1226,11 @@ if __name__ == "__main__":
     });
     el.onlyAll.addEventListener("change", function () { state.onlyAll = el.onlyAll.checked; renderAll(); });
     el.table.addEventListener("change", function (e) {
-      if (e.target.id === "md-pick-all") {
+      if (e.target.id === "mdd-pick-all") {
         lastRows.forEach(function (r) { if (e.target.checked) delete state.off[r.model]; else state.off[r.model] = 1; });
         renderAll(); return;
       }
-      if (!e.target.classList.contains("md-pick")) return;
+      if (!e.target.classList.contains("mdd-pick")) return;
       if (e.target.checked) delete state.off[e.target.value]; else state.off[e.target.value] = 1;
       renderAll();
     });
@@ -1247,14 +1247,14 @@ if __name__ == "__main__":
     });
     opt.addEventListener("input", renderScripts);
     opt.addEventListener("change", function () {
-      $("md-box").hidden = val("md-region") !== "box";
-      $("md-members-custom").disabled = val("md-members") !== "custom";
+      $("mdd-box").hidden = val("mdd-region") !== "box";
+      $("mdd-members-custom").disabled = val("mdd-members") !== "custom";
       renderScripts();
     });
-    $("md-folder").addEventListener("input", renderScripts);
+    $("mdd-folder").addEventListener("input", renderScripts);
 
     // 탭
-    var tabs = app.querySelectorAll(".md-tab");
+    var tabs = app.querySelectorAll(".mdd-tab");
     tabs.forEach(function (b) {
       b.addEventListener("click", function () {
         tabs.forEach(function (x) {
@@ -1294,10 +1294,10 @@ if __name__ == "__main__":
 
     el.table.dataset.sortable = "1";  // site.js 공통 정렬 대신 이 표 전용 정렬(같은 모양) 사용 — 표를 다시 그려도 유지되도록
     fillVars(false); fillExps();
-    $("md-box").hidden = val("md-region") !== "box";
-    $("md-members-custom").disabled = val("md-members") !== "custom";
+    $("mdd-box").hidden = val("mdd-region") !== "box";
+    $("mdd-members-custom").disabled = val("mdd-members") !== "custom";
     app.hidden = false;
-    var loading = $("md-loading");
+    var loading = $("mdd-loading");
     if (loading) loading.hidden = true;
     renderAll();
   }
