@@ -1,0 +1,183 @@
+fake files: 17 in /home/runner/work/_temp/mt/fake
+
+[1] CMIP6 monthly per-model, join, box, K→°C
+    | /home/runner/work/_temp/mt/fake에서 netCDF 파일 17개를 찾았습니다
+    | 이름 규칙(DRS)에 맞지 않아 건너뛴 파일 1개 (예: readme_not_drs.nc)
+    |   [WARN] MODA r1i1p1f1 historical: 버전이 여럿이라 최신 v20200101만 씁니다 (다른 버전 파일 2개 제외)
+    | 묶음 5개 (변수·모델·실험·멤버·격자)
+    | 
+    | [MODA r1i1p1f1 gn] tas (Amon)
+    |   [WARN] MODA r1i1p1f1 historical: tas_Amon_MODA_historical_r1i1p1f1_gn_200501-201412.nc: 앞 자료(tas_Amon_MODA_historical_r1i1p1f1_gn_200001-200912.nc)와 60개 시각이 겹쳐(2005-01–2009-12) 겹친 부분은 앞 자료 값을 썼습니다
+    |   [OK  ] MODA r1i1p1f1 historical+ssp245: /home/runner/work/_temp/mt/out1/tas_Amon_MODA_historical+ssp245_r1i1p1f1_gn_199501-202512_box.nc (time 372 × lat 6 × lon 6 · noleap · 1995-01–2025-12 · 0.0 MB)
+    | 
+    | [MODB r1i1p1f2 gn] tas (Amon)
+    |   [WARN] MODB r1i1p1f2 historical: 빈 구간: 2000-12 다음이 2002-01입니다 (tas_Amon_MODB_historical_r1i1p1f2_gn_199001-200012.nc → tas_Amon_MODB_historical_r1i1p1f2_gn_200201-201412.nc)
+    |   [OK  ] MODB r1i1p1f2 historical+ssp245: /home/runner/work/_temp/mt/out1/tas_Amon_MODB_historical+ssp245_r1i1p1f2_gn_199501-202512_box.nc (time 360 × j 4 × i 3 · 360_day · 1995-01–2025-12 · 0.0 MB)
+    | 
+    | ========================================================================
+    | 모델별 결과
+    | ------------------------------------------------------------------------
+    |   경고         MODA                       저장 1 · 경고 2 · 실패 0
+    |   경고         MODB                       저장 1 · 경고 1 · 실패 0
+    | ========================================================================
+    | 저장한 파일 2개 · 실패 0건 · 결과 폴더: /home/runner/work/_temp/mt/out1
+  ok   merge1.py: exit code 0 (expected 0)
+  ok   MODA joined file exists: ['tas_Amon_MODA_historical+ssp245_r1i1p1f1_gn_199501-202512_box.nc', 'tas_Amon_MODB_historical+ssp245_r1i1p1f2_gn_199501-202512_box.nc']
+  ok   MODA calendar noleap
+  ok   MODA 1995-01..2025-12 = 372 months (got 372)
+  ok   MODA strictly monthly, no duplicates/gaps
+  ok   MODA values match time (overlap kept earlier piece, °C conversion)
+  ok   MODA units degC
+  ok   MODA box subset
+  ok   MODA box size 6×6 (got {'time': 372, 'lat': 6, 'lon': 6, 'bnds': 2})
+  ok   warned about two versions, used latest
+  ok   warned about overlap 2005–2009
+  ok   MODB joined file exists
+  ok   MODB calendar kept 360_day
+  ok   MODB curvilinear subset kept 2-D coords
+  ok   MODB values outside box are NaN
+  ok   warned about MODB gap 2001
+  ok   first member only (no r2i1p1f1)
+  ok   CMIP7 files ignored for CMIP6 project
+  ok   per-model summary printed
+
+[2] CMIP6 monthly ensemble, calendar → noleap, English
+    | found 17 netCDF file(s) in /home/runner/work/_temp/mt/fake
+    | 1 file(s) skipped because the name does not follow the DRS (e.g. readme_not_drs.nc)
+    |   [WARN] MODA r1i1p1f1 historical: several versions; using the latest v20200101 only (2 file(s) of other versions ignored)
+    | 5 group(s) (variable, model, experiment, member, grid)
+    | 
+    | [MODA r1i1p1f1 gn] tas (Amon)
+    |   [WARN] MODA r1i1p1f1 historical: tas_Amon_MODA_historical_r1i1p1f1_gn_200501-201412.nc overlaps tas_Amon_MODA_historical_r1i1p1f1_gn_200001-200912.nc at 60 time steps (2005-01–2009-12); kept the earlier values
+    | 
+    | [MODB r1i1p1f2 gn] tas (Amon)
+    |   [WARN] MODB r1i1p1f2 historical: gap: 2000-12 is followed by 2002-01 (tas_Amon_MODB_historical_r1i1p1f2_gn_199001-200012.nc → tas_Amon_MODB_historical_r1i1p1f2_gn_200201-201412.nc)
+    |   [WARN] MODB r1i1p1f2 historical+ssp245: calendar 360_day → noleap: monthly data re-stamped at the 15th of each month (time bounds dropped)
+    | 
+    | [ensemble] tas (Amon) historical+ssp245: 2
+    |   [WARN] ensemble historical+ssp245: could not combine, saving one file per model instead: ValueError: MODB is on a different grid; set REGRID to combine
+    |   [OK  ] MODA r1i1p1f1 historical+ssp245: /home/runner/work/_temp/mt/out2/tas_Amon_MODA_historical+ssp245_r1i1p1f1_199501-202512.nc (time 372 × lat 6 × lon 6 · noleap · 1995-01–2025-12 · 0.0 MB)
+    |   [OK  ] MODB r1i1p1f2 historical+ssp245: /home/runner/work/_temp/mt/out2/tas_Amon_MODB_historical+ssp245_r1i1p1f2_199501-202512.nc (time 360 × j 4 × i 3 · noleap · 1995-01–2025-12 · 0.0 MB)
+    | 
+    | ========================================================================
+    | Result by model
+    | ------------------------------------------------------------------------
+    |   WARN       MODA                       saved 1 · warnings 2 · failed 0
+    |   WARN       MODB                       saved 1 · warnings 2 · failed 0
+    |   WARN       ensemble                   saved 0 · warnings 1 · failed 0
+    | ========================================================================
+    | 2 file(s) saved · 0 failure(s) · output folder: /home/runner/work/_temp/mt/out2
+  ok   merge2.py: exit code 0 (expected 0)
+  ok   ensemble across different grids falls back with warning
+  ok   two per-model files after fallback (2)
+  ok   tas_Amon_MODA_historical+ssp245_r1i1p1f1_199501-202512.nc calendar → noleap
+  ok   tas_Amon_MODB_historical+ssp245_r1i1p1f2_199501-202512.nc calendar → noleap
+
+[3] ensemble of one grid, members=all, no join
+    | /home/runner/work/_temp/mt/fake에서 netCDF 파일 17개를 찾았습니다
+    | 이름 규칙(DRS)에 맞지 않아 건너뛴 파일 1개 (예: readme_not_drs.nc)
+    | 묶음 2개 (변수·모델·실험·멤버·격자)
+    | 
+    | [MODA r1i1p1f1 gn] tas (Amon)
+    | 
+    | [MODA r2i1p1f1 gn] tas (Amon)
+    | 
+    | [ensemble] tas (Amon) ssp245: 2
+    |   [OK  ] ensemble ssp245: /home/runner/work/_temp/mt/out3/tas_Amon_multimodel_ssp245_201501-202012.nc (model 2 × time 72 × lat 72 × lon 144 · noleap · 2015-01–2020-12 · 0.0 MB)
+    | 
+    | ========================================================================
+    | 모델별 결과
+    | ------------------------------------------------------------------------
+    |   성공         ensemble                   저장 1 · 경고 0 · 실패 0
+    | ========================================================================
+    | 저장한 파일 1개 · 실패 0건 · 결과 폴더: /home/runner/work/_temp/mt/out3
+  ok   merge3.py: exit code 0 (expected 0)
+  ok   ensemble file exists
+  ok   model dimension = 2 members (got {'model': 2, 'time': 72, 'lat': 72, 'lon': 144})
+  ok   member_id coordinate
+  ok   2015–2020 = 72 months
+
+[4] CMIP6 daily, calendar → noleap
+    | /home/runner/work/_temp/mt/fake에서 netCDF 파일 17개를 찾았습니다
+    | 이름 규칙(DRS)에 맞지 않아 건너뛴 파일 1개 (예: readme_not_drs.nc)
+    | 묶음 3개 (변수·모델·실험·멤버·격자)
+    | 
+    | [MODA r1i1p1f1 gn] tas (day)
+    |   [OK  ] MODA r1i1p1f1 historical+ssp245: /home/runner/work/_temp/mt/out4/tas_day_MODA_historical+ssp245_r1i1p1f1_gn_20130101-20161231.nc (time 1460 × lat 72 × lon 144 · noleap · 2013-01-01–2016-12-31 · 0.1 MB)
+    | 
+    | [MODB r1i1p1f2 gn] tas (day)
+    |   [WARN] MODB r1i1p1f2 historical: 자료 기간 2013-01-01–2014-12-30가 고른 기간(2013–2016)보다 짧습니다
+    |   [WARN] MODB r1i1p1f2 historical: 달력 360_day → noleap: 시각 720개 → 730개 — 360_day 변환은 해마다 날짜를 고르게 늘리거나 줄인 것이라 일별 값의 날짜가 하루 이틀 어긋나고, 새로 생긴 날은 NaN입니다
+    |   [OK  ] MODB r1i1p1f2 historical: /home/runner/work/_temp/mt/out4/tas_day_MODB_historical_r1i1p1f2_gn_20130101-20141231.nc (time 730 × j 40 × i 60 · noleap · 2013-01-01–2014-12-31 · 0.1 MB)
+    | 
+    | ========================================================================
+    | 모델별 결과
+    | ------------------------------------------------------------------------
+    |   성공         MODA                       저장 1 · 경고 0 · 실패 0
+    |   경고         MODB                       저장 1 · 경고 2 · 실패 0
+    | ========================================================================
+    | 저장한 파일 2개 · 실패 0건 · 결과 폴더: /home/runner/work/_temp/mt/out4
+  ok   merge4.py: exit code 0 (expected 0)
+  ok   daily files: ['tas_day_MODB_historical_r1i1p1f2_gn_20130101-20141231.nc', 'tas_day_MODA_historical+ssp245_r1i1p1f1_gn_20130101-20161231.nc']
+  ok   MODA 2013–2016 noleap = 1460 days (got 1460)
+  ok   MODB 360_day → noleap 730 days (got noleap 730)
+  ok   360_day conversion warning printed
+  ok   daily log mentions experiments
+
+[5] pr → mm/day, calendar → standard (daily-free monthly)
+    | found 17 netCDF file(s) in /home/runner/work/_temp/mt/fake
+    | 1 file(s) skipped because the name does not follow the DRS (e.g. readme_not_drs.nc)
+    | 1 group(s) (variable, model, experiment, member, grid)
+    | 
+    | [MODA r1i1p1f1 gn] pr (Amon)
+    |   [WARN] MODA r1i1p1f1 historical: calendar noleap → standard: monthly data re-stamped at the 15th of each month (time bounds dropped)
+    |   [OK  ] MODA r1i1p1f1 historical: /home/runner/work/_temp/mt/out5/pr_Amon_MODA_historical_r1i1p1f1_gn_200001-200112.nc (time 24 × lat 72 × lon 144 · standard · 2000-01–2001-12 · 0.0 MB)
+    | 
+    | ========================================================================
+    | Result by model
+    | ------------------------------------------------------------------------
+    |   WARN       MODA                       saved 1 · warnings 1 · failed 0
+    | ========================================================================
+    | 1 file(s) saved · 0 failure(s) · output folder: /home/runner/work/_temp/mt/out5
+  ok   merge5.py: exit code 0 (expected 0)
+  ok   pr file
+  ok   pr converted to mm/day
+  ok   calendar standard
+
+[6] CMIP7 DRS file names
+    | /home/runner/work/_temp/mt/fake에서 netCDF 파일 17개를 찾았습니다
+    | 이름 규칙(DRS)에 맞지 않아 건너뛴 파일 1개 (예: readme_not_drs.nc)
+    | 묶음 1개 (변수·모델·실험·멤버·격자)
+    | 
+    | [MODC r1i1p1f1 g110] tas_tavg-h2m-hxy-u (mon, glb)
+    |   [OK  ] MODC r1i1p1f1 historical: /home/runner/work/_temp/mt/out6/tas_tavg-h2m-hxy-u_mon_glb_MODC_historical_r1i1p1f1_g110_200001-202112.nc (time 264 × lat 72 × lon 144 · proleptic_gregorian · 2000-01–2021-12 · 0.0 MB)
+    | 
+    | ========================================================================
+    | 모델별 결과
+    | ------------------------------------------------------------------------
+    |   성공         MODC                       저장 1 · 경고 0 · 실패 0
+    | ========================================================================
+    | 저장한 파일 1개 · 실패 0건 · 결과 폴더: /home/runner/work/_temp/mt/out6
+  ok   merge6.py: exit code 0 (expected 0)
+  ok   CMIP7 merged file: ['tas_tavg-h2m-hxy-u_mon_glb_MODC_historical_r1i1p1f1_g110_200001-202112.nc']
+  ok   CMIP7 264 months, proleptic_gregorian
+
+[7] nothing to merge → non-zero exit
+    | /home/runner/work/_temp/mt/fake에서 netCDF 파일 17개를 찾았습니다
+    | 이름 규칙(DRS)에 맞지 않아 건너뛴 파일 1개 (예: readme_not_drs.nc)
+    | 묶음 0개 (변수·모델·실험·멤버·격자)
+    | 합칠 파일이 없습니다 — FOLDER·VARIABLES·EXPERIMENTS 설정을 확인하세요
+    | 
+    | ========================================================================
+    | 모델별 결과
+    | ------------------------------------------------------------------------
+    | ========================================================================
+    | 저장한 파일 0개 · 실패 0건 · 결과 폴더: /home/runner/work/_temp/mt/out7
+  ok   merge7.py: exit code 1 (expected 1)
+
+[search] intake-esgf script compile + import check
+  ok   search script CMIP6/ko imports ok 
+  ok   search script CMIP7/en imports ok 
+  ok   intake_esgf importable
+
+ALL PASSED
