@@ -1,17 +1,26 @@
 {
-  "date": "2026-10-18",
-  "reviewed_at": "2026-10-18T08:20:00+09:00",
-  "summary": "공지 페이지 276곳 중 21곳이 바뀌었으나 모두 날짜·용량 표시나 오래된 글 재노출이라 새 공지 후보는 없습니다.",
+  "date": "2026-10-19",
+  "reviewed_at": "2026-10-19T08:17:43+09:00",
+  "summary": "공지 페이지 276곳 중 20곳이 바뀌었으나 모두 날짜·용량 표시 변화나 다른 자료에 관한 글이라 새 공지 후보는 없습니다.",
   "watch": {
-    "date": "2026-10-18",
+    "date": "2026-10-19",
     "checked": 276,
-    "ok": 246,
-    "changed": 21
+    "ok": 244,
+    "changed": 20
   },
   "candidates": [],
   "pr": null,
   "pending": [],
   "ignored": [
+    {
+      "datasets": [
+        "ascat",
+        "osisaf-drift",
+        "osisaf-sic"
+      ],
+      "url": "https://osi-saf.eumetsat.int/community/list-of-service-messages",
+      "reason": "10-18 새 서비스 메시지 'Several LML products unavailable'은 저·중위도(LML) 해수면온도·복사 플럭스 제품 관련 — 해빙·해빙 이동·ASCAT 바람과 무관"
+    },
     {
       "datasets": [
         "ascat"
@@ -42,35 +51,24 @@
     },
     {
       "datasets": [
-        "cs3smos"
+        "cobe-sst3"
       ],
-      "url": "https://data.marine.copernicus.eu/product/SEAICE_GLO_PHY_L4_NRT_011_014/description",
-      "reason": "자료 기간 끝 날짜 표시가 정기 갱신으로 바뀜"
-    },
-    {
-      "datasets": [
-        "duacs",
-        "glorys12",
-        "nextsim",
-        "ostia",
-        "topaz4b"
-      ],
-      "url": "https://marine.copernicus.eu/user-corner/user-notification-service",
-      "reason": "2026-07-07 신규 서비스 릴리스 글(60일 넘은 오래된 글) 재노출, 해결된 10-14 배포 지연 글 삭제 — 새 공지 아님 (SL-515는 notes 참고)"
+      "url": "https://climatedataguide.ucar.edu/climate-data/sst-data-cobev3-centennial-situ-observation-based-estimates-version-3",
+      "reason": "페이지 수정 날짜 표시만 바뀜"
     },
     {
       "datasets": [
         "gimms-ndvi"
       ],
       "url": "https://zenodo.org/records/8253971",
-      "reason": "파일 용량 표시만 바뀜"
+      "reason": "조회수·용량 표시만 바뀜"
     },
     {
       "datasets": [
         "grace"
       ],
       "url": "https://grace.jpl.nasa.gov/data/data-updates/",
-      "reason": "GRACE 연구 소개 뉴스 — 자료 변경 아님"
+      "reason": "사이드바 자료 링크('GRACE Satellites at IABG') 노출 — 자료 갱신 공지 아님"
     },
     {
       "datasets": [
@@ -113,13 +111,6 @@
       ],
       "url": "https://nsidc.org/data/g02202/versions/6",
       "reason": "인용문의 접속 날짜(Date Accessed)만 바뀜"
-    },
-    {
-      "datasets": [
-        "oco2"
-      ],
-      "url": "https://science.nasa.gov/mission/oco-2/",
-      "reason": "NASA 일반 뉴스 목록 변화 — 자료와 무관"
     },
     {
       "datasets": [
@@ -171,7 +162,7 @@
       ],
       "url": "https://aqua.nasa.gov/",
       "error": "SSLError: HTTPSConnectionPool(host='aqua.nasa.gov', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLCertVerificationError(1, \"[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: Hostn",
-      "fails": 5
+      "fails": 6
     },
     {
       "datasets": [
@@ -179,7 +170,7 @@
       ],
       "url": "https://asdc.larc.nasa.gov/project/CALIPSO",
       "error": "HTTP 403 / HTTP 403 (브라우저)",
-      "fails": 5
+      "fails": 6
     },
     {
       "datasets": [
@@ -187,7 +178,7 @@
       ],
       "url": "https://www.ecmwf.int/en/forecasts/datasets/reanalysis-datasets/cera-20c",
       "error": "HTTP 401 / HTTP 401 (브라우저)",
-      "fails": 12
+      "fails": 13
     },
     {
       "datasets": [
@@ -195,7 +186,7 @@
       ],
       "url": "https://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=2187",
       "error": "HTTP 403 / HTTP 403 (브라우저)",
-      "fails": 5
+      "fails": 6
     },
     {
       "datasets": [
@@ -203,7 +194,7 @@
       ],
       "url": "https://nmsc.kma.go.kr/homepage/json/base/bbs/listBbs.do?bbsCd=00237",
       "error": "브라우저로도 본문이 비어 있음",
-      "fails": 5
+      "fails": 6
     },
     {
       "datasets": [
@@ -218,7 +209,7 @@
       ],
       "url": "https://www.earthdata.nasa.gov/data/alerts-outages",
       "error": "HTTP 403 / HTTP 403 (브라우저)",
-      "fails": 12
+      "fails": 13
     },
     {
       "datasets": [
@@ -228,7 +219,7 @@
       ],
       "url": "https://oceancolor.gsfc.nasa.gov/data/reprocessing/",
       "error": "HTTP 403 / HTTP 403 (브라우저)",
-      "fails": 5
+      "fails": 6
     },
     {
       "datasets": [
@@ -236,7 +227,7 @@
       ],
       "url": "https://gosat-gw.nies.go.jp/en/news/",
       "error": "HTTP 404 / HTTP 404 (브라우저)",
-      "fails": 5
+      "fails": 6
     },
     {
       "datasets": [
@@ -244,7 +235,7 @@
       ],
       "url": "https://www.earthdata.nasa.gov/data/projects/merra-2/news",
       "error": "HTTP 403 / HTTP 403 (브라우저)",
-      "fails": 12
+      "fails": 13
     },
     {
       "datasets": [
@@ -252,7 +243,7 @@
       ],
       "url": "https://asdc.larc.nasa.gov/project/MISR",
       "error": "HTTP 403 / HTTP 403 (브라우저)",
-      "fails": 5
+      "fails": 6
     },
     {
       "datasets": [
@@ -260,7 +251,7 @@
       ],
       "url": "https://aqua.nasa.gov/announcements/aqua-status",
       "error": "SSLError: HTTPSConnectionPool(host='aqua.nasa.gov', port=443): Max retries exceeded with url: /announcements/aqua-status (Caused by SSLError(SSLCertVerificationError(1, \"[SSL: CERTIFICATE_VERIFY_FAILED] certifi",
-      "fails": 5
+      "fails": 6
     },
     {
       "datasets": [
@@ -268,7 +259,7 @@
       ],
       "url": "https://www.earthdata.nasa.gov/data/catalog/lpcloud-mcd64a1-061",
       "error": "HTTP 403 / HTTP 403 (브라우저)",
-      "fails": 5
+      "fails": 6
     },
     {
       "datasets": [
@@ -276,7 +267,7 @@
       ],
       "url": "https://www.earthdata.nasa.gov/data/catalog/lpcloud-mod16a2gf-061",
       "error": "HTTP 403 / HTTP 403 (브라우저)",
-      "fails": 5
+      "fails": 6
     },
     {
       "datasets": [
@@ -285,7 +276,7 @@
       ],
       "url": "https://www.earthdata.nasa.gov/data/alerts-outages/transition-from-modis-viirs",
       "error": "HTTP 403 / HTTP 403 (브라우저)",
-      "fails": 5
+      "fails": 6
     },
     {
       "datasets": [
@@ -293,7 +284,7 @@
       ],
       "url": "https://www.earthdata.nasa.gov/data/catalog/lpcloud-mcd12q1-061",
       "error": "HTTP 403 / HTTP 403 (브라우저)",
-      "fails": 5
+      "fails": 6
     },
     {
       "datasets": [
@@ -301,7 +292,7 @@
       ],
       "url": "https://www.earthdata.nasa.gov/data/catalog/lpcloud-mod11a1-061",
       "error": "HTTP 403 / HTTP 403 (브라우저)",
-      "fails": 5
+      "fails": 6
     },
     {
       "datasets": [
@@ -310,7 +301,7 @@
       ],
       "url": "https://oceancolor.gsfc.nasa.gov/",
       "error": "HTTP 403 / HTTP 403 (브라우저)",
-      "fails": 5
+      "fails": 6
     },
     {
       "datasets": [
@@ -318,7 +309,7 @@
       ],
       "url": "https://www.tropomi.eu/data-products/level-2-products",
       "error": "HTTP 404 / HTTP 404 (브라우저)",
-      "fails": 5
+      "fails": 6
     },
     {
       "datasets": [
@@ -326,7 +317,7 @@
       ],
       "url": "https://doi.org/10.5067/VIIRS/VJ143MA3.002",
       "error": "HTTP 403 / HTTP 403 (브라우저)",
-      "fails": 5
+      "fails": 6
     },
     {
       "datasets": [
@@ -334,7 +325,7 @@
       ],
       "url": "https://www.earthdata.nasa.gov/data/catalog/lpcloud-vnp64a1-002",
       "error": "HTTP 403 / HTTP 403 (브라우저)",
-      "fails": 5
+      "fails": 6
     },
     {
       "datasets": [
@@ -344,7 +335,7 @@
       ],
       "url": "https://www.earthdata.nasa.gov/data/alerts-outages/suomi-npp-data-product-delivery-cease-november-1-2026",
       "error": "HTTP 403 / HTTP 403 (브라우저)",
-      "fails": 5
+      "fails": 6
     },
     {
       "datasets": [
@@ -352,7 +343,7 @@
       ],
       "url": "https://www.earthdata.nasa.gov/data/catalog/lpcloud-vj215a2h-002",
       "error": "HTTP 403 / HTTP 403 (브라우저)",
-      "fails": 5
+      "fails": 6
     },
     {
       "datasets": [
@@ -360,7 +351,7 @@
       ],
       "url": "https://www.earthdata.nasa.gov/data/catalog/lpcloud-vj221a1d-002",
       "error": "HTTP 403 / HTTP 403 (브라우저)",
-      "fails": 5
+      "fails": 6
     },
     {
       "datasets": [
@@ -368,7 +359,7 @@
       ],
       "url": "https://www.earthdata.nasa.gov/data/catalog/lpcloud-vnp21a1d-002",
       "error": "HTTP 403 / HTTP 403 (브라우저)",
-      "fails": 5
+      "fails": 6
     },
     {
       "datasets": [
@@ -376,12 +367,12 @@
       ],
       "url": "https://www.earthdata.nasa.gov/data/catalog/lpcloud-vnp13a1-002",
       "error": "HTTP 403 / HTTP 403 (브라우저)",
-      "fails": 5
+      "fails": 6
     }
   ],
   "notes": [
-    "운영자 확인 필요: 직접 확인 대상 4곳(Earthdata alerts-outages, Earthdata MERRA-2 news, ECMWF CERA-20C, GES DISC 공지 API)을 오늘 WebFetch로 열지 못했습니다(예약 실행 중 주소 열람 권한 요청에 응답이 없어 취소됨). 그래서 이 주소들은 errors에 그대로 두었고, IMERG·MERRA-2·GPCP·GES DISC·CERA-20C 관련 최근 7일 공지는 확인되지 않았습니다 — 브라우저로 직접 봐 주세요: https://www.earthdata.nasa.gov/data/alerts-outages , https://www.earthdata.nasa.gov/data/projects/merra-2/news , https://www.ecmwf.int/en/forecasts/datasets/reanalysis-datasets/cera-20c , https://disc.gsfc.nasa.gov/api/alerts?page=1&size=10",
-    "운영자 확인 필요: Copernicus Marine [SL-515] SEALEVEL_(GLO|EUR)_PHY_L3_NRT — 2026-10-03 이후 HY-2B(H2B) L2 자료 미수신, L3 H2B는 10-02까지(2026-10-15 16:00 UTC 기준 In progress, 오늘 감시 사본에서도 그대로). 어제와 같이 DUACS 공지 여부는 판단 보류 (https://marine.copernicus.eu/user-corner/user-notification-service)",
-    "errors의 25개 주소는 모두 5회 이상 연속 실패(last_ok 없음)지만 Earthdata·ECMWF 등 대부분은 데이터센터 접속 차단(403/401)입니다. 오늘은 새 공식 주소를 찾지 못해 watch_urls 교체 제안은 없습니다."
+    "운영자 확인 필요: 직접 확인 대상(Earthdata alerts-outages, Earthdata MERRA-2 news, ECMWF CERA-20C, GES DISC 공지 API)을 오늘도 WebFetch로 열지 못했습니다(예약 실행 중 주소 열람 권한 요청에 응답이 없어 취소됨). 그래서 이 주소들은 errors에 그대로 두었고, IMERG·MERRA-2·GPCP·GES DISC·CERA-20C 관련 최근 7일 공지는 확인되지 않았습니다 — 브라우저로 직접 봐 주세요: https://www.earthdata.nasa.gov/data/alerts-outages , https://www.earthdata.nasa.gov/data/projects/merra-2/news , https://www.ecmwf.int/en/forecasts/datasets/reanalysis-datasets/cera-20c , https://disc.gsfc.nasa.gov/api/alerts?page=1&size=10 . 같은 이유로 OSI SAF 10-18 서비스 메시지 원문도 열지 못해 감시 사본(목록 제목·분류)만으로 판단했습니다.",
+    "운영자 확인 필요: Copernicus Marine [SL-515] SEALEVEL_(GLO|EUR)_PHY_L3_NRT — 2026-10-03 이후 HY-2B(H2B) L2 자료 미수신, L3 H2B는 10-02까지(2026-10-15 16:00 UTC 기준 In progress, 오늘 감시 사본에서도 그대로). DUACS 공지 여부는 계속 판단 보류 (https://marine.copernicus.eu/user-corner/user-notification-service)",
+    "errors의 25개 주소는 모두 6회 이상 연속 실패(last_ok 없음)이며 Earthdata·ECMWF 등 대부분은 데이터센터 접속 차단(403/401)입니다. 오늘은 새 공식 주소를 확인하지 못해 watch_urls 교체 제안은 없습니다."
   ]
 }
