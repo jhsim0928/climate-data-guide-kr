@@ -39,6 +39,20 @@ Product Roadmap
 Get Inspired
 Service Commitments and Licence
 Contact Us
+[SST-991] SST_(ATL|GLO)_(PHY|SST)_(L3S|L4)_NRT - Delay since 2026-10-17 for ODYSSEA SST L3S and L4 products
+In progress
+2026-10-18 12:00 UTC - In progress
+Due to a technical issue that has affected the production and delivery of the ODYSSEA SST products, the files have not been produced or delivered since 2026-10-17.
+Impacted product:
+SST_ATL_PHY_L3S_NRT_010_037
+SST_GLO_SST_L3S_NRT_OBSERVATIONS_010_010
+SST_ATL_SST_L4_NRT_OBSERVATIONS_010_025
+SST_GLO_PHY_L4_NRT_010_043
+The technical team is working to restore normal production and deliver the missing files as soon as possible.
+We apologize for any inconvenience this may cause.
+If you have any question, please contact
+Copernicus Marine User Support
+Copy a link to this article
 [SL-515] SEALEVEL_(EUR|GLO)_PHY_L3_NRT - No upstream H2B data received since 2026-10-03
 In progress
 2026-10-15 16:00 UTC - In progress
@@ -169,6 +183,14 @@ cmems_obs-ins_glo_bgc_my_easybgc_irr
 If you have any question, please contact
 Copernicus Marine User Support
 Copy a link to this article
+[WAV-308] WAVE_GLO_PHY_SWH_L3_NRT - missing HY-2B data from 2026-10-02 to 2026-10-12
+Anomaly
+2026-10-19 11:00 UTC - Anomaly
+Due to the unavailability of upstream data, the dataset cmems_obs-wave_glo_phy-swh_nrt_h2b-l3_PT1S from WAVE_GLO_PHY_SWH_L3_NRT_014_001 is missing from 2026-10-02 to 2026-10-12.
+We apologize for any inconvenience this may cause.
+If you have any question, please contact
+Copernicus Marine User Support
+Copy a link to this article
 [WND-267] WIND_GLO_PHY_L3_NRT - some delayed datasets since 2026-10-03
 Anomaly
 2026-10-12 00:00 UTC - Anomaly
@@ -184,14 +206,6 @@ cmems_obs-wind_glo_phy_nrt_l3-hy2c-hscat-asc-0.25deg_P1D-i
 cmems_obs-wind_glo_phy_nrt_l3-hy2c-hscat-des-0.25deg_P1D-i
 cmems_obs-wind_glo_phy_nrt_l3-hy2c-hscat-asc-0.5deg_P1D-i
 cmems_obs-wind_glo_phy_nrt_l3-hy2c-hscat-des-0.5deg_P1D-i
-We apologize for any inconvenience this may cause.
-If you have any question, please contact
-Copernicus Marine User Support
-Copy a link to this article
-[WEB-395] Maintenance on global search capabilities on 2026-10-19
-Scheduled
-2026-10-19 09:00 UTC - Scheduled
-On 2026-10-19, starting at 9AM (CEST), we will be performing a scheduled maintenance on the site's indexing system related to the search capabilities. As a consequence, the search fields across the platform may be temporarily unavailable and users might also experience slowness or incomplete results when trying to use any search functionality.
 We apologize for any inconvenience this may cause.
 If you have any question, please contact
 Copernicus Marine User Support
@@ -633,54 +647,4 @@ cmems_mod_nwatl_phy_mld_anfc_0.027deg_PT1H-i
 cmems_mod_nwatl_phy_sal_anfc_0.027deg_PT1H-i
 cmems_mod_nwatl_phy_ssh_anfc_0.027deg_PT1H-i
 cmems_mod_nwatl_phy_temp_anfc_0.027deg_PT1H-i
-Copy a link to this article
-COPERNICUS MARINE NEW SERVICE RELEASE ON 7 JULY 2026
-Improvement
-Copernicus Marine Service is pleased to deliver New Service Release on 7 July 2026.
-The main characteristics of this release will be :
-BLUE OCEAN
-SST_BS_SST_L4_NRT_OBSERVATIONS_010_006
-SST_MED_SST_L4_NRT_OBSERVATIONS_010_004
-: New climatology will be constructed over the period 1991–2020 to replace the current climatology based on the period 1985-2005. This evolution also implies the reprocessing of all the anomaly data records for both Mediterranean Sea and Black Sea for Near Real Time products from 2008 to present.
-WAVE_GLO_PHY_SPC-FWK_L3_NRT_014_002
-: A new dataset is created due to the integration of Sentinel-1C measurements in Level-3 NRT Fireworks products.
-WAVE_GLO_PHY_SWH_L3_MY_014_005
-: The last version of Multi Year Significant Wave Heigh Level 3 based on CCi Sea State Project will replace the previous version of the product. A new dataset will be created, and the old datasets will be retired.
-WAVE_GLO_PHY_SWH_L4_NRT_014_003
-: Increased spatial (from 2° to 0.5°) and temporal (from daily to 6 hours) resolution of the instantaneous (MIOST mapping approach) dataset of the product.
-WAVE_GLO_PHY_SWH_L3_NRT_014_001
-: The temporal coverage of the ten 1 Hz Significant Wave Height datasets (_PT1S) is reduced to the last two years of available data. Earlier records are now available through the updated
-WAVE_GLO_PHY_SWH_L3_MY_014_005
-product.
-WIND_GLO_PHY_L3_NRT_012_002
-: New FY-3E WindRAD L3 Near Real Time datasets at two horizontal resolutions will be added to the product.
-MULTIOBS_GLO_PHY_S_SURFACE_MYNRT_015_013
-: Updated upstream Sea Surface Salinity (SSS) input data. The product now uses the
-MULTIOBS_GLO_PHY_SSS_L3_MYNRT_015_014
-Level-3 SMOS Sea Surface Salinity dataset, improving the robustness and consistency of the processing chain.
-MULTIOBS_GLO_PHY_SSS_L4_MY_015_015
-: Use the "Centre Aval de Traitement des Données du Satellite (CATDS)" L3G products (Gaussian temporal average of Sea Surface Salinity, SSS) instead of the CATDS L3Q, simple average of SSS for the Soil Moisture and Ocean Salinity products.
-SEALEVEL_EUR_PHY_L3_NRT_008_059
-SEALEVEL_GLO_PHY_L3_NRT_008_044
-: New datasets are being added to the catalog in preparation for the future integration of Sentinel-6B into the DUACS system. These datasets will remain empty for an indefinite period. Operational production of these data is scheduled to begin in late 2026, after the mission's commissioning phase.
-GREEN OCEAN
-GLOBAL_MULTIYEAR_BGC_001_033
-: The reanalysis, which provides an estimate of low and mid-trophic levels for the period 1998–2024, is extended to the first half of 2025.
-WHITE OCEAN
-NWATL_ANALYSISFORECAST_PHY_ICE_017_001
-: The COLAB-MFC starts with a new near-real-time product which is based on the Coastal Ice Ocean Prediction System for the East Coast of Canada developed by Environment and Climate Change Canada and distributed by the Meteorological Service of Canada. The new product covers the Northwestern Atlantic along the North American coastline and provides 48-hour forecasts in hourly files, issued four times a day at 1/36° resolution and 99 vertical z-levels. It includes both ocean physics and sea ice variables.
-List of impacted product :
-SEALEVEL_EUR_PHY_L3_NRT_008_059
-SEALEVEL_GLO_PHY_L3_NRT_008_044
-SST_BS_SST_L4_NRT_OBSERVATIONS_010_006
-SST_MED_SST_L4_NRT_OBSERVATIONS_010_004
-WAVE_GLO_PHY_SPC-FWK_L3_NRT_014_002
-WAVE_GLO_PHY_SWH_L3_MY_014_005
-WAVE_GLO_PHY_SWH_L4_NRT_014_003
-WIND_GLO_PHY_L3_NRT_012_002
-GLOBAL_MULTIYEAR_BGC_001_033
-NWATL_ANALYSISFORECAST_PHY_ICE_017_001
-MULTIOBS_GLO_PHY_SSS_L4_MY_015_015
-MULTIOBS_GLO_PHY_S_SURFACE_MYNRT_015_013
-WAVE_GLO_PHY_SWH_L3_NRT_014_001
 Copy a link to this article
