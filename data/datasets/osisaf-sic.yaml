@@ -315,6 +315,14 @@ citations:
     Copernicus Marine·CDS에서 받았다면 인용 문구의 배포처(distributor)와 다운로드 날짜 자리에 그 정보를 넣으세요.
 
 notices:
+  - date: "2026-10-20"
+    level: warning
+    title: JAXA 시스템 점검으로 AMSR3 기반 준실시간 해빙 산출물 누락·지연 (10/19~10/23, 서비스 메시지 #3605)
+    body: >-
+      자료 원천 기관(JAXA)의 시스템 점검으로 2026-10-19 05:00 UTC부터 10-23 03:00 UTC까지 GOSAT-GW AMSR3 기반 산출물
+      OSI-410-g(L2 PMW 해빙 농도), OSI-408-g(AMSR3 해빙 농도), OSI-404-d(해빙 방출률)가 제공되지 않거나 늦어진다고 OSI SAF가 알렸습니다.
+      이 기간 준실시간 AMSR3 해빙 농도를 쓰는 경우 빈 날짜를 확인하세요.
+    source: https://osi-saf.eumetsat.int/community/list-of-service-messages/missing-amsr3-products
   - date: "2026-08-31"
     level: warning
     title: 2026-09-01부터 AMSR3 기반 해빙 산출물 운영 시작 (서비스 메시지 #3571)
@@ -372,4 +380,4 @@ watch_urls:
   - https://osi-saf.eumetsat.int/community/stories
   - https://osi-saf.eumetsat.int/community/stories/implications-end-ssmis-data-osi-saf-products
 
-last_verified: "2026-10-11"
+last_verified: "2026-10-21"
