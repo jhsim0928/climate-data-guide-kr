@@ -1,27 +1,20 @@
 {
- "date_kst": "2026-10-22",
- "run_at": "2026-10-22T05:47:30+09:00",
+ "date_kst": "2026-10-23",
+ "run_at": "2026-10-23T05:46:47+09:00",
  "baseline": false,
  "checked": 276,
- "ok": 242,
+ "ok": 244,
  "changes": [
   {
-   "url": "https://scatterometer.knmi.nl/ascat_b_osi_25_prod/",
+   "url": "https://osi-saf.eumetsat.int/community/list-of-service-messages",
    "datasets": [
-    "ascat"
+    "ascat",
+    "osisaf-drift",
+    "osisaf-sic"
    ],
    "added": [
-    "Updated @ 2026-10-21 19:39 utc"
-   ],
-   "removed_count": 1
-  },
-  {
-   "url": "https://scatterometer.knmi.nl/ascat_c_osi_25_prod/",
-   "datasets": [
-    "ascat"
-   ],
-   "added": [
-    "Updated @ 2026-10-21 19:16 utc"
+    "22 October 2026",
+    "High latitude OSI SAF website back online"
    ],
    "removed_count": 1
   },
@@ -32,13 +25,10 @@
     "omi"
    ],
    "added": [
-    "NASA’s SR-1 Freedom Advances with Progress on Nuclear Power Module",
-    "Extratropical Cyclone Whips Past Iceland",
-    "NASA’s CASALS Instrument Bridges Gaps in 3D Maps of Earth’s Surface",
-    "NASA Prepares ROSES-27 to Advance American Science and Leadership in Space",
-    "NASA Ames Unitary Plan Wind Tunnel"
+    "Fires Char New Guinea",
+    "NASA’s Hubble Charts Path for Roman with Gravitational Lenses"
    ],
-   "removed_count": 14
+   "removed_count": 6
   },
   {
    "url": "https://essd.copernicus.org/preprints/essd-2026-412/",
@@ -46,7 +36,7 @@
     "berkeley-earth"
    ],
    "added": [
-    "Latest update: 21 Oct 2026"
+    "Latest update: 22 Oct 2026"
    ],
    "removed_count": 1
   },
@@ -56,15 +46,10 @@
     "calipso"
    ],
    "added": [
-    "NASA’s SR-1 Freedom Advances with Progress on Nuclear Power Module",
-    "Extratropical Cyclone Whips Past Iceland",
-    "NASA’s CASALS Instrument Bridges Gaps in 3D Maps of Earth’s Surface",
-    "8 hours ago",
-    "NASA Prepares ROSES-27 to Advance American Science and Leadership in Space",
-    "NASA Ames Unitary Plan Wind Tunnel",
-    "24 hours ago"
+    "Fires Char New Guinea",
+    "NASA’s Hubble Charts Path for Roman with Gravitational Lenses"
    ],
-   "removed_count": 15
+   "removed_count": 6
   },
   {
    "url": "https://forum.ecmwf.int/c/announcements/5",
@@ -77,24 +62,38 @@
     "oras6"
    ],
    "added": [
-    "21 October 2026",
-    "Delayed update of Soil moisture gridded data following issue identification"
+    "Data Stores Service protection measures affecting data downloads and account access (CDS/ADS/EWDS/ECDS)",
+    "ewds",
+    "ecds",
+    "22 October 2026"
    ],
    "removed_count": 1
   },
   {
-   "url": "https://climate.copernicus.eu/copernicus-arctic-regional-reanalysis-service",
+   "url": "https://ceres.larc.nasa.gov/data/",
    "datasets": [
-    "carra",
-    "carra2"
+    "ceres-ebaf",
+    "ceres-syn1deg"
    ],
    "added": [
-    "Site under maintenance",
-    "We'll be back soon",
-    "Starting with 21 October 16:00 CET, this website is going to be temporarily unavailable for several hours due to scheduled maintenance.",
-    "Thank you for your patience."
+    "NOTICE: The CERES website will be unavailable 3:00 PM, Friday, 10/23/2026 to 5:00 PM, Monday, 10/26/2026 due to maintenance.",
+    "If you have any questions, please email:"
    ],
-   "removed_count": 128
+   "removed_count": 0
+  },
+  {
+   "url": "https://www.weather.gov/notification/",
+   "datasets": [
+    "cfsr-cfsv2",
+    "core",
+    "ncep-ncar-r1"
+   ],
+   "added": [
+    "Oct 22:",
+    "SCN26-92",
+    ": Decommissioning of iNWS websites"
+   ],
+   "removed_count": 0
   },
   {
    "url": "https://gdex.ucar.edu/datasets/d094000/",
@@ -102,8 +101,8 @@
     "cfsr-cfsv2"
    ],
    "added": [
-    "2011-01-01 00:00 +0000 to 2026-10-21 03:00 +0000",
-    "59.87 TB"
+    "2011-01-01 00:00 +0000 to 2026-10-22 03:00 +0000",
+    "59.88 TB"
    ],
    "removed_count": 2
   },
@@ -113,9 +112,30 @@
     "cobe-sst3"
    ],
    "added": [
-    "on 2026-10-21."
+    "on 2026-10-22."
    ],
    "removed_count": 1
+  },
+  {
+   "url": "https://earth.esa.int/eogateway/instruments/siral/processor-releases",
+   "datasets": [
+    "cryosat2-sit"
+   ],
+   "added": [
+    "undefined - Earth Online"
+   ],
+   "removed_count": 583
+  },
+  {
+   "url": "https://earth.esa.int/eogateway/catalog/smos-cryosat-l4-sea-ice-thickness",
+   "datasets": [
+    "cs2smos"
+   ],
+   "added": [
+    "FLEX Level 0 EO Products - Internal",
+    "The FLEX Level 0 EO Products (Internal) collection contains Earth Observation data generated during initial PDGS processing, following th…"
+   ],
+   "removed_count": 2
   },
   {
    "url": "https://marine.copernicus.eu/user-corner/user-notification-service",
@@ -127,24 +147,32 @@
     "topaz4b"
    ],
    "added": [
-    "[ICE-812] SEAICE_(ANT|ARC)_(PHY|SEAICE)_(|AUTO)(L3|L4) - delivery interruption 2026-10-19 to 2026-10-23",
-    "2026-10-19 05:00 UTC - In progress",
-    "Do a server maintenance, some upstream data is not available from 2026-10-19 to 2026-10-23 for sea ice and iceberg products:",
-    "As a result, their production is interrupted.",
-    "[SST-992] SST_(ATL|GLO)_(PHY|SST)_(L3S|L4)_NRT - Degraded quality for 2026-10-20 data",
-    "2026-09-21 12:00 UTC - In progress",
-    "AMSR upstream data have become unavailable from the external provider. As a consequence, the ODYSSEA L3S Atlantic and Global PMW files dated 2026-10-20 could not be produced. The merged L3S and L4 products remain available, but their quality is degraded due to the absence of AMSR2 microwave observations.",
-    "[WEB-408] Emergency maintenance on the Copernicus Marine website",
-    "2026-10-21 14:00 UTC - Scheduled",
-    "Due to an urgent technical maintenance on our web infrastructure, an emergency maintenance operation will take place on",
-    "2026-10-21 starting at 14:00 UTC (16:00 CEST)",
-    "As a consequence, the Copernicus Marine website and related online services may be temporarily degraded or unavailable during this intervention:",
-    "Access to the main website (marine.copernicus.eu)",
-    "Search functionalities and product catalogue pages",
-    "User support chat, feedback tools, and use case submission form",
-    "We will keep you informed once normal operations have resumed."
+    "[OC-1112] OCEANCOLOUR_ATL_BGC_(L3|L4)_(MY|NRT) - Degraded quality of PFT variables starting 2025-09-01",
+    "2026-10-21 11:00 UTC - In progress",
+    "The quality of NRT products (",
+    ") is nominal again.",
+    "The quality issue is still present from 2025-09-01 to 2026-10-11 for the MY products (",
+    "), but the data are correct after these dates. The data with a degraded quality will be updated on 2026-11-24 with the",
+    "November 2026 release",
+    "2026-10-15 12:00 UTC - In progress",
+    "The quality of PFT variables in ATL-plankton datasets should be considered degraded from 2025-09-01 to 2026-10-11 due to a mistake in the processing system. These datasets are currently being updated and the incident will be resolved on 2026-11-24 with the",
+    "Impacted products and datasets:",
+    "(cmems_obs-oc_atl_bgc-plankton_nrt_l3-multi-1km_P1D)",
+    "(cmems_obs-oc_atl_bgc-plankton_my_l3-multi-1km_P1D)",
+    "(cmems_obs-oc_atl_bgc-plankton_nrt_l4-multi-1km_P1M)",
+    "(cmems_obs-oc_atl_bgc-plankton_my_l4-multi-1km_P1M)",
+    "[WAV-311] WAVE_GLO_PHY_SWH_L4_NRT - delay since 2026-10-22",
+    "2026-10-22 12:00 UTC - In progress",
+    "Due to the unavailability of upstream data, dataset cmems_obs-wave_glo_phy-swh_nrt_multi-l4-0.5deg_PT6H-i from WAVE_GLO_PHY_SWH_L4_NRT_014_003 is delayed since 2026-10-22.",
+    "[MOB-401] MULTIOBS_GLO_BGC_SURFACE_NRT_015_016 - Data intake unavailable since 2026-10-20",
+    "Due to the unavailability of upstream OLI files starting from 2026-10-20, the OLI datasets of product",
+    "[NWS-297] NWSHELF_ANALYSISFORECAST_PHY - delay since 2026-10-21",
+    "2026-10-21 12:00 UTC - In progress",
+    "Due to a technical issue, all the datasets from the product NWSHELF_ANALYSISFORECAST_PHY_004_013 are delayed since 2026-10-21.",
+    "[GLO-1068] GLOBAL_ANALYSISFORECAST_PHY - Delayed sea level since 2026-10-20",
+    "Due to an upstream data unavailability, the dataset cmems_mod_glo_phy_anfc_merged-sl_PT1H-i from GLOBAL_ANALYSISFORECAST_PHY_001_024 is delayed since 2026-10-20."
    ],
-   "removed_count": 52
+   "removed_count": 226
   },
   {
    "url": "https://forum.ecmwf.int/c/announcements/c3s-announcements/7",
@@ -153,68 +181,83 @@
     "esa-cci-landcover"
    ],
    "added": [
-    "Delayed update of Soil moisture gridded data following issue identification",
-    "20 October 2026"
-   ],
-   "removed_count": 3
-  },
-  {
-   "url": "https://climate.copernicus.eu/news",
-   "datasets": [
-    "era6"
-   ],
-   "added": [
-    "Site under maintenance",
-    "We'll be back soon",
-    "Starting with 21 October 16:00 CET, this website is going to be temporarily unavailable for several hours due to scheduled maintenance.",
-    "Thank you for your patience."
-   ],
-   "removed_count": 39
-  },
-  {
-   "url": "https://climate.esa.int/en/projects/sea-state/",
-   "datasets": [
-    "esa-cci-sea-state"
-   ],
-   "added": [
-    "Climate Change Initiative colocation CMUG Integration meetings 2023",
-    "7-9 November 2023"
-   ],
-   "removed_count": 2
-  },
-  {
-   "url": "https://climate.esa.int/en/projects/soil-moisture/",
-   "datasets": [
-    "esa-cci-sm"
-   ],
-   "added": [
-    "Taking climate action with Earth observation",
-    "Satellites' contribution to understanding climate change and supporting climate action are under the COP28 spotlight"
+    "22 October 2026"
    ],
    "removed_count": 1
   },
   {
-   "url": "https://cds.climate.copernicus.eu/datasets/satellite-soil-moisture?tab=documentation",
+   "url": "https://nesc.nier.go.kr/ko/html/board/bbs/24/list.do",
    "datasets": [
-    "esa-cci-sm"
+    "gems"
    ],
    "added": [
-    "Open",
-    "Affected period: 2026-09-01 to 2026-09-20",
-    "Affected data: PASSIVE and COMBINED Surface Soil Moisture ...",
-    "PASSIVE data streams in this period contain high number of masked values. As a result, PASSIVE SSM a...",
-    "Users are advised to use the corrected version v202505.2.0 for all products for all dates after 2026..."
+    "22689 인천 서해구 환경로 42 국립환경과학원 환경위성센터"
    ],
-   "removed_count": 0
+   "removed_count": 1
   },
   {
-   "url": "https://climate.esa.int/en/projects/snow/",
+   "url": "https://nesc.nier.go.kr/ko/html/cntnts/104/static/page.do",
    "datasets": [
-    "esa-cci-snow"
+    "gems"
    ],
    "added": [
-    "ESA Digital Twin Earth",
-    "Call for Expressions of Interest"
+    "22689 인천 서해구 환경로 42 국립환경과학원 환경위성센터"
+   ],
+   "removed_count": 1
+  },
+  {
+   "url": "https://nesc.nier.go.kr/ko/html/svc/openapi/explain.do",
+   "datasets": [
+    "gems"
+   ],
+   "added": [
+    "22689 인천 서해구 환경로 42 국립환경과학원 환경위성센터"
+   ],
+   "removed_count": 1
+  },
+  {
+   "url": "https://zenodo.org/records/8253971",
+   "datasets": [
+    "gimms-ndvi"
+   ],
+   "added": [
+    "59.7 TB",
+    "45.2 TB"
+   ],
+   "removed_count": 2
+  },
+  {
+   "url": "https://product.gosat-gw.nies.go.jp/en/home/",
+   "datasets": [
+    "gosat"
+   ],
+   "added": [
+    "G3PA under maintenance",
+    "Announcement of service stop",
+    "Thank you for your understanding and cooperation.",
+    "Currently, GOSAT-GW TANSO-3 Product Archive (G3PA) service has been suspended due to the system maintenance.",
+    "Please try accessing the service again once it has been restored.",
+    "[Downtime Period]",
+    "6:00 AM on Thursday, October 22, 2026 to 8:00 AM on Thursday, October 29, 2026 (UTC)",
+    "Inquiries for products and services",
+    "National Institute for Environmental Studies (NIES) GOSAT-GW TANSO-3 Product Archive Support Desk",
+    "サービス停止のお知らせ",
+    "ただ今、システムメンテナンス中のため、GOSAT-GW TANSO-3 Product Archive サービスを停止しております。",
+    "ご利用のみなさまにはご不便をお掛けいたしますが、サービス再開後にアクセスいただきますようお願いいたします。",
+    "[停止期間]",
+    "2026年10月22日(木) 15:00 ～ 2026年10月29日(木) 17:00 (JST)",
+    "プロダクトとサービスに関するお問い合わせ先",
+    "国立研究開発法人国立環境研究所 (NIES) GOSAT-GW TANSO-3 Product Archive サポートデスク"
+   ],
+   "removed_count": 42
+  },
+  {
+   "url": "https://grace.jpl.nasa.gov/data/data-updates/",
+   "datasets": [
+    "grace"
+   ],
+   "added": [
+    "GRACE Satellite Under Construction"
    ],
    "removed_count": 2
   },
@@ -224,7 +267,7 @@
     "icesat2-sit"
    ],
    "added": [
-    "]. Date Accessed 10-21-2026."
+    "]. Date Accessed 10-22-2026."
    ],
    "removed_count": 1
   },
@@ -234,7 +277,7 @@
     "icesat2-sit"
    ],
    "added": [
-    "]. Date Accessed 10-21-2026."
+    "]. Date Accessed 10-22-2026."
    ],
    "removed_count": 1
   },
@@ -244,26 +287,9 @@
     "icesat2-sit"
    ],
    "added": [
-    "]. Date Accessed 10-21-2026."
+    "]. Date Accessed 10-22-2026."
    ],
    "removed_count": 1
-  },
-  {
-   "url": "https://disc.gsfc.nasa.gov/information/alerts",
-   "datasets": [
-    "imerg",
-    "oco2"
-   ],
-   "added": [
-    "Showing 1 - 25 of 407 alerts associated with",
-    "Ingest & Archive Migration to Interrupt Data Ingestion on Oct. 28-30",
-    "As part of NASA's planned Consolidated Ingest and Archive (I&A) system migration, the following data centers will experience ...",
-    "Alert Date:Oct 21, 2026 2:00:00 PM",
-    "NSG scheduled maintenance on Thursday October 22nd , 2026",
-    "A maintenance activity is scheduled on Thursday October 22nd in NSG Production environment from 9:30 to 11:30 EDT (13:30 to 15:30 ...",
-    "Alert Date:Oct 22, 2026 4:00:00 AM"
-   ],
-   "removed_count": 7
   },
   {
    "url": "https://nsidc.org/data/nsidc-0776/versions/2",
@@ -271,7 +297,7 @@
     "its-live"
    ],
    "added": [
-    "]. Date Accessed 10-21-2026."
+    "]. Date Accessed 10-22-2026."
    ],
    "removed_count": 1
   },
@@ -281,11 +307,12 @@
     "merra2"
    ],
    "added": [
-    "20261021 12z",
-    "20261021 06z",
-    "20261020 09z"
+    "20261022 12z",
+    "20261022 06z",
+    "20261021 09z",
+    "20261013 18z"
    ],
-   "removed_count": 8
+   "removed_count": 6
   },
   {
    "url": "https://science.nasa.gov/science-research/earth-science/terra-the-end-of-an-era",
@@ -293,13 +320,10 @@
     "misr"
    ],
    "added": [
-    "NASA’s SR-1 Freedom Advances with Progress on Nuclear Power Module",
-    "Extratropical Cyclone Whips Past Iceland",
-    "NASA’s CASALS Instrument Bridges Gaps in 3D Maps of Earth’s Surface",
-    "NASA Prepares ROSES-27 to Advance American Science and Leadership in Space",
-    "NASA Ames Unitary Plan Wind Tunnel"
+    "Fires Char New Guinea",
+    "NASA’s Hubble Charts Path for Roman with Gravitational Lenses"
    ],
-   "removed_count": 16
+   "removed_count": 5
   },
   {
    "url": "https://nsidc.org/data/g02202/versions/6",
@@ -307,7 +331,7 @@
     "nsidc-cdr-sic"
    ],
    "added": [
-    "]. Date Accessed 10-21-2026."
+    "]. Date Accessed 10-22-2026."
    ],
    "removed_count": 1
   },
@@ -317,13 +341,10 @@
     "oco2"
    ],
    "added": [
-    "Extratropical Cyclone Whips Past Iceland",
-    "NASA’s CASALS Instrument Bridges Gaps in 3D Maps of Earth’s Surface",
-    "NASA Ames Unitary Plan Wind Tunnel",
-    "24 hours ago",
-    "NASA Experimental Mars Helicopter Blade Designs Target Longer Flights"
+    "Fires Char New Guinea",
+    "NASA’s Hubble Charts Path for Roman with Gravitational Lenses"
    ],
-   "removed_count": 13
+   "removed_count": 5
   },
   {
    "url": "https://science.nasa.gov/missions/potential-evolution-of-the-aura-mission/",
@@ -331,12 +352,10 @@
     "omi"
    ],
    "added": [
-    "Extratropical Cyclone Whips Past Iceland",
-    "NASA’s CASALS Instrument Bridges Gaps in 3D Maps of Earth’s Surface",
-    "NASA Ames Unitary Plan Wind Tunnel",
-    "NASA Experimental Mars Helicopter Blade Designs Target Longer Flights"
+    "Fires Char New Guinea",
+    "NASA’s Hubble Charts Path for Roman with Gravitational Lenses"
    ],
-   "removed_count": 13
+   "removed_count": 5
   },
   {
    "url": "https://nsidc.org/data/nsidc-0116/versions/4",
@@ -344,7 +363,7 @@
     "polar-pathfinder-motion"
    ],
    "added": [
-    "]. Date Accessed 10-21-2026."
+    "]. Date Accessed 10-22-2026."
    ],
    "removed_count": 1
   },
@@ -354,7 +373,7 @@
     "polar-pathfinder-motion"
    ],
    "added": [
-    "]. Date Accessed 10-21-2026."
+    "]. Date Accessed 10-22-2026."
    ],
    "removed_count": 1
   },
@@ -364,9 +383,10 @@
     "sea-ice-index"
    ],
    "added": [
-    "]. Date Accessed 10-21-2026."
+    "Due to the data provider's system maintenance, data from the Advanced Microwave Scanning Radiometer 2 (AMSR2) satellite is currently unavailable, thus impacting the processing of sea ice data. Processing is expected to resume as soon as system maintenance ends.",
+    "]. Date Accessed 10-22-2026."
    ],
-   "removed_count": 1
+   "removed_count": 2
   },
   {
    "url": "https://nsidc.org/data/spl3smp",
@@ -374,9 +394,20 @@
     "smap"
    ],
    "added": [
-    "]. Date Accessed 10-21-2026."
+    "]. Date Accessed 10-22-2026."
    ],
    "removed_count": 1
+  },
+  {
+   "url": "https://earth.esa.int/eogateway/catalog/smos-l3-sea-ice-thickness",
+   "datasets": [
+    "smos-sit"
+   ],
+   "added": [
+    "FLEX Level 0 EO Products - Internal",
+    "The FLEX Level 0 EO Products (Internal) collection contains Earth Observation data generated during initial PDGS processing, following th…"
+   ],
+   "removed_count": 2
   },
   {
    "url": "https://egusphere.copernicus.org/preprints/2025/egusphere-2025-3810/",
@@ -384,7 +415,7 @@
     "soda4"
    ],
    "added": [
-    "Latest update: 20 Oct 2026"
+    "Latest update: 22 Oct 2026"
    ],
    "removed_count": 1
   },
@@ -394,10 +425,25 @@
     "tropomi"
    ],
    "added": [
-    "October 21, 2026",
-    "Copernicus Sentinel-5P OFFL HCHO and SO2 v2.8.0 products reprocessed - now available on CDSE"
+    "October 22, 2026",
+    "Presentations of the CDSE User Summit 2026 online",
+    "Join the CDSE Webinar: Environmental Impact Awareness Among CDSE End Users​",
+    "Upgrade of S-1 On-Demand Production service [2026-11-05]",
+    "CDSE Website Service Restored Following Essential System Updates"
    ],
    "removed_count": 0
+  },
+  {
+   "url": "https://www.nesdis.noaa.gov/news/cessation-of-suomi-national-polar-orbiting-partnership-s-npp-data-users-onafter-november-2-2026",
+   "datasets": [
+    "viirs-ocean"
+   ],
+   "added": [
+    "NOAA Satellites Monitor Subtropical Storm Josephine Off the East Coast",
+    "October 22, 2026",
+    "NOAA Releases Global Navigation Satellite System Reflectometry (GNSS-R) Ocean Surface Winds Executive Summary Report"
+   ],
+   "removed_count": 3
   },
   {
    "url": "https://nsidc.org/data/vnp10a1/versions/2",
@@ -405,7 +451,7 @@
     "viirs-snow"
    ],
    "added": [
-    "]. Date Accessed 10-21-2026."
+    "]. Date Accessed 10-22-2026."
    ],
    "removed_count": 1
   }
@@ -417,7 +463,7 @@
     "airs"
    ],
    "error": "SSLError: HTTPSConnectionPool(host='aqua.nasa.gov', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLCertVerificationError(1, \"[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: Hostn",
-   "fails": 9,
+   "fails": 10,
    "last_ok": null
   },
   {
@@ -427,7 +473,7 @@
     "gsmap"
    ],
    "error": "브라우저로도 본문이 비어 있음",
-   "fails": 3,
+   "fails": 4,
    "last_ok": "2026-10-19"
   },
   {
@@ -436,7 +482,7 @@
     "calipso"
    ],
    "error": "HTTP 403 / HTTP 403 (브라우저)",
-   "fails": 9,
+   "fails": 10,
    "last_ok": null
   },
   {
@@ -445,7 +491,7 @@
     "cera20c"
    ],
    "error": "HTTP 401 / HTTP 401 (브라우저)",
-   "fails": 16,
+   "fails": 17,
    "last_ok": null
   },
   {
@@ -454,7 +500,7 @@
     "gimms-ndvi"
    ],
    "error": "HTTP 403 / HTTP 403 (브라우저)",
-   "fails": 9,
+   "fails": 10,
    "last_ok": null
   },
   {
@@ -463,7 +509,7 @@
     "gk2a"
    ],
    "error": "브라우저로도 본문이 비어 있음",
-   "fails": 9,
+   "fails": 10,
    "last_ok": null
   },
   {
@@ -479,7 +525,7 @@
     "viirs-burned-area"
    ],
    "error": "HTTP 403 / HTTP 403 (브라우저)",
-   "fails": 16,
+   "fails": 17,
    "last_ok": null
   },
   {
@@ -490,7 +536,7 @@
     "viirs-ocean"
    ],
    "error": "HTTP 403 / HTTP 403 (브라우저)",
-   "fails": 9,
+   "fails": 10,
    "last_ok": null
   },
   {
@@ -499,7 +545,7 @@
     "gosat"
    ],
    "error": "브라우저로도 본문이 비어 있음",
-   "fails": 9,
+   "fails": 10,
    "last_ok": null
   },
   {
@@ -508,7 +554,7 @@
     "merra2"
    ],
    "error": "HTTP 403 / HTTP 403 (브라우저)",
-   "fails": 16,
+   "fails": 17,
    "last_ok": null
   },
   {
@@ -517,7 +563,7 @@
     "misr"
    ],
    "error": "HTTP 403 / HTTP 403 (브라우저)",
-   "fails": 9,
+   "fails": 10,
    "last_ok": null
   },
   {
@@ -526,7 +572,7 @@
     "modis-albedo"
    ],
    "error": "SSLError: HTTPSConnectionPool(host='aqua.nasa.gov', port=443): Max retries exceeded with url: /announcements/aqua-status (Caused by SSLError(SSLCertVerificationError(1, \"[SSL: CERTIFICATE_VERIFY_FAILED] certifi",
-   "fails": 9,
+   "fails": 10,
    "last_ok": null
   },
   {
@@ -535,7 +581,7 @@
     "modis-burned-area"
    ],
    "error": "HTTP 403 / HTTP 403 (브라우저)",
-   "fails": 9,
+   "fails": 10,
    "last_ok": null
   },
   {
@@ -544,7 +590,7 @@
     "modis-et"
    ],
    "error": "HTTP 403 / HTTP 403 (브라우저)",
-   "fails": 9,
+   "fails": 10,
    "last_ok": null
   },
   {
@@ -554,7 +600,7 @@
     "modis-vi"
    ],
    "error": "HTTP 403 / HTTP 403 (브라우저)",
-   "fails": 9,
+   "fails": 10,
    "last_ok": null
   },
   {
@@ -563,7 +609,7 @@
     "modis-landcover"
    ],
    "error": "HTTP 403 / HTTP 403 (브라우저)",
-   "fails": 9,
+   "fails": 10,
    "last_ok": null
   },
   {
@@ -572,7 +618,7 @@
     "modis-lst"
    ],
    "error": "HTTP 403 / HTTP 403 (브라우저)",
-   "fails": 9,
+   "fails": 10,
    "last_ok": null
   },
   {
@@ -582,7 +628,7 @@
     "pace-oci"
    ],
    "error": "HTTP 403 / HTTP 403 (브라우저)",
-   "fails": 9,
+   "fails": 10,
    "last_ok": null
   },
   {
@@ -591,7 +637,7 @@
     "tropomi"
    ],
    "error": "HTTP 404 / HTTP 404 (브라우저)",
-   "fails": 9,
+   "fails": 10,
    "last_ok": null
   },
   {
@@ -600,7 +646,7 @@
     "viirs-albedo"
    ],
    "error": "HTTP 403 / HTTP 403 (브라우저)",
-   "fails": 9,
+   "fails": 10,
    "last_ok": null
   },
   {
@@ -609,7 +655,7 @@
     "viirs-burned-area"
    ],
    "error": "HTTP 403 / HTTP 403 (브라우저)",
-   "fails": 9,
+   "fails": 10,
    "last_ok": null
   },
   {
@@ -620,7 +666,7 @@
     "viirs-vi"
    ],
    "error": "HTTP 403 / HTTP 403 (브라우저)",
-   "fails": 9,
+   "fails": 10,
    "last_ok": null
   },
   {
@@ -629,7 +675,7 @@
     "viirs-lai"
    ],
    "error": "HTTP 403 / HTTP 403 (브라우저)",
-   "fails": 9,
+   "fails": 10,
    "last_ok": null
   },
   {
@@ -638,7 +684,7 @@
     "viirs-lst"
    ],
    "error": "HTTP 403 / HTTP 403 (브라우저)",
-   "fails": 9,
+   "fails": 10,
    "last_ok": null
   },
   {
@@ -647,7 +693,7 @@
     "viirs-lst"
    ],
    "error": "HTTP 403 / HTTP 403 (브라우저)",
-   "fails": 9,
+   "fails": 10,
    "last_ok": null
   },
   {
@@ -656,7 +702,7 @@
     "viirs-vi"
    ],
    "error": "HTTP 403 / HTTP 403 (브라우저)",
-   "fails": 9,
+   "fails": 10,
    "last_ok": null
   }
  ]

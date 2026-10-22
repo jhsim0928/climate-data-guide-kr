@@ -1,5 +1,143 @@
 # https://climate.copernicus.eu/copernicus-arctic-regional-reanalysis-service
-Site under maintenance
-We'll be back soon
-Starting with 21 October 16:00 CET, this website is going to be temporarily unavailable for several hours due to scheduled maintenance.
-Thank you for your patience.
+Copernicus Arctic Regional Reanalysis | Copernicus
+Implemented by
+ECMWF
+as part of
+Copernicus Programme
+Climate
+Change Service
+close
+Copernicus Arctic Regional Reanalysis
+Contents
+Arctic Regional Reanalysis: why?
+What the Copernicus Climate Change Service (C3S) offers for Arctic Regional Reanalysis
+European Arctic Regional Reanalysis (CARRA1)
+New generation pan-Arctic regional reanalysis: CARRA2
+More information
+The project team
+Arctic Regional Reanalysis: why?
+The ERA5 global reanalysis in 31 km resolution is the most used data set from C3S in the Copernicus Climate Data Store (CDS). Why do we need an additional regional reanalysis for the Arctic?
+In general, we know by observational records and future scenarios that there is a warming in the Arctic, twice or more as high as the global average warming, and there will be a need for understanding and management of the related change processes. We also see an increased economic activity and increased political interest for the Arctic.
+High model resolution is essential to properly analyse the climate over the steep Arctic landscapes, for instance in realms where ice sheets, ice caps and mountain glaciers have carved out vertical-walled u-shaped valleys and fjords. Here, the C3S Arctic regional reanalysis data with 2.5 km horizontal resolution comes to its right.
+Our modelling domains (CARRA-West and CARRA-East and CARRA2, see below) contain the sea-ice covered Arctic Ocean, and the largest bodies of land ice in the Arctic including the Greenland Ice Sheet, the Malaspina-Seward Glacier Complex in Alaska, the ice fields in Northeastern Canada, the Russian Severny Island Ice Cap, Vatnajökull on Iceland and Austfonna on Svalbard. Changes in these ice bodies are the main focus in Arctic climate research.
+The better resolved regional reanalysis provides for instance better data for the specific wind phenomena in this region such as for instance, but not exclusively the North Atlantic polar lows and the downslope winds from the Greenland Ice Sheet. These wind phenomena are very important for ships and people living in this region.
+What the Copernicus Climate Change Service (C3S) offers for Arctic Regional Reanalysis
+The first C3S Arctic Regional ReAnalysis dataset (CARRA1) was released in 2020. This has a Western domain (CARRA-West) covering Greenland and Iceland, and an Eastern domain (CARRA-East) covering Svalbard, the Barents Sea, and the Northwestern Atlantic Ocean. The CARRA2 dataset is first released in 2025 and it has full pan-Arctic coverage. See all the domains in the Figure.
+Whereas the CARRA1 output fields should be accessed from different CDS catalogue entries by level type, we have gathered all the output fields on different levels for CARRA2 on the same entry. Additionally, we have also made separate CDS entry with daily and monthly averaged or accumulated data for both CARRA1 and CARRA2. On top of that the CARRA2 CDS entry includes also geographic subsetting making possible to download just part of the entire pan-Arctic domain. This feature was missing for CARRA1.
+CARRA1 Data can be accessed in the C3S Climate Data Store under the following catalogue entries:
+Single levels
+Model levels
+Pressure levels
+Height levels
+Daily and monthly data
+CARRA2 data can be accessed in the C3S Climate Data Store under the following catalogue entries:
+Sub-daily data
+Daily and monthly data
+All CARRA CDS entries are available
+in this list
+European Arctic Regional Reanalysis (CARRA1)
+The HARMONIE-AROME weather prediction system has been adapted for the reanalysis application, resulting in the Copernicus Arctic Regional Reanalysis (CARRA) system. The production has been performed at the high-performance computing facility of ECMWF with a 3-dimensional variational data assimilation scheme for the upper air analysis in a three-hourly update frequency. A lot of effort has been put into enhancing the assimilation and use of input data. The following improvements compared to ERA5 and the operational HARMONIE-AROME modelling systems have been made:
+A large increase in the local surface observation datasets collected from the partner countries: for instance local data from Iceland and Greenland datasets from various programs such as ASIAQ (
+Greenland Survey
+), PROMICE (
+Programme for Monitoring of the Greenland Ice Sheet
+) and GC-Net (
+Greenland Climate Network
+Major improvements in the regional physiography and orography data, including corrected glacier masks, coastlines and detailed elevation data (the latter is based on
+ArcticDEM v7
+Satellite-derived glacier albedo data are used, which is a major improvement relative to the operational weather forecasts products and ERA5.
+The sea ice physical parameterisation has been improved.
+Snow initialisation based on historical satellite (AVHRR: Advanced Very High Resolution Radiometer) data is applied.
+High resolution sea surface temperature (SST) and sea ice (reprocessed ESA-CCI and EUMETSAT OSISAF data) are used.
+Extensive use of satellite data (radiance, scatterometer, radio occultation, atmospheric motion vectors), which are not previously used in the HARMONIE-AROME operational weather prediction system.
+Improvements of the upper air data assimilation algorithm (large scale constraint and new background errors).
+During phase 1 of the Copernicus programme, the first Arctic regional atmospheric reanalysis (CARRA1) was produced for European parts of the Arctic areas. The reanalysis covers the period from September 1990 to present (>30 years, which includes the WMO 30-year climate reference period of 1991-2020). The CARRA1 reanalysis data series are updated on a monthly basis with a 2-3 months latency, i.e. at the end of month N, data is provided until the end of month N-2. This timely update is planned to be maintained until the end of March 2027 overlapping with timely updates of the CARRA2 system from 2026 onwards.
+The CARRA domains including the two European parts of the Arctic used for CARRA1 (CARRA-West and CARRA-East) and the CARRA2 pan-Arctic domain.
+The dedicated Arctic reanalysis uses global ERA5 reanalysis as boundary forcing, providing with its 2.5 km mesh more local detail than the coarser resolution products of the ERA5 global reanalysis (see more details in the table below).
+New generation pan-Arctic regional reanalysis: CARRA2
+We are presently implementing the new generation of the Arctic reanalysis, the CARRA2 (Copernicus Arctic Regional Reanalysis, second generation) system. Extensive optimisation efforts with the HARMONIE-AROME Numerical Weather Prediction (NWP) system have enabled CARRA2 to have full pan-Arctic coverage (see domain figure) while still maintaining the 2.5 km grid resolution (see some more details in the table below). It incorporates many further improvements of the NWP modelling system.
+The first CARRA2 data release has been made in December 2025. It includes data from 8 three-year periods: 1986-1988, 1991-1993, 1996-1998, 2001-2003, 2006-2008, 2011-2013, 2016-2018 and 2021-2023. The complete 40-years data set is expected to be available in the Climate Data Store until mid-2026. Timely updates will be also produced with a delay of 2-3 months latest from January 2027.
+The main improvements of CARRA2 with respect to CARRA1 are as follows:
+Extension of the reanalysis domain to a much larger area to provide pan-Arctic coverage, contributing to a better reanalysis database for studies and applications covering the entire Arctic.
+Extension of the reanalysis period to be more than 40 years (September 1985 - December 2025) with timely updates afterwards.
+A substantial enhancement in the reanalysis system for the land surface processes using a multi-layer soil/snow diffusive scheme, along with an upgraded algorithm for surface data assimilation. This includes provision of more detailed information on snow and soil state.
+A novel approach to provide a time-varying measure of uncertainty for essential climate variables from the CARRA2 reanalysis by referencing the ERA5 ensembles through a machine learning approach. 1-year of demonstration dataset is to be provided for the users.
+A new physiographic database with ECOCLIMAP Second Generation with significantly improved data quality and representativeness for the surface conditions.
+An extension to the pan-Arctic domain with updated time consistency efforts for satellite-based surface input data for sea surface temperature, sea ice concentration, snow cover and glacier albedo.
+CARRA1
+(CARRA-West/CARRA-East)
+CARRA2 (pan-Arctic)
+HARMONIE-AROME model cycle
+Cy40h1
+Cy46h1
+Horizontal resolution
+2.5 km
+Number of grid points
+CARRA-West:1280x1080
+CARRA-East: 1000x800
+2880x2880
+Number of vertical levels
+Model dynamics
+Non-hydrostatic
+Hydrostatic
+Surface scheme
+Force restore scheme
+12-layer snow + 14-layer soil diffusive scheme
+Upper-air data assimilation
+3D-Var
+Surface data assimilation
+Optimal interpolation
+Simplified Extended Kalman Filter
+Assimilation frequency
+3-hourly
+Output frequency
+3-hourly analyses and hourly forecasts (3h after the 6h forecast range)
+Forecast lengths
+30h from 00 UTC and 12 UTC and 3h otherwise
+18h from 00 UTC and 12 UTC and 3h otherwise
+Time coverage
+September 1990 - present
+September 1985 - December 2025 (timely updates are planned)
+When data available
+Updated monthly up to month-2
+Full time series expected to be available spring 2026
+Comparison between CARRA1 (CARRA-West/CARRA-East) and CARRA2 (pan-Arctic)
+More information
+CARRA1
+Web articles:
+C3S zooms in on Arctic climate
+Copernicus Arctic Regional Reanalysis data now updated monthly
+User guides:
+Data User Guide
+Full System Documentation
+Copernicus Arctic Regional Reanalysis (CARRA): Added value to the ERA5 global reanalysis
+Copernicus Arctic Regional Reanalysis (CARRA): list of references
+CARRA2
+Web article:
+First CARRA2 data release offers new insights into Arctic extremes
+User guides:
+Data User Guide
+Full System Documentation
+Copernicus Arctic Regional Reanalysis (CARRA2) test and validation report
+The project team
+The related work are led by the Norwegian Meteorological Institute. Partners are the meteorological services in the Nordic countries: Denmark, Sweden, Iceland and Finland, the Geological Survey of Denmark and Greenland (GEUS) and Météo-France. The project takes advantage of the operational experiences in using the HARMONIE-AROME numerical weather prediction system for weather prediction in the partner countries. Also, the system benefits from adaptation work done in Norway and Denmark to use the model-system for operational weather prediction in the Arctic areas. The Norwegian and Danish meteorological institutes are responsible for running the production of the reanalyses.
+Back to top
+DATA IN THE CDS
+CARRA1 single levels
+CARRA1 model levels
+CARRA1 pressure levels
+CARRA1 height levels
+CARRA1 daily and monthly
+CARRA2 sub-daily
+CARRA2 daily and monthly
+WORKSHOPS
+CARRA2 User Workshop
+Copernicus Arctic Regional Reanalysis User Workshop
+Copernicus Arctic Regional Reanalysis User Forum
+RELATED ARTICLES
+First CARRA2 data release offers new insights into Arctic extremes
+The Arctic is warming at more than twice the global average, making it an important region for monitoring climate change. To support better understanding of key regional processes and inform decision-making, the Copernicus Climate Change Service has released the first data from its second-generation Copernicus Arctic Regional Reanalysis – CARRA2, which is now a pan-Arctic regional reanalysis. Covering the entire Arctic north of 60°N with unprecedented detail, this new dataset marks a major step forward in monitoring extreme weather and climate variability across the region.
+Copernicus Arctic Regional Reanalysis data now updated monthly
+The Copernicus Arctic Regional Reanalysis (CARRA), a state-of-the-art, data-driven reanalysis from the Copernicus Climate Change Service that allows a new scrutiny of the Arctic climate, is now being updated monthly, offering data of unprecedented detail and accuracy with a latency of three months or less.
+C3S zooms in on Arctic climate
+To support scientists studying the European Arctic as well as affected communities, C3S&nbsp;is developing a dataset that provides detailed information about how weather and climate conditions in the region have evolved since 1991. Today marks the release of the first batch of data, covering 1998 to 2019.
