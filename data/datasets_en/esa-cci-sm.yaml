@@ -279,6 +279,14 @@ transitions:
         url: https://catalogue.ceda.ac.uk/uuid/d4e66299f5054129b8076fb7502949e1
 
 notices:
+  - date: "2026-10-20"
+    level: warning
+    title: Delayed update of Soil moisture gridded data following issue identification — use corrected version v202505.2
+    body: >-
+      The regular 10-day ICDR updates were temporarily suspended since 20 September 2026 after the data providers identified gaps affecting 1–20 September 2026.
+      The corrected version v202505.2 was republished on 21 October 2026; v202505 and v202505.1 should no longer be used. Users who downloaded data for 1–20 September 2026 should download v202505.2,
+      and API users need to update their scripts to retrieve v202505.2. Regular ICDR updates will resume thereafter.
+    source: https://forum.ecmwf.int/t/delayed-update-of-soil-moisture-gridded-data-following-issue-identification/15456
   - date: "2025-12-12"
     level: info
     title: C3S soil moisture (CDS) surface soil moisture variables renamed
@@ -318,4 +326,4 @@ watch_urls:
   - https://climate.esa.int/en/projects/soil-moisture/
   - https://cds.climate.copernicus.eu/datasets/satellite-soil-moisture?tab=documentation
 
-last_verified: "2026-10-13"
+last_verified: "2026-10-23"
