@@ -222,6 +222,13 @@ citations:
     NSIDC requires citation of the data set as a condition of use. Give the version (V4) and DOI, the hemisphere and period used and the access date, and if you use values from 2025 onwards, state that they are based on AMSR2 input (NSIDC-0803).
 
 notices:
+  - date: "2026-10-23"
+    level: warning
+    title: AMSR2 data currently unavailable due to the data provider's system maintenance — sea ice data processing affected
+    body: >-
+      Due to the data provider's system maintenance, data from the Advanced Microwave Scanning Radiometer 2 (AMSR2) satellite is currently unavailable,
+      thus impacting the processing of sea ice data. Processing is expected to resume as soon as system maintenance ends.
+    source: https://nsidc.org/data/g02135/versions/4
   - date: "2026-09-08"
     level: info
     title: "User notice: AMSR2 products continued forward processing — Sea Ice Index input (NSIDC-0803) maintained"
@@ -281,4 +288,4 @@ watch_urls:
   - https://nsidc.org/data/data-programs/noaa-nsidc/data-updates
   - https://nsidc.org/data/user-resources/data-announcements
 
-last_verified: "2026-10-12"
+last_verified: "2026-10-23"

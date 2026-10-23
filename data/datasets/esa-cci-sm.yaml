@@ -279,6 +279,13 @@ transitions:
         url: https://catalogue.ceda.ac.uk/uuid/d4e66299f5054129b8076fb7502949e1
 
 notices:
+  - date: "2026-10-20"
+    level: warning
+    title: C3S 토양수분(CDS) 2026년 9월 1~20일 자료 문제 — v202505.2 보정판으로 다시 받기
+    body: >-
+      자료 제공자가 2026년 9월 1~20일 자료에서 결측을 발견해, 9월 20일부터 10일 단위 ICDR 갱신을 멈췄다가 10월 21일 보정판 v202505.2를 다시 공개했습니다.
+      v202505·v202505.1은 더 이상 쓰지 말라고 안내했으며, 이 기간 자료를 받았다면 v202505.2로 다시 받고 CDS API 스크립트의 버전도 v202505.2로 바꿔야 합니다. 정기 갱신은 이후 재개됩니다.
+    source: https://forum.ecmwf.int/t/delayed-update-of-soil-moisture-gridded-data-following-issue-identification/15456
   - date: "2025-12-12"
     level: info
     title: C3S 토양수분(CDS) 표층 토양수분 변수 이름 변경
@@ -318,4 +325,4 @@ watch_urls:
   - https://climate.esa.int/en/projects/soil-moisture/
   - https://cds.climate.copernicus.eu/datasets/satellite-soil-moisture?tab=documentation
 
-last_verified: "2026-10-13"
+last_verified: "2026-10-23"
