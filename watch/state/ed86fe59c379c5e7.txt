@@ -1,5 +1,748 @@
 # https://earth.esa.int/eogateway/instruments/siral/processor-releases
-undefined - Earth Online
+Instrument Processing Facilities - Earth Online
 earth online
+CryoSat
+Data
+Instrument Processing Faciliti...
+Instrument Processing Facilities
+Processor Releases
+The Instrument Processing Facilities (IPF) generate operational CryoSat Ice and Ocean data. New versions of the processing baselines are periodically released to implement improvements or fixes for issues that are detected.
+The tables below describe the changes that were implemented in the latest IPF release and in each historic release.
+Level 1 Ice Products
+The current IPF1 installed at the Kiruna payload data segment for level-1 ice products is IPF1 vP2.3 and NRT IPF1 vO1.3.
+Detailed information concerning the IPF1 Ice products is available in the latest version of the
+Product Format Specification document for L1B Ice Processor
+Detailed information concerning the main evolutions for the L1B Ice Processor with respect to the last IPF1 is available in the
+Baseline F evolutions document
+Date
+IPF Version
+Changes to the IPF baseline
+Processor versions
+Offline: 04/07/2026
+IPF1 vP2.3
+Upgrade of the CryoSat Ice Processors to Baseline-F. This is a major SW upgrade and introduces significant evolutions to the processors with respect to Baseline-E. The update of IPF1 includes:
+- Addition of Range Integrated Power
+- Addition of distance to coast information
+- Updated ocean tide model to FES2022b
+Resolution of a number of known data quality anomalies.
+Offline:
+SIR1LRM/8.6
+SIR1SAR/8.6
+SARIN/8.6
+Offline: 20/12/2023
+IPF1 vO2.5
+Minor upgrade of the Ice Baseline-E Processors to resolve two anomalies affecting the generation of Calibration products. No changes were made to the ice products.
+Offline:
+SIR1LRM/7.4
+SIR1SAR/7.4
+SARIN/7.4
+Offline: 08/01/2023
+IPF1 vO2.3
+Minor upgrade of the Ice Baseline-E Processors to resolve two recurring processing failures affecting the ice products.
+Offline:
+SIR1LRM/7.2
+SIR1SAR/7.2
+SARIN/7.2
+NRT: 06/02/2023
+NRT IPF1 vO1.3
+Minor upgrade of the Ice Baseline-E Processors to resolve two recurring processing failures affecting the ice products.
+NRT:
+SIR1SARNRT/2.3
+SARINNRT/2.3
+Offline: 19/01/2022
+IPF1 vO2.2
+Minor upgrade of the Ice Baseline-E Processors to update the Digital Object Identifiers (DOIs) in the global attributes of the data file. This required a change to the PCONF file but no changes were made to the processors themselves.
+Offline:
+SIR1LRM/7.1
+SIR1SAR/7.1
+SARIN/7.1
+NRT: 16/02/2022
+NRT IPF1 vO1.2
+Minor upgrade of the NRT Baseline-E Processors to update the Digital Object Identifiers (DOIs) in the global attributes of the data file. This required a change to the PCONF file but no changes were made to the processors themselves.
+NRT:
+SIR1SARNRT/2.2
+SARINNRT/2.2
+Offline: 22/08/2021
+IPF1 vO2.1
+Upgrade of the CryoSat Ice Processors to Baseline-E. This is a major SW upgrade and introduces significant evolutions to the processors with respect to Baseline-D. The update of IPF1 includes:
+Implementation of the updated Earth Explorer CFI software library
+Addition of 20Hz Pseudo-LRM (PLRM) estimates to the L1B SAR and SARIn products
+Compression of the L1B NetCDF products
+Resolution of a number of known data quality anomalies.
+Offline:
+SIR1LRM/7.0
+SIR1SAR/7.0
+SARIN/7.0
+NRT: 20/09/2021
+NRT IPF1 vO1.1
+Upgrade of the CryoSat Ice NRT Processors to Baseline-E. The update of IPF1 includes the same evolutions as the Offline IPFs (above), plus:
+Updated orbit selection policy to ensure consistent use of the DORIS Navigator Orbit
+Resolution of a number of known data quality anomalies.
+NRT:
+SIR1SARNRT/2.1
+SARINNRT/2.1
+NRT: 08/03/2021
+NRT IPF1 vN1.4
+Minor update of the NRT IPFs to change the order generation policy and processing mode from ‘NRT’ to ‘Systematic’ in order to reduce the number of gaps in NRT data coverage. NRT products are now generated for all SAR and SIN transitions, and the product file class has been changed from ‘NRT’ to ‘OFFL’.
+NRT:
+SIR1SARNRT/1.4
+SARINNRT/1.4
+Offline: 02/09/2020
+IPF1 vN1.3
+Minor update of the Baseline-D processors to implement amendments to the processor Task Tables. No changes were made to the processors themselves.
+Offline:
+SIR1LRM/5.6 SIR1SAR/5.6 SARIN/5.6
+NRT:
+IPF1 vN1.1
+First official release of the NRT IPFs. In order to enable the generation of NRT SAR and SARIn products in near real time (2-3 hours after acquisition), the NRT chain was separated from the existing Baseline-D IPFs. This allows processing to use the L0 Star Tracker products instead of the Star Tracker ATTREF products without delay.
+NRT:
+SIR1SARNRT/1.1
+SARINNRT/1.1
+Offline: 29/04/2019
+IPF1 vN1.1
+Upgrade of the CryoSat Ice Processors to Baseline-D. This is a major software upgrade and introduces significant evolutions to the processors with respect to Baseline-C. The update of IPF1 includes:
+New NetCDF format
+New SAR/ SARIn stack peakiness parameter added
+Resolution of a number of known data quality anomalies
+Offline:
+SIR1LRM/5.4
+SIR1SAR/5.4
+SARIN/5.4
+FDM: 27/05/2019
+IPF1 vM3.0
+Minor update of the Baseline-C FDM processors to update the Explorer Geo Correction v4.4, and allow Baseline-C FDM production to be maintained temporarily in overlap with the Ice Baseline-D processors.
+SIR1FDM/4.9
+FDM: 04/06/2015
+Offline: 07/05/2015
+IPF1 vM1.0.2
+Software version issued to implement improvements to the FDM mode. This update includes:
+Use of Star tracker L0 files in FDM chain
+Introduction of attitude information in the L1B FDM Time Orbit Group
+Other operative modes (SAR and SARIn) have not been modified at this stage and the processor versions remain unchanged (see below).
+SIR1LRM/4.6
+SIR1FDM/2.9
+FDM: 26/03/2015
+Offline: 01/04/2015*
+IPF1 vM1.0.1
+Software version issued following a major IPF upgrade. This was used to process all products marked by the new Baseline-C and introduces major evolutions to the processors with respect to Baseline-B. The update of IPF1 includes:
+Provision of additional attitude information in new product fields
+Use of best available attitude information coming from the same Star Tracker selected on-board
+L1B product format and content changes; Fix of several ARs from the previous IPF1 Vk2.1
+Updated configuration parameters in the PCONF, IPFDB and IPF Task Tables
+* L1 LRM, SAR, & SARIn data from validity 22/02/2015 to 01/04/2015 is a hybrid Baseline-C using the old Baseline-B orbit model.
+SIR1LRM/4.5
+SIR1SAR/4.5
+SARIN/4.5
+SIR1FDM/2.8
+SIR1LRC1/4.4
+SIR1SAC1/4.4
+SIR_SIC1/4.4
+SIR1SAC2/4.5
+SIR1SIC2/4.4
+SIR2SIC2/4.4
+IPF1 Vk2.1
+Software version issued to implement amendments to the processor Task Tables. No changes were made to the processor executables or PCONF files. This update includes:
+Update of all standard processor Task Tables to make the use of certain auxiliary data files mandatory in Offline production
+The fix of several ARs related to Task Tables from the previous IPF1 Vk2.0
+SIR1LRM/4.2
+SIR1SAR/4.2
+SARIN/4.2
+SIR1FDM/2.5
+SIR1LRC1/4.1
+SIR1SAC1/4.1
+SIR_SIC1/4.1
+SIR1SAC2/4.2
+SIR1SIC2/4.1
+SIR2SIC2/4.1
+IPF1 Vk2.0
+Software version issued in the frame of the CryoSat mission to implement improvements to the FDM mode. Other operative modes (LRM, SAR and SARIn) have not been modified at this stage. This update includes:
+The fix of several ARs from the previous IPF1 Vk1.0 for FDM mode only
+SIR1LRM/4.1
+SIR1SAR/4.1
+SARIN/4.1
+SIR1FDM/2.4
+SIR1LRC1/4.0
+SIR1SAC1/4.0
+SIR_SIC1/4.0
+SIR1SAC2/4.1
+SIR1SIC2/4.0
+SIR2SIC2/4.0
+IPF1 Vk1.0
+Software version issued following the first year of the CryoSat Operations Phase. This was used to process all products marked by the new baseline B and includes the following:
+The fix of several ARs from the previous IPF1 Vj1.1
+Updated configuration settings in the PCONF, IPFDB and IPF Task Tables
+Integration of Earth Explorer 3.7.4.1 CFI libraries
+SIR1LRM/4.0
+SIR1SAR/4.0
+SARIN/4.0
+SIR1FDM/2.3
+SIR1LRC1/3.9
+SIR1SAC1/3.9
+SIR_SIC1/3.9
+SIR1SAC2/4.0
+SIR1SIC2/3.9
+SIR2SIC2/3.9
+IPF1 Vj1.1
+Software version issued for the transfer to operations. This includes the following:
+The fix of several ARs from Commissioning Phase (from Vi1.0)
+Change of settings in the PCONF and IPFDB
+Integration of Explorer Geocorrection 4.2 CFI library
+Integration of Earth Explorer 3.7.3 CFI libraries
+SIR1LRM/3.9
+SIR1SAR/3.9
+SARIN/3.9
+SIR1FDM/2.2
+SIR1LRC1/3.8
+SIR1SAC1/3.8
+SIR_SIC1/3.8
+SIR1SAC2/3.9
+SIR1SIC2/3.8
+SIR2SIC2/3.8
+IPF1 Vi1.0
+Software version issued in the frame of the CryoSat Commissioning Phase.
+SIR1LRM/3.7
+SIR1SAR/3.7
+SARIN/3.7
+SIR1FDM/2.0
+SIR1LRC1/3.6
+SIR1SAC1/3.6
+SIR_SIC1/3.6
+SIR1SAC2/3.7
+SIR1SIC2/3.6
+SIR2SIC2/3.6
+Level 2 Ice Products
+The current IPF2 installed at the Kiruna payload data segment for ice products is IPF2 vP2.2 and NRT IPF2 vO1.1.
+Detailed information concerning the products is available in the latest version of the
+Product Format Specification document for L2 Ice Processor
+Detailed information concerning the main evolutions for the L2 Ice Processor with respect to the last IPF2 is available in the
+Baseline F evolutions document
+Date
+IPF Version
+Changes to the IPF baseline
+Processor versions
+Offline: 04/07/2026
+IPF2 vP2.2
+Upgrade of the CryoSat Ice Processors to Baseline-F. This is a major SW upgrade and introduces significant evolutions to the processors with respect to Baseline-E. The update of IPF2 includes:
+- Sea ice freeboard, sea ice thickness, ice density and water density variables added
+- Addition of Bedmachine mask
+- Addition of distance to coast information
+- Updated ocean tide model to FES2022b
+- Geoid model updated to EGM2008
+Resolution of a number of known data quality anomalies.
+Offline:
+IPF2LRM/8.8
+IPF2SAR/8.8
+IPF2SRN/8.8
+IPF2GDR/8.8
+Offline: 19/01/2022
+IPF2 vO2.2
+Minor upgrade of the Ice Baseline-E Processors to update the Digital Object Identifiers (DOIs) in the global attributes of the data file. This required a change to the PCONF file but no changes were made to the processors themselves.
+Offline:
+IPF2LRM/7.1
+IPF2SAR/7.1
+IPF2SRN/7.1
+IPF2GDR/7.1
+NRT: 16/02/2022
+NRT IPF2 vO1.1
+Minor upgrade of the NRT Baseline-E Processors to update the Digital Object Identifiers (DOIs) in the global attributes of the data file. This required a change to the PCONF file but no changes were made to the processors themselves.
+NRT:
+IPF2SARNRT/2.1
+IPF2SRNNRT/2.1
+Offline: 22/08/2021
+IPF2 vO2.1
+Upgrade of the CryoSat Ice Processors to Baseline-E. This is a major SW upgrade and introduces significant evolutions to the processors with respect to Baseline-D. The update of IPF2 includes:
+Improvements to SSHA interpolation
+An improved snow depth correction
+Improvements to LRM and SARIn land ice retracking
+Implementation of the updated Earth Explorer CFI software library
+Compression of the L2 NetCDF products
+Resolution of a number of known data quality anomalies.
+Offline:
+IPF2LRM/7.0
+IPF2SAR/7.0
+IPF2SRN/7.0
+IPF2GDR/7.0
+NRT: 20/09/2021
+NRT IPF2 vO1.0
+Upgrade of the CryoSat Ice Processors to Baseline-E. The update of IPF2 includes the same evolutions as the Offline IPFs (above), plus:
+Updated orbit selection policy to ensure consistent use of the DORIS Navigator Orbit
+Resolution of a number of known data quality anomalies.
+NRT:
+IPF2SARNRT/2.0
+IPF2SRNNRT/2.0
+NRT: 08/03/2021
+NRT IPF2 vN1.2
+Minor update of the NRT IPFs to change the order generation policy and processing mode from ‘NRT’ to ‘Systematic’ in order to reduce the number of gaps in NRT data coverage. NRT products are now generated for all SAR and SIN transitions, and the product file class has been changed from ‘NRT’ to ‘OFFL’.
+NRT:
+IPF2SARNRT/1.2
+IPF2SRNNRT/1.2
+Offline: 02/09/2020
+IPF2 vN1.3
+Minor update of the Baseline-D processors to implement amendments to the processor Task Tables. No changes were made to the processors themselves.
+IPF2LRM/5.4
+IPF2SAR/5.4
+IPF2SRN/5.5
+IPF2GDR/5.3
+Offline: 16/03/2020
+IPF2 vN1.2
+Minor update of the CryoSat Ice Baseline-D IPF2 to resolve a common GDR processing failure encountered during the Ice Baseline-D reprocessing.
+For a list of all known remaining IPF anomalies (ARs) following this update, please see the
+Product Status
+page.
+IPF2LRM/5.3
+IPF2SAR/5.3
+IPF2SRN/5.4
+IPF2GDR/5.3
+NRT: 27/05/2019
+IPF2 vN1.0
+First official release of the NRT IPFs. In order to enable the generation of NRT SAR and SARIn products in near real time (2-3 hours after acquisition), the NRT chain was separated from the existing Baseline-D IPFs. This allows processing to use the L0 Star Tracker products instead of the Star Tracker ATTREF products without delay.
+NRT:
+IPF2SARNRT/1.0
+IPF2SRNNRT/1.0
+Offline: 29/04/2019
+IPF2 vN1.1.1
+Upgrade of the CryoSat Ice Processors to Baseline-D. This is a major software upgrade and introduces significant evolutions to the processors with respect to Baseline-C. The update of IPF2 includes:
+New NetCDF format
+Freeboard computation in SARIn mode
+Improvements to sea ice and land ice retrackers
+Resolution of a number of known data quality anomalies
+IPF2LRM/5.2
+IPF2SAR/5.2
+IPF2SRN/5.3
+IPF2GDR/5.2
+FDM: 27/05/2019
+IPF2 vM3.0
+Minor update of the Baseline-C FDM processors to update the Explorer Geo Correction v4.4, and allow Baseline-C FDM production to be maintained temporarily in overlap with the Ice Baseline-D processors.
+IPF2FDM/3.9
+FDM: 28/09/2015
+Offline: 30/08/2015
+IPF2 vM1.0.4
+Software version issued to fix an anomaly with the attitude information fields in the L2 SAR and L2i products (all modes). FDM has not been modified at this stage. Changes implemented in this update:
+Roll, Pitch, Yaw and Star Tracker ID fields no longer contain zero values in the L2 SAR and L2i products (all modes)
+IPF2LRM/3.1
+IPF2SAR/3.1
+IPF2SRN/3.1
+IPF2GDR/3.1
+IPF2FDM/3.1
+FDM: 04/06/2015
+Offline: 07/05/2015
+IPF2 vM1.0.3
+Software version issued to implement improvements to the FDM mode. Other operative modes (LRM, SAR and SARIn) have not been modified at this stage. This update includes:
+Use of Star tracker L0 files in FDM chain
+IPF2LRM/2.9
+IPF2SAR/2.9
+IPF2SRN/2.9
+IPF2GDR/2.9
+IPF2FDM/2.6
+FDM: 26/03/2015
+Offline: 01/04/2015*
+IPF2 vM1.0.2
+Software version issued following a major IPF upgrade. This software is used to process all products marked by the new Baseline-C and introduces major evolutions to the processors with respect to Baseline-B. The update includes:
+L2 product format and content changes
+Refinement of the OGOG and CFI land-ice retrackers (LRM)
+New retracker for land ice (LRM)
+New retracker and freeboard activation (SAR)
+Use of new Arctic MSS (SAR), Antarctica and Greenland DEM (SARIn), updated Slope Model (LRM)
+Fix of several ARs from the previous IPF2 Vk1.2
+Updated configuration parameters in the PCONF, IPFDB and IPF Task Tables
+*L2 and L2i LRM, SAR, SARIn & GDR data from validity 22/02/2015 to 01/04/2015 is a hybrid Baseline-C, using the old Baseline-B orbit model.
+IPF2LRM/2.8
+IPF2SAR/2.8
+IPF2SRN/2.8
+IPF2GDR/2.8
+IPF2FDM/2.5
+IPF2 Vk1.2
+Software version issued to implement amendments to the processor Task Tables. No changes were made to the processor executables or PCONF files. This update includes:
+Update of all standard processor Task Tables to make the use of certain auxiliary data files mandatory in Offline production
+The fix of several ARs related to Task Tables from the previous IPF1 Vk2.0
+IPF2LRM/2.6
+IPF2SAR_A/2.61
+IPF2SRN/2.6
+IPF2GDR_A/2.6
+IPF2FDM/2.3
+IPF2 Vk1.0
+Software version issued in the frame of the CryoSat mission to implement improvements to the FDM mode. Other operative modes (LRM, SAR and SARIn) have not been modified at this stage. This update includes:
+The fix of several ARs from the previous IPF2 Vj1.2 for FDM mode only
+IPF2LRM/2.5
+IPF2SAR_A/2.5
+IPF2SRN/2.5
+IPF2GDR_A/2.5
+IPF2FDM/2.2
+IPF2 Vj1.2
+Software version issued following the first year of the CryoSat Operations Phase. This software is used to process all products marked by the new baseline B and includes the following:
+The fix of several ARs from the previous IPF2 Vi1.0
+Updated configuration settings in the PCONF, IPFDB and IPF Task Tables
+Updated configuration of the sea-ice discrimination algorithm
+Integration of Earth Explorer 3.7.4.1 CFI libraries
+IPF2LRM/2.4
+IPF2SAR_A/2.4
+IPF2SRN/2.4
+IPF2GDR_A/2.4
+IPF2FDM/2.1
+IPF2 Vi1.0
+Software version issued for the transfer to operations. This includes the following:
+The fix of several ARs from Commissioning Phase (from Vh1.5)
+Integration of Explorer Geocorrection 4.2 CFI library
+Integration of Earth Explorer 3.7.3 CFI libraries
+Addition of sigma0 computation in SAR/SARIn/SID chains
+Modified setting of GDR filename start and stop validity times
+Handling of invalid coherence values in SARIn chain
+IPF2LRM/2.1
+IPF2SAR_A/2.1
+IPF2SRN/2.1
+IPF2GDR_A/2.1
+IPF2FDM/1.8
+IPF2 Vh1.5
+Software version issued in the frame of the CryoSat mission Commissioning Phase.
+IPF2LRM/2.0
+IPF2SAR_A/2.0
+IPF2SRN/2.0
+IPF2GDR_A/2.0
+IPF2FDM/1.7
+Level 1 Ocean Products
+The current IPF1 installed at the Kiruna payload data segment for Level 1 ocean products is COP-IPF1 v4.24.
+Detailed information about the products is available in the latest version of the
+Product Format Specification document for CryoSat Ocean Products
+Date
+IPF Version
+Changes to the IPF baseline
+Processor versions
+NOP: 14/01/2025
+IOP: 12/01/2025
+GOP: 14/12/2024
+COP_IPF1 v4.24
+Minor update of the CryoSat Ocean Baseline-D processors to implement amendments to the processor Task Tables. No changes were made to the processors themselves.
+NOP:
+SIR1LNO/4.24 SIR1SNO/4.24 SIR1NNO/4.24
+IOP:
+SIR1LIO/4.24 SIR1SIO/4.24 SIR1NIO/4.24
+GOP:
+SIR1SGO/4.24 SIR1LGO/4.24 SIR1NGO/4.24
+NOP: 30/09/2024
+IOP: 28/09/2024
+GOP: 30/08/2024
+COP_IPF1 v4.23
+Upgrade of the CryoSat Ocean Processors to Baseline-D. This is a major SW upgrade and introduces significant evolutions to the processors with respect to Baseline-C.
+NOP:
+SIR1LNO/4.23 SIR1SNO/4.23 SIR1NNO/4.23
+IOP:
+SIR1LIO/4.23 SIR1SIO/4.23 SIR1NIO/4.23
+GOP:
+SIR1SGO/4.23 SIR1LGO/4.23 SIR1NGO/4.23
+NOP: 17/05/2022
+IOP: 16/05/2022
+GOP: 17/04/2022
+COP-IPF1 v3.13
+Minor SW upgrade to correctly handle a common processing failure affecting the ocean products.
+NOP:
+SIR1LNO/3.8
+SIR1SNO/3.8
+SIR1NNO/3.8
+IOP:
+SIR1LIO/3.8
+SIR1SIO/3.8
+SIR1NIO/3.8
+GOP:
+SIR1SGO/3.8
+SIR1LGO/3.8
+SIR1NGO/3.8
+NOP: 20/09/2021
+IOP: 18/09/2021
+GOP: 22/08/2021
+COP-IPF1 v3.11
+Minor SW upgrade to implement the updated Earth Explorer CFI software library into the COP IPF1.
+NOP:
+SIR1LNO/3.7
+SIR1SNO/3.7
+SIR1NNO/3.7
+IOP:
+SIR1LIO/3.7
+SIR1SIO/3.7
+SIR1NIO/3.7
+GOP:
+SIR1LGO/3.7
+SIR1SGO/3.7
+SIR1NGO/3.7
+NOP: 27/05/2019
+IOP: 26/05/2019
+GOP: 29/04/2019
+COP-IPF1 v3.7
+Software version issued to fix a number of minor anomalies with respect to the previous version, which include:
+Incomplete product metadata; missing Data Set Descriptors (DSDs) in product HDR files and xrefs in product data files
+Inconsistencies in product metadata
+Inconsistencies in some product variable names and descriptions
+NOP:
+SIR1LNO/3.5
+SIR1SNO/3.5
+SIR1NNO/3.5
+IOP:
+SIR1LIO/3.5
+SIR1SIO/3.5
+SIR1NIO/3.5
+GOP:
+SIR1SGO/3.5
+SIR1LGO/3.5
+SIR1NGO/3.5
+NOP: 10/01/2018
+IOP & GOP: 06/11/2017
+COP-IPF1 v3.4
+Upgrade of the CryoSat Ocean Processors to Baseline-C. This is a major software upgrade and introduces significant evolutions to the processors with respect to Baseline-B. The update of IPF1 includes:
+New format specification based on NetCDF
+Native SAR/ SARIn data added to products over SAR/ SARIn regions
+Addition of new parameters
+New and updated geophysical corrections
+Introduction of new Near-Real Time Ocean Products (NOP)
+NOP:
+SIR1LNO/3.2
+SIR1SNO/3.2
+SIR1NNO/3.2
+IOP:
+SIR1LIO/3.2
+SIR1SIO/3.2
+GOP:
+SIR1SGO/3.2
+SIR1LGO/3.2
+SIR1NGO/3.2
+IOP: 25/03/2015*
+GOP: 22/02/2015*
+COP-IPF1 v2.6
+Software update release containing:
+New Static Aux Data files integrated to align the range bias with the IPFDB used for Baseline-C Ice Processing
+Updated instrumental Look-Up Tables (LUT) determined by CLS in the frame of COP expertise activities
+*L2 IOP from validity 25/03/2015 to 01/04/2015 and L2 GOP from validity 22/02/2015 to 01/04/2015 is a hybrid form using the old Baseline-B orbit model.
+SIR1LIO/2.6
+SIR1SIO/2.6
+SIR1SGO/2.6
+SIR1LGO/2.6
+IOP & GOP: 10/04/2014
+COP-IPF1 v2.3
+The first software release of the Level-1 CryoSat Ocean Processor Instrument Processing Facility (COP IPF1).
+SIR1LIO/2.3
+SIR1SIO/2.3
+SIR1SGO/2.3
+SIR1LGO/2.3
+Level 2 Ocean Products
+The current IPF2 installed at the Kiruna payload data segment for Level 2 ocean products is COP-IPF2 v4.26
+Detailed information about the products is available in the latest version of the
+Product Format Specification document for CryoSat Ocean Products
+Date
+IPF Version
+Changes to the IPF baseline
+Processor versions
+NOP:
+IOP:
+GOP:
+COP_IPF2 v4.26
+Minor update of the CryoSat Ocean Baseline-D processors to implement amendments to the processor Task Tables. No changes were made to the processors themselves.
+NOP:
+IPF2_NOPM/4.26
+IPF2_NOPN/4.26
+IPF2_NOPR/4.26
+IOP:
+IPF2_IOPM/4.26
+IPF2_IOPN/4.26
+IPF2_IOPR/4.26
+GOP:
+IPF2_GOPM/4.26
+IPF2_GOPN/4.26
+IPF2_GOPR/4.26
+P2P:
+P2P_IOP/4.26
+P2P_GOP/4.26
+NOP:
+IOP:
+GOP:
+COP_IPF2 v4.25
+Upgrade of the CryoSat Ocean Processors to Baseline-D. This is a major SW upgrade and introduces significant evolutions to the processors with respect to Baseline-C. The update of IPF2 includes:
+An update to the SAMOSA retracker version (2.3 to 2.5)
+Dedicated processing for Sea State Bias in SAR mode
+Revised mean sea surface (MSS) and Mean Dynamic Topography (MDT) solutions.
+NOP:
+IPF2_NOPM/4.25
+IPF2_NOPN/4.25
+IPF2_NOPR/4.25
+IOP:
+IPF2_IOPM/4.25
+IPF2_IOPN/4.25
+IPF2_IOPR/4.25
+GOP:
+IPF2_GOPM/4.25
+IPF2_GOPN/4.25
+IPF2_GOPR/4.25
+P2P:
+P2P_IOP/4.25
+P2P_GOP/4.25
+NOP: 17/05/2022
+IOP: 16/05/2022
+GOP: 17/04/2022
+COP-IPF2 v3.13
+Minor SW upgrade to correctly handle a common processing failure affecting the ocean products.
+The Pole-to-Pole (P2P) processors have not been modified in this release and the processor versions remain unchanged.
+NOP:
+IPF2_NOPM/3.9
+IPF2_NOPN/3.9
+IPF2_NOPR/3.9
+IOP:
+IPF2_IOPM/3.9
+IPF2_IOPN/3.9
+IPF2_IOPR/3.9
+GOP:
+IPF2_GOPM/3.9
+IPF2_GOPN/3.9
+IPF2_GOPR/3.9
+P2P:
+P2P_IOP/1.7
+P2P_GOP/1.7
+NOP: 20/09/2021
+IOP: 18/09/2021
+GOP: 22/08/2021
+COP-IPF2 v3.12
+Minor SW upgrade to implement the updated Earth Explorer CFI software library into the COP IPF2
+NOP:
+IPF2_NOPM/3.8
+IPF2_NOPN/3.8
+IPF2_NOPR/3.8
+IOP:
+IPF2_IOPM/3.8
+IPF2_IOPN/3.8
+IPF2_IOPR/3.8
+GOP:
+IPF2_GOPM/3.8
+IPF2_GOPN/3.8
+IPF2_GOPR/3.8
+P2P:
+P2P_IOP/1.7
+P2P_GOP/1.7
+NOP: 27/05/2019
+IOP: 26/05/2019
+GOP: 29/04/2019
+COP-IPF2 v3.9
+Software version issued to fix a number of minor anomalies with respect to the previous version, which include:
+Incomplete product metadata; missing Data Set Descriptors (DSDs) in product HDR files and xrefs in product data files
+Inconsistencies in product metadata
+Inconsistencies in some product variable names and descriptions
+NOP:
+IPF2_NOPM/3.6
+IPF2_NOPN/3.6
+IPF2_NOPR/3.6
+IOP:
+IPF2_IOPM/3.6
+IPF2_IOPN/3.6
+IPF2_IOPR/3.6
+GOP:
+IPF2_GOPM/3.6
+IPF2_GOPN/3.6
+IPF2_GOPR/3.6
+P2P:
+P2P_IOP/1.5
+P2P_GOP/1.5
+NOP: 11/01/2018
+IOP: 10/01/2018
+GOP: 15/12/2017
+COP-IPF2 v3.6
+Software version issued to fix a number of minor anomalies with respect to the previous version, which include:
+Incorrect storage of data in some L2 fields, which was causing failures in the subsequent P2P processing
+Processing failures related to a timing issue
+Incorrect orbit file retrieval policy
+NOP:
+IPF2_NOPM/3.3
+IPF2_NOPN/3.3
+IPF2_NOPR/3.3
+IOP:
+IPF2_IOPM/3.3
+IPF2_IOPN/3.3
+IPF2_IOPR/3.3
+GOP:
+IPF2_GOPM/3.3
+IPF2_GOPN/3.3
+IPF2_GOPR/3.3
+P2P:
+P2P_IOP/1.2
+P2P_GOP/1.2
+IOP & GOP: 06/11/2017
+NOP: 10/01/2018
+COP-IPF2 v3.4
+Upgrade of the CryoSat Ocean Processors to Baseline-C. This is a major software upgrade and introduces significant evolutions to the processors with respect to Baseline-B. The update of IPF2 includes:
+New format specification based on NetCDF
+Native SAR/ SARIn data added to products over SAR/ SARIn regions
+Addition of new parameters
+New and updated geophysical corrections
+Introduction of new Near-Real Time Ocean Products (NOP)
+New L2 processor implemented at Baseline-C to generate pole-to-pole (P2P) IOP and GOP. These are concatenated multi-mode L2 products with half-orbit coverage.
+NOP:
+IPF2_NOPM/3.2
+IPF2_NOPN/3.2
+IPF2_NOPR/3.2
+IOP:
+IPF2_IOPM/3.2
+IPF2_IOPN/3.2
+IPF2_IOPR/3.2
+GOP:
+IPF2_GOPM/3.2
+IPF2_GOPN/3.2
+IPF2_GOPR/3.2
+P2P:
+P2P_IOP/1.1
+P2P_GOP/1.1
+IOP: 25/03/2015*
+GOP: 22/02/2015*
+COP-IPF2 v2.5
+Software update release containing:
+New Static Aux Data files integrated to align the range bias with the IPFDB used for Baseline-C Ice Processing
+Updated instrumental Look-Up Tables (LUT) determined by CLS in the frame of COP expertise activities
+* L1 IOP from validity 25/03/2015 to 01/04/2015L1 and L1 GOP from validity 22/02/2015 to 01/04/2015 is a hybrid form using the old Baseline-B orbit model.
+IPF2IOP/2.5
+IPF2GOP/2.5
+IOP & GOP: 10/04/2014
+COP-IPF2 v2.2
+The first software release of the Level-2 CryoSat Ocean Processor Instrument Processing Facility (COP IPF2)
+IPF2IOP/2.2
+IPF2GOP/2.2
+CryoTEMPO EOLIS Products
+Date
+IPF Version
+Changes to the IPF baseline
+Processor version
+TEMPO_SWATH
+The first software release of CryoTEMPO EOLIS processor
 Tweet
 Share
+Featured
+CryoSat Ice Baseline-F data products now available
+Migration of CryoSat-2 PDS network
+CryoSat CryoTEMPO-EOLIS Baseline-3 data products now available
+All CryoSat Ocean Baseline-D reprocessed data now available
+CryoSat data users - We need your feedback!
+CryoSat on X
+Follow CryoSat on X
+CryoSat Data Users Survey
+Note to CryoSat Data Users
+: We are changing our QC procedures to provide Daily Reports
+only
+when an issue is identified in the products. If you have any queries about any other days or data products, then please get in touch via
+eohelp@esa.int
+To give us your feedback on the quality information provided and what you need, please fill out our
+user survey
+or send your feedback via
+email
+Search with keywords
+Active Remote Sensing
+Altimeters
+CryoSat
+Cryosphere
+Glaciers and Ice Sheets
+Oceans
+Radar Altimeters
+Sea Ice
+SIRAL
+Snow and Ice
+Terrestrial Hydrosphere
+People also search for
+Data
+News
+Missions
+Events
+Tools and toolboxes
+Activities
+Campaigns
+Learn & Discover

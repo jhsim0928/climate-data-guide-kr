@@ -1,40 +1,158 @@
 {
- "date_kst": "2026-10-26",
- "run_at": "2026-10-26T05:47:46+09:00",
+ "date_kst": "2026-10-27",
+ "run_at": "2026-10-27T05:47:39+09:00",
  "baseline": false,
  "checked": 276,
- "ok": 239,
+ "ok": 242,
  "changes": [
+  {
+   "url": "https://scatterometer.knmi.nl/ascat_b_osi_25_prod/",
+   "datasets": [
+    "ascat"
+   ],
+   "added": [
+    "Updated @ 2026-10-26 19:47 utc"
+   ],
+   "removed_count": 1
+  },
+  {
+   "url": "https://scatterometer.knmi.nl/ascat_c_osi_25_prod/",
+   "datasets": [
+    "ascat"
+   ],
+   "added": [
+    "Updated @ 2026-10-26 19:12 utc"
+   ],
+   "removed_count": 1
+  },
+  {
+   "url": "https://science.nasa.gov/mission/aura/",
+   "datasets": [
+    "aura-mls",
+    "omi"
+   ],
+   "added": [
+    "4 weeks ago",
+    "Hunting Red Leaves with Satellites",
+    "12 hours ago"
+   ],
+   "removed_count": 1
+  },
   {
    "url": "https://essd.copernicus.org/preprints/essd-2026-412/",
    "datasets": [
     "berkeley-earth"
    ],
    "added": [
-    "Latest update: 25 Oct 2026"
+    "Total article views: 1,535",
+    "HTML: 948",
+    "PDF: 479",
+    "XML: 108",
+    "Total: 1,535",
+    "Supplement: 138",
+    "BibTeX: 117",
+    "EndNote: 97",
+    "Thereof 1,535 with geography defined",
+    "Latest update: 26 Oct 2026"
+   ],
+   "removed_count": 10
+  },
+  {
+   "url": "https://science.nasa.gov/mission/calipso/",
+   "datasets": [
+    "calipso"
+   ],
+   "added": [
+    "4 weeks ago",
+    "Hunting Red Leaves with Satellites",
+    "NASA SEES Interns Tackle Real-World Challenges in Lunar Exploration",
+    "40 minutes ago",
+    "Spaceflight Science Foundations (ROSES B.8)"
+   ],
+   "removed_count": 3
+  },
+  {
+   "url": "https://forum.ecmwf.int/c/announcements/5",
+   "datasets": [
+    "carra",
+    "era-interim",
+    "era5",
+    "era6",
+    "oras5",
+    "oras6"
+   ],
+   "added": [
+    "26 October 2026"
    ],
    "removed_count": 1
   },
   {
-   "url": "https://gdex.ucar.edu/datasets/d094000/",
+   "url": "https://www.weather.gov/notification/",
    "datasets": [
-    "cfsr-cfsv2"
+    "cfsr-cfsv2",
+    "core",
+    "ncep-ncar-r1"
    ],
    "added": [
-    "2011-01-01 00:00 +0000 to 2026-10-25 03:00 +0000",
-    "59.91 TB"
+    "Oct 26:",
+    "SCN26-93",
+    ": Termination of the Tropical Cyclone Surface Wind Field Graphic on or About",
+    "January 1, 2027"
    ],
-   "removed_count": 2
+   "removed_count": 0
   },
   {
-   "url": "https://climatedataguide.ucar.edu/climate-data/sst-data-cobev3-centennial-situ-observation-based-estimates-version-3",
+   "url": "https://www.ncei.noaa.gov/alerts",
    "datasets": [
-    "cobe-sst3"
+    "cmorph",
+    "ersst-v6",
+    "ersst",
+    "gpcp",
+    "oisst",
+    "persiann-cdr",
+    "woa23"
    ],
    "added": [
-    "on 2026-10-25."
+    "Mon, 11/30/2026 - 17:00"
    ],
    "removed_count": 1
+  },
+  {
+   "url": "https://marine.copernicus.eu/user-corner/user-notification-service",
+   "datasets": [
+    "duacs",
+    "glorys12",
+    "nextsim",
+    "ostia",
+    "topaz4b"
+   ],
+   "added": [
+    "2026-10-26 09:00 UTC - In progress - update",
+    "The upstream maintenance is not over and therefore production has not resumed.",
+    "Due to a server maintenance, some upstream data is not available from 2026-10-19 to 2026-10-23 for sea ice and iceberg products:"
+   ],
+   "removed_count": 6
+  },
+  {
+   "url": "https://earth.esa.int/eogateway/missions/earthcare/data/data-quality",
+   "datasets": [
+    "earthcare"
+   ],
+   "added": [
+    "Occasional spikes are observed in the Rayleigh and Mie cross-talk measurements, associated with a limitation in the L1 processor’s screening.",
+    "The processor team is currently working on a fix to address this issue."
+   ],
+   "removed_count": 0
+  },
+  {
+   "url": "https://podaac.jpl.nasa.gov/dataset/MUR-JPL-L4-GLOB-v4.1",
+   "datasets": [
+    "ghrsst-mur"
+   ],
+   "added": [
+    "2002-Jun-01 to 2026-Oct-25"
+   ],
+   "removed_count": 11
   },
   {
    "url": "https://zenodo.org/records/8253971",
@@ -42,19 +160,77 @@
     "gimms-ndvi"
    ],
    "added": [
-    "45.3 TB"
+    "59.9 TB",
+    "45.4 TB"
    ],
-   "removed_count": 1
+   "removed_count": 2
   },
   {
-   "url": "https://grace.jpl.nasa.gov/data/data-updates/",
+   "url": "https://psc.apl.uw.edu/data/global-sea-ice-giomas-data-sets/",
    "datasets": [
-    "grace"
+    "giomas"
    ],
    "added": [
-    "Water Cycle Extremes: Droughts and Pluvials"
+    "Andrew Shumway",
+    "Claire Jensen",
+    "Yu-Chan Chao",
+    "Larisa Petrik",
+    "Erica Escajeda",
+    "Ben Hills",
+    "Jessica Lindsay",
+    "Lydia McCamish",
+    "Nick Wogan",
+    "Adjunct and Affiliate Scientists »",
+    "Cecilia Bitz",
+    "Jody Deming",
+    "Qinghua Ding",
+    "Pierre Dutrieux",
+    "Carie Frantz",
+    "Thomas Grenfell",
+    "Christopher Krembs",
+    "Jonathan Lilly",
+    "Twila Moon",
+    "Kent Moore",
+    "Robin Muench",
+    "David Shean",
+    "John Sylvester",
+    "Thomas Weingartner"
    ],
-   "removed_count": 3
+   "removed_count": 2
+  },
+  {
+   "url": "https://psc.apl.uw.edu/research/projects/arctic-sea-ice-volume-anomaly/",
+   "datasets": [
+    "giomas",
+    "piomas"
+   ],
+   "added": [
+    "Andrew Shumway",
+    "Claire Jensen",
+    "Yu-Chan Chao",
+    "Larisa Petrik",
+    "Erica Escajeda",
+    "Ben Hills",
+    "Jessica Lindsay",
+    "Lydia McCamish",
+    "Nick Wogan",
+    "Adjunct and Affiliate Scientists »",
+    "Cecilia Bitz",
+    "Jody Deming",
+    "Qinghua Ding",
+    "Pierre Dutrieux",
+    "Carie Frantz",
+    "Thomas Grenfell",
+    "Christopher Krembs",
+    "Jonathan Lilly",
+    "Twila Moon",
+    "Kent Moore",
+    "Robin Muench",
+    "David Shean",
+    "John Sylvester",
+    "Thomas Weingartner"
+   ],
+   "removed_count": 2
   },
   {
    "url": "https://nsidc.org/data/is2sitmogr4/versions/4",
@@ -62,7 +238,7 @@
     "icesat2-sit"
    ],
    "added": [
-    "]. Date Accessed 10-25-2026."
+    "]. Date Accessed 10-26-2026."
    ],
    "removed_count": 1
   },
@@ -72,7 +248,7 @@
     "icesat2-sit"
    ],
    "added": [
-    "]. Date Accessed 10-25-2026."
+    "]. Date Accessed 10-26-2026."
    ],
    "removed_count": 1
   },
@@ -82,9 +258,39 @@
     "icesat2-sit"
    ],
    "added": [
-    "]. Date Accessed 10-25-2026."
+    "]. Date Accessed 10-26-2026."
    ],
    "removed_count": 1
+  },
+  {
+   "url": "https://disc.gsfc.nasa.gov/information/alerts",
+   "datasets": [
+    "imerg",
+    "oco2"
+   ],
+   "added": [
+    "Showing 1 - 25 of 408 alerts associated with",
+    "ESA NEWS :Discontinuation of S-NPP VIIRS data availability - Impact on Sentinel-5P TROPOMI L2_NP* production",
+    "Following NOAA OSPO announcement regarding the discontinuation of S-NPP VIIRS data availability, please be informed that VIIRS data will ...",
+    "Alert Date:Nov 2, 2026 6:00:00 PM"
+   ],
+   "removed_count": 4
+  },
+  {
+   "url": "https://nsidc.org/data/user-resources/data-announcements",
+   "datasets": [
+    "its-live",
+    "modis-snow",
+    "nsidc-cdr-sic",
+    "polar-pathfinder-motion",
+    "sea-ice-index"
+   ],
+   "added": [
+    "October 26, 2026",
+    "Data set update: SMAP Radiometer Twice-Daily rSIR-Enhanced EASE-Grid 2.0 Brightness Temperatures, Version 3",
+    "The SMAP Radiometer Twice-Daily rSIR-Enhanced EASE-Grid 2.0 Brightness Temperatures, Version 3 data set, available at the NASA National Snow and Ice Data Center Distributed Active Archive Center (NSIDC DAAC), has finished reprocessing data and now includes data from 31 March 2015 to 30 April 2026. Data will now be updated monthly. Version 2 of the data will be retired on 16 November 2026."
+   ],
+   "removed_count": 3
   },
   {
    "url": "https://nsidc.org/data/nsidc-0776/versions/2",
@@ -92,7 +298,7 @@
     "its-live"
    ],
    "added": [
-    "]. Date Accessed 10-25-2026."
+    "]. Date Accessed 10-26-2026."
    ],
    "removed_count": 1
   },
@@ -102,12 +308,24 @@
     "merra2"
    ],
    "added": [
-    "20261025 12z",
-    "20261025 06z",
-    "20261024 09z",
-    "20261016 18z"
+    "20261026 12z",
+    "20261026 06z",
+    "20261025 09z"
    ],
-   "removed_count": 6
+   "removed_count": 5
+  },
+  {
+   "url": "https://science.nasa.gov/science-research/earth-science/terra-the-end-of-an-era",
+   "datasets": [
+    "misr"
+   ],
+   "added": [
+    "4 weeks ago",
+    "Hunting Red Leaves with Satellites",
+    "NASA SEES Interns Tackle Real-World Challenges in Lunar Exploration",
+    "Spaceflight Science Foundations (ROSES B.8)"
+   ],
+   "removed_count": 3
   },
   {
    "url": "https://nsidc.org/data/g02202/versions/6",
@@ -115,9 +333,34 @@
     "nsidc-cdr-sic"
    ],
    "added": [
-    "]. Date Accessed 10-25-2026."
+    "]. Date Accessed 10-26-2026."
    ],
    "removed_count": 1
+  },
+  {
+   "url": "https://science.nasa.gov/mission/oco-2/",
+   "datasets": [
+    "oco2"
+   ],
+   "added": [
+    "4 weeks ago",
+    "Hunting Red Leaves with Satellites"
+   ],
+   "removed_count": 1
+  },
+  {
+   "url": "https://science.nasa.gov/missions/potential-evolution-of-the-aura-mission/",
+   "datasets": [
+    "omi"
+   ],
+   "added": [
+    "4 weeks ago",
+    "Hunting Red Leaves with Satellites",
+    "NASA SEES Interns Tackle Real-World Challenges in Lunar Exploration",
+    "1 hour ago",
+    "Spaceflight Science Foundations (ROSES B.8)"
+   ],
+   "removed_count": 3
   },
   {
    "url": "https://nsidc.org/data/nsidc-0116/versions/4",
@@ -125,7 +368,7 @@
     "polar-pathfinder-motion"
    ],
    "added": [
-    "]. Date Accessed 10-25-2026."
+    "]. Date Accessed 10-26-2026."
    ],
    "removed_count": 1
   },
@@ -135,7 +378,7 @@
     "polar-pathfinder-motion"
    ],
    "added": [
-    "]. Date Accessed 10-25-2026."
+    "]. Date Accessed 10-26-2026."
    ],
    "removed_count": 1
   },
@@ -145,9 +388,19 @@
     "sea-ice-index"
    ],
    "added": [
-    "]. Date Accessed 10-25-2026."
+    "]. Date Accessed 10-26-2026."
    ],
    "removed_count": 1
+  },
+  {
+   "url": "https://nsidc.org/data/smap/news",
+   "datasets": [
+    "smap"
+   ],
+   "added": [
+    "October 26, 2026"
+   ],
+   "removed_count": 3
   },
   {
    "url": "https://nsidc.org/data/spl3smp",
@@ -155,7 +408,7 @@
     "smap"
    ],
    "added": [
-    "]. Date Accessed 10-25-2026."
+    "]. Date Accessed 10-26-2026."
    ],
    "removed_count": 1
   },
@@ -165,9 +418,22 @@
     "soda4"
    ],
    "added": [
-    "Latest update: 24 Oct 2026"
+    "Latest update: 25 Oct 2026"
    ],
    "removed_count": 1
+  },
+  {
+   "url": "https://dataspace.copernicus.eu/news",
+   "datasets": [
+    "tropomi"
+   ],
+   "added": [
+    "October 26, 2026",
+    "Discontinuation of S-NPP VIIRS data availability - Impact on Sentinel-5P TROPOMI L2_NP* production",
+    "VHR Europe 2024 Mosaic now available for download",
+    "Copernicus DEM View Service - Dataset Update"
+   ],
+   "removed_count": 0
   },
   {
    "url": "https://nsidc.org/data/vnp10a1/versions/2",
@@ -175,7 +441,7 @@
     "viirs-snow"
    ],
    "added": [
-    "]. Date Accessed 10-25-2026."
+    "]. Date Accessed 10-26-2026."
    ],
    "removed_count": 1
   }
@@ -187,7 +453,7 @@
     "airs"
    ],
    "error": "SSLError: HTTPSConnectionPool(host='aqua.nasa.gov', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLCertVerificationError(1, \"[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: Hostn",
-   "fails": 13,
+   "fails": 14,
    "last_ok": null
   },
   {
@@ -196,8 +462,8 @@
     "amsr2-asi",
     "gsmap"
    ],
-   "error": "브라우저로도 본문이 비어 있음",
-   "fails": 7,
+   "error": "HTTP 403 / HTTP 403 (브라우저)",
+   "fails": 8,
    "last_ok": "2026-10-19"
   },
   {
@@ -206,7 +472,7 @@
     "calipso"
    ],
    "error": "HTTP 403 / HTTP 403 (브라우저)",
-   "fails": 13,
+   "fails": 14,
    "last_ok": null
   },
   {
@@ -215,38 +481,8 @@
     "cera20c"
    ],
    "error": "HTTP 401 / HTTP 401 (브라우저)",
-   "fails": 20,
+   "fails": 21,
    "last_ok": null
-  },
-  {
-   "url": "https://earth.esa.int/eogateway/instruments/siral/processor-releases",
-   "datasets": [
-    "cryosat2-sit"
-   ],
-   "error": "ReadTimeout: HTTPSConnectionPool(host='earth.esa.int', port=443): Read timed out. (read timeout=40)",
-   "fails": 3,
-   "last_ok": "2026-10-23"
-  },
-  {
-   "url": "https://podaac.jpl.nasa.gov/announcements",
-   "datasets": [
-    "ghrsst-mur",
-    "grace",
-    "smap-sss",
-    "swot"
-   ],
-   "error": "ConnectTimeout: HTTPSConnectionPool(host='podaac.jpl.nasa.gov', port=443): Max retries exceeded with url: /announcements (Caused by ConnectTimeoutError(<HTTPSConnection(host='podaac.jpl.nasa.gov', port=443) at 0x76e9",
-   "fails": 5,
-   "last_ok": "2026-10-21"
-  },
-  {
-   "url": "https://podaac.jpl.nasa.gov/dataset/MUR-JPL-L4-GLOB-v4.1",
-   "datasets": [
-    "ghrsst-mur"
-   ],
-   "error": "ConnectTimeout: HTTPSConnectionPool(host='podaac.jpl.nasa.gov', port=443): Max retries exceeded with url: /dataset/MUR-JPL-L4-GLOB-v4.1 (Caused by ConnectTimeoutError(<HTTPSConnection(host='podaac.jpl.nasa.gov', port",
-   "fails": 5,
-   "last_ok": "2026-10-21"
   },
   {
    "url": "https://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=2187",
@@ -254,7 +490,7 @@
     "gimms-ndvi"
    ],
    "error": "HTTP 403 / HTTP 403 (브라우저)",
-   "fails": 13,
+   "fails": 14,
    "last_ok": null
   },
   {
@@ -263,7 +499,7 @@
     "gk2a"
    ],
    "error": "브라우저로도 본문이 비어 있음",
-   "fails": 13,
+   "fails": 14,
    "last_ok": null
   },
   {
@@ -279,7 +515,7 @@
     "viirs-burned-area"
    ],
    "error": "HTTP 403 / HTTP 403 (브라우저)",
-   "fails": 20,
+   "fails": 21,
    "last_ok": null
   },
   {
@@ -290,7 +526,7 @@
     "viirs-ocean"
    ],
    "error": "HTTP 403 / HTTP 403 (브라우저)",
-   "fails": 13,
+   "fails": 14,
    "last_ok": null
   },
   {
@@ -299,7 +535,7 @@
     "gosat"
    ],
    "error": "브라우저로도 본문이 비어 있음",
-   "fails": 13,
+   "fails": 14,
    "last_ok": null
   },
   {
@@ -308,7 +544,7 @@
     "merra2"
    ],
    "error": "HTTP 403 / HTTP 403 (브라우저)",
-   "fails": 20,
+   "fails": 21,
    "last_ok": null
   },
   {
@@ -317,7 +553,7 @@
     "misr"
    ],
    "error": "HTTP 403 / HTTP 403 (브라우저)",
-   "fails": 13,
+   "fails": 14,
    "last_ok": null
   },
   {
@@ -326,7 +562,7 @@
     "modis-albedo"
    ],
    "error": "SSLError: HTTPSConnectionPool(host='aqua.nasa.gov', port=443): Max retries exceeded with url: /announcements/aqua-status (Caused by SSLError(SSLCertVerificationError(1, \"[SSL: CERTIFICATE_VERIFY_FAILED] certifi",
-   "fails": 13,
+   "fails": 14,
    "last_ok": null
   },
   {
@@ -335,7 +571,7 @@
     "modis-burned-area"
    ],
    "error": "HTTP 403 / HTTP 403 (브라우저)",
-   "fails": 13,
+   "fails": 14,
    "last_ok": null
   },
   {
@@ -344,7 +580,7 @@
     "modis-et"
    ],
    "error": "HTTP 403 / HTTP 403 (브라우저)",
-   "fails": 13,
+   "fails": 14,
    "last_ok": null
   },
   {
@@ -354,7 +590,7 @@
     "modis-vi"
    ],
    "error": "HTTP 403 / HTTP 403 (브라우저)",
-   "fails": 13,
+   "fails": 14,
    "last_ok": null
   },
   {
@@ -363,7 +599,7 @@
     "modis-landcover"
    ],
    "error": "HTTP 403 / HTTP 403 (브라우저)",
-   "fails": 13,
+   "fails": 14,
    "last_ok": null
   },
   {
@@ -372,7 +608,7 @@
     "modis-lst"
    ],
    "error": "HTTP 403 / HTTP 403 (브라우저)",
-   "fails": 13,
+   "fails": 14,
    "last_ok": null
   },
   {
@@ -382,7 +618,7 @@
     "pace-oci"
    ],
    "error": "HTTP 403 / HTTP 403 (브라우저)",
-   "fails": 13,
+   "fails": 14,
    "last_ok": null
   },
   {
@@ -391,7 +627,7 @@
     "persiann-cdr"
    ],
    "error": "ReadTimeout: HTTPSConnectionPool(host='www.ncei.noaa.gov', port=443): Read timed out. (read timeout=40)",
-   "fails": 3,
+   "fails": 4,
    "last_ok": "2026-10-23"
   },
   {
@@ -400,16 +636,7 @@
     "smos-sss"
    ],
    "error": "HTTP 503",
-   "fails": 5,
-   "last_ok": "2026-10-21"
-  },
-  {
-   "url": "https://podaac.jpl.nasa.gov/SWOT-events/SWOT_events.html",
-   "datasets": [
-    "swot"
-   ],
-   "error": "ConnectTimeout: HTTPSConnectionPool(host='podaac.jpl.nasa.gov', port=443): Max retries exceeded with url: /SWOT-events/SWOT_events.html (Caused by ConnectTimeoutError(<HTTPSConnection(host='podaac.jpl.nasa.gov', port",
-   "fails": 5,
+   "fails": 6,
    "last_ok": "2026-10-21"
   },
   {
@@ -418,7 +645,7 @@
     "tropomi"
    ],
    "error": "HTTP 404 / HTTP 404 (브라우저)",
-   "fails": 13,
+   "fails": 14,
    "last_ok": null
   },
   {
@@ -427,7 +654,7 @@
     "viirs-albedo"
    ],
    "error": "HTTP 403 / HTTP 403 (브라우저)",
-   "fails": 13,
+   "fails": 14,
    "last_ok": null
   },
   {
@@ -436,7 +663,7 @@
     "viirs-burned-area"
    ],
    "error": "HTTP 403 / HTTP 403 (브라우저)",
-   "fails": 13,
+   "fails": 14,
    "last_ok": null
   },
   {
@@ -447,7 +674,7 @@
     "viirs-vi"
    ],
    "error": "HTTP 403 / HTTP 403 (브라우저)",
-   "fails": 13,
+   "fails": 14,
    "last_ok": null
   },
   {
@@ -456,7 +683,7 @@
     "viirs-lai"
    ],
    "error": "HTTP 403 / HTTP 403 (브라우저)",
-   "fails": 13,
+   "fails": 14,
    "last_ok": null
   },
   {
@@ -465,7 +692,7 @@
     "viirs-lst"
    ],
    "error": "HTTP 403 / HTTP 403 (브라우저)",
-   "fails": 13,
+   "fails": 14,
    "last_ok": null
   },
   {
@@ -474,7 +701,7 @@
     "viirs-lst"
    ],
    "error": "HTTP 403 / HTTP 403 (브라우저)",
-   "fails": 13,
+   "fails": 14,
    "last_ok": null
   },
   {
@@ -483,7 +710,7 @@
     "viirs-vi"
    ],
    "error": "HTTP 403 / HTTP 403 (브라우저)",
-   "fails": 13,
+   "fails": 14,
    "last_ok": null
   }
  ]
