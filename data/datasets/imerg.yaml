@@ -332,6 +332,13 @@ transitions:
         url: https://www.earthdata.nasa.gov/data/alerts-outages/gpm-version-08-reprocessing
 
 notices:
+  - date: "2026-10-21"
+    level: warning
+    title: GES DISC 신규 자료 수집 일시 중단 (10/29 06:00~10/30 22:00 한국 시간)
+    body: >-
+      NASA 통합 수집·보관(I&A) 시스템 이전으로 GES DISC는 미국 동부 시간 10월 28일 17:00~10월 30일 09:00(한국 시간 10월 29일 06:00~10월 30일 22:00)에 새 자료 수집과 공개가 일시 중단됩니다.
+      기존 자료의 검색·다운로드는 계속 가능하며, 이 기간에 들어올 새 자료는 이전이 끝난 뒤 수집되어 공개됩니다.
+    source: https://disc.gsfc.nasa.gov/information/alerts
   - date: "2026-09-30"
     level: warning
     title: GES DISC 기존 데이터 서버(gpm1 등) 접근 종료 예정 — Earthdata Cloud로 전환
@@ -402,4 +409,4 @@ watch_urls:
   - https://disc.gsfc.nasa.gov/information/alerts
   - https://gpm1.gesdisc.eosdis.nasa.gov/data/GPM_L3/
 
-last_verified: "2026-10-12"
+last_verified: "2026-10-27"
