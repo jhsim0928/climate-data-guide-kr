@@ -149,7 +149,7 @@ access:
   - name: AVISO+ — SWOT ocean data access (L2, L3 and L3 Wind Wave)
     url: https://www.aviso.altimetry.fr/en/missions/current-missions/swot/swot-ocean-data-access.html
     method: "FTP/SFTP — L2 LR SSH at /swot_products/l2_karin/l2_lr_ssh, L3 Wind Wave at /swot_products/l3_karin/l3_lr_wind_wave"
-    note: CNES-side L2 distribution and the L3 wave product (SWOT_L3_LR_WIND_WAVE v2.0) are also available here. AVISO+ account required.
+    note: CNES-side L2 distribution and the L3 wave product (SWOT_L3_LR_WIND_WAVE v3.0) are also available here. AVISO+ account required.
 
 example:
   lang: python
@@ -247,6 +247,13 @@ citations:
     PO.DAAC asks for a data citation with authors, title, publisher and DOI in the reference list.
 
 notices:
+  - date: "2026-10"
+    level: info
+    title: AVISO SWOT L3 LR Wind Wave v3.0 released (Light and Extended)
+    body: >-
+      AVISO announced the production and distribution of the Light and Extended SWOT L3_LR_WIND_WAVE version 3.0 products for the Science (cycle 1 – cycle 51) and Calval (cycle 474 – cycle 578) phases.
+      The previous version 2.0 products covered the Science phase cycles 2–16 only.
+    source: https://www.aviso.altimetry.fr/en/missions/current-missions/swot/swot-ocean-data-access.html
   - date: "2025-11"
     level: info
     title: AVISO L3 LR SSH v3.0 released; shorter L2 latency
@@ -357,4 +364,4 @@ watch_urls:
   - https://podaac.jpl.nasa.gov/SWOT-events/SWOT_events.html
   - https://www.aviso.altimetry.fr/en/missions/current-missions/swot/swot-ocean-data-access.html
 
-last_verified: "2026-10-13"
+last_verified: "2026-10-28"
