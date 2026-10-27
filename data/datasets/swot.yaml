@@ -149,7 +149,7 @@ access:
   - name: AVISO+ — SWOT 해양 자료 접근 안내 (L2·L3·L3 Wind Wave)
     url: https://www.aviso.altimetry.fr/en/missions/current-missions/swot/swot-ocean-data-access.html
     method: "FTP/SFTP — L2 LR SSH /swot_products/l2_karin/l2_lr_ssh, L3 Wind Wave /swot_products/l3_karin/l3_lr_wind_wave"
-    note: CNES 쪽 L2 배포와 L3 파랑 산출물(SWOT_L3_LR_WIND_WAVE v2.0)도 여기서 받습니다. AVISO+ 계정 필요.
+    note: CNES 쪽 L2 배포와 L3 파랑 산출물(SWOT_L3_LR_WIND_WAVE v3.0)도 여기서 받습니다. AVISO+ 계정 필요.
 
 example:
   lang: python
@@ -247,6 +247,13 @@ citations:
     PO.DAAC 자료는 저자·제목·배포처·DOI를 갖춘 데이터 인용을 참고문헌에 넣으라고 안내합니다.
 
 notices:
+  - date: "2026-10"
+    level: info
+    title: AVISO SWOT L3 LR Wind Wave v3.0 공개 (Light·Extended)
+    body: >-
+      AVISO가 SWOT L3_LR_WIND_WAVE(유의파고·풍속 L3) Light·Extended v3.0의 생산·배포를 시작했습니다. 과학 단계 사이클 1~51과 보정(Calval) 단계 사이클 474~578이 들어 있습니다.
+      이전 v2.0은 과학 단계 사이클 2~16만 담았습니다.
+    source: https://www.aviso.altimetry.fr/en/missions/current-missions/swot/swot-ocean-data-access.html
   - date: "2025-11"
     level: info
     title: AVISO L3 LR SSH v3.0 공개, L2 지연 단축
@@ -357,4 +364,4 @@ watch_urls:
   - https://podaac.jpl.nasa.gov/SWOT-events/SWOT_events.html
   - https://www.aviso.altimetry.fr/en/missions/current-missions/swot/swot-ocean-data-access.html
 
-last_verified: "2026-10-13"
+last_verified: "2026-10-28"
