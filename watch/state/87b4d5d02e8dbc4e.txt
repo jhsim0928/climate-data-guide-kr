@@ -43,7 +43,7 @@ Tags
 Open more actions menu
 Latest commit
 History
-71 Commits
+76 Commits
 Folders and files
 Name
 Last commit message
@@ -232,6 +232,11 @@ True
 remote_options
 "asynchronous"
 True
+"anon"
+True
+target_options
+"anon"
+True
 lazy
 True
 ## create a xarray Dataset object based on the virtual chunks.
@@ -240,8 +245,12 @@ ref_fs
 get_mapper
 consolidated
 False
-decode_times
-True
+In addition to
+fsspec
+xarray
+, you will need to install
+fastparquet
+in order for the above code block to function.
 Icechunk (daily data only)
 Currently, only daily data is accessible using the icechunk method
 via the repo at

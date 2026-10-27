@@ -20,21 +20,18 @@ Advanced Very High-Resolution Radiometer (AVHRR)
 Visible Infrared Imaging Radiometer Suite (VIIRS)
 High-resolution Infra-Red Sounder (HIRS)
 Cross-track Infrared Sounder (CrIS) Infrared
-Atmospheric Sounding Interferometer (IASI)
+Infrared Atmospheric Sounding Interferometer (IASI)
 PATMOS-x improved the quality of the dataset by recalibrating and renavigating the data. The resulting CDR supports climate variability studies over the period of record providing a long-term resource for multi-decadal studies. The final record has global coverage at a 0.1°x0.1° equal angle grid and extends from 1979–present.
 To help the project receive continued support, updates, and improvement, tell us how you use PATMOS-x Cloud Properties CDR data by completing our optional User Registration Form.
 User Registration
 Product Details
-Technical Note
 Principal Investigator
 Mike Foster, Space Science and Engineering Center, University of Wisconsin - Madison
 Citation
 Cite dataset when used as a source. See the dataset's landing page for citation details at
-doi:10.7289/V5X9287S
+doi:10.25921/8grd-2m57
 Data Access
 Download
-Amazon (Cloud)​
-Google (Cloud)
 Information
 Contact
 Documentation
@@ -43,6 +40,7 @@ Use Agreement
 Algorithm Description
 Data Flow Diagram
 Maturity Matrix
+User Guide
 Source Code
 ​​​​​​
 Cloud emissivity
@@ -54,12 +52,3 @@ Cloud top temperature
 Cloud type
 Cloud-top pressure
 Total precipitable water
-Data accessibility note:
-To access the 1981-1999 PATMOS-x data files, utilize the
-Amazon (Cloud)
-Google (Cloud)
-links. The NCEI link contains 2000-current only.
-Data quality note:
-Much of the NOAA-20 data suffers from high reflectance values at oblique sun angles due to an improper application of solar normalization. Data NOT impacted by this issue include July of 2018, January of 2019, and anything past January 13th, 2026. The issue does not seem to have heavily impacted the cloud mask or cloud height, but the cloud optical properties are biased high in certain regions. This issue will be resolved in PATMOS-x Cloud Properties Version 7.0.
-The 13.3 micron channel on the NOAA-18 HIRS instrument produced corrupt data for a period in 2023. The corruption began gradually January 12th and becomes severe by January 16th. The behavior subsides and the data looks normal by April 29th. Inconsistencies in cloud detection and height assignment can be seen in NOAA-18 PATMOS-x files for this period.
-The AVHRR instrument does not have an onboard calibration system for solar reflectance channels (0.63-, 0.86- and 1.6-microns). As a result, the most recent data relies on an extrapolation of the existing calibration (Heidinger et al. 2010). The most recent data contain the word 'preliminary' in the file name to indicate that the values may change slightly as new calibration coefficients become available. Once a file is calibrated, 'preliminary' is removed. Calibration process is performed approximately once a year at the University of Wisconsin - Madison. As a result, there is often more than one version of 'preliminary' files for the most recent data. To avoid confusion NCEI archives only the first 'preliminary' version of data until the final version is available.
