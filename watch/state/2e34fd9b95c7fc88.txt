@@ -602,7 +602,7 @@ East Bounding Coordinate:
 Time Span:
 2002-May-31 to Present
 Granule Time Span:
-2002-Jun-01 to 2026-Oct-26
+2002-Jun-01 to 2026-Oct-27
 Projection
 Projection Type:
 Cylindrical Lat-Lon
@@ -744,16 +744,7 @@ C1996881146-POCLOUD
 Tools
 PO.DAAC Data Subscriber
 Information
-Simple
-: podaac-data-downloader -c MUR-JPL-L4-GLOB-v4.1 -d ./data --start-date 2002-05-31T21:00:00Z --end-date 2002-06-07T21:00:00Z -e ""
-Download by Spatial and Temporal Search
-: podaac-data-downloader -c MUR-JPL-L4-GLOB-v4.1 -d ./data --start-date 2002-05-31T21:00:00Z --end-date 2002-06-07T21:00:00Z -b="-180,-90,180,90"
-Download by Extension
-: podaac-data-downloader -c MUR-JPL-L4-GLOB-v4.1 -d ./data --start-date 2002-05-31T21:00:00Z --end-date 2002-06-07T21:00:00Z -e .nc
-Download recent data (360 min.)
-: podaac-data-subscriber -c MUR-JPL-L4-GLOB-v4.1 -d ./data -m 360
-Download recent data (1440 min.)
-: podaac-data-subscriber -c MUR-JPL-L4-GLOB-v4.1 -d ./data -m 1440
+podaac-data-subscriber -c MUR-JPL-L4-GLOB-v4.1 -d ./data/MUR-JPL-L4-GLOB-v4.1 --start-date 2002-05-31T21:00:00Z
 Services
 Harmony subsetter
 Information
