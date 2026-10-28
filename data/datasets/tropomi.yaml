@@ -277,6 +277,14 @@ citations:
     알고리즘은 각 제품의 ATBD를 함께 밝히세요. GES DISC에서 받았다면 GES DISC 컬렉션을 경유했다고 적는 것이 좋습니다.
 
 notices:
+  - date: "2026-10-26"
+    level: warning
+    title: S-NPP VIIRS 자료 종료로 L2__NP_* (NPP 구름) 제품 생산 중단 (2026-11-02 13:00 UTC 이후 관측분)
+    body: >-
+      NOAA가 S-NPP VIIRS 자료 제공을 2026-11-02 13:00 UTC에 끝내므로, VIIRS에 의존하는 Sentinel-5P L2__NP_* 제품(L2__NP_BD3·BD6·BD7)은
+      그 이후 관측분부터 더 이상 만들어지지 않는다고 ESA가 알렸습니다. ESA는 Sentinel-5P L2 과학 제품의 자료 품질은 영향을 받지 않으며,
+      VIIRS 의존성 제거는 2025년 11월 배포(NL-L2 2.9.0·UPAS 2.8.0)에서 시작해 2026년 11월 배포(NL-L2 3.0.0·UPAS 3.0.1)로 마무리된다고 밝혔습니다.
+    source: https://dataspace.copernicus.eu/news/2026-10-26-discontinuation-s-npp-viirs-data-availability-impact-sentinel-5p-tropomi-l2np
   - date: "2026-10-21"
     level: info
     title: OFFL HCHO·SO2 v2.8.0 재처리 완료 (2025-11-22~12-02, 궤도 42023~42173)
@@ -346,4 +354,4 @@ watch_urls:
   - https://www.tropomi.eu/data-products/level-2-products
   - https://sentiwiki.copernicus.eu/web/s5p-products
 
-last_verified: "2026-10-23"
+last_verified: "2026-10-28"

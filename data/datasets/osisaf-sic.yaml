@@ -315,6 +315,13 @@ citations:
     Copernicus Marine·CDS에서 받았다면 인용 문구의 배포처(distributor)와 다운로드 날짜 자리에 그 정보를 넣으세요.
 
 notices:
+  - date: "2026-10-23"
+    level: warning
+    title: AMSR3 기반 해빙 산출물 누락 계속 — 입력 자료 미수신, 재개 시점 미정 (서비스 메시지 #3607)
+    body: >-
+      OSI SAF가 이전 메시지(#3605, 10/19~10/23 누락)에 이어, 자료 원천 기관에서 아직 입력 자료를 받지 못하고 있으며 재개 일정은 현재 알 수 없다고 알렸습니다.
+      AMSR3 기반 준실시간 해빙 산출물을 쓰는 경우 10월 23일 이후에도 빈 날짜가 있을 수 있으니 확인하세요.
+    source: https://osi-saf.eumetsat.int/community/list-of-service-messages/missing-amsr3-products-update
   - date: "2026-10-20"
     level: warning
     title: JAXA 시스템 점검으로 AMSR3 기반 준실시간 해빙 산출물 누락·지연 (10/19~10/23, 서비스 메시지 #3605)
@@ -380,4 +387,4 @@ watch_urls:
   - https://osi-saf.eumetsat.int/community/stories
   - https://osi-saf.eumetsat.int/community/stories/implications-end-ssmis-data-osi-saf-products
 
-last_verified: "2026-10-21"
+last_verified: "2026-10-28"

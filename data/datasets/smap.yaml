@@ -329,6 +329,14 @@ transitions:
         url: https://nsidc.org/data/spl4cmdl/versions/8
 
 notices:
+  - date: "2026-10-23"
+    level: info
+    title: SMAP L4 Version 8 부 버전 갱신 — 2023-08-01 이후 자료 (Science Version ID Vv8012·Vv8013)
+    body: >-
+      NSIDC가 SMAP L4 Version 8 자료(SPL4SMAU·SPL4SMGP·SPL4SMLM·SPL4CMDL)를 2023년 8월 1일 이후 자료부터 새 부 버전으로 갱신했다고 알렸습니다.
+      L1C_TB 품질관리 개선, IMERG Late 입력, 위치 오류(2026-05-14~07-28) 수정이 반영되었고 Science Version ID(Vv8012·Vv8013)로 구분됩니다.
+      다시 받아야 하는지는 공지에 없으므로 SMAP 버전 이력 페이지에서 확인하세요.
+    source: https://nsidc.org/data/user-resources/data-announcements/data-set-updates-smap-level-4
   - date: "2026-10-15"
     level: info
     title: 2026-05-14~07-28 위치 오류 재처리 완료 — 이 기간 표준 제품 다시 받기 권고
@@ -416,4 +424,4 @@ watch_urls:
   - https://nsidc.org/data/smap/news
   - https://nsidc.org/data/spl3smp
 
-last_verified: "2026-10-16"
+last_verified: "2026-10-28"

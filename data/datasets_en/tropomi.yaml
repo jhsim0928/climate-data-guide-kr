@@ -284,6 +284,15 @@ citations:
     (for NO2, 10.5270/S5P-s4ljg54) and also cite each product's ATBD for the algorithm. If you obtained the data from GES DISC, say so.
 
 notices:
+  - date: "2026-10-26"
+    level: warning
+    title: Discontinuation of S-NPP VIIRS data availability — Sentinel-5P TROPOMI L2_NP* products no longer generated after 2 November 2026 13:00 UTC
+    body: >-
+      Following NOAA's announcement, S-NPP VIIRS data will no longer be available after 2 November 2026 at 13:00 UTC. Sentinel-5P TROPOMI L2_NP* products
+      (L2__NP_BD3, BD6, BD7), which depend on S-NPP VIIRS, will no longer be generated for data acquired after that time. The data quality of the
+      Sentinel-5P Level-2 science products is not affected; the removal of the VIIRS dependency started with the November 2025 release (NL-L2 2.9.0, UPAS 2.8.0)
+      and will be completed with the November 2026 release (NL-L2 3.0.0, UPAS 3.0.1).
+    source: https://dataspace.copernicus.eu/news/2026-10-26-discontinuation-s-npp-viirs-data-availability-impact-sentinel-5p-tropomi-l2np
   - date: "2026-10-21"
     level: info
     title: Copernicus Sentinel-5P OFFL HCHO and SO2 v2.8.0 products reprocessed — now available on CDSE (22 November–2 December 2025, orbits 42023–42173)
@@ -355,4 +364,4 @@ watch_urls:
   - https://www.tropomi.eu/data-products/level-2-products
   - https://sentiwiki.copernicus.eu/web/s5p-products
 
-last_verified: "2026-10-23"
+last_verified: "2026-10-28"
