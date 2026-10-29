@@ -258,7 +258,7 @@
         "cera20c"
       ],
       "url": "https://www.ecmwf.int/en/forecasts/datasets/reanalysis-datasets/cera-20c",
-      "error": "HTTP 401 / HTTP 401 (브라우저) (오늘 WebFetch도 승인 시간 초과로 거절)",
+      "error": "HTTP 401 / HTTP 401 (브라우저) (오늘 08시·12:50 WebFetch도 승인 시간 초과로 거절)",
       "fails": 23
     },
     {
@@ -289,7 +289,7 @@
         "viirs-burned-area"
       ],
       "url": "https://www.earthdata.nasa.gov/data/alerts-outages",
-      "error": "HTTP 403 / HTTP 403 (브라우저) (오늘 WebFetch도 승인 시간 초과로 거절)",
+      "error": "HTTP 403 / HTTP 403 (브라우저) (오늘 08시·12:50 WebFetch도 승인 시간 초과로 거절)",
       "fails": 23
     },
     {
@@ -315,7 +315,7 @@
         "merra2"
       ],
       "url": "https://www.earthdata.nasa.gov/data/projects/merra-2/news",
-      "error": "HTTP 403 / HTTP 403 (브라우저) (오늘 WebFetch도 승인 시간 초과로 거절)",
+      "error": "HTTP 403 / HTTP 403 (브라우저) (오늘 08시·12:50 WebFetch도 승인 시간 초과로 거절)",
       "fails": 23
     },
     {
@@ -465,7 +465,7 @@
         "gpcp"
       ],
       "url": "https://disc.gsfc.nasa.gov/api/alerts?page=1&size=10",
-      "error": "WebFetch 승인 시간 초과로 거절",
+      "error": "WebFetch 승인 시간 초과로 거절(08시·12:50 두 번)",
       "fails": 1
     }
   ],
@@ -476,6 +476,7 @@
     "운영자 확인 필요: ERA5 등 ECMWF 자료 — 포럼에 'Data Stores Service protection measures affecting data downloads and account access (CDS/ADS/EWDS/ECDS)' 글(활동 10/27, era5 태그)이 있으나 사이트 공지에 없습니다. 다운로드·계정 접근에 영향을 주는 조치일 수 있어 원문 확인이 필요합니다. 'Upcoming CDS/ADS Terms of use change'·'ERA5 hourly time-series' 글은 활동 날짜만 10/28로 바뀐 기존 글입니다(CDS 약관 개정은 ERA5-Land에 공지 있음). (https://forum.ecmwf.int/c/announcements/5)",
     "운영자 확인 필요: MERRA-2 — GMAO 운영 상태 페이지에서 MERRA-2가 Nominal → 'Error / Failed Listing'(마지막 20261018 18z)으로 바뀌었습니다. 내부 처리 상태 표시라 공지 여부는 판단하지 않았습니다. 참고로 GES DISC 수집 중단(10/29 06:00~10/30 22:00 한국 시간) 공지는 이미 사이트에 있습니다. (https://gmao.gsfc.nasa.gov/operations/status.php)",
     "직접 확인 실패: Earthdata 공지 목록, MERRA-2 뉴스, CERA-20C 페이지, GES DISC 공지 API를 WebFetch로 열지 못해 오늘은 확인하지 못했습니다(errors에 남김).",
-    "7일 넘게 실패한 주소(asdc.larc.nasa.gov, oceancolor.gsfc.nasa.gov, aqua.nasa.gov, tropomi.eu 404, gosat-gw.nies.go.jp 404, earthdata.nasa.gov 카탈로그 주소 등)의 새 공식 주소는 오늘도 찾지 못했습니다(웹 열람 불가)."
+    "7일 넘게 실패한 주소(asdc.larc.nasa.gov, oceancolor.gsfc.nasa.gov, aqua.nasa.gov, tropomi.eu 404, gosat-gw.nies.go.jp 404, earthdata.nasa.gov 카탈로그 주소 등)의 새 공식 주소는 오늘도 찾지 못했습니다(웹 열람 불가).",
+    "12:50 직접 확인 실패: Earthdata 공지 목록, MERRA-2 뉴스, CERA-20C 페이지, GES DISC 공지 API(size=40)를 WebFetch로 다시 열었으나 허가 요청이 시간 안에 승인되지 않아 모두 거절되었습니다(재시도 1회 포함). 새 공지 여부를 확인하지 못했고, 위 '운영자 확인 필요' 4건도 그대로 보류입니다. 열린 공지 후보 PR은 없습니다."
   ]
 }
