@@ -39,6 +39,27 @@ Product Roadmap
 Get Inspired
 Service Commitments and Licence
 Contact Us
+[INS-851] INSITU_(BAL|GLO|NWS)_PHYBGCWAV_DISCRETE_MYNRT - unavailable danish sea level data since 2026-10-28
+In progress
+2026-10-29 12:30 UTC - In progress - Update
+A patch has been implemented to restart production. Delivery is as normal, and we are closely monitoring the outcome.
+2026-10-28 12:30 UTC - In progress
+Due to upstream infrastructure changes, Danish in-situ sea level data is not available since 2026-10-28. The following products are affected:
+INSITU_BAL_PHYBGCWAV_DISCRETE_MYNRT_013_032
+INSITU_GLO_PHYBGCWAV_DISCRETE_MYNRT_013_030
+INSITU_NWS_PHYBGCWAV_DISCRETE_MYNRT_013_036
+We apologize for any inconvenience this may cause.
+If you have any question, please contact
+Copernicus Marine User Support
+Copy a link to this article
+[ICE-817] SEAICE_GLO_PHY_L4_NRT - delayed north production start
+In progress
+2026-10-29 07:00 UTC - In progress
+Due to an outage of upstream data dissemination (AMSR2 and AMSR3 from JAXA), the start of the production of SEAICE_GLO_PHY_L4_NRT_011_014 for the northern hemisphere, expected to take place on 2026-10-24, is delayed.
+We apologize for any inconvenience this may cause.
+If you have any question, please contact
+Copernicus Marine User Support
+Copy a link to this article
 [WAV-315] WAVE_GLO_PHY_SWH_L3_NRT - delayed CFOSAT dataset since 2026-10-20
 In progress
 2026-10-20 12:00 UTC - In progress
@@ -62,21 +83,10 @@ We apologize for any inconvenience this may cause.
 If you have any question, please contact
 Copernicus Marine User Support
 Copy a link to this article
-[ICE-815] SEAICE_ARC_(PHY|SEAICE)_(L3S|L4)_NRT - Delay due to missing AMSR3 products
-In progress
-2026-10-21 22:00 UTC - In progress
-Due to missing AMSR3 products from OSI-SAF (see
-Missing AMSR3 products | OSI SAF
-), products
-SEAICE_ARC_SEAICE_L4_NRT_OBSERVATIONS_011_008
-SEAICE_ARC_PHY_SST-IST_L3S_NRT_011_022
-are delayed from 2026-10-21 to 2026-10-23. Depending on the availability of the AMSR3 products, delays can be extended to 2026-10-24, 2026-10-25 and 2026-10-26.
-We apologize for any inconvenience this may cause.
-If you have any question, please contact
-Copernicus Marine User Support
-Copy a link to this article
 [ICE-814] SEAICE_GLO_SEAICE_L4_NRT_OBSERVATIONS_011_001 - Data missing since 2026-10-20
 In progress
+2026-10-29 08:00 UTC - In progress
+The production has resumed. The files for 2026-10-20 are going to be reprocessed.
 2026-10-20 02:30 UTC - In progress
 Due to a technical issue, data in product
 SEAICE_GLO_SEAICE_L4_NRT_OBSERVATIONS_011_001
@@ -127,7 +137,7 @@ Copernicus Marine User Support
 Copy a link to this article
 [ICE-812] SEAICE_(ANT|ARC)_(PHY|SEAICE)_(|AUTO)(L3|L4) - delivery interruption 2026-10-19 to 2026-10-23
 In progress
-2026-10-28 14:00 UTC - In progress - update
+2026-10-28 14:00 UTC - In progress
 While the upstream maintenance is not confirmed over, a workaround has been implemented and production has restarted.
 2026-10-19 05:00 UTC - In progress
 The upstream maintenance is not over and therefore production has not resumed.
@@ -378,20 +388,6 @@ cmems_obs-wind_glo_phy_nrt_l3-hy2c-hscat-asc-0.5deg_P1D-i
 cmems_obs-wind_glo_phy_nrt_l3-hy2c-hscat-des-0.5deg_P1D-i
 The input data flow has been restored now but the products from 1 and 2 May are considered lost.
 We apologize for the inconvenience.
-If you have any question, please contact
-Copernicus Marine User Support
-Copy a link to this article
-[ICE-810] SEAICE_ARC_(PHY|SEAICE)_NRT - Change of upstream SIC from AMSR2 to AMSR3
-Information
-2025-10-08 10:00 UTC - Information
-The input sea ice concentration (SIC) used to identify surface type between SST and IST was switched from the AMSR2-based product (OSI-408-a,
-Global Sea-Ice Concentration (AMSR2) | OSI SAF
-) to the new AMSR3-based product (OSI-408-g,
-Sea-Ice Concentration (AMSR3) | OSI SAF
-). This changed happened from 2026-10-01 due to missing input AMSR2-based SIC and is permanent, i.e. from 2026-10-01 the new OSI SAF AMSR3-based SIC will be used.
-Impacted products:
-SEAICE_ARC_SEAICE_L4_NRT_OBSERVATIONS_011_008
-SEAICE_ARC_PHY_SST-IST_L3S_NRT_011_022
 If you have any question, please contact
 Copernicus Marine User Support
 Copy a link to this article
