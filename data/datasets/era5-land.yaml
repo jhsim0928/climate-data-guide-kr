@@ -251,6 +251,14 @@ citations:
     정확한 권장 문구는 CDS 데이터셋 페이지의 인용 안내를 확인하세요.
 
 notices:
+  - date: "2026-10-22"
+    level: warning
+    title: CDS 등 ECMWF 데이터 스토어 보호 조치 — 규칙에 어긋난 요청은 계정 일시 정지·비활성화
+    body: >-
+      ECMWF가 일부 공개 도메인에서 의심스럽고 과도한 이용을 발견해 CDS·ADS·EWDS·ECDS에 보호 조치를 적용했습니다. 이용 정책에 어긋난다고 판단되면 검토 동안 접근이 일시 정지되고,
+      잘못된 요청을 반복하면 계정이 비활성화될 수 있습니다. 요청은 병렬·대량 대신 하나씩 차례로 보내고, 내려받기 양식과 같은 형식의 요청만 보내며, 프로필(거주 국가 등)을 정확히 하고
+      가능하면 기관 이메일로 등록하라고 권고했습니다.
+    source: https://forum.ecmwf.int/t/data-stores-service-protection-measures-affecting-data-downloads-and-account-access-cds-ads-ewds-ecds/15481
   - date: "2026-10-05"
     level: info
     title: CDS 이용약관 개정 (2026-10-28 시행)
@@ -308,4 +316,4 @@ watch_urls:
   - https://forum.ecmwf.int/c/announcements/c3s-announcements/7
   - https://confluence.ecmwf.int/display/CKB/ERA5-Land%3A+data+documentation
 
-last_verified: "2026-10-12"
+last_verified: "2026-10-29"
