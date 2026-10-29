@@ -1,16 +1,48 @@
 {
   "date": "2026-10-29",
   "reviewed_at": "2026-10-29T08:17:51+09:00",
-  "summary": "공지 페이지 276곳 중 34곳이 바뀌었습니다. 오늘은 원문 열람(WebFetch)이 막혀 공지 후보를 올리지 않았고, 확인이 필요한 4건(EarthCARE·GSMaP 11/4 JAXA 시스템 점검, ECMWF 데이터 스토어 보호 조치, MERRA-2 처리 상태 오류)을 메모에 남겼습니다.",
+  "summary": "공지 페이지 276곳 중 34곳이 바뀌었습니다. 오늘은 원문 열람(WebFetch)이 막혀 공지 후보를 올리지 않았고, 확인이 필요한 4건(EarthCARE·GSMaP 11/4 JAXA 시스템 점검, ECMWF 데이터 스토어 보호 조치, MERRA-2 처리 상태 오류)을 메모에 남겼습니다. 15시에 보류분을 직접 확인해 3건(ERA5·ERA5-Land 보호 조치, GSMaP 점검)을 PR #21로 올렸습니다.",
   "watch": {
     "date": "2026-10-29",
     "checked": 276,
     "ok": 247,
     "changed": 34
   },
-  "candidates": [],
-  "pr": null,
-  "pending": [],
+  "candidates": [
+    {
+      "dataset": "ERA5",
+      "dataset_id": "era5",
+      "level": "warning",
+      "date": "2026-10-22",
+      "title": "CDS 등 ECMWF 데이터 스토어 보호 조치 — 규칙에 어긋난 요청은 계정 일시 정지·비활성화",
+      "source": "https://forum.ecmwf.int/t/data-stores-service-protection-measures-affecting-data-downloads-and-account-access-cds-ads-ewds-ecds/15481"
+    },
+    {
+      "dataset": "ERA5-Land",
+      "dataset_id": "era5-land",
+      "level": "warning",
+      "date": "2026-10-22",
+      "title": "CDS 등 ECMWF 데이터 스토어 보호 조치 — 규칙에 어긋난 요청은 계정 일시 정지·비활성화",
+      "source": "https://forum.ecmwf.int/t/data-stores-service-protection-measures-affecting-data-downloads-and-account-access-cds-ads-ewds-ecds/15481"
+    },
+    {
+      "dataset": "GSMaP",
+      "dataset_id": "gsmap",
+      "level": "info",
+      "date": "2026-10-28",
+      "title": "JAXA EORC 시스템 점검 — GSMaP 영상·산출물 처리 지연 (2026-11-04 01:30~06:30 UTC)",
+      "source": "https://www.eorc.jaxa.jp/GPM/en/news.html"
+    }
+  ],
+  "pr": "https://github.com/jhsim0928/climate-data-guide-kr/pull/21",
+  "pending": [
+    {
+      "number": 21,
+      "title": "공지 후보 2026-10-29 (직접 확인): ERA5·ERA5-Land 외 1건",
+      "url": "https://github.com/jhsim0928/climate-data-guide-kr/pull/21",
+      "opened": "2026-10-29"
+    }
+  ],
   "ignored": [
     {
       "datasets": [
@@ -477,6 +509,7 @@
     "운영자 확인 필요: MERRA-2 — GMAO 운영 상태 페이지에서 MERRA-2가 Nominal → 'Error / Failed Listing'(마지막 20261018 18z)으로 바뀌었습니다. 내부 처리 상태 표시라 공지 여부는 판단하지 않았습니다. 참고로 GES DISC 수집 중단(10/29 06:00~10/30 22:00 한국 시간) 공지는 이미 사이트에 있습니다. (https://gmao.gsfc.nasa.gov/operations/status.php)",
     "직접 확인 실패: Earthdata 공지 목록, MERRA-2 뉴스, CERA-20C 페이지, GES DISC 공지 API를 WebFetch로 열지 못해 오늘은 확인하지 못했습니다(errors에 남김).",
     "7일 넘게 실패한 주소(asdc.larc.nasa.gov, oceancolor.gsfc.nasa.gov, aqua.nasa.gov, tropomi.eu 404, gosat-gw.nies.go.jp 404, earthdata.nasa.gov 카탈로그 주소 등)의 새 공식 주소는 오늘도 찾지 못했습니다(웹 열람 불가).",
-    "12:50 직접 확인 실패: Earthdata 공지 목록, MERRA-2 뉴스, CERA-20C 페이지, GES DISC 공지 API(size=40)를 WebFetch로 다시 열었으나 허가 요청이 시간 안에 승인되지 않아 모두 거절되었습니다(재시도 1회 포함). 새 공지 여부를 확인하지 못했고, 위 '운영자 확인 필요' 4건도 그대로 보류입니다. 열린 공지 후보 PR은 없습니다."
+    "12:50 직접 확인 실패: Earthdata 공지 목록, MERRA-2 뉴스, CERA-20C 페이지, GES DISC 공지 API(size=40)를 WebFetch로 다시 열었으나 허가 요청이 시간 안에 승인되지 않아 모두 거절되었습니다(재시도 1회 포함). 새 공지 여부를 확인하지 못했고, 위 '운영자 확인 필요' 4건도 그대로 보류입니다. 열린 공지 후보 PR은 없습니다.",
+    "15시 직접 확인(대화 세션): 보류 4건을 원문으로 확인 — ECMWF 데이터 스토어 보호 조치(ERA5·ERA5-Land)와 GSMaP 11/4 점검을 PR #21로 올림. EarthCARE 점검 공지는 원문에서 찾지 못함, MERRA-2 상태는 다시 Nominal. 직접 확인 대상 4곳(Earthdata 공지, MERRA-2 뉴스, CERA-20C, GES DISC 공지)은 새 관련 공지 없음."
   ]
 }
