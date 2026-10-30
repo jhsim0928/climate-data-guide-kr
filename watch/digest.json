@@ -1,44 +1,16 @@
 {
-  "date": "2026-10-30",
-  "reviewed_at": "2026-10-30T13:05:00+09:00",
-  "summary": "공지 페이지 276곳 중 34곳이 바뀌었습니다. 낮 직접 확인에서 원문을 열어 2건(ICESat-2 Quick Look 배포 중단, CS3SMOS 북반구 생산 시작 지연)을 공지 후보로 올렸습니다.",
+  "date": "2026-10-31",
+  "reviewed_at": "2026-10-31T08:18:57+09:00",
+  "summary": "공지 페이지 276곳 중 33곳이 바뀌었습니다. 원문 확인(WebFetch)이 막혀 새 공지 후보는 올리지 않았고, 운영자 확인이 필요한 4건(NCEI 접근 장애, CS3SMOS 북극 시즌 시작, S-NPP 종료 시각 변경 가능성, DIAS JRA-55 재공개)을 메모에 남겼습니다.",
   "watch": {
-    "date": "2026-10-30",
+    "date": "2026-10-31",
     "checked": 276,
-    "ok": 249,
-    "changed": 34
+    "ok": 248,
+    "changed": 33
   },
-  "candidates": [
-    {
-      "dataset": "ICESat-2 해빙 두께",
-      "dataset_id": "icesat2-sit",
-      "level": "warning",
-      "date": "2026-10-29",
-      "title": "ATL07·ATL10 Quick Look 배포 중단 (2026-10-22부터, 곧 재개 예정)",
-      "source": "https://nsidc.org/data/user-resources/data-announcements/user-notice-atl07-and-atl10-quick-look-data-outage-0",
-      "why": "3~5일 지연 Quick Look 자료가 일주일 넘게 나오지 않아 최근 해빙 자료를 쓰는 연구자에게 영향(2025년 같은 중단도 공지한 전례)."
-    },
-    {
-      "dataset": "CS3SMOS",
-      "dataset_id": "cs3smos",
-      "level": "warning",
-      "date": "2026-10-29",
-      "title": "Copernicus Marine 북반구 2026/27 시즌 생산 시작 지연 (JAXA AMSR2·AMSR3 배포 중단)",
-      "source": "https://marine.copernicus.eu/user-corner/user-notification-service",
-      "why": "북극 시즌 첫 자료(예정 10-24)가 늦어지고 재개일이 미공개라 북극 두께 자료를 기다리는 사용자에게 영향."
-    }
-  ],
-  "pr": {
-    "url": "https://github.com/jhsim0928/climate-data-guide-kr/pull/22",
-    "number": 22
-  },
-  "pending": [
-    {
-      "url": "https://github.com/jhsim0928/climate-data-guide-kr/pull/22",
-      "title": "공지 후보 2026-10-30: ICESat-2 외 1건 (직접 확인)",
-      "opened": "2026-10-30"
-    }
-  ],
+  "candidates": [],
+  "pr": null,
+  "pending": [],
   "ignored": [
     {
       "datasets": [
@@ -78,15 +50,20 @@
     },
     {
       "datasets": [
-        "carra",
-        "era-interim",
-        "era5",
-        "era6",
-        "oras5",
-        "oras6"
+        "ceres-ebaf",
+        "ceres-syn1deg"
       ],
-      "url": "https://forum.ecmwf.int/c/announcements/5",
-      "reason": "C3S Atlas 주피터 노트북 안내 — 자료 변화 아님"
+      "url": "https://ceres.larc.nasa.gov/data/",
+      "reason": "EBAF·SYN1deg 월별 자료 추가 안내(정상 갱신)"
+    },
+    {
+      "datasets": [
+        "cfsr-cfsv2",
+        "core",
+        "ncep-ncar-r1"
+      ],
+      "url": "https://www.weather.gov/notification/",
+      "reason": "해상 상태 분석·WPC 강수 예보·그래픽 사이트 변경 안내 — CFSR/CFSv2·NCEP-NCAR R1·CORE와 무관"
     },
     {
       "datasets": [
@@ -97,10 +74,25 @@
     },
     {
       "datasets": [
-        "cobe-sst3"
+        "cmorph",
+        "ersst-v6",
+        "ersst",
+        "gpcp",
+        "oisst",
+        "persiann-cdr",
+        "woa23"
       ],
-      "url": "https://climatedataguide.ucar.edu/climate-data/sst-data-cobev3-centennial-situ-observation-based-estimates-version-3",
-      "reason": "페이지 수정 날짜만 바뀜"
+      "url": "https://www.ncei.noaa.gov/alerts",
+      "reason": "NCEI \"ES Outage\"(시스템 장애로 다수 접근 서비스 중단, 10/30~11/02 표시) — 원문을 열지 못해 후보로 올리지 않음, notes 참고"
+    },
+    {
+      "datasets": [
+        "cs2smos",
+        "cs3smos",
+        "smos-sit"
+      ],
+      "url": "https://spaces.awi.de/spaces/CS2SMOS/overview",
+      "reason": "CS3SMOS 2026/27 북극 시즌 NRT 처리 시작 글(10/30) — 원문을 열지 못해 후보로 올리지 않음, notes 참고"
     },
     {
       "datasets": [
@@ -118,29 +110,7 @@
         "topaz4b"
       ],
       "url": "https://marine.copernicus.eu/user-corner/user-notification-service",
-      "reason": "덴마크 현장 해수면 자료(INS-851)는 감시 자료와 무관. SEAICE_GLO_PHY_L4_NRT(ICE-817) 지연은 CS3SMOS 관련이라 낮 직접 확인 후 공지 후보로 올림(PR #22)"
-    },
-    {
-      "datasets": [
-        "era5-land",
-        "esa-cci-landcover"
-      ],
-      "url": "https://forum.ecmwf.int/c/announcements/c3s-announcements/7",
-      "reason": "C3S Atlas 주피터 노트북 안내 — 자료 변화 아님"
-    },
-    {
-      "datasets": [
-        "era6"
-      ],
-      "url": "https://climate.copernicus.eu/news",
-      "reason": "기후 뉴스 기사 — 자료 변화 아님"
-    },
-    {
-      "datasets": [
-        "ghrsst-mur"
-      ],
-      "url": "https://podaac.jpl.nasa.gov/dataset/MUR-JPL-L4-GLOB-v4.1",
-      "reason": "자료 기간 표시만 늘어남(정상 갱신)"
+      "reason": "해색(OC-1116)·지중해/흑해 모델(MED·BLK)·북극 해빙 관측(ICE-812/815, AMSR3) 공지 — 감시 자료(DUACS·GLORYS12·neXtSIM·OSTIA·TOPAZ4b)와 무관"
     },
     {
       "datasets": [
@@ -151,56 +121,61 @@
     },
     {
       "datasets": [
-        "icesat2-sit"
+        "grace"
       ],
-      "url": "https://nsidc.org/data/icesat-2/news",
-      "reason": "ATL07QL·ATL10QL Quick Look 중단 공지 — 낮 직접 확인에서 원문 확인 후 공지 후보로 올림(PR #22)"
+      "url": "https://grace.jpl.nasa.gov/data/data-updates/",
+      "reason": "과학 기사(아마존 유역 수문) 링크만 추가"
     },
     {
       "datasets": [
         "icesat2-sit"
       ],
       "url": "https://nsidc.org/data/is2sitmogr4/versions/4",
-      "reason": "같은 Quick Look 중단 배너·접속 날짜 표시"
+      "reason": "접속 날짜 표시만 바뀜"
     },
     {
       "datasets": [
         "icesat2-sit"
       ],
       "url": "https://nsidc.org/data/atl20/versions/5",
-      "reason": "같은 Quick Look 중단 배너·접속 날짜 표시"
+      "reason": "접속 날짜 표시만 바뀜"
     },
     {
       "datasets": [
         "icesat2-sit"
       ],
       "url": "https://nsidc.org/data/atl10/versions/7",
-      "reason": "같은 Quick Look 중단 배너·접속 날짜 표시"
+      "reason": "접속 날짜 표시만 바뀜"
     },
     {
       "datasets": [
-        "its-live",
-        "modis-snow",
-        "nsidc-cdr-sic",
-        "polar-pathfinder-motion",
-        "sea-ice-index"
+        "imerg",
+        "oco2"
       ],
-      "url": "https://nsidc.org/data/user-resources/data-announcements",
-      "reason": "ICESat-2 Quick Look 중단(이 페이지 감시 자료와 무관, icesat2-sit 메모 참고)·다른 자료 신규 공개 안내"
+      "url": "https://disc.gsfc.nasa.gov/information/alerts",
+      "reason": "GES DISC 계획 이전 완료·자료 수집 재개 갱신(10/30) — 사이트에 이미 있는 수집 중단 공지와 같은 사건"
     },
     {
       "datasets": [
         "its-live"
       ],
       "url": "https://nsidc.org/data/nsidc-0776/versions/2",
-      "reason": "ICESat-2 Quick Look 배너·접속 날짜 표시 — 이 자료와 무관"
+      "reason": "접속 날짜 표시만 바뀜"
+    },
+    {
+      "datasets": [
+        "jra3q",
+        "jra55c"
+      ],
+      "url": "https://diasjp.net/en/dataset-republication-list/",
+      "reason": "DIAS 재공개 목록 추가(JRA-55 등) — JRA-3Q·JRA-55C 줄은 그대로, JRA-55는 notes 참고"
     },
     {
       "datasets": [
         "merra2"
       ],
       "url": "https://gmao.gsfc.nasa.gov/operations/status.php",
-      "reason": "GEOS 운영 처리 시각 표시만 갱신 — MERRA-2 줄은 그대로"
+      "reason": "GEOS 운영 처리 시각 표시만 갱신"
     },
     {
       "datasets": [
@@ -208,20 +183,6 @@
       ],
       "url": "https://science.nasa.gov/science-research/earth-science/terra-the-end-of-an-era",
       "reason": "NASA 뉴스 목록(다른 주제 기사)만 바뀜"
-    },
-    {
-      "datasets": [
-        "modis-albedo",
-        "modis-burned-area",
-        "modis-et",
-        "modis-lai",
-        "modis-landcover",
-        "modis-lst",
-        "modis-snow",
-        "modis-vi"
-      ],
-      "url": "https://modis-land.gsfc.nasa.gov/news.html",
-      "reason": "'(none)' 표시만 바뀜"
     },
     {
       "datasets": [
@@ -249,14 +210,14 @@
         "polar-pathfinder-motion"
       ],
       "url": "https://nsidc.org/data/nsidc-0116/versions/4",
-      "reason": "ICESat-2 Quick Look 배너·접속 날짜 표시 — 이 자료와 무관"
+      "reason": "접속 날짜 표시만 바뀜"
     },
     {
       "datasets": [
         "polar-pathfinder-motion"
       ],
       "url": "https://nsidc.org/data/nsidc-0748/versions/1",
-      "reason": "ICESat-2 Quick Look 배너·접속 날짜 표시 — 이 자료와 무관"
+      "reason": "접속 날짜 표시만 바뀜"
     },
     {
       "datasets": [
@@ -270,14 +231,7 @@
         "smap"
       ],
       "url": "https://nsidc.org/data/spl3smp",
-      "reason": "ICESat-2 Quick Look 배너·접속 날짜 표시 — 이 자료와 무관"
-    },
-    {
-      "datasets": [
-        "smos-sit"
-      ],
-      "url": "https://earth.esa.int/eogateway/catalog/smos-l3-sea-ice-thickness",
-      "reason": "다른 자료(FLEX) 목록만 바뀜"
+      "reason": "접속 날짜 표시만 바뀜"
     },
     {
       "datasets": [
@@ -291,14 +245,21 @@
         "tropomi"
       ],
       "url": "https://dataspace.copernicus.eu/news",
-      "reason": "Sentinel-3 점검 안내 — TROPOMI(Sentinel-5P)와 무관"
+      "reason": "Sentinel-1·3·openEO 안내 — TROPOMI(Sentinel-5P)와 무관"
+    },
+    {
+      "datasets": [
+        "viirs-ocean"
+      ],
+      "url": "https://www.nesdis.noaa.gov/news/cessation-of-suomi-national-polar-orbiting-partnership-s-npp-data-users-onafter-november-2-2026",
+      "reason": "같은 사건(S-NPP 자료 전달 종료)의 Update #3 링크 — 시각 변경 가능성, notes 참고"
     },
     {
       "datasets": [
         "viirs-snow"
       ],
       "url": "https://nsidc.org/data/vnp10a1/versions/2",
-      "reason": "ICESat-2 Quick Look 배너·접속 날짜 표시 — 이 자료와 무관"
+      "reason": "접속 날짜 표시만 바뀜"
     }
   ],
   "errors": [
@@ -308,7 +269,7 @@
         "airs"
       ],
       "error": "SSLError: HTTPSConnectionPool(host='aqua.nasa.gov', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLCertVerificationError(1, \"[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: Hostn",
-      "fails": 17,
+      "fails": 18,
       "last_ok": null
     },
     {
@@ -318,7 +279,7 @@
         "gsmap"
       ],
       "error": "HTTP 403 / HTTP 403 (브라우저)",
-      "fails": 11,
+      "fails": 12,
       "last_ok": "2026-10-19"
     },
     {
@@ -327,7 +288,16 @@
         "calipso"
       ],
       "error": "HTTP 403 / HTTP 403 (브라우저)",
-      "fails": 17,
+      "fails": 18,
+      "last_ok": null
+    },
+    {
+      "url": "https://www.ecmwf.int/en/forecasts/datasets/reanalysis-datasets/cera-20c",
+      "datasets": [
+        "cera20c"
+      ],
+      "error": "HTTP 401 / HTTP 401 (브라우저)",
+      "fails": 25,
       "last_ok": null
     },
     {
@@ -336,7 +306,7 @@
         "gimms-ndvi"
       ],
       "error": "HTTP 403 / HTTP 403 (브라우저)",
-      "fails": 17,
+      "fails": 18,
       "last_ok": null
     },
     {
@@ -345,7 +315,23 @@
         "gk2a"
       ],
       "error": "브라우저로도 본문이 비어 있음",
-      "fails": 17,
+      "fails": 18,
+      "last_ok": null
+    },
+    {
+      "url": "https://www.earthdata.nasa.gov/data/alerts-outages",
+      "datasets": [
+        "gldas",
+        "imerg",
+        "modis-albedo",
+        "modis-burned-area",
+        "modis-landcover",
+        "modis-snow",
+        "viirs-albedo",
+        "viirs-burned-area"
+      ],
+      "error": "HTTP 403 / HTTP 403 (브라우저)",
+      "fails": 25,
       "last_ok": null
     },
     {
@@ -356,7 +342,7 @@
         "viirs-ocean"
       ],
       "error": "HTTP 403 / HTTP 403 (브라우저)",
-      "fails": 17,
+      "fails": 18,
       "last_ok": null
     },
     {
@@ -365,7 +351,16 @@
         "gosat"
       ],
       "error": "HTTP 404 / HTTP 404 (브라우저)",
-      "fails": 17,
+      "fails": 18,
+      "last_ok": null
+    },
+    {
+      "url": "https://www.earthdata.nasa.gov/data/projects/merra-2/news",
+      "datasets": [
+        "merra2"
+      ],
+      "error": "HTTP 403 / HTTP 403 (브라우저)",
+      "fails": 25,
       "last_ok": null
     },
     {
@@ -374,7 +369,7 @@
         "misr"
       ],
       "error": "HTTP 403 / HTTP 403 (브라우저)",
-      "fails": 17,
+      "fails": 18,
       "last_ok": null
     },
     {
@@ -383,7 +378,7 @@
         "modis-albedo"
       ],
       "error": "SSLError: HTTPSConnectionPool(host='aqua.nasa.gov', port=443): Max retries exceeded with url: /announcements/aqua-status (Caused by SSLError(SSLCertVerificationError(1, \"[SSL: CERTIFICATE_VERIFY_FAILED] certifi",
-      "fails": 17,
+      "fails": 18,
       "last_ok": null
     },
     {
@@ -392,7 +387,7 @@
         "modis-burned-area"
       ],
       "error": "HTTP 403 / HTTP 403 (브라우저)",
-      "fails": 17,
+      "fails": 18,
       "last_ok": null
     },
     {
@@ -401,7 +396,7 @@
         "modis-et"
       ],
       "error": "HTTP 403 / HTTP 403 (브라우저)",
-      "fails": 17,
+      "fails": 18,
       "last_ok": null
     },
     {
@@ -411,7 +406,7 @@
         "modis-vi"
       ],
       "error": "HTTP 403 / HTTP 403 (브라우저)",
-      "fails": 17,
+      "fails": 18,
       "last_ok": null
     },
     {
@@ -420,7 +415,7 @@
         "modis-landcover"
       ],
       "error": "HTTP 403 / HTTP 403 (브라우저)",
-      "fails": 17,
+      "fails": 18,
       "last_ok": null
     },
     {
@@ -429,7 +424,7 @@
         "modis-lst"
       ],
       "error": "HTTP 403 / HTTP 403 (브라우저)",
-      "fails": 17,
+      "fails": 18,
       "last_ok": null
     },
     {
@@ -439,7 +434,7 @@
         "pace-oci"
       ],
       "error": "HTTP 403 / HTTP 403 (브라우저)",
-      "fails": 17,
+      "fails": 18,
       "last_ok": null
     },
     {
@@ -447,8 +442,8 @@
       "datasets": [
         "smos-sss"
       ],
-      "error": "HTTP 503",
-      "fails": 9,
+      "error": "ConnectTimeout: HTTPSConnectionPool(host='www.catds.fr', port=443): Max retries exceeded with url: / (Caused by ConnectTimeoutError(<HTTPSConnection(host='www.catds.fr', port=443) at 0x7a5ad8359430>, 'Connection to w",
+      "fails": 10,
       "last_ok": "2026-10-21"
     },
     {
@@ -457,7 +452,7 @@
         "tropomi"
       ],
       "error": "HTTP 404 / HTTP 404 (브라우저)",
-      "fails": 17,
+      "fails": 18,
       "last_ok": null
     },
     {
@@ -466,7 +461,7 @@
         "viirs-albedo"
       ],
       "error": "HTTP 403 / HTTP 403 (브라우저)",
-      "fails": 17,
+      "fails": 18,
       "last_ok": null
     },
     {
@@ -475,7 +470,7 @@
         "viirs-burned-area"
       ],
       "error": "HTTP 403 / HTTP 403 (브라우저)",
-      "fails": 17,
+      "fails": 18,
       "last_ok": null
     },
     {
@@ -486,7 +481,7 @@
         "viirs-vi"
       ],
       "error": "HTTP 403 / HTTP 403 (브라우저)",
-      "fails": 17,
+      "fails": 18,
       "last_ok": null
     },
     {
@@ -495,7 +490,7 @@
         "viirs-lai"
       ],
       "error": "HTTP 403 / HTTP 403 (브라우저)",
-      "fails": 17,
+      "fails": 18,
       "last_ok": null
     },
     {
@@ -504,7 +499,7 @@
         "viirs-lst"
       ],
       "error": "HTTP 403 / HTTP 403 (브라우저)",
-      "fails": 17,
+      "fails": 18,
       "last_ok": null
     },
     {
@@ -513,7 +508,7 @@
         "viirs-lst"
       ],
       "error": "HTTP 403 / HTTP 403 (브라우저)",
-      "fails": 17,
+      "fails": 18,
       "last_ok": null
     },
     {
@@ -522,16 +517,17 @@
         "viirs-vi"
       ],
       "error": "HTTP 403 / HTTP 403 (브라우저)",
-      "fails": 17,
+      "fails": 18,
       "last_ok": null
     }
   ],
   "notes": [
-    "직접 확인(12:50경 WebFetch): Earthdata 공지 목록·MERRA-2 뉴스·CERA-20C·GES DISC 공지(api/alerts)를 모두 열었습니다. IMERG·MERRA-2·GPCP·GES DISC·CERA-20C에 관한 최근 7일 새 공지는 없습니다(직접 확인: 새 공지 없음). GES DISC 공지에는 이미 사이트에 있는 신규 자료 수집 중단(10/28 17:00~10/30 09:00 미 동부시간) 외에 연장·변경 안내가 없습니다.",
-    "Earthdata 공지 목록(alerts-outages)은 WebFetch로 열렸지만 보이는 최신 글이 2025-05라, 목록이 일부만 읽혔을 수 있습니다. 필요하면 브라우저로 한 번 확인해 주세요.",
-    "운영자 확인 필요 2건은 원문을 열어 공지 후보로 올렸습니다(PR #22): ICESat-2 ATL07QL·ATL10QL 배포 중단(NSIDC 2026-10-29), CS3SMOS 북반구 생산 시작 지연(Copernicus Marine [ICE-817], 진행 중·재개일 미공개). 아침 메모의 '10/29 생산 재개·10/20 파일 재처리'는 다른 상품(ICE-814) 내용이라 공지에 넣지 않았습니다.",
-    "MERRA-2·IMERG·GPCP: 사이트 공지(GES DISC 신규 자료 수집 일시 중단, 10/29 06:00~10/30 22:00 한국 시간)가 진행 중입니다.",
-    "참고: GES DISC 공지에 S-NPP VIIRS 배포 종료(2026-11-02 13:00 UTC)로 Sentinel-5P TROPOMI L2_NP* 보조 산출물이 더 만들어지지 않는다는 ESA 안내(10/26)가 있습니다. 주 자료 품질에는 영향 없다고 되어 있어 후보로 올리지 않았습니다.",
+    "직접 확인 실패: 이번 실행에서 WebFetch 권한 요청이 응답 시간 초과로 거절되어 Earthdata 공지 목록·MERRA-2 뉴스·CERA-20C·GES DISC 공지(api/alerts)를 열지 못했습니다. 이 주소들은 errors에 그대로 두었습니다. 브라우저로 한 번 확인해 주세요.",
+    "운영자 확인 필요: NCEI 공지 목록에 'ES Outage'(심각도 high, 표시 기간 Fri 10/30/2026 14:12 ~ Mon 11/02/2026 16:00) — 'Due to a system outage, many Access Services are currently unavailable.' CMORPH·ERSST·GPCP·OISST·PERSIANN-CDR·WOA23 다운로드에 영향 가능. 기존 10/02 클라우드 이전 지연 공지와 별개 사건으로 보이며, 원문 확인 후 공지 후보로 올릴지 판단이 필요합니다. https://www.ncei.noaa.gov/alerts",
+    "운영자 확인 필요: AWI가 10/30에 CS3SMOS 2026/27 북극 시즌 NRT 처리 시작을 알렸습니다(입력 AMSR3 누락으로 7일 늦게 시작, 첫 두께장 10/15~10/22). 사이트의 10/29 '생산 시작 지연' 공지를 해소하는 소식이나, Copernicus Marine ICE-817은 아직 '진행 중'입니다. https://spaces.awi.de/spaces/CS2SMOS/overview",
+    "운영자 확인 필요: NESDIS 페이지에 'Update #3 - Cessation of S-NPP data to users on November 02, 2026 1540 UTC and Decommissioning'(10/30 발행)이 올라왔습니다. 사이트 VIIRS 해색 공지는 13:00 UTC로 되어 있어 종료 시각이 바뀌었을 수 있습니다. 갱신 원문을 열지 못해 고치지 않았습니다. https://www.nesdis.noaa.gov/news/cessation-of-suomi-national-polar-orbiting-partnership-s-npp-data-users-onafter-november-2-2026",
+    "운영자 확인 필요: DIAS 재공개 목록에 JRA-55(JRA55)가 2026-10-15로 추가되었습니다(실제/예정 구분은 목록 서식이라 확인 못함). JRA-55 페이지는 이 주소를 감시하지 않으므로 필요하면 공지 여부를 판단해 주세요. https://diasjp.net/en/dataset-republication-list/",
+    "GES DISC 공지 페이지에 '10/30 12:00 p.m. ET 계획 이전 완료, 자료 수집…' 갱신이 보입니다. IMERG·GPCP·MERRA-2의 수집 중단 공지(10/29~10/30)가 끝난 것으로 보이나 본문은 확인하지 못했습니다.",
     "errors의 earthdata.nasa.gov 자료 카탈로그·asdc·oceancolor 등은 7일 넘게 실패 중이나 사람 브라우저로는 열리는 주소라 watch_urls 교체 제안은 하지 않습니다(aqua.nasa.gov SSL 오류, gosat-gw·tropomi.eu 404는 이전과 같음)."
   ]
 }
