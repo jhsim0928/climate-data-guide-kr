@@ -226,6 +226,13 @@ citations:
     If you downloaded from Copernicus Marine, add "This study has been conducted using E.U. Copernicus Marine Service Information" together with the DOI.
 
 notices:
+  - date: "2026-10-29"
+    level: warning
+    title: "[ICE-817] SEAICE_GLO_PHY_L4_NRT - delayed north production start"
+    body: >-
+      Due to an outage of upstream data dissemination (AMSR2 and AMSR3 from JAXA), the start of the production of SEAICE_GLO_PHY_L4_NRT_011_014
+      for the northern hemisphere, expected to take place on 2026-10-24, is delayed. Copernicus Marine lists the issue as in progress; no restart date has been announced yet.
+    source: https://marine.copernicus.eu/user-corner/user-notification-service
   - date: "2026-10-11"
     level: info
     title: Antarctic 2026 winter data updating on Copernicus Marine — 2026/27 Arctic season not yet announced
@@ -283,4 +290,4 @@ watch_urls:
   - https://spaces.awi.de/spaces/CS2SMOS/pages/297634429/CryoSat-2+Sentinel-3+SMOS+Merged+Sea+Ice+Thickness
   - https://data.marine.copernicus.eu/product/SEAICE_GLO_PHY_L4_NRT_011_014/description
 
-last_verified: "2026-10-12"
+last_verified: "2026-10-30"
