@@ -19,7 +19,7 @@ provider: NASA GSFC Snow Team (Riggs and Hall) / NASA NSIDC DAAC
 status: active
 status_note: >-
   Version 2 (Collection 2) is current and is updated daily (on 2026-10-13 the latest VJ110A1 file was for 11 October 2026 and VNP10A1 for 8 October).
-  Delivery of Suomi NPP data (VNP10) ends at 13:00 UTC on 2 November 2026, however, and NSIDC directs users to the NOAA-20 (VJ110) and NOAA-21 (VJ210) products.
+  Delivery of Suomi NPP data (VNP10) ends at 15:40 UTC on 2 November 2026, however, and NSIDC directs users to the NOAA-20 (VJ110) and NOAA-21 (VJ210) products.
   Version 1 stopped production on 17 June 2024.
 
 period:
@@ -291,6 +291,14 @@ transitions:
         url: https://nsidc.org/sites/default/files/documents/user-guide/multi_vnp10a1-v002-userguide.pdf
 
 notices:
+  - date: "2026-10-30"
+    level: warning
+    title: "Update #3: Cessation of S-NPP data to users on November 02, 2026 1540 UTC and decommissioning"
+    body: >-
+      NOAA NESDIS Update #3 (issued October 30, 2026 1400 UTC): delivery of Suomi National Polar-orbiting Partnership (S-NPP) data to users will cease on November 02, 2026 15:40 UTC
+      (previously 13:00 UTC) for ATMS, CERES, OMPS Nadir and Limb, VIIRS and HRD Direct Broadcast; the outage is permanent.
+      Starting December 1st 2026, S-NPP will be lowered incrementally through approximately December 12th for reentry over the South Pacific Ocean. Users should transition to NOAA-21 (primary) and NOAA-20 (secondary) products.
+    source: https://www.nesdis.noaa.gov/news/update-3-cessation-of-suomi-national-polar-orbiting-partnership-s-npp-data-users-november-02-2026-1540-utc-and-decommissioning-issued-october-30-2026-1400-utc
   - date: "2026-10-16"
     level: warning
     title: Gaps in Level 0 VIIRS data between October 12 and 13 delay downstream processing
@@ -347,4 +355,4 @@ watch_urls:
   - https://nsidc.org/data/viirs/news
   - https://nsidc.org/data/vnp10a1/versions/2
 
-last_verified: "2026-10-17"
+last_verified: "2026-10-31"

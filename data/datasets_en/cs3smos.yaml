@@ -19,7 +19,7 @@ status: active
 status_note: >-
   Version v300, which replaced CS2SMOS v206. AWI started Arctic near-real-time production on 2025-10-23 and ended the 2025/26 Arctic season with the
   9–15 April 2026 map. Summer gaps are expected for this winter-only product; Southern Hemisphere fields are produced from 15 April to 15 October (the
-  Copernicus Marine Antarctic dataset is updated to 2026-10-06). As of 2026-10-12 the AWI wiki has not yet announced the start of the 2026/27 Arctic season.
+  Copernicus Marine Antarctic dataset is updated to 2026-10-06). AWI started near-real-time processing for the 2026/27 Arctic season on 2026-10-30 (7-day delay after missing input data; first field 15–22 October).
 
 period:
   start: "2023-10"
@@ -226,6 +226,14 @@ citations:
     If you downloaded from Copernicus Marine, add "This study has been conducted using E.U. Copernicus Marine Service Information" together with the DOI.
 
 notices:
+  - date: "2026-10-30"
+    level: info
+    title: CS3SMOS near real-time sea ice thickness processing starts for the Arctic 2026/27 winter season (7-day delay)
+    body: >-
+      AWI: operational processing of the Level-4 CryoSat-2/Sentinel-3/SMOS (CS3SMOS) sea ice thickness product starts for the Arctic 2026/27 winter season with a short delay of 7 days
+      after a gap of missing input data (OSI SAF Service Message: Missing AMSR3 data). The first sea ice thickness field covers October 15 to October 22, 2026.
+      Check Copernicus Marine notifications separately for the redistributed SEAICE_GLO_PHY_L4_NRT_011_014 product.
+    source: https://spaces.awi.de/spaces/CS2SMOS/overview
   - date: "2026-10-29"
     level: warning
     title: "[ICE-817] SEAICE_GLO_PHY_L4_NRT - delayed north production start"
@@ -290,4 +298,4 @@ watch_urls:
   - https://spaces.awi.de/spaces/CS2SMOS/pages/297634429/CryoSat-2+Sentinel-3+SMOS+Merged+Sea+Ice+Thickness
   - https://data.marine.copernicus.eu/product/SEAICE_GLO_PHY_L4_NRT_011_014/description
 
-last_verified: "2026-10-30"
+last_verified: "2026-10-31"

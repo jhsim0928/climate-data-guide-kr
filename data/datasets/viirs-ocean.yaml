@@ -2,7 +2,7 @@
 # VIIRS 해양 (Suomi NPP·NOAA-20·NOAA-21 VIIRS OBPG Level-3 해색·해수면온도) — 데이터셋 정보 파일
 # 위성 탭(해색), 해양 탭(위성 관측 자료) 교차 수록. MODIS 해양의 후속이며, MODIS → VIIRS 비교는 modis-ocean.yaml의 transitions에 있습니다.
 # 해색은 Suomi NPP·NOAA-20 R2022.0(부분 재처리 R2022.0.1·0.2), NOAA-21 R2025.0, 해수면온도는 Suomi NPP 2016.2·NOAA-20 2024.0입니다(NOAA-21 SST는 OB.DAAC에 없음).
-# NOAA가 Suomi NPP 과학 자료 전달을 2026-11-02 13:00 UTC에 끝내므로(VIIRS 포함) Suomi NPP판은 그 뒤 새 자료가 없습니다. OBPG 자체 공지는 2026-10-13 기준 확인되지 않았습니다.
+# NOAA가 Suomi NPP 과학 자료 전달을 2026-11-02 15:40 UTC에 끝내므로(VIIRS 포함) Suomi NPP판은 그 뒤 새 자료가 없습니다. OBPG 자체 공지는 2026-10-13 기준 확인되지 않았습니다.
 # 수정 후에는 공식 페이지에서 확인한 날짜로 last_verified 를 갱신하세요.
 # ─────────────────────────────────────────────────────────────
 id: viirs-ocean
@@ -23,7 +23,7 @@ provider: NASA GSFC Ocean Biology Processing Group(OBPG) / NASA Ocean Biology DA
 status: active
 status_note: >-
   NOAA-20·NOAA-21 판은 정상 생산 중입니다. 2026-10-13 확인 시 세 위성 모두 NRT 해색 일자료가 2026-10-11까지, 확정판 해색은 2026-07-31까지(2026-08-27~28 등록) 있습니다.
-  다만 NOAA NESDIS가 VIIRS를 포함한 Suomi NPP 과학 자료 전달을 2026년 11월 2일 13:00 UTC에 영구 중단한다고 공지했고(NASA GES DISC 2026-10-07 재공지), NASA는 NOAA-20·NOAA-21 산출물로 옮기라고 안내합니다.
+  다만 NOAA NESDIS가 VIIRS를 포함한 Suomi NPP 과학 자료 전달을 2026년 11월 2일 15:40 UTC에 영구 중단한다고 공지했고(NASA GES DISC 2026-10-07 재공지), NASA는 NOAA-20·NOAA-21 산출물로 옮기라고 안내합니다.
   위성 운용 종료가 아니라 자료 전달 중단이며 이미 만든 자료는 NASA가 계속 보관·배포합니다. OB.DAAC의 별도 공지는 확인되지 않았습니다.
 
 period:
@@ -70,7 +70,7 @@ time_convention:
     - "`par`는 하루 적분값(mol m-2 day-1)입니다. MODIS에 있던 통과 시각 순간값 `ipar`와 형광 `nflh`(FLH 파일)는 VIIRS L3에 없습니다."
     - "세 위성은 서로 약 50분 안에 지나가지만 같은 시각은 아닙니다. 위성마다 일 파일을 따로 만들므로 여러 위성을 합칠 때는 각자 평균한 뒤 합치거나 한 위성만 쓰세요."
     - "NRT판(파일 이름 끝 .NRT.nc, 컬렉션 이름 _NRT)과 확정판은 별개 컬렉션입니다. 확정판이 나오면 확정판으로 바꾸고 두 판을 한 시계열에 섞지 마세요."
-    - "Suomi NPP 자료는 2026-11-02 13:00 UTC 이후 끊깁니다. 마지막 날(11-02) 일 파일은 하루를 다 채우지 못할 수 있으니 시계열 끝을 확인하세요."
+    - "Suomi NPP 자료는 2026-11-02 15:40 UTC 이후 끊깁니다. 마지막 날(11-02) 일 파일은 하루를 다 채우지 못할 수 있으니 시계열 끝을 확인하세요."
   source: https://oceandata.sci.gsfc.nasa.gov/files/resources/docs/format/Ocean_Data_Product_Users_Guide.pdf
   source_name: "OBPG Ocean Science Data Product Format Specification(2017-11) + OB.DAAC CMR·OPeNDAP 파일 속성·Direct Data Access 파일 목록 + Earthdata 포럼(LP DAAC) 답변"
 
@@ -262,6 +262,13 @@ citations:
     NASA는 실제로 쓴 산출물과 위성(Suomi NPP·NOAA-20·NOAA-21)별 데이터셋 DOI를 인용하라고 요청합니다. 처리 버전(R2022.0·2025.0, SST 2016.2·2024.0)과 NRT 여부를 함께 적으세요.
 
 notices:
+  - date: "2026-10-30"
+    level: warning
+    title: Suomi NPP 자료 전달 종료 시각 변경 — 2026년 11월 2일 15:40 UTC (한국 시간 11월 3일 00:40)
+    body: >-
+      NOAA NESDIS가 10월 30일 세 번째 갱신 공지에서 Suomi NPP 자료 전달 종료 시각을 2026년 11월 2일 13:00 UTC에서 15:40 UTC로 바꿨습니다(VIIRS·ATMS·CERES·OMPS·HRD 직접 수신 모두, 영구 종료).
+      위성은 2026년 12월 1일부터 약 12일까지 고도를 낮춰 남태평양 상공에서 대기권에 재진입시킬 예정입니다. 이어 쓸 자료는 NOAA-21(1순위)·NOAA-20(2순위) 판입니다.
+    source: https://www.nesdis.noaa.gov/news/update-3-cessation-of-suomi-national-polar-orbiting-partnership-s-npp-data-users-november-02-2026-1540-utc-and-decommissioning-issued-october-30-2026-1400-utc
   - date: "2026-08-03"
     level: critical
     title: Suomi NPP 과학 자료 전달 2026년 11월 2일 13:00 UTC 종료 — NOAA-21·NOAA-20 판으로 전환
@@ -377,4 +384,4 @@ watch_urls:
   - https://oceancolor.gsfc.nasa.gov/data/reprocessing/
   - https://www.nesdis.noaa.gov/news/cessation-of-suomi-national-polar-orbiting-partnership-s-npp-data-users-onafter-november-2-2026
 
-last_verified: "2026-10-13"
+last_verified: "2026-10-31"

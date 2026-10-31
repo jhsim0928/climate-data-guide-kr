@@ -17,7 +17,7 @@ provider: NASA GSFC Deep Blue and Dark Target teams / NASA VIIRS Atmosphere SIPS
 status: active
 status_note: >-
   Deep Blue V2.1 (released 2026-09-14) and Dark Target V2.1 (released 2025-12-18) are produced routinely from NOAA-20 and NOAA-21 (on 2026-10-13 AERDB_M3 for NOAA-20 reached September 2026).
-  However, NOAA will stop delivering Suomi NPP science data at 13:00 UTC on 2 November 2026, so the SNPP versions (AERDB_*_VIIRS_SNPP, AERDT_L2_VIIRS_SNPP) will get no new data after that, and LAADS advises moving to the NOAA-20 and NOAA-21 versions.
+  However, NOAA will stop delivering Suomi NPP science data at 15:40 UTC on 2 November 2026, so the SNPP versions (AERDB_*_VIIRS_SNPP, AERDT_L2_VIIRS_SNPP) will get no new data after that, and LAADS advises moving to the NOAA-20 and NOAA-21 versions.
   Deep Blue V2.0 remains available alongside until 2027-03-31; Dark Target V2.0 was decommissioned on 2026-08-31.
 
 period:
@@ -310,6 +310,14 @@ transitions:
         url: https://ladsweb.modaps.eosdis.nasa.gov/alerts-and-issues/199536
 
 notices:
+  - date: "2026-10-30"
+    level: warning
+    title: "Update #3: Cessation of S-NPP data to users on November 02, 2026 1540 UTC and decommissioning"
+    body: >-
+      NOAA NESDIS Update #3 (issued October 30, 2026 1400 UTC): delivery of Suomi National Polar-orbiting Partnership (S-NPP) data to users will cease on November 02, 2026 15:40 UTC
+      (previously 13:00 UTC) for ATMS, CERES, OMPS Nadir and Limb, VIIRS and HRD Direct Broadcast; the outage is permanent.
+      Starting December 1st 2026, S-NPP will be lowered incrementally through approximately December 12th for reentry over the South Pacific Ocean. Users should transition to NOAA-21 (primary) and NOAA-20 (secondary) products.
+    source: https://www.nesdis.noaa.gov/news/update-3-cessation-of-suomi-national-polar-orbiting-partnership-s-npp-data-users-november-02-2026-1540-utc-and-decommissioning-issued-october-30-2026-1400-utc
   - date: "2026-10-06"
     level: critical
     title: Suomi NPP data delivery ends 2 November 2026 — switch from the SNPP versions of AERDB and AERDT to NOAA-20 and NOAA-21
@@ -393,4 +401,4 @@ watch_urls:
   - https://ladsweb.modaps.eosdis.nasa.gov/missions-and-measurements/products/AERDT_L2_VIIRS_NOAA20
   - https://ladsweb.modaps.eosdis.nasa.gov/learn/modis-to-viirs-transition
 
-last_verified: "2026-10-13"
+last_verified: "2026-10-31"
