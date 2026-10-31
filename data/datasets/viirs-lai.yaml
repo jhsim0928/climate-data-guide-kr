@@ -19,7 +19,7 @@ provider: NASA VIIRS 육상팀(보스턴대 Myneni 연구실) / LP DAAC
 status: active
 status_note: >-
   Version 2(002)가 Suomi NPP(VNP15A2H)·NOAA-20(VJ115A2H)·NOAA-21(VJ215A2H) 세 위성별로 8일마다 나오고 있습니다(2026-10-13 확인 시 2026-09-14 시작 합성까지).
-  다만 NOAA는 Suomi NPP 자료 전달을 2026년 11월 2일(NASA 공지는 11월 1일) 13:00 UTC에 끝낸다고 밝혔고, LP DAAC는 VNP15A2H 대신
+  다만 NOAA는 Suomi NPP 자료 전달을 2026년 11월 2일 15:40 UTC(NASA 공지는 11월 1일)에 끝낸다고 밝혔고, LP DAAC는 VNP15A2H 대신
   VJ215A2H(주)·VJ115A2H(보조)로 옮기라고 안내하고 있습니다. Version 1은 2025년 4월 배포가 끝났습니다.
 
 period:
@@ -245,6 +245,13 @@ transitions:
         url: https://www.earthdata.nasa.gov/data/alerts-outages/viirs-version-1-sr-vi-lai-fpar-lst-active-fires-data-products-decommissioned
 
 notices:
+  - date: "2026-10-30"
+    level: warning
+    title: Suomi NPP 자료 전달 종료 시각 변경 — 2026년 11월 2일 15:40 UTC (한국 시간 11월 3일 00:40)
+    body: >-
+      NOAA NESDIS가 10월 30일 세 번째 갱신 공지에서 Suomi NPP 자료 전달 종료 시각을 2026년 11월 2일 13:00 UTC에서 15:40 UTC로 바꿨습니다(VIIRS·ATMS·CERES·OMPS·HRD 직접 수신 모두, 영구 종료).
+      위성은 2026년 12월 1일부터 약 12일까지 고도를 낮춰 남태평양 상공에서 대기권에 재진입시킬 예정입니다. 이어 쓸 자료는 NOAA-21(1순위)·NOAA-20(2순위) 판입니다.
+    source: https://www.nesdis.noaa.gov/news/update-3-cessation-of-suomi-national-polar-orbiting-partnership-s-npp-data-users-november-02-2026-1540-utc-and-decommissioning-issued-october-30-2026-1400-utc
   - date: "2026-08-07"
     level: warning
     title: Suomi NPP 자료 전달 2026년 11월 종료 — VNP15A2H 대신 VJ215A2H·VJ115A2H로 전환
@@ -291,4 +298,4 @@ watch_urls:
   - https://www.earthdata.nasa.gov/data/catalog/lpcloud-vj215a2h-002
   - https://landweb.modaps.eosdis.nasa.gov/knownissue
 
-last_verified: "2026-10-13"
+last_verified: "2026-10-31"

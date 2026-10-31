@@ -17,7 +17,7 @@ provider: NASA GSFC Deep Blue 팀·Dark Target 팀 / NASA VIIRS Atmosphere SIPS 
 status: active
 status_note: >-
   Deep Blue V2.1(2026-09-14 공개)과 Dark Target V2.1(2025-12-18 공개)이 NOAA-20·NOAA-21 자료로 정상 생산되고 있습니다(2026-10-13 확인 시 AERDB_M3 NOAA-20은 2026년 9월분까지).
-  다만 NOAA가 Suomi NPP 과학 자료 전달을 2026년 11월 2일 13:00 UTC에 끝내므로 SNPP 판(AERDB_*_VIIRS_SNPP·AERDT_L2_VIIRS_SNPP)은 그 뒤 새 자료가 없고, LAADS는 NOAA-20·NOAA-21 판으로 옮기라고 안내합니다.
+  다만 NOAA가 Suomi NPP 과학 자료 전달을 2026년 11월 2일 15:40 UTC에 끝내므로 SNPP 판(AERDB_*_VIIRS_SNPP·AERDT_L2_VIIRS_SNPP)은 그 뒤 새 자료가 없고, LAADS는 NOAA-20·NOAA-21 판으로 옮기라고 안내합니다.
   Deep Blue V2.0은 2027-03-31까지 함께 제공되며, Dark Target V2.0은 2026-08-31 배포가 끝났습니다.
 
 period:
@@ -306,6 +306,13 @@ transitions:
         url: https://ladsweb.modaps.eosdis.nasa.gov/alerts-and-issues/199536
 
 notices:
+  - date: "2026-10-30"
+    level: warning
+    title: Suomi NPP 자료 전달 종료 시각 변경 — 2026년 11월 2일 15:40 UTC (한국 시간 11월 3일 00:40)
+    body: >-
+      NOAA NESDIS가 10월 30일 세 번째 갱신 공지에서 Suomi NPP 자료 전달 종료 시각을 2026년 11월 2일 13:00 UTC에서 15:40 UTC로 바꿨습니다(VIIRS·ATMS·CERES·OMPS·HRD 직접 수신 모두, 영구 종료).
+      위성은 2026년 12월 1일부터 약 12일까지 고도를 낮춰 남태평양 상공에서 대기권에 재진입시킬 예정입니다. 이어 쓸 자료는 NOAA-21(1순위)·NOAA-20(2순위) 판입니다.
+    source: https://www.nesdis.noaa.gov/news/update-3-cessation-of-suomi-national-polar-orbiting-partnership-s-npp-data-users-november-02-2026-1540-utc-and-decommissioning-issued-october-30-2026-1400-utc
   - date: "2026-10-06"
     level: critical
     title: Suomi NPP 자료 전달 2026년 11월 2일 종료 — AERDB·AERDT SNPP 판 대신 NOAA-20·NOAA-21로
@@ -389,4 +396,4 @@ watch_urls:
   - https://ladsweb.modaps.eosdis.nasa.gov/missions-and-measurements/products/AERDT_L2_VIIRS_NOAA20
   - https://ladsweb.modaps.eosdis.nasa.gov/learn/modis-to-viirs-transition
 
-last_verified: "2026-10-13"
+last_verified: "2026-10-31"

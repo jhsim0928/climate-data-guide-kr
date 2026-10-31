@@ -19,7 +19,7 @@ provider: NASA VIIRS Land Team (Myneni group, Boston University) / LP DAAC
 status: active
 status_note: >-
   Version 2 (002) is produced every 8 days separately for Suomi NPP (VNP15A2H), NOAA-20 (VJ115A2H) and NOAA-21 (VJ215A2H); on 2026-10-13 the latest composite began on 2026-09-14.
-  NOAA has announced that delivery of Suomi NPP data ends at 13:00 UTC on 2 November 2026 (1 November in the NASA notice), and LP DAAC advises users to move from VNP15A2H
+  NOAA has announced that delivery of Suomi NPP data ends at 15:40 UTC on 2 November 2026 (1 November in the NASA notice), and LP DAAC advises users to move from VNP15A2H
   to VJ215A2H (primary) or VJ115A2H (secondary). Version 1 distribution ended in April 2025.
 
 period:
@@ -245,6 +245,14 @@ transitions:
         url: https://www.earthdata.nasa.gov/data/alerts-outages/viirs-version-1-sr-vi-lai-fpar-lst-active-fires-data-products-decommissioned
 
 notices:
+  - date: "2026-10-30"
+    level: warning
+    title: "Update #3: Cessation of S-NPP data to users on November 02, 2026 1540 UTC and decommissioning"
+    body: >-
+      NOAA NESDIS Update #3 (issued October 30, 2026 1400 UTC): delivery of Suomi National Polar-orbiting Partnership (S-NPP) data to users will cease on November 02, 2026 15:40 UTC
+      (previously 13:00 UTC) for ATMS, CERES, OMPS Nadir and Limb, VIIRS and HRD Direct Broadcast; the outage is permanent.
+      Starting December 1st 2026, S-NPP will be lowered incrementally through approximately December 12th for reentry over the South Pacific Ocean. Users should transition to NOAA-21 (primary) and NOAA-20 (secondary) products.
+    source: https://www.nesdis.noaa.gov/news/update-3-cessation-of-suomi-national-polar-orbiting-partnership-s-npp-data-users-november-02-2026-1540-utc-and-decommissioning-issued-october-30-2026-1400-utc
   - date: "2026-08-07"
     level: warning
     title: Suomi NPP data delivery ends in November 2026 — move from VNP15A2H to VJ215A2H or VJ115A2H
@@ -291,4 +299,4 @@ watch_urls:
   - https://www.earthdata.nasa.gov/data/catalog/lpcloud-vj215a2h-002
   - https://landweb.modaps.eosdis.nasa.gov/knownissue
 
-last_verified: "2026-10-13"
+last_verified: "2026-10-31"

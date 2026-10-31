@@ -17,7 +17,7 @@ provider: NASA GSFC and University of Wisconsin SSEC MODIS-VIIRS cloud team (Pla
 status: active
 status_note: >-
   The NOAA-20 versions of CLDPROP (V1.1) and CLDMSK (V2) are produced routinely (on 2026-10-13 CLDPROP_D3_VIIRS_NOAA20 reached 9 October). A NOAA-21 cloud mask exists,
-  but no NOAA-21 version of the cloud properties (CLDPROP) had been released as of 2026-10-13. The Suomi NPP versions get no new data after NOAA ends delivery (13:00 UTC on 2026-11-02),
+  but no NOAA-21 version of the cloud properties (CLDPROP) had been released as of 2026-10-13. The Suomi NPP versions get no new data after NOAA ends delivery (15:40 UTC on 2026-11-02),
   and the Aqua MODIS versions end with Aqua science operations (expected September 2027). After that only the NOAA-20 versions (and NOAA-21 for the mask) remain.
 
 period:
@@ -263,6 +263,14 @@ transitions:
         url: https://cmr.earthdata.nasa.gov/search/collections.umm_json?concept_id=C3860045339-LAADS
 
 notices:
+  - date: "2026-10-30"
+    level: warning
+    title: "Update #3: Cessation of S-NPP data to users on November 02, 2026 1540 UTC and decommissioning"
+    body: >-
+      NOAA NESDIS Update #3 (issued October 30, 2026 1400 UTC): delivery of Suomi National Polar-orbiting Partnership (S-NPP) data to users will cease on November 02, 2026 15:40 UTC
+      (previously 13:00 UTC) for ATMS, CERES, OMPS Nadir and Limb, VIIRS and HRD Direct Broadcast; the outage is permanent.
+      Starting December 1st 2026, S-NPP will be lowered incrementally through approximately December 12th for reentry over the South Pacific Ocean. Users should transition to NOAA-21 (primary) and NOAA-20 (secondary) products.
+    source: https://www.nesdis.noaa.gov/news/update-3-cessation-of-suomi-national-polar-orbiting-partnership-s-npp-data-users-november-02-2026-1540-utc-and-decommissioning-issued-october-30-2026-1400-utc
   - date: "2026-10-06"
     level: critical
     title: Suomi NPP data delivery ends 2 November 2026 — switch from the SNPP versions of CLDPROP and CLDMSK to NOAA-20
@@ -338,4 +346,4 @@ watch_urls:
   - https://ladsweb.modaps.eosdis.nasa.gov/missions-and-measurements/products/CLDPROP_L2_VIIRS_NOAA20
   - https://ladsweb.modaps.eosdis.nasa.gov/missions-and-measurements/products/CLDMSK_L2_VIIRS_NOAA20
 
-last_verified: "2026-10-13"
+last_verified: "2026-10-31"

@@ -17,7 +17,7 @@ provider: NASA GSFC·위스콘신대 SSEC MODIS-VIIRS 구름 팀(Platnick 등) /
 status: active
 status_note: >-
   NOAA-20 판 CLDPROP(V1.1)과 CLDMSK(V2)가 정상 생산되고 있습니다(2026-10-13 확인 시 CLDPROP_D3_VIIRS_NOAA20은 10월 9일 자료까지). 구름 마스크는 NOAA-21 판도 있지만,
-  구름 특성(CLDPROP)의 NOAA-21 판은 2026-10-13 기준 공개되지 않았습니다. Suomi NPP 판은 NOAA의 자료 전달 종료(2026-11-02 13:00 UTC)로 그 뒤 새 자료가 없고,
+  구름 특성(CLDPROP)의 NOAA-21 판은 2026-10-13 기준 공개되지 않았습니다. Suomi NPP 판은 NOAA의 자료 전달 종료(2026-11-02 15:40 UTC)로 그 뒤 새 자료가 없고,
   Aqua MODIS 판은 Aqua 과학 운용 종료(2027년 9월 전망)와 함께 끝납니다. 그 뒤로는 NOAA-20(및 마스크는 NOAA-21) 판만 남습니다.
 
 period:
@@ -264,6 +264,13 @@ transitions:
         url: https://cmr.earthdata.nasa.gov/search/collections.umm_json?concept_id=C3860045339-LAADS
 
 notices:
+  - date: "2026-10-30"
+    level: warning
+    title: Suomi NPP 자료 전달 종료 시각 변경 — 2026년 11월 2일 15:40 UTC (한국 시간 11월 3일 00:40)
+    body: >-
+      NOAA NESDIS가 10월 30일 세 번째 갱신 공지에서 Suomi NPP 자료 전달 종료 시각을 2026년 11월 2일 13:00 UTC에서 15:40 UTC로 바꿨습니다(VIIRS·ATMS·CERES·OMPS·HRD 직접 수신 모두, 영구 종료).
+      위성은 2026년 12월 1일부터 약 12일까지 고도를 낮춰 남태평양 상공에서 대기권에 재진입시킬 예정입니다. 이어 쓸 자료는 NOAA-21(1순위)·NOAA-20(2순위) 판입니다.
+    source: https://www.nesdis.noaa.gov/news/update-3-cessation-of-suomi-national-polar-orbiting-partnership-s-npp-data-users-november-02-2026-1540-utc-and-decommissioning-issued-october-30-2026-1400-utc
   - date: "2026-10-06"
     level: critical
     title: Suomi NPP 자료 전달 2026년 11월 2일 종료 — CLDPROP·CLDMSK SNPP 판 대신 NOAA-20으로
@@ -339,4 +346,4 @@ watch_urls:
   - https://ladsweb.modaps.eosdis.nasa.gov/missions-and-measurements/products/CLDPROP_L2_VIIRS_NOAA20
   - https://ladsweb.modaps.eosdis.nasa.gov/missions-and-measurements/products/CLDMSK_L2_VIIRS_NOAA20
 
-last_verified: "2026-10-13"
+last_verified: "2026-10-31"

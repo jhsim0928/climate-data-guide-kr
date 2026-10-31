@@ -20,7 +20,7 @@ provider: NASA JPL(Hulley·Hook) / NASA VIIRS 육상팀 / NASA LP DAAC
 status: active
 status_note: >-
   NOAA-20(VJ121)과 NOAA-21(VJ221) 자료는 매일 정상 생산되고 있습니다(2026-10-13 확인 시 VJ221A1D는 10월 11일 자료까지).
-  다만 NOAA가 Suomi NPP의 모든 과학 자료 전달을 2026년 11월 2일 13:00 UTC에 끝낸다고 공지해, VNP21 계열은 그 뒤로 새 자료가 나오지 않습니다.
+  다만 NOAA가 Suomi NPP의 모든 과학 자료 전달을 2026년 11월 2일 15:40 UTC에 끝낸다고 공지해, VNP21 계열은 그 뒤로 새 자료가 나오지 않습니다.
   LP DAAC는 NOAA-21(VJ221, 1순위)이나 NOAA-20(VJ121, 2순위) 제품으로 옮기라고 안내합니다. 성숙도는 1단계 검증(Stage 1 Validation)입니다.
 
 period:
@@ -160,7 +160,7 @@ example:
     print(np.nanmean(lst_k) - 273.15)
 
 tips:
-  - "Suomi NPP 자료 전달은 2026년 11월 2일 13:00 UTC에 끝납니다(NOAA 공지, Earthdata 공지 제목은 11월 1일). 새 분석은 NOAA-21(VJ221) 또는 NOAA-20(VJ121)으로 시작하세요."
+  - "Suomi NPP 자료 전달은 2026년 11월 2일 15:40 UTC에 끝납니다(NOAA 공지, Earthdata 공지 제목은 11월 1일). 새 분석은 NOAA-21(VJ221) 또는 NOAA-20(VJ121)으로 시작하세요."
   - "VIIRS LST는 MOD21(TES)과 같은 방식이라 MOD21과는 잘 이어지지만, MOD11(분할창)과는 알고리즘이 달라 건조지에서 수 K 차이가 날 수 있습니다."
   - "MOD21처럼 오염 화소를 채움값으로 지우지 않습니다. 사막의 먼지·감지되지 않은 구름 때문에 이상 고온값이 나올 수 있으니 QC 비트·방출률·오차를 함께 써서 걸러 내세요."
   - "방출률이 낮다고 무조건 구름은 아닙니다. 사용자 가이드는 고철질 암석(mafic rock)처럼 M15·M16 방출률이 0.9 아래로 내려가는 실제 지표도 있다고 설명합니다."
@@ -291,6 +291,13 @@ transitions:
         url: https://www.earthdata.nasa.gov/data/alerts-outages/viirs-version-1-sr-vi-lai-fpar-lst-active-fires-data-products-decommissioned
 
 notices:
+  - date: "2026-10-30"
+    level: warning
+    title: Suomi NPP 자료 전달 종료 시각 변경 — 2026년 11월 2일 15:40 UTC (한국 시간 11월 3일 00:40)
+    body: >-
+      NOAA NESDIS가 10월 30일 세 번째 갱신 공지에서 Suomi NPP 자료 전달 종료 시각을 2026년 11월 2일 13:00 UTC에서 15:40 UTC로 바꿨습니다(VIIRS·ATMS·CERES·OMPS·HRD 직접 수신 모두, 영구 종료).
+      위성은 2026년 12월 1일부터 약 12일까지 고도를 낮춰 남태평양 상공에서 대기권에 재진입시킬 예정입니다. 이어 쓸 자료는 NOAA-21(1순위)·NOAA-20(2순위) 판입니다.
+    source: https://www.nesdis.noaa.gov/news/update-3-cessation-of-suomi-national-polar-orbiting-partnership-s-npp-data-users-november-02-2026-1540-utc-and-decommissioning-issued-october-30-2026-1400-utc
   - date: "2026-08-03"
     level: critical
     title: Suomi NPP 과학 자료 전달 2026년 11월 2일 종료 — VNP21 대신 VJ221·VJ121로 전환
@@ -338,4 +345,4 @@ watch_urls:
   - https://www.earthdata.nasa.gov/data/catalog/lpcloud-vnp21a1d-002
   - https://landweb.modaps.eosdis.nasa.gov/knownissue?sensor=VIIRS
 
-last_verified: "2026-10-13"
+last_verified: "2026-10-31"

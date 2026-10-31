@@ -19,7 +19,7 @@ provider: NASA GSFC 적설팀(Riggs·Hall) / NASA NSIDC DAAC
 status: active
 status_note: >-
   Version 2(Collection 2)가 현재 판으로 매일 갱신됩니다(2026-10-13 확인 시 VJ110A1 최신 파일 2026년 10월 11일자, VNP10A1 10월 8일자).
-  다만 Suomi NPP 자료(VNP10) 전달은 2026년 11월 2일 13:00 UTC에 끝나므로, NSIDC는 NOAA-20(VJ110)·NOAA-21(VJ210) 제품으로 옮기라고 안내합니다.
+  다만 Suomi NPP 자료(VNP10) 전달은 2026년 11월 2일 15:40 UTC에 끝나므로, NSIDC는 NOAA-20(VJ110)·NOAA-21(VJ210) 제품으로 옮기라고 안내합니다.
   Version 1은 2024년 6월 17일 생산을 멈췄습니다.
 
 period:
@@ -291,6 +291,13 @@ transitions:
         url: https://nsidc.org/sites/default/files/documents/user-guide/multi_vnp10a1-v002-userguide.pdf
 
 notices:
+  - date: "2026-10-30"
+    level: warning
+    title: Suomi NPP 자료 전달 종료 시각 변경 — 2026년 11월 2일 15:40 UTC (한국 시간 11월 3일 00:40)
+    body: >-
+      NOAA NESDIS가 10월 30일 세 번째 갱신 공지에서 Suomi NPP 자료 전달 종료 시각을 2026년 11월 2일 13:00 UTC에서 15:40 UTC로 바꿨습니다(VIIRS·ATMS·CERES·OMPS·HRD 직접 수신 모두, 영구 종료).
+      위성은 2026년 12월 1일부터 약 12일까지 고도를 낮춰 남태평양 상공에서 대기권에 재진입시킬 예정입니다. 이어 쓸 자료는 NOAA-21(1순위)·NOAA-20(2순위) 판입니다.
+    source: https://www.nesdis.noaa.gov/news/update-3-cessation-of-suomi-national-polar-orbiting-partnership-s-npp-data-users-november-02-2026-1540-utc-and-decommissioning-issued-october-30-2026-1400-utc
   - date: "2026-10-16"
     level: warning
     title: 10월 12~13일 VIIRS Level 0 자료 공백으로 하위 산출물 처리 지연
@@ -347,4 +354,4 @@ watch_urls:
   - https://nsidc.org/data/viirs/news
   - https://nsidc.org/data/vnp10a1/versions/2
 
-last_verified: "2026-10-17"
+last_verified: "2026-10-31"

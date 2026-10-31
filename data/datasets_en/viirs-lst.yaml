@@ -20,7 +20,7 @@ provider: NASA JPL (Hulley, Hook) / NASA VIIRS Land Team / NASA LP DAAC
 status: active
 status_note: >-
   NOAA-20 (VJ121) and NOAA-21 (VJ221) data are produced normally every day (on 2026-10-13 VJ221A1D reached 11 October).
-  However, NOAA has announced that delivery of all Suomi NPP science data ends at 13:00 UTC on 2 November 2026, so the VNP21 series will receive no new data after that.
+  However, NOAA has announced that delivery of all Suomi NPP science data ends at 15:40 UTC on 2 November 2026, so the VNP21 series will receive no new data after that.
   LP DAAC advises moving to the NOAA-21 (VJ221, primary) or NOAA-20 (VJ121, secondary) products. Maturity is Stage 1 Validation.
 
 period:
@@ -160,7 +160,7 @@ example:
     print(np.nanmean(lst_k) - 273.15)
 
 tips:
-  - "Suomi NPP data delivery ends at 13:00 UTC on 2 November 2026 (NOAA notice; the Earthdata notice title says 1 November). Start new analyses with NOAA-21 (VJ221) or NOAA-20 (VJ121)."
+  - "Suomi NPP data delivery ends at 15:40 UTC on 2 November 2026 (NOAA notice; the Earthdata notice title says 1 November). Start new analyses with NOAA-21 (VJ221) or NOAA-20 (VJ121)."
   - "VIIRS LST uses the same method as MOD21 (TES), so it continues MOD21 well, but it differs in algorithm from MOD11 (split-window) and can differ by several K over arid land."
   - "Like MOD21, contaminated pixels are not set to fill. Dust and undetected cloud over deserts can produce hot outliers, so screen with the QC bits, emissivity and error estimates together."
   - "Low emissivity does not always mean cloud. The User's Guide notes that real surfaces such as mafic rocks can have M15/M16 emissivity below 0.9."
@@ -291,6 +291,14 @@ transitions:
         url: https://www.earthdata.nasa.gov/data/alerts-outages/viirs-version-1-sr-vi-lai-fpar-lst-active-fires-data-products-decommissioned
 
 notices:
+  - date: "2026-10-30"
+    level: warning
+    title: "Update #3: Cessation of S-NPP data to users on November 02, 2026 1540 UTC and decommissioning"
+    body: >-
+      NOAA NESDIS Update #3 (issued October 30, 2026 1400 UTC): delivery of Suomi National Polar-orbiting Partnership (S-NPP) data to users will cease on November 02, 2026 15:40 UTC
+      (previously 13:00 UTC) for ATMS, CERES, OMPS Nadir and Limb, VIIRS and HRD Direct Broadcast; the outage is permanent.
+      Starting December 1st 2026, S-NPP will be lowered incrementally through approximately December 12th for reentry over the South Pacific Ocean. Users should transition to NOAA-21 (primary) and NOAA-20 (secondary) products.
+    source: https://www.nesdis.noaa.gov/news/update-3-cessation-of-suomi-national-polar-orbiting-partnership-s-npp-data-users-november-02-2026-1540-utc-and-decommissioning-issued-october-30-2026-1400-utc
   - date: "2026-08-03"
     level: critical
     title: Suomi NPP science data delivery ends 2 November 2026 — switch from VNP21 to VJ221 or VJ121
@@ -338,4 +346,4 @@ watch_urls:
   - https://www.earthdata.nasa.gov/data/catalog/lpcloud-vnp21a1d-002
   - https://landweb.modaps.eosdis.nasa.gov/knownissue?sensor=VIIRS
 
-last_verified: "2026-10-13"
+last_verified: "2026-10-31"

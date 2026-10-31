@@ -19,7 +19,7 @@ status: active
 status_note: >-
   CS2SMOS v206을 대체한 v300으로, AWI가 2025-10-23부터 북극 준실시간 생산을 시작했고 2025/26 북극 시즌은 2026-04-09~15 주간장을 끝으로 마쳤습니다.
   계절 산출 자료라 여름철 공백은 정상이며, 남반구는 4/15~10/15에 만들어집니다(Copernicus Marine 남반구 데이터셋은 2026-10-06까지 갱신).
-  2026-10-12 현재 AWI 위키에 2026/27 북극 시즌 시작 공지는 아직 없습니다.
+  2026/27 북극 시즌은 AWI가 2026-10-30에 준실시간 처리를 시작했습니다(입력 자료 공백으로 7일 지연, 첫 두께장 10/15~10/22).
 
 period:
   start: "2023-10"
@@ -216,6 +216,13 @@ citations:
     Copernicus Marine에서 받았다면 "This study has been conducted using E.U. Copernicus Marine Service Information" 문장과 DOI를 함께 적습니다.
 
 notices:
+  - date: "2026-10-30"
+    level: info
+    title: AWI CS3SMOS 2026/27 북극 시즌 준실시간 생산 시작 (7일 지연, 첫 두께장 10/15~10/22)
+    body: >-
+      AWI가 입력 자료 공백(OSI SAF 서비스 메시지: AMSR3 자료 누락)으로 7일 늦게 L4 CS3SMOS 해빙 두께의 2026/27 북극 시즌 운영 처리를 시작했습니다. 첫 두께장은 2026년 10월 15~22일입니다.
+      Copernicus Marine 재배포본(SEAICE_GLO_PHY_L4_NRT_011_014)의 재개는 Copernicus Marine 공지에서 따로 확인하세요.
+    source: https://spaces.awi.de/spaces/CS2SMOS/overview
   - date: "2026-10-29"
     level: warning
     title: Copernicus Marine 북반구 2026/27 시즌 생산 시작 지연 (JAXA AMSR2·AMSR3 배포 중단)
@@ -278,4 +285,4 @@ watch_urls:
   - https://spaces.awi.de/spaces/CS2SMOS/pages/297634429/CryoSat-2+Sentinel-3+SMOS+Merged+Sea+Ice+Thickness
   - https://data.marine.copernicus.eu/product/SEAICE_GLO_PHY_L4_NRT_011_014/description
 
-last_verified: "2026-10-30"
+last_verified: "2026-10-31"

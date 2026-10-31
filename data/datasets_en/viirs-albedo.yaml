@@ -19,7 +19,7 @@ provider: NASA VIIRS Land Science Team (Schaaf lab, UMass Boston) / NASA LP DAAC
 status: active
 status_note: >-
   Collection 2 (V002) is the current version and is updated daily (on 2026-10-13 the latest VJ143MA3 file was dated 4 October 2026 and VNP43MA3 1 October 2026).
-  However, NOAA will stop delivering Suomi NPP data (VNP43) at 13:00 UTC on 2 November 2026, so from then on users need the NOAA-21 (VJ243, primary) or NOAA-20 (VJ143, secondary) products.
+  However, NOAA will stop delivering Suomi NPP data (VNP43) at 15:40 UTC on 2 November 2026, so from then on users need the NOAA-21 (VJ243, primary) or NOAA-20 (VJ143, secondary) products.
   Collection 1 (V001) stopped production in early 2025 and has been superseded.
 
 period:
@@ -274,6 +274,14 @@ transitions:
         url: https://www.earthdata.nasa.gov/data/alerts-outages/viirs-version-2-albedo-brdf-nbar-cmg-data-products-released
 
 notices:
+  - date: "2026-10-30"
+    level: warning
+    title: "Update #3: Cessation of S-NPP data to users on November 02, 2026 1540 UTC and decommissioning"
+    body: >-
+      NOAA NESDIS Update #3 (issued October 30, 2026 1400 UTC): delivery of Suomi National Polar-orbiting Partnership (S-NPP) data to users will cease on November 02, 2026 15:40 UTC
+      (previously 13:00 UTC) for ATMS, CERES, OMPS Nadir and Limb, VIIRS and HRD Direct Broadcast; the outage is permanent.
+      Starting December 1st 2026, S-NPP will be lowered incrementally through approximately December 12th for reentry over the South Pacific Ocean. Users should transition to NOAA-21 (primary) and NOAA-20 (secondary) products.
+    source: https://www.nesdis.noaa.gov/news/update-3-cessation-of-suomi-national-polar-orbiting-partnership-s-npp-data-users-november-02-2026-1540-utc-and-decommissioning-issued-october-30-2026-1400-utc
   - date: "2026-08-03"
     level: critical
     title: Suomi NPP data delivery ends on 2 November 2026 — no new VNP43 data
@@ -324,4 +332,4 @@ watch_urls:
   - https://www.earthdata.nasa.gov/data/alerts-outages
   - https://doi.org/10.5067/VIIRS/VJ143MA3.002
 
-last_verified: "2026-10-13"
+last_verified: "2026-10-31"

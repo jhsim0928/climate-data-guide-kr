@@ -2,7 +2,7 @@
 # VIIRS Ocean (Suomi NPP, NOAA-20 and NOAA-21 VIIRS OBPG Level-3 ocean color and SST) — dataset information file (English edition)
 # Satellite tab (ocean color), cross-listed in the Ocean tab (satellite observations). Successor to MODIS Ocean; the MODIS → VIIRS comparison is in modis-ocean.yaml transitions.
 # Ocean color is R2022.0 for Suomi NPP and NOAA-20 (mini-reprocessings R2022.0.1 and 0.2) and R2025.0 for NOAA-21; SST is 2016.2 for Suomi NPP and 2024.0 for NOAA-20 (no NOAA-21 SST at OB.DAAC).
-# NOAA ends delivery of Suomi NPP science data (including VIIRS) at 13:00 UTC on 2026-11-02, so the Suomi NPP version gets no new data after that. No separate OBPG notice was found as of 2026-10-13.
+# NOAA ends delivery of Suomi NPP science data (including VIIRS) at 15:40 UTC on 2026-11-02, so the Suomi NPP version gets no new data after that. No separate OBPG notice was found as of 2026-10-13.
 # After editing, update last_verified to the date you checked the official pages.
 # ─────────────────────────────────────────────────────────────
 id: viirs-ocean
@@ -23,7 +23,7 @@ provider: NASA GSFC Ocean Biology Processing Group (OBPG) / NASA Ocean Biology D
 status: active
 status_note: >-
   NOAA-20 and NOAA-21 products are being produced normally. When checked on 2026-10-13, NRT daily ocean color for all three satellites ran to 2026-10-11 and standard ocean color to 2026-07-31 (registered 2026-08-27/28).
-  However, NOAA NESDIS has announced that delivery of all Suomi NPP science data, including VIIRS, will permanently cease at 13:00 UTC on 2 November 2026 (re-announced by NASA GES DISC on 2026-10-07), and NASA advises moving to NOAA-20 and NOAA-21 products.
+  However, NOAA NESDIS has announced that delivery of all Suomi NPP science data, including VIIRS, will permanently cease at 15:40 UTC on 2 November 2026 (re-announced by NASA GES DISC on 2026-10-07), and NASA advises moving to NOAA-20 and NOAA-21 products.
   This is an end of data delivery, not of satellite operations, and NASA continues to archive and distribute existing data. No separate OB.DAAC notice was found.
 
 period:
@@ -70,7 +70,7 @@ time_convention:
     - "`par` is a daily integral (mol m-2 day-1). The instantaneous `ipar` and fluorescence `nflh` (FLH files) that MODIS provides are not in the VIIRS L3 set."
     - "The three satellites pass within about 50 minutes of each other but not at the same time. Each satellite has its own daily files, so when combining them average each one first or stick to a single satellite."
     - "NRT (file names ending .NRT.nc, collection names ending _NRT) and standard files are separate collections. Switch to the standard files once they appear and do not mix the two in one time series."
-    - "Suomi NPP data stop after 13:00 UTC on 2026-11-02. The last daily file (11-02) may not cover the whole day, so check the end of your series."
+    - "Suomi NPP data stop after 15:40 UTC on 2026-11-02. The last daily file (11-02) may not cover the whole day, so check the end of your series."
   source: https://oceandata.sci.gsfc.nasa.gov/files/resources/docs/format/Ocean_Data_Product_Users_Guide.pdf
   source_name: "OBPG Ocean Science Data Product Format Specification (2017-11) + OB.DAAC CMR and OPeNDAP file attributes and Direct Data Access listings + Earthdata Forum (LP DAAC) replies"
 
@@ -262,6 +262,14 @@ citations:
     NASA asks users to cite the dataset DOI for each product and platform (Suomi NPP, NOAA-20, NOAA-21) actually used. Also state the processing version (R2022.0 or 2025.0; SST 2016.2 or 2024.0) and whether the files were NRT.
 
 notices:
+  - date: "2026-10-30"
+    level: warning
+    title: "Update #3: Cessation of S-NPP data to users on November 02, 2026 1540 UTC and decommissioning"
+    body: >-
+      NOAA NESDIS Update #3 (issued October 30, 2026 1400 UTC): delivery of Suomi National Polar-orbiting Partnership (S-NPP) data to users will cease on November 02, 2026 15:40 UTC
+      (previously 13:00 UTC) for ATMS, CERES, OMPS Nadir and Limb, VIIRS and HRD Direct Broadcast; the outage is permanent.
+      Starting December 1st 2026, S-NPP will be lowered incrementally through approximately December 12th for reentry over the South Pacific Ocean. Users should transition to NOAA-21 (primary) and NOAA-20 (secondary) products.
+    source: https://www.nesdis.noaa.gov/news/update-3-cessation-of-suomi-national-polar-orbiting-partnership-s-npp-data-users-november-02-2026-1540-utc-and-decommissioning-issued-october-30-2026-1400-utc
   - date: "2026-08-03"
     level: critical
     title: Suomi NPP science data delivery ends 13:00 UTC on 2 November 2026 — move to NOAA-21 and NOAA-20
@@ -377,4 +385,4 @@ watch_urls:
   - https://oceancolor.gsfc.nasa.gov/data/reprocessing/
   - https://www.nesdis.noaa.gov/news/cessation-of-suomi-national-polar-orbiting-partnership-s-npp-data-users-onafter-november-2-2026
 
-last_verified: "2026-10-13"
+last_verified: "2026-10-31"
