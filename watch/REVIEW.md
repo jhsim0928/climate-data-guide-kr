@@ -3,6 +3,8 @@
 매일 08시쯤(한국 시간) 예약 작업으로 실행되는 Claude가 이 문서를 그대로 따릅니다.
 운영자가 읽어도 흐름을 알 수 있도록 한국어로 적었습니다.
 
+**언어:** 운영자에게 가는 모든 결과는 한국어로 씁니다. 최종 보고, 중간 안내, 알림(PushNotification), PR 제목·본문, 커밋 메시지, `digest.json`의 summary·notes가 모두 해당합니다. 예외는 영어판 YAML(`data/datasets_en/`)에 쓰는 공지 제목·본문(원문 영어 표현)뿐입니다.
+
 ## 전체 흐름
 
 1. **05:40쯤 — GitHub Actions `공지 페이지 점검`** (`.github/workflows/watch.yml`, `scripts/watch.py`)
