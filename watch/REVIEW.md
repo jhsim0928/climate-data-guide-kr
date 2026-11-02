@@ -68,7 +68,17 @@ pip install --break-system-packages -q -r requirements.txt
 `watch/state/index.json`에 `fails ≥ 1`, `last_error`에 `HTTP 401`/`HTTP 403`이 남습니다. 사람 브라우저로는 열립니다.
 
 - 이런 주소는 **WebFetch로 직접 열어** 최근 7일 안에 올라온 글 중 그 주소를 감시하는 자료(`datasets`)에 관한 것이 있는지 봅니다.
-  (예: Earthdata 공지 목록은 NASA 전체 자료 공지이므로 MERRA-2·IMERG·GPCP·GES DISC 관련 글만 봄)
+  범위는 `watch/state/index.json`(또는 `digest.json`의 `errors`)에서 그 주소의 `datasets` **전체**입니다. 일부만 골라 보지 않습니다.
+  - 예: Earthdata 공지 목록(`https://www.earthdata.nasa.gov/data/alerts-outages`)은 NASA 전체 자료 공지이므로
+    IMERG·MERRA-2·GPCP·GES DISC뿐 아니라 **VIIRS·MODIS·GLDAS·Suomi NPP·NOAA-20/21·LAADS·LP DAAC·OB.DAAC·NSIDC DAAC** 관련 글도 모두 봅니다.
+  - 글이 위성·센서 계열 전체에 해당하면(예: 'VIIRS Processing Delay') 감시 주소에 없더라도 사이트의 그 계열 자료(`data/datasets/viirs-*.yaml` 등) 중
+    원문이 밝힌 배포 기관·제품에 해당하는 것을 모두 후보로 봅니다.
+- **목록에 개별 글 링크가 없을 때**(WebFetch는 글자만 주고 링크 주소를 빼는 경우가 많음) 보류하지 말고 원문 주소를 찾아 엽니다.
+  1. 제목으로 주소를 만들어 엽니다: 소문자로 바꾸고, 영문·숫자 외 문자는 `-`로, 겹친 `-`는 하나로.
+     예: Earthdata 'VIIRS Processing Delay' → `https://www.earthdata.nasa.gov/data/alerts-outages/viirs-processing-delay`
+     (같은 제목 글이 전에도 있었으면 `-0`, `-1`을 붙인 주소일 수 있음. 연 글의 발행일이 목록과 같은지 꼭 확인)
+  2. 그래도 안 되면 WebFetch에 "이 목록에서 '<제목>' 글의 링크 주소(href)를 알려 달라"고 따로 묻습니다.
+  3. 둘 다 실패할 때만 `notes`에 "운영자 확인 필요"로 남깁니다.
 - 관련 공지가 있으면 3단계 기준으로 판단해 후보로 올리고, 없으면 넘어갑니다.
 - WebFetch로 확인한 주소는 `digest.json`의 `errors`에 넣지 않습니다. WebFetch로도 열리지 않을 때만 `errors`에 넣습니다.
 - 자바스크립트로만 그려져 WebFetch로도 내용이 비어 오는 페이지(예: disc.gsfc.nasa.gov)는 같은 자료의 다른 감시 주소로 대신합니다.
