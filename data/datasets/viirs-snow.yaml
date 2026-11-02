@@ -293,6 +293,13 @@ transitions:
 notices:
   - date: "2026-10-30"
     level: warning
+    title: 10월 27일 VIIRS Level 0 자료 공백으로 하위 산출물 처리 지연 (해결 시점 미정)
+    body: >-
+      NASA Earthdata는 2026년 10월 27일 Suomi NPP·NOAA-20·NOAA-21 VIIRS Level 0 자료에 공백이 생겨 하위 산출물 처리가 늦어지고 있으며,
+      과학팀이 공백을 메우는 중이라고 알렸습니다(NSIDC DAAC 포함, 해결 시점은 미정). 이 기간 자료가 평소보다 늦게 올라올 수 있습니다.
+    source: https://www.earthdata.nasa.gov/data/alerts-outages/viirs-processing-delay
+  - date: "2026-10-30"
+    level: warning
     title: Suomi NPP 자료 전달 종료 시각 변경 — 2026년 11월 2일 15:40 UTC (한국 시간 11월 3일 00:40)
     body: >-
       NOAA NESDIS가 10월 30일 세 번째 갱신 공지에서 Suomi NPP 자료 전달 종료 시각을 2026년 11월 2일 13:00 UTC에서 15:40 UTC로 바꿨습니다(VIIRS·ATMS·CERES·OMPS·HRD 직접 수신 모두, 영구 종료).
@@ -354,4 +361,4 @@ watch_urls:
   - https://nsidc.org/data/viirs/news
   - https://nsidc.org/data/vnp10a1/versions/2
 
-last_verified: "2026-10-31"
+last_verified: "2026-11-02"
