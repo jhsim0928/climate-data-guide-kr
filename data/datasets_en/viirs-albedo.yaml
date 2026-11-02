@@ -276,6 +276,13 @@ transitions:
 notices:
   - date: "2026-10-30"
     level: warning
+    title: VIIRS Processing Delay
+    body: >-
+      Gaps in Level 0 Suomi-NPP, NOAA-20, and NOAA-21 VIIRS data on October 27, 2026, are causing a delay in processing data products further downstream.
+      The science team is working to fill the gaps. Resolution: TBD.
+    source: https://www.earthdata.nasa.gov/data/alerts-outages/viirs-processing-delay
+  - date: "2026-10-30"
+    level: warning
     title: "Update #3: Cessation of S-NPP data to users on November 02, 2026 1540 UTC and decommissioning"
     body: >-
       NOAA NESDIS Update #3 (issued October 30, 2026 1400 UTC): delivery of Suomi National Polar-orbiting Partnership (S-NPP) data to users will cease on November 02, 2026 15:40 UTC
@@ -332,4 +339,4 @@ watch_urls:
   - https://www.earthdata.nasa.gov/data/alerts-outages
   - https://doi.org/10.5067/VIIRS/VJ143MA3.002
 
-last_verified: "2026-10-31"
+last_verified: "2026-11-02"
