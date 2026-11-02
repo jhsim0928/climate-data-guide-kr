@@ -39,6 +39,27 @@ Product Roadmap
 Get Inspired
 Service Commitments and Licence
 Contact Us
+[MOB-403] MULTIOBS_GLO_BGC_SURFACE_NRT_015_016 - Incomplete product delivery since 2026-11-01
+In progress
+2026-11-01 12:00 UTC - In progress
+Due to an anomaly identified in yesterday's OLCI Sentinel-3 data (2026-11-01), the product
+MULTIOBS_GLO_BGC_SURFACE_NRT_015_016
+delivered today (2026-11-02) is significantly incomplete. The issue is currently under investigation.
+Impacted datasets:
+cmems_obs-mob_glo_bgc_nrt_mr_olci_P1D-i
+cmems_obs-mob_glo_bgc_nrt_mr_multi_P7D-m
+We apologize for any inconvenience this may cause.
+If you have any question, please contact
+Copernicus Marine User Support
+Copy a link to this article
+[SST-996] SST_(BS|MED)_PHY_SUBSKIN_L4_NRT - delayed data since 2026-11-01
+In progress
+2026-11-01 14:00 UTC - In progress
+Due to an upstream data issue, the products SST_MED_PHY_SUBSKIN_L4_NRT_010_036 and SST_BS_PHY_SUBSKIN_L4_NRT_010_035 are delayed since 2026-11-01.
+We apologize for any inconvenience this may cause.
+If you have any question, please contact
+Copernicus Marine User Support
+Copy a link to this article
 [OC-1116] OCEANCOLOUR_(ATL|GLO)_BGC_(L3|L4)_NRT - Missing data since 2026-10-30
 In progress
 2026-10-30 17:00 UTC - In progress
@@ -61,14 +82,6 @@ Due to upstream infrastructure changes, Danish in-situ sea level data is not ava
 INSITU_BAL_PHYBGCWAV_DISCRETE_MYNRT_013_032
 INSITU_GLO_PHYBGCWAV_DISCRETE_MYNRT_013_030
 INSITU_NWS_PHYBGCWAV_DISCRETE_MYNRT_013_036
-We apologize for any inconvenience this may cause.
-If you have any question, please contact
-Copernicus Marine User Support
-Copy a link to this article
-[ICE-817] SEAICE_GLO_PHY_L4_NRT - delayed north production start
-In progress
-2026-10-29 07:00 UTC - In progress
-Due to an outage of upstream data dissemination (AMSR2 and AMSR3 from JAXA), the start of the production of SEAICE_GLO_PHY_L4_NRT_011_014 for the northern hemisphere, expected to take place on 2026-10-24, is delayed.
 We apologize for any inconvenience this may cause.
 If you have any question, please contact
 Copernicus Marine User Support
@@ -107,30 +120,6 @@ Missing AMSR3 products | OSI SAF
 SEAICE_ARC_SEAICE_L4_NRT_OBSERVATIONS_011_008
 SEAICE_ARC_PHY_SST-IST_L3S_NRT_011_022
 are delayed from 2026-10-21 to 2026-10-23. Depending on the availability of the AMSR3 products, delays can be extended to 2026-10-24, 2026-10-25 and 2026-10-26.
-We apologize for any inconvenience this may cause.
-If you have any question, please contact
-Copernicus Marine User Support
-Copy a link to this article
-[ICE-814] SEAICE_GLO_SEAICE_L4_NRT_OBSERVATIONS_011_001 - Data missing since 2026-10-20
-In progress
-2026-10-29 08:00 UTC - In progress
-The production has resumed. The files for 2026-10-20 are going to be reprocessed.
-2026-10-20 02:30 UTC - In progress
-Due to a technical issue, data in product
-SEAICE_GLO_SEAICE_L4_NRT_OBSERVATIONS_011_001
-are missing since 2026-10-20. The issue is expected to end on 2026-10-23, so that the next data distributed on time will be on 2026-10-24 around 02:30 UTC.
-We apologize for any inconvenience this may cause.
-If you have any question, please contact
-Copernicus Marine User Support
-Copy a link to this article
-[INS-848] INSITU_(GLO|IBI|MED)_PHYBGCWAV_DISCRETE_MYNRT - some delayed wave data since 2026-10-22
-In progress
-2026-10-22 13:00 UTC - In progress
-Due to a technical issue, Candhis network wave buoys data is delayed since 2026-10-22.
-The following products are affected:
-INSITU_GLO_PHYBGCWAV_DISCRETE_MYNRT_013_030
-INSITU_IBI_PHYBGCWAV_DISCRETE_MYNRT_013_033
-INSITU_MED_PHYBGCWAV_DISCRETE_MYNRT_013_035
 We apologize for any inconvenience this may cause.
 If you have any question, please contact
 Copernicus Marine User Support
@@ -357,6 +346,23 @@ Anomaly
 The production has resumed since 2026-10-08. However, data from 2026-10-03 to 2026-10-07 will not be recovered.
 2026-10-04 00:00 UTC - In progress
 Due to unavailability of the upstream data, the HY-2B and HY-2C HSCAT wind data in WIND_GLO_PHY_L3_NRT_012_002 are not available since 3 October 2026.
+The following datasets are affected by this incident:
+cmems_obs-wind_glo_phy_nrt_l3-hy2b-hscat-asc-0.25deg_P1D-i
+cmems_obs-wind_glo_phy_nrt_l3-hy2b-hscat-des-0.25deg_P1D-i
+cmems_obs-wind_glo_phy_nrt_l3-hy2b-hscat-asc-0.5deg_P1D-i
+cmems_obs-wind_glo_phy_nrt_l3-hy2b-hscat-des-0.5deg_P1D-i
+cmems_obs-wind_glo_phy_nrt_l3-hy2c-hscat-asc-0.25deg_P1D-i
+cmems_obs-wind_glo_phy_nrt_l3-hy2c-hscat-des-0.25deg_P1D-i
+cmems_obs-wind_glo_phy_nrt_l3-hy2c-hscat-asc-0.5deg_P1D-i
+cmems_obs-wind_glo_phy_nrt_l3-hy2c-hscat-des-0.5deg_P1D-i
+We apologize for any inconvenience this may cause.
+If you have any question, please contact
+Copernicus Marine User Support
+Copy a link to this article
+[WND-264] WIND_GLO_PHY_L3_NRT - HY-2B and HY-2C datasets unavailable on 2026-09-05
+Anomaly
+2026-09-06 12:00 UTC - Anomaly
+Due to unavailability of the upstream data, the HY-2B and HY-2C HSCAT wind data in WIND_GLO_PHY_L3_NRT_012_002 are not available on 5 September 2026. The input data flow has been restored now so the incident is over. However, the observations on 2026-09-05 will not be recovered and should be considered lost.
 The following datasets are affected by this incident:
 cmems_obs-wind_glo_phy_nrt_l3-hy2b-hscat-asc-0.25deg_P1D-i
 cmems_obs-wind_glo_phy_nrt_l3-hy2b-hscat-des-0.25deg_P1D-i

@@ -11,32 +11,34 @@
    [json] 200 https://disc.gsfc.nasa.gov/api/config/terraversion
    [json] 200 https://disc.gsfc.nasa.gov/service/datasets/jsonwsp
    [json] 200 https://disc.gsfc.nasa.gov/service/keywords/jsonwsp
-   [json] 200 https://disc.gsfc.nasa.gov/api/alerts?expiration=%5B$gte%5D%5B1793565917314%5D&fields=brief
-   [json] 200 https://disc.gsfc.nasa.gov/service/categories/jsonwsp
+   [json] 200 https://disc.gsfc.nasa.gov/api/alerts?expiration=%5B$gte%5D%5B1793652310166%5D&fields=brief
    [json] 200 https://disc.gsfc.nasa.gov/api/csrf-token
+   [json] 200 https://disc.gsfc.nasa.gov/service/categories/jsonwsp
    [json] 200 https://disc.gsfc.nasa.gov/api/ping/token
    [json] 200 https://disc.gsfc.nasa.gov/service/keywords/jsonwsp
-   [json] 200 https://disc.gsfc.nasa.gov/api/alerts?expiration=%5B$gte%5D%5B1793565917668%5D
+   [json] 200 https://disc.gsfc.nasa.gov/api/alerts?expiration=%5B$gte%5D%5B1793652311146%5D
    [json] 200 https://disc.gsfc.nasa.gov/service/datasets/jsonwsp
    [json] 200 https://disc.gsfc.nasa.gov/api/metadata/dataset/GPCPMON_3.3/variables
-   [json] 200 https://disc.gsfc.nasa.gov/api/publications?datasets=%5B$eq%5D%5BGPCPMON_3.3%5D&sort=year&tags=%5B$ne%5D%5Bsource:dif%5D&title=%5BGPCPMON_3.3%5D
-   [json] 200 https://disc.gsfc.nasa.gov/api/publications?datasets=%5B$eq%5D%5BGPCPMON_3.3%5D&sort=year&tags=%5B$eq%5D%5Bsource:dif%5D&title=%5BGPCPMON_3.3%5D
    [json] 401 https://disc.gsfc.nasa.gov/auth/token
+   [json] 200 https://disc.gsfc.nasa.gov/api/publications?datasets=%5B$eq%5D%5BGPCPMON_3.3%5D&sort=year&tags=%5B$eq%5D%5Bsource:dif%5D&title=%5BGPCPMON_3.3%5D
+   [json] 200 https://disc.gsfc.nasa.gov/api/publications?datasets=%5B$eq%5D%5BGPCPMON_3.3%5D&sort=year&tags=%5B$ne%5D%5Bsource:dif%5D&title=%5BGPCPMON_3.3%5D
    [json] 200 https://disc.gsfc.nasa.gov/api/inventory/intervals/GPCPMON_3.3?year=2026&month=1
+   [json] 401 https://disc.gsfc.nasa.gov/auth/token
+   [json] 401 https://disc.gsfc.nasa.gov/auth/token
    [json] 200 https://cmr.earthdata.nasa.gov/search/collections.umm_json?entry_id=GPCPMON_3.3&include_granule_counts=true
    [json] 200 https://cmr.earthdata.nasa.gov/search/granules.umm_json?entry_id%5B%5D=GPCPMON_3.3&page_size=1&sort_key%5B%5D=-startDate
    [json] 200 https://cmr.earthdata.nasa.gov/search/granules.umm_json?entry_id%5B%5D=GPCPMON_3.3&page_size=1&sort_key%5B%5D=%2BstartDate
+   [json] 200 https://api.giovanni.earthdata.nasa.gov/configured-variables
    [json] 200 https://disc.gsfc.nasa.gov/api//metadata/dataset/GPCPMON_3.3
    [json] 200 https://cmr.earthdata.nasa.gov/search/variables.umm_json?keyword=C3405935516-GES_DISC&page_size=200
-   [json] 200 https://api.giovanni.earthdata.nasa.gov/configured-variables
    [json] 200 https://sjldutoe6c.execute-api.us-east-1.amazonaws.com/default/harmony-proxy/giovanni.gsfc.nasa.gov/giovanni/daac-bin/getProvisionedShapefiles.py
    [json] 200 https://sjldutoe6c.execute-api.us-east-1.amazonaws.com/default/harmony-proxy/capabilities?collectionId=C3405935516-GES_DISC&version=3
 [browser] https://disc.gsfc.nasa.gov/datacollection/GPCPMON_3.3.html → 39줄
 [browser] https://grace.jpl.nasa.gov/data/data-updates/ → 62줄
    [json] 200 https://disc.gsfc.nasa.gov/api/config/terraversion
-   [json] 200 https://disc.gsfc.nasa.gov/service/datasets/jsonwsp
-   [json] 200 https://disc.gsfc.nasa.gov/api/alerts?expiration=%5B$gte%5D%5B1793565927785%5D&fields=brief
+   [json] 200 https://disc.gsfc.nasa.gov/api/alerts?expiration=%5B$gte%5D%5B1793652321706%5D&fields=brief
    [json] 200 https://disc.gsfc.nasa.gov/service/keywords/jsonwsp
+   [json] 200 https://disc.gsfc.nasa.gov/service/datasets/jsonwsp
    [json] 200 https://disc.gsfc.nasa.gov/service/categories/jsonwsp
    [json] 200 https://disc.gsfc.nasa.gov/api/csrf-token
    [json] 200 https://disc.gsfc.nasa.gov/api/ping/token
@@ -47,12 +49,21 @@
 [browser] https://disc.gsfc.nasa.gov/information/alerts → 109줄
 [browser] https://www.earthdata.nasa.gov/data/projects/merra-2/news → HTTP 403 (브라우저)
 [browser] https://asdc.larc.nasa.gov/project/MISR → HTTP 403 (브라우저)
+   [json] 200 https://plus.nasa.gov/wp-json/nasaplus/v1/live
+   [json] 200 https://api.parsely.com/v2/profile?apikey=science.nasa.gov&uuid=pid%3Df15ef68e-680e-4c38-a4ea-f5457bbdd873&url=https%3A%2F%2Fscience.nasa.gov%2Fscience-research%2Fearth-science%2Fterra-the-end-of-an-era%2F
+[browser] https://science.nasa.gov/science-research/earth-science/terra-the-end-of-an-era → 124줄
 [browser] https://www.earthdata.nasa.gov/data/catalog/lpcloud-mcd64a1-061 → HTTP 403 (브라우저)
 [browser] https://www.earthdata.nasa.gov/data/catalog/lpcloud-mod16a2gf-061 → HTTP 403 (브라우저)
 [browser] https://www.earthdata.nasa.gov/data/alerts-outages/transition-from-modis-viirs → HTTP 403 (브라우저)
 [browser] https://www.earthdata.nasa.gov/data/catalog/lpcloud-mcd12q1-061 → HTTP 403 (브라우저)
 [browser] https://www.earthdata.nasa.gov/data/catalog/lpcloud-mod11a1-061 → HTTP 403 (브라우저)
 [browser] https://oceancolor.gsfc.nasa.gov/ → HTTP 403 (브라우저)
+   [json] 200 https://plus.nasa.gov/wp-json/nasaplus/v1/live
+   [json] 200 https://api.parsely.com/v2/profile?apikey=science.nasa.gov&uuid=pid%3Df15ef68e-680e-4c38-a4ea-f5457bbdd873&url=https%3A%2F%2Fscience.nasa.gov%2Fmission%2Foco-2%2F
+[browser] https://science.nasa.gov/mission/oco-2/ → 41줄
+   [json] 200 https://plus.nasa.gov/wp-json/nasaplus/v1/live
+   [json] 200 https://api.parsely.com/v2/profile?apikey=science.nasa.gov&uuid=pid%3Df15ef68e-680e-4c38-a4ea-f5457bbdd873&url=https%3A%2F%2Fscience.nasa.gov%2Fmissions%2Fpotential-evolution-of-the-aura-mission%2F
+[browser] https://science.nasa.gov/missions/potential-evolution-of-the-aura-mission/ → 13줄
 [browser] https://www.tropomi.eu/data-products/level-2-products → HTTP 404 (브라우저)
 [browser] https://doi.org/10.5067/VIIRS/VJ143MA3.002 → HTTP 403 (브라우저)
 [browser] https://www.earthdata.nasa.gov/data/catalog/lpcloud-vnp64a1-002 → HTTP 403 (브라우저)
