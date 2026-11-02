@@ -530,6 +530,9 @@ details.hint summary { cursor: pointer; }
 .md-typeset .notice-tbl .md-typeset__scrollwrap { display: block; width: 100%; margin-left: 0; margin-right: 0; }
 .md-typeset .notice-tbl .md-typeset__table { display: block; width: 100%; padding: 0; }
 .md-typeset .notice-tbl table:not([class]) { display: table; width: 100%; table-layout: fixed; }
+.md-typeset .notice-tbl details.notice-ds { margin: 0; border: 0; box-shadow: none; padding: 0; background: none; font-size: inherit; }
+.md-typeset .notice-tbl details.notice-ds > summary { cursor: pointer; padding: 0; color: var(--md-typeset-a-color); }
+.md-typeset .notice-tbl details.notice-ds > summary::before, .md-typeset .notice-tbl details.notice-ds > summary::after { display: none; }
 .md-typeset .notice-tbl th:nth-child(1) { width: 13%; }
 .md-typeset .notice-tbl th:nth-child(2) { width: 17%; }
 .md-typeset .notice-tbl th:nth-child(3) { width: 16%; }

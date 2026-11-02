@@ -232,7 +232,7 @@
       var levels = Array.prototype.map.call(box.querySelectorAll('input[name="nlevel"]:checked'), function (e) { return e.value; });
       var n = 0;
       table.querySelectorAll("tbody tr").forEach(function (tr) {
-        var ok = (!sel.value || tr.dataset.dataset === sel.value) && levels.indexOf(tr.dataset.level) !== -1;
+        var ok = (!sel.value || (" " + tr.dataset.dataset + " ").indexOf(" " + sel.value + " ") !== -1) && levels.indexOf(tr.dataset.level) !== -1;
         tr.hidden = !ok;
         if (ok) n++;
       });
@@ -499,6 +499,26 @@
     return Math.round((Date.UTC(+b.slice(0, 4), +b.slice(5, 7) - 1, +b.slice(8, 10)) -
                        Date.UTC(+a.slice(0, 4), +a.slice(5, 7) - 1, +a.slice(8, 10))) / 86400000);
   }
+  // 같은 기관 공지(날짜·원문·제목·구분이 같음)가 여러 자료에 실린 경우 한 항목으로 묶음 (예: VIIRS 산출물 9종)
+  // 이름은 '첫 자료 외 N개', 자료 페이지 링크 대신 중요 공지 표로 연결
+  function groupNotices(list) {
+    var out = [], idx = {};
+    list.forEach(function (n) {
+      var k = [n.date, n.source, n.title, n.level].join("\u0001");
+      var w = String(n.dataset_name || "").split(" ")[0];
+      if (k in idx) { var g = out[idx[k]]; g._n++; if (g._w !== w) g._w = ""; return; }
+      idx[k] = out.length;
+      out.push(Object.assign({ _n: 1, _w: w }, n));
+    });
+    return out.map(function (n) {
+      if (n._n > 1) {  // 이름 첫 단어가 모두 같으면 'VIIRS 자료 9개', 아니면 '첫 자료 외 N개' (사이트 표와 같은 규칙)
+        n.dataset_name = n._w ? (IS_EN ? n._w + " — " + n._n + " datasets" : n._w + " 자료 " + n._n + "개")
+          : n.dataset_name + (IS_EN ? " and " + (n._n - 1) + " more" : " 외 " + (n._n - 1) + "개");
+        n.url = "notices/";
+      }
+      return n;
+    });
+  }
   function setupNoticePopup() {
     var root = document.getElementById("notice-popup-root");
     if (!root || document.querySelector(".notice-popup")) return;
@@ -508,9 +528,9 @@
     var en = IS_EN;
     fetch("assets/notices.json", { cache: "no-cache" }).then(function (r) { return r.ok ? r.json() : null; }).then(function (data) {
       if (!data || !data.notices) return;
-      var crit = data.notices.filter(function (n) {
+      var crit = groupNotices(data.notices.filter(function (n) {
         return n.level === "critical" && /^\d{4}-\d{2}-\d{2}$/.test(n.date) && daysBetween(n.date, today) >= 0;
-      }).sort(function (a, b) { return a.date < b.date ? 1 : -1; });
+      })).sort(function (a, b) { return a.date < b.date ? 1 : -1; });
       var items = crit.filter(function (n) { return daysBetween(n.date, today) <= 7; });
       // 미리 보기: 1주일 안 중요 공지가 없을 때, 가장 최근 중요 공지(같은 날짜 묶음, 최대 3건)를 예시로 보여 줌
       // (index.md 의 data-preview="1" 을 지우면 꺼짐. 1주일 안 공지가 생기면 자동으로 원래 방식)
@@ -523,19 +543,19 @@
       var t = en ? {
         title: "Important notices from the past week", ptitle: "Important notice alerts (preview)",
         pintro: "When a provider announces an important change (end of production, version switch and so on), it pops up here for one week. Below is the most recent important notice.",
-        sub: "Get these by email →", page: "Dataset page", src: "Original notice ↗",
+        sub: "Get these by email →", page: "Dataset page", list: "Datasets in the notice table", src: "Original notice ↗",
         hide: "Don't show again today", close: "Close", all: "All provider notices →", lv: "Important"
       } : {
         title: "최근 1주일 중요 공지", ptitle: "중요 공지 알림 (미리 보기)",
         pintro: "자료 제공 기관이 제공 중단·버전 교체 같은 중요한 공지를 내면, 1주일 동안 이렇게 홈 화면에 알려 드립니다. 아래는 가장 최근의 중요 공지입니다.",
-        sub: "메일로 받아 보기 →", page: "자료 페이지", src: "기관 원문 ↗",
+        sub: "메일로 받아 보기 →", page: "자료 페이지", list: "공지 표에서 자료 보기", src: "기관 원문 ↗",
         hide: "오늘 하루 보지 않기", close: "닫기", all: "기관 공지 전체 보기 →", lv: "중요"
       };
       var list = items.slice(0, 5).map(function (n) {
         return '<li><div class="np-meta"><span class="np-lv">' + esc(t.lv) + "</span> " + esc(n.date) + " · <b>" + esc(n.dataset_name) + "</b></div>" +
           '<div class="np-title">' + esc(n.title) + "</div>" +
           (n.body ? '<p class="np-body">' + esc(n.body) + "</p>" : "") +
-          '<div class="np-links"><a href="' + esc(n.url) + '">' + esc(t.page) + "</a>" +
+          '<div class="np-links"><a href="' + esc(n.url) + '">' + esc(n._n > 1 ? t.list : t.page) + "</a>" +
           (n.source ? ' · <a href="' + esc(n.source) + '" target="_blank" rel="noopener noreferrer">' + esc(t.src) + "</a>" : "") + "</div></li>";
       }).join("");
       var wrap = document.createElement("div");
