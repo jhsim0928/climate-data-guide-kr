@@ -1020,6 +1020,29 @@ def all_notices(datasets: list[dict]) -> list[tuple[dict, dict]]:
     return sorted(pairs, key=lambda p: notice_sort_key(p[1]), reverse=True)
 
 
+def grouped_notices(pairs) -> list[tuple[list[dict], dict]]:
+    """같은 기관 공지(날짜·원문 주소·제목·구분이 같음)가 여러 자료에 실린 경우 한 줄로 묶음.
+    예: Suomi NPP 종료 공지가 VIIRS 산출물 9종에 각각 실린 경우 → 1줄(자료 9개). 순서는 처음 나온 자리."""
+    groups, index = [], {}
+    for d, n in pairs:
+        k = (str(n["date"]), str(n.get("source") or ""), str(n["title"]), n["level"])
+        if k in index:
+            groups[index[k]][0].append(d)
+        else:
+            index[k] = len(groups)
+            groups.append(([d], n))
+    return groups
+
+
+def group_label(ds: list[dict]) -> str:
+    """묶인 공지의 '자료' 칸 요약 문구. 이름 첫 단어가 모두 같으면 'VIIRS 자료 9개', 아니면 'ERA5 외 2개'"""
+    first = {x["name"].split()[0] for x in ds}
+    if len(first) == 1:
+        w = first.pop()
+        return f"{w} — {len(ds)} datasets" if is_en() else f"{w} 자료 {len(ds)}개"
+    return f"{ds[0]['name']} and {len(ds) - 1} more" if is_en() else f"{ds[0]['name']} 외 {len(ds) - 1}개"
+
+
 ORG_LABEL = {"UW": "Univ. of Washington", "UMD": "Univ. of Maryland", "UEA": "UEA CRU", "CMEMS": "Copernicus Marine"}
 
 
@@ -1057,12 +1080,18 @@ def notice_org(d: dict, n: dict) -> str:
     return org_label(d)
 
 
-def notice_rows(pairs, link_prefix: str) -> list[str]:
+def notice_rows(pairs, link_prefix: str, limit: int | None = None) -> list[str]:
     L = ["| 공지일 | 자료 | 발표 기관 | 구분 | 기관 공지 (원문) |", "|---|---|---|---|---|"]
-    for d, n in pairs:
+    for ds, n in grouped_notices(pairs)[:limit]:
+        d = ds[0]
         label = level_label(n["level"])
+        if len(ds) == 1:
+            cell = f"[{nt(d['name'])}]({link_prefix}{d['id']}.md)"
+        else:  # 여러 자료에 같은 공지 → '첫 자료 외 N개' (마우스를 올리면 전체 이름)
+            names = html.escape(", ".join(x["name"] for x in ds), quote=True)
+            cell = f'<a href="{link_prefix.replace("datasets/", "")}notices/" title="{names}">{nt(html.escape(group_label(ds)))}</a>'
         L.append(
-            f"| {notice_date_label(n)} | [{nt(d['name'])}]({link_prefix}{d['id']}.md) | {html.escape(notice_org(d, n))} "
+            f"| {notice_date_label(n)} | {cell} | {html.escape(notice_org(d, n))} "
             f"| <span class=\"level-{n['level']}\">{label}</span> | [{n['title']} ↗]({n['source']}) |"
         )
     return [loc(x) for x in L]
@@ -1089,20 +1118,31 @@ def render_notices(datasets: list[dict]) -> str:
         d = str(n["date"])
         return notice_date_label(n).replace(d, '<span class="nobr">' + d + "</span>", 1)
 
-    def row(d, n, attrs=True):
-        return (f'<tr data-dataset="{d["id"]}" data-level="{n["level"]}">' if attrs else "<tr>") + (
+    def ds_link(d):
+        return f'<a href="../datasets/{d["id"]}/">{nt(html.escape(d["name"]))}</a>'
+
+    def row(ds, n, attrs=True):
+        d = ds[0]
+        if len(ds) == 1:
+            cell = ds_link(d)
+        else:  # 같은 기관 공지가 여러 자료에 실린 경우 한 줄로 — 펼치면 자료 목록
+            cell = (f'<details class="notice-ds"><summary>{nt(html.escape(group_label(ds)))}</summary>'
+                    + "<br>".join(ds_link(x) for x in ds) + "</details>")
+        ids = " ".join(x["id"] for x in ds)
+        return (f'<tr data-dataset="{ids}" data-level="{n["level"]}">' if attrs else "<tr>") + (
             f'<td class="nowrap">{date_cell(n)}</td>'
-            f'<td><a href="../datasets/{d["id"]}/">{nt(html.escape(d["name"]))}</a></td>'
+            f'<td>{cell}</td>'
             f'<td>{html.escape(notice_org(d, n))}</td>'
             f'<td><span class="level-{n["level"]}">{level_label(n["level"])}</span></td>'
             f'<td><a href="{html.escape(n["source"])}" target="_blank" rel="noopener">{html.escape(n["title"])} ↗</a></td></tr>')
-    rows = "".join(row(d, n) for d, n in pairs)
+    pairs, upcoming = grouped_notices(pairs), grouped_notices(upcoming)
+    rows = "".join(row(ds, n) for ds, n in pairs)
     up = ([
         "## 예정된 변경", "",
         "기관이 미리 알린 앞으로의 변경입니다. 날짜가 달까지만 발표된 것도 있으니, 정확한 시점은 원문에서 확인하세요.", "",
         '<div class="notice-tbl" data-search-exclude><table>'
         "<thead><tr><th>예정일</th><th>자료</th><th>발표 기관</th><th>구분</th><th>기관 공지 (원문)</th></tr></thead>"
-        "<tbody>" + "".join(row(d, n, False) for d, n in upcoming) + "</tbody></table></div>", "",
+        "<tbody>" + "".join(row(ds, n, False) for ds, n in upcoming) + "</tbody></table></div>", "",
         "## 발표된 공지 (최신순)", "",
     ] if upcoming else [])
     return loc("\n".join([
@@ -1485,11 +1525,13 @@ def notices_rss(datasets: list[dict], config) -> str:
         return format_datetime(datetime(parts[0], parts[1], parts[2], tzinfo=timezone.utc))
 
     items = []
-    for d, n in all_notices(datasets)[:50]:
-        link = f"{base}datasets/{d['id']}/"
+    for ds, n in grouped_notices(all_notices(datasets))[:50]:
+        d = ds[0]  # 여러 자료에 같은 공지면 한 항목으로 (guid는 첫 자료 기준이라 기존 항목과 같음)
+        link = f"{base}datasets/{d['id']}/" if len(ds) == 1 else f"{base}notices/"
+        name = d["name"] if len(ds) == 1 else group_label(ds)
         items.append(
             "<item>"
-            f"<title>{x('[' + d['name'] + '] ' + n['title'])}</title>"
+            f"<title>{x('[' + name + '] ' + n['title'])}</title>"
             f"<link>{x(link)}</link>"
             f"<guid isPermaLink=\"false\">{x(d['id'] + '|' + str(n.get('key_date') or n['date']) + '|' + str(datasets.index(d)) + '|' + n['title'][:60])}</guid>"
             f"<pubDate>{pub(n['date'])}</pubDate>"
@@ -1675,7 +1717,7 @@ def on_page_markdown(markdown, page, config, files):
     if "<!-- DOMAIN_SUMMARY -->" in markdown:
         markdown = markdown.replace("<!-- DOMAIN_SUMMARY -->", domain_summary(_datasets))
     if "<!-- RECENT_NOTICES -->" in markdown:
-        markdown = markdown.replace("<!-- RECENT_NOTICES -->", "\n".join(notice_rows(all_notices(_datasets)[:6], "datasets/")))
+        markdown = markdown.replace("<!-- RECENT_NOTICES -->", "\n".join(notice_rows(all_notices(_datasets), "datasets/", limit=6)))
     if "<!-- STD_TABLE -->" in markdown:
         markdown = markdown.replace("<!-- STD_TABLE -->", std_table(_datasets))
     if "<!-- VARIABLE_APP -->" in markdown:
