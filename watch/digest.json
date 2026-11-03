@@ -23,13 +23,7 @@
     "url": "https://github.com/jhsim0928/climate-data-guide-kr/pull/27",
     "number": 27
   },
-  "pending": [
-    {
-      "url": "https://github.com/jhsim0928/climate-data-guide-kr/pull/27",
-      "title": "공지 후보 2026-11-03: CryoSat-2 1건",
-      "opened": "2026-11-03"
-    }
-  ],
+  "pending": [],
   "ignored": [
     {
       "datasets": [
@@ -551,6 +545,7 @@
     }
   ],
   "notes": [
+    "PR #27(CryoSat-2 공지 후보)은 2026-11-03 12:56(한국 시간)에 운영자가 머지했습니다. 열린 공지 후보 PR은 없습니다.",
     "직접 확인(12:50): Earthdata 공지 목록·MERRA-2 뉴스·CERA-20C·GES DISC api/alerts 를 WebFetch로 열었습니다. MERRA-2·CERA-20C·GES DISC(IMERG·MERRA-2·GPCP·GLDAS)는 새 공지 없음. Earthdata의 최근 7일 관련 글은 모두 이미 사이트에 있음('VIIRS Processing Delay'는 10/30 이후 갱신·해결 없음).",
     "아침 보류 4건 재판단: CryoSat 해빙 농도 보조자료 변경 → 원문 확인 후 공지 후보(PR #27). S-NPP Update #4 → 11/2 15:40 UTC 종료 확인뿐이라 새 공지 아님. Giovanni 11/4 점검 → 공지 아님. NSIDC Polar Pathfinder 갱신 → 사이트 기존 공지와 같은 내용.",
     "운영자 확인 필요(자료 설명 갱신 제안): S-NPP 전달이 11/2 15:40 UTC에 실제로 끝났으므로(NESDIS Update #4) viirs-* 9개 자료의 status_note '끝나므로/끝낸다고' 같은 예정형 문구를 완료형으로 고칠 때입니다. 특히 viirs-burned-area status_note는 아직 '11월 1일 13시(UTC)'로 적혀 있습니다. 공지가 아닌 설명 수정이라 PR에 넣지 않았습니다. (https://www.nesdis.noaa.gov/news/update-4-cessation-of-suomi-national-polar-orbiting-partnership-s-npp-data-users-november-02-2026-1540-utc-and-decommissioning-issued-november-2-2026-1800-utc)",
