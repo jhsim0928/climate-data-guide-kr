@@ -39,6 +39,27 @@ Product Roadmap
 Get Inspired
 Service Commitments and Licence
 Contact Us
+[OC-1118] OCEANCOLOUR_(BAL|MED)_BGC_(L3|L4)_NRT - degraded data on 2026-11-01
+In progress
+2026-11-02 20:00 UTC - In progress
+Due to an upstream ground segment issue affecting Sentinel-3A and Sentinel-3B, the following product's datasets are degraded on 2026-11-01
+OCEANCOLOUR_BAL_BGC_L3_NRT_009_131:
+cmems_obs-oc_bal_bgc-plankton_nrt_l3-olci-300m_P1D
+cmems_obs-oc_bal_bgc-reflectance_nrt_l3-olci-300m_P1D
+cmems_obs-oc_bal_bgc-transp_nrt_l3-olci-300m_P1D
+cmems_obs-oc_bal_bgc-optics_nrt_l3-olci-300m_P1D
+OCEANCOLOUR_MED_BGC_L3_NRT_009_141
+cmems_obs-oc_med_bgc-plankton_nrt_l3-olci-300m_P1D
+cmems_obs-oc_med_bgc-reflectance_nrt_l3-olci-300m_P1D
+cmems_obs-oc_med_bgc-transp_nrt_l3-olci-300m_P1D
+OCEANCOLOUR_MED_BGC_L4_NRT_009_142
+cmems_obs-oc_med_bgc-plankton_nrt_l4-olci-300m_P1M
+cmems_obs-oc_med_bgc-transp_nrt_l4-olci-300m_P1M
+The files will be reprocessed if upstream recovery happens before retirement of the NRT data.
+We apologize for any inconvenience this may cause.
+If you have any question, please contact
+Copernicus Marine User Support
+Copy a link to this article
 [MOB-403] MULTIOBS_GLO_BGC_SURFACE_NRT_015_016 - Incomplete product delivery since 2026-11-01
 In progress
 2026-11-01 12:00 UTC - In progress
@@ -54,6 +75,8 @@ Copernicus Marine User Support
 Copy a link to this article
 [OC-1116] OCEANCOLOUR_(ATL|GLO)_BGC_(L3|L4)_NRT - Missing data since 2026-10-30
 In progress
+2026-11-04 14:00 UTC - In progress - update
+The incident is not over due to an extended maintenance. Best estimate for a resolution is 2026-11-05.
 2026-10-30 17:00 UTC - In progress
 Due to an unplanned maintenance, the NRT production is interrupted for the time of the maintenance which should last a couple days.
 Impacted products:
@@ -74,14 +97,6 @@ Due to upstream infrastructure changes, Danish in-situ sea level data is not ava
 INSITU_BAL_PHYBGCWAV_DISCRETE_MYNRT_013_032
 INSITU_GLO_PHYBGCWAV_DISCRETE_MYNRT_013_030
 INSITU_NWS_PHYBGCWAV_DISCRETE_MYNRT_013_036
-We apologize for any inconvenience this may cause.
-If you have any question, please contact
-Copernicus Marine User Support
-Copy a link to this article
-[WAV-315] WAVE_GLO_PHY_SWH_L3_NRT - delayed CFOSAT dataset since 2026-10-20
-In progress
-2026-10-20 12:00 UTC - In progress
-Due to the unavailability of upstream data, delivery of dataset cmems_obs-wave_glo_phy-swh_nrt_cfo-l3_PT1S from WAVE_GLO_PHY_SWH_L3_NRT_014_001 is interrupted since 2026-10-20.
 We apologize for any inconvenience this may cause.
 If you have any question, please contact
 Copernicus Marine User Support
@@ -324,6 +339,17 @@ We apologize for any inconvenience this may cause.
 If you have any question, please contact
 Copernicus Marine User Support
 Copy a link to this article
+[WAV-315] WAVE_GLO_PHY_SWH_L3_NRT - delayed CFOSAT dataset since 2026-10-20
+Anomaly
+2026-10-20 12:00 UTC - In progress - Anomaly
+Production is nominal since 2026-11-02.
+However, data from 2026-10-20 to 2026-11-01 will not be recovered.
+2026-10-20 12:00 UTC - In progress
+Due to the unavailability of upstream data, delivery of dataset cmems_obs-wave_glo_phy-swh_nrt_cfo-l3_PT1S from WAVE_GLO_PHY_SWH_L3_NRT_014_001 is interrupted since 2026-10-20.
+We apologize for any inconvenience this may cause.
+If you have any question, please contact
+Copernicus Marine User Support
+Copy a link to this article
 [WAV-308] WAVE_GLO_PHY_SWH_L3_NRT - missing HY-2B data from 2026-10-02 to 2026-10-12
 Anomaly
 2026-10-19 11:00 UTC - Anomaly
@@ -364,22 +390,6 @@ cmems_obs-wind_glo_phy_nrt_l3-hy2c-hscat-asc-0.25deg_P1D-i
 cmems_obs-wind_glo_phy_nrt_l3-hy2c-hscat-des-0.25deg_P1D-i
 cmems_obs-wind_glo_phy_nrt_l3-hy2c-hscat-asc-0.5deg_P1D-i
 cmems_obs-wind_glo_phy_nrt_l3-hy2c-hscat-des-0.5deg_P1D-i
-We apologize for any inconvenience this may cause.
-If you have any question, please contact
-Copernicus Marine User Support
-Copy a link to this article
-[WND-263] WIND_GLO_PHY_L3_NRT - Some datasets delayed since 2026-08-27
-Anomaly
-2026-09-09 12:00 UTC - In progress - Anomaly
-Upstream data delivery has resumed. Production has resumed with a longer than nominal timeliness.
-Data between 2026-08-27 and 2026-09-03 included will not be recovered. Data from 2026-09-04 onwards is being produced and delivered.
-2026-08-27 12:00 UTC - In progress
-Due to the unavailability of upstream data, the FY-3E WindRAD wind data in WIND_GLO_PHY_L3_NRT_012_002 are not available since 27 August 2026.
-The following datasets are affected by the incident:
-cmems_obs-wind_glo_phy_nrt_l3-fy3e-windrad-asc-0.25deg_P1D-i
-cmems_obs-wind_glo_phy_nrt_l3-fy3e-windrad-des-0.25deg_P1D-i
-cmems_obs-wind_glo_phy_nrt_l3-fy3e-windrad-asc-0.5deg_P1D-i
-cmems_obs-wind_glo_phy_nrt_l3-fy3e-windrad-des-0.5deg_P1D-i
 We apologize for any inconvenience this may cause.
 If you have any question, please contact
 Copernicus Marine User Support
