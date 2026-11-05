@@ -291,6 +291,13 @@ transitions:
         url: https://nsidc.org/sites/default/files/documents/user-guide/multi_vnp10a1-v002-userguide.pdf
 
 notices:
+  - date: "2026-10-29"
+    level: warning
+    title: Suomi NPP VIIRS 궤도 77742 자료 공백 (10월 28일 22:00~23:48 UTC)
+    body: >-
+      NASA Earthdata는 Suomi NPP VIIRS 궤도 77742 대부분에 자료 공백이 있다고 알렸습니다(Land SIPS 기준 2026년 10월 28일 22:00~23:48 UTC, LAADS·LP·NSIDC·OB.DAAC).
+      공지는 '해결됨'으로 표시됐으나 자료 복구 여부는 밝히지 않았으므로, 이 시간대 SNPP 자료를 쓸 때는 결측을 확인하세요.
+    source: https://www.earthdata.nasa.gov/data/alerts-outages/suomi-npp-data-outage
   - date: "2026-10-30"
     level: warning
     title: 10월 27일 VIIRS Level 0 자료 공백으로 하위 산출물 처리 지연 (해결 시점 미정)
@@ -361,4 +368,4 @@ watch_urls:
   - https://nsidc.org/data/viirs/news
   - https://nsidc.org/data/vnp10a1/versions/2
 
-last_verified: "2026-11-02"
+last_verified: "2026-11-05"

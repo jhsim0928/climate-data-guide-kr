@@ -238,6 +238,13 @@ transitions:
         url: https://lpdaac.usgs.gov/documents/2124/VNP64_User_Guide_v1.1.pdf
 
 notices:
+  - date: "2026-10-29"
+    level: warning
+    title: Suomi-NPP data outage
+    body: >-
+      There is a known data outage for SNPP VIIRS impacting most of orbit 77742.
+      In the Land SIPS system, the gap covers 10/28/26 22:00 – 23:48 (inclusive). Status: Resolved Outage (Oct. 29, 2026).
+    source: https://www.earthdata.nasa.gov/data/alerts-outages/suomi-npp-data-outage
   - date: "2026-10-30"
     level: warning
     title: VIIRS Processing Delay
@@ -314,4 +321,4 @@ watch_urls:
   - https://www.earthdata.nasa.gov/data/alerts-outages/suomi-npp-data-product-delivery-cease-november-1-2026
   - https://www.earthdata.nasa.gov/data/alerts-outages
 
-last_verified: "2026-11-02"
+last_verified: "2026-11-05"

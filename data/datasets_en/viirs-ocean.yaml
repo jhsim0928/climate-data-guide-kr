@@ -262,6 +262,13 @@ citations:
     NASA asks users to cite the dataset DOI for each product and platform (Suomi NPP, NOAA-20, NOAA-21) actually used. Also state the processing version (R2022.0 or 2025.0; SST 2016.2 or 2024.0) and whether the files were NRT.
 
 notices:
+  - date: "2026-10-29"
+    level: warning
+    title: Suomi-NPP data outage
+    body: >-
+      There is a known data outage for SNPP VIIRS impacting most of orbit 77742.
+      In the Land SIPS system, the gap covers 10/28/26 22:00 – 23:48 (inclusive). Status: Resolved Outage (Oct. 29, 2026).
+    source: https://www.earthdata.nasa.gov/data/alerts-outages/suomi-npp-data-outage
   - date: "2026-10-30"
     level: warning
     title: VIIRS Processing Delay
@@ -392,4 +399,4 @@ watch_urls:
   - https://oceancolor.gsfc.nasa.gov/data/reprocessing/
   - https://www.nesdis.noaa.gov/news/cessation-of-suomi-national-polar-orbiting-partnership-s-npp-data-users-onafter-november-2-2026
 
-last_verified: "2026-11-02"
+last_verified: "2026-11-05"
