@@ -1,16 +1,107 @@
 {
   "date": "2026-11-05",
-  "reviewed_at": "2026-11-05T08:17:05+09:00",
-  "summary": "공지 페이지 276곳 중 30곳이 바뀌었으나 모두 표시 변화이거나 다른 자료 관련이라 새 공지 후보는 없습니다. 이번 실행에서는 WebFetch가 막혀 Earthdata·MERRA-2·CERA-20C·GES DISC 직접 확인을 하지 못했습니다(운영자 확인 필요).",
+  "reviewed_at": "2026-11-05T12:55:00+09:00",
+  "summary": "공지 페이지 276곳 중 30곳이 바뀌었으나 자동 감지분에는 새 공지가 없었고, 낮 직접 확인(Earthdata·MERRA-2·CERA-20C·GES DISC)에서 Earthdata 'Suomi-NPP data outage'(10/29) 1건을 VIIRS 9종 새 공지 후보로 올렸습니다(PR #29).",
   "watch": {
     "date": "2026-11-05",
     "checked": 276,
     "ok": 251,
     "changed": 30
   },
-  "candidates": [],
-  "pr": null,
-  "pending": [],
+  "candidates": [
+    {
+      "dataset": "VIIRS aerosol",
+      "dataset_id": "viirs-aerosol",
+      "level": "warning",
+      "date": "2026-10-29",
+      "title": "Suomi NPP VIIRS 궤도 77742 자료 공백 (10월 28일 22:00~23:48 UTC)",
+      "source": "https://www.earthdata.nasa.gov/data/alerts-outages/suomi-npp-data-outage",
+      "why": "SNPP VIIRS 궤도 77742 대부분이 빠져(Land SIPS 기준 10/28 22:00~23:48 UTC) 이 시간대 자료에 결측이 있을 수 있음, 복구 여부는 원문에 없음"
+    },
+    {
+      "dataset": "VIIRS albedo",
+      "dataset_id": "viirs-albedo",
+      "level": "warning",
+      "date": "2026-10-29",
+      "title": "Suomi NPP VIIRS 궤도 77742 자료 공백 (10월 28일 22:00~23:48 UTC)",
+      "source": "https://www.earthdata.nasa.gov/data/alerts-outages/suomi-npp-data-outage",
+      "why": "SNPP VIIRS 궤도 77742 대부분이 빠져(Land SIPS 기준 10/28 22:00~23:48 UTC) 이 시간대 자료에 결측이 있을 수 있음, 복구 여부는 원문에 없음"
+    },
+    {
+      "dataset": "VIIRS burned-area",
+      "dataset_id": "viirs-burned-area",
+      "level": "warning",
+      "date": "2026-10-29",
+      "title": "Suomi NPP VIIRS 궤도 77742 자료 공백 (10월 28일 22:00~23:48 UTC)",
+      "source": "https://www.earthdata.nasa.gov/data/alerts-outages/suomi-npp-data-outage",
+      "why": "SNPP VIIRS 궤도 77742 대부분이 빠져(Land SIPS 기준 10/28 22:00~23:48 UTC) 이 시간대 자료에 결측이 있을 수 있음, 복구 여부는 원문에 없음"
+    },
+    {
+      "dataset": "VIIRS cloud",
+      "dataset_id": "viirs-cloud",
+      "level": "warning",
+      "date": "2026-10-29",
+      "title": "Suomi NPP VIIRS 궤도 77742 자료 공백 (10월 28일 22:00~23:48 UTC)",
+      "source": "https://www.earthdata.nasa.gov/data/alerts-outages/suomi-npp-data-outage",
+      "why": "SNPP VIIRS 궤도 77742 대부분이 빠져(Land SIPS 기준 10/28 22:00~23:48 UTC) 이 시간대 자료에 결측이 있을 수 있음, 복구 여부는 원문에 없음"
+    },
+    {
+      "dataset": "VIIRS lai",
+      "dataset_id": "viirs-lai",
+      "level": "warning",
+      "date": "2026-10-29",
+      "title": "Suomi NPP VIIRS 궤도 77742 자료 공백 (10월 28일 22:00~23:48 UTC)",
+      "source": "https://www.earthdata.nasa.gov/data/alerts-outages/suomi-npp-data-outage",
+      "why": "SNPP VIIRS 궤도 77742 대부분이 빠져(Land SIPS 기준 10/28 22:00~23:48 UTC) 이 시간대 자료에 결측이 있을 수 있음, 복구 여부는 원문에 없음"
+    },
+    {
+      "dataset": "VIIRS lst",
+      "dataset_id": "viirs-lst",
+      "level": "warning",
+      "date": "2026-10-29",
+      "title": "Suomi NPP VIIRS 궤도 77742 자료 공백 (10월 28일 22:00~23:48 UTC)",
+      "source": "https://www.earthdata.nasa.gov/data/alerts-outages/suomi-npp-data-outage",
+      "why": "SNPP VIIRS 궤도 77742 대부분이 빠져(Land SIPS 기준 10/28 22:00~23:48 UTC) 이 시간대 자료에 결측이 있을 수 있음, 복구 여부는 원문에 없음"
+    },
+    {
+      "dataset": "VIIRS ocean",
+      "dataset_id": "viirs-ocean",
+      "level": "warning",
+      "date": "2026-10-29",
+      "title": "Suomi NPP VIIRS 궤도 77742 자료 공백 (10월 28일 22:00~23:48 UTC)",
+      "source": "https://www.earthdata.nasa.gov/data/alerts-outages/suomi-npp-data-outage",
+      "why": "SNPP VIIRS 궤도 77742 대부분이 빠져(Land SIPS 기준 10/28 22:00~23:48 UTC) 이 시간대 자료에 결측이 있을 수 있음, 복구 여부는 원문에 없음"
+    },
+    {
+      "dataset": "VIIRS snow",
+      "dataset_id": "viirs-snow",
+      "level": "warning",
+      "date": "2026-10-29",
+      "title": "Suomi NPP VIIRS 궤도 77742 자료 공백 (10월 28일 22:00~23:48 UTC)",
+      "source": "https://www.earthdata.nasa.gov/data/alerts-outages/suomi-npp-data-outage",
+      "why": "SNPP VIIRS 궤도 77742 대부분이 빠져(Land SIPS 기준 10/28 22:00~23:48 UTC) 이 시간대 자료에 결측이 있을 수 있음, 복구 여부는 원문에 없음"
+    },
+    {
+      "dataset": "VIIRS vi",
+      "dataset_id": "viirs-vi",
+      "level": "warning",
+      "date": "2026-10-29",
+      "title": "Suomi NPP VIIRS 궤도 77742 자료 공백 (10월 28일 22:00~23:48 UTC)",
+      "source": "https://www.earthdata.nasa.gov/data/alerts-outages/suomi-npp-data-outage",
+      "why": "SNPP VIIRS 궤도 77742 대부분이 빠져(Land SIPS 기준 10/28 22:00~23:48 UTC) 이 시간대 자료에 결측이 있을 수 있음, 복구 여부는 원문에 없음"
+    }
+  ],
+  "pr": {
+    "url": "https://github.com/jhsim0928/climate-data-guide-kr/pull/29",
+    "number": 29
+  },
+  "pending": [
+    {
+      "url": "https://github.com/jhsim0928/climate-data-guide-kr/pull/29",
+      "title": "공지 후보 2026-11-05: VIIRS 9종 Suomi NPP 자료 공백 1건",
+      "opened": "2026-11-05"
+    }
+  ],
   "ignored": [
     {
       "datasets": [
@@ -258,15 +349,6 @@
       "last_ok": null
     },
     {
-      "url": "https://www.ecmwf.int/en/forecasts/datasets/reanalysis-datasets/cera-20c",
-      "datasets": [
-        "cera20c"
-      ],
-      "error": "HTTP 401 / HTTP 401 (브라우저)",
-      "fails": 30,
-      "last_ok": null
-    },
-    {
       "url": "https://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=2187",
       "datasets": [
         "gimms-ndvi"
@@ -282,22 +364,6 @@
       ],
       "error": "브라우저로도 본문이 비어 있음",
       "fails": 23,
-      "last_ok": null
-    },
-    {
-      "url": "https://www.earthdata.nasa.gov/data/alerts-outages",
-      "datasets": [
-        "gldas",
-        "imerg",
-        "modis-albedo",
-        "modis-burned-area",
-        "modis-landcover",
-        "modis-snow",
-        "viirs-albedo",
-        "viirs-burned-area"
-      ],
-      "error": "HTTP 403 / HTTP 403 (브라우저)",
-      "fails": 30,
       "last_ok": null
     },
     {
@@ -318,15 +384,6 @@
       ],
       "error": "HTTP 404 / HTTP 404 (브라우저)",
       "fails": 23,
-      "last_ok": null
-    },
-    {
-      "url": "https://www.earthdata.nasa.gov/data/projects/merra-2/news",
-      "datasets": [
-        "merra2"
-      ],
-      "error": "HTTP 403 / HTTP 403 (브라우저)",
-      "fails": 30,
       "last_ok": null
     },
     {
@@ -470,8 +527,9 @@
     }
   ],
   "notes": [
-    "운영자 확인 필요: 예약 실행 중 WebFetch 권한 요청에 응답이 없어(PROVENANCE_REQUIRED) 직접 확인 주소를 열지 못했습니다 — https://www.earthdata.nasa.gov/data/alerts-outages , https://www.earthdata.nasa.gov/data/projects/merra-2/news , https://www.ecmwf.int/en/forecasts/datasets/reanalysis-datasets/cera-20c , https://disc.gsfc.nasa.gov/api/alerts?page=1&size=10 . 그래서 이 주소들은 errors 에 그대로 남겼습니다. 특히 Earthdata 'VIIRS Processing Delay'(10/30) 해결 여부와 11/3 이후 새 글은 브라우저로 확인이 필요합니다.",
-    "GES DISC 공지 목록(저장 사본)에는 11/2 이후 새 글이 없습니다(Giovanni 11/4 19:00 UTC 30분 점검은 이미 지나 공지하지 않음).",
+    "직접 확인(12:50, WebFetch): Earthdata 공지 목록·MERRA-2 뉴스·CERA-20C·GES DISC 공지 API를 모두 열었습니다. 새 공지 후보는 'Suomi-NPP data outage'(10/29, SNPP VIIRS 궤도 77742 공백, LAADS·LP·NSIDC·OB.DAAC) 1건 → VIIRS 9종 PR #29.",
+    "직접 확인: 'VIIRS Processing Delay'(10/30)는 아직 'Active Outage, Resolved TBD'로 해결되지 않았고 사이트에 이미 공지되어 있습니다. 'Reminder: New Suomi NPP Observations to Cease'는 11/2 갱신에서 15:40 UTC 종료를 확인했으며 이미 공지되어 있습니다. NISAR 처리 중단(10/30)·Sentinel-1D·Earthdata Forum 점검은 사이트 자료와 무관합니다.",
+    "직접 확인: MERRA-2 뉴스·CERA-20C 페이지에는 새 공지가 없습니다. GES DISC 공지 API에는 10/29 이후 새로 만들어지거나 갱신된 공지가 없습니다(최신은 10/26 TROPOMI L2_NP 중단, 이미 공지). 단 API 응답 뒷부분은 요약으로만 읽혔습니다.",
     "어제 남긴 'viirs-* status_note 완료형으로 고치기' 제안은 아직 반영되지 않았습니다(설명 수정이라 PR에 넣지 않음).",
     "errors 의 earthdata.nasa.gov 카탈로그·asdc·oceancolor 등은 7일 넘게 실패 중이나 사람 브라우저로는 열리는 주소라 watch_urls 교체 제안은 하지 않습니다(gosat-gw·tropomi.eu·gportal 404는 이전과 같음)."
   ]
