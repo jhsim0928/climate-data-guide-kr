@@ -1,124 +1,56 @@
 {
-  "date": "2026-11-05",
-  "reviewed_at": "2026-11-05T12:55:00+09:00",
-  "summary": "공지 페이지 276곳 중 30곳이 바뀌었으나 자동 감지분에는 새 공지가 없었고, 낮 직접 확인(Earthdata·MERRA-2·CERA-20C·GES DISC)에서 Earthdata 'Suomi-NPP data outage'(10/29) 1건을 VIIRS 9종 새 공지 후보로 올렸습니다(PR #29).",
+  "date": "2026-11-06",
+  "reviewed_at": "2026-11-06T08:19:09+09:00",
+  "summary": "공지 페이지 276곳 중 35곳이 바뀌었고, 그중 1건(GOSAT-2 FTS-2 관측 일시 중단)을 새 공지 후보로 올렸습니다(PR #30). Earthdata·MERRA-2·CERA-20C·GES DISC 직접 확인은 WebFetch가 막혀 하지 못했습니다.",
   "watch": {
-    "date": "2026-11-05",
+    "date": "2026-11-06",
     "checked": 276,
-    "ok": 251,
-    "changed": 30
+    "ok": 250,
+    "changed": 36
   },
   "candidates": [
     {
-      "dataset": "VIIRS aerosol",
-      "dataset_id": "viirs-aerosol",
-      "level": "warning",
-      "date": "2026-10-29",
-      "title": "Suomi NPP VIIRS 궤도 77742 자료 공백 (10월 28일 22:00~23:48 UTC)",
-      "source": "https://www.earthdata.nasa.gov/data/alerts-outages/suomi-npp-data-outage",
-      "why": "SNPP VIIRS 궤도 77742 대부분이 빠져(Land SIPS 기준 10/28 22:00~23:48 UTC) 이 시간대 자료에 결측이 있을 수 있음, 복구 여부는 원문에 없음"
-    },
-    {
-      "dataset": "VIIRS albedo",
-      "dataset_id": "viirs-albedo",
-      "level": "warning",
-      "date": "2026-10-29",
-      "title": "Suomi NPP VIIRS 궤도 77742 자료 공백 (10월 28일 22:00~23:48 UTC)",
-      "source": "https://www.earthdata.nasa.gov/data/alerts-outages/suomi-npp-data-outage",
-      "why": "SNPP VIIRS 궤도 77742 대부분이 빠져(Land SIPS 기준 10/28 22:00~23:48 UTC) 이 시간대 자료에 결측이 있을 수 있음, 복구 여부는 원문에 없음"
-    },
-    {
-      "dataset": "VIIRS burned-area",
-      "dataset_id": "viirs-burned-area",
-      "level": "warning",
-      "date": "2026-10-29",
-      "title": "Suomi NPP VIIRS 궤도 77742 자료 공백 (10월 28일 22:00~23:48 UTC)",
-      "source": "https://www.earthdata.nasa.gov/data/alerts-outages/suomi-npp-data-outage",
-      "why": "SNPP VIIRS 궤도 77742 대부분이 빠져(Land SIPS 기준 10/28 22:00~23:48 UTC) 이 시간대 자료에 결측이 있을 수 있음, 복구 여부는 원문에 없음"
-    },
-    {
-      "dataset": "VIIRS cloud",
-      "dataset_id": "viirs-cloud",
-      "level": "warning",
-      "date": "2026-10-29",
-      "title": "Suomi NPP VIIRS 궤도 77742 자료 공백 (10월 28일 22:00~23:48 UTC)",
-      "source": "https://www.earthdata.nasa.gov/data/alerts-outages/suomi-npp-data-outage",
-      "why": "SNPP VIIRS 궤도 77742 대부분이 빠져(Land SIPS 기준 10/28 22:00~23:48 UTC) 이 시간대 자료에 결측이 있을 수 있음, 복구 여부는 원문에 없음"
-    },
-    {
-      "dataset": "VIIRS lai",
-      "dataset_id": "viirs-lai",
-      "level": "warning",
-      "date": "2026-10-29",
-      "title": "Suomi NPP VIIRS 궤도 77742 자료 공백 (10월 28일 22:00~23:48 UTC)",
-      "source": "https://www.earthdata.nasa.gov/data/alerts-outages/suomi-npp-data-outage",
-      "why": "SNPP VIIRS 궤도 77742 대부분이 빠져(Land SIPS 기준 10/28 22:00~23:48 UTC) 이 시간대 자료에 결측이 있을 수 있음, 복구 여부는 원문에 없음"
-    },
-    {
-      "dataset": "VIIRS lst",
-      "dataset_id": "viirs-lst",
-      "level": "warning",
-      "date": "2026-10-29",
-      "title": "Suomi NPP VIIRS 궤도 77742 자료 공백 (10월 28일 22:00~23:48 UTC)",
-      "source": "https://www.earthdata.nasa.gov/data/alerts-outages/suomi-npp-data-outage",
-      "why": "SNPP VIIRS 궤도 77742 대부분이 빠져(Land SIPS 기준 10/28 22:00~23:48 UTC) 이 시간대 자료에 결측이 있을 수 있음, 복구 여부는 원문에 없음"
-    },
-    {
-      "dataset": "VIIRS ocean",
-      "dataset_id": "viirs-ocean",
-      "level": "warning",
-      "date": "2026-10-29",
-      "title": "Suomi NPP VIIRS 궤도 77742 자료 공백 (10월 28일 22:00~23:48 UTC)",
-      "source": "https://www.earthdata.nasa.gov/data/alerts-outages/suomi-npp-data-outage",
-      "why": "SNPP VIIRS 궤도 77742 대부분이 빠져(Land SIPS 기준 10/28 22:00~23:48 UTC) 이 시간대 자료에 결측이 있을 수 있음, 복구 여부는 원문에 없음"
-    },
-    {
-      "dataset": "VIIRS snow",
-      "dataset_id": "viirs-snow",
-      "level": "warning",
-      "date": "2026-10-29",
-      "title": "Suomi NPP VIIRS 궤도 77742 자료 공백 (10월 28일 22:00~23:48 UTC)",
-      "source": "https://www.earthdata.nasa.gov/data/alerts-outages/suomi-npp-data-outage",
-      "why": "SNPP VIIRS 궤도 77742 대부분이 빠져(Land SIPS 기준 10/28 22:00~23:48 UTC) 이 시간대 자료에 결측이 있을 수 있음, 복구 여부는 원문에 없음"
-    },
-    {
-      "dataset": "VIIRS vi",
-      "dataset_id": "viirs-vi",
-      "level": "warning",
-      "date": "2026-10-29",
-      "title": "Suomi NPP VIIRS 궤도 77742 자료 공백 (10월 28일 22:00~23:48 UTC)",
-      "source": "https://www.earthdata.nasa.gov/data/alerts-outages/suomi-npp-data-outage",
-      "why": "SNPP VIIRS 궤도 77742 대부분이 빠져(Land SIPS 기준 10/28 22:00~23:48 UTC) 이 시간대 자료에 결측이 있을 수 있음, 복구 여부는 원문에 없음"
+      "dataset": "GOSAT (GOSAT-2·GOSAT-GW)",
+      "dataset_id": "gosat",
+      "level": "info",
+      "date": "2026-11-05",
+      "title": "GOSAT-2 FTS-2 관측 일시 중단 (2026-10-29~11-02)",
+      "source": "https://www.eorc.jaxa.jp/GOSAT/index.html",
+      "why": "GOSAT-2 FTS-2 관측이 10/29~11/02 멈춰 2026-10-30 13:09:40 ~ 11-02 00:36:59(UT) 자료가 제공되지 않음"
     }
   ],
   "pr": {
-    "url": "https://github.com/jhsim0928/climate-data-guide-kr/pull/29",
-    "number": 29
+    "url": "https://github.com/jhsim0928/climate-data-guide-kr/pull/30",
+    "number": 30
   },
-  "pending": [],
+  "pending": [
+    {
+      "url": "https://github.com/jhsim0928/climate-data-guide-kr/pull/30",
+      "title": "공지 후보 2026-11-06: GOSAT 1건",
+      "opened": "2026-11-06"
+    }
+  ],
   "ignored": [
     {
       "datasets": [
-        "ascat",
-        "osisaf-drift",
-        "osisaf-sic"
+        "airs"
       ],
-      "url": "https://osi-saf.eumetsat.int/community/list-of-service-messages",
-      "reason": "새 메시지 'IASI METOP-B calibration planned on 2026-11-05'는 IASI 기기 보정으로 ASCAT·OSI SAF 해빙 자료와 무관"
+      "url": "https://aqua.nasa.gov/",
+      "reason": "NASA 뉴스 목록 변화, 해당 자료와 무관"
     },
     {
       "datasets": [
         "ascat"
       ],
       "url": "https://scatterometer.knmi.nl/ascat_b_osi_25_prod/",
-      "reason": "제품 페이지의 갱신 시각 표시만 바뀜"
+      "reason": "갱신 시각 표시만 바뀜"
     },
     {
       "datasets": [
         "ascat"
       ],
       "url": "https://scatterometer.knmi.nl/ascat_c_osi_25_prod/",
-      "reason": "제품 페이지의 갱신 시각 표시만 바뀜"
+      "reason": "갱신 시각 표시만 바뀜"
     },
     {
       "datasets": [
@@ -126,21 +58,21 @@
         "omi"
       ],
       "url": "https://science.nasa.gov/mission/aura/",
-      "reason": "NASA 일반 뉴스 목록만 바뀜"
+      "reason": "NASA 뉴스 목록 변화, 해당 자료와 무관"
     },
     {
       "datasets": [
         "berkeley-earth"
       ],
       "url": "https://essd.copernicus.org/preprints/essd-2026-412/",
-      "reason": "논문 조회수·갱신일 표시만 바뀜"
+      "reason": "논문 조회수 표시만 바뀜"
     },
     {
       "datasets": [
         "calipso"
       ],
       "url": "https://science.nasa.gov/mission/calipso/",
-      "reason": "NASA 일반 뉴스 목록만 바뀜"
+      "reason": "NASA 뉴스 목록 변화, 해당 자료와 무관"
     },
     {
       "datasets": [
@@ -152,28 +84,58 @@
         "oras6"
       ],
       "url": "https://forum.ecmwf.int/c/announcements/5",
-      "reason": "새 글 'E-OBS daily gridded data: new dataset implementation'은 E-OBS 관련으로 감시 자료(ERA5·ORAS5 등)와 무관"
+      "reason": "새 글은 E-OBS 신규 구현(C3S)·ADS 이용약관(CAMS)으로 감시 자료와 무관"
+    },
+    {
+      "datasets": [
+        "ceres-ebaf",
+        "ceres-syn1deg"
+      ],
+      "url": "https://ceres.larc.nasa.gov/data/",
+      "reason": "NOAA-20 SSF 제품 공개 목록으로 EBAF·SYN1deg와 무관"
+    },
+    {
+      "datasets": [
+        "cfsr-cfsv2",
+        "core",
+        "ncep-ncar-r1"
+      ],
+      "url": "https://www.weather.gov/notification/",
+      "reason": "SCN26-47은 NAM·SREF·HREF 등 종료 안내로 CFSR/CFSv2·R1과 무관"
     },
     {
       "datasets": [
         "cfsr-cfsv2"
       ],
       "url": "https://gdex.ucar.edu/datasets/d094000/",
-      "reason": "자료 기간 끝 날짜·용량이 정상 갱신됨"
+      "reason": "자료 기간·용량 표시 갱신(정상 갱신)"
+    },
+    {
+      "datasets": [
+        "cmorph",
+        "ersst-v6",
+        "ersst",
+        "gpcp",
+        "oisst",
+        "persiann-cdr",
+        "woa23"
+      ],
+      "url": "https://www.ncei.noaa.gov/alerts",
+      "reason": "WODSelect(World Ocean Database 검색 도구) 속도 저하 안내로 감시 자료(WOA23 등) 자체의 문제가 아님"
     },
     {
       "datasets": [
         "cobe-sst3"
       ],
       "url": "https://climatedataguide.ucar.edu/climate-data/sst-data-cobev3-centennial-situ-observation-based-estimates-version-3",
-      "reason": "페이지 갱신 날짜 표시만 바뀜"
+      "reason": "페이지 갱신 날짜만 바뀜"
     },
     {
       "datasets": [
         "cs3smos"
       ],
       "url": "https://data.marine.copernicus.eu/product/SEAICE_GLO_PHY_L4_NRT_011_014/description",
-      "reason": "자료 기간 끝 날짜가 정상 갱신됨"
+      "reason": "자료 기간·용량 표시 갱신(정상 갱신)"
     },
     {
       "datasets": [
@@ -184,142 +146,157 @@
         "topaz4b"
       ],
       "url": "https://marine.copernicus.eu/user-corner/user-notification-service",
-      "reason": "갱신된 사고 글(OC-1116·OC-1118 해색 NRT, WAV-309·WAV-315 파랑 CFOSAT)은 해색·파랑 제품으로 DUACS·GLORYS12·neXtSIM·OSTIA·TOPAZ4b와 무관"
+      "reason": "갱신된 사건은 해색(OC-1116)·현장 해수면(INS-851)·해빙 SEAICE L3/L4(ICE-812)·파랑 스펙트럼(WAV-309) 제품으로 감시 자료(DUACS·GLORYS12·neXtSIM·OSTIA·TOPAZ4b)와 무관"
     },
     {
       "datasets": [
-        "era5-land",
-        "esa-cci-landcover"
+        "ghrsst-mur",
+        "grace",
+        "smap-sss",
+        "swot"
       ],
-      "url": "https://forum.ecmwf.int/c/announcements/c3s-announcements/7",
-      "reason": "새 글 'E-OBS daily gridded data: new dataset implementation'은 E-OBS 관련으로 ERA5-Land·ESA CCI 토지피복과 무관"
+      "url": "https://podaac.jpl.nasa.gov/announcements",
+      "reason": "목록 문구 잘림 표시만 바뀜(SWOT GIS 서비스 안내 등 기존 글)"
     },
     {
       "datasets": [
         "ghrsst-mur"
       ],
       "url": "https://podaac.jpl.nasa.gov/dataset/MUR-JPL-L4-GLOB-v4.1",
-      "reason": "자료 기간 끝 날짜가 정상 갱신됨"
+      "reason": "자료 기간·용량 표시 갱신(정상 갱신)"
     },
     {
       "datasets": [
         "gimms-ndvi"
       ],
       "url": "https://zenodo.org/records/8253971",
-      "reason": "용량 표시만 바뀜"
+      "reason": "자료 기간·용량 표시 갱신(정상 갱신)"
     },
     {
       "datasets": [
         "icesat2-sit"
       ],
       "url": "https://nsidc.org/data/is2sitmogr4/versions/4",
-      "reason": "인용문의 접속 날짜(Date Accessed)만 바뀜"
+      "reason": "인용문 접속일 표시만 바뀜"
     },
     {
       "datasets": [
         "icesat2-sit"
       ],
       "url": "https://nsidc.org/data/atl20/versions/5",
-      "reason": "인용문의 접속 날짜(Date Accessed)만 바뀜"
+      "reason": "인용문 접속일 표시만 바뀜"
     },
     {
       "datasets": [
         "icesat2-sit"
       ],
       "url": "https://nsidc.org/data/atl10/versions/7",
-      "reason": "인용문의 접속 날짜(Date Accessed)만 바뀜"
-    },
-    {
-      "datasets": [
-        "imerg",
-        "oco2"
-      ],
-      "url": "https://disc.gsfc.nasa.gov/information/alerts",
-      "reason": "목록 요약 문구만 바뀜(S-NPP 종료 알림 11/2 갱신 — 사이트에 이미 공지, Giovanni 11/4 30분 점검은 이미 지남, TROPOMI L2_NP 중단은 이미 공지) (저장 사본으로 판단)"
+      "reason": "인용문 접속일 표시만 바뀜"
     },
     {
       "datasets": [
         "its-live"
       ],
       "url": "https://nsidc.org/data/nsidc-0776/versions/2",
-      "reason": "인용문의 접속 날짜(Date Accessed)만 바뀜"
+      "reason": "인용문 접속일 표시만 바뀜"
+    },
+    {
+      "datasets": [
+        "jra3q"
+      ],
+      "url": "https://www.data.jma.go.jp/jra/html/JRA-3Q/index_en.html",
+      "reason": "DIAS 장기 점검·6월 24일 이후 자료만 제공 안내는 이미 사이트에 공지됨(2026-08-19)"
     },
     {
       "datasets": [
         "merra2"
       ],
       "url": "https://gmao.gsfc.nasa.gov/operations/status.php",
-      "reason": "GEOS 계열 작업의 최신 완료 시각만 바뀜"
+      "reason": "운영 상태표의 일상 배달 상태 표시(Partial PDR delivery), 별도 공지 없음"
     },
     {
       "datasets": [
         "misr"
       ],
       "url": "https://science.nasa.gov/science-research/earth-science/terra-the-end-of-an-era",
-      "reason": "NASA 일반 뉴스 목록만 바뀜"
+      "reason": "NASA 뉴스 목록 변화, 해당 자료와 무관"
+    },
+    {
+      "datasets": [
+        "modis-albedo"
+      ],
+      "url": "https://aqua.nasa.gov/announcements/aqua-status",
+      "reason": "NASA 뉴스 목록 변화, 해당 자료와 무관"
     },
     {
       "datasets": [
         "nsidc-cdr-sic"
       ],
       "url": "https://nsidc.org/data/g02202/versions/6",
-      "reason": "인용문의 접속 날짜(Date Accessed)만 바뀜"
+      "reason": "인용문 접속일 표시만 바뀜"
     },
     {
       "datasets": [
         "oco2"
       ],
       "url": "https://science.nasa.gov/mission/oco-2/",
-      "reason": "NASA 일반 뉴스 목록만 바뀜"
+      "reason": "NASA 뉴스 목록 변화, 해당 자료와 무관"
     },
     {
       "datasets": [
         "omi"
       ],
       "url": "https://science.nasa.gov/missions/potential-evolution-of-the-aura-mission/",
-      "reason": "NASA 일반 뉴스 목록만 바뀜"
+      "reason": "NASA 뉴스 목록 변화, 해당 자료와 무관"
     },
     {
       "datasets": [
         "polar-pathfinder-motion"
       ],
       "url": "https://nsidc.org/data/nsidc-0116/versions/4",
-      "reason": "인용문의 접속 날짜(Date Accessed)만 바뀜"
+      "reason": "인용문 접속일 표시만 바뀜"
     },
     {
       "datasets": [
         "polar-pathfinder-motion"
       ],
       "url": "https://nsidc.org/data/nsidc-0748/versions/1",
-      "reason": "인용문의 접속 날짜(Date Accessed)만 바뀜"
+      "reason": "인용문 접속일 표시만 바뀜"
     },
     {
       "datasets": [
         "sea-ice-index"
       ],
       "url": "https://nsidc.org/data/g02135/versions/4",
-      "reason": "인용문의 접속 날짜(Date Accessed)만 바뀜"
+      "reason": "인용문 접속일 표시만 바뀜"
     },
     {
       "datasets": [
         "smap"
       ],
       "url": "https://nsidc.org/data/spl3smp",
-      "reason": "인용문의 접속 날짜(Date Accessed)만 바뀜"
+      "reason": "인용문 접속일 표시만 바뀜"
     },
     {
       "datasets": [
         "soda4"
       ],
       "url": "https://egusphere.copernicus.org/preprints/2025/egusphere-2025-3810/",
-      "reason": "논문 조회수·갱신일 표시만 바뀜"
+      "reason": "논문 조회수 표시만 바뀜"
     },
     {
       "datasets": [
         "viirs-snow"
       ],
       "url": "https://nsidc.org/data/vnp10a1/versions/2",
-      "reason": "인용문의 접속 날짜(Date Accessed)만 바뀜"
+      "reason": "인용문 접속일 표시만 바뀜"
+    },
+    {
+      "datasets": [
+        "gosat"
+      ],
+      "url": "https://product.gosat-gw.nies.go.jp/en/home/",
+      "reason": "새 제목 'Announcement of Service Downtime (November 11, 2026)'은 notes 참고(운영자 확인 필요)"
     }
   ],
   "errors": [
@@ -330,7 +307,7 @@
         "gsmap"
       ],
       "error": "HTTP 404 / HTTP 404 (브라우저)",
-      "fails": 17,
+      "fails": 18,
       "last_ok": "2026-10-19"
     },
     {
@@ -339,7 +316,16 @@
         "calipso"
       ],
       "error": "HTTP 403 / HTTP 403 (브라우저)",
-      "fails": 23,
+      "fails": 24,
+      "last_ok": null
+    },
+    {
+      "url": "https://www.ecmwf.int/en/forecasts/datasets/reanalysis-datasets/cera-20c",
+      "datasets": [
+        "cera20c"
+      ],
+      "error": "HTTP 401 / HTTP 401 (브라우저)",
+      "fails": 31,
       "last_ok": null
     },
     {
@@ -348,7 +334,7 @@
         "gimms-ndvi"
       ],
       "error": "HTTP 403 / HTTP 403 (브라우저)",
-      "fails": 23,
+      "fails": 24,
       "last_ok": null
     },
     {
@@ -357,7 +343,23 @@
         "gk2a"
       ],
       "error": "브라우저로도 본문이 비어 있음",
-      "fails": 23,
+      "fails": 24,
+      "last_ok": null
+    },
+    {
+      "url": "https://www.earthdata.nasa.gov/data/alerts-outages",
+      "datasets": [
+        "gldas",
+        "imerg",
+        "modis-albedo",
+        "modis-burned-area",
+        "modis-landcover",
+        "modis-snow",
+        "viirs-albedo",
+        "viirs-burned-area"
+      ],
+      "error": "HTTP 403 / HTTP 403 (브라우저)",
+      "fails": 31,
       "last_ok": null
     },
     {
@@ -368,7 +370,7 @@
         "viirs-ocean"
       ],
       "error": "HTTP 403 / HTTP 403 (브라우저)",
-      "fails": 23,
+      "fails": 24,
       "last_ok": null
     },
     {
@@ -377,7 +379,16 @@
         "gosat"
       ],
       "error": "HTTP 404 / HTTP 404 (브라우저)",
-      "fails": 23,
+      "fails": 24,
+      "last_ok": null
+    },
+    {
+      "url": "https://www.earthdata.nasa.gov/data/projects/merra-2/news",
+      "datasets": [
+        "merra2"
+      ],
+      "error": "HTTP 403 / HTTP 403 (브라우저)",
+      "fails": 31,
       "last_ok": null
     },
     {
@@ -386,7 +397,7 @@
         "misr"
       ],
       "error": "HTTP 403 / HTTP 403 (브라우저)",
-      "fails": 23,
+      "fails": 24,
       "last_ok": null
     },
     {
@@ -395,7 +406,7 @@
         "modis-burned-area"
       ],
       "error": "HTTP 403 / HTTP 403 (브라우저)",
-      "fails": 23,
+      "fails": 24,
       "last_ok": null
     },
     {
@@ -404,7 +415,7 @@
         "modis-et"
       ],
       "error": "HTTP 403 / HTTP 403 (브라우저)",
-      "fails": 23,
+      "fails": 24,
       "last_ok": null
     },
     {
@@ -414,7 +425,7 @@
         "modis-vi"
       ],
       "error": "HTTP 403 / HTTP 403 (브라우저)",
-      "fails": 23,
+      "fails": 24,
       "last_ok": null
     },
     {
@@ -423,7 +434,7 @@
         "modis-landcover"
       ],
       "error": "HTTP 403 / HTTP 403 (브라우저)",
-      "fails": 23,
+      "fails": 24,
       "last_ok": null
     },
     {
@@ -432,7 +443,7 @@
         "modis-lst"
       ],
       "error": "HTTP 403 / HTTP 403 (브라우저)",
-      "fails": 23,
+      "fails": 24,
       "last_ok": null
     },
     {
@@ -442,8 +453,17 @@
         "pace-oci"
       ],
       "error": "HTTP 403 / HTTP 403 (브라우저)",
-      "fails": 23,
+      "fails": 24,
       "last_ok": null
+    },
+    {
+      "url": "https://www.ncei.noaa.gov/thredds/catalog/cdr/persiann/catalog.html",
+      "datasets": [
+        "persiann-cdr"
+      ],
+      "error": "ReadTimeout: HTTPSConnectionPool(host='www.ncei.noaa.gov', port=443): Read timed out. (read timeout=40)",
+      "fails": 3,
+      "last_ok": "2026-11-03"
     },
     {
       "url": "https://www.tropomi.eu/data-products/level-2-products",
@@ -451,7 +471,7 @@
         "tropomi"
       ],
       "error": "HTTP 404 / HTTP 404 (브라우저)",
-      "fails": 23,
+      "fails": 24,
       "last_ok": null
     },
     {
@@ -460,7 +480,7 @@
         "viirs-albedo"
       ],
       "error": "HTTP 403 / HTTP 403 (브라우저)",
-      "fails": 23,
+      "fails": 24,
       "last_ok": null
     },
     {
@@ -469,7 +489,7 @@
         "viirs-burned-area"
       ],
       "error": "HTTP 403 / HTTP 403 (브라우저)",
-      "fails": 23,
+      "fails": 24,
       "last_ok": null
     },
     {
@@ -480,7 +500,7 @@
         "viirs-vi"
       ],
       "error": "HTTP 403 / HTTP 403 (브라우저)",
-      "fails": 23,
+      "fails": 24,
       "last_ok": null
     },
     {
@@ -489,7 +509,7 @@
         "viirs-lai"
       ],
       "error": "HTTP 403 / HTTP 403 (브라우저)",
-      "fails": 23,
+      "fails": 24,
       "last_ok": null
     },
     {
@@ -498,7 +518,7 @@
         "viirs-lst"
       ],
       "error": "HTTP 403 / HTTP 403 (브라우저)",
-      "fails": 23,
+      "fails": 24,
       "last_ok": null
     },
     {
@@ -507,7 +527,7 @@
         "viirs-lst"
       ],
       "error": "HTTP 403 / HTTP 403 (브라우저)",
-      "fails": 23,
+      "fails": 24,
       "last_ok": null
     },
     {
@@ -516,16 +536,14 @@
         "viirs-vi"
       ],
       "error": "HTTP 403 / HTTP 403 (브라우저)",
-      "fails": 23,
+      "fails": 24,
       "last_ok": null
     }
   ],
   "notes": [
-    "직접 확인(12:50, WebFetch): Earthdata 공지 목록·MERRA-2 뉴스·CERA-20C·GES DISC 공지 API를 모두 열었습니다. 새 공지 후보는 'Suomi-NPP data outage'(10/29, SNPP VIIRS 궤도 77742 공백, LAADS·LP·NSIDC·OB.DAAC) 1건 → VIIRS 9종 PR #29.",
-    "PR #29는 2026-11-05 13:02(한국 시간)에 운영자가 머지했습니다(VIIRS 9종 공지 반영).",
-    "직접 확인: 'VIIRS Processing Delay'(10/30)는 아직 'Active Outage, Resolved TBD'로 해결되지 않았고 사이트에 이미 공지되어 있습니다. 'Reminder: New Suomi NPP Observations to Cease'는 11/2 갱신에서 15:40 UTC 종료를 확인했으며 이미 공지되어 있습니다. NISAR 처리 중단(10/30)·Sentinel-1D·Earthdata Forum 점검은 사이트 자료와 무관합니다.",
-    "직접 확인: MERRA-2 뉴스·CERA-20C 페이지에는 새 공지가 없습니다. GES DISC 공지 API에는 10/29 이후 새로 만들어지거나 갱신된 공지가 없습니다(최신은 10/26 TROPOMI L2_NP 중단, 이미 공지). 단 API 응답 뒷부분은 요약으로만 읽혔습니다.",
-    "어제 남긴 'viirs-* status_note 완료형으로 고치기' 제안은 아직 반영되지 않았습니다(설명 수정이라 PR에 넣지 않음).",
-    "errors 의 earthdata.nasa.gov 카탈로그·asdc·oceancolor 등은 7일 넘게 실패 중이나 사람 브라우저로는 열리는 주소라 watch_urls 교체 제안은 하지 않습니다(gosat-gw·tropomi.eu·gportal 404는 이전과 같음)."
+    "운영자 확인 필요: 이번 실행에서는 WebFetch 권한 요청이 시간 안에 승인되지 않아(무인 실행) Earthdata 공지 목록, MERRA-2 뉴스, CERA-20C, GES DISC 공지 API를 직접 확인하지 못했습니다. 이 주소들은 errors에 그대로 남겼습니다. VIIRS·MODIS·GLDAS·IMERG·MERRA-2 등 NASA 자료의 최근 7일 공지는 브라우저로 확인해 주세요.",
+    "GOSAT 후보는 WebFetch 대신 새벽 자동 점검이 저장한 EORC 페이지 사본(공지 전문 포함)으로 확인했습니다. 9/29 같은 종류의 공지와 같은 출처·형식입니다.",
+    "운영자 확인 필요: GOSAT-GW TANSO-3 Product Archive에 'Announcement of Service Downtime (November 11, 2026)'이 새로 올라왔으나 제목만 보이고 본문(정지 시각)을 열지 못해 후보로 올리지 않았습니다(https://product.gosat-gw.nies.go.jp/en/home/).",
+    "errors의 earthdata.nasa.gov 카탈로그·asdc·oceancolor 등은 7일 넘게 실패 중이나 사람 브라우저로는 열리는 주소라 watch_urls 교체 제안은 하지 않습니다(gosat-gw 뉴스·tropomi.eu·gportal 404는 이전과 같음)."
   ]
 }
