@@ -1,7 +1,7 @@
 {
   "date": "2026-11-06",
   "reviewed_at": "2026-11-06T08:19:09+09:00",
-  "summary": "공지 페이지 276곳 중 35곳이 바뀌었고, 그중 1건(GOSAT-2 FTS-2 관측 일시 중단)을 새 공지 후보로 올렸습니다(PR #30). Earthdata·MERRA-2·CERA-20C·GES DISC 직접 확인은 WebFetch가 막혀 하지 못했습니다.",
+  "summary": "공지 페이지 276곳 중 35곳이 바뀌었고, 그중 1건(GOSAT-2 FTS-2 관측 일시 중단)을 새 공지 후보로 올렸습니다(PR #30). Earthdata·MERRA-2·CERA-20C·GES DISC 직접 확인은 WebFetch가 막혀 하지 못했습니다. 낮 직접 확인도 WebFetch가 막혀 하지 못했습니다.",
   "watch": {
     "date": "2026-11-06",
     "checked": 276,
@@ -539,6 +539,7 @@
     "GOSAT 후보는 WebFetch 대신 새벽 자동 점검이 저장한 EORC 페이지 사본(공지 전문 포함)으로 확인했습니다. 9/29 같은 종류의 공지와 같은 출처·형식입니다.",
     "PR #30은 2026-11-06 08:41(한국 시간)에 운영자가 머지했습니다(GOSAT 공지 반영).",
     "운영자 확인 필요: GOSAT-GW TANSO-3 Product Archive에 'Announcement of Service Downtime (November 11, 2026)'이 새로 올라왔으나 제목만 보이고 본문(정지 시각)을 열지 못해 후보로 올리지 않았습니다(https://product.gosat-gw.nies.go.jp/en/home/).",
-    "errors의 earthdata.nasa.gov 카탈로그·asdc·oceancolor 등은 7일 넘게 실패 중이나 사람 브라우저로는 열리는 주소라 watch_urls 교체 제안은 하지 않습니다(gosat-gw 뉴스·tropomi.eu·gportal 404는 이전과 같음)."
+    "errors의 earthdata.nasa.gov 카탈로그·asdc·oceancolor 등은 7일 넘게 실패 중이나 사람 브라우저로는 열리는 주소라 watch_urls 교체 제안은 하지 않습니다(gosat-gw 뉴스·tropomi.eu·gportal 404는 이전과 같음).",
+    "낮 직접 확인(12:50~12:56 한국 시간): WebFetch 권한 요청이 또 시간 안에 승인되지 않아(PROVENANCE_REQUIRED) Earthdata 공지 목록, MERRA-2 뉴스, CERA-20C, GES DISC 공지 API, GOSAT-GW 서비스 중단 공지를 모두 열지 못했습니다. 새 공지 후보 없음, errors는 그대로 둡니다. 운영자 확인 필요: 위 주소들을 브라우저로 직접 확인해 주세요."
   ]
 }
