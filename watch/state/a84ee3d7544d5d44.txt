@@ -39,6 +39,19 @@ Product Roadmap
 Get Inspired
 Service Commitments and Licence
 Contact Us
+[MOB-404] MULTIOBS_GLO_BGC_SURFACE_NRT_015_016 - Delay since 2026-11-04
+In progress
+2026-11-04 12:00 UTC - In progress
+Due to an upstream issue, the delivery of the OLI datasets from product
+MULTIOBS_GLO_BGC_SURFACE_NRT_015_016
+are delayed since 2026-11-04.
+Impacted datasets:
+cmems_obs-mob_car_bgc_nrt_hr_oli_P1D-i
+cmems_obs-mob_nbs_bgc_nrt_hr_oli_P1D-i
+We apologize for the inconvenience.
+If you have any question, please contact
+Copernicus Marine User Support
+Copy a link to this article
 [OC-1118] OCEANCOLOUR_(BAL|MED)_BGC_(L3|L4)_NRT - degraded data on 2026-11-01
 In progress
 2026-11-02 20:00 UTC - In progress
@@ -56,24 +69,6 @@ OCEANCOLOUR_MED_BGC_L4_NRT_009_142
 cmems_obs-oc_med_bgc-plankton_nrt_l4-olci-300m_P1M
 cmems_obs-oc_med_bgc-transp_nrt_l4-olci-300m_P1M
 The files will be reprocessed if upstream recovery happens before retirement of the NRT data.
-We apologize for any inconvenience this may cause.
-If you have any question, please contact
-Copernicus Marine User Support
-Copy a link to this article
-[OC-1116] OCEANCOLOUR_(ATL|GLO)_BGC_(L3|L4)_NRT - Missing data since 2026-10-30
-In progress
-2026-11-05 11:45 UTC - In progress - update
-The maintenance is now complete. Today's production will be delivered, and the missing days are currently being reprocessed.
-The situation should be back to normal by this evening.
-2026-11-04 14:00 UTC - In progress - update
-The incident is not over due to an extended maintenance. Best estimate for a resolution is 2026-11-05.
-2026-10-30 17:00 UTC - In progress
-Due to an unplanned maintenance, the NRT production is interrupted for the time of the maintenance which should last a couple days.
-Impacted products:
-OCEANCOLOUR_GLO_BGC_L3_NRT_009_101
-OCEANCOLOUR_GLO_BGC_L4_NRT_009_102
-OCEANCOLOUR_ATL_BGC_L3_NRT_009_111
-OCEANCOLOUR_ATL_BGC_L4_NRT_009_116
 We apologize for any inconvenience this may cause.
 If you have any question, please contact
 Copernicus Marine User Support
@@ -208,11 +203,16 @@ Copernicus Marine User Support
 Copy a link to this article
 [SST-992] SST_(ATL|GLO)_(PHY|SST)_(L3S|L4)_NRT - Degraded quality for 2026-10-20 data
 In progress
+2026-11-06 10:00 UTC - In progress
+The missing AMSR2 data were retrieved up to 2026-10-29, thus the affected PMW datasets have been reprocessed up to and including 2026-10-29.
+The incident remains ongoing.
 2026-09-21 12:00 UTC - In progress
 AMSR upstream data have become unavailable from the external provider. As a consequence, the ODYSSEA L3S Atlantic and Global PMW files dated 2026-10-20 could not be produced. The merged L3S and L4 products remain available, but their quality is degraded due to the absence of AMSR2 microwave observations.
 Impacted products:
 SST_GLO_SST_L3S_NRT_OBSERVATIONS_010_010
+/ cmems_obs-sst_glo_phy_l3s_pmw_P1D-m
 SST_ATL_PHY_L3S_NRT_010_037
+/ cmems_obs-sst_atl_phy_l3s_pmw_P1D-m
 SST_ATL_SST_L4_NRT_OBSERVATIONS_010_025
 SST_GLO_PHY_L4_NRT_010_043
 We apologize for any inconvenience this may cause.
