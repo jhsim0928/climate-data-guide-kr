@@ -1,7 +1,7 @@
 {
   "date": "2026-11-09",
   "reviewed_at": "2026-11-09T08:13:04+09:00",
-  "summary": "공지 페이지 276곳 중 27곳이 바뀌었고 새 공지 후보는 없습니다. 직접 확인(Earthdata 공지·MERRA-2 뉴스·CERA-20C·GES DISC 공지)에서도 새 공지는 없었고, 어제 확인 못 한 AIRS L1B 품질 안내는 L1B 전용·영향 없음으로 확인했습니다.",
+  "summary": "공지 페이지 276곳 중 27곳이 바뀌었고 새 공지 후보는 없습니다. 직접 확인(Earthdata 공지·MERRA-2 뉴스·CERA-20C·GES DISC 공지)에서도 새 공지는 없었고, 어제 확인 못 한 AIRS L1B 품질 안내는 L1B 전용·영향 없음으로 확인했습니다. 낮 직접 확인(12:50)에서도 새 공지는 없었습니다.",
   "watch": {
     "date": "2026-11-09",
     "checked": 276,
@@ -408,6 +408,7 @@
     }
   ],
   "notes": [
+    "직접 확인(12:50): 새 공지 없음 — Earthdata 공지 목록, MERRA-2 뉴스, CERA-20C, GES DISC api/alerts(size=40)를 WebFetch로 다시 열었습니다. 아침 이후 새 글은 없습니다(목록 최신 글은 NISAR 11/7, 사이트 자료와 무관). 최근 7일 관련 글(Suomi NPP 전달 종료 11/2, TROPOMI L2__NP 생산 중단·11/10 처리기 업그레이드, VIIRS Processing Delay 해결 TBD)은 이미 사이트에 있고, AIRS L1B 안내(11/6)는 영향 없음. MERRA-2 뉴스 최신 글 2026-04-14, CERA-20C 공지 문구 없음.",
     "직접 확인: 새 공지 없음 — Earthdata 공지 목록(https://www.earthdata.nasa.gov/data/alerts-outages), MERRA-2 뉴스, CERA-20C, GES DISC api/alerts를 WebFetch로 열었습니다. 최근 7일 글 중 사이트 자료 관련 건은 이미 사이트에 있거나(VIIRS Processing Delay 10/30 — 여전히 해결 TBD·갱신 없음, Suomi NPP 전달 종료 11/2, TROPOMI L2__NP 생산 중단·11/10 처리기 업그레이드) 영향이 없습니다(AIRS L1B CalFlag 안내). NISAR(11/7)·Sentinel-6B NTC(11/5)·ECOSTRESS/OCO-3 AppEEARS(11/5)·Giovanni 30분 점검(11/4, 지난 일)은 사이트 자료와 무관해 제외.",
     "직접 확인: MERRA-2 뉴스는 2026-04-14 이후 새 글 없음, CERA-20C 페이지에 공지 문구 없음(1901-01-01~2010-12-31 제품 설명만).",
     "어제 '운영자 확인 필요'였던 AIRS L1B 품질 안내(11/6)는 GES DISC 공지 API에서 본문을 확인해 해소했습니다 — 대상은 AIRIBRAD_005·AIRSAQIRL1B_8.0 등 L1B 4종뿐이고 '지금은 품질 선별에서 무시해도 된다', 보정에는 영향 없다고 적혀 있습니다.",
