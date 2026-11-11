@@ -1,12 +1,12 @@
 {
-  "date": "2026-11-11",
-  "reviewed_at": "2026-11-11T13:05:00+09:00",
-  "summary": "공지 페이지 276곳 중 33곳이 바뀌었지만 모두 표시·뉴스 목록 변화 등이라 새 공지 후보는 없습니다. 낮 직접 확인(NASA Earthdata·MERRA-2·CERA-20C·GES DISC)에서도 새 공지는 없었습니다.",
+  "date": "2026-11-12",
+  "reviewed_at": "2026-11-12T08:19:13+09:00",
+  "summary": "공지 페이지 276곳 중 35곳이 바뀌었지만 새 공지 후보는 없습니다. CryoSat Baseline-F 준실시간 제품 공개 안내 1건은 원문 확인을 못 해 운영자 확인으로 남겼고, NASA Earthdata·MERRA-2·CERA-20C·GES DISC 직접 확인은 웹 조회 권한이 막혀 하지 못했습니다.",
   "watch": {
-    "date": "2026-11-11",
+    "date": "2026-11-12",
     "checked": 276,
-    "ok": 249,
-    "changed": 33
+    "ok": 248,
+    "changed": 35
   },
   "candidates": [],
   "pr": null,
@@ -14,46 +14,46 @@
   "ignored": [
     {
       "datasets": [
-        "airs"
-      ],
-      "url": "https://aqua.nasa.gov/",
-      "reason": "NASA 뉴스 목록 변화, 해당 자료와 무관"
-    },
-    {
-      "datasets": [
-        "ascat"
-      ],
-      "url": "https://scatterometer.knmi.nl/ascat_b_osi_25_prod/",
-      "reason": "갱신 시각 표시만 바뀜"
-    },
-    {
-      "datasets": [
-        "ascat"
-      ],
-      "url": "https://scatterometer.knmi.nl/ascat_c_osi_25_prod/",
-      "reason": "갱신 시각 표시만 바뀜"
-    },
-    {
-      "datasets": [
+        "airs",
         "aura-mls",
-        "omi"
+        "omi",
+        "calipso",
+        "misr",
+        "modis-albedo",
+        "oco2"
       ],
-      "url": "https://science.nasa.gov/mission/aura/",
-      "reason": "NASA 뉴스 목록 변화, 해당 자료와 무관"
+      "url": "https://aqua.nasa.gov/ 외 NASA 미션 페이지 6곳",
+      "reason": "NASA 뉴스 목록(Navajo 저수지·중력파 기사)만 바뀜"
+    },
+    {
+      "datasets": [
+        "ascat",
+        "osisaf-drift",
+        "osisaf-sic"
+      ],
+      "url": "https://osi-saf.eumetsat.int/community/list-of-service-messages",
+      "reason": "11/11 서비스 메시지는 해수면온도·복사플럭스(SST/IST) 제품 결손·복구로, 사이트의 ASCAT·해빙 표류·해빙 농도 자료와 무관"
+    },
+    {
+      "datasets": [
+        "ascat"
+      ],
+      "url": "https://scatterometer.knmi.nl/ascat_b_osi_25_prod/ · ascat_c_osi_25_prod/",
+      "reason": "갱신 시각 표시만 바뀜"
     },
     {
       "datasets": [
         "berkeley-earth"
       ],
       "url": "https://essd.copernicus.org/preprints/essd-2026-412/",
-      "reason": "논문 조회수 표시만 바뀜"
+      "reason": "논문 조회수 변화"
     },
     {
       "datasets": [
-        "calipso"
+        "soda4"
       ],
-      "url": "https://science.nasa.gov/mission/calipso/",
-      "reason": "NASA 뉴스 목록 변화, 해당 자료와 무관"
+      "url": "https://egusphere.copernicus.org/preprints/2025/egusphere-2025-3810/",
+      "reason": "논문 조회수 변화"
     },
     {
       "datasets": [
@@ -65,53 +65,28 @@
         "oras6"
       ],
       "url": "https://forum.ecmwf.int/c/announcements/5",
-      "reason": "새 글은 C3S 계절예측(DWD GCFS2.2 적설) 문제로, 감시 자료(재분석·해양 재분석)와 무관"
-    },
-    {
-      "datasets": [
-        "ceres-ebaf",
-        "ceres-syn1deg"
-      ],
-      "url": "https://ceres.larc.nasa.gov/data/",
-      "reason": "NOAA20 FLASH_SSF 정기 월자료 공개 표시, EBAF·SYN1deg 변화 아님"
-    },
-    {
-      "datasets": [
-        "cfsr-cfsv2",
-        "core",
-        "ncep-ncar-r1"
-      ],
-      "url": "https://www.weather.gov/notification/",
-      "reason": "NWS 항공예보(SIGWX)·CPC 텔레커넥션 산출물 공지로 CFSR/CFSv2·CORE·NCEP R1과 무관"
+      "reason": "CAMS 유럽 예보(cams_european_forecast) 관련 글로 감시 자료와 무관"
     },
     {
       "datasets": [
         "cfsr-cfsv2"
       ],
       "url": "https://gdex.ucar.edu/datasets/d094000/",
-      "reason": "자료 기간·용량 표시만 갱신(정상 갱신)"
+      "reason": "자료 기간·용량 정기 갱신 표시"
     },
     {
       "datasets": [
-        "cobe-sst3"
+        "chirps"
       ],
-      "url": "https://climatedataguide.ucar.edu/climate-data/sst-data-cobev3-centennial-situ-observation-based-estimates-version-3",
-      "reason": "페이지 수정 날짜 표시만 바뀜"
+      "url": "https://www.chc.ucsb.edu/news/announcement/archive",
+      "reason": "CHIRTS-ERA5(기온 자료) 소개 글로 CHIRPS와 다른 자료"
     },
     {
       "datasets": [
-        "cs3smos"
+        "era5-land"
       ],
-      "url": "https://data.marine.copernicus.eu/product/SEAICE_GLO_PHY_L4_NRT_011_014/description",
-      "reason": "자료 기간 표시만 갱신(정상 갱신)"
-    },
-    {
-      "datasets": [
-        "era5-land",
-        "esa-cci-landcover"
-      ],
-      "url": "https://forum.ecmwf.int/c/announcements/c3s-announcements/7",
-      "reason": "새 글은 C3S 계절예측(DWD GCFS2.2 적설) 문제로, ERA5-Land·ESA CCI 토지피복과 무관"
+      "url": "https://confluence.ecmwf.int/display/CKB/ERA5-Land%3A+data+documentation",
+      "reason": "문서 내 관련 링크 문구 변화"
     },
     {
       "datasets": [
@@ -120,147 +95,63 @@
         "oras6"
       ],
       "url": "https://www.ecmwf.int/en/about/media-centre/news",
-      "reason": "COP31 참가 소식(행사), 공지 아님"
+      "reason": "산불 보고서 뉴스"
     },
     {
       "datasets": [
         "era6"
       ],
       "url": "https://climate.copernicus.eu/news",
-      "reason": "Climate Pulse 2.0 앱 소식, ERA6 자료 변화 아님"
-    },
-    {
-      "datasets": [
-        "esa-cci-landcover"
-      ],
-      "url": "https://cds.climate.copernicus.eu/datasets/satellite-land-cover",
-      "reason": "시계열 판(time-series) 안내 문구 추가 — 별도 파생 자료 안내로 자료 자체 변화 아님(notes 참고)"
+      "reason": "기후 뉴스(2026년 1.5°C 초과 전망)"
     },
     {
       "datasets": [
         "gimms-ndvi"
       ],
       "url": "https://zenodo.org/records/8253971",
-      "reason": "Zenodo 전체 서버 점검 10분(11/17 08:00~08:15 UTC), 연구자 영향 미미"
+      "reason": "용량 표시 변화"
     },
     {
       "datasets": [
-        "icesat2-sit"
+        "grace"
       ],
-      "url": "https://nsidc.org/data/is2sitmogr4/versions/4",
-      "reason": "인용문 접속 날짜(Date Accessed)만 바뀜"
+      "url": "https://www.gfz.de/en/grace-c",
+      "reason": "화면 모드 메뉴 변화"
     },
     {
       "datasets": [
-        "icesat2-sit"
+        "hadsst4"
       ],
-      "url": "https://nsidc.org/data/atl20/versions/5",
-      "reason": "인용문 접속 날짜(Date Accessed)만 바뀜"
+      "url": "https://www.metoffice.gov.uk/hadobs/hadsst4/data/download.html",
+      "reason": "월간 정기 갱신에 따른 체크섬 변화"
     },
     {
       "datasets": [
-        "icesat2-sit"
+        "icesat2-sit",
+        "its-live",
+        "nsidc-cdr-sic",
+        "polar-pathfinder-motion",
+        "sea-ice-index",
+        "smap",
+        "viirs-snow"
       ],
-      "url": "https://nsidc.org/data/atl10/versions/7",
-      "reason": "인용문 접속 날짜(Date Accessed)만 바뀜"
+      "url": "https://nsidc.org/data/... (11곳)",
+      "reason": "인용문의 접속 날짜(Date Accessed)만 바뀜"
     },
     {
       "datasets": [
-        "its-live"
+        "imerg",
+        "oco2"
       ],
-      "url": "https://nsidc.org/data/nsidc-0776/versions/2",
-      "reason": "인용문 접속 날짜(Date Accessed)만 바뀜"
+      "url": "https://disc.gsfc.nasa.gov/information/alerts",
+      "reason": "11/8 공지가 만료(Expired) 표시로 바뀜"
     },
     {
       "datasets": [
         "merra2"
       ],
       "url": "https://gmao.gsfc.nasa.gov/operations/status.php",
-      "reason": "GMAO 운영 상태 시각 갱신(정상)"
-    },
-    {
-      "datasets": [
-        "misr"
-      ],
-      "url": "https://science.nasa.gov/science-research/earth-science/terra-the-end-of-an-era",
-      "reason": "NASA 뉴스 목록 변화, 해당 자료와 무관"
-    },
-    {
-      "datasets": [
-        "modis-albedo"
-      ],
-      "url": "https://aqua.nasa.gov/announcements/aqua-status",
-      "reason": "NASA 뉴스 목록 변화, 해당 자료와 무관"
-    },
-    {
-      "datasets": [
-        "nsidc-cdr-sic"
-      ],
-      "url": "https://nsidc.org/data/g02202/versions/6",
-      "reason": "인용문 접속 날짜(Date Accessed)만 바뀜"
-    },
-    {
-      "datasets": [
-        "oco2"
-      ],
-      "url": "https://science.nasa.gov/mission/oco-2/",
-      "reason": "NASA 뉴스 목록 변화, 해당 자료와 무관"
-    },
-    {
-      "datasets": [
-        "omi"
-      ],
-      "url": "https://science.nasa.gov/missions/potential-evolution-of-the-aura-mission/",
-      "reason": "NASA 뉴스 목록·시간 표시 변화, 해당 자료와 무관"
-    },
-    {
-      "datasets": [
-        "polar-pathfinder-motion"
-      ],
-      "url": "https://nsidc.org/data/nsidc-0116/versions/4",
-      "reason": "인용문 접속 날짜(Date Accessed)만 바뀜"
-    },
-    {
-      "datasets": [
-        "polar-pathfinder-motion"
-      ],
-      "url": "https://nsidc.org/data/nsidc-0748/versions/1",
-      "reason": "인용문 접속 날짜(Date Accessed)만 바뀜"
-    },
-    {
-      "datasets": [
-        "sea-ice-index"
-      ],
-      "url": "https://nsidc.org/data/g02135/versions/4",
-      "reason": "인용문 접속 날짜(Date Accessed)만 바뀜"
-    },
-    {
-      "datasets": [
-        "smap"
-      ],
-      "url": "https://nsidc.org/data/spl3smp",
-      "reason": "인용문 접속 날짜(Date Accessed)만 바뀜"
-    },
-    {
-      "datasets": [
-        "soda4"
-      ],
-      "url": "https://egusphere.copernicus.org/preprints/2025/egusphere-2025-3810/",
-      "reason": "논문 조회수 표시만 바뀜"
-    },
-    {
-      "datasets": [
-        "viirs-snow"
-      ],
-      "url": "https://nsidc.org/data/vnp10a1/versions/2",
-      "reason": "인용문 접속 날짜(Date Accessed)만 바뀜"
-    },
-    {
-      "datasets": [
-        "airs"
-      ],
-      "url": "https://www.earthdata.nasa.gov/data/alerts-outages/airs-level-1b-data-quality-advisory-calflag-bit-1-telemetry-out-limit",
-      "reason": "AIRS L1B(AIRIBRAD·AIRSAQIRL1B) CalFlag bit 1 안내(11/6)로 보정·복사휘도 영향 없음, 사이트가 다루는 V7 L2·L3와 무관"
+      "reason": "운영 상태 날짜 갱신(모두 Nominal)"
     }
   ],
   "errors": [
@@ -270,7 +161,16 @@
         "calipso"
       ],
       "error": "HTTP 403 / HTTP 403 (브라우저)",
-      "fails": 29,
+      "fails": 30,
+      "last_ok": null
+    },
+    {
+      "url": "https://www.ecmwf.int/en/forecasts/datasets/reanalysis-datasets/cera-20c",
+      "datasets": [
+        "cera20c"
+      ],
+      "error": "HTTP 401 / HTTP 401 (브라우저)",
+      "fails": 37,
       "last_ok": null
     },
     {
@@ -279,7 +179,7 @@
         "gimms-ndvi"
       ],
       "error": "HTTP 403 / HTTP 403 (브라우저)",
-      "fails": 29,
+      "fails": 30,
       "last_ok": null
     },
     {
@@ -288,7 +188,23 @@
         "gk2a"
       ],
       "error": "브라우저로도 본문이 비어 있음",
-      "fails": 29,
+      "fails": 30,
+      "last_ok": null
+    },
+    {
+      "url": "https://www.earthdata.nasa.gov/data/alerts-outages",
+      "datasets": [
+        "gldas",
+        "imerg",
+        "modis-albedo",
+        "modis-burned-area",
+        "modis-landcover",
+        "modis-snow",
+        "viirs-albedo",
+        "viirs-burned-area"
+      ],
+      "error": "HTTP 403 / HTTP 403 (브라우저)",
+      "fails": 37,
       "last_ok": null
     },
     {
@@ -299,7 +215,7 @@
         "viirs-ocean"
       ],
       "error": "HTTP 403 / HTTP 403 (브라우저)",
-      "fails": 29,
+      "fails": 30,
       "last_ok": null
     },
     {
@@ -308,7 +224,16 @@
         "gosat"
       ],
       "error": "HTTP 404 / HTTP 404 (브라우저)",
-      "fails": 29,
+      "fails": 30,
+      "last_ok": null
+    },
+    {
+      "url": "https://www.earthdata.nasa.gov/data/projects/merra-2/news",
+      "datasets": [
+        "merra2"
+      ],
+      "error": "HTTP 403 / HTTP 403 (브라우저)",
+      "fails": 37,
       "last_ok": null
     },
     {
@@ -317,7 +242,7 @@
         "misr"
       ],
       "error": "HTTP 403 / HTTP 403 (브라우저)",
-      "fails": 29,
+      "fails": 30,
       "last_ok": null
     },
     {
@@ -326,7 +251,7 @@
         "modis-burned-area"
       ],
       "error": "HTTP 403 / HTTP 403 (브라우저)",
-      "fails": 29,
+      "fails": 30,
       "last_ok": null
     },
     {
@@ -335,7 +260,7 @@
         "modis-et"
       ],
       "error": "HTTP 403 / HTTP 403 (브라우저)",
-      "fails": 29,
+      "fails": 30,
       "last_ok": null
     },
     {
@@ -345,7 +270,7 @@
         "modis-vi"
       ],
       "error": "HTTP 403 / HTTP 403 (브라우저)",
-      "fails": 29,
+      "fails": 30,
       "last_ok": null
     },
     {
@@ -354,7 +279,7 @@
         "modis-landcover"
       ],
       "error": "HTTP 403 / HTTP 403 (브라우저)",
-      "fails": 29,
+      "fails": 30,
       "last_ok": null
     },
     {
@@ -363,7 +288,7 @@
         "modis-lst"
       ],
       "error": "HTTP 403 / HTTP 403 (브라우저)",
-      "fails": 29,
+      "fails": 30,
       "last_ok": null
     },
     {
@@ -373,7 +298,7 @@
         "pace-oci"
       ],
       "error": "HTTP 403 / HTTP 403 (브라우저)",
-      "fails": 29,
+      "fails": 30,
       "last_ok": null
     },
     {
@@ -382,7 +307,7 @@
         "persiann-cdr"
       ],
       "error": "ReadTimeout: HTTPSConnectionPool(host='www.ncei.noaa.gov', port=443): Read timed out. (read timeout=40)",
-      "fails": 8,
+      "fails": 9,
       "last_ok": "2026-11-03"
     },
     {
@@ -391,7 +316,7 @@
         "tropomi"
       ],
       "error": "HTTP 404 / HTTP 404 (브라우저)",
-      "fails": 29,
+      "fails": 30,
       "last_ok": null
     },
     {
@@ -400,7 +325,7 @@
         "viirs-albedo"
       ],
       "error": "HTTP 403 / HTTP 403 (브라우저)",
-      "fails": 29,
+      "fails": 30,
       "last_ok": null
     },
     {
@@ -409,7 +334,7 @@
         "viirs-burned-area"
       ],
       "error": "HTTP 403 / HTTP 403 (브라우저)",
-      "fails": 29,
+      "fails": 30,
       "last_ok": null
     },
     {
@@ -420,7 +345,7 @@
         "viirs-vi"
       ],
       "error": "HTTP 403 / HTTP 403 (브라우저)",
-      "fails": 29,
+      "fails": 30,
       "last_ok": null
     },
     {
@@ -429,7 +354,7 @@
         "viirs-lai"
       ],
       "error": "HTTP 403 / HTTP 403 (브라우저)",
-      "fails": 29,
+      "fails": 30,
       "last_ok": null
     },
     {
@@ -438,7 +363,7 @@
         "viirs-lst"
       ],
       "error": "HTTP 403 / HTTP 403 (브라우저)",
-      "fails": 29,
+      "fails": 30,
       "last_ok": null
     },
     {
@@ -447,7 +372,7 @@
         "viirs-lst"
       ],
       "error": "HTTP 403 / HTTP 403 (브라우저)",
-      "fails": 29,
+      "fails": 30,
       "last_ok": null
     },
     {
@@ -456,14 +381,16 @@
         "viirs-vi"
       ],
       "error": "HTTP 403 / HTTP 403 (브라우저)",
-      "fails": 29,
+      "fails": 30,
       "last_ok": null
     }
   ],
   "notes": [
-    "직접 확인: 새 공지 없음 (12:50 WebFetch로 Earthdata 공지 목록, MERRA-2 뉴스, CERA-20C, GES DISC 공지 API를 열었습니다. 최근 7일 글은 NISAR·Sentinel-6B·ECOSTRESS/OCO-3(사이트 자료 아님), AIRS L1B 안내(L1B 한정·품질 영향 없음)뿐이고, S5P 11/10 처리기 업그레이드·S-NPP VIIRS 종료 영향·VIIRS Processing Delay는 이미 사이트에 있습니다.)",
-    "운영자 확인 필요: ESA CCI 토지피복 CDS 페이지에 '특정 지점·소영역 추출에 최적화된 시계열 판(1992~현재)' 안내가 새로 붙었습니다. 새 파생 자료 안내로 보이며 공지 여부 판단 바랍니다(https://cds.climate.copernicus.eu/datasets/satellite-land-cover).",
-    "참고: 7일 넘게 실패 중인 주소들(errors의 fails≥8)은 이번 실행에서 새 공식 주소를 찾지 못했습니다(웹 조회 불가).",
-    "참고: PR #31(TROPOMI)은 머지되어 열린 공지 후보 PR이 없습니다."
+    "운영자 확인 필요: ESA CryoSat 미션 페이지에 'CryoSat Ice Baseline-F Near Real Time data products now available' 안내가 새로 올라왔습니다(준실시간 생산 2026-11-02 시작, Baseline-F 처리기 전 제품 운영 전환 완료). 사이트의 7/20 공지는 '준실시간 처리기는 아직 공개 전'이라 후속 안내(info) 대상으로 보이지만, 웹 조회가 막혀 개별 원문·게시일을 확인하지 못해 후보로 올리지 않았습니다(https://earth.esa.int/eogateway/missions/cryosat).",
+    "운영자 확인 필요: SODA4.15.2 REG ocean 디렉터리에 'levs38/' 하위 폴더가 새로 생겼습니다. 새 연직층 판 공개인지 확인 바랍니다(https://dsrs.atmos.umd.edu/DATA/SODA4.15.2_REG/ocean/).",
+    "운영자 확인 필요: 직접 확인 못 함 — 이번 실행에서 WebFetch 권한 요청이 응답되지 않아(무인 실행) NASA Earthdata 공지 목록, MERRA-2 뉴스, CERA-20C, GES DISC 공지 API를 열지 못했습니다. 이 주소들은 errors에 그대로 남겼습니다.",
+    "참고: 오늘 새벽 감지 실행(05:41)이 startup_failure로 돌지 않아 08:12에 수동으로 다시 실행했습니다(성공, run_at 08:17).",
+    "참고: 7일 넘게 실패 중인 주소들(errors의 fails≥9)은 웹 조회가 막혀 새 공식 주소를 찾지 못했습니다.",
+    "참고: 열린 공지 후보 PR이 없습니다."
   ]
 }
