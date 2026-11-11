@@ -1,0 +1,310 @@
+# ─────────────────────────────────────────────────────────────
+# ISIMIP3b — 데이터셋 정보 파일
+# ISIMIP3b 편이보정·통계 다운스케일링 대기 기후 입력자료 (CMIP6 기반, 0.5° 일 자료)
+# ─────────────────────────────────────────────────────────────
+id: isimip3b
+name: ISIMIP3b (편이보정 기후 입력자료)
+full_name: ISIMIP3b bias-adjusted atmospheric climate input data (영향모델 상호비교 사업 ISIMIP 3단계 b의 CMIP6 기반 편이보정 기후 입력자료)
+category: model_output
+domain: model
+group: 통계 다운스케일링·편이보정
+order: 20
+domains: [대기, 육지]
+provider: ISIMIP (Inter-Sectoral Impact Model Intercomparison Project) 교차부문 과학팀 — 편이보정 Stefan Lange (ISIMIP3BASD)
+
+status: active
+status_note: >-
+  ISIMIP 저장소(data.isimip.org)에서 계속 제공되며, ISIMIP3 프로토콜은 로그인 없이 받을 수 있다고 안내합니다(2026-10-16 확인). 2026년 8월 CMIP7 기반의 다음 단계 ISIMIP4b가
+  첫 입력자료(EC-Earth3-ESM-1-1)와 함께 시작되었지만, ISIMIP 운영위원회(2026년 2월)는 ISIMIP3 기반 연구를 계속 시작하도록 권하고 있어
+  ISIMIP3b 자료가 대체·철회된 것은 아닙니다. ISIMIP4b의 GCM·시나리오가 늘어나는지 지켜보세요.
+
+transitions:
+  - from: ISIMIP3b
+    to: ISIMIP4b
+    status: planned
+    date: "2026-08"
+    summary: >-
+      CMIP7 기반의 다음 시뮬레이션 단계입니다. 2026년 8월 EC-Earth3-ESM-1-1 한 모델의 첫 입력자료가 공개되었고, 다른 CMIP7 GCM과 시나리오는 추후 추가될 예정입니다.
+    changes:
+      - aspect: 기반 기후모델
+        before: CMIP6 GCM — 1차(primary) 5개 + 2차(secondary) 5개
+        after: CMIP7 GCM — 첫 단계는 EC-Earth3-ESM-1-1 하나, UKESM 등 다른 GCM은 준비되는 대로 추가
+      - aspect: 미래 시나리오
+        before: SSP1-2.6·SSP3-7.0·SSP5-8.5 (2차 자료에 ssp119·ssp245·ssp460 등 추가)
+        after: CMIP7 ScenarioMIP Very Low(VL)·High(H), 1.5°C 초과 후 복귀(overshoot) 시나리오 1개 이상 추가 예정
+      - aspect: Group II 고정 인간 강제력 연도
+        before: 2015년 수준 고정
+        after: 2021년 수준 고정
+      - aspect: 수평 해상도
+        before: 0.5° (ISIMIP3BASD 통계 다운스케일링)
+        after: 0.5° 편이보정 자료 계획 + CORDEX 역학 다운스케일링으로 만든 0.1° 고해상도 자료 계획
+      - aspect: 편이보정 방법·기준자료
+        before: ISIMIP3BASD v2.5.0, W5E5 v2.0
+        after: 2026-10-16 기준 공식 페이지에 명시 없음
+      - aspect: 파일 경로
+        before: ISIMIP3b/InputData/climate/atmosphere/bias-adjusted/global/daily/
+        after: ISIMIP4b/InputData/climate/atmosphere/bias-adjusted/global/daily/
+    impacts:
+      - "ISIMIP4b는 아직 GCM 1개로 시작한 단계입니다. 다중 모델 영향 평가는 당분간 ISIMIP3b로 하는 것이 현실적이며, ISIMIP 운영위원회도 ISIMIP3 기반 연구(특히 Group III)를 계속 시작하도록 권했습니다."
+      - "두 단계는 기반 모델 세대(CMIP6/CMIP7)·시나리오 체계(SSP/VL·H)·고정 인간 강제력 연도가 달라, 같은 시나리오로 취급해 한 앙상블로 섞지 마세요."
+      - "파일 경로와 파일명 앞부분(ISIMIP3b → ISIMIP4b)이 바뀌므로 경로를 고정해 둔 내려받기 스크립트는 점검이 필요합니다."
+    sources:
+      - name: ISIMIP — ISIMIP4b kicked off (2026-08-28)
+        url: https://www.isimip.org/news/isimip4b-kicked-off
+      - name: ISIMIP4 Protocol (isimip.org)
+        url: https://www.isimip.org/protocol/isimip4-protocol/
+      - name: ISIMIP4 simulation protocol
+        url: https://protocol4.isimip.org/
+      - name: ISIMIP 운영위원회 회의 요약 (2026년 2월)
+        url: https://www.isimip.org/outcomes/fact-sheets-and-documents/summary-of-the-isimip-steering-committee-meeting-february-2026/
+
+period:
+  start: "1601-01"
+  end: "2100-12"
+  note: >-
+    산업화 이전(piControl) 1601–1849, historical 1850–2014, 미래(ssp126·ssp370·ssp585) 2015–2100. piControl은 모델마다 다른 연도를
+    1601–2100으로 맞춘 것입니다. 편이보정 학습 기간은 W5E5의 1979–2014년입니다.
+
+resolution:
+  spatial_short: "56 km (0.5°)"
+  temporal_short: "1일"
+  spatial: >-
+    0.5° 정규 위경도 격자. CMIP6 일 자료를 원 해상도에 가장 가까운 0.5°·1.0°·2.0° 격자로 1차 보존적 재격자화한 뒤, 같은 해상도로 집계한
+    W5E5 v2.0에 맞춰 편이보정하고 ISIMIP3BASD로 0.5°까지 통계적 다운스케일링(1.0° 모델은 1단계, 2.0° 모델은 1.0°→0.5° 2단계)
+  vertical: 지상(단일면)만
+  temporal: 일
+
+coverage:
+  short: 전지구
+  note: >-
+    육지와 해양을 모두 포함한 전지구 파일입니다. 기준자료 W5E5 v2.0이 육지는 WFDE5 v2.0, 해양은 ERA5를 합친 자료입니다.
+update: 정기 갱신 없음. 2차 GCM·추가 실험이 별도 자료로 더해졌고, 수정 사항은 ISIMIP 변경 기록(issues and notes)으로 공지
+license: >-
+  2026-10-16 확인한 공식 페이지(isimip.org)에는 이 입력자료의 라이선스가 따로 적혀 있지 않습니다(웹사이트 내용은 CC BY 4.0, ISIMIP3 모델 출력은 CC0 권장).
+  ISIMIP 저장소의 데이터셋 페이지에 표시된 라이선스를 확인하세요. 공개자료 이용 약관은 관련 DOI 인용과 이용 사실 알림(info@isimip.org)을 요청합니다.
+account_required: false
+
+summary: >-
+  ISIMIP(영향모델 상호비교 사업)의 3단계 b(ISIMIP3b)에서 농업·수문·생태·보건 등 영향모델을 구동하려고 만든 CMIP6 기반 일 기후 입력자료입니다.
+  CMIP6 GCM의 piControl·historical·SSP 출력을 관측 기반 W5E5 v2.0에 맞춰 추세 보존형 분위수 사상(ISIMIP3BASD v2.5.0)으로 편이보정하고 0.5°로
+  통계적 다운스케일링했습니다. 의무 사용인 1차 GCM 5개(GFDL-ESM4, IPSL-CM6A-LR, MPI-ESM1-2-HR, MRI-ESM2-0, UKESM1-0-LL)와 선택인 2차 GCM 5개가
+  있으며, 기온·강수·강설·습도·기압·복사·풍속 11개 변수를 제공합니다.
+
+time_convention:
+  summary: >-
+    모든 변수는 일 단위 값입니다. tas·pr·prsn·hurs·huss·ps·rlds·rsds·sfcWind는 일평균, tasmax·tasmin은 일 최고·최저기온입니다. 모든 모델의 달력을
+    proleptic Gregorian으로 맞췄고, 원래 달력에 없던 날은 시간 방향 선형 보간으로 채워 넣었습니다.
+  points:
+    - "pr는 비와 눈을 합친 총강수이고 prsn은 그중 강설입니다. 비(액체 강수)는 pr − prsn으로 구합니다"
+    - "pr·prsn 단위는 kg m-2 s-1(일평균 강수율)이므로 86400을 곱하면 mm/일입니다"
+    - "360일·365일 달력 모델도 윤일·31일이 보간으로 채워져 있으므로, 그날 값은 모델이 직접 계산한 값이 아닙니다"
+    - "보정 후 값은 변수별 허용 범위(예: hurs 1–100 %, sfcWind 0.1–50 m s-1)로 잘라냈습니다(clipping)"
+  source: https://www.isimip.org/documents/413/ISIMIP3b_bias_adjustment_fact_sheet_Gnsz7CO.pdf
+  source_name: ISIMIP3b bias adjustment fact sheet (Lange, 2021-12-01)
+
+variables:
+  note: >-
+    ISIMIP3b 편이보정 팩트시트 표 1과 ISIMIP 입력자료 상세 페이지의 11개 변수 전체입니다. 변수명은 파일 속 이름(CMIP6 이름과 같음)이고 단위는 팩트시트 기준입니다.
+    huss는 보정된 hurs·ps·tas에서, prsn은 pr와 강설 비율에서, tasmax·tasmin은 tas와 일교차·왜도에서 간접적으로 계산되었습니다.
+  full_list: https://www.isimip.org/gettingstarted/input-data-bias-adjustment/details/84/
+  groups:
+    - name: 일 대기 (bias-adjusted, daily)
+      kind: mean
+      period: 일
+      items:
+        - "일평균 기온(지상) — `tas` (K)"
+        - text: "일 최고기온 — `tasmax` (K)"
+          kind: max
+        - text: "일 최저기온 — `tasmin` (K)"
+          kind: min
+        - text: "총강수 플럭스 — `pr` (kg m-2 s-1)"
+          note: 비와 눈을 모두 포함합니다.
+        - "강설 플럭스 — `prsn` (kg m-2 s-1)"
+        - "지상 상대습도 — `hurs` (%)"
+        - "지상 비습 — `huss` (kg kg-1)"
+        - "지표 기압 — `ps` (Pa)"
+        - "지표 하향 장파 복사 — `rlds` (W m-2)"
+        - "지표 하향 단파 복사 — `rsds` (W m-2)"
+        - text: "지상 풍속(일평균) — `sfcWind` (m s-1)"
+          std: [wind10]
+
+access:
+  - name: ISIMIP 저장소 (ISIMIP Repository)
+    url: https://data.isimip.org/
+    login: false
+    method: 웹 검색·다운로드, 파일 목록 + wget, API(isimip-client), 국가·영역 잘라 받기(mask/cutout)
+    note: >-
+      ISIMIP 프로토콜이 "로그인 없이" 받을 수 있다고 안내합니다. 1차 GCM 자료는 ISIMIP3b/InputData/climate/atmosphere/bias-adjusted/global/daily/,
+      2차 GCM 자료는 ISIMIP3b/SecondaryInputData/climate/atmosphere/ 아래에 시나리오·모델별로 있습니다. ESGF 제공은 2022년 5월 종료되었습니다.
+
+example:
+  lang: python
+  note: ISIMIP 공식 isimip-client README의 검색 방식입니다. 결과의 파일 목록으로 내려받거나 웹 화면에서 목록 파일을 받아 wget -ci로 받습니다.
+  code: |
+    # pip install isimip-client
+    from isimip_client.client import ISIMIPClient
+
+    client = ISIMIPClient()
+    response = client.datasets(simulation_round='ISIMIP3b',
+                               product='InputData',
+                               climate_forcing='gfdl-esm4',
+                               climate_scenario='ssp370',
+                               climate_variable='pr')
+    for dataset in response['results']:
+        print(dataset)
+
+    # 내려받은 파일 열기 (파일명 규칙:
+    # <climate-forcing>_<ensemble-member>_<bias-adjustment>_<climate-scenario>_<climate-variable>_global_daily_<start-year>_<end-year>.nc)
+    # import xarray as xr
+    # ds = xr.open_mfdataset("gfdl-esm4_*_ssp370_pr_global_daily_*.nc")
+    # pr_mm = ds["pr"] * 86400   # kg m-2 s-1 -> mm/일
+
+tips:
+  - >-
+    모든 GCM이 같은 0.5° 격자·같은 변수명·proleptic Gregorian 달력으로 맞춰져 있어 CMIP6 원자료처럼 달력(noleap·360_day)이나 격자를 직접 맞출 필요가 없습니다.
+    다만 원래 없던 날(360일 달력의 31일 등)은 선형 보간으로 채운 값이므로 극한 일 단위 분석에서 유의하세요.
+  - >-
+    1차 GCM 5개(GFDL-ESM4, IPSL-CM6A-LR, MPI-ESM1-2-HR, MRI-ESM2-0, UKESM1-0-LL)는 ISIMIP 영향모델 참여자의 의무 입력이고, 2차 GCM 5개(CanESM5,
+    CNRM-CM6-1, CNRM-ESM2-1, EC-Earth3, MIROC6)와 1차 모델의 추가 실험(hist-nat, ssp119, ssp245, ssp460, ssp534-over)은 별도 "Secondary" 자료로 나뉘어 있습니다.
+    모델당 멤버는 하나(UKESM1-0-LL·CNRM 계열은 r1i1p1f2, 나머지 r1i1p1f1)입니다.
+  - >-
+    ISIMIP3BASD는 기후모델의 추세를 보존하도록 설계되었지만 강수 추세는 대부분 "곱셈적으로" 보존되므로 강수의 절대 변화량은 원 GCM과 달라질 수 있습니다.
+    또 변수별(단변량)로 보정하며 다변량 보정(MBCn)은 쓰지 않았습니다. 팩트시트는 prsn에만 편이가 남았고, CanESM5는 ssp585 prsn 시계열에 불연속이 보인다고 적고 있습니다.
+  - >-
+    일부 모델은 ps나 sfcWind가 없어 대체 변수로 계산했습니다(MRI-ESM2-0 ps, CNRM-CM6-1·CNRM-ESM2-1 ps·sfcWind; 해면기압 psl과 uas·vas에서 계산).
+    CNRM-ESM2-1은 piControl이 291년뿐이라 500년을 채우려고 재사용했습니다. piControl 분석에는 주의하세요.
+  - >-
+    2021년 5월 이전에 받은 ISIMIP3b 자료(ISIMIP3BASD v2.4.1 이하, W5E5 v1.0)는 철회·교체된 판입니다. 입력자료 상세 페이지의 Specifications 항목에는 아직
+    v2.4.1·W5E5 v1.0이 적힌 곳이 있으니, 받은 파일의 전역 속성이나 저장소 데이터셋 페이지에서 v2.5.0·W5E5 v2.0인지 확인하세요.
+  - >-
+    파일은 모델·시나리오·변수·기간 구간별로 나뉘어 있습니다. 관심 지역만 필요하면 ISIMIP 저장소의 Configure download(국가·영역 마스크·잘라내기)나
+    isimip-client의 cutout_bbox/mask_bbox를 쓰면 전 지구 파일을 다 받지 않아도 됩니다(처리에 수십 분 걸릴 수 있음).
+
+citations:
+  dataset:
+    - label: ISIMIP3b 편이보정 대기 기후 입력자료 (1차 GCM)
+      text: >-
+        ISIMIP3b bias-adjusted atmospheric climate input data. ISIMIP Repository. https://doi.org/10.48364/ISIMIP.842396
+        (저자·버전 표기는 저장소 DOI 페이지의 인용문을 그대로 쓰세요)
+      doi: 10.48364/ISIMIP.842396
+    - label: 2차 GCM·추가 실험 자료 (Secondary)
+      text: >-
+        Secondary ISIMIP3b bias-adjusted atmospheric climate input data. ISIMIP Repository. https://doi.org/10.48364/ISIMIP.581124
+        (저자·버전 표기는 저장소 DOI 페이지의 인용문을 그대로 쓰세요)
+      doi: 10.48364/ISIMIP.581124
+    - label: 기준자료 W5E5 v2.0
+      text: >-
+        Lange, S., Menz, C., Gleixner, S., Cucchi, M., Weedon, G. P., Amici, A., Bellouin, N., Müller Schmied, H., Hersbach, H., Buontempo, C., Cagnazzo, C. (2021):
+        WFDE5 over land merged with ERA5 over the ocean (W5E5 v2.0). https://doi.org/10.48364/ISIMIP.342217
+      doi: 10.48364/ISIMIP.342217
+  papers:
+    - label: 편이보정·다운스케일링 방법 (ISIMIP3BASD v1.0 논문)
+      text: >-
+        Lange, S. (2019): Trend-preserving bias adjustment and statistical downscaling with ISIMIP3BASD (v1.0).
+        Geoscientific Model Development, 12(7), 3055–3070.
+      doi: 10.5194/gmd-12-3055-2019
+      bibtex: |
+        @article{lange2019isimip3basd,
+          author  = {Lange, Stefan},
+          title   = {Trend-preserving bias adjustment and statistical downscaling with {ISIMIP3BASD} (v1.0)},
+          journal = {Geoscientific Model Development},
+          volume  = {12},
+          number  = {7},
+          pages   = {3055--3070},
+          year    = {2019},
+          doi     = {10.5194/gmd-12-3055-2019}
+        }
+    - label: ISIMIP3BASD v2.5.0 코드 (실제 사용 버전)
+      text: "Lange, S. (2021): ISIMIP3BASD v2.5.0. https://doi.org/10.5281/zenodo.4686991"
+      doi: 10.5281/zenodo.4686991
+    - label: W5E5의 육지 부분 WFDE5
+      text: >-
+        Cucchi, M., Weedon, G. P., Amici, A., Bellouin, N., Lange, S., Müller Schmied, H., Hersbach, H., Buontempo, C. (2020):
+        WFDE5: bias-adjusted ERA5 reanalysis data for impact studies. Earth System Science Data, 12(3), 2097–2120.
+      doi: 10.5194/essd-12-2097-2020
+      bibtex: |
+        @article{cucchi2020wfde5,
+          author  = {Cucchi, Marco and Weedon, Graham P. and Amici, Alessandro and Bellouin, Nicolas and Lange, Stefan and M{\"u}ller Schmied, Hannes and Hersbach, Hans and Buontempo, Carlo},
+          title   = {{WFDE5}: bias-adjusted {ERA5} reanalysis data for impact studies},
+          journal = {Earth System Science Data},
+          volume  = {12},
+          number  = {3},
+          pages   = {2097--2120},
+          year    = {2020},
+          doi     = {10.5194/essd-12-2097-2020}
+        }
+  acknowledgement: >-
+    편이보정 팩트시트는 ISIMIP3b 편이보정 기후 입력자료를 쓰면 Lange (2019)·Lange (2021)(방법)와 Cucchi et al. (2020)·Lange et al. (2021)(W5E5)을 인용하도록 요청합니다.
+    ISIMIP 공개자료 이용 약관은 관련 DOI 인용과 이용 사실 알림(info@isimip.org)을 요청하고, 입력자료·영향모델 출력을 함께 쓴 경우의 사사 예문
+    ("For their roles in producing, coordinating, and making available the ISIMIP input data and impact model output, we acknowledge …")을 제시합니다.
+    원 GCM은 CMIP6 자료이므로 CMIP6 모델 출력 인용도 함께 검토하세요.
+
+notices:
+  - date: "2026-08-28"
+    level: info
+    title: CMIP7 기반 ISIMIP4b 시작 — 첫 입력자료 공개
+    body: >-
+      CMIP7 ScenarioMIP의 첫 EC-Earth 시뮬레이션을 바탕으로 한 ISIMIP4b 첫 입력자료 묶음(picontrol, historical, High·Very Low 시나리오)이 공개되었습니다.
+      UKESM 등 다른 GCM은 가능한 한 빨리 추가될 예정이며, AR7 제출 마감(2027년 5월 예상)을 목표로 하고 있습니다.
+    source: https://www.isimip.org/news/isimip4b-kicked-off
+  - date: "2022-01-10"
+    level: info
+    title: 2차(secondary) 기후 입력자료 공개
+    body: >-
+      1차 GCM 5개의 추가 실험(hist-nat, ssp119, ssp245, ssp460)과 2차 GCM 5개(CNRM-CM6-1, CNRM-ESM2-1, CanESM5, EC-Earth3, MIROC6)의 편이보정 자료가
+      공개되었습니다(DOI 10.48364/ISIMIP.581124). 프로토콜에 포함되지 않은 자료이므로 프로토콜 실험을 먼저 수행해 달라고 안내합니다.
+    source: https://www.isimip.org/newsletter/isimip3b-secondary-climate-input-data-now-available
+  - date: "2021-05-17"
+    level: critical
+    title: ISIMIP3b 편이보정 기후 입력자료 전면 교체 (ISIMIP3BASD v2.5.0, W5E5 v2.0)
+    body: >-
+      ISIMIP3b 편이보정 기후 입력자료가 완전히 교체되었습니다. 편이보정 코드가 ISIMIP3BASD v2.4.1에서 v2.5.0으로, 기준자료가 W5E5 v1.0에서 v2.0으로 바뀌었습니다.
+      새 ISIMIP3b 시뮬레이션은 반드시 새 자료를 써야 하며, 옛 자료로 한 시뮬레이션을 다시 해야 하는지는 당시 결정되지 않았습니다.
+    source: https://www.isimip.org/gettingstarted/input-data-changelog/isimip3-replaced-bias-adjusted-climate-input-data
+  - date: "2021-04-19"
+    level: critical
+    title: 문제 있는 ISIMIP3 기후 입력자료 철회
+    body: >-
+      ISIMIP3b 편이보정 기후 입력자료(와 ISIMIP3a 관측 기반 입력자료)의 문제 있는 판이 ESGF·ISIMIP 서버에서 철회되었습니다. 더 이상 쓰지 말고 새 판을 기다리도록 안내했습니다.
+    source: https://www.isimip.org/gettingstarted/input-data-changelog/isimip3-climate-input-data-retracted-isimip-servers
+  - date: "2021-02-18"
+    level: warning
+    title: 편이보정 기후 입력자료에서 불연속 발견
+    body: ISIMIP3b 편이보정 기후 입력자료의 통계가 매달 경계마다 불연속인 것으로 확인되었습니다. 편이보정을 달력 월 단위로 따로 적용했기 때문입니다.
+    source: https://www.isimip.org/gettingstarted/input-data-changelog/isimip3b-discontinuities-found-bias-adjusted-climate-input-data
+  - date: "2020-06-19"
+    level: warning
+    title: ISIMIP3BASD v2.3.1 결함으로 편이보정 자료 교체
+    body: >-
+      ISIMIP3BASD v2.3.1의 결함으로 ps·rlds·tas를 뺀 모든 변수(특히 강수)의 편이보정이 잘못되어, v2.4.1로 다시 보정한 자료로 2020-06-19 교체했습니다.
+      모든 기후모델과 시나리오가 영향을 받았습니다.
+    source: https://www.isimip.org/gettingstarted/input-data-changelog/isimip3b-bias-adjusted-gcm-data-replaced/
+
+links:
+  - name: ISIMIP3b 편이보정 안내 (ISIMIP3BASD v2.5.0, W5E5 v2.0)
+    url: https://www.isimip.org/gettingstarted/isimip3b-bias-adjustment/
+  - name: ISIMIP3b 편이보정 팩트시트 (PDF)
+    url: https://www.isimip.org/documents/413/ISIMIP3b_bias_adjustment_fact_sheet_Gnsz7CO.pdf
+  - name: ISIMIP 입력자료·편이보정 목록
+    url: https://www.isimip.org/gettingstarted/input-data-bias-adjustment/
+  - name: ISIMIP3 시뮬레이션 프로토콜
+    url: https://protocol.isimip.org/
+  - name: ISIMIP 입력자료 변경 기록 (2022년 1월 이전)
+    url: https://www.isimip.org/gettingstarted/input-data-changelog/
+  - name: ISIMIP 입력자료 변경 기록 (2022년 1월 이후, issues and notes)
+    url: https://data.isimip.org/issues-and-notes/
+  - name: ISIMIP 저장소 이용 안내
+    url: https://www.isimip.org/outputdata/isimip-repository/
+  - name: ISIMIP 공개자료 이용 약관
+    url: https://www.isimip.org/gettingstarted/terms-of-use/terms-use-publicly-available-isimip-data-after-embargo-period/
+  - name: isimip-client (공식 Python 클라이언트)
+    url: https://github.com/ISI-MIP/isimip-client/blob/master/README.md
+  - name: NEX-GDDP-CMIP6 (같은 분류의 0.25° 편이보정 자료, NCCS)
+    url: https://www.nccs.nasa.gov/services/data-collections/land-based-products/nex-gddp-cmip6
+
+watch_urls:
+  - https://www.isimip.org/gettingstarted/input-data-bias-adjustment/
+  - https://www.isimip.org/protocol/isimip4-protocol/
+  - https://protocol4.isimip.org/
+
+last_verified: "2026-10-16"

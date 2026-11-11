@@ -1,0 +1,341 @@
+# ─────────────────────────────────────────────────────────────
+# CORDEX-CMIP5 — dataset information file (English edition)
+# First-generation WCRP CORDEX: dynamical downscaling of CMIP5 GCMs with regional climate models (RCP scenarios)
+# Checked 2026-10-16: no new simulations (superseded by CORDEX-CMIP6); part of the ESGF holdings lost at DKRZ in early 2025
+# ─────────────────────────────────────────────────────────────
+id: cordex-cmip5
+name: CORDEX-CMIP5
+full_name: Coordinated Regional Climate Downscaling Experiment driven by CMIP5
+category: model_output
+domain: model
+group: 지역 다운스케일링
+order: 20
+domains: [대기, 육지, 극지]
+provider: WCRP CORDEX (produced by regional modelling groups, distributed via ESGF and the Copernicus CDS)
+
+status: ended
+status_note: >-
+  The first CORDEX generation, driven by CMIP5 GCMs under RCP scenarios; community work has moved on to the CMIP6-driven CORDEX-CMIP6. As checked on
+  2026-10-16, a major data loss at the DKRZ ESGF node in early 2025 still affects about 20,000 datasets (over 200 TB), and some of the most commonly used
+  variables remain accessible via the Copernicus CDS. The US ESGF index (ORNL Globus index) returns no CORDEX project datasets.
+successor:
+  name: CORDEX-CMIP6
+  url: https://wcrp-cordex.github.io/simulation-status/
+  note: The next generation, driven by CMIP6 GCMs under SSP scenarios. As of 2026-10-16 only some domains (Europe, North America, etc.) are on ESGF; East Asia (EAS) is not yet published.
+
+period:
+  start: "1950"
+  end: "2100"
+  note: >-
+    The archive specifications give 1950–2005 for historical runs, 2006–2100 for RCP4.5 and RCP8.5, and 1989–2008 as the advised period for
+    ERA-Interim-driven evaluation runs. The Copernicus CDS holdings span up to 1979–2019 for evaluation, 1948–2010 for historical and 2006–2101 for RCP
+    experiments depending on the simulation, and also include RCP2.6.
+
+resolution:
+  spatial_short: "모델마다 다름"
+  temporal_short: "3시간"
+  spatial: >-
+    CORDEX rotated-pole grids per domain — Table 1 of the archive specifications defines 16 grids: 13 domains at 0.44° (e.g. EAS-44), MNA-22 and SEA-22
+    at 0.22°, and EUR-11 at 0.11°; further 0.22° domains such as EAS-22 were used later (CORDEX domain tables). Core variables must also be provided on regular latitude-longitude i-grids (e.g. EAS-44i at 0.5°, with grid point boundaries at
+    whole-number degrees). East Asia data on the Copernicus CDS are at 0.22° and 0.44°.
+  vertical: Surface and single-level variables + selected pressure-level variables (200, 500, 850 hPa, etc.)
+  temporal: 3-hourly, 6-hourly, daily, monthly, seasonal (sem) + invariant fields (fx)
+
+coverage:
+  short: 대륙별 영역
+  note: >-
+    CORDEX regional domains (South America, Central America, North America, Europe, Africa, South Asia, East Asia, Central Asia, Australasia, Antarctica,
+    Arctic, Mediterranean, Middle East and North Africa, South-East Asia). The Korean Peninsula lies in the East Asia domain (EAS, CORDEX Region 7):
+    EAS-44 is a 203×167 grid with the rotated north pole at longitude -64.78°, latitude 77.61°, and EAS-44i is a 0.5° regular 227×157 grid (cell
+    positions 62.75°–175.75°E, 18.75°S–59.25°N).
+update: Ended (no new simulations; the CDS copy is described as updated quarterly, with only the latest version provided)
+license: >-
+  The CORDEX-CMIP5 terms of use (2 May 2013) split data into "unrestricted" (commercial use allowed) and "non-commercial" (non-commercial research and
+  educational purposes only); which applies to each simulation is given in the CORDEX RCM list. On the Copernicus CDS the data are under the "CORDEX
+  licence" and can be used for commercial purposes except simulations from BOUN-RegCM4-3 (Central Asia and MENA) and RU-CORE-RegCM4-3 (South-East Asia).
+  Publications need an acknowledgement and a table of the models used.
+account_required: true
+
+summary: >-
+  CORDEX-CMIP5 is the first generation of continental-scale regional climate simulations from the WCRP Coordinated Regional Climate Downscaling
+  Experiment (CORDEX), in which multiple regional climate models (RCMs) are driven by CMIP5 global climate models (GCMs) and by the ERA-Interim reanalysis.
+  Most domains use a 0.44° (about 50 km) grid and cover historical (1950–2005) and RCP2.6, 4.5 and 8.5 scenario (2006–2100) periods. It underlies the
+  C3S CORDEX ensemble used for the regional assessment in the IPCC AR6 Atlas; its successor is the CMIP6-driven CORDEX-CMIP6.
+
+time_convention:
+  summary: >-
+    Averages, maxima and minima use the midpoint of the time interval as the time value, with time_bnds giving the interval. Instantaneous 3-hourly and
+    6-hourly variables are on the hour (every 3 or 6 hours from 0Z).
+  points:
+    - "6-hourly instantaneous values are at 0, 6, 12 and 18Z and 6-hourly averages at 3, 9, 15 and 21Z; 3-hourly instantaneous values are every 3 hours from 0Z and 3-hourly averages at 1.5Z, 4.5Z, and so on."
+    - "Even for tas, 3-hourly data are instantaneous (point) while daily, monthly and seasonal data are means. Monthly and seasonal tasmax/tasmin are means of daily maxima (minima)."
+    - "Time units are 'days since 1949-12-01T00:00:00Z' (or an equivalent format), and the calendar follows the driving data (proleptic Gregorian or standard Gregorian for evaluation runs). GCM-driven runs may use 365-day or 360-day calendars."
+    - "Reanalysis-driven runs use experiment_id 'evaluation', not 'historical'."
+  source: http://wcrp-cordex.github.io/cordex-cmip5/cordex_archive_specifications.pdf
+  source_name: CORDEX Archive Specifications v3.2 (5 May 2020) + CORDEX variables requirement table v3.1 (21 Feb 2014)
+
+variables:
+  note: >-
+    Core variables from the CORDEX variables requirement table (v3.1, 21 Feb 2014). Names are as in the files and units as in the table. No 1-hourly
+    output is specified. On the Copernicus CDS the same variables are selected by CDS names such as '2m_air_temperature'.
+  full_list: http://wcrp-cordex.github.io/cordex-cmip5/CORDEX_variables_requirement_table.pdf
+  groups:
+    - name: Daily (day)
+      kind: mean
+      period: Daily
+      items:
+        - "Near-surface air temperature — `tas` (K)"
+        - text: "Daily maximum near-surface air temperature — `tasmax` (K)"
+          kind: max
+        - text: "Daily minimum near-surface air temperature — `tasmin` (K)"
+          kind: min
+        - "Precipitation — `pr` (kg m-2 s-1)"
+        - "Near-surface specific humidity — `huss` (1)"
+        - "Near-surface relative humidity — `hurs` (%)"
+        - "Sea level pressure — `psl` (Pa)"
+        - "Near-surface wind speed — `sfcWind` (m s-1)"
+        - "Eastward near-surface wind — `uas` (m s-1)"
+        - "Northward near-surface wind — `vas` (m s-1)"
+        - "Surface downwelling shortwave radiation — `rsds` (W m-2)"
+        - "Surface downwelling longwave radiation — `rlds` (W m-2)"
+        - "Evaporation — `evspsbl` (kg m-2 s-1)"
+        - text: "Total runoff — `mrro` (kg m-2 s-1)"
+          note: Mean over land
+    - name: Monthly (mon)
+      kind: mean
+      period: Monthly
+      items:
+        - "Near-surface air temperature — `tas` (K)"
+        - text: "Daily maximum near-surface air temperature, monthly mean — `tasmax` (K)"
+          note: Mean of daily maxima
+        - text: "Daily minimum near-surface air temperature, monthly mean — `tasmin` (K)"
+          note: Mean of daily minima
+        - "Precipitation — `pr` (kg m-2 s-1)"
+        - "Sea level pressure — `psl` (Pa)"
+        - "Total cloud fraction — `clt` (%)"
+    - name: 3-hourly (3hr)
+      kind: instant
+      period: 3-hourly
+      items:
+        - "Near-surface air temperature — `tas` (K)"
+        - text: "Precipitation — `pr` (kg m-2 s-1)"
+          kind: mean
+        - "Near-surface specific humidity — `huss` (1)"
+        - "Sea level pressure — `psl` (Pa)"
+        - "Near-surface wind speed — `sfcWind` (m s-1)"
+        - text: "Surface downwelling shortwave radiation — `rsds` (W m-2)"
+          kind: mean
+    - name: 6-hourly (6hr)
+      kind: instant
+      period: 6-hourly
+      items:
+        - "Eastward near-surface wind — `uas` (m s-1)"
+        - "Northward near-surface wind — `vas` (m s-1)"
+        - "Geopotential height at 500 hPa — `zg500` (m)"
+        - "Eastward wind at 850 hPa — `ua850` (m s-1)"
+    - name: Invariant fields (fx)
+      kind: static
+      items:
+        - "Surface altitude — `orog` (m)"
+        - "Land area fraction — `sftlf` (%)"
+
+access:
+  - name: Copernicus CDS — CORDEX regional climate model data on single levels
+    url: https://cds.climate.copernicus.eu/datasets/projections-cordex-domains-single-levels
+    login: true
+    method: Web download form / CDS API (cdsapi); spatial and temporal sub-selection available since July 2026
+    note: >-
+      14 domains (East Asia at 0.22° and 0.44°), evaluation, historical and RCP2.6/4.5/8.5 experiments, 3-hourly, 6-hourly, daily, monthly and seasonal
+      data, 24 main variables, NetCDF4 (CF-1.4). Requires an ECMWF account and acceptance of the CORDEX licence. CORDEX points here for the most
+      commonly used variables after the DKRZ data loss.
+  - name: CEDA Archive — CORDEX EAS-44i (MOHC HadRM3P, ERA-Interim evaluation run)
+    url: https://catalogue.ceda.ac.uk/uuid/c47ee635b055465da578404741e3170f
+    login: true
+    method: CEDA Archive web/FTP (path /badc/cordex/data/CORDEX/output/EAS-44i/MOHC/ECMWF-ERAINT/evaluation)
+    note: Monthly averages and seasonal means from the Met Office Hadley Centre's 0.44° East Asia evaluation run (1990–2010). Available to any registered CEDA user.
+
+example:
+  lang: python
+  note: >-
+    Put your CDS API key in ~/.cdsapirc and accept the licence on the dataset page first. A request only succeeds if the domain, resolution, GCM, RCM and
+    member combination exists, so check the available combinations in the download form and change the values (the GCM–RCM pair below is an example).
+  code: |
+    # pip install --upgrade cdsapi
+    import cdsapi
+
+    client = cdsapi.Client()
+    client.retrieve(
+        "projections-cordex-domains-single-levels",
+        {
+            "domain": "east_asia",
+            "experiment": "historical",
+            "horizontal_resolution": "0_44_degree_x_0_44_degree",
+            "temporal_resolution": "daily_mean",
+            "variable": ["2m_air_temperature"],
+            "gcm_model": "mohc_hadgem2_es",
+            "rcm_model": "clmcom_cclm5_0_2",
+            "ensemble_member": "r1i1p1",
+            "year": ["2001", "2002", "2003", "2004", "2005"],
+            "month": ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"],
+        },
+        "cordex_eas44_tas_day.zip",
+    )
+
+tips:
+  - >-
+    A data loss at the DKRZ node in early 2025 removed about 20,000 CORDEX-CMIP5 datasets (over 200 TB) without replicas from ESGF. First check whether the
+    data you need are on the loss list (esgf-data-loss/Missing_CORDEX_Data.txt in the WCRP-CORDEX/cordex-cmip5 GitHub repository), and do not delete files
+    you downloaded earlier. CORDEX asks anyone holding affected datasets to contact datasupport@cordex.org.
+  - >-
+    The ESGF route is in transition. The CORDEX page says four nodes (SMHI-NSC, DKRZ, CEDA/BADC, IPSL) fully support the CORDEX search facets, but ESGF
+    is decommissioning the legacy SOLR index those nodes use and has no plans to migrate older projects such as CMIP5 to the new indexes. As checked on
+    2026-10-16, the US ORNL Globus index returns 0 results for project=CORDEX. Downloading via ESGF requires joining the CORDEX Research (non-commercial)
+    or CORDEX Commercial group.
+  - >-
+    The East Asia ESGF summary (version 2023-07-13) shows only EAS-22 (REMO2015 and RegCM4-4 driven by HadGEM2-ES, MPI-ESM-LR, MPI-ESM-MR and NorESM1-M,
+    RCP2.6 and 8.5) and EAS-44 (CCLM5-0-2 and HIRHAM5 driven by CNRM-CM5, EC-EARTH, HadGEM2-ES and MPI-ESM-LR, RCP4.5 and 8.5). Simulations by Korean
+    institutions are mostly absent from that table, so also check the regional EAST ASIA CORDEX website linked from the CORDEX East Asia domain page and
+    its contact people.
+  - >-
+    File names follow VariableName_Domain_GCMModelName_Experiment_Ensemble_RCMModelName_RCMVersionID_Frequency_StartTime-EndTime.nc; 3- and 6-hourly
+    files hold one year, daily files five years or fewer, and monthly or seasonal files ten years or fewer. Join the historical (1950–2005) and RCP
+    (2006–2100) files of one GCM–RCM pair to build a continuous series.
+  - >-
+    Native rotated-pole grids (EAS-44, etc.) carry rlat/rlon coordinates plus 2-D lat/lon. To compare several RCMs, use the regular i-grids (e.g.
+    EAS-44i) where core variables are provided, or regrid to a common grid with care (e.g. conservative remapping). Calendars can be 365-day or 360-day
+    following the driving GCM.
+  - >-
+    Check known data problems in the CORDEX errata service linked from the CDS documentation and on the CDS known-issues page.
+
+citations:
+  dataset:
+    - label: Copernicus CDS copy (if downloaded from the CDS)
+      text: >-
+        CORDEX regional climate model data on single levels. Copernicus Climate Change Service (C3S) Climate Data Store (CDS), DOI: 10.24381/cds.bc91edc3
+        (Accessed on DD-MMM-YYYY). Check the exact citation format in the Citation section of the CDS page.
+      doi: 10.24381/cds.bc91edc3
+  papers:
+    - label: C3S CORDEX ensemble paper (CDS holdings, IPCC AR6 Atlas)
+      text: >-
+        Diez-Sierra, J., Iturbide, M., Gutiérrez, J. M., Fernández, J., Milovac, J., Cofiño, A. S., Cimadevilla, E., Nikulin, G., Levavasseur, G.,
+        Kjellström, E., et al. (2022): The Worldwide C3S CORDEX Grand Ensemble: A Major Contribution to Assess Regional Climate Change in the IPCC AR6 Atlas.
+        Bulletin of the American Meteorological Society, 103(12), E2804–E2826.
+      doi: 10.1175/BAMS-D-22-0111.1
+      bibtex: |
+        @article{diezsierra2022c3scordex,
+          author  = {Diez-Sierra, Javier and Iturbide, Maialen and Guti{\'e}rrez, Jos{\'e} M. and Fern{\'a}ndez, Jes{\'u}s and Milovac, Josipa and Cofi{\~n}o, Antonio S. and Cimadevilla, Ezequiel and Nikulin, Grigory and Levavasseur, Guillaume and Kjellstr{\"o}m, Erik and others},
+          title   = {The Worldwide {C3S} {CORDEX} Grand Ensemble: A Major Contribution to Assess Regional Climate Change in the {IPCC} {AR6} Atlas},
+          journal = {Bulletin of the American Meteorological Society},
+          volume  = {103},
+          number  = {12},
+          pages   = {E2804--E2826},
+          year    = {2022},
+          doi     = {10.1175/BAMS-D-22-0111.1}
+        }
+  acknowledgement: >-
+    The CORDEX-CMIP5 terms of use (2013) require an acknowledgement and a table listing the models and modelling groups used: "We acknowledge the World
+    Climate Research Programme's Working Group on Regional Climate, and the Working Group on Coupled Modelling, former coordinating body of CORDEX and
+    responsible panel for CMIP5. We also thank the climate modelling groups (listed in Table XX of this paper) for producing and making available their
+    model output. We also acknowledge the Earth System Grid Federation infrastructure an international effort led by the U.S. Department of Energy's
+    Program for Climate Model Diagnosis and Intercomparison, the European Network for Earth System Modelling and other partners in the Global Organisation
+    for Earth System Science Portals (GO-ESSP)." Replace Table XX with your model table number.
+
+notices:
+  - date: "2026-07"
+    level: info
+    title: Copernicus CDS CORDEX data now support spatial and temporal sub-selection
+    body: >-
+      According to the update log on the CDS dataset page, spatial and temporal sub-selection are now available. The adaptor now uses a WPS-based process,
+      so requests use year and month widgets instead of start and end keys. Check the request keys in older API scripts.
+    source: https://cds.climate.copernicus.eu/datasets/projections-cordex-domains-single-levels?tab=documentation
+  - date: "2025-05-16"
+    level: critical
+    title: ESGF data loss at DKRZ — about 20,000 CORDEX-CMIP5 datasets affected
+    body: >-
+      A major data loss at DKRZ in early 2025 affected CORDEX-CMIP5 availability on ESGF. Many datasets were stored only at that node without replicas, so
+      the loss is largely unrecoverable; about 20,000 datasets (over 200 TB) across multiple domains, variables and frequencies are still affected. The full
+      list is in Missing_CORDEX_Data.txt on GitHub, and some of the most commonly used variables remain accessible via the Copernicus CDS.
+    source: https://cordex.org/2025/05/16/esgf-data-loss-impacting-the-availablility-of-cordex-cmip5-data/
+
+transitions:
+  - from: CORDEX-CMIP5
+    to: CORDEX-CMIP6
+    to_id: cordex-cmip6
+    status: planned
+    summary: >-
+      The next generation, with driving GCMs moving from CMIP5 to CMIP6 and scenarios from RCPs to SSPs. As of 2026-10-16 some domains (Europe, North
+      America, etc.) are on ESGF but East Asia (EAS) is not yet published, so Korean Peninsula studies will rely on both generations for a while.
+    changes:
+      - aspect: Driving global models
+        before: CMIP5 GCMs (e.g. for East Asia HadGEM2-ES, MPI-ESM-LR, MPI-ESM-MR, NorESM1-M, CNRM-CM5, EC-EARTH)
+        after: CMIP6 GCMs (EAS-12 EC-Earth3-Veg, MPI-ESM1-2-HR, NorESM2-MM; EAS-25 UKESM1-0-LL)
+      - aspect: Future scenarios
+        before: RCP2.6, 4.5, 8.5, 2006–2100
+        after: SSP1-2.6 and 3-7.0 first, SSP2-4.5 and 5-8.5 recommended, 2015–2100
+      - aspect: Historical period
+        before: 1950–2005
+        after: 1950–2014 (at least 1960–2014)
+      - aspect: Evaluation (reanalysis-driven) runs
+        before: ERA-Interim, 1989–2008 advised
+        after: ERA5, 1979–2020 or longer
+      - aspect: Domain names and resolution
+        before: EAS-44, EAS-22, EAS-11 (grid spacing in degrees), 0.44° default for most domains
+        after: EAS-50, EAS-25, EAS-12 (nearest km, same grid definitions), primary target grid spacings 25 km and 12.5 km
+      - aspect: Output frequencies
+        before: 3-hourly, 6-hourly, daily, monthly, seasonal (sem), fixed
+        after: 1-hourly, 3-hourly, 6-hourly, daily, monthly, fixed (hourly recommended for CORE variables, no seasonal files)
+      - aspect: Archive specifications and DRS
+        before: CORDEX Archive Specifications (v3.2, 2020), project_id CORDEX, RCM version v1 etc.
+        after: CORDEX-CMIP6 archiving specifications (v1 2024 → v4 2026), project_id CORDEX-CMIP6, new version_realization element vN-rM
+      - aspect: Time units
+        before: days since 1949-12-01T00:00:00Z
+        after: days since 1950-01-01 (1850-01-01 allowed before 1950)
+      - aspect: Licence
+        before: unrestricted / non-commercial (varies by simulation)
+        after: CC BY 4.0 strongly recommended (all 54 registered models CC BY 4.0 on 2026-10-16)
+      - aspect: Distribution
+        before: Legacy ESGF index (affected by the DKRZ loss) + Copernicus CDS
+        after: New ESGF STAC index (CORDEX-CMIP6 collection), some data on interim servers before publication
+    impacts:
+      - "Both driving GCMs and scenarios changed, so do not pool CORDEX-CMIP5 and CORDEX-CMIP6 results into one ensemble or splice them into one series. RCP and SSP scenarios do not map one to one."
+      - "Domain names changed (EAS-44 → EAS-50, EAS-22 → EAS-25), so update the domain values in searches and scripts. The grid definitions are the same."
+      - "As of 2026-10-16 CORDEX-CMIP6 EAS-25 has only one driving GCM (UKESM1-0-LL), so its range of inter-GCM uncertainty can differ from the CORDEX-CMIP5 East Asia ensemble."
+      - "The search project name changed from CORDEX to CORDEX-CMIP6, and experiments are searched with driving_experiment_id (historical, ssp126, etc.)."
+    sources:
+      - name: CORDEX Archive Specifications v3.2 (CORDEX-CMIP5)
+        url: http://wcrp-cordex.github.io/cordex-cmip5/cordex_archive_specifications.pdf
+      - name: CORDEX-CMIP6 Archiving Specifications for Dynamical Downscaling
+        url: https://wcrp-cordex.github.io/archive-specifications/CORDEX-CMIP6_archiving_specifications_DD/
+      - name: CORDEX experiment design for dynamical downscaling of CMIP6 (18 May 2021)
+        url: https://cordex.org/wp-content/uploads/2021/05/CORDEX-CMIP6_exp_design_RCM.pdf
+      - name: CORDEX domain tables (WCRP-CORDEX/domain-tables)
+        url: https://github.com/WCRP-CORDEX/domain-tables
+      - name: CORDEX-CMIP6 simulation status by domain
+        url: https://wcrp-cordex.github.io/simulation-status/CORDEX_CMIP6_status.html
+      - name: CORDEX-CMIP6 Terms of Use
+        url: https://cordex.org/data-access/cordex-cmip6-data/cordex-cmip6-terms-of-use/
+
+links:
+  - name: CORDEX-CMIP5 data (cordex.org)
+    url: https://cordex.org/data-access/cordex-cmip5-data/
+  - name: CORDEX-CMIP5 ESGF
+    url: https://cordex.org/data-access/cordex-cmip5-data/cordex-cmip5-esgf/
+  - name: How to access CORDEX-CMIP5 data (terms of use)
+    url: https://cordex.org/data-access/cordex-cmip5-data/how-to-access-cordex-cmip5-data/
+  - name: CORDEX-CMIP5 documents (archive specifications, variable table, terms of use, RCM list)
+    url: https://wcrp-cordex.github.io/cordex-cmip5/
+  - name: CORDEX-CMIP5 ESGF summary tables (GCM–RCM matrices by scenario)
+    url: https://wcrp-cordex.github.io/simulation-status/CORDEX_CMIP5_status_by_scenario.html
+  - name: DKRZ data loss list (Missing_CORDEX_Data.txt)
+    url: https://github.com/WCRP-CORDEX/cordex-cmip5/blob/main/esgf-data-loss/Missing_CORDEX_Data.txt
+  - name: CORDEX Region 7 — East Asia
+    url: https://cordex.org/domains/region-7-east-asia/
+  - name: CORDEX FAQ — data and access (ESGF group sign-up)
+    url: https://cordex.org/faq/faq-data-and-access/
+
+watch_urls:
+  - https://cordex.org/news-events/
+  - https://cordex.org/data-access/esgf
+  - https://cds.climate.copernicus.eu/datasets/projections-cordex-domains-single-levels?tab=documentation
+
+last_verified: "2026-10-16"

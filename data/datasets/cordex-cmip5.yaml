@@ -1,0 +1,331 @@
+# ─────────────────────────────────────────────────────────────
+# CORDEX-CMIP5 — 데이터셋 정보 파일
+# WCRP CORDEX 1세대: CMIP5 전지구 모델을 지역기후모델(RCM)로 역학 다운스케일링 (RCP 시나리오)
+# 2026-10-16 확인: 새 시뮬레이션 없음(CORDEX-CMIP6로 넘어감), 2025년 초 DKRZ 자료 손실로 ESGF 일부 자료 사라짐
+# ─────────────────────────────────────────────────────────────
+id: cordex-cmip5
+name: CORDEX-CMIP5
+full_name: Coordinated Regional Climate Downscaling Experiment driven by CMIP5 (CMIP5 기반 WCRP 지역기후 다운스케일링 국제 공동실험)
+category: model_output
+domain: model
+group: 지역 다운스케일링
+order: 20
+domains: [대기, 육지, 극지]
+provider: WCRP CORDEX (각 지역 모델링 그룹 생산, ESGF·Copernicus CDS 배포)
+
+status: ended
+status_note: >-
+  CMIP5 GCM·RCP 시나리오 기반의 1세대 CORDEX 자료로, 공동체 작업은 CMIP6 기반 CORDEX-CMIP6로 넘어갔습니다. 2026-10-16 확인 시
+  2025년 초 DKRZ ESGF 노드의 자료 손실로 약 20,000개 데이터셋(200 TB 이상)이 ESGF에서 사라진 상태이며, 많이 쓰는 변수 일부는 Copernicus CDS에서 계속 받을 수 있습니다.
+  미국 ESGF 색인(ORNL Globus 색인)에서는 CORDEX 프로젝트가 검색되지 않습니다.
+successor:
+  name: CORDEX-CMIP6
+  url: https://wcrp-cordex.github.io/simulation-status/
+  note: CMIP6 GCM·SSP 시나리오 기반 후속 세대입니다. 2026-10-16 기준 유럽·북미 등 일부 영역만 ESGF에 공개되었고 동아시아(EAS)는 아직 공개 전입니다.
+
+period:
+  start: "1950"
+  end: "2100"
+  note: >-
+    보관 규격 기준 과거 실험(historical) 1950–2005년, RCP4.5·RCP8.5 시나리오 2006–2100년, ERA-Interim 구동 평가 실험(evaluation)은 1989–2008년이 권장 기간입니다.
+    Copernicus CDS 수록본은 평가 1979–2019년, 과거 1948–2010년, RCP 2006–2101년 범위 안에서 시뮬레이션마다 다르고, RCP2.6도 포함합니다.
+
+resolution:
+  spatial_short: "모델마다 다름"
+  temporal_short: "3시간"
+  spatial: >-
+    영역별 CORDEX 회전극 격자 — 보관 규격 표 1은 0.44° 13개 영역(EAS-44 등)과 0.22°(MNA-22·SEA-22)·0.11°(EUR-11)까지 16개 격자를 정의하며,
+    이후 EAS-22 같은 0.22° 영역도 쓰였습니다(CORDEX 도메인 표).
+    핵심 변수는 정규 위경도 i-격자(EAS-44i 0.5° 등, 격자 경계가 정수 위경도)로도 제공하도록 규정되어 있습니다.
+    Copernicus CDS 수록 동아시아 자료는 0.22°와 0.44°입니다.
+  vertical: 지표·단일면 변수 + 일부 기압면 변수(200·500·850 hPa 등)
+  temporal: 3시간·6시간·일·월·계절(sem) + 고정장(fx)
+
+coverage:
+  short: 대륙별 영역
+  note: >-
+    CORDEX 14개 지역 영역(남미·중미·북미·유럽·아프리카·남아시아·동아시아·중앙아시아·오스트랄라시아·남극·북극·지중해·중동북아프리카(MENA)·동남아시아).
+    한반도는 동아시아(EAS, CORDEX Region 7) 영역에 들어가며, EAS-44는 회전극 북극점(경도 -64.78°, 위도 77.61°) 기준 203×167 격자,
+    EAS-44i는 0.5° 정규 격자 227×157(62.75°–175.75°E, 18.75°S–59.25°N 격자 위치)입니다.
+update: 갱신 종료 (새 시뮬레이션 없음. CDS 수록본은 분기별 갱신으로 안내되며 최신 버전만 제공)
+license: >-
+  CORDEX-CMIP5 이용 약관(2013-05-02)은 자료를 "unrestricted"(상업 이용 가능)와 "non-commercial"(비상업 연구·교육 전용)로 나누며, 시뮬레이션마다 어느 쪽인지는
+  CORDEX RCM 목록에서 확인합니다. Copernicus CDS 수록본은 "CORDEX licence"로, BOUN-RegCM4-3(중앙아시아·MENA)과 RU-CORE-RegCM4-3(동남아시아)을 빼면 상업 이용이 가능합니다.
+  논문에는 사사 문장과 사용 모델·기관 표가 필요합니다.
+account_required: true
+
+summary: >-
+  CORDEX-CMIP5는 WCRP 지역기후 다운스케일링 공동실험(CORDEX)이 CMIP5 전지구 기후모델(GCM)과 ERA-Interim 재분석을 경계조건으로 여러 지역기후모델(RCM)을 돌려 만든
+  1세대 대륙별 영역 기후 시뮬레이션입니다. 대부분 영역이 0.44°(약 50 km) 격자이고, 과거(1950–2005)와 RCP2.6·4.5·8.5 시나리오(2006–2100)를 다룹니다.
+  IPCC AR6 Atlas의 지역 기후변화 평가에 쓰인 C3S CORDEX 앙상블의 바탕이며, 지금은 CMIP6 기반 CORDEX-CMIP6가 후속 세대입니다.
+
+time_convention:
+  summary: >-
+    평균·최대·최소 변수는 시간 좌표가 구간의 가운데(중간점)에 찍히고 time_bnds로 구간을 줍니다. 3시간·6시간 순간값 변수는 정시(0Z부터 3시간 또는 6시간 간격) 값입니다.
+  points:
+    - "6시간 순간값은 0·6·12·18Z, 6시간 평균값은 3·9·15·21Z, 3시간 순간값은 0Z부터 3시간 간격, 3시간 평균값은 1.5Z·4.5Z…에 찍힙니다."
+    - "같은 tas라도 3시간 자료는 순간값(point), 일·월·계절 자료는 평균입니다. 월·계절 tasmax·tasmin은 '일 최고(최저)의 평균'입니다."
+    - "시간 단위는 'days since 1949-12-01T00:00:00Z'(또는 같은 뜻의 형식)이고, 달력은 구동 자료를 따릅니다(평가 실험은 proleptic Gregorian 또는 standard Gregorian). GCM 구동 실험은 365일·360일 달력일 수 있습니다."
+    - "평가 실험의 experiment_id는 'historical'이 아니라 'evaluation'입니다."
+  source: http://wcrp-cordex.github.io/cordex-cmip5/cordex_archive_specifications.pdf
+  source_name: CORDEX Archive Specifications v3.2 (2020-05-05) + CORDEX 변수 요구표 v3.1 (2014-02-21)
+
+variables:
+  note: >-
+    CORDEX 변수 요구표(CORDEX variables requirement table, v3.1, 2014-02-21)의 핵심 변수입니다. 변수명은 파일 속 이름, 단위는 요구표 표기입니다.
+    1시간 자료는 규정되어 있지 않습니다. Copernicus CDS에서는 같은 변수를 '2m_air_temperature' 같은 CDS 이름으로 고릅니다.
+  full_list: http://wcrp-cordex.github.io/cordex-cmip5/CORDEX_variables_requirement_table.pdf
+  groups:
+    - name: 일 (day)
+      kind: mean
+      period: 일
+      items:
+        - {text: "지상 기온 — `tas` (K)", std: [t2m]}
+        - text: "일 최고기온 — `tasmax` (K)"
+          kind: max
+        - text: "일 최저기온 — `tasmin` (K)"
+          kind: min
+        - "강수 — `pr` (kg m-2 s-1)"
+        - "지상 비습 — `huss` (1)"
+        - "지상 상대습도 — `hurs` (%)"
+        - "해면기압 — `psl` (Pa)"
+        - {text: "지상 풍속 — `sfcWind` (m s-1)", std: [wind10]}
+        - {text: "지상 동서 바람 — `uas` (m s-1)", std: [wind10]}
+        - {text: "지상 남북 바람 — `vas` (m s-1)", std: [wind10]}
+        - "지표 하향 단파복사 — `rsds` (W m-2)"
+        - "지표 하향 장파복사 — `rlds` (W m-2)"
+        - "증발 — `evspsbl` (kg m-2 s-1)"
+        - text: "총 유출 — `mrro` (kg m-2 s-1)"
+          note: 육지 평균
+    - name: 월 (mon)
+      kind: mean
+      period: 월
+      items:
+        - {text: "지상 기온 — `tas` (K)", std: [t2m]}
+        - text: "일 최고기온의 월평균 — `tasmax` (K)"
+          note: 일 최고기온을 평균한 값
+        - text: "일 최저기온의 월평균 — `tasmin` (K)"
+          note: 일 최저기온을 평균한 값
+        - "강수 — `pr` (kg m-2 s-1)"
+        - "해면기압 — `psl` (Pa)"
+        - "전운량 — `clt` (%)"
+    - name: 3시간 (3hr)
+      kind: instant
+      period: 3시간
+      items:
+        - {text: "지상 기온 — `tas` (K)", std: [t2m]}
+        - text: "강수 — `pr` (kg m-2 s-1)"
+          kind: mean
+        - "지상 비습 — `huss` (1)"
+        - "해면기압 — `psl` (Pa)"
+        - {text: "지상 풍속 — `sfcWind` (m s-1)", std: [wind10]}
+        - text: "지표 하향 단파복사 — `rsds` (W m-2)"
+          kind: mean
+    - name: 6시간 (6hr)
+      kind: instant
+      period: 6시간
+      items:
+        - {text: "지상 동서 바람 — `uas` (m s-1)", std: [wind10]}
+        - {text: "지상 남북 바람 — `vas` (m s-1)", std: [wind10]}
+        - "500 hPa 지위고도 — `zg500` (m)"
+        - "850 hPa 동서 바람 — `ua850` (m s-1)"
+    - name: 고정장 (fx)
+      kind: static
+      items:
+        - "지표 고도 — `orog` (m)"
+        - "육지 비율 — `sftlf` (%)"
+
+access:
+  - name: Copernicus CDS — CORDEX regional climate model data on single levels
+    url: https://cds.climate.copernicus.eu/datasets/projections-cordex-domains-single-levels
+    login: true
+    method: 웹 다운로드 폼 / CDS API (cdsapi), 2026년 7월부터 영역·기간 잘라 받기 가능
+    note: >-
+      14개 영역(동아시아 0.22°·0.44° 포함), 평가·과거·RCP2.6·4.5·8.5, 3시간·6시간·일·월·계절 자료, 주요 변수 24종이 있습니다. NetCDF4(CF-1.4).
+      ECMWF 계정과 CORDEX 라이선스 동의가 필요합니다. DKRZ 손실 뒤에도 많이 쓰는 변수는 이곳에서 받을 수 있다고 CORDEX가 안내합니다.
+  - name: CEDA 아카이브 — CORDEX EAS-44i (MOHC HadRM3P, ERA-Interim 평가 실험)
+    url: https://catalogue.ceda.ac.uk/uuid/c47ee635b055465da578404741e3170f
+    login: true
+    method: CEDA 아카이브 웹·FTP (경로 /badc/cordex/data/CORDEX/output/EAS-44i/MOHC/ECMWF-ERAINT/evaluation)
+    note: 영국 기상청 해들리센터의 동아시아 0.44° 평가 실험(1990–2010) 월·계절 평균입니다. CEDA 등록 사용자면 받을 수 있습니다.
+
+example:
+  lang: python
+  note: >-
+    ~/.cdsapirc에 CDS API key를 넣고 웹 페이지에서 라이선스에 동의한 뒤 실행합니다. 영역·해상도·GCM·RCM·멤버 조합이 실제로 있어야 요청이 성공하므로,
+    다운로드 폼에서 가능한 조합을 먼저 확인하고 값을 바꾸세요(아래 GCM·RCM 조합은 예시).
+  code: |
+    # pip install --upgrade cdsapi
+    import cdsapi
+
+    client = cdsapi.Client()
+    client.retrieve(
+        "projections-cordex-domains-single-levels",
+        {
+            "domain": "east_asia",
+            "experiment": "historical",
+            "horizontal_resolution": "0_44_degree_x_0_44_degree",
+            "temporal_resolution": "daily_mean",
+            "variable": ["2m_air_temperature"],
+            "gcm_model": "mohc_hadgem2_es",
+            "rcm_model": "clmcom_cclm5_0_2",
+            "ensemble_member": "r1i1p1",
+            "year": ["2001", "2002", "2003", "2004", "2005"],
+            "month": ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"],
+        },
+        "cordex_eas44_tas_day.zip",
+    )
+
+tips:
+  - >-
+    2025년 초 DKRZ 노드 자료 손실로 복제본이 없던 CORDEX-CMIP5 데이터셋 약 20,000개(200 TB 이상)가 ESGF에서 사라졌습니다. 필요한 자료가 손실 목록
+    (GitHub WCRP-CORDEX/cordex-cmip5의 esgf-data-loss/Missing_CORDEX_Data.txt)에 있는지 먼저 확인하고, 예전에 받아 둔 파일은 지우지 마세요.
+    손실 자료를 갖고 있다면 CORDEX(datasupport@cordex.org)에 알리도록 요청하고 있습니다.
+  - >-
+    ESGF 경로는 과도기입니다. CORDEX 안내 페이지는 SMHI-NSC·DKRZ·CEDA(BADC)·IPSL 네 노드가 CORDEX 검색 항목을 완전히 지원한다고 하지만,
+    ESGF는 이 노드들이 쓰는 옛 SOLR 색인을 퇴역시키는 중이고 CMIP5 같은 옛 프로젝트를 새 색인으로 옮길 계획이 없다고 밝혔습니다. 2026-10-16 확인 시
+    미국 ORNL Globus 색인에서 project=CORDEX 검색 결과는 0건입니다. ESGF로 받으려면 CORDEX Research(비상업) 또는 CORDEX Commercial 그룹 가입이 필요합니다.
+  - >-
+    동아시아 ESGF 현황표(2023-07-13판)에는 EAS-22(REMO2015·RegCM4-4, 구동 HadGEM2-ES·MPI-ESM-LR·MPI-ESM-MR·NorESM1-M, RCP2.6·8.5)와
+    EAS-44(CCLM5-0-2·HIRHAM5, 구동 CNRM-CM5·EC-EARTH·HadGEM2-ES·MPI-ESM-LR, RCP4.5·8.5) 조합만 보입니다. 국내 기관이 만든 동아시아 시뮬레이션은
+    이 표에 거의 없으므로, CORDEX 동아시아 영역 페이지가 연결해 둔 지역 웹사이트(EAST ASIA CORDEX)와 담당 연구진 안내를 함께 확인하세요.
+  - >-
+    파일 이름은 변수_영역_GCM_실험_멤버_RCM_RCM버전(v1 등)_빈도_기간.nc 형식이고, 3·6시간 자료는 1년, 일 자료는 5년 이하, 월·계절 자료는 10년 이하 단위로 나뉩니다.
+    한 GCM–RCM 조합의 과거(1950–2005)와 RCP(2006–2100) 파일을 이어 붙여 연속 시계열을 만듭니다.
+  - >-
+    회전극 원격자(EAS-44 등)에는 rlat·rlon 좌표와 2차원 lat·lon이 함께 들어 있습니다. 여러 RCM을 비교할 때는 핵심 변수가 있는 정규 i-격자(EAS-44i 등)를 쓰거나,
+    보존적 보간 등으로 공통 격자에 맞추세요. 달력도 구동 GCM을 따라 365일·360일일 수 있습니다.
+  - >-
+    오류가 알려진 자료는 CDS 문서에서 연결하는 CORDEX 정오표(errata) 서비스와 CDS 알려진 문제(Known issues) 페이지에서 확인하세요.
+
+citations:
+  dataset:
+    - label: Copernicus CDS 수록본 (CDS에서 받은 경우)
+      text: >-
+        CORDEX regional climate model data on single levels. Copernicus Climate Change Service (C3S) Climate Data Store (CDS), DOI: 10.24381/cds.bc91edc3
+        (Accessed on DD-MMM-YYYY). 정확한 인용 형식은 CDS 페이지의 Citation 항목에서 확인하세요.
+      doi: 10.24381/cds.bc91edc3
+  papers:
+    - label: C3S CORDEX 앙상블 논문 (CDS 수록본·IPCC AR6 Atlas)
+      text: >-
+        Diez-Sierra, J., Iturbide, M., Gutiérrez, J. M., Fernández, J., Milovac, J., Cofiño, A. S., Cimadevilla, E., Nikulin, G., Levavasseur, G.,
+        Kjellström, E., et al. (2022): The Worldwide C3S CORDEX Grand Ensemble: A Major Contribution to Assess Regional Climate Change in the IPCC AR6 Atlas.
+        Bulletin of the American Meteorological Society, 103(12), E2804–E2826.
+      doi: 10.1175/BAMS-D-22-0111.1
+      bibtex: |
+        @article{diezsierra2022c3scordex,
+          author  = {Diez-Sierra, Javier and Iturbide, Maialen and Guti{\'e}rrez, Jos{\'e} M. and Fern{\'a}ndez, Jes{\'u}s and Milovac, Josipa and Cofi{\~n}o, Antonio S. and Cimadevilla, Ezequiel and Nikulin, Grigory and Levavasseur, Guillaume and Kjellstr{\"o}m, Erik and others},
+          title   = {The Worldwide {C3S} {CORDEX} Grand Ensemble: A Major Contribution to Assess Regional Climate Change in the {IPCC} {AR6} Atlas},
+          journal = {Bulletin of the American Meteorological Society},
+          volume  = {103},
+          number  = {12},
+          pages   = {E2804--E2826},
+          year    = {2022},
+          doi     = {10.1175/BAMS-D-22-0111.1}
+        }
+  acknowledgement: >-
+    CORDEX-CMIP5 이용 약관(2013)은 논문에 사사 문장과 사용한 모델·모델링 그룹 표를 넣도록 요구합니다. 사사 문장은 "We acknowledge the World Climate Research
+    Programme's Working Group on Regional Climate, and the Working Group on Coupled Modelling, former coordinating body of CORDEX and responsible panel for
+    CMIP5. We also thank the climate modelling groups (listed in Table XX of this paper) for producing and making available their model output. We also
+    acknowledge the Earth System Grid Federation infrastructure an international effort led by the U.S. Department of Energy's Program for Climate Model
+    Diagnosis and Intercomparison, the European Network for Earth System Modelling and other partners in the Global Organisation for Earth System Science
+    Portals (GO-ESSP)."이며, Table XX를 모델 표 번호로 바꿉니다.
+
+notices:
+  - date: "2026-07"
+    level: info
+    title: Copernicus CDS CORDEX 자료 영역·기간 잘라 받기 지원
+    body: >-
+      CDS 데이터셋 페이지의 갱신 기록에 따르면 공간·시간 잘라 받기가 가능해졌습니다. 요청 방식이 WPS 기반으로 바뀌어 시작·끝 키 대신 year·month 항목으로 기간을 고릅니다.
+      예전 API 스크립트는 요청 키를 점검하세요.
+    source: https://cds.climate.copernicus.eu/datasets/projections-cordex-domains-single-levels?tab=documentation
+  - date: "2025-05-16"
+    level: critical
+    title: DKRZ ESGF 자료 손실 — CORDEX-CMIP5 약 20,000개 데이터셋 사라짐
+    body: >-
+      2025년 초 DKRZ에서 큰 자료 손실이 있었고, 복제본 없이 그 노드에만 있던 데이터셋이 많아 대부분 복구할 수 없습니다. 여러 영역·변수·빈도에 걸쳐
+      약 20,000개 데이터셋(200 TB 이상)이 영향을 받았으며, 전체 목록은 GitHub의 Missing_CORDEX_Data.txt에 있습니다. 자주 쓰는 변수 일부는 Copernicus CDS에서 계속 받을 수 있습니다.
+    source: https://cordex.org/2025/05/16/esgf-data-loss-impacting-the-availablility-of-cordex-cmip5-data/
+
+transitions:
+  - from: CORDEX-CMIP5
+    to: CORDEX-CMIP6
+    to_id: cordex-cmip6
+    status: planned
+    summary: >-
+      구동 GCM이 CMIP5에서 CMIP6로, 시나리오가 RCP에서 SSP로 바뀐 후속 세대입니다. 2026-10-16 기준 유럽·북미 등 일부 영역은 ESGF에 공개되었지만
+      동아시아(EAS)는 아직 공개 전이라 한반도 연구는 한동안 두 세대를 함께 보게 됩니다.
+    changes:
+      - aspect: 구동 전지구 모델
+        before: CMIP5 GCM (예 — 동아시아 HadGEM2-ES·MPI-ESM-LR·MPI-ESM-MR·NorESM1-M·CNRM-CM5·EC-EARTH)
+        after: CMIP6 GCM (EAS-12 EC-Earth3-Veg·MPI-ESM1-2-HR·NorESM2-MM, EAS-25 UKESM1-0-LL)
+      - aspect: 미래 시나리오
+        before: RCP2.6·4.5·8.5, 2006–2100
+        after: SSP1-2.6·3-7.0 우선, SSP2-4.5·5-8.5 권장, 2015–2100
+      - aspect: 과거 실험 기간
+        before: 1950–2005
+        after: 1950–2014 (최소 1960–2014)
+      - aspect: 평가 실험(재분석 구동)
+        before: ERA-Interim, 1989–2008 권장
+        after: ERA5, 1979–2020 이상
+      - aspect: 영역 이름·해상도
+        before: EAS-44·EAS-22·EAS-11 (격자 간격 °), 대부분 영역 기본 0.44°
+        after: EAS-50·EAS-25·EAS-12 (가까운 km, 같은 격자 정의), 주 목표 격자 간격 25 km·12.5 km
+      - aspect: 출력 빈도
+        before: 3시간·6시간·일·월·계절(sem)·고정장
+        after: 1시간·3시간·6시간·일·월·고정장 (CORE 변수 1시간 권장, 계절 자료 없음)
+      - aspect: 보관 규격·DRS
+        before: CORDEX Archive Specifications (v3.2, 2020), project_id CORDEX, RCM 버전 v1 등
+        after: CORDEX-CMIP6 보관 규격 (v1 2024 → v4 2026), project_id CORDEX-CMIP6, version_realization vN-rM 추가
+      - aspect: 시간 단위
+        before: days since 1949-12-01T00:00:00Z
+        after: days since 1950-01-01 (1950년 이전 구간은 1850-01-01 허용)
+      - aspect: 라이선스
+        before: unrestricted / non-commercial 두 가지 (시뮬레이션마다 다름)
+        after: CC BY 4.0 강력 권장 (2026-10-16 등록 모델 54개 모두 CC BY 4.0)
+      - aspect: 배포처
+        before: ESGF 옛 색인(DKRZ 손실 영향) + Copernicus CDS
+        after: ESGF 새 STAC 색인 (CORDEX-CMIP6 컬렉션), 공개 전 일부는 임시 서버
+    impacts:
+      - "구동 GCM과 시나리오가 모두 바뀌었으므로 CORDEX-CMIP5와 CORDEX-CMIP6 결과를 한 앙상블로 섞거나 시계열로 이어 붙이지 마세요. RCP와 SSP 시나리오는 1:1로 대응하지 않습니다."
+      - "영역 이름이 바뀌어(EAS-44 → EAS-50, EAS-22 → EAS-25) 검색어와 스크립트의 영역 값을 고쳐야 합니다. 격자 정의는 같습니다."
+      - "CORDEX-CMIP6 EAS-25는 2026-10-16 기준 구동 GCM이 UKESM1-0-LL 하나뿐이라 GCM 간 불확실성 범위가 CORDEX-CMIP5 동아시아 앙상블과 다를 수 있습니다."
+      - "검색 프로젝트 이름이 CORDEX에서 CORDEX-CMIP6로 바뀌었고, 실험 이름도 driving_experiment_id(historical·ssp126 등)로 검색합니다."
+    sources:
+      - name: CORDEX Archive Specifications v3.2 (CORDEX-CMIP5)
+        url: http://wcrp-cordex.github.io/cordex-cmip5/cordex_archive_specifications.pdf
+      - name: CORDEX-CMIP6 Archiving Specifications for Dynamical Downscaling
+        url: https://wcrp-cordex.github.io/archive-specifications/CORDEX-CMIP6_archiving_specifications_DD/
+      - name: CORDEX experiment design for dynamical downscaling of CMIP6 (2021-05-18)
+        url: https://cordex.org/wp-content/uploads/2021/05/CORDEX-CMIP6_exp_design_RCM.pdf
+      - name: CORDEX 도메인 표 (WCRP-CORDEX/domain-tables)
+        url: https://github.com/WCRP-CORDEX/domain-tables
+      - name: CORDEX-CMIP6 영역별 시뮬레이션 현황
+        url: https://wcrp-cordex.github.io/simulation-status/CORDEX_CMIP6_status.html
+      - name: CORDEX-CMIP6 이용 약관
+        url: https://cordex.org/data-access/cordex-cmip6-data/cordex-cmip6-terms-of-use/
+
+links:
+  - name: CORDEX-CMIP5 자료 안내 (cordex.org)
+    url: https://cordex.org/data-access/cordex-cmip5-data/
+  - name: CORDEX-CMIP5 ESGF 안내
+    url: https://cordex.org/data-access/cordex-cmip5-data/cordex-cmip5-esgf/
+  - name: CORDEX-CMIP5 받는 방법·이용 약관 안내
+    url: https://cordex.org/data-access/cordex-cmip5-data/how-to-access-cordex-cmip5-data/
+  - name: CORDEX-CMIP5 문서 모음 (보관 규격·변수표·이용 약관·RCM 목록)
+    url: https://wcrp-cordex.github.io/cordex-cmip5/
+  - name: CORDEX-CMIP5 ESGF 현황표 (시나리오별 GCM–RCM 행렬)
+    url: https://wcrp-cordex.github.io/simulation-status/CORDEX_CMIP5_status_by_scenario.html
+  - name: DKRZ 자료 손실 목록 (Missing_CORDEX_Data.txt)
+    url: https://github.com/WCRP-CORDEX/cordex-cmip5/blob/main/esgf-data-loss/Missing_CORDEX_Data.txt
+  - name: CORDEX 동아시아 영역 (Region 7) 안내
+    url: https://cordex.org/domains/region-7-east-asia/
+  - name: CORDEX 자료 FAQ (ESGF 그룹 가입)
+    url: https://cordex.org/faq/faq-data-and-access/
+
+watch_urls:
+  - https://cordex.org/news-events/
+  - https://cordex.org/data-access/esgf
+  - https://cds.climate.copernicus.eu/datasets/projections-cordex-domains-single-levels?tab=documentation
+
+last_verified: "2026-10-16"

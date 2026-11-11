@@ -6,7 +6,7 @@ hooks/datasets.py 가 만드는 페이지·폼·메뉴의 한국어 화면 문�
 (영어판 빌드 뒤 scripts/check_en.py 로 남은 한국어를 찾을 수 있습니다)
 """
 
-DOMAIN_LABEL = {"atmosphere": "Atmosphere", "ocean": "Ocean", "seaice": "Sea ice", "land": "Land", "satellite": "Satellite"}
+DOMAIN_LABEL = {"atmosphere": "Atmosphere", "ocean": "Ocean", "seaice": "Sea ice", "land": "Land", "satellite": "Satellite", "model": "Climate models"}
 
 GROUP = {
     "재분석": "Reanalyses",
@@ -44,6 +44,10 @@ GROUP = {
     "해빙": "Sea ice",
     "빙하·빙상": "Glaciers & ice sheets",
     "지면": "Land",
+    "전지구 모델 실험": "Global model intercomparison (CMIP)",
+    "지역 다운스케일링": "Regional dynamical downscaling",
+    "통계 다운스케일링·편이보정": "Statistical downscaling & bias adjustment",
+    "국가 기후변화 시나리오": "National climate scenarios",
 }
 
 DOMAIN_INTRO = {
@@ -52,6 +56,8 @@ DOMAIN_INTRO = {
     "seaice": "Sea-ice concentration, thickness, volume and drift: model-based reanalyses, observation-based analyses, satellite products, drift vectors and extent/area indices.",
     "land": "Land data assimilation systems and land reanalyses, plus satellite-based soil moisture, evapotranspiration, vegetation (LAI, NDVI), land cover, land surface temperature, albedo, snow, terrestrial water storage and fire products for hydrology, agriculture, ecology and land-surface studies.",
     "satellite": "Satellite-derived datasets grouped by what they observe: precipitation, clouds, radiation, temperature and atmospheric composition; sea surface temperature, winds, ocean colour, salinity and sea level; sea ice and ice sheets; and land. Satellite datasets listed under other tabs appear here too.",
+    "model": "Climate model simulations: the global model intercomparison projects (CMIP), regional downscaling of them (CORDEX), statistically downscaled and bias-adjusted products, and national climate scenarios, organised by generation. "
+             "Model output is split by model, experiment, member and grid, so see [Model data download](../model-data.md) for an availability table and download-and-merge scripts.",
 }
 
 GROUP_INTRO = {
@@ -79,18 +85,22 @@ GROUP_INTRO = {
     "해면 염분": "Sea surface salinity from L-band microwave satellites.",
     "해면고도·파랑": "Sea surface height and significant wave height from satellite altimetry.",
     "빙하·빙상": "Satellite observations of glacier and ice-sheet velocity, elevation and mass change.",
+    "전지구 모델 실험": "Results of global climate models from institutions worldwide run with a common experiment design (historical, future scenarios, …) in the Coupled Model Intercomparison Project. Files are split by model, experiment, member, grid and time chunk.",
+    "지역 다운스케일링": "Regional climate models driven at their boundaries by global model output, giving finer grids over particular continents or regions (CORDEX).",
+    "통계 다운스케일링·편이보정": "Global model output statistically bias-adjusted against observations and downscaled to a common fine grid. All models usually come on the same grid, calendar and variable names, so they are easy to use directly.",
+    "국가 기후변화 시나리오": "Climate change scenarios produced by national agencies as the official basis for climate policy.",
 }
 
 DOMAIN_TAG = {"대기": "Atmosphere", "해양": "Ocean", "해빙": "Sea ice", "육지": "Land", "극지": "Polar",
               "해양파랑": "Ocean waves", "원격탐사": "Remote sensing", "빙상": "Ice sheets", "수문": "Hydrology", "에어로졸": "Aerosols"}
 
-TEMPORAL = {"10분": "10 min", "30분": "30 min", "1시간": "1 h", "3시간": "3 h", "6시간": "6 h", "1일": "1 day",
+TEMPORAL = {"1시간 미만": "< 1 h", "10분": "10 min", "30분": "30 min", "1시간": "1 h", "3시간": "3 h", "6시간": "6 h", "1일": "1 day",
             "5일": "5 days", "7일": "7 days", "8일": "8 days", "10일": "10 days", "15일": "15 days",
             "16일": "16 days", "1개월": "1 month", "1년": "1 year"}
 
 COVERAGE = {"전지구": "Global", "준전지구": "Quasi-global", "양극": "Both poles", "북극": "Arctic",
             "북극·북대서양": "Arctic & N. Atlantic", "북극 일부": "Part of Arctic", "남극": "Antarctic",
-            "아시아": "Asia", "북미": "North America"}
+            "아시아": "Asia", "북미": "North America", "대륙별 영역": "Regional domains"}
 
 STATUS = {"active": "Available", "delayed": "Update delayed", "deprecated": "Being replaced",
           "ended": "Discontinued", "upcoming": "Upcoming"}
@@ -129,6 +139,7 @@ DISCLAIMER = (
 
 # 화면 문구 — 긴 것부터 차례로 바꿉니다 (부분 문자열이 먼저 바뀌는 일을 막기 위해 길이순 정렬)
 UI = {
+    "모델마다 다름": "Varies by model",
     # 데이터셋 페이지
     "중요 공지 알림 받기": "Get notice alerts",
     "다른 자료와 비교": "Compare with other datasets",
@@ -271,6 +282,65 @@ UI = {
     "<strong>변수로 찾기</strong><span>강수·기온·SST처럼 변수 이름으로 자료 찾기</span>": "<strong>Find by variable</strong><span>Search datasets by a variable such as precipitation, temperature or SST</span>",
     "<strong>자료 비교</strong><span>최대 4개 자료를 한 표로 나란히</span>": "<strong>Compare datasets</strong><span>Up to four datasets side by side in one table</span>",
     "<strong>표준 변수 목록</strong><span>자료마다 다른 변수 이름 한눈에</span>": "<strong>Standard variables</strong><span>What each dataset calls the same quantity</span>",
+    "<strong>모델 자료 받기</strong><span>CMIP 가용성 표와 받기·합치기 스크립트</span>": "<strong>Model data download</strong><span>CMIP availability table and download-and-merge scripts</span>",
+    # 모델 자료 받기 (model-data.md)
+    "가용성 표 준비 중": "Availability table not ready yet",
+    "모델 가용성 표(카탈로그)가 아직 만들어지지 않았습니다. 매주 자동으로 ESGF 색인을 확인해 채워 넣으니, 그동안은 아래 안내와 각 자료 페이지의 받는 방법을 참고하세요.":
+        "The model availability table (catalog) has not been built yet. It is filled in automatically from the ESGF indices every week; until then, see the notes below and the access section of each dataset page.",
+    "가용성 표를 불러오는 중입니다… (자바스크립트가 꺼져 있으면 보이지 않습니다)": "Loading the availability table… (it needs JavaScript)",
+    "1. 자료 고르기": "1. Choose data",
+    '<label class="field">프로젝트<select': '<label class="field">Project<select',
+    '<label class="field">빈도<select': '<label class="field">Frequency<select',
+    '변수 <span class="hint">(괄호 안: 모델 수)</span>': 'Variable <span class="hint">(number of models in brackets)</span>',
+    "<legend>실험 (여러 개 고를 수 있음)</legend>": "<legend>Experiments (choose one or more)</legend>",
+    "고른 실험이 모두 있는 모델만 보기": "Only models that have all chosen experiments",
+    "2. 가용성 표": "2. Availability table",
+    "모델 이름 왼쪽 칸으로 스크립트에 넣을 모델을 고릅니다(처음에는 전부). 실험 칸의 숫자는 멤버 수, 아래는 기간이며 칸에 마우스를 올리면 멤버 목록·파일 수·크기가 보입니다. 크기·파일 수는 고른 실험의 모든 멤버를 합친 값입니다. ":
+        "Use the boxes on the left to choose the models that go into the script (all at first). In the experiment columns the number is the member count and below it the period; hover over a cell for the member list, file count and size. Sizes and file counts add up every member of the chosen experiments. ",
+    "3. 스크립트 옵션": "3. Script options",
+    "<legend>멤버</legend>": "<legend>Members</legend>",
+    "<span>모델별 첫 멤버</span>": "<span>First member per model</span>",
+    "<span>전부</span>": "<span>All</span>",
+    "<span>직접 입력</span>": "<span>Enter your own</span>",
+    "예) r1i1p1f1, r2i1p1f1": "e.g. r1i1p1f1, r2i1p1f1",
+    "<legend>기간 (연도)</legend>": "<legend>Years</legend>",
+    '<label class="field">시작<input': '<label class="field">First<input',
+    '<label class="field">끝<input': '<label class="field">Last<input',
+    "비워 두면 전체 기간입니다.": "Leave empty for the full period.",
+    "<legend>영역</legend>": "<legend>Region</legend>",
+    "<span>위경도 상자</span>": "<span>Lat/lon box</span>",
+    "<span>전지구</span>": "<span>Global</span>",
+    '<label class="field">남 (°N)<input': '<label class="field">South (°N)<input',
+    '<label class="field">북 (°N)<input': '<label class="field">North (°N)<input',
+    '<label class="field">서 (°E)<input': '<label class="field">West (°E)<input',
+    '<label class="field">동 (°E)<input': '<label class="field">East (°E)<input',
+    "기본값은 한반도 주변(30–45°N, 120–135°E)입니다.": "The default is the area around the Korean Peninsula (30–45°N, 120–135°E).",
+    "<legend>달력·격자·단위</legend>": "<legend>Calendar, grid and units</legend>",
+    '<label class="field">달력 통일<select': '<label class="field">Calendar<select',
+    '<option value="">그대로</option>': '<option value="">Keep as is</option>',
+    "noleap (365일)": "noleap (365-day)",
+    "standard (그레고리력)": "standard (Gregorian)",
+    '<label class="field">재격자<select': '<label class="field">Regridding<select',
+    '<option value="">없음</option>': '<option value="">None</option>',
+    "공통 1° 격자 · bilinear": "Common 1° grid · bilinear",
+    "공통 1° 격자 · conservative": "Common 1° grid · conservative",
+    "<span>강수 pr → mm/day</span>": "<span>Precipitation pr → mm/day</span>",
+    "<span>기온 K → °C</span>": "<span>Temperature K → °C</span>",
+    "<span>historical + 시나리오 이어 붙이기 (같은 멤버끼리)</span>": "<span>Join historical + scenario (same member only)</span>",
+    "<legend>출력</legend>": "<legend>Output</legend>",
+    "<span>모델별 파일</span>": "<span>One file per model</span>",
+    "<span>여러 모델을 model 차원으로 묶은 한 파일</span>": "<span>One file with a model dimension</span>",
+    "<span>내려받지 않고 OPeNDAP으로 필요한 부분만 읽기 (실험적 — 노드에 따라 실패할 수 있음)</span>": "<span>Read only what is needed over OPeNDAP instead of downloading (experimental — may fail on some nodes)</span>",
+    "4. 스크립트": "4. Script",
+    "ESGF에서 받아 합치기 (intake-esgf)": "Download from ESGF and merge (intake-esgf)",
+    "이미 받은 파일 폴더 합치기": "Merge a folder of downloaded files",
+    "고른 모델을 ESGF에서 찾아 받고(원본은 ~/.esgf/), 기간·영역을 잘라 시간 순으로 이어 붙여 cmip_out/ 에 저장합니다.":
+        "Finds and downloads the chosen models from ESGF (originals in ~/.esgf/), cuts the years and region, joins the pieces in time order and saves the result in cmip_out/.",
+    ">복사</button>": ">Copy</button>",
+    ">.py 저장</button>": ">Save .py</button>",
+    '<label class="field">받은 파일이 있는 폴더<input': '<label class="field">Folder with the downloaded files<input',
+    "폴더(하위 폴더 포함)의 CMIP6·CMIP7 파일 이름을 읽어 변수·모델·실험·멤버·격자별로 묶고, 시간 순 정렬 → 겹침·빈 구간 검사 → 버전이 여럿이면 최신만 → 이어 붙여 하나로 저장합니다. 버전은 폴더 이름(v20190429 같은)에서 읽습니다.":
+        "Reads the CMIP6/CMIP7 file names in the folder (and sub-folders), groups them by variable, model, experiment, member and grid, sorts them in time, checks for overlaps and gaps, keeps only the latest version when there are several, and joins them into one file. Versions are read from folder names such as v20190429.",
     '<label class="field var-search">찾을 변수': '<label class="field var-search">Variable',
     "위 칸에 변수 이름(한국어·영어)이나 자료의 변수명(<code>tp</code>, <code>PRECTOT</code> …)을 넣거나 위 예시 단어를 눌러 보세요.":
         "Type a variable name or a dataset's short name (<code>tp</code>, <code>PRECTOT</code> …) above, or click an example.",

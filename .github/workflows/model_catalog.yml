@@ -1,0 +1,64 @@
+# 매주 ESGF 검색 색인을 확인해 '모델 자료 받기' 페이지의 가용성 표(data/model-catalog/catalog.json)를 새로 만듭니다.
+# 순서: 카탈로그 생성 → 스크립트 생성기 시험(가짜 파일 합치기 + ESGF에서 실제로 작은 자료 받기) → 바뀌었으면 main에 커밋 → 사이트 배포
+# 시험이 실패하면 커밋하지 않고 실패로 끝납니다(Actions 탭·메일로 운영자가 알 수 있게).
+name: 모델 가용성 표 갱신
+
+on:
+  schedule:
+    - cron: "23 19 * * 1"   # 매주 월요일 UTC 19:23 = 화요일 한국 04:23
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: write   # 커밋 뒤 사이트 배포(deploy.yml)를 시작하려고 — GITHUB_TOKEN으로 올린 커밋은 push 배포를 자동으로 시작하지 않음
+
+concurrency:
+  group: model-catalog
+  cancel-in-progress: false
+
+jobs:
+  catalog:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - run: pip install requests netCDF4 h5netcdf h5py fsspec aiohttp xarray cftime numpy pandas dask "intake-esgf>=2026.9.28"
+
+      - name: 가용성 표 만들기
+        run: python scripts/model_catalog.py
+
+      - name: 시험 1 — 이미 받은 파일 합치기 (가짜 CMIP 파일)
+        run: python scripts/tests/test_merge_script.py "$RUNNER_TEMP/merge-test"
+
+      - name: 시험 2 — ESGF에서 받아 합치기 (작은 조건으로 실제 실행)
+        run: python scripts/tests/smoke_search_script.py --out "$RUNNER_TEMP/smoke" --cmip6 1 --cmip7 1
+
+      - name: 시험 3 — 사이트 빌드
+        run: |
+          pip install -r requirements.txt
+          python scripts/validate.py
+          mkdocs build --strict
+          mkdocs build --strict -f mkdocs.en.yml
+
+      - name: 바뀌었으면 main에 저장하고 사이트 배포
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git config user.name "model-catalog"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/model-catalog
+          if git diff --cached --quiet; then echo "바뀐 내용 없음"; exit 0; fi
+          git commit -q -m "model-catalog: 가용성 표 갱신 $(TZ=Asia/Seoul date +%F)"
+          pushed=0
+          for i in 1 2 3; do
+            if git pull -q --rebase origin main && git push -q origin HEAD:main; then pushed=1; break; fi
+            sleep 5
+          done
+          [ "$pushed" = 1 ] || exit 1
+          gh workflow run deploy.yml --ref main

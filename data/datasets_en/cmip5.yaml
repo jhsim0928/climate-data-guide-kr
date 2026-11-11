@@ -1,0 +1,330 @@
+# ─────────────────────────────────────────────────────────────
+# CMIP5 — dataset information file (English edition)
+# WCRP Coupled Model Intercomparison Project Phase 5 (the model basis of IPCC AR5)
+# ─────────────────────────────────────────────────────────────
+id: cmip5
+name: CMIP5
+full_name: Coupled Model Intercomparison Project Phase 5
+category: model_output
+domain: model
+group: 전지구 모델 실험
+order: 30
+domains: [대기, 해양, 해빙, 육지]
+provider: WCRP Working Group on Coupled Modelling (WGCM) · coordinated by PCMDI (LLNL, USA) · contributing modelling groups · ESGF
+
+status: ended
+status_note: >-
+  CMIP5 is a completed phase and no data are added or updated. WCRP has stated that there are no plans to migrate CMIP3 and CMIP5 to the new ESGF
+  indexes (ESGF-NG), and the LLNL node that held CMIP5 data was shut down on 2025-07-29. Checked on 2026-10-16, the ORNL ESGF search index still lists
+  92,556 latest CMIP5 datasets that can be downloaded, but for new work consider the later phases first (CMIP6, and CMIP7, whose publication has begun).
+successor:
+  name: CMIP6
+  url: https://wcrp-cmip.org/cmip-phases/cmip6/
+  note: >-
+    CMIP6 is organised around the DECK and a set of CMIP-Endorsed MIPs, and its future scenarios moved from the RCPs to SSP-based scenarios. See
+    "Changes in the successor" below for details. CMIP7 data have also been published on ESGF since September 2026.
+
+transitions:
+  - from: CMIP5
+    to: CMIP6
+    to_id: cmip6
+    status: completed
+    summary: >-
+      Instead of CMIP5's centralized structure, with 35 experiments defined in one design, CMIP6 adopted a federated structure of the DECK, the historical
+      simulation and CMIP-Endorsed MIPs; the historical run was extended to 2014 and future scenarios moved from the RCPs to SSP-based ScenarioMIP scenarios.
+    changes:
+      - aspect: Experiment structure
+        before: A centralized design defining 35 experiments (long-term, near-term decadal prediction and atmosphere-only suites)
+        after: Four DECK experiments run by every model (AMIP, piControl, abrupt-4xCO2, 1pctCO2) plus historical, and a federation of individually designed CMIP-Endorsed MIPs
+      - aspect: Historical period
+        before: 1850–2005 (to at least 2005)
+        after: 1850–2014 (historical forcings 1850–2014)
+      - aspect: Future scenarios
+        before: RCP2.6, 4.5, 6.0, 8.5 (2006–2100), some extended to 2300
+        after: >-
+          SSP-based ScenarioMIP scenarios (2015–2100). Tier 1 is SSP1-2.6, SSP2-4.5, SSP3-7.0 and SSP5-8.5; SSP1-2.6, 2-4.5 and 5-8.5 are SSP-based
+          updates of RCP2.6, 4.5 and 8.5, and SSP3-7.0 fills a gap in the CMIP5 forcing levels
+      - aspect: Ensemble member label
+        before: "r<N>i<M>p<L> (three indices: realization, initialization, physics; e.g. r1i1p1)"
+        after: "r i p f (forcing index f added; e.g. r1i1p1f1)"
+      - aspect: Output request
+        before: CMIP5 standard output list (by MIP table)
+        after: The centrally coordinated CMIP6 Data Request (defining the output requested by each MIP)
+      - aspect: Variable names and units (examples)
+        before: "Sea ice concentration `sic` (OImon, %), SST `tos` (K), sea surface salinity `sos` (psu)"
+        after: "Sea ice concentration `siconc` (SImon, %), SST `tos` (degC), sea surface salinity `sos` (0.001)"
+      - aspect: Terms of use
+        before: CMIP5 Terms of Use (since the May 2020 update all output available for "unrestricted" use, subject to conditions such as acknowledgement)
+        after: Licences per model — mostly CC BY 4.0 (in October 2022 all modelling groups removed NC and SA restrictions)
+      - aspect: Distribution
+        before: Legacy ESGF indexes (not migrated to the new ESGF-NG indexes; still listed in the ORNL index, among others)
+        after: ESGF (Globus and STAC indexes), cloud copies (e.g. Pangeo), Copernicus CDS and others
+    impacts:
+      - CMIP5 RCPs and CMIP6 SSPs are different scenarios, even at the same nominal forcing level — emissions, land use and aerosol pathways differ. Do not pool the two phases into one ensemble or splice them into one time series.
+      - The historical run ends in a different year (2005 vs 2014) and scenarios start in a different year (2006 vs 2015), so reference and future periods need to be set for each phase separately.
+      - Some variable names (sic → siconc) and units (tos K → degC, sos psu → 0.001) changed, so CMIP5 scripts applied unchanged to CMIP6 can give wrong values.
+      - "The f index changes the member name format (r1i1p1 vs r1i1p1f1). Check any code that parses filenames or directories."
+    sources:
+      - name: Taylor, Stouffer & Meehl (2012), An Overview of CMIP5 and the Experiment Design, BAMS
+        url: https://doi.org/10.1175/BAMS-D-11-00094.1
+      - name: Taylor et al. (2009/2011), A Summary of the CMIP5 Experiment Design (PCMDI)
+        url: https://pcmdi.llnl.gov/mips/cmip5/docs/Taylor_CMIP5_design.pdf
+      - name: WCRP CMIP — CMIP5 (35 experiments, endorsed by WGCM in 2008)
+        url: https://wcrp-cmip.org/cmip-phases/cmip5/
+      - name: Eyring et al. (2016), Overview of the CMIP6 experimental design and organization, GMD
+        url: https://doi.org/10.5194/gmd-9-1937-2016
+      - name: O'Neill et al. (2016), The Scenario Model Intercomparison Project (ScenarioMIP) for CMIP6, GMD
+        url: https://doi.org/10.5194/gmd-9-3461-2016
+      - name: CMIP5 Data Reference Syntax (DRS) and Controlled Vocabularies v1.3.1 (2012)
+        url: https://pcmdi.llnl.gov/mips/cmip5/docs/cmip5_data_reference_syntax.pdf
+      - name: PCMDI — Guide for CMIP6 data users (ripf ensemble labels)
+        url: https://pcmdi.llnl.gov/CMIP6/Guide/dataUsers.html
+      - name: PCMDI — CMIP6 Terms of Use 6.2
+        url: https://pcmdi.llnl.gov/CMIP6/TermsOfUse/TermsOfUse6-2.html
+
+period:
+  start: "1850-01"
+  end: "2100-12"
+  note: >-
+    The historical experiment runs from 1850 to at least 2005 (the design document recommends extending it to the end of 2012), and the RCP scenarios cover
+    2006–2100 (CMIP5 experiment design). RCP4.5, 8.5 and 2.6 were partly extended through 2300, AMIP covers 1979 to at least 2008, and the decadal
+    prediction experiments are provided separately for each initialisation year from 1960.
+
+resolution:
+  spatial_short: "모델마다 다름"
+  temporal_short: "1시간 미만"
+  spatial: Varies by model (provided on each model's native grid; there is no official common-grid version)
+  vertical: >-
+    Varies by variable and table — 3-D atmospheric variables on standard pressure levels (e.g. Amon), 3-D ocean variables on model depth levels (Omon),
+    surface variables on a single level.
+  temporal: >-
+    Frequency set by the MIP table — monthly (mon), daily (day), 6-hourly (6hr), 3-hourly (3hr), yearly (yr), monthly climatology (monClim) and
+    time-independent (fx). Sub-hourly (subhr) output exists only for the site (cfSites) output of a few models.
+
+coverage:
+  short: 전지구
+update: No longer updated (CMIP5 phase completed)
+license: >-
+  Under the CMIP5 Terms of Use (May 2020 update; document version of 28 September 2021), all model output in the CMIP5 archive is available for
+  "unrestricted" use, subject to conditions: credit the data providers with the acknowledgement, do not hold the modelling groups responsible for errors
+  in the models or output, and when redistributing widely, tell recipients about the terms and where the original data are.
+account_required: false
+
+summary: >-
+  CMIP5 is the fifth phase of the Coupled Model Intercomparison Project, endorsed by the WCRP Working Group on Coupled Modelling (WGCM) in 2008 and
+  coordinated by PCMDI; its multi-model output underpinned the IPCC Fifth Assessment Report (AR5). Its 35 experiments include long-term climate change
+  runs (pre-industrial control, historical, RCP scenarios, CO2 increase experiments, etc.), decadal prediction experiments and atmosphere-only runs,
+  aimed at understanding carbon cycle and cloud feedbacks, exploring decadal predictability, and explaining why similarly forced models give a range
+  of responses.
+
+time_convention:
+  summary: >-
+    Most variables are time means over the table frequency (month, day, 3 hours, …); the time coordinate is the midpoint of the averaging interval and the
+    interval is given by time_bnds. Fixed (fx) fields have no time axis.
+  points:
+    - "For time-mean variables the time coordinate is the mid-point of the averaging interval (the mean of the two time bounds) (CMIP5 Model Output Requirements)"
+    - "All files from one simulation must use the same base time (days since …), but the calendar can differ between models"
+    - "Amon tasmax and tasmin are monthly means of daily maxima and minima (cell_methods: time: maximum within days time: mean over days); daily maxima and minima are in the day table"
+    - "Fixed (fx) variables carry the ensemble label r0i0p0 (CMIP5 DRS)"
+  source: https://pcmdi.llnl.gov/mips/cmip5/docs/CMIP5_output_metadata_requirements.pdf
+  source_name: Taylor & Doutriaux, CMIP5 Model Output Requirements (PCMDI)
+
+variables:
+  note: >-
+    Core variables checked against the CMIP5 CMOR tables (PCMDI/cmip5-cmor-tables, 17 July 2013) and the file metadata (variable_units) in the ORNL ESGF
+    index. Names are the in-file names (out_name); the same variable has a different frequency and time treatment depending on the table
+    (Amon, day, Omon, OImon, fx).
+  full_list: https://pcmdi.llnl.gov/mips/cmip5/docs/standard_output.pdf
+  groups:
+    - name: Monthly atmosphere (Amon)
+      kind: mean
+      period: Monthly
+      items:
+        - "Near-surface air temperature — `tas` (K)"
+        - "Precipitation — `pr` (kg m-2 s-1)"
+        - "Sea level pressure — `psl` (Pa)"
+        - "Surface air pressure — `ps` (Pa)"
+        - "Near-surface specific humidity — `huss` (1)"
+        - "Near-surface wind speed — `sfcWind` (m s-1)"
+        - "Surface downwelling shortwave radiation — `rsds` (W m-2)"
+        - "TOA outgoing longwave radiation — `rlut` (W m-2)"
+        - "Total cloud fraction — `clt` (%)"
+        - "Air temperature (pressure levels) — `ta` (K)"
+        - "Eastward wind (pressure levels) — `ua` (m s-1)"
+        - "Geopotential height (pressure levels) — `zg` (m)"
+    - name: Daily atmosphere (day)
+      kind: mean
+      period: Daily
+      items:
+        - "Near-surface air temperature — `tas` (K)"
+        - text: "Daily maximum near-surface air temperature — `tasmax` (K)"
+          kind: max
+        - text: "Daily minimum near-surface air temperature — `tasmin` (K)"
+          kind: min
+        - "Precipitation — `pr` (kg m-2 s-1)"
+        - "Sea level pressure — `psl` (Pa)"
+        - "Daily-mean near-surface wind speed — `sfcWind` (m s-1)"
+    - name: Monthly ocean (Omon)
+      kind: mean
+      period: Monthly
+      items:
+        - "Sea surface temperature — `tos` (K)"
+        - "Sea surface salinity — `sos` (psu)"
+        - "Sea surface height above geoid — `zos` (m)"
+        - "Sea water potential temperature — `thetao` (K)"
+        - "Sea water salinity — `so` (psu)"
+        - "Ocean mixed layer thickness defined by sigma T — `mlotst` (m)"
+    - name: Monthly sea ice (OImon)
+      kind: mean
+      period: Monthly
+      items:
+        - "Sea ice area fraction — `sic` (%)"
+        - "Sea ice thickness — `sit` (m)"
+    - name: Fixed fields (fx)
+      kind: static
+      items:
+        - "Land area fraction — `sftlf` (%)"
+        - "Surface altitude — `orog` (m)"
+        - "Atmosphere grid-cell area — `areacella` (m2)"
+        - "Ocean grid-cell area — `areacello` (m2)"
+        - "Sea floor depth — `deptho` (m)"
+
+access:
+  - name: ORNL ESGF search index (Solr-compatible search API, project=CMIP5)
+    url: https://esgf-node.ornl.gov/esgf-1-5-bridge?project=CMIP5&limit=0&facets=institute&format=application%2Fsolr%2Bjson
+    login: false
+    method: Search API → per-file HTTP, OPeNDAP and Globus URLs
+    note: >-
+      Checked on 2026-10-16: 97,939 CMIP5 datasets (92,556 latest versions) are indexed, with file URLs pointing to data nodes including ORNL, ALCF,
+      CCCma (Canada), DIAS (Japan), GFDL and NASA NCCS. The OPeNDAP access form for a file on the ORNL node opened without logging in. Files on other
+      nodes may not be retrievable, depending on the node's status.
+
+example:
+  lang: python
+  note: >-
+    Finds files with the ORNL ESGF search API (Solr-style response) and opens them directly through the ORNL node's OPeNDAP URLs. Each entry in the url field
+    has the form "address|format|service".
+  code: |
+    # pip install requests xarray netCDF4
+    import requests
+    import xarray as xr
+
+    params = {
+        "project": "CMIP5", "type": "File", "latest": "true",
+        "experiment": "historical", "time_frequency": "mon", "cmor_table": "Amon",
+        "variable": "tas", "model": "CNRM-CM5", "ensemble": "r1i1p1",
+        "limit": 100, "format": "application/solr+json",
+    }
+    r = requests.get("https://esgf-node.ornl.gov/esgf-1-5-bridge", params=params, timeout=120)
+    docs = r.json()["response"]["docs"]
+
+    # keep only OPeNDAP URLs and strip ".html" (the same file may be replicated on several nodes)
+    urls = sorted({u.split("|")[0].removesuffix(".html")
+                   for d in docs for u in d["url"] if u.endswith("|OPENDAP")})
+    ds = xr.open_mfdataset(urls, combine="by_coords")
+    print(ds["tas"])
+
+tips:
+  - >-
+    CMIP3 and CMIP5 are not being migrated to the new ESGF indexes, so CMIP5 may not show up in the new MetaGrid interfaces or in intake-esgf's default
+    configuration (STAC and Globus indexes). WCRP notes that the data may need to be downloaded via alternative routes such as the CEDA and DKRZ archives,
+    so first check which route currently works (e.g. the ORNL index).
+  - >-
+    PCMDI's CMIP5 "Getting Started" page (written in 2012) describes registering an esgf-node.llnl.gov account and OpenID and joining a research or
+    commercial group, but the LLNL node was shut down on 2025-07-29 and the terms of use were changed to "unrestricted" use in May 2020. Do not follow the
+    old procedure as written.
+  - >-
+    Historical ends in 2005 and the RCPs start in 2006, so a continuous series means joining historical and RCP files from the same model and the same member
+    (rip). Check that the RCP file's parent experiment and member (parent_experiment_rip) match.
+  - >-
+    Files come split by model, experiment, member (e.g. r1i1p1), table, version (vYYYYMMDD) and time range. The same file can be replicated on several nodes,
+    so de-duplicate by dataset ID and version and make sure you use the latest version (latest=true).
+  - >-
+    Calendars (gregorian, noleap, 360_day, …) and grids differ between models. When comparing models, read times with cftime and regrid to a common grid
+    (e.g. conservatively) before computing.
+  - >-
+    PCMDI's CMIP5 errata page (entries from January 2012 to February 2015) lists known problems such as wrong units (e.g. NorESM1-M evaporation too large by a
+    factor of 1000, MIROC-ESM land fraction stored as 0–1 instead of percent), missing or overlapping time periods and incorrect branch times. Check whether the models you plan to use are listed.
+  - For downloading and combining many models and members at once, see this site's "Model data download" page (/model-data/).
+
+citations:
+  dataset: []
+  papers:
+    - label: CMIP5 overview and experiment design
+      text: >-
+        Taylor, K. E., Stouffer, R. J., and Meehl, G. A. (2012): An Overview of CMIP5 and the Experiment Design.
+        Bulletin of the American Meteorological Society, 93(4), 485–498.
+      doi: 10.1175/BAMS-D-11-00094.1
+      bibtex: |
+        @article{taylor2012cmip5,
+          author  = {Taylor, Karl E. and Stouffer, Ronald J. and Meehl, Gerald A.},
+          title   = {An Overview of {CMIP5} and the Experiment Design},
+          journal = {Bulletin of the American Meteorological Society},
+          volume  = {93},
+          number  = {4},
+          pages   = {485--498},
+          year    = {2012},
+          doi     = {10.1175/BAMS-D-11-00094.1}
+        }
+  acknowledgement: >-
+    PCMDI's CMIP5 citation guidance asks you to refer to the data as "the CMIP5 multi-model ensemble", include a table of the models and institutions used
+    (with official CMIP5 model names), and use this acknowledgement:
+    "We acknowledge the World Climate Research Programme's Working Group on Coupled Modelling, which is responsible for CMIP, and we thank the climate
+    modeling groups (listed in Table XX of this paper) for producing and making available their model output. For CMIP the U.S. Department of Energy's
+    Program for Climate Model Diagnosis and Intercomparison provides coordinating support and led development of software infrastructure in partnership
+    with the Global Organization for Earth System Science Portals." (Replace Table XX with the number of your model table.)
+    Where available, also cite the documentation papers of the models used.
+
+notices:
+  - date: "2025-07-29"
+    level: warning
+    title: LLNL ESGF node shut down
+    body: >-
+      The LLNL ESGF node, which held and served CMIP data, was shut down as of 29 July 2025. esgf-node.llnl.gov paths in older instructions no longer work.
+    source: https://wcrp-cmip.org/esgf-information/
+  - date: "2025-02-12"
+    level: warning
+    title: CMIP3 and CMIP5 will not be migrated to the new ESGF indexes
+    body: >-
+      As part of the move to the next-generation ESGF (ESGF-NG), there are no plans to migrate older projects, including CMIP3 and CMIP5, to the new indexes.
+      CMIP5 may not appear in search initially; the data are retained but may need to be downloaded via alternative routes such as the CEDA and DKRZ archives.
+      (The information page carries no posting date; the date is that of the "Upcoming changes to ESGF infrastructure" announcement in the WCRP CMIP news list.)
+    source: https://wcrp-cmip.org/esgf-information/
+  - date: "2020-05"
+    level: info
+    title: CMIP5 Terms of Use updated — all output available for "unrestricted" use
+    body: >-
+      The updated terms supersede the original Terms of Use: all model output in the CMIP5 archive is now available for "unrestricted" use.
+      The conditions listed in the terms, such as the acknowledgement, still apply.
+    source: https://pcmdi.llnl.gov/mips/cmip5/terms-of-use.html
+
+links:
+  - name: PCMDI CMIP5 pages
+    url: https://pcmdi.llnl.gov/mips/cmip5/
+  - name: CMIP5 Terms of Use
+    url: https://pcmdi.llnl.gov/mips/cmip5/terms-of-use.html
+  - name: CMIP5 citation guidance
+    url: https://pcmdi.llnl.gov/mips/cmip5/citation.html
+  - name: CMIP5 experiment design document (Taylor et al.)
+    url: https://pcmdi.llnl.gov/mips/cmip5/docs/Taylor_CMIP5_design.pdf
+  - name: CMIP5 standard output (PDF)
+    url: https://pcmdi.llnl.gov/mips/cmip5/docs/standard_output.pdf
+  - name: CMIP5 errata
+    url: https://pcmdi.llnl.gov/mips/cmip5/errata.html
+  - name: CMIP5 CMOR tables (GitHub)
+    url: https://github.com/PCMDI/cmip5-cmor-tables/blob/master/Tables/CMIP5_Amon
+  - name: CEDA catalogue — WCRP CMIP5 project record
+    url: https://catalogue.ceda.ac.uk/uuid/d2d8f982d66cce55bb59fc769ca39264
+  - name: WCRP CMIP — CMIP5
+    url: https://wcrp-cmip.org/cmip-phases/cmip5/
+  - name: ESGF information (WCRP CMIP)
+    url: https://wcrp-cmip.org/esgf-information/
+  - name: CMIP7 FAQ — why CMIP5 is not migrated to ESGF-NG
+    url: https://wcrp-cmip.github.io/cmip7-guidance/docs/CMIP7/FAQ/
+
+watch_urls:
+  - https://wcrp-cmip.org/esgf-information/
+  - https://wcrp-cmip.org/cmip-data-access/
+  - https://wcrp-cmip.github.io/cmip7-guidance/docs/CMIP7/FAQ/
+
+last_verified: "2026-10-16"

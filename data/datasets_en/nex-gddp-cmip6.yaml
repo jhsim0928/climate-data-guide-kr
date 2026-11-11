@@ -1,0 +1,278 @@
+# ─────────────────────────────────────────────────────────────
+# NEX-GDDP-CMIP6 — dataset information file (English edition)
+# NASA Earth Exchange Global Daily Downscaled Projections (CMIP6-based, 0.25° daily, bias-corrected and downscaled)
+# ─────────────────────────────────────────────────────────────
+id: nex-gddp-cmip6
+name: NEX-GDDP-CMIP6
+full_name: NASA Earth Exchange Global Daily Downscaled Projections, CMIP6
+category: model_output
+domain: model
+group: 통계 다운스케일링·편이보정
+order: 10
+domains: [대기, 육지]
+provider: Prepared by the Climate Analytics Group and NASA Ames Research Center (NASA Earth Exchange, NEX); distributed by the NASA Center for Climate Simulation (NCCS)
+
+status: active
+status_note: >-
+  As checked on 2026-10-16, the data are still served from NCCS THREDDS and the public AWS bucket (nex-gddp-cmip6), but the AWS registry lists the
+  update frequency as "No future updates planned". The NCCS collection page gives the version as "1.0, 1.1, and 1.2" while also linking a v2 tech note
+  (latest update 31 May 2025); neither page says where the v2.0 files are hosted or how they are named. NCCS is also becoming Nexus Compute and is
+  migrating its website through the end of 2026, so page addresses may change.
+
+period:
+  start: "1950-01"
+  end: "2100-12"
+  note: >-
+    Historical 1950–2014 and projections 2015–2100 (SSP1-2.6, SSP2-4.5, SSP3-7.0, SSP5-8.5). Bias correction is trained on GMFD for 1960–2014.
+    Years missing from the original GCM output (year 2100 for some models, 2099 for SSP3-7.0, hurs 2058 in SSP2-4.5 and 2023 in SSP1-2.6) are absent,
+    and some models have only partial scenario coverage (tech note Appendix I footnotes).
+
+resolution:
+  spatial_short: "28 km (0.25°)"
+  temporal_short: "1일"
+  spatial: >-
+    0.25 degrees x 0.25 degrees (Geographic, WGS-84 datum; pixel latitude/longitude refer to the pixel centre), lat 600 × lon 1440. Output from
+    35 CMIP6 GCMs, bias-corrected and spatially disaggregated with BCSD against the 0.25° GMFD climatology
+  vertical: Near-surface (single level) only
+  temporal: Daily (daily mean, daily maximum and minimum temperature)
+
+coverage:
+  short: 준전지구
+  note: >-
+    180°W to 180°E, 60°S to 90°N; nothing south of 60°S (most of Antarctica). Because GMFD lacks validation over the oceans, the tech note warns that
+    values over smaller island areas might not be realistic.
+update: No future updates planned (AWS registry). Fixes have been added as new versioned files (v1.1, v1.2); the v2 fixes are described in a tech note, but where the files are hosted is not stated
+license: >-
+  Initially released under CC BY-SA 4.0 to match the original CMIP6 licences; after the CMIP6 community updated its licences in June 2022, all
+  NEX-GDDP-CMIP6 outputs have been made available under a blanket CC0 licence as of September 2022 (AWS registry, v1 tech note). The v2 tech note
+  (Section 7) says the outputs are governed by the original CMIP6 terms of use and that the global attribute cmip6_license in each file gives the
+  specific licence, so check the file attributes too. Intended for scientific research; commercial or engineering design use is not recommended.
+account_required: false
+
+summary: >-
+  NEX-GDDP-CMIP6 is a global (north of 60°S) set of high-resolution, bias-corrected daily climate projections produced by the NASA Earth Exchange
+  team at NASA Ames by applying BCSD to daily output from 35 CMIP6 GCMs (one variant per model) on a common 0.25° grid. Nine variables — mean, maximum
+  and minimum temperature, precipitation, humidity, downwelling shortwave and longwave radiation, and wind speed — are provided for the historical
+  experiment (1950–2014) and four SSPs (2015–2100), and can be downloaded without an account from NCCS THREDDS or the public AWS bucket.
+  It is aimed at impact studies sensitive to fine-scale gradients and local topography (hydrology, agriculture, health) and at multi-model comparison.
+
+time_convention:
+  summary: >-
+    All variables are daily values. tas, pr, hurs, huss, rlds, rsds and sfcWind are daily means (pr is the mean of the daily precipitation rate);
+    tasmax and tasmin are the daily maximum and minimum. Time units are "days since" a reference date that varies by model and follows the
+    corresponding CMIP6 experiment.
+  points:
+    - "The NetcdfSubset example on the NCCS page requests time_start=2014-01-01T12:00:00Z to time_end=2014-12-31T12:00:00Z, i.e. timestamps at 12 UTC. Each value still represents the whole day."
+    - "pr is in kg m-2 s-1 (mean daily rate); multiply by 86400 to get mm per day."
+    - "The tech notes do not describe the calendar type or leap-day handling. Before combining models, check the calendar attribute of the time variable in each file."
+  source: https://www.nccs.nasa.gov/wp-content/uploads/2025/06/NEX-GDDP-CMIP6-v2-Tech_Note.pdf
+  source_name: NEX-GDDP-CMIP6 v2 Technical Note (NCCS)
+
+variables:
+  note: >-
+    All nine variables listed in the v1 and v2 tech notes (CMIP6 CMOR names). Units follow the tech notes and the CMIP6 day table. Each file holds one
+    variable for one year.
+  full_list: https://www.nccs.nasa.gov/wp-content/uploads/2025/06/NEX-GDDP-CMIP6-v2-Tech_Note.pdf
+  groups:
+    - name: Daily atmosphere (day)
+      kind: mean
+      period: Daily
+      items:
+        - "Daily Near-Surface Air Temperature — `tas` (K)"
+        - text: "Daily Maximum Near-Surface Air Temperature — `tasmax` (K)"
+          kind: max
+        - text: "Daily Minimum Near-Surface Air Temperature — `tasmin` (K)"
+          kind: min
+        - text: "Precipitation (mean of the daily precipitation rate) — `pr` (kg m-2 s-1)"
+          note: Multiply by 86400 for mm per day.
+        - "Near-Surface Relative Humidity — `hurs` (%)"
+        - text: "Near-Surface Specific Humidity — `huss` (1)"
+          note: Dimensionless ratio (kg/kg).
+        - "Surface Downwelling Longwave Radiation — `rlds` (W m-2)"
+        - "Surface Downwelling Shortwave Radiation — `rsds` (W m-2)"
+        - text: "Daily-Mean Near-Surface Wind Speed — `sfcWind` (m s-1)"
+          std: [wind10]
+
+access:
+  - name: AWS Open Data — nex-gddp-cmip6 bucket (us-west-2)
+    url: https://nex-gddp-cmip6.s3.us-west-2.amazonaws.com/index.html
+    login: false
+    method: S3 (aws s3 cp/ls --no-sign-request), HTTPS
+    note: >-
+      A cache copy of the NCCS archive available since September 2022 (NetCDF, CF-1.7); no AWS account needed. A separate bucket,
+      nex-gddp-cmip6-cog, holds a Cloud-Optimized GeoTIFF subset for two models (GFDL-CM4, GISS-E2-1-G) and two SSPs (ssp245, ssp585), split into
+      daily, monthly and "crossing" (years until the 2°C threshold) products.
+  - name: NCCS THREDDS — AMES/NEX/GDDP-CMIP6
+    url: https://ds.nccs.nasa.gov/thredds/catalog/AMES/NEX/GDDP-CMIP6/catalog.html
+    login: false
+    method: THREDDS (HTTP file download; NetcdfSubset for spatial/time subsets)
+    note: >-
+      Yearly files sit in model → scenario → variant → variable folders. Index files with all file URLs and checksums (gddpcmip6-thredds-fileserver.csv,
+      plus the _v1.1 and _v1.2 lists) are under https://ds.nccs.nasa.gov/thredds/fileServer/AMES/NEX/GDDP-CMIP6/.
+
+example:
+  lang: python
+  note: Uses the same NetcdfSubset request format as the example on the NCCS page to cut out 2014 precipitation around the Korean Peninsula.
+  code: |
+    # pip install xarray netCDF4
+    import urllib.request
+    import xarray as xr
+
+    base = "https://ds.nccs.nasa.gov/thredds/ncss/grid/AMES/NEX/GDDP-CMIP6"
+    path = "ACCESS-CM2/historical/r1i1p1f1/pr/pr_day_ACCESS-CM2_historical_r1i1p1f1_gn_2014.nc"
+    query = ("?var=pr&north=39&west=124&east=131&south=33&horizStride=1"
+             "&time_start=2014-01-01T12:00:00Z&time_end=2014-12-31T12:00:00Z"
+             "&accept=netcdf3&addLatLon=true")
+    urllib.request.urlretrieve(f"{base}/{path}{query}", "pr_korea_2014.nc")
+
+    ds = xr.open_dataset("pr_korea_2014.nc")
+    print(ds["time"].encoding.get("calendar"))   # calendars can differ between models
+    pr_mm = ds["pr"] * 86400                      # kg m-2 s-1 -> mm/day
+    print(pr_mm.mean(["lat", "lon"]).to_series().head())
+
+    # List the AWS bucket (no account needed): aws s3 ls --no-sign-request s3://nex-gddp-cmip6/
+
+tips:
+  - >-
+    There is one file per model, scenario, variant, variable and year (<variable>_day_<model>_<experiment>_<variant>_<grid>_<year>.nc; 38 TB
+    in total). A multi-model, full-period download runs to thousands of files, so for a small region the THREDDS NetcdfSubset service is far lighter.
+  - >-
+    Corrected files were added with "_v1.1.nc" and "_v1.2.nc" suffixes, and all version 1.0 files remain in the archive (v1 tech note). When a year
+    has several files, use the highest version and check the global attribute version — this concerns tasmin and tas for SSP1-2.6 and SSP3-7.0 (v1.2),
+    pr (v1.1) and hurs (v1.1) in particular.
+  - >-
+    Every model is on the same 0.25° grid with the same variable names, which makes multi-model work much easier than with raw CMIP6 output, but the
+    time reference date still differs between models and the tech notes do not discuss calendars. Check the calendar attribute (e.g. 365-day or
+    360-day calendars) before merging models.
+  - >-
+    There is one variant per model, but not always r1i1p1f1 (CESM2 r4i1p1f1; CESM2-WACCM and FGOALS-g3 r3i1p1f1; CNRM models, GISS-E2-1-G,
+    MIROC-ES2L and UKESM1-0-LL f2; HadGEM3 models f3). GFDL-CM4 appears twice (gr1 and gr2), so the 35 entries cover 34 models — do not count
+    GFDL-CM4 twice in an ensemble mean.
+  - >-
+    BCSD does not add information beyond what is in the original CMIP6 scenarios; it assumes the relative spatial patterns of 1960–2014 persist and
+    does not adjust the slope of GCM trends. Thrasher et al. (2022) note that downscaled extremes might be underestimated in some regions. For
+    extreme indices or small islands, compare with the parent GCMs and observations.
+  - >-
+    The tech note appendix flags that the original GCM tasmax and tasmin were retracted by CMCC for the CMCC models. Check the Appendix I footnotes
+    and the version history before using temperature extremes from those models.
+  - >-
+    NCCS is becoming Earth Modeling Nexus Core Computing (Nexus Compute), and its website content is moving to the Nexus Compute page on
+    science.nasa.gov through the end of 2026. No change to THREDDS paths has been announced; if a scripted URL stops working, use the AWS bucket.
+
+citations:
+  dataset:
+    - label: NEX-GDDP-CMIP6 dataset (citation given in the tech note)
+      text: >-
+        Thrasher, B., Wang, W., Michaelis, A., Nemani, R. (2021). NEX-GDDP-CMIP6. NASA Center for Climate Simulation.
+        https://doi.org/10.7917/OFSG3345
+      doi: 10.7917/OFSG3345
+      bibtex: |
+        @misc{nexgddpcmip6,
+          author    = {Thrasher, B. and Wang, W. and Michaelis, A. and Nemani, R.},
+          title     = {{NEX-GDDP-CMIP6}},
+          year      = {2021},
+          publisher = {NASA Center for Climate Simulation},
+          doi       = {10.7917/OFSG3345}
+        }
+    - label: If accessed on AWS (AWS registry "How to Cite")
+      text: >-
+        NEX-GDDP-CMIP6 data was accessed on [date] from https://registry.opendata.aws/nex-gddp-cmip6
+  papers:
+    - label: Dataset description paper (primary reference)
+      text: >-
+        Thrasher, B., Wang, W., Michaelis, A., Melton, F., Lee, T., Nemani, R. (2022): NASA Global Daily Downscaled Projections, CMIP6.
+        Scientific Data, 9, 262.
+      doi: 10.1038/s41597-022-01393-4
+      bibtex: |
+        @article{thrasher2022nexgddpcmip6,
+          author  = {Thrasher, Bridget and Wang, Weile and Michaelis, Andrew and Melton, Forrest and Lee, Tsengdar and Nemani, Ramakrishna},
+          title   = {{NASA} Global Daily Downscaled Projections, {CMIP6}},
+          journal = {Scientific Data},
+          volume  = {9},
+          number  = {1},
+          pages   = {262},
+          year    = {2022},
+          doi     = {10.1038/s41597-022-01393-4}
+        }
+    - label: Bias-correction method (daily BCSD variant)
+      text: >-
+        Thrasher, B., Maurer, E. P., McKellar, C., Duffy, P. B. (2012): Technical Note: Bias correcting climate model simulated daily
+        temperature extremes with quantile mapping. Hydrology and Earth System Sciences, 16(9), 3309–3314.
+      doi: 10.5194/hess-16-3309-2012
+      bibtex: |
+        @article{thrasher2012bcsd,
+          author  = {Thrasher, B. and Maurer, E. P. and McKellar, C. and Duffy, P. B.},
+          title   = {Technical Note: Bias correcting climate model simulated daily temperature extremes with quantile mapping},
+          journal = {Hydrology and Earth System Sciences},
+          volume  = {16},
+          number  = {9},
+          pages   = {3309--3314},
+          year    = {2012},
+          doi     = {10.5194/hess-16-3309-2012}
+        }
+  acknowledgement: >-
+    Section 6 of the tech note asks publications to include: "Climate scenarios used were from the NEX-GDDP-CMIP6 dataset, prepared by the Climate
+    Analytics Group and NASA Ames Research Center using the NASA Earth eXchange (NEX) and distributed by the NASA Center for Climate Simulation (NCCS)."
+    Copy the second paragraph (acknowledging WCRP, the CMIP6 modelling groups, ESGF and funding agencies) from the tech note as well. The CMIP6 terms
+    of use also apply.
+
+notices:
+  - date: "2025-05-31"
+    level: warning
+    title: v2.0 tech note posted — corrections across all nine variables
+    body: >-
+      A v2 tech note describes "the updates applied to the various v1.x GDDP variables to create the v2 output" (date is the document's "Latest update").
+      Changes include an upper bound of 105% for hurs; a lower bound of 0.0 for huss, rlds and sfcWind; adjustment of anomalously large pr and rsds values in
+      cells with very small daily climatology; full reprocessing of tasmax and tasmin with the adjusted GMFD (values swapped where tx<tn); and new tas files.
+      The document does not say where v2 files are hosted or how they are suffixed.
+    source: https://www.nccs.nasa.gov/wp-content/uploads/2025/06/NEX-GDDP-CMIP6-v2-Tech_Note.pdf
+  - date: "2024-02-01"
+    level: warning
+    title: pr reprocessed (v1.1); tasmin and tas fully reprocessed (v1.2)
+    body: >-
+      pr was reprocessed to fix an overcorrection in climatologically dry areas and added as "_v1.1.nc" files. The August 2023 tasmin fix for SSP1-2.6
+      and SSP3-7.0 had not been applied to enough grid cells, so those tasmin fields and tas were reprocessed in full and released as "_v1.2.nc" files.
+    source: https://www.nccs.nasa.gov/wp-content/uploads/2024/03/NEX-GDDP-CMIP6-Tech_Note_4.pdf
+  - date: "2023-08-27"
+    level: warning
+    title: Fixes for tasmin (SSP1-2.6, SSP3-7.0), TaiESM1 and hurs added (v1.1)
+    body: >-
+      tasmin for SSP1-2.6 and SSP3-7.0, which had incorrect values in a limited number of grid cells primarily along coasts, was reprocessed; TaiESM1
+      historical tasmax and tasmin were replaced after their CMIP6 retraction and tas, tasmax and tasmin reprocessed; and hurs was reprocessed with a more
+      realistic upper bound. Fixed files carry "_v1.1.nc", and all version 1.0 files remain in the archive.
+    source: https://www.nccs.nasa.gov/wp-content/uploads/2024/03/NEX-GDDP-CMIP6-Tech_Note_4.pdf
+  - date: "2022-09-20"
+    level: info
+    title: Licence changed to CC0; AWS copy available
+    body: >-
+      Following the CMIP6 licence update, as of September 2022 all NEX-GDDP-CMIP6 outputs are made available under a blanket CC0 licence instead of
+      CC BY-SA 4.0 (citation guidance still applies). A cache copy of the data is also available on AWS (s3://nex-gddp-cmip6/) as of September 2022.
+    source: https://www.nccs.nasa.gov/wp-content/uploads/2024/03/NEX-GDDP-CMIP6-Tech_Note_4.pdf
+  - date: "2022-03-18"
+    level: info
+    title: SSP1-2.6 and SSP3-7.0 added
+    body: Revision 2 of the tech note reflects the addition of the SSP1-2.6 and SSP3-7.0 scenarios.
+    source: https://www.nccs.nasa.gov/wp-content/uploads/2024/03/NEX-GDDP-CMIP6-Tech_Note_4.pdf
+
+links:
+  - name: NCCS NEX-GDDP-CMIP6 collection page
+    url: https://www.nccs.nasa.gov/services/data-collections/land-based-products/nex-gddp-cmip6
+  - name: Registry of Open Data on AWS — NEX-GDDP-CMIP6
+    url: https://registry.opendata.aws/nex-gddp-cmip6/
+  - name: v1 Tech Note (Tech Note 4, revised February 2024)
+    url: https://www.nccs.nasa.gov/wp-content/uploads/2024/03/NEX-GDDP-CMIP6-Tech_Note_4.pdf
+  - name: v2 Tech Note (latest update 31 May 2025)
+    url: https://www.nccs.nasa.gov/wp-content/uploads/2025/06/NEX-GDDP-CMIP6-v2-Tech_Note.pdf
+  - name: Thrasher et al. (2022), Scientific Data
+    url: https://www.nature.com/articles/s41597-022-01393-4
+  - name: NCCS to Nexus Compute transition
+    url: https://www.nccs.nasa.gov/nexus-compute-transition/
+  - name: ISIMIP3b bias adjustment (another bias-adjusted dataset in this group)
+    url: https://www.isimip.org/gettingstarted/isimip3b-bias-adjustment/
+
+watch_urls:
+  - https://www.nccs.nasa.gov/services/data-collections/land-based-products/nex-gddp-cmip6
+  - https://registry.opendata.aws/nex-gddp-cmip6/
+  - https://www.nccs.nasa.gov/nexus-compute-transition/
+
+last_verified: "2026-10-16"
