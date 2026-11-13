@@ -1262,6 +1262,7 @@ def compare_data(datasets: list[dict]) -> list[dict]:
         s = d.get("successor") or {}
         out.append({
             "id": d["id"], "name": d["name"], "domain": domain_label(d["domain"]), "group": g_label(d["group"]),
+            "doms": [d["domain"]] + [x["domain"] for x in d.get("also_in") or [] if x["domain"] != d["domain"]],
             "category": cat_label(d["category"]), "provider": d["provider"], "status": badge(d["status"]),
             "period": period_text(d["period"]), "coverage": cov_text(d),
             "coverage_s": cov_label((d.get("coverage") or {}).get("short") or "-"),
@@ -1348,12 +1349,20 @@ def std_table(datasets: list[dict]) -> str:
 
 def compare_app(datasets: list[dict], mode: str = "compare") -> str:
     """mode="compare": 자료 비교 페이지 / mode="var": 변수로 찾기 페이지 (검색창이 주인공, 자료 선택 칸은 숨김)"""
+    def doms_of(d):
+        return [d["domain"]] + [x["domain"] for x in d.get("also_in") or [] if x["domain"] != d["domain"]]
     opts = ""
     for dom, (label, groups) in DOMAINS.items():
         items = [d for d in datasets if d["domain"] == dom]
-        opts += f'<optgroup label="{domain_label(dom)}">' + "".join(
-            f'<option value="{d["id"]}">{html.escape(d["name"])}</option>' for d in items
+        opts += f'<optgroup label="{domain_label(dom)}" data-dom="{dom}">' + "".join(
+            f'<option value="{d["id"]}" data-doms="{" ".join(doms_of(d))}">{html.escape(d["name"])}</option>' for d in items
         ) + "</optgroup>"
+    # 분야 고르기: 고른 분야의 자료만 자료 선택 칸·변수 찾기 결과에 보이게 (다른 분야에도 실린 자료 포함)
+    dom_chips = f'<button type="button" class="dom-chip is-on" data-dom="" aria-pressed="true">전체 <span class="n">{len(datasets)}</span></button>' + "".join(
+        f'<button type="button" class="dom-chip" data-dom="{dom}" aria-pressed="false">{domain_label(dom)} '
+        f'<span class="n">{sum(1 for d in datasets if dom in doms_of(d))}</span></button>'
+        for dom in DOMAINS)
+    dom_filter = f'<div class="dom-filter" role="group" aria-label="분야"><span class="dom-label">분야</span>{dom_chips}</div>'
     selects = "".join(
         f'<label class="field">{"Dataset" if is_en() else "자료"} {i + 1}<select class="cmp-select" data-slot="{i}">'
         f'<option value="">— 선택 —</option>{opts}</select></label>'
@@ -1382,7 +1391,7 @@ def compare_app(datasets: list[dict], mode: str = "compare") -> str:
             '<div id="var-basket" class="var-basket" data-search-exclude hidden></div>'
         ) + f'<script type="application/json" id="cmp-data">{data}</script>' + f'<script type="application/json" id="std-data">{stdj}</script>'
     return loc(
-        '<section class="cdg-form compare-controls" data-search-exclude><div class="cmp-selects">' + selects + "</div>"
+        '<section class="cdg-form compare-controls" data-search-exclude>' + dom_filter + '<div class="cmp-selects">' + selects + "</div>"
         '<label class="field">변수 찾기 <span class="hint">— 변수 이름(한국어·영어)이나 변수명을 넣으면 그 변수가 있는 자료를 모두 보여 줍니다</span>'
         '<input type="text" id="cmp-q" list="std-list" autocomplete="off" placeholder="예) 강수, 2m 기온, tp, SST, 해빙 두께"></label>'
         f'<datalist id="std-list">{opts_dl}</datalist>'

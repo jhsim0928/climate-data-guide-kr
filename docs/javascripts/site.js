@@ -37,6 +37,45 @@
     (params.get("ids") || "").split(",").filter(Boolean).slice(0, 4).forEach(function (id, i) {
       if (byId[id]) selects[i].value = id;
     });
+
+    // ── 분야 고르기: 자료 선택 칸에 그 분야 자료만 (이미 고른 자료는 그대로 유지) ──
+    var DOM = "";
+    var domBtns = Array.prototype.slice.call(document.querySelectorAll(".dom-filter .dom-chip"));
+    var MASTER = selects.length ? selects[0].cloneNode(true) : null;  // 전체 목록 원본
+    function applyDomain() {
+      if (!MASTER) return;
+      selects.forEach(function (s) {
+        var keep = s.value;
+        var fresh = MASTER.cloneNode(true);
+        s.innerHTML = "";
+        Array.prototype.slice.call(fresh.children).forEach(function (node) {
+          if (node.tagName !== "OPTGROUP") { s.appendChild(node); return; }
+          if (!DOM) { s.appendChild(node); return; }
+          // 고른 분야: 다른 분야 묶음에 있어도 그 분야에 함께 실린 자료는 보여 줌
+          var opts = Array.prototype.slice.call(node.children).filter(function (o) {
+            return (" " + (o.getAttribute("data-doms") || "") + " ").indexOf(" " + DOM + " ") >= 0 || o.value === keep;
+          });
+          if (!opts.length) return;
+          var g = document.createElement("optgroup");
+          g.label = node.label;
+          opts.forEach(function (o) { g.appendChild(o); });
+          s.appendChild(g);
+        });
+        s.value = keep;
+      });
+      domBtns.forEach(function (b) {
+        var on = b.getAttribute("data-dom") === DOM;
+        b.classList.toggle("is-on", on);
+        b.setAttribute("aria-pressed", on ? "true" : "false");
+      });
+    }
+    domBtns.forEach(function (b) {
+      b.addEventListener("click", function () { DOM = b.getAttribute("data-dom") || ""; applyDomain(); render(); });
+    });
+    if (params.get("dom") && domBtns.some(function (b) { return b.getAttribute("data-dom") === params.get("dom"); })) {
+      DOM = params.get("dom");
+      applyDomain();
+    }
     if (params.get("v")) q.value = params.get("v");
 
     var ROWS = [
@@ -107,9 +146,13 @@
       if (!results) return;
       if (!term) { results.hidden = true; results.innerHTML = ""; return; }
       var picked = selectedIds();
-      var rows = all.map(function (d) { return { d: d, m: matches(d, term, concepts) }; })
+      var rows = all.filter(function (d) { return !DOM || (d.doms || []).indexOf(DOM) >= 0; })
+        .map(function (d) { return { d: d, m: matches(d, term, concepts) }; })
         .filter(function (x) { return x.m.length; });
-      var h = '<h2 class="var-results-title">' + L("변수 찾기 결과", "Datasets with this variable") + "</h2>";
+      var domName = "";
+      if (DOM) domBtns.forEach(function (b) { if (b.getAttribute("data-dom") === DOM) domName = b.firstChild.textContent.trim(); });
+      var h = '<h2 class="var-results-title">' + L("변수 찾기 결과", "Datasets with this variable") +
+        (domName ? ' <span class="hint">— ' + esc(domName) + L(" 분야만", " only") + "</span>" : "") + "</h2>";
       if (concepts.length) {
         h += '<div class="var-concepts">' + concepts.map(function (c) {
           return '<div class="var-concept"><strong>' + esc(c.n) + "</strong>" +
@@ -163,6 +206,7 @@
       var p = new URLSearchParams();
       if (ids.length) p.set("ids", ids.join(","));
       if (term) p.set("v", term);
+      if (DOM) p.set("dom", DOM);
       try { history.replaceState(null, "", location.pathname + (p.toString() ? "?" + p : "")); } catch (e) {}
 
       renderResults(term, concepts);

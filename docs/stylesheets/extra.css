@@ -546,3 +546,13 @@ details.hint summary { cursor: pointer; }
   .md-typeset .notice-tbl table:not([class]) { min-width: 44rem; }
 }
 .md-typeset .notice-tbl .nobr { white-space: nowrap; }
+/* 자료 비교 — 분야 고르기 */
+.md-typeset .dom-filter { display: flex; flex-wrap: wrap; align-items: center; gap: 0.4em; margin: 0 0 1em; }
+.md-typeset .dom-filter .dom-label { font-weight: 700; font-size: 0.78rem; margin-right: 0.3em; }
+.md-typeset .dom-chip {
+  padding: 0.3em 0.9em; border-radius: 999px; font-size: 0.78rem; cursor: pointer; font-weight: 600;
+  border: 1px solid var(--md-default-fg-color--lighter); background: var(--md-default-bg-color); color: var(--md-default-fg-color--light);
+}
+.md-typeset .dom-chip .n { font-weight: 400; font-size: 0.9em; opacity: 0.75; margin-left: 0.15em; }
+.md-typeset .dom-chip:hover { border-color: var(--md-primary-fg-color); color: var(--md-primary-fg-color); }
+.md-typeset .dom-chip.is-on { background: var(--md-primary-fg-color); border-color: var(--md-primary-fg-color); color: var(--md-primary-bg-color); }
