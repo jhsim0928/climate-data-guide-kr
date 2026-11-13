@@ -1,7 +1,7 @@
 {
   "date": "2026-11-13",
   "reviewed_at": "2026-11-13T08:17:44+09:00",
-  "summary": "공지 페이지 276곳 중 47곳이 바뀌었으나 새 공지 후보는 없습니다. TROPOMI 처리기 운영 전환 안내와 NOAA-20·21 VIIRS 자료 공백 공지는 원문을 열지 못해 운영자 확인으로 남겼습니다.",
+  "summary": "공지 페이지 276곳 중 47곳이 바뀌었으나 새 공지 후보는 없습니다. TROPOMI 처리기 운영 전환 안내와 NOAA-20·21 VIIRS 자료 공백 공지는 원문을 열지 못해 운영자 확인으로 남겼습니다. 낮 직접 확인도 WebFetch 허가가 막혀 원문을 열지 못했습니다.",
   "watch": {
     "date": "2026-11-13",
     "checked": 276,
@@ -369,6 +369,7 @@
     }
   ],
   "notes": [
+    "낮 직접 확인(12:50) 실패: WebFetch 허가 요청이 다시 응답 없이 시간 초과(PROVENANCE_REQUIRED)됐고, 운영자에게 알림 후 한 번 더 시도했으나 이후 요청은 운영자에게 전달조차 되지 않았습니다. NASA Earthdata 공지 목록·MERRA-2 뉴스·CERA-20C·GES DISC 공지 API·Copernicus Data Space 뉴스를 모두 열지 못해 errors에 그대로 두었고, 위 '운영자 확인 필요' 2건(S5P 운영 전환, NOAA-20·21 VIIRS 자료 공백)도 여전히 보류입니다.",
     "직접 확인 실패: 예약 실행 중 WebFetch 권한 요청에 응답할 사람이 없어(PROVENANCE_REQUIRED, 시간 초과) NASA Earthdata 공지 목록, MERRA-2 뉴스, CERA-20C, GES DISC 공지 API, Copernicus Data Space 뉴스를 모두 열지 못했습니다. 이 주소들은 errors에 그대로 두었습니다.",
     "운영자 확인 필요: Copernicus Data Space 11/12 글 'Copernicus Sentinel-5 Precursor (S5P) products improvement - operational switch'(GES DISC 목록에도 '11월 11일 업데이트' 언급). 사이트 TROPOMI 10/13 공지(11/10 처리기 업그레이드 예정)의 실제 전환 안내로 보이나, 원문을 열지 못해 전환 날짜·버전을 확인하지 못했습니다(https://dataspace.copernicus.eu/news).",
     "운영자 확인 필요(어제부터 이어짐): Earthdata 'JPSS1/NOAA-20 AND JPSS2/NOAA-21 VIIRS data gaps and processing delays from November 5, 2026' 공지 원문을 오늘도 열지 못했습니다(https://www.earthdata.nasa.gov/data/alerts-outages). 사이트 viirs-* 자료에 해당할 가능성이 큽니다.",
