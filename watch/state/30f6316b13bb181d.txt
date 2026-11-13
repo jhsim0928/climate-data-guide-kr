@@ -66,11 +66,11 @@ High-Resolution Global Monthly Average Temperature (Experimental; 1850-Recent)
 Full 0.25° x 0.25° Resolution (available
 upon request
 1° x 1° Resolution Field
-(~400 MB)
+(~430 MB)
 5° x 5° Resolution Field
-(~8 MB)
+(~18 MB)
 Description file for this data
-In addition to the high-resolution fields, Berkeley Earth has created a new ensembles of alternative reconstructions. These ensembles are meant to fully sample that the uncertainty in the reconstruction of historical temperature fields. The ensemble fields are available at 1° x 1° resolution to be compared to the 1° x 1° resolution field above. Access to ensemble fields available
+In addition to the high-resolution fields, Berkeley Earth has created a new ensemble of alternative reconstructions. These ensembles are meant to fully sample the uncertainty in the reconstruction of historical temperature fields. The ensemble fields are available at 1° x 1° resolution to be compared to the 1° x 1° resolution field above. Access to ensemble fields is available
 upon request
 Regional, national and city-level subsets are also available below.
 Note: Effective Q2 2025 the 1°x1° resolution time series and gridded products below are no longer being updated as we have operationalized our high-resolution, 0.25° x 0.25° product. The high-resolution
@@ -100,53 +100,53 @@ Average Temperature
 Average High Temperature
 Average Low Temperature
 Datasets are also provided in a gridded NetCDF format. Two types of grids are provided, a grid based on dividing the Earth into 15984 equal-area grid cells and a latitude-longitude grid. The equal area grid is the primary data format used in most of our analyses and provides generally smaller files; however, that format may be less convenient for many users.
-Datasets marked as “Experimental” below are products that are under development have not peer reviewed, and are included here so that potential users can give us feedback.
+Datasets marked as “Experimental” below are products that are under development, have not been peer reviewed, and are included here so that potential users can give us feedback.
 Global Monthly Land + Ocean
 Average Temperature with Air Temperatures at Sea Ice (Recommended; 1850 – Recent)
 Video of Temperature Field
 Equal Area
-(~100 MB)
+(~120 MB)
 1º x 1º Latitude-Longitude Grid
-(~400 MB)
+(~450 MB)
 Average Temperature with Water Temperatures at Sea Ice (1850 – Recent)
 Equal Area
-(~100 MB)
+(~120 MB)
 1º x 1º Latitude-Longitude Grid
-(~400 MB)
+(~450 MB)
 README
 Global Monthly Land
 Average Temperature (TAVG; 1753 – Recent)
 Video of Temperature Field
 Equal Area
-(~45 MB)
+(~48 MB)
 1º x 1º Latitude-Longitude Grid
 (~200 MB)
 High Temperature (TMAX; 1833 – Recent)
 Equal Area
-(~35 MB)
+(~37 MB)
 1º x 1º Latitude-Longitude Grid
-(~140 MB)
+(~160 MB)
 Low Temperature (TAVG; 1833 – Recent)
 Equal Area
-(~35 MB)
+(~37 MB)
 1º x 1º Latitude-Longitude Grid
-(~140 MB)
+(~160 MB)
 README
 Global Daily Land (Experimental; 1880 – Recent)
 Average Temperature (TAVG)
 Equal Area
-(~750 MB)
-1º x 1º Latitude-Longitude Grid (each decade 200-450 MB)
+(~830 MB)
+1º x 1º Latitude-Longitude Grid (each decade 200-460 MB)
 2020-Recent
 Average High Temperature (TMAX)
 Equal Area
-(~750 MB)
-1º x 1º Latitude-Longitude Grid (each decade 200-450 MB)
+(~840 MB)
+1º x 1º Latitude-Longitude Grid (each decade 200-460 MB)
 2020-Recent
 Average Low Temperature (TMIN)
 Equal Area
-(~750 MB)
-1º x 1º Latitude-Longitude Grid (each decade 200-450 MB)
+(~860 MB)
+1º x 1º Latitude-Longitude Grid (each decade 220-460 MB)
 2020-Recent
 README
 National and Regional Temperature Data
@@ -173,11 +173,13 @@ The new high-resolution Berkeley Earth data set has been used to construct new c
 Available Data:
 All countries monthly mean temperature time series and annual summaries (
 by request
-State / Province level monthly and annual mean temperature times series for selected countries (
+State / Province level monthly and annual mean temperature time series for selected countries (
 by request
 Example files:
 Malaysia
+(annual)
 Alberta
+(annual)
 For technical questions related to this or other data products, please contact
 data@berkeleyearth.org
 Berkeley Earth has released a beta version of our new high-resolution monthly gridded mean temperature data product covering the whole Earth from 1850 to present with 0.25° x 0.25° resolution.
@@ -201,23 +203,23 @@ Antarctica (560 MB)
 Description file for this data
 1° x 1° Gridded Monthly Average Temperature (1850-Recent)
 North America
-(59 MB)
+(65 MB)
 Contiguous USA
 (12 MB)
 South America
-(22 MB)
+(24 MB)
 Africa
-(33 MB)
+(36 MB)
 Europe
-(15 MB)
+(16 MB)
 Asia
-(77 MB)
+(84 MB)
 South Asia
-(29 MB)
+(31 MB)
 Australasia
-(32 MB)
+(35 MB)
 Antarctica
-(35 MB, 1950-Recent)
+(39 MB, 1950-Recent)
 Description file for this data
 Local & Individual Station Data
 Temperature anomalies in 2020 in the vicinity of Japan
@@ -226,10 +228,12 @@ Monthly and annual average time series are available for ~8,000 cities,
 by request
 Samples:
 Tokyo
+(annual)
 Mexico City
+(annual)
 For technical questions related to this or other data products, please contact
 data@berkeleyearth.org
-From the current (lower-resolution) version of the Berkeley Earth data set, we provide rough city-level estimates at ~110 km resolution with monthly average low, high and mean temperature For improved data see the next section.
+From the current (lower-resolution) version of the Berkeley Earth data set, we provide rough city-level estimates at ~110 km resolution with monthly average low, high and mean temperature. For improved data see the next section.
 Local Time Series Data
 Cities
 Breakpoint Adjusted Monthly Station data
@@ -240,9 +244,7 @@ TAVG
 TMIN
 TMAX
 Diagnostics
-Source data consists of the raw temperature reports that form the foundation of our averaging system. Source observations are provided as originally reported and will contain many quality control and redundancy issues. Intermediate data is constructed from the source data by merging redundant records, identifying a variety of quality control problems, and creating monthly averages from daily reports when necessary. The definitive repository for
-Source and Intermediate data
-is located in the SVN, which is built nightly.
+Source data consists of the raw temperature reports that form the foundation of our averaging system. Source observations are provided as originally reported and will contain many quality control and redundancy issues. Intermediate data is constructed from the source data by merging redundant records, identifying a variety of quality control problems, and creating monthly averages from daily reports when necessary.
 source files
 we used to create the Berkeley Earth database are available in a common format.
 Multi-valued
@@ -260,7 +262,7 @@ Same as “Single-valued” except that all values flagged as bad via the qualit
 TAVG
 TMIN
 TMAX
-Berkeley Earth’s main analysis uses a variety of techniques to detect and compensate for systematic problems with the source data. For example, measurement discontinuities often occur when observing stations are moved or instrumentation is change. However, for diagnostic and pedagogical reasons it can be useful to look at averages when many of the quality control and homogenization features of the Berkeley Earth algorithm have been disabled.
+Berkeley Earth’s main analysis uses a variety of techniques to detect and compensate for systematic problems with the source data. For example, measurement discontinuities often occur when observing stations are moved or instrumentation is changed. However, for diagnostic and pedagogical reasons it can be useful to look at averages when many of the quality control and homogenization features of the Berkeley Earth algorithm have been disabled.
 These files are updated infrequently.
 Global Raw Land Only Monthly (1750 – Recent)
 The following files provide time series that summarize the raw data, omitting most of the bias and error detection steps.
@@ -275,19 +277,19 @@ The following files provide gridded land data that summarize the raw data, omitt
 Global Raw Monthly Land (Diagnostic)
 Average Temperature (TAVG; 1753 – Recent)
 Equal Area
-(~45 MB)
+(~48 MB)
 1º x 1º Latitude-Longitude Grid
 (~200 MB)
 High Temperature (TMAX; 1833 – Recent)
 Equal Area
-(~35 MB)
+(~37 MB)
 1º x 1º Latitude-Longitude Grid
-(~140 MB)
+(~160 MB)
 Low Temperature (TAVG; 1833 – Recent)
 Equal Area
-(~35 MB)
+(~37 MB)
 1º x 1º Latitude-Longitude Grid
-(~140 MB)
+(~160 MB)
 Contiguous United States Average Temperature (TAVG; 1850 – Recent)
 Video of Temperature Field
 ¼º x ¼º Latitude-Longitude Grid
