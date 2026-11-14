@@ -306,6 +306,13 @@ transitions:
         url: https://ladsweb.modaps.eosdis.nasa.gov/alerts-and-issues/199536
 
 notices:
+  - date: "2026-11-10"
+    level: info
+    title: 10월 27일 VIIRS Level 0 자료 공백에 따른 처리 지연 해결 (11월 10일)
+    body: >-
+      NASA Earthdata는 2026년 10월 27일 Suomi NPP·NOAA-20·NOAA-21 VIIRS Level 0 자료 공백으로 하위 산출물 처리가 늦어지던 문제를
+      11월 10일 해결(Resolved)로 표시했습니다(LAADS DAAC·LP DAAC·OB.DAAC·NSIDC DAAC). 지연되던 기간 자료가 올라왔는지 확인하고 쓰면 됩니다.
+    source: https://www.earthdata.nasa.gov/data/alerts-outages/viirs-processing-delay
   - date: "2026-10-29"
     level: warning
     title: Suomi NPP VIIRS 궤도 77742 자료 공백 (10월 28일 22:00~23:48 UTC)
@@ -410,4 +417,4 @@ watch_urls:
   - https://ladsweb.modaps.eosdis.nasa.gov/missions-and-measurements/products/AERDT_L2_VIIRS_NOAA20
   - https://ladsweb.modaps.eosdis.nasa.gov/learn/modis-to-viirs-transition
 
-last_verified: "2026-11-05"
+last_verified: "2026-11-14"

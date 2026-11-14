@@ -297,6 +297,13 @@ citations:
     It is good practice to cite the V7 L2/L3 user guides (see the AIRS documentation index) for the algorithm and quality description as well.
 
 notices:
+  - date: "2026-11-13"
+    level: warning
+    title: "Aqua drift: increasing divergence between AIRS surface temperatures and GISTEMP; no plans to continue v7 corrections"
+    body: >-
+      NASA GISS (GISTEMP News and Updates, November 13, 2026): due to the drift of the Aqua satellite as it nears end-of-mission, there is an increasing divergence
+      between the AIRS surface temperatures and GISTEMP or other records. The AIRS v7 data were corrected for the years 2021 to mid 2023; however, there are currently no plans to continue these efforts.
+    source: https://data.giss.nasa.gov/gistemp/
   - date: "2026-03-20"
     level: warning
     title: NASA projects the end of Aqua science operations in September 2027
@@ -345,4 +352,4 @@ watch_urls:
   - https://docserver.gesdisc.eosdis.nasa.gov/public/project/AIRS/AIRS_Documentation.pdf
   - https://aqua.nasa.gov/
 
-last_verified: "2026-10-13"
+last_verified: "2026-11-14"
