@@ -245,6 +245,13 @@ transitions:
         url: https://www.earthdata.nasa.gov/data/alerts-outages/viirs-version-1-sr-vi-lai-fpar-lst-active-fires-data-products-decommissioned
 
 notices:
+  - date: "2026-11-10"
+    level: info
+    title: "VIIRS Processing Delay: Resolved (November 10, 2026)"
+    body: >-
+      The Earthdata alert on gaps in Level 0 Suomi-NPP, NOAA-20, and NOAA-21 VIIRS data on October 27, 2026, which were delaying processing of downstream data products,
+      is marked Resolved as of November 10, 2026 (LAADS DAAC, LP DAAC, OB.DAAC, NSIDC DAAC).
+    source: https://www.earthdata.nasa.gov/data/alerts-outages/viirs-processing-delay
   - date: "2026-10-29"
     level: warning
     title: Suomi-NPP data outage
@@ -313,4 +320,4 @@ watch_urls:
   - https://www.earthdata.nasa.gov/data/catalog/lpcloud-vj215a2h-002
   - https://landweb.modaps.eosdis.nasa.gov/knownissue
 
-last_verified: "2026-11-05"
+last_verified: "2026-11-14"
