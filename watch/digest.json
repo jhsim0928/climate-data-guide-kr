@@ -1,12 +1,12 @@
 {
-  "date": "2026-11-17",
-  "reviewed_at": "2026-11-17T12:56:14+09:00",
-  "summary": "공지 페이지 276곳 중 58곳이 바뀌었으나 원문을 열지 못해(웹 열람 권한 거절) 새 공지 후보는 올리지 않았습니다. NCEI 11/17 시스템 점검, GLORYS12 interim 갱신 지연, TROPOMI QA 문제 등 4건은 운영자 확인이 필요합니다. 낮 직접 확인(12:50)도 웹 열람 권한 요청에 응답이 없어 원문을 열지 못했습니다.",
+  "date": "2026-11-18",
+  "reviewed_at": "2026-11-18T08:17:10+09:00",
+  "summary": "공지 페이지 276곳 중 43곳이 바뀌었으나 표시·뉴스 목록 변화뿐이거나 원문을 열지 못해(웹 열람 권한 거절) 새 공지 후보는 올리지 않았습니다. 'NASA’s Terra Mission to End' 기사 등 5건은 운영자 확인이 필요합니다.",
   "watch": {
-    "date": "2026-11-17",
+    "date": "2026-11-18",
     "checked": 276,
-    "ok": 252,
-    "changed": 58
+    "ok": 253,
+    "changed": 43
   },
   "candidates": [],
   "pr": null,
@@ -18,15 +18,6 @@
       ],
       "url": "https://aqua.nasa.gov/",
       "reason": "NASA 뉴스 목록(다른 주제 기사)만 바뀜"
-    },
-    {
-      "datasets": [
-        "ascat",
-        "osisaf-drift",
-        "osisaf-sic"
-      ],
-      "url": "https://osi-saf.eumetsat.int/community/list-of-service-messages",
-      "reason": "11/15 'Several LML products unavailable'·11/16 'All LML products available again' — 해수면온도·복사 플럭스(LML) 산출물 안내로 감시 자료(ASCAT 바람·해빙 농도·해빙 이동)와 무관하고 이미 복구됨"
     },
     {
       "datasets": [
@@ -52,73 +43,24 @@
     },
     {
       "datasets": [
-        "avhrr-pathfinder"
-      ],
-      "url": "https://www.ncei.noaa.gov/products/avhrr-pathfinder-sst",
-      "reason": "NCEI 11/17 시스템 점검 배너 — 원문 미확인, notes 참고"
-    },
-    {
-      "datasets": [
         "berkeley-earth"
       ],
       "url": "https://essd.copernicus.org/preprints/essd-2026-412/",
-      "reason": "논문 조회수 표시만 바뀜"
+      "reason": "논문 조회수 통계만 바뀜"
     },
     {
       "datasets": [
         "calipso"
       ],
       "url": "https://science.nasa.gov/mission/calipso/",
-      "reason": "NASA 뉴스 목록(다른 주제 기사)만 바뀜"
-    },
-    {
-      "datasets": [
-        "carra",
-        "era-interim",
-        "era5",
-        "era6",
-        "oras5",
-        "oras6"
-      ],
-      "url": "https://forum.ecmwf.int/c/announcements/5",
-      "reason": "ERA5·ERA5-Land 일별 통계 새 데이터셋 공개 글 — 원문 미확인, notes 참고"
-    },
-    {
-      "datasets": [
-        "cfsr-cfsv2",
-        "core",
-        "ncep-ncar-r1"
-      ],
-      "url": "https://www.weather.gov/notification/",
-      "reason": "열대 기상 토의(TWD) 예보 문서 발행 중단 안내로 재분석 자료(CFSR·R1)와 무관"
+      "reason": "NASA 뉴스 목록 변화 — 'NASA’s Terra Mission to End' 기사 제목이 새로 보이나 원문 미확인(notes 참고), 나머지는 다른 주제 기사"
     },
     {
       "datasets": [
         "cfsr-cfsv2"
       ],
       "url": "https://gdex.ucar.edu/datasets/d094000/",
-      "reason": "자료 기간·용량 표시만 바뀜"
-    },
-    {
-      "datasets": [
-        "cfsr-cfsv2"
-      ],
-      "url": "https://www.ncei.noaa.gov/products/weather-climate-models/climate-forecast-system",
-      "reason": "NCEI 11/17 시스템 점검 배너 — 원문 미확인, notes 참고"
-    },
-    {
-      "datasets": [
-        "clara-a3"
-      ],
-      "url": "https://www.cmsaf.eu/EN/News/news_node.html",
-      "reason": "Service Message 169는 CLAAS-3 ICDR 지연으로 CLARA-A3와 다른 자료"
-    },
-    {
-      "datasets": [
-        "cmorph"
-      ],
-      "url": "https://www.ncei.noaa.gov/products/climate-data-records/precipitation-cmorph",
-      "reason": "NCEI 11/17 시스템 점검 배너 — 원문 미확인, notes 참고"
+      "reason": "자료 기간·용량 표시만 바뀜(정기 갱신)"
     },
     {
       "datasets": [
@@ -131,189 +73,157 @@
         "woa23"
       ],
       "url": "https://www.ncei.noaa.gov/alerts",
-      "reason": "NCEI 11/17 시스템 점검 배너 — 원문 미확인, notes 참고"
+      "reason": "새 글은 Tsunami Dashboard·GOES-R SUVI 자료 이전 — 감시 자료와 무관"
     },
     {
       "datasets": [
         "cobe-sst3"
       ],
       "url": "https://climatedataguide.ucar.edu/climate-data/sst-data-cobev3-centennial-situ-observation-based-estimates-version-3",
-      "reason": "페이지 갱신 날짜 표시만 바뀜"
+      "reason": "자료 기간·용량 표시만 바뀜(정기 갱신)"
     },
     {
       "datasets": [
         "cs3smos"
       ],
       "url": "https://data.marine.copernicus.eu/product/SEAICE_GLO_PHY_L4_NRT_011_014/description",
-      "reason": "자료 기간 표시만 바뀜"
+      "reason": "자료 기간·용량 표시만 바뀜(정기 갱신)"
     },
     {
       "datasets": [
         "duacs"
       ],
       "url": "https://marine.copernicus.eu/user-corner/product-roadmap/transition-information?product=SEALEVEL_GLO_PHY_L4_MY_008_047",
-      "reason": "전환 안내 페이지의 'Last update' 날짜만 바뀜 (OCEANCOLOUR NRT 이중 배포 기간 문구는 기존 안내)"
+      "reason": "페이지 갱신 날짜 표시만 바뀜"
     },
     {
       "datasets": [
         "duacs"
       ],
       "url": "https://marine.copernicus.eu/user-corner/product-roadmap/transition-information?product=SEALEVEL_GLO_PHY_L4_NRT_008_046",
-      "reason": "전환 안내 페이지의 'Last update' 날짜만 바뀜 (OCEANCOLOUR NRT 이중 배포 기간 문구는 기존 안내)"
+      "reason": "페이지 갱신 날짜 표시만 바뀜"
     },
     {
       "datasets": [
-        "duacs",
-        "glorys12",
-        "nextsim",
-        "ostia",
-        "topaz4b"
+        "era6",
+        "oras5",
+        "oras6"
       ],
-      "url": "https://marine.copernicus.eu/user-corner/user-notification-service",
-      "reason": "GLO-1079 interim 갱신 지연 — 원문 미확인, notes 참고 (ICE-818·11/24 릴리스 표본은 해당 자료와 무관)"
+      "url": "https://www.ecmwf.int/en/about/media-centre/news",
+      "reason": "ECMWF HPCwire 수상 뉴스 — 자료 공지 아님"
     },
     {
       "datasets": [
-        "earthcare"
+        "esa-cci-snow"
       ],
-      "url": "https://earth.esa.int/eogateway/missions/earthcare/data",
-      "reason": "EarthCARE ATLAS 소개 글(뉴스) 추가, 자료 변화 아님"
+      "url": "https://catalogue.ceda.ac.uk/uuid/edf8abd23f4a40aabd4d52e48dec06ea/",
+      "reason": "인용 논문 목록만 바뀜"
     },
     {
       "datasets": [
-        "earthcare"
+        "esa-cci-sst"
       ],
-      "url": "https://earth.esa.int/eogateway/missions/earthcare/data/data-quality",
-      "reason": "EarthCARE ATLAS 소개 글(뉴스) 추가, 자료 변화 아님"
-    },
-    {
-      "datasets": [
-        "era5-land",
-        "esa-cci-landcover"
-      ],
-      "url": "https://forum.ecmwf.int/c/announcements/c3s-announcements/7",
-      "reason": "ERA5·ERA5-Land 일별 통계 새 데이터셋 공개 글 — 원문 미확인, notes 참고"
-    },
-    {
-      "datasets": [
-        "ersst-v6",
-        "ersst"
-      ],
-      "url": "https://www.ncei.noaa.gov/products/extended-reconstructed-sst",
-      "reason": "NCEI 11/17 시스템 점검 배너 — 원문 미확인, notes 참고"
+      "url": "https://catalogue.ceda.ac.uk/uuid/4a9654136a7148e39b7feb56f8bb02d2/",
+      "reason": "인용 논문 목록만 바뀜"
     },
     {
       "datasets": [
         "esa-cci-sst"
       ],
       "url": "https://marine.copernicus.eu/user-corner/product-roadmap/transition-information?product=SST_GLO_SST_L4_REP_OBSERVATIONS_010_024",
-      "reason": "전환 안내 페이지의 'Last update' 날짜만 바뀜 (OCEANCOLOUR NRT 이중 배포 기간 문구는 기존 안내)"
+      "reason": "페이지 갱신 날짜 표시만 바뀜"
     },
     {
       "datasets": [
         "ghrsst-mur"
       ],
       "url": "https://podaac.jpl.nasa.gov/dataset/MUR-JPL-L4-GLOB-v4.1",
-      "reason": "자료 기간 표시만 바뀜"
+      "reason": "자료 기간·용량 표시만 바뀜(정기 갱신)"
     },
     {
       "datasets": [
         "gimms-ndvi"
       ],
       "url": "https://zenodo.org/records/8253971",
-      "reason": "다운로드 용량 통계만 바뀜"
+      "reason": "자료 기간·용량 표시만 바뀜(정기 갱신)"
     },
     {
       "datasets": [
         "globcolour"
       ],
       "url": "https://marine.copernicus.eu/user-corner/product-roadmap/transition-information?product=OCEANCOLOUR_GLO_BGC_L3_MY_009_103",
-      "reason": "전환 안내 페이지의 'Last update' 날짜만 바뀜 (OCEANCOLOUR NRT 이중 배포 기간 문구는 기존 안내)"
+      "reason": "페이지 갱신 날짜 표시만 바뀜"
     },
     {
       "datasets": [
         "globcolour"
       ],
       "url": "https://marine.copernicus.eu/user-corner/product-roadmap/transition-information?product=OCEANCOLOUR_GLO_BGC_L4_MY_009_104",
-      "reason": "전환 안내 페이지의 'Last update' 날짜만 바뀜 (OCEANCOLOUR NRT 이중 배포 기간 문구는 기존 안내)"
+      "reason": "페이지 갱신 날짜 표시만 바뀜"
     },
     {
       "datasets": [
         "globcolour"
       ],
       "url": "https://marine.copernicus.eu/user-corner/product-roadmap/transition-information?product=OCEANCOLOUR_GLO_BGC_L3_NRT_009_101",
-      "reason": "전환 안내 페이지의 'Last update' 날짜만 바뀜 (OCEANCOLOUR NRT 이중 배포 기간 문구는 기존 안내)"
+      "reason": "페이지 갱신 날짜 표시만 바뀜"
     },
     {
       "datasets": [
         "glorys12"
       ],
       "url": "https://marine.copernicus.eu/user-corner/product-roadmap/transition-information?product=GLOBAL_MULTIYEAR_PHY_001_030",
-      "reason": "전환 안내 페이지의 'Last update' 날짜만 바뀜 (OCEANCOLOUR NRT 이중 배포 기간 문구는 기존 안내)"
+      "reason": "페이지 갱신 날짜 표시만 바뀜"
     },
     {
       "datasets": [
-        "gpcp"
+        "godas"
       ],
-      "url": "https://www.ncei.noaa.gov/products/climate-data-records/precipitation-gpcp-monthly",
-      "reason": "NCEI 11/17 시스템 점검 배너 — 원문 미확인, notes 참고"
+      "url": "https://downloads.psl.noaa.gov/Datasets/godas/",
+      "reason": "자료 기간·용량 표시만 바뀜(정기 갱신)"
     },
     {
       "datasets": [
         "icesat2-sit"
       ],
       "url": "https://nsidc.org/data/is2sitmogr4/versions/4",
-      "reason": "인용문의 접속일(Date Accessed) 표시만 바뀜"
+      "reason": "인용문 접속 날짜 표시만 바뀜"
     },
     {
       "datasets": [
         "icesat2-sit"
       ],
       "url": "https://nsidc.org/data/atl20/versions/5",
-      "reason": "인용문의 접속일(Date Accessed) 표시만 바뀜"
+      "reason": "인용문 접속 날짜 표시만 바뀜"
     },
     {
       "datasets": [
         "icesat2-sit"
       ],
       "url": "https://nsidc.org/data/atl10/versions/7",
-      "reason": "인용문의 접속일(Date Accessed) 표시만 바뀜"
-    },
-    {
-      "datasets": [
-        "imerg",
-        "oco2"
-      ],
-      "url": "https://disc.gsfc.nasa.gov/information/alerts",
-      "reason": "새 글은 Sentinel-5P NRTI O3·CLOUD QA 문제(11/10)로 IMERG·OCO-2와 무관 (TROPOMI 건은 notes 참고)"
-    },
-    {
-      "datasets": [
-        "isccp-h"
-      ],
-      "url": "https://www.ncei.noaa.gov/products/international-satellite-cloud-climatology",
-      "reason": "NCEI 11/17 시스템 점검 배너 — 원문 미확인, notes 참고"
-    },
-    {
-      "datasets": [
-        "isccp-h"
-      ],
-      "url": "https://www.ncei.noaa.gov/products/climate-data-records/cloud-properties-isccp",
-      "reason": "NCEI 11/17 시스템 점검 배너 — 원문 미확인, notes 참고"
+      "reason": "인용문 접속 날짜 표시만 바뀜"
     },
     {
       "datasets": [
         "its-live"
       ],
       "url": "https://nsidc.org/data/nsidc-0776/versions/2",
-      "reason": "인용문의 접속일(Date Accessed) 표시만 바뀜"
+      "reason": "인용문 접속 날짜 표시만 바뀜"
+    },
+    {
+      "datasets": [
+        "jra3q",
+        "jra55c"
+      ],
+      "url": "https://diasjp.net/en/dataset-republication-list/",
+      "reason": "MLIT XRAIN 자료 재공개 안내 — JRA-3Q·JRA-55C와 무관"
     },
     {
       "datasets": [
         "merra2"
       ],
       "url": "https://gmao.gsfc.nasa.gov/operations/status.php",
-      "reason": "운영 상태표의 날짜별 처리 기록 갱신(정상 처리)"
+      "reason": "GEOS-FP 운영 상태 시각 표시만 바뀜"
     },
     {
       "datasets": [
@@ -327,119 +237,91 @@
         "modis-albedo"
       ],
       "url": "https://aqua.nasa.gov/announcements/aqua-status",
-      "reason": "NASA 뉴스 목록(다른 주제 기사)만 바뀜"
-    },
-    {
-      "datasets": [
-        "noaa-olr"
-      ],
-      "url": "https://www.ncei.noaa.gov/products/climate-data-records/outgoing-longwave-radiation-daily",
-      "reason": "NCEI 11/17 시스템 점검 배너 — 원문 미확인, notes 참고"
+      "reason": "NASA 뉴스 목록 변화 — 'NASA’s Terra Mission to End' 기사 제목이 새로 보이나 원문 미확인(notes 참고), 나머지는 다른 주제 기사"
     },
     {
       "datasets": [
         "nsidc-cdr-sic"
       ],
       "url": "https://nsidc.org/data/g02202/versions/6",
-      "reason": "인용문의 접속일(Date Accessed) 표시만 바뀜"
+      "reason": "인용문 접속 날짜 표시만 바뀜"
+    },
+    {
+      "datasets": [
+        "oc-cci"
+      ],
+      "url": "https://catalogue.ceda.ac.uk/uuid/5011d22aae5a4671b0cbc7d05c56c4f0/",
+      "reason": "인용 논문 목록만 바뀜"
     },
     {
       "datasets": [
         "oco2"
       ],
       "url": "https://science.nasa.gov/mission/oco-2/",
-      "reason": "NASA 뉴스 목록(다른 주제 기사)만 바뀜"
-    },
-    {
-      "datasets": [
-        "oisst"
-      ],
-      "url": "https://www.ncei.noaa.gov/products/optimum-interpolation-sst",
-      "reason": "NCEI 11/17 시스템 점검 배너 — 원문 미확인, notes 참고"
+      "reason": "NASA 뉴스 목록 변화 — 'NASA’s Terra Mission to End' 기사 제목이 새로 보이나 원문 미확인(notes 참고), 나머지는 다른 주제 기사"
     },
     {
       "datasets": [
         "omi"
       ],
       "url": "https://science.nasa.gov/missions/potential-evolution-of-the-aura-mission/",
-      "reason": "NASA 뉴스 목록(다른 주제 기사)만 바뀜"
-    },
-    {
-      "datasets": [
-        "patmos-x"
-      ],
-      "url": "https://www.ncei.noaa.gov/products/climate-data-records/avhrr-hirs-cloud-properties-patmos",
-      "reason": "NCEI 11/17 시스템 점검 배너 — 원문 미확인, notes 참고"
-    },
-    {
-      "datasets": [
-        "persiann-cdr"
-      ],
-      "url": "https://www.ncei.noaa.gov/products/climate-data-records/precipitation-persiann",
-      "reason": "NCEI 11/17 시스템 점검 배너 — 원문 미확인, notes 참고"
+      "reason": "NASA 뉴스 목록 변화 — 'NASA’s Terra Mission to End' 기사 제목이 새로 보이나 원문 미확인(notes 참고), 나머지는 다른 주제 기사"
     },
     {
       "datasets": [
         "polar-pathfinder-motion"
       ],
       "url": "https://nsidc.org/data/nsidc-0116/versions/4",
-      "reason": "인용문의 접속일(Date Accessed) 표시만 바뀜"
+      "reason": "인용문 접속 날짜 표시만 바뀜"
     },
     {
       "datasets": [
         "polar-pathfinder-motion"
       ],
       "url": "https://nsidc.org/data/nsidc-0748/versions/1",
-      "reason": "인용문의 접속일(Date Accessed) 표시만 바뀜"
+      "reason": "인용문 접속 날짜 표시만 바뀜"
     },
     {
       "datasets": [
         "sea-ice-index"
       ],
       "url": "https://nsidc.org/data/g02135/versions/4",
-      "reason": "인용문의 접속일(Date Accessed) 표시만 바뀜"
+      "reason": "인용문 접속 날짜 표시만 바뀜"
     },
     {
       "datasets": [
         "smap"
       ],
       "url": "https://nsidc.org/data/spl3smp",
-      "reason": "인용문의 접속일(Date Accessed) 표시만 바뀜"
+      "reason": "인용문 접속 날짜 표시만 바뀜"
     },
     {
       "datasets": [
         "soda4"
       ],
       "url": "https://egusphere.copernicus.org/preprints/2025/egusphere-2025-3810/",
-      "reason": "논문 조회수 표시만 바뀜"
+      "reason": "논문 조회수 통계만 바뀜"
     },
     {
       "datasets": [
         "topaz4b"
       ],
       "url": "https://marine.copernicus.eu/user-corner/product-roadmap/transition-information?product=ARCTIC_MULTIYEAR_PHY_002_003",
-      "reason": "전환 안내 페이지의 'Last update' 날짜만 바뀜 (OCEANCOLOUR NRT 이중 배포 기간 문구는 기존 안내)"
+      "reason": "페이지 갱신 날짜 표시만 바뀜"
     },
     {
       "datasets": [
         "tropomi"
       ],
       "url": "https://dataspace.copernicus.eu/news",
-      "reason": "Sentinel-5P NRTI O3·CLOUD QA 문제 — 원문 미확인, notes 참고"
+      "reason": "Sentinel-2C 11/17 자료 미제공 공지 — TROPOMI(Sentinel-5P)와 무관"
     },
     {
       "datasets": [
         "viirs-snow"
       ],
       "url": "https://nsidc.org/data/vnp10a1/versions/2",
-      "reason": "인용문의 접속일(Date Accessed) 표시만 바뀜"
-    },
-    {
-      "datasets": [
-        "woa23"
-      ],
-      "url": "https://www.ncei.noaa.gov/products/world-ocean-atlas",
-      "reason": "NCEI 11/17 시스템 점검 배너 — 원문 미확인, notes 참고"
+      "reason": "인용문 접속 날짜·자료 기간 표시만 바뀜(VNP10A1 기간 끝 2026-11-02 — Suomi NPP 자료 전달 종료로, 이미 공지됨)"
     }
   ],
   "errors": [
@@ -449,7 +331,7 @@
         "calipso"
       ],
       "error": "HTTP 403 / HTTP 403 (브라우저)",
-      "fails": 35,
+      "fails": 36,
       "last_ok": null
     },
     {
@@ -458,7 +340,7 @@
         "cera20c"
       ],
       "error": "HTTP 401 / HTTP 401 (브라우저)",
-      "fails": 42,
+      "fails": 43,
       "last_ok": null
     },
     {
@@ -467,7 +349,7 @@
         "gimms-ndvi"
       ],
       "error": "HTTP 403 / HTTP 403 (브라우저)",
-      "fails": 35,
+      "fails": 36,
       "last_ok": null
     },
     {
@@ -476,7 +358,7 @@
         "gk2a"
       ],
       "error": "브라우저로도 본문이 비어 있음",
-      "fails": 35,
+      "fails": 36,
       "last_ok": null
     },
     {
@@ -492,7 +374,7 @@
         "viirs-burned-area"
       ],
       "error": "HTTP 403 / HTTP 403 (브라우저)",
-      "fails": 42,
+      "fails": 43,
       "last_ok": null
     },
     {
@@ -503,7 +385,7 @@
         "viirs-ocean"
       ],
       "error": "HTTP 403 / HTTP 403 (브라우저)",
-      "fails": 35,
+      "fails": 36,
       "last_ok": null
     },
     {
@@ -512,7 +394,7 @@
         "gosat"
       ],
       "error": "HTTP 404 / HTTP 404 (브라우저)",
-      "fails": 35,
+      "fails": 36,
       "last_ok": null
     },
     {
@@ -521,7 +403,7 @@
         "merra2"
       ],
       "error": "HTTP 403 / HTTP 403 (브라우저)",
-      "fails": 42,
+      "fails": 43,
       "last_ok": null
     },
     {
@@ -530,7 +412,7 @@
         "misr"
       ],
       "error": "HTTP 403 / HTTP 403 (브라우저)",
-      "fails": 35,
+      "fails": 36,
       "last_ok": null
     },
     {
@@ -539,7 +421,7 @@
         "modis-burned-area"
       ],
       "error": "HTTP 403 / HTTP 403 (브라우저)",
-      "fails": 35,
+      "fails": 36,
       "last_ok": null
     },
     {
@@ -548,7 +430,7 @@
         "modis-et"
       ],
       "error": "HTTP 403 / HTTP 403 (브라우저)",
-      "fails": 35,
+      "fails": 36,
       "last_ok": null
     },
     {
@@ -558,7 +440,7 @@
         "modis-vi"
       ],
       "error": "HTTP 403 / HTTP 403 (브라우저)",
-      "fails": 35,
+      "fails": 36,
       "last_ok": null
     },
     {
@@ -567,7 +449,7 @@
         "modis-landcover"
       ],
       "error": "HTTP 403 / HTTP 403 (브라우저)",
-      "fails": 35,
+      "fails": 36,
       "last_ok": null
     },
     {
@@ -576,7 +458,7 @@
         "modis-lst"
       ],
       "error": "HTTP 403 / HTTP 403 (브라우저)",
-      "fails": 35,
+      "fails": 36,
       "last_ok": null
     },
     {
@@ -586,17 +468,8 @@
         "pace-oci"
       ],
       "error": "HTTP 403 / HTTP 403 (브라우저)",
-      "fails": 35,
+      "fails": 36,
       "last_ok": null
-    },
-    {
-      "url": "https://www.ncei.noaa.gov/thredds/catalog/cdr/persiann/catalog.html",
-      "datasets": [
-        "persiann-cdr"
-      ],
-      "error": "ReadTimeout: HTTPSConnectionPool(host='www.ncei.noaa.gov', port=443): Read timed out. (read timeout=40)",
-      "fails": 3,
-      "last_ok": "2026-11-14"
     },
     {
       "url": "https://www.tropomi.eu/data-products/level-2-products",
@@ -604,7 +477,7 @@
         "tropomi"
       ],
       "error": "HTTP 404 / HTTP 404 (브라우저)",
-      "fails": 35,
+      "fails": 36,
       "last_ok": null
     },
     {
@@ -613,7 +486,7 @@
         "viirs-albedo"
       ],
       "error": "HTTP 403 / HTTP 403 (브라우저)",
-      "fails": 35,
+      "fails": 36,
       "last_ok": null
     },
     {
@@ -622,7 +495,7 @@
         "viirs-burned-area"
       ],
       "error": "HTTP 403 / HTTP 403 (브라우저)",
-      "fails": 35,
+      "fails": 36,
       "last_ok": null
     },
     {
@@ -633,7 +506,7 @@
         "viirs-vi"
       ],
       "error": "HTTP 403 / HTTP 403 (브라우저)",
-      "fails": 35,
+      "fails": 36,
       "last_ok": null
     },
     {
@@ -642,7 +515,7 @@
         "viirs-lai"
       ],
       "error": "HTTP 403 / HTTP 403 (브라우저)",
-      "fails": 35,
+      "fails": 36,
       "last_ok": null
     },
     {
@@ -651,7 +524,7 @@
         "viirs-lst"
       ],
       "error": "HTTP 403 / HTTP 403 (브라우저)",
-      "fails": 35,
+      "fails": 36,
       "last_ok": null
     },
     {
@@ -660,7 +533,7 @@
         "viirs-lst"
       ],
       "error": "HTTP 403 / HTTP 403 (브라우저)",
-      "fails": 35,
+      "fails": 36,
       "last_ok": null
     },
     {
@@ -669,18 +542,18 @@
         "viirs-vi"
       ],
       "error": "HTTP 403 / HTTP 403 (브라우저)",
-      "fails": 35,
+      "fails": 36,
       "last_ok": null
     }
   ],
   "notes": [
-    "운영자 확인 필요(낮 직접 확인 실패, 12:56): Earthdata 공지 목록·MERRA-2 뉴스·CERA-20C·GES DISC API(size=40)와 보류 원문 4건(NCEI 점검, CMEMS GLO-1079, Sentinel-5P QA, ECMWF ERA5 일별 통계)을 WebFetch로 열려 했으나 모두 '권한 요청에 제시간 응답 없음(PROVENANCE_REQUIRED)'으로 거절됐습니다. JPSS/NOAA-20·21 VIIRS 글 주소는 사이트에서 client_error(주소 오류 가능)로 열리지 않았습니다. 새 공지 후보 없음, errors 그대로 둠.",
-    "운영자 확인 필요(시간 민감): NCEI 공지 'Network Maintenance' — \"many NCEI systems will be unavailable November 17, 6:30 AM ET - 2:00 PM ET\"(한국 시간 11/17 20:30 ~ 11/18 04:00). OISST·ERSST·GPCP·CMORPH·PERSIANN-CDR·WOA23·ISCCP-H·PATMOS-x·NOAA OLR·CFSR/CFSv2 페이지 배너에 함께 떴으나 어떤 시스템·자료가 영향받는지 원문을 열지 못해 후보로 올리지 않았습니다. https://www.ncei.noaa.gov/alerts",
-    "운영자 확인 필요: Copernicus Marine [GLO-1079] 'GLOBAL_MULTIYEAR_(BGC|PHY|WAV) - Regular interim updates delayed'(2026-11-15 12:00 UTC, 진행 중) — 기술 문제로 GLOBAL_MULTIYEAR_PHY_001_030(GLORYS12) 등의 interim 갱신이 지연. GLORYS12 주의 공지 후보로 보이나 원문을 WebFetch로 열지 못해 보류했습니다. https://marine.copernicus.eu/user-corner/user-notification-service",
-    "운영자 확인 필요: Copernicus Data Space 뉴스 'Sentinel-5P NRTI O3 and CLOUD Products: QA value issue following the UPAS 3.0.1 upgrade'(11/16, GES DISC에도 11/10 게시) — TROPOMI NRTI O3·CLOUD 산출물 QA 값 문제. 영향 궤도·조치를 원문으로 확인하지 못해 보류했습니다. https://dataspace.copernicus.eu/news",
-    "운영자 확인 필요: ECMWF 포럼 'New dataset published in CDS: ERA5 and ERA5-Land post-processed daily statistics'(11/16) — ERA5·ERA5-Land 안내(info) 후보일 수 있으나 기존 자료 변경인지 원문을 열지 못했습니다. https://forum.ecmwf.int/c/announcements/5",
-    "운영자 확인 필요(직접 확인 실패): 직접 확인 주소 4곳(https://www.earthdata.nasa.gov/data/alerts-outages, https://www.earthdata.nasa.gov/data/projects/merra-2/news, https://www.ecmwf.int/en/forecasts/datasets/reanalysis-datasets/cera-20c, https://disc.gsfc.nasa.gov/api/alerts?page=1&size=10)과 위 공지 원문들을 WebFetch로 열려 했으나 모두 '권한 요청에 제시간 응답 없음(PROVENANCE_REQUIRED)'으로 거절됐습니다(사이트 오류 아님). Earthdata·MERRA-2·CERA-20C·GES DISC의 최근 7일 새 공지 여부를 확인하지 못해 errors에 그대로 두었습니다. 예약 작업의 웹 열람 권한을 '항상 허용'으로 바꿔 주셔야 이 단계가 동작합니다.",
-    "운영자 확인 필요(11/12부터 이어짐): Earthdata 'JPSS1/NOAA-20 AND JPSS2/NOAA-21 VIIRS data gaps and processing delays from November 5, 2026'(11/9 게시) 원문을 여전히 열지 못했습니다. https://www.earthdata.nasa.gov/data/alerts-outages/jpss1-noaa-20-and-jpss2-noaa-21-viirs-data-gaps-and-processing-delays-from-november-5-2026",
-    "참고: 7일 넘게 실패 중인 주소들(errors의 fails≥35)은 이번에도 새 공식 주소를 찾지 못했습니다."
+    "운영자 확인 필요(직접 확인 실패, 08:20): 직접 확인 주소 4곳(Earthdata 공지 목록, MERRA-2 뉴스, CERA-20C, GES DISC API)과 보류 원문 모두 WebFetch '권한 요청에 제시간 응답 없음(PROVENANCE_REQUIRED)'으로 거절됐습니다(사이트 오류 아님, 11/12부터 매일 같은 증상). 예약 작업의 웹 열람 권한을 '항상 허용'으로 바꿔 주셔야 3-1단계가 동작합니다. errors는 그대로 두었습니다.",
+    "운영자 확인 필요(새로 보임): NASA 뉴스 목록(Terra 관련 감시 주소 포함)에 'NASA’s Terra Mission to End' 기사가 새로 떴습니다. MISR·MODIS(Terra) 종료 시점이 기존 공지(2027년 2월 전망)와 달라졌는지 원문을 열지 못해 후보로 올리지 않았습니다. https://science.nasa.gov/mission/terra/",
+    "운영자 확인 필요(11/17부터 이어짐): Copernicus Marine [GLO-1079] GLOBAL_MULTIYEAR interim 갱신 지연(GLORYS12 등) — 원문 미확인. https://marine.copernicus.eu/user-corner/user-notification-service",
+    "운영자 확인 필요(11/17부터 이어짐): Sentinel-5P NRTI O3·CLOUD 'QA value issue following the UPAS 3.0.1 upgrade'(TROPOMI) — 원문 미확인. https://dataspace.copernicus.eu/news",
+    "운영자 확인 필요(11/17부터 이어짐): ECMWF 포럼 'ERA5 and ERA5-Land post-processed daily statistics' 새 데이터셋(ERA5·ERA5-Land 안내 후보 가능) — 원문 미확인. https://forum.ecmwf.int/c/announcements/5",
+    "운영자 확인 필요(11/12부터 이어짐): Earthdata 'JPSS1/NOAA-20 AND JPSS2/NOAA-21 VIIRS data gaps and processing delays from November 5, 2026' 원문 미확인. https://www.earthdata.nasa.gov/data/alerts-outages/jpss1-noaa-20-and-jpss2-noaa-21-viirs-data-gaps-and-processing-delays-from-november-5-2026",
+    "참고: NCEI 'Network Maintenance'(11/17 20:30~11/18 04:00 한국 시간)는 이미 끝난 시간이라 공지로 올리지 않았습니다.",
+    "참고: 7일 넘게 실패 중인 주소들(errors의 fails≥36)은 이번에도 새 공식 주소를 찾지 못했습니다(웹 열람 불가)."
   ]
 }
