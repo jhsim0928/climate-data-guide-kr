@@ -247,6 +247,14 @@ citations:
     PO.DAAC asks for a data citation with authors, title, publisher and DOI in the reference list.
 
 notices:
+  - date: "2026-11-16"
+    level: warning
+    title: SWOT Version D reprocessing complete; Version C to be retired December 1, 2026
+    body: >-
+      SWOT Version C products will be retired on December 1, 2026 and will no longer be available for download and access from PO.DAAC; they are also being removed from NASA Earthdata, Earthdata Search, CMR and associated SWOT tools and services.
+      Version D reprocessed products ("PGD0") cover the start of the calibration phase (~March 30, 2023) through cycle 32 (~May 18, 2025), and forward-processed products ("PID0") cover cycle 33 (~May 19, 2025) onward. Always select the granule with the highest product counter, and select PGD0 when both PGD0 and PID0 exist.
+      Transition workflows to Version D before December 1, 2026.
+    source: https://www.earthdata.nasa.gov/data/alerts-outages/swot-version-d-reprocessing-complete-version-c-retired-december-1-2026
   - date: "2026-10"
     level: info
     title: AVISO SWOT L3 LR Wind Wave v3.0 released (Light and Extended)
@@ -364,4 +372,4 @@ watch_urls:
   - https://podaac.jpl.nasa.gov/SWOT-events/SWOT_events.html
   - https://www.aviso.altimetry.fr/en/missions/current-missions/swot/swot-ocean-data-access.html
 
-last_verified: "2026-10-28"
+last_verified: "2026-11-18"
