@@ -329,6 +329,13 @@ transitions:
         url: https://nsidc.org/data/spl4cmdl/versions/8
 
 notices:
+  - date: "2026-11-18"
+    level: warning
+    title: NSIDC SMAP 전방 처리 일시 중단 (2026-12-01~12-03 예정)
+    body: >-
+      NSIDC는 모든 SMAP 자료의 전방(forward) 처리를 2026년 12월 1일부터 일시 중단하고 12월 3일 재개할 예정이라고 안내했습니다.
+      필요하면 중단이 더 길어질 수 있어, 이 기간 최신 자료가 늦게 올라올 수 있습니다.
+    source: https://nsidc.org/data/spl3smp
   - date: "2026-10-23"
     level: info
     title: SMAP L4 Version 8 부 버전 갱신 — 2023-08-01 이후 자료 (Science Version ID Vv8012·Vv8013)
@@ -424,4 +431,4 @@ watch_urls:
   - https://nsidc.org/data/smap/news
   - https://nsidc.org/data/spl3smp
 
-last_verified: "2026-10-28"
+last_verified: "2026-11-19"
