@@ -39,12 +39,17 @@ Product Roadmap
 Get Inspired
 Service Commitments and Licence
 Contact Us
-[MED-533] MEDSEA_ANALYSISFORECAST_BGC_006_014 - Potential delay
-On Going
-2026-10-30 11:00 UTC - On going
-Due to the system update,
-MEDSEA_ANALYSISFORECAST_BGC_006_014
-might experience delays between 2026-11-03 and 2026-11-24.
+[WND-273] WIND_GLO_PHY_L3_NRT_012_002 - FY-3E wind dataset unavailable since 2026-11-16
+In progress
+2026-11-16 00:00 UTC - In progress
+Due to unavailability of the upstream data, the FY-3E wind data in
+WIND_GLO_PHY_L3_NRT_012_002
+are not available since 2026-11-16.
+Impacted datasets:
+cmems_obs-wind_glo_phy_nrt_l3-fy3e-windrad-asc-0.25deg_P1D-i
+cmems_obs-wind_glo_phy_nrt_l3-fy3e-windrad-des-0.25deg_P1D-i
+cmems_obs-wind_glo_phy_nrt_l3-fy3e-windrad-asc-0.5deg_P1D-i
+cmems_obs-wind_glo_phy_nrt_l3-fy3e-windrad-des-0.5deg_P1D-i
 We apologize for any inconvenience this may cause.
 If you have any question, please contact
 Copernicus Marine User Support
@@ -103,28 +108,6 @@ The upstream maintenance is not over and therefore production has not resumed.
 2026-10-19 05:00 UTC - In progress
 Due to a server maintenance, some upstream data is not available from 2026-10-19 to 2026-10-23 for sea ice and iceberg products:
 As a result, their production is interrupted.
-We apologize for any inconvenience this may cause.
-If you have any question, please contact
-Copernicus Marine User Support
-Copy a link to this article
-[SST-992] SST_(ATL|GLO)_(PHY|SST)_(L3S|L4)_NRT - Degraded quality for 2026-10-20 data
-In progress
-2026-11-13 13:00 UTC - In progress
-All affected PMW products have now been produced up to and including 2026/11/08. The L4 products have also been reprocessed up to the same date.
-AMSR2 upstream data reception has partially resumed, but we have not received any data after 2026/11/08 so far.
-The incident remains ongoing. We will provide another update as soon as we receive more AMSR2 data or get more information from the provider.
-2026-11-06 10:00 UTC - In progress
-The missing AMSR2 data were retrieved up to 2026-10-29, thus the affected PMW datasets have been reprocessed up to and including 2026-10-29.
-The incident remains ongoing.
-2026-09-21 12:00 UTC - In progress
-AMSR upstream data have become unavailable from the external provider. As a consequence, the ODYSSEA L3S Atlantic and Global PMW files dated 2026-10-20 could not be produced. The merged L3S and L4 products remain available, but their quality is degraded due to the absence of AMSR2 microwave observations.
-Impacted products:
-SST_GLO_SST_L3S_NRT_OBSERVATIONS_010_010
-/ cmems_obs-sst_glo_phy_l3s_pmw_P1D-m
-SST_ATL_PHY_L3S_NRT_010_037
-/ cmems_obs-sst_atl_phy_l3s_pmw_P1D-m
-SST_ATL_SST_L4_NRT_OBSERVATIONS_010_025
-SST_GLO_PHY_L4_NRT_010_043
 We apologize for any inconvenience this may cause.
 If you have any question, please contact
 Copernicus Marine User Support
@@ -673,4 +656,18 @@ To install or upgrade the Toolbox, please consult the
 Copernicus Marine Toolbox installation documentation
 If you have any questions, please
 contact the Copernicus Marine User Support
+Copy a link to this article
+[ICE-810] SEAICE_ARC_(PHY|SEAICE)_NRT - Change of upstream SIC from AMSR2 to AMSR3
+Information
+2025-10-08 10:00 UTC - Information
+The input sea ice concentration (SIC) used to identify surface type between SST and IST was switched from the AMSR2-based product (OSI-408-a,
+Global Sea-Ice Concentration (AMSR2) | OSI SAF
+) to the new AMSR3-based product (OSI-408-g,
+Sea-Ice Concentration (AMSR3) | OSI SAF
+). This changed happened from 2026-10-01 due to missing input AMSR2-based SIC and is permanent, i.e. from 2026-10-01 the new OSI SAF AMSR3-based SIC will be used.
+Impacted products:
+SEAICE_ARC_SEAICE_L4_NRT_OBSERVATIONS_011_008
+SEAICE_ARC_PHY_SST-IST_L3S_NRT_011_022
+If you have any question, please contact
+Copernicus Marine User Support
 Copy a link to this article
