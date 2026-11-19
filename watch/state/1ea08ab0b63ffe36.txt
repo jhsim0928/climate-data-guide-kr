@@ -52,6 +52,10 @@ Opening Date
 Last Update
 Status
 Description
+HC_MOD_26323
+Note
+New Terra Observations to Cease on December 1, 2026
+<h1>New Terra Observations to Cease on December 1, 2026</h1><p style="font-size: 16px;">The Terra mission will cease delivering all science observation data on December 1, 2026 (2026/335). NASA archives and distributes data from Terra instruments through Earthdata and multiple Distributed Active Archive Centers. The LAADS DAAC has been a source for all Level-1 and Atmosphere products derived from the Terra MODIS (Moderate-resolution Imaging Spectroradiometer) instrument for over 2.5 decades. The historical archive of all Terra MODIS products will remain available, but users who need updated data products should transition to alternative products as soon as possible. The MODIS Adaptive Processive System (MODAPS) that produces the Terra MODIS data products will continue to wrap up its forward-processing or reprocessing tasks, and LAADS DAAC will continue to manage and distribute its Terra MODIS collections.<br><br><a href="https://www.earthdata.nasa.gov/data/alerts-outages/new-terra-observations-cease-december-1-2026">Read the data alert</a> on Earthdata.<br> More details can be found in the <a href="https://science.nasa.gov/blogs/science-news/2026/11/17/nasas-terra-mission-to-end/">official NASA announcement</a>.</p><br><br><br>
 HC_MOD_26187
 Note
 MOD44B (C61) Vegetation Continuous Fields (VCF) - Retrieval Differences Due to Java Runtime Update
@@ -144,22 +148,22 @@ HC_MOD_23181
 Note
 2023.181 data loss
 On June 30th, 2023 (2023/181), a data loss occurred for TERRA MODIS (C61) during a night-time orbit over Northern South America and southeast Asia/western Australia. The impacted granules are 2023/181/01:45 and 2023/181/14:31:40 - 15:21:13 (inclusive). ATC dumped data on a deleted contact and the continuity report didn't show data loss until after the end of the next contact (16:00:00 - 16:18:00). LRS data is fully recovered and some ASTER. However MODIS and MISR are unrecoverable. The image below shows the L1B global browse for 2023/181 where the missing data occurred<br><br><br>
-TM_MOD28_23160
-Note
-MxD28C3 Storage Values Discrepency
-On 6/9/2023, the science team found the storage capacity values in the lake information parameter file of the MODIS Global Water Reservoir 8-day product (MxD28C2) are inconsistent with the one used for the monthly product (MxD28C3) over the following locations:<br><br> Lake ID 23 (Okeechobee)<br> Lake ID 59 (Kovdozero)<br> Lake ID 73 (Storsjon)<br>Lake ID 119 (Kallsjon)<br> Lake ID 122 (Tshangalele)<br>Lake ID 161 (Lake Ross)<br><br>This discrepancy arises from the utilization of different sources for the reservoir capacity values, and only affects the 8-day storage values at these six locations (with a constant offset at each location). To ensure consistency, the lake information parameter file for PGE188 MxD28C2 has been updated. A reprocessing of the PGE188 MxD28C2 for the mission period will be conducted. <br><br>
-HC_MOD_23062
-Note
-Terra Data Loss 2023.062 (03.03.23)
-On March 3rd, 2023 (2023/062), a data loss occurred for TERRA MODIS (C61) during a daytime orbit over Central Asia. The impacted granules are from 2023/062/02:31:40 - 062/03:34:02 inclusive. During the TDRSS contact with TDE (062/03:36:00 - 03:52:43z), a high CADU delta occurred after the automated playback. The OCE ran a LAST_MODIS replay followed by an ALL_MODIS replay in an attempt to recover the MODIS data. Data gaps appeared in the continuity report for MODIS. The DB community was notified to see if the MODIS data could be recovered, and they were able to make a partial recovery. The image below shows the L1B global browse for 2023/062 where the missing data occurs.
 HC_MOD_23061
 Note
 Terra Data Loss 2023.061 (03.02.23)
 On March 2nd, 2023 (2023/061), a data loss occurred for TERRA MODIS (C61) during a nighttime orbit over Northern Central Pacific Ocean. The impacted granules are from 2023/061/08:23:41 - 061/08:36:19 inclusive. During the TDRSS contact with TDE (061/09:15:59 - 09:26:59z), the OCE ran a PBFLEX for 6 minutes. No K-Band RF was being received from White Sands. The OCE ran a PBSTOP and called White Sands to troubleshoot the issue. White Sand conducted a chain failover, but the K-Band lock was still not established. The OCE ran replays of MODIS and MISR, followed by another PBFLEX of 6 minutes. Data gaps appeared in the continuity report for MODIS. The DB community was notified to see if the MODIS data could be recovered, but their attempts were unsuccessful. The image below shows the L1B global browse for 2023/061 where the missing data occurs.
+TM_MOD28_23160
+Note
+MxD28C3 Storage Values Discrepency
+On 6/9/2023, the science team found the storage capacity values in the lake information parameter file of the MODIS Global Water Reservoir 8-day product (MxD28C2) are inconsistent with the one used for the monthly product (MxD28C3) over the following locations:<br><br> Lake ID 23 (Okeechobee)<br> Lake ID 59 (Kovdozero)<br> Lake ID 73 (Storsjon)<br>Lake ID 119 (Kallsjon)<br> Lake ID 122 (Tshangalele)<br>Lake ID 161 (Lake Ross)<br><br>This discrepancy arises from the utilization of different sources for the reservoir capacity values, and only affects the 8-day storage values at these six locations (with a constant offset at each location). To ensure consistency, the lake information parameter file for PGE188 MxD28C2 has been updated. A reprocessing of the PGE188 MxD28C2 for the mission period will be conducted. <br><br>
 HC_MOD_23007
 Note
 Terra Data Loss 2023.007 (01.07.23)
 On January 7th, 2023 (2023/007), a data loss occurred for TERRA MODIS (C61) during a nighttime orbit over Eastern Australia and Eastern Asia. The impacted granules are from 2023/007/09:06:40 - 007/12:40:11 inclusive. During the TDRSS contact with TDS, no S-band telemetry was being received. White Sands reported they were experiencing equipment problems and there was no chance of recovery for the contact. Despite series of data recovery attempts, the data recoveries were unsuccessful. On the scheduled contact with TDW (007/13:42:00 - 14:00:00z), the MISR buffer was disabled at AOS and was re-enabled through the PBFLEX procedure. Automation was re-enabled at 13:58:09z. A DB request was sent out for the MODIS data, and a partial recovery of the data was made. The image below shows the L1B global browse for 2023/007 where the missing data occurs.
+HC_MOD_23062
+Note
+Terra Data Loss 2023.062 (03.03.23)
+On March 3rd, 2023 (2023/062), a data loss occurred for TERRA MODIS (C61) during a daytime orbit over Central Asia. The impacted granules are from 2023/062/02:31:40 - 062/03:34:02 inclusive. During the TDRSS contact with TDE (062/03:36:00 - 03:52:43z), a high CADU delta occurred after the automated playback. The OCE ran a LAST_MODIS replay followed by an ALL_MODIS replay in an attempt to recover the MODIS data. Data gaps appeared in the continuity report for MODIS. The DB community was notified to see if the MODIS data could be recovered, and they were able to make a partial recovery. The image below shows the L1B global browse for 2023/062 where the missing data occurs.
 TM_MOD_22336
 Note
 Terra Data Loss 2022.336 (12.02.22)
