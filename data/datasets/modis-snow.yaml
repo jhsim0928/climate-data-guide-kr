@@ -350,6 +350,13 @@ transitions:
         url: https://modis-land.gsfc.nasa.gov/news.html
 
 notices:
+  - date: "2026-11-18"
+    level: critical
+    title: NSIDC DAAC, Terra 새 자료 수신 2026년 12월 1일 종료 — Terra MODIS(MOD10) 갱신 중단
+    body: >-
+      NSIDC DAAC는 Terra 위성의 새 과학 자료 전달이 2026년 12월 1일(2026/335)에 끝난다고 공지했습니다.
+      이미 보관된 과거 자료는 계속 받을 수 있지만, 갱신 자료가 필요한 연구자는 가능한 한 빨리 대체 제품으로 옮기라고 권고했습니다.
+    source: https://nsidc.org/data/user-resources/data-announcements/user-notice-new-terra-observations-cease
   - date: "2026-03-26"
     level: warning
     title: Terra MODIS 대기 모드 전환 — 2026년 3월 26~27일 자료 품질 불량
@@ -410,4 +417,4 @@ watch_urls:
   - https://modis-land.gsfc.nasa.gov/news.html
   - https://www.earthdata.nasa.gov/data/alerts-outages
 
-last_verified: "2026-10-13"
+last_verified: "2026-11-19"

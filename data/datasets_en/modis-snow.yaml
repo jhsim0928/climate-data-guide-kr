@@ -350,6 +350,14 @@ transitions:
         url: https://modis-land.gsfc.nasa.gov/news.html
 
 notices:
+  - date: "2026-11-18"
+    level: critical
+    title: "User Notice: New Terra Observations to Cease (December 1, 2026)"
+    body: >-
+      Delivery of new science data from the Terra satellite to the NASA National Snow and Ice Data Center Distributed Active Archive Center (NSIDC DAAC)
+      will cease on December 1, 2026 (2026/335). The archive of historical data will remain available, but users that rely on updated data
+      should transition to alternative products as soon as possible.
+    source: https://nsidc.org/data/user-resources/data-announcements/user-notice-new-terra-observations-cease
   - date: "2026-03-26"
     level: warning
     title: Terra MODIS placed in standby — data for 26–27 March 2026 flagged as bad
@@ -410,4 +418,4 @@ watch_urls:
   - https://modis-land.gsfc.nasa.gov/news.html
   - https://www.earthdata.nasa.gov/data/alerts-outages
 
-last_verified: "2026-10-13"
+last_verified: "2026-11-19"
