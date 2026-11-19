@@ -277,6 +277,12 @@ citations:
     알고리즘은 각 제품의 ATBD를 함께 밝히세요. GES DISC에서 받았다면 GES DISC 컬렉션을 경유했다고 적는 것이 좋습니다.
 
 notices:
+  - date: "2026-11-16"
+    level: warning
+    title: "UPAS 3.0.1 교체 뒤 NRTI O3·CLOUD 산출물 QA 값 문제 — NRTI O3는 QA 0.4 기준 권장"
+    body: >-
+      ESA는 UPAS 3.0.1 업그레이드 뒤 구름 비율이 높은 드문 경우(특히 남미·아프리카 상공) NRTI CLOUD의 QA 값이 기대보다 낮게 나올 수 있고, NRTI O3도 CLOUD QA 값을 입력으로 써서 같은 영향을 받는다고 알렸습니다. QA 값에만 해당하며 산출물 자체의 타당성에는 영향이 없다고 밝혔고, 원인을 찾아 고친 판을 시험 중입니다. 그동안 NRTI O3는 QA 기준값 0.4를 쓰라고 권고했습니다.
+    source: https://dataspace.copernicus.eu/news/2026-11-16-sentinel-5p-nrti-o3-and-cloud-products-qa-value-issue-following-upas-301-upgrade
   - date: "2026-11-12"
     level: info
     title: 2026-11-11 운영 처리기 교체 완료 — 새 버전 자료 NRTI 궤도 47046·OFFL 궤도 47001부터
@@ -369,4 +375,4 @@ watch_urls:
   - https://www.tropomi.eu/data-products/level-2-products
   - https://sentiwiki.copernicus.eu/web/s5p-products
 
-last_verified: "2026-11-13"
+last_verified: "2026-11-19"

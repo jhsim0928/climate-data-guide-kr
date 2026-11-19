@@ -284,6 +284,12 @@ citations:
     (for NO2, 10.5270/S5P-s4ljg54) and also cite each product's ATBD for the algorithm. If you obtained the data from GES DISC, say so.
 
 notices:
+  - date: "2026-11-16"
+    level: warning
+    title: "Sentinel-5P NRTI O3 and CLOUD Products: QA value issue following the UPAS 3.0.1 upgrade"
+    body: >-
+      In rare cases involving high cloud fractions, particularly over South America and Africa, QA values may be lower than expected; NRTI O3 uses the CLOUD QA value as an input and is affected as well. This issue affects the QA value only and does not affect the validity of the products. The root cause has been identified, and an updated version addressing the issue is currently being tested. Meanwhile, users are advised to use a QA threshold of 0.4 for the NRTI O3 product.
+    source: https://dataspace.copernicus.eu/news/2026-11-16-sentinel-5p-nrti-o3-and-cloud-products-qa-value-issue-following-upas-301-upgrade
   - date: "2026-11-12"
     level: info
     title: Copernicus Sentinel-5 Precursor (S5P) products improvement - operational switch (November 11, 2026)
@@ -381,4 +387,4 @@ watch_urls:
   - https://www.tropomi.eu/data-products/level-2-products
   - https://sentiwiki.copernicus.eu/web/s5p-products
 
-last_verified: "2026-11-13"
+last_verified: "2026-11-19"
