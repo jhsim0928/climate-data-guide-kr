@@ -361,6 +361,12 @@ transitions:
         url: https://ladsweb.modaps.eosdis.nasa.gov/learn/modis-to-viirs-transition
 
 notices:
+  - date: "2026-11-17"
+    level: critical
+    title: "NASA, Terra 과학 자료 수집 2026년 12월 1일 종료 발표 — Terra MODIS(MOD04·MOD08) 새 관측 중단"
+    body: >-
+      NASA는 Terra 위성이 2026년 12월 1일 과학 자료 수집을 멈추고, 남은 연료로 궤도를 낮춘 뒤 2027년 1월 모든 시스템을 끈다고 발표했습니다(2026-11-17 기사). 이후 Terra MODIS 제품(MOD04·MOD08)에는 새 관측이 더해지지 않으며, 과거 자료는 계속 무료로 제공됩니다. 앞서 알린 '2027년 2월 종료 전망'보다 앞당겨졌고, 기사는 Aqua 일정은 다루지 않았습니다.
+    source: https://science.nasa.gov/blogs/science-news/2026/11/17/nasas-terra-mission-to-end/
   - date: "2026-08-03"
     level: info
     title: LAADS Classic API 2026-08-31 폐지 — API-V2로 전환
@@ -425,4 +431,4 @@ watch_urls:
   - https://ladsweb.modaps.eosdis.nasa.gov/learn/modis-to-viirs-transition
   - https://ladsweb.modaps.eosdis.nasa.gov/missions-and-measurements/products/MOD04_L2
 
-last_verified: "2026-10-13"
+last_verified: "2026-11-19"
