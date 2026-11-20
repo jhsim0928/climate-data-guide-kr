@@ -9,7 +9,7 @@ Processor Releases
 The Instrument Processing Facilities (IPF) generate operational CryoSat Ice and Ocean data. New versions of the processing baselines are periodically released to implement improvements or fixes for issues that are detected.
 The tables below describe the changes that were implemented in the latest IPF release and in each historic release.
 Level 1 Ice Products
-The current IPF1 installed at the Kiruna payload data segment for level-1 ice products is IPF1 vP2.3 and NRT IPF1 vO1.3.
+The current IPF1 installed at the Kiruna payload data segment for level-1 ice products is IPF1 vP2.3 and NRT IPF1 VP1.4.
 Detailed information concerning the IPF1 Ice products is available in the latest version of the
 Product Format Specification document for L1B Ice Processor
 Detailed information concerning the main evolutions for the L1B Ice Processor with respect to the last IPF1 is available in the
@@ -18,6 +18,12 @@ Date
 IPF Version
 Changes to the IPF baseline
 Processor versions
+Offline: 02/11/2026
+NRT IPF1 VP1.4
+Upgrade of the CryoSat Ice NRT Processors to Baseline-F. The update of IPF1 includes the same evolutions as the Offline IPFs (below).
+NRT:
+SIR1SARNRT/8.8
+SARINNRT/8.8
 Offline: 04/07/2026
 IPF1 vP2.3
 Upgrade of the CryoSat Ice Processors to Baseline-F. This is a major SW upgrade and introduces significant evolutions to the processors with respect to Baseline-E. The update of IPF1 includes:
@@ -211,7 +217,7 @@ SIR1SAC2/3.7
 SIR1SIC2/3.6
 SIR2SIC2/3.6
 Level 2 Ice Products
-The current IPF2 installed at the Kiruna payload data segment for ice products is IPF2 vP2.2 and NRT IPF2 vO1.1.
+The current IPF2 installed at the Kiruna payload data segment for ice products is IPF2 VP2.2 and NRT IPF2 VP1.3
 Detailed information concerning the products is available in the latest version of the
 Product Format Specification document for L2 Ice Processor
 Detailed information concerning the main evolutions for the L2 Ice Processor with respect to the last IPF2 is available in the
@@ -220,6 +226,12 @@ Date
 IPF Version
 Changes to the IPF baseline
 Processor versions
+NRT: 02/11/2026
+NRT IPF2 VP1.3
+Upgrade of the CryoSat Ice NRT Processors to Baseline-F. The update of IPF2 includes the same evolutions as the Offline IPFs (below).
+NRT:
+IPF2SARNRT/8.9
+IPF2SRNNRT/8.9
 Offline: 04/07/2026
 IPF2 vP2.2
 Upgrade of the CryoSat Ice Processors to Baseline-F. This is a major SW upgrade and introduces significant evolutions to the processors with respect to Baseline-E. The update of IPF2 includes:

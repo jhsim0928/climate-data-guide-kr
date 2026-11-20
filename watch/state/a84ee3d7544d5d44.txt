@@ -39,20 +39,6 @@ Product Roadmap
 Get Inspired
 Service Commitments and Licence
 Contact Us
-[SST-1000] SST_(BS|MED)_SST_(L3S[L4)_NRT_OBSERVATIONS - Degraded data on 2026-11-18
-In progress
-2026-11-18 12:00 UTC - In progress
-Due to an upstream issue, the needed Sentinel-3A and Sentinel-3B upstream data for 2026-11-18 were not downloaded. Consequently, all L3S and L4 MED and BS night products for 2026-11-18 were produced in degraded mode (without Sentinel-3 SLSTR input).
-The CNR SST night products will remain degraded until this issue is resolved.
-Impacted products:
-SST_BS_SST_L3S_NRT_OBSERVATIONS_010_013
-SST_BS_SST_L4_NRT_OBSERVATIONS_010_006
-SST_MED_SST_L3S_NRT_OBSERVATIONS_010_012
-SST_MED_SST_L4_NRT_OBSERVATIONS_010_004
-We apologize for any inconvenience this may cause.
-If you have any question, please contact
-Copernicus Marine User Support
-Copy a link to this article
 [WND-273] WIND_GLO_PHY_L3_NRT_012_002 - FY-3E wind dataset unavailable since 2026-11-16
 In progress
 2026-11-16 00:00 UTC - In progress
@@ -670,4 +656,18 @@ To install or upgrade the Toolbox, please consult the
 Copernicus Marine Toolbox installation documentation
 If you have any questions, please
 contact the Copernicus Marine User Support
+Copy a link to this article
+[ICE-810] SEAICE_ARC_(PHY|SEAICE)_NRT - Change of upstream SIC from AMSR2 to AMSR3
+Information
+2025-10-08 10:00 UTC - Information
+The input sea ice concentration (SIC) used to identify surface type between SST and IST was switched from the AMSR2-based product (OSI-408-a,
+Global Sea-Ice Concentration (AMSR2) | OSI SAF
+) to the new AMSR3-based product (OSI-408-g,
+Sea-Ice Concentration (AMSR3) | OSI SAF
+). This changed happened from 2026-10-01 due to missing input AMSR2-based SIC and is permanent, i.e. from 2026-10-01 the new OSI SAF AMSR3-based SIC will be used.
+Impacted products:
+SEAICE_ARC_SEAICE_L4_NRT_OBSERVATIONS_011_008
+SEAICE_ARC_PHY_SST-IST_L3S_NRT_011_022
+If you have any question, please contact
+Copernicus Marine User Support
 Copy a link to this article
