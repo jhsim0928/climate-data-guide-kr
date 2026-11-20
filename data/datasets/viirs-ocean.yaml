@@ -262,6 +262,13 @@ citations:
     NASA는 실제로 쓴 산출물과 위성(Suomi NPP·NOAA-20·NOAA-21)별 데이터셋 DOI를 인용하라고 요청합니다. 처리 버전(R2022.0·2025.0, SST 2016.2·2024.0)과 NRT 여부를 함께 적으세요.
 
 notices:
+  - date: "2026-11-17"
+    level: info
+    title: NOAA-20·NOAA-21 VIIRS 자료 공백(11월 5~7일)에 따른 처리 지연 해결 (11월 17일)
+    body: >-
+      NASA Earthdata는 2026년 11월 5·6일 NOAA-20·NOAA-21, 11월 7일 NOAA-20 VIIRS 자료에 공백이 생겨 하위 산출물 처리가 늦어졌고 과학팀이 공백을 메우는 중이라고 11월 9일 알렸으며,
+      11월 17일 '해결(Resolved)'로 표시했습니다(LAADS DAAC·LP DAAC·OB.DAAC·NSIDC DAAC). 공지는 공백이 모두 메워졌는지 밝히지 않았으니, 이 기간 NOAA-20·NOAA-21 자료를 쓸 때는 결측을 확인하세요.
+    source: https://www.earthdata.nasa.gov/data/alerts-outages/jpss1-noaa-20-jpss2-noaa-21-viirs-data-gaps-processing-delays-from-november-5
   - date: "2026-11-10"
     level: info
     title: 10월 27일 VIIRS Level 0 자료 공백에 따른 처리 지연 해결 (11월 10일)
@@ -405,4 +412,4 @@ watch_urls:
   - https://oceancolor.gsfc.nasa.gov/data/reprocessing/
   - https://www.nesdis.noaa.gov/news/cessation-of-suomi-national-polar-orbiting-partnership-s-npp-data-users-onafter-november-2-2026
 
-last_verified: "2026-11-14"
+last_verified: "2026-11-20"

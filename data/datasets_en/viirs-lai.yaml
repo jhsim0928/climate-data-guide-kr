@@ -245,6 +245,13 @@ transitions:
         url: https://www.earthdata.nasa.gov/data/alerts-outages/viirs-version-1-sr-vi-lai-fpar-lst-active-fires-data-products-decommissioned
 
 notices:
+  - date: "2026-11-17"
+    level: info
+    title: "JPSS1/NOAA-20 and JPSS2/NOAA-21 VIIRS data gaps and processing delays from November 5, 2026: Resolved (November 17, 2026)"
+    body: >-
+      VIIRS data gaps on November 5 and 6, 2026 (JPSS1/NOAA-20 and JPSS2/NOAA-21) and November 7, 2026 (JPSS1/NOAA-20) caused a delay in processing data products further downstream;
+      the science team worked to fill the gaps (LAADS DAAC, LP DAAC, OB.DAAC, NSIDC DAAC). Status: Resolved Outage (Nov. 17, 2026).
+    source: https://www.earthdata.nasa.gov/data/alerts-outages/jpss1-noaa-20-jpss2-noaa-21-viirs-data-gaps-processing-delays-from-november-5
   - date: "2026-11-10"
     level: info
     title: "VIIRS Processing Delay: Resolved (November 10, 2026)"
@@ -320,4 +327,4 @@ watch_urls:
   - https://www.earthdata.nasa.gov/data/catalog/lpcloud-vj215a2h-002
   - https://landweb.modaps.eosdis.nasa.gov/knownissue
 
-last_verified: "2026-11-14"
+last_verified: "2026-11-20"
