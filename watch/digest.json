@@ -1,20 +1,38 @@
 {
   "date": "2026-11-21",
-  "reviewed_at": "2026-11-21T08:17:31+09:00",
-  "summary": "공지 페이지 276곳 중 37곳이 바뀌었으나 새 공지 후보는 올리지 않았습니다. NSIDC MODIS Version 7 공개와 SMAP 처리 중단 일정 변경은 원문을 열지 못해 운영자 확인 필요로 남겼고, WebFetch가 막혀 Earthdata·MERRA-2·CERA-20C 직접 확인을 하지 못했습니다.",
+  "reviewed_at": "2026-11-21T12:56:00+09:00",
+  "summary": "공지 페이지 276곳 중 37곳이 바뀌었습니다. 낮 직접 확인(12:50)에서 NSIDC MODIS Version 7 공개 원문을 열어 MODIS 적설 공지 후보 1건을 올렸습니다. Earthdata·MERRA-2·CERA-20C·GES DISC에는 사이트에 없는 새 공지가 없었습니다.",
   "watch": {
     "date": "2026-11-21",
     "checked": 276,
     "ok": 231,
     "changed": 37
   },
-  "candidates": [],
-  "pr": null,
+  "candidates": [
+    {
+      "dataset": "MODIS Snow (MOD10)",
+      "dataset_id": "modis-snow",
+      "level": "warning",
+      "date": "2026-11-19",
+      "title": "NSIDC DAAC, MODIS 적설 Version 7(Collection 7) 공개 — Version 61은 앞으로 몇 달 안에 폐기",
+      "source": "https://nsidc.org/data/user-resources/data-announcements/new-versions-released-moderate-resolution-imaging-spectroradiometer-modis-version-7",
+      "why": "사이트가 안내하는 Version 61(8일·월 제품 제외)이 몇 달 안에 받을 수 없게 되어 Version 7로 옮길 준비가 필요합니다."
+    }
+  ],
+  "pr": {
+    "url": "https://github.com/jhsim0928/climate-data-guide-kr/pull/38",
+    "number": 38
+  },
   "pending": [
     {
       "url": "https://github.com/jhsim0928/climate-data-guide-kr/pull/37",
       "title": "공지 후보 2026-11-20: VIIRS 8종 NOAA-20·21 자료 공백 처리 지연 해결",
       "opened": "2026-11-20"
+    },
+    {
+      "url": "https://github.com/jhsim0928/climate-data-guide-kr/pull/38",
+      "title": "공지 후보 2026-11-21: MODIS 적설 Version 7 공개·Version 61 폐기 예정",
+      "opened": "2026-11-21"
     }
   ],
   "ignored": [
@@ -279,14 +297,6 @@
     },
     {
       "datasets": [
-        "cera20c"
-      ],
-      "url": "https://www.ecmwf.int/en/forecasts/datasets/reanalysis-datasets/cera-20c",
-      "error": "HTTP 401 / HTTP 401 (브라우저) / WebFetch 직접 확인도 실패(권한 요청 시간 초과)",
-      "fails": 46
-    },
-    {
-      "datasets": [
         "cryosat2-sit"
       ],
       "url": "https://spaces.awi.de/pages/viewrecentblogposts.action?key=SIRAL",
@@ -329,21 +339,6 @@
     },
     {
       "datasets": [
-        "gldas",
-        "imerg",
-        "modis-albedo",
-        "modis-burned-area",
-        "modis-landcover",
-        "modis-snow",
-        "viirs-albedo",
-        "viirs-burned-area"
-      ],
-      "url": "https://www.earthdata.nasa.gov/data/alerts-outages",
-      "error": "HTTP 403 / HTTP 403 (브라우저) / WebFetch 직접 확인도 실패(권한 요청 시간 초과)",
-      "fails": 46
-    },
-    {
-      "datasets": [
         "goci",
         "modis-ocean",
         "viirs-ocean"
@@ -359,14 +354,6 @@
       "url": "https://gosat-gw.nies.go.jp/en/news/",
       "error": "HTTP 404 / HTTP 404 (브라우저)",
       "fails": 39
-    },
-    {
-      "datasets": [
-        "merra2"
-      ],
-      "url": "https://www.earthdata.nasa.gov/data/projects/merra-2/news",
-      "error": "HTTP 403 / HTTP 403 (브라우저) / WebFetch 직접 확인도 실패(권한 요청 시간 초과)",
-      "fails": 46
     },
     {
       "datasets": [
@@ -502,10 +489,10 @@
     }
   ],
   "notes": [
-    "직접 확인 실패: 이번 실행에서는 WebFetch가 모든 주소에서 '권한 요청 시간 초과'로 거절되어 Earthdata 공지 목록·MERRA-2 뉴스·CERA-20C·GES DISC API(https://disc.gsfc.nasa.gov/api/alerts?page=1&size=10)·NSIDC 페이지를 열지 못했습니다. 이 주소들은 errors에 그대로 두었습니다. 낮에 직접 확인을 다시 돌리거나 브라우저로 확인해 주세요.",
-    "운영자 확인 필요: NSIDC DAAC 'New versions released: Moderate Resolution Imaging Spectroradiometer (MODIS), Version 7'(2026-11-20) — Terra·Aqua MODIS 적설·해빙 자료 Version 7(Collection 7) 공개, Version 61 재처리와 같은 알고리즘이라고 함. modis-snow 공지 후보(info)로 보이나 개별 원문을 열지 못해 올리지 않았습니다(V6.1 종료 여부·제품 목록 미확인). https://nsidc.org/data/user-resources/data-announcements",
-    "운영자 확인 필요: SMAP 전방 처리 중단 일정 변경 — NSIDC가 '2026-12-01 12:00 MT 중단, 12-02 15:00 MT 재개 예정'으로 고쳤습니다(기존 문구는 12-01~12-03, '더 길어질 수 있음' 문구 삭제). 사이트 smap 공지(2026-11-18, 제목 '2026-12-01~12-03 예정')의 기간 수정이 필요해 보입니다. https://nsidc.org/data/spl3smp",
+    "직접 확인(12:50): WebFetch로 Earthdata 공지 목록·MERRA-2 뉴스·CERA-20C·GES DISC API(size=40)·NSIDC 페이지를 열었습니다(errors에서 뺌). 11/14 이후 Earthdata 글은 'New Terra Observations to Cease on December 1, 2026'(11/17, 이미 MISR·MODIS 7종·적설 공지 있음), 'SWOT Version D Reprocessing Complete; Version C to be Retired'(11/16, 이미 swot 공지 있음), 'MEaSUREs CAMEL Version 3 2024·2025년 공개'(11/17, 사이트 자료 아님)뿐이었습니다. VIIRS·MODIS·GLDAS·IMERG·LAADS·LP DAAC·OB.DAAC 관련 새 글 없음. MERRA-2 뉴스·CERA-20C·GES DISC(최신 11/12, 모두 이미 본 글)도 새 공지 없음.",
+    "해결: NSIDC MODIS Version 7 공개(2026-11-19, 오전에는 11-20으로 적었으나 원문 발행일은 11-19) 개별 원문을 열어 modis-snow 공지 후보(warning)로 PR #38에 올렸습니다. Version 61 폐기는 '앞으로 몇 달 안'이며 날짜 미발표. 머지 뒤 modis-snow의 full_name·설명·인용을 Version 7 기준으로 고쳐야 합니다.",
+    "운영자 확인 필요: SMAP 처리 중단 일정 — 새벽 감지 사본(watch/state)에는 '12-01 12:00 MT 중단, 12-02 15:00 MT 재개 예정'으로 바뀌었는데, 낮에 WebFetch로 연 https://nsidc.org/data/spl3smp 에는 기존 문구('12-01부터, 12-03 재개 예정, 더 길어질 수 있음')가 그대로 보였습니다. 원문이 엇갈려 사이트 smap 공지(2026-11-18)는 고치지 않았습니다. 브라우저로 확인해 주세요.",
     "NSIDC 공지 목록의 다른 새 글(MEaSUREs ATMS 강수 상·강수율 V1, SnowEx20 SWESARR V1 공개)은 사이트 자료가 아니라 공지로 보지 않았습니다.",
-    "운영자 확인 필요(계속): CryoSat 자료 ESA MAAP 이전 원문 미확인(cryosat2-sit). https://earth.esa.int/eogateway/catalog/cryosat-products"
+    "CryoSat MAAP 이전: 낮에 https://earth.esa.int/eogateway/catalog/cryosat-products 를 열었으나 MAAP 이전 안내는 없었습니다(현재 접근 경로 CS2EO·ESA 배포 서비스·FTPS·VtCryoSat). 공지로 보지 않았습니다."
   ]
 }
