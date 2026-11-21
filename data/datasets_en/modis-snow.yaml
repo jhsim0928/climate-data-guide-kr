@@ -350,6 +350,14 @@ transitions:
         url: https://modis-land.gsfc.nasa.gov/news.html
 
 notices:
+  - date: "2026-11-19"
+    level: warning
+    title: "New versions released: MODIS Version 7 snow and sea ice products at NSIDC DAAC (Version 61 to be retired)"
+    body: >-
+      Version 7 (Collection 7) MODIS snow cover and sea ice data sets from Terra and Aqua are now available at NSIDC DAAC in HDF5 format.
+      They are derived using the same science algorithm used in MODIS Version 61 reprocessing; differences come from changes to the input L1B calibration (new land/water mask, updated geolocation LUTs).
+      MOD10A2, MOD10C2, MOD10CM, MYD10A2, MYD10C2 and MYD10CM remain at Version 61; Version 61 of the remaining data sets will be retired from the NSIDC DAAC in the coming months (no date announced).
+    source: https://nsidc.org/data/user-resources/data-announcements/new-versions-released-moderate-resolution-imaging-spectroradiometer-modis-version-7
   - date: "2026-11-18"
     level: critical
     title: "User Notice: New Terra Observations to Cease (December 1, 2026)"
@@ -418,4 +426,4 @@ watch_urls:
   - https://modis-land.gsfc.nasa.gov/news.html
   - https://www.earthdata.nasa.gov/data/alerts-outages
 
-last_verified: "2026-11-19"
+last_verified: "2026-11-21"

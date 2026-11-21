@@ -350,6 +350,13 @@ transitions:
         url: https://modis-land.gsfc.nasa.gov/news.html
 
 notices:
+  - date: "2026-11-19"
+    level: warning
+    title: NSIDC DAAC, MODIS 적설 Version 7(Collection 7) 공개 — Version 61은 앞으로 몇 달 안에 폐기
+    body: >-
+      NSIDC DAAC가 Terra·Aqua MODIS 적설·해빙 자료 Version 7을 공개했습니다(HDF5 형식, Terra 2000-02-24·Aqua 2002-07-04부터). 과학 알고리즘은 Version 61 재처리와 같고, 차이는 입력 L1B 보정(새 육지/수역 마스크, 지리위치 보정표 갱신)에서 옵니다.
+      8일·월 제품(MOD10A2·MOD10C2·MOD10CM·MYD10A2·MYD10C2·MYD10CM)은 Version 7이 없이 Version 61로 남고, 나머지 Version 61 자료는 앞으로 몇 달 안에 NSIDC DAAC에서 폐기(받기 불가)될 예정이라 Version 7로 옮길 준비가 필요합니다(폐기 날짜는 미발표).
+    source: https://nsidc.org/data/user-resources/data-announcements/new-versions-released-moderate-resolution-imaging-spectroradiometer-modis-version-7
   - date: "2026-11-18"
     level: critical
     title: NSIDC DAAC, Terra 새 자료 수신 2026년 12월 1일 종료 — Terra MODIS(MOD10) 갱신 중단
@@ -417,4 +424,4 @@ watch_urls:
   - https://modis-land.gsfc.nasa.gov/news.html
   - https://www.earthdata.nasa.gov/data/alerts-outages
 
-last_verified: "2026-11-19"
+last_verified: "2026-11-21"
