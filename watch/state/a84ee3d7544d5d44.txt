@@ -39,6 +39,18 @@ Product Roadmap
 Get Inspired
 Service Commitments and Licence
 Contact Us
+[SST-1002] SST_(ATL|GLO)_(PHY|SST)_(L3S|L4)_NRT - degraded data since 2026-11-19
+In progress
+2026-11-20 12:00 UTC - In progress
+Due to an upstream data issue affecting AMSR2 data, the following products are delivered with degraded quality since 2026-11-19:
+SST_ATL_PHY_L3S_NRT_010_037
+SST_ATL_SST_L4_NRT_OBSERVATIONS_010_025
+SST_GLO_PHY_L4_NRT_010_043
+SST_GLO_SST_L3S_NRT_OBSERVATIONS_010_010
+We apologize for any inconvenience this may cause.
+If you have any question, please contact
+Copernicus Marine User Support
+Copy a link to this article
 [WND-273] WIND_GLO_PHY_L3_NRT_012_002 - FY-3E wind dataset unavailable since 2026-11-16
 In progress
 2026-11-16 00:00 UTC - In progress
@@ -108,17 +120,6 @@ The upstream maintenance is not over and therefore production has not resumed.
 2026-10-19 05:00 UTC - In progress
 Due to a server maintenance, some upstream data is not available from 2026-10-19 to 2026-10-23 for sea ice and iceberg products:
 As a result, their production is interrupted.
-We apologize for any inconvenience this may cause.
-If you have any question, please contact
-Copernicus Marine User Support
-Copy a link to this article
-[GLO-1079] GLOBAL_MULTIYEAR_(BGC|PHY|WAV) - Regular interim updates delayed
-In progress
-2026-11-15 12:00 UTC - In progress
-Due to a technical issue, the regular interim updates (=data uploaded between the scheduled yearly MY updates) are delayed for the following products:
-GLOBAL_MULTIYEAR_PHY_001_030
-GLOBAL_MULTIYEAR_BGC_001_029
-GLOBAL_MULTIYEAR_WAV_001_032
 We apologize for any inconvenience this may cause.
 If you have any question, please contact
 Copernicus Marine User Support
@@ -226,6 +227,15 @@ WAVE_GLO_PHY_SPC_L3_MY_014_006
 dataset-wav-sar-l3-spc-rep-global-s1b
 INSITU_GLO_BGC_DISCRETE_MY_013_046
 cmems_obs-ins_glo_bgc_my_easybgc_irr
+If you have any question, please contact
+Copernicus Marine User Support
+Copy a link to this article
+[OC-1126] OCEANCOLOUR_(ARC|BAL|BLK|IBI|MED|NWS)_BGC_HR_L3_NRT - missing or degraded data from 2026-11-17 to 2026-11-19
+Anomaly
+2026-11-23 11:00 UTC - Anomaly
+Due to an onboard issue on Sentinel-2C from 2026-11-17 to 2026-11-19, some upstream data was lost, impacting L3 daily HR-OC products which are degraded or missing for those days.
+The following products are affected:
+We apologize for any inconvenience this may cause.
 If you have any question, please contact
 Copernicus Marine User Support
 Copy a link to this article
@@ -656,18 +666,4 @@ To install or upgrade the Toolbox, please consult the
 Copernicus Marine Toolbox installation documentation
 If you have any questions, please
 contact the Copernicus Marine User Support
-Copy a link to this article
-[ICE-810] SEAICE_ARC_(PHY|SEAICE)_NRT - Change of upstream SIC from AMSR2 to AMSR3
-Information
-2025-10-08 10:00 UTC - Information
-The input sea ice concentration (SIC) used to identify surface type between SST and IST was switched from the AMSR2-based product (OSI-408-a,
-Global Sea-Ice Concentration (AMSR2) | OSI SAF
-) to the new AMSR3-based product (OSI-408-g,
-Sea-Ice Concentration (AMSR3) | OSI SAF
-). This changed happened from 2026-10-01 due to missing input AMSR2-based SIC and is permanent, i.e. from 2026-10-01 the new OSI SAF AMSR3-based SIC will be used.
-Impacted products:
-SEAICE_ARC_SEAICE_L4_NRT_OBSERVATIONS_011_008
-SEAICE_ARC_PHY_SST-IST_L3S_NRT_011_022
-If you have any question, please contact
-Copernicus Marine User Support
 Copy a link to this article
