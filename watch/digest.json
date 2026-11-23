@@ -1,41 +1,56 @@
 {
-  "date": "2026-11-23",
-  "reviewed_at": "2026-11-23T08:16:54+09:00",
-  "summary": "공지 페이지 276곳 중 18곳이 바뀌었지만 모두 표시 변화로 보아 새 공지 후보는 없습니다. 다만 이번 실행에서는 웹 페이지 직접 열기(WebFetch)가 권한 요청 무응답으로 막혀 NASA Earthdata·MERRA-2·CERA-20C·GES DISC 직접 확인을 하지 못했습니다. 낮 12:50 직접 확인도 같은 이유(권한 요청 무응답)로 막혀 미확인 상태가 이어집니다.",
+  "date": "2026-11-24",
+  "reviewed_at": "2026-11-24T08:17:08+09:00",
+  "summary": "공지 페이지 276곳 중 29곳이 바뀌었지만 모두 표시 변화이거나 사이트 자료와 무관한 글이라 새 공지 후보는 없습니다. 이번 실행에서도 웹 페이지 직접 열기(WebFetch)가 권한 요청 무응답으로 막혀 NASA Earthdata·MERRA-2·CERA-20C·GES DISC 직접 확인을 하지 못했습니다.",
   "watch": {
-    "date": "2026-11-23",
+    "date": "2026-11-24",
     "checked": 276,
-    "ok": 242,
-    "changed": 18
+    "ok": 236,
+    "changed": 29
   },
   "candidates": [],
   "pr": null,
   "pending": [
     {
-      "url": "https://github.com/jhsim0928/climate-data-guide-kr/pull/37",
-      "title": "공지 후보 2026-11-20: VIIRS 8종 NOAA-20·21 자료 공백 처리 지연 해결",
-      "opened": "2026-11-20"
-    },
-    {
       "url": "https://github.com/jhsim0928/climate-data-guide-kr/pull/38",
       "title": "공지 후보 2026-11-21: MODIS 적설 Version 7 공개·Version 61 폐기 예정",
       "opened": "2026-11-21"
+    },
+    {
+      "url": "https://github.com/jhsim0928/climate-data-guide-kr/pull/37",
+      "title": "공지 후보 2026-11-20: VIIRS 8종 NOAA-20·21 자료 공백 처리 지연 해결",
+      "opened": "2026-11-20"
     }
   ],
   "ignored": [
     {
       "datasets": [
+        "airs"
+      ],
+      "url": "https://aqua.nasa.gov/",
+      "reason": "NASA 사이트 공통 뉴스 목록(Europa Clipper·Webb 등)만 바뀜 — 해당 자료 공지 아님"
+    },
+    {
+      "datasets": [
         "ascat"
       ],
       "url": "https://scatterometer.knmi.nl/ascat_b_osi_25_prod/",
-      "reason": "제품 페이지의 갱신 시각 표시만 바뀜"
+      "reason": "'Updated @' 갱신 시각 표시만 바뀜"
     },
     {
       "datasets": [
         "ascat"
       ],
       "url": "https://scatterometer.knmi.nl/ascat_c_osi_25_prod/",
-      "reason": "제품 페이지의 갱신 시각 표시만 바뀜"
+      "reason": "'Updated @' 갱신 시각 표시만 바뀜"
+    },
+    {
+      "datasets": [
+        "aura-mls",
+        "omi"
+      ],
+      "url": "https://science.nasa.gov/mission/aura/",
+      "reason": "NASA 사이트 공통 뉴스 목록(Europa Clipper·Webb 등)만 바뀜 — 해당 자료 공지 아님"
     },
     {
       "datasets": [
@@ -46,94 +61,163 @@
     },
     {
       "datasets": [
+        "calipso"
+      ],
+      "url": "https://science.nasa.gov/mission/calipso/",
+      "reason": "NASA 사이트 공통 뉴스 목록(Europa Clipper·Webb 등)만 바뀜 — 해당 자료 공지 아님"
+    },
+    {
+      "datasets": [
         "cfsr-cfsv2"
       ],
       "url": "https://gdex.ucar.edu/datasets/d094000/",
-      "reason": "자료 기간 끝 날짜·용량 표시만 진행(정상 갱신)"
+      "reason": "자료 기간 끝 날짜·용량 표시가 매일 갱신된 것(정상 갱신)"
+    },
+    {
+      "datasets": [
+        "cgls-lai"
+      ],
+      "url": "https://land.copernicus.eu/en/production-updates",
+      "reason": "새 글 'Degraded coverage of Global Hourly Land Surface Temperature product between 7th and 14th December 2026'은 전지구 시간별 지표면온도(LST) 제품 공지로, 사이트의 CGLS LAI·FAPAR·FCover와 무관(사이트에 CGLS LST 자료 없음)"
     },
     {
       "datasets": [
         "cobe-sst3"
       ],
       "url": "https://climatedataguide.ucar.edu/climate-data/sst-data-cobev3-centennial-situ-observation-based-estimates-version-3",
-      "reason": "페이지 날짜 표시만 바뀜"
+      "reason": "페이지 갱신 날짜 표시만 바뀜"
+    },
+    {
+      "datasets": [
+        "duacs",
+        "glorys12",
+        "nextsim",
+        "ostia",
+        "topaz4b"
+      ],
+      "url": "https://marine.copernicus.eu/user-corner/user-notification-service",
+      "reason": "새 공지 SST-1002(AMSR2 문제로 SST_ATL_PHY_L3S_NRT_010_037·SST_ATL_SST_L4_NRT_010_025·SST_GLO_PHY_L4_NRT_010_043·SST_GLO_SST_L3S_NRT_010_010 품질 저하)와 OC-1126(유럽 지역 해색 HR L3 NRT)은 사이트 자료(OSTIA 010_001·DUACS·GLORYS12·neXtSIM·TOPAZ4b) 제품이 아님 — 사본(watch/state)으로 제품 목록 확인"
     },
     {
       "datasets": [
         "ecco-v4"
       ],
       "url": "https://mailman.mit.edu/pipermail/ecco-support/",
-      "reason": "메일링 목록 보관함에 2026년 11월 항목이 새로 생김(내용 미확인, notes 참고)"
+      "reason": "11월 보관함 크기 표시가 바뀜(새 메일 있음) — 내용 미확인, notes 참고"
+    },
+    {
+      "datasets": [
+        "era6",
+        "oras5",
+        "oras6"
+      ],
+      "url": "https://www.ecmwf.int/en/about/media-centre/news",
+      "reason": "ECMWF 직원 파견 소개 기사 — 자료 공지 아님"
+    },
+    {
+      "datasets": [
+        "gimms-ndvi"
+      ],
+      "url": "https://zenodo.org/records/8253971",
+      "reason": "조회·다운로드 통계 숫자만 바뀜"
     },
     {
       "datasets": [
         "icesat2-sit"
       ],
       "url": "https://nsidc.org/data/is2sitmogr4/versions/4",
-      "reason": "인용문의 접속 날짜(Date Accessed) 표시만 바뀜"
+      "reason": "인용문의 접속일(Date Accessed) 표시만 바뀜"
     },
     {
       "datasets": [
         "icesat2-sit"
       ],
       "url": "https://nsidc.org/data/atl20/versions/5",
-      "reason": "인용문의 접속 날짜(Date Accessed) 표시만 바뀜"
+      "reason": "인용문의 접속일(Date Accessed) 표시만 바뀜"
     },
     {
       "datasets": [
         "icesat2-sit"
       ],
       "url": "https://nsidc.org/data/atl10/versions/7",
-      "reason": "인용문의 접속 날짜(Date Accessed) 표시만 바뀜"
+      "reason": "인용문의 접속일(Date Accessed) 표시만 바뀜"
     },
     {
       "datasets": [
         "its-live"
       ],
       "url": "https://nsidc.org/data/nsidc-0776/versions/2",
-      "reason": "인용문의 접속 날짜(Date Accessed) 표시만 바뀜"
+      "reason": "인용문의 접속일(Date Accessed) 표시만 바뀜"
     },
     {
       "datasets": [
         "merra2"
       ],
       "url": "https://gmao.gsfc.nasa.gov/operations/status.php",
-      "reason": "GMAO 운영 상태 표의 처리 날짜만 진행(MERRA-2는 Nominal)"
+      "reason": "운영 상태 표의 최근 실행 시각만 바뀜"
+    },
+    {
+      "datasets": [
+        "misr"
+      ],
+      "url": "https://science.nasa.gov/science-research/earth-science/terra-the-end-of-an-era",
+      "reason": "NASA 사이트 공통 뉴스 목록(Europa Clipper·Webb 등)만 바뀜 — 해당 자료 공지 아님"
+    },
+    {
+      "datasets": [
+        "modis-albedo"
+      ],
+      "url": "https://aqua.nasa.gov/announcements/aqua-status",
+      "reason": "NASA 사이트 공통 뉴스 목록(Europa Clipper·Webb 등)만 바뀜 — 해당 자료 공지 아님"
     },
     {
       "datasets": [
         "nsidc-cdr-sic"
       ],
       "url": "https://nsidc.org/data/g02202/versions/6",
-      "reason": "인용문의 접속 날짜(Date Accessed) 표시만 바뀜"
+      "reason": "인용문의 접속일(Date Accessed) 표시만 바뀜"
+    },
+    {
+      "datasets": [
+        "oco2"
+      ],
+      "url": "https://science.nasa.gov/mission/oco-2/",
+      "reason": "NASA 사이트 공통 뉴스 목록(Europa Clipper·Webb 등)만 바뀜 — 해당 자료 공지 아님"
+    },
+    {
+      "datasets": [
+        "omi"
+      ],
+      "url": "https://science.nasa.gov/missions/potential-evolution-of-the-aura-mission/",
+      "reason": "NASA 사이트 공통 뉴스 목록(Europa Clipper·Webb 등)만 바뀜 — 해당 자료 공지 아님"
     },
     {
       "datasets": [
         "polar-pathfinder-motion"
       ],
       "url": "https://nsidc.org/data/nsidc-0116/versions/4",
-      "reason": "인용문의 접속 날짜(Date Accessed) 표시만 바뀜"
+      "reason": "인용문의 접속일(Date Accessed) 표시만 바뀜"
     },
     {
       "datasets": [
         "polar-pathfinder-motion"
       ],
       "url": "https://nsidc.org/data/nsidc-0748/versions/1",
-      "reason": "인용문의 접속 날짜(Date Accessed) 표시만 바뀜"
+      "reason": "인용문의 접속일(Date Accessed) 표시만 바뀜"
     },
     {
       "datasets": [
         "sea-ice-index"
       ],
       "url": "https://nsidc.org/data/g02135/versions/4",
-      "reason": "인용문의 접속 날짜(Date Accessed) 표시만 바뀜"
+      "reason": "인용문의 접속일(Date Accessed) 표시만 바뀜"
     },
     {
       "datasets": [
         "smap"
       ],
       "url": "https://nsidc.org/data/spl3smp",
-      "reason": "인용문의 접속 날짜(Date Accessed) 표시만 바뀜"
+      "reason": "인용문의 접속일(Date Accessed) 표시만 바뀜"
     },
     {
       "datasets": [
@@ -147,7 +231,7 @@
         "viirs-snow"
       ],
       "url": "https://nsidc.org/data/vnp10a1/versions/2",
-      "reason": "인용문의 접속 날짜(Date Accessed) 표시만 바뀜"
+      "reason": "인용문의 접속일(Date Accessed) 표시만 바뀜"
     }
   ],
   "errors": [
@@ -158,7 +242,7 @@
         "gsmap"
       ],
       "error": "HTTP 503",
-      "fails": 4,
+      "fails": 5,
       "last_ok": "2026-11-19"
     },
     {
@@ -167,7 +251,7 @@
         "calipso"
       ],
       "error": "HTTP 403 / HTTP 403 (브라우저)",
-      "fails": 41,
+      "fails": 42,
       "last_ok": null
     },
     {
@@ -176,7 +260,7 @@
         "cera20c"
       ],
       "error": "HTTP 401 / HTTP 401 (브라우저)",
-      "fails": 48,
+      "fails": 49,
       "last_ok": null
     },
     {
@@ -185,7 +269,7 @@
         "cryosat2-sit"
       ],
       "error": "ConnectTimeout: HTTPSConnectionPool(host='spaces.awi.de', port=443): Max retries exceeded with url: /pages/viewrecentblogposts.action?key=SIRAL (Caused by ConnectTimeoutError(<HTTPSConnection(host='spaces.awi.de', po",
-      "fails": 5,
+      "fails": 6,
       "last_ok": "2026-11-18"
     },
     {
@@ -195,8 +279,8 @@
         "cs3smos",
         "smos-sit"
       ],
-      "error": "ConnectTimeout: HTTPSConnectionPool(host='spaces.awi.de', port=443): Max retries exceeded with url: /spaces/CS2SMOS/overview (Caused by ConnectTimeoutError(<HTTPSConnection(host='spaces.awi.de', port=443) at 0x7adbf4",
-      "fails": 5,
+      "error": "ConnectTimeout: HTTPSConnectionPool(host='spaces.awi.de', port=443): Max retries exceeded with url: /spaces/CS2SMOS/overview (Caused by ConnectTimeoutError(<HTTPSConnection(host='spaces.awi.de', port=443) at 0x74979c",
+      "fails": 6,
       "last_ok": "2026-11-18"
     },
     {
@@ -205,7 +289,7 @@
         "cs3smos"
       ],
       "error": "ConnectTimeout: HTTPSConnectionPool(host='spaces.awi.de', port=443): Max retries exceeded with url: /spaces/CS2SMOS/pages/297634429/CryoSat-2+Sentinel-3+SMOS+Merged+Sea+Ice+Thickness (Caused by ConnectTimeoutError(<H",
-      "fails": 5,
+      "fails": 6,
       "last_ok": "2026-11-18"
     },
     {
@@ -214,7 +298,7 @@
         "earthcare"
       ],
       "error": "HTTP 404 / HTTP 404 (브라우저)",
-      "fails": 3,
+      "fails": 4,
       "last_ok": "2026-11-20"
     },
     {
@@ -225,8 +309,8 @@
         "smap-sss",
         "swot"
       ],
-      "error": "ReadTimeout: HTTPSConnectionPool(host='podaac.jpl.nasa.gov', port=443): Read timed out. (read timeout=40)",
-      "fails": 3,
+      "error": "ConnectTimeout: HTTPSConnectionPool(host='podaac.jpl.nasa.gov', port=443): Max retries exceeded with url: /announcements (Caused by ConnectTimeoutError(<HTTPSConnection(host='podaac.jpl.nasa.gov', port=443) at 0x7497",
+      "fails": 4,
       "last_ok": "2026-11-20"
     },
     {
@@ -234,8 +318,8 @@
       "datasets": [
         "ghrsst-mur"
       ],
-      "error": "ReadTimeout: HTTPSConnectionPool(host='podaac.jpl.nasa.gov', port=443): Read timed out. (read timeout=40)",
-      "fails": 3,
+      "error": "ConnectTimeout: HTTPSConnectionPool(host='podaac.jpl.nasa.gov', port=443): Max retries exceeded with url: /dataset/MUR-JPL-L4-GLOB-v4.1 (Caused by ConnectTimeoutError(<HTTPSConnection(host='podaac.jpl.nasa.gov', port",
+      "fails": 4,
       "last_ok": "2026-11-20"
     },
     {
@@ -244,7 +328,7 @@
         "gimms-ndvi"
       ],
       "error": "HTTP 403 / HTTP 403 (브라우저)",
-      "fails": 41,
+      "fails": 42,
       "last_ok": null
     },
     {
@@ -253,7 +337,7 @@
         "gk2a"
       ],
       "error": "브라우저로도 본문이 비어 있음",
-      "fails": 41,
+      "fails": 42,
       "last_ok": null
     },
     {
@@ -269,7 +353,7 @@
         "viirs-burned-area"
       ],
       "error": "HTTP 403 / HTTP 403 (브라우저)",
-      "fails": 48,
+      "fails": 49,
       "last_ok": null
     },
     {
@@ -280,7 +364,7 @@
         "viirs-ocean"
       ],
       "error": "HTTP 403 / HTTP 403 (브라우저)",
-      "fails": 41,
+      "fails": 42,
       "last_ok": null
     },
     {
@@ -289,7 +373,7 @@
         "gosat"
       ],
       "error": "HTTP 404 / HTTP 404 (브라우저)",
-      "fails": 3,
+      "fails": 4,
       "last_ok": "2026-11-20"
     },
     {
@@ -298,7 +382,7 @@
         "gosat"
       ],
       "error": "HTTP 404 / HTTP 404 (브라우저)",
-      "fails": 41,
+      "fails": 42,
       "last_ok": null
     },
     {
@@ -307,7 +391,7 @@
         "gsmap"
       ],
       "error": "HTTP 404 / HTTP 404 (브라우저)",
-      "fails": 3,
+      "fails": 4,
       "last_ok": "2026-11-20"
     },
     {
@@ -316,7 +400,7 @@
         "gsmap"
       ],
       "error": "HTTP 404 / HTTP 404 (브라우저)",
-      "fails": 3,
+      "fails": 4,
       "last_ok": "2026-11-20"
     },
     {
@@ -325,7 +409,7 @@
         "merra2"
       ],
       "error": "HTTP 403 / HTTP 403 (브라우저)",
-      "fails": 48,
+      "fails": 49,
       "last_ok": null
     },
     {
@@ -334,7 +418,7 @@
         "misr"
       ],
       "error": "HTTP 403 / HTTP 403 (브라우저)",
-      "fails": 41,
+      "fails": 42,
       "last_ok": null
     },
     {
@@ -343,7 +427,7 @@
         "modis-burned-area"
       ],
       "error": "HTTP 403 / HTTP 403 (브라우저)",
-      "fails": 41,
+      "fails": 42,
       "last_ok": null
     },
     {
@@ -352,7 +436,7 @@
         "modis-et"
       ],
       "error": "HTTP 403 / HTTP 403 (브라우저)",
-      "fails": 41,
+      "fails": 42,
       "last_ok": null
     },
     {
@@ -362,7 +446,7 @@
         "modis-vi"
       ],
       "error": "HTTP 403 / HTTP 403 (브라우저)",
-      "fails": 41,
+      "fails": 42,
       "last_ok": null
     },
     {
@@ -371,7 +455,7 @@
         "modis-landcover"
       ],
       "error": "HTTP 403 / HTTP 403 (브라우저)",
-      "fails": 41,
+      "fails": 42,
       "last_ok": null
     },
     {
@@ -380,7 +464,7 @@
         "modis-lst"
       ],
       "error": "HTTP 403 / HTTP 403 (브라우저)",
-      "fails": 41,
+      "fails": 42,
       "last_ok": null
     },
     {
@@ -390,7 +474,7 @@
         "pace-oci"
       ],
       "error": "HTTP 403 / HTTP 403 (브라우저)",
-      "fails": 41,
+      "fails": 42,
       "last_ok": null
     },
     {
@@ -399,7 +483,7 @@
         "swot"
       ],
       "error": "ReadTimeout: HTTPSConnectionPool(host='podaac.jpl.nasa.gov', port=443): Read timed out. (read timeout=40)",
-      "fails": 3,
+      "fails": 4,
       "last_ok": "2026-11-20"
     },
     {
@@ -408,7 +492,7 @@
         "tropomi"
       ],
       "error": "HTTP 404 / HTTP 404 (브라우저)",
-      "fails": 41,
+      "fails": 42,
       "last_ok": null
     },
     {
@@ -417,7 +501,7 @@
         "viirs-albedo"
       ],
       "error": "HTTP 403 / HTTP 403 (브라우저)",
-      "fails": 41,
+      "fails": 42,
       "last_ok": null
     },
     {
@@ -426,7 +510,7 @@
         "viirs-burned-area"
       ],
       "error": "HTTP 403 / HTTP 403 (브라우저)",
-      "fails": 41,
+      "fails": 42,
       "last_ok": null
     },
     {
@@ -437,7 +521,7 @@
         "viirs-vi"
       ],
       "error": "HTTP 403 / HTTP 403 (브라우저)",
-      "fails": 41,
+      "fails": 42,
       "last_ok": null
     },
     {
@@ -446,7 +530,7 @@
         "viirs-lai"
       ],
       "error": "HTTP 403 / HTTP 403 (브라우저)",
-      "fails": 41,
+      "fails": 42,
       "last_ok": null
     },
     {
@@ -455,7 +539,7 @@
         "viirs-lst"
       ],
       "error": "HTTP 403 / HTTP 403 (브라우저)",
-      "fails": 41,
+      "fails": 42,
       "last_ok": null
     },
     {
@@ -464,7 +548,7 @@
         "viirs-lst"
       ],
       "error": "HTTP 403 / HTTP 403 (브라우저)",
-      "fails": 41,
+      "fails": 42,
       "last_ok": null
     },
     {
@@ -473,18 +557,18 @@
         "viirs-vi"
       ],
       "error": "HTTP 403 / HTTP 403 (브라우저)",
-      "fails": 41,
+      "fails": 42,
       "last_ok": null
     }
   ],
   "notes": [
-    "낮 직접 확인(12:56): WebFetch가 다시 권한 요청 무응답(PROVENANCE_REQUIRED)으로 막혀 Earthdata 공지 목록·MERRA-2 뉴스·CERA-20C·GES DISC 공지 API·ECCO 메일링 목록을 모두 열지 못했습니다. 아래 '운영자 확인 필요' 항목은 그대로 유효하며, 해당 주소는 errors에 남겼습니다.",
-    "운영자 확인 필요: 이번 실행에서 WebFetch가 권한 요청 무응답(PROVENANCE_REQUIRED)으로 모든 주소에서 막혀, 직접 확인 대상 페이지를 열지 못했습니다. 아래 주소는 errors에 그대로 남겼습니다.",
-    "운영자 확인 필요: NASA Earthdata 공지 목록(VIIRS·MODIS·GLDAS·IMERG·MERRA-2·GPCP·LAADS·LP DAAC·OB.DAAC·NSIDC DAAC 등) 최근 7일 새 공지 여부 미확인 — https://www.earthdata.nasa.gov/data/alerts-outages",
-    "운영자 확인 필요: MERRA-2 뉴스 미확인 — https://www.earthdata.nasa.gov/data/projects/merra-2/news (GMAO 운영 상태 표에서는 MERRA-2 Nominal)",
+    "운영자 확인 필요: 이번 실행에서도 WebFetch가 권한 요청 무응답(PROVENANCE_REQUIRED)으로 모든 주소에서 막혀(11/23에 이어 이틀째), 직접 확인 대상 페이지를 열지 못했습니다. 해당 주소는 errors에 그대로 남겼습니다.",
+    "운영자 확인 필요: NASA Earthdata 공지 목록(VIIRS·MODIS·GLDAS·IMERG·MERRA-2·GPCP·Suomi NPP·NOAA-20/21·LAADS·LP DAAC·OB.DAAC·NSIDC DAAC 등) 최근 7일 새 공지 여부 미확인 — https://www.earthdata.nasa.gov/data/alerts-outages",
+    "운영자 확인 필요: MERRA-2 뉴스 미확인 — https://www.earthdata.nasa.gov/data/projects/merra-2/news (GMAO 운영 상태 표는 정상 갱신 중)",
     "운영자 확인 필요: CERA-20C 페이지 미확인 — https://www.ecmwf.int/en/forecasts/datasets/reanalysis-datasets/cera-20c",
     "운영자 확인 필요: GES DISC 공지 본문 미확인 — https://disc.gsfc.nasa.gov/api/alerts?page=1&size=10",
-    "운영자 확인 필요: ECCO 지원 메일링 목록에 2026년 11월 글이 새로 올라왔으나 내용을 열지 못했습니다 — https://mailman.mit.edu/pipermail/ecco-support/2026-November/date.html",
+    "운영자 확인 필요: ECCO 지원 메일링 목록 11월 보관함이 커져(3 KB) 새 메일이 있으나 내용을 열지 못했습니다 — https://mailman.mit.edu/pipermail/ecco-support/2026-November/date.html",
+    "참고: Copernicus Marine SST-1002(2026-11-19부터 AMSR2 문제로 NRT SST 4개 제품 품질 저하)은 OSTIA(SST_GLO_SST_L4_NRT_OBSERVATIONS_010_001)가 목록에 없어 공지로 올리지 않았습니다. 사이트에 해당 제품을 추가할 계획이 있다면 참고하세요.",
     "watch_urls 교체 제안은 이번에 찾지 못했습니다(웹 열기 불가). 7일 넘게 실패 중인 주소: CALIPSO·MISR(ASDC), GIMMS NDVI, GK2A, OB.DAAC, GOSAT(NIES), TROPOMI, Earthdata 카탈로그 주소들."
   ]
 }
