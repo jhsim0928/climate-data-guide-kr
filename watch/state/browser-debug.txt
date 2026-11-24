@@ -1,6 +1,9 @@
 [browser] https://airs.jpl.nasa.gov/data/outages/ → 1281줄
 [browser] https://asdc.larc.nasa.gov/project/CALIPSO → HTTP 403 (브라우저)
 [browser] https://www.ecmwf.int/en/forecasts/datasets/reanalysis-datasets/cera-20c → HTTP 401 (브라우저)
+[browser] https://spaces.awi.de/pages/viewrecentblogposts.action?key=SIRAL → HTTP 403 (브라우저)
+[browser] https://spaces.awi.de/spaces/CS2SMOS/overview → HTTP 403 (브라우저)
+[browser] https://spaces.awi.de/spaces/CS2SMOS/pages/297634429/CryoSat-2+Sentinel-3+SMOS+Merged+Sea+Ice+Thickness → HTTP 403 (브라우저)
 [browser] https://www.eorc.jaxa.jp/EARTHCARE/index.html → HTTP 404 (브라우저)
 [browser] https://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=2187 → HTTP 403 (브라우저)
    [json] 200 https://nmsc.kma.go.kr/homepage/json/base/bbs/listBbs.do?bbsCd=00237
@@ -12,18 +15,19 @@
    [json] 200 https://disc.gsfc.nasa.gov/api/config/terraversion
    [json] 200 https://disc.gsfc.nasa.gov/service/datasets/jsonwsp
    [json] 200 https://disc.gsfc.nasa.gov/service/keywords/jsonwsp
-   [json] 200 https://disc.gsfc.nasa.gov/api/alerts?expiration=%5B$gte%5D%5B1795466734840%5D&fields=brief
    [json] 200 https://disc.gsfc.nasa.gov/service/categories/jsonwsp
+   [json] 200 https://disc.gsfc.nasa.gov/api/alerts?expiration=%5B$gte%5D%5B1795553139944%5D&fields=brief
    [json] 200 https://disc.gsfc.nasa.gov/api/csrf-token
    [json] 200 https://disc.gsfc.nasa.gov/api/ping/token
    [json] 200 https://disc.gsfc.nasa.gov/service/keywords/jsonwsp
-   [json] 200 https://disc.gsfc.nasa.gov/api/alerts?expiration=%5B$gte%5D%5B1795466735332%5D
+   [json] 200 https://disc.gsfc.nasa.gov/api/alerts?expiration=%5B$gte%5D%5B1795553140416%5D
    [json] 200 https://disc.gsfc.nasa.gov/service/datasets/jsonwsp
    [json] 200 https://disc.gsfc.nasa.gov/api/metadata/dataset/GPCPMON_3.3/variables
+   [json] 401 https://disc.gsfc.nasa.gov/auth/token
    [json] 200 https://disc.gsfc.nasa.gov/api/publications?datasets=%5B$eq%5D%5BGPCPMON_3.3%5D&sort=year&tags=%5B$eq%5D%5Bsource:dif%5D&title=%5BGPCPMON_3.3%5D
    [json] 200 https://disc.gsfc.nasa.gov/api/publications?datasets=%5B$eq%5D%5BGPCPMON_3.3%5D&sort=year&tags=%5B$ne%5D%5Bsource:dif%5D&title=%5BGPCPMON_3.3%5D
-   [json] 401 https://disc.gsfc.nasa.gov/auth/token
    [json] 200 https://disc.gsfc.nasa.gov/api/inventory/intervals/GPCPMON_3.3?year=2026&month=1
+   [json] 401 https://disc.gsfc.nasa.gov/auth/token
    [json] 401 https://disc.gsfc.nasa.gov/auth/token
    [json] 200 https://cmr.earthdata.nasa.gov/search/granules.umm_json?entry_id%5B%5D=GPCPMON_3.3&page_size=1&sort_key%5B%5D=%2BstartDate
    [json] 200 https://cmr.earthdata.nasa.gov/search/collections.umm_json?entry_id=GPCPMON_3.3&include_granule_counts=true
@@ -34,16 +38,16 @@
    [json] 200 https://cmr.earthdata.nasa.gov/search/collections.umm_json?page_size=50&sort_key%5B%5D=-usage_score&consortium=EOSDIS&has_granules_or_opensearch=true
    [json] 200 https://sjldutoe6c.execute-api.us-east-1.amazonaws.com/default/harmony-proxy/giovanni.gsfc.nasa.gov/giovanni/daac-bin/getProvisionedShapefiles.py
    [json] 200 https://sjldutoe6c.execute-api.us-east-1.amazonaws.com/default/harmony-proxy/capabilities?collectionId=C3405935516-GES_DISC&version=3
-[browser] https://disc.gsfc.nasa.gov/datacollection/GPCPMON_3.3.html → 39줄
+[browser] https://disc.gsfc.nasa.gov/datacollection/GPCPMON_3.3.html → 38줄
 [browser] https://grace.jpl.nasa.gov/data/data-updates/ → 62줄
 [browser] https://www.eorc.jaxa.jp/GPM/en/news.html → HTTP 404 (브라우저)
 [browser] https://sharaku.eorc.jaxa.jp/GSMaP/guide.html → HTTP 404 (브라우저)
    [json] 200 https://disc.gsfc.nasa.gov/api/config/terraversion
-   [json] 200 https://disc.gsfc.nasa.gov/api/alerts?expiration=%5B$gte%5D%5B1795466752133%5D&fields=brief
-   [json] 200 https://disc.gsfc.nasa.gov/service/keywords/jsonwsp
+   [json] 200 https://disc.gsfc.nasa.gov/api/alerts?expiration=%5B$gte%5D%5B1795553155564%5D&fields=brief
    [json] 200 https://disc.gsfc.nasa.gov/service/datasets/jsonwsp
-   [json] 200 https://disc.gsfc.nasa.gov/api/csrf-token
+   [json] 200 https://disc.gsfc.nasa.gov/service/keywords/jsonwsp
    [json] 200 https://disc.gsfc.nasa.gov/service/categories/jsonwsp
+   [json] 200 https://disc.gsfc.nasa.gov/api/csrf-token
    [json] 200 https://disc.gsfc.nasa.gov/api/ping/token
    [json] 200 https://disc.gsfc.nasa.gov/api/alerts/groups
    [json] 200 https://disc.gsfc.nasa.gov/api/alerts?fields=brief&page=1&size=25

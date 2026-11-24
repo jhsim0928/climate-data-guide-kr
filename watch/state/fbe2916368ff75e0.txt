@@ -190,6 +190,10 @@ TM_NPP_L1B_24031
 Note
 2024/031 SNPP X-Band Anomaly Data Loss
 On January 31, 2024 (2024/031), beginning at 01:10z, no SNPP Stored Mission Data (SMD) was received for SVL Rev 63527 due to ground issues at Svalbard. Data recovery was attempted on following SVL Rev 63528 and SVL Rev 63529. Recovery was unsuccessful. <br><br><font color='red'><b>Update 02/01/2024:</b></font><br>The NPP SMD X-band transmitter anomaly has been resolved. SMD flow resumed at 16:00 UTC on 2024.031 with small intermittent data losses due to FCDAS downlink issues. Data loss from the period 030/23:21z - 031/16:00z is considered unrecoverable. <br><br>
+PM_NPP_SRFL_23011
+Pending
+VNP09A1/H1 artifact tile h31v12 (New Zealand)
+Based on a user inquiry, an artifact was discovered in the VNP09H1 and VNP09A1 red and NIR bands when generating a yearly maximum NDVI composite (VNP13A1). The artifact was specifically observed over New Zealand (h31v12) and was traced back to the 'cloud mask quality' and 'cloud detection & confidence' Quality Flags in VNP09GA, VNP09A1, VNP09H1, and VNP35_L2. On further review of VNP35_L2, the artifact was mainly originating from one of the input ancillary file, 1km VI file (VNP_VNDVIIP_L2) that may be failing in the grid-to-gran conversion in PGE553. The artifact is observed in both C1 and C2 collections and will be addressed in the future collection.<br><br>The first image below on the left shows the artifact in the VNP09H1 product for tile h31v12 (South Island of New Zealand). The data in this image has been composited over 46, 8-day periods for year 2021. The larger northeastern portion of the island shows inconsistent retrieval (white), which is incorrect, compared with the properly composited values in the southwestern region of the island (green). The second image shows the same composite period for the VNP09A1 product as an RGB image, where the failure of the cloud mask is observed over the eastern portion of the island.<br><br>
 PM_NPP_L1B_21032
 Note
 C2 SNPP and C2.1 J1 L1 TOA radiance comparison
