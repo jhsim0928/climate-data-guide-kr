@@ -1,7 +1,7 @@
 {
   "date": "2026-11-24",
   "reviewed_at": "2026-11-24T08:17:08+09:00",
-  "summary": "공지 페이지 276곳 중 29곳이 바뀌었지만 모두 표시 변화이거나 사이트 자료와 무관한 글이라 새 공지 후보는 없습니다. 이번 실행에서도 웹 페이지 직접 열기(WebFetch)가 권한 요청 무응답으로 막혀 NASA Earthdata·MERRA-2·CERA-20C·GES DISC 직접 확인을 하지 못했습니다.",
+  "summary": "공지 페이지 276곳 중 29곳이 바뀌었지만 모두 표시 변화이거나 사이트 자료와 무관한 글이라 새 공지 후보는 없습니다. 이번 실행에서도 웹 페이지 직접 열기(WebFetch)가 권한 요청 무응답으로 막혀 NASA Earthdata·MERRA-2·CERA-20C·GES DISC 직접 확인을 하지 못했습니다. 낮 직접 확인(12:50)에서도 WebFetch가 막혀 확인하지 못했습니다.",
   "watch": {
     "date": "2026-11-24",
     "checked": 276,
@@ -562,6 +562,7 @@
     }
   ],
   "notes": [
+    "운영자 확인 필요: 낮 직접 확인(12:50)에서도 WebFetch가 권한 요청 무응답(PROVENANCE_REQUIRED)으로 막혔습니다(사흘째). NASA Earthdata 공지 목록·MERRA-2 뉴스·CERA-20C·GES DISC 공지(api/alerts)·ECCO 메일링 목록을 열지 못해 새 공지 여부를 판단하지 못했습니다. 해당 주소는 errors에 그대로 두었습니다.",
     "운영자 확인 필요: 이번 실행에서도 WebFetch가 권한 요청 무응답(PROVENANCE_REQUIRED)으로 모든 주소에서 막혀(11/23에 이어 이틀째), 직접 확인 대상 페이지를 열지 못했습니다. 해당 주소는 errors에 그대로 남겼습니다.",
     "운영자 확인 필요: NASA Earthdata 공지 목록(VIIRS·MODIS·GLDAS·IMERG·MERRA-2·GPCP·Suomi NPP·NOAA-20/21·LAADS·LP DAAC·OB.DAAC·NSIDC DAAC 등) 최근 7일 새 공지 여부 미확인 — https://www.earthdata.nasa.gov/data/alerts-outages",
     "운영자 확인 필요: MERRA-2 뉴스 미확인 — https://www.earthdata.nasa.gov/data/projects/merra-2/news (GMAO 운영 상태 표는 정상 갱신 중)",
