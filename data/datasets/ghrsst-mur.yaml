@@ -199,6 +199,13 @@ citations:
     PO.DAAC 인용 지침(https://podaac.jpl.nasa.gov/CitingPODAAC)에 따라 실제로 쓴 판(v4.1 또는 MUR25 v4.2)의 DOI를 적으세요.
 
 notices:
+  - date: "2026-11-19"
+    level: warning
+    title: "AMSR2 입력 중단으로 MUR·MUR25 품질 저하 (2026-10-21~11-13, 재처리 일정 미정)"
+    body: >-
+      PO.DAAC는 상위 제공기관의 AMSR2 마이크로파 SST가 끊겨 MUR·MUR25 L4 SST 자료에 품질 문제가 있었다고 알렸습니다. 영향 기간은 AMSR2 중단 기간인 2026년 10월 21일~11월 13일입니다. 입력이 복구되어 MUR 제품은 나아졌고, 이 기간은 나중에
+      재처리를 시도할 예정이지만 일정은 밝히지 않았으니 해당 기간 자료를 쓸 때 주의하세요.
+    source: https://www.earthdata.nasa.gov/data/alerts-outages/recent-mur-level-4-sea-surface-temperature-data-issues
   - date: "2025-09-02"
     level: warning
     title: 2025-08-25·26 MUR 품질 크게 저하 (재처리 전까지 그대로 제공)
@@ -259,4 +266,4 @@ watch_urls:
   - https://podaac.jpl.nasa.gov/announcements
   - https://podaac.jpl.nasa.gov/dataset/MUR-JPL-L4-GLOB-v4.1
 
-last_verified: "2026-10-13"
+last_verified: "2026-11-25"

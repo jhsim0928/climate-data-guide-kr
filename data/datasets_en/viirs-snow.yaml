@@ -291,6 +291,13 @@ transitions:
         url: https://nsidc.org/sites/default/files/documents/user-guide/multi_vnp10a1-v002-userguide.pdf
 
 notices:
+  - date: "2026-11-24"
+    level: warning
+    title: "JPSS1/NOAA-20 AND JPSS2/NOAA-21 VIIRS processing delays from November 19, 2026"
+    body: >-
+      Delays in processing JPSS1/NOAA-20 and JPSS2/NOAA-21 VIIRS data, beginning November 19, 2026, are affecting the availability of data products that depend on
+      VIIRS data for processing (LAADS DAAC, LP DAAC, NSIDC DAAC, OB.DAAC). The science team is working to resolve the issue; resolution date TBD.
+    source: https://www.earthdata.nasa.gov/data/alerts-outages/jpss1-noaa-20-jpss2-noaa-21-viirs-processing-delays-from-november-19-2026
   - date: "2026-11-17"
     level: info
     title: "JPSS1/NOAA-20 and JPSS2/NOAA-21 VIIRS data gaps and processing delays from November 5, 2026: Resolved (November 17, 2026)"
@@ -383,4 +390,4 @@ watch_urls:
   - https://nsidc.org/data/viirs/news
   - https://nsidc.org/data/vnp10a1/versions/2
 
-last_verified: "2026-11-20"
+last_verified: "2026-11-25"
