@@ -278,6 +278,13 @@ transitions:
         url: https://www.earthdata.nasa.gov/data/alerts-outages/viirs-version-1-data-products-decommissioned
 
 notices:
+  - date: "2026-11-24"
+    level: warning
+    title: "NOAA-20·NOAA-21 VIIRS 처리 지연 (11월 19일부터, 진행 중)"
+    body: >-
+      NASA Earthdata는 2026년 11월 19일부터 NOAA-20(JPSS1)·NOAA-21(JPSS2) VIIRS 자료 처리가 늦어져 VIIRS 자료로 만드는 산출물의 제공에 영향이 있다고 11월 24일 알렸습니다(LAADS DAAC·LP DAAC·NSIDC
+      DAAC·OB.DAAC). 과학팀이 해결 중이며 해결 날짜는 아직 정해지지 않았습니다(TBD). 11월 19일 이후 NOAA-20·NOAA-21 자료는 늦게 올라올 수 있습니다.
+    source: https://www.earthdata.nasa.gov/data/alerts-outages/jpss1-noaa-20-jpss2-noaa-21-viirs-processing-delays-from-november-19-2026
   - date: "2026-11-17"
     level: info
     title: NOAA-20·NOAA-21 VIIRS 자료 공백(11월 5~7일)에 따른 처리 지연 해결 (11월 17일)
@@ -358,4 +365,4 @@ watch_urls:
   - https://www.earthdata.nasa.gov/data/catalog/lpcloud-vnp13a1-002
   - https://landweb.modaps.eosdis.nasa.gov/knownissue
 
-last_verified: "2026-11-20"
+last_verified: "2026-11-25"
