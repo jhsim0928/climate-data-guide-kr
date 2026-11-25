@@ -39,6 +39,112 @@ Product Roadmap
 Get Inspired
 Service Commitments and Licence
 Contact Us
+[MED-543] MEDSEA_ANALYSISFORECAST_PHY - time coordinate mismatch in 202611 dataset version
+In progress
+2026-11-25 15:00 UTC - In progress
+A mismatch was detected in the time coordinate values of the new system files (dataset part 202611) of the product MEDSEA_ANALYSISFORECAST_PHY_006_013, causing phase shift in hourly and 15minutes datasets.
+The time coordinate is corrected in files produced on 2026-11-25 and later. The rest of the records are currently being replaced.
+The issue is not present in the previous system files (dataset part 202511), which is also available for the user under Double Dissemination period.
+Affected datasets:
+cmems_mod_med_phy-mld_anfc_4.2km_P1D-m
+cmems_mod_med_phy-mld_anfc_4.2km-2D_PT1H-m
+cmems_mod_med_phy-sal_anfc_4.2km_P1D-m
+cmems_mod_med_phy-sal_anfc_4.2km-2D_PT1H-m
+cmems_mod_med_phy-sal_anfc_4.2km-3D_PT1H-m
+cmems_mod_med_phy-ssh_anfc_4.2km_P1D-m
+cmems_mod_med_phy-ssh_anfc_4.2km_PT15M-i
+cmems_mod_med_phy-ssh_anfc_4.2km-2D_PT1H-m
+cmems_mod_med_phy-ssh_anfc_detided-4.2km_P1D-m
+cmems_mod_med_phy-temp_anfc_4.2km_P1D-m
+cmems_mod_med_phy-temp_anfc_4.2km-2D_PT1H-m
+cmems_mod_med_phy-temp_anfc_4.2km-3D_PT1H-m
+We apologize for any inconvenience this may cause.
+If you have any question, please contact
+Copernicus Marine User Support
+Copy a link to this article
+[SST-1003] SST_(BLK|MED)_PHY_(L3S|L4)_NRT - Degraded data since 2026-11-24
+In progress
+2026-11-24 12:00 UTC - In progress
+Due to an upstream data issue, the required AMSR3 upstream data from 2026-11-24 were not downloaded. Consequently, all L3S and L4 MED and BLK night products from 2026-11-24 were produced in degraded mode (without AMSR3 input). The CNR SST night products will remain degraded until this issue is resolved.
+Impacted products:
+SST_BLK_PHY_L3S_NRT_010_013
+SST_BLK_PHY_L4_NRT_010_006
+SST_MED_PHY_L3S_NRT_010_012
+SST_MED_PHY_L4_NRT_010_004
+We apologize for any inconvenience this may cause.
+If you have any question, please contact
+Copernicus Marine User Support
+Copy a link to this article
+[IBI-600] IBI_ANALYSISFORECAST_WAV - delayed data since 2026-11-25
+In progress
+2026-11-25 01:30 UTC - In progress
+Due to a technical issue, delivery of the following datasets from IBI_ANALYSISFORECAST_WAV_005_005 are delayed:
+cmems_mod_ibi_wav_anfc_0.027deg_PT1H-i
+cmems_mod_ibi_wav_spectra_anfc_0.083deg_PT1H-i
+We apologize for any inconvenience this may cause.
+If you have any question, please contact
+Copernicus Marine User Support
+Copy a link to this article
+[MDSOP-432] Temporary unavailability of the SUBSET service for selected datasets
+In progress
+2026-11-24 00:00 UTC - In progress
+Following the
+November 2026 release
+, the datasets listed below are temporarily unavailable with the SUBSET service, affecting access via:
+Subset Form
+Subset (
+open_dataset()
+read_dataframe()
+functions of the Copernicus Marine Toolbox
+MyOcean Pro Viewer
+In the meantime, we recommend downloading the original data with the
+File Browser
+or with the GET (
+) function of the Copernicus Marine Toolbox.
+The datasets will become available as soon as the conversion to the
+Analysis-Ready Cloud-Optimized (ARCO)
+format is complete. The conversion process is expected to be completed within the next weeks. We will keep you informed of any further developments.
+Impacted products/datasets:
+ARCTIC_ANALYSISFORECAST_PHY_TIDE_002_015
+/cmems_mod_arc_phy_anfc_3km-tide_PT1H-i
+BLKSEA_MULTIYEAR_WAV_007_006
+/cmems_mod_blk_wav_my_2.5km-climatology_P1M-m
+INSITU_GLO_BGC_DISCRETE_MY_013_046
+/cmems_obs-ins_glo_bgc-chl_my_na_irr
+OCEANCOLOUR_ARC_BGC_L3_MY_009_123
+/cmems_obs-oc_arc_bgc-plankton_my_l3-olci-300m_P1D
+OCEANCOLOUR_ATL_BGC_L3_MY_009_113
+/cmems_obs-oc_atl_bgc-plankton_my_l3-multi-1km_P1D
+OCEANCOLOUR_BLK_BGC_L4_MY_009_154
+/cmems_obs-oc_blk_bgc-car_my_l4-gapfree-multi-1km_P1D-m
+OCEANCOLOUR_BLK_BGC_L4_MY_009_154
+/cmems_obs-oc_blk_bgc-optics_my_l4-gapfree-multi-1km_P1D-m
+OCEANCOLOUR_BLK_BGC_L4_MY_009_154
+/cmems_obs-oc_blk_bgc-plankton_my_l4-gapfree-multi-1km_P1D
+CEANCOLOUR_BLK_BGC_L4_MY_009_154
+/cmems_obs-oc_blk_bgc-plankton_my_l4-multi-1km_P1M
+OCEANCOLOUR_BLK_BGC_L4_MY_009_154
+/cmems_obs-oc_blk_bgc-pp_my_l4-multi-4km_P1D
+OCEANCOLOUR_BLK_BGC_L4_MY_009_154
+/cmems_obs-oc_blk_bgc-pp_my_l4-multi-4km_P1M
+OCEANCOLOUR_BLK_BGC_L4_MY_009_154
+/cmems_obs-oc_blk_bgc-reflectance_my_l4-gapfree-multi-1km_P1D-m
+OCEANCOLOUR_BLK_BGC_L4_MY_009_154
+/cmems_obs-oc_blk_bgc-transp_my_l4-gapfree-multi-1km_P1D-m
+OCEANCOLOUR_GLO_BGC_L3_MY_009_103
+/cmems_obs-oc_glo_bgc-plankton_my_l3-multi-4km_P1D
+OCEANCOLOUR_GLO_BGC_L4_MY_009_104
+/cmems_obs-oc_glo_bgc-plankton_my_l4-olci-300m_P1M
+OCEANCOLOUR_MED_BGC_L3_MY_009_143
+/cmems_obs-oc_med_bgc-plankton_my_l3-multi-1km_P1D
+NWSHELF_ANALYSISFORECAST_PHY_004_013
+/cmems_mod_nws_phy-cur_anfc_1.5km-3D-detided_P1D-m
+NWSHELF_MULTIYEAR_WAV_004_015
+/cmems_mod_nws_wav_my_1.5km_PT1H-i
+We apologize for the inconvenience.
+If you have any question, please contact
+Copernicus Marine User Support
+Copy a link to this article
 [SL-520] SEALEVEL_(EUR|GLO)_PHY_L3_NRT - Empty L3 S6AN datasets
 In progress
 2026-11-24 12:00 UTC - In progress
@@ -339,54 +445,6 @@ cmems_obs-wind_glo_phy_nrt_l3-fy3e-windrad-des-0.25deg_P1D-i
 cmems_obs-wind_glo_phy_nrt_l3-fy3e-windrad-asc-0.5deg_P1D-i
 cmems_obs-wind_glo_phy_nrt_l3-fy3e-windrad-des-0.5deg_P1D-i
 We apologize for any inconvenience this may cause.
-If you have any question, please contact
-Copernicus Marine User Support
-Copy a link to this article
-[WAV-303] WAVE_GLO_PHY_SWH_L3_NRT - delayed Jason-3 data since 2026-08-26
-Anomaly
-2026-09-08 09:00 UTC - Anomaly
-Production was resumed on 226-09-03. However, due to missing upstream data, the data from 2026-08-26 to 2026-09-03 will not be recovered.
-2026-08-26 17:00 UTC - In progress
-Due to an onboard incident, Jason-3 satellite data is delayed since 2026-08-26 17:00 UTC. The following datasets from WAVE_GLO_PHY_SWH_L3_NRT_014_001 are affected:
-cmems_obs-wave_glo_phy-swh_nrt_j3-l3_PT1S
-cmems_obs-wave_glo_phy-swh_nrt_j3-l3-1km_PT0.2S-i
-We apologize for any inconvenience this may cause.
-If you have any question, please contact
-Copernicus Marine User Support
-Copy a link to this article
-[SL-500] SEALEVEL_(EUR|GLO)_PHY_L3_NRT - delayed Jason-3 datasets since 2026-08-26
-Anomaly
-2026-09-09 07:00 UTC - Anomaly
-production is now nominal. There will be a data gap during the satellite's unavailability from 20260826 17h to 20260903 10h19 UTC.
-2026-09-08 12:00 UTC - In progress - update
-Jason-3 is operational again and first measurements are dated 2026-09-03 10:19 UTC. Return to normal production is expected tomorrow 2026-09-09.
-2026-08-26 17:00 UTC - In progress
-Due to an onboard incident, Jason-3 satellite data is delayed since 2026-08-26 17:00 UTC.
-Affected products and datasets:
-SEALEVEL_GLO_PHY_L3_NRT_008_044: datasets
-cmems_obs-sl_glo_phy-ssh_nrt_j3n-l3-duacs_PT0.2S
-cmems_obs-sl_glo_phy-ssh_nrt_j3g-l3-duacs_PT1S-i
-SEALEVEL_EUR_PHY_L3_NRT_008_059: datasets
-cmems_obs-sl_eur_phy-ssh_nrt_j3g-l3-duacs_PT1S-i
-cmems_obs-sl_eur_phy-ssh_nrt_j3g-l3-duacs_PT0.2S-i
-We apologize for any inconvenience this may cause.
-If you have any question, please contact
-Copernicus Marine User Support
-Copy a link to this article
-[SST-956] SST_BAL_PHY_SUBSKIN_L4_NRT - some missing record files
-Anomaly
-2026-08-20 01:00 UTC - Anomaly
-Due to a technical issue, the files for the following 44 dates (file names starting with YYYYMMDDHH) are permanently missing from the SST_BAL_PHY_SUBSKIN_L4_NRT_010_034 records:
-2025012501, 2025012502, 2025012507, 2025012508, 2025012617, 2025012618, 2025020221, 2025020408, 2025020409, 2025020610, 2025020611, 2025021417, 2025021418, 2025021707, 2025021708, 2025021714, 2025021715, 2025021915, 2025021916, 2025022009, 2025022010, 2025022011, 2025022503, 2025022504, and 2025032323
-We apologize for any inconvenience this may cause.
-If you have any question, please contact
-Copernicus Marine User Support
-Copy a link to this article
-[ICE-818] SEAICE_BAL_L4_NRT_OBSERVATIONS - Starting production for the season
-Information
-2025-11-13 16:40 UTC - Information
-Delivery of SEAICE_BAL_SEAICE_L4_NRT_OBSERVATIONS_011_004 datasets have started on 9 Nov 2026. Delivery is twice weekly, on mondays and thursdays for the beginning of the season.
-When more sea ice will appear and daily ice charting will start the delivery will become daily.
 If you have any question, please contact
 Copernicus Marine User Support
 Copy a link to this article
