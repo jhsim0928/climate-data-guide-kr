@@ -242,6 +242,14 @@ citations:
 
 notices:
   - date: "2026-11-24"
+    level: warning
+    title: "[MDSOP-432] Temporary unavailability of the SUBSET service for selected datasets (MY L3 multi-4km daily plankton, L4 OLCI 300 m monthly plankton)"
+    body: >-
+      Following the November 2026 release, cmems_obs-oc_glo_bgc-plankton_my_l3-multi-4km_P1D and cmems_obs-oc_glo_bgc-plankton_my_l4-olci-300m_P1M
+      are temporarily unavailable with the SUBSET service (Subset Form, Toolbox subset, open_dataset() and read_dataframe(), MyOcean Pro Viewer).
+      In the meantime, download the original data with the File Browser or the Toolbox GET function; the datasets will become available once the ARCO conversion is complete, expected within the next weeks.
+    source: https://marine.copernicus.eu/user-corner/user-notification-service
+  - date: "2026-11-24"
     key_date: "2026-11"  # 메일 발송 기록용 원래 날짜(바꾸지 마세요)
     level: warning
     title: (Scheduled) November 2026 version update — new OC5 coefficients, carbon (POC, DOC) datasets, script changes needed
@@ -338,4 +346,4 @@ watch_urls:
   - https://marine.copernicus.eu/user-corner/product-roadmap/transition-information?product=OCEANCOLOUR_GLO_BGC_L4_MY_009_104
   - https://marine.copernicus.eu/user-corner/product-roadmap/transition-information?product=OCEANCOLOUR_GLO_BGC_L3_NRT_009_101
 
-last_verified: "2026-10-13"
+last_verified: "2026-11-26"
