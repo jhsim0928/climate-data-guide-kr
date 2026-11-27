@@ -52,6 +52,8 @@ Copernicus Marine User Support
 Copy a link to this article
 [MED-543] MEDSEA_ANALYSISFORECAST_PHY - time coordinate mismatch in 202611 dataset version
 In progress
+2026-11-27 09:00 UTC - In progress - Update
+Due to the time coordinate correction breaking ARCO ingestion, the availability of the new data updates for the subset service may be delayed.
 2026-11-25 15:00 UTC - In progress
 A mismatch was detected in the time coordinate values of the new system files (dataset part 202611) of the product MEDSEA_ANALYSISFORECAST_PHY_006_013, causing phase shift in hourly and 15minutes datasets.
 The time coordinate is corrected in files produced on 2026-11-25 and later. The rest of the records are currently being replaced.
@@ -82,16 +84,6 @@ SST_BLK_PHY_L3S_NRT_010_013
 SST_BLK_PHY_L4_NRT_010_006
 SST_MED_PHY_L3S_NRT_010_012
 SST_MED_PHY_L4_NRT_010_004
-We apologize for any inconvenience this may cause.
-If you have any question, please contact
-Copernicus Marine User Support
-Copy a link to this article
-[IBI-600] IBI_ANALYSISFORECAST_WAV - delayed data since 2026-11-25
-In progress
-2026-11-25 01:30 UTC - In progress
-Due to a technical issue, delivery of the following datasets from IBI_ANALYSISFORECAST_WAV_005_005 are delayed:
-cmems_mod_ibi_wav_anfc_0.027deg_PT1H-i
-cmems_mod_ibi_wav_spectra_anfc_0.083deg_PT1H-i
 We apologize for any inconvenience this may cause.
 If you have any question, please contact
 Copernicus Marine User Support
@@ -155,14 +147,6 @@ We apologize for any inconvenience this may cause.
 If you have any question, please contact
 Copernicus Marine User Support
 Copy a link to this article
-[ICE-823] SEAICE_GLO_PHY_L4_NRT - delayed data since 2026-11-20
-In progress
-2026-11-20 00:00 UTC - In progress
-Due to a technical issue, delivery of the product SEAICE_GLO_PHY_L4_NRT_011_014 is delayed since 2026-11-20.
-We apologize for any inconvenience this may cause.
-If you have any question, please contact
-Copernicus Marine User Support
-Copy a link to this article
 [SST-1002] SST_(ATL|GLO)_(PHY|SST)_(L3S|L4)_NRT - degraded data since 2026-11-19
 In progress
 2026-11-20 12:00 UTC - In progress
@@ -201,49 +185,6 @@ INSITU_NWS_PHYBGCWAV_DISCRETE_MYNRT_013_036
 INSITU_MED_PHYBGCWAV_DISCRETE_MYNRT_013_035
 INSITU_IBI_PHYBGCWAV_DISCRETE_MYNRT_013_033
 We will fix this issue as soon as possible.
-We apologize for any inconvenience this may cause.
-If you have any question, please contact
-Copernicus Marine User Support
-Copy a link to this article
-[OC-1112] OCEANCOLOUR_ATL_BGC_(L3|L4)_(MY|NRT) - Degraded quality of PFT variables starting 2025-09-01
-In progress
-2026-10-21 11:00 UTC - In progress
-The quality of NRT products (
-OCEANCOLOUR_ATL_BGC_L3_NRT_009_111
-OCEANCOLOUR_ATL_BGC_L4_NRT_009_116
-) is nominal again.
-The quality issue is still present from 2025-09-01 to 2026-10-11 for the MY products (
-OCEANCOLOUR_ATL_BGC_L3_MY_009_113
-OCEANCOLOUR_ATL_BGC_L4_MY_009_118
-), but the data are correct after these dates. The data with a degraded quality will be updated on 2026-11-24 with the
-November 2026 release
-2026-10-15 12:00 UTC - In progress
-The quality of PFT variables in ATL-plankton datasets should be considered degraded from 2025-09-01 to 2026-10-11 due to a mistake in the processing system. These datasets are currently being updated and the incident will be resolved on 2026-11-24 with the
-November 2026 release
-Impacted products and datasets:
-OCEANCOLOUR_ATL_BGC_L3_NRT_009_111
-(cmems_obs-oc_atl_bgc-plankton_nrt_l3-multi-1km_P1D)
-OCEANCOLOUR_ATL_BGC_L3_MY_009_113
-(cmems_obs-oc_atl_bgc-plankton_my_l3-multi-1km_P1D)
-OCEANCOLOUR_ATL_BGC_L4_NRT_009_116
-(cmems_obs-oc_atl_bgc-plankton_nrt_l4-multi-1km_P1M)
-OCEANCOLOUR_ATL_BGC_L4_MY_009_118
-(cmems_obs-oc_atl_bgc-plankton_my_l4-multi-1km_P1M)
-We apologize for any inconvenience this may cause.
-If you have any question, please contact
-Copernicus Marine User Support
-Copy a link to this article
-[ICE-812] SEAICE_(ANT|ARC)_(PHY|SEAICE)_(|AUTO)(L3|L4) - delivery interruption 2026-10-19 to 2026-10-23
-In progress
-2026-11-05 13:00 UTC - In progress - Update
-Production is back to normal, but some files have yet to be back-filled.
-2026-10-30 09:00 UTC - In progress - Update
-The upstream data are not stable yet, therefore the data production is still impacted.
-2026-10-19 05:00 UTC - In progress - Update
-The upstream maintenance is not over and therefore production has not resumed.
-2026-10-19 05:00 UTC - In progress
-Due to a server maintenance, some upstream data is not available from 2026-10-19 to 2026-10-23 for sea ice and iceberg products:
-As a result, their production is interrupted.
 We apologize for any inconvenience this may cause.
 If you have any question, please contact
 Copernicus Marine User Support
@@ -394,6 +335,26 @@ We apologize for any inconvenience this may cause.
 If you have any question, please contact
 Copernicus Marine User Support
 Copy a link to this article
+[ICE-812] SEAICE_(ANT|ARC)_(PHY|SEAICE)_(|AUTO)(L3|L4) - delivery interruption 2026-10-19 to 2026-10-23
+Anomaly
+2026-11-27 13:00 UTC - Anomaly
+The final list of dates for which the data will not be delivered due to this incident is:
+SEAICE_ARC_PHY_AUTO_L3_MYNRT_011_023 and SEAICE_ARC_PHY_AUTO_L4_MYNRT_011_024: 2026-10-20 to 2026-10-25 and 2026-11-06 to 2026-11-08
+SEAICE_ANT_PHY_AUTO_L3_NRT_011_012: 2026-10-19 to 2026-10-29 and 2026-11-05 to 2026-11-10
+SEAICE_ARC_SEAICE_L4_NRT_OBSERVATIONS_011_007: 2026-10-20 to 2026-10-26, 2026-10-31, and 2026-11-05 to 2026-11-07
+2026-11-05 13:00 UTC - In progress - Update
+Production is back to normal, but some files have yet to be back-filled.
+2026-10-30 09:00 UTC - In progress - Update
+The upstream data are not stable yet, therefore the data production is still impacted.
+2026-10-19 05:00 UTC - In progress - Update
+The upstream maintenance is not over and therefore production has not resumed.
+2026-10-19 05:00 UTC - In progress
+Due to a server maintenance, some upstream data is not available from 2026-10-19 to 2026-10-23 for sea ice and iceberg products:
+As a result, their production is interrupted.
+We apologize for any inconvenience this may cause.
+If you have any question, please contact
+Copernicus Marine User Support
+Copy a link to this article
 [WAV-309] WAVE_GLO_PHY_SPC_L3_NRT - delayed data since 2026-10-20
 Anomaly
 2026-11-05 15:00 UTC - Anomaly
@@ -427,6 +388,51 @@ cmems_obs-wind_glo_phy_nrt_l3-hy2c-hscat-asc-0.25deg_P1D-i
 cmems_obs-wind_glo_phy_nrt_l3-hy2c-hscat-des-0.25deg_P1D-i
 cmems_obs-wind_glo_phy_nrt_l3-hy2c-hscat-asc-0.5deg_P1D-i
 cmems_obs-wind_glo_phy_nrt_l3-hy2c-hscat-des-0.5deg_P1D-i
+We apologize for any inconvenience this may cause.
+If you have any question, please contact
+Copernicus Marine User Support
+Copy a link to this article
+[WND-264] WIND_GLO_PHY_L3_NRT - HY-2B and HY-2C datasets unavailable on 2026-09-05
+Anomaly
+2026-09-06 12:00 UTC - Anomaly
+Due to unavailability of the upstream data, the HY-2B and HY-2C HSCAT wind data in WIND_GLO_PHY_L3_NRT_012_002 are not available on 5 September 2026. The input data flow has been restored now so the incident is over. However, the observations on 2026-09-05 will not be recovered and should be considered lost.
+The following datasets are affected by this incident:
+cmems_obs-wind_glo_phy_nrt_l3-hy2b-hscat-asc-0.25deg_P1D-i
+cmems_obs-wind_glo_phy_nrt_l3-hy2b-hscat-des-0.25deg_P1D-i
+cmems_obs-wind_glo_phy_nrt_l3-hy2b-hscat-asc-0.5deg_P1D-i
+cmems_obs-wind_glo_phy_nrt_l3-hy2b-hscat-des-0.5deg_P1D-i
+cmems_obs-wind_glo_phy_nrt_l3-hy2c-hscat-asc-0.25deg_P1D-i
+cmems_obs-wind_glo_phy_nrt_l3-hy2c-hscat-des-0.25deg_P1D-i
+cmems_obs-wind_glo_phy_nrt_l3-hy2c-hscat-asc-0.5deg_P1D-i
+cmems_obs-wind_glo_phy_nrt_l3-hy2c-hscat-des-0.5deg_P1D-i
+We apologize for any inconvenience this may cause.
+If you have any question, please contact
+Copernicus Marine User Support
+Copy a link to this article
+[WND-263] WIND_GLO_PHY_L3_NRT - Some datasets delayed since 2026-08-27
+Anomaly
+2026-09-09 12:00 UTC - In progress - Anomaly
+Upstream data delivery has resumed. Production has resumed with a longer than nominal timeliness.
+Data between 2026-08-27 and 2026-09-03 included will not be recovered. Data from 2026-09-04 onwards is being produced and delivered.
+2026-08-27 12:00 UTC - In progress
+Due to the unavailability of upstream data, the FY-3E WindRAD wind data in WIND_GLO_PHY_L3_NRT_012_002 are not available since 27 August 2026.
+The following datasets are affected by the incident:
+cmems_obs-wind_glo_phy_nrt_l3-fy3e-windrad-asc-0.25deg_P1D-i
+cmems_obs-wind_glo_phy_nrt_l3-fy3e-windrad-des-0.25deg_P1D-i
+cmems_obs-wind_glo_phy_nrt_l3-fy3e-windrad-asc-0.5deg_P1D-i
+cmems_obs-wind_glo_phy_nrt_l3-fy3e-windrad-des-0.5deg_P1D-i
+We apologize for any inconvenience this may cause.
+If you have any question, please contact
+Copernicus Marine User Support
+Copy a link to this article
+[WAV-303] WAVE_GLO_PHY_SWH_L3_NRT - delayed Jason-3 data since 2026-08-26
+Anomaly
+2026-09-08 09:00 UTC - Anomaly
+Production was resumed on 226-09-03. However, due to missing upstream data, the data from 2026-08-26 to 2026-09-03 will not be recovered.
+2026-08-26 17:00 UTC - In progress
+Due to an onboard incident, Jason-3 satellite data is delayed since 2026-08-26 17:00 UTC. The following datasets from WAVE_GLO_PHY_SWH_L3_NRT_014_001 are affected:
+cmems_obs-wave_glo_phy-swh_nrt_j3-l3_PT1S
+cmems_obs-wave_glo_phy-swh_nrt_j3-l3-1km_PT0.2S-i
 We apologize for any inconvenience this may cause.
 If you have any question, please contact
 Copernicus Marine User Support
