@@ -322,6 +322,14 @@ citations:
     Check the current wording under "Citation and attribution" on the CDS dataset page.
 
 notices:
+  - date: "2026-11-27"
+    level: warning
+    title: "New version of CARRA data (Version 2): rerun of 2 April - 31 October 2024"
+    body: >-
+      A new version of CARRA data for 2 April - 31 October 2024 is available on the CDS for the single, pressure, height and model levels datasets.
+      Version 2 fixes an issue with the use of a satellite dataset in production that caused a small degradation in mean sea level pressure and temperature.
+      Users of this period should select Version 2 (API users add the version keyword); Version 1 remains the default, so existing requests are unchanged.
+    source: https://forum.ecmwf.int/t/new-version-and-latest-time-updates-for-carra-entries/15663
   - date: "2026-06-03"
     level: warning
     title: CARRA1 timely updates end in March 2027
@@ -376,4 +384,4 @@ watch_urls:
   - https://forum.ecmwf.int/c/announcements/5
   - https://climate.copernicus.eu/copernicus-arctic-regional-reanalysis-service
 
-last_verified: "2026-10-12"
+last_verified: "2026-11-28"

@@ -322,6 +322,14 @@ citations:
     권장 인용 문구는 CDS 데이터셋 페이지의 "Citation and attribution" 항목에서 다시 확인하세요.
 
 notices:
+  - date: "2026-11-27"
+    level: warning
+    title: CARRA 2024년 4~10월 재처리판(Version 2) CDS 공개 — 해당 기간 해면기압·기온 소폭 저하 수정
+    body: >-
+      생산에 쓰인 특정 위성 자료 문제로 2024년 4월 2일~10월 31일 CARRA 자료의 해면기압(MSLP)과 기온이 조금 나빠져, 이 기간을 다시 돌린 Version 2가
+      CDS의 단일면·기압면·고도면·모델면 데이터셋에 추가되었습니다. 이 기간 자료를 쓰는 경우 Version 2를 고르세요(CDS API는 요청에 version 키워드 추가).
+      Version 1(1990년 9월부터 원래 자료)이 계속 기본값이라 version을 지정하지 않은 기존 요청은 그대로 Version 1을 받습니다.
+    source: https://forum.ecmwf.int/t/new-version-and-latest-time-updates-for-carra-entries/15663
   - date: "2026-06-03"
     level: warning
     title: CARRA1 정기 갱신 2027년 3월 종료 예정
@@ -376,4 +384,4 @@ watch_urls:
   - https://forum.ecmwf.int/c/announcements/5
   - https://climate.copernicus.eu/copernicus-arctic-regional-reanalysis-service
 
-last_verified: "2026-10-12"
+last_verified: "2026-11-28"
